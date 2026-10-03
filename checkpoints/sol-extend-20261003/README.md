@@ -1,7 +1,7 @@
-# Bounded native stem-extension checkpoint
+# Bounded native spot-extension checkpoint
 
-Latest: owner/group/order-aware stem lookup, original fitted-glyph line intersection, point replacement, and one-side merge/side-gap/stem composition. Rejection returns NeedSpot and stops; spot/parallel branches, full extension loop and CLI integration remain pending.
+Latest: owning unassigned BEAM_SPOT pool, full-ordinate/stable-abscissa order, own-glyph exclusion, selected spot bounds-to-point replacement, and one-side merge/stem/spot integration. Earlier accepted stems skip spot processing. Rejection stops before parallel or whole-loop scheduling; full BEAMS/CLI remains unfinished.
 
-126 independent original method controls include 58 accepted extensions and two original prefix-derived 2/6-pixel cap controls. 33 focused tests, fmt, and workspace all-targets Clippy passed. Original nonfinite intersections stay explicit; no numeric zero coercion. The prior full 259 debug/259 release/fmt/Clippy/release-build checkpoint is preserved as historical baseline evidence, not a full rerun of the new stem stage.
+140 independent original controls: 138 spot invocations, 79 accepted spot replacements, and 2 accepted stems that skip spot calls. Four no-fallback counterfactual controls and eight odd-interline rounding controls are included. 38 focused tests, fmt and workspace all-targets Clippy passed. The corrected test-harness failure log is retained. Previous full 259 debug/259 release validation is historical, not a full rerun of this new stage.
 
-Restore the verified original base archive plus the cumulative archive in MANIFEST.json. Verify both SHA256 values, all changed-file hashes, and the exact final source Git tree. Previous archives and parent commits remain preserved. No full BEAMS/OMR claim.
+Restore original verified base plus the cumulative archive named in MANIFEST.json. Verify both SHA256 values, every changed-file hash, and the final source Git tree. All previous archives/parent commits remain preserved. Nonfinite point/stem semantics from earlier verified stages remain unchanged.
