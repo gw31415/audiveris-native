@@ -1,0 +1,6 @@
+tree 6bdcf5efdf751830d0d33f77eb984f60dd6fb3a8
+parent 21f0833abd67dd4fa1dd0c60a74a686779329818
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791033990 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791033990 +0000
+
+Connect GRID, beams, groups and rests through deterministic shared vertex/relation identities; expose native CLI intermediate graph

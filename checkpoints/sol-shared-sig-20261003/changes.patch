@@ -1,0 +1,1640 @@
+diff --git a/docs/SHARED-SIG.md b/docs/SHARED-SIG.md
+new file mode 100644
+index 0000000..5f96a74
+--- /dev/null
++++ b/docs/SHARED-SIG.md
+@@ -0,0 +1,13 @@
++# Shared native SIG adapter and intermediate CLI report
++
++shared_sig::Graph owns one vertex ID allocator, source-key map and relation ID store across GRID, beam candidates, beam groups, rests and serifs. Source identity is (system, phase, local ID). Imports retain original payload and source identity while rewriting vertex and relation endpoints to shared IDs. IDs allocate in actual import/registration encounter order, are not reused, and remain stable across re-synchronization and cleanup. GRID and BEAMS glyph IDs retain explicit separate namespaces; no shared glyph-index equivalence is claimed.
++
++GRID import reads actual native bar_semantics systems/inters/relations. Beam sync uses typed SystemCandidates in registration order, including tombstones. Full system sync adds group vertices/Containment/support relations and rest/serif vertices/relations. Converted rests keep an explicit source_beam_id pointing to the source beam's shared tombstone. Rest relation source/target kinds and side are checked; dangling or removed endpoints, duplicate GRID source IDs, duplicate rest/group IDs and budget overflow reject. Clone/commit updates make imports and sync transactional. Existing phase logic remains authoritative; this store is the common graph adapter/view, not a replacement JVM SIG engine. Initial-candidate-only sync rejects after live group/rest data exists, requiring a complete snapshot to prevent stale memberships.
++
++multiple_rest_pipeline::process_shared synchronizes initial candidate/group identities, calls the existing native conversion pass, then synchronizes its registration and cleanup. All eleven unchanged original conversion controls (six positive, five negative) still match; the tests also check unified relation endpoints and rest vertex/relation counts. Four additional contract tests cover collisions across GRID/beam/group/rest IDs, deterministic replay, stable tombstones, malformed endpoint/duplicate rollback, cross-system local ID reuse and protection against incomplete later-phase updates. Eleven focused tests, fmt and all-targets Clippy pass.
++
++The existing beam-spots CLI now retains typed native candidate state and emits shared_sig beside existing phase reports. Actual raster input beams-single.png completes the native path and produces one GRID vertex and one beam vertex with distinct common IDs. A second fresh CLI run at the final code matches the complete prior report byte content/hash and shared IDs. This CLI report covers GRID and BEAMS.INITIAL_CANDIDATES only; it does not run later extensions/hooks/groups/rest conversion. musicxml_complete remains false. Input/report hashes, actual commands, both logs and shared graph output are preserved in evidence.
++
++Current full debug/release suites are UNVERIFIED at this new tree. The 289-test full release result belongs solely to parent source 21f0833abd67dd4fa1dd0c60a74a686779329818, immutable remote checkpoint a14eb873873b101247913c41a6987cdbddaa17d4. No broad regression rerun was requested for this adapter stage.
++
++Remaining: CLI execution of the complete BEAMS/rest pipeline with native staff/pitch and system lag mapping, common contextualization beyond existing GRID classes, integrating header/stem/other inter namespaces, full shared glyph index, journal/snapshot rehydration (replay currently rebuilds from ordered phase inputs), additional error-path and large/multi-staff controls, real-score rest recognition and full OMR. Shared IDs deliberately differ from JVM IDs; deterministic replay requires the same phase/source registration order.
+diff --git a/evidence/shared-sig-checkpoint/CLI-RECEIPT.json b/evidence/shared-sig-checkpoint/CLI-RECEIPT.json
+new file mode 100644
+index 0000000..59602f7
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/CLI-RECEIPT.json
+@@ -0,0 +1,45 @@
++{
++  "status": "passed",
++  "command": [
++    "cargo",
++    "run",
++    "--locked",
++    "--offline",
++    "-j",
++    "2",
++    "--",
++    "beam-spots",
++    "fixtures/official-grid/beams-single.png",
++    "/workspace/audiveris-shared-sig-check-20261003/spots.pgm",
++    "/workspace/audiveris-shared-sig-check-20261003/report.json"
++  ],
++  "seconds": 1.3704186109998773,
++  "input_sha256": "9e70dcea82c8e8a5ae4e9ba107eee54f60f1b6f950066870b7010e5ad0a4ca76",
++  "report_sha256": "e71d5a44fb2eac7e4b14c69c41614237ad3f15ae490204752303795b5f7aadff",
++  "graph_vertices": 2,
++  "graph_relations": 0,
++  "by_phase": {
++    "GRID": 1,
++    "BEAM": 1,
++    "GROUP": 0,
++    "REST": 0
++  },
++  "scope": "Actual native raster path through GRID and initial candidates, not later BEAMS/rest CLI execution",
++  "musicxml_complete": false,
++  "replay_status": "passed; complete report and shared IDs identical",
++  "replay_command": [
++    "cargo",
++    "run",
++    "--locked",
++    "--offline",
++    "-j",
++    "2",
++    "--",
++    "beam-spots",
++    "fixtures/official-grid/beams-single.png",
++    "/workspace/audiveris-shared-sig-check-20261003/replay-spots.pgm",
++    "/workspace/audiveris-shared-sig-check-20261003/replay-report.json"
++  ],
++  "replay_seconds": 1.3226181019999785,
++  "replay_report_sha256": "e71d5a44fb2eac7e4b14c69c41614237ad3f15ae490204752303795b5f7aadff"
++}
+\ No newline at end of file
+diff --git a/evidence/shared-sig-checkpoint/cli-replay.log b/evidence/shared-sig-checkpoint/cli-replay.log
+new file mode 100644
+index 0000000..0fa0734
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/cli-replay.log
+@@ -0,0 +1,3 @@
++    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
++     Running `/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native beam-spots fixtures/official-grid/beams-single.png /workspace/audiveris-shared-sig-check-20261003/replay-spots.pgm /workspace/audiveris-shared-sig-check-20261003/replay-report.json`
++Native beam spots: 6; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete
+diff --git a/evidence/shared-sig-checkpoint/cli.log b/evidence/shared-sig-checkpoint/cli.log
+new file mode 100644
+index 0000000..e79077f
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/cli.log
+@@ -0,0 +1,3 @@
++    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
++     Running `/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native beam-spots fixtures/official-grid/beams-single.png /workspace/audiveris-shared-sig-check-20261003/spots.pgm /workspace/audiveris-shared-sig-check-20261003/report.json`
++Native beam spots: 6; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete
+diff --git a/evidence/shared-sig-checkpoint/clippy.log b/evidence/shared-sig-checkpoint/clippy.log
+new file mode 100644
+index 0000000..65f83ff
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/clippy.log
+@@ -0,0 +1,2 @@
++    Checking audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
++    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.04s
+diff --git a/evidence/shared-sig-checkpoint/fmt.log b/evidence/shared-sig-checkpoint/fmt.log
+new file mode 100644
+index 0000000..e69de29
+diff --git a/evidence/shared-sig-checkpoint/focused.log b/evidence/shared-sig-checkpoint/focused.log
+new file mode 100644
+index 0000000..01e4077
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/focused.log
+@@ -0,0 +1,37 @@
++   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
++    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.33s
++     Running tests/beam_groups.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_groups-b12d22b12992eded)
++
++running 3 tests
++test rejects_invalid_before_grouping ... ok
++test original_group_removal_preserves_survivors_and_incident_support_order ... ok
++test original_uninterrupted_group_controls ... ok
++
++test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
++
++     Running tests/multiple_rest_pipeline.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_pipeline-841c6c0f4e9242af)
++
++running 1 test
++test uninterrupted_original_complete_rest_conversions_match_integrated_native_pass ... ok
++
++test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
++
++     Running tests/multiple_rest_registration.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_registration-97fa2a870eb98b86)
++
++running 3 tests
++test absent_filament_rejects_before_graph_or_glyph_mutation ... ok
++test ordered_vertices_relations_and_canonical_glyph_identity ... ok
++test final_cleanup_updates_real_candidates_groups_and_exclusions ... ok
++
++test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
++
++     Running tests/shared_sig.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/shared_sig-eb2235491f0106e8)
++
++running 4 tests
++test systems_with_same_local_ids_are_separate ... ok
++test dangling_relations_and_duplicate_sources_reject_transactionally ... ok
++test removed_beam_retains_identity_and_rest_relations_share_one_store ... ok
++test colliding_phase_ids_relations_and_replay_are_stable ... ok
++
++test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
++
+diff --git a/evidence/shared-sig-checkpoint/shared-sig.json b/evidence/shared-sig-checkpoint/shared-sig.json
+new file mode 100644
+index 0000000..996138b
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/shared-sig.json
+@@ -0,0 +1,637 @@
++{
++  "covered_substages": [
++    "GRID",
++    "BEAMS.INITIAL_CANDIDATES"
++  ],
++  "id_namespace": "native shared registration-order vertex and relation IDs; not JVM IDs",
++  "inters": [
++    {
++      "bounds": [
++        858,
++        119,
++        2,
++        67
++      ],
++      "contextual_grade": 0.8,
++      "frozen": false,
++      "glyph_id": 1,
++      "glyph_id_namespace": "GRID",
++      "grade": 0.8,
++      "id": 1,
++      "kind": "BarlineInter",
++      "origin": {
++        "local": 1,
++        "phase": "GRID",
++        "system": 1
++      },
++      "shape": "THIN_BARLINE",
++      "source_peak": [
++        1,
++        858,
++        859
++      ],
++      "staff_id": 1
++    },
++    {
++      "bounds": [
++        280,
++        86,
++        112,
++        8
++      ],
++      "glyph": {
++        "bounds": [
++          280,
++          86,
++          112,
++          8
++        ],
++        "orientation": "VERTICAL",
++        "runs": [
++          [
++            0,
++            0,
++            8
++          ],
++          [
++            1,
++            0,
++            8
++          ],
++          [
++            2,
++            0,
++            8
++          ],
++          [
++            3,
++            0,
++            8
++          ],
++          [
++            4,
++            0,
++            8
++          ],
++          [
++            5,
++            0,
++            8
++          ],
++          [
++            6,
++            0,
++            8
++          ],
++          [
++            7,
++            0,
++            8
++          ],
++          [
++            8,
++            0,
++            8
++          ],
++          [
++            9,
++            0,
++            8
++          ],
++          [
++            10,
++            0,
++            8
++          ],
++          [
++            11,
++            0,
++            8
++          ],
++          [
++            12,
++            0,
++            8
++          ],
++          [
++            13,
++            0,
++            8
++          ],
++          [
++            14,
++            0,
++            8
++          ],
++          [
++            15,
++            0,
++            8
++          ],
++          [
++            16,
++            0,
++            8
++          ],
++          [
++            17,
++            0,
++            8
++          ],
++          [
++            18,
++            0,
++            8
++          ],
++          [
++            19,
++            0,
++            8
++          ],
++          [
++            20,
++            0,
++            8
++          ],
++          [
++            21,
++            0,
++            8
++          ],
++          [
++            22,
++            0,
++            8
++          ],
++          [
++            23,
++            0,
++            8
++          ],
++          [
++            24,
++            0,
++            8
++          ],
++          [
++            25,
++            0,
++            8
++          ],
++          [
++            26,
++            0,
++            8
++          ],
++          [
++            27,
++            0,
++            8
++          ],
++          [
++            28,
++            0,
++            8
++          ],
++          [
++            29,
++            0,
++            8
++          ],
++          [
++            30,
++            0,
++            8
++          ],
++          [
++            31,
++            0,
++            8
++          ],
++          [
++            32,
++            0,
++            8
++          ],
++          [
++            33,
++            0,
++            8
++          ],
++          [
++            34,
++            0,
++            8
++          ],
++          [
++            35,
++            0,
++            8
++          ],
++          [
++            36,
++            0,
++            8
++          ],
++          [
++            37,
++            0,
++            8
++          ],
++          [
++            38,
++            0,
++            8
++          ],
++          [
++            39,
++            0,
++            8
++          ],
++          [
++            40,
++            0,
++            8
++          ],
++          [
++            41,
++            0,
++            8
++          ],
++          [
++            42,
++            0,
++            8
++          ],
++          [
++            43,
++            0,
++            8
++          ],
++          [
++            44,
++            0,
++            8
++          ],
++          [
++            45,
++            0,
++            8
++          ],
++          [
++            46,
++            0,
++            8
++          ],
++          [
++            47,
++            0,
++            8
++          ],
++          [
++            48,
++            0,
++            8
++          ],
++          [
++            49,
++            0,
++            8
++          ],
++          [
++            50,
++            0,
++            8
++          ],
++          [
++            51,
++            0,
++            8
++          ],
++          [
++            52,
++            0,
++            8
++          ],
++          [
++            53,
++            0,
++            8
++          ],
++          [
++            54,
++            0,
++            8
++          ],
++          [
++            55,
++            0,
++            8
++          ],
++          [
++            56,
++            0,
++            8
++          ],
++          [
++            57,
++            0,
++            8
++          ],
++          [
++            58,
++            0,
++            8
++          ],
++          [
++            59,
++            0,
++            8
++          ],
++          [
++            60,
++            0,
++            8
++          ],
++          [
++            61,
++            0,
++            8
++          ],
++          [
++            62,
++            0,
++            8
++          ],
++          [
++            63,
++            0,
++            8
++          ],
++          [
++            64,
++            0,
++            8
++          ],
++          [
++            65,
++            0,
++            8
++          ],
++          [
++            66,
++            0,
++            8
++          ],
++          [
++            67,
++            0,
++            8
++          ],
++          [
++            68,
++            0,
++            8
++          ],
++          [
++            69,
++            0,
++            8
++          ],
++          [
++            70,
++            0,
++            8
++          ],
++          [
++            71,
++            0,
++            8
++          ],
++          [
++            72,
++            0,
++            8
++          ],
++          [
++            73,
++            0,
++            8
++          ],
++          [
++            74,
++            0,
++            8
++          ],
++          [
++            75,
++            0,
++            8
++          ],
++          [
++            76,
++            0,
++            8
++          ],
++          [
++            77,
++            0,
++            8
++          ],
++          [
++            78,
++            0,
++            8
++          ],
++          [
++            79,
++            0,
++            8
++          ],
++          [
++            80,
++            0,
++            8
++          ],
++          [
++            81,
++            0,
++            8
++          ],
++          [
++            82,
++            0,
++            8
++          ],
++          [
++            83,
++            0,
++            8
++          ],
++          [
++            84,
++            0,
++            8
++          ],
++          [
++            85,
++            0,
++            8
++          ],
++          [
++            86,
++            0,
++            8
++          ],
++          [
++            87,
++            0,
++            8
++          ],
++          [
++            88,
++            0,
++            8
++          ],
++          [
++            89,
++            0,
++            8
++          ],
++          [
++            90,
++            0,
++            8
++          ],
++          [
++            91,
++            0,
++            8
++          ],
++          [
++            92,
++            0,
++            8
++          ],
++          [
++            93,
++            0,
++            8
++          ],
++          [
++            94,
++            0,
++            8
++          ],
++          [
++            95,
++            0,
++            8
++          ],
++          [
++            96,
++            0,
++            8
++          ],
++          [
++            97,
++            0,
++            8
++          ],
++          [
++            98,
++            0,
++            8
++          ],
++          [
++            99,
++            0,
++            8
++          ],
++          [
++            100,
++            0,
++            8
++          ],
++          [
++            101,
++            0,
++            8
++          ],
++          [
++            102,
++            0,
++            8
++          ],
++          [
++            103,
++            0,
++            8
++          ],
++          [
++            104,
++            0,
++            8
++          ],
++          [
++            105,
++            0,
++            8
++          ],
++          [
++            106,
++            0,
++            8
++          ],
++          [
++            107,
++            0,
++            8
++          ],
++          [
++            108,
++            0,
++            8
++          ],
++          [
++            109,
++            0,
++            8
++          ],
++          [
++            110,
++            0,
++            8
++          ],
++          [
++            111,
++            0,
++            8
++          ]
++        ]
++      },
++      "glyph_id": 11,
++      "glyph_id_namespace": "BEAMS",
++      "grade": 0.792980145040992,
++      "height": 8.0,
++      "id": 2,
++      "kind": "BeamInter",
++      "median": [
++        280.0,
++        90.0,
++        392.0,
++        90.0
++      ],
++      "origin": {
++        "local": 1,
++        "phase": "BEAM",
++        "system": 1
++      },
++      "shape": "BEAM"
++    }
++  ],
++  "musicxml_complete": false,
++  "relations": [],
++  "schema": "audiveris-native.shared-sig.v1",
++  "tombstones": []
++}
+\ No newline at end of file
+diff --git a/evidence/shared-sig-checkpoint/validation.json b/evidence/shared-sig-checkpoint/validation.json
+new file mode 100644
+index 0000000..8e09003
+--- /dev/null
++++ b/evidence/shared-sig-checkpoint/validation.json
+@@ -0,0 +1,107 @@
++{
++  "status": "passed",
++  "scope": "Shared vertex/relation adapter, integrated native rest synchronization and real GRID/initial-beam CLI snapshot; later CLI phases unfinished",
++  "focused_tests": {
++    "suites": 4,
++    "passed": 11,
++    "failed": 0,
++    "ignored": 0
++  },
++  "fmt": "passed",
++  "all_targets_clippy": "passed",
++  "original_controls": {
++    "native_outputs_used": false,
++    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
++    "cases": 75,
++    "accepted_serif_peaks": 42,
++    "runtime_excludes_compile_shims": true,
++    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
++    "positive_original_serif_peaks": 42,
++    "native_final_peak_acceptance": "42 peaks in 41 positive cases, 34 negative cases matched",
++    "rest_conversions": 6,
++    "real_score_acceptance": "not measured",
++    "staff_measurements": "actual staff integer ordinates and thickness; supplied synthetic pixels",
++    "observer_sha256": "56566e209ba59a911a1e17fc32877d33fe11ca12fad388d5f3b074113b299d1f",
++    "fixture_sha256": "70eacedd951b63d8c102d1c7546f5f817d75c144bbc01548a1c8644b378ececf",
++    "direct_original_filament_cases": 48,
++    "accepted_glyphs": 32,
++    "rejected_filaments": 16,
++    "original_group_cleanup_cases": 16,
++    "original_complete_rest_conversion": "11 cases, six complete conversions and five non-conversions",
++    "filament_fixture_sha256": "c378b2eb1913d4158963e025e5ad1a0031ec074f1b01e16c652a8770e7f2a823",
++    "cleanup_fixture_sha256": "3eab833bbd1765e9bd6e344bc145d959c2b0f5c824781c5bebde4a81fbcc2a8b",
++    "filament_observer_sha256": "b16b7d152ef71c214f54fd91abf1346f8e11d993eac693eb1ab1b9ad05ef63b6",
++    "cleanup_observer_sha256": "7cc8c612dc0e9f0b57eb147c89bdc1fa93a478ddd92b66fd32529afea3e7e3de",
++    "complete_rest_cases": 11,
++    "complete_rest_conversions": 6,
++    "negative_rest_controls": 5,
++    "complete_rest_fixture_sha256": "dc3577d3df2edf89467f72ca64635d25ed0b5a67b8ebbfdf606f8d5dfbb872e8",
++    "complete_rest_observer_sha256": "f798ea30f6e8acbe18fbda56ef637cf9d8823567c58688593559b8e105830b21"
++  },
++  "current_full_workspace": {
++    "debug": "UNVERIFIED at new source",
++    "release": "UNVERIFIED at new source"
++  },
++  "parent_full_release": {
++    "source_commit": "21f0833abd67dd4fa1dd0c60a74a686779329818",
++    "checkpoint_commit": "a14eb873873b101247913c41a6987cdbddaa17d4",
++    "status": "passed",
++    "tests": 289,
++    "current_source": "UNVERIFIED"
++  },
++  "shared_graph_contract_tests": 4,
++  "cli": {
++    "status": "passed",
++    "command": [
++      "cargo",
++      "run",
++      "--locked",
++      "--offline",
++      "-j",
++      "2",
++      "--",
++      "beam-spots",
++      "fixtures/official-grid/beams-single.png",
++      "/workspace/audiveris-shared-sig-check-20261003/spots.pgm",
++      "/workspace/audiveris-shared-sig-check-20261003/report.json"
++    ],
++    "seconds": 1.3704186109998773,
++    "input_sha256": "9e70dcea82c8e8a5ae4e9ba107eee54f60f1b6f950066870b7010e5ad0a4ca76",
++    "report_sha256": "e71d5a44fb2eac7e4b14c69c41614237ad3f15ae490204752303795b5f7aadff",
++    "graph_vertices": 2,
++    "graph_relations": 0,
++    "by_phase": {
++      "GRID": 1,
++      "BEAM": 1,
++      "GROUP": 0,
++      "REST": 0
++    },
++    "scope": "Actual native raster path through GRID and initial candidates, not later BEAMS/rest CLI execution",
++    "musicxml_complete": false,
++    "replay_status": "passed; complete report and shared IDs identical",
++    "replay_command": [
++      "cargo",
++      "run",
++      "--locked",
++      "--offline",
++      "-j",
++      "2",
++      "--",
++      "beam-spots",
++      "fixtures/official-grid/beams-single.png",
++      "/workspace/audiveris-shared-sig-check-20261003/replay-spots.pgm",
++      "/workspace/audiveris-shared-sig-check-20261003/replay-report.json"
++    ],
++    "replay_seconds": 1.3226181019999785,
++    "replay_report_sha256": "e71d5a44fb2eac7e4b14c69c41614237ad3f15ae490204752303795b5f7aadff"
++  },
++  "previous_full_workspace": {
++    "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
++    "debug": 275,
++    "release": 275,
++    "checkpoint_commit": "0bdac35f8bd1509a76904ac3b8736fc03dd6838b"
++  },
++  "native_staff_association_and_pitch": "not integrated",
++  "positive_rest_recognition": "six complete original/native conversions with supplied synthetic raster/lag sections and actual original staff",
++  "thirteen_image_rest_boundary": "not run"
++}
+diff --git a/src/lib.rs b/src/lib.rs
+index f001ff3..e9be2b7 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -396,3 +396,5 @@ pub mod multiple_rest_registration;
+ pub mod serif_glyphs;
+ 
+ pub mod multiple_rest_pipeline;
++
++pub mod shared_sig;
+diff --git a/src/main.rs b/src/main.rs
+index 1ba419a..60a2030 100644
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -261,18 +261,39 @@ fn page_glyphs(args: &[String]) -> Result<bool, Box<dyn std::error::Error>> {
+     };
+     // Preserve the completed prolog snapshot before candidate registration mutates
+     // the phase context. A bounded-stage failure must not erase prior results.
+-    let beam_candidates = if let Some(context) = &mut beam_context {
+-        match audiveris_native::beam_candidates::analyze(&residual, context, &sc) {
+-            Ok(report) => report,
++    let (candidate_state, beam_candidates) = if let Some(context) = &mut beam_context {
++        match audiveris_native::beam_candidates::analyze_typed(&residual, context, &sc) {
++            Ok(state) => {
++                let report = state.report();
++                (Some(state), report)
++            }
+             Err(error) => {
+                 eprintln!(
+                     "BEAMS initial candidates unavailable: {error}; completed prolog retained"
+                 );
+-                serde_json::json!({"stage":"BEAMS.native_initial_candidates","initial_beam_candidates_complete":false,"beams_complete":false,"musicxml_complete":false,"error":error})
++                (
++                    None,
++                    serde_json::json!({"stage":"BEAMS.native_initial_candidates","initial_beam_candidates_complete":false,"beams_complete":false,"musicxml_complete":false,"error":error}),
++                )
+             }
+         }
+     } else {
+-        serde_json::json!({"stage":"BEAMS.native_initial_candidates","initial_beam_candidates_complete":false,"beams_complete":false,"musicxml_complete":false,"error":"incomplete_beam_prolog_dependency"})
++        (
++            None,
++            serde_json::json!({"stage":"BEAMS.native_initial_candidates","initial_beam_candidates_complete":false,"beams_complete":false,"musicxml_complete":false,"error":"incomplete_beam_prolog_dependency"}),
++        )
++    };
++    let shared_sig = if let Some(state) = &candidate_state {
++        let mut graph = audiveris_native::shared_sig::Graph::default();
++        graph.import_grid(&grid_ir)?;
++        for system in state.systems() {
++            graph.sync_candidates(system)?;
++        }
++        let mut snapshot = graph.snapshot();
++        snapshot["covered_substages"] = serde_json::json!(["GRID", "BEAMS.INITIAL_CANDIDATES"]);
++        snapshot
++    } else {
++        serde_json::json!({"schema":"audiveris-native.shared-sig.v1","available":false,"error":"incomplete_beam_candidates","musicxml_complete":false})
+     };
+     let last_completed_substage = if beam_candidates["initial_beam_candidates_complete"] == true {
+         "BEAMS.INITIAL_CANDIDATES"
+@@ -305,7 +326,7 @@ fn page_glyphs(args: &[String]) -> Result<bool, Box<dyn std::error::Error>> {
+         .open(&args[4])?;
+     serde_json::to_writer(
+         &mut out,
+-        &serde_json::json!({"schema":if args[1]=="staff-mask"{"audiveris-native.experimental-staff-mask.v1"}else if args[1]=="beam-spots"{"audiveris-native.experimental-beam-spots.v1"}else{"audiveris-native.experimental-page-glyphs.v1"},"line_completion":completion,"page_glyphs":result,"grid_ir":grid_ir,"note_preparation":note_preparation,"header_preparation":header_preparation,"clef_candidates":clef_candidates,"clef_registration":clef_registration,"key_preparation":key_preparation,"key_peaks":key_peaks,"key_slices":key_slices,"key_components":key_components,"key_fallback":key_fallback,"key_process":key_process,"key_column":key_column,"time_candidates":time_candidates,"time_column":time_column,"headers":headers,"stem_seeds":stem_seeds,"beam_preparation":beam_preparation,"beam_prolog":beam_prolog,"beam_candidates":beam_candidates,"last_completed_stage":"STEM_SEEDS","last_completed_substage":last_completed_substage,"musicxml_complete":false}),
++        &serde_json::json!({"schema":if args[1]=="staff-mask"{"audiveris-native.experimental-staff-mask.v1"}else if args[1]=="beam-spots"{"audiveris-native.experimental-beam-spots.v1"}else{"audiveris-native.experimental-page-glyphs.v1"},"line_completion":completion,"page_glyphs":result,"grid_ir":grid_ir,"note_preparation":note_preparation,"header_preparation":header_preparation,"clef_candidates":clef_candidates,"clef_registration":clef_registration,"key_preparation":key_preparation,"key_peaks":key_peaks,"key_slices":key_slices,"key_components":key_components,"key_fallback":key_fallback,"key_process":key_process,"key_column":key_column,"time_candidates":time_candidates,"time_column":time_column,"headers":headers,"stem_seeds":stem_seeds,"beam_preparation":beam_preparation,"beam_prolog":beam_prolog,"beam_candidates":beam_candidates,"shared_sig":shared_sig,"last_completed_stage":"STEM_SEEDS","last_completed_substage":last_completed_substage,"musicxml_complete":false}),
+     )?;
+     writeln!(out)?;
+     if args[1] == "staff-mask" {
+diff --git a/src/multiple_rest_pipeline.rs b/src/multiple_rest_pipeline.rs
+index 5d0c3a4..b112f90 100644
+--- a/src/multiple_rest_pipeline.rs
++++ b/src/multiple_rest_pipeline.rs
+@@ -60,3 +60,20 @@ pub fn process(
+     }
+     Ok(graph)
+ }
++
++/// Fresh pre-rhythm pass with a shared graph observer. Imports current beam and
++/// group identities before conversion, then synchronizes registration/cleanup.
++/// Existing GRID vertices and relations are retained by the adapter.
++pub fn process_shared(
++    state: &mut SystemCandidates,
++    groups: &mut GroupPass,
++    registry: &mut Registry,
++    context: Context<'_>,
++    staff: impl FnMut(&CandidateInter) -> Option<StaffPosition>,
++    shared: &mut crate::shared_sig::Graph,
++) -> Result<RestGraph, String> {
++    shared.sync_system(state, groups, &RestGraph::default())?;
++    let rests = process(state, groups, registry, context, staff)?;
++    shared.sync_system(state, groups, &rests)?;
++    Ok(rests)
++}
+diff --git a/src/shared_sig.rs b/src/shared_sig.rs
+new file mode 100644
+index 0000000..e4ee2b6
+--- /dev/null
++++ b/src/shared_sig.rs
+@@ -0,0 +1,351 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Deterministic native identities and relation store across existing phases.
++use crate::{
++    beam_candidates::SystemCandidates, beam_groups::GroupPass,
++    multiple_rest_registration::RestGraph,
++};
++use serde::{Deserialize, Serialize};
++use serde_json::{Value, json};
++use std::collections::{BTreeMap, BTreeSet};
++#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
++#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
++pub enum Phase {
++    Grid,
++    Beam,
++    Group,
++    Rest,
++}
++#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
++pub struct Key {
++    pub system: u64,
++    pub phase: Phase,
++    pub local: usize,
++}
++#[derive(Clone, Debug)]
++struct Vertex {
++    key: Key,
++    data: Value,
++    removed: bool,
++}
++#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
++struct EdgeKey {
++    system: u64,
++    phase: Phase,
++    source: usize,
++    target: usize,
++    kind: String,
++    ordinal: usize,
++}
++#[derive(Clone, Debug)]
++struct Edge {
++    key: EdgeKey,
++    data: Value,
++    removed: bool,
++}
++#[derive(Clone, Default, Debug)]
++pub struct Graph {
++    vertices: Vec<Vertex>,
++    keys: BTreeMap<Key, usize>,
++    edges: Vec<Edge>,
++    edge_keys: BTreeMap<EdgeKey, usize>,
++}
++impl Graph {
++    pub fn id(&self, key: Key) -> Option<usize> {
++        self.keys.get(&key).copied()
++    }
++    fn vertex(&mut self, key: Key, mut data: Value, removed: bool) -> Result<usize, String> {
++        if key.system == 0 || key.local == 0 || !data.is_object() {
++            return Err("invalid_shared_sig_vertex".into());
++        }
++        let id = if let Some(id) = self.id(key) {
++            id
++        } else {
++            if self.vertices.len() >= 100000 {
++                return Err("shared_sig_vertex_budget".into());
++            }
++            let id = self.vertices.len() + 1;
++            self.keys.insert(key, id);
++            self.vertices.push(Vertex {
++                key,
++                data: Value::Null,
++                removed,
++            });
++            id
++        };
++        data["id"] = json!(id);
++        data["origin"] = json!(key);
++        self.vertices[id - 1] = Vertex { key, data, removed };
++        Ok(id)
++    }
++    fn endpoint(&self, key: Key) -> Result<usize, String> {
++        let id = self.id(key).ok_or("missing_shared_sig_endpoint")?;
++        if self.vertices[id - 1].removed {
++            return Err("removed_shared_sig_endpoint".into());
++        }
++        Ok(id)
++    }
++    fn phase(&mut self, system: u64, phase: Phase) {
++        for v in &mut self.vertices {
++            if v.key.system == system && v.key.phase == phase {
++                v.removed = true;
++            }
++        }
++        for e in &mut self.edges {
++            if e.key.system == system && e.key.phase == phase {
++                e.removed = true;
++            }
++        }
++    }
++    fn relations(
++        &mut self,
++        system: u64,
++        phase: Phase,
++        relations: Vec<(Key, Key, Value)>,
++    ) -> Result<(), String> {
++        let mut counts = BTreeMap::new();
++        for (a, b, mut data) in relations {
++            if a.system != system || b.system != system || !data.is_object() {
++                return Err("invalid_shared_sig_relation".into());
++            }
++            let source = self.endpoint(a)?;
++            let target = self.endpoint(b)?;
++            let kind = data["kind"]
++                .as_str()
++                .filter(|s| !s.is_empty())
++                .ok_or("invalid_shared_sig_relation_kind")?
++                .to_owned();
++            let count = counts
++                .entry((source, target, kind.clone()))
++                .or_insert(0usize);
++            let key = EdgeKey {
++                system,
++                phase,
++                source,
++                target,
++                kind,
++                ordinal: *count,
++            };
++            *count += 1;
++            let id = if let Some(id) = self.edge_keys.get(&key) {
++                *id
++            } else {
++                if self.edges.len() >= 1000000 {
++                    return Err("shared_sig_relation_budget".into());
++                }
++                let id = self.edges.len() + 1;
++                self.edge_keys.insert(key.clone(), id);
++                self.edges.push(Edge {
++                    key: key.clone(),
++                    data: Value::Null,
++                    removed: false,
++                });
++                id
++            };
++            data["id"] = json!(id);
++            data["source"] = json!(source);
++            data["target"] = json!(target);
++            data["system_id"] = json!(system);
++            self.edges[id - 1] = Edge {
++                key,
++                data,
++                removed: false,
++            };
++        }
++        Ok(())
++    }
++    fn prune(&mut self) {
++        for e in &mut self.edges {
++            if self.vertices[e.key.source - 1].removed || self.vertices[e.key.target - 1].removed {
++                e.removed = true;
++            }
++        }
++    }
++    /// Import GRID vertices/relations in existing system and registration order.
++    /// IDs in payload are rewritten; source identities remain in origin. Glyph
++    /// IDs retain the explicit GRID namespace, not a fabricated shared index.
++    pub fn import_grid(&mut self, grid: &Value) -> Result<(), String> {
++        let mut next = self.clone();
++        let systems = grid["bar_semantics"]["systems"]
++            .as_array()
++            .ok_or("missing_shared_sig_grid_systems")?;
++        let mut seen = BTreeSet::new();
++        for s in systems {
++            let system = s["id"]
++                .as_u64()
++                .filter(|id| *id > 0)
++                .ok_or("invalid_shared_sig_system")?;
++            if !seen.insert(system) {
++                return Err("duplicate_shared_sig_system".into());
++            }
++            next.phase(system, Phase::Grid);
++            let mut locals = BTreeSet::new();
++            for v in s["inters"]
++                .as_array()
++                .ok_or("missing_shared_sig_grid_inters")?
++            {
++                let local = v["id"]
++                    .as_u64()
++                    .and_then(|id| usize::try_from(id).ok())
++                    .filter(|id| *id > 0)
++                    .ok_or("invalid_shared_sig_local_id")?;
++                if !locals.insert(local) {
++                    return Err("duplicate_shared_sig_local_id".into());
++                }
++                let mut data = v.clone();
++                data["glyph_id_namespace"] = json!("GRID");
++                next.vertex(
++                    Key {
++                        system,
++                        phase: Phase::Grid,
++                        local,
++                    },
++                    data,
++                    false,
++                )?;
++            }
++            let mut relations = Vec::new();
++            for r in s["relations"]
++                .as_array()
++                .ok_or("missing_shared_sig_grid_relations")?
++            {
++                let key = |field| -> Result<Key, String> {
++                    let local = r[field]
++                        .as_u64()
++                        .and_then(|id| usize::try_from(id).ok())
++                        .ok_or("invalid_shared_sig_grid_endpoint")?;
++                    Ok(Key {
++                        system,
++                        phase: Phase::Grid,
++                        local,
++                    })
++                };
++                relations.push((key("source")?, key("target")?, r.clone()));
++            }
++            next.relations(system, Phase::Grid, relations)?;
++        }
++        next.prune();
++        *self = next;
++        Ok(())
++    }
++    pub fn sync_candidates(&mut self, state: &SystemCandidates) -> Result<(), String> {
++        if self.vertices.iter().any(|v| {
++            v.key.system == state.system_id()
++                && matches!(v.key.phase, Phase::Group | Phase::Rest)
++                && !v.removed
++        }) {
++            return Err("complete_shared_sig_phase_state_required".into());
++        }
++        let mut next = self.clone();
++        next.beams(state)?;
++        next.prune();
++        *self = next;
++        Ok(())
++    }
++    fn beams(&mut self, state: &SystemCandidates) -> Result<(), String> {
++        let system = state.system_id();
++        self.phase(system, Phase::Beam);
++        for b in state.inters() {
++            self.vertex(Key{system,phase:Phase::Beam,local:b.id()},json!({"kind":b.kind,"shape":b.shape,"bounds":b.bounds,"median":b.item.median,"height":b.item.height,"grade":b.impacts.grade,"glyph_id":b.glyph_id(),"glyph_id_namespace":"BEAMS","glyph":crate::beam_dispatch::glyph_json(&b.glyph)}),b.is_removed())?;
++        }
++        let key = |local| Key {
++            system,
++            phase: Phase::Beam,
++            local,
++        };
++        self.relations(
++            system,
++            Phase::Beam,
++            state
++                .exclusions()
++                .iter()
++                .map(|&(a, b)| (key(a), key(b), json!({"kind":"Exclusion"})))
++                .collect(),
++        )
++    }
++    /// Synchronize all mutable BEAMS/rest phase snapshots transactionally. Phase
++    /// logic is unchanged; absent vertices and incident edges become tombstones.
++    pub fn sync_system(
++        &mut self,
++        state: &SystemCandidates,
++        groups: &GroupPass,
++        rests: &RestGraph,
++    ) -> Result<(), String> {
++        let mut next = self.clone();
++        let system = state.system_id();
++        next.beams(state)?;
++        next.phase(system, Phase::Group);
++        next.phase(system, Phase::Rest);
++        let beam = |local| Key {
++            system,
++            phase: Phase::Beam,
++            local,
++        };
++        let group = |local| Key {
++            system,
++            phase: Phase::Group,
++            local,
++        };
++        let rest = |local| Key {
++            system,
++            phase: Phase::Rest,
++            local,
++        };
++        let mut relations = Vec::new();
++        let mut ids = BTreeSet::new();
++        for g in &groups.groups {
++            if !ids.insert(g.id) {
++                return Err("duplicate_shared_sig_group".into());
++            }
++            let members = g
++                .members
++                .iter()
++                .map(|&id| next.endpoint(beam(id)))
++                .collect::<Result<Vec<_>, _>>()?;
++            next.vertex(
++                group(g.id),
++                json!({"kind":"BeamGroupInter","members":members,"bounds":g.bounds}),
++                false,
++            )?;
++            for &id in &g.members {
++                relations.push((group(g.id), beam(id), json!({"kind":"Containment"})));
++            }
++        }
++        for &(a, b) in &groups.supports {
++            relations.push((beam(a), beam(b), json!({"kind":"BeamBeamRelation"})));
++        }
++        next.relations(system, Phase::Group, relations)?;
++        let mut ids = BTreeSet::new();
++        for r in &rests.rests {
++            if !ids.insert(r.id) {
++                return Err("duplicate_shared_sig_rest_id".into());
++            }
++            let source = next
++                .id(beam(r.source_beam))
++                .ok_or("missing_shared_sig_rest_source")?;
++            next.vertex(rest(r.id),json!({"kind":"MultipleRestInter","staff_id":r.staff_id,"median":r.median,"height":r.height,"grade":r.grade,"source_beam_id":source}),false)?;
++        }
++        for s in &rests.serifs {
++            if !ids.insert(s.id) {
++                return Err("duplicate_shared_sig_rest_id".into());
++            }
++            next.vertex(rest(s.id),json!({"kind":"VerticalSerifInter","glyph_id":s.glyph_id,"glyph_id_namespace":"BEAMS","median":s.plan.median,"width":s.plan.width,"grade":s.plan.peak.grade,"impacts":s.plan.peak.impacts}),false)?;
++        }
++        for relation in &rests.relations {
++            if !rests.rests.iter().any(|r| r.id == relation.rest_id)
++                || !rests
++                    .serifs
++                    .iter()
++                    .any(|s| s.id == relation.serif_id && s.plan.left == relation.left)
++            {
++                return Err("invalid_shared_sig_rest_relation_types".into());
++            }
++        }
++        next.relations(system,Phase::Rest,rests.relations.iter().map(|r|(rest(r.rest_id),rest(r.serif_id),json!({"kind":"MultipleRestSerifRelation","rest_side":if r.left{"LEFT"}else{"RIGHT"}}))).collect())?;
++        next.prune();
++        *self = next;
++        Ok(())
++    }
++    pub fn snapshot(&self) -> Value {
++        json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false})
++    }
++}
+diff --git a/tests/multiple_rest_pipeline.rs b/tests/multiple_rest_pipeline.rs
+index c7a8320..cadfed9 100644
+--- a/tests/multiple_rest_pipeline.rs
++++ b/tests/multiple_rest_pipeline.rs
+@@ -114,7 +114,8 @@ fn uninterrupted_original_complete_rest_conversions_match_integrated_native_pass
+                 line_thickness: &thickness,
+             },
+         )];
+-        let graph = multiple_rest_pipeline::process(
++        let mut shared = audiveris_native::shared_sig::Graph::default();
++        let graph = multiple_rest_pipeline::process_shared(
+             &mut state,
+             &mut groups,
+             &mut registry,
+@@ -135,8 +136,38 @@ fn uninterrupted_original_complete_rest_conversions_match_integrated_native_pass
+                     mid_line_thickness: beam["mid_line_thickness"].as_f64().unwrap(),
+                 })
+             },
++            &mut shared,
+         )
+         .unwrap();
++        let snapshot = shared.snapshot();
++        let active_ids = snapshot["inters"]
++            .as_array()
++            .unwrap()
++            .iter()
++            .map(|v| v["id"].as_u64().unwrap())
++            .collect::<std::collections::BTreeSet<_>>();
++        for edge in snapshot["relations"].as_array().unwrap() {
++            assert!(active_ids.contains(&edge["source"].as_u64().unwrap()));
++            assert!(active_ids.contains(&edge["target"].as_u64().unwrap()));
++        }
++        assert_eq!(
++            snapshot["inters"]
++                .as_array()
++                .unwrap()
++                .iter()
++                .filter(|v| v["kind"] == "MultipleRestInter")
++                .count(),
++            graph.rests.len()
++        );
++        assert_eq!(
++            snapshot["relations"]
++                .as_array()
++                .unwrap()
++                .iter()
++                .filter(|v| v["kind"] == "MultipleRestSerifRelation")
++                .count(),
++            graph.relations.len()
++        );
+         let rests=graph.rests.iter().map(|r|serde_json::json!({"median":r.median,"height":r.height,"grade":r.grade,"staff_id":r.staff_id})).collect::<Vec<_>>();
+         assert_eq!(serde_json::json!(rests), c["rests"], "case {index} rests");
+         assert_eq!(
+diff --git a/tests/shared_sig.rs b/tests/shared_sig.rs
+new file mode 100644
+index 0000000..d23a8d1
+--- /dev/null
++++ b/tests/shared_sig.rs
+@@ -0,0 +1,231 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++use audiveris_native::{
++    GrayImage,
++    beam_candidates::SystemCandidates,
++    beam_dispatch::Registry,
++    beam_groups::{self, GroupPass},
++    beam_impacts::Impacts,
++    beam_merge::MergeCandidate,
++    beam_structure::BeamItem,
++    multiple_rest_detection::SerifPlan,
++    multiple_rest_registration::{Relation, RestGraph, RestInter, SerifInter},
++    serif_peaks::Peak,
++    shared_sig::{Graph, Key, Phase},
++};
++use serde_json::{Value, json};
++fn grid() -> Value {
++    json!({"bar_semantics":{"systems":[{"id":1,"inters":[{"id":1,"kind":"BarlineInter","glyph_id":1},{"id":2,"kind":"BarlineInter","glyph_id":2}],"relations":[{"kind":"BarGroupRelation","source":1,"target":2}]}]}})
++}
++fn state() -> SystemCandidates {
++    let image = GrayImage::new(250, 200, vec![0; 50000]).unwrap();
++    let mut registry = Registry::default();
++    let mut state = SystemCandidates::empty(1);
++    for y in [153., 163.] {
++        state
++            .register_merge(
++                &image,
++                &mut registry,
++                &MergeCandidate {
++                    item: BeamItem {
++                        median: [100., y, 200., y],
++                        height: 8.,
++                    },
++                    is_small: false,
++                    impacts: Impacts {
++                        values: [1.; 6],
++                        grade: 0.8,
++                        non_finite: false,
++                    },
++                },
++            )
++            .unwrap();
++    }
++    state
++}
++fn endpoints(snapshot: &Value) {
++    let ids = snapshot["inters"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .map(|v| v["id"].as_u64().unwrap())
++        .collect::<std::collections::BTreeSet<_>>();
++    assert_eq!(ids.len(), snapshot["inters"].as_array().unwrap().len());
++    for r in snapshot["relations"].as_array().unwrap() {
++        assert!(ids.contains(&r["source"].as_u64().unwrap()));
++        assert!(ids.contains(&r["target"].as_u64().unwrap()));
++    }
++}
++#[test]
++fn colliding_phase_ids_relations_and_replay_are_stable() {
++    let s = state();
++    let groups = beam_groups::populate_system(&s, 16).unwrap();
++    let mut g = Graph::default();
++    g.import_grid(&grid()).unwrap();
++    g.sync_system(&s, &groups, &RestGraph::default()).unwrap();
++    let first = g.snapshot();
++    endpoints(&first);
++    assert_eq!(
++        g.id(Key {
++            system: 1,
++            phase: Phase::Grid,
++            local: 1
++        }),
++        Some(1)
++    );
++    assert_eq!(
++        g.id(Key {
++            system: 1,
++            phase: Phase::Beam,
++            local: 1
++        }),
++        Some(3)
++    );
++    assert_eq!(
++        g.id(Key {
++            system: 1,
++            phase: Phase::Group,
++            local: 1
++        }),
++        Some(5)
++    );
++    g.import_grid(&grid()).unwrap();
++    g.sync_system(&s, &groups, &RestGraph::default()).unwrap();
++    assert!(g.sync_candidates(&s).is_err());
++    assert_eq!(first, g.snapshot());
++    assert_eq!(first, g.snapshot());
++    let mut replay = Graph::default();
++    replay.import_grid(&grid()).unwrap();
++    replay
++        .sync_system(&s, &groups, &RestGraph::default())
++        .unwrap();
++    assert_eq!(first, replay.snapshot());
++}
++#[test]
++fn removed_beam_retains_identity_and_rest_relations_share_one_store() {
++    let mut s = state();
++    let mut groups = beam_groups::populate_system(&s, 16).unwrap();
++    let mut g = Graph::default();
++    g.import_grid(&grid()).unwrap();
++    g.sync_system(&s, &groups, &RestGraph::default()).unwrap();
++    let old = g
++        .id(Key {
++            system: 1,
++            phase: Phase::Beam,
++            local: 1,
++        })
++        .unwrap();
++    let mut rests = RestGraph::default();
++    rests.rests.push(RestInter {
++        id: 1,
++        source_beam: 1,
++        staff_id: 7,
++        median: [100., 153., 200., 153.],
++        height: 8.,
++        grade: 0.8,
++    });
++    for (id, left) in [(2, true), (3, false)] {
++        rests.serifs.push(SerifInter {
++            id,
++            glyph_id: id,
++            plan: SerifPlan {
++                left,
++                peak: Peak {
++                    start: 100,
++                    stop: 100,
++                    top: 130,
++                    bottom: 170,
++                    impacts: [1.; 6],
++                    grade: 0.8,
++                },
++                median: [100.5, 129.5, 100.5, 171.5],
++                width: 1.,
++            },
++        });
++        rests.relations.push(Relation {
++            rest_id: 1,
++            serif_id: id,
++            left,
++        });
++    }
++    rests.finish_cleanup(&mut s, &mut groups).unwrap();
++    g.sync_system(&s, &groups, &rests).unwrap();
++    let snap = g.snapshot();
++    endpoints(&snap);
++    assert_eq!(
++        g.id(Key {
++            system: 1,
++            phase: Phase::Beam,
++            local: 1
++        }),
++        Some(old)
++    );
++    assert!(
++        snap["tombstones"]
++            .as_array()
++            .unwrap()
++            .iter()
++            .any(|v| v["id"] == old)
++    );
++    let rest = snap["inters"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .find(|v| v["kind"] == "MultipleRestInter")
++        .unwrap();
++    assert_eq!(rest["source_beam_id"], old);
++    assert!(rest["id"] != old);
++    let snapshot = snap.clone();
++    g.sync_system(&s, &groups, &rests).unwrap();
++    assert_eq!(snapshot, g.snapshot());
++}
++#[test]
++fn dangling_relations_and_duplicate_sources_reject_transactionally() {
++    let mut graph = Graph::default();
++    graph.import_grid(&grid()).unwrap();
++    let before = graph.snapshot();
++    let mut bad = grid();
++    bad["bar_semantics"]["systems"][0]["relations"][0]["target"] = json!(99);
++    assert!(graph.import_grid(&bad).is_err());
++    assert_eq!(graph.snapshot(), before);
++    bad = grid();
++    bad["bar_semantics"]["systems"][0]["inters"][1]["id"] = json!(1);
++    assert!(graph.import_grid(&bad).is_err());
++    assert_eq!(graph.snapshot(), before);
++    let s = state();
++    let bad_groups = GroupPass {
++        ordered_ids: vec![1, 2],
++        groups: vec![],
++        supports: vec![(1, 99)],
++    };
++    assert!(
++        graph
++            .sync_system(&s, &bad_groups, &RestGraph::default())
++            .is_err()
++    );
++    assert_eq!(graph.snapshot(), before);
++}
++#[test]
++fn systems_with_same_local_ids_are_separate() {
++    let mut value = grid();
++    let mut other = value["bar_semantics"]["systems"][0].clone();
++    other["id"] = json!(2);
++    value["bar_semantics"]["systems"]
++        .as_array_mut()
++        .unwrap()
++        .push(other);
++    let mut g = Graph::default();
++    g.import_grid(&value).unwrap();
++    endpoints(&g.snapshot());
++    assert_ne!(
++        g.id(Key {
++            system: 1,
++            phase: Phase::Grid,
++            local: 1
++        }),
++        g.id(Key {
++            system: 2,
++            phase: Phase::Grid,
++            local: 1
++        })
++    );
++}
