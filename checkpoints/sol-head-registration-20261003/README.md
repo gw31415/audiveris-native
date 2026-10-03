@@ -9,3 +9,5 @@ Original HeadInter registration on the common native SIG; previous phase IDs and
 Restore: `python checkpoints/sol-head-registration-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 4865 source hashes, plus all 457 archival files and archival tree. Saved remote commit `c0138ede839194017177ce2d2d55d821be5c298d`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
