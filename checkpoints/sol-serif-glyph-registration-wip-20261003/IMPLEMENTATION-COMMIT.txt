@@ -1,0 +1,6 @@
+tree 4367b9d25a7cb6feeac058b2f430320b965a23c1
+parent 70968f79b7cdb51fa43a4327394ccbdf4ede7ac0
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791033025 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791033025 +0000
+
+Implement serif glyph construction, phase graph registration and original-controlled beam/group cleanup (WIP)

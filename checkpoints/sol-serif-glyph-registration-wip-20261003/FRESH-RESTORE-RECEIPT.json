@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-03T13:10:29.051832+00:00",
+  "reconstruction": "Fresh actual base archive plus cumulative snapshot-loop archive/bundle, pinned late-hook, group and admission and raster patches, then pinned peak-refinement and discovery and current glyph-registration patches",
+  "ancestor_file_hashes_verified": 176,
+  "late_hook_hashes_verified": 37,
+  "group_hashes_verified": 37,
+  "prior_admission_hashes_verified": 20,
+  "prior_raster_hashes_verified": 20,
+  "prior_peak_hashes_verified": 15,
+  "prior_discovery_hashes_verified": 17,
+  "new_changed_file_hashes_verified": 30,
+  "fresh_restored_implementation_commit": "1ce999c312ba40dc582215edc3609038a49a399c",
+  "fresh_restored_tree": "4367b9d25a7cb6feeac058b2f430320b965a23c1",
+  "tracked_files": 4634,
+  "source_clean": true,
+  "patch_bytes": 389707,
+  "patch_sha256": "d06e4ee4ac2f8d6babe34e56969fa74526c42d0edb84837893327f8a1e424f0d"
+}
