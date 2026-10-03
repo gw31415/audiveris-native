@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "fixtures/official-grid/beams-single.png",
+    "/workspace/audiveris-horizontal-ends-check-20261003/cli.pgm",
+    "/workspace/audiveris-horizontal-ends-check-20261003/cli.json"
+  ],
+  "seconds": 1.3315148900001077,
+  "exit_code": 0,
+  "report_sha256": "77e33d9dc131ee720f9d9e6a3bcc844d82ba9a38ba099fce679cd0fc04da2d61",
+  "staff_count": 1,
+  "system_count": 1,
+  "last_completed_substage": "BEAMS.EPILOG",
+  "epilog_complete": true,
+  "rest_boundaries": [
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+    }
+  ],
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false,
+  "same_pipeline_values_as_parent": true,
+  "supplied_clips_discovered_by_native_grid": false
+}

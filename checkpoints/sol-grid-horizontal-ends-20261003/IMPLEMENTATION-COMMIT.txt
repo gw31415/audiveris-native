@@ -1,0 +1,6 @@
+tree 9de7acbcedfb019edff5cad253a653670cadb76f
+parent 27be340c925ca39b0fbd41f8a1baf4d1cd146be3
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791038799 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791038799 +0000
+
+Derive original horizontal neighbors and area ends from native GRID coordinates; expose missing horizontal staff-chain geometry

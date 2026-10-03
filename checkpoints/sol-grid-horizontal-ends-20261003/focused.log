@@ -1,0 +1,49 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.48s
+     Running tests/beam_dispatch.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_dispatch-3acb279573ad8cdb)
+
+running 9 tests
+test centroid_is_half_even_with_signed_origins ... ok
+test epilog_removes_only_exclusively_beam_grouped_free_glyphs ... ok
+test dispatch_includes_right_limit_and_overlapping_systems ... ok
+test invalid_sheet_epilog_reference_rejects_before_any_owner_mutates ... ok
+test registry_preserves_existing_canonical_object_and_groups ... ok
+test initial_free_glyph_order_survives_duplicate_dispatch_and_parser_roundtrip ... ok
+test invalid_registry_and_geometry_inputs_fail_explicitly ... ok
+test sheet_epilog_preserves_shared_identity_groups_and_survivor_order ... ok
+test supplied_clipped_ends_bound_beam_sides_without_changing_staff_limits ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/grid_ir.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/grid_ir-3c20762612d9e602)
+
+running 3 tests
+test exact_pixel_registry_reuses_content_and_keeps_distinct_origins_and_orientations ... ok
+test incomplete_brace_raster_stops_at_explicit_fallback_boundary ... ok
+test native_persistent_staff_sections_membership_and_ordinary_sig_match_final_official_grid ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.95s
+
+     Running tests/native_rest_mapping.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/native_rest_mapping-e5dc5d3cac3b39a0)
+
+running 9 tests
+test invalid_ledger_identity_shape_and_order_are_rejected ... ok
+test native_curve_pitch_and_lag_order_are_retained ... ok
+test clipped_curved_areas_and_invalid_ends_are_explicitly_rejected ... ok
+test original_empty_ledger_pitch_controls_match_native_mapping ... ok
+test original_multistaff_areas_closest_and_above_controls_match ... ok
+test unsupported_staff_and_populated_ledger_paths_are_explicit ... ok
+test original_populated_ledger_pitch_controls_match_native_mapping ... ok
+test original_scanned_score_multisystem_area_selection_and_bounds_match ... ok
+test original_supplied_clipped_system_areas_match ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/system_area_ends.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/system_area_ends-bd908f88be14efb7)
+
+running 2 tests
+test malformed_and_duplicate_native_system_coordinates_reject ... ok
+test original_horizontal_neighbor_and_area_end_controls_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
