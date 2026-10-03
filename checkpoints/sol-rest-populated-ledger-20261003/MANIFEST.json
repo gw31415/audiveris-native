@@ -1,0 +1,144 @@
+{
+  "branch": "checkpoint/sol-rest-populated-ledger-20261003",
+  "parent_checkpoint_commit": "80a73c100ce1aa0ef8ae112373fb5c90d6c0f53d",
+  "parent_implementation_commit": "71635e9793bd48679a4774cb97b9f1f44601c874",
+  "parent_implementation_tree": "8a4bc5a06c81527edb0cd1870f5c8c922beb873b",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/80a73c100ce1aa0ef8ae112373fb5c90d6c0f53d/checkpoints/sol-rest-empty-ledger-20261003/MANIFEST.json",
+  "local_implementation_commit": "4bbcfb37165a51aa281f8149a35104908b8241f1",
+  "local_implementation_tree": "188eff6160886aaaf5801557f2714cdbd88495bc",
+  "changed_files_from_parent": [
+    "docs/REST-POPULATED-LEDGER-PITCH.md",
+    "fixtures/official-populated-ledger-pitch.json",
+    "scripts/java/PopulatedLedgerPitchControlProbe.java",
+    "src/beams_pipeline.rs",
+    "src/native_rest_mapping.rs",
+    "tests/native_rest_mapping.rs"
+  ],
+  "file_sha256": {
+    "docs/REST-POPULATED-LEDGER-PITCH.md": "1f32ef455155bd800b9368a661e251eaaca5adb29b76c05847150b7a1c6b23a0",
+    "fixtures/official-populated-ledger-pitch.json": "741ce1e9e5e1e6dbbd1ec04ac072fd9be0a995bbc1e3bec1c6b33888fa06d0b3",
+    "scripts/java/PopulatedLedgerPitchControlProbe.java": "d148c671f42ebc79eeea9d6e51b3f44b0c380adc8d1afce4073a1454b69eec72",
+    "src/beams_pipeline.rs": "25b33d5385cb382cbdc2c1b9405b75b90831349d4137f8dbd379ec547ca27d75",
+    "src/native_rest_mapping.rs": "d42bbc5e27d456109ec803d636784373424da6ce5b66fac12cdeca942ad36a67",
+    "tests/native_rest_mapping.rs": "ab53b779b9a9a635a10ab4d6cd764a91dbddf65aa6f310e25db331080e9a2e8d"
+  },
+  "tracked_files": 4698,
+  "patch": {
+    "path": "checkpoints/sol-rest-populated-ledger-20261003/changes.patch",
+    "bytes": 26765,
+    "sha256": "e3616a4a9678aaececc463cbd303847aedaa9c15fd113268c60100414877320b"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-rest-populated-ledger-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "focused": {
+      "suites": 6,
+      "passed": 17,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "full_debug": "UNVERIFIED at new source",
+    "full_release": "UNVERIFIED at new source",
+    "scope": "Original populated straight GeoPath ledgerLineMap traversal/interpolation/gap fallback, 220 independent controls; native single-staff mapping, ledger detection/multi-staff/curved paths unsupported",
+    "original_controls": {
+      "command": [
+        "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Xmx256m",
+        "-XX:ActiveProcessorCount=2",
+        "-Djava.awt.headless=true",
+        "-Duser.home=/workspace/audiveris-populated-ledger-check-20261003/original/home",
+        "--enable-native-access=ALL-UNNAMED",
+        "-cp",
+        "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-populated-ledger-check-20261003/original/classes",
+        "PopulatedLedgerPitchControlProbe",
+        "/workspace/audiveris-populated-ledger-check-20261003/original/recheck.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.47678305199951865,
+      "cases": 220,
+      "configurations": 4,
+      "native_outputs_used": false,
+      "reproduced_fixture_equal": true,
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "fixture_sha256": "741ce1e9e5e1e6dbbd1ec04ac072fd9be0a995bbc1e3bec1c6b33888fa06d0b3",
+      "observer_sha256": "d148c671f42ebc79eeea9d6e51b3f44b0c380adc8d1afce4073a1454b69eec72",
+      "scope": "Supplied straight GeoPath ledgers; no native ledger discovery, staff association or real-score positive evidence"
+    },
+    "prior_full_regression": {
+      "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+      "remote_commit": "deec43364e2b6b348cca4b38f798f534c8bd1925",
+      "debug": 297,
+      "release": 297,
+      "suites_each": 94
+    },
+    "cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/beams-single.png",
+        "/workspace/audiveris-populated-ledger-check-20261003/cli.pgm",
+        "/workspace/audiveris-populated-ledger-check-20261003/cli.json"
+      ],
+      "seconds": 1.271531258998948,
+      "exit_code": 0,
+      "report_sha256": "bbb12e4700d1309e4780045998aed991a619c5e9ec1b48e4a9e72590bcdfb527",
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "shared_graph_identical_to_parent": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff and empty/straight-ledger external endpoint pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "scanned_cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/laura-gray.png",
+        "/workspace/audiveris-populated-ledger-check-20261003/laura-cli.pgm",
+        "/workspace/audiveris-populated-ledger-check-20261003/laura-cli.json"
+      ],
+      "seconds": 15.82566751700142,
+      "exit_code": 0,
+      "report_sha256": "51b10582bc657d6d3c687d38c0c41f8824aba7947c73dab72d83fdb844d8b187",
+      "last_completed_substage": "BEAMS.GROUPS",
+      "epilog_complete": false,
+      "shared_graph_identical_to_parent": true,
+      "rest_boundaries": [
+        {
+          "complete": false,
+          "error": "unsupported_rest_multi_staff_mapping"
+        },
+        {
+          "complete": false,
+          "error": "unsupported_rest_multi_staff_mapping"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "prior_empty_ledger_original_controls": 21,
+    "existing_original_conversion_controls": {
+      "positive_synthetic": 6,
+      "negative_synthetic": 5
+    },
+    "positive_real_score_rest": "not demonstrated",
+    "full_OMR": "unfinished"
+  },
+  "recovery": [
+    "Restore exact parent source with immutable source_recovery_manifest_url and prior chain.",
+    "Verify patch byte count/hash then git apply --check and git apply --index.",
+    "Verify git write-tree and every changed file hash.",
+    "Write raw implementation commit using git hash-object -t commit -w --stdin; verify exact source commit and attach a new isolated local branch.",
+    "Verify clean source and tracked count."
+  ],
+  "full_OMR": "unfinished"
+}

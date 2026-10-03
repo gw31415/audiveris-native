@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "fixtures/official-grid/beams-single.png",
+    "/workspace/audiveris-populated-ledger-check-20261003/cli.pgm",
+    "/workspace/audiveris-populated-ledger-check-20261003/cli.json"
+  ],
+  "seconds": 1.271531258998948,
+  "exit_code": 0,
+  "report_sha256": "bbb12e4700d1309e4780045998aed991a619c5e9ec1b48e4a9e72590bcdfb527",
+  "last_completed_substage": "BEAMS.EPILOG",
+  "epilog_complete": true,
+  "shared_graph_identical_to_parent": true,
+  "rest_boundaries": [
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff and empty/straight-ledger external endpoint pitches"
+    }
+  ],
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false
+}

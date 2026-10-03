@@ -1,0 +1,271 @@
+diff --git a/docs/REST-POPULATED-LEDGER-PITCH.md b/docs/REST-POPULATED-LEDGER-PITCH.md
+new file mode 100644
+index 0000000..68ba24e
+--- /dev/null
++++ b/docs/REST-POPULATED-LEDGER-PITCH.md
+@@ -0,0 +1,11 @@
++# Native supplied straight-ledger pitch mapping
++
++Original Staff.pitchPositionOf reads the five staff lines at the endpoint x. Within the staff it uses the measured top/bottom span. Outside, it walks consecutive signed ledgerLineMap keys starting at -1 or +1, interpolates between the previous boundary and the first ledger beyond the ordinate, and adds two pitch steps for every passed ledger. On the first absent key it falls back from the last visited line using specificInterline; higher keys beyond a gap are ignored. This is not a nearest-line approximation.
++
++Mapping::from_grid now accepts staff.ledger_lines entries {index,points:[[x0,y0],[x1,y1]]}. Nonzero signed indices and unique keys are required. The native Curve interpolation/extrapolation represents an original straight GeoPath. Curved ledger paths, malformed maps, crossing/reversed ledger order at the queried x and non-five-line/unsupported staff areas remain explicit errors. pitch_at follows the original consecutive-key walk; beam endpoint pitch uses this same method.
++
++The independent PopulatedLedgerPitchControlProbe calls the unmodified pinned Audiveris Staff.pitchPositionOf with supplied sloped staff curves and straight GeoPath ledger maps. Its 220 cases cover consecutive/gapped keys on both sides, missing first keys, one-sided maps, exact boundary ordinates, staff-span interpolation, fallback beyond the final ledger and x outside the supplied path. Native outputs were not used to generate expectations. Existing 21 empty-ledger controls and eleven complete conversion controls remain unchanged.
++
++Native GRID is pre-LEDGERS and currently emits empty ledger_lines. This stage adds correct supplied populated-map consumption, not native ledger discovery. The current raster pipeline still rejects multi-staff/multi-system rest mapping. Original SystemInfo.getStaffAtOrAbove first calls StaffManager.getClosestStaff: this restricts candidates through actual Staff.getArea containment, resolves overlap by Staff.distanceTo with encounter-order ties, and chooses the preceding system staff if the point lies above the closest staff's first line. Correct native area serialization/containment and per-system lag ownership are still missing; nearest vertical staff heuristics are not substituted.
++
++Original pin 9e1e55cd2746037d059345881c53e6a6754bffbd, preserved JAR SHA256 9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5. This stage retains validated e13359df's 297/297 debug/release receipt and parent empty-ledger source 71635e9. Current full suites are unverified and are deferred until a coherent mapping stage. Positive real-score rest conversion is not demonstrated; six original positive conversions are synthetic controls, and full OMR/MusicXML remains unfinished.
+diff --git a/fixtures/official-populated-ledger-pitch.json b/fixtures/official-populated-ledger-pitch.json
+new file mode 100644
+index 0000000..2eef7bb
+--- /dev/null
++++ b/fixtures/official-populated-ledger-pitch.json
+@@ -0,0 +1 @@
++{"specific_interline":16,"configurations":[{"ledgers":[{"points":[[0.0,70.0],[128.0,86.64]],"index":-2},{"points":[[0.0,88.0],[128.0,102.08]],"index":-1},{"points":[[0.0,182.0],[128.0,205.04]],"index":1},{"points":[[0.0,211.0],[128.0,231.48]],"index":2}],"cases":[{"pitch":-11.69,"y":38.400000000000006,"x":-16.0},{"pitch":-7.947598253275109,"y":68.4,"x":-16.0},{"pitch":-5.973684210526314,"y":86.4,"x":-16.0},{"pitch":-4.041118421052632,"y":98.15,"x":-16.0},{"pitch":-4.0,"y":98.4,"x":-16.0},{"pitch":1.8515771615898373E-15,"y":129.10000000000002,"x":-16.0},{"pitch":4.0,"y":159.8,"x":-16.0},{"pitch":4.025879917184265,"y":160.05,"x":-16.0},{"pitch":5.966873706004142,"y":178.8,"x":-16.0},{"pitch":7.410641200545704,"y":199.8,"x":-16.0},{"pitch":11.920000000000002,"y":239.8,"x":-16.0},{"pitch":-11.75,"y":40.0,"x":0.0},{"pitch":-8.0,"y":70.0,"x":0.0},{"pitch":-6.0,"y":88.0,"x":0.0},{"pitch":-4.041666666666667,"y":99.75,"x":0.0},{"pitch":-4.0,"y":100.0,"x":0.0},{"pitch":0.0,"y":131.5,"x":0.0},{"pitch":4.0,"y":163.0,"x":0.0},{"pitch":4.026315789473684,"y":163.25,"x":0.0},{"pitch":6.0,"y":182.0,"x":0.0},{"pitch":7.448275862068965,"y":203.0,"x":0.0},{"pitch":12.0,"y":243.0,"x":0.0},{"pitch":-11.989999999999998,"y":46.400000000000006,"x":64.0},{"pitch":-8.239999999999998,"y":76.4,"x":64.0},{"pitch":-6.076555023923444,"y":94.4,"x":64.0},{"pitch":-4.044014084507042,"y":106.15,"x":64.0},{"pitch":-4.0,"y":106.4,"x":64.0},{"pitch":1.6381388720693952E-15,"y":141.10000000000002,"x":64.0},{"pitch":4.0,"y":175.8,"x":64.0},{"pitch":4.028216704288939,"y":176.05,"x":64.0},{"pitch":6.092352092352094,"y":194.8,"x":64.0},{"pitch":7.607503607503608,"y":215.8,"x":64.0},{"pitch":12.32,"y":255.8,"x":64.0},{"pitch":-12.22625,"y":52.7,"x":127.0},{"pitch":-8.47625,"y":82.7,"x":127.0},{"pitch":-6.164294954721862,"y":100.7,"x":127.0},{"pitch":-4.046598322460391,"y":112.45,"x":127.0},{"pitch":-4.0,"y":112.7,"x":127.0},{"pitch":7.509038158627214E-16,"y":150.55,"x":127.0},{"pitch":4.0,"y":188.4,"x":127.0},{"pitch":4.0303766707168895,"y":188.65,"x":127.0},{"pitch":6.1919879062736225,"y":207.4,"x":127.0},{"pitch":7.779289493575209,"y":228.4,"x":127.0},{"pitch":12.634999999999998,"y":268.4,"x":127.0},{"pitch":-12.35,"y":56.0,"x":160.0},{"pitch":-8.6,"y":86.0,"x":160.0},{"pitch":-6.216216216216216,"y":104.0,"x":160.0},{"pitch":-4.048076923076923,"y":115.75,"x":160.0},{"pitch":-4.0,"y":116.0,"x":160.0},{"pitch":0.0,"y":155.5,"x":160.0},{"pitch":4.0,"y":195.0,"x":160.0},{"pitch":4.031645569620253,"y":195.25,"x":160.0},{"pitch":6.248062015503877,"y":214.0,"x":160.0},{"pitch":7.875968992248063,"y":235.0,"x":160.0},{"pitch":12.8,"y":275.0,"x":160.0}],"name":"consecutive"},{"ledgers":[{"points":[[0.0,70.0],[128.0,86.64]],"index":-3},{"points":[[0.0,88.0],[128.0,102.08]],"index":-1},{"points":[[0.0,182.0],[128.0,205.04]],"index":1},{"points":[[0.0,211.0],[128.0,231.48]],"index":3}],"cases":[{"pitch":-11.979999999999999,"y":38.400000000000006,"x":-16.0},{"pitch":-8.229999999999999,"y":68.4,"x":-16.0},{"pitch":-5.973684210526314,"y":86.4,"x":-16.0},{"pitch":-4.041118421052632,"y":98.15,"x":-16.0},{"pitch":-4.0,"y":98.4,"x":-16.0},{"pitch":1.8515771615898373E-15,"y":129.10000000000002,"x":-16.0},{"pitch":4.0,"y":159.8,"x":-16.0},{"pitch":4.025879917184265,"y":160.05,"x":-16.0},{"pitch":5.966873706004142,"y":178.8,"x":-16.0},{"pitch":8.585,"y":199.8,"x":-16.0},{"pitch":13.585,"y":239.8,"x":-16.0},{"pitch":-12.0,"y":40.0,"x":0.0},{"pitch":-8.25,"y":70.0,"x":0.0},{"pitch":-6.0,"y":88.0,"x":0.0},{"pitch":-4.041666666666667,"y":99.75,"x":0.0},{"pitch":-4.0,"y":100.0,"x":0.0},{"pitch":0.0,"y":131.5,"x":0.0},{"pitch":4.0,"y":163.0,"x":0.0},{"pitch":4.026315789473684,"y":163.25,"x":0.0},{"pitch":6.0,"y":182.0,"x":0.0},{"pitch":8.625,"y":203.0,"x":0.0},{"pitch":13.625,"y":243.0,"x":0.0},{"pitch":-12.079999999999998,"y":46.400000000000006,"x":64.0},{"pitch":-8.329999999999998,"y":76.4,"x":64.0},{"pitch":-6.079999999999998,"y":94.4,"x":64.0},{"pitch":-4.044014084507042,"y":106.15,"x":64.0},{"pitch":-4.0,"y":106.4,"x":64.0},{"pitch":1.6381388720693952E-15,"y":141.10000000000002,"x":64.0},{"pitch":4.0,"y":175.8,"x":64.0},{"pitch":4.028216704288939,"y":176.05,"x":64.0},{"pitch":6.160000000000004,"y":194.8,"x":64.0},{"pitch":8.785000000000004,"y":215.8,"x":64.0},{"pitch":13.785000000000004,"y":255.8,"x":64.0},{"pitch":-12.15875,"y":52.7,"x":127.0},{"pitch":-8.40875,"y":82.7,"x":127.0},{"pitch":-6.1587499999999995,"y":100.7,"x":127.0},{"pitch":-4.046598322460391,"y":112.45,"x":127.0},{"pitch":-4.0,"y":112.7,"x":127.0},{"pitch":7.509038158627214E-16,"y":150.55,"x":127.0},{"pitch":4.0,"y":188.4,"x":127.0},{"pitch":4.0303766707168895,"y":188.65,"x":127.0},{"pitch":6.317500000000003,"y":207.4,"x":127.0},{"pitch":8.942500000000003,"y":228.4,"x":127.0},{"pitch":13.942499999999999,"y":268.4,"x":127.0},{"pitch":-12.2,"y":56.0,"x":160.0},{"pitch":-8.45,"y":86.0,"x":160.0},{"pitch":-6.199999999999999,"y":104.0,"x":160.0},{"pitch":-4.048076923076923,"y":115.75,"x":160.0},{"pitch":-4.0,"y":116.0,"x":160.0},{"pitch":0.0,"y":155.5,"x":160.0},{"pitch":4.0,"y":195.0,"x":160.0},{"pitch":4.031645569620253,"y":195.25,"x":160.0},{"pitch":6.400000000000002,"y":214.0,"x":160.0},{"pitch":9.025000000000002,"y":235.0,"x":160.0},{"pitch":14.025000000000002,"y":275.0,"x":160.0}],"name":"gap_after_first"},{"ledgers":[{"points":[[0.0,70.0],[128.0,86.64]],"index":-2},{"points":[[0.0,211.0],[128.0,231.48]],"index":2}],"cases":[{"pitch":-11.5,"y":38.400000000000006,"x":-16.0},{"pitch":-7.75,"y":68.4,"x":-16.0},{"pitch":-5.5,"y":86.4,"x":-16.0},{"pitch":-4.03125,"y":98.15,"x":-16.0},{"pitch":-4.0,"y":98.4,"x":-16.0},{"pitch":1.8515771615898373E-15,"y":129.10000000000002,"x":-16.0},{"pitch":4.0,"y":159.8,"x":-16.0},{"pitch":4.03125,"y":160.05,"x":-16.0},{"pitch":6.375,"y":178.8,"x":-16.0},{"pitch":9.0,"y":199.8,"x":-16.0},{"pitch":14.0,"y":239.8,"x":-16.0},{"pitch":-11.5,"y":40.0,"x":0.0},{"pitch":-7.75,"y":70.0,"x":0.0},{"pitch":-5.5,"y":88.0,"x":0.0},{"pitch":-4.03125,"y":99.75,"x":0.0},{"pitch":-4.0,"y":100.0,"x":0.0},{"pitch":0.0,"y":131.5,"x":0.0},{"pitch":4.0,"y":163.0,"x":0.0},{"pitch":4.03125,"y":163.25,"x":0.0},{"pitch":6.375,"y":182.0,"x":0.0},{"pitch":9.0,"y":203.0,"x":0.0},{"pitch":14.0,"y":243.0,"x":0.0},{"pitch":-11.5,"y":46.400000000000006,"x":64.0},{"pitch":-7.75,"y":76.4,"x":64.0},{"pitch":-5.5,"y":94.4,"x":64.0},{"pitch":-4.03125,"y":106.15,"x":64.0},{"pitch":-4.0,"y":106.4,"x":64.0},{"pitch":1.6381388720693952E-15,"y":141.10000000000002,"x":64.0},{"pitch":4.0,"y":175.8,"x":64.0},{"pitch":4.03125,"y":176.05,"x":64.0},{"pitch":6.375,"y":194.8,"x":64.0},{"pitch":9.0,"y":215.8,"x":64.0},{"pitch":14.0,"y":255.8,"x":64.0},{"pitch":-11.5,"y":52.7,"x":127.0},{"pitch":-7.75,"y":82.7,"x":127.0},{"pitch":-5.5,"y":100.7,"x":127.0},{"pitch":-4.03125,"y":112.45,"x":127.0},{"pitch":-4.0,"y":112.7,"x":127.0},{"pitch":7.509038158627214E-16,"y":150.55,"x":127.0},{"pitch":4.0,"y":188.4,"x":127.0},{"pitch":4.03125,"y":188.65,"x":127.0},{"pitch":6.375,"y":207.4,"x":127.0},{"pitch":9.0,"y":228.4,"x":127.0},{"pitch":13.999999999999996,"y":268.4,"x":127.0},{"pitch":-11.5,"y":56.0,"x":160.0},{"pitch":-7.75,"y":86.0,"x":160.0},{"pitch":-5.5,"y":104.0,"x":160.0},{"pitch":-4.03125,"y":115.75,"x":160.0},{"pitch":-4.0,"y":116.0,"x":160.0},{"pitch":0.0,"y":155.5,"x":160.0},{"pitch":4.0,"y":195.0,"x":160.0},{"pitch":4.03125,"y":195.25,"x":160.0},{"pitch":6.375,"y":214.0,"x":160.0},{"pitch":9.0,"y":235.0,"x":160.0},{"pitch":14.0,"y":275.0,"x":160.0}],"name":"gap_at_first"},{"ledgers":[{"points":[[0.0,70.0],[128.0,86.64]],"index":-2},{"points":[[0.0,88.0],[128.0,102.08]],"index":-1}],"cases":[{"pitch":-11.69,"y":38.400000000000006,"x":-16.0},{"pitch":-7.947598253275109,"y":68.4,"x":-16.0},{"pitch":-5.973684210526314,"y":86.4,"x":-16.0},{"pitch":-4.041118421052632,"y":98.15,"x":-16.0},{"pitch":-4.0,"y":98.4,"x":-16.0},{"pitch":1.8515771615898373E-15,"y":129.10000000000002,"x":-16.0},{"pitch":4.0,"y":159.8,"x":-16.0},{"pitch":4.03125,"y":160.05,"x":-16.0},{"pitch":6.375,"y":178.8,"x":-16.0},{"pitch":9.0,"y":199.8,"x":-16.0},{"pitch":14.0,"y":239.8,"x":-16.0},{"pitch":-11.75,"y":40.0,"x":0.0},{"pitch":-8.0,"y":70.0,"x":0.0},{"pitch":-6.0,"y":88.0,"x":0.0},{"pitch":-4.041666666666667,"y":99.75,"x":0.0},{"pitch":-4.0,"y":100.0,"x":0.0},{"pitch":0.0,"y":131.5,"x":0.0},{"pitch":4.0,"y":163.0,"x":0.0},{"pitch":4.03125,"y":163.25,"x":0.0},{"pitch":6.375,"y":182.0,"x":0.0},{"pitch":9.0,"y":203.0,"x":0.0},{"pitch":14.0,"y":243.0,"x":0.0},{"pitch":-11.989999999999998,"y":46.400000000000006,"x":64.0},{"pitch":-8.239999999999998,"y":76.4,"x":64.0},{"pitch":-6.076555023923444,"y":94.4,"x":64.0},{"pitch":-4.044014084507042,"y":106.15,"x":64.0},{"pitch":-4.0,"y":106.4,"x":64.0},{"pitch":1.6381388720693952E-15,"y":141.10000000000002,"x":64.0},{"pitch":4.0,"y":175.8,"x":64.0},{"pitch":4.03125,"y":176.05,"x":64.0},{"pitch":6.375,"y":194.8,"x":64.0},{"pitch":9.0,"y":215.8,"x":64.0},{"pitch":14.0,"y":255.8,"x":64.0},{"pitch":-12.22625,"y":52.7,"x":127.0},{"pitch":-8.47625,"y":82.7,"x":127.0},{"pitch":-6.164294954721862,"y":100.7,"x":127.0},{"pitch":-4.046598322460391,"y":112.45,"x":127.0},{"pitch":-4.0,"y":112.7,"x":127.0},{"pitch":7.509038158627214E-16,"y":150.55,"x":127.0},{"pitch":4.0,"y":188.4,"x":127.0},{"pitch":4.03125,"y":188.65,"x":127.0},{"pitch":6.375,"y":207.4,"x":127.0},{"pitch":9.0,"y":228.4,"x":127.0},{"pitch":13.999999999999996,"y":268.4,"x":127.0},{"pitch":-12.35,"y":56.0,"x":160.0},{"pitch":-8.6,"y":86.0,"x":160.0},{"pitch":-6.216216216216216,"y":104.0,"x":160.0},{"pitch":-4.048076923076923,"y":115.75,"x":160.0},{"pitch":-4.0,"y":116.0,"x":160.0},{"pitch":0.0,"y":155.5,"x":160.0},{"pitch":4.0,"y":195.0,"x":160.0},{"pitch":4.03125,"y":195.25,"x":160.0},{"pitch":6.375,"y":214.0,"x":160.0},{"pitch":9.0,"y":235.0,"x":160.0},{"pitch":14.0,"y":275.0,"x":160.0}],"name":"negative_only"}],"native_outputs_used":false,"lines":[{"thickness":1.0,"points":[[0.0,100.0],[128.0,112.8]]},{"thickness":1.0,"points":[[0.0,115.75],[128.0,131.75]]},{"thickness":1.0,"points":[[0.0,131.5],[128.0,150.7]]},{"thickness":1.0,"points":[[0.0,147.25],[128.0,169.65]]},{"thickness":1.0,"points":[[0.0,163.0],[128.0,188.6]]}],"scope":"Unmodified original Staff.pitchPositionOf; supplied sloped five-line staff and straight GeoPath ledgers. Consecutive/gapped signed indices, interpolation, absent-first-key fallback, external abscissas; not native ledger discovery or real-score positive conversion."}
+\ No newline at end of file
+diff --git a/scripts/java/PopulatedLedgerPitchControlProbe.java b/scripts/java/PopulatedLedgerPitchControlProbe.java
+new file mode 100644
+index 0000000..4e510bc
+--- /dev/null
++++ b/scripts/java/PopulatedLedgerPitchControlProbe.java
+@@ -0,0 +1,52 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Supplied staff and straight GeoPath ledger curves; unmodified Staff.pitchPositionOf.
++import java.lang.reflect.*;
++import java.awt.geom.Point2D;
++import java.nio.file.*;
++import java.util.*;
++import com.fasterxml.jackson.databind.ObjectMapper;
++public class PopulatedLedgerPitchControlProbe {
++ public static void main(String[] args) throws Exception {
++  Class<?> staffClass=Class.forName("org.audiveris.omr.sheet.Staff"),lineClass=Class.forName("org.audiveris.omr.sheet.grid.LineInfo"); List<Object> lines=new ArrayList<>();List<Object> geometry=new ArrayList<>();
++  for(int n=0;n<5;n++) {
++   final double base=100.+15.75*n,slope=.1+.025*n;
++   lines.add(Proxy.newProxyInstance(lineClass.getClassLoader(),new Class[]{lineClass},(o,m,a)->{
++    if(m.getName().equals("yAt")) {double y=base+slope*((Number)a[0]).doubleValue();if(m.getReturnType()==int.class)return (int)Math.rint(y);return y;}
++    if(m.getName().equals("getThickness"))return 1.;
++    throw new UnsupportedOperationException(m.getName());
++   }));
++   geometry.add(Map.of("points",List.of(new double[]{0,base},new double[]{128,base+128*slope}),"thickness",1.));
++  }
++  Object staff=staffClass.getConstructor().newInstance();
++  for(var e:Map.of("lines",(Object)lines,"specificInterline",(Object)16).entrySet()){Field f=staffClass.getDeclaredField(e.getKey());f.setAccessible(true);f.set(staff,e.getValue());}
++  Field ledger=staffClass.getDeclaredField("ledgerLineMap");ledger.setAccessible(true);if(!((Map<?,?>)ledger.get(staff)).isEmpty())throw new AssertionError("nonempty ledger map");
++  Class<?> pathClass=Class.forName("org.audiveris.omr.math.GeoPath");
++  @SuppressWarnings("unchecked") Map<Integer,Object> ledgerMap=(Map<Integer,Object>)ledger.get(staff);
++  List<Object> configurations=new ArrayList<>();
++  for(String configuration:List.of("consecutive","gap_after_first","gap_at_first","negative_only")) {
++   ledgerMap.clear();List<Object> curves=new ArrayList<>();
++   int[] indices=switch(configuration) {
++    case "consecutive" -> new int[]{-2,-1,1,2};
++    case "gap_after_first" -> new int[]{-3,-1,1,3};
++    case "gap_at_first" -> new int[]{-2,2};
++    default -> new int[]{-2,-1};
++   };
++   for(int index:indices) {
++    double base=index<0?(index==-1?88:70):index==1?182:211;
++    double slope=index<0?(index==-1?.11:.13):index==1?.18:.16;
++    Object path=pathClass.getConstructor().newInstance();
++    pathClass.getMethod("moveTo",double.class,double.class).invoke(path,0.,base);
++    pathClass.getMethod("lineTo",double.class,double.class).invoke(path,128.,base+128*slope);
++    ledgerMap.put(index,path);
++    curves.add(Map.of("index",index,"points",List.of(new double[]{0,base},new double[]{128,base+128*slope})));
++   }
++   List<Object> cases=new ArrayList<>();
++   for(double x:new double[]{-16,0,64,127,160}) {
++    double top=100.+.1*x,bottom=163.+.2*x;
++    for(double y:new double[]{top-60,top-30,top-12,top-.25,top,(top+bottom)/2,bottom,bottom+.25,bottom+19,bottom+40,bottom+80})cases.add(Map.of("x",x,"y",y,"pitch",staffClass.getMethod("pitchPositionOf",Point2D.class).invoke(staff,new Point2D.Double(x,y))));
++   }
++   configurations.add(Map.of("name",configuration,"ledgers",curves,"cases",cases));
++  }
++  new ObjectMapper().writeValue(Path.of(args[0]).toFile(),Map.of("native_outputs_used",false,"scope","Unmodified original Staff.pitchPositionOf; supplied sloped five-line staff and straight GeoPath ledgers. Consecutive/gapped signed indices, interpolation, absent-first-key fallback, external abscissas; not native ledger discovery or real-score positive conversion.","specific_interline",16,"lines",geometry,"configurations",configurations));
++ }
++}
+diff --git a/src/beams_pipeline.rs b/src/beams_pipeline.rs
+index b4313d9..bdb628d 100644
+--- a/src/beams_pipeline.rs
++++ b/src/beams_pipeline.rs
+@@ -80,7 +80,7 @@ pub fn advance(
+         })();
+         let rests = match rest_result {
+             Ok(rests) => {
+-                json!({"complete":true,"conversions":rests.rests.len(),"registered_serifs":rests.serifs.len(),"supported_scope":"single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff and empty-ledger external endpoint pitches"})
++                json!({"complete":true,"conversions":rests.rests.len(),"registered_serifs":rests.serifs.len(),"supported_scope":"single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff and empty/straight-ledger external endpoint pitches"})
+             }
+             Err(error) => json!({"complete":false,"error":error}),
+         };
+@@ -95,6 +95,6 @@ pub fn advance(
+         json!({"complete":false,"reason":"incomplete_native_rest_boundary"})
+     };
+     Ok(
+-        json!({"stage":"BEAMS.native_through_multiple_rests","extensions_complete":true,"hooks_complete":true,"groups_complete":true,"multiple_rest_boundary_complete":rests_complete,"systems":reports,"epilog":epilog,"epilog_complete":rests_complete,"beams_complete":rests_complete,"musicxml_complete":false,"pending":["LEDGERS/HEADS/rhythm/MusicXML","multi-staff staff-area mapping and populated ledger curves"]}),
++        json!({"stage":"BEAMS.native_through_multiple_rests","extensions_complete":true,"hooks_complete":true,"groups_complete":true,"multiple_rest_boundary_complete":rests_complete,"systems":reports,"epilog":epilog,"epilog_complete":rests_complete,"beams_complete":rests_complete,"musicxml_complete":false,"pending":["LEDGERS/HEADS/rhythm/MusicXML","multi-staff staff-area mapping, curved ledger paths and native ledger discovery"]}),
+     )
+ }
+diff --git a/src/native_rest_mapping.rs b/src/native_rest_mapping.rs
+index b964908..6abe148 100644
+--- a/src/native_rest_mapping.rs
++++ b/src/native_rest_mapping.rs
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: AGPL-3.0-or-later
+-// Default single-system/five-line staff, explicitly empty pre-LEDGERS map.
++// Default single-system/five-line staff; empty or supplied straight ledger curves.
+ use crate::{
+     Run,
+     beam_candidates::CandidateInter,
+@@ -18,6 +18,7 @@ pub struct Mapping {
+     pub abscissas: [i32; 2],
+     pub sections: Vec<Section>,
+     lines: Vec<Curve>,
++    ledgers: std::collections::BTreeMap<i32, Curve>,
+ }
+ impl Mapping {
+     pub fn from_grid(
+@@ -45,12 +46,35 @@ impl Mapping {
+         {
+             return Err("unsupported_rest_staff_area_mapping".into());
+         }
+-        if staff["ledger_lines"]
+-            .as_array()
+-            .is_some_and(|v| !v.is_empty())
+-            || (!staff["ledger_lines"].is_null() && !staff["ledger_lines"].is_array())
+-        {
+-            return Err("unsupported_rest_populated_ledger_mapping".into());
++        let mut ledgers = std::collections::BTreeMap::new();
++        if !staff["ledger_lines"].is_null() {
++            let raw_ledgers = staff["ledger_lines"]
++                .as_array()
++                .filter(|v| v.len() <= 1024)
++                .ok_or("invalid_rest_ledger_map")?;
++            for ledger in raw_ledgers {
++                let index = ledger["index"]
++                    .as_i64()
++                    .and_then(|v| i32::try_from(v).ok())
++                    .filter(|v| *v != 0 && v.unsigned_abs() <= 1024)
++                    .ok_or("invalid_rest_ledger_index")?;
++                let points = ledger["points"]
++                    .as_array()
++                    .filter(|v| v.len() == 2)
++                    .ok_or("unsupported_rest_non_linear_ledger_mapping")?
++                    .iter()
++                    .map(|p| {
++                        Ok([
++                            p[0].as_f64().ok_or("invalid_rest_ledger_point")?,
++                            p[1].as_f64().ok_or("invalid_rest_ledger_point")?,
++                        ])
++                    })
++                    .collect::<Result<Vec<_>, String>>()?;
++                let curve = Curve::interpolate(points).ok_or("invalid_rest_ledger_curve")?;
++                if ledgers.insert(index, curve).is_some() {
++                    return Err("duplicate_rest_ledger_index".into());
++                }
++            }
+         }
+         let raw = staff["lines"]
+             .as_array()
+@@ -175,6 +199,7 @@ impl Mapping {
+             ],
+             sections,
+             lines,
++            ledgers,
+         })
+     }
+     pub fn geometry(&self, fore: usize) -> StaffGeometry<'_> {
+@@ -187,8 +212,8 @@ impl Mapping {
+             fore,
+         }
+     }
+-    /// Original Staff.pitchPositionOf with an empty ledgerLineMap. Outside
+-    /// the staff, use specificInterline rather than extrapolating the staff span.
++    /// Original Staff.pitchPositionOf: traverse consecutive signed ledger keys,
++    /// interpolate the enclosing pair, or fall back from the last visited line.
+     pub fn pitch_at(&self, x: f64, y: f64) -> Result<f64, String> {
+         if !x.is_finite() || !y.is_finite() {
+             return Err("invalid_rest_pitch_point".into());
+@@ -201,8 +226,22 @@ impl Mapping {
+         Ok(if y >= top && y <= bottom {
+             4. * (2. * y - bottom - top) / (bottom - top)
+         } else {
+-            let (base, edge) = if y < top { (-4., top) } else { (4., bottom) };
+-            base + 2. * (y - edge) / self.interline as f64
++            let (direction, mut edge) = if y < top { (-1, top) } else { (1, bottom) };
++            let mut pitch = f64::from(4 * direction);
++            let mut index = direction;
++            while let Some(ledger) = self.ledgers.get(&index) {
++                let ordinate = ledger.y(x);
++                if !ordinate.is_finite() || f64::from(direction) * (ordinate - edge) <= 0. {
++                    return Err("unsupported_rest_ledger_order".into());
++                }
++                if f64::from(direction) * (ordinate - y) >= 0. {
++                    return Ok(pitch + f64::from(2 * direction) * (y - edge) / (ordinate - edge));
++                }
++                edge = ordinate;
++                pitch += f64::from(2 * direction);
++                index += direction;
++            }
++            pitch + 2. * (y - edge) / self.interline as f64
+         })
+     }
+     pub fn position(&self, beam: &CandidateInter) -> Result<Option<StaffPosition>, String> {
+diff --git a/tests/native_rest_mapping.rs b/tests/native_rest_mapping.rs
+index 4f55fa2..f7d0782 100644
+--- a/tests/native_rest_mapping.rs
++++ b/tests/native_rest_mapping.rs
+@@ -63,7 +63,7 @@ fn unsupported_staff_and_populated_ledger_paths_are_explicit() {
+     populated["staffs"][0]["ledger_lines"] = json!([{"index": 1}]);
+     assert_eq!(
+         Mapping::from_grid(&populated, 128, 64, 1).err().unwrap(),
+-        "unsupported_rest_populated_ledger_mapping"
++        "unsupported_rest_non_linear_ledger_mapping"
+     );
+ }
+ 
+@@ -90,3 +90,48 @@ fn original_empty_ledger_pitch_controls_match_native_mapping() {
+     let m = Mapping::from_grid(&grid(), 128, 64, 1).unwrap();
+     assert!(m.pitch_at(f64::NAN, 18.).is_err());
+ }
++
++#[test]
++fn original_populated_ledger_pitch_controls_match_native_mapping() {
++    let fixture: Value = serde_json::from_str(include_str!(
++        "../fixtures/official-populated-ledger-pitch.json"
++    ))
++    .unwrap();
++    assert_eq!(fixture["native_outputs_used"], false);
++    for configuration in fixture["configurations"].as_array().unwrap() {
++        let mut g = grid();
++        g["staffs"][0]["lines"] = fixture["lines"].clone();
++        g["staffs"][0]["specific_interline"] = fixture["specific_interline"].clone();
++        g["staffs"][0]["ledger_lines"] = configuration["ledgers"].clone();
++        let m = Mapping::from_grid(&g, 128, 256, 1).unwrap();
++        for case in configuration["cases"].as_array().unwrap() {
++            let actual = m
++                .pitch_at(case["x"].as_f64().unwrap(), case["y"].as_f64().unwrap())
++                .unwrap();
++            let expected = case["pitch"].as_f64().unwrap();
++            assert!(
++                (actual - expected).abs() <= 1e-12,
++                "{case}: {actual} != {expected}"
++            );
++        }
++    }
++}
++
++#[test]
++fn invalid_ledger_identity_shape_and_order_are_rejected() {
++    let mut g = grid();
++    let ledger = json!({"index":1,"points":[[0,30],[128,30]]});
++    g["staffs"][0]["ledger_lines"] = json!([ledger, ledger]);
++    assert_eq!(
++        Mapping::from_grid(&g, 128, 64, 1).err().unwrap(),
++        "duplicate_rest_ledger_index"
++    );
++    g["staffs"][0]["ledger_lines"] = json!([{"index":0,"points":[[0,30],[128,30]]}]);
++    assert!(Mapping::from_grid(&g, 128, 64, 1).is_err());
++    g["staffs"][0]["ledger_lines"] = json!([{"index":1,"points":[[0,20],[128,20]]}]);
++    let mapping = Mapping::from_grid(&g, 128, 64, 1).unwrap();
++    assert_eq!(
++        mapping.pitch_at(20., 40.).err().unwrap(),
++        "unsupported_rest_ledger_order"
++    );
++}
