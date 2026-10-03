@@ -1,0 +1,6 @@
+tree 8e40bb713cd00e1d5fadc824a6ee1a6bc7f50c93
+parent 044e6209303cdc98e52f61462f1a2d50c858fd4d
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791044239 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791044239 +0000
+
+Use declared native GRID neighbor-chain areas for beam spot dispatch; validate original selection and both-end controls plus fourteen two-column raster spots

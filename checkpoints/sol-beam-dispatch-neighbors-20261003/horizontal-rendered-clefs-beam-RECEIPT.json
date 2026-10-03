@@ -1,0 +1,297 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png",
+    "/workspace/audiveris-beam-dispatch-check-20261003/horizontal-rendered-clefs-beam.pgm",
+    "/workspace/audiveris-beam-dispatch-check-20261003/horizontal-rendered-clefs-beam.json"
+  ],
+  "exit_code": 0,
+  "seconds": 2.727087039998878,
+  "report_sha256": "858eae7ee72541d8931661c55f035b1c86da8faaf1bbb25c2540126c58dcbffd",
+  "boundary_log": "Native beam spots: 0; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete\n",
+  "system_candidates": null,
+  "stem_seeds": "BEAMS.GROUPS",
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished",
+  "last_completed_substage": "BEAMS.GROUPS",
+  "beam_prolog": {
+    "beam_prolog_complete": true,
+    "beams_complete": false,
+    "free_glyphs": [
+      {
+        "glyph_ids": [
+          1,
+          2
+        ],
+        "system_id": 1
+      },
+      {
+        "glyph_ids": [
+          3,
+          4
+        ],
+        "system_id": 2
+      }
+    ],
+    "head_scale": {
+      "black_head": null,
+      "music_font": null
+    },
+    "head_sizing": {
+      "closed_candidates": [],
+      "measured_core": [],
+      "music_font_unsupported": null,
+      "parameters": {
+        "binarization_threshold": 110,
+        "diameter": 14.4,
+        "max_height": 24,
+        "max_stack_height": 64,
+        "max_stack_weight": 1024,
+        "max_weight": 384,
+        "max_width": 32,
+        "min_height": 14,
+        "min_stack_height": 32,
+        "min_stack_weight": 512,
+        "min_weight": 205,
+        "min_width": 16,
+        "singles_quorum": 20
+      },
+      "singles": [],
+      "stacks": []
+    },
+    "identity_scope": "native phase-owned canonical glyph identities, not Java numeric IDs or a JVM weak-index GC simulation; accepted seed identities/groups are retained",
+    "musicxml_complete": false,
+    "pending": [
+      "BeamStructure and BeamInter construction",
+      "beam hooks/groups/extensions and multiple-measure rests",
+      "LEDGERS, HEADS, stem attachment, rhythm and MusicXML"
+    ],
+    "registry": [
+      {
+        "glyph": {
+          "bounds": [
+            400,
+            120,
+            2,
+            66
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              66
+            ],
+            [
+              1,
+              0,
+              66
+            ]
+          ]
+        },
+        "groups": [
+          "VERTICAL_SEED"
+        ],
+        "id": 1
+      },
+      {
+        "glyph": {
+          "bounds": [
+            700,
+            120,
+            2,
+            66
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              66
+            ],
+            [
+              1,
+              0,
+              66
+            ]
+          ]
+        },
+        "groups": [
+          "VERTICAL_SEED"
+        ],
+        "id": 2
+      },
+      {
+        "glyph": {
+          "bounds": [
+            1360,
+            120,
+            2,
+            66
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              66
+            ],
+            [
+              1,
+              0,
+              66
+            ]
+          ]
+        },
+        "groups": [
+          "VERTICAL_SEED"
+        ],
+        "id": 3
+      },
+      {
+        "glyph": {
+          "bounds": [
+            1660,
+            120,
+            2,
+            66
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              66
+            ],
+            [
+              1,
+              0,
+              66
+            ]
+          ]
+        },
+        "groups": [
+          "VERTICAL_SEED"
+        ],
+        "id": 4
+      }
+    ],
+    "stage": "BEAMS.native_prolog",
+    "supported_scope": "fresh default five-line single-column native GRID; no drum/one-line or music-family overrides; current native resource bounds",
+    "systems": [
+      {
+        "grouped_spots": [],
+        "system_id": 1
+      },
+      {
+        "grouped_spots": [],
+        "system_id": 2
+      }
+    ]
+  },
+  "beam_candidates": {
+    "beams_complete": false,
+    "initial_beam_candidates_complete": true,
+    "musicxml_complete": false,
+    "parameters": {
+      "small": null,
+      "standard": {
+        "coreSectionWidth": 2,
+        "cornerMargin": 1.8,
+        "isSmall": false,
+        "maxHeightHigh": 12.6,
+        "maxHookWidth": 32.0,
+        "maxItemXGap": 8.0,
+        "minBeamWidthHigh": 64.0,
+        "minBeamWidthLow": 16.0,
+        "minHeightLow": 6.3,
+        "minHookWidthHigh": 16.0,
+        "minHookWidthLow": 11.2,
+        "typicalHeight": 9.0
+      }
+    },
+    "pending": [
+      "beam extensions and late hooks",
+      "beam groups and multiple-measure rests",
+      "LEDGERS, HEADS, stems, rhythm and MusicXML"
+    ],
+    "stage": "BEAMS.native_initial_candidates",
+    "supported_scope": "fresh default native prolog; explicit 4M-pixel, geometry, sampling and work bounds; no smallBeams override",
+    "systems": [
+      {
+        "assigned_spot_ids": [],
+        "inters": [],
+        "ordered_spots": [],
+        "relations": [],
+        "system_id": 1
+      },
+      {
+        "assigned_spot_ids": [],
+        "inters": [],
+        "ordered_spots": [],
+        "relations": [],
+        "system_id": 2
+      }
+    ],
+    "work_units": 0
+  },
+  "later_beams": {
+    "beams_complete": false,
+    "epilog": {
+      "complete": false,
+      "reason": "incomplete_native_rest_boundary"
+    },
+    "epilog_complete": false,
+    "extensions_complete": true,
+    "groups_complete": true,
+    "hooks_complete": true,
+    "multiple_rest_boundary_complete": false,
+    "musicxml_complete": false,
+    "pending": [
+      "LEDGERS/HEADS/rhythm/MusicXML",
+      "horizontal staff/column discovery, curved area clipping, curved ledger paths and native ledger discovery"
+    ],
+    "stage": "BEAMS.native_through_multiple_rests",
+    "systems": [
+      {
+        "extensions": {
+          "initial_ids": [],
+          "side_attempts": 0,
+          "skipped_removed": []
+        },
+        "groups": [],
+        "hooks": {
+          "appended": 0,
+          "attempts": 0,
+          "initial_ids": []
+        },
+        "rests": {
+          "complete": false,
+          "error": "unsupported_rest_staff_column_mapping"
+        },
+        "supports": [],
+        "system_id": 1
+      },
+      {
+        "extensions": {
+          "initial_ids": [],
+          "side_attempts": 0,
+          "skipped_removed": []
+        },
+        "groups": [],
+        "hooks": {
+          "appended": 0,
+          "attempts": 0,
+          "initial_ids": []
+        },
+        "rests": {
+          "complete": false,
+          "error": "unsupported_rest_staff_column_mapping"
+        },
+        "supports": [],
+        "system_id": 2
+      }
+    ]
+  }
+}
