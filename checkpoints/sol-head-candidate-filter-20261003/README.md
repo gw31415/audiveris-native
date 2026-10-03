@@ -9,3 +9,5 @@ Original per-scanner stable decreasing-grade, fixed representative, inclusive ma
 Restore: `python checkpoints/sol-head-candidate-filter-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 4833 source hashes, plus all 419 archival files and archival tree. Saved remote commit `15e48a1ef79d61a7b29ec988cbbfd8ab4f02e2b8`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.

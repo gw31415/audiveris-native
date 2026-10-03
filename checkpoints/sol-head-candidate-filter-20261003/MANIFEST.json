@@ -140,6 +140,59 @@
       "source_clean": true,
       "source": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-prepush/artifacts/audiveris-source",
       "source_git": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-prepush/source-git"
+    },
+    "remote_fresh_restore": {
+      "status": "passed",
+      "source_commit": "bbf8db60ed019ccbffae1fc54250490e86c8a5fd",
+      "source_tree": "c47ba4bf15cd168719b91515198147d89f737f54",
+      "all_fresh_restored_sha256_verified": 4833,
+      "source_clean": true,
+      "source": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-remote-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-remote-restore/source-git",
+      "recorded_utc": "2026-10-03T22:24:45.346926+00:00",
+      "remote_main_verified": "15e48a1ef79d61a7b29ec988cbbfd8ab4f02e2b8",
+      "archival_repository_tree": "086e3e63369d1af345b621a36afb4d2cd10ff93e",
+      "fresh_remote_clone": true,
+      "all_archival_files_sha256_verified": 419,
+      "recovered_from_remote_archives_and_pinned_chain": true,
+      "recovered_native_cli_report_sha256": "137321f2a01e5077eab5ccde2a6a22f5e6360b049be390ef5950dfe6f710f995",
+      "recovered_cli_oracle_comparison": {
+        "status": "passed",
+        "range_scanners": 118,
+        "aggregates": 454,
+        "seed_conflict_controls": 21,
+        "live_seed_conflicts_complete": false,
+        "heads_complete": false,
+        "preserved_catalog": {
+          "status": "passed",
+          "range_scanners": 118,
+          "accepted_candidates": 2224,
+          "weak_stemless_rejected": 407,
+          "raw_candidates": 2631,
+          "accepted_stemless": {
+            "WHOLE_NOTE": 3
+          },
+          "preserved_prefix": {
+            "status": "passed",
+            "raw_seed_proposals": 418,
+            "veto_seed_proposals": 358,
+            "head_spot_system_references": 402,
+            "range_scanners": 118,
+            "visited_abscissae": 47790,
+            "skipped_windows": 869,
+            "black_void_prefix_proposals": 2221,
+            "heads_complete": false,
+            "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+            "report_sha256": "137321f2a01e5077eab5ccde2a6a22f5e6360b049be390ef5950dfe6f710f995"
+          },
+          "heads_complete": false,
+          "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+          "report_sha256": "137321f2a01e5077eab5ccde2a6a22f5e6360b049be390ef5950dfe6f710f995"
+        },
+        "report_sha256": "137321f2a01e5077eab5ccde2a6a22f5e6360b049be390ef5950dfe6f710f995"
+      },
+      "saved_full_workspace_passed": 352,
+      "tests_rerun_on_recovered_source": false
     }
   },
   "implemented_scope": "Original per-scanner stable decreasing-grade, fixed representative, inclusive max dx aggregation; all 118 scanners yield 454 representatives from the certified 2224 proposals. Original seed conflict kernel (positive rectangles, IoU >= 0.1, grade >= head grade * 0.9, sorted head competitor slice) passes 21 controls. Prior catalog, seed, prefix and shared SIG reports are preserved exactly. Live seed conflicts await glyph-updated seed bounds; no native HeadInter/SIG registration yet.",
@@ -154,6 +207,7 @@
   "evidence_log_storage": "Log copies normalize trailing whitespace; originals remain in the existing task workspace.",
   "evidence_sha256": {
     "evidence/PREPUSH-RESTORE.json": "5ceb627fc5cdc4a111daa2b001e1444cc4b5a5ee7840354ca98399d32c7e91f3",
+    "evidence/REMOTE-READBACK.json": "ce57a505016f57a81770aca677b3a0a3c0a84e350ddfe67f214dac5b2cd65e0f",
     "evidence/baseline-heads.log": "d9070f1a443a4b450f83e5ba4866e3af627c460fc978099622fb0b96de10da79",
     "evidence/bundle-verify.log": "8b7f30e2537b79643426c50896035a2e966601337be0ecd9d4fb754d008f6b15",
     "evidence/clippy.log": "7139ae7b897ba7fbf4c7adceeaaefbaaef0d97b4b41b15252c40abe82d73270d",
