@@ -7,3 +7,5 @@ Implementation `3f015272fde1c071351296fd80c25ad8c1bc4448`; tree `cae6a56c2fd3526
 Restore with `python checkpoints/sol-head-range-catalog-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. The destination must not exist. No toolchain setup, download or credential changes are needed.
 
 Range aggregation, seed conflicts, glyph retrieval, HeadInter/SIG registration and full OMR remain unfinished. See MANIFEST.json for hashes, limitations and validation evidence.
+
+A separate remote clone of main `8bfaa3136da2be8e75e91083bd40efa3c6bc5568` was restored and verified: all 4,826 source file SHA256 values and implementation tree match; all 396 archival files and archival tree also match. The recovered CLI report passes the original-oracle verifier. Tests were not rerun on the recovered source. See evidence/REMOTE-READBACK.json.

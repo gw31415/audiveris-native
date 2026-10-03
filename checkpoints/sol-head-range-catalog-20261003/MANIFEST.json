@@ -288,6 +288,50 @@
       "source_clean": true,
       "source": "/workspace/work/head-range-catalog/prepush-restore/artifacts/audiveris-source",
       "source_git": "/workspace/work/head-range-catalog/prepush-restore/source-git"
+    },
+    "remote_fresh_restore": {
+      "recorded_utc": "2026-10-03T21:55:39.884464+00:00",
+      "status": "passed",
+      "remote_main_verified": "8bfaa3136da2be8e75e91083bd40efa3c6bc5568",
+      "archival_repository_tree": "98313042dbdc31851d33114dd5c7ae72aad5bf1e",
+      "fresh_remote_clone": true,
+      "recovered_from_remote_archives_and_pinned_chain": true,
+      "all_archival_files_sha256_verified": 396,
+      "source_commit": "3f015272fde1c071351296fd80c25ad8c1bc4448",
+      "source_tree": "cae6a56c2fd3526bd56819fb11b54386ca3cf4e2",
+      "all_fresh_restored_sha256_verified": 4826,
+      "source_clean": true,
+      "bundle_sha256_verified": "64e0ea93fd5ab5e6a3f14f2dc6ba12fd4baa486093eaa967041223db6daba230",
+      "source_sha256_list_verified": "1a4515ccc4e33a0d8fb18949d8e6dbd8076093813c106842ff49f94848e48972",
+      "recovered_native_cli_report_sha256": "eb826200bf40ba80944de94f15d6837275201cbf05abf16ac47f1dc23d98b3ed",
+      "recovered_cli_oracle_comparison": {
+        "status": "passed",
+        "range_scanners": 118,
+        "accepted_candidates": 2224,
+        "weak_stemless_rejected": 407,
+        "raw_candidates": 2631,
+        "accepted_stemless": {
+          "WHOLE_NOTE": 3
+        },
+        "preserved_prefix": {
+          "status": "passed",
+          "raw_seed_proposals": 418,
+          "veto_seed_proposals": 358,
+          "head_spot_system_references": 402,
+          "range_scanners": 118,
+          "visited_abscissae": 47790,
+          "skipped_windows": 869,
+          "black_void_prefix_proposals": 2221,
+          "heads_complete": false,
+          "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+          "report_sha256": "eb826200bf40ba80944de94f15d6837275201cbf05abf16ac47f1dc23d98b3ed"
+        },
+        "heads_complete": false,
+        "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+        "report_sha256": "eb826200bf40ba80944de94f15d6837275201cbf05abf16ac47f1dc23d98b3ed"
+      },
+      "saved_full_workspace_passed": 349,
+      "tests_rerun_on_recovered_source": false
     }
   },
   "official_source_receipts": [
@@ -330,6 +374,7 @@
     "Activate the existing onboarding toolchain; run cargo test --workspace --locked --offline -j2 or the focused HEADS tests. Compare independent Laura CLI with scripts/check_head_range_catalog.py."
   ],
   "evidence_sha256": {
+    "evidence/REMOTE-READBACK.json": "a892e60806cf6754705c9a4c48ec56f99d26074e912d45d6b594ea77c95ba5ba",
     "evidence/baseline-heads.log": "df7023974754313407ce8dda2315d4f87570d28a276740aaede824230c74a66c",
     "evidence/bundle-verify.log": "3c4c87bbdcefeeb1b38047920a144ee053194ce9f3da7479d60d8cd5390e77d4",
     "evidence/clippy.log": "03d6b5e734a479f4f7b3ab41f9418596369b261df35d0f13201bdb412ea3b198",
@@ -350,6 +395,7 @@
     "evidence/original-summary.json": "363f8fba19ffa4cc35d1dcf51c59f774d8144c887f7187476747a79a911b74ae",
     "evidence/prepush-restore.json": "985218755a9ea9e33c3f10ad69353a872bf21227564dae35638a6ec2503fe0c5",
     "evidence/prepush-restore.log": "cdecf09c4cba41d1c1a536faecfe98152813826b3d546482d35197c1e8ad0c32",
+    "evidence/remote-restore.log": "4d6409e8a8bbc6c5b7101aecc2665deea1b0bd3922af85a788c02f694d9eb1cc",
     "evidence/standalone-cli-comparison.json": "289b2df9468136bd93f6e3b1d91ea2b38e27393d4ed998c05520c9d5a7d4da82"
   },
   "restore_script_sha256": "627797bb2e27723f305c82722a60dd3cdf776241b96010fab602b77e06afad85",
