@@ -1,0 +1,213 @@
+{
+  "focused": {
+    "suites": 5,
+    "passed": 14,
+    "failed": 0,
+    "ignored": 0
+  },
+  "fmt": "passed",
+  "all_targets_clippy": "passed",
+  "build": "passed",
+  "native_grid_raster_fixtures": 13,
+  "original_controls": {
+    "raster_cases": 1,
+    "positive_registered_staffs": 2,
+    "shapes": [
+      "G_CLEF",
+      "F_CLEF"
+    ],
+    "supplied_geometry_configurations": 9,
+    "rectangle_queries": 78,
+    "native_outputs_used": false,
+    "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "fixture_sha256": "9e25ceb2622168ae4a9a53acd38050c9ad7fefaf2d20f547434b921e4f060f91",
+    "observer_sha256": "4d82fb3999e9f2e8ccd8b421cdb9029c9e13700d60867e5796bca25c0d376797",
+    "scope": "Unmodified ClefBuilder outer/inner rectangles using original StaffManager neighbors, including strict midpoint endpoint controls and curved staff geometry; supplied geometry, not positive raster recognition",
+    "raster_scope": "Synthetic positive side-by-side treble and bass raster; original candidates and registration exact; not positive real-score rest recognition"
+  },
+  "cli": {
+    "cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/beams-single.png",
+        "/workspace/audiveris-clef-horizontal-check-20261003/cli.pgm",
+        "/workspace/audiveris-clef-horizontal-check-20261003/cli.json"
+      ],
+      "seconds": 1.3801971770008095,
+      "exit_code": 0,
+      "report_sha256": "77e33d9dc131ee720f9d9e6a3bcc844d82ba9a38ba099fce679cd0fc04da2d61",
+      "staff_count": 1,
+      "system_count": 1,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false,
+      "same_pipeline_values_as_parent": true,
+      "supplied_clips_discovered_by_native_grid": false,
+      "byte_identical_to_parent": true,
+      "changed_parent_report_fields": null
+    },
+    "multi-cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/laura-gray.png",
+        "/workspace/audiveris-clef-horizontal-check-20261003/multi-cli.pgm",
+        "/workspace/audiveris-clef-horizontal-check-20261003/multi-cli.json"
+      ],
+      "seconds": 16.946643096000116,
+      "exit_code": 0,
+      "report_sha256": "94a19d30818d02ed79346d46329292d003de0534eb04d98649fa13dd068c8fa2",
+      "staff_count": 6,
+      "system_count": 2,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        },
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false,
+      "same_pipeline_values_as_parent": true,
+      "supplied_clips_discovered_by_native_grid": false,
+      "byte_identical_to_parent": true,
+      "changed_parent_report_fields": null
+    },
+    "multi-replay": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/laura-gray.png",
+        "/workspace/audiveris-clef-horizontal-check-20261003/multi-replay.pgm",
+        "/workspace/audiveris-clef-horizontal-check-20261003/multi-replay.json"
+      ],
+      "seconds": 16.19658633200015,
+      "exit_code": 0,
+      "report_sha256": "94a19d30818d02ed79346d46329292d003de0534eb04d98649fa13dd068c8fa2",
+      "staff_count": 6,
+      "system_count": 2,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        },
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false,
+      "replay_identical": true,
+      "same_pipeline_values_as_parent": true,
+      "supplied_clips_discovered_by_native_grid": false,
+      "byte_identical_to_parent": true,
+      "changed_parent_report_fields": null
+    }
+  },
+  "native_cli_pipeline_values_identical_to_parent": true,
+  "reports_byte_identical_to_parent": true,
+  "native_clef_raster_fixtures": 11,
+  "shared_grid_graph": "unchanged during pure candidate analysis and registration",
+  "horizontal_cli_boundaries": {
+    "horizontal-rendered-clefs": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png",
+        "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-rendered-clefs-beam.pgm",
+        "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-rendered-clefs-beam.json"
+      ],
+      "exit_code": 1,
+      "seconds": 1.074466288999247,
+      "report_sha256": null,
+      "boundary_log": "error: unsupported_seed_system_area_clip\n",
+      "system_candidates": null,
+      "stem_seeds": null,
+      "positive_real_score_rest": "not demonstrated",
+      "full_OMR": "unfinished"
+    },
+    "horizontal-two-column": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-two-column.png",
+        "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-two-column-beam.pgm",
+        "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-two-column-beam.json"
+      ],
+      "exit_code": 1,
+      "seconds": 1.0192746039992926,
+      "report_sha256": null,
+      "boundary_log": "error: unsupported_seed_system_area_clip\n",
+      "system_candidates": null,
+      "stem_seeds": null,
+      "positive_real_score_rest": "not demonstrated",
+      "full_OMR": "unfinished"
+    },
+    "horizontal-mixed-short": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-mixed-short.png",
+        "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-mixed-short-beam.pgm",
+        "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-mixed-short-beam.json"
+      ],
+      "exit_code": 1,
+      "seconds": 0.9167626540001947,
+      "report_sha256": null,
+      "boundary_log": "error: unsupported_seed_system_area_clip\n",
+      "system_candidates": null,
+      "stem_seeds": null,
+      "positive_real_score_rest": "not demonstrated",
+      "full_OMR": "unfinished"
+    }
+  },
+  "native_horizontal_area_end_discovery": "implemented from produced GRID coordinates",
+  "native_neighbor_chain_and_area_point_geometry": "implemented in native GRID",
+  "initial_short_staff_system_building": "verified on actual two-column and mixed short raster inputs",
+  "side_by_side_clef_adapter": "original horizontal and vertical neighbor mapping verified; positive original raster candidates and registration",
+  "actual_multi_column_raster_pipeline": "stops at unsupported_seed_system_area_clip; see individual boundary receipts",
+  "remaining_dependencies": [
+    "clipped stem-seed system-area adapter",
+    "downstream beam/rest horizontal-chain adapters",
+    "clipped beam preparation masks",
+    "clipped boolean-intersection bounds and edges"
+  ],
+  "full_debug": "UNVERIFIED at new source",
+  "full_release": "UNVERIFIED at new source",
+  "prior_full_regression": {
+    "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+    "remote_commit": "deec43364e2b6b348cca4b38f798f534c8bd1925",
+    "debug": 297,
+    "release": 297,
+    "suites_each": 94
+  },
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished"
+}

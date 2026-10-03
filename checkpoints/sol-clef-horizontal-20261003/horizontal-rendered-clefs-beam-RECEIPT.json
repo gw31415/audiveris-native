@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png",
+    "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-rendered-clefs-beam.pgm",
+    "/workspace/audiveris-clef-horizontal-check-20261003/horizontal-rendered-clefs-beam.json"
+  ],
+  "exit_code": 1,
+  "seconds": 1.074466288999247,
+  "report_sha256": null,
+  "boundary_log": "error: unsupported_seed_system_area_clip\n",
+  "system_candidates": null,
+  "stem_seeds": null,
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished"
+}

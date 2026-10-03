@@ -1,0 +1,6 @@
+tree 882b5b76bbeac38e521ed654468c41d5761c8c14
+parent bce67177a788cec94c36d15d7f29237ed9fef183
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791040334 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791040334 +0000
+
+Use original neighbor chains for clef browse rectangles; verify positive side-by-side treble and bass raster

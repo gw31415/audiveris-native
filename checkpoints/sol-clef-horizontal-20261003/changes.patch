@@ -1,0 +1,387 @@
+diff --git a/docs/CLEF-HORIZONTAL-NEIGHBORS.md b/docs/CLEF-HORIZONTAL-NEIGHBORS.md
+new file mode 100644
+index 0000000..47b2b79
+--- /dev/null
++++ b/docs/CLEF-HORIZONTAL-NEIGHBORS.md
+@@ -0,0 +1,7 @@
++# Side-by-side clef browse geometry
++
++Native ClefBuilder candidate analysis now uses original StaffManager vertical-neighbor chains for browse rectangles, rather than rejecting horizontally separated staffs and limiting clipping to adjacent vector entries. Every neighbor whose integer abscissas strictly enclose the browse midpoint contributes the original rounded ordinate and half-gap ceil/floor bound. Midpoints exactly on neighbor endpoints do not contribute. Inner-rectangle constants, candidate extraction, classifier grading and registration retain the pinned original behavior.
++
++Original private getOuterRect/getInnerRect controls cover side-by-side, skipped neighbors, touching endpoints, curved lines and independently observed Laura geometry. A new actual side-by-side raster composed from preserved rendered treble and bass fixtures is run through original GRID, ClefBuilder candidates and registration; native ROI, glyph pixels, candidate grades and registered clef bounds are compared to that oracle. Existing positive/negative raster clef controls remain checked. Candidate and registration functions retain staff IDs, and shared GRID graph ownership/identity is checked unchanged during these pure stages.
++
++This stage does not implement a full multi-column score pipeline or assign provisional clefs into an authoritative complete SIG. The full native CLI records the next actual unsupported boundary; stem-seed and beam/rest adapters and clipped area bounds remain unfinished. No positive real-score rest conversion is claimed. Full regression at this source remains unverified.
+diff --git a/fixtures/official-clef-neighbor-rects.json b/fixtures/official-clef-neighbor-rects.json
+new file mode 100644
+index 0000000..cf7ed97
+--- /dev/null
++++ b/fixtures/official-clef-neighbor-rects.json
+@@ -0,0 +1 @@
++{"scope":"Unmodified ClefBuilder outer/inner rectangles using original StaffManager neighbors, including strict midpoint endpoint controls and curved staff geometry; supplied geometry, not positive raster recognition","native_outputs_used":false,"configurations":[{"input":{"name":"single","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":1,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]}],"systems":[{"id":1,"staff_ids":[1],"coordinates":[20,20,182,60,0]}]}},"name":"single","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]}]},{"input":{"name":"odd-midpoint","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":1,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]},{"id":2,"system_id":2,"left":500,"right":801,"lines":[{"points":[[500,30.0],[801,30.0]],"thickness":1},{"points":[[500,40.0],[801,40.0]],"thickness":1},{"points":[[500,50.0],[801,50.0]],"thickness":1},{"points":[[500,60.0],[801,60.0]],"thickness":1},{"points":[[500,70.0],[801,70.0]],"thickness":1}]}],"systems":[{"id":1,"staff_ids":[1],"coordinates":[20,20,182,60,0]},{"id":2,"staff_ids":[2],"coordinates":[500,30,302,70,0]}]}},"name":"odd-midpoint","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]},{"staff_id":2,"start":501,"outer":[503,0,47,107],"inner":[505,6,45,95]},{"staff_id":2,"start":475,"outer":[477,0,47,107],"inner":[479,6,45,95]},{"staff_id":2,"start":776,"outer":[778,0,47,107],"inner":[780,6,45,95]}]},{"input":{"name":"three-horizontal","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":7,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]},{"id":2,"system_id":2,"left":450,"right":651,"lines":[{"points":[[450,30.0],[651,30.0]],"thickness":1},{"points":[[450,40.0],[651,40.0]],"thickness":1},{"points":[[450,50.0],[651,50.0]],"thickness":1},{"points":[[450,60.0],[651,60.0]],"thickness":1},{"points":[[450,70.0],[651,70.0]],"thickness":1}]},{"id":3,"system_id":11,"left":800,"right":980,"lines":[{"points":[[800,25.0],[980,25.0]],"thickness":1},{"points":[[800,35.0],[980,35.0]],"thickness":1},{"points":[[800,45.0],[980,45.0]],"thickness":1},{"points":[[800,55.0],[980,55.0]],"thickness":1},{"points":[[800,65.0],[980,65.0]],"thickness":1}]}],"systems":[{"id":7,"staff_ids":[1],"coordinates":[20,20,182,60,0]},{"id":2,"staff_ids":[2],"coordinates":[450,30,202,70,0]},{"id":11,"staff_ids":[3],"coordinates":[800,25,181,65,0]}]}},"name":"three-horizontal","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]},{"staff_id":2,"start":451,"outer":[453,0,47,107],"inner":[455,6,45,95]},{"staff_id":2,"start":425,"outer":[427,0,47,107],"inner":[429,6,45,95]},{"staff_id":2,"start":626,"outer":[628,0,47,107],"inner":[630,6,45,95]},{"staff_id":3,"start":801,"outer":[803,0,47,102],"inner":[805,6,45,90]},{"staff_id":3,"start":775,"outer":[777,0,47,102],"inner":[779,6,45,90]},{"staff_id":3,"start":955,"outer":[957,0,47,102],"inner":[959,6,45,90]}]},{"input":{"name":"touch-is-not-overlap","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":1,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]},{"id":2,"system_id":2,"left":500,"right":801,"lines":[{"points":[[500,60.0],[801,60.0]],"thickness":1},{"points":[[500,70.0],[801,70.0]],"thickness":1},{"points":[[500,80.0],[801,80.0]],"thickness":1},{"points":[[500,90.0],[801,90.0]],"thickness":1},{"points":[[500,100.0],[801,100.0]],"thickness":1}]}],"systems":[{"id":1,"staff_ids":[1],"coordinates":[20,20,182,60,0]},{"id":2,"staff_ids":[2],"coordinates":[500,60,302,100,0]}]}},"name":"touch-is-not-overlap","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]},{"staff_id":2,"start":501,"outer":[503,27,47,110],"inner":[505,33,45,98]},{"staff_id":2,"start":475,"outer":[477,27,47,110],"inner":[479,33,45,98]},{"staff_id":2,"start":776,"outer":[778,27,47,110],"inner":[780,33,45,98]}]},{"input":{"name":"one-pixel-overlap","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":1,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]},{"id":2,"system_id":2,"left":500,"right":801,"lines":[{"points":[[500,59.0],[801,59.0]],"thickness":1},{"points":[[500,69.0],[801,69.0]],"thickness":1},{"points":[[500,79.0],[801,79.0]],"thickness":1},{"points":[[500,89.0],[801,89.0]],"thickness":1},{"points":[[500,99.0],[801,99.0]],"thickness":1}]}],"systems":[{"id":1,"staff_ids":[1],"coordinates":[20,20,182,60,0]},{"id":2,"staff_ids":[2],"coordinates":[500,59,302,99,0]}]}},"name":"one-pixel-overlap","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]},{"staff_id":2,"start":501,"outer":[503,26,47,110],"inner":[505,32,45,98]},{"staff_id":2,"start":475,"outer":[477,26,47,110],"inner":[479,32,45,98]},{"staff_id":2,"start":776,"outer":[778,26,47,110],"inner":[780,32,45,98]}]},{"input":{"name":"skip-non-overlap","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":7,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]},{"id":2,"system_id":2,"left":450,"right":651,"lines":[{"points":[[450,200.0],[651,200.0]],"thickness":1},{"points":[[450,210.0],[651,210.0]],"thickness":1},{"points":[[450,220.0],[651,220.0]],"thickness":1},{"points":[[450,230.0],[651,230.0]],"thickness":1},{"points":[[450,240.0],[651,240.0]],"thickness":1}]},{"id":3,"system_id":11,"left":800,"right":980,"lines":[{"points":[[800,30.0],[980,30.0]],"thickness":1},{"points":[[800,40.0],[980,40.0]],"thickness":1},{"points":[[800,50.0],[980,50.0]],"thickness":1},{"points":[[800,60.0],[980,60.0]],"thickness":1},{"points":[[800,70.0],[980,70.0]],"thickness":1}]}],"systems":[{"id":7,"staff_ids":[1],"coordinates":[20,20,182,60,0]},{"id":2,"staff_ids":[2],"coordinates":[450,200,202,240,0]},{"id":11,"staff_ids":[3],"coordinates":[800,30,181,70,0]}]}},"name":"skip-non-overlap","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]},{"staff_id":2,"start":451,"outer":[453,167,47,110],"inner":[455,173,45,98]},{"staff_id":2,"start":425,"outer":[427,167,47,110],"inner":[429,173,45,98]},{"staff_id":2,"start":626,"outer":[628,167,47,110],"inner":[630,173,45,98]},{"staff_id":3,"start":801,"outer":[803,0,47,107],"inner":[805,6,45,95]},{"staff_id":3,"start":775,"outer":[777,0,47,107],"inner":[779,6,45,95]},{"staff_id":3,"start":955,"outer":[957,0,47,107],"inner":[959,6,45,95]}]},{"input":{"name":"first-encounter","width":1000,"height":1000,"grid":{"staffs":[{"id":1,"system_id":7,"left":20,"right":201,"lines":[{"points":[[20,20.0],[201,20.0]],"thickness":1},{"points":[[20,30.0],[201,30.0]],"thickness":1},{"points":[[20,40.0],[201,40.0]],"thickness":1},{"points":[[20,50.0],[201,50.0]],"thickness":1},{"points":[[20,60.0],[201,60.0]],"thickness":1}]},{"id":2,"system_id":2,"left":300,"right":451,"lines":[{"points":[[300,200.0],[451,200.0]],"thickness":1},{"points":[[300,210.0],[451,210.0]],"thickness":1},{"points":[[300,220.0],[451,220.0]],"thickness":1},{"points":[[300,230.0],[451,230.0]],"thickness":1},{"points":[[300,240.0],[451,240.0]],"thickness":1}]},{"id":3,"system_id":11,"left":500,"right":651,"lines":[{"points":[[500,30.0],[651,30.0]],"thickness":1},{"points":[[500,40.0],[651,40.0]],"thickness":1},{"points":[[500,50.0],[651,50.0]],"thickness":1},{"points":[[500,60.0],[651,60.0]],"thickness":1},{"points":[[500,70.0],[651,70.0]],"thickness":1}]},{"id":4,"system_id":4,"left":800,"right":980,"lines":[{"points":[[800,25.0],[980,25.0]],"thickness":1},{"points":[[800,35.0],[980,35.0]],"thickness":1},{"points":[[800,45.0],[980,45.0]],"thickness":1},{"points":[[800,55.0],[980,55.0]],"thickness":1},{"points":[[800,65.0],[980,65.0]],"thickness":1}]}],"systems":[{"id":7,"staff_ids":[1],"coordinates":[20,20,182,60,0]},{"id":2,"staff_ids":[2],"coordinates":[300,200,152,240,0]},{"id":11,"staff_ids":[3],"coordinates":[500,30,152,70,0]},{"id":4,"staff_ids":[4],"coordinates":[800,25,181,65,0]}]}},"name":"first-encounter","queries":[{"staff_id":1,"start":21,"outer":[23,0,47,97],"inner":[25,6,45,85]},{"staff_id":1,"start":-5,"outer":[-3,0,47,97],"inner":[-1,6,45,85]},{"staff_id":1,"start":176,"outer":[178,0,47,97],"inner":[180,6,45,85]},{"staff_id":2,"start":301,"outer":[303,167,47,110],"inner":[305,173,45,98]},{"staff_id":2,"start":275,"outer":[277,167,47,110],"inner":[279,173,45,98]},{"staff_id":2,"start":426,"outer":[428,167,47,110],"inner":[430,173,45,98]},{"staff_id":3,"start":501,"outer":[503,0,47,107],"inner":[505,6,45,95]},{"staff_id":3,"start":475,"outer":[477,0,47,107],"inner":[479,6,45,95]},{"staff_id":3,"start":626,"outer":[628,0,47,107],"inner":[630,6,45,95]},{"staff_id":4,"start":801,"outer":[803,0,47,102],"inner":[805,6,45,90]},{"staff_id":4,"start":775,"outer":[777,0,47,102],"inner":[779,6,45,90]},{"staff_id":4,"start":955,"outer":[957,0,47,102],"inner":[959,6,45,90]}]},{"input":{"width":1489,"height":2104,"interline":11,"grid":{"staffs":[{"id":1,"system_id":1,"lines":[{"points":[[234.0,391.0],[1416.0,391.0]],"thickness":2.038922155688623,"glyph_id":59},{"points":[[234.0,402.0],[1416.0,402.0]],"thickness":2.057833859095689,"glyph_id":60},{"points":[[234.0,413.6429782082325],[1416.0,413.4998789346247]],"thickness":1.055045871559633,"glyph_id":61},{"points":[[234.0,425.0],[1416.0,425.0]],"thickness":2.0671641791044775,"glyph_id":62},{"points":[[234.0,436.0],[1416.0,436.0]],"thickness":2.0445075757575757,"glyph_id":63}],"left":234,"right":1416,"specific_interline":11,"ledger_lines":[]},{"id":2,"system_id":1,"lines":[{"points":[[234.0,516.0],[1416.0,516.0]],"thickness":2.045,"glyph_id":64},{"points":[[234.0,527.6429782082324],[1416.0,527.4998789346247]],"thickness":1.0379746835443038,"glyph_id":65},{"points":[[234.0,539.0],[1416.0,539.0]],"thickness":2.0749486652977414,"glyph_id":66},{"points":[[234.0,550.0],[1416.0,550.0]],"thickness":2.0664488017429194,"glyph_id":67},{"points":[[234.0,561.6429782082324],[1416.0,561.4998789346247]],"thickness":1.0544747081712063,"glyph_id":68}],"left":234,"right":1416,"specific_interline":11,"ledger_lines":[]},{"id":3,"system_id":1,"lines":[{"points":[[234.0,636.5],[1416.0,636.5]],"thickness":1.0431519699812384,"glyph_id":69},{"points":[[234.0,648.0],[1416.0,648.0]],"thickness":2.0546875,"glyph_id":70},{"points":[[234.0,659.0],[1416.0,659.0]],"thickness":2.0382775119617227,"glyph_id":71},{"points":[[234.0,670.5],[1416.0,670.5]],"thickness":1.0306859205776173,"glyph_id":72},{"points":[[234.0,682.0],[1416.0,682.0]],"thickness":2.0245535714285716,"glyph_id":73}],"left":234,"right":1416,"specific_interline":11,"ledger_lines":[]},{"id":4,"system_id":2,"lines":[{"points":[[72.0,886.0],[1415.0,886.0]],"thickness":2.0279232111692846,"glyph_id":74},{"points":[[72.0,897.0],[1415.0,897.0]],"thickness":2.040781648258284,"glyph_id":75},{"points":[[72.0,908.5],[1415.0,908.5]],"thickness":1.0371009490940466,"glyph_id":76},{"points":[[72.0,920.0],[1415.0,920.0]],"thickness":2.0452961672473866,"glyph_id":77},{"points":[[72.0,931.0],[1415.0,931.0]],"thickness":2.0299110751818916,"glyph_id":78}],"left":72,"right":1415,"specific_interline":11,"ledger_lines":[]},{"id":5,"system_id":2,"lines":[{"points":[[72.0,1028.5],[1415.0,1028.5]],"thickness":1.0260089686098655,"glyph_id":79},{"points":[[72.0,1040.0],[1415.0,1040.0]],"thickness":2.0490111779879623,"glyph_id":80},{"points":[[72.0,1051.0],[1415.0,1051.0]],"thickness":2.0552092609082813,"glyph_id":81},{"points":[[72.0,1062.5],[1415.0,1062.5]],"thickness":1.02710027100271,"glyph_id":82},{"points":[[72.0,1074.0],[1415.0,1074.0]],"thickness":2.0490909090909093,"glyph_id":83}],"left":72,"right":1415,"specific_interline":11,"ledger_lines":[]},{"id":6,"system_id":2,"lines":[{"points":[[72.0,1156.5],[1415.0,1156.5]],"thickness":1.0435339308578746,"glyph_id":84},{"points":[[72.0,1168.0],[1415.0,1168.0]],"thickness":2.036290322580645,"glyph_id":85},{"points":[[72.0,1179.0],[1415.0,1179.0]],"thickness":1.5482275350370982,"glyph_id":86},{"points":[[72.0,1190.5],[1415.0,1190.5]],"thickness":1.0317991631799164,"glyph_id":87},{"points":[[72.0,1199.8100368036853],[155.9375,1202.0404640560473],[239.875,1202.0042342438885],[323.8125,1202.000440233834],[407.75,1202.0000401415994],[491.6875,1202.0000037034674],[575.625,1202.0000002813956],[659.5625,1202.000000022314],[743.5,1202.0000000016712],[827.4375,1202.0000000000507],[911.375,1201.9999999992035],[995.3125,1201.9999999908948],[1079.25,1201.9999999120023],[1163.1875,1201.9999992812038],[1247.125,1201.9999968138475],[1331.0625,1202.000011057483],[1415.0,1202.008895478132]],"thickness":2.0158982511923687,"glyph_id":88}],"left":72,"right":1415,"specific_interline":11,"ledger_lines":[]}],"systems":[{"id":1,"staff_ids":[1,2,3],"coordinates":[234,391,1183,682,246],"area":{"x_range":[0,1489],"vertical_margin":10,"north_neighbor_last_line":null,"south_neighbor_first_line":4}},{"id":2,"staff_ids":[4,5,6],"coordinates":[72,886,1344,1200,270],"area":{"x_range":[0,1489],"vertical_margin":10,"north_neighbor_last_line":3,"south_neighbor_first_line":null}}],"vlag":[{"id":1,"first_pos":300,"runs":[[0,1]]},{"id":2,"first_pos":300,"runs":[[400,20]]},{"id":3,"first_pos":300,"runs":[[680,20]]},{"id":4,"first_pos":300,"runs":[[870,20]]},{"id":5,"first_pos":300,"runs":[[890,20]]},{"id":6,"first_pos":300,"runs":[[2103,1]]}],"hlag":[]},"source_fixture":"fixtures/official-grid/laura-gray-final.json","source_is_original_grid":true,"name":"original-laura-stacked"},"name":"original-laura-stacked","queries":[{"staff_id":1,"start":235,"outer":[237,358,47,115],"inner":[239,364,45,103]},{"staff_id":1,"start":209,"outer":[211,358,47,115],"inner":[213,364,45,103]},{"staff_id":1,"start":1391,"outer":[1393,358,47,115],"inner":[1395,364,45,103]},{"staff_id":2,"start":235,"outer":[237,483,47,116],"inner":[239,489,45,104]},{"staff_id":2,"start":209,"outer":[211,483,47,116],"inner":[213,489,45,104]},{"staff_id":2,"start":1391,"outer":[1393,483,47,115],"inner":[1395,489,45,103]},{"staff_id":3,"start":235,"outer":[237,603,47,116],"inner":[239,609,45,104]},{"staff_id":3,"start":209,"outer":[211,603,47,116],"inner":[213,609,45,104]},{"staff_id":3,"start":1391,"outer":[1393,603,47,116],"inner":[1395,609,45,104]},{"staff_id":4,"start":73,"outer":[75,853,47,115],"inner":[77,859,45,103]},{"staff_id":4,"start":47,"outer":[49,853,47,115],"inner":[51,859,45,103]},{"staff_id":4,"start":1390,"outer":[1392,853,47,115],"inner":[1394,859,45,103]},{"staff_id":5,"start":73,"outer":[75,995,47,116],"inner":[77,1001,45,104]},{"staff_id":5,"start":47,"outer":[49,995,47,116],"inner":[51,1001,45,104]},{"staff_id":5,"start":1390,"outer":[1392,995,47,116],"inner":[1394,1001,45,104]},{"staff_id":6,"start":73,"outer":[75,1123,47,115],"inner":[77,1129,45,103]},{"staff_id":6,"start":47,"outer":[49,1123,47,114],"inner":[51,1129,45,102]},{"staff_id":6,"start":1390,"outer":[1392,1123,47,116],"inner":[1394,1129,45,104]}]},{"input":{"name":"curved-clipped-staff-chain","width":320,"height":400,"grid":{"hlag":[],"staffs":[{"right":140,"lines":[{"points":[[20.0,50.0],[80.0,54.0],[140.0,49.0]],"thickness":1.0},{"points":[[20.0,66.0],[80.0,70.0],[140.0,65.0]],"thickness":1.0},{"points":[[20.0,82.0],[80.0,86.0],[140.0,81.0]],"thickness":1.0},{"points":[[20.0,98.0],[80.0,102.0],[140.0,97.0]],"thickness":1.0},{"points":[[20.0,114.0],[80.0,118.0],[140.0,113.0]],"thickness":1.0}],"specific_interline":16,"left":20,"ledger_lines":[],"id":1,"system_id":1},{"right":140,"lines":[{"points":[[20.0,194.0],[80.0,198.0],[140.0,193.0]],"thickness":1.0},{"points":[[20.0,210.0],[80.0,214.0],[140.0,209.0]],"thickness":1.0},{"points":[[20.0,226.0],[80.0,230.0],[140.0,225.0]],"thickness":1.0},{"points":[[20.0,242.0],[80.0,246.0],[140.0,241.0]],"thickness":1.0},{"points":[[20.0,258.0],[80.0,262.0],[140.0,257.0]],"thickness":1.0}],"specific_interline":16,"left":20,"ledger_lines":[],"id":2,"system_id":1},{"id":3,"system_id":2,"left":180,"right":300,"lines":[{"points":[[180,194],[240,198],[300,193]],"thickness":1},{"points":[[180,210],[240,214],[300,209]],"thickness":1},{"points":[[180,226],[240,230],[300,225]],"thickness":1},{"points":[[180,242],[240,246],[300,241]],"thickness":1},{"points":[[180,258],[240,262],[300,257]],"thickness":1}]}],"systems":[{"id":1,"area":{"vertical_margin":14,"x_range":[0,160]},"staff_ids":[1,2],"coordinates":[20,50,121,258,144]},{"id":2,"staff_ids":[3],"coordinates":[180,194,121,258,0]}],"vlag":[]}},"name":"curved-clipped-staff-chain","queries":[{"staff_id":1,"start":21,"outer":[23,20,47,134],"inner":[25,26,45,122]},{"staff_id":1,"start":-5,"outer":[-3,17,47,134],"inner":[-1,23,45,122]},{"staff_id":1,"start":115,"outer":[117,16,47,134],"inner":[119,22,45,122]},{"staff_id":2,"start":21,"outer":[23,164,47,134],"inner":[25,170,45,122]},{"staff_id":2,"start":-5,"outer":[-3,161,47,134],"inner":[-1,167,45,122]},{"staff_id":2,"start":115,"outer":[117,160,47,134],"inner":[119,166,45,122]},{"staff_id":3,"start":181,"outer":[183,164,47,134],"inner":[185,170,45,122]},{"staff_id":3,"start":155,"outer":[157,161,47,134],"inner":[159,167,45,122]},{"staff_id":3,"start":275,"outer":[277,160,47,134],"inner":[279,166,45,122]}]}]}
+\ No newline at end of file
+diff --git a/fixtures/official-grid/horizontal-rendered-clefs-clef-registration.json b/fixtures/official-grid/horizontal-rendered-clefs-clef-registration.json
+new file mode 100644
+index 0000000..41b638b
+--- /dev/null
++++ b/fixtures/official-grid/horizontal-rendered-clefs-clef-registration.json
+@@ -0,0 +1 @@
++{"staffs":[{"staff_id":1,"clef_stop":158,"inters":[{"shape":"G_CLEF","kind":"TREBLE","grade":0.7971109687762324,"pitch":2.0,"bounds":[116,97,43,112],"glyph":{"bounds":[116,97,43,113],"orientation":"VERTICAL","runs":[[0,59,14],[1,55,19],[2,54,23],[3,52,26],[4,50,29],[5,49,32],[6,48,15],[6,75,7],[7,46,15],[7,77,5],[8,45,14],[8,78,5],[8,100,6],[9,44,13],[9,79,5],[9,98,10],[10,43,14],[10,80,4],[10,97,13],[11,42,15],[11,81,4],[11,96,15],[12,39,15],[12,82,3],[12,96,15],[13,39,14],[13,64,9],[13,82,4],[13,95,17],[14,39,13],[14,62,13],[14,83,3],[14,95,17],[15,38,13],[15,60,17],[15,83,3],[15,95,18],[16,38,12],[16,59,19],[16,83,6],[16,95,13],[16,110,3],[17,37,12],[17,58,20],[17,84,5],[17,95,13],[17,110,3],[18,20,7],[18,36,12],[18,55,13],[18,75,4],[18,84,5],[18,96,12],[18,110,3],[19,14,33],[19,55,12],[19,76,3],[19,84,5],[19,97,10],[19,110,3],[20,11,35],[20,55,11],[20,77,3],[20,84,5],[20,98,8],[20,110,3],[21,8,38],[21,55,10],[21,78,2],[21,84,5],[21,100,4],[21,110,3],[22,7,14],[22,33,19],[22,55,10],[22,78,2],[22,84,5],[22,110,3],[23,5,13],[23,32,32],[23,84,5],[23,110,3],[24,4,12],[24,31,13],[24,45,20],[24,84,5],[24,110,3],[25,3,11],[25,30,13],[25,51,19],[25,84,5],[25,109,4],[26,2,11],[26,29,12],[26,55,21],[26,84,5],[26,109,3],[27,1,11],[27,28,13],[27,55,28],[27,84,5],[27,108,4],[28,1,10],[28,27,14],[28,55,9],[28,68,21],[28,106,5],[29,0,11],[29,26,12],[29,55,9],[29,74,21],[29,104,6],[30,1,10],[30,23,14],[30,55,9],[30,80,30],[31,2,9],[31,23,13],[31,55,10],[31,83,25],[32,3,9],[32,21,13],[32,55,10],[32,82,4],[32,91,15],[33,5,27],[33,55,11],[33,81,4],[33,99,2],[34,7,23],[34,55,12],[34,81,4],[35,10,18],[35,55,13],[35,79,5],[36,14,11],[36,55,15],[36,78,6],[37,58,25],[38,59,23],[39,60,21],[40,61,19],[41,63,15],[42,65,10]]}}],"exclusions":[]},{"staff_id":2,"clef_stop":1119,"inters":[{"shape":"F_CLEF","kind":"BASS","grade":0.7952473847806326,"pitch":-2.0,"bounds":[1076,119,44,57],"glyph":{"bounds":[1075,119,45,58],"orientation":"VERTICAL","runs":[[0,56,1],[1,10,9],[1,55,3],[2,8,13],[2,55,3],[3,6,16],[3,54,3],[4,5,18],[4,53,4],[5,4,20],[5,53,3],[6,1,7],[6,11,13],[6,52,4],[7,1,5],[7,10,14],[7,52,3],[8,1,4],[8,10,14],[8,49,6],[9,1,4],[9,10,14],[9,49,5],[10,1,3],[10,10,14],[10,49,5],[11,1,3],[11,11,13],[11,49,4],[12,0,3],[12,11,12],[12,48,4],[13,0,3],[13,12,11],[13,47,5],[14,0,3],[14,13,9],[14,46,5],[15,0,3],[15,15,5],[15,45,6],[16,0,3],[16,44,7],[17,0,3],[17,42,9],[18,0,4],[18,41,7],[19,0,4],[19,40,8],[20,0,5],[20,38,9],[21,0,6],[21,36,10],[22,1,6],[22,33,12],[23,1,8],[23,31,13],[24,1,12],[24,26,17],[25,1,41],[26,1,40],[27,1,39],[28,1,38],[29,4,33],[30,5,31],[31,6,29],[32,8,24],[33,10,19],[34,13,13],[37,8,2],[38,6,6],[38,22,6],[39,6,6],[39,22,6],[40,5,8],[40,21,8],[41,5,8],[41,21,8],[42,5,8],[42,21,8],[43,6,6],[43,22,6],[44,7,4],[44,23,4]]}}],"exclusions":[]}]}
+diff --git a/fixtures/official-grid/horizontal-rendered-clefs-clef.json b/fixtures/official-grid/horizontal-rendered-clefs-clef.json
+new file mode 100644
+index 0000000..b350c9b
+--- /dev/null
++++ b/fixtures/official-grid/horizontal-rendered-clefs-clef.json
+@@ -0,0 +1 @@
++{"f_clef_pitch_offset":-1.491875,"staffs":[{"staff_id":1,"outer":[102,73,69,165],"inner":[105,81,66,149],"first_parts":[{"id":25,"bounds":[116,97,43,113],"orientation":"VERTICAL","runs":[[0,59,14],[1,55,19],[2,54,23],[3,52,26],[4,50,29],[5,49,32],[6,48,15],[6,75,7],[7,46,15],[7,77,5],[8,45,14],[8,78,5],[8,100,6],[9,44,13],[9,79,5],[9,98,10],[10,43,14],[10,80,4],[10,97,13],[11,42,15],[11,81,4],[11,96,15],[12,39,15],[12,82,3],[12,96,15],[13,39,14],[13,64,9],[13,82,4],[13,95,17],[14,39,13],[14,62,13],[14,83,3],[14,95,17],[15,38,13],[15,60,17],[15,83,3],[15,95,18],[16,38,12],[16,59,19],[16,83,6],[16,95,13],[16,110,3],[17,37,12],[17,58,20],[17,84,5],[17,95,13],[17,110,3],[18,20,7],[18,36,12],[18,55,13],[18,75,4],[18,84,5],[18,96,12],[18,110,3],[19,14,33],[19,55,12],[19,76,3],[19,84,5],[19,97,10],[19,110,3],[20,11,35],[20,55,11],[20,77,3],[20,84,5],[20,98,8],[20,110,3],[21,8,38],[21,55,10],[21,78,2],[21,84,5],[21,100,4],[21,110,3],[22,7,14],[22,33,19],[22,55,10],[22,78,2],[22,84,5],[22,110,3],[23,5,13],[23,32,32],[23,84,5],[23,110,3],[24,4,12],[24,31,13],[24,45,20],[24,84,5],[24,110,3],[25,3,11],[25,30,13],[25,51,19],[25,84,5],[25,109,4],[26,2,11],[26,29,12],[26,55,21],[26,84,5],[26,109,3],[27,1,11],[27,28,13],[27,55,28],[27,84,5],[27,108,4],[28,1,10],[28,27,14],[28,55,9],[28,68,21],[28,106,5],[29,0,11],[29,26,12],[29,55,9],[29,74,21],[29,104,6],[30,1,10],[30,23,14],[30,55,9],[30,80,30],[31,2,9],[31,23,13],[31,55,10],[31,83,25],[32,3,9],[32,21,13],[32,55,10],[32,82,4],[32,91,15],[33,5,27],[33,55,11],[33,81,4],[33,99,2],[34,7,23],[34,55,12],[34,81,4],[35,10,18],[35,55,13],[35,79,5],[36,14,11],[36,55,15],[36,78,6],[37,58,25],[38,59,23],[39,60,21],[40,61,19],[41,63,15],[42,65,10]]}],"second_parts":[{"id":25,"bounds":[116,97,43,113],"orientation":"VERTICAL","runs":[[0,59,14],[1,55,19],[2,54,23],[3,52,26],[4,50,29],[5,49,32],[6,48,15],[6,75,7],[7,46,15],[7,77,5],[8,45,14],[8,78,5],[8,100,6],[9,44,13],[9,79,5],[9,98,10],[10,43,14],[10,80,4],[10,97,13],[11,42,15],[11,81,4],[11,96,15],[12,39,15],[12,82,3],[12,96,15],[13,39,14],[13,64,9],[13,82,4],[13,95,17],[14,39,13],[14,62,13],[14,83,3],[14,95,17],[15,38,13],[15,60,17],[15,83,3],[15,95,18],[16,38,12],[16,59,19],[16,83,6],[16,95,13],[16,110,3],[17,37,12],[17,58,20],[17,84,5],[17,95,13],[17,110,3],[18,20,7],[18,36,12],[18,55,13],[18,75,4],[18,84,5],[18,96,12],[18,110,3],[19,14,33],[19,55,12],[19,76,3],[19,84,5],[19,97,10],[19,110,3],[20,11,35],[20,55,11],[20,77,3],[20,84,5],[20,98,8],[20,110,3],[21,8,38],[21,55,10],[21,78,2],[21,84,5],[21,100,4],[21,110,3],[22,7,14],[22,33,19],[22,55,10],[22,78,2],[22,84,5],[22,110,3],[23,5,13],[23,32,32],[23,84,5],[23,110,3],[24,4,12],[24,31,13],[24,45,20],[24,84,5],[24,110,3],[25,3,11],[25,30,13],[25,51,19],[25,84,5],[25,109,4],[26,2,11],[26,29,12],[26,55,21],[26,84,5],[26,109,3],[27,1,11],[27,28,13],[27,55,28],[27,84,5],[27,108,4],[28,1,10],[28,27,14],[28,55,9],[28,68,21],[28,106,5],[29,0,11],[29,26,12],[29,55,9],[29,74,21],[29,104,6],[30,1,10],[30,23,14],[30,55,9],[30,80,30],[31,2,9],[31,23,13],[31,55,10],[31,83,25],[32,3,9],[32,21,13],[32,55,10],[32,82,4],[32,91,15],[33,5,27],[33,55,11],[33,81,4],[33,99,2],[34,7,23],[34,55,12],[34,81,4],[35,10,18],[35,55,13],[35,79,5],[36,14,11],[36,55,15],[36,78,6],[37,58,25],[38,59,23],[39,60,21],[40,61,19],[41,63,15],[42,65,10]]}],"first_best":[{"kind":"TREBLE","shape":"G_CLEF","grade":0.7971109687762324,"glyph":{"id":25,"bounds":[116,97,43,113],"orientation":"VERTICAL","runs":[[0,59,14],[1,55,19],[2,54,23],[3,52,26],[4,50,29],[5,49,32],[6,48,15],[6,75,7],[7,46,15],[7,77,5],[8,45,14],[8,78,5],[8,100,6],[9,44,13],[9,79,5],[9,98,10],[10,43,14],[10,80,4],[10,97,13],[11,42,15],[11,81,4],[11,96,15],[12,39,15],[12,82,3],[12,96,15],[13,39,14],[13,64,9],[13,82,4],[13,95,17],[14,39,13],[14,62,13],[14,83,3],[14,95,17],[15,38,13],[15,60,17],[15,83,3],[15,95,18],[16,38,12],[16,59,19],[16,83,6],[16,95,13],[16,110,3],[17,37,12],[17,58,20],[17,84,5],[17,95,13],[17,110,3],[18,20,7],[18,36,12],[18,55,13],[18,75,4],[18,84,5],[18,96,12],[18,110,3],[19,14,33],[19,55,12],[19,76,3],[19,84,5],[19,97,10],[19,110,3],[20,11,35],[20,55,11],[20,77,3],[20,84,5],[20,98,8],[20,110,3],[21,8,38],[21,55,10],[21,78,2],[21,84,5],[21,100,4],[21,110,3],[22,7,14],[22,33,19],[22,55,10],[22,78,2],[22,84,5],[22,110,3],[23,5,13],[23,32,32],[23,84,5],[23,110,3],[24,4,12],[24,31,13],[24,45,20],[24,84,5],[24,110,3],[25,3,11],[25,30,13],[25,51,19],[25,84,5],[25,109,4],[26,2,11],[26,29,12],[26,55,21],[26,84,5],[26,109,3],[27,1,11],[27,28,13],[27,55,28],[27,84,5],[27,108,4],[28,1,10],[28,27,14],[28,55,9],[28,68,21],[28,106,5],[29,0,11],[29,26,12],[29,55,9],[29,74,21],[29,104,6],[30,1,10],[30,23,14],[30,55,9],[30,80,30],[31,2,9],[31,23,13],[31,55,10],[31,83,25],[32,3,9],[32,21,13],[32,55,10],[32,82,4],[32,91,15],[33,5,27],[33,55,11],[33,81,4],[33,99,2],[34,7,23],[34,55,12],[34,81,4],[35,10,18],[35,55,13],[35,79,5],[36,14,11],[36,55,15],[36,78,6],[37,58,25],[38,59,23],[39,60,21],[40,61,19],[41,63,15],[42,65,10]]}}],"second_best":[{"kind":"TREBLE","shape":"G_CLEF","grade":0.7971109687762324,"glyph":{"id":25,"bounds":[116,97,43,113],"orientation":"VERTICAL","runs":[[0,59,14],[1,55,19],[2,54,23],[3,52,26],[4,50,29],[5,49,32],[6,48,15],[6,75,7],[7,46,15],[7,77,5],[8,45,14],[8,78,5],[8,100,6],[9,44,13],[9,79,5],[9,98,10],[10,43,14],[10,80,4],[10,97,13],[11,42,15],[11,81,4],[11,96,15],[12,39,15],[12,82,3],[12,96,15],[13,39,14],[13,64,9],[13,82,4],[13,95,17],[14,39,13],[14,62,13],[14,83,3],[14,95,17],[15,38,13],[15,60,17],[15,83,3],[15,95,18],[16,38,12],[16,59,19],[16,83,6],[16,95,13],[16,110,3],[17,37,12],[17,58,20],[17,84,5],[17,95,13],[17,110,3],[18,20,7],[18,36,12],[18,55,13],[18,75,4],[18,84,5],[18,96,12],[18,110,3],[19,14,33],[19,55,12],[19,76,3],[19,84,5],[19,97,10],[19,110,3],[20,11,35],[20,55,11],[20,77,3],[20,84,5],[20,98,8],[20,110,3],[21,8,38],[21,55,10],[21,78,2],[21,84,5],[21,100,4],[21,110,3],[22,7,14],[22,33,19],[22,55,10],[22,78,2],[22,84,5],[22,110,3],[23,5,13],[23,32,32],[23,84,5],[23,110,3],[24,4,12],[24,31,13],[24,45,20],[24,84,5],[24,110,3],[25,3,11],[25,30,13],[25,51,19],[25,84,5],[25,109,4],[26,2,11],[26,29,12],[26,55,21],[26,84,5],[26,109,3],[27,1,11],[27,28,13],[27,55,28],[27,84,5],[27,108,4],[28,1,10],[28,27,14],[28,55,9],[28,68,21],[28,106,5],[29,0,11],[29,26,12],[29,55,9],[29,74,21],[29,104,6],[30,1,10],[30,23,14],[30,55,9],[30,80,30],[31,2,9],[31,23,13],[31,55,10],[31,83,25],[32,3,9],[32,21,13],[32,55,10],[32,82,4],[32,91,15],[33,5,27],[33,55,11],[33,81,4],[33,99,2],[34,7,23],[34,55,12],[34,81,4],[35,10,18],[35,55,13],[35,79,5],[36,14,11],[36,55,15],[36,78,6],[37,58,25],[38,59,23],[39,60,21],[40,61,19],[41,63,15],[42,65,10]]}}]},{"staff_id":2,"outer":[1062,73,69,165],"inner":[1065,81,66,149],"first_parts":[{"id":26,"bounds":[1075,119,35,58],"orientation":"VERTICAL","runs":[[0,56,1],[1,10,9],[1,55,3],[2,8,13],[2,55,3],[3,6,16],[3,54,3],[4,5,18],[4,53,4],[5,4,20],[5,53,3],[6,1,7],[6,11,13],[6,52,4],[7,1,5],[7,10,14],[7,52,3],[8,1,4],[8,10,14],[8,49,6],[9,1,4],[9,10,14],[9,49,5],[10,1,3],[10,10,14],[10,49,5],[11,1,3],[11,11,13],[11,49,4],[12,0,3],[12,11,12],[12,48,4],[13,0,3],[13,12,11],[13,47,5],[14,0,3],[14,13,9],[14,46,5],[15,0,3],[15,15,5],[15,45,6],[16,0,3],[16,44,7],[17,0,3],[17,42,9],[18,0,4],[18,41,7],[19,0,4],[19,40,8],[20,0,5],[20,38,9],[21,0,6],[21,36,10],[22,1,6],[22,33,12],[23,1,8],[23,31,13],[24,1,12],[24,26,17],[25,1,41],[26,1,40],[27,1,39],[28,1,38],[29,4,33],[30,5,31],[31,6,29],[32,8,24],[33,10,19],[34,13,13]]},{"id":27,"bounds":[1112,124,8,8],"orientation":"VERTICAL","runs":[[0,3,2],[1,1,6],[2,1,6],[3,0,8],[4,0,8],[5,0,8],[6,1,6],[7,2,4]]},{"id":28,"bounds":[1113,140,7,8],"orientation":"VERTICAL","runs":[[0,1,6],[1,1,6],[2,0,8],[3,0,8],[4,0,8],[5,1,6],[6,2,4]]}],"second_parts":[{"id":26,"bounds":[1075,119,35,58],"orientation":"VERTICAL","runs":[[0,56,1],[1,10,9],[1,55,3],[2,8,13],[2,55,3],[3,6,16],[3,54,3],[4,5,18],[4,53,4],[5,4,20],[5,53,3],[6,1,7],[6,11,13],[6,52,4],[7,1,5],[7,10,14],[7,52,3],[8,1,4],[8,10,14],[8,49,6],[9,1,4],[9,10,14],[9,49,5],[10,1,3],[10,10,14],[10,49,5],[11,1,3],[11,11,13],[11,49,4],[12,0,3],[12,11,12],[12,48,4],[13,0,3],[13,12,11],[13,47,5],[14,0,3],[14,13,9],[14,46,5],[15,0,3],[15,15,5],[15,45,6],[16,0,3],[16,44,7],[17,0,3],[17,42,9],[18,0,4],[18,41,7],[19,0,4],[19,40,8],[20,0,5],[20,38,9],[21,0,6],[21,36,10],[22,1,6],[22,33,12],[23,1,8],[23,31,13],[24,1,12],[24,26,17],[25,1,41],[26,1,40],[27,1,39],[28,1,38],[29,4,33],[30,5,31],[31,6,29],[32,8,24],[33,10,19],[34,13,13]]},{"id":27,"bounds":[1112,124,8,8],"orientation":"VERTICAL","runs":[[0,3,2],[1,1,6],[2,1,6],[3,0,8],[4,0,8],[5,0,8],[6,1,6],[7,2,4]]},{"id":28,"bounds":[1113,140,7,8],"orientation":"VERTICAL","runs":[[0,1,6],[1,1,6],[2,0,8],[3,0,8],[4,0,8],[5,1,6],[6,2,4]]}],"first_best":[{"kind":"BASS","shape":"F_CLEF","grade":0.7952473847806326,"glyph":{"id":30,"bounds":[1075,119,45,58],"orientation":"VERTICAL","runs":[[0,56,1],[1,10,9],[1,55,3],[2,8,13],[2,55,3],[3,6,16],[3,54,3],[4,5,18],[4,53,4],[5,4,20],[5,53,3],[6,1,7],[6,11,13],[6,52,4],[7,1,5],[7,10,14],[7,52,3],[8,1,4],[8,10,14],[8,49,6],[9,1,4],[9,10,14],[9,49,5],[10,1,3],[10,10,14],[10,49,5],[11,1,3],[11,11,13],[11,49,4],[12,0,3],[12,11,12],[12,48,4],[13,0,3],[13,12,11],[13,47,5],[14,0,3],[14,13,9],[14,46,5],[15,0,3],[15,15,5],[15,45,6],[16,0,3],[16,44,7],[17,0,3],[17,42,9],[18,0,4],[18,41,7],[19,0,4],[19,40,8],[20,0,5],[20,38,9],[21,0,6],[21,36,10],[22,1,6],[22,33,12],[23,1,8],[23,31,13],[24,1,12],[24,26,17],[25,1,41],[26,1,40],[27,1,39],[28,1,38],[29,4,33],[30,5,31],[31,6,29],[32,8,24],[33,10,19],[34,13,13],[37,8,2],[38,6,6],[38,22,6],[39,6,6],[39,22,6],[40,5,8],[40,21,8],[41,5,8],[41,21,8],[42,5,8],[42,21,8],[43,6,6],[43,22,6],[44,7,4],[44,23,4]]}}],"second_best":[{"kind":"BASS","shape":"F_CLEF","grade":0.7952473847806326,"glyph":{"id":30,"bounds":[1075,119,45,58],"orientation":"VERTICAL","runs":[[0,56,1],[1,10,9],[1,55,3],[2,8,13],[2,55,3],[3,6,16],[3,54,3],[4,5,18],[4,53,4],[5,4,20],[5,53,3],[6,1,7],[6,11,13],[6,52,4],[7,1,5],[7,10,14],[7,52,3],[8,1,4],[8,10,14],[8,49,6],[9,1,4],[9,10,14],[9,49,5],[10,1,3],[10,10,14],[10,49,5],[11,1,3],[11,11,13],[11,49,4],[12,0,3],[12,11,12],[12,48,4],[13,0,3],[13,12,11],[13,47,5],[14,0,3],[14,13,9],[14,46,5],[15,0,3],[15,15,5],[15,45,6],[16,0,3],[16,44,7],[17,0,3],[17,42,9],[18,0,4],[18,41,7],[19,0,4],[19,40,8],[20,0,5],[20,38,9],[21,0,6],[21,36,10],[22,1,6],[22,33,12],[23,1,8],[23,31,13],[24,1,12],[24,26,17],[25,1,41],[26,1,40],[27,1,39],[28,1,38],[29,4,33],[30,5,31],[31,6,29],[32,8,24],[33,10,19],[34,13,13],[37,8,2],[38,6,6],[38,22,6],[39,6,6],[39,22,6],[40,5,8],[40,21,8],[41,5,8],[41,21,8],[42,5,8],[42,21,8],[43,6,6],[43,22,6],[44,7,4],[44,23,4]]}}]}]}
+diff --git a/fixtures/official-grid/horizontal-rendered-clefs.png b/fixtures/official-grid/horizontal-rendered-clefs.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..a60fb6827783c18b42866bbd688559167e1ffdb7
+GIT binary patch
+literal 4972
+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
+BTA}~|
+
+literal 0
+HcmV?d00001
+
+diff --git a/scripts/java/ClefNeighborRectControlProbe.java b/scripts/java/ClefNeighborRectControlProbe.java
+new file mode 100644
+index 0000000..1596644
+--- /dev/null
++++ b/scripts/java/ClefNeighborRectControlProbe.java
+@@ -0,0 +1,49 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Actual original horizontalNeighbor and computeSystemArea; no native expectations.
++import java.util.*;import java.nio.file.*;import java.lang.reflect.*;import java.awt.*;import java.awt.geom.*;import com.fasterxml.jackson.databind.*;
++@SuppressWarnings("unchecked")
++public class ClefNeighborRectControlProbe extends MultiStaffAreaControlProbe {
++ public static void main(String[] args)throws Exception {
++ ObjectMapper mapper=new ObjectMapper();JsonNode inputs=mapper.readTree(Path.of(args[0]).toFile());java.util.List<Object> configurations=new ArrayList<>();
++ for(JsonNode input:inputs.get("configurations")){JsonNode grid=input.get("grid");
++  Object sheet=empty(c("sheet.Sheet")),picture=empty(c("sheet.Picture")),sm=empty(c("sheet.SystemManager")),scale=empty(c("sheet.Scale"));
++  int width=input.get("width").asInt(),height=input.get("height").asInt();
++  set(picture,"width",width);set(picture,"height",height);set(sheet,"picture",picture);set(sheet,"systemManager",sm);set(sm,"sheet",sheet);
++  set(scale,"interlineScale",c("sheet.Scale$InterlineScale").getConstructor(int.class,int.class,int.class).newInstance(11,11,11));set(sheet,"scale",scale);
++  Map<Integer,Object> systems=new LinkedHashMap<>();
++  for(JsonNode def:grid.get("systems")){
++   Object sys=empty(c("sheet.SystemInfo"));set(sys,"id",def.get("id").asInt());set(sys,"sheet",sheet);set(sys,"areaLeft",0);set(sys,"areaRight",width);
++   JsonNode box=def.get("coordinates");set(sys,"left",box.get(0).asInt());set(sys,"top",box.get(1).asInt());set(sys,"width",box.get(2).asInt());set(sys,"bottom",box.get(3).asInt());
++   systems.put(def.get("id").asInt(),sys);((java.util.List<Object>)get(sm,"systems")).add(sys);
++  }
++  Class<?> lc=c("sheet.grid.LineInfo");
++  for(JsonNode def:grid.get("staffs")){
++   java.util.List<Object> lines=new ArrayList<>();
++   for(JsonNode l:def.get("lines")){
++    double[] xs=new double[l.get("points").size()],ys=new double[xs.length];for(int n=0;n<xs.length;n++){xs[n]=l.get("points").get(n).get(0).asDouble();ys[n]=l.get("points").get(n).get(1).asDouble();}
++    Object spline=c("math.NaturalSpline").getMethod("interpolate",double[].class,double[].class).invoke(null,xs,ys);
++    lines.add(Proxy.newProxyInstance(lc.getClassLoader(),new Class[]{lc},(o,m,a)->{
++     switch(m.getName()){
++      case "getSpline":return spline;
++      case "getThickness":return l.get("thickness").asDouble();
++      case "getEndPoint":return a[0].toString().equals("LEFT")?new Point2D.Double(xs[0],ys[0]):new Point2D.Double(xs[xs.length-1],ys[ys.length-1]);
++      case "yAt":if(m.getReturnType()==int.class)return spline.getClass().getMethod("yAtX",int.class).invoke(spline,((Number)a[0]).intValue());return spline.getClass().getMethod("yAtXExt",double.class).invoke(spline,((Number)a[0]).doubleValue());
++      default:throw new UnsupportedOperationException(m.getName());
++     }
++    }));
++   }
++   Object staff=c("sheet.Staff").getConstructor().newInstance(),sys=systems.get(def.get("system_id").asInt());set(staff,"id",def.get("id").asInt());set(staff,"left",def.get("left").asInt());set(staff,"right",def.get("right").asInt());set(staff,"specificInterline",11);set(staff,"lines",lines);set(staff,"system",sys);((java.util.List<Object>)get(sys,"staves")).add(staff);
++  }
++
++ Object manager=c("sheet.StaffManager").getConstructor(c("sheet.Sheet")).newInstance(sheet);set(sheet,"staffManager",manager);java.util.List<Object> result=new ArrayList<>();
++ for(Object staff:(java.util.List<?>)get(manager,"staves")){
++ int left=(int)get(staff,"left"),right=(int)get(staff,"right");set(staff,"header",c("sheet.header.StaffHeader").getConstructor(int.class).newInstance(left+1));Object builder=c("sheet.clef.ClefBuilder").getConstructor(c("sheet.Staff")).newInstance(staff);
++ for(int start:new int[]{left+1,left-25,right-25}){c("sheet.clef.ClefBuilder").getMethod("setBrowseStart",int.class).invoke(builder,start);Method outer=c("sheet.clef.ClefBuilder").getDeclaredMethod("getOuterRect"),inner=c("sheet.clef.ClefBuilder").getDeclaredMethod("getInnerRect",Rectangle.class);outer.setAccessible(true);inner.setAccessible(true);Rectangle o=(Rectangle)outer.invoke(builder),i=(Rectangle)inner.invoke(builder,o);result.add(Map.of("staff_id",get(staff,"id"),"start",start,"outer",new int[]{o.x,o.y,o.width,o.height},"inner",new int[]{i.x,i.y,i.width,i.height}));}
++ }
++ configurations.add(Map.of("name",input.get("name").asText(),"input",input,"queries",result));
++ }
++ mapper.writeValue(Path.of(args[1]).toFile(),Map.of("native_outputs_used",false,"configurations",configurations,"scope","Unmodified ClefBuilder outer/inner rectangles using original StaffManager neighbors, including strict midpoint endpoint controls and curved staff geometry; supplied geometry, not positive raster recognition"));
++ System.exit(0); // End the observer after evidence is written; classifier pool otherwise idles.
++
++ }
++}
+diff --git a/src/clef_candidates.rs b/src/clef_candidates.rs
+index 3fdfb44..8edd2f2 100644
+--- a/src/clef_candidates.rs
++++ b/src/clef_candidates.rs
+@@ -315,7 +315,7 @@ fn best(
+     Ok((all, trials))
+ }
+ /// Requires native NO_STAFF raster and native GRID/header-start snapshots.
+-/// Only single-column, standard five-line staves and pinned default constants.
++/// Standard five-line staves with original neighbor chains and pinned defaults.
+ pub fn analyze(
+     residual: &GrayImage,
+     grid: &Value,
+@@ -331,20 +331,38 @@ pub fn analyze(
+             return Err("unsupported_clef_staff_configuration".into());
+         }
+     }
+-    for pair in staffs.windows(2) {
+-        if pair[0]["left"]
+-            .as_f64()
+-            .unwrap()
+-            .max(pair[1]["left"].as_f64().unwrap())
+-            >= pair[0]["right"]
+-                .as_f64()
+-                .unwrap()
+-                .min(pair[1]["right"].as_f64().unwrap())
+-        {
+-            return Err("unsupported_clef_side_by_side_staves".into());
+-        }
+-    }
+     let model = audiveris_classifier::Model::from_json(MODEL)?;
++    let rectangles = browse_rectangles(grid, headers, residual.height, interline)?;
++    let mut out = Vec::new();
++    for (staff, roi) in staffs.iter().zip(&rectangles) {
++        let outer: [i64; 4] = serde_json::from_value(roi["outer"].clone())?;
++        let inner: [i64; 4] = serde_json::from_value(roi["inner"].clone())?;
++        let first = parts(residual, outer, inner, true, interline)?;
++        let second = parts(residual, inner, inner, false, interline)?;
++        let (fb, ft) = best(&first, staff, interline, &model)?;
++        let (sb, st) = best(&second, staff, interline, &model)?;
++        out.push(json!({"staff_id":staff["id"],"outer":outer,"inner":inner,"first_parts":first.iter().map(glyph).collect::<Vec<_>>(),"second_parts":second.iter().map(glyph).collect::<Vec<_>>(),"first_best":fb,"second_best":sb,"first_trials":ft,"second_trials":st,"selected_pass":if fb.is_empty(){2}else{1}}));
++    }
++    Ok(
++        json!({"stage":"HEADERS.clef_candidates","staffs":out,"clef_selection_complete":false,"headers_complete":false,"note_recognition_complete":false,"pending":["register clef candidates and exclusions","key-dependent clef contextualization and final selection","key and time signatures"]}),
++    )
++}
++/// Original ClefBuilder.getOuterRect/getInnerRect, with full StaffManager
++/// vertical neighbor chains and strict midpoint-in-abscissa tests.
++pub fn browse_rectangles(
++    grid: &Value,
++    headers: &Value,
++    height: usize,
++    interline: usize,
++) -> Result<Vec<Value>, String> {
++    if interline == 0 || interline > 128 || height == 0 || height > 4_000_000 {
++        return Err("unsupported_clef_interline".into());
++    }
++    let staffs = grid["staffs"].as_array().ok_or("missing_clef_staffs")?;
++    let neighbors = crate::system_area_geometry::staff_neighbors(staffs)?;
++    if headers["staff_headers"].as_array().is_none() {
++        return Err("missing_clef_headers".into());
++    }
+     let px = |n: f64| (interline as f64 * n).round_ties_even() as i64;
+     let mut out = Vec::new();
+     for (i, staff) in staffs.iter().enumerate() {
+@@ -354,21 +372,24 @@ pub fn analyze(
+             .iter()
+             .find(|h| h["staff_id"] == staff["id"])
+             .ok_or("missing_clef_header")?;
+-        let start = header["start"].as_i64().unwrap();
++        let start = header["start"]
++            .as_i64()
++            .filter(|n| n.unsigned_abs() <= 4_000_000)
++            .ok_or("invalid_clef_header_start")?;
+         let end = start + px(4.5);
+         let mid = (start + end) / 2;
+         let top = line(staff, 0).y(mid as f64).round_ties_even() as i64;
+         let bottom = line(staff, 4).y(mid as f64).round_ties_even() as i64;
+         let mut y0 = 0.max(top - px(3.));
+-        let mut y1 = (residual.height as i64 - 1).min(bottom + px(3.25));
+-        for (above, j) in [
+-            (true, i.checked_sub(1)),
+-            (false, (i + 1 < staffs.len()).then_some(i + 1)),
+-        ] {
+-            if let Some(j) = j {
+-                let s = &staffs[j];
+-                if s["left"].as_f64().unwrap() < (mid as f64)
+-                    && s["right"].as_f64().unwrap() > mid as f64
++        let mut y1 = (height as i64 - 1).min(bottom + px(3.25));
++        for (above, key) in [(true, "north"), (false, "south")] {
++            for id in neighbors[i][key].as_array().unwrap() {
++                let s = staffs
++                    .iter()
++                    .find(|s| s["id"] == *id)
++                    .ok_or("missing_clef_neighbor")?;
++                if s["left"].as_f64().unwrap().round_ties_even() < mid as f64
++                    && s["right"].as_f64().unwrap().round_ties_even() > mid as f64
+                 {
+                     let y = line(s, if above { 4 } else { 0 })
+                         .y(mid as f64)
+@@ -393,13 +414,7 @@ pub fn analyze(
+             outer[2] - px(0.2),
+             outer[3] - 2 * px(0.5),
+         ];
+-        let first = parts(residual, outer, inner, true, interline)?;
+-        let second = parts(residual, inner, inner, false, interline)?;
+-        let (fb, ft) = best(&first, staff, interline, &model)?;
+-        let (sb, st) = best(&second, staff, interline, &model)?;
+-        out.push(json!({"staff_id":staff["id"],"outer":outer,"inner":inner,"first_parts":first.iter().map(glyph).collect::<Vec<_>>(),"second_parts":second.iter().map(glyph).collect::<Vec<_>>(),"first_best":fb,"second_best":sb,"first_trials":ft,"second_trials":st,"selected_pass":if fb.is_empty(){2}else{1}}));
++        out.push(json!({"staff_id":staff["id"],"outer":outer,"inner":inner}));
+     }
+-    Ok(
+-        json!({"stage":"HEADERS.clef_candidates","staffs":out,"clef_selection_complete":false,"headers_complete":false,"note_recognition_complete":false,"pending":["register clef candidates and exclusions","key-dependent clef contextualization and final selection","key and time signatures"]}),
+-    )
++    Ok(out)
+ }
+diff --git a/tests/clef_candidates.rs b/tests/clef_candidates.rs
+index 5dd8002..4b9630f 100644
+--- a/tests/clef_candidates.rs
++++ b/tests/clef_candidates.rs
+@@ -40,6 +40,7 @@ fn native_clef_parts_and_candidate_maps_match_original_rasters() {
+         "rendered-clef-c_clef",
+         "rendered-clef-empty",
+         "rendered-clef-noise",
++        "horizontal-rendered-clefs",
+     ] {
+         let image = GrayImage::decode(
+             &std::fs::read(root.join(format!("fixtures/official-grid/{name}.png"))).unwrap(),
+@@ -68,6 +69,9 @@ fn native_clef_parts_and_candidate_maps_match_original_rasters() {
+             page_glyphs::extract(&binary, &complete, sc.interline.main as u32, None).unwrap();
+         let grid = grid_ir::build(&residual, &sc, &prep, &complete, &systems, &sticks).unwrap();
+         let headers = header_preparation::from_grid(&grid).unwrap();
++        let mut shared = audiveris_native::shared_sig::Graph::default();
++        shared.import_grid(&grid).unwrap();
++        let graph_before = shared.snapshot();
+         let actual =
+             clef_candidates::analyze(&residual, &grid, &headers, sc.interline.main).unwrap();
+         let oracle: Value = serde_json::from_slice(
+@@ -93,6 +97,17 @@ fn native_clef_parts_and_candidate_maps_match_original_rasters() {
+         .unwrap();
+         near(&registered["staffs"], &official["staffs"]);
+         assert_eq!(registered["clef_selection_complete"], false);
++        assert_eq!(shared.snapshot(), graph_before);
++        if name == "horizontal-rendered-clefs" {
++            assert_eq!(registered["staffs"].as_array().unwrap().len(), 2);
++            assert!(
++                registered["staffs"]
++                    .as_array()
++                    .unwrap()
++                    .iter()
++                    .all(|s| !s["inters"].as_array().unwrap().is_empty())
++            );
++        }
+     }
+ }
+ 
+@@ -119,3 +134,58 @@ fn controlled_original_registration_checks_ties_and_complete_exclusions() {
+         3
+     );
+ }
++
++#[test]
++fn original_clef_neighbor_browse_rectangle_controls_match() {
++    let f: Value = serde_json::from_str(include_str!(
++        "../fixtures/official-clef-neighbor-rects.json"
++    ))
++    .unwrap();
++    assert_eq!(f["native_outputs_used"], false);
++    for c in f["configurations"].as_array().unwrap() {
++        let input = &c["input"];
++        for q in c["queries"].as_array().unwrap() {
++            let hs=input["grid"]["staffs"].as_array().unwrap().iter().map(|s|serde_json::json!({"staff_id":s["id"],"start":if s["id"]==q["staff_id"]{q["start"].as_i64().unwrap()}else{s["left"].as_i64().unwrap()+1}})).collect::<Vec<_>>();
++            let h = serde_json::json!({"staff_headers":hs});
++            let rows = clef_candidates::browse_rectangles(
++                &input["grid"],
++                &h,
++                input["height"].as_u64().unwrap() as usize,
++                11,
++            )
++            .unwrap();
++            let row = rows
++                .iter()
++                .find(|s| s["staff_id"] == q["staff_id"])
++                .unwrap();
++            assert_eq!(row["outer"], q["outer"], "{} {q}", c["name"]);
++            assert_eq!(row["inner"], q["inner"]);
++        }
++    }
++    let c = &f["configurations"][0];
++    assert!(
++        clef_candidates::browse_rectangles(
++            &c["input"]["grid"],
++            &serde_json::json!({"staff_headers":[]}),
++            1000,
++            11
++        )
++        .is_err()
++    );
++    assert!(
++        clef_candidates::browse_rectangles(&c["input"]["grid"], &serde_json::json!({}), 1000, 0)
++            .is_err()
++    );
++}
++
++#[test]
++fn clef_browse_extreme_header_start_returns_error() {
++    let f: Value = serde_json::from_str(include_str!(
++        "../fixtures/official-clef-neighbor-rects.json"
++    ))
++    .unwrap();
++    let g = &f["configurations"][0]["input"]["grid"];
++    let h =
++        serde_json::json!({"staff_headers":[{"staff_id":g["staffs"][0]["id"],"start":i64::MIN}]});
++    assert!(clef_candidates::browse_rectangles(g, &h, 1000, 11).is_err());
++}
