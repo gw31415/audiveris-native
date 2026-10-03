@@ -1,7 +1,7 @@
-# Native extension and full-validation checkpoint
+# Bounded native stem-extension checkpoint
 
-Latest: validation receipts only, no new feature. Clean source commit 549d4090977e960e36703a29b9dea68d03574e6c passed 259 debug and 259 release tests, fmt, workspace all-targets Clippy, and workspace release build. Exact commands/toolchain/logs are in evidence/full-workspace-549d409-checkpoint after restoration.
+Latest: owner/group/order-aware stem lookup, original fitted-glyph line intersection, point replacement, and one-side merge/side-gap/stem composition. Rejection returns NeedSpot and stops; spot/parallel branches, full extension loop and CLI integration remain pending.
 
-Restore original verified base archive plus the cumulative archive named in MANIFEST.json. Validate both archive hashes, all changed-file hashes, the tested source tree before adding validation receipts, and the final checkpoint Git tree. Earlier archives and commits remain preserved.
+126 independent original method controls include 58 accepted extensions and two original prefix-derived 2/6-pixel cap controls. 33 focused tests, fmt, and workspace all-targets Clippy passed. Original nonfinite intersections stay explicit; no numeric zero coercion. The prior full 259 debug/259 release/fmt/Clippy/release-build checkpoint is preserved as historical baseline evidence, not a full rerun of the new stem stage.
 
-NaN from the empty-area 0/0 point-extension foreground ratio is explicitly classified in the receipt and is never serialized as numeric zero. Stem selection, full extension loop/CLI integration and full BEAMS/OMR remain pending.
+Restore the verified original base archive plus the cumulative archive in MANIFEST.json. Verify both SHA256 values, all changed-file hashes, and the exact final source Git tree. Previous archives and parent commits remain preserved. No full BEAMS/OMR claim.
