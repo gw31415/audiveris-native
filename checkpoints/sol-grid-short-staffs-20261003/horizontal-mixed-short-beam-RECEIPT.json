@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-mixed-short.png",
+    "/workspace/audiveris-short-staff-check-20261003/horizontal-mixed-short-beam.pgm",
+    "/workspace/audiveris-short-staff-check-20261003/horizontal-mixed-short-beam.json"
+  ],
+  "exit_code": 1,
+  "seconds": 0.3148808759997337,
+  "report_sha256": null,
+  "boundary_log": "error: unsupported_clef_side_by_side_staves\n",
+  "system_candidates": null,
+  "stem_seeds": null,
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished"
+}
