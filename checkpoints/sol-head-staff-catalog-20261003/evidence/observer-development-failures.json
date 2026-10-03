@@ -1,0 +1,24 @@
+{
+  "discarded_observer_attempts": [
+    {
+      "attempt": "staff-catalog-oracle",
+      "observer_error": "NoSuchMethodException: setValue",
+      "accepted_as_validation": false,
+      "console_sha256": "f48fce016a091775bd26b8d503b34c28db1fa92d448293bd79c67e1631df18e6"
+    },
+    {
+      "attempt": "staff-catalog-oracle-v2",
+      "observer_error": "NoSuchFieldException: part",
+      "accepted_as_validation": false,
+      "console_sha256": "0cdaa78e31d5867c1a09076fb45673235d6797ba36c4ae7844b70cd02e0cff12"
+    },
+    {
+      "attempt": "staff-catalog-oracle-v3",
+      "observer_error": "NoSuchFieldException: header (inherited by OneLineStaff)",
+      "accepted_as_validation": false,
+      "console_sha256": "ff178a2193a9aa8d6d804ca2e5a0047af17b03662ce3a87d22932f6d6033a702"
+    }
+  ],
+  "accepted_observer": "staff-catalog-oracle-v4",
+  "original_algorithm_or_rust_comparison_failures": 0
+}

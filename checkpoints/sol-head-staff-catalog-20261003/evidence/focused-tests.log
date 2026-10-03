@@ -1,0 +1,26 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.31s
+     Running tests/head_ledger_search.rs (/workspace/onboarding/target/debug/deps/head_ledger_search-d8c7743d8e6f56df)
+
+running 2 tests
+test signed_contiguous_levels_and_merged_limits_preserve_original_traversal ... ok
+test original_real_laura_ledger_scanners_references_and_seed_proposals_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.05s
+
+     Running tests/head_seed_search.rs (/workspace/onboarding/target/debug/deps/head_seed_search-1216cfe219d12561)
+
+running 2 tests
+test original_offset_order_and_strict_curved_seed_slice ... ok
+test independent_original_laura_seed_search_and_decision_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.02s
+
+     Running tests/head_staff_catalog.rs (/workspace/onboarding/target/debug/deps/head_staff_catalog-803bd9ac486f225f)
+
+running 3 tests
+test original_75_unmapped_or_boundary_drum_pitches_and_two_tablature_skips ... ok
+test original_384_staff_shape_order_switch_and_main_specific_scale_cases ... ok
+test main_scale_reaches_ledger_search_and_unsupported_staff_templates_are_explicit ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
