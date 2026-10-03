@@ -1,0 +1,208 @@
+{
+  "recorded_utc": "2026-10-03T23:04:04.687339+00:00",
+  "branch": "main",
+  "parent_checkpoint_commit": "2386cf36a0976223832017a7ff38e4728996d627",
+  "parent_implementation_commit": "8d5de292421aea36439dccbabf3fa73a1b18c79f",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/2386cf36a0976223832017a7ff38e4728996d627/checkpoints/sol-head-registration-20261003/MANIFEST.json",
+  "local_implementation_commit": "440aea056874db6fd944327e551ca6b8d7e027f5",
+  "local_implementation_tree": "7dca07e254d66bb16fa6d5c158ce53e4cbe116ca",
+  "tracked_files": 4870,
+  "changed_files_from_parent": [
+    "fixtures/official-head-staff-dependency/README.md",
+    "fixtures/official-head-staff-dependency/controls.json",
+    "scripts/check_head_staff_dependency.py",
+    "scripts/java/HeadStaffDependencyProbe.java",
+    "scripts/linux_oracle.py",
+    "src/head_glyph_retrieval.rs",
+    "src/main.rs",
+    "src/shared_sig.rs",
+    "tests/head_staff_dependency.rs"
+  ],
+  "file_sha256": {
+    "fixtures/official-head-staff-dependency/README.md": "87158730fc65c18652f30e5030c2cffc3e6712e54a0c6f863961c780405bfd0e",
+    "fixtures/official-head-staff-dependency/controls.json": "af849ed085aaa00da56684c068300ff239ccf30b6aded758384369cc12cf02ba",
+    "scripts/check_head_staff_dependency.py": "c37e218a2448d97550ddcbbff3aa5387d9e5c66cf4406a59b25c90cc7f96d073",
+    "scripts/java/HeadStaffDependencyProbe.java": "f7600c54b092cc17939157bcdca3d82106e08263923047f23e937c8cb2a450e3",
+    "scripts/linux_oracle.py": "e66ada59e36b268ee1e1582f99487eddd5564ab8206aa56baccb5a34271ea85f",
+    "src/head_glyph_retrieval.rs": "544666867c479f46e0a55efddb940ab3defc36fe957602a84e3c5e0368f64588",
+    "src/main.rs": "7be2476f403c4328fc31e355d50f7a0b37211ed9508a2c611df982446835ed3a",
+    "src/shared_sig.rs": "78a839bd77afd1db4f2172e71d1618231bd7dc8e361db21ca4c8919f8ed7e75f",
+    "tests/head_staff_dependency.rs": "8d6fb537a1c4234365b63ceaedb48c9201c394b8640d84bbb356c6c9dd2306ec"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-head-staff-dependency-20261003/SOURCE-SHA256.json",
+    "sha256": "6e33963f45c263aa9bf5038df8028cec91c70c70fddee8f1eaabceb50cdff213",
+    "files": 4870
+  },
+  "bundle": {
+    "path": "checkpoints/sol-head-staff-dependency-20261003/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 10281,
+    "decoded_sha256": "a5a6c11acb8dce239f8be17fd01dbbe80b55d187da226020906627bf3df3cd6b",
+    "base64_sha256": "7929f40cf232d97031992e9ae559f892de5c1cf0f1c5870d64f456defc6f506c",
+    "prerequisite": "8d5de292421aea36439dccbabf3fa73a1b18c79f"
+  },
+  "validation": {
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "focused_tests_passed": 18,
+    "focused_failed": 0,
+    "native_cli_laura": {
+      "status": "passed",
+      "staff_dependency_controls": 8,
+      "live_physical_scanners": 118,
+      "heads_complete": false,
+      "shared_phase_refresh_guards_verified": true,
+      "certified_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+      "preserved_registration": {
+        "status": "passed",
+        "heads": 352,
+        "duplicate_removals": 22,
+        "HEADS_exclusions": 513,
+        "staff_note_counts": [
+          44,
+          58,
+          48,
+          56,
+          112,
+          34
+        ],
+        "small_beams_contextualized": 3,
+        "purge_controls": 40,
+        "beam_context_controls": 7,
+        "small_beam_controls": 9,
+        "seed_tally_controls": 4,
+        "heads_complete": false,
+        "prior_shared_ids_and_edges_preserved": true,
+        "preserved_glyphs": {
+          "status": "passed",
+          "range_scanners": 118,
+          "seed_glyphs": 358,
+          "seed_conflicts": 438,
+          "range_glyphs": 16,
+          "foreground_controls": 16,
+          "heads_complete": false,
+          "preserved_filter": {
+            "status": "passed",
+            "range_scanners": 118,
+            "aggregates": 454,
+            "seed_conflict_controls": 21,
+            "live_seed_conflicts_complete": false,
+            "heads_complete": false,
+            "preserved_catalog": {
+              "status": "passed",
+              "range_scanners": 118,
+              "accepted_candidates": 2224,
+              "weak_stemless_rejected": 407,
+              "raw_candidates": 2631,
+              "accepted_stemless": {
+                "WHOLE_NOTE": 3
+              },
+              "preserved_prefix": {
+                "status": "passed",
+                "raw_seed_proposals": 418,
+                "veto_seed_proposals": 358,
+                "head_spot_system_references": 402,
+                "range_scanners": 118,
+                "visited_abscissae": 47790,
+                "skipped_windows": 869,
+                "black_void_prefix_proposals": 2221,
+                "heads_complete": false,
+                "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+                "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+              },
+              "heads_complete": false,
+              "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+              "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+            },
+            "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+          },
+          "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+        },
+        "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+      },
+      "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+      "existing_full_reports_exactly_preserved": true,
+      "preserved_fields": [
+        "head_seed_search",
+        "head_seed_veto",
+        "head_range_search",
+        "head_range_catalog",
+        "head_candidate_filter",
+        "head_glyph_retrieval",
+        "shared_sig"
+      ],
+      "prior_registration_outputs_preserved": true
+    },
+    "original": {
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "release": "5.11.0",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "native_outputs_used": false,
+      "staff_dependency_controls": 8
+    },
+    "shared_sig_continues_same_graph": true,
+    "staff_dependency_complete": true,
+    "scope_complete_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+    "musicxml_complete": false,
+    "full_workspace_suite": {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "passed": 366,
+      "failed": 0,
+      "ignored": 0,
+      "targets": 116,
+      "mode": "debug"
+    },
+    "heads_complete": false,
+    "unrun_optional": [
+      "full release suite"
+    ],
+    "fresh_restore": {
+      "status": "passed",
+      "source_commit": "440aea056874db6fd944327e551ca6b8d7e027f5",
+      "source_tree": "7dca07e254d66bb16fa6d5c158ce53e4cbe116ca",
+      "all_fresh_restored_sha256_verified": 4870,
+      "source_clean": true,
+      "source": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-prepush/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-prepush/source-git"
+    }
+  },
+  "implemented_scope": "Original previous-staff duplicate/overlap/tally retirement before next staff seed competitor slicing; removed good seed references cannot veto later range heads. Eight original boundary controls, including the 0.7 versus 0.699995 grade/seed-tally tie and 0.9 conflict threshold. The physical registration CLI path uses the canonical sheet glyph registry and the same shared SIG. Later upstream-only GRID/BEAMS/LEDGERS refreshes reject transactionally while live HEADS require complete phase state. All 118 physical scanners and full Laura HEADS registration/epilog match original; prior seven complete reports and all prior registration results are preserved. Overall HEADS is not declared complete beyond the existing certified Bravura 51pt ordinary five-line/ledger subset.",
+  "not_implemented": [
+    "broader font/point-size and special staff/drum/tab catalogs beyond the existing Bravura 51pt ordinary five-line staff/ledger dependency subset",
+    "broader complete HEADS image/pipeline oracle coverage before heads_complete can become true",
+    "stem attachment, rhythm and MusicXML (outside HEADS)"
+  ],
+  "heads_complete": false,
+  "full_OMR": "unfinished",
+  "evidence_log_storage": "Log copies normalize trailing whitespace; originals remain in the existing task workspace.",
+  "evidence_sha256": {
+    "evidence/PREPUSH-RESTORE.json": "dd4c4ad6c3edf5c0d2bf5873eb80fc5a5a6c41c5bdf2022657325945e85a55de",
+    "evidence/bundle-verify.log": "7cfd3f658dd371bb060576b602b1963edc6755d8a67fe157efdbffb9dfbfb1ca",
+    "evidence/clippy.log": "c9612b69070998aec659d8acd6374368b8697319fb3ae92be1312380b3c6b171",
+    "evidence/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/focused-tests.log": "a2edeb236f878f6acb5c1d4faaa9046187b456ce6541b74a477a560f19df055c",
+    "evidence/full-workspace-tests.log": "ff3c35039172a91de4e14f5c1f77b850c8a9c4eb4e862704ec9354a50c87ed6a",
+    "evidence/native-cli-comparison.json": "12a51f59d440feb5b9ce1968f088c2c934f0a41c00388fc42a303c01656dd7e6",
+    "evidence/native-cli.log": "b38cec27c7c0efdd03e6be5548644e2e353f0a3a769e49e3d6b017892991c1f4",
+    "evidence/native-laura-report.json.gz": "1cbb100ba7e17647b72b6b66f68b10d19f6d2a66d758ad26cc22be02542e789a",
+    "evidence/official-source-receipts.json": "5c0380d46e7363e913d7569e7d6524a75154c903a739fa59989fce2b9ecd1974",
+    "evidence/oracle-compile.log": "66bcca1c459c184393ca1ea31a078957c7f00ee39c306aba62c0f924af7bc171",
+    "evidence/oracle-console.log": "ffc7c699ff4093de8afec17b2e9380913497e55da49a6530c5b527af7172c4b1",
+    "evidence/oracle-provenance.json": "7f2913e91b0a7115e85c8b76fb1001435a2791592d61522a8801820eb35a5c49"
+  },
+  "restore_script_sha256": "7fb976fd135ddee97a2e8295eb928872955e39cae378da2b30e42f039b7bfb6e",
+  "recovery": [
+    "Clone archival main using existing access.",
+    "Run this RESTORE.py --repository CLONE --destination NEW_DIRECTORY; verifies the pinned archive/patch/bundle chain, exact source tree, all source files and clean status. No environment setup.",
+    "Use existing onboarding toolchain; run saved test command and independent CLI verifier from the restored source."
+  ]
+}
