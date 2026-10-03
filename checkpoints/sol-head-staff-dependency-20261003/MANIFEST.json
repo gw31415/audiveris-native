@@ -173,6 +173,100 @@
       "source_clean": true,
       "source": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-prepush/artifacts/audiveris-source",
       "source_git": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-prepush/source-git"
+    },
+    "remote_fresh_restore": {
+      "status": "passed",
+      "source_commit": "440aea056874db6fd944327e551ca6b8d7e027f5",
+      "source_tree": "7dca07e254d66bb16fa6d5c158ce53e4cbe116ca",
+      "all_fresh_restored_sha256_verified": 4870,
+      "source_clean": true,
+      "source": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-remote-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-remote-restore/source-git",
+      "recorded_utc": "2026-10-03T23:04:37.799724+00:00",
+      "remote_main_verified": "ca6e2ea318c7a88125c28aa4dd76268c4138783f",
+      "archival_repository_tree": "e2228c019d2caa5e16481fafbf1e30a08f6d175c",
+      "fresh_remote_clone": true,
+      "all_archival_files_sha256_verified": 476,
+      "recovered_from_remote_archives_and_pinned_chain": true,
+      "recovered_native_cli_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+      "recovered_cli_oracle_comparison": {
+        "status": "passed",
+        "staff_dependency_controls": 8,
+        "live_physical_scanners": 118,
+        "heads_complete": false,
+        "shared_phase_refresh_guards_verified": true,
+        "certified_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+        "preserved_registration": {
+          "status": "passed",
+          "heads": 352,
+          "duplicate_removals": 22,
+          "HEADS_exclusions": 513,
+          "staff_note_counts": [
+            44,
+            58,
+            48,
+            56,
+            112,
+            34
+          ],
+          "small_beams_contextualized": 3,
+          "purge_controls": 40,
+          "beam_context_controls": 7,
+          "small_beam_controls": 9,
+          "seed_tally_controls": 4,
+          "heads_complete": false,
+          "prior_shared_ids_and_edges_preserved": true,
+          "preserved_glyphs": {
+            "status": "passed",
+            "range_scanners": 118,
+            "seed_glyphs": 358,
+            "seed_conflicts": 438,
+            "range_glyphs": 16,
+            "foreground_controls": 16,
+            "heads_complete": false,
+            "preserved_filter": {
+              "status": "passed",
+              "range_scanners": 118,
+              "aggregates": 454,
+              "seed_conflict_controls": 21,
+              "live_seed_conflicts_complete": false,
+              "heads_complete": false,
+              "preserved_catalog": {
+                "status": "passed",
+                "range_scanners": 118,
+                "accepted_candidates": 2224,
+                "weak_stemless_rejected": 407,
+                "raw_candidates": 2631,
+                "accepted_stemless": {
+                  "WHOLE_NOTE": 3
+                },
+                "preserved_prefix": {
+                  "status": "passed",
+                  "raw_seed_proposals": 418,
+                  "veto_seed_proposals": 358,
+                  "head_spot_system_references": 402,
+                  "range_scanners": 118,
+                  "visited_abscissae": 47790,
+                  "skipped_windows": 869,
+                  "black_void_prefix_proposals": 2221,
+                  "heads_complete": false,
+                  "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+                  "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                },
+                "heads_complete": false,
+                "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+                "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+              },
+              "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+            },
+            "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+          },
+          "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+        },
+        "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+      },
+      "saved_full_workspace_passed": 366,
+      "tests_rerun_on_recovered_source": false
     }
   },
   "implemented_scope": "Original previous-staff duplicate/overlap/tally retirement before next staff seed competitor slicing; removed good seed references cannot veto later range heads. Eight original boundary controls, including the 0.7 versus 0.699995 grade/seed-tally tie and 0.9 conflict threshold. The physical registration CLI path uses the canonical sheet glyph registry and the same shared SIG. Later upstream-only GRID/BEAMS/LEDGERS refreshes reject transactionally while live HEADS require complete phase state. All 118 physical scanners and full Laura HEADS registration/epilog match original; prior seven complete reports and all prior registration results are preserved. Overall HEADS is not declared complete beyond the existing certified Bravura 51pt ordinary five-line/ledger subset.",
@@ -186,6 +280,7 @@
   "evidence_log_storage": "Log copies normalize trailing whitespace; originals remain in the existing task workspace.",
   "evidence_sha256": {
     "evidence/PREPUSH-RESTORE.json": "dd4c4ad6c3edf5c0d2bf5873eb80fc5a5a6c41c5bdf2022657325945e85a55de",
+    "evidence/REMOTE-READBACK.json": "b7a27c0ad7e5174cb87d292b66d85a7de401e10668ad7f8c286c3a44e8805f09",
     "evidence/bundle-verify.log": "7cfd3f658dd371bb060576b602b1963edc6755d8a67fe157efdbffb9dfbfb1ca",
     "evidence/clippy.log": "c9612b69070998aec659d8acd6374368b8697319fb3ae92be1312380b3c6b171",
     "evidence/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

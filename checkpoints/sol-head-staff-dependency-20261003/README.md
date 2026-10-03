@@ -9,3 +9,5 @@ Original previous-staff duplicate/overlap/tally retirement before next staff see
 Restore: `python checkpoints/sol-head-staff-dependency-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 4870 source hashes, plus all 476 archival files and archival tree. Saved remote commit `ca6e2ea318c7a88125c28aa4dd76268c4138783f`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
