@@ -1,0 +1,27 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running tests/head_range_catalog.rs (/workspace/onboarding/target/debug/deps/head_range_catalog-98ce438012748bf0)
+
+running 3 tests
+test original_stemless_and_constructor_grade_ulp_boundaries ... ok
+test original_whole_breve_renders_with_and_without_black_spots ... ok
+test original_laura_all_118_default_catalog_scanners ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.64s
+
+     Running tests/head_range_search.rs (/workspace/onboarding/target/debug/deps/head_range_search-470c97b1269d7284)
+
+running 3 tests
+test black_relevance_slice_touching_edges_and_inclusive_range ... ok
+test safety_skip_stride_integer_chamfer_and_unknown_pixels ... ok
+test original_laura_head_spots_and_all_118_range_prefix_scanners ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.69s
+
+     Running tests/head_seed_veto.rs (/workspace/onboarding/target/debug/deps/head_seed_veto-27153e87d05b1d17)
+
+running 3 tests
+test veto_uses_positive_area_original_grade_and_group_long_beam ... ok
+test central_veto_abandons_each_source_shape_before_other_offsets ... ok
+test original_real_score_competitor_selection_slices_and_eval_veto ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.42s

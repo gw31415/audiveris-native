@@ -1,0 +1,5 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `/workspace/onboarding/target/debug/audiveris-native page-glyphs fixtures/official-grid/laura-gray.png /workspace/work/head-lifecycle/filter-laura-residual.pgm /workspace/work/head-lifecycle/filter-laura-report.json`
+Experimental native page glyphs: 604; full GRID and musical recognition remain incomplete

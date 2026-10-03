@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "bbf8db60ed019ccbffae1fc54250490e86c8a5fd",
+  "source_tree": "c47ba4bf15cd168719b91515198147d89f737f54",
+  "all_fresh_restored_sha256_verified": 4833,
+  "source_clean": true,
+  "source": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-prepush/source-git"
+}
