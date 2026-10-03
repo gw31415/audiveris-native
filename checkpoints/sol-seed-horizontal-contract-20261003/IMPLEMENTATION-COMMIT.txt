@@ -1,0 +1,6 @@
+tree 08382b57d09909493d8a4416e7189f6bd8779253
+parent 81d33ae92b7b67980834b845c38c162b3df567d0
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791041324 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791041324 +0000
+
+Update supported clip contract and expand original scaler/checker/stick replay to twelve raster fixtures; retain all 356 contexts
