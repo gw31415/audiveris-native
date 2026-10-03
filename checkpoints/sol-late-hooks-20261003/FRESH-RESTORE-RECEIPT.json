@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-03T12:16:45.059395+00:00",
+  "parent_checkpoint_commit": "59ac9e17d142e46ae316a821b6b34005c2c787cd",
+  "parent_archive_sha256": "acd9947fd512dad4b48db074d071a373b01c7e1589244927a69d9e54734bd6f1",
+  "parent_changed_file_hashes_verified": 176,
+  "patch_sha256": "e2834ccbf831f22d7e5aa71d9120d0b1fe3f8f6a41470c6858b854cbec67db56",
+  "patch_bytes": 251127,
+  "fresh_restored_implementation_commit": "8027a5ca51b8e8fd826c4f84250a72a1d2e6b2f2",
+  "fresh_restored_tree": "9bf0cd706fda4855860b6df309f3d635b2a22097",
+  "new_changed_file_hashes_verified": 37,
+  "tracked_files": 4505,
+  "source_clean": true,
+  "remote_readback": "pending"
+}
