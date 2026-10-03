@@ -1,0 +1,146 @@
+{
+  "verified_utc": "2026-10-03T12:39:36.129209+00:00",
+  "source_checkpoint_commit": "dfc92629df63532d8726935e5f4f5ca784a62204",
+  "debug_checkpoint_commit": "e19875c20c4b8f93ccde0a88dcd0d31acd398460",
+  "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+  "source_tree": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_unchanged": true,
+  "debug": {
+    "suites": 85,
+    "passed": 275,
+    "failed": 0,
+    "ignored": 0
+  },
+  "fmt": "passed",
+  "all_targets_clippy": "passed",
+  "release_status": "passed",
+  "release_checks": [
+    {
+      "name": "release-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:37:21.243582+00:00",
+      "log": "/workspace/audiveris-groups-release-check-20261003/release-tests.log",
+      "pid": 27710,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:39:32.628890+00:00",
+      "seconds": 131.38,
+      "test_summary": {
+        "suites": 85,
+        "passed": 275,
+        "failed": 0,
+        "ignored": 0
+      },
+      "failed_tests": []
+    },
+    {
+      "name": "release-build",
+      "command": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:39:32.630140+00:00",
+      "log": "/workspace/audiveris-groups-release-check-20261003/release-build.log",
+      "pid": 30132,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:39:32.694538+00:00",
+      "seconds": 0.06
+    }
+  ],
+  "artifact_hashes": {
+    "COMPLETION-RECEIPT.json": {
+      "bytes": 2095,
+      "sha256": "db8e9197e6d61ea3cc8cfbd6317098fe6824700bb31a9569e4a88baa64c6b231"
+    },
+    "release-tests.log": {
+      "bytes": 40181,
+      "sha256": "4315fb77280310d6de8b38e1cbf50e8d9810f148f1144d1b597326ecb0436d9f"
+    },
+    "release-build.log": {
+      "bytes": 62,
+      "sha256": "9576f1f7e73fc2bb1ec2336aae60cb485c591eadc60a1b998573411c34057e08"
+    },
+    "run-checks.py": {
+      "bytes": 4214,
+      "sha256": "c2d61737e84b11b04ae64dccf4353c7879e84ca4c8d560616724d57f2c12f42b"
+    }
+  },
+  "fresh_source_restore": {
+    "status": "passed",
+    "verified_utc": "2026-10-03T12:25:34.451322+00:00",
+    "parent_checkpoint_commit": "b0034e93ef8f4f756cfed3e5818bfa1efe84304b",
+    "parent_archive_sha256": "acd9947fd512dad4b48db074d071a373b01c7e1589244927a69d9e54734bd6f1",
+    "ancestor_changed_file_hashes_verified": 176,
+    "parent_changed_file_hashes_verified": 37,
+    "parent_late_hook_patch_sha256": "e2834ccbf831f22d7e5aa71d9120d0b1fe3f8f6a41470c6858b854cbec67db56",
+    "patch_sha256": "f4692bcb9c1a2f02ab2a481ee0203a67337efe6dd05af61adbf038de1729030c",
+    "patch_bytes": 431058,
+    "fresh_restored_implementation_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+    "fresh_restored_tree": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+    "new_changed_file_hashes_verified": 37,
+    "tracked_files": 4540,
+    "source_clean": true,
+    "remote_readback": "pending"
+  },
+  "source_checkpoint_readback": {
+    "status": "passed",
+    "verified_utc": "2026-10-03T12:26:14.616Z",
+    "checkpoint_branch": "checkpoint/sol-beam-groups-20261003-121900",
+    "checkpoint_commit": "dfc92629df63532d8726935e5f4f5ca784a62204",
+    "checkpoint_tree": "b9da536b973800fc7a68b8f764a25a44d0a6478a",
+    "remote_artifacts_verified": {
+      "checkpoints/sol-beam-groups-20261003/MANIFEST.json": "994be03e13851b4f363be0534e8eda17fe2ead3c",
+      "checkpoints/sol-beam-groups-20261003/FRESH-RESTORE-RECEIPT.json": "df5be3e8b957f0a831c2d4d7447f243c81f59c8d",
+      "checkpoints/sol-beam-groups-20261003/changes.patch": "14e34bc21dc1119641c3f8d500ec35c9cd9f59b8",
+      "checkpoints/sol-beam-groups-20261003/IMPLEMENTATION-COMMIT.txt": "5d3446958bf7f1c76b2ed6a6c0feab79f22392d2",
+      "checkpoints/sol-beam-groups-20261003/VALIDATION.json": "2d235b8167d6e19d2bcbc5682eec32f8a52ca9cb"
+    },
+    "source": {
+      "implementation": "6eeebeadab1048d62aa46300d38efeae86421181",
+      "tree": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+      "changed_files": 37,
+      "tracked_files": 4540,
+      "patch_bytes": 431058,
+      "focused_tests": {
+        "suites": 2,
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      "original_controls": 103,
+      "original_control_groups": 174,
+      "images": 13,
+      "image_groups": 15,
+      "fresh_restore": "passed"
+    },
+    "parent_checkpoint_unchanged": true,
+    "previous_worker_branch_unchanged": true,
+    "main_unchanged": true,
+    "parent_archive_preserved": true,
+    "current_full_workspace": "UNVERIFIED"
+  },
+  "implementation_changes": "none",
+  "remaining_scope": "Rests, epilog, CLI wiring and full OMR remain unfinished",
+  "release_binary": {
+    "local_path": "/workspace/audiveris-debug-check-20261003/target/release/audiveris-native",
+    "bytes": 7444632,
+    "sha256": "e388de3929f225ee2f5ef221dc4410eb4d1d8617102547ff34be27214f4e0f57",
+    "uploaded": false
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+  "source_checkpoint_commit": "dfc92629df63532d8726935e5f4f5ca784a62204",
+  "status": "passed",
+  "runner_pid": 27682,
+  "started_utc": "2026-10-03T12:37:20.783068+00:00",
+  "source_root": "/workspace/audiveris-savedlatest-20261003",
+  "source_expected_tree": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_tree_before": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_clean_before": true,
+  "checks": [
+    {
+      "name": "release-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:37:21.243582+00:00",
+      "log": "/workspace/audiveris-groups-release-check-20261003/release-tests.log",
+      "pid": 27710,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:39:32.628890+00:00",
+      "seconds": 131.38,
+      "test_summary": {
+        "suites": 85,
+        "passed": 275,
+        "failed": 0,
+        "ignored": 0
+      },
+      "failed_tests": []
+    },
+    {
+      "name": "release-build",
+      "command": [
+        "cargo",
+        "build",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:39:32.630140+00:00",
+      "log": "/workspace/audiveris-groups-release-check-20261003/release-build.log",
+      "pid": 30132,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:39:32.694538+00:00",
+      "seconds": 0.06
+    }
+  ],
+  "release_checks": "release tests and release workspace build only",
+  "implementation_changes": "none",
+  "command_budget_seconds": 480,
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+  "elapsed_seconds": 132.35,
+  "source_tree_after": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_clean_after": true,
+  "source_unchanged": true,
+  "finished_utc": "2026-10-03T12:39:33.129316+00:00"
+}
