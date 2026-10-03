@@ -1,0 +1,111 @@
+WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)
+	at org.audiveris.omr.Main.<clinit>(Main.java:70)
+WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)
+	at org.audiveris.omr.Main.<clinit>(Main.java:70)
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /home/agent/.config/AudiverisLtd/audiveris/tessdata
+WARN  []              TesseractOCR 140  | Could not create folder /home/agent/.config/AudiverisLtd/audiveris/tessdata {}
+java.nio.file.FileSystemException: /home/agent/.config/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.text.tesseract.TesseractOCR.findOcrFolder(TesseractOCR.java:138)
+	at org.audiveris.omr.text.tesseract.TesseractOCR.getOcrFolder(TesseractOCR.java:228)
+	at org.audiveris.omr.text.tesseract.TesseractOCR.isAvailable(TesseractOCR.java:253)
+	at org.audiveris.omr.text.tesseract.TesseractOCR.getSupportedLanguages(TesseractOCR.java:155)
+	at org.audiveris.omr.text.tesseract.Languages.checkSupport(Languages.java:136)
+	at org.audiveris.omr.Main.main(Main.java:266)
+WARN  []              TesseractOCR 144  | Tesseract data could not be found. Try setting TESSDATA_PREFIX environment variable to point to tessdata folder.
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png"
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+Fontconfig error: No writable cache directories
+INFO  [horizontal-rendered-clefs]                      Book 560  | 1 sheet in /workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/audiveris-seed-horizontal-check-20261003/original/horizontal-rendered-clefs.omr
+INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
+INFO  [horizontal-rendered-clefs]            StepMonitoring 98   | LOAD
+INFO  [horizontal-rendered-clefs]                 SheetStub 1278 | Loaded image #1 1920x420 from /workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png
+INFO  [horizontal-rendered-clefs]            StepMonitoring 98   | BINARY
+INFO  [horizontal-rendered-clefs]            StepMonitoring 98   | SCALE
+INFO  [horizontal-rendered-clefs]              ScaleBuilder 254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+INFO  [horizontal-rendered-clefs]              ScaleBuilder 271  | Beam measured height: 13 -- 0.75 of [7..15] range at 26% of needed quorum
+WARN  [horizontal-rendered-clefs]              ScaleBuilder 300  | No reliable beam height found, guessed value: 9
+INFO  [horizontal-rendered-clefs]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
+INFO  [horizontal-rendered-clefs]                 ScaleStep 65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+INFO  [horizontal-rendered-clefs]                      Book 2584 | Book{horizontal-rendered-clefs} storing
+INFO  [horizontal-rendered-clefs]                      Book 2565 | Stored /book.xml
+INFO  [horizontal-rendered-clefs]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [horizontal-rendered-clefs]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [horizontal-rendered-clefs]                      Book 2525 | Book stored as /workspace/audiveris-seed-horizontal-check-20261003/original/horizontal-rendered-clefs.omr
+INFO  [horizontal-rendered-clefs]                 SheetStub 1655 | Sheet disposed
+INFO  [horizontal-rendered-clefs]                      Book 2050 | End of Stub#1
+INFO  [horizontal-rendered-clefs]                      Book 2057 | End of Book{horizontal-rendered-clefs}
+INFO  [horizontal-rendered-clefs]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [horizontal-rendered-clefs]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [horizontal-rendered-clefs]         ClustersRetriever 326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+INFO  [horizontal-rendered-clefs]                 PeakGraph 310  | Systems: #1[1] #2[2]
+INFO  [horizontal-rendered-clefs]             SystemManager 800  | 1 part along 2 systems
+INFO  [horizontal-rendered-clefs]                      Book 543  | Created scores: [{Score 1}]
+INFO  [horizontal-rendered-clefs]                      Book 2565 | Stored /book.xml
+INFO  [horizontal-rendered-clefs]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [horizontal-rendered-clefs]                      Book 2525 | Book stored as /workspace/audiveris-seed-horizontal-check-20261003/original/horizontal-rendered-clefs.omr
+INFO  [horizontal-rendered-clefs]                     Score 181  | Closing {Score 1}

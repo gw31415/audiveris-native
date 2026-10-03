@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-mixed-short.png",
+    "/workspace/audiveris-seed-horizontal-check-20261003/horizontal-mixed-short-beam.pgm",
+    "/workspace/audiveris-seed-horizontal-check-20261003/horizontal-mixed-short-beam.json"
+  ],
+  "exit_code": 1,
+  "seconds": 0.967246904001513,
+  "report_sha256": null,
+  "boundary_log": "error: unsupported_beam_system_area\n",
+  "system_candidates": null,
+  "stem_seeds": null,
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished"
+}

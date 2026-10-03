@@ -1,0 +1,47 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.74s
+     Running tests/clef_candidates.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/clef_candidates-d252144c94b7bb6c)
+
+running 4 tests
+test clef_browse_extreme_header_start_returns_error ... ok
+test original_clef_neighbor_browse_rectangle_controls_match ... ok
+test controlled_original_registration_checks_ties_and_complete_exclusions ... ok
+test native_clef_parts_and_candidate_maps_match_original_rasters ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.59s
+
+     Running tests/shared_sig.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/shared_sig-eb2235491f0106e8)
+
+running 4 tests
+test systems_with_same_local_ids_are_separate ... ok
+test dangling_relations_and_duplicate_sources_reject_transactionally ... ok
+test colliding_phase_ids_relations_and_replay_are_stable ... ok
+test removed_beam_retains_identity_and_rest_relations_share_one_store ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/short_staff_system_graph.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/short_staff_system_graph-9dc6a19b313f72a7)
+
+running 1 test
+test native_rasters_match_original_short_staff_peak_graph ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/stem_seeds.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/stem_seeds-75e33307ea7af497)
+
+running 4 tests
+test seed_scope_and_identity_rejections_also_apply_without_candidates ... ok
+test vertical_lag_run_cap_precedes_deserialization ... ok
+test original_clipped_neighbor_chain_staff_selection_matches ... ok
+test original_stem_seeds_match_complete_native_pipeline ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.07s
+
+     Running tests/system_area_geometry.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/system_area_geometry-2affe76eae3a79a5)
+
+running 2 tests
+test incomplete_membership_and_nonfinite_points_reject ... ok
+test original_horizontal_chains_vertical_neighbors_and_area_points_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
