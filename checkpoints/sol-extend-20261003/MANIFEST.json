@@ -1,9 +1,9 @@
 {
-  "schema": 1,
-  "purpose": "Recover actual Sol implementation without Library",
+  "schema": 2,
+  "purpose": "Recover cumulative actual Sol implementation without Library or earlier deltas",
   "repository": "gw31415/audiveris-native",
   "branch": "checkpoint/sol-extend-20261003",
-  "parent_commit": "768ea30e44a84fcb5a670c21f2471a8724a97a6e",
+  "parent_commit": "8c84650cb4f0d3ce22eafe31e9de0ea9ecb5fa12",
   "original_source_commit": "8ebbf976f568f91077d32221d52366d71559ab75",
   "base_source_tree": "4ad9d3c0c4cc242633caa64b5e081333bacf1b9b",
   "base_archive": {
@@ -13,16 +13,18 @@
     "sha256": "ec3f4226b3c7cc40028eff06051d6bcdece761e3390872daaad2cd55cf5084f2"
   },
   "delta_archive": {
-    "path": "checkpoints/sol-extend-20261003/audiveris-sol-extend-to-beam-0055b80d-delta-20261003.tar.gz",
-    "bytes": 62971,
-    "sha256": "94678f99156eeb8360b2ff84018487d43398f2231413f3d996a1fb5ccc601223",
-    "git_blob_sha": "9c517f99d2f757121f55132d192a105639471a18"
+    "path": "checkpoints/sol-extend-20261003/audiveris-sol-extension-prefix-156b38f0-cumulative-20261003.tar.gz",
+    "bytes": 100454,
+    "sha256": "ae1ac93451cc40a8d19c76282c5cc919e698799c1f7e6cd588aa8c993432622a",
+    "git_blob_sha": "a5562412711bd44e5e92ec3028a1de2f161cf744",
+    "archive_root": "sol-extension-prefix-20261003"
   },
-  "local_implementation_commit": "0055b80d5114b73ecb70079ea14c24d794616c72",
-  "local_implementation_tree": "61aab2c10595629e8b5467799cc773240f5cfec1",
+  "local_implementation_commit": "156b38f00227c7804e79dcc4470763391830b073",
+  "local_implementation_tree": "730be76b97816a811f085f67e83d9139d513446f",
   "all_changed_files_verified": true,
   "changed_files": [
     "docs/BEAM-EXTEND-TO-BEAM.md",
+    "docs/BEAM-EXTENSION-PREFIX.md",
     "evidence/beam-extend-to-beam-checkpoint/clippy.log",
     "evidence/beam-extend-to-beam-checkpoint/commands.json",
     "evidence/beam-extend-to-beam-checkpoint/fmt.log",
@@ -34,30 +36,48 @@
     "evidence/beam-extend-to-beam-checkpoint/provenance.json",
     "evidence/beam-extend-to-beam-checkpoint/quality.json",
     "evidence/beam-extend-to-beam-checkpoint/validation.json",
+    "evidence/beam-extension-prefix-checkpoint/clippy.log",
+    "evidence/beam-extension-prefix-checkpoint/commands.json",
+    "evidence/beam-extension-prefix-checkpoint/fmt.log",
+    "evidence/beam-extension-prefix-checkpoint/focused-tests.log",
+    "evidence/beam-extension-prefix-checkpoint/inputs.json",
+    "evidence/beam-extension-prefix-checkpoint/original-0.log",
+    "evidence/beam-extension-prefix-checkpoint/original-1.log",
+    "evidence/beam-extension-prefix-checkpoint/original-2.log",
+    "evidence/beam-extension-prefix-checkpoint/provenance.json",
+    "evidence/beam-extension-prefix-checkpoint/validation-commands.json",
+    "evidence/beam-extension-prefix-checkpoint/validation.json",
     "fixtures/official-beam-extend-to-beam.json",
+    "fixtures/official-beam-extension-prefix.json",
     "scripts/java/BeamExtendToBeamControlProbe.java",
+    "scripts/java/BeamExtensionPrefixControlProbe.java",
     "scripts/run_beam_extend_to_beam_controls.py",
+    "scripts/run_beam_extension_prefix_controls.py",
     "src/beam_extend_to_beam.rs",
+    "src/beam_extension_prefix.rs",
     "src/lib.rs",
-    "tests/beam_extend_to_beam.rs"
+    "tests/beam_extend_to_beam.rs",
+    "tests/beam_extension_prefix.rs"
   ],
+  "cumulative_from_original_base": true,
+  "previous_delta_not_required": true,
   "validation": {
-    "focused_tests_passed": 20,
+    "status": "passed",
+    "source_base_commit": "8ebbf976f568f91077d32221d52366d71559ab75",
+    "previous_implementation_commit": "0055b80d5114b73ecb70079ea14c24d794616c72",
+    "focused_tests_passed": 22,
     "focused_tests_failed": 0,
-    "original_controls": 61,
-    "accepted_original_merges": 26,
+    "new_original_prefix_controls": 37,
+    "new_original_accepted_merges": 16,
+    "prior_original_extend_gate_controls": 61,
     "fmt": "passed",
     "workspace_all_targets_clippy": "passed",
-    "full_workspace_tests_release_build": "not rerun for this delta"
+    "full_workspace_release_checks": "not rerun for this stage",
+    "scope": "Single-side decision and initial snapshot merge prefix only; pending stem/spot/parallel branches stop execution, not stubbed false. Original enum/SIG/order/lookups/merges invoked by independent slice observer; unmodified whole extendBeams method not run or claimed equivalent.",
+    "implementation_work_limit": "Preflight repeated lookup bound 1,000,000,000; existing gate and lifecycle work bounds retained."
   },
   "source_dirty_files": [],
-  "scope": "Bounded extendToBeam only. Full extension loop, VIP diagnostic propagation, hooks/groups and downstream OMR unfinished.",
-  "publishing_method": "GitHub connector Git Data APIs; not CLI git push. Remote archive commit differs from local implementation commit.",
-  "library_backup": {
-    "library_file_id": "libfile_72617e1086a88191ba80dff018bab32f",
-    "version": 0,
-    "producer_upload": "succeeded",
-    "consumer_verified_receipt": false
-  },
-  "recovery": "Fetch both pinned archives via authorized GitHub access. Verify size/SHA256, extract outer base then source.tar.xz, extract delta archive, and apply changes.patch in audiveris-source (git apply works without original Git history). Alternatively overlay delta/. Read BASE-HANDOFF.json and MANIFEST.json. Install recorded Rust 1.98.1; run focused tests. No Library access is required."
+  "scope": "Side-decision and initial snapshot merge prefix only; explicit downstream stop. No whole extension loop, late hooks/groups or downstream OMR. Oracle slice invokes original methods; uninterrupted original extendBeams equivalence not claimed.",
+  "publishing_method": "GitHub connector Git Data APIs, not CLI git push",
+  "recovery": "Fetch base and this cumulative archive from this GitHub branch/commit; verify bytes/SHA256; unpack outer base then source.tar.xz; extract delta archive; apply changes.patch in audiveris-source or overlay delta/. Compare Git tree with local_implementation_tree. No Library or previous delta needed."
 }

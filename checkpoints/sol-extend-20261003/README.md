@@ -1,9 +1,11 @@
-# Sol extendToBeam recovery checkpoint
+# Cumulative Sol extension prefix checkpoint
 
-This branch preserves the actual implementation delta from verified source 8ebbf976f568f91077d32221d52366d71559ab75, corresponding to local implementation commit 0055b80d5114b73ecb70079ea14c24d794616c72. It contains every changed source, test, fixture, observer and evidence file plus the cumulative patch. The baseline archive is retained at the repository root.
+This cumulative archive preserves every changed source/test/fixture/observer/evidence file from verified source 8ebbf976f568f91077d32221d52366d71559ab75 through local implementation commit 156b38f00227c7804e79dcc4470763391830b073. It includes the prior extendToBeam gate and the new side-decision/snapshot prefix. The earlier delta is not required for recovery.
 
-Read MANIFEST.json for pinned references, sizes, SHA256 hashes and recovery steps. Verify and extract both archives, then apply changes.patch or overlay delta/ onto the exact base snapshot. No Library download is needed.
+Read MANIFEST.json for pinned archives, SHA256 hashes, sizes, source tree and recovery steps. Fetch the baseline archive at the repository root and the cumulative delta named in the manifest, then apply changes.patch or overlay delta/ onto the exact source snapshot. Verify the restored Git tree. No Library access is required.
 
-20 focused debug tests passed; 61 original controls include 26 accepted merges; fmt and workspace/all-targets clippy passed. Full workspace/release checks were not rerun for this change. Full extension orchestration, hooks/groups and downstream OMR remain unfinished.
+22 focused debug tests, fmt, and workspace/all-targets clippy pass. The new independently supplied slice controls invoke original SIG.inters, HorizontalSide.values, getSideBeam and extendToBeam: 37 cases, 16 accepted merges. Prior 61 gap-gate controls remain passing. Full workspace/release checks were not rerun for this stage.
 
-This is a GitHub connector-created archive checkpoint commit, not a successful CLI git push or the original local implementation commit object. The separate local push proof commit 0366e5e36f136a70eee5c6dceb4dd964f4554a50 failed to push and is not claimed remotely retained here.
+The prefix preserves initial order, removed-ID skips, appended-beam exclusion, LEFT-only direct merging, RIGHT maximum-extension decisions and explicit downstream stops. It does not stub stem/spot/parallel branches as false, execute the full extension loop or claim uninterrupted original pipeline equivalence. Whole-page CLI extension orchestration, late hooks/groups and downstream OMR remain unfinished.
+
+This branch is maintained with GitHub connector-created commits and fast-forward ref updates. The earlier CLI git push failed and is not claimed successful. Previous checkpoint commits and archives are preserved.
