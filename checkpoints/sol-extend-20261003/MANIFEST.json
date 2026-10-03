@@ -1,19 +1,19 @@
 {
-  "schema": 3,
-  "stage": "extendToPoint prerequisite",
-  "archive": "checkpoints/sol-extend-20261003/audiveris-sol-extend-point-549d4090-cumulative-20261003.tar.gz",
-  "archive_bytes": 133295,
-  "archive_sha256": "0fb3e1f697046dd49cb620ed6a763014707f77b32ce053cbb02ea2cef49b46e8",
-  "archive_blob_sha": "d070f4be6754a267a1eada6946e940a59e0cb863",
-  "recorded_utc": "2026-10-03T09:37:47.549172+00:00",
+  "schema": 4,
+  "archive": "checkpoints/sol-extend-20261003/audiveris-sol-full-validation-46d56e3c-cumulative-20261003.tar.gz",
+  "archive_root": "sol-extension-prefix-20261003",
+  "archive_bytes": 172010,
+  "archive_sha256": "19693269b24fc0be8d8e7e9b611550a5b962fd99b11264b8818a0bf7fef3da7e",
+  "archive_blob_sha": "7286a12f8dcfbd7a6eab93d13f94ac258e435e29",
+  "recorded_utc": "2026-10-03T09:48:20.070803+00:00",
   "base_source_commit": "8ebbf976f568f91077d32221d52366d71559ab75",
   "base_source_tree": "4ad9d3c0c4cc242633caa64b5e081333bacf1b9b",
   "base_source_archive_sha256": "6d00a4aaa3109d148f25c2acb9b8252d7a7085f4a34d5c62c8f76eb5e12fc79d",
   "base_outer_archive_sha256": "ec3f4226b3c7cc40028eff06051d6bcdece761e3390872daaad2cd55cf5084f2",
   "reconstructed_local_base_commit": "57898b537df3346aa461711fceec9c5ecfaafa91",
-  "local_implementation_commit": "549d4090977e960e36703a29b9dea68d03574e6c",
-  "local_implementation_tree": "c3c94e49e607605458f9a30c626422225498f9ca",
-  "previous_local_implementation_commit": "156b38f00227c7804e79dcc4470763391830b073",
+  "local_implementation_commit": "46d56e3cd0074d09ce1eafa21ae18e4c97634279",
+  "local_implementation_tree": "1cf177c29f8851b217f921633093bff49deb756c",
+  "previous_local_implementation_commit": "549d4090977e960e36703a29b9dea68d03574e6c",
   "branch": "sol/20261003-extend-to-beam",
   "dirty_files": [],
   "changed_files": [
@@ -53,6 +53,13 @@
     "evidence/beam-extension-prefix-checkpoint/provenance.json",
     "evidence/beam-extension-prefix-checkpoint/validation-commands.json",
     "evidence/beam-extension-prefix-checkpoint/validation.json",
+    "evidence/full-workspace-549d409-checkpoint/README.md",
+    "evidence/full-workspace-549d409-checkpoint/clippy.log",
+    "evidence/full-workspace-549d409-checkpoint/debug.log",
+    "evidence/full-workspace-549d409-checkpoint/fmt.log",
+    "evidence/full-workspace-549d409-checkpoint/release-build.log",
+    "evidence/full-workspace-549d409-checkpoint/release.log",
+    "evidence/full-workspace-549d409-checkpoint/validation.json",
     "fixtures/official-beam-extend-to-beam.json",
     "fixtures/official-beam-extend-to-point.json",
     "fixtures/official-beam-extension-prefix.json",
@@ -72,19 +79,136 @@
   ],
   "validation": {
     "status": "passed",
-    "focused_tests_passed": 24,
-    "focused_tests_failed": 0,
-    "original_method_controls": 38,
-    "original_accepted_extensions": 17,
-    "fmt": "passed",
-    "workspace_all_targets_clippy": "passed",
-    "full_workspace_release_checks": "not rerun at this bounded stage",
-    "scope": "extendToPoint prerequisite only. Stem selection, extension loop and CLI wiring pending. No hooks/groups/notes/rhythm/MusicXML completion claim.",
-    "original_empty_area_nan_acceptance": "preserved after independent original control detected initial mismatch",
-    "initial_failed_evidence": "/workspace/audiveris-sol/point-initial-failure"
+    "started_utc": "2026-10-03T09:41:04.884896+00:00",
+    "tested_source_commit": "549d4090977e960e36703a29b9dea68d03574e6c",
+    "tested_source_tree": "c3c94e49e607605458f9a30c626422225498f9ca",
+    "source_clean_before_checks": true,
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "checks": [
+      {
+        "name": "debug",
+        "command": [
+          "cargo",
+          "+1.98.1",
+          "test",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "-j",
+          "2"
+        ],
+        "exit_code": 0,
+        "seconds": 285.6394047059998,
+        "log": "debug.log",
+        "completed_utc": "2026-10-03T09:45:50.562970+00:00",
+        "test_summary": {
+          "suites": 77,
+          "passed": 259,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      {
+        "name": "release",
+        "command": [
+          "cargo",
+          "+1.98.1",
+          "test",
+          "--workspace",
+          "--release",
+          "--locked",
+          "--offline",
+          "-j",
+          "2"
+        ],
+        "exit_code": 0,
+        "seconds": 127.40934824899978,
+        "log": "release.log",
+        "completed_utc": "2026-10-03T09:47:57.974016+00:00",
+        "test_summary": {
+          "suites": 77,
+          "passed": 259,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      {
+        "name": "fmt",
+        "command": [
+          "cargo",
+          "+1.98.1",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "seconds": 0.39796496200006004,
+        "log": "fmt.log",
+        "completed_utc": "2026-10-03T09:47:58.373146+00:00"
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "+1.98.1",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "--all-targets",
+          "-j",
+          "2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "seconds": 0.09043009000015445,
+        "log": "clippy.log",
+        "completed_utc": "2026-10-03T09:47:58.464453+00:00"
+      },
+      {
+        "name": "release-build",
+        "command": [
+          "cargo",
+          "+1.98.1",
+          "build",
+          "--workspace",
+          "--release",
+          "--locked",
+          "--offline",
+          "-j",
+          "2"
+        ],
+        "exit_code": 0,
+        "seconds": 0.05465350299982674,
+        "log": "release-build.log",
+        "completed_utc": "2026-10-03T09:47:58.519895+00:00"
+      }
+    ],
+    "new_features_added": false,
+    "nonfinite_edge": {
+      "classification": "NaN",
+      "operation": "0 / 0 when side area contains no integer samples",
+      "original_dcmpg_ifge_accepts": true,
+      "native_point_gate_accepts": true,
+      "representation": "Explicit classification string; no nonfinite floating value serialized or coerced to zero."
+    },
+    "source_unchanged_after_checks": true,
+    "finished_utc": "2026-10-03T09:47:58.534409+00:00",
+    "scope": "Full workspace validation of current bounded native implementation. Stem selection/extension loop/CLI integration and full BEAMS/OMR remain unfinished.",
+    "release_cli_artifact": {
+      "path": "/workspace/audiveris-sol/toolchain/target/release/audiveris-native",
+      "bytes": 7425344,
+      "sha256": "93c41f591e4cfd630a60778d00e36016a74eeff5bd9c74cf33e45e01292a33ee",
+      "packaged": false,
+      "feature_completeness_claim": false
+    },
+    "source_code_changed_in_validation_commit": false
   },
   "cumulative_from_original_base": true,
-  "archive_root": "sol-extension-prefix-20261003",
   "recovery": "Apply changes.patch or overlay delta/ onto exact 8ebbf976 snapshot. Contains prior gate plus this prefix stage; no preceding delta required.",
   "full_BEAMS": "unfinished",
   "producer_upload": "not yet attempted",
@@ -126,6 +250,13 @@
     "evidence/beam-extension-prefix-checkpoint/provenance.json": "61db31da31f6e93ea30eb30c2a6646f791278e6b571ab4133546430349470668",
     "evidence/beam-extension-prefix-checkpoint/validation-commands.json": "bf17f975cdf0a1bc2c39cb74f5059a75eec5146abca3ce870a8fe8a203c0942d",
     "evidence/beam-extension-prefix-checkpoint/validation.json": "e1b8492dfe5cdd72a02628dcfb2bfd758bc757f8214ee02ce4faf6729cad0da9",
+    "evidence/full-workspace-549d409-checkpoint/README.md": "d00bc35db735ca4a347a0e8f2e13651fa8f77239fb50560e70bc989b4aacd1ab",
+    "evidence/full-workspace-549d409-checkpoint/clippy.log": "ee1d3fffa2022e962e63e0dbe4d35c9c198450a20c29fc09030f635dbb38bfcd",
+    "evidence/full-workspace-549d409-checkpoint/debug.log": "6c0dcb2efd820bae2f8f7de347fee3abf1fa2a4e0d6ca4a3cacdf03301b61ca8",
+    "evidence/full-workspace-549d409-checkpoint/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/full-workspace-549d409-checkpoint/release-build.log": "90c8a1a69c0155761cff4bfe0e61bbee007961d2b96729d2127c2e0c291489dd",
+    "evidence/full-workspace-549d409-checkpoint/release.log": "b6b95e0c91d2350b4a1af708adf566d8495e3c2f2d1409b0a5218b5786e059bb",
+    "evidence/full-workspace-549d409-checkpoint/validation.json": "828b15c24edb7f83a87de652c036f1ebca3a171207fc0f4c3d9eed67c84c76b1",
     "fixtures/official-beam-extend-to-beam.json": "5dcaa6a478087125ac8b414945051da9c4d6fbffc3ea8c5f2d6d5905305721ce",
     "fixtures/official-beam-extend-to-point.json": "af1ff9b0bd40d4b134da69794aec4da041676d76797ece0168ce012d9baba491",
     "fixtures/official-beam-extension-prefix.json": "245abb92855b362bdc852b6c687a5a6a5ddefed2cc02fcf4d63bbfc01042de61",
@@ -142,5 +273,19 @@
     "tests/beam_extend_to_beam.rs": "3a7f44a3de1627d03e87d7183d106639f96bcfc64623bfb788f90a87c05d4852",
     "tests/beam_extend_to_point.rs": "1be150db7c0c93cf3af2ea9e725a922813e6892114228fda6b510b62e982fffd",
     "tests/beam_extension_prefix.rs": "d31b45e206cfda49c7c8541dbe23aee358dfb0222f4847f9680e9ab645cad533"
+  },
+  "stage": "Full workspace validation only; no new feature",
+  "feature_validation": {
+    "status": "passed",
+    "focused_tests_passed": 24,
+    "focused_tests_failed": 0,
+    "original_method_controls": 38,
+    "original_accepted_extensions": 17,
+    "fmt": "passed",
+    "workspace_all_targets_clippy": "passed",
+    "full_workspace_release_checks": "not rerun at this bounded stage",
+    "scope": "extendToPoint prerequisite only. Stem selection, extension loop and CLI wiring pending. No hooks/groups/notes/rhythm/MusicXML completion claim.",
+    "original_empty_area_nan_acceptance": "preserved after independent original control detected initial mismatch",
+    "initial_failed_evidence": "/workspace/audiveris-sol/point-initial-failure"
   }
 }
