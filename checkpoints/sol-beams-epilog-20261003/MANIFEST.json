@@ -1,0 +1,178 @@
+{
+  "schema": 10,
+  "branch": "checkpoint/sol-beams-epilog-20261003-134300",
+  "parent_checkpoint_commit": "c0d36bbfcd2faaa501b2877747045431a91d43ae",
+  "parent_implementation_commit": "e201b704cfbee035c956d446cb002f979a043106",
+  "parent_implementation_tree": "bc539c16686d877dcdaf04274d4fec8862a7f499",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/c0d36bbfcd2faaa501b2877747045431a91d43ae/checkpoints/sol-real-beams-rests-20261003/MANIFEST.json",
+  "local_implementation_commit": "019ed5dac34d43877c4ba4218ff212e4be32955b",
+  "local_implementation_tree": "db3adf6d28c87f852fdc8e39850d6adc9d2c500f",
+  "changed_files_from_parent": [
+    "docs/BEAMS-EPILOG.md",
+    "evidence/beams-epilog-checkpoint/BeamsStepBuilder.javap.txt",
+    "evidence/beams-epilog-checkpoint/CLI-RECEIPT.json",
+    "evidence/beams-epilog-checkpoint/SystemInfo.javap.txt",
+    "evidence/beams-epilog-checkpoint/clippy.log",
+    "evidence/beams-epilog-checkpoint/fmt.log",
+    "evidence/beams-epilog-checkpoint/focused.log",
+    "evidence/beams-epilog-checkpoint/validation.json",
+    "src/beam_dispatch.rs",
+    "src/beams_pipeline.rs",
+    "src/main.rs",
+    "tests/beam_dispatch.rs"
+  ],
+  "file_sha256": {
+    "docs/BEAMS-EPILOG.md": "5b001548d15c535c5abd49fbd7eb88f629dd58e0062ead1a2982218eb8e070ed",
+    "evidence/beams-epilog-checkpoint/BeamsStepBuilder.javap.txt": "724141aa1f2a771fd15f90dad436c073472d636e76978811aa8f25ecb1df4148",
+    "evidence/beams-epilog-checkpoint/CLI-RECEIPT.json": "b2e79b677a5f30b73486c652d9d213cea0604deaca9318f9b7f7775d9e8766ff",
+    "evidence/beams-epilog-checkpoint/SystemInfo.javap.txt": "65d2aa963ed1605014307a12cb6ff1c1aedf44907a1854f2faca7503716ff728",
+    "evidence/beams-epilog-checkpoint/clippy.log": "83947090166fa022b4bd66e01432783de7d6c9b05b538f37fe6ee99538a5dcc0",
+    "evidence/beams-epilog-checkpoint/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/beams-epilog-checkpoint/focused.log": "5c31d83da8e025db33f79673fc894e1de6fe192a2bce2b463ed87af1076f80b2",
+    "evidence/beams-epilog-checkpoint/validation.json": "f8e22899006d76d52b3c56f341e98e5053d38368e3dd6a804f14c6d7bcfeea28",
+    "src/beam_dispatch.rs": "2548d22588324e57124620f31649e2852176bec473b55ebf685c2212306563a6",
+    "src/beams_pipeline.rs": "6fbe43b4a09b27daad1011ea287f9d620251dc59594d0199a139f67154d99fb7",
+    "src/main.rs": "15bf5d37ea3a0f848fa758a9c8d97c6e1f1a872a05a63aa7ae2472dc84e5ad3b",
+    "tests/beam_dispatch.rs": "e22c9835eb438c71de14eacd58ac1fe331eba4678c0fff6d3ae872ed92f3a6cc"
+  },
+  "tracked_files": 4692,
+  "dirty_files": [],
+  "patch": {
+    "path": "checkpoints/sol-beams-epilog-20261003/changes.patch",
+    "bytes": 306472,
+    "sha256": "8adfba62d3a46944478ba318d592d168e038b1e8388c1128c42a91e5cee26052"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-beams-epilog-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "regression_batches": [
+      {
+        "order": 1,
+        "profile": "debug",
+        "command": "cargo test --locked --offline -j 2 --workspace",
+        "status": "pending after checkpoint"
+      },
+      {
+        "order": 2,
+        "profile": "release",
+        "command": "cargo test --release --locked --offline -j 2 --workspace",
+        "status": "pending, separate bounded run"
+      }
+    ],
+    "status": "passed",
+    "scope": "Native BEAMS epilog integration preserving free-glyph/registry/shared graph invariants; supported single-staff native pipeline, multi-staff/ledger explicit unsupported",
+    "focused_tests": {
+      "suites": 5,
+      "passed": 18,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "original_controls": {
+      "native_outputs_used": false,
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "cases": 75,
+      "accepted_serif_peaks": 42,
+      "runtime_excludes_compile_shims": true,
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "positive_original_serif_peaks": 42,
+      "native_final_peak_acceptance": "42 peaks in 41 positive cases, 34 negative cases matched",
+      "rest_conversions": 6,
+      "real_score_acceptance": "not measured",
+      "staff_measurements": "actual staff integer ordinates and thickness; supplied synthetic pixels",
+      "observer_sha256": "56566e209ba59a911a1e17fc32877d33fe11ca12fad388d5f3b074113b299d1f",
+      "fixture_sha256": "70eacedd951b63d8c102d1c7546f5f817d75c144bbc01548a1c8644b378ececf",
+      "direct_original_filament_cases": 48,
+      "accepted_glyphs": 32,
+      "rejected_filaments": 16,
+      "original_group_cleanup_cases": 16,
+      "original_complete_rest_conversion": "11 cases, six complete conversions and five non-conversions",
+      "filament_fixture_sha256": "c378b2eb1913d4158963e025e5ad1a0031ec074f1b01e16c652a8770e7f2a823",
+      "cleanup_fixture_sha256": "3eab833bbd1765e9bd6e344bc145d959c2b0f5c824781c5bebde4a81fbcc2a8b",
+      "filament_observer_sha256": "b16b7d152ef71c214f54fd91abf1346f8e11d993eac693eb1ab1b9ad05ef63b6",
+      "cleanup_observer_sha256": "7cc8c612dc0e9f0b57eb147c89bdc1fa93a478ddd92b66fd32529afea3e7e3de",
+      "complete_rest_cases": 11,
+      "complete_rest_conversions": 6,
+      "negative_rest_controls": 5,
+      "complete_rest_fixture_sha256": "dc3577d3df2edf89467f72ca64635d25ed0b5a67b8ebbfdf606f8d5dfbb872e8",
+      "complete_rest_observer_sha256": "f798ea30f6e8acbe18fbda56ef637cf9d8823567c58688593559b8e105830b21"
+    },
+    "current_full_workspace": {
+      "debug": "UNVERIFIED at new source",
+      "release": "UNVERIFIED at new source"
+    },
+    "parent_full_release": {
+      "source_commit": "21f0833abd67dd4fa1dd0c60a74a686779329818",
+      "checkpoint_commit": "a14eb873873b101247913c41a6987cdbddaa17d4",
+      "status": "passed",
+      "tests": 289,
+      "current_source": "UNVERIFIED"
+    },
+    "shared_graph_contract_tests": 4,
+    "cli": {
+      "status": "passed",
+      "last_completed_substage": "BEAMS.EPILOG",
+      "replay_identical": true,
+      "shared_graph_identical_to_parent": true,
+      "report_sha256": "986174b1d30fe26712778220bab1377d260ef5ade6e3bd671f4d9ca708b8a64c",
+      "seconds": 1.3205471590008528,
+      "epilog": {
+        "complete": true,
+        "graph_mutation": false,
+        "registry_glyph_count": 11,
+        "remaining_free_glyphs": [
+          {
+            "glyph_ids": [
+              1,
+              2
+            ],
+            "system_id": 1
+          }
+        ],
+        "systems": [
+          {
+            "removed_free_glyph_ids": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "system_id": 1
+          }
+        ]
+      },
+      "real_input_rest_conversions": 0,
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false,
+      "unsupported_scanned_input": {
+        "seconds": 15.414652040000874,
+        "last_completed_substage": "BEAMS.GROUPS",
+        "epilog_complete": false,
+        "rest_errors": [
+          "unsupported_rest_multi_staff_mapping",
+          "unsupported_rest_multi_staff_mapping"
+        ]
+      }
+    },
+    "native_mapping_contract_tests": 2,
+    "previous_full_workspace": {
+      "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+      "debug": 275,
+      "release": 275,
+      "checkpoint_commit": "0bdac35f8bd1509a76904ac3b8736fc03dd6838b"
+    },
+    "native_staff_association_and_pitch": "single-staff integrated; multi-staff/ledger unsupported",
+    "positive_rest_recognition": "six complete original/native conversions with supplied synthetic raster/lag sections and actual original staff",
+    "full_OMR": "unfinished"
+  },
+  "recovery": [
+    "Restore exact prior shared-SIG implementation using its immutable manifest and archive/late-hook/group/admission/raster-patch dependencies. Verify parent commit e201b704cfbee035c956d446cb002f979a043106 and tree bc539c16686d877dcdaf04274d4fec8862a7f499.",
+    "Verify this changes.patch bytes and SHA256; git apply --check, then git apply --index.",
+    "Verify git write-tree equals local_implementation_tree and every file_sha256 entry.",
+    "git hash-object -t commit -w IMPLEMENTATION-COMMIT.txt must equal local_implementation_commit.",
+    "Attach HEAD to a new local branch at that commit. Verify clean status and tracked_files count."
+  ],
+  "full_OMR": "unfinished"
+}
