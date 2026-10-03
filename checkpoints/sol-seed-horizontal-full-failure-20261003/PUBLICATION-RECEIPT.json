@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "remote_commit": "3ddd3fe086c947cb1b063c56d7b90434b828c707",
+  "remote_tree": "6fa1260e799ae31bfb82d3e32e03b3a4cfc56e53",
+  "branch": "checkpoint/sol-seed-horizontal-20261003",
+  "source": {
+    "source_commit": "81d33ae92b7b67980834b845c38c162b3df567d0",
+    "source_tree": "76057c875fbdc7549531c77d5c7c727f859a9dda",
+    "changed_files": 6,
+    "tracked_files": 4733,
+    "patch_bytes": 480920,
+    "focused": {
+      "suites": 5,
+      "passed": 15,
+      "failed": 0,
+      "ignored": 0
+    },
+    "original_positive_raster_cases": 1,
+    "original_selection_queries": 4410,
+    "positive_original_raster_seeds": 4,
+    "fresh_restore": "passed",
+    "full_debug": "UNVERIFIED",
+    "full_release": "UNVERIFIED"
+  },
+  "artifact_readbacks_verified": 18,
+  "ancestor_blobs_preserved": 234,
+  "main_parent_full_refs_unchanged": true,
+  "verified_utc": "2026-10-03 15:18:27 UTC"
+}

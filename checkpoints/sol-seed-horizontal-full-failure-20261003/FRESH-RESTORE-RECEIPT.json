@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "source_commit": "81d33ae92b7b67980834b845c38c162b3df567d0",
+  "source_tree": "76057c875fbdc7549531c77d5c7c727f859a9dda",
+  "parent_source_commit": "6afb227a4885116d34d7d0ff01d924ea161aae48",
+  "parent_source_tree": "882b5b76bbeac38e521ed654468c41d5761c8c14",
+  "tracked_files": 4733,
+  "changed_hashes_verified": 6,
+  "all_fresh_restored_file_hashes_verified": 4733,
+  "source_clean": true,
+  "verified_utc": "2026-10-03T15:17:29.420612+00:00",
+  "post_full_regression_verification_utc": "2026-10-03T15:26:59.925083+00:00",
+  "source_clean_after_full_profiles": true,
+  "all_4733_live_and_fresh_file_hashes_reverified": true
+}

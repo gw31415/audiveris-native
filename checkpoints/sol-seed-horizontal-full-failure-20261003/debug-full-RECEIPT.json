@@ -1,0 +1,28 @@
+{
+  "source_commit": "81d33ae92b7b67980834b845c38c162b3df567d0",
+  "source_tree": "76057c875fbdc7549531c77d5c7c727f859a9dda",
+  "source_clean_before_and_after": true,
+  "profile": "debug",
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-j2",
+    "--workspace",
+    "--no-fail-fast"
+  ],
+  "started_utc": "2026-10-03T15:18:24.730315+00:00",
+  "ended_utc": "2026-10-03T15:24:16.140240+00:00",
+  "seconds": 351.40994297399993,
+  "exit_code": 101,
+  "timed_out": false,
+  "suite_results": 97,
+  "passed": 309,
+  "failed": 4,
+  "ignored": 0,
+  "log_bytes": 47985,
+  "log_sha256": "e2e03d826df1a502294ca0f877a29645b24302fc53e1ebbf780fe811a3fd69f8",
+  "full_suite_status": "failed_or_incomplete",
+  "runs_at_this_source": 1
+}
