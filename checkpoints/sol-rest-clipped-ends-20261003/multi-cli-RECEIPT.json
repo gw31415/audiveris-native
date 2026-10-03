@@ -1,0 +1,34 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "fixtures/official-grid/laura-gray.png",
+    "/workspace/audiveris-clipped-area-check-20261003/multi-cli.pgm",
+    "/workspace/audiveris-clipped-area-check-20261003/multi-cli.json"
+  ],
+  "seconds": 16.49239754700102,
+  "exit_code": 0,
+  "report_sha256": "94a19d30818d02ed79346d46329292d003de0534eb04d98649fa13dd068c8fa2",
+  "staff_count": 6,
+  "system_count": 2,
+  "last_completed_substage": "BEAMS.EPILOG",
+  "epilog_complete": true,
+  "rest_boundaries": [
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+    },
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+    }
+  ],
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false,
+  "same_pipeline_values_as_parent": true,
+  "supplied_clips_discovered_by_native_grid": false
+}

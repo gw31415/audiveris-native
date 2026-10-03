@@ -1,0 +1,359 @@
+diff --git a/docs/REST-CLIPPED-SYSTEM-AREAS.md b/docs/REST-CLIPPED-SYSTEM-AREAS.md
+new file mode 100644
+index 0000000..ebd85b6
+--- /dev/null
++++ b/docs/REST-CLIPPED-SYSTEM-AREAS.md
+@@ -0,0 +1,7 @@
++# Supplied clipped system ends
++
++Native beam dispatch and multiple-rest mapping now consume supplied horizontal system-area ends for straight boundary paths. The area is the original north/south staff boundary band intersected with the supplied rectangle, retaining horizontal endpoint extensions, Java boundary containment, original closest/at-or-above selection and full-lag section rectangle intersections. This adds no neighbor-discovery heuristic.
++
++The preserved original StaffManager computes clipped staff areas directly. The control probe intersects the original SystemManager area with java.awt.Area using supplied ends [250,1400], then calls original SystemInfo selection. Its real scanned Laura curves come from independently observed original GRID output. This tests the intersection and selection semantics, not native horizontal-neighbor discovery. Clipped curved boundary paths return an explicit unsupported error; invalid ends are rejected. Full-width curved areas retain their previous support.
++
++Current native GRID still emits full-width ends. The native real-input CLI therefore verifies the full-width pipeline, while supplied-geometry controls exercise clipping. Horizontal staff-chain discovery and curved clipping remain unfinished. Positive real-score multiple-rest conversion is not demonstrated; full OMR remains unfinished. Full regression at this source is not yet run.
+diff --git a/fixtures/official-clipped-system-area.json b/fixtures/official-clipped-system-area.json
+new file mode 100644
+index 0000000..6b6a11d
+--- /dev/null
++++ b/fixtures/official-clipped-system-area.json
+@@ -0,0 +1 @@
++{"native_outputs_used":false,"input":{"width":1489,"height":2104,"interline":11,"grid":{"staffs":[{"id":1,"system_id":1,"lines":[{"points":[[234.0,391.0],[1416.0,391.0]],"thickness":2.038922155688623,"glyph_id":59},{"points":[[234.0,402.0],[1416.0,402.0]],"thickness":2.057833859095689,"glyph_id":60},{"points":[[234.0,413.6429782082325],[1416.0,413.4998789346247]],"thickness":1.055045871559633,"glyph_id":61},{"points":[[234.0,425.0],[1416.0,425.0]],"thickness":2.0671641791044775,"glyph_id":62},{"points":[[234.0,436.0],[1416.0,436.0]],"thickness":2.0445075757575757,"glyph_id":63}],"left":234,"right":1416,"specific_interline":11,"ledger_lines":[]},{"id":2,"system_id":1,"lines":[{"points":[[234.0,516.0],[1416.0,516.0]],"thickness":2.045,"glyph_id":64},{"points":[[234.0,527.6429782082324],[1416.0,527.4998789346247]],"thickness":1.0379746835443038,"glyph_id":65},{"points":[[234.0,539.0],[1416.0,539.0]],"thickness":2.0749486652977414,"glyph_id":66},{"points":[[234.0,550.0],[1416.0,550.0]],"thickness":2.0664488017429194,"glyph_id":67},{"points":[[234.0,561.6429782082324],[1416.0,561.4998789346247]],"thickness":1.0544747081712063,"glyph_id":68}],"left":234,"right":1416,"specific_interline":11,"ledger_lines":[]},{"id":3,"system_id":1,"lines":[{"points":[[234.0,636.5],[1416.0,636.5]],"thickness":1.0431519699812384,"glyph_id":69},{"points":[[234.0,648.0],[1416.0,648.0]],"thickness":2.0546875,"glyph_id":70},{"points":[[234.0,659.0],[1416.0,659.0]],"thickness":2.0382775119617227,"glyph_id":71},{"points":[[234.0,670.5],[1416.0,670.5]],"thickness":1.0306859205776173,"glyph_id":72},{"points":[[234.0,682.0],[1416.0,682.0]],"thickness":2.0245535714285716,"glyph_id":73}],"left":234,"right":1416,"specific_interline":11,"ledger_lines":[]},{"id":4,"system_id":2,"lines":[{"points":[[72.0,886.0],[1415.0,886.0]],"thickness":2.0279232111692846,"glyph_id":74},{"points":[[72.0,897.0],[1415.0,897.0]],"thickness":2.040781648258284,"glyph_id":75},{"points":[[72.0,908.5],[1415.0,908.5]],"thickness":1.0371009490940466,"glyph_id":76},{"points":[[72.0,920.0],[1415.0,920.0]],"thickness":2.0452961672473866,"glyph_id":77},{"points":[[72.0,931.0],[1415.0,931.0]],"thickness":2.0299110751818916,"glyph_id":78}],"left":72,"right":1415,"specific_interline":11,"ledger_lines":[]},{"id":5,"system_id":2,"lines":[{"points":[[72.0,1028.5],[1415.0,1028.5]],"thickness":1.0260089686098655,"glyph_id":79},{"points":[[72.0,1040.0],[1415.0,1040.0]],"thickness":2.0490111779879623,"glyph_id":80},{"points":[[72.0,1051.0],[1415.0,1051.0]],"thickness":2.0552092609082813,"glyph_id":81},{"points":[[72.0,1062.5],[1415.0,1062.5]],"thickness":1.02710027100271,"glyph_id":82},{"points":[[72.0,1074.0],[1415.0,1074.0]],"thickness":2.0490909090909093,"glyph_id":83}],"left":72,"right":1415,"specific_interline":11,"ledger_lines":[]},{"id":6,"system_id":2,"lines":[{"points":[[72.0,1156.5],[1415.0,1156.5]],"thickness":1.0435339308578746,"glyph_id":84},{"points":[[72.0,1168.0],[1415.0,1168.0]],"thickness":2.036290322580645,"glyph_id":85},{"points":[[72.0,1179.0],[1415.0,1179.0]],"thickness":1.5482275350370982,"glyph_id":86},{"points":[[72.0,1190.5],[1415.0,1190.5]],"thickness":1.0317991631799164,"glyph_id":87},{"points":[[72.0,1199.8100368036853],[155.9375,1202.0404640560473],[239.875,1202.0042342438885],[323.8125,1202.000440233834],[407.75,1202.0000401415994],[491.6875,1202.0000037034674],[575.625,1202.0000002813956],[659.5625,1202.000000022314],[743.5,1202.0000000016712],[827.4375,1202.0000000000507],[911.375,1201.9999999992035],[995.3125,1201.9999999908948],[1079.25,1201.9999999120023],[1163.1875,1201.9999992812038],[1247.125,1201.9999968138475],[1331.0625,1202.000011057483],[1415.0,1202.008895478132]],"thickness":2.0158982511923687,"glyph_id":88}],"left":72,"right":1415,"specific_interline":11,"ledger_lines":[]}],"systems":[{"id":1,"staff_ids":[1,2,3],"coordinates":[234,391,1183,682,246],"area":{"x_range":[250,1400],"vertical_margin":10,"north_neighbor_last_line":null,"south_neighbor_first_line":4}},{"id":2,"staff_ids":[4,5,6],"coordinates":[72,886,1344,1200,270],"area":{"x_range":[250,1400],"vertical_margin":10,"north_neighbor_last_line":3,"south_neighbor_first_line":null}}],"vlag":[{"id":1,"first_pos":300,"runs":[[0,1]]},{"id":2,"first_pos":300,"runs":[[400,20]]},{"id":3,"first_pos":300,"runs":[[680,20]]},{"id":4,"first_pos":300,"runs":[[870,20]]},{"id":5,"first_pos":300,"runs":[[890,20]]},{"id":6,"first_pos":300,"runs":[[2103,1]]}],"hlag":[]},"source_fixture":"fixtures/official-grid/laura-gray-final.json","source_is_original_grid":true},"systems":[{"id":1,"cases":[{"closest":0,"above":0,"x":-1.0,"y":0.0},{"closest":0,"above":0,"x":-1.0,"y":390.0},{"closest":0,"above":0,"x":-1.0,"y":391.0},{"closest":0,"above":0,"x":-1.0,"y":436.0},{"closest":0,"above":0,"x":-1.0,"y":515.0},{"closest":0,"above":0,"x":-1.0,"y":540.0},{"closest":0,"above":0,"x":-1.0,"y":637.0},{"closest":0,"above":0,"x":-1.0,"y":670.0},{"closest":0,"above":0,"x":-1.0,"y":692.0},{"closest":0,"above":0,"x":-1.0,"y":800.0},{"closest":0,"above":0,"x":-1.0,"y":875.0},{"closest":0,"above":0,"x":-1.0,"y":885.0},{"closest":0,"above":0,"x":-1.0,"y":886.0},{"closest":0,"above":0,"x":-1.0,"y":930.0},{"closest":0,"above":0,"x":-1.0,"y":1000.0},{"closest":0,"above":0,"x":-1.0,"y":1200.0},{"closest":0,"above":0,"x":-1.0,"y":2103.0},{"closest":0,"above":0,"x":-1.0,"y":2104.0},{"closest":0,"above":0,"x":0.0,"y":0.0},{"closest":0,"above":0,"x":0.0,"y":390.0},{"closest":0,"above":0,"x":0.0,"y":391.0},{"closest":0,"above":0,"x":0.0,"y":436.0},{"closest":0,"above":0,"x":0.0,"y":515.0},{"closest":0,"above":0,"x":0.0,"y":540.0},{"closest":0,"above":0,"x":0.0,"y":637.0},{"closest":0,"above":0,"x":0.0,"y":670.0},{"closest":0,"above":0,"x":0.0,"y":692.0},{"closest":0,"above":0,"x":0.0,"y":800.0},{"closest":0,"above":0,"x":0.0,"y":875.0},{"closest":0,"above":0,"x":0.0,"y":885.0},{"closest":0,"above":0,"x":0.0,"y":886.0},{"closest":0,"above":0,"x":0.0,"y":930.0},{"closest":0,"above":0,"x":0.0,"y":1000.0},{"closest":0,"above":0,"x":0.0,"y":1200.0},{"closest":0,"above":0,"x":0.0,"y":2103.0},{"closest":0,"above":0,"x":0.0,"y":2104.0},{"closest":0,"above":0,"x":234.0,"y":0.0},{"closest":0,"above":0,"x":234.0,"y":390.0},{"closest":0,"above":0,"x":234.0,"y":391.0},{"closest":0,"above":0,"x":234.0,"y":436.0},{"closest":0,"above":0,"x":234.0,"y":515.0},{"closest":0,"above":0,"x":234.0,"y":540.0},{"closest":0,"above":0,"x":234.0,"y":637.0},{"closest":0,"above":0,"x":234.0,"y":670.0},{"closest":0,"above":0,"x":234.0,"y":692.0},{"closest":0,"above":0,"x":234.0,"y":800.0},{"closest":0,"above":0,"x":234.0,"y":875.0},{"closest":0,"above":0,"x":234.0,"y":885.0},{"closest":0,"above":0,"x":234.0,"y":886.0},{"closest":0,"above":0,"x":234.0,"y":930.0},{"closest":0,"above":0,"x":234.0,"y":1000.0},{"closest":0,"above":0,"x":234.0,"y":1200.0},{"closest":0,"above":0,"x":234.0,"y":2103.0},{"closest":0,"above":0,"x":234.0,"y":2104.0},{"closest":0,"above":0,"x":249.75,"y":0.0},{"closest":0,"above":0,"x":249.75,"y":390.0},{"closest":0,"above":0,"x":249.75,"y":391.0},{"closest":0,"above":0,"x":249.75,"y":436.0},{"closest":0,"above":0,"x":249.75,"y":515.0},{"closest":0,"above":0,"x":249.75,"y":540.0},{"closest":0,"above":0,"x":249.75,"y":637.0},{"closest":0,"above":0,"x":249.75,"y":670.0},{"closest":0,"above":0,"x":249.75,"y":692.0},{"closest":0,"above":0,"x":249.75,"y":800.0},{"closest":0,"above":0,"x":249.75,"y":875.0},{"closest":0,"above":0,"x":249.75,"y":885.0},{"closest":0,"above":0,"x":249.75,"y":886.0},{"closest":0,"above":0,"x":249.75,"y":930.0},{"closest":0,"above":0,"x":249.75,"y":1000.0},{"closest":0,"above":0,"x":249.75,"y":1200.0},{"closest":0,"above":0,"x":249.75,"y":2103.0},{"closest":0,"above":0,"x":249.75,"y":2104.0},{"closest":1,"above":0,"x":250.0,"y":0.0},{"closest":1,"above":0,"x":250.0,"y":390.0},{"closest":1,"above":1,"x":250.0,"y":391.0},{"closest":1,"above":1,"x":250.0,"y":436.0},{"closest":2,"above":1,"x":250.0,"y":515.0},{"closest":2,"above":2,"x":250.0,"y":540.0},{"closest":3,"above":3,"x":250.0,"y":637.0},{"closest":3,"above":3,"x":250.0,"y":670.0},{"closest":3,"above":3,"x":250.0,"y":692.0},{"closest":3,"above":3,"x":250.0,"y":800.0},{"closest":3,"above":3,"x":250.0,"y":875.0},{"closest":0,"above":0,"x":250.0,"y":885.0},{"closest":0,"above":0,"x":250.0,"y":886.0},{"closest":0,"above":0,"x":250.0,"y":930.0},{"closest":0,"above":0,"x":250.0,"y":1000.0},{"closest":0,"above":0,"x":250.0,"y":1200.0},{"closest":0,"above":0,"x":250.0,"y":2103.0},{"closest":0,"above":0,"x":250.0,"y":2104.0},{"closest":1,"above":0,"x":250.25,"y":0.0},{"closest":1,"above":0,"x":250.25,"y":390.0},{"closest":1,"above":1,"x":250.25,"y":391.0},{"closest":1,"above":1,"x":250.25,"y":436.0},{"closest":2,"above":1,"x":250.25,"y":515.0},{"closest":2,"above":2,"x":250.25,"y":540.0},{"closest":3,"above":3,"x":250.25,"y":637.0},{"closest":3,"above":3,"x":250.25,"y":670.0},{"closest":3,"above":3,"x":250.25,"y":692.0},{"closest":3,"above":3,"x":250.25,"y":800.0},{"closest":3,"above":3,"x":250.25,"y":875.0},{"closest":0,"above":0,"x":250.25,"y":885.0},{"closest":0,"above":0,"x":250.25,"y":886.0},{"closest":0,"above":0,"x":250.25,"y":930.0},{"closest":0,"above":0,"x":250.25,"y":1000.0},{"closest":0,"above":0,"x":250.25,"y":1200.0},{"closest":0,"above":0,"x":250.25,"y":2103.0},{"closest":0,"above":0,"x":250.25,"y":2104.0},{"closest":1,"above":0,"x":500.0,"y":0.0},{"closest":1,"above":0,"x":500.0,"y":390.0},{"closest":1,"above":1,"x":500.0,"y":391.0},{"closest":1,"above":1,"x":500.0,"y":436.0},{"closest":2,"above":1,"x":500.0,"y":515.0},{"closest":2,"above":2,"x":500.0,"y":540.0},{"closest":3,"above":3,"x":500.0,"y":637.0},{"closest":3,"above":3,"x":500.0,"y":670.0},{"closest":3,"above":3,"x":500.0,"y":692.0},{"closest":3,"above":3,"x":500.0,"y":800.0},{"closest":3,"above":3,"x":500.0,"y":875.0},{"closest":0,"above":0,"x":500.0,"y":885.0},{"closest":0,"above":0,"x":500.0,"y":886.0},{"closest":0,"above":0,"x":500.0,"y":930.0},{"closest":0,"above":0,"x":500.0,"y":1000.0},{"closest":0,"above":0,"x":500.0,"y":1200.0},{"closest":0,"above":0,"x":500.0,"y":2103.0},{"closest":0,"above":0,"x":500.0,"y":2104.0},{"closest":1,"above":0,"x":1399.75,"y":0.0},{"closest":1,"above":0,"x":1399.75,"y":390.0},{"closest":1,"above":1,"x":1399.75,"y":391.0},{"closest":1,"above":1,"x":1399.75,"y":436.0},{"closest":2,"above":1,"x":1399.75,"y":515.0},{"closest":2,"above":2,"x":1399.75,"y":540.0},{"closest":3,"above":3,"x":1399.75,"y":637.0},{"closest":3,"above":3,"x":1399.75,"y":670.0},{"closest":3,"above":3,"x":1399.75,"y":692.0},{"closest":3,"above":3,"x":1399.75,"y":800.0},{"closest":3,"above":3,"x":1399.75,"y":875.0},{"closest":0,"above":0,"x":1399.75,"y":885.0},{"closest":0,"above":0,"x":1399.75,"y":886.0},{"closest":0,"above":0,"x":1399.75,"y":930.0},{"closest":0,"above":0,"x":1399.75,"y":1000.0},{"closest":0,"above":0,"x":1399.75,"y":1200.0},{"closest":0,"above":0,"x":1399.75,"y":2103.0},{"closest":0,"above":0,"x":1399.75,"y":2104.0},{"closest":0,"above":0,"x":1400.0,"y":0.0},{"closest":0,"above":0,"x":1400.0,"y":390.0},{"closest":0,"above":0,"x":1400.0,"y":391.0},{"closest":0,"above":0,"x":1400.0,"y":436.0},{"closest":0,"above":0,"x":1400.0,"y":515.0},{"closest":0,"above":0,"x":1400.0,"y":540.0},{"closest":0,"above":0,"x":1400.0,"y":637.0},{"closest":0,"above":0,"x":1400.0,"y":670.0},{"closest":0,"above":0,"x":1400.0,"y":692.0},{"closest":0,"above":0,"x":1400.0,"y":800.0},{"closest":0,"above":0,"x":1400.0,"y":875.0},{"closest":0,"above":0,"x":1400.0,"y":885.0},{"closest":0,"above":0,"x":1400.0,"y":886.0},{"closest":0,"above":0,"x":1400.0,"y":930.0},{"closest":0,"above":0,"x":1400.0,"y":1000.0},{"closest":0,"above":0,"x":1400.0,"y":1200.0},{"closest":0,"above":0,"x":1400.0,"y":2103.0},{"closest":0,"above":0,"x":1400.0,"y":2104.0},{"closest":0,"above":0,"x":1400.25,"y":0.0},{"closest":0,"above":0,"x":1400.25,"y":390.0},{"closest":0,"above":0,"x":1400.25,"y":391.0},{"closest":0,"above":0,"x":1400.25,"y":436.0},{"closest":0,"above":0,"x":1400.25,"y":515.0},{"closest":0,"above":0,"x":1400.25,"y":540.0},{"closest":0,"above":0,"x":1400.25,"y":637.0},{"closest":0,"above":0,"x":1400.25,"y":670.0},{"closest":0,"above":0,"x":1400.25,"y":692.0},{"closest":0,"above":0,"x":1400.25,"y":800.0},{"closest":0,"above":0,"x":1400.25,"y":875.0},{"closest":0,"above":0,"x":1400.25,"y":885.0},{"closest":0,"above":0,"x":1400.25,"y":886.0},{"closest":0,"above":0,"x":1400.25,"y":930.0},{"closest":0,"above":0,"x":1400.25,"y":1000.0},{"closest":0,"above":0,"x":1400.25,"y":1200.0},{"closest":0,"above":0,"x":1400.25,"y":2103.0},{"closest":0,"above":0,"x":1400.25,"y":2104.0},{"closest":0,"above":0,"x":1489.0,"y":0.0},{"closest":0,"above":0,"x":1489.0,"y":390.0},{"closest":0,"above":0,"x":1489.0,"y":391.0},{"closest":0,"above":0,"x":1489.0,"y":436.0},{"closest":0,"above":0,"x":1489.0,"y":515.0},{"closest":0,"above":0,"x":1489.0,"y":540.0},{"closest":0,"above":0,"x":1489.0,"y":637.0},{"closest":0,"above":0,"x":1489.0,"y":670.0},{"closest":0,"above":0,"x":1489.0,"y":692.0},{"closest":0,"above":0,"x":1489.0,"y":800.0},{"closest":0,"above":0,"x":1489.0,"y":875.0},{"closest":0,"above":0,"x":1489.0,"y":885.0},{"closest":0,"above":0,"x":1489.0,"y":886.0},{"closest":0,"above":0,"x":1489.0,"y":930.0},{"closest":0,"above":0,"x":1489.0,"y":1000.0},{"closest":0,"above":0,"x":1489.0,"y":1200.0},{"closest":0,"above":0,"x":1489.0,"y":2103.0},{"closest":0,"above":0,"x":1489.0,"y":2104.0}],"bounds":[250,0,1150,876],"section_ids":[1,2,3,4]},{"id":2,"cases":[{"closest":0,"above":0,"x":-1.0,"y":0.0},{"closest":0,"above":0,"x":-1.0,"y":390.0},{"closest":0,"above":0,"x":-1.0,"y":391.0},{"closest":0,"above":0,"x":-1.0,"y":436.0},{"closest":0,"above":0,"x":-1.0,"y":515.0},{"closest":0,"above":0,"x":-1.0,"y":540.0},{"closest":0,"above":0,"x":-1.0,"y":637.0},{"closest":0,"above":0,"x":-1.0,"y":670.0},{"closest":0,"above":0,"x":-1.0,"y":692.0},{"closest":0,"above":0,"x":-1.0,"y":800.0},{"closest":0,"above":0,"x":-1.0,"y":875.0},{"closest":0,"above":0,"x":-1.0,"y":885.0},{"closest":0,"above":0,"x":-1.0,"y":886.0},{"closest":0,"above":0,"x":-1.0,"y":930.0},{"closest":0,"above":0,"x":-1.0,"y":1000.0},{"closest":0,"above":0,"x":-1.0,"y":1200.0},{"closest":0,"above":0,"x":-1.0,"y":2103.0},{"closest":0,"above":0,"x":-1.0,"y":2104.0},{"closest":0,"above":0,"x":0.0,"y":0.0},{"closest":0,"above":0,"x":0.0,"y":390.0},{"closest":0,"above":0,"x":0.0,"y":391.0},{"closest":0,"above":0,"x":0.0,"y":436.0},{"closest":0,"above":0,"x":0.0,"y":515.0},{"closest":0,"above":0,"x":0.0,"y":540.0},{"closest":0,"above":0,"x":0.0,"y":637.0},{"closest":0,"above":0,"x":0.0,"y":670.0},{"closest":0,"above":0,"x":0.0,"y":692.0},{"closest":0,"above":0,"x":0.0,"y":800.0},{"closest":0,"above":0,"x":0.0,"y":875.0},{"closest":0,"above":0,"x":0.0,"y":885.0},{"closest":0,"above":0,"x":0.0,"y":886.0},{"closest":0,"above":0,"x":0.0,"y":930.0},{"closest":0,"above":0,"x":0.0,"y":1000.0},{"closest":0,"above":0,"x":0.0,"y":1200.0},{"closest":0,"above":0,"x":0.0,"y":2103.0},{"closest":0,"above":0,"x":0.0,"y":2104.0},{"closest":0,"above":0,"x":234.0,"y":0.0},{"closest":0,"above":0,"x":234.0,"y":390.0},{"closest":0,"above":0,"x":234.0,"y":391.0},{"closest":0,"above":0,"x":234.0,"y":436.0},{"closest":0,"above":0,"x":234.0,"y":515.0},{"closest":0,"above":0,"x":234.0,"y":540.0},{"closest":0,"above":0,"x":234.0,"y":637.0},{"closest":0,"above":0,"x":234.0,"y":670.0},{"closest":0,"above":0,"x":234.0,"y":692.0},{"closest":0,"above":0,"x":234.0,"y":800.0},{"closest":0,"above":0,"x":234.0,"y":875.0},{"closest":0,"above":0,"x":234.0,"y":885.0},{"closest":0,"above":0,"x":234.0,"y":886.0},{"closest":0,"above":0,"x":234.0,"y":930.0},{"closest":0,"above":0,"x":234.0,"y":1000.0},{"closest":0,"above":0,"x":234.0,"y":1200.0},{"closest":0,"above":0,"x":234.0,"y":2103.0},{"closest":0,"above":0,"x":234.0,"y":2104.0},{"closest":0,"above":0,"x":249.75,"y":0.0},{"closest":0,"above":0,"x":249.75,"y":390.0},{"closest":0,"above":0,"x":249.75,"y":391.0},{"closest":0,"above":0,"x":249.75,"y":436.0},{"closest":0,"above":0,"x":249.75,"y":515.0},{"closest":0,"above":0,"x":249.75,"y":540.0},{"closest":0,"above":0,"x":249.75,"y":637.0},{"closest":0,"above":0,"x":249.75,"y":670.0},{"closest":0,"above":0,"x":249.75,"y":692.0},{"closest":0,"above":0,"x":249.75,"y":800.0},{"closest":0,"above":0,"x":249.75,"y":875.0},{"closest":0,"above":0,"x":249.75,"y":885.0},{"closest":0,"above":0,"x":249.75,"y":886.0},{"closest":0,"above":0,"x":249.75,"y":930.0},{"closest":0,"above":0,"x":249.75,"y":1000.0},{"closest":0,"above":0,"x":249.75,"y":1200.0},{"closest":0,"above":0,"x":249.75,"y":2103.0},{"closest":0,"above":0,"x":249.75,"y":2104.0},{"closest":0,"above":0,"x":250.0,"y":0.0},{"closest":0,"above":0,"x":250.0,"y":390.0},{"closest":0,"above":0,"x":250.0,"y":391.0},{"closest":0,"above":0,"x":250.0,"y":436.0},{"closest":0,"above":0,"x":250.0,"y":515.0},{"closest":0,"above":0,"x":250.0,"y":540.0},{"closest":0,"above":0,"x":250.0,"y":637.0},{"closest":0,"above":0,"x":250.0,"y":670.0},{"closest":4,"above":0,"x":250.0,"y":692.0},{"closest":4,"above":0,"x":250.0,"y":800.0},{"closest":4,"above":0,"x":250.0,"y":875.0},{"closest":4,"above":0,"x":250.0,"y":885.0},{"closest":4,"above":4,"x":250.0,"y":886.0},{"closest":4,"above":4,"x":250.0,"y":930.0},{"closest":5,"above":4,"x":250.0,"y":1000.0},{"closest":6,"above":6,"x":250.0,"y":1200.0},{"closest":6,"above":6,"x":250.0,"y":2103.0},{"closest":0,"above":0,"x":250.0,"y":2104.0},{"closest":0,"above":0,"x":250.25,"y":0.0},{"closest":0,"above":0,"x":250.25,"y":390.0},{"closest":0,"above":0,"x":250.25,"y":391.0},{"closest":0,"above":0,"x":250.25,"y":436.0},{"closest":0,"above":0,"x":250.25,"y":515.0},{"closest":0,"above":0,"x":250.25,"y":540.0},{"closest":0,"above":0,"x":250.25,"y":637.0},{"closest":0,"above":0,"x":250.25,"y":670.0},{"closest":4,"above":0,"x":250.25,"y":692.0},{"closest":4,"above":0,"x":250.25,"y":800.0},{"closest":4,"above":0,"x":250.25,"y":875.0},{"closest":4,"above":0,"x":250.25,"y":885.0},{"closest":4,"above":4,"x":250.25,"y":886.0},{"closest":4,"above":4,"x":250.25,"y":930.0},{"closest":5,"above":4,"x":250.25,"y":1000.0},{"closest":6,"above":6,"x":250.25,"y":1200.0},{"closest":6,"above":6,"x":250.25,"y":2103.0},{"closest":0,"above":0,"x":250.25,"y":2104.0},{"closest":0,"above":0,"x":500.0,"y":0.0},{"closest":0,"above":0,"x":500.0,"y":390.0},{"closest":0,"above":0,"x":500.0,"y":391.0},{"closest":0,"above":0,"x":500.0,"y":436.0},{"closest":0,"above":0,"x":500.0,"y":515.0},{"closest":0,"above":0,"x":500.0,"y":540.0},{"closest":0,"above":0,"x":500.0,"y":637.0},{"closest":0,"above":0,"x":500.0,"y":670.0},{"closest":4,"above":0,"x":500.0,"y":692.0},{"closest":4,"above":0,"x":500.0,"y":800.0},{"closest":4,"above":0,"x":500.0,"y":875.0},{"closest":4,"above":0,"x":500.0,"y":885.0},{"closest":4,"above":4,"x":500.0,"y":886.0},{"closest":4,"above":4,"x":500.0,"y":930.0},{"closest":5,"above":4,"x":500.0,"y":1000.0},{"closest":6,"above":6,"x":500.0,"y":1200.0},{"closest":6,"above":6,"x":500.0,"y":2103.0},{"closest":0,"above":0,"x":500.0,"y":2104.0},{"closest":0,"above":0,"x":1399.75,"y":0.0},{"closest":0,"above":0,"x":1399.75,"y":390.0},{"closest":0,"above":0,"x":1399.75,"y":391.0},{"closest":0,"above":0,"x":1399.75,"y":436.0},{"closest":0,"above":0,"x":1399.75,"y":515.0},{"closest":0,"above":0,"x":1399.75,"y":540.0},{"closest":0,"above":0,"x":1399.75,"y":637.0},{"closest":0,"above":0,"x":1399.75,"y":670.0},{"closest":4,"above":0,"x":1399.75,"y":692.0},{"closest":4,"above":0,"x":1399.75,"y":800.0},{"closest":4,"above":0,"x":1399.75,"y":875.0},{"closest":4,"above":0,"x":1399.75,"y":885.0},{"closest":4,"above":4,"x":1399.75,"y":886.0},{"closest":4,"above":4,"x":1399.75,"y":930.0},{"closest":5,"above":4,"x":1399.75,"y":1000.0},{"closest":6,"above":6,"x":1399.75,"y":1200.0},{"closest":6,"above":6,"x":1399.75,"y":2103.0},{"closest":0,"above":0,"x":1399.75,"y":2104.0},{"closest":0,"above":0,"x":1400.0,"y":0.0},{"closest":0,"above":0,"x":1400.0,"y":390.0},{"closest":0,"above":0,"x":1400.0,"y":391.0},{"closest":0,"above":0,"x":1400.0,"y":436.0},{"closest":0,"above":0,"x":1400.0,"y":515.0},{"closest":0,"above":0,"x":1400.0,"y":540.0},{"closest":0,"above":0,"x":1400.0,"y":637.0},{"closest":0,"above":0,"x":1400.0,"y":670.0},{"closest":0,"above":0,"x":1400.0,"y":692.0},{"closest":0,"above":0,"x":1400.0,"y":800.0},{"closest":0,"above":0,"x":1400.0,"y":875.0},{"closest":0,"above":0,"x":1400.0,"y":885.0},{"closest":0,"above":0,"x":1400.0,"y":886.0},{"closest":0,"above":0,"x":1400.0,"y":930.0},{"closest":0,"above":0,"x":1400.0,"y":1000.0},{"closest":0,"above":0,"x":1400.0,"y":1200.0},{"closest":0,"above":0,"x":1400.0,"y":2103.0},{"closest":0,"above":0,"x":1400.0,"y":2104.0},{"closest":0,"above":0,"x":1400.25,"y":0.0},{"closest":0,"above":0,"x":1400.25,"y":390.0},{"closest":0,"above":0,"x":1400.25,"y":391.0},{"closest":0,"above":0,"x":1400.25,"y":436.0},{"closest":0,"above":0,"x":1400.25,"y":515.0},{"closest":0,"above":0,"x":1400.25,"y":540.0},{"closest":0,"above":0,"x":1400.25,"y":637.0},{"closest":0,"above":0,"x":1400.25,"y":670.0},{"closest":0,"above":0,"x":1400.25,"y":692.0},{"closest":0,"above":0,"x":1400.25,"y":800.0},{"closest":0,"above":0,"x":1400.25,"y":875.0},{"closest":0,"above":0,"x":1400.25,"y":885.0},{"closest":0,"above":0,"x":1400.25,"y":886.0},{"closest":0,"above":0,"x":1400.25,"y":930.0},{"closest":0,"above":0,"x":1400.25,"y":1000.0},{"closest":0,"above":0,"x":1400.25,"y":1200.0},{"closest":0,"above":0,"x":1400.25,"y":2103.0},{"closest":0,"above":0,"x":1400.25,"y":2104.0},{"closest":0,"above":0,"x":1489.0,"y":0.0},{"closest":0,"above":0,"x":1489.0,"y":390.0},{"closest":0,"above":0,"x":1489.0,"y":391.0},{"closest":0,"above":0,"x":1489.0,"y":436.0},{"closest":0,"above":0,"x":1489.0,"y":515.0},{"closest":0,"above":0,"x":1489.0,"y":540.0},{"closest":0,"above":0,"x":1489.0,"y":637.0},{"closest":0,"above":0,"x":1489.0,"y":670.0},{"closest":0,"above":0,"x":1489.0,"y":692.0},{"closest":0,"above":0,"x":1489.0,"y":800.0},{"closest":0,"above":0,"x":1489.0,"y":875.0},{"closest":0,"above":0,"x":1489.0,"y":885.0},{"closest":0,"above":0,"x":1489.0,"y":886.0},{"closest":0,"above":0,"x":1489.0,"y":930.0},{"closest":0,"above":0,"x":1489.0,"y":1000.0},{"closest":0,"above":0,"x":1489.0,"y":1200.0},{"closest":0,"above":0,"x":1489.0,"y":2103.0},{"closest":0,"above":0,"x":1489.0,"y":2104.0}],"bounds":[250,692,1150,1412],"section_ids":[3,4,5,6]}],"scope":"Unmodified StaffManager clipped staff areas, Java Area rectangle intersection on original SystemManager area, and SystemInfo selection; supplied ends [250,1400], original Laura GRID curves; native horizontal-neighbor end discovery not tested"}
+\ No newline at end of file
+diff --git a/scripts/java/ClippedSystemAreaControlProbe.java b/scripts/java/ClippedSystemAreaControlProbe.java
+new file mode 100644
+index 0000000..eef63a2
+--- /dev/null
++++ b/scripts/java/ClippedSystemAreaControlProbe.java
+@@ -0,0 +1,51 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Supplied independently observed scanned-score GRID curves; unmodified original areas.
++import java.util.*;import java.nio.file.*;import java.lang.reflect.*;import java.awt.*;import java.awt.geom.*;import com.fasterxml.jackson.databind.*;
++@SuppressWarnings("unchecked")
++public class ClippedSystemAreaControlProbe extends MultiStaffAreaControlProbe {
++ public static void main(String[]args)throws Exception {
++  ObjectMapper mapper=new ObjectMapper();JsonNode input=mapper.readTree(Path.of(args[0]).toFile()),grid=input.get("grid");
++  Object sheet=empty(c("sheet.Sheet")),picture=empty(c("sheet.Picture")),sm=empty(c("sheet.SystemManager")),scale=empty(c("sheet.Scale"));
++  int width=input.get("width").asInt(),height=input.get("height").asInt();
++  set(picture,"width",width);set(picture,"height",height);set(sheet,"picture",picture);set(sheet,"systemManager",sm);set(sm,"sheet",sheet);
++  set(scale,"interlineScale",c("sheet.Scale$InterlineScale").getConstructor(int.class,int.class,int.class).newInstance(11,11,11));set(sheet,"scale",scale);
++  Map<Integer,Object> systems=new LinkedHashMap<>();
++  for(JsonNode def:grid.get("systems")){
++   Object sys=empty(c("sheet.SystemInfo"));set(sys,"id",def.get("id").asInt());set(sys,"sheet",sheet);set(sys,"areaLeft",def.get("area").get("x_range").get(0).asInt());set(sys,"areaRight",def.get("area").get("x_range").get(1).asInt());
++   JsonNode box=def.get("coordinates");set(sys,"left",box.get(0).asInt());set(sys,"top",box.get(1).asInt());set(sys,"width",box.get(2).asInt());set(sys,"bottom",box.get(3).asInt());
++   systems.put(def.get("id").asInt(),sys);((java.util.List<Object>)get(sm,"systems")).add(sys);
++  }
++  Class<?> lc=c("sheet.grid.LineInfo");
++  for(JsonNode def:grid.get("staffs")){
++   java.util.List<Object> lines=new ArrayList<>();
++   for(JsonNode l:def.get("lines")){
++    double[] xs=new double[l.get("points").size()],ys=new double[xs.length];for(int n=0;n<xs.length;n++){xs[n]=l.get("points").get(n).get(0).asDouble();ys[n]=l.get("points").get(n).get(1).asDouble();}
++    Object spline=c("math.NaturalSpline").getMethod("interpolate",double[].class,double[].class).invoke(null,xs,ys);
++    lines.add(Proxy.newProxyInstance(lc.getClassLoader(),new Class[]{lc},(o,m,a)->{
++     switch(m.getName()){
++      case "getSpline":return spline;
++      case "getThickness":return l.get("thickness").asDouble();
++      case "getEndPoint":return a[0].toString().equals("LEFT")?new Point2D.Double(xs[0],ys[0]):new Point2D.Double(xs[xs.length-1],ys[ys.length-1]);
++      case "yAt":if(m.getReturnType()==int.class)return spline.getClass().getMethod("yAtX",int.class).invoke(spline,((Number)a[0]).intValue());return spline.getClass().getMethod("yAtXExt",double.class).invoke(spline,((Number)a[0]).doubleValue());
++      default:throw new UnsupportedOperationException(m.getName());
++     }
++    }));
++   }
++   Object staff=c("sheet.Staff").getConstructor().newInstance(),sys=systems.get(def.get("system_id").asInt());set(staff,"id",def.get("id").asInt());set(staff,"left",def.get("left").asInt());set(staff,"right",def.get("right").asInt());set(staff,"specificInterline",11);set(staff,"lines",lines);set(staff,"system",sys);((java.util.List<Object>)get(sys,"staves")).add(staff);
++  }
++  Object manager=c("sheet.StaffManager").getConstructor(c("sheet.Sheet")).newInstance(sheet);set(sheet,"staffManager",manager);
++  for(Object sys:systems.values())for(Object staff:(java.util.List<?>)get(sys,"staves"))c("sheet.StaffManager").getMethod("computeStaffArea",c("sheet.Staff")).invoke(manager,staff);
++  java.util.List<Object> result=new ArrayList<>();
++  for(var entry:systems.entrySet()){
++   Object sys=entry.getValue();c("sheet.SystemManager").getMethod("computeSystemArea",c("sheet.SystemInfo")).invoke(sm,sys);int left=250,right=1400;Area area=(Area)get(sys,"area");area.intersect(new Area(new Rectangle(left,0,right-left,height)));set(sys,"areaLeft",left);set(sys,"areaRight",right);set(sys,"area",area);Rectangle bounds=(Rectangle)c("sheet.SystemInfo").getMethod("getBounds").invoke(sys);
++   java.util.List<Object> cases=new ArrayList<>(),sectionIds=new ArrayList<>();
++   for(double x:new double[]{-1,0,234,249.75,250,250.25,500,1399.75,1400,1400.25,width})for(double y:new double[]{0,390,391,436,515,540,637,670,692,800,875,885,886,930,1000,1200,height-1,height}) {
++    Point2D p=new Point2D.Double(x,y);Object closest=c("sheet.SystemInfo").getMethod("getClosestStaff",Point2D.class).invoke(sys,p),above=c("sheet.SystemInfo").getMethod("getStaffAtOrAbove",Point2D.class).invoke(sys,p);
++    cases.add(Map.of("x",x,"y",y,"closest",closest==null?0:c("sheet.Staff").getMethod("getId").invoke(closest),"above",above==null?0:c("sheet.Staff").getMethod("getId").invoke(above)));
++   }
++   for(JsonNode section:grid.get("vlag")){JsonNode run=section.get("runs").get(0);if(bounds.intersects(new Rectangle(section.get("first_pos").asInt(),run.get(0).asInt(),1,run.get(1).asInt())))sectionIds.add(section.get("id").asInt());}
++   result.add(Map.of("id",entry.getKey(),"bounds",new int[]{bounds.x,bounds.y,bounds.width,bounds.height},"cases",cases,"section_ids",sectionIds));
++  }
++  mapper.writeValue(Path.of(args[1]).toFile(),Map.of("native_outputs_used",false,"input",input,"systems",result,"scope","Unmodified StaffManager clipped staff areas, Java Area rectangle intersection on original SystemManager area, and SystemInfo selection; supplied ends [250,1400], original Laura GRID curves; native horizontal-neighbor end discovery not tested"));
++ }
++}
+diff --git a/src/beam_dispatch.rs b/src/beam_dispatch.rs
+index 2aba773..c79c87f 100644
+--- a/src/beam_dispatch.rs
++++ b/src/beam_dispatch.rs
+@@ -284,6 +284,80 @@ pub(crate) fn system_area(
+     );
+     audiveris_area::Area::from_closed_segments(&segments)
+ }
++pub(crate) fn area_ends(value: &Value, width: usize) -> Result<[usize; 2], String> {
++    let v = value
++        .as_array()
++        .filter(|v| v.len() == 2)
++        .ok_or("invalid_system_area_ends")?;
++    let l = v[0]
++        .as_u64()
++        .and_then(|n| usize::try_from(n).ok())
++        .ok_or("invalid_system_area_ends")?;
++    let r = v[1]
++        .as_u64()
++        .and_then(|n| usize::try_from(n).ok())
++        .ok_or("invalid_system_area_ends")?;
++    if l >= r || r > width {
++        return Err("invalid_system_area_ends".into());
++    }
++    Ok([l, r])
++}
++/// Original intersection with the supplied horizontal area-end rectangle.
++/// Full-width curved bands retain their existing path; clipped straight bands
++/// reconstruct the exact line-only intersection polygon.
++pub(crate) fn clipped_system_area(
++    width: usize,
++    height: usize,
++    north: Option<&Curve>,
++    south: Option<&Curve>,
++    margin: f64,
++    ends: [usize; 2],
++) -> Result<audiveris_area::Area, String> {
++    if ends == [0, width] {
++        return system_area(width, height, north, south, margin);
++    }
++    if ends[0] >= ends[1] || ends[1] > width {
++        return Err("invalid_system_area_ends".into());
++    }
++    if north.into_iter().chain(south).any(|c| c.points.len() != 2) {
++        return Err("unsupported_curved_system_area_clip".into());
++    }
++    fn boundary(c: Option<&Curve>, shift: f64, flat: f64, ends: [usize; 2]) -> Vec<[f64; 2]> {
++        let y = |x: f64| match c {
++            None => flat,
++            Some(c) => {
++                let a = c.points[0];
++                let b = *c.points.last().unwrap();
++                if x < a[0] {
++                    a[1] + shift
++                } else if x > b[0] {
++                    b[1] + shift
++                } else {
++                    c.y(x) + shift
++                }
++            }
++        };
++        let mut points = vec![[ends[0] as f64, y(ends[0] as f64)]];
++        if let Some(c) = c {
++            for p in &c.points {
++                if p[0] > ends[0] as f64 && p[0] < ends[1] as f64 {
++                    points.push([p[0], p[1] + shift]);
++                }
++            }
++        }
++        points.push([ends[1] as f64, y(ends[1] as f64)]);
++        points
++    }
++    let top = boundary(north, margin, 0., ends);
++    let mut bottom = boundary(south, -margin, height as f64, ends);
++    bottom.reverse();
++    let segments = top
++        .windows(2)
++        .chain(bottom.windows(2))
++        .map(|p| p.to_vec())
++        .collect::<Vec<_>>();
++    audiveris_area::Area::from_closed_segments(&segments)
++}
+ pub const MAX_AREA_QUERY_WORK: usize = 100_000_000;
+ #[derive(Debug)]
+ pub struct SystemArea {
+@@ -374,9 +448,8 @@ impl Geometry {
+                 }
+                 members.push(sid);
+             }
+-            if system["area"]["x_range"] != json!([0, width])
+-                || number(&system["area"]["vertical_margin"])? != margin
+-            {
++            let ends = area_ends(&system["area"]["x_range"], width)?;
++            if number(&system["area"]["vertical_margin"])? != margin {
+                 return Err("unsupported_beam_dispatch_area".into());
+             }
+             let coord = system["coordinates"]
+@@ -433,7 +506,8 @@ impl Geometry {
+                         .clone(),
+                 )
+             };
+-            let area = system_area(width, height, north.as_ref(), south.as_ref(), margin)?;
++            let area =
++                clipped_system_area(width, height, north.as_ref(), south.as_ref(), margin, ends)?;
+             systems.push(SystemArea {
+                 id,
+                 left,
+@@ -465,7 +539,7 @@ impl Geometry {
+         Ok(())
+     }
+     /// Original BeamsBuilder.isSideInSystem checks both vertical beam ends.
+-    /// This uses the full GRID area without staff left/right clipping.
++    /// This uses the GRID area, including supplied system-area ends.
+     pub fn is_beam_side_in_system(
+         &self,
+         id: u64,
+diff --git a/src/beams_pipeline.rs b/src/beams_pipeline.rs
+index 1b74b3a..2774a0d 100644
+--- a/src/beams_pipeline.rs
++++ b/src/beams_pipeline.rs
+@@ -84,7 +84,7 @@ pub fn advance(
+         })();
+         let rests = match rest_result {
+             Ok(rests) => {
+-                json!({"complete":true,"conversions":rests.rests.len(),"registered_serifs":rests.serifs.len(),"supported_scope":"full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"})
++                json!({"complete":true,"conversions":rests.rests.len(),"registered_serifs":rests.serifs.len(),"supported_scope":"supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"})
+             }
+             Err(error) => json!({"complete":false,"error":error}),
+         };
+@@ -99,6 +99,6 @@ pub fn advance(
+         json!({"complete":false,"reason":"incomplete_native_rest_boundary"})
+     };
+     Ok(
+-        json!({"stage":"BEAMS.native_through_multiple_rests","extensions_complete":true,"hooks_complete":true,"groups_complete":true,"multiple_rest_boundary_complete":rests_complete,"systems":reports,"epilog":epilog,"epilog_complete":rests_complete,"beams_complete":rests_complete,"musicxml_complete":false,"pending":["LEDGERS/HEADS/rhythm/MusicXML","horizontal staff/column chains, clipped system area ends, curved ledger paths and native ledger discovery"]}),
++        json!({"stage":"BEAMS.native_through_multiple_rests","extensions_complete":true,"hooks_complete":true,"groups_complete":true,"multiple_rest_boundary_complete":rests_complete,"systems":reports,"epilog":epilog,"epilog_complete":rests_complete,"beams_complete":rests_complete,"musicxml_complete":false,"pending":["LEDGERS/HEADS/rhythm/MusicXML","horizontal staff/column discovery, curved area clipping, curved ledger paths and native ledger discovery"]}),
+     )
+ }
+diff --git a/src/native_rest_mapping.rs b/src/native_rest_mapping.rs
+index 9fefb88..9243a4e 100644
+--- a/src/native_rest_mapping.rs
++++ b/src/native_rest_mapping.rs
+@@ -316,9 +316,7 @@ impl SystemMapping {
+             if !system_ids.insert(sys["id"].as_u64().ok_or("invalid_rest_mapping_system")?) {
+                 return Err("duplicate_rest_mapping_system".into());
+             }
+-            if sys["area"]["x_range"] != serde_json::json!([0, width]) {
+-                return Err("unsupported_rest_system_area_ends".into());
+-            }
++            crate::beam_dispatch::area_ends(&sys["area"]["x_range"], width)?;
+             if raw.len() > 1 && sys["area"]["vertical_margin"].as_f64() != Some(margin) {
+                 return Err("unsupported_rest_system_area_margin".into());
+             }
+@@ -384,12 +382,14 @@ impl SystemMapping {
+         }
+         let first = owned[0];
+         let last = *owned.last().unwrap();
+-        let system_area = crate::beam_dispatch::system_area(
++        let ends = crate::beam_dispatch::area_ends(&systems[target]["area"]["x_range"], width)?;
++        let system_area = crate::beam_dispatch::clipped_system_area(
+             width,
+             height,
+             first.checked_sub(1).map(|i| &global[i].lines[4]),
+             global.get(last + 1).map(|s| &s.lines[0]),
+             margin,
++            ends,
+         )?;
+         let [low, high] = system_area
+             .path_y_bounds()
+@@ -400,21 +400,22 @@ impl SystemMapping {
+             return Err("unsupported_rest_system_area_bounds".into());
+         }
+         let bounds = crate::sections::Bounds {
+-            x: 0,
++            x: ends[0],
+             y: low as usize,
+-            width,
++            width: ends[1] - ends[0],
+             height: (high - low) as usize,
+         };
+         sections.retain(|s| crate::bar_sticks::intersects(s.bounds(), bounds));
+         let areas = owned
+             .iter()
+             .map(|&i| {
+-                crate::beam_dispatch::system_area(
++                crate::beam_dispatch::clipped_system_area(
+                     width,
+                     height,
+                     i.checked_sub(1).map(|n| &global[n].lines[4]),
+                     global.get(i + 1).map(|s| &s.lines[0]),
+                     margin,
++                    ends,
+                 )
+             })
+             .collect::<Result<Vec<_>, String>>()?;
+diff --git a/tests/beam_dispatch.rs b/tests/beam_dispatch.rs
+index ee791e6..2dd3205 100644
+--- a/tests/beam_dispatch.rs
++++ b/tests/beam_dispatch.rs
+@@ -236,3 +236,19 @@ fn invalid_sheet_epilog_reference_rejects_before_any_owner_mutates() {
+         before
+     );
+ }
++
++#[test]
++fn supplied_clipped_ends_bound_beam_sides_without_changing_staff_limits() {
++    let f: Value = serde_json::from_str(include_str!(
++        "../fixtures/official-clipped-system-area.json"
++    ))
++    .unwrap();
++    let g = Geometry::from_grid(1489, 2104, &f["input"]["grid"], 11).unwrap();
++    for sys in [1, 2] {
++        let y = if sys == 1 { 500. } else { 1100. };
++        assert!(!g.is_beam_side_in_system(sys, [249.75, y], 4.).unwrap());
++        assert!(g.is_beam_side_in_system(sys, [250., y], 4.).unwrap());
++        assert!(g.is_beam_side_in_system(sys, [1399.75, y], 4.).unwrap());
++        assert!(!g.is_beam_side_in_system(sys, [1400., y], 4.).unwrap());
++    }
++}
+diff --git a/tests/native_rest_mapping.rs b/tests/native_rest_mapping.rs
+index 3a098e6..31073c3 100644
+--- a/tests/native_rest_mapping.rs
++++ b/tests/native_rest_mapping.rs
+@@ -207,3 +207,58 @@ fn original_scanned_score_multisystem_area_selection_and_bounds_match() {
+         );
+     }
+ }
++#[test]
++fn original_supplied_clipped_system_areas_match() {
++    use audiveris_native::native_rest_mapping::SystemMapping;
++    let f: Value = serde_json::from_str(include_str!(
++        "../fixtures/official-clipped-system-area.json"
++    ))
++    .unwrap();
++    assert_eq!(f["native_outputs_used"], false);
++    for sys in f["systems"].as_array().unwrap() {
++        let sid = sys["id"].as_u64().unwrap();
++        let m = SystemMapping::from_grid(
++            &f["input"]["grid"],
++            f["input"]["width"].as_u64().unwrap() as usize,
++            f["input"]["height"].as_u64().unwrap() as usize,
++            sid,
++        )
++        .unwrap();
++        for case in sys["cases"].as_array().unwrap() {
++            let x = case["x"].as_f64().unwrap();
++            let y = case["y"].as_f64().unwrap();
++            let id = |i: Option<usize>| i.map(|n| m.staffs[n].id).unwrap_or(0);
++            assert_eq!(
++                id(m.closest_staff(x, y).unwrap()),
++                case["closest"].as_u64().unwrap(),
++                "closest: {case}"
++            );
++            assert_eq!(
++                id(m.staff_at_or_above(x, y).unwrap()),
++                case["above"].as_u64().unwrap(),
++                "above: {case}"
++            );
++        }
++        assert_eq!(
++            m.sections.iter().map(|s| s.id.0).collect::<Vec<_>>(),
++            serde_json::from_value::<Vec<u32>>(sys["section_ids"].clone()).unwrap()
++        );
++    }
++}
++
++#[test]
++fn clipped_curved_areas_and_invalid_ends_are_explicitly_rejected() {
++    use audiveris_native::native_rest_mapping::SystemMapping;
++    let f: Value =
++        serde_json::from_str(include_str!("../fixtures/official-multistaff-area.json")).unwrap();
++    let mut g = f["grid"].clone();
++    g["systems"][0]["area"]["x_range"] = json!([20, 140]);
++    assert_eq!(
++        SystemMapping::from_grid(&g, 160, 320, 1).err().unwrap(),
++        "unsupported_curved_system_area_clip"
++    );
++    for ends in [json!([140, 20]), json!([0, 161]), json!([20, 20])] {
++        g["systems"][0]["area"]["x_range"] = ends;
++        assert!(SystemMapping::from_grid(&g, 160, 320, 1).is_err());
++    }
++}
