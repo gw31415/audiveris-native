@@ -1,0 +1,4 @@
+    Blocking waiting for file lock on build directory
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 17.28s
+     Running `/workspace/onboarding/target/debug/audiveris-native page-glyphs fixtures/official-grid/laura-gray.png /workspace/work/head-range/final-laura-residual.pgm /workspace/work/head-range/final-laura-report.json`
+Experimental native page glyphs: 604; full GRID and musical recognition remain incomplete

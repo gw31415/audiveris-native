@@ -1,0 +1,18 @@
+{
+  "commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+  "tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+  "parent": "df25de2ded65d3fc8a25898116ffaae03f56a0ba",
+  "tracked_files": 4804,
+  "changed_files": [
+    "fixtures/official-head-range-prefix.json",
+    "fixtures/official-head-range-spots.png",
+    "scripts/check_head_range_prefix.py",
+    "scripts/java/HeadRangePrefixProbe.java",
+    "scripts/linux_oracle.py",
+    "src/head_range_search.rs",
+    "src/head_seed_search.rs",
+    "src/lib.rs",
+    "src/main.rs",
+    "tests/head_range_search.rs"
+  ]
+}

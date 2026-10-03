@@ -1,0 +1,280 @@
+{
+  "recorded_utc": "2026-10-03T21:00:53.113383+00:00",
+  "branch": "main",
+  "parent_checkpoint_commit": "2c30b55d51acaeb70298bfbde22d36769a249229",
+  "parent_implementation_commit": "df25de2ded65d3fc8a25898116ffaae03f56a0ba",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/2c30b55d51acaeb70298bfbde22d36769a249229/checkpoints/sol-head-veto-20261003/MANIFEST.json",
+  "local_implementation_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+  "local_implementation_tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+  "tracked_files": 4804,
+  "changed_files_from_parent": [
+    "fixtures/official-head-range-prefix.json",
+    "fixtures/official-head-range-spots.png",
+    "scripts/check_head_range_prefix.py",
+    "scripts/java/HeadRangePrefixProbe.java",
+    "scripts/linux_oracle.py",
+    "src/head_range_search.rs",
+    "src/head_seed_search.rs",
+    "src/lib.rs",
+    "src/main.rs",
+    "tests/head_range_search.rs"
+  ],
+  "file_sha256": {
+    "fixtures/official-head-range-prefix.json": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+    "fixtures/official-head-range-spots.png": "5c58ba5e6ddfa636d020411e80ad74500b6a2e4f742cb55e22c02481402c8a9e",
+    "scripts/check_head_range_prefix.py": "16445055e7ed69888a544b3172e7f7232270730390ec36b5c5d4e47f8dc46701",
+    "scripts/java/HeadRangePrefixProbe.java": "f4f951316ec383c91cc780a075d37c43e87d31d7803153bf48a17485158adee6",
+    "scripts/linux_oracle.py": "d91ae094054f12ecff3b6ec7dbd1c2bbc9a85d6cb5cdc5815f76a8b1792697c8",
+    "src/head_range_search.rs": "1f9a4a66fac4d362922b7d3364490256e76bf9005a5e4266d2b4ad4985af448a",
+    "src/head_seed_search.rs": "33a974365c64c64d55bdf4186fd5894d4b384b947abd4b408d054cb6470d8412",
+    "src/lib.rs": "458040e844fc26ee8235e34e8a208b0c6c517a47f8f00a1def4c1aa38b4b14b0",
+    "src/main.rs": "be768f11616546f0e03af850fc20e76180424fab4031d8df107290a9f78b50df",
+    "tests/head_range_search.rs": "f0ee7d047f6dc96caea824926eeddcadd3f8bcd1d69b8d331b6163516a6b895f"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-head-range-prefix-20261003/SOURCE-SHA256.json",
+    "sha256": "557d7d62aabf5126b04d7aeba28ce2a2dffcb63d779209998d7860d5c5934685",
+    "files": 4804
+  },
+  "bundle": {
+    "path": "checkpoints/sol-head-range-prefix-20261003/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 249774,
+    "decoded_sha256": "61b0414e9ffdd07069a954160078afb0fe68b8c7c0860f0f96eac9e070175501",
+    "base64_sha256": "383d6ad00dea2288ccbc90415da7cdc1e67448a249d950cfb691f617113f0f7c",
+    "prerequisite": "df25de2ded65d3fc8a25898116ffaae03f56a0ba"
+  },
+  "validation": {
+    "initial_restoration": {
+      "repository_commit": "2c30b55d51acaeb70298bfbde22d36769a249229",
+      "source_commit": "df25de2ded65d3fc8a25898116ffaae03f56a0ba",
+      "source_tree": "12465ec2ea444299722b20a0bddedb88579799fe",
+      "all_restored_sha256_verified": 4798,
+      "tests_passed": 343,
+      "failed": 0,
+      "ignored": 0,
+      "current_task_baseline_rerun": true
+    },
+    "focused_tests_passed": 10,
+    "focused_failed": 0,
+    "focused_ignored": 0,
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "full_workspace_suite": {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "passed": 346,
+      "failed": 0,
+      "ignored": 0,
+      "targets": 111,
+      "mode": "debug"
+    },
+    "native_cli_laura": {
+      "status": "passed",
+      "raw_seed_proposals": 418,
+      "veto_seed_proposals": 358,
+      "head_spot_system_references": 402,
+      "range_scanners": 118,
+      "visited_abscissae": 47790,
+      "skipped_windows": 869,
+      "black_void_prefix_proposals": 2221,
+      "heads_complete": false,
+      "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+      "report_sha256": "51a2753773731bcb999638d0424e1efc2a22dfd2920aa75298bb87bdedbf7c77",
+      "shared_SIG_and_full_seed_reports_exactly_preserved": true
+    },
+    "original": {
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "release": "5.11.0",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "native_outputs_used": false,
+      "head_spots_sha256": "af3f2dd911401d163fd35648a4be7e959de903348e4fb4835400ffa8a95b4a36",
+      "system_spot_references": 402,
+      "staff_scanners": 66,
+      "ledger_scanners": 52,
+      "visited_abscissae": 47790,
+      "skipped_windows": 869,
+      "black_void_prefix_proposals": 2221,
+      "eval_counts": {
+        "eval": 123014,
+        "bar_veto": 1204,
+        "competitor_veto": 8612,
+        "central_veto": 9728,
+        "noncentral_veto": 88
+      }
+    },
+    "fresh_restore": {
+      "status": "passed",
+      "source_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+      "source_tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+      "all_fresh_restored_sha256_verified": 4804,
+      "source_clean": true,
+      "source": "/workspace/work/head-range/prepush-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-range/prepush-restore/source-git"
+    },
+    "heads_complete": false,
+    "full_OMR": "unfinished",
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "-j2"
+        ],
+        "source": "initial pinned implementation",
+        "passed": 343,
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--offline",
+          "-j2",
+          "--test",
+          "head_range_search",
+          "--test",
+          "head_seed_veto",
+          "--test",
+          "head_seed_search",
+          "--test",
+          "head_ledger_search",
+          "--",
+          "--nocapture"
+        ],
+        "source": "new implementation",
+        "passed": 10,
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "--all-targets",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "python",
+          "scripts/linux_oracle.py",
+          "--oracle-home",
+          "/workspace/onboarding/linux-oracle",
+          "--probe",
+          "head-range-prefix",
+          "--fixtures",
+          "laura-gray",
+          "--output",
+          "/workspace/work/head-range/oracle",
+          "--timeout",
+          "180"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "run",
+          "--locked",
+          "--offline",
+          "-j2",
+          "--",
+          "page-glyphs",
+          "fixtures/official-grid/laura-gray.png",
+          "/workspace/work/head-range/final-laura-residual.pgm",
+          "/workspace/work/head-range/final-laura-report.json"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "python",
+          "scripts/check_head_range_prefix.py",
+          "/workspace/work/head-range/final-laura-report.json"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "unrun_optional": [
+      "full release suite"
+    ]
+  },
+  "official_source_receipts": [
+    {
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/note/NoteHeadsBuilder.java",
+      "sha256": "397de423f9168337b9f9b2acc693739cf49422122d48237e2107e6c896bc3b2c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/note/HeadSpotsBuilder.java",
+      "sha256": "f82b5d4e5108584fd0acde7158a540664161b6b1faa460d594d8b302cec04655"
+    }
+  ],
+  "implemented_scope": "Temporary HEAD_SPOTS glyph extraction, centroid-based original system-area dispatch and inclusive system widths. Original staff/ledger range limits (header stop, floor/ceil endpoints and minTemplateWidth), original competitorsArea spot slices, one-specific-interline expansion, half-open coverage, integer chamfer safety skipping including UNKNOWN, theoretical ordinates and original ordered y offsets. Bravura 51pt NOTEHEAD_BLACK/NOTEHEAD_VOID MIDDLE_LEFT raw proposals with source-shape veto, strict best score and black-to-void hole reassignment retaining source score. No spot registration/free-glyph mutation. Existing raw 418 and veto 358 seed proposals and shared SIG are exactly preserved.",
+  "control_scope": "Unmodified pinned original 5.11 Linux JAR after fresh raster GRID/HEADERS/STEM_SEEDS/BEAMS/LEDGERS; original HeadSpotsBuilder.getSpots and Scanner geometry/relevance/eval methods. Explicit black/void prefix observation freezes before createInter, aggregation, seed conflict filtering and retrieval. All 118 scanners, 402 system spot references and 2221 ordered proposals match the native CLI; native structural controls separately cover skip stride, image limits, integer truncation, UNKNOWN and spot-slice/range boundaries.",
+  "not_implemented": [
+    "whole/breve and other range template catalog shapes",
+    "range candidate aggregation and seed conflict filtering",
+    "seed and range glyph retrieval and HeadInter/SIG registration",
+    "duplicate/overlap purge and HeadSeedTally",
+    "stem attachment, rhythm and MusicXML"
+  ],
+  "recovery": [
+    "Clone saved archival main into a new directory using existing repository access.",
+    "Run RESTORE.py --repository ARCHIVAL_CHECKOUT --destination NEW_DIRECTORY. It verifies pinned base archives and every patch/bundle prerequisite in the existing chain; refuses an existing destination.",
+    "Verify exact implementation commit/tree, all 4804 source file hashes and clean status from RESTORE-VERIFIED.json. Activate the existing onboarding toolchain without rerunning its old-source restore guard.",
+    "From the restored source run cargo test --locked --offline -j2 --test head_range_search --test head_seed_veto; use scripts/check_head_range_prefix.py for an independent Laura CLI comparison."
+  ],
+  "heads_complete": false,
+  "full_OMR": "unfinished",
+  "evidence_sha256": {
+    "evidence/baseline-tests.log": "8a7f522d9a77090cbed250ffb617d8a116373172b0ac4e60cc5e717c2fc3b154",
+    "evidence/bundle-verify.log": "855ba34c8ef6b4aefb21966e68e9b40a2b9e4103c961c48836f0604926b43169",
+    "evidence/clippy.log": "f70a892229d00b764d008c9eef993e4ca11236100a23422166dadc93b02030e2",
+    "evidence/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/focused-tests.log": "e20c9813d1a1428971c0a4a95bbdb401bad1753d5519828f5f0aca5979f67187",
+    "evidence/full-workspace-tests.log": "13ebd2c46a9bcb702cc7c7613d38ee1cd1e84e85cefcc7a8a15eac47f9154b43",
+    "evidence/implementation.json": "d172861c857ecc4948497e06117ccc6383c684999bbead4ab1c30951a7447040",
+    "evidence/initial-integrity.json": "7ec80ac0e150b0ec0f5464776c7b985dc706825f5d268b1969b03b4a1ee5a08a",
+    "evidence/native-cli-comparison.json": "b6cc023fb36d6b3a9bc492d0798518b7a10c54be8aa95fdc062cdb80a6ee9e85",
+    "evidence/native-cli.log": "4e22604c6f88407960f88cd664ad2d4c6d3d195e13e9457d4000d94fb2b36764",
+    "evidence/native-laura-report.json.gz": "cdc35ee294630050e2d34c3b522a481200e74b71f9a54e0419369da1f1dfea2f",
+    "evidence/oracle-compile.log": "a0d5710a8e2a65f4ce1b0019223793ca08eb73834e5bb572e58a41db234cc97a",
+    "evidence/oracle-console.log": "2e5b8e17a0775bc4d3475a071e4534fb12f8d9d2014a0a814ec3267c3dd4b40e",
+    "evidence/oracle-provenance.json": "e53b5892c58434fe0ff1b0b2d4195c727a72634cb376759e3668d0ba901a6f5f",
+    "evidence/prepush-restore.json": "8b1e31f8a308e407942a735ebb9b3e8b286c0c29999cb58174fc5eb2396047f8",
+    "evidence/prepush-restore.log": "2f08109dc86ef8d6a9a3497f5c2d86222c43b7d628d0d1a567204c6c79de291f"
+  },
+  "restore_script_sha256": "286abb4cd5633dcaa34c14a800406c6dedd040c946376d10647d136d782c0079",
+  "preserved_dependency_limitations": [
+    "Eligible multiple-rest/tremolo competitors still require exact original area metadata; unknown areas fail explicitly and positive real-score rest competition is not demonstrated.",
+    "Supported default five-line staves and Bravura 51pt catalog retain predecessor resource bounds; drum, tablature, other music families and sizes remain unsupported."
+  ]
+}

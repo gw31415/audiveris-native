@@ -1,0 +1,22 @@
+{
+  "repository_commit": "2c30b55d51acaeb70298bfbde22d36769a249229",
+  "source_commit": "df25de2ded65d3fc8a25898116ffaae03f56a0ba",
+  "verified_files": 4798,
+  "artifacts": [
+    {
+      "path": "audiveris-8ebbf976-verified-source-20261003.tar.gz",
+      "bytes": 9402223,
+      "sha256": "ec3f4226b3c7cc40028eff06051d6bcdece761e3390872daaad2cd55cf5084f2"
+    },
+    {
+      "path": "audiveris-linux-beam-candidates-handoff-history.bundle",
+      "bytes": 13504957,
+      "sha256": "e1bae694a4dc194ee58269341919219596060749428ab2b4f45ce9ef703cc059"
+    },
+    {
+      "path": "checkpoints/sol-head-veto-20261003/source.bundle.b64",
+      "bytes": 55361,
+      "sha256": "b68078d74656bb94128e9f5353398dcca81e9d285be8ac13d05133be285a7be6"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+  "source_tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+  "all_fresh_restored_sha256_verified": 4804,
+  "source_clean": true,
+  "source": "/workspace/work/head-range/prepush-restore/artifacts/audiveris-source",
+  "source_git": "/workspace/work/head-range/prepush-restore/source-git"
+}
