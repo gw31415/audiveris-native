@@ -1,0 +1,580 @@
+{
+  "validation": {
+    "focused": {
+      "suites": 8,
+      "passed": 25,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "clippy_all_targets": "passed",
+    "build": "passed",
+    "original": {
+      "native_outputs_used": false,
+      "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "configurations": 9,
+      "system_bounds": 21,
+      "selection_controls": 3150,
+      "positive_closest": 1212,
+      "absent_closest": 1938,
+      "positive_above": 838,
+      "absent_above": 2312,
+      "fixture_sha256": "a87ba428292cfc7b551783bef775a78ff5d0285224c0f364ea5e6f65ac55dafb",
+      "observer_sha256": "cf1c3b6c1b9986847103fa04b79d8c82a9d69c7c0cb4211353a5aeb6fd1b87ee"
+    },
+    "cli": [
+      {
+        "name": "horizontal-beams-double",
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-beams-double.png",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-beams-double.pgm",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-beams-double.json"
+        ],
+        "exit_code": 0,
+        "seconds": 2.5281186279971735,
+        "report_sha256": "5ddada76ead7913eb28dbe190a5338a4df318d73a5287ce480bfaa0b0bffbd88",
+        "last_completed_substage": "BEAMS.EPILOG",
+        "later_beams": {
+          "beams_complete": true,
+          "epilog": {
+            "complete": true,
+            "graph_mutation": false,
+            "registry_glyph_count": 26,
+            "remaining_free_glyphs": [
+              {
+                "glyph_ids": [
+                  1,
+                  2
+                ],
+                "system_id": 1
+              },
+              {
+                "glyph_ids": [
+                  3,
+                  4
+                ],
+                "system_id": 2
+              }
+            ],
+            "systems": [
+              {
+                "removed_free_glyph_ids": [
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15
+                ],
+                "system_id": 1
+              },
+              {
+                "removed_free_glyph_ids": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22
+                ],
+                "system_id": 2
+              }
+            ]
+          },
+          "epilog_complete": true,
+          "extensions_complete": true,
+          "groups_complete": true,
+          "hooks_complete": true,
+          "multiple_rest_boundary_complete": true,
+          "musicxml_complete": false,
+          "pending": [
+            "LEDGERS/HEADS/rhythm/MusicXML",
+            "curved clipped system bounds, curved ledger paths and native ledger discovery"
+          ],
+          "stage": "BEAMS.native_through_multiple_rests",
+          "systems": [
+            {
+              "extensions": {
+                "initial_ids": [
+                  1,
+                  2
+                ],
+                "side_attempts": 4,
+                "skipped_removed": []
+              },
+              "groups": [
+                {
+                  "bounds": [
+                    280,
+                    86,
+                    112,
+                    24
+                  ],
+                  "id": 1,
+                  "members": [
+                    1,
+                    2
+                  ]
+                }
+              ],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": [
+                  1,
+                  2
+                ]
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [
+                [
+                  1,
+                  2
+                ]
+              ],
+              "system_id": 1
+            },
+            {
+              "extensions": {
+                "initial_ids": [
+                  1,
+                  2
+                ],
+                "side_attempts": 4,
+                "skipped_removed": []
+              },
+              "groups": [
+                {
+                  "bounds": [
+                    1240,
+                    86,
+                    112,
+                    24
+                  ],
+                  "id": 1,
+                  "members": [
+                    1,
+                    2
+                  ]
+                }
+              ],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": [
+                  1,
+                  2
+                ]
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [
+                [
+                  1,
+                  2
+                ]
+              ],
+              "system_id": 2
+            }
+          ]
+        },
+        "boundary_log": "Native beam spots: 14; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete\n"
+      },
+      {
+        "name": "horizontal-rendered-clefs",
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-rendered-clefs.pgm",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-rendered-clefs.json"
+        ],
+        "exit_code": 0,
+        "seconds": 2.7761363919998985,
+        "report_sha256": "ecae51d7d73c6f50108a6715bdd10ff990d8b40329bcd1012d0ed375f508eb8f",
+        "last_completed_substage": "BEAMS.EPILOG",
+        "later_beams": {
+          "beams_complete": true,
+          "epilog": {
+            "complete": true,
+            "graph_mutation": false,
+            "registry_glyph_count": 4,
+            "remaining_free_glyphs": [
+              {
+                "glyph_ids": [
+                  1,
+                  2
+                ],
+                "system_id": 1
+              },
+              {
+                "glyph_ids": [
+                  3,
+                  4
+                ],
+                "system_id": 2
+              }
+            ],
+            "systems": [
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 1
+              },
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 2
+              }
+            ]
+          },
+          "epilog_complete": true,
+          "extensions_complete": true,
+          "groups_complete": true,
+          "hooks_complete": true,
+          "multiple_rest_boundary_complete": true,
+          "musicxml_complete": false,
+          "pending": [
+            "LEDGERS/HEADS/rhythm/MusicXML",
+            "curved clipped system bounds, curved ledger paths and native ledger discovery"
+          ],
+          "stage": "BEAMS.native_through_multiple_rests",
+          "systems": [
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 1
+            },
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 2
+            }
+          ]
+        },
+        "boundary_log": "Native beam spots: 0; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete\n"
+      },
+      {
+        "name": "horizontal-two-column",
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-two-column.png",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-two-column.pgm",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-two-column.json"
+        ],
+        "exit_code": 0,
+        "seconds": 1.7724967000031029,
+        "report_sha256": "bdf038d13d36763fd8b078d0ef69288e53a793df37e9d4ad3513254f62f5f2bc",
+        "last_completed_substage": "BEAMS.EPILOG",
+        "later_beams": {
+          "beams_complete": true,
+          "epilog": {
+            "complete": true,
+            "graph_mutation": false,
+            "registry_glyph_count": 4,
+            "remaining_free_glyphs": [
+              {
+                "glyph_ids": [
+                  1,
+                  2
+                ],
+                "system_id": 1
+              },
+              {
+                "glyph_ids": [
+                  3,
+                  4
+                ],
+                "system_id": 2
+              }
+            ],
+            "systems": [
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 1
+              },
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 2
+              }
+            ]
+          },
+          "epilog_complete": true,
+          "extensions_complete": true,
+          "groups_complete": true,
+          "hooks_complete": true,
+          "multiple_rest_boundary_complete": true,
+          "musicxml_complete": false,
+          "pending": [
+            "LEDGERS/HEADS/rhythm/MusicXML",
+            "curved clipped system bounds, curved ledger paths and native ledger discovery"
+          ],
+          "stage": "BEAMS.native_through_multiple_rests",
+          "systems": [
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 1
+            },
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 2
+            }
+          ]
+        },
+        "boundary_log": "Native beam spots: 0; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete\n"
+      },
+      {
+        "name": "horizontal-mixed-short",
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-mixed-short.png",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-mixed-short.pgm",
+          "/workspace/audiveris-rest-horizontal-check-20261003/horizontal-mixed-short.json"
+        ],
+        "exit_code": 0,
+        "seconds": 1.671550628998375,
+        "report_sha256": "aa7eeb463488aff8ad34f3225ea2c5aa16a1b27dc1bfc69f0ce969321bba6ecc",
+        "last_completed_substage": "BEAMS.EPILOG",
+        "later_beams": {
+          "beams_complete": true,
+          "epilog": {
+            "complete": true,
+            "graph_mutation": false,
+            "registry_glyph_count": 5,
+            "remaining_free_glyphs": [
+              {
+                "glyph_ids": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ],
+                "system_id": 1
+              },
+              {
+                "glyph_ids": [
+                  1,
+                  2
+                ],
+                "system_id": 2
+              },
+              {
+                "glyph_ids": [
+                  4,
+                  5
+                ],
+                "system_id": 3
+              }
+            ],
+            "systems": [
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 1
+              },
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 2
+              },
+              {
+                "removed_free_glyph_ids": [],
+                "system_id": 3
+              }
+            ]
+          },
+          "epilog_complete": true,
+          "extensions_complete": true,
+          "groups_complete": true,
+          "hooks_complete": true,
+          "multiple_rest_boundary_complete": true,
+          "musicxml_complete": false,
+          "pending": [
+            "LEDGERS/HEADS/rhythm/MusicXML",
+            "curved clipped system bounds, curved ledger paths and native ledger discovery"
+          ],
+          "stage": "BEAMS.native_through_multiple_rests",
+          "systems": [
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 1
+            },
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 2
+            },
+            {
+              "extensions": {
+                "initial_ids": [],
+                "side_attempts": 0,
+                "skipped_removed": []
+              },
+              "groups": [],
+              "hooks": {
+                "appended": 0,
+                "attempts": 0,
+                "initial_ids": []
+              },
+              "rests": {
+                "complete": true,
+                "conversions": 0,
+                "registered_serifs": 0,
+                "supported_scope": "declared native GRID original global neighbor areas, certified full-width or straight clipped system bounds, five-line staff membership selection; supplied vertical-column geometry retained; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+              },
+              "supports": [],
+              "system_id": 3
+            }
+          ]
+        },
+        "boundary_log": "Native beam spots: 0; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete\n"
+      }
+    ],
+    "fresh_restore": {
+      "status": "passed",
+      "source_commit": "7bc4213cea7ed27ee8355e319447dda3b9b7074f",
+      "source_tree": "52ea03605e0a777a638c1fcb76e3ea7cb6259f64",
+      "tracked_files": 4752,
+      "changed_files": 8,
+      "all_fresh_restored_sha256_verified": 4752,
+      "source_clean": true,
+      "verified_utc": "2026-10-03T16:25:09.748435+00:00"
+    },
+    "graph": "shared GRID snapshot unchanged during pure native rest geometry mapping; existing original complete-rest shared registration/cleanup controls passed",
+    "curved_clipped_system_bounds": "explicit unsupported_rest_native_system_area_bounds; dedicated negative control passed",
+    "full_current_source": "UNVERIFIED",
+    "prior_full_baseline": {
+      "source_commit": "cdb29dcee8e15ed95cb8c02fe9104ccf440953f3",
+      "remote_commit": "6e10993dd9b2fc0eb4c6d3c1838e0538f6e9353e",
+      "debug_passed": 314,
+      "release_passed": 314,
+      "suites_each": 97
+    },
+    "positive_real_score_rest": "not demonstrated",
+    "full_OMR": "unfinished",
+    "next_dependencies": [
+      "clipped curved system bounds",
+      "curved ledger paths and native ledger discovery",
+      "LEDGERS/HEADS/stems/rhythm/MusicXML"
+    ]
+  },
+  "logs": {
+    "focused": "   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.77s\n     Running tests/beam_dispatch_neighbors.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_dispatch_neighbors-f018fa95744038a3)\n\nrunning 2 tests\ntest original_neighbor_dispatch_selection_and_beam_ends_match ... ok\ntest original_two_column_spots_preserve_pixel_order_and_identity ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.70s\n\n     Running tests/multiple_rest_admission.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_admission-e8903fd6c9e22053)\n\nrunning 2 tests\ntest missing_staff_tablature_removed_and_invalid_measurements ... ok\ntest original_process_admission_and_serif_queries ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running tests/multiple_rest_detection.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_detection-37ada9cacc6c98ce)\n\nrunning 2 tests\ntest ordered_detection_selection_and_registration_geometry ... ok\ntest admission_rejection_and_missing_side_leave_no_plan ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running tests/multiple_rest_pipeline.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_pipeline-841c6c0f4e9242af)\n\nrunning 1 test\ntest uninterrupted_original_complete_rest_conversions_match_integrated_native_pass ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n     Running tests/multiple_rest_registration.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_registration-97fa2a870eb98b86)\n\nrunning 3 tests\ntest absent_filament_rejects_before_graph_or_glyph_mutation ... ok\ntest ordered_vertices_relations_and_canonical_glyph_identity ... ok\ntest final_cleanup_updates_real_candidates_groups_and_exclusions ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n     Running tests/native_rest_mapping.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/native_rest_mapping-e5dc5d3cac3b39a0)\n\nrunning 9 tests\ntest native_curve_pitch_and_lag_order_are_retained ... ok\ntest invalid_ledger_identity_shape_and_order_are_rejected ... ok\ntest clipped_curved_areas_and_invalid_ends_are_explicitly_rejected ... ok\ntest original_empty_ledger_pitch_controls_match_native_mapping ... ok\ntest original_populated_ledger_pitch_controls_match_native_mapping ... ok\ntest unsupported_staff_and_populated_ledger_paths_are_explicit ... ok\ntest original_multistaff_areas_closest_and_above_controls_match ... ok\ntest original_scanned_score_multisystem_area_selection_and_bounds_match ... ok\ntest original_supplied_clipped_system_areas_match ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n     Running tests/rest_neighbor_mapping.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/rest_neighbor_mapping-92225b88f57ced68)\n\nrunning 2 tests\ntest curved_clipped_system_bounds_remain_explicitly_unsupported ... ok\ntest original_horizontal_closest_above_and_certified_bounds_match ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s\n\n     Running tests/shared_sig.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/shared_sig-eb2235491f0106e8)\n\nrunning 4 tests\ntest systems_with_same_local_ids_are_separate ... ok\ntest dangling_relations_and_duplicate_sources_reject_transactionally ... ok\ntest removed_beam_retains_identity_and_rest_relations_share_one_store ... ok\ntest colliding_phase_ids_relations_and_replay_are_stable ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+    "fmt": "",
+    "clippy": "    Checking audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.90s\n",
+    "build": "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s\n"
+  },
+  "original_oracle_log": "16:22:31.464 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.502 [main] WARN org.audiveris.omr.WellKnowns -- Error creating /home/agent/.cache/AudiverisLtd/audiveris/log\njava.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system\n\tat java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)\n\tat java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)\n\tat java.base/java.nio.file.Files.createDirectory(Unknown Source)\n\tat java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)\n\tat java.base/java.nio.file.Files.createDirectories(Unknown Source)\n\tat org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)\n\tat org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)\n\tat org.audiveris.omr.constant.ConstantManager.<init>(ConstantManager.java:151)\n\tat org.audiveris.omr.constant.ConstantManager.<clinit>(ConstantManager.java:140)\n\tat org.audiveris.omr.constant.Constant.setUnitAndName(Constant.java:398)\n\tat org.audiveris.omr.constant.Constant$Double.<clinit>(Constant.java:682)\n\tat org.audiveris.omr.sheet.SystemManager$Constants.<init>(SystemManager.java:932)\n\tat org.audiveris.omr.sheet.SystemManager.<clinit>(SystemManager.java:83)\n\tat java.base/java.lang.Class.forName0(Native Method)\n\tat java.base/java.lang.Class.forName(Unknown Source)\n\tat java.base/java.lang.Class.forName(Unknown Source)\n\tat MultiStaffAreaControlProbe.c(MultiStaffAreaControlProbe.java:5)\n\tat RestNeighborAreaControlProbe.main(RestNeighborAreaControlProbe.java:9)\n16:22:31.504 [main] WARN org.audiveris.omr.WellKnowns -- Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp\njava.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system\n\tat java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)\n\tat java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)\n\tat java.base/java.nio.file.Files.createDirectory(Unknown Source)\n\tat java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)\n\tat java.base/java.nio.file.Files.createDirectories(Unknown Source)\n\tat org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)\n\tat org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)\n\tat org.audiveris.omr.constant.ConstantManager.<init>(ConstantManager.java:151)\n\tat org.audiveris.omr.constant.ConstantManager.<clinit>(ConstantManager.java:140)\n\tat org.audiveris.omr.constant.Constant.setUnitAndName(Constant.java:398)\n\tat org.audiveris.omr.constant.Constant$Double.<clinit>(Constant.java:682)\n\tat org.audiveris.omr.sheet.SystemManager$Constants.<init>(SystemManager.java:932)\n\tat org.audiveris.omr.sheet.SystemManager.<clinit>(SystemManager.java:83)\n\tat java.base/java.lang.Class.forName0(Native Method)\n\tat java.base/java.lang.Class.forName(Unknown Source)\n\tat java.base/java.lang.Class.forName(Unknown Source)\n\tat MultiStaffAreaControlProbe.c(MultiStaffAreaControlProbe.java:5)\n\tat RestNeighborAreaControlProbe.main(RestNeighborAreaControlProbe.java:9)\nWARNING: A restricted method in java.lang.System has been called\nWARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)\nWARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module\nWARNING: Restricted methods will be blocked in a future release unless native access is enabled\n\n16:22:31.612 [main] DEBUG org.audiveris.omr.constant.ConstantManager -- [org.audiveris.omr.constant.ConstantManager] No property file /home/agent/.config/AudiverisLtd/audiveris/run.properties\n16:22:31.671 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.678 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.684 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.689 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.693 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.698 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.705 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n16:22:31.714 [main] DEBUG org.audiveris.omr.sheet.Picture -- Picture unmarshalled by JAXB\n"
+}
