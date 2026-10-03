@@ -1,0 +1,11 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.07s
+     Running tests/head_glyph_retrieval.rs (/workspace/onboarding/target/debug/deps/head_glyph_retrieval-b259717e3d00f596)
+
+running 4 tests
+test original_integer_ordinate_and_determinant_seed_pivots ... ok
+test canonical_registry_reuses_glyphs_and_malformed_retrieval_is_rejected ... ok
+test original_four_shapes_foreground_keypoints_edges_erasure_and_empty ... ok
+test original_all_seed_glyphs_live_conflicts_and_range_glyphs ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.85s
