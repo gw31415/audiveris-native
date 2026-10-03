@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "configurations": 9,
+  "system_controls": 21,
+  "area_point_controls": 4888,
+  "positive_area_points": 1677,
+  "native_outputs_used": false,
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "fixture_sha256": "6dd181ac0a5dc2f63fc7f2b53f652d6ca402e18c15f480940ada3bdb184d49c4",
+  "observer_sha256": "e73f2cbecd8de64ef10a519ddd1f08bbb3874599be1f3537606b74d5e2c78b8e",
+  "oracle_log_sha256": "c6b01ee8741325cacbc17b17b28f58e253fb186c0e156941e522b04d540bbf41",
+  "scope": "Unmodified original system/staff horizontal and vertical neighbors, global spline boundary areas, clip intersections and contains; synthetic horizontal layouts plus independently observed original Laura GRID; native short-staff raster discovery not claimed",
+  "scope_note": "Point containment includes curved clipped staff chains; clipped boolean intersection bounds are not exposed"
+}

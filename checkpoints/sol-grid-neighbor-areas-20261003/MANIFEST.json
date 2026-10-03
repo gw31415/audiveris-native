@@ -1,0 +1,193 @@
+{
+  "branch": "checkpoint/sol-grid-neighbor-areas-20261003",
+  "parent_checkpoint_commit": "3cbff7663ea63bb973c0e39449e7c8d152efc9cf",
+  "parent_implementation_commit": "9ddf0849ab7b75c9879337049082672bcc0d5f5f",
+  "parent_implementation_tree": "9de7acbcedfb019edff5cad253a653670cadb76f",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/3cbff7663ea63bb973c0e39449e7c8d152efc9cf/checkpoints/sol-grid-horizontal-ends-20261003/MANIFEST.json",
+  "local_implementation_commit": "feb059289574e2e967d1457ad9d8fb27a9cc7635",
+  "local_implementation_tree": "c2b3cc244006568ea19696d0c9d2313e437c1245",
+  "changed_files_from_parent": [
+    "docs/GRID-NEIGHBOR-AREA-CHAINS.md",
+    "fixtures/official-neighbor-system-area.json",
+    "scripts/java/NeighborSystemAreaControlProbe.java",
+    "src/beam_dispatch.rs",
+    "src/grid_ir.rs",
+    "src/lib.rs",
+    "src/system_area_ends.rs",
+    "src/system_area_geometry.rs",
+    "tests/system_area_geometry.rs"
+  ],
+  "file_sha256": {
+    "docs/GRID-NEIGHBOR-AREA-CHAINS.md": "18b14e15cbba4281413a4ed05c18270ea1a29933396f7ad6fa2fab11c907e29b",
+    "fixtures/official-neighbor-system-area.json": "6dd181ac0a5dc2f63fc7f2b53f652d6ca402e18c15f480940ada3bdb184d49c4",
+    "scripts/java/NeighborSystemAreaControlProbe.java": "e73f2cbecd8de64ef10a519ddd1f08bbb3874599be1f3537606b74d5e2c78b8e",
+    "src/beam_dispatch.rs": "ff168be083e9bfd135a0da30ff12e766676072582e9bc595de7f01302e44a7f7",
+    "src/grid_ir.rs": "2597fde4c952ae8e2c83e3f1e46ff0456cc7d7d7379d81c3e2a5ae1b6a77e441",
+    "src/lib.rs": "41c34dea8c6aa028e6b7a8af7b575168ab4df672e0cee1d8f5889fab5e17eda1",
+    "src/system_area_ends.rs": "df8a8281f583b2d99c8246fb38de3daba4a05fb416ade011cb0413fd28595022",
+    "src/system_area_geometry.rs": "ed2fefe932776339a1b97712d5149d27cb1dcfe2aba557f25d2fd47582890fd9",
+    "tests/system_area_geometry.rs": "823c09dc5f597925b1d504abf86db74936f8ba4223112ec63437d53fc1c5263e"
+  },
+  "tracked_files": 4717,
+  "patch": {
+    "path": "checkpoints/sol-grid-neighbor-areas-20261003/changes.patch",
+    "bytes": 232865,
+    "sha256": "9ef78d64f3b7fcef7ae6f973c62ebdc716b50cf49e60d4a01e2fef6ebba8d3ff"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-grid-neighbor-areas-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "focused": {
+      "suites": 5,
+      "passed": 25,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "build": "passed",
+    "native_grid_raster_fixtures": 13,
+    "original_controls": {
+      "exit_code": 0,
+      "configurations": 9,
+      "system_controls": 21,
+      "area_point_controls": 4888,
+      "positive_area_points": 1677,
+      "native_outputs_used": false,
+      "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "fixture_sha256": "6dd181ac0a5dc2f63fc7f2b53f652d6ca402e18c15f480940ada3bdb184d49c4",
+      "observer_sha256": "e73f2cbecd8de64ef10a519ddd1f08bbb3874599be1f3537606b74d5e2c78b8e",
+      "oracle_log_sha256": "c6b01ee8741325cacbc17b17b28f58e253fb186c0e156941e522b04d540bbf41",
+      "scope": "Unmodified original system/staff horizontal and vertical neighbors, global spline boundary areas, clip intersections and contains; synthetic horizontal layouts plus independently observed original Laura GRID; native short-staff raster discovery not claimed",
+      "scope_note": "Point containment includes curved clipped staff chains; clipped boolean intersection bounds are not exposed"
+    },
+    "cli": {
+      "cli": {
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "fixtures/official-grid/beams-single.png",
+          "/workspace/audiveris-neighbor-area-check-20261003/cli.pgm",
+          "/workspace/audiveris-neighbor-area-check-20261003/cli.json"
+        ],
+        "seconds": 1.3811767879997205,
+        "exit_code": 0,
+        "report_sha256": "77e33d9dc131ee720f9d9e6a3bcc844d82ba9a38ba099fce679cd0fc04da2d61",
+        "staff_count": 1,
+        "system_count": 1,
+        "last_completed_substage": "BEAMS.EPILOG",
+        "epilog_complete": true,
+        "rest_boundaries": [
+          {
+            "complete": true,
+            "conversions": 0,
+            "registered_serifs": 0,
+            "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+          }
+        ],
+        "positive_real_score_rest": "not demonstrated",
+        "musicxml_complete": false,
+        "same_pipeline_values_as_parent": true,
+        "supplied_clips_discovered_by_native_grid": false
+      },
+      "multi-cli": {
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "fixtures/official-grid/laura-gray.png",
+          "/workspace/audiveris-neighbor-area-check-20261003/multi-cli.pgm",
+          "/workspace/audiveris-neighbor-area-check-20261003/multi-cli.json"
+        ],
+        "seconds": 16.32509874599964,
+        "exit_code": 0,
+        "report_sha256": "94a19d30818d02ed79346d46329292d003de0534eb04d98649fa13dd068c8fa2",
+        "staff_count": 6,
+        "system_count": 2,
+        "last_completed_substage": "BEAMS.EPILOG",
+        "epilog_complete": true,
+        "rest_boundaries": [
+          {
+            "complete": true,
+            "conversions": 0,
+            "registered_serifs": 0,
+            "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+          },
+          {
+            "complete": true,
+            "conversions": 0,
+            "registered_serifs": 0,
+            "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+          }
+        ],
+        "positive_real_score_rest": "not demonstrated",
+        "musicxml_complete": false,
+        "same_pipeline_values_as_parent": true,
+        "supplied_clips_discovered_by_native_grid": false
+      },
+      "multi-replay": {
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "fixtures/official-grid/laura-gray.png",
+          "/workspace/audiveris-neighbor-area-check-20261003/multi-replay.pgm",
+          "/workspace/audiveris-neighbor-area-check-20261003/multi-replay.json"
+        ],
+        "seconds": 16.14878420399873,
+        "exit_code": 0,
+        "report_sha256": "94a19d30818d02ed79346d46329292d003de0534eb04d98649fa13dd068c8fa2",
+        "staff_count": 6,
+        "system_count": 2,
+        "last_completed_substage": "BEAMS.EPILOG",
+        "epilog_complete": true,
+        "rest_boundaries": [
+          {
+            "complete": true,
+            "conversions": 0,
+            "registered_serifs": 0,
+            "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+          },
+          {
+            "complete": true,
+            "conversions": 0,
+            "registered_serifs": 0,
+            "supported_scope": "supplied full-width or straight-boundary clipped systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+          }
+        ],
+        "positive_real_score_rest": "not demonstrated",
+        "musicxml_complete": false,
+        "replay_identical": true,
+        "same_pipeline_values_as_parent": true,
+        "supplied_clips_discovered_by_native_grid": false
+      }
+    },
+    "native_cli_report_bytes_identical_to_parent": true,
+    "native_horizontal_area_end_discovery": "implemented from produced GRID coordinates",
+    "native_neighbor_chain_and_area_point_geometry": "implemented in native GRID",
+    "actual_multi_column_raster_pipeline": "unsupported upstream short-staff discovery and downstream clipped beam/column adapters",
+    "remaining_dependencies": [
+      "system_graph short/multi-column staff neighbors",
+      "downstream beam/rest horizontal-chain adapters",
+      "clipped beam preparation masks",
+      "clipped boolean-intersection bounds and edges"
+    ],
+    "full_debug": "UNVERIFIED at new source",
+    "full_release": "UNVERIFIED at new source",
+    "prior_full_regression": {
+      "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+      "remote_commit": "deec43364e2b6b348cca4b38f798f534c8bd1925",
+      "debug": 297,
+      "release": 297,
+      "suites_each": 94
+    },
+    "positive_real_score_rest": "not demonstrated",
+    "full_OMR": "unfinished"
+  },
+  "recovery": [
+    "Restore exact parent source from immutable source_recovery_manifest_url and prior chain.",
+    "Verify patch byte count/hash; git apply --check then git apply --index.",
+    "Verify git write-tree and each changed SHA256.",
+    "Write raw implementation commit with git hash-object -t commit -w --stdin, verify source pin, attach new isolated local branch.",
+    "Verify clean source and tracked count."
+  ],
+  "full_OMR": "unfinished"
+}
