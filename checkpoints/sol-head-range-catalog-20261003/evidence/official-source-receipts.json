@@ -1,0 +1,18 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/note/NoteHeadsBuilder.java",
+    "sha256": "397de423f9168337b9f9b2acc693739cf49422122d48237e2107e6c896bc3b2c"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/glyph/Shape.java",
+    "sha256": "0ddcf3c45307905f1b1a30ae7b63b4e7bf107119b1b798584ba20539b1056f7f"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/glyph/Grades.java",
+    "sha256": "04f999eea71dd1ed25461911b938a0dfd29c2f7f46769639d12d9cc26ad4cdd6"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractInter.java",
+    "sha256": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548"
+  }
+]

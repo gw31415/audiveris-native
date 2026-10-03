@@ -1,0 +1,357 @@
+{
+  "recorded_utc": "2026-10-03T21:54:33.588225+00:00",
+  "branch": "main",
+  "parent_checkpoint_commit": "fa645b4d4170850b4d3e41b44d4ee81bd5a04e25",
+  "parent_implementation_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/fa645b4d4170850b4d3e41b44d4ee81bd5a04e25/checkpoints/sol-head-range-prefix-20261003/MANIFEST.json",
+  "local_implementation_commit": "3f015272fde1c071351296fd80c25ad8c1bc4448",
+  "local_implementation_tree": "cae6a56c2fd3526bd56819fb11b54386ca3cf4e2",
+  "tracked_files": 4826,
+  "changed_files_from_parent": [
+    "fixtures/official-head-range-catalog/BREVE-clean.png",
+    "fixtures/official-head-range-catalog/BREVE-edge.png",
+    "fixtures/official-head-range-catalog/BREVE-empty.png",
+    "fixtures/official-head-range-catalog/BREVE-erased.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-clean.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-edge.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-empty.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-erased.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-clean.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-edge.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-empty.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-erased.png",
+    "fixtures/official-head-range-catalog/README.md",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-clean.png",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-edge.png",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-empty.png",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-erased.png",
+    "fixtures/official-head-range-catalog/controls.json",
+    "fixtures/official-head-range-catalog/laura.json",
+    "scripts/check_head_range_catalog.py",
+    "scripts/java/HeadRangeCatalogProbe.java",
+    "scripts/linux_oracle.py",
+    "src/head_range_search.rs",
+    "src/main.rs",
+    "tests/head_range_catalog.rs"
+  ],
+  "file_sha256": {
+    "fixtures/official-head-range-catalog/BREVE-clean.png": "a83919b811f41c5c8ec483791beedcfc25bad1454eca2521e48bf9fdb35e8636",
+    "fixtures/official-head-range-catalog/BREVE-edge.png": "1d6546b39ff45ed6ef2260acdb027caa654dccbc3345f07100268ce8de469234",
+    "fixtures/official-head-range-catalog/BREVE-empty.png": "2d5bfa8c29964252fa8fbd725bb8cb82fe7359d2377a16bac645b3543fb03ca2",
+    "fixtures/official-head-range-catalog/BREVE-erased.png": "e49d157b3615baf18dc135dfdc4e0fea736efd1304007267cff85d5fce0425c6",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-clean.png": "eed6552b2e1e9e0b14355689242706e829d7ee06ac2092b9cd98d1c3abf3a171",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-edge.png": "f36fc76e8ad9456052004d8cf4370ee483231f3e340298110525f41d2c636a6a",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-empty.png": "2d5bfa8c29964252fa8fbd725bb8cb82fe7359d2377a16bac645b3543fb03ca2",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-erased.png": "9f7bcf3ec00069279c18bcd9a53b9c17dc448e3b916faed29240ab539d427c56",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-clean.png": "c8b768b895c6be3dbef74897f6e4be8107e9f8dd2714a3c1d5fa2bb4ac897165",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-edge.png": "07bc945c0d58788e22725d1c48542e4baa5ddab154a849b568d6f0ac2895c492",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-empty.png": "2d5bfa8c29964252fa8fbd725bb8cb82fe7359d2377a16bac645b3543fb03ca2",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-erased.png": "8fab34a4e86588ce307936286a0159fced4368a043700a54bb4f7ba82e71ef2f",
+    "fixtures/official-head-range-catalog/README.md": "403d7e06ec91f923687a029ad5bb49ebccd1e5931bb3a55ad2406b68804282e1",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-clean.png": "174dcb880fd9d7f7a35eb5ac454e713b1c569365d95ede0d826c86cece9a8c7c",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-edge.png": "fe3ca96277f8669c11d630b304c228a7a242e16e417f8378ff4db349521c4d03",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-empty.png": "2d5bfa8c29964252fa8fbd725bb8cb82fe7359d2377a16bac645b3543fb03ca2",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-erased.png": "5e219d2b054928110b0b4d0ded49d0fcaeebd20dea5a72191c3ad8414b91f7d9",
+    "fixtures/official-head-range-catalog/controls.json": "0e6d4041179a7e72d636be968bc262ee94ec9967573aa62354c33ff51eadb958",
+    "fixtures/official-head-range-catalog/laura.json": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+    "scripts/check_head_range_catalog.py": "a7fcdc16c05b29490ce33ba738face859048d73a94626a5ea8f29e99d1faeea5",
+    "scripts/java/HeadRangeCatalogProbe.java": "6a9a70f323c42f33264e8e38c1499356547459f462c9cecd79a839df936fad02",
+    "scripts/linux_oracle.py": "9b420493d885dd735bfe6114c44d2cbaecccb0a03e09780b6424463e02e722d0",
+    "src/head_range_search.rs": "70a79bb13c3f437086d11af60ca4b7e152169d3df9aee1dafa493882f4dd935c",
+    "src/main.rs": "53597b646fdf61a634fa77c8661c7a2a8c9143a7480e5d2f11f26ddb30ebecb0",
+    "tests/head_range_catalog.rs": "0d933764c9b24e42dcf8d500f3bc2faaf2293a8468634d0ba18621eaaa96396f"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-head-range-catalog-20261003/SOURCE-SHA256.json",
+    "sha256": "1a4515ccc4e33a0d8fb18949d8e6dbd8076093813c106842ff49f94848e48972",
+    "files": 4826
+  },
+  "bundle": {
+    "path": "checkpoints/sol-head-range-catalog-20261003/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 279480,
+    "decoded_sha256": "64e0ea93fd5ab5e6a3f14f2dc6ba12fd4baa486093eaa967041223db6daba230",
+    "base64_sha256": "0c454e1713146f5c61902299c4b699b4874f19b78b0ab410a585b8dbb68b6336",
+    "prerequisite": "ab718d19748c58411f04ce9d3687d8189a416ec0"
+  },
+  "validation": {
+    "initial_integrity": {
+      "repository_commit": "fa645b4d4170850b4d3e41b44d4ee81bd5a04e25",
+      "source_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+      "source_tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+      "verified_files": 4804,
+      "unsaved_changes": [],
+      "saved_debug_tests_passed": 346,
+      "source_sha256_list": "557d7d62aabf5126b04d7aeba28ce2a2dffcb63d779209998d7860d5c5934685"
+    },
+    "baseline_focused_tests_passed": 6,
+    "focused_tests_passed": 9,
+    "focused_failed": 0,
+    "focused_ignored": 0,
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "full_workspace_suite": {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "passed": 349,
+      "failed": 0,
+      "ignored": 0,
+      "targets": 112,
+      "mode": "debug"
+    },
+    "native_cli_laura": {
+      "status": "passed",
+      "range_scanners": 118,
+      "accepted_candidates": 2224,
+      "weak_stemless_rejected": 407,
+      "raw_candidates": 2631,
+      "accepted_stemless": {
+        "WHOLE_NOTE": 3
+      },
+      "preserved_prefix": {
+        "status": "passed",
+        "raw_seed_proposals": 418,
+        "veto_seed_proposals": 358,
+        "head_spot_system_references": 402,
+        "range_scanners": 118,
+        "visited_abscissae": 47790,
+        "skipped_windows": 869,
+        "black_void_prefix_proposals": 2221,
+        "heads_complete": false,
+        "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+        "report_sha256": "eb826200bf40ba80944de94f15d6837275201cbf05abf16ac47f1dc23d98b3ed"
+      },
+      "heads_complete": false,
+      "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+      "report_sha256": "eb826200bf40ba80944de94f15d6837275201cbf05abf16ac47f1dc23d98b3ed",
+      "existing_full_reports_exactly_preserved": true,
+      "preserved_fields": [
+        "head_seed_search",
+        "head_seed_veto",
+        "head_range_search",
+        "shared_sig"
+      ],
+      "baseline_report_sha256": "51a2753773731bcb999638d0424e1efc2a22dfd2920aa75298bb87bdedbf7c77"
+    },
+    "original": {
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "release": "5.11.0",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "native_outputs_used": false,
+      "probe": "HeadRangeCatalogProbe",
+      "oracle_success": true,
+      "laura_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+      "control_sha256": "0e6d4041179a7e72d636be968bc262ee94ec9967573aa62354c33ff51eadb958",
+      "scanners": 118,
+      "visited_abscissae": 47790,
+      "skipped_windows": 869,
+      "accepted_candidates": 2224,
+      "weak_stemless_rejected": 407,
+      "eval_counts": {
+        "eval": 306635,
+        "bar_veto": 4452,
+        "competitor_veto": 17912,
+        "central_veto": 22189,
+        "noncentral_veto": 175
+      },
+      "eligibility_parameters": {
+        "stemless_boost": 0.0,
+        "min_contextual_grade": 0.5,
+        "min_inter_grade": 0.08000000000000002
+      },
+      "render_images": 16,
+      "render_cases": 32,
+      "score_ulp_boundary_controls": 40
+    },
+    "heads_complete": false,
+    "full_OMR": "unfinished",
+    "unrun_optional": [
+      "full release suite"
+    ],
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--offline",
+          "-j2",
+          "--test",
+          "head_range_search",
+          "--test",
+          "head_seed_veto",
+          "--",
+          "--nocapture"
+        ],
+        "source": "initial saved source",
+        "passed": 6,
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--offline",
+          "-j2",
+          "--test",
+          "head_range_catalog",
+          "--test",
+          "head_range_search",
+          "--test",
+          "head_seed_veto",
+          "--",
+          "--nocapture"
+        ],
+        "source": "new source",
+        "passed": 9,
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--locked",
+          "--offline",
+          "--all-targets",
+          "-j2",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "python",
+          "scripts/linux_oracle.py",
+          "--oracle-home",
+          "/workspace/onboarding/linux-oracle",
+          "--probe",
+          "head-range-catalog",
+          "--fixtures",
+          "laura-gray",
+          "--output",
+          "/workspace/work/head-range-catalog/oracle-final",
+          "--timeout",
+          "180"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "cargo",
+          "run",
+          "--locked",
+          "--offline",
+          "-j2",
+          "--",
+          "page-glyphs",
+          "fixtures/official-grid/laura-gray.png",
+          "/workspace/work/head-range-catalog/verified-laura-residual.pgm",
+          "/workspace/work/head-range-catalog/verified-laura-report.json"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "python",
+          "scripts/check_head_range_catalog.py",
+          "/workspace/work/head-range-catalog/verified-laura-report.json"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "fresh_restore": {
+      "status": "passed",
+      "source_commit": "3f015272fde1c071351296fd80c25ad8c1bc4448",
+      "source_tree": "cae6a56c2fd3526bd56819fb11b54386ca3cf4e2",
+      "all_fresh_restored_sha256_verified": 4826,
+      "source_clean": true,
+      "source": "/workspace/work/head-range-catalog/prepush-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-range-catalog/prepush-restore/source-git"
+    }
+  },
+  "official_source_receipts": [
+    {
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/note/NoteHeadsBuilder.java",
+      "sha256": "397de423f9168337b9f9b2acc693739cf49422122d48237e2107e6c896bc3b2c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/glyph/Shape.java",
+      "sha256": "0ddcf3c45307905f1b1a30ae7b63b4e7bf107119b1b798584ba20539b1056f7f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/glyph/Grades.java",
+      "sha256": "04f999eea71dd1ed25461911b938a0dfd29c2f7f46769639d12d9cc26ad4cdd6"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractInter.java",
+      "sha256": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548"
+    }
+  ],
+  "implemented_scope": "Default Bravura 51pt oval range catalog BREVE, WHOLE_NOTE, NOTEHEAD_VOID, NOTEHEAD_BLACK in original Shape enum order; hollow browsing without black spots; source-shape veto, best-location and hole reassignment contracts preserved. Original isWeakStemLessHead and createInter grade eligibility, intrinsic/future grade metadata, accepted and rejected candidates. Existing black/void prefix and full seed/shared SIG reports exactly preserved. No glyph or SIG identity allocated.",
+  "control_scope": "Fresh pinned original 5.11 Linux JAR; all 118 Laura staff/ledger range scanners, 2224 accepted and 407 weak stemless rejected. 16 independent original binary render images (32 cases with/without black relevance), clean whole/breve positives, erased, clipped edges and empty images. 40 original ULP score controls around stemless/contextual and constructor grade boundaries.",
+  "not_implemented": [
+    "range candidate aggregation and seed conflict filtering",
+    "glyph retrieval and HeadInter/SIG registration",
+    "duplicate/overlap purge and HeadSeedTally",
+    "non-default small/cross/drum shapes, other music fonts and point sizes",
+    "stem attachment, rhythm and MusicXML"
+  ],
+  "heads_complete": false,
+  "full_OMR": "unfinished",
+  "preserved_dependency_limitations": [
+    "Original areas for eligible multiple-rest/tremolo competitors remain required; unknown areas fail explicitly. Positive real-score rest competition is not demonstrated.",
+    "Default five-line staves and Bravura 51pt only; drum and tablature remain unsupported."
+  ],
+  "recovery": [
+    "Clone saved archival main using existing access; no new credentials or environment setup.",
+    "Run this RESTORE.py --repository ARCHIVAL_CHECKOUT --destination NEW_DIRECTORY; refuses an existing destination and verifies the pinned archive/patch/bundle chain.",
+    "Check RESTORE-VERIFIED.json for exact source commit/tree, every source file SHA256 and clean Git status.",
+    "Activate the existing onboarding toolchain; run cargo test --workspace --locked --offline -j2 or the focused HEADS tests. Compare independent Laura CLI with scripts/check_head_range_catalog.py."
+  ],
+  "evidence_sha256": {
+    "evidence/baseline-heads.log": "df7023974754313407ce8dda2315d4f87570d28a276740aaede824230c74a66c",
+    "evidence/bundle-verify.log": "3c4c87bbdcefeeb1b38047920a144ee053194ce9f3da7479d60d8cd5390e77d4",
+    "evidence/clippy.log": "03d6b5e734a479f4f7b3ab41f9418596369b261df35d0f13201bdb412ea3b198",
+    "evidence/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/focused-tests.log": "2f622edb898f8d12f38455f00047341edac0e3f14501c411e49ef6f3262985fc",
+    "evidence/full-workspace-tests.log": "7b68ee3d6650ff38b78f0d6d6477ed857f6205fddaeb32301249d328cf6555b8",
+    "evidence/implementation.json": "b33199b7e6feb71a5050faf8e0ffd73d4788bbdb1eec6853fe81762fee2fdf28",
+    "evidence/initial-integrity.json": "30ce8c2ae21cc0eb808e9502c2d92a02e4cafde9f6d21be8050b9ab8d0ce852a",
+    "evidence/native-cli-comparison.json": "4e8449d182699039cc582900e7af7304d10c8d918a83c14cbef0db1fd1d88c8e",
+    "evidence/native-cli.log": "0a10f46b5c30576d37c9be44470e18653fb2e53e6fac2d7acb97270a2e0d1cd4",
+    "evidence/native-laura-report.json.gz": "7b118bd5ba1d488e04deffeae4094d738d9b49798002bcee0e4efde437160912",
+    "evidence/official-source-receipts.json": "a3f9e787f6d0cb9413c62214da671b6ee6b6126d5e72fbc0b92e35c7b58d2055",
+    "evidence/oracle-compile.log": "c85f10e86a7cf615dbb4d80c276a041e003735aa935800b8bc9e82fc59ff0f20",
+    "evidence/oracle-console.log": "354c0dcae64003b200c298a7de5cf2d48f6041c1b00946b68cd9e448879a3b4b",
+    "evidence/oracle-execution.json": "3b6904a8c1f3cf137bf7dfb3cec3fbd61c29a071e5da0b926b30b24a1298533c",
+    "evidence/oracle-provenance.json": "58c79e53c6e19a6d04dd5308948d262e92289dc201c54b3e57d64c4c0e65d9c2",
+    "evidence/oracle-runner.log": "c818ed95cfac966f700e49fedb2153817e1de261ff16c0eda775e2ab3f5f5893",
+    "evidence/original-summary.json": "363f8fba19ffa4cc35d1dcf51c59f774d8144c887f7187476747a79a911b74ae",
+    "evidence/prepush-restore.json": "985218755a9ea9e33c3f10ad69353a872bf21227564dae35638a6ec2503fe0c5",
+    "evidence/prepush-restore.log": "cdecf09c4cba41d1c1a536faecfe98152813826b3d546482d35197c1e8ad0c32",
+    "evidence/standalone-cli-comparison.json": "289b2df9468136bd93f6e3b1d91ea2b38e27393d4ed998c05520c9d5a7d4da82"
+  },
+  "restore_script_sha256": "627797bb2e27723f305c82722a60dd3cdf776241b96010fab602b77e06afad85",
+  "evidence_log_storage": "Log copies normalize trailing whitespace; original command outputs remain in the existing task workspace."
+}

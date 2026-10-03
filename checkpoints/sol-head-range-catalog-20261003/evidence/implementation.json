@@ -1,0 +1,32 @@
+{
+  "commit": "3f015272fde1c071351296fd80c25ad8c1bc4448",
+  "tree": "cae6a56c2fd3526bd56819fb11b54386ca3cf4e2",
+  "files": 4826,
+  "changed": [
+    "fixtures/official-head-range-catalog/BREVE-clean.png",
+    "fixtures/official-head-range-catalog/BREVE-edge.png",
+    "fixtures/official-head-range-catalog/BREVE-empty.png",
+    "fixtures/official-head-range-catalog/BREVE-erased.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-clean.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-edge.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-empty.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_BLACK-erased.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-clean.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-edge.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-empty.png",
+    "fixtures/official-head-range-catalog/NOTEHEAD_VOID-erased.png",
+    "fixtures/official-head-range-catalog/README.md",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-clean.png",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-edge.png",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-empty.png",
+    "fixtures/official-head-range-catalog/WHOLE_NOTE-erased.png",
+    "fixtures/official-head-range-catalog/controls.json",
+    "fixtures/official-head-range-catalog/laura.json",
+    "scripts/check_head_range_catalog.py",
+    "scripts/java/HeadRangeCatalogProbe.java",
+    "scripts/linux_oracle.py",
+    "src/head_range_search.rs",
+    "src/main.rs",
+    "tests/head_range_catalog.rs"
+  ]
+}
