@@ -1,0 +1,29 @@
+{
+  "source_commit": "cdb29dcee8e15ed95cb8c02fe9104ccf440953f3",
+  "source_tree": "08382b57d09909493d8a4416e7189f6bd8779253",
+  "source_clean_before_and_after": true,
+  "profile": "release",
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-j2",
+    "--workspace",
+    "--no-fail-fast",
+    "--release"
+  ],
+  "started_utc": "2026-10-03T15:34:46.520140+00:00",
+  "ended_utc": "2026-10-03T15:35:34.307606+00:00",
+  "seconds": 47.787471654999536,
+  "exit_code": 0,
+  "timed_out": false,
+  "suite_results": 97,
+  "passed": 314,
+  "failed": 0,
+  "ignored": 0,
+  "log_bytes": 45917,
+  "log_sha256": "fcde3ab302df023124a6be0e8c6b4c1bc763c1406de332d0438f297f52de7126",
+  "full_suite_status": "passed",
+  "runs_at_this_source": 1
+}

@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "remote_commit": "983e8dacf074a66d797e4419df912bc2b7911d83",
+  "remote_tree": "ed2bc4794dfc02231106163af9d5307eb85a2620",
+  "branch": "checkpoint/sol-seed-horizontal-contract-20261003",
+  "source": {
+    "source_commit": "cdb29dcee8e15ed95cb8c02fe9104ccf440953f3",
+    "source_tree": "08382b57d09909493d8a4416e7189f6bd8779253",
+    "changed_files": 7,
+    "tracked_files": 4735,
+    "patch_bytes": 8852,
+    "focused": {
+      "suites": 7,
+      "passed": 26,
+      "failed": 0,
+      "ignored": 0
+    },
+    "runtime_unchanged": true,
+    "original_checker_contexts": 356,
+    "fresh_restore": "passed",
+    "full_debug": "UNVERIFIED",
+    "full_release": "UNVERIFIED"
+  },
+  "artifact_readbacks_verified": 10,
+  "ancestor_blobs_preserved": 262,
+  "main_parent_full_refs_unchanged": true,
+  "verified_utc": "2026-10-03 15:29:33 UTC"
+}
