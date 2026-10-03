@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "runner_pid": 3151,
+  "started_utc": "2026-10-03T11:11:12.747465+00:00",
+  "source_root": "/workspace/audiveris-savedlatest-20261003",
+  "source_expected_tree": "170a81e817aef9d272f0212f7b53e8ce82529b1b",
+  "source_tree_before": "170a81e817aef9d272f0212f7b53e8ce82529b1b",
+  "source_clean_before": true,
+  "checks": [
+    {
+      "name": "debug",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T11:11:13.165918+00:00",
+      "log": "/workspace/audiveris-debug-check-20261003/debug.log",
+      "pid": 3166,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T11:16:14.440677+00:00",
+      "seconds": 301.27,
+      "test_summary": {
+        "suites": 80,
+        "passed": 267,
+        "failed": 0,
+        "ignored": 0
+      },
+      "failed_tests": []
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T11:16:14.441979+00:00",
+      "log": "/workspace/audiveris-debug-check-20261003/fmt.log",
+      "pid": 9884,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T11:16:14.907733+00:00",
+      "seconds": 0.47
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T11:16:14.908101+00:00",
+      "log": "/workspace/audiveris-debug-check-20261003/clippy.log",
+      "pid": 9887,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T11:16:23.583301+00:00",
+      "seconds": 8.67
+    }
+  ],
+  "release_checks": "not run",
+  "implementation_changes": "none",
+  "command_budget_seconds": 480,
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+  "elapsed_seconds": 310.86,
+  "source_tree_after": "170a81e817aef9d272f0212f7b53e8ce82529b1b",
+  "source_clean_after": true,
+  "source_unchanged": true,
+  "finished_utc": "2026-10-03T11:16:23.608074+00:00",
+  "completion_observed_utc": "2026-10-03T11:16:38.859128+00:00",
+  "terminal_process_state": "runner and cargo processes have exited; exec session 54507 exited 0",
+  "source_tree_verified_at_receipt": "170a81e817aef9d272f0212f7b53e8ce82529b1b",
+  "source_clean_at_receipt": true,
+  "log_sha256": {
+    "debug": "93ce1d79961c01388834609740b4d2a496b531975e8dbb366e6deed39ce5c992",
+    "fmt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "clippy": "8ca9b1e1c47ad2a555dacc21e6958225c656e5c212eb8f91f52604b0ec0eb5a7",
+    "runner": "7b2c7b43cc27e0475a695ae001835364a31434392172856c2939fd3f3548bee3",
+    "setup": "2db10983c3543532c4ec30f826b01ff6c42b9f593a36f7a497b23975c78a4786"
+  },
+  "receipt_scope": "Full workspace DEBUG only, fmt and all-targets Clippy. Release build/test not run. No full OMR completion claim."
+}
