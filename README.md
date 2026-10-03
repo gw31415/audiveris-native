@@ -1,12 +1,12 @@
 # Audiveris native recovery checkpoint
 
-This private repository preserves the base archive, cumulative implementation recovery artifacts and validation receipts. The current Rust implementation is reconstructed from the pinned recovery chain; it is not expanded into the repository root.
+This private repository preserves base archives, cumulative exact-source recovery bundles and validation receipts. The Rust implementation is reconstructed from the pinned chain; it is not expanded into the repository root.
 
-- Verified source commit: `7bc4213cea7ed27ee8355e319447dda3b9b7074f`
-- Exact source tree: `52ea03605e0a777a638c1fcb76e3ea7cb6259f64`; 4,752 tracked files, fresh restore verified.
-- Full debug and release: 321 tests passed across 100 suites per profile, zero failed or ignored. Each profile ran once at this source.
-- [Full validation manifest](checkpoints/sol-rest-horizontal-full-20261003/MANIFEST.json)
-- [Complete debug/release logs and receipts](checkpoints/sol-rest-horizontal-full-20261003/EVIDENCE.json)
-- [Pinned source recovery manifest](https://github.com/gw31415/audiveris-native/blob/9cbcc2db25d379272fe028c16daf39669e71f531/checkpoints/sol-rest-horizontal-20261003/MANIFEST.json)
+- Latest source: `d72ab86ee547c7b97d30948f2d37b657e90c8466`; tree `ded253713cd00b21b0c5b21839ac121c6296b6a6`, 4756 tracked files, fresh restore verified.
+- Current stage: certified non-crossing curved clip bounds for native rest mapping and header erasure; original quadratic/cubic bounds, staff selection and lag filtering matched.
+- Focused checks: 25 passed; area-library checks: 8 passed. Full suites are unverified at this new source.
+- Prior full baseline `7bc4213cea7ed27ee8355e319447dda3b9b7074f`: debug/release each passed 321 tests across 100 suites, zero failed/ignored, once each.
+- [Latest source/validation manifest](checkpoints/sol-curved-clipped-bounds-20261003/MANIFEST.json), including complete focused/original logs and four horizontal BEAMS.EPILOG receipts.
+- [Prior full validation](checkpoints/sol-rest-horizontal-full-20261003/MANIFEST.json).
 
-Four horizontal raster inputs reach the supported BEAMS.EPILOG boundary with zero rest conversions. Positive real-score rest conversion remains unproven; full OMR and MusicXML remain unfinished. Remaining dependencies include clipped curved system bounds, curved ledger paths/native ledger discovery and later LEDGERS/HEADS/stems/rhythm/MusicXML stages.
+Crossing/non-monotone clips remain unsupported. Positive real-score rest conversion is not demonstrated. Full OMR/MusicXML remain unfinished; native ledger discovery, curved ledger pitches and later LEDGERS/HEADS/stems/rhythm/MusicXML remain.
