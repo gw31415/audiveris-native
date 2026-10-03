@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "fixtures/official-grid/laura-gray.png",
+    "/workspace/audiveris-multisystem-area-check-20261003/multi-replay.pgm",
+    "/workspace/audiveris-multisystem-area-check-20261003/multi-replay.json"
+  ],
+  "seconds": 15.571659293000266,
+  "exit_code": 0,
+  "report_sha256": "2569e1638e512343d93c932b050879cec44793f2cf86fd22f399d6b40292f669",
+  "staff_count": 6,
+  "system_count": 2,
+  "last_completed_substage": "BEAMS.EPILOG",
+  "epilog_complete": true,
+  "rest_boundaries": [
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+    },
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+    }
+  ],
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false,
+  "replay_identical": true
+}

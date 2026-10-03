@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "source_commit": "9eb7204738b237ae90cf41ad59dd267c0dc53574",
+  "source_tree": "c11dafe9149b50ced9cd17706503a6e7f8755228",
+  "parent_source_commit": "8eea39cfa34efb45cc0ef503e9e1f4a925484203",
+  "parent_source_tree": "3b62d077e84403137e51252b5713834f43c7123e",
+  "tracked_files": 4704,
+  "changed_hashes_verified": 7,
+  "all_fresh_restored_file_hashes_verified": 4704,
+  "source_clean": true,
+  "verified_utc": "2026-10-03T14:32:15.331759+00:00"
+}

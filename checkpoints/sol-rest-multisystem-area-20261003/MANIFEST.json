@@ -1,0 +1,189 @@
+{
+  "branch": "checkpoint/sol-rest-multisystem-area-20261003",
+  "parent_checkpoint_commit": "739db5f9248c34dd283eccae27ccfb5f377e2cd3",
+  "parent_implementation_commit": "8eea39cfa34efb45cc0ef503e9e1f4a925484203",
+  "parent_implementation_tree": "3b62d077e84403137e51252b5713834f43c7123e",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/739db5f9248c34dd283eccae27ccfb5f377e2cd3/checkpoints/sol-rest-multistaff-area-20261003/MANIFEST.json",
+  "local_implementation_commit": "9eb7204738b237ae90cf41ad59dd267c0dc53574",
+  "local_implementation_tree": "c11dafe9149b50ced9cd17706503a6e7f8755228",
+  "changed_files_from_parent": [
+    "crates/audiveris-area/src/lib.rs",
+    "docs/REST-MULTISYSTEM-AREAS.md",
+    "fixtures/official-multisystem-area.json",
+    "scripts/java/MultiSystemAreaControlProbe.java",
+    "src/beams_pipeline.rs",
+    "src/native_rest_mapping.rs",
+    "tests/native_rest_mapping.rs"
+  ],
+  "file_sha256": {
+    "crates/audiveris-area/src/lib.rs": "14a3543e7a53ed70bac3032ca68fffe11229053fdc40c08a469d998d6d39fecb",
+    "docs/REST-MULTISYSTEM-AREAS.md": "5a298f051006dac3b9334afd633083516f408f507a83eb662de630fcb79e3cbe",
+    "fixtures/official-multisystem-area.json": "bb2d3650b882e92b85a47d77e2549bec1785080580e127f54e85c7b938b67c7c",
+    "scripts/java/MultiSystemAreaControlProbe.java": "ded6400d57cc1537393ccd74eda135b27cd2b98ce07146bc06e24296d212f035",
+    "src/beams_pipeline.rs": "3d92a55844cce49ba8f8de9474f53e0a25251267e2898dc321ad01841dc7f297",
+    "src/native_rest_mapping.rs": "0ab3f37a0837e364f1d7002bce7e9b04a069f3994ac113a9bbf56d5c9c87f86c",
+    "tests/native_rest_mapping.rs": "45165a813ff892d22ab478f65d5d25d151f6b3fe3693e6b42c3e4284b8caebc3"
+  },
+  "tracked_files": 4704,
+  "patch": {
+    "path": "checkpoints/sol-rest-multisystem-area-20261003/changes.patch",
+    "bytes": 40954,
+    "sha256": "190d2dafce8b246aa48c5162248891a10812ead61b9485e89b9115c60a0fb927"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-rest-multisystem-area-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "focused": {
+      "suites": 7,
+      "passed": 27,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "full_debug": "UNVERIFIED at new source",
+    "full_release": "UNVERIFIED at new source",
+    "scope": "Original global staff/system areas and per-system selection from real scanned original GRID curves; 324 selection controls plus section-rectangle intersections; actual scanned CLI boundary/replay recorded without positive-rest claim",
+    "original_controls": {
+      "exit_code": 0,
+      "cases": 324,
+      "positive_staff_selections": 98,
+      "no_staff_results": 226,
+      "native_outputs_used": false,
+      "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "fixture_sha256": "bb2d3650b882e92b85a47d77e2549bec1785080580e127f54e85c7b938b67c7c",
+      "observer_sha256": "ded6400d57cc1537393ccd74eda135b27cd2b98ce07146bc06e24296d212f035",
+      "original_grid_source_fixture_sha256": "806950f773b4d7bfc2b98d9c017097ba79f0831337414dfca45547283c5d2589",
+      "scope": "Unmodified StaffManager/SystemManager areas and SystemInfo selection, independently observed original Laura GRID curves; supplied section rectangles; not positive raster rest recognition",
+      "system_bounds": [
+        [
+          0,
+          0,
+          1489,
+          876
+        ],
+        [
+          0,
+          692,
+          1489,
+          1412
+        ]
+      ]
+    },
+    "prior_full_regression": {
+      "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+      "remote_commit": "deec43364e2b6b348cca4b38f798f534c8bd1925",
+      "debug": 297,
+      "release": 297,
+      "suites_each": 94
+    },
+    "cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/beams-single.png",
+        "/workspace/audiveris-multisystem-area-check-20261003/cli.pgm",
+        "/workspace/audiveris-multisystem-area-check-20261003/cli.json"
+      ],
+      "seconds": 1.4722530350009038,
+      "exit_code": 0,
+      "report_sha256": "ada8b14c95aefa084183a7dc0f0d5ae2653ddc9022b196a127dd50829c6ee512",
+      "staff_count": 1,
+      "system_count": 1,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "multi_staff_cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/laura-gray.png",
+        "/workspace/audiveris-multisystem-area-check-20261003/multi-cli.pgm",
+        "/workspace/audiveris-multisystem-area-check-20261003/multi-cli.json"
+      ],
+      "seconds": 15.11428513499959,
+      "exit_code": 0,
+      "report_sha256": "2569e1638e512343d93c932b050879cec44793f2cf86fd22f399d6b40292f669",
+      "staff_count": 6,
+      "system_count": 2,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        },
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "multi_staff_cli_replay": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/laura-gray.png",
+        "/workspace/audiveris-multisystem-area-check-20261003/multi-replay.pgm",
+        "/workspace/audiveris-multisystem-area-check-20261003/multi-replay.json"
+      ],
+      "seconds": 15.571659293000266,
+      "exit_code": 0,
+      "report_sha256": "2569e1638e512343d93c932b050879cec44793f2cf86fd22f399d6b40292f669",
+      "staff_count": 6,
+      "system_count": 2,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        },
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "full-width systems with a common-overlap vertical five-line staff column; global original staff areas and per-system selection; system-bounds lag intersections and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false,
+      "replay_identical": true
+    },
+    "prior_empty_ledger_original_controls": 21,
+    "prior_supplied_straight_ledger_controls": 220,
+    "prior_multistaff_area_controls": 252,
+    "existing_original_conversion_controls": {
+      "positive_synthetic": 6,
+      "negative_synthetic": 5
+    },
+    "positive_real_score_rest": "not demonstrated",
+    "full_OMR": "unfinished"
+  },
+  "recovery": [
+    "Restore exact parent source with immutable source_recovery_manifest_url and prior chain.",
+    "Verify patch byte count/hash then git apply --check and git apply --index.",
+    "Verify git write-tree and every changed file hash.",
+    "Write raw implementation commit using git hash-object -t commit -w --stdin; verify exact source commit and attach a new isolated local branch.",
+    "Verify clean source and tracked count."
+  ],
+  "full_OMR": "unfinished"
+}
