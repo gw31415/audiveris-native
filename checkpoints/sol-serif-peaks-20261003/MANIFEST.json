@@ -1,0 +1,97 @@
+{
+  "schema": 10,
+  "branch": "checkpoint/sol-serif-peaks-20261003-125300",
+  "parent_checkpoint_commit": "c10a2350c25431629148744cc46534309d0d668d",
+  "parent_implementation_commit": "67c4f6ffa735b6244625097b2e4d3427e2a03bed",
+  "parent_implementation_tree": "5a13c10acb9cd1f16e3d0a72f3f9b2231f0fdc61",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/c10a2350c25431629148744cc46534309d0d668d/checkpoints/sol-serif-raster-wip-20261003/MANIFEST.json",
+  "local_implementation_commit": "62d6443f846c5c9ec58ef99cfd38727d8510278b",
+  "local_implementation_tree": "825160bfe11119386ae97578421df721fa785f29",
+  "changed_files_from_parent": [
+    "docs/SERIF-PEAKS.md",
+    "evidence/serif-peaks-checkpoint/AreaUtil.javap.txt",
+    "evidence/serif-peaks-checkpoint/StaffProjector-Constants.javap.txt",
+    "evidence/serif-peaks-checkpoint/StaffProjector.javap.txt",
+    "evidence/serif-peaks-checkpoint/clippy-first.log",
+    "evidence/serif-peaks-checkpoint/clippy.log",
+    "evidence/serif-peaks-checkpoint/fmt.log",
+    "evidence/serif-peaks-checkpoint/focused.log",
+    "evidence/serif-peaks-checkpoint/unchanged-original-commands.json",
+    "evidence/serif-peaks-checkpoint/unchanged-original-inputs.json",
+    "evidence/serif-peaks-checkpoint/unchanged-original-provenance.json",
+    "evidence/serif-peaks-checkpoint/validation.json",
+    "src/lib.rs",
+    "src/serif_peaks.rs",
+    "tests/serif_peaks.rs"
+  ],
+  "file_sha256": {
+    "docs/SERIF-PEAKS.md": "d724595bef74160bcf94b1b68cc82f48d0a39a8e5e5137d8db576562bb0eee88",
+    "evidence/serif-peaks-checkpoint/AreaUtil.javap.txt": "f84d10eedfcd3a6679cf40b0a021494741315d8acfff059631f899bb693a7dca",
+    "evidence/serif-peaks-checkpoint/StaffProjector-Constants.javap.txt": "6813142848b825471e200b41d83efff6932e67bd00d89f32923ac3108fae1b10",
+    "evidence/serif-peaks-checkpoint/StaffProjector.javap.txt": "972e68777f7bf09292e513c297d2f9d54b9e48301b571e08252c1e2ff8c3181c",
+    "evidence/serif-peaks-checkpoint/clippy-first.log": "9e8f2107c096b846e81104a64499325dce4634f693b8a8053b03c2ca7a83a98f",
+    "evidence/serif-peaks-checkpoint/clippy.log": "86c16de044b9ff0b910b567f93e731ee413ee3ac1f52f3037345b25202e86668",
+    "evidence/serif-peaks-checkpoint/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/serif-peaks-checkpoint/focused.log": "0e17b1988a8476f9676d6a122766ae2ee1713978196595e9a68ff61f7582aa7e",
+    "evidence/serif-peaks-checkpoint/unchanged-original-commands.json": "683cbcd376449c8fb19b1e15b9e1e0b2eca7a3609f52897d7f72ea5eb9010a2e",
+    "evidence/serif-peaks-checkpoint/unchanged-original-inputs.json": "bf58dd0845e8af30aad8a7f43a8c605ad1cd6a8c11d3a73724f0f6bf1d63ef3f",
+    "evidence/serif-peaks-checkpoint/unchanged-original-provenance.json": "675ecb9c303d0207f26a0fb6b3737e059142ffed94a1d05ee976f47329a76c84",
+    "evidence/serif-peaks-checkpoint/validation.json": "73bcfb082c0c4a280be80f8f79596d2d2450519b2e1f66038497a7bdd0c20cc5",
+    "src/lib.rs": "a66b2bb1999579fc9395fe34bb6b8d8dfa8ac9d417f3297f6e722a191a6c98ae",
+    "src/serif_peaks.rs": "b0792d8e5925e8abd93c8469784bd6fd528ef0f7b6aa04eaa458adb563163cf0",
+    "tests/serif_peaks.rs": "b284225491c4e2ac7bb8f87e234525b5536de8ecbe3aceee1b7d6cebb974868a"
+  },
+  "tracked_files": 4592,
+  "dirty_files": [],
+  "patch": {
+    "path": "checkpoints/sol-serif-peaks-20261003/changes.patch",
+    "bytes": 190863,
+    "sha256": "00ae2fb25438c1bdf7dc7540109949c5d1c54902efb2ed2ea1017f2248facc87"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-serif-peaks-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "status": "passed",
+    "scope": "Native serif peak refinement/grade acceptance matches 75 synthetic controls; rest conversion UNFINISHED",
+    "focused_tests": {
+      "suites": 3,
+      "passed": 6,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "original_controls": {
+      "native_outputs_used": false,
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "cases": 75,
+      "accepted_serif_peaks": 42,
+      "runtime_excludes_compile_shims": true,
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "positive_original_serif_peaks": 42,
+      "native_final_peak_acceptance": "42 peaks in 41 positive cases, 34 negative cases matched",
+      "rest_conversions": "not implemented",
+      "real_score_acceptance": "not measured",
+      "staff_measurements": "actual staff integer ordinates and thickness; supplied synthetic pixels",
+      "observer_sha256": "56566e209ba59a911a1e17fc32877d33fe11ca12fad388d5f3b074113b299d1f",
+      "fixture_sha256": "70eacedd951b63d8c102d1c7546f5f817d75c144bbc01548a1c8644b378ececf"
+    },
+    "current_full_workspace": "UNVERIFIED; deferred batch regression",
+    "previous_full_workspace": {
+      "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+      "debug": 275,
+      "release": 275,
+      "checkpoint_commit": "0bdac35f8bd1509a76904ac3b8736fc03dd6838b"
+    },
+    "native_staff_association_and_pitch": "not integrated",
+    "positive_rest_recognition": "not implemented",
+    "thirteen_image_rest_boundary": "not run"
+  },
+  "recovery": [
+    "Restore exact prior raster implementation using its immutable manifest and archive/late-hook/group/admission/raster-patch dependencies. Verify parent commit 67c4f6ffa735b6244625097b2e4d3427e2a03bed and tree 5a13c10acb9cd1f16e3d0a72f3f9b2231f0fdc61.",
+    "Verify this changes.patch bytes and SHA256; git apply --check, then git apply --index.",
+    "Verify git write-tree equals local_implementation_tree and every file_sha256 entry.",
+    "git hash-object -t commit -w IMPLEMENTATION-COMMIT.txt must equal local_implementation_commit.",
+    "Attach HEAD to a new local branch at that commit. Verify clean status and tracked_files count."
+  ],
+  "full_OMR": "unfinished"
+}
