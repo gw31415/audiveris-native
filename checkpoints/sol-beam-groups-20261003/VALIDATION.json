@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-03T12:25:31.484719+00:00",
+  "focused_tests": {
+    "suites": 2,
+    "passed": 3,
+    "failed": 0,
+    "ignored": 0
+  },
+  "fmt": "passed",
+  "workspace_all_targets_clippy": "passed",
+  "original": {
+    "native_outputs_used": false,
+    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "cases": 103,
+    "groups": 174,
+    "runtime_excludes_compile_shims": true,
+    "original_images": 13,
+    "original_image_groups_added": 15,
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "observer_sha256": {
+      "BeamGroupsProbe.java": "149c22caf15073619f8dd5234c7f77fba8713a3a17e6c236d784dcbc5e94da7b",
+      "BeamGroupsControlProbe.java": "a652b0291c6580605e5e51c4f38b70e692baadaa55fee4e95b2518780d959749"
+    },
+    "fixture_sha256": {
+      "beams-split.json": "498a2eaa1f76c46dce4715841536ffebcc820081e3742e2e0e2c27d12fe6b783",
+      "beams-hook.json": "f500580ce52c087a78e8318cd536282bb7a21f9b0b36851bc8feb2b6a220bdbe",
+      "beams-steep.json": "d934924fff09e14699d841227b48ea70af0b3e98e56b4a5f473f21acc4c3ae6e",
+      "beams-single.json": "b3c07efebde228fffc04e11c8cc181b527e31b94c37bce97efa1e0f0a46d05eb",
+      "beams-thin.json": "d934924fff09e14699d841227b48ea70af0b3e98e56b4a5f473f21acc4c3ae6e",
+      "beams-empty.json": "d934924fff09e14699d841227b48ea70af0b3e98e56b4a5f473f21acc4c3ae6e",
+      "beams-heads-only.json": "d934924fff09e14699d841227b48ea70af0b3e98e56b4a5f473f21acc4c3ae6e",
+      "beams-noise.json": "d934924fff09e14699d841227b48ea70af0b3e98e56b4a5f473f21acc4c3ae6e",
+      "beams-sloped.json": "01a106b91c239dcbbebd05f25249f85d76a4426d7bcfbc29d49aec45e50e4110",
+      "beams-short.json": "d934924fff09e14699d841227b48ea70af0b3e98e56b4a5f473f21acc4c3ae6e",
+      "beams-double.json": "094b2db0d8bf1a1766183cdb9ab39c3de71f5bcef0e4e4b35c8f337e32038bf4",
+      "beams-triple.json": "c174032090e1c5aa7d02b1a59a470df63f30f80508ce60c9d846a1784f879a5a",
+      "laura-gray.json": "56201b2ceb31b453e396cc5f8f50d5efec9a2384907416d1316d8acdbff50678"
+    }
+  },
+  "current_full_workspace": "UNVERIFIED",
+  "previous_full_workspace": {
+    "implementation_tree": "170a81e817aef9d272f0212f7b53e8ce82529b1b",
+    "debug_passed": 267,
+    "release_passed": 267,
+    "checkpoint_commit": "1fc033e9eede72b53d78c425617271ee09a8e814"
+  },
+  "scope": "Beam group formation after late hooks; rests/epilog/CLI/full OMR unfinished"
+}
