@@ -9,3 +9,5 @@ Exact original Linux TemplateFactory catalogs for Bravura/Leland/FinaleJazz at 3
 Restore: `python checkpoints/sol-head-font-coverage-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 5079 source hashes, plus all 499 archival files and archival tree. Saved remote commit `cbed00a7255bab07a7cdd5d8c2c3b6603b37495e`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.

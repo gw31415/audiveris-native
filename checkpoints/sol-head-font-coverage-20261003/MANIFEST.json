@@ -616,6 +616,120 @@
       "source_clean": true,
       "source": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-prepush/artifacts/audiveris-source",
       "source_git": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-prepush/source-git"
+    },
+    "remote_fresh_restore": {
+      "status": "passed",
+      "source_commit": "63ea0d7bfde1f6371806138d5b8fcec6e359294f",
+      "source_tree": "91b718cecb5f519b1bf7d0e26d161b0d8ff85546",
+      "all_fresh_restored_sha256_verified": 5079,
+      "source_clean": true,
+      "source": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-remote-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-remote-restore/source-git",
+      "recorded_utc": "2026-10-03T23:28:49.109901+00:00",
+      "remote_main_verified": "cbed00a7255bab07a7cdd5d8c2c3b6603b37495e",
+      "archival_repository_tree": "4f51a4e398387558541433ed6cb1ad2490ec3575",
+      "fresh_remote_clone": true,
+      "all_archival_files_sha256_verified": 499,
+      "recovered_from_remote_archives_and_pinned_chain": true,
+      "recovered_native_cli_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+      "recovered_cli_oracle_comparison": {
+        "status": "passed",
+        "exact_templates": 48,
+        "original_rendered_images": 192,
+        "range_comparisons": 384,
+        "physical_glyph_comparisons": 192,
+        "fonts": [
+          "Bravura",
+          "Leland",
+          "FinaleJazz"
+        ],
+        "point_sizes": [
+          32,
+          40,
+          51,
+          64
+        ],
+        "heads_complete": false,
+        "page_font_or_special_staff_parity_claimed": false,
+        "preserved_staff_dependency": {
+          "status": "passed",
+          "staff_dependency_controls": 8,
+          "live_physical_scanners": 118,
+          "heads_complete": false,
+          "shared_phase_refresh_guards_verified": true,
+          "certified_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+          "preserved_registration": {
+            "status": "passed",
+            "heads": 352,
+            "duplicate_removals": 22,
+            "HEADS_exclusions": 513,
+            "staff_note_counts": [
+              44,
+              58,
+              48,
+              56,
+              112,
+              34
+            ],
+            "small_beams_contextualized": 3,
+            "purge_controls": 40,
+            "beam_context_controls": 7,
+            "small_beam_controls": 9,
+            "seed_tally_controls": 4,
+            "heads_complete": false,
+            "prior_shared_ids_and_edges_preserved": true,
+            "preserved_glyphs": {
+              "status": "passed",
+              "range_scanners": 118,
+              "seed_glyphs": 358,
+              "seed_conflicts": 438,
+              "range_glyphs": 16,
+              "foreground_controls": 16,
+              "heads_complete": false,
+              "preserved_filter": {
+                "status": "passed",
+                "range_scanners": 118,
+                "aggregates": 454,
+                "seed_conflict_controls": 21,
+                "live_seed_conflicts_complete": false,
+                "heads_complete": false,
+                "preserved_catalog": {
+                  "status": "passed",
+                  "range_scanners": 118,
+                  "accepted_candidates": 2224,
+                  "weak_stemless_rejected": 407,
+                  "raw_candidates": 2631,
+                  "accepted_stemless": {
+                    "WHOLE_NOTE": 3
+                  },
+                  "preserved_prefix": {
+                    "status": "passed",
+                    "raw_seed_proposals": 418,
+                    "veto_seed_proposals": 358,
+                    "head_spot_system_references": 402,
+                    "range_scanners": 118,
+                    "visited_abscissae": 47790,
+                    "skipped_windows": 869,
+                    "black_void_prefix_proposals": 2221,
+                    "heads_complete": false,
+                    "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+                    "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                  },
+                  "heads_complete": false,
+                  "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+                  "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                },
+                "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+              },
+              "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+            },
+            "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+          },
+          "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+        }
+      },
+      "saved_full_workspace_passed": 371,
+      "tests_rerun_on_recovered_source": false
     }
   },
   "implemented_scope": "Exact original Linux TemplateFactory catalogs for Bravura/Leland/FinaleJazz at 32/40/51/64pt; 48 templates, four ordinary head shapes including whole/breve. Shared range and physical glyph kernels accept an explicit exact point-size catalog. Original Scanner evaluation/hole conversion/weak-stemless/constructor gates match on 384 empty-veto range controls, and physical glyph retrieval matches on 192 clean/erased/clipped/empty rendered images. Missing font/size/shape is explicit; historical builtin Bravura51 and certified page orchestration remain unchanged. This certifies kernels, not full-page other-font/special-staff parity. Laura original 352 heads/513 exclusions, previous reports, staff propagation and shared SIG remain preserved; heads_complete=false.",
@@ -630,6 +744,7 @@
   "evidence_log_storage": "Log copies normalize trailing whitespace; originals remain in the existing task workspace.",
   "evidence_sha256": {
     "evidence/PREPUSH-RESTORE.json": "f23a5ff1f54222e8ec350f068c118275ac08c1c61fe4fb153b8beadb6b95b61b",
+    "evidence/REMOTE-READBACK.json": "cd1c1db9757f5726230a864dfa08c3fdc12da093c554e6720f4de4818cbf9a81",
     "evidence/bank-focused-tests.log": "061fe19758bd58cbc47c5d6ad62d4715a18d3b6c43e168fe609a26e7e5ebba51",
     "evidence/bundle-verify.log": "bdf97cc728189690ee71c08c0d77db24f92adeb43c490d12ec43e747fe36275f",
     "evidence/clippy.log": "56377c17d820a08e4758f9627a6ac7f815eca24a10c337528759e9ede0bf1bf1",
