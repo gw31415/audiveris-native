@@ -1,0 +1,89 @@
+{
+  "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+  "source_checkpoint_commit": "dfc92629df63532d8726935e5f4f5ca784a62204",
+  "status": "passed",
+  "runner_pid": 22681,
+  "started_utc": "2026-10-03T12:27:57.216713+00:00",
+  "source_root": "/workspace/audiveris-savedlatest-20261003",
+  "source_expected_tree": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_tree_before": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_clean_before": true,
+  "checks": [
+    {
+      "name": "debug",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:27:57.900815+00:00",
+      "log": "/workspace/audiveris-groups-debug-check-20261003/debug.log",
+      "pid": 22709,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:33:49.023213+00:00",
+      "seconds": 351.12,
+      "test_summary": {
+        "suites": 85,
+        "passed": 275,
+        "failed": 0,
+        "ignored": 0
+      },
+      "failed_tests": []
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:33:49.024843+00:00",
+      "log": "/workspace/audiveris-groups-debug-check-20261003/fmt.log",
+      "pid": 27589,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:33:49.540870+00:00",
+      "seconds": 0.52
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "status": "passed",
+      "started_utc": "2026-10-03T12:33:49.541288+00:00",
+      "log": "/workspace/audiveris-groups-debug-check-20261003/clippy.log",
+      "pid": 27592,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T12:33:49.657144+00:00",
+      "seconds": 0.12
+    }
+  ],
+  "release_checks": "not run",
+  "implementation_changes": "none",
+  "command_budget_seconds": 480,
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+  "elapsed_seconds": 352.96,
+  "source_tree_after": "b19d73263e6da118b5c3acbece8d5e90f9ea8d83",
+  "source_clean_after": true,
+  "source_unchanged": true,
+  "finished_utc": "2026-10-03T12:33:50.173204+00:00"
+}
