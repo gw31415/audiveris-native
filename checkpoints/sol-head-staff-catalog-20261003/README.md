@@ -9,3 +9,5 @@ Original staff-line Scanner ordering, one-line three-pitch/no-ledger contract, d
 Restore: `python checkpoints/sol-head-staff-catalog-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 5090 source hashes, plus all 519 archival files and archival tree. Saved remote commit `88989355317587d98f92cad6d45024ffbbbb6065`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
