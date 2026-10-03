@@ -1,0 +1,169 @@
+{
+  "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+  "source_tree": "de96cd18a3a6f8f3d5d2ee04010485650c7db0c9",
+  "parent_source_checkpoint": "d6808c232e1c5342aa52b343645a9df799be9380",
+  "branch": "checkpoint/sol-epilog-contract-full-20261003",
+  "regression": {
+    "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+    "source_tree": "de96cd18a3a6f8f3d5d2ee04010485650c7db0c9",
+    "tracked_files": 4692,
+    "started_utc": "2026-10-03T13:53:28.477998+00:00",
+    "runner_pid": 59125,
+    "source_unchanged": true,
+    "batches": [
+      {
+        "profile": "debug",
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--offline",
+          "-j",
+          "2",
+          "--workspace",
+          "--no-fail-fast"
+        ],
+        "started_utc": "2026-10-03T13:53:28.665183+00:00",
+        "status": "passed",
+        "log": "/workspace/audiveris-epilog-contract-check-20261003/debug.log",
+        "pid": 59226,
+        "exit_code": 0,
+        "finished_utc": "2026-10-03T13:59:13.946105+00:00",
+        "elapsed_seconds": 345.28016549099993,
+        "log_sha256": "f74f6675b84b11680b9440b855c49042a5144ae41b18749080d85b54cf592948",
+        "counts": {
+          "suites": 94,
+          "passed": 297,
+          "failed": 0,
+          "ignored": 0
+        }
+      },
+      {
+        "profile": "release",
+        "command": [
+          "cargo",
+          "test",
+          "--release",
+          "--locked",
+          "--offline",
+          "-j",
+          "2",
+          "--workspace",
+          "--no-fail-fast"
+        ],
+        "started_utc": "2026-10-03T13:59:14.333370+00:00",
+        "status": "passed",
+        "log": "/workspace/audiveris-epilog-contract-check-20261003/release.log",
+        "pid": 59809,
+        "exit_code": 0,
+        "finished_utc": "2026-10-03T14:00:01.647419+00:00",
+        "elapsed_seconds": 47.31323090399928,
+        "log_sha256": "b99e3a7f2c182caca9ed389bcbae20beb64ae0d3ed0174096592773392bd291d",
+        "counts": {
+          "suites": 94,
+          "passed": 297,
+          "failed": 0,
+          "ignored": 0
+        }
+      }
+    ],
+    "finished_utc": "2026-10-03T14:00:01.825634+00:00",
+    "status": "passed"
+  },
+  "full_all_suites_status": "passed",
+  "profiles_each_invoked_once": true,
+  "no_fail_fast": true,
+  "source_changes_during_full_regression": false,
+  "fresh_source_verification": {
+    "status": "passed",
+    "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+    "source_tree": "de96cd18a3a6f8f3d5d2ee04010485650c7db0c9",
+    "tracked_files": 4692,
+    "all_source_hashes_match_before_after": true,
+    "all_fresh_restore_file_hashes_verified": 4692,
+    "source_clean": true,
+    "verified_utc": "2026-10-03T14:00:10.170978+00:00",
+    "source_recovery_checkpoint": "d6808c232e1c5342aa52b343645a9df799be9380",
+    "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/d6808c232e1c5342aa52b343645a9df799be9380/checkpoints/sol-epilog-contract-20261003/MANIFEST.json"
+  },
+  "cli": {
+    "status": "passed",
+    "profiles": {
+      "debug": {
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+          "beam-spots",
+          "fixtures/official-grid/beams-single.png",
+          "/workspace/audiveris-epilog-contract-check-20261003/cli-debug.pgm",
+          "/workspace/audiveris-epilog-contract-check-20261003/cli-debug.json"
+        ],
+        "empty_environment": true,
+        "PATH": "/nonexistent",
+        "report_sha256": "986174b1d30fe26712778220bab1377d260ef5ade6e3bd671f4d9ca708b8a64c",
+        "identical_to_epilog_source_checkpoint_report": true,
+        "last_completed_substage": "BEAMS.EPILOG"
+      },
+      "release": {
+        "command": [
+          "/workspace/audiveris-debug-check-20261003/target/release/audiveris-native",
+          "beam-spots",
+          "fixtures/official-grid/beams-single.png",
+          "/workspace/audiveris-epilog-contract-check-20261003/cli-release.pgm",
+          "/workspace/audiveris-epilog-contract-check-20261003/cli-release.json"
+        ],
+        "empty_environment": true,
+        "PATH": "/nonexistent",
+        "report_sha256": "986174b1d30fe26712778220bab1377d260ef5ade6e3bd671f4d9ca708b8a64c",
+        "identical_to_epilog_source_checkpoint_report": true,
+        "last_completed_substage": "BEAMS.EPILOG"
+      }
+    },
+    "shared_graph_vertices": 3,
+    "shared_graph_relations": 1,
+    "ids_unique_and_endpoints_live": true,
+    "same_graph_as_pre_epilog_parent": true,
+    "epilog_final_registry_count": 11,
+    "removed_free_glyphs": 6,
+    "musicxml_complete": false,
+    "positive_real_score_rest": "not demonstrated"
+  },
+  "files": {
+    "STATE.json": {
+      "bytes": 1820,
+      "sha256": "98b55fcfa09eddf58762f2864add0e05b9c36b506df910ab5b25855b6273905c"
+    },
+    "debug.log": {
+      "bytes": 43716,
+      "sha256": "f74f6675b84b11680b9440b855c49042a5144ae41b18749080d85b54cf592948"
+    },
+    "release.log": {
+      "bytes": 43948,
+      "sha256": "b99e3a7f2c182caca9ed389bcbae20beb64ae0d3ed0174096592773392bd291d"
+    },
+    "SOURCE-HASHES.json": {
+      "bytes": 701721,
+      "sha256": "f871360bda5c207dc566a367dfc83478174bd0ad0e1adfe9887770a1d91fa395"
+    },
+    "FINAL-SOURCE-VERIFICATION.json": {
+      "bytes": 607,
+      "sha256": "cd8131b0831839f5a167e08e5285d1dce58a63b15c06d71c160d69a931474458"
+    },
+    "FINAL-CLI-VERIFICATION.json": {
+      "bytes": 1586,
+      "sha256": "428f533f568c2ed6b7a872f8bcf4885b3388ea5a70e1579cf3c7e54253ed7e25"
+    },
+    "cli-debug.log": {
+      "bytes": 131,
+      "sha256": "7b73c74a18522f9d94d917b5e33419bec5a88cafcd243b3a19aed0bc4fbc8411"
+    },
+    "cli-release.log": {
+      "bytes": 131,
+      "sha256": "7b73c74a18522f9d94d917b5e33419bec5a88cafcd243b3a19aed0bc4fbc8411"
+    }
+  },
+  "limits": [
+    "multi-staff/ledger rest mapping unsupported",
+    "positive real-score rest conversion not demonstrated",
+    "full OMR/MusicXML unfinished"
+  ]
+}

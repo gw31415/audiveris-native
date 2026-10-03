@@ -1,0 +1,67 @@
+{
+  "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+  "source_tree": "de96cd18a3a6f8f3d5d2ee04010485650c7db0c9",
+  "tracked_files": 4692,
+  "started_utc": "2026-10-03T13:53:28.477998+00:00",
+  "runner_pid": 59125,
+  "source_unchanged": true,
+  "batches": [
+    {
+      "profile": "debug",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--workspace",
+        "--no-fail-fast"
+      ],
+      "started_utc": "2026-10-03T13:53:28.665183+00:00",
+      "status": "passed",
+      "log": "/workspace/audiveris-epilog-contract-check-20261003/debug.log",
+      "pid": 59226,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T13:59:13.946105+00:00",
+      "elapsed_seconds": 345.28016549099993,
+      "log_sha256": "f74f6675b84b11680b9440b855c49042a5144ae41b18749080d85b54cf592948",
+      "counts": {
+        "suites": 94,
+        "passed": 297,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "profile": "release",
+      "command": [
+        "cargo",
+        "test",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--workspace",
+        "--no-fail-fast"
+      ],
+      "started_utc": "2026-10-03T13:59:14.333370+00:00",
+      "status": "passed",
+      "log": "/workspace/audiveris-epilog-contract-check-20261003/release.log",
+      "pid": 59809,
+      "exit_code": 0,
+      "finished_utc": "2026-10-03T14:00:01.647419+00:00",
+      "elapsed_seconds": 47.31323090399928,
+      "log_sha256": "b99e3a7f2c182caca9ed389bcbae20beb64ae0d3ed0174096592773392bd291d",
+      "counts": {
+        "suites": 94,
+        "passed": 297,
+        "failed": 0,
+        "ignored": 0
+      }
+    }
+  ],
+  "finished_utc": "2026-10-03T14:00:01.825634+00:00",
+  "status": "passed"
+}

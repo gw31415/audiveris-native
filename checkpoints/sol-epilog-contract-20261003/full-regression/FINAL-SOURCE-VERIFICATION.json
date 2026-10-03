@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+  "source_tree": "de96cd18a3a6f8f3d5d2ee04010485650c7db0c9",
+  "tracked_files": 4692,
+  "all_source_hashes_match_before_after": true,
+  "all_fresh_restore_file_hashes_verified": 4692,
+  "source_clean": true,
+  "verified_utc": "2026-10-03T14:00:10.170978+00:00",
+  "source_recovery_checkpoint": "d6808c232e1c5342aa52b343645a9df799be9380",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/d6808c232e1c5342aa52b343645a9df799be9380/checkpoints/sol-epilog-contract-20261003/MANIFEST.json"
+}
