@@ -1,0 +1,66 @@
+{
+  "source_commit": "019ed5dac34d43877c4ba4218ff212e4be32955b",
+  "source_tree": "db3adf6d28c87f852fdc8e39850d6adc9d2c500f",
+  "tracked_files": 4692,
+  "started_utc": "2026-10-03T13:44:39.324435+00:00",
+  "runner_pid": 51228,
+  "source_unchanged": true,
+  "batches": [
+    {
+      "profile": "debug",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--workspace"
+      ],
+      "started_utc": "2026-10-03T13:44:39.508563+00:00",
+      "status": "failed",
+      "log": "/workspace/audiveris-epilog-regression-20261003/debug.log",
+      "pid": 51257,
+      "exit_code": 101,
+      "finished_utc": "2026-10-03T13:46:25.443764+00:00",
+      "elapsed_seconds": 105.93438339400018,
+      "log_sha256": "bf73d666b13e144a3d77fe33527e14ea9ef3f6252dd4af6343c8447bc3537e54",
+      "counts": {
+        "suites": 30,
+        "passed": 137,
+        "failed": 1,
+        "ignored": 0
+      }
+    },
+    {
+      "profile": "release",
+      "command": [
+        "cargo",
+        "test",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--workspace"
+      ],
+      "started_utc": "2026-10-03T13:46:47.622388+00:00",
+      "status": "failed",
+      "log": "/workspace/audiveris-epilog-regression-20261003/release.log",
+      "pid": 56278,
+      "exit_code": 101,
+      "finished_utc": "2026-10-03T13:48:28.131057+00:00",
+      "elapsed_seconds": 100.50762599100017,
+      "log_sha256": "91ef1de2713fd8a9a6b171e170102b21c682fe07acf8753e9edeacd7d5d96b4a",
+      "counts": {
+        "suites": 30,
+        "passed": 137,
+        "failed": 1,
+        "ignored": 0
+      }
+    }
+  ],
+  "status": "failed",
+  "release_runner_pid": 56248,
+  "finished_utc": "2026-10-03T13:48:28.314377+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "source_commit": "019ed5dac34d43877c4ba4218ff212e4be32955b",
+  "source_tree": "db3adf6d28c87f852fdc8e39850d6adc9d2c500f",
+  "verified_utc": "2026-10-03T13:46:12.194754+00:00",
+  "report_sha256": "986174b1d30fe26712778220bab1377d260ef5ade6e3bd671f4d9ca708b8a64c",
+  "identical_to_checkpoint_report": true,
+  "epilog_removed_exclusive_free_references_only": true,
+  "final_registry_glyph_count": 11,
+  "prolog_registry_glyph_count": 10,
+  "new_beam_glyph_ids": [
+    11
+  ],
+  "registry_snapshot_limit": "report has initial prolog registry, final count and registered beam ID; final registry object snapshot not emitted",
+  "removed_free_glyphs": 6,
+  "surviving_free_glyphs": 2,
+  "graph_vertices": 3,
+  "graph_relations": 1,
+  "graph_ids_origins_unique": true,
+  "no_dangling_relations_or_live_tombstones": true,
+  "graph_identical_to_pre_epilog_parent": true,
+  "fresh_restore_all_4692_file_hashes_match": true,
+  "source_unchanged": true,
+  "native_real_input_rest_conversions": 0,
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false
+}
