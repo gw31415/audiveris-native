@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "fixtures/official-grid/bracket-pair.png",
+    "/workspace/audiveris-multistaff-area-check-20261003/multi-cli.pgm",
+    "/workspace/audiveris-multistaff-area-check-20261003/multi-cli.json"
+  ],
+  "seconds": 1.5208183080012532,
+  "exit_code": 0,
+  "report_sha256": "4a803f148a84bd473f27b97d29a4535d87d14b731528da7fdb237fbd5b4f8e55",
+  "staff_count": 2,
+  "system_count": 1,
+  "last_completed_substage": "BEAMS.EPILOG",
+  "epilog_complete": true,
+  "rest_boundaries": [
+    {
+      "complete": true,
+      "conversions": 0,
+      "registered_serifs": 0,
+      "supported_scope": "single full-width system and equal-span five-line staff column; original overlapping staff areas and at-or-above selection; native GRID/lag and empty/supplied straight-ledger pitches"
+    }
+  ],
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false
+}

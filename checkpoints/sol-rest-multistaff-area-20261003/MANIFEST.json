@@ -1,0 +1,174 @@
+{
+  "branch": "checkpoint/sol-rest-multistaff-area-20261003",
+  "parent_checkpoint_commit": "c959def7a001daacad66cc50d47531d4442b0648",
+  "parent_implementation_commit": "4bbcfb37165a51aa281f8149a35104908b8241f1",
+  "parent_implementation_tree": "188eff6160886aaaf5801557f2714cdbd88495bc",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/c959def7a001daacad66cc50d47531d4442b0648/checkpoints/sol-rest-populated-ledger-20261003/MANIFEST.json",
+  "local_implementation_commit": "8eea39cfa34efb45cc0ef503e9e1f4a925484203",
+  "local_implementation_tree": "3b62d077e84403137e51252b5713834f43c7123e",
+  "changed_files_from_parent": [
+    "docs/REST-MULTISTAFF-AREAS.md",
+    "fixtures/official-multistaff-area.json",
+    "scripts/java/MultiStaffAreaControlProbe.java",
+    "src/beam_dispatch.rs",
+    "src/beams_pipeline.rs",
+    "src/native_rest_mapping.rs",
+    "tests/native_rest_mapping.rs"
+  ],
+  "file_sha256": {
+    "docs/REST-MULTISTAFF-AREAS.md": "ff6dd369e2a01b9ca8eca23f3bdb7b291ce691078b65c489e9847e3e658fb52f",
+    "fixtures/official-multistaff-area.json": "97550ca81e08ea87f21cbed7752b8ec5a6a6fabeb752cad5426f937ca298b446",
+    "scripts/java/MultiStaffAreaControlProbe.java": "b1c46b61a116a5b121f5bce92fca3bfe3dece2945acc8f40923311a3962208e2",
+    "src/beam_dispatch.rs": "fc513caa9019d4d281ec20bd47f08a86f1d6d10d573105ef9ea3a79044d2c277",
+    "src/beams_pipeline.rs": "9136b2a38168c627830ffb378c93eff97fc47637f50b98f725aa88b595a32541",
+    "src/native_rest_mapping.rs": "4bccfab459e7de8bd6691eaea102ab0d657d8550299ae68e6d7302a39024f31b",
+    "tests/native_rest_mapping.rs": "01ac62b0e7066d699fb12bda11a72f65f9900cb5c660b62495f0d3fd66931a79"
+  },
+  "tracked_files": 4701,
+  "patch": {
+    "path": "checkpoints/sol-rest-multistaff-area-20261003/changes.patch",
+    "bytes": 30705,
+    "sha256": "b72ddbe1c703aa3d1f5828664199600145a12581bd527993af4ed27f02c5b829"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-rest-multistaff-area-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "focused": {
+      "suites": 7,
+      "passed": 26,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "full_debug": "UNVERIFIED at new source",
+    "full_release": "UNVERIFIED at new source",
+    "scope": "Original computeStaffArea/getClosestStaff/getStaffAtOrAbove with curved equal-span staff column, 252 controls; native CLI two-staff input reaches epilog with deterministic replay, zero positive real-score rests",
+    "original_controls": {
+      "command": [
+        "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Xmx256m",
+        "-XX:ActiveProcessorCount=2",
+        "-Djava.awt.headless=true",
+        "--enable-native-access=ALL-UNNAMED",
+        "-cp",
+        "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-multistaff-area-check-20261003/original/classes",
+        "MultiStaffAreaControlProbe",
+        "/workspace/audiveris-multistaff-area-check-20261003/original/recheck.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5248909080000885,
+      "cases": 252,
+      "positive_staff_selections": 131,
+      "no_staff_results": 121,
+      "native_outputs_used": false,
+      "reproduced_fixture_equal": true,
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "fixture_sha256": "97550ca81e08ea87f21cbed7752b8ec5a6a6fabeb752cad5426f937ca298b446",
+      "observer_sha256": "b1c46b61a116a5b121f5bce92fca3bfe3dece2945acc8f40923311a3962208e2",
+      "scope": "Original computeStaffArea/getClosestStaff/getStaffAtOrAbove with supplied curved two-staff geometry; not positive rest conversion"
+    },
+    "prior_full_regression": {
+      "source_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+      "remote_commit": "deec43364e2b6b348cca4b38f798f534c8bd1925",
+      "debug": 297,
+      "release": 297,
+      "suites_each": 94
+    },
+    "cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/beams-single.png",
+        "/workspace/audiveris-multistaff-area-check-20261003/cli.pgm",
+        "/workspace/audiveris-multistaff-area-check-20261003/cli.json"
+      ],
+      "seconds": 1.3712033489991882,
+      "exit_code": 0,
+      "report_sha256": "68ca1a60aefc2a95971ce4811e37f824a951a7efddb649dc0d79a7a4a8dcbe00",
+      "staff_count": 1,
+      "system_count": 1,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "single full-width system and equal-span five-line staff column; original overlapping staff areas and at-or-above selection; native GRID/lag and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "multi_staff_cli": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/bracket-pair.png",
+        "/workspace/audiveris-multistaff-area-check-20261003/multi-cli.pgm",
+        "/workspace/audiveris-multistaff-area-check-20261003/multi-cli.json"
+      ],
+      "seconds": 1.5208183080012532,
+      "exit_code": 0,
+      "report_sha256": "4a803f148a84bd473f27b97d29a4535d87d14b731528da7fdb237fbd5b4f8e55",
+      "staff_count": 2,
+      "system_count": 1,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "single full-width system and equal-span five-line staff column; original overlapping staff areas and at-or-above selection; native GRID/lag and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "multi_staff_cli_replay": {
+      "command": [
+        "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+        "beam-spots",
+        "fixtures/official-grid/bracket-pair.png",
+        "/workspace/audiveris-multistaff-area-check-20261003/multi-replay.pgm",
+        "/workspace/audiveris-multistaff-area-check-20261003/multi-replay.json"
+      ],
+      "seconds": 1.5712140670002555,
+      "exit_code": 0,
+      "report_sha256": "4a803f148a84bd473f27b97d29a4535d87d14b731528da7fdb237fbd5b4f8e55",
+      "staff_count": 2,
+      "system_count": 1,
+      "last_completed_substage": "BEAMS.EPILOG",
+      "epilog_complete": true,
+      "rest_boundaries": [
+        {
+          "complete": true,
+          "conversions": 0,
+          "registered_serifs": 0,
+          "supported_scope": "single full-width system and equal-span five-line staff column; original overlapping staff areas and at-or-above selection; native GRID/lag and empty/supplied straight-ledger pitches"
+        }
+      ],
+      "positive_real_score_rest": "not demonstrated",
+      "musicxml_complete": false,
+      "replay_identical": true
+    },
+    "prior_empty_ledger_original_controls": 21,
+    "prior_supplied_straight_ledger_controls": 220,
+    "existing_original_conversion_controls": {
+      "positive_synthetic": 6,
+      "negative_synthetic": 5
+    },
+    "positive_real_score_rest": "not demonstrated",
+    "full_OMR": "unfinished"
+  },
+  "recovery": [
+    "Restore exact parent source with immutable source_recovery_manifest_url and prior chain.",
+    "Verify patch byte count/hash then git apply --check and git apply --index.",
+    "Verify git write-tree and every changed file hash.",
+    "Write raw implementation commit using git hash-object -t commit -w --stdin; verify exact source commit and attach a new isolated local branch.",
+    "Verify clean source and tracked count."
+  ],
+  "full_OMR": "unfinished"
+}
