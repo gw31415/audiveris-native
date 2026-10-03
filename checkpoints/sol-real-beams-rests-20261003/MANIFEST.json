@@ -1,0 +1,450 @@
+{
+  "schema": 10,
+  "branch": "checkpoint/sol-real-beams-rests-20261003-133500",
+  "parent_checkpoint_commit": "6d71a1ed372f03b26ef264d5530f088c26ca473d",
+  "parent_implementation_commit": "cbe757dab7cecdc718a2a4ed40f020b58583c0db",
+  "parent_implementation_tree": "6bdcf5efdf751830d0d33f77eb984f60dd6fb3a8",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/6d71a1ed372f03b26ef264d5530f088c26ca473d/checkpoints/sol-shared-sig-20261003/MANIFEST.json",
+  "local_implementation_commit": "e201b704cfbee035c956d446cb002f979a043106",
+  "local_implementation_tree": "bc539c16686d877dcdaf04274d4fec8862a7f499",
+  "changed_files_from_parent": [
+    "docs/REAL-BEAMS-RESTS.md",
+    "evidence/real-beams-rests-checkpoint/CLI-RECEIPT.json",
+    "evidence/real-beams-rests-checkpoint/LAURA-CLI-RECEIPT.json",
+    "evidence/real-beams-rests-checkpoint/StaffManager.javap.txt",
+    "evidence/real-beams-rests-checkpoint/StaffSystemInfo.javap.txt",
+    "evidence/real-beams-rests-checkpoint/cli-replay.log",
+    "evidence/real-beams-rests-checkpoint/cli.log",
+    "evidence/real-beams-rests-checkpoint/clippy.log",
+    "evidence/real-beams-rests-checkpoint/fmt.log",
+    "evidence/real-beams-rests-checkpoint/focused.log",
+    "evidence/real-beams-rests-checkpoint/later-beams.json",
+    "evidence/real-beams-rests-checkpoint/laura-cli.log",
+    "evidence/real-beams-rests-checkpoint/laura-later-beams.json",
+    "evidence/real-beams-rests-checkpoint/laura-shared-sig.json",
+    "evidence/real-beams-rests-checkpoint/shared-sig.json",
+    "evidence/real-beams-rests-checkpoint/validation.json",
+    "src/beams_pipeline.rs",
+    "src/lib.rs",
+    "src/main.rs",
+    "src/native_rest_mapping.rs",
+    "tests/multiple_rest_pipeline.rs",
+    "tests/native_rest_mapping.rs"
+  ],
+  "file_sha256": {
+    "docs/REAL-BEAMS-RESTS.md": "ca64c0a8f1870b362377caac2b8660ffca142a6728a6cff051ff614e172d88dd",
+    "evidence/real-beams-rests-checkpoint/CLI-RECEIPT.json": "919083447b2458396e4a910b6b4be8e1b28de8aaa67dff58aad96e9ce2561144",
+    "evidence/real-beams-rests-checkpoint/LAURA-CLI-RECEIPT.json": "0becebaea9a167442498958c00ca0bdb4f5504de82dd079598ba2209904bd5be",
+    "evidence/real-beams-rests-checkpoint/StaffManager.javap.txt": "566a9df743c1aedf11b966f0c0e71ce7ddfc5e4bce13cc8fd89aa6b6e36c1caa",
+    "evidence/real-beams-rests-checkpoint/StaffSystemInfo.javap.txt": "97232c7e46b48ff5d4a4280cb9fe3a56b6def281bc1ef2b37c56c48f0d80c53f",
+    "evidence/real-beams-rests-checkpoint/cli-replay.log": "06ef0ab135926890090e907a1a5eab47f95ea824a283b5b5d2aa5bdeb5d3dac7",
+    "evidence/real-beams-rests-checkpoint/cli.log": "c9bfcd92ad8d53d66f51e2a33cc7ac708cd37dc70f906f99797762e84e67e3a4",
+    "evidence/real-beams-rests-checkpoint/clippy.log": "cb3d28c4370ff616bdd9cfb0c688d8adb70917f277bfdaea231ab3fa83553f84",
+    "evidence/real-beams-rests-checkpoint/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/real-beams-rests-checkpoint/focused.log": "f20dd4fca6e8d4317cfe847a0cd9304bc33ca5e45acbf107d9c578c1d4a37de0",
+    "evidence/real-beams-rests-checkpoint/later-beams.json": "ab8c83ac8894291c489f40c4613d0732920e14f1241c3ff0f41a56a54f8dcff0",
+    "evidence/real-beams-rests-checkpoint/laura-cli.log": "bd585d5d6d9b3bdca5a1b27f67a9b3bad1aad372971cc3c83996b231d91040fd",
+    "evidence/real-beams-rests-checkpoint/laura-later-beams.json": "b5c3c67dab2e717c1bb0bee9964604fa088415b89587231c1cb4f6ef98695e43",
+    "evidence/real-beams-rests-checkpoint/laura-shared-sig.json": "71551820730a3e8d087912592849eb6b2e1a469b6af1b03b87726d7ce3f2241c",
+    "evidence/real-beams-rests-checkpoint/shared-sig.json": "d329b12447de78944bcd4545d8cc49ae7c6b50c70f82ea940890946a925f5dc0",
+    "evidence/real-beams-rests-checkpoint/validation.json": "b8cb4fd9804465e6f8bb5b460f27c604dd05402bd4f409fd807f6aca533e2881",
+    "src/beams_pipeline.rs": "1fae2ffbf72961817f0392a2648e6322ad9a302925ed14bf7a701adc38adddb6",
+    "src/lib.rs": "d7aa911a62355939e25e5c2acb1f39b5a56e110fe14fe076036f36ce1410d311",
+    "src/main.rs": "ec5ffe9020dd46c4faecdefabd6444b11560228ec5ac3d5ae08eccc502de9ee6",
+    "src/native_rest_mapping.rs": "674846b0ebd96a13c7f3d9701dfdfa6ac1179c538f84f9a1afd1a2014b564d84",
+    "tests/multiple_rest_pipeline.rs": "28e3f4b8db8f2d1efa7b5f2838d6aadf6b33db289cd1a32f7a69a0b89b7dad7f",
+    "tests/native_rest_mapping.rs": "e3a9bf0682db5eef2e93b0da54cc7a3e5cd95d95cf63d877c1d12954df878d4f"
+  },
+  "tracked_files": 4684,
+  "dirty_files": [],
+  "patch": {
+    "path": "checkpoints/sol-real-beams-rests-20261003/changes.patch",
+    "bytes": 571724,
+    "sha256": "dc6d28a2e3fdde9a59818b2800f73c6abfd20fe59dc0a7e261bf44aa8edd659d"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-real-beams-rests-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "status": "passed",
+    "scope": "Real native image CLI through extensions/hooks/groups/rest boundary with native single-staff mapping; unsupported geometry explicit and epilog pending",
+    "focused_tests": {
+      "suites": 5,
+      "passed": 13,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "original_controls": {
+      "native_outputs_used": false,
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "cases": 75,
+      "accepted_serif_peaks": 42,
+      "runtime_excludes_compile_shims": true,
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "positive_original_serif_peaks": 42,
+      "native_final_peak_acceptance": "42 peaks in 41 positive cases, 34 negative cases matched",
+      "rest_conversions": 6,
+      "real_score_acceptance": "not measured",
+      "staff_measurements": "actual staff integer ordinates and thickness; supplied synthetic pixels",
+      "observer_sha256": "56566e209ba59a911a1e17fc32877d33fe11ca12fad388d5f3b074113b299d1f",
+      "fixture_sha256": "70eacedd951b63d8c102d1c7546f5f817d75c144bbc01548a1c8644b378ececf",
+      "direct_original_filament_cases": 48,
+      "accepted_glyphs": 32,
+      "rejected_filaments": 16,
+      "original_group_cleanup_cases": 16,
+      "original_complete_rest_conversion": "11 cases, six complete conversions and five non-conversions",
+      "filament_fixture_sha256": "c378b2eb1913d4158963e025e5ad1a0031ec074f1b01e16c652a8770e7f2a823",
+      "cleanup_fixture_sha256": "3eab833bbd1765e9bd6e344bc145d959c2b0f5c824781c5bebde4a81fbcc2a8b",
+      "filament_observer_sha256": "b16b7d152ef71c214f54fd91abf1346f8e11d993eac693eb1ab1b9ad05ef63b6",
+      "cleanup_observer_sha256": "7cc8c612dc0e9f0b57eb147c89bdc1fa93a478ddd92b66fd32529afea3e7e3de",
+      "complete_rest_cases": 11,
+      "complete_rest_conversions": 6,
+      "negative_rest_controls": 5,
+      "complete_rest_fixture_sha256": "dc3577d3df2edf89467f72ca64635d25ed0b5a67b8ebbfdf606f8d5dfbb872e8",
+      "complete_rest_observer_sha256": "f798ea30f6e8acbe18fbda56ef637cf9d8823567c58688593559b8e105830b21"
+    },
+    "current_full_workspace": {
+      "debug": "UNVERIFIED at new source",
+      "release": "UNVERIFIED at new source"
+    },
+    "parent_full_release": {
+      "source_commit": "21f0833abd67dd4fa1dd0c60a74a686779329818",
+      "checkpoint_commit": "a14eb873873b101247913c41a6987cdbddaa17d4",
+      "status": "passed",
+      "tests": 289,
+      "current_source": "UNVERIFIED"
+    },
+    "shared_graph_contract_tests": 4,
+    "cli": {
+      "status": "passed",
+      "input": "fixtures/official-grid/beams-single.png",
+      "input_sha256": "9e70dcea82c8e8a5ae4e9ba107eee54f60f1b6f950066870b7010e5ad0a4ca76",
+      "report_sha256": "608e4d7ae0bd263e983972b687b85186ba79bc989beeb20da7668cf3ab0adf43",
+      "replay_report_sha256": "608e4d7ae0bd263e983972b687b85186ba79bc989beeb20da7668cf3ab0adf43",
+      "replay_command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--",
+        "beam-spots",
+        "fixtures/official-grid/beams-single.png",
+        "/workspace/audiveris-real-beams-rests-check-20261003/replay-spots.pgm",
+        "/workspace/audiveris-real-beams-rests-check-20261003/replay-report.json"
+      ],
+      "replay_seconds": 1.4236186760008422,
+      "last_completed_substage": "BEAMS.MULTIPLE_RESTS",
+      "original_group_fixture": "fixtures/official-beam-groups-images/beams-single.json",
+      "original_group_fixture_sha256": "b3c07efebde228fffc04e11c8cc181b527e31b94c37bce97efa1e0f0a46d05eb",
+      "original_group_comparison": "matched group bounds, members, beam geometry/grade/glyph pixels",
+      "graph_vertices": 3,
+      "graph_relations": 1,
+      "native_real_input_rest_conversions": 0,
+      "complete_original_synthetic_rest_controls": 11,
+      "positive_original_synthetic_rest_conversions": 6,
+      "real_score_positive_rest_conversion": "not demonstrated",
+      "musicxml_complete": false
+    },
+    "laura_cli": {
+      "command": [
+        "cargo",
+        "run",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--",
+        "beam-spots",
+        "fixtures/official-grid/laura-gray.png",
+        "/workspace/audiveris-real-beams-rests-check-20261003/laura-spots.pgm",
+        "/workspace/audiveris-real-beams-rests-check-20261003/laura-report.json"
+      ],
+      "exit_code": 0,
+      "seconds": 15.760370945999966,
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "musicxml_complete": false,
+      "last_completed_substage": "BEAMS.GROUPS",
+      "later_beams": {
+        "beams_complete": false,
+        "extensions_complete": true,
+        "groups_complete": true,
+        "hooks_complete": true,
+        "multiple_rest_boundary_complete": false,
+        "musicxml_complete": false,
+        "pending": [
+          "BEAMS epilog/free glyph cleanup",
+          "LEDGERS/HEADS/rhythm/MusicXML",
+          "multi-staff rest mapping and ledger-aware pitch"
+        ],
+        "stage": "BEAMS.native_through_multiple_rests",
+        "systems": [
+          {
+            "extensions": {
+              "initial_ids": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "side_attempts": 14,
+              "skipped_removed": []
+            },
+            "groups": [
+              {
+                "bounds": [
+                  485,
+                  379,
+                  87,
+                  27
+                ],
+                "id": 1,
+                "members": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              {
+                "bounds": [
+                  485,
+                  504,
+                  87,
+                  27
+                ],
+                "id": 2,
+                "members": [
+                  4,
+                  5,
+                  6
+                ]
+              },
+              {
+                "bounds": [
+                  994,
+                  681,
+                  255,
+                  7
+                ],
+                "id": 3,
+                "members": [
+                  7
+                ]
+              }
+            ],
+            "hooks": {
+              "appended": 0,
+              "attempts": 0,
+              "initial_ids": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ]
+            },
+            "rests": {
+              "complete": false,
+              "error": "unsupported_rest_multi_staff_mapping"
+            },
+            "supports": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                4,
+                6
+              ],
+              [
+                5,
+                6
+              ]
+            ],
+            "system_id": 1
+          },
+          {
+            "extensions": {
+              "initial_ids": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ],
+              "side_attempts": 16,
+              "skipped_removed": []
+            },
+            "groups": [
+              {
+                "bounds": [
+                  923,
+                  874,
+                  101,
+                  25
+                ],
+                "id": 1,
+                "members": [
+                  1,
+                  2,
+                  9
+                ]
+              },
+              {
+                "bounds": [
+                  923,
+                  1016,
+                  101,
+                  25
+                ],
+                "id": 2,
+                "members": [
+                  3,
+                  4,
+                  10
+                ]
+              },
+              {
+                "bounds": [
+                  216,
+                  1144,
+                  496,
+                  19
+                ],
+                "id": 3,
+                "members": [
+                  5
+                ]
+              },
+              {
+                "bounds": [
+                  824,
+                  1145,
+                  200,
+                  24
+                ],
+                "id": 4,
+                "members": [
+                  6,
+                  8,
+                  11
+                ]
+              },
+              {
+                "bounds": [
+                  1120,
+                  1150,
+                  101,
+                  13
+                ],
+                "id": 5,
+                "members": [
+                  7
+                ]
+              }
+            ],
+            "hooks": {
+              "appended": 3,
+              "attempts": 4,
+              "initial_ids": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8
+              ]
+            },
+            "rests": {
+              "complete": false,
+              "error": "unsupported_rest_multi_staff_mapping"
+            },
+            "supports": [
+              [
+                1,
+                2
+              ],
+              [
+                1,
+                9
+              ],
+              [
+                2,
+                9
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                3,
+                10
+              ],
+              [
+                4,
+                10
+              ],
+              [
+                6,
+                8
+              ],
+              [
+                6,
+                11
+              ],
+              [
+                8,
+                11
+              ]
+            ],
+            "system_id": 2
+          }
+        ]
+      },
+      "graph_vertices": 64,
+      "graph_relations": 63,
+      "report_sha256": "7a507f8b910c19885cb977fe4ccee66c8fca3a45580463d22a8cdb210580df50"
+    },
+    "native_mapping_contract_tests": 2,
+    "previous_full_workspace": {
+      "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
+      "debug": 275,
+      "release": 275,
+      "checkpoint_commit": "0bdac35f8bd1509a76904ac3b8736fc03dd6838b"
+    },
+    "native_staff_association_and_pitch": "not integrated",
+    "positive_rest_recognition": "six complete original/native conversions with supplied synthetic raster/lag sections and actual original staff",
+    "thirteen_image_rest_boundary": "not run"
+  },
+  "recovery": [
+    "Restore exact prior shared-SIG implementation using its immutable manifest and archive/late-hook/group/admission/raster-patch dependencies. Verify parent commit cbe757dab7cecdc718a2a4ed40f020b58583c0db and tree 6bdcf5efdf751830d0d33f77eb984f60dd6fb3a8.",
+    "Verify this changes.patch bytes and SHA256; git apply --check, then git apply --index.",
+    "Verify git write-tree equals local_implementation_tree and every file_sha256 entry.",
+    "git hash-object -t commit -w IMPLEMENTATION-COMMIT.txt must equal local_implementation_commit.",
+    "Attach HEAD to a new local branch at that commit. Verify clean status and tracked_files count."
+  ],
+  "full_OMR": "unfinished"
+}
