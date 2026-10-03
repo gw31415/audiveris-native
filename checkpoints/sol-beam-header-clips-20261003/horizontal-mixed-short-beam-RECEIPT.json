@@ -1,0 +1,2017 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-mixed-short.png",
+    "/workspace/audiveris-beam-header-check-20261003/horizontal-mixed-short-beam.pgm",
+    "/workspace/audiveris-beam-header-check-20261003/horizontal-mixed-short-beam.json"
+  ],
+  "exit_code": 0,
+  "seconds": 1.7718521399983729,
+  "report_sha256": "8213e638cfbe6f2092a162aa5edf3b5c45504dfb58c43a1b494d017cbf10bdfe",
+  "boundary_log": "BEAMS prolog unavailable: inconsistent_beam_dispatch_neighbor; beam spot pixels retained\nNative beam spots: 0; prolog complete: false; initial candidates complete: false; beam interpretation and MusicXML remain incomplete\n",
+  "system_candidates": null,
+  "stem_seeds": {
+    "note_recognition_complete": false,
+    "pending": [
+      "BEAMS",
+      "LEDGERS",
+      "automatic HEADS and stem attachment",
+      "rhythm and MusicXML"
+    ],
+    "stage": "STEM_SEEDS.native",
+    "stem_scaling": {
+      "area": 1194,
+      "fallback_used": false,
+      "histogram": {
+        "values": [
+          0,
+          0,
+          0,
+          1194,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "x_max": 12,
+        "x_min": 0
+      },
+      "parameters": {
+        "min_derivative": 60,
+        "min_gain_ratio": 0.1,
+        "min_value": 1,
+        "quorum": 119,
+        "stem_as_fore_ratio": 1.0
+      },
+      "peak": {
+        "main": 3,
+        "max": 3,
+        "min": 3
+      },
+      "peaks": [
+        {
+          "main": 3,
+          "max": 3,
+          "min": 3
+        }
+      ],
+      "stage": "STEM_SEEDS.stem_scale",
+      "stem_scale": {
+        "main": 3,
+        "max": 3
+      },
+      "stem_scaling_complete": true,
+      "stem_seeds_complete": false
+    },
+    "stem_seeds_complete": true,
+    "supported_scope": "fresh profile1, five-line native GRID with original neighbor-chain clipped staff areas; current 4M-pixel/resource limits",
+    "systems": [
+      {
+        "accepted_seeds": [
+          {
+            "bounds": [
+              140,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              440,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              560,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              660,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              960,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 141.0,
+              "point_count": 597
+            },
+            "bounds": [
+              140,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              141.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                140,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              141.0,
+              100.0,
+              141.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  140,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 140,
+                "id": 2,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              141.0,
+              100.0
+            ],
+            "stop": [
+              141.0,
+              298.0
+            ],
+            "weight": 597
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 441.0,
+              "point_count": 597
+            },
+            "bounds": [
+              440,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              441.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                440,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              441.0,
+              100.0,
+              441.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  440,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 440,
+                "id": 3,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              441.0,
+              100.0
+            ],
+            "stop": [
+              441.0,
+              298.0
+            ],
+            "weight": 597
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 561.0,
+              "point_count": 597
+            },
+            "bounds": [
+              560,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              561.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                560,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              561.0,
+              100.0,
+              561.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  560,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 560,
+                "id": 4,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              561.0,
+              100.0
+            ],
+            "stop": [
+              561.0,
+              298.0
+            ],
+            "weight": 597
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 661.0,
+              "point_count": 597
+            },
+            "bounds": [
+              660,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              661.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                660,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              661.0,
+              100.0,
+              661.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  660,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 660,
+                "id": 5,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              661.0,
+              100.0
+            ],
+            "stop": [
+              661.0,
+              298.0
+            ],
+            "weight": 597
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 961.0,
+              "point_count": 597
+            },
+            "bounds": [
+              960,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              961.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                960,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              961.0,
+              100.0,
+              961.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  960,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 960,
+                "id": 6,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              961.0,
+              100.0
+            ],
+            "stop": [
+              961.0,
+              298.0
+            ],
+            "weight": 597
+          }
+        ],
+        "left": 42,
+        "profile": 1,
+        "right": 963,
+        "system_id": 1
+      },
+      {
+        "accepted_seeds": [
+          {
+            "bounds": [
+              140,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              440,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 141.0,
+              "point_count": 597
+            },
+            "bounds": [
+              140,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              141.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 2,
+            "glyph": {
+              "bounds": [
+                140,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              141.0,
+              100.0,
+              141.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  140,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 140,
+                "id": 2,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              141.0,
+              100.0
+            ],
+            "stop": [
+              141.0,
+              298.0
+            ],
+            "weight": 597
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 441.0,
+              "point_count": 597
+            },
+            "bounds": [
+              440,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              441.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 2,
+            "glyph": {
+              "bounds": [
+                440,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              441.0,
+              100.0,
+              441.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  440,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 440,
+                "id": 3,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              441.0,
+              100.0
+            ],
+            "stop": [
+              441.0,
+              298.0
+            ],
+            "weight": 597
+          }
+        ],
+        "left": 42,
+        "profile": 1,
+        "right": 443,
+        "system_id": 2
+      },
+      {
+        "accepted_seeds": [
+          {
+            "bounds": [
+              660,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              960,
+              100,
+              3,
+              199
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                199
+              ],
+              [
+                1,
+                0,
+                199
+              ],
+              [
+                2,
+                0,
+                199
+              ]
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 661.0,
+              "point_count": 597
+            },
+            "bounds": [
+              660,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              661.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 3,
+            "glyph": {
+              "bounds": [
+                660,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              661.0,
+              100.0,
+              661.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  660,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 660,
+                "id": 5,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              661.0,
+              100.0
+            ],
+            "stop": [
+              661.0,
+              298.0
+            ],
+            "weight": 597
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 961.0,
+              "point_count": 597
+            },
+            "bounds": [
+              960,
+              100,
+              3,
+              199
+            ],
+            "center": [
+              961.5,
+              199.5
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.6597930912801142,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.06804138174397717,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 16.5,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 16.583333333333332,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 16.583333333333332,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 199,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7748154579257583,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 3,
+            "glyph": {
+              "bounds": [
+                960,
+                100,
+                3,
+                199
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  199
+                ],
+                [
+                  1,
+                  0,
+                  199
+                ],
+                [
+                  2,
+                  0,
+                  199
+                ]
+              ]
+            },
+            "line": [
+              961.0,
+              100.0,
+              961.0,
+              298.0
+            ],
+            "mean_distance": 0.816496580927726,
+            "members": [
+              {
+                "bounds": [
+                  960,
+                  100,
+                  3,
+                  199
+                ],
+                "first_pos": 960,
+                "id": 6,
+                "runs": [
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ],
+                  [
+                    100,
+                    199
+                  ]
+                ],
+                "vertical": true,
+                "weight": 597
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              961.0,
+              100.0
+            ],
+            "stop": [
+              961.0,
+              298.0
+            ],
+            "weight": 597
+          }
+        ],
+        "left": 562,
+        "profile": 1,
+        "right": 963,
+        "system_id": 3
+      }
+    ]
+  },
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished",
+  "last_completed_substage": "BEAMS.SPOT_PREPARATION",
+  "beam_preparation": {
+    "beams_complete": false,
+    "header_erase_rectangles": [
+      {
+        "first_header_staff_id": 1,
+        "rect": [
+          0,
+          76,
+          44,
+          97
+        ],
+        "system_id": 1
+      },
+      {
+        "first_header_staff_id": 2,
+        "rect": [
+          0,
+          226,
+          44,
+          97
+        ],
+        "system_id": 2
+      },
+      {
+        "first_header_staff_id": 3,
+        "rect": [
+          502,
+          226,
+          62,
+          97
+        ],
+        "system_id": 3
+      }
+    ],
+    "masks": {
+      "binarized": {
+        "black_count": 0,
+        "height": 450,
+        "sha256": "3be73bf1907b4bb9c49c31c8e804bf2c9e33d0aa505718d57bfe7f4e0e302f38",
+        "width": 1000
+      },
+      "closed": {
+        "black_count": 0,
+        "height": 450,
+        "sha256": "ea0c9833aad380816859513061ce2c82f129af5801ea30baf30264c44f3a543a",
+        "width": 1000
+      },
+      "filtered_horizontal": {
+        "black_count": 3582,
+        "height": 450,
+        "sha256": "343f10827a630adf947945a2c86074952d8cd909b41c0a2507310130b9c33fa6",
+        "width": 1000
+      },
+      "gaussian": {
+        "black_count": 1170,
+        "height": 450,
+        "sha256": "54b42f6a617f839130bf0c495fad19e317f08f6ae16df5d3d008547d49a02363",
+        "width": 1000
+      },
+      "head_spots": {
+        "black_count": 0,
+        "height": 450,
+        "sha256": "3be73bf1907b4bb9c49c31c8e804bf2c9e33d0aa505718d57bfe7f4e0e302f38",
+        "width": 1000
+      },
+      "header_erased": {
+        "black_count": 957,
+        "height": 450,
+        "sha256": "6f881abe63f78d55d95cc7fef83d16f34230856106847a38bd412c4b2985b0e3",
+        "width": 1000
+      },
+      "median": {
+        "black_count": 3558,
+        "height": 450,
+        "sha256": "b250886ce595a67c3c5524affeafbb81ad3f3ccef1c2746dfb5b3817f6c876a8",
+        "width": 1000
+      },
+      "no_staff": {
+        "black_count": 3582,
+        "height": 450,
+        "sha256": "343f10827a630adf947945a2c86074952d8cd909b41c0a2507310130b9c33fa6",
+        "width": 1000
+      }
+    },
+    "musicxml_complete": false,
+    "pending": [
+      "BlackHeadSizer and glyph indexing/tagging",
+      "system spot dispatch",
+      "BeamStructure and BeamInter construction",
+      "multiple-measure rests",
+      "LEDGERS, HEADS, stem attachment, rhythm and MusicXML"
+    ],
+    "pixel_preparation_complete": true,
+    "scale": {
+      "beam_thickness": 7,
+      "effective_spot_beam": 7,
+      "fore": 1,
+      "interline": 12,
+      "small_beam_thickness": null,
+      "small_beams_switch": false,
+      "stem_max": 3
+    },
+    "spot_count": 0,
+    "stage": "BEAMS.native_spot_preparation",
+    "supported_scope": "default smallBeams=false; five-line GRID; legacy full-width and certified straight clipped system header bounds; four-million-pixel/resource bounds",
+    "unassigned_spots": []
+  },
+  "beam_prolog": {
+    "beam_prolog_complete": false,
+    "beams_complete": false,
+    "error": "inconsistent_beam_dispatch_neighbor",
+    "stage": "BEAMS.native_prolog"
+  },
+  "shared_sig": {
+    "covered_substages": [
+      "GRID"
+    ],
+    "id_namespace": "native shared registration-order vertex and relation IDs; not JVM IDs",
+    "inters": [
+      {
+        "bounds": [
+          40,
+          100,
+          3,
+          49
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 1,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 1,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 1,
+          "phase": "GRID",
+          "system": 1
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          1,
+          40,
+          42
+        ],
+        "staff_id": 1
+      },
+      {
+        "bounds": [
+          40,
+          250,
+          3,
+          49
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 1,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 2,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 2,
+          "phase": "GRID",
+          "system": 2
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          2,
+          40,
+          42
+        ],
+        "staff_id": 2
+      },
+      {
+        "bounds": [
+          560,
+          250,
+          3,
+          49
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 2,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 3,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 3,
+          "phase": "GRID",
+          "system": 3
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          3,
+          560,
+          562
+        ],
+        "staff_id": 3
+      }
+    ],
+    "musicxml_complete": false,
+    "relations": [],
+    "schema": "audiveris-native.shared-sig.v1",
+    "tombstones": []
+  }
+}

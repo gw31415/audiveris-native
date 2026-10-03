@@ -1,0 +1,2204 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/horizontal-rendered-clefs.png",
+    "/workspace/audiveris-beam-header-check-20261003/horizontal-rendered-clefs-beam.pgm",
+    "/workspace/audiveris-beam-header-check-20261003/horizontal-rendered-clefs-beam.json"
+  ],
+  "exit_code": 0,
+  "seconds": 2.830650511998101,
+  "report_sha256": "fd5eaff613834740a67759f541e182b46ad4e3a89d8791f2ebaeb68ee2f7e92e",
+  "boundary_log": "BEAMS prolog unavailable: inconsistent_beam_dispatch_neighbor; beam spot pixels retained\nNative beam spots: 0; prolog complete: false; initial candidates complete: false; beam interpretation and MusicXML remain incomplete\n",
+  "system_candidates": null,
+  "stem_seeds": {
+    "note_recognition_complete": false,
+    "pending": [
+      "BEAMS",
+      "LEDGERS",
+      "automatic HEADS and stem attachment",
+      "rhythm and MusicXML"
+    ],
+    "stage": "STEM_SEEDS.native",
+    "stem_scaling": {
+      "area": 722,
+      "fallback_used": false,
+      "histogram": {
+        "values": [
+          0,
+          1,
+          377,
+          61,
+          47,
+          28,
+          40,
+          22,
+          19,
+          13,
+          38,
+          10,
+          32,
+          10,
+          12,
+          9,
+          3
+        ],
+        "x_max": 16,
+        "x_min": 0
+      },
+      "parameters": {
+        "min_derivative": 36,
+        "min_gain_ratio": 0.1,
+        "min_value": 1,
+        "quorum": 72,
+        "stem_as_fore_ratio": 1.0
+      },
+      "peak": {
+        "main": 2,
+        "max": 3,
+        "min": 2
+      },
+      "peaks": [
+        {
+          "main": 2,
+          "max": 3,
+          "min": 2
+        }
+      ],
+      "stage": "STEM_SEEDS.stem_scale",
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "stem_scaling_complete": true,
+      "stem_seeds_complete": false
+    },
+    "stem_seeds_complete": true,
+    "supported_scope": "fresh profile1, five-line native GRID with original neighbor-chain clipped staff areas; current 4M-pixel/resource limits",
+    "systems": [
+      {
+        "accepted_seeds": [
+          {
+            "bounds": [
+              400,
+              120,
+              2,
+              66
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                66
+              ],
+              [
+                1,
+                0,
+                66
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              700,
+              120,
+              2,
+              66
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                66
+              ],
+              [
+                1,
+                0,
+                66
+              ]
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 400.5,
+              "point_count": 132
+            },
+            "bounds": [
+              400,
+              120,
+              2,
+              66
+            ],
+            "center": [
+              401.0,
+              153.0
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.84375,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.03125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 4.0625,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 4.125,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 4.125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 66,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7896126991379185,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                400,
+                120,
+                2,
+                66
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  66
+                ],
+                [
+                  1,
+                  0,
+                  66
+                ]
+              ]
+            },
+            "line": [
+              400.5,
+              120.0,
+              400.5,
+              185.0
+            ],
+            "mean_distance": 0.5,
+            "members": [
+              {
+                "bounds": [
+                  400,
+                  120,
+                  2,
+                  66
+                ],
+                "first_pos": 400,
+                "id": 65,
+                "runs": [
+                  [
+                    120,
+                    66
+                  ],
+                  [
+                    120,
+                    66
+                  ]
+                ],
+                "vertical": true,
+                "weight": 132
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              400.5,
+              120.0
+            ],
+            "stop": [
+              400.5,
+              185.0
+            ],
+            "weight": 132
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 700.5,
+              "point_count": 132
+            },
+            "bounds": [
+              700,
+              120,
+              2,
+              66
+            ],
+            "center": [
+              701.0,
+              153.0
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.84375,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.03125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 4.0625,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 4.125,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 4.125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 66,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7896126991379185,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                700,
+                120,
+                2,
+                66
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  66
+                ],
+                [
+                  1,
+                  0,
+                  66
+                ]
+              ]
+            },
+            "line": [
+              700.5,
+              120.0,
+              700.5,
+              185.0
+            ],
+            "mean_distance": 0.5,
+            "members": [
+              {
+                "bounds": [
+                  700,
+                  120,
+                  2,
+                  66
+                ],
+                "first_pos": 700,
+                "id": 67,
+                "runs": [
+                  [
+                    120,
+                    66
+                  ],
+                  [
+                    120,
+                    66
+                  ]
+                ],
+                "vertical": true,
+                "weight": 132
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              700.5,
+              120.0
+            ],
+            "stop": [
+              700.5,
+              185.0
+            ],
+            "weight": 132
+          },
+          {
+            "basic_line": {
+              "a": -0.9999952550001434,
+              "b": 0.003080580659236661,
+              "c": 136.0039105089205,
+              "point_count": 146
+            },
+            "bounds": [
+              134,
+              104,
+              5,
+              45
+            ],
+            "center": [
+              136.5,
+              126.5
+            ],
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                134,
+                104,
+                5,
+                45
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  13,
+                  7
+                ],
+                [
+                  1,
+                  7,
+                  33
+                ],
+                [
+                  2,
+                  4,
+                  35
+                ],
+                [
+                  3,
+                  1,
+                  38
+                ],
+                [
+                  4,
+                  0,
+                  14
+                ],
+                [
+                  4,
+                  26,
+                  19
+                ]
+              ]
+            },
+            "line": [
+              136.32493775929123,
+              104.0,
+              136.4604839514643,
+              148.0
+            ],
+            "mean_distance": 1.195207932932452,
+            "members": [
+              {
+                "bounds": [
+                  134,
+                  117,
+                  1,
+                  7
+                ],
+                "first_pos": 134,
+                "id": 23,
+                "runs": [
+                  [
+                    117,
+                    7
+                  ]
+                ],
+                "vertical": true,
+                "weight": 7
+              },
+              {
+                "bounds": [
+                  135,
+                  111,
+                  1,
+                  33
+                ],
+                "first_pos": 135,
+                "id": 26,
+                "runs": [
+                  [
+                    111,
+                    33
+                  ]
+                ],
+                "vertical": true,
+                "weight": 33
+              },
+              {
+                "bounds": [
+                  136,
+                  108,
+                  1,
+                  35
+                ],
+                "first_pos": 136,
+                "id": 27,
+                "runs": [
+                  [
+                    108,
+                    35
+                  ]
+                ],
+                "vertical": true,
+                "weight": 35
+              },
+              {
+                "bounds": [
+                  137,
+                  105,
+                  1,
+                  38
+                ],
+                "first_pos": 137,
+                "id": 28,
+                "runs": [
+                  [
+                    105,
+                    38
+                  ]
+                ],
+                "vertical": true,
+                "weight": 38
+              },
+              {
+                "bounds": [
+                  138,
+                  104,
+                  1,
+                  14
+                ],
+                "first_pos": 138,
+                "id": 30,
+                "runs": [
+                  [
+                    104,
+                    14
+                  ]
+                ],
+                "vertical": true,
+                "weight": 14
+              },
+              {
+                "bounds": [
+                  138,
+                  130,
+                  1,
+                  19
+                ],
+                "first_pos": 138,
+                "id": 31,
+                "runs": [
+                  [
+                    130,
+                    19
+                  ]
+                ],
+                "vertical": true,
+                "weight": 19
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              136.32493775929123,
+              104.0
+            ],
+            "stop": [
+              136.4604839514643,
+              148.0
+            ],
+            "weight": 146
+          },
+          {
+            "basic_line": {
+              "a": -0.9999728051057784,
+              "b": -0.007374893143716657,
+              "c": 121.64225625387894,
+              "point_count": 109
+            },
+            "bounds": [
+              119,
+              145,
+              4,
+              34
+            ],
+            "center": [
+              121.0,
+              162.0
+            ],
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                119,
+                145,
+                4,
+                34
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  4,
+                  26
+                ],
+                [
+                  1,
+                  2,
+                  29
+                ],
+                [
+                  2,
+                  1,
+                  32
+                ],
+                [
+                  3,
+                  0,
+                  15
+                ],
+                [
+                  3,
+                  27,
+                  7
+                ]
+              ]
+            },
+            "line": [
+              120.57617580438668,
+              145.0,
+              120.33279771200256,
+              178.0
+            ],
+            "mean_distance": 1.0603832903853616,
+            "members": [
+              {
+                "bounds": [
+                  119,
+                  149,
+                  1,
+                  26
+                ],
+                "first_pos": 119,
+                "id": 4,
+                "runs": [
+                  [
+                    149,
+                    26
+                  ]
+                ],
+                "vertical": true,
+                "weight": 26
+              },
+              {
+                "bounds": [
+                  120,
+                  147,
+                  1,
+                  29
+                ],
+                "first_pos": 120,
+                "id": 5,
+                "runs": [
+                  [
+                    147,
+                    29
+                  ]
+                ],
+                "vertical": true,
+                "weight": 29
+              },
+              {
+                "bounds": [
+                  121,
+                  146,
+                  1,
+                  32
+                ],
+                "first_pos": 121,
+                "id": 6,
+                "runs": [
+                  [
+                    146,
+                    32
+                  ]
+                ],
+                "vertical": true,
+                "weight": 32
+              },
+              {
+                "bounds": [
+                  122,
+                  145,
+                  1,
+                  15
+                ],
+                "first_pos": 122,
+                "id": 7,
+                "runs": [
+                  [
+                    145,
+                    15
+                  ]
+                ],
+                "vertical": true,
+                "weight": 15
+              },
+              {
+                "bounds": [
+                  122,
+                  172,
+                  1,
+                  7
+                ],
+                "first_pos": 122,
+                "id": 8,
+                "runs": [
+                  [
+                    172,
+                    7
+                  ]
+                ],
+                "vertical": true,
+                "weight": 7
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              120.57617580438668,
+              145.0
+            ],
+            "stop": [
+              120.33279771200256,
+              178.0
+            ],
+            "weight": 109
+          },
+          {
+            "basic_line": {
+              "a": -0.9986544214812848,
+              "b": 0.051858909127366425,
+              "c": 131.85942571347772,
+              "point_count": 71
+            },
+            "bounds": [
+              139,
+              129,
+              3,
+              38
+            ],
+            "center": [
+              140.5,
+              148.0
+            ],
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                139,
+                129,
+                3,
+                38
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  32
+                ],
+                [
+                  1,
+                  13,
+                  20
+                ],
+                [
+                  2,
+                  19,
+                  19
+                ]
+              ]
+            },
+            "line": [
+              138.7359050445104,
+              129.0,
+              140.6572700296736,
+              166.0
+            ],
+            "mean_distance": 0.6777073502113299,
+            "members": [
+              {
+                "bounds": [
+                  139,
+                  129,
+                  1,
+                  32
+                ],
+                "first_pos": 139,
+                "id": 33,
+                "runs": [
+                  [
+                    129,
+                    32
+                  ]
+                ],
+                "vertical": true,
+                "weight": 32
+              },
+              {
+                "bounds": [
+                  140,
+                  142,
+                  1,
+                  20
+                ],
+                "first_pos": 140,
+                "id": 36,
+                "runs": [
+                  [
+                    142,
+                    20
+                  ]
+                ],
+                "vertical": true,
+                "weight": 20
+              },
+              {
+                "bounds": [
+                  141,
+                  148,
+                  1,
+                  19
+                ],
+                "first_pos": 141,
+                "id": 38,
+                "runs": [
+                  [
+                    148,
+                    19
+                  ]
+                ],
+                "vertical": true,
+                "weight": 19
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              138.7359050445104,
+              129.0
+            ],
+            "stop": [
+              140.6572700296736,
+              166.0
+            ],
+            "weight": 71
+          },
+          {
+            "basic_line": {
+              "a": -0.9992650795953968,
+              "b": 0.03833145837566855,
+              "c": 138.19988698020734,
+              "point_count": 108
+            },
+            "bounds": [
+              144,
+              165,
+              4,
+              43
+            ],
+            "center": [
+              146.0,
+              186.5
+            ],
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                144,
+                165,
+                4,
+                43
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  21
+                ],
+                [
+                  0,
+                  38,
+                  5
+                ],
+                [
+                  1,
+                  6,
+                  21
+                ],
+                [
+                  1,
+                  36,
+                  6
+                ],
+                [
+                  2,
+                  12,
+                  30
+                ],
+                [
+                  3,
+                  15,
+                  25
+                ]
+              ]
+            },
+            "line": [
+              144.6308697895365,
+              165.0,
+              146.24197507546316,
+              207.0
+            ],
+            "mean_distance": 1.0056245916876296,
+            "members": [
+              {
+                "bounds": [
+                  144,
+                  165,
+                  1,
+                  21
+                ],
+                "first_pos": 144,
+                "id": 43,
+                "runs": [
+                  [
+                    165,
+                    21
+                  ]
+                ],
+                "vertical": true,
+                "weight": 21
+              },
+              {
+                "bounds": [
+                  144,
+                  203,
+                  1,
+                  5
+                ],
+                "first_pos": 144,
+                "id": 44,
+                "runs": [
+                  [
+                    203,
+                    5
+                  ]
+                ],
+                "vertical": true,
+                "weight": 5
+              },
+              {
+                "bounds": [
+                  145,
+                  171,
+                  1,
+                  21
+                ],
+                "first_pos": 145,
+                "id": 46,
+                "runs": [
+                  [
+                    171,
+                    21
+                  ]
+                ],
+                "vertical": true,
+                "weight": 21
+              },
+              {
+                "bounds": [
+                  145,
+                  201,
+                  1,
+                  6
+                ],
+                "first_pos": 145,
+                "id": 47,
+                "runs": [
+                  [
+                    201,
+                    6
+                  ]
+                ],
+                "vertical": true,
+                "weight": 6
+              },
+              {
+                "bounds": [
+                  146,
+                  177,
+                  1,
+                  30
+                ],
+                "first_pos": 146,
+                "id": 49,
+                "runs": [
+                  [
+                    177,
+                    30
+                  ]
+                ],
+                "vertical": true,
+                "weight": 30
+              },
+              {
+                "bounds": [
+                  147,
+                  180,
+                  1,
+                  25
+                ],
+                "first_pos": 147,
+                "id": 50,
+                "runs": [
+                  [
+                    180,
+                    25
+                  ]
+                ],
+                "vertical": true,
+                "weight": 25
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              144.6308697895365,
+              165.0
+            ],
+            "stop": [
+              146.24197507546316,
+              207.0
+            ],
+            "weight": 108
+          },
+          {
+            "basic_line": {
+              "a": -0.9998828818859807,
+              "b": 0.015304329824785419,
+              "c": 140.04482078333643,
+              "point_count": 49
+            },
+            "bounds": [
+              142,
+              152,
+              2,
+              28
+            ],
+            "center": [
+              143.0,
+              166.0
+            ],
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                142,
+                152,
+                2,
+                28
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  21
+                ],
+                [
+                  1,
+                  0,
+                  28
+                ]
+              ]
+            },
+            "line": [
+              142.3877551020408,
+              152.0,
+              142.80102040816325,
+              179.0
+            ],
+            "mean_distance": 0.48137733425319595,
+            "members": [
+              {
+                "bounds": [
+                  142,
+                  152,
+                  1,
+                  21
+                ],
+                "first_pos": 142,
+                "id": 40,
+                "runs": [
+                  [
+                    152,
+                    21
+                  ]
+                ],
+                "vertical": true,
+                "weight": 21
+              },
+              {
+                "bounds": [
+                  143,
+                  152,
+                  1,
+                  28
+                ],
+                "first_pos": 143,
+                "id": 41,
+                "runs": [
+                  [
+                    152,
+                    28
+                  ]
+                ],
+                "vertical": true,
+                "weight": 28
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              142.3877551020408,
+              152.0
+            ],
+            "stop": [
+              142.80102040816325,
+              179.0
+            ],
+            "weight": 49
+          },
+          {
+            "basic_line": {
+              "a": -0.9990854660560649,
+              "b": -0.0427578240271378,
+              "c": 154.7024665284109,
+              "point_count": 92
+            },
+            "bounds": [
+              148,
+              102,
+              5,
+              29
+            ],
+            "center": [
+              150.5,
+              116.5
+            ],
+            "closest_staff_id": 1,
+            "glyph": {
+              "bounds": [
+                148,
+                102,
+                5,
+                29
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  16,
+                  13
+                ],
+                [
+                  1,
+                  0,
+                  27
+                ],
+                [
+                  2,
+                  2,
+                  23
+                ],
+                [
+                  3,
+                  5,
+                  18
+                ],
+                [
+                  4,
+                  9,
+                  11
+                ]
+              ]
+            },
+            "line": [
+              150.47878643568043,
+              102.0,
+              149.28047146320273,
+              130.0
+            ],
+            "mean_distance": 1.1935683604349459,
+            "members": [
+              {
+                "bounds": [
+                  148,
+                  118,
+                  1,
+                  13
+                ],
+                "first_pos": 148,
+                "id": 51,
+                "runs": [
+                  [
+                    118,
+                    13
+                  ]
+                ],
+                "vertical": true,
+                "weight": 13
+              },
+              {
+                "bounds": [
+                  149,
+                  102,
+                  1,
+                  27
+                ],
+                "first_pos": 149,
+                "id": 54,
+                "runs": [
+                  [
+                    102,
+                    27
+                  ]
+                ],
+                "vertical": true,
+                "weight": 27
+              },
+              {
+                "bounds": [
+                  150,
+                  104,
+                  1,
+                  23
+                ],
+                "first_pos": 150,
+                "id": 55,
+                "runs": [
+                  [
+                    104,
+                    23
+                  ]
+                ],
+                "vertical": true,
+                "weight": 23
+              },
+              {
+                "bounds": [
+                  151,
+                  107,
+                  1,
+                  18
+                ],
+                "first_pos": 151,
+                "id": 56,
+                "runs": [
+                  [
+                    107,
+                    18
+                  ]
+                ],
+                "vertical": true,
+                "weight": 18
+              },
+              {
+                "bounds": [
+                  152,
+                  111,
+                  1,
+                  11
+                ],
+                "first_pos": 152,
+                "id": 58,
+                "runs": [
+                  [
+                    111,
+                    11
+                  ]
+                ],
+                "vertical": true,
+                "weight": 11
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              150.47878643568043,
+              102.0
+            ],
+            "stop": [
+              149.28047146320273,
+              130.0
+            ],
+            "weight": 92
+          }
+        ],
+        "left": 100,
+        "profile": 1,
+        "right": 859,
+        "system_id": 1
+      },
+      {
+        "accepted_seeds": [
+          {
+            "bounds": [
+              1360,
+              120,
+              2,
+              66
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                66
+              ],
+              [
+                1,
+                0,
+                66
+              ]
+            ]
+          },
+          {
+            "bounds": [
+              1660,
+              120,
+              2,
+              66
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                66
+              ],
+              [
+                1,
+                0,
+                66
+              ]
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 1360.5,
+              "point_count": 132
+            },
+            "bounds": [
+              1360,
+              120,
+              2,
+              66
+            ],
+            "center": [
+              1361.0,
+              153.0
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.84375,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.03125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 4.0625,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 4.125,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 4.125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 66,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7896126991379185,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 2,
+            "glyph": {
+              "bounds": [
+                1360,
+                120,
+                2,
+                66
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  66
+                ],
+                [
+                  1,
+                  0,
+                  66
+                ]
+              ]
+            },
+            "line": [
+              1360.5,
+              120.0,
+              1360.5,
+              185.0
+            ],
+            "mean_distance": 0.5,
+            "members": [
+              {
+                "bounds": [
+                  1360,
+                  120,
+                  2,
+                  66
+                ],
+                "first_pos": 1360,
+                "id": 96,
+                "runs": [
+                  [
+                    120,
+                    66
+                  ],
+                  [
+                    120,
+                    66
+                  ]
+                ],
+                "vertical": true,
+                "weight": 132
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              1360.5,
+              120.0
+            ],
+            "stop": [
+              1360.5,
+              185.0
+            ],
+            "weight": 132
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 1660.5,
+              "point_count": 132
+            },
+            "bounds": [
+              1660,
+              120,
+              2,
+              66
+            ],
+            "center": [
+              1661.0,
+              153.0
+            ],
+            "check": {
+              "accepted": true,
+              "checks": [
+                {
+                  "covariant": false,
+                  "high": 0.08,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Slope",
+                  "raw_value": 0.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.2,
+                  "impact": 0.84375,
+                  "low": 0.0,
+                  "name": "Straight",
+                  "raw_value": 0.03125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 3.5,
+                  "impact": 1.0,
+                  "low": 1.25,
+                  "name": "Length",
+                  "raw_value": 4.0625,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 2.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "Clean",
+                  "raw_value": 4.125,
+                  "weight": 2.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.25,
+                  "impact": 1.0,
+                  "low": 0.625,
+                  "name": "Black",
+                  "raw_value": 4.125,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": true,
+                  "high": 1.0,
+                  "impact": 1.0,
+                  "low": 0.3,
+                  "name": "BlackRatio",
+                  "raw_value": 1.0,
+                  "weight": 1.0
+                },
+                {
+                  "covariant": false,
+                  "high": 0.3,
+                  "impact": 1.0,
+                  "low": 0.0,
+                  "name": "Gap",
+                  "raw_value": 0.0,
+                  "weight": 5.0
+                }
+              ],
+              "context_black": 66,
+              "context_gap": 0,
+              "context_white": 0,
+              "grade": 0.7896126991379185,
+              "min_threshold": 0.2
+            },
+            "closest_staff_id": 2,
+            "glyph": {
+              "bounds": [
+                1660,
+                120,
+                2,
+                66
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  66
+                ],
+                [
+                  1,
+                  0,
+                  66
+                ]
+              ]
+            },
+            "line": [
+              1660.5,
+              120.0,
+              1660.5,
+              185.0
+            ],
+            "mean_distance": 0.5,
+            "members": [
+              {
+                "bounds": [
+                  1660,
+                  120,
+                  2,
+                  66
+                ],
+                "first_pos": 1660,
+                "id": 98,
+                "runs": [
+                  [
+                    120,
+                    66
+                  ],
+                  [
+                    120,
+                    66
+                  ]
+                ],
+                "vertical": true,
+                "weight": 132
+              }
+            ],
+            "skipped_header_or_staff": false,
+            "start": [
+              1660.5,
+              120.0
+            ],
+            "stop": [
+              1660.5,
+              185.0
+            ],
+            "weight": 132
+          },
+          {
+            "basic_line": {
+              "a": -1.0,
+              "b": 0.0,
+              "c": 1104.9569892473119,
+              "point_count": 93
+            },
+            "bounds": [
+              1104,
+              123,
+              3,
+              33
+            ],
+            "center": [
+              1105.5,
+              139.5
+            ],
+            "closest_staff_id": 2,
+            "glyph": {
+              "bounds": [
+                1104,
+                123,
+                3,
+                33
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  33
+                ],
+                [
+                  1,
+                  1,
+                  31
+                ],
+                [
+                  2,
+                  2,
+                  29
+                ]
+              ]
+            },
+            "line": [
+              1104.9569892473119,
+              123.0,
+              1104.9569892473119,
+              155.0
+            ],
+            "mean_distance": 0.8153629510725968,
+            "members": [
+              {
+                "bounds": [
+                  1104,
+                  123,
+                  3,
+                  33
+                ],
+                "first_pos": 1104,
+                "id": 88,
+                "runs": [
+                  [
+                    123,
+                    33
+                  ],
+                  [
+                    124,
+                    31
+                  ],
+                  [
+                    125,
+                    29
+                  ]
+                ],
+                "vertical": true,
+                "weight": 93
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              1104.9569892473119,
+              123.0
+            ],
+            "stop": [
+              1104.9569892473119,
+              155.0
+            ],
+            "weight": 93
+          },
+          {
+            "basic_line": {
+              "a": -0.9999871947582505,
+              "b": -0.0050606639410842634,
+              "c": 1108.4888417878853,
+              "point_count": 56
+            },
+            "bounds": [
+              1107,
+              127,
+              3,
+              24
+            ],
+            "center": [
+              1108.5,
+              139.0
+            ],
+            "closest_staff_id": 2,
+            "glyph": {
+              "bounds": [
+                1107,
+                127,
+                3,
+                24
+              ],
+              "orientation": "VERTICAL",
+              "runs": [
+                [
+                  0,
+                  0,
+                  24
+                ],
+                [
+                  1,
+                  2,
+                  19
+                ],
+                [
+                  2,
+                  5,
+                  13
+                ]
+              ]
+            },
+            "line": [
+              1107.86032388664,
+              127.0,
+              1107.7439271255062,
+              150.0
+            ],
+            "mean_distance": 0.7881895489384549,
+            "members": [
+              {
+                "bounds": [
+                  1107,
+                  127,
+                  1,
+                  24
+                ],
+                "first_pos": 1107,
+                "id": 89,
+                "runs": [
+                  [
+                    127,
+                    24
+                  ]
+                ],
+                "vertical": true,
+                "weight": 24
+              },
+              {
+                "bounds": [
+                  1108,
+                  129,
+                  1,
+                  19
+                ],
+                "first_pos": 1108,
+                "id": 90,
+                "runs": [
+                  [
+                    129,
+                    19
+                  ]
+                ],
+                "vertical": true,
+                "weight": 19
+              },
+              {
+                "bounds": [
+                  1109,
+                  132,
+                  1,
+                  13
+                ],
+                "first_pos": 1109,
+                "id": 91,
+                "runs": [
+                  [
+                    132,
+                    13
+                  ]
+                ],
+                "vertical": true,
+                "weight": 13
+              }
+            ],
+            "skipped_header_or_staff": true,
+            "start": [
+              1107.86032388664,
+              127.0
+            ],
+            "stop": [
+              1107.7439271255062,
+              150.0
+            ],
+            "weight": 56
+          }
+        ],
+        "left": 1060,
+        "profile": 1,
+        "right": 1819,
+        "system_id": 2
+      }
+    ]
+  },
+  "positive_real_score_rest": "not demonstrated",
+  "full_OMR": "unfinished",
+  "last_completed_substage": "BEAMS.SPOT_PREPARATION",
+  "beam_preparation": {
+    "beams_complete": false,
+    "header_erase_rectangles": [
+      {
+        "first_header_staff_id": 1,
+        "rect": [
+          0,
+          89,
+          159,
+          129
+        ],
+        "system_id": 1
+      },
+      {
+        "first_header_staff_id": 2,
+        "rect": [
+          959,
+          89,
+          161,
+          129
+        ],
+        "system_id": 2
+      }
+    ],
+    "masks": {
+      "binarized": {
+        "black_count": 0,
+        "height": 420,
+        "sha256": "9eeb638e2001f07b12ffadc8006e12018791980667d6f6ec36e09ac65084636c",
+        "width": 1920
+      },
+      "closed": {
+        "black_count": 0,
+        "height": 420,
+        "sha256": "9eeb638e2001f07b12ffadc8006e12018791980667d6f6ec36e09ac65084636c",
+        "width": 1920
+      },
+      "filtered_horizontal": {
+        "black_count": 2895,
+        "height": 420,
+        "sha256": "62abaf1ff27937fdcc7c770be8b50125741506b140630d382976bec9119faed2",
+        "width": 1920
+      },
+      "gaussian": {
+        "black_count": 1577,
+        "height": 420,
+        "sha256": "5cc8dd21995391860e2a12ffa24ccda788dcfa7d05dcb4b2fb85596f07811f30",
+        "width": 1920
+      },
+      "head_spots": {
+        "black_count": 0,
+        "height": 420,
+        "sha256": "9eeb638e2001f07b12ffadc8006e12018791980667d6f6ec36e09ac65084636c",
+        "width": 1920
+      },
+      "header_erased": {
+        "black_count": 96,
+        "height": 420,
+        "sha256": "c25813195f299fcc037fa60db085f961bac1f5c872f9fdba4b73e5bb9a65f13a",
+        "width": 1920
+      },
+      "median": {
+        "black_count": 2832,
+        "height": 420,
+        "sha256": "e9d30c29657cc4a8601aa84789d5595701125a2a421b1c3bd3b4684f55ac3759",
+        "width": 1920
+      },
+      "no_staff": {
+        "black_count": 3650,
+        "height": 420,
+        "sha256": "6a2f46221ab5340c2a6e30f212175725b5abf12b925830f8ee4b54560f12dd9a",
+        "width": 1920
+      }
+    },
+    "musicxml_complete": false,
+    "pending": [
+      "BlackHeadSizer and glyph indexing/tagging",
+      "system spot dispatch",
+      "BeamStructure and BeamInter construction",
+      "multiple-measure rests",
+      "LEDGERS, HEADS, stem attachment, rhythm and MusicXML"
+    ],
+    "pixel_preparation_complete": true,
+    "scale": {
+      "beam_thickness": 9,
+      "effective_spot_beam": 9,
+      "fore": 2,
+      "interline": 16,
+      "small_beam_thickness": null,
+      "small_beams_switch": false,
+      "stem_max": 3
+    },
+    "spot_count": 0,
+    "stage": "BEAMS.native_spot_preparation",
+    "supported_scope": "default smallBeams=false; five-line GRID; legacy full-width and certified straight clipped system header bounds; four-million-pixel/resource bounds",
+    "unassigned_spots": []
+  },
+  "beam_prolog": {
+    "beam_prolog_complete": false,
+    "beams_complete": false,
+    "error": "inconsistent_beam_dispatch_neighbor",
+    "stage": "BEAMS.native_prolog"
+  },
+  "shared_sig": {
+    "covered_substages": [
+      "GRID"
+    ],
+    "id_namespace": "native shared registration-order vertex and relation IDs; not JVM IDs",
+    "inters": [
+      {
+        "bounds": [
+          400,
+          119,
+          2,
+          67
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 1,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 1,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 1,
+          "phase": "GRID",
+          "system": 1
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          1,
+          400,
+          401
+        ],
+        "staff_id": 1
+      },
+      {
+        "bounds": [
+          700,
+          119,
+          2,
+          67
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 2,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 2,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 2,
+          "phase": "GRID",
+          "system": 1
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          1,
+          700,
+          701
+        ],
+        "staff_id": 1
+      },
+      {
+        "bounds": [
+          858,
+          119,
+          2,
+          67
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 3,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 3,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 3,
+          "phase": "GRID",
+          "system": 1
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          1,
+          858,
+          859
+        ],
+        "staff_id": 1
+      },
+      {
+        "bounds": [
+          1360,
+          119,
+          2,
+          67
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 4,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 4,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 4,
+          "phase": "GRID",
+          "system": 2
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          2,
+          1360,
+          1361
+        ],
+        "staff_id": 2
+      },
+      {
+        "bounds": [
+          1660,
+          119,
+          2,
+          67
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 5,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 5,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 5,
+          "phase": "GRID",
+          "system": 2
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          2,
+          1660,
+          1661
+        ],
+        "staff_id": 2
+      },
+      {
+        "bounds": [
+          1818,
+          119,
+          2,
+          67
+        ],
+        "contextual_grade": 0.8,
+        "frozen": false,
+        "glyph_id": 6,
+        "glyph_id_namespace": "GRID",
+        "grade": 0.8,
+        "id": 6,
+        "kind": "BarlineInter",
+        "origin": {
+          "local": 6,
+          "phase": "GRID",
+          "system": 2
+        },
+        "shape": "THIN_BARLINE",
+        "source_peak": [
+          2,
+          1818,
+          1819
+        ],
+        "staff_id": 2
+      }
+    ],
+    "musicxml_complete": false,
+    "relations": [],
+    "schema": "audiveris-native.shared-sig.v1",
+    "tombstones": []
+  }
+}
