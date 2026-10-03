@@ -1,0 +1,144 @@
+diff --git a/docs/BEAM-CANDIDATES.md b/docs/BEAM-CANDIDATES.md
+index 6410649..b6bc32b 100644
+--- a/docs/BEAM-CANDIDATES.md
++++ b/docs/BEAM-CANDIDATES.md
+@@ -14,9 +14,12 @@ The grayscale PNG/PGM input is limited to four million pixels. Output files must
+ not already exist. `SPOTS.pgm` remains the prepared beam-spot mask. The report
+ now adds `beam_candidates`: ordered spot traces, assigned spot IDs, initial
+ beam/hook geometry and pixel glyphs, individual grade impacts, and exclusions.
+-Successful supported inputs use `last_completed_substage=BEAMS.INITIAL_CANDIDATES`.
+-`last_completed_stage=STEM_SEEDS`, `beams_complete=false`, and
+-`musicxml_complete=false` are intentional. The stored prolog snapshot precedes
++The initial candidate snapshot keeps its own partial `beams_complete=false`.
++The top-level `last_completed_substage` reports the furthest completed native
++boundary: supported single-staff inputs now reach `BEAMS.EPILOG`; the candidate
++marker remains the fallback when later processing cannot complete.
++`last_completed_stage=STEM_SEEDS` and `musicxml_complete=false` remain intentional.
++See [the current CLI contract](BEAMS-EPILOG.md). The stored prolog snapshot precedes
+ candidate registration and survives bounded candidate-stage errors.
+ 
+ No Java, subprocess, network, font rendering, or expected fixture is required at
+diff --git a/docs/BEAM-PREPARATION.md b/docs/BEAM-PREPARATION.md
+index 8421218..443b5c6 100644
+--- a/docs/BEAM-PREPARATION.md
++++ b/docs/BEAM-PREPARATION.md
+@@ -1,5 +1,7 @@
+ # Native BEAMS spot preparation
+ 
++Current CLI contract: [BEAMS epilog](BEAMS-EPILOG.md). The stage reports below describe the named historical checkpoint; current supported single-staff inputs can reach BEAMS.EPILOG. Phase snapshots retain their earlier completion flags.
++
+ This pixel milestone is now followed by [native BEAMS prolog](BEAM-PROLOG.md), which adds head sizing and system dispatch. The historical v15 evidence below remains unchanged.
+ 
+ Pinned Audiveris 5.11.0: `9e1e55cd2746037d059345881c53e6a6754bffbd`.
+diff --git a/docs/BEAMS-EPILOG.md b/docs/BEAMS-EPILOG.md
+index 22790ad..31155c1 100644
+--- a/docs/BEAMS-EPILOG.md
++++ b/docs/BEAMS-EPILOG.md
+@@ -1,3 +1,22 @@
+ # Native BEAMS epilog
+ 
+-finish_beams_epilog implements original BeamsStep.doEpilog -> SystemInfo.removeGroupedGlyphs(BEAM_SPOT): remove only free-glyph owner references whose canonical glyph has exactly the BEAM_SPOT group. Preserve registry objects, groups, survivor order, shared graph vertices, edges and IDs. Validate every reference before mutation. CLI invokes this after all supported native system rest boundaries complete; unsupported multi-staff/ledger geometry prevents epilog and BEAMS completion. GRID always enters the common graph even when candidate extraction is incomplete. The supported single-staff default geometry now reaches BEAMS.EPILOG; this is not full OMR, MusicXML or demonstrated positive real-score rest conversion. Eighteen focused tests, fmt and all-targets Clippy pass. Real image replay preserves graph and IDs exactly; scanned multi-staff input remains explicit unsupported. Full debug and release at this source remain UNVERIFIED, ready for separate bounded batches after this checkpoint. Historical 289-test release applies only to source 21f0833abd67dd4fa1dd0c60a74a686779329818.
++finish_beams_epilog implements original BeamsStep.doEpilog -> SystemInfo.removeGroupedGlyphs(BEAM_SPOT): remove only free-glyph owner references whose canonical glyph has exactly the BEAM_SPOT group. Preserve registry objects, groups, survivor order, shared graph vertices, edges and IDs. Validate every reference before mutation. CLI invokes this after all supported native system rest boundaries complete; unsupported multi-staff/ledger geometry prevents epilog and BEAMS completion. GRID always enters the common graph even when candidate extraction is incomplete. The supported single-staff default geometry now reaches BEAMS.EPILOG; this is not full OMR, MusicXML or demonstrated positive real-score rest conversion. Eighteen focused tests, fmt and all-targets Clippy pass. Real image replay preserves graph and IDs exactly; scanned multi-staff input remains explicit unsupported. Full debug and release were unverified at the epilog implementation checkpoint. Subsequent fixed-pin runs at 019ed5da each found the obsolete CLI assertion below and stopped; later suites were not reached. Subsequent validation is recorded in the external contract checkpoint receipts. Historical 289-test release applies only to source 21f0833abd67dd4fa1dd0c60a74a686779329818.
++
++## Current CLI contract
++
++The top-level last_completed_substage reports the furthest boundary actually
++completed, while last_completed_stage remains STEM_SEEDS for the full-step
++milestones. Initial preparation/prolog/candidate snapshots retain their partial
++beams_complete=false values. later_beams.beams_complete and epilog_complete
++become true only when all native system rest boundaries and sheet epilog finish.
++The supported single/default-five-line-staff synthetic inputs can reach
++BEAMS.EPILOG; unsupported multi-staff/ledger cases remain incomplete and expose
++their actual earlier boundary/errors. musicxml_complete remains false.
++
++The CLI contract test runs beams-double.png with an empty environment and
++PATH=/nonexistent, verifies epilog and preceding completion flags, shared graph
++identity/endpoint invariants, unchanged mask digest and refusal to overwrite
++existing files. Its old INITIAL_CANDIDATES assertion described an earlier
++checkpoint. Updating that single obsolete expectation preserves the original
++partial phase assertions, image checks and output refusal; it does not infer
++full OMR or positive real-score rest recognition.
+diff --git a/docs/CLOUD-HANDOFF.md b/docs/CLOUD-HANDOFF.md
+index 481afc5..19d2b40 100644
+--- a/docs/CLOUD-HANDOFF.md
++++ b/docs/CLOUD-HANDOFF.md
+@@ -1,5 +1,7 @@
+ # Initial BEAMS candidate handoff
+ 
++Current CLI contract: [BEAMS epilog](BEAMS-EPILOG.md). The stage reports below describe the named historical checkpoint; current supported single-staff inputs can reach BEAMS.EPILOG. Phase snapshots retain their earlier completion flags.
++
+ This is a source-development checkpoint, not a fully swept replacement binary.
+ The bundled executable remains the verified v16 BEAMS prolog binary at commit
+ 23f4f8f94aa5d9945be0a7a7fceea53f174e5b71. The new source adds initial candidates.
+diff --git a/docs/REAL-BEAMS-RESTS.md b/docs/REAL-BEAMS-RESTS.md
+index 12b8155..1ff561b 100644
+--- a/docs/REAL-BEAMS-RESTS.md
++++ b/docs/REAL-BEAMS-RESTS.md
+@@ -1,5 +1,7 @@
+ # Real-input native BEAMS through multiple-rest boundary
+ 
++Current CLI contract: [BEAMS epilog](BEAMS-EPILOG.md). The stage reports below describe the named historical checkpoint; current supported single-staff inputs can reach BEAMS.EPILOG. Phase snapshots retain their earlier completion flags.
++
+ beams_pipeline::advance runs existing native initial candidates through the extension snapshot loop, late hooks, group formation, native rest mapping/detection/registration and shared graph synchronization. CLI beam-spots now emits later_beams, the actual latest supported substage, and common graph vertices/relations. Initial phase snapshots remain present. Registry and source candidate/group semantics are retained. BEAMS epilog/free glyph cleanup, LEDGERS/HEADS/rhythm/MusicXML are still pending and beams_complete/musicxml_complete remain false.
+ 
+ native_rest_mapping consumes native GRID staff curves, measured thickness, specific interline, left/right abscissas and complete vLag then hLag sections. It supports one system and one default five-line staff whose native area is the full image, uses actual integer curve ordinates for StaffProjector sampling, and uses the original in-staff pitch formula 4*(2*y-bottom-top)/(bottom-top) at median endpoints. A beam center above the only staff's first line has no staff-at-or-above. Multi-system/multi-staff, unsupported area/edge geometry and outside-staff ledger pitch are explicit errors, not guessed association or false conversion. Source provenance bytecode for Staff/SystemInfo and StaffManager is preserved. The integrated eleven original conversion controls now derive endpoint pitches via this native mapping; six positive and five negative conversions still match. Two mapping contract tests cover curve samples, lag orientation/order, center pitch, multi-staff rejection and unsupported ledger range. Thirteen focused tests, fmt and all-targets Clippy pass.
+diff --git a/docs/SHARED-SIG.md b/docs/SHARED-SIG.md
+index 5f96a74..a38774d 100644
+--- a/docs/SHARED-SIG.md
++++ b/docs/SHARED-SIG.md
+@@ -1,5 +1,7 @@
+ # Shared native SIG adapter and intermediate CLI report
+ 
++Current CLI contract: [BEAMS epilog](BEAMS-EPILOG.md). The stage reports below describe the named historical checkpoint; current supported single-staff inputs can reach BEAMS.EPILOG. Phase snapshots retain their earlier completion flags.
++
+ shared_sig::Graph owns one vertex ID allocator, source-key map and relation ID store across GRID, beam candidates, beam groups, rests and serifs. Source identity is (system, phase, local ID). Imports retain original payload and source identity while rewriting vertex and relation endpoints to shared IDs. IDs allocate in actual import/registration encounter order, are not reused, and remain stable across re-synchronization and cleanup. GRID and BEAMS glyph IDs retain explicit separate namespaces; no shared glyph-index equivalence is claimed.
+ 
+ GRID import reads actual native bar_semantics systems/inters/relations. Beam sync uses typed SystemCandidates in registration order, including tombstones. Full system sync adds group vertices/Containment/support relations and rest/serif vertices/relations. Converted rests keep an explicit source_beam_id pointing to the source beam's shared tombstone. Rest relation source/target kinds and side are checked; dangling or removed endpoints, duplicate GRID source IDs, duplicate rest/group IDs and budget overflow reject. Clone/commit updates make imports and sync transactional. Existing phase logic remains authoritative; this store is the common graph adapter/view, not a replacement JVM SIG engine. Initial-candidate-only sync rejects after live group/rest data exists, requiring a complete snapshot to prevent stale memberships.
+diff --git a/tests/beam_preparation.rs b/tests/beam_preparation.rs
+index 9d5f163..3969959 100644
+--- a/tests/beam_preparation.rs
++++ b/tests/beam_preparation.rs
+@@ -464,7 +464,42 @@ fn beam_spots_cli_is_native_and_refuses_existing_outputs() {
+     let r: Value = serde_json::from_slice(&std::fs::read(&report).unwrap()).unwrap();
+     assert_eq!(r["schema"], "audiveris-native.experimental-beam-spots.v1");
+     assert_eq!(r["last_completed_stage"], "STEM_SEEDS");
+-    assert_eq!(r["last_completed_substage"], "BEAMS.INITIAL_CANDIDATES");
++    assert_eq!(r["last_completed_substage"], "BEAMS.EPILOG");
++    for boundary in [
++        "extensions_complete",
++        "hooks_complete",
++        "groups_complete",
++        "multiple_rest_boundary_complete",
++        "epilog_complete",
++        "beams_complete",
++    ] {
++        assert_eq!(r["later_beams"][boundary], true, "{boundary}");
++    }
++    assert_eq!(r["musicxml_complete"], false);
++    assert_eq!(r["later_beams"]["epilog"]["graph_mutation"], false);
++    assert!(
++        r["shared_sig"]["covered_substages"]
++            .as_array()
++            .unwrap()
++            .contains(&serde_json::json!("BEAMS.EPILOG"))
++    );
++    let live: std::collections::BTreeSet<_> = r["shared_sig"]["inters"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .map(|i| i["id"].as_u64().unwrap())
++        .collect();
++    assert_eq!(
++        live.len(),
++        r["shared_sig"]["inters"].as_array().unwrap().len()
++    );
++    for relation in r["shared_sig"]["relations"].as_array().unwrap() {
++        assert!(live.contains(&relation["source"].as_u64().unwrap()));
++        assert!(live.contains(&relation["target"].as_u64().unwrap()));
++    }
++    for tombstone in r["shared_sig"]["tombstones"].as_array().unwrap() {
++        assert!(!live.contains(&tombstone.as_u64().unwrap()));
++    }
+     assert_eq!(
+         r["beam_candidates"]["initial_beam_candidates_complete"],
+         true

@@ -1,0 +1,72 @@
+{
+  "branch": "checkpoint/sol-epilog-contract-20261003",
+  "parent_checkpoint_commit": "c7e365b1126d3fbc9c1bebb01e7b32e8368d8e3f",
+  "parent_implementation_commit": "019ed5dac34d43877c4ba4218ff212e4be32955b",
+  "parent_implementation_tree": "db3adf6d28c87f852fdc8e39850d6adc9d2c500f",
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/aa108a95a2108fab1a9a19a75ef32bed8fbcdaea/checkpoints/sol-beams-epilog-20261003/MANIFEST.json",
+  "local_implementation_commit": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+  "local_implementation_tree": "de96cd18a3a6f8f3d5d2ee04010485650c7db0c9",
+  "changed_files_from_parent": [
+    "docs/BEAM-CANDIDATES.md",
+    "docs/BEAM-PREPARATION.md",
+    "docs/BEAMS-EPILOG.md",
+    "docs/CLOUD-HANDOFF.md",
+    "docs/REAL-BEAMS-RESTS.md",
+    "docs/SHARED-SIG.md",
+    "tests/beam_preparation.rs"
+  ],
+  "file_sha256": {
+    "docs/BEAM-CANDIDATES.md": "fc60303e3f2a596c837257027e5951b8b35c7390c92943f329c215dbe6499f0c",
+    "docs/BEAM-PREPARATION.md": "90a78ef5e09a8f8b2946060cf6d17e4556b08afe520e964d140e1d8a79e5a40c",
+    "docs/BEAMS-EPILOG.md": "75d602e7a7c9176c741df37ae1cb49c53031c7850f1708ee80cf7412538b37ee",
+    "docs/CLOUD-HANDOFF.md": "4ebce9deac0b534cde287ec7cfeff4d3e0d80a062f08fdddeae962bf2db66ecc",
+    "docs/REAL-BEAMS-RESTS.md": "35df23f17ad6f86371a50e2426f12b27ff0d6076834ca7523f9b6e2e76892c37",
+    "docs/SHARED-SIG.md": "ae4724685853ae3577cc96603bd727612ddbdb97105bfe4252bb43106cc3fceb",
+    "tests/beam_preparation.rs": "4abd9729c144ff78467e9b95fd1ddb84f81eab55ea7b16a80253266c670e72cf"
+  },
+  "tracked_files": 4692,
+  "patch": {
+    "path": "checkpoints/sol-epilog-contract-20261003/changes.patch",
+    "bytes": 12329,
+    "sha256": "bb4f0b0d524b98935c7bb537f2c4d44c6162fff1afbfff0b13eecd6739bf8a77"
+  },
+  "implementation_commit_preimage": "checkpoints/sol-epilog-contract-20261003/IMPLEMENTATION-COMMIT.txt",
+  "validation": {
+    "focused": {
+      "suites": 3,
+      "passed": 17,
+      "failed": 0,
+      "ignored": 0
+    },
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "full_debug": "pending at fixed new source",
+    "full_release": "pending at fixed new source",
+    "implementation_changes": "test/documentation only; no algorithm/runtime changes",
+    "source_frozen": "e13359dfd928a474176b65ffe7c3a6edb69951aa",
+    "old_stage_test_assertions_audit": "Only one stage marker assertion in all Rust tests/crates; changed to exact BEAMS.EPILOG and added completion/graph checks",
+    "retained_invariants": [
+      "native empty environment PATH=/nonexistent",
+      "initial phase partial flags",
+      "mask SHA256",
+      "refusal preserving existing output",
+      "musicxml incomplete"
+    ],
+    "added_invariants": [
+      "all native later boundaries complete",
+      "epilog no graph mutation",
+      "shared coverage includes epilog",
+      "unique live IDs",
+      "valid relation endpoints",
+      "no live tombstones"
+    ]
+  },
+  "recovery": [
+    "Restore exact parent source with immutable source_recovery_manifest_url and prior chain.",
+    "Verify patch byte count/hash then git apply --check and git apply --index.",
+    "Verify git write-tree and every changed file hash.",
+    "Write raw implementation commit using git hash-object -t commit -w --stdin; verify exact source commit and attach a new isolated local branch.",
+    "Verify clean source and tracked count."
+  ],
+  "full_OMR": "unfinished"
+}

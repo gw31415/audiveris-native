@@ -1,0 +1,6 @@
+tree de96cd18a3a6f8f3d5d2ee04010485650c7db0c9
+parent 019ed5dac34d43877c4ba4218ff212e4be32955b
+author Checkpoint Restore <checkpoint-restore@local.invalid> 1791035606 +0000
+committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791035606 +0000
+
+Align CLI contract test and milestone documentation with supported native BEAMS epilog; retain phase, mask, output refusal and graph invariants
