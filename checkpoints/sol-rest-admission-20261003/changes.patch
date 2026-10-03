@@ -1,0 +1,1405 @@
+diff --git a/docs/MULTIPLE-REST-ADMISSION.md b/docs/MULTIPLE-REST-ADMISSION.md
+new file mode 100644
+index 0000000..a7524a2
+--- /dev/null
++++ b/docs/MULTIPLE-REST-ADMISSION.md
+@@ -0,0 +1,9 @@
++# Multiple-rest admission and serif query boundary
++
++`multiple_rest_admission::assess_candidate` implements the pinned original MultipleRestsBuilder.process admission predicates. Removed candidates, hooks and small beams are excluded. Normal beam bounds must be at least the rounded four-interline minimum width. The caller supplies the original staff association and endpoint pitch measurements: no staff, tablature, and either absolute endpoint pitch above 0.2 reject. Passing candidates receive LEFT then RIGHT serif queries at bounds.x and bounds.x+width-1 with half-even-rounded beam height minus mid-line thickness. No beam, group or registry is mutated. This is a completed admission subset, not completed rest recognition.
++
++73 independent original-JAR controls invoke uninterrupted MultipleRestsBuilder.process on actual staff/raster data and supplied beam medians, with 26 reaching its projector. Sheet scale and the actual staff's declared specific interline are varied explicitly over 15, 16 and 17; actual original endpoint pitch measurements are retained. Direct original getSerifPeaks and processMultiRestSide calls capture query-derived peak lists. All peak lists were empty and no rest conversion occurred in these controls. This proves admission and query setup, not positive raster serif detection. Last LEFT/first RIGHT peak selection is justified by pinned getSerifPeaks bytecode; a native nonempty order test verifies the implementation without claiming an original nonempty control.
++
++Four focused tests across admission and group controls pass, along with fmt and all-targets Clippy. The initial oracle attempt failed because its sheet scale did not match staff specificInterline; this was corrected explicitly in the original controls. Clippy's initial collapsible-if failure was fixed and checked again. Prior provenance and the full 275 debug/release validation at groups source 6eeebead are retained. Full regression at this new tree is UNVERIFIED and deferred to a meaningful batch boundary.
++
++Staff association/pitch computation in the native rests flow, raster serif peak detection, serif filament/glyph construction, MultipleRestInter/VerticalSerifInter registration, beam removal and group cleanup, epilog, CLI wiring and full OMR remain unfinished. No thirteen-image rest boundary or positive rest-conversion acceptance is claimed.
+diff --git a/evidence/multiple-rest-admission-checkpoint/MultipleRestsBuilder.javap.txt b/evidence/multiple-rest-admission-checkpoint/MultipleRestsBuilder.javap.txt
+new file mode 100644
+index 0000000..79f1f8b
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/MultipleRestsBuilder.javap.txt
+@@ -0,0 +1,578 @@
++Compiled from "MultipleRestsBuilder.java"
++public class org.audiveris.omr.sheet.beam.MultipleRestsBuilder {
++  private static final org.audiveris.omr.sheet.beam.MultipleRestsBuilder$Constants constants;
++
++  private static final org.slf4j.Logger logger;
++
++  private final org.audiveris.omr.sheet.SystemInfo system;
++
++  private final org.audiveris.omr.sheet.Sheet sheet;
++
++  private final java.util.Map<org.audiveris.omr.sheet.Staff, org.audiveris.omr.sheet.grid.StaffProjector> projectors;
++
++  private final org.audiveris.omr.sheet.beam.MultipleRestsBuilder$Parameters params;
++
++  private final java.util.Map<org.audiveris.omr.sig.inter.BeamInter, java.util.Map<org.audiveris.omr.util.HorizontalSide, org.audiveris.omr.sheet.grid.StaffPeak>> found;
++
++  public org.audiveris.omr.sheet.beam.MultipleRestsBuilder(org.audiveris.omr.sheet.SystemInfo);
++    Code:
++       0: aload_0
++       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
++       4: aload_0
++       5: new           #7                  // class java/util/HashMap
++       8: dup
++       9: invokespecial #9                  // Method java/util/HashMap."<init>":()V
++      12: putfield      #10                 // Field projectors:Ljava/util/Map;
++      15: aload_0
++      16: new           #16                 // class java/util/LinkedHashMap
++      19: dup
++      20: invokespecial #18                 // Method java/util/LinkedHashMap."<init>":()V
++      23: putfield      #19                 // Field found:Ljava/util/Map;
++      26: aload_0
++      27: aload_1
++      28: putfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++      31: aload_0
++      32: aload_1
++      33: invokevirtual #26                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
++      36: putfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      39: aload_0
++      40: new           #36                 // class org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Parameters
++      43: dup
++      44: aload_0
++      45: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      48: invokevirtual #38                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
++      51: invokespecial #44                 // Method org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Parameters."<init>":(Lorg/audiveris/omr/sheet/Scale;)V
++      54: putfield      #47                 // Field params:Lorg/audiveris/omr/sheet/beam/MultipleRestsBuilder$Parameters;
++      57: return
++
++  private void createInters();
++    Code:
++       0: aload_0
++       1: getfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++       4: invokevirtual #51                 // Method org/audiveris/omr/sheet/SystemInfo.getSig:()Lorg/audiveris/omr/sig/SIGraph;
++       7: astore_1
++       8: aload_0
++       9: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      12: invokevirtual #38                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
++      15: invokevirtual #55                 // Method org/audiveris/omr/sheet/Scale.getFore:()Ljava/lang/Integer;
++      18: invokevirtual #61                 // Method java/lang/Integer.intValue:()I
++      21: i2d
++      22: ldc2_w        #67                 // double 2.0d
++      25: ddiv
++      26: dstore_2
++      27: aload_0
++      28: invokevirtual #69                 // Method getMaxSerifWidth:()I
++      31: istore        4
++      33: aload_0
++      34: iload         4
++      36: invokevirtual #72                 // Method getSectionsByWidth:(I)Ljava/util/List;
++      39: astore        5
++      41: aload_0
++      42: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      45: invokevirtual #76                 // Method org/audiveris/omr/sheet/Sheet.getGlyphIndex:()Lorg/audiveris/omr/glyph/GlyphIndex;
++      48: astore        6
++      50: new           #80                 // class org/audiveris/omr/sheet/grid/BarFilamentBuilder
++      53: dup
++      54: aload_0
++      55: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      58: invokespecial #82                 // Method org/audiveris/omr/sheet/grid/BarFilamentBuilder."<init>":(Lorg/audiveris/omr/sheet/Sheet;)V
++      61: astore        7
++      63: aload_0
++      64: getfield      #19                 // Field found:Ljava/util/Map;
++      67: invokeinterface #85,  1           // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
++      72: invokeinterface #91,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
++      77: astore        8
++      79: aload         8
++      81: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++      86: ifeq          377
++      89: aload         8
++      91: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++      96: checkcast     #107                // class java/util/Map$Entry
++      99: astore        9
++     101: aload         9
++     103: invokeinterface #109,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
++     108: checkcast     #112                // class org/audiveris/omr/sig/inter/BeamInter
++     111: astore        10
++     113: new           #114                // class org/audiveris/omr/sig/inter/MultipleRestInter
++     116: dup
++     117: aload         10
++     119: invokevirtual #116                // Method org/audiveris/omr/sig/inter/BeamInter.getGrade:()Ljava/lang/Double;
++     122: aload         10
++     124: invokevirtual #120                // Method org/audiveris/omr/sig/inter/BeamInter.getMedian:()Ljava/awt/geom/Line2D;
++     127: aload         10
++     129: invokevirtual #124                // Method org/audiveris/omr/sig/inter/BeamInter.getHeight:()D
++     132: invokespecial #128                // Method org/audiveris/omr/sig/inter/MultipleRestInter."<init>":(Ljava/lang/Double;Ljava/awt/geom/Line2D;D)V
++     135: astore        11
++     137: aload_1
++     138: aload         11
++     140: invokevirtual #131                // Method org/audiveris/omr/sig/SIGraph.addVertex:(Lorg/audiveris/omr/sig/inter/Inter;)Z
++     143: pop
++     144: aload         11
++     146: aload_0
++     147: getfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++     150: aload         10
++     152: invokevirtual #137                // Method org/audiveris/omr/sig/inter/BeamInter.getCenter:()Ljava/awt/Point;
++     155: invokevirtual #141                // Method org/audiveris/omr/sheet/SystemInfo.getStaffAtOrAbove:(Ljava/awt/geom/Point2D;)Lorg/audiveris/omr/sheet/Staff;
++     158: invokevirtual #145                // Method org/audiveris/omr/sig/inter/MultipleRestInter.setStaff:(Lorg/audiveris/omr/sheet/Staff;)V
++     161: aload         9
++     163: invokeinterface #149,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
++     168: checkcast     #86                 // class java/util/Map
++     171: astore        12
++     173: invokestatic  #152                // Method org/audiveris/omr/util/HorizontalSide.values:()[Lorg/audiveris/omr/util/HorizontalSide;
++     176: astore        13
++     178: aload         13
++     180: arraylength
++     181: istore        14
++     183: iconst_0
++     184: istore        15
++     186: iload         15
++     188: iload         14
++     190: if_icmpge     362
++     193: aload         13
++     195: iload         15
++     197: aaload
++     198: astore        16
++     200: aload         12
++     202: aload         16
++     204: invokeinterface #158,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
++     209: checkcast     #162                // class org/audiveris/omr/sheet/grid/StaffPeak
++     212: astore        17
++     214: aload         7
++     216: aload         17
++     218: iconst_0
++     219: aload         5
++     221: invokevirtual #164                // Method org/audiveris/omr/sheet/grid/BarFilamentBuilder.buildFilament:(Lorg/audiveris/omr/sheet/grid/StaffPeak;ILjava/util/List;)Lorg/audiveris/omr/glyph/dynamic/Filament;
++     224: astore        18
++     226: aload         6
++     228: aload         18
++     230: aconst_null
++     231: invokevirtual #168                // Method org/audiveris/omr/glyph/dynamic/Filament.toGlyph:(Lorg/audiveris/omr/glyph/GlyphGroup;)Lorg/audiveris/omr/glyph/Glyph;
++     234: invokevirtual #174                // Method org/audiveris/omr/glyph/GlyphIndex.registerOriginal:(Lorg/audiveris/omr/glyph/Glyph;)Lorg/audiveris/omr/glyph/Glyph;
++     237: astore        19
++     239: aload         17
++     241: invokevirtual #180                // Method org/audiveris/omr/sheet/grid/StaffPeak.getStart:()I
++     244: i2d
++     245: aload         17
++     247: invokevirtual #183                // Method org/audiveris/omr/sheet/grid/StaffPeak.getWidth:()I
++     250: i2d
++     251: ldc2_w        #67                 // double 2.0d
++     254: ddiv
++     255: dadd
++     256: dstore        20
++     258: new           #186                // class java/awt/geom/Line2D$Double
++     261: dup
++     262: dload         20
++     264: aload         17
++     266: invokevirtual #188                // Method org/audiveris/omr/sheet/grid/StaffPeak.getTop:()I
++     269: i2d
++     270: dload_2
++     271: dsub
++     272: ldc2_w        #191                // double 0.5d
++     275: dadd
++     276: dload         20
++     278: aload         17
++     280: invokevirtual #193                // Method org/audiveris/omr/sheet/grid/StaffPeak.getBottom:()I
++     283: i2d
++     284: dload_2
++     285: dadd
++     286: ldc2_w        #191                // double 0.5d
++     289: dadd
++     290: invokespecial #196                // Method java/awt/geom/Line2D$Double."<init>":(DDDD)V
++     293: astore        22
++     295: new           #199                // class org/audiveris/omr/sig/inter/VerticalSerifInter
++     298: dup
++     299: aload         19
++     301: aload         17
++     303: invokevirtual #201                // Method org/audiveris/omr/sheet/grid/StaffPeak.getImpacts:()Lorg/audiveris/omr/sig/GradeImpacts;
++     306: aload         22
++     308: aload         17
++     310: invokevirtual #183                // Method org/audiveris/omr/sheet/grid/StaffPeak.getWidth:()I
++     313: i2d
++     314: invokestatic  #205                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
++     317: invokespecial #211                // Method org/audiveris/omr/sig/inter/VerticalSerifInter."<init>":(Lorg/audiveris/omr/glyph/Glyph;Lorg/audiveris/omr/sig/GradeImpacts;Ljava/awt/geom/Line2D;Ljava/lang/Double;)V
++     320: astore        23
++     322: aload_1
++     323: aload         23
++     325: invokevirtual #131                // Method org/audiveris/omr/sig/SIGraph.addVertex:(Lorg/audiveris/omr/sig/inter/Inter;)Z
++     328: pop
++     329: new           #214                // class org/audiveris/omr/sig/relation/MultipleRestSerifRelation
++     332: dup
++     333: invokespecial #216                // Method org/audiveris/omr/sig/relation/MultipleRestSerifRelation."<init>":()V
++     336: astore        24
++     338: aload         24
++     340: aload         16
++     342: invokevirtual #217                // Method org/audiveris/omr/sig/relation/MultipleRestSerifRelation.setRestSide:(Lorg/audiveris/omr/util/HorizontalSide;)V
++     345: aload_1
++     346: aload         11
++     348: aload         23
++     350: aload         24
++     352: invokevirtual #221                // Method org/audiveris/omr/sig/SIGraph.addEdge:(Lorg/audiveris/omr/sig/inter/Inter;Lorg/audiveris/omr/sig/inter/Inter;Lorg/audiveris/omr/sig/relation/Relation;)Z
++     355: pop
++     356: iinc          15, 1
++     359: goto          186
++     362: getstatic     #225                // Field logger:Lorg/slf4j/Logger;
++     365: ldc           #229                // String Detected {}
++     367: aload         11
++     369: invokeinterface #231,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
++     374: goto          79
++     377: return
++
++  private int getMaxSerifWidth();
++    Code:
++       0: iconst_0
++       1: istore_1
++       2: aload_0
++       3: getfield      #19                 // Field found:Ljava/util/Map;
++       6: invokeinterface #237,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
++      11: invokeinterface #240,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
++      16: astore_2
++      17: aload_2
++      18: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++      23: ifeq          87
++      26: aload_2
++      27: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++      32: checkcast     #86                 // class java/util/Map
++      35: astore_3
++      36: aload_3
++      37: invokeinterface #237,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
++      42: invokeinterface #240,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
++      47: astore        4
++      49: aload         4
++      51: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++      56: ifeq          84
++      59: aload         4
++      61: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++      66: checkcast     #162                // class org/audiveris/omr/sheet/grid/StaffPeak
++      69: astore        5
++      71: iload_1
++      72: aload         5
++      74: invokevirtual #183                // Method org/audiveris/omr/sheet/grid/StaffPeak.getWidth:()I
++      77: invokestatic  #243                // Method java/lang/Math.max:(II)I
++      80: istore_1
++      81: goto          49
++      84: goto          17
++      87: iload_1
++      88: ireturn
++
++  private org.audiveris.omr.sheet.grid.StaffProjector getProjector(org.audiveris.omr.sheet.Staff);
++    Code:
++       0: aload_0
++       1: getfield      #10                 // Field projectors:Ljava/util/Map;
++       4: aload_1
++       5: invokeinterface #158,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
++      10: checkcast     #249                // class org/audiveris/omr/sheet/grid/StaffProjector
++      13: astore_2
++      14: aload_2
++      15: ifnonnull     44
++      18: aload_0
++      19: getfield      #10                 // Field projectors:Ljava/util/Map;
++      22: aload_1
++      23: new           #249                // class org/audiveris/omr/sheet/grid/StaffProjector
++      26: dup
++      27: aload_0
++      28: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      31: aload_1
++      32: aconst_null
++      33: invokespecial #251                // Method org/audiveris/omr/sheet/grid/StaffProjector."<init>":(Lorg/audiveris/omr/sheet/Sheet;Lorg/audiveris/omr/sheet/Staff;Lorg/audiveris/omr/sheet/grid/PeakGraph;)V
++      36: dup
++      37: astore_2
++      38: invokeinterface #254,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
++      43: pop
++      44: aload_2
++      45: areturn
++
++  private java.util.List<org.audiveris.omr.lag.Section> getSectionsByWidth(int);
++    Code:
++       0: new           #258                // class java/util/ArrayList
++       3: dup
++       4: invokespecial #260                // Method java/util/ArrayList."<init>":()V
++       7: astore_2
++       8: aload_0
++       9: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      12: invokevirtual #261                // Method org/audiveris/omr/sheet/Sheet.getLagManager:()Lorg/audiveris/omr/lag/LagManager;
++      15: ldc_w         #267                // String hLag
++      18: invokevirtual #269                // Method org/audiveris/omr/lag/LagManager.getLag:(Ljava/lang/String;)Lorg/audiveris/omr/lag/Lag;
++      21: astore_3
++      22: aload_0
++      23: getfield      #32                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
++      26: invokevirtual #261                // Method org/audiveris/omr/sheet/Sheet.getLagManager:()Lorg/audiveris/omr/lag/LagManager;
++      29: ldc_w         #275                // String vLag
++      32: invokevirtual #269                // Method org/audiveris/omr/lag/LagManager.getLag:(Ljava/lang/String;)Lorg/audiveris/omr/lag/Lag;
++      35: astore        4
++      37: aload_0
++      38: getfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++      41: invokevirtual #277                // Method org/audiveris/omr/sheet/SystemInfo.getBounds:()Ljava/awt/Rectangle;
++      44: astore        5
++      46: iconst_2
++      47: anewarray     #281                // class org/audiveris/omr/lag/Lag
++      50: dup
++      51: iconst_0
++      52: aload         4
++      54: aastore
++      55: dup
++      56: iconst_1
++      57: aload_3
++      58: aastore
++      59: invokestatic  #283                // Method java/util/Arrays.asList:([Ljava/lang/Object;)Ljava/util/List;
++      62: invokeinterface #289,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
++      67: astore        6
++      69: aload         6
++      71: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++      76: ifeq          171
++      79: aload         6
++      81: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++      86: checkcast     #281                // class org/audiveris/omr/lag/Lag
++      89: astore        7
++      91: aload         7
++      93: invokeinterface #292,  1          // InterfaceMethod org/audiveris/omr/lag/Lag.getEntities:()Ljava/util/Collection;
++      98: invokeinterface #240,  1          // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
++     103: astore        8
++     105: aload         8
++     107: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++     112: ifeq          168
++     115: aload         8
++     117: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++     122: checkcast     #295                // class org/audiveris/omr/lag/Section
++     125: astore        9
++     127: aload         9
++     129: getstatic     #297                // Field org/audiveris/omr/run/Orientation.HORIZONTAL:Lorg/audiveris/omr/run/Orientation;
++     132: invokeinterface #303,  2          // InterfaceMethod org/audiveris/omr/lag/Section.getLength:(Lorg/audiveris/omr/run/Orientation;)I
++     137: iload_1
++     138: if_icmpgt     165
++     141: aload         9
++     143: invokeinterface #307,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getBounds:()Ljava/awt/Rectangle;
++     148: aload         5
++     150: invokevirtual #308                // Method java/awt/Rectangle.intersects:(Ljava/awt/Rectangle;)Z
++     153: ifeq          165
++     156: aload_2
++     157: aload         9
++     159: invokeinterface #314,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
++     164: pop
++     165: goto          105
++     168: goto          69
++     171: aload_2
++     172: getstatic     #318                // Field org/audiveris/omr/lag/Section.byAbscissa:Ljava/util/Comparator;
++     175: invokestatic  #322                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
++     178: aload_2
++     179: areturn
++
++  private java.util.Map<org.audiveris.omr.util.HorizontalSide, org.audiveris.omr.sheet.grid.StaffPeak> getSerifPeaks(org.audiveris.omr.sig.inter.BeamInter, org.audiveris.omr.sheet.Staff);
++    Code:
++       0: new           #328                // class java/util/EnumMap
++       3: dup
++       4: ldc           #153                // class org/audiveris/omr/util/HorizontalSide
++       6: invokespecial #330                // Method java/util/EnumMap."<init>":(Ljava/lang/Class;)V
++       9: astore_3
++      10: aload_0
++      11: aload_2
++      12: invokevirtual #333                // Method getProjector:(Lorg/audiveris/omr/sheet/Staff;)Lorg/audiveris/omr/sheet/grid/StaffProjector;
++      15: astore        4
++      17: aload_1
++      18: invokevirtual #337                // Method org/audiveris/omr/sig/inter/BeamInter.getBounds:()Ljava/awt/Rectangle;
++      21: astore        5
++      23: aload_1
++      24: invokevirtual #124                // Method org/audiveris/omr/sig/inter/BeamInter.getHeight:()D
++      27: aload_2
++      28: invokevirtual #338                // Method org/audiveris/omr/sheet/Staff.getMidLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
++      31: invokeinterface #344,  1          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.getThickness:()D
++      36: dsub
++      37: invokestatic  #349                // Method java/lang/Math.rint:(D)D
++      40: d2i
++      41: istore        6
++      43: invokestatic  #152                // Method org/audiveris/omr/util/HorizontalSide.values:()[Lorg/audiveris/omr/util/HorizontalSide;
++      46: astore        7
++      48: aload         7
++      50: arraylength
++      51: istore        8
++      53: iconst_0
++      54: istore        9
++      56: iload         9
++      58: iload         8
++      60: if_icmpge     203
++      63: aload         7
++      65: iload         9
++      67: aaload
++      68: astore        10
++      70: aload         10
++      72: getstatic     #353                // Field org/audiveris/omr/util/HorizontalSide.LEFT:Lorg/audiveris/omr/util/HorizontalSide;
++      75: if_acmpne     86
++      78: aload         5
++      80: getfield      #357                // Field java/awt/Rectangle.x:I
++      83: goto          99
++      86: aload         5
++      88: getfield      #357                // Field java/awt/Rectangle.x:I
++      91: aload         5
++      93: getfield      #361                // Field java/awt/Rectangle.width:I
++      96: iadd
++      97: iconst_1
++      98: isub
++      99: istore        11
++     101: aload         4
++     103: iload         11
++     105: aload         10
++     107: iload         6
++     109: invokevirtual #364                // Method org/audiveris/omr/sheet/grid/StaffProjector.processMultiRestSide:(ILorg/audiveris/omr/util/HorizontalSide;I)Ljava/util/List;
++     112: astore        12
++     114: getstatic     #225                // Field logger:Lorg/slf4j/Logger;
++     117: ldc_w         #368                // String {} {} {}
++     120: iconst_3
++     121: anewarray     #2                  // class java/lang/Object
++     124: dup
++     125: iconst_0
++     126: aload_1
++     127: aastore
++     128: dup
++     129: iconst_1
++     130: aload         10
++     132: aastore
++     133: dup
++     134: iconst_2
++     135: aload         12
++     137: aastore
++     138: invokeinterface #370,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;[Ljava/lang/Object;)V
++     143: aload         12
++     145: invokeinterface #373,  1          // InterfaceMethod java/util/List.isEmpty:()Z
++     150: ifne          197
++     153: aload         12
++     155: aload         10
++     157: getstatic     #353                // Field org/audiveris/omr/util/HorizontalSide.LEFT:Lorg/audiveris/omr/util/HorizontalSide;
++     160: if_acmpne     175
++     163: aload         12
++     165: invokeinterface #376,  1          // InterfaceMethod java/util/List.size:()I
++     170: iconst_1
++     171: isub
++     172: goto          176
++     175: iconst_0
++     176: invokeinterface #379,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
++     181: checkcast     #162                // class org/audiveris/omr/sheet/grid/StaffPeak
++     184: astore        13
++     186: aload_3
++     187: aload         10
++     189: aload         13
++     191: invokeinterface #254,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
++     196: pop
++     197: iinc          9, 1
++     200: goto          56
++     203: aload_3
++     204: areturn
++
++  public void process();
++    Code:
++       0: aload_0
++       1: getfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++       4: invokevirtual #51                 // Method org/audiveris/omr/sheet/SystemInfo.getSig:()Lorg/audiveris/omr/sig/SIGraph;
++       7: astore_1
++       8: aload_1
++       9: ldc           #112                // class org/audiveris/omr/sig/inter/BeamInter
++      11: invokevirtual #382                // Method org/audiveris/omr/sig/SIGraph.inters:(Ljava/lang/Class;)Ljava/util/List;
++      14: astore_2
++      15: aload_2
++      16: invokeinterface #289,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
++      21: astore_3
++      22: aload_3
++      23: invokeinterface #97,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++      28: ifeq          229
++      31: aload_3
++      32: invokeinterface #103,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++      37: checkcast     #386                // class org/audiveris/omr/sig/inter/Inter
++      40: astore        4
++      42: aload         4
++      44: checkcast     #112                // class org/audiveris/omr/sig/inter/BeamInter
++      47: astore        5
++      49: aload         5
++      51: invokevirtual #337                // Method org/audiveris/omr/sig/inter/BeamInter.getBounds:()Ljava/awt/Rectangle;
++      54: getfield      #361                // Field java/awt/Rectangle.width:I
++      57: aload_0
++      58: getfield      #47                 // Field params:Lorg/audiveris/omr/sheet/beam/MultipleRestsBuilder$Parameters;
++      61: getfield      #388                // Field org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Parameters.minLength:I
++      64: if_icmpge     70
++      67: goto          22
++      70: aload         5
++      72: invokevirtual #137                // Method org/audiveris/omr/sig/inter/BeamInter.getCenter:()Ljava/awt/Point;
++      75: astore        6
++      77: aload_0
++      78: getfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++      81: aload         6
++      83: invokevirtual #141                // Method org/audiveris/omr/sheet/SystemInfo.getStaffAtOrAbove:(Ljava/awt/geom/Point2D;)Lorg/audiveris/omr/sheet/Staff;
++      86: astore        7
++      88: aload         7
++      90: ifnull        22
++      93: aload         7
++      95: invokevirtual #391                // Method org/audiveris/omr/sheet/Staff.isTablature:()Z
++      98: ifeq          104
++     101: goto          22
++     104: aload         7
++     106: aload         5
++     108: invokevirtual #120                // Method org/audiveris/omr/sig/inter/BeamInter.getMedian:()Ljava/awt/geom/Line2D;
++     111: invokevirtual #394                // Method java/awt/geom/Line2D.getP1:()Ljava/awt/geom/Point2D;
++     114: invokevirtual #400                // Method org/audiveris/omr/sheet/Staff.pitchPositionOf:(Ljava/awt/geom/Point2D;)D
++     117: dstore        8
++     119: dload         8
++     121: invokestatic  #404                // Method java/lang/Math.abs:(D)D
++     124: getstatic     #407                // Field constants:Lorg/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants;
++     127: getfield      #411                // Field org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants.maxAbsolutePitch:Lorg/audiveris/omr/constant/Constant$Double;
++     130: invokevirtual #417                // Method org/audiveris/omr/constant/Constant$Double.getValue:()Ljava/lang/Object;
++     133: checkcast     #206                // class java/lang/Double
++     136: invokevirtual #420                // Method java/lang/Double.doubleValue:()D
++     139: dcmpl
++     140: ifle          146
++     143: goto          22
++     146: aload         7
++     148: aload         5
++     150: invokevirtual #120                // Method org/audiveris/omr/sig/inter/BeamInter.getMedian:()Ljava/awt/geom/Line2D;
++     153: invokevirtual #423                // Method java/awt/geom/Line2D.getP2:()Ljava/awt/geom/Point2D;
++     156: invokevirtual #400                // Method org/audiveris/omr/sheet/Staff.pitchPositionOf:(Ljava/awt/geom/Point2D;)D
++     159: dstore        10
++     161: dload         10
++     163: invokestatic  #404                // Method java/lang/Math.abs:(D)D
++     166: getstatic     #407                // Field constants:Lorg/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants;
++     169: getfield      #411                // Field org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants.maxAbsolutePitch:Lorg/audiveris/omr/constant/Constant$Double;
++     172: invokevirtual #417                // Method org/audiveris/omr/constant/Constant$Double.getValue:()Ljava/lang/Object;
++     175: checkcast     #206                // class java/lang/Double
++     178: invokevirtual #420                // Method java/lang/Double.doubleValue:()D
++     181: dcmpl
++     182: ifle          188
++     185: goto          22
++     188: aload_0
++     189: aload         5
++     191: aload         7
++     193: invokevirtual #426                // Method getSerifPeaks:(Lorg/audiveris/omr/sig/inter/BeamInter;Lorg/audiveris/omr/sheet/Staff;)Ljava/util/Map;
++     196: astore        12
++     198: aload         12
++     200: invokeinterface #430,  1          // InterfaceMethod java/util/Map.size:()I
++     205: iconst_2
++     206: if_icmpeq     212
++     209: goto          22
++     212: aload_0
++     213: getfield      #19                 // Field found:Ljava/util/Map;
++     216: aload         5
++     218: aload         12
++     220: invokeinterface #254,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
++     225: pop
++     226: goto          22
++     229: aload_0
++     230: getfield      #19                 // Field found:Ljava/util/Map;
++     233: invokeinterface #431,  1          // InterfaceMethod java/util/Map.isEmpty:()Z
++     238: ifne          264
++     241: aload_0
++     242: invokevirtual #432                // Method createInters:()V
++     245: aload_0
++     246: getfield      #22                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
++     249: invokevirtual #51                 // Method org/audiveris/omr/sheet/SystemInfo.getSig:()Lorg/audiveris/omr/sig/SIGraph;
++     252: aload_0
++     253: getfield      #19                 // Field found:Ljava/util/Map;
++     256: invokeinterface #435,  1          // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
++     261: invokevirtual #438                // Method org/audiveris/omr/sig/SIGraph.deleteInters:(Ljava/util/Collection;)V
++     264: return
++
++  static {};
++    Code:
++       0: new           #412                // class org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants
++       3: dup
++       4: invokespecial #442                // Method org/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants."<init>":()V
++       7: putstatic     #407                // Field constants:Lorg/audiveris/omr/sheet/beam/MultipleRestsBuilder$Constants;
++      10: ldc           #11                 // class org/audiveris/omr/sheet/beam/MultipleRestsBuilder
++      12: invokestatic  #443                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
++      15: putstatic     #225                // Field logger:Lorg/slf4j/Logger;
++      18: return
++}
+diff --git a/evidence/multiple-rest-admission-checkpoint/clippy-first.log b/evidence/multiple-rest-admission-checkpoint/clippy-first.log
+new file mode 100644
+index 0000000..b9a2c4a
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/clippy-first.log
+@@ -0,0 +1,31 @@
++    Checking audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
++error: this `if` statement can be collapsed
++  --> src/multiple_rest_admission.rs:58:5
++   |
++58 | /     if let Some(s) = staff {
++59 | |         if s.id == 0
++60 | |             || !s.endpoint_pitches.iter().all(|p| p.is_finite())
++61 | |             || !s.mid_line_thickness.is_finite()
++...  |
++67 | |     }
++   | |_____^
++   |
++   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#collapsible_if
++   = note: `-D clippy::collapsible-if` implied by `-D warnings`
++   = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
++help: collapse nested if block
++   |
++58 ~     if let Some(s) = staff
++59 ~         && (s.id == 0
++60 |             || !s.endpoint_pitches.iter().all(|p| p.is_finite())
++61 |             || !s.mid_line_thickness.is_finite()
++62 |             || s.mid_line_thickness <= 0.
++63 ~             || s.mid_line_thickness > 20000.)
++64 |         {
++65 |             return Err("invalid_multiple_rest_staff_measurement".into());
++66 ~         }
++   |
++
++error: could not compile `audiveris-native` (lib) due to 1 previous error
++warning: build failed, waiting for other jobs to finish...
++error: could not compile `audiveris-native` (lib test) due to 1 previous error
+diff --git a/evidence/multiple-rest-admission-checkpoint/clippy.log b/evidence/multiple-rest-admission-checkpoint/clippy.log
+new file mode 100644
+index 0000000..b64452a
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/clippy.log
+@@ -0,0 +1,2 @@
++    Checking audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
++    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.35s
+diff --git a/evidence/multiple-rest-admission-checkpoint/control-commands.json b/evidence/multiple-rest-admission-checkpoint/control-commands.json
+new file mode 100644
+index 0000000..e85c1a4
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/control-commands.json
+@@ -0,0 +1,61 @@
++[
++  {
++    "command": [
++      "/workspace/audiveris-loop-check-20261003/oracle/jdk-21.0.12.1+1/bin/javac",
++      "--release",
++      "21",
++      "-d",
++      "/workspace/audiveris-rests-check-20261003/original-v2/stubs",
++      "/workspace/audiveris-rests-check-20261003/original-v2/stub-src/RunClass.java",
++      "/workspace/audiveris-rests-check-20261003/original-v2/stub-src/Book.java"
++    ],
++    "exit_code": 0,
++    "seconds": 0.4692063929996948
++  },
++  {
++    "command": [
++      "/workspace/audiveris-loop-check-20261003/oracle/jdk-21.0.12.1+1/bin/javac",
++      "--release",
++      "21",
++      "-cp",
++      "/workspace/audiveris-rests-check-20261003/original-v2/stubs:/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*",
++      "-sourcepath",
++      "/workspace/audiveris-rests-check-20261003/original-v2/empty",
++      "-d",
++      "/workspace/audiveris-rests-check-20261003/original-v2/classes",
++      "/workspace/audiveris-savedlatest-20261003/scripts/java/GridProbe.java",
++      "/workspace/audiveris-savedlatest-20261003/scripts/java/BeamImpactsControlProbe.java",
++      "/workspace/audiveris-savedlatest-20261003/scripts/java/MultipleRestAdmissionControlProbe.java"
++    ],
++    "exit_code": 0,
++    "seconds": 1.0192321829999855
++  },
++  {
++    "command": [
++      "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/runtime/bin/java",
++      "-Xmx512m",
++      "-XX:ActiveProcessorCount=2",
++      "-Djava.awt.headless=true",
++      "-Dnative.probe.inputs=/workspace/audiveris-rests-check-20261003/original-v2/inputs.json",
++      "-Dnative.probe.output=/workspace/audiveris-rests-check-20261003/original-v2/original.json",
++      "-cp",
++      "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-rests-check-20261003/original-v2/classes",
++      "Audiveris",
++      "-batch",
++      "-constant",
++      "org.audiveris.omr.Main.persistBatchCliConstants=false",
++      "-constant",
++      "org.audiveris.omr.Main.runBatchTasksInParallel=false",
++      "-step",
++      "SCALE",
++      "-run",
++      "MultipleRestAdmissionControlProbe",
++      "-output",
++      "/workspace/audiveris-rests-check-20261003/original-v2/output",
++      "--",
++      "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png"
++    ],
++    "exit_code": 0,
++    "seconds": 1.9222506989999602
++  }
++]
+diff --git a/evidence/multiple-rest-admission-checkpoint/control-inputs.json b/evidence/multiple-rest-admission-checkpoint/control-inputs.json
+new file mode 100644
+index 0000000..b77f0bf
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/control-inputs.json
+@@ -0,0 +1 @@
++[{"interline":15,"width":59,"left_offset":0,"right_offset":0},{"interline":15,"width":59,"left_offset":-1.5,"right_offset":1.5},{"interline":15,"width":59,"left_offset":-1.6,"right_offset":1.6},{"interline":15,"width":59,"left_offset":-1.61,"right_offset":0},{"interline":15,"width":59,"left_offset":0,"right_offset":1.61},{"interline":15,"width":59,"left_offset":3,"right_offset":0},{"interline":15,"width":59,"left_offset":0,"right_offset":-3},{"interline":15,"width":60,"left_offset":0,"right_offset":0},{"interline":15,"width":60,"left_offset":-1.5,"right_offset":1.5},{"interline":15,"width":60,"left_offset":-1.6,"right_offset":1.6},{"interline":15,"width":60,"left_offset":-1.61,"right_offset":0},{"interline":15,"width":60,"left_offset":0,"right_offset":1.61},{"interline":15,"width":60,"left_offset":3,"right_offset":0},{"interline":15,"width":60,"left_offset":0,"right_offset":-3},{"interline":15,"width":61,"left_offset":0,"right_offset":0},{"interline":15,"width":61,"left_offset":-1.5,"right_offset":1.5},{"interline":15,"width":61,"left_offset":-1.6,"right_offset":1.6},{"interline":15,"width":61,"left_offset":-1.61,"right_offset":0},{"interline":15,"width":61,"left_offset":0,"right_offset":1.61},{"interline":15,"width":61,"left_offset":3,"right_offset":0},{"interline":15,"width":61,"left_offset":0,"right_offset":-3},{"interline":16,"width":63,"left_offset":0,"right_offset":0},{"interline":16,"width":63,"left_offset":-1.5,"right_offset":1.5},{"interline":16,"width":63,"left_offset":-1.6,"right_offset":1.6},{"interline":16,"width":63,"left_offset":-1.61,"right_offset":0},{"interline":16,"width":63,"left_offset":0,"right_offset":1.61},{"interline":16,"width":63,"left_offset":3,"right_offset":0},{"interline":16,"width":63,"left_offset":0,"right_offset":-3},{"interline":16,"width":64,"left_offset":0,"right_offset":0},{"interline":16,"width":64,"left_offset":-1.5,"right_offset":1.5},{"interline":16,"width":64,"left_offset":-1.6,"right_offset":1.6},{"interline":16,"width":64,"left_offset":-1.61,"right_offset":0},{"interline":16,"width":64,"left_offset":0,"right_offset":1.61},{"interline":16,"width":64,"left_offset":3,"right_offset":0},{"interline":16,"width":64,"left_offset":0,"right_offset":-3},{"interline":16,"width":65,"left_offset":0,"right_offset":0},{"interline":16,"width":65,"left_offset":-1.5,"right_offset":1.5},{"interline":16,"width":65,"left_offset":-1.6,"right_offset":1.6},{"interline":16,"width":65,"left_offset":-1.61,"right_offset":0},{"interline":16,"width":65,"left_offset":0,"right_offset":1.61},{"interline":16,"width":65,"left_offset":3,"right_offset":0},{"interline":16,"width":65,"left_offset":0,"right_offset":-3},{"interline":17,"width":67,"left_offset":0,"right_offset":0},{"interline":17,"width":67,"left_offset":-1.5,"right_offset":1.5},{"interline":17,"width":67,"left_offset":-1.6,"right_offset":1.6},{"interline":17,"width":67,"left_offset":-1.61,"right_offset":0},{"interline":17,"width":67,"left_offset":0,"right_offset":1.61},{"interline":17,"width":67,"left_offset":3,"right_offset":0},{"interline":17,"width":67,"left_offset":0,"right_offset":-3},{"interline":17,"width":68,"left_offset":0,"right_offset":0},{"interline":17,"width":68,"left_offset":-1.5,"right_offset":1.5},{"interline":17,"width":68,"left_offset":-1.6,"right_offset":1.6},{"interline":17,"width":68,"left_offset":-1.61,"right_offset":0},{"interline":17,"width":68,"left_offset":0,"right_offset":1.61},{"interline":17,"width":68,"left_offset":3,"right_offset":0},{"interline":17,"width":68,"left_offset":0,"right_offset":-3},{"interline":17,"width":69,"left_offset":0,"right_offset":0},{"interline":17,"width":69,"left_offset":-1.5,"right_offset":1.5},{"interline":17,"width":69,"left_offset":-1.6,"right_offset":1.6},{"interline":17,"width":69,"left_offset":-1.61,"right_offset":0},{"interline":17,"width":69,"left_offset":0,"right_offset":1.61},{"interline":17,"width":69,"left_offset":3,"right_offset":0},{"interline":17,"width":69,"left_offset":0,"right_offset":-3},{"width":80,"height":1},{"width":80,"height":1.5},{"width":80,"height":2},{"width":80,"height":2.5},{"width":80,"height":7.5},{"width":80,"height":8},{"width":80,"height":8.5},{"width":80,"height":9.5},{"width":80,"kind":"BeamHookInter"},{"width":80,"kind":"SmallBeamInter"}]
+diff --git a/evidence/multiple-rest-admission-checkpoint/control-original-0.log b/evidence/multiple-rest-admission-checkpoint/control-original-0.log
+new file mode 100644
+index 0000000..e69de29
+diff --git a/evidence/multiple-rest-admission-checkpoint/control-original-1.log b/evidence/multiple-rest-admission-checkpoint/control-original-1.log
+new file mode 100644
+index 0000000..55e68af
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/control-original-1.log
+@@ -0,0 +1,10 @@
++/workspace/audiveris-savedlatest-20261003/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
++  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
++                   ^
++/workspace/audiveris-savedlatest-20261003/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
++  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
++                                                                                              ^
++/workspace/audiveris-savedlatest-20261003/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
++  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
++                                                                                                                      ^
++3 warnings
+diff --git a/evidence/multiple-rest-admission-checkpoint/control-original-2.log b/evidence/multiple-rest-admission-checkpoint/control-original-2.log
+new file mode 100644
+index 0000000..fb439ea
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/control-original-2.log
+@@ -0,0 +1,113 @@
++WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log
++java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
++	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
++	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
++	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)
++	at org.audiveris.omr.Main.<clinit>(Main.java:70)
++	at Audiveris.main(Audiveris.java:50)
++WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp
++java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
++	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
++	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
++	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)
++	at org.audiveris.omr.Main.<clinit>(Main.java:70)
++	at Audiveris.main(Audiveris.java:50)
++WARNING: A restricted method in java.lang.System has been called
++WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
++WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
++WARNING: Restricted methods will be blocked in a future release unless native access is enabled
++
++INFO  []                      Main 259  | Running in batch mode
++INFO  []              TesseractOCR 137  | Creating OCR folder /home/agent/.config/AudiverisLtd/audiveris/tessdata
++WARN  []              TesseractOCR 140  | Could not create folder /home/agent/.config/AudiverisLtd/audiveris/tessdata {}
++java.nio.file.FileSystemException: /home/agent/.config/AudiverisLtd: Read-only file system
++	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.findOcrFolder(TesseractOCR.java:138)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.getOcrFolder(TesseractOCR.java:228)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.isAvailable(TesseractOCR.java:253)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.getSupportedLanguages(TesseractOCR.java:155)
++	at org.audiveris.omr.text.tesseract.Languages.checkSupport(Languages.java:136)
++	at org.audiveris.omr.Main.main(Main.java:266)
++	at Audiveris.main(Audiveris.java:50)
++WARN  []              TesseractOCR 144  | Tesseract data could not be found. Try setting TESSDATA_PREFIX environment variable to point to tessdata folder.
++WARN  []                 Languages 142  | *** No installed OCR languages ***
++INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
++INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
++    Input "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png"
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++INFO  [beams-single]                      Book 560  | 1 sheet in /workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png
++INFO  []                      Book 2565 | Stored /book.xml
++INFO  []                      Book 2525 | Book stored as /workspace/audiveris-rests-check-20261003/original-v2/output/beams-single.omr
++INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
++INFO  [beams-single]            StepMonitoring 98   | LOAD
++INFO  [beams-single]                 SheetStub 1278 | Loaded image #1 960x420 from /workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png
++INFO  [beams-single]            StepMonitoring 98   | BINARY
++INFO  [beams-single]            StepMonitoring 98   | SCALE
++INFO  [beams-single]              ScaleBuilder 254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
++INFO  [beams-single]              ScaleBuilder 271  | Beam measured height:  8 -- 0.13 of [7..15] range at 349% of needed quorum
++INFO  [beams-single]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
++INFO  [beams-single]                 ScaleStep 65   | Scale{ interline(16,16,16) line(2,2,2) beam(8)}
++INFO  [beams-single]                      Book 2584 | Book{beams-single} storing
++INFO  [beams-single]                      Book 2565 | Stored /book.xml
++INFO  [beams-single]                DataHolder 348  | Stored /sheet#1/BINARY.png
++INFO  [beams-single]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
++INFO  [beams-single]                      Book 2525 | Book stored as /workspace/audiveris-rests-check-20261003/original-v2/output/beams-single.omr
++INFO  [beams-single]                 SheetStub 1655 | Sheet disposed
++INFO  [beams-single]                      Book 2050 | End of Stub#1
++INFO  [beams-single]                      Book 2057 | End of Book{beams-single}
++INFO  [beams-single]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
++INFO  [beams-single]            LinesRetriever 1508 | Global slope: 0.00000
++INFO  [beams-single]         ClustersRetriever 326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
++INFO  [beams-single]                 PeakGraph 310  | Systems: #1[1]
++INFO  [beams-single]             SystemManager 800  | 1 part along 1 system
++INFO  [beams-single]                      Book 543  | Created scores: [{Score 1}]
++INFO  [beams-single]                      Book 2565 | Stored /book.xml
++INFO  [beams-single]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
++INFO  [beams-single]                      Book 2525 | Book stored as /workspace/audiveris-rests-check-20261003/original-v2/output/beams-single.omr
++INFO  [beams-single]                     Score 181  | Closing {Score 1}
+diff --git a/evidence/multiple-rest-admission-checkpoint/control-provenance.json b/evidence/multiple-rest-admission-checkpoint/control-provenance.json
+new file mode 100644
+index 0000000..b4207df
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/control-provenance.json
+@@ -0,0 +1,7 @@
++{
++  "native_outputs_used": false,
++  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
++  "cases": 73,
++  "admitted_to_projector": 26,
++  "runtime_excludes_compile_shims": true
++}
+diff --git a/evidence/multiple-rest-admission-checkpoint/first-oracle-interline-mismatch.log b/evidence/multiple-rest-admission-checkpoint/first-oracle-interline-mismatch.log
+new file mode 100644
+index 0000000..9dd4307
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/first-oracle-interline-mismatch.log
+@@ -0,0 +1,160 @@
++WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log
++java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
++	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
++	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
++	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)
++	at org.audiveris.omr.Main.<clinit>(Main.java:70)
++	at Audiveris.main(Audiveris.java:50)
++WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp
++java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
++	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
++	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
++	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)
++	at org.audiveris.omr.Main.<clinit>(Main.java:70)
++	at Audiveris.main(Audiveris.java:50)
++WARNING: A restricted method in java.lang.System has been called
++WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
++WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
++WARNING: Restricted methods will be blocked in a future release unless native access is enabled
++
++INFO  []                      Main 259  | Running in batch mode
++INFO  []              TesseractOCR 137  | Creating OCR folder /home/agent/.config/AudiverisLtd/audiveris/tessdata
++WARN  []              TesseractOCR 140  | Could not create folder /home/agent/.config/AudiverisLtd/audiveris/tessdata {}
++java.nio.file.FileSystemException: /home/agent/.config/AudiverisLtd: Read-only file system
++	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
++	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
++	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.findOcrFolder(TesseractOCR.java:138)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.getOcrFolder(TesseractOCR.java:228)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.isAvailable(TesseractOCR.java:253)
++	at org.audiveris.omr.text.tesseract.TesseractOCR.getSupportedLanguages(TesseractOCR.java:155)
++	at org.audiveris.omr.text.tesseract.Languages.checkSupport(Languages.java:136)
++	at org.audiveris.omr.Main.main(Main.java:266)
++	at Audiveris.main(Audiveris.java:50)
++WARN  []              TesseractOCR 144  | Tesseract data could not be found. Try setting TESSDATA_PREFIX environment variable to point to tessdata folder.
++WARN  []                 Languages 142  | *** No installed OCR languages ***
++INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
++INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
++    Input "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png"
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++Fontconfig error: No writable cache directories
++INFO  [beams-single]                      Book 560  | 1 sheet in /workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png
++INFO  []                      Book 2565 | Stored /book.xml
++INFO  []                      Book 2525 | Book stored as /workspace/audiveris-rests-check-20261003/original/output/beams-single.omr
++INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
++INFO  [beams-single]            StepMonitoring 98   | LOAD
++INFO  [beams-single]                 SheetStub 1278 | Loaded image #1 960x420 from /workspace/audiveris-savedlatest-20261003/fixtures/official-grid/beams-single.png
++INFO  [beams-single]            StepMonitoring 98   | BINARY
++INFO  [beams-single]            StepMonitoring 98   | SCALE
++INFO  [beams-single]              ScaleBuilder 254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
++INFO  [beams-single]              ScaleBuilder 271  | Beam measured height:  8 -- 0.13 of [7..15] range at 349% of needed quorum
++INFO  [beams-single]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
++INFO  [beams-single]                 ScaleStep 65   | Scale{ interline(16,16,16) line(2,2,2) beam(8)}
++INFO  [beams-single]                      Book 2584 | Book{beams-single} storing
++INFO  [beams-single]                      Book 2565 | Stored /book.xml
++INFO  [beams-single]                DataHolder 348  | Stored /sheet#1/BINARY.png
++INFO  [beams-single]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
++INFO  [beams-single]                      Book 2525 | Book stored as /workspace/audiveris-rests-check-20261003/original/output/beams-single.omr
++INFO  [beams-single]                 SheetStub 1655 | Sheet disposed
++INFO  [beams-single]                      Book 2050 | End of Stub#1
++INFO  [beams-single]                      Book 2057 | End of Book{beams-single}
++INFO  [beams-single]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
++INFO  [beams-single]            LinesRetriever 1508 | Global slope: 0.00000
++INFO  [beams-single]         ClustersRetriever 326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
++INFO  [beams-single]                 PeakGraph 310  | Systems: #1[1]
++INFO  [beams-single]             SystemManager 800  | 1 part along 1 system
++INFO  [beams-single]                      Book 543  | Created scores: [{Score 1}]
++WARN  [beams-single]                       CLI 956  | Exception occurred java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
++java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
++	at MultipleRestAdmissionControlProbe.process(MultipleRestAdmissionControlProbe.java:14)
++	at org.audiveris.omr.CLI$ProcessingTask.processBook(CLI.java:916)
++	at org.audiveris.omr.CLI$CliTask.call(CLI.java:513)
++	at org.audiveris.omr.Main.runBatchTasks(Main.java:370)
++	at org.audiveris.omr.Main.main(Main.java:272)
++	at Audiveris.main(Audiveris.java:50)
++Caused by: java.lang.reflect.InvocationTargetException: null
++	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
++	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
++	at BeamImpactsControlProbe.call(BeamImpactsControlProbe.java:18)
++	at MultipleRestAdmissionControlProbe.call(MultipleRestAdmissionControlProbe.java:6)
++	at MultipleRestAdmissionControlProbe.process(MultipleRestAdmissionControlProbe.java:11)
++	... 5 common frames omitted
++Caused by: java.lang.IllegalArgumentException: No interline scale for provided value 16
++	at org.audiveris.omr.sheet.Scale.getInterlineScale(Scale.java:389)
++	at org.audiveris.omr.sheet.grid.StaffProjector$Parameters.<init>(StaffProjector.java:1796)
++	at org.audiveris.omr.sheet.grid.StaffProjector.<init>(StaffProjector.java:193)
++	at org.audiveris.omr.sheet.beam.MultipleRestsBuilder.getProjector(MultipleRestsBuilder.java:196)
++	at org.audiveris.omr.sheet.beam.MultipleRestsBuilder.getSerifPeaks(MultipleRestsBuilder.java:258)
++	at org.audiveris.omr.sheet.beam.MultipleRestsBuilder.process(MultipleRestsBuilder.java:320)
++	... 10 common frames omitted
++INFO  [beams-single]                      Book 2565 | Stored /book.xml
++INFO  [beams-single]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
++INFO  [beams-single]                      Book 2525 | Book stored as /workspace/audiveris-rests-check-20261003/original/output/beams-single.omr
++INFO  [beams-single]                     Score 181  | Closing {Score 1}
++WARN  []                      Main 373  | Exception on beams-single, java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
++java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
++	at MultipleRestAdmissionControlProbe.process(MultipleRestAdmissionControlProbe.java:14)
++	at org.audiveris.omr.CLI$ProcessingTask.processBook(CLI.java:916)
++	at org.audiveris.omr.CLI$CliTask.call(CLI.java:513)
++	at org.audiveris.omr.Main.runBatchTasks(Main.java:370)
++	at org.audiveris.omr.Main.main(Main.java:272)
++	at Audiveris.main(Audiveris.java:50)
++Caused by: java.lang.reflect.InvocationTargetException: null
++	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
++	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
++	at BeamImpactsControlProbe.call(BeamImpactsControlProbe.java:18)
++	at MultipleRestAdmissionControlProbe.call(MultipleRestAdmissionControlProbe.java:6)
++	at MultipleRestAdmissionControlProbe.process(MultipleRestAdmissionControlProbe.java:11)
++	... 5 common frames omitted
++Caused by: java.lang.IllegalArgumentException: No interline scale for provided value 16
++	at org.audiveris.omr.sheet.Scale.getInterlineScale(Scale.java:389)
++	at org.audiveris.omr.sheet.grid.StaffProjector$Parameters.<init>(StaffProjector.java:1796)
++	at org.audiveris.omr.sheet.grid.StaffProjector.<init>(StaffProjector.java:193)
++	at org.audiveris.omr.sheet.beam.MultipleRestsBuilder.getProjector(MultipleRestsBuilder.java:196)
++	at org.audiveris.omr.sheet.beam.MultipleRestsBuilder.getSerifPeaks(MultipleRestsBuilder.java:258)
++	at org.audiveris.omr.sheet.beam.MultipleRestsBuilder.process(MultipleRestsBuilder.java:320)
++	... 10 common frames omitted
++WARN  []                      Main 307  | Exit forced. Failure
+diff --git a/evidence/multiple-rest-admission-checkpoint/fmt.log b/evidence/multiple-rest-admission-checkpoint/fmt.log
+new file mode 100644
+index 0000000..e69de29
+diff --git a/evidence/multiple-rest-admission-checkpoint/focused.log b/evidence/multiple-rest-admission-checkpoint/focused.log
+new file mode 100644
+index 0000000..8b86fc8
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/focused.log
+@@ -0,0 +1,18 @@
++   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
++    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.48s
++     Running tests/beam_groups.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_groups-b12d22b12992eded)
++
++running 2 tests
++test rejects_invalid_before_grouping ... ok
++test original_uninterrupted_group_controls ... ok
++
++test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
++
++     Running tests/multiple_rest_admission.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/multiple_rest_admission-e8903fd6c9e22053)
++
++running 2 tests
++test missing_staff_tablature_removed_and_invalid_measurements ... ok
++test original_process_admission_and_serif_queries ... ok
++
++test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
++
+diff --git a/evidence/multiple-rest-admission-checkpoint/validation.json b/evidence/multiple-rest-admission-checkpoint/validation.json
+new file mode 100644
+index 0000000..c983590
+--- /dev/null
++++ b/evidence/multiple-rest-admission-checkpoint/validation.json
+@@ -0,0 +1,35 @@
++{
++  "status": "passed",
++  "scope": "Completed admission subset; multiple-rest raster recognition and registration UNFINISHED",
++  "focused_tests": {
++    "suites": 2,
++    "passed": 4,
++    "failed": 0,
++    "ignored": 0
++  },
++  "fmt": "passed",
++  "all_targets_clippy": "passed",
++  "original_controls": {
++    "native_outputs_used": false,
++    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
++    "cases": 73,
++    "admitted_to_projector": 26,
++    "runtime_excludes_compile_shims": true,
++    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
++    "positive_serif_lists": 0,
++    "rest_conversions": 0,
++    "staff_measurements": "actual original association and pitch; declared specificInterline varied explicitly",
++    "observer_sha256": "2e0416ac7565fb1c8be4cac954033d83f313b0d1ebfe838695c708f011999a85",
++    "fixture_sha256": "0647942c6d40f128ff48a0cf07364c6a065e97420b5c3dc2b088ce8dfbe45a06"
++  },
++  "current_full_workspace": "UNVERIFIED; deferred batch regression",
++  "previous_full_workspace": {
++    "source_commit": "6eeebeadab1048d62aa46300d38efeae86421181",
++    "debug": 275,
++    "release": 275,
++    "checkpoint_commit": "0bdac35f8bd1509a76904ac3b8736fc03dd6838b"
++  },
++  "native_staff_association_and_pitch": "not integrated",
++  "positive_rest_recognition": "not implemented",
++  "thirteen_image_rest_boundary": "not run"
++}
+diff --git a/fixtures/official-multiple-rest-admission.json b/fixtures/official-multiple-rest-admission.json
+new file mode 100644
+index 0000000..40080fc
+--- /dev/null
++++ b/fixtures/official-multiple-rest-admission.json
+@@ -0,0 +1 @@
++{"original_method":"Uninterrupted MultipleRestsBuilder.process plus direct original getSerifPeaks; actual staff and raster","cases":[{"input":{"interline":15,"width":59,"left_offset":0,"right_offset":0},"bounds":[450,149,59,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":59,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,59,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":59,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,59,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":59,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,59,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":59,"left_offset":0,"right_offset":1.61},"bounds":[450,149,59,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":59,"left_offset":3,"right_offset":0},"bounds":[450,149,59,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":59,"left_offset":0,"right_offset":-3},"bounds":[450,146,59,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":60,"left_offset":0,"right_offset":0},"bounds":[450,149,60,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":509}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":15,"width":60,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,60,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":509}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":15,"width":60,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,60,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":509}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":15,"width":60,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,60,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":60,"left_offset":0,"right_offset":1.61},"bounds":[450,149,60,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":60,"left_offset":3,"right_offset":0},"bounds":[450,149,60,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":60,"left_offset":0,"right_offset":-3},"bounds":[450,146,60,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":61,"left_offset":0,"right_offset":0},"bounds":[450,149,61,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":510}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":15,"width":61,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,61,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":510}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":15,"width":61,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,61,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":510}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":15,"width":61,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,61,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":61,"left_offset":0,"right_offset":1.61},"bounds":[450,149,61,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":61,"left_offset":3,"right_offset":0},"bounds":[450,149,61,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":15,"width":61,"left_offset":0,"right_offset":-3},"bounds":[450,146,61,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":0,"right_offset":0},"bounds":[450,149,63,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,63,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,63,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,63,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":0,"right_offset":1.61},"bounds":[450,149,63,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":3,"right_offset":0},"bounds":[450,149,63,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":63,"left_offset":0,"right_offset":-3},"bounds":[450,146,63,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":64,"left_offset":0,"right_offset":0},"bounds":[450,149,64,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":513}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":16,"width":64,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,64,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":513}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":16,"width":64,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,64,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":513}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":16,"width":64,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,64,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":64,"left_offset":0,"right_offset":1.61},"bounds":[450,149,64,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":64,"left_offset":3,"right_offset":0},"bounds":[450,149,64,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":64,"left_offset":0,"right_offset":-3},"bounds":[450,146,64,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":65,"left_offset":0,"right_offset":0},"bounds":[450,149,65,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":514}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":16,"width":65,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,65,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":514}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":16,"width":65,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,65,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":514}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":16,"width":65,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,65,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":65,"left_offset":0,"right_offset":1.61},"bounds":[450,149,65,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":65,"left_offset":3,"right_offset":0},"bounds":[450,149,65,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":16,"width":65,"left_offset":0,"right_offset":-3},"bounds":[450,146,65,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":0,"right_offset":0},"bounds":[450,149,67,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,67,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,67,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,67,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":0,"right_offset":1.61},"bounds":[450,149,67,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":3,"right_offset":0},"bounds":[450,149,67,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":67,"left_offset":0,"right_offset":-3},"bounds":[450,146,67,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":68,"left_offset":0,"right_offset":0},"bounds":[450,149,68,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":517}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":17,"width":68,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,68,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":517}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":17,"width":68,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,68,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":517}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":17,"width":68,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,68,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":68,"left_offset":0,"right_offset":1.61},"bounds":[450,149,68,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":68,"left_offset":3,"right_offset":0},"bounds":[450,149,68,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":68,"left_offset":0,"right_offset":-3},"bounds":[450,146,68,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":69,"left_offset":0,"right_offset":0},"bounds":[450,149,69,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":518}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":17,"width":69,"left_offset":-1.5,"right_offset":1.5},"bounds":[450,147,69,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1875,0.1875],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":518}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":17,"width":69,"left_offset":-1.6,"right_offset":1.6},"bounds":[450,147,69,12],"height":8.0,"staff":{"endpoint_pitches":[-0.1999999999999993,0.1999999999999993],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":518}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"interline":17,"width":69,"left_offset":-1.61,"right_offset":0},"bounds":[450,147,69,10],"height":8.0,"staff":{"endpoint_pitches":[-0.2012500000000017,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":69,"left_offset":0,"right_offset":1.61},"bounds":[450,149,69,10],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.2012500000000017],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":69,"left_offset":3,"right_offset":0},"bounds":[450,149,69,11],"height":8.0,"staff":{"endpoint_pitches":[0.375,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"interline":17,"width":69,"left_offset":0,"right_offset":-3},"bounds":[450,146,69,11],"height":8.0,"staff":{"endpoint_pitches":[0.0,-0.375],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"width":80,"height":1},"bounds":[450,152,80,2],"height":1.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":-1,"left":true,"x":450},{"added_chunk":-1,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":1.5},"bounds":[450,152,80,2],"height":1.5,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":-1,"left":true,"x":450},{"added_chunk":-1,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":2},"bounds":[450,152,80,2],"height":2.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":0,"left":true,"x":450},{"added_chunk":0,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":2.5},"bounds":[450,151,80,4],"height":2.5,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":0,"left":true,"x":450},{"added_chunk":0,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":7.5},"bounds":[450,149,80,8],"height":7.5,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":5,"left":true,"x":450},{"added_chunk":5,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":8},"bounds":[450,149,80,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":8.5},"bounds":[450,148,80,10],"height":8.5,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":6,"left":true,"x":450},{"added_chunk":6,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"height":9.5},"bounds":[450,148,80,10],"height":9.5,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":true,"beam_removed":false,"queries":[{"added_chunk":7,"left":true,"x":450},{"added_chunk":7,"left":false,"x":529}],"peak_lists":[[],[]],"selected_peaks":[null,null]},{"input":{"width":80,"kind":"BeamHookInter"},"bounds":[450,149,80,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false},{"input":{"width":80,"kind":"SmallBeamInter"},"bounds":[450,149,80,8],"height":8.0,"staff":{"endpoint_pitches":[0.0,0.0],"id":1,"mid_line_thickness":2.020289855072464,"tablature":false},"admitted_to_projector":false,"beam_removed":false}],"native_outputs_used":false}
+\ No newline at end of file
+diff --git a/scripts/java/MultipleRestAdmissionControlProbe.java b/scripts/java/MultipleRestAdmissionControlProbe.java
+new file mode 100644
+index 0000000..bbe4653
+--- /dev/null
++++ b/scripts/java/MultipleRestAdmissionControlProbe.java
+@@ -0,0 +1,15 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Uninterrupted original process on independent beam inputs and actual staff.
++import java.util.*;import java.nio.file.*;import java.awt.geom.*;import com.fasterxml.jackson.databind.*;
++public class MultipleRestAdmissionControlProbe extends GridProbe {
++ final Object sourceBook;public MultipleRestAdmissionControlProbe(org.audiveris.omr.sheet.Book b,SortedSet<Integer> ids){super(b,ids);sourceBook=b;}
++ static Object call(Object o,String n,Object...a)throws Exception{return BeamImpactsControlProbe.call(o,n,a);}static Object make(String n,Object...a)throws Exception{return BeamImpactsControlProbe.make(n,a);}static Class<?> cls(String n)throws Exception{return BeamImpactsControlProbe.cls(n);}
++ static List<Object> peaks(List<?> values)throws Exception{List<Object> out=new ArrayList<>();for(Object p:values)out.add(Map.of("start",call(p,"getStart"),"width",call(p,"getWidth"),"top",call(p,"getTop"),"bottom",call(p,"getBottom")));return out;}
++ @SuppressWarnings({"unchecked","rawtypes"}) public void process(){try{Object sheet=call(((List<?>)call(sourceBook,"getStubs")).get(0),"getSheet");call(cls("sheet.grid.GridStep").getConstructor().newInstance(),"doit",sheet);Object system=((List<?>)call(sheet,"getSystems")).get(0),sig=call(system,"getSig"),actualStaff=((List<?>)call(system,"getStaves")).get(0);ObjectMapper mapper=new ObjectMapper();List<Object> results=new ArrayList<>();
++ for(JsonNode c:mapper.readTree(Files.readString(Path.of(System.getProperty("native.probe.inputs"))))){int il=c.path("interline").asInt(16);Object scale=make("sheet.Scale",make("sheet.Scale$InterlineScale",il,il,il),make("sheet.Scale$LineScale",2,2,2),null,null,null);call(sheet,"setScale",scale);BeamImpactsControlProbe.set(actualStaff,"specificInterline",il);Object mid=call(actualStaff,"getMidLine");double x=450.,w=c.path("width").asDouble(64),y1=(Double)call(mid,"yAt",x)+c.path("left_offset").asDouble(),y2=(Double)call(mid,"yAt",x+w)+c.path("right_offset").asDouble();Object b=make("sig.inter."+c.path("kind").asText("BeamInter"),make("sig.inter.AbstractBeamInter$Impacts",1.,1.,1.,1.,1.,1.),new Line2D.Double(x,y1,x+w,y2),c.path("height").asDouble(8));call(sig,"addVertex",b);Object builder=make("sheet.beam.MultipleRestsBuilder",system);java.awt.Rectangle box=(java.awt.Rectangle)call(b,"getBounds");Object staff=call(system,"getStaffAtOrAbove",call(b,"getCenter"));List<Object> pitch=new ArrayList<>();Object staffData=null;
++ if(staff!=null){pitch.add(call(staff,"pitchPositionOf",new Point2D.Double(x,y1)));pitch.add(call(staff,"pitchPositionOf",new Point2D.Double(x+w,y2)));staffData=Map.of("id",call(staff,"getId"),"tablature",call(staff,"isTablature"),"endpoint_pitches",pitch,"mid_line_thickness",call(call(staff,"getMidLine"),"getThickness"));}
++ call(builder,"process");Map<?,?> projectors=(Map<?,?>)BeamImpactsControlProbe.get(builder,"projectors");boolean admitted=!projectors.isEmpty();Map<String,Object> result=new LinkedHashMap<>();result.put("input",c);result.put("bounds",new int[]{box.x,box.y,box.width,box.height});result.put("height",call(b,"getHeight"));result.put("staff",staffData);result.put("admitted_to_projector",admitted);result.put("beam_removed",call(b,"isRemoved"));
++ if(admitted){Object projector=projectors.get(staff);int chunk=(int)Math.rint((Double)call(b,"getHeight")-(Double)call(call(staff,"getMidLine"),"getThickness"));List<?> left=(List<?>)call(projector,"processMultiRestSide",box.x,Enum.valueOf((Class)cls("util.HorizontalSide"),"LEFT"),chunk),right=(List<?>)call(projector,"processMultiRestSide",box.x+box.width-1,Enum.valueOf((Class)cls("util.HorizontalSide"),"RIGHT"),chunk);result.put("queries",List.of(Map.of("x",box.x,"left",true,"added_chunk",chunk),Map.of("x",box.x+box.width-1,"left",false,"added_chunk",chunk)));result.put("peak_lists",List.of(peaks(left),peaks(right)));java.lang.reflect.Method method=builder.getClass().getDeclaredMethod("getSerifPeaks",cls("sig.inter.BeamInter"),cls("sheet.Staff"));method.setAccessible(true);Map<?,?> selected=(Map<?,?>)method.invoke(builder,b,staff);List<Object> chosen=new ArrayList<>();for(String side:List.of("LEFT","RIGHT")){Object p=selected.get(Enum.valueOf((Class)cls("util.HorizontalSide"),side));chosen.add(p==null?null:peaks(List.of(p)).get(0));}result.put("selected_peaks",chosen);}
++ results.add(result);for(Object v:new ArrayList<>((Set<?>)call(sig,"vertexSet")))if(v.getClass().getSimpleName().equals("MultipleRestInter")||v.getClass().getSimpleName().equals("VerticalSerifInter"))call(v,"remove");call(b,"remove");}
++ mapper.writeValue(Path.of(System.getProperty("native.probe.output")).toFile(),Map.of("native_outputs_used",false,"original_method","Uninterrupted MultipleRestsBuilder.process plus direct original getSerifPeaks; actual staff and raster","cases",results));}catch(Exception e){throw new RuntimeException(e);}}
++}
+diff --git a/scripts/run_multiple_rest_admission_controls.py b/scripts/run_multiple_rest_admission_controls.py
+new file mode 100644
+index 0000000..07ff639
+--- /dev/null
++++ b/scripts/run_multiple_rest_admission_controls.py
+@@ -0,0 +1,23 @@
++#!/usr/bin/env python3
++# SPDX-License-Identifier: AGPL-3.0-or-later
++"""Independent original multiple-rest admission controls; native output is never consulted."""
++from pathlib import Path
++import json,sys,subprocess,time,hashlib
++import linux_oracle as oracle
++root=Path(__file__).resolve().parents[1];home=Path(sys.argv[1]);out=Path(sys.argv[2]);out.mkdir(parents=True,exist_ok=False)
++cases=[]
++for il in [15,16,17]:
++ for width in [4*il-1,4*il,4*il+1]:
++  for a,b in [(0,0),(-1.5,1.5),(-1.6,1.6),(-1.61,0),(0,1.61),(3,0),(0,-3)]:cases.append({'interline':il,'width':width,'left_offset':a,'right_offset':b})
++for h in [1,1.5,2,2.5,7.5,8,8.5,9.5]:cases.append({'width':80,'height':h})
++for kind in ['BeamHookInter','SmallBeamInter']:cases.append({'width':80,'kind':kind})
++(out/'inputs.json').write_text(json.dumps(cases,separators=(',',':'))+'\n');dist=home/'official/opt/audiveris/lib';oracle.checked(dist/'app/audiveris.jar',oracle.JAR_SHA256);(out/'classes').mkdir();stub=out/'stubs';stub.mkdir();empty=out/'empty';empty.mkdir();stubsrc=out/'stub-src';stubsrc.mkdir();(stubsrc/'Book.java').write_text('package org.audiveris.omr.sheet; public class Book {}\n');(stubsrc/'RunClass.java').write_text('package org.audiveris.omr.step; import java.util.SortedSet; import org.audiveris.omr.sheet.Book; public abstract class RunClass {public RunClass(Book b,SortedSet<Integer> ids){} public abstract void process();}\n')
++commands=[[str(home/oracle.JDK_DIR/'bin/javac'),'--release','21','-d',str(stub),*map(str,stubsrc.glob('*.java'))],[str(home/oracle.JDK_DIR/'bin/javac'),'--release','21','-cp',str(stub)+':'+str(dist/'app/*'),'-sourcepath',str(empty),'-d',str(out/'classes'),*map(str,[root/'scripts/java/GridProbe.java',root/'scripts/java/BeamImpactsControlProbe.java',root/'scripts/java/MultipleRestAdmissionControlProbe.java'])],[str(dist/'runtime/bin/java'),'-Xmx512m','-XX:ActiveProcessorCount=2','-Djava.awt.headless=true','-Dnative.probe.inputs='+str(out/'inputs.json'),'-Dnative.probe.output='+str(out/'original.json'),'-cp',str(dist/'app/*')+':'+str(out/'classes'),'Audiveris','-batch','-constant','org.audiveris.omr.Main.persistBatchCliConstants=false','-constant','org.audiveris.omr.Main.runBatchTasksInParallel=false','-step','SCALE','-run','MultipleRestAdmissionControlProbe','-output',str(out/'output'),'--',str(root/'fixtures/official-grid/beams-single.png')]]
++receipts=[]
++for i,cmd in enumerate(commands):
++ start=time.monotonic()
++ with (out/f'original-{i}.log').open('w') as f:run=subprocess.run(cmd,stdout=f,stderr=subprocess.STDOUT,timeout=90)
++ receipts.append({'command':cmd,'exit_code':run.returncode,'seconds':time.monotonic()-start});(out/'commands.json').write_text(json.dumps(receipts,indent=2)+'\n');assert run.returncode==0
++fixture=root/'fixtures/official-multiple-rest-admission.json';assert not fixture.exists();fixture.write_bytes((out/'original.json').read_bytes());result=json.loads(fixture.read_text());assert len(result['cases'])==len(cases)
++(out/'provenance.json').write_text(json.dumps({'native_outputs_used':False,'jar_sha256':oracle.JAR_SHA256,'cases':len(cases),'admitted_to_projector':sum(c['admitted_to_projector'] for c in result['cases']),'runtime_excludes_compile_shims':True},indent=2)+'\n')
++print((out/'provenance.json').read_text())
+diff --git a/src/lib.rs b/src/lib.rs
+index d7bfc90..805ac61 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -383,3 +383,5 @@ pub mod beam_extend_to_spot;
+ pub mod beam_extend_in_parallel;
+ 
+ pub mod beam_groups;
++
++pub mod multiple_rest_admission;
+diff --git a/src/multiple_rest_admission.rs b/src/multiple_rest_admission.rs
+new file mode 100644
+index 0000000..48d2ef1
+--- /dev/null
++++ b/src/multiple_rest_admission.rs
+@@ -0,0 +1,113 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Pinned MultipleRestsBuilder.process admission and getSerifPeaks queries.
++use crate::beam_candidates::CandidateInter;
++#[derive(Clone, Copy, Debug, PartialEq)]
++pub struct StaffPosition {
++    pub id: u64,
++    pub tablature: bool,
++    pub endpoint_pitches: [f64; 2],
++    pub mid_line_thickness: f64,
++}
++#[derive(Clone, Copy, Debug, PartialEq)]
++pub struct SerifQuery {
++    pub x: i32,
++    pub left: bool,
++    pub added_chunk: i32,
++}
++#[derive(Clone, Debug, PartialEq)]
++pub struct Admission {
++    pub rejection: Option<&'static str>,
++    pub staff_id: Option<u64>,
++    pub queries: Vec<SerifQuery>,
++}
++/// Staff association and endpoint pitch measurement are supplied by the caller.
++/// This boundary never mutates candidates, groups or the glyph registry.
++pub fn assess_candidate(
++    beam: &CandidateInter,
++    interline: usize,
++    staff: Option<StaffPosition>,
++) -> Result<Admission, String> {
++    assess(
++        beam.kind,
++        beam.is_removed(),
++        beam.bounds,
++        beam.item.height,
++        interline,
++        staff,
++    )
++}
++pub fn assess(
++    kind: &str,
++    removed: bool,
++    bounds: [i32; 4],
++    height: f64,
++    interline: usize,
++    staff: Option<StaffPosition>,
++) -> Result<Admission, String> {
++    if interline == 0
++        || interline > 10000
++        || bounds[2] <= 0
++        || bounds[3] <= 0
++        || bounds.iter().any(|&n| i64::from(n).abs() > 10_000_000)
++        || !height.is_finite()
++        || height <= 0.
++        || height > 20000.
++    {
++        return Err("invalid_multiple_rest_admission_geometry".into());
++    }
++    if let Some(s) = staff
++        && (s.id == 0
++            || !s.endpoint_pitches.iter().all(|p| p.is_finite())
++            || !s.mid_line_thickness.is_finite()
++            || s.mid_line_thickness <= 0.
++            || s.mid_line_thickness > 20000.)
++    {
++        return Err("invalid_multiple_rest_staff_measurement".into());
++    }
++    let reject = |reason| Admission {
++        rejection: Some(reason),
++        staff_id: None,
++        queries: Vec::new(),
++    };
++    if removed || kind != "BeamInter" {
++        return Ok(reject("not_active_normal_beam"));
++    }
++    let min_length = (4. * interline as f64).round_ties_even() as i32;
++    if bounds[2] < min_length {
++        return Ok(reject("too_short"));
++    }
++    let Some(staff) = staff else {
++        return Ok(reject("no_staff"));
++    };
++    if staff.tablature {
++        return Ok(reject("tablature"));
++    }
++    if staff.endpoint_pitches[0].abs() > 0.2 {
++        return Ok(reject("left_pitch"));
++    }
++    if staff.endpoint_pitches[1].abs() > 0.2 {
++        return Ok(reject("right_pitch"));
++    }
++    let added_chunk = (height - staff.mid_line_thickness).round_ties_even() as i32;
++    Ok(Admission {
++        rejection: None,
++        staff_id: Some(staff.id),
++        queries: vec![
++            SerifQuery {
++                x: bounds[0],
++                left: true,
++                added_chunk,
++            },
++            SerifQuery {
++                x: bounds[0] + bounds[2] - 1,
++                left: false,
++                added_chunk,
++            },
++        ],
++    })
++}
++/// Original getSerifPeaks retains the last LEFT peak and first RIGHT peak in
++/// the projector's encounter order. Lists are not sorted or deduplicated here.
++pub fn select_serif_peaks<'a, T>(left: &'a [T], right: &'a [T]) -> [Option<&'a T>; 2] {
++    [left.last(), right.first()]
++}
+diff --git a/tests/multiple_rest_admission.rs b/tests/multiple_rest_admission.rs
+new file mode 100644
+index 0000000..1a8dc70
+--- /dev/null
++++ b/tests/multiple_rest_admission.rs
+@@ -0,0 +1,109 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++use audiveris_native::multiple_rest_admission::{self, StaffPosition};
++use serde_json::Value;
++#[test]
++fn original_process_admission_and_serif_queries() {
++    let v: Value = serde_json::from_str(include_str!(
++        "../fixtures/official-multiple-rest-admission.json"
++    ))
++    .unwrap();
++    assert_eq!(v["native_outputs_used"], false);
++    assert_eq!(v["cases"].as_array().unwrap().len(), 73);
++    let mut admitted = 0;
++    for (i, c) in v["cases"].as_array().unwrap().iter().enumerate() {
++        let staff = if c["staff"].is_null() {
++            None
++        } else {
++            Some(StaffPosition {
++                id: c["staff"]["id"].as_u64().unwrap(),
++                tablature: c["staff"]["tablature"].as_bool().unwrap(),
++                endpoint_pitches: std::array::from_fn(|n| {
++                    c["staff"]["endpoint_pitches"][n].as_f64().unwrap()
++                }),
++                mid_line_thickness: c["staff"]["mid_line_thickness"].as_f64().unwrap(),
++            })
++        };
++        let got = multiple_rest_admission::assess(
++            c["input"]["kind"].as_str().unwrap_or("BeamInter"),
++            false,
++            std::array::from_fn(|n| c["bounds"][n].as_i64().unwrap() as i32),
++            c["height"].as_f64().unwrap(),
++            c["input"]["interline"].as_u64().unwrap_or(16) as usize,
++            staff,
++        )
++        .unwrap();
++        assert_eq!(
++            got.rejection.is_none(),
++            c["admitted_to_projector"].as_bool().unwrap(),
++            "case {i}"
++        );
++        if got.rejection.is_none() {
++            admitted += 1;
++            let queries = got
++                .queries
++                .iter()
++                .map(|q| serde_json::json!({"x":q.x,"left":q.left,"added_chunk":q.added_chunk}))
++                .collect::<Vec<_>>();
++            assert_eq!(serde_json::json!(queries), c["queries"], "case {i} queries");
++            let arrays = c["peak_lists"].as_array().unwrap();
++            let selected = multiple_rest_admission::select_serif_peaks(
++                arrays[0].as_array().unwrap(),
++                arrays[1].as_array().unwrap(),
++            );
++            assert_eq!(
++                serde_json::json!(selected),
++                c["selected_peaks"],
++                "case {i} peaks"
++            );
++        }
++    }
++    assert!(admitted > 0);
++}
++#[test]
++fn missing_staff_tablature_removed_and_invalid_measurements() {
++    let staff = StaffPosition {
++        id: 1,
++        tablature: false,
++        endpoint_pitches: [0., 0.],
++        mid_line_thickness: 2.,
++    };
++    let assess = |s, removed| {
++        multiple_rest_admission::assess("BeamInter", removed, [20, 10, 64, 8], 8., 16, s).unwrap()
++    };
++    assert_eq!(assess(None, false).rejection, Some("no_staff"));
++    assert_eq!(
++        assess(
++            Some(StaffPosition {
++                tablature: true,
++                ..staff
++            }),
++            false
++        )
++        .rejection,
++        Some("tablature")
++    );
++    assert_eq!(
++        assess(Some(staff), true).rejection,
++        Some("not_active_normal_beam")
++    );
++    assert!(
++        multiple_rest_admission::assess(
++            "BeamInter",
++            false,
++            [0, 0, 64, 8],
++            8.,
++            16,
++            Some(StaffPosition {
++                endpoint_pitches: [f64::NAN, 0.],
++                ..staff
++            })
++        )
++        .is_err()
++    );
++    let left = [2, 1, 4];
++    let right = [8, 7, 9];
++    assert_eq!(
++        multiple_rest_admission::select_serif_peaks(&left, &right),
++        [Some(&4), Some(&8)]
++    );
++}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "verified_utc": "2026-10-03T12:45:11.037772+00:00",
+  "reconstruction": "Fresh actual base archive plus cumulative snapshot-loop archive/bundle, pinned late-hook and group patches, then this admission patch",
+  "ancestor_file_hashes_verified": 176,
+  "late_hook_hashes_verified": 37,
+  "group_hashes_verified": 37,
+  "new_changed_file_hashes_verified": 20,
+  "fresh_restored_implementation_commit": "fe14b3c859b8bb9559714f290423476f0b272a8e",
+  "fresh_restored_tree": "3dd2ea15e92b95c96d7af4a62b3c4840b9f14031",
+  "tracked_files": 4559,
+  "source_clean": true,
+  "patch_bytes": 110401,
+  "patch_sha256": "e8b031ef6de4c030229724bec5ce17f851e4ab7188e55ea3878087a3d7de7613"
+}
