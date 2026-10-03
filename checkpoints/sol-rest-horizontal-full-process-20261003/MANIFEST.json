@@ -1,0 +1,72 @@
+{
+  "branch": "checkpoint/sol-rest-horizontal-full-process-20261003",
+  "parent_checkpoint_commit": "9cbcc2db25d379272fe028c16daf39669e71f531",
+  "local_implementation_commit": "7bc4213cea7ed27ee8355e319447dda3b9b7074f",
+  "local_implementation_tree": "52ea03605e0a777a638c1fcb76e3ea7cb6259f64",
+  "tracked_files": 4752,
+  "source_unchanged_from_parent": true,
+  "changed_source_files": [],
+  "source_recovery_manifest_url": "https://github.com/gw31415/audiveris-native/blob/9cbcc2db25d379272fe028c16daf39669e71f531/checkpoints/sol-rest-horizontal-20261003/MANIFEST.json",
+  "validation_summary": {
+    "source_commit": "7bc4213cea7ed27ee8355e319447dda3b9b7074f",
+    "source_tree": "52ea03605e0a777a638c1fcb76e3ea7cb6259f64",
+    "source_unchanged": true,
+    "tracked_files": 4752,
+    "validation_complete": false,
+    "both_profiles_passed": false,
+    "profiles": {
+      "debug": {
+        "source_commit": "7bc4213cea7ed27ee8355e319447dda3b9b7074f",
+        "source_tree": "52ea03605e0a777a638c1fcb76e3ea7cb6259f64",
+        "source_clean_before_and_after": true,
+        "profile": "debug",
+        "command": [
+          "cargo",
+          "test",
+          "--locked",
+          "--offline",
+          "-j2",
+          "--workspace",
+          "--no-fail-fast"
+        ],
+        "started_utc": "2026-10-03T16:27:55.960766+00:00",
+        "ended_utc": "2026-10-03T16:33:56.197948+00:00",
+        "seconds": 360.23718801200084,
+        "exit_code": 0,
+        "timed_out": false,
+        "suite_results": 100,
+        "passed": 321,
+        "failed": 0,
+        "ignored": 0,
+        "failed_tests": [],
+        "log_bytes": 47005,
+        "log_sha256": "63f09fdf75b3c2f75edcaf3e76c19268ab82f435034b8db22477372718775aab",
+        "full_suite_status": "passed",
+        "runs_at_this_source": 1
+      }
+    },
+    "process_status": "running",
+    "source_hash_verification": {
+      "source_commit": "7bc4213cea7ed27ee8355e319447dda3b9b7074f",
+      "source_tree": "52ea03605e0a777a638c1fcb76e3ea7cb6259f64",
+      "tracked_files": 4752,
+      "live_and_fresh_restored_all_file_sha256_reverified": 4752,
+      "source_clean": true,
+      "verified_utc": "2026-10-03T16:34:18.748729+00:00"
+    },
+    "full_OMR": "unfinished",
+    "positive_real_score_rest": "not demonstrated"
+  },
+  "evidence": {
+    "path": "checkpoints/sol-rest-horizontal-full-process-20261003/EVIDENCE.json",
+    "sha256": "73726e04c470446604d8131c6b739171b454e4ef213e4fa338196f34a6b54adf"
+  },
+  "artifact_count": 2,
+  "restore": "Restore immutable linked source manifest and its cumulative parent chain. Decode its exact Git bundle and verify implementation commit/tree and changed file hashes. This validation checkpoint makes no source change. Process checkpoints retain observations and logs, not portable OS processes.",
+  "full_OMR": "unfinished",
+  "remaining_dependencies": [
+    "clipped curved system bounds",
+    "curved ledger paths and native ledger discovery",
+    "LEDGERS/HEADS/stems/rhythm/MusicXML"
+  ]
+}
