@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "63ea0d7bfde1f6371806138d5b8fcec6e359294f",
+  "source_tree": "91b718cecb5f519b1bf7d0e26d161b0d8ff85546",
+  "all_fresh_restored_sha256_verified": 5079,
+  "source_clean": true,
+  "source": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-prepush/source-git"
+}
