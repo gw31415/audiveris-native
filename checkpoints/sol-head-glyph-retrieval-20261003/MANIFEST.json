@@ -174,6 +174,69 @@
       "source_clean": true,
       "source": "/workspace/work/head-lifecycle/sol-head-glyph-retrieval-20261003-prepush/artifacts/audiveris-source",
       "source_git": "/workspace/work/head-lifecycle/sol-head-glyph-retrieval-20261003-prepush/source-git"
+    },
+    "remote_fresh_restore": {
+      "status": "passed",
+      "source_commit": "7397628fd5dd81f7337837db6da80b3294cf1d2f",
+      "source_tree": "c1ef66e20d6c894687163996eb0dc4741826ef10",
+      "all_fresh_restored_sha256_verified": 4856,
+      "source_clean": true,
+      "source": "/workspace/work/head-lifecycle/sol-head-glyph-retrieval-20261003-remote-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-lifecycle/sol-head-glyph-retrieval-20261003-remote-restore/source-git",
+      "recorded_utc": "2026-10-03T22:44:34.388162+00:00",
+      "remote_main_verified": "73d15ce6bf1a0c8e1dfc68f4f4c554e3abdc3257",
+      "archival_repository_tree": "701326ccf5afd78b8e20b28e5e773ea38deedae7",
+      "fresh_remote_clone": true,
+      "all_archival_files_sha256_verified": 438,
+      "recovered_from_remote_archives_and_pinned_chain": true,
+      "recovered_native_cli_report_sha256": "dc8752f2459b11be161fe5430cc4a0ac868ffd34d6b1472a87b40c4ebf2d4f0b",
+      "recovered_cli_oracle_comparison": {
+        "status": "passed",
+        "range_scanners": 118,
+        "seed_glyphs": 358,
+        "seed_conflicts": 438,
+        "range_glyphs": 16,
+        "foreground_controls": 16,
+        "heads_complete": false,
+        "preserved_filter": {
+          "status": "passed",
+          "range_scanners": 118,
+          "aggregates": 454,
+          "seed_conflict_controls": 21,
+          "live_seed_conflicts_complete": false,
+          "heads_complete": false,
+          "preserved_catalog": {
+            "status": "passed",
+            "range_scanners": 118,
+            "accepted_candidates": 2224,
+            "weak_stemless_rejected": 407,
+            "raw_candidates": 2631,
+            "accepted_stemless": {
+              "WHOLE_NOTE": 3
+            },
+            "preserved_prefix": {
+              "status": "passed",
+              "raw_seed_proposals": 418,
+              "veto_seed_proposals": 358,
+              "head_spot_system_references": 402,
+              "range_scanners": 118,
+              "visited_abscissae": 47790,
+              "skipped_windows": 869,
+              "black_void_prefix_proposals": 2221,
+              "heads_complete": false,
+              "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+              "report_sha256": "dc8752f2459b11be161fe5430cc4a0ac868ffd34d6b1472a87b40c4ebf2d4f0b"
+            },
+            "heads_complete": false,
+            "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+            "report_sha256": "dc8752f2459b11be161fe5430cc4a0ac868ffd34d6b1472a87b40c4ebf2d4f0b"
+          },
+          "report_sha256": "dc8752f2459b11be161fe5430cc4a0ac868ffd34d6b1472a87b40c4ebf2d4f0b"
+        },
+        "report_sha256": "dc8752f2459b11be161fe5430cc4a0ac868ffd34d6b1472a87b40c4ebf2d4f0b"
+      },
+      "saved_full_workspace_passed": 356,
+      "tests_rerun_on_recovered_source": false
     }
   },
   "implemented_scope": "Original binary foreground template-keypoint glyph retrieval, canonical sheet registry reuse and glyph-updated bounds. Original Scanner integer-line ordinate and determinant seed pivot, 358 live seed glyphs, 438 conflicts among 454 range representatives, 16 range glyphs over all 118 scanners. Sixteen four-shape image controls and 62 original pivot controls. All six predecessor reports preserved exactly. No HeadInter/SIG registration yet.",
@@ -186,6 +249,7 @@
   "evidence_log_storage": "Log copies normalize trailing whitespace; originals remain in the existing task workspace.",
   "evidence_sha256": {
     "evidence/PREPUSH-RESTORE.json": "dec60edc3279f3a1fff1006037cabb93d1f8c8cabfbbae80f88e6ccaf47e755c",
+    "evidence/REMOTE-READBACK.json": "55574cc114a6dd2b3a9738e239f857c8de8ae4aa789d9fa83ba2a58f20f18818",
     "evidence/bundle-verify.log": "cb5b866b964a3aed05cd730f5f5884187fe651aa764f77f6f6ba6c3d1fbcc2e8",
     "evidence/clippy.log": "97d008dd37ee5361a6c0b6405c13d324eab9386e5cba44823a5d3a537c9e8c1b",
     "evidence/fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
