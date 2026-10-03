@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native",
+    "beam-spots",
+    "fixtures/official-grid/laura-gray.png",
+    "/workspace/audiveris-empty-ledger-check-20261003/laura-cli.pgm",
+    "/workspace/audiveris-empty-ledger-check-20261003/laura-cli.json"
+  ],
+  "seconds": 15.609740465000868,
+  "exit_code": 0,
+  "report_sha256": "17cbdd47c1e747663cebd505c9bd03d71ba92a1f729e942d5b761e5932f083a3",
+  "last_completed_substage": "BEAMS.GROUPS",
+  "epilog_complete": false,
+  "rest_boundaries": [
+    {
+      "complete": false,
+      "error": "unsupported_rest_multi_staff_mapping"
+    },
+    {
+      "complete": false,
+      "error": "unsupported_rest_multi_staff_mapping"
+    }
+  ],
+  "positive_real_score_rest": "not demonstrated",
+  "musicxml_complete": false
+}

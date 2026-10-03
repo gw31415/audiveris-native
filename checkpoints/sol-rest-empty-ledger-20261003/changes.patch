@@ -1,0 +1,250 @@
+diff --git a/docs/REST-EMPTY-LEDGER-PITCH.md b/docs/REST-EMPTY-LEDGER-PITCH.md
+new file mode 100644
+index 0000000..52636a3
+--- /dev/null
++++ b/docs/REST-EMPTY-LEDGER-PITCH.md
+@@ -0,0 +1,46 @@
++# Native rest pitch with an empty ledger map
++
++This scoped implementation continues the validated e13359df source checkpoint.
++The original Staff.pitchPositionOf computes in-staff pitch from first/last-line
++ordinates and the line-count span. Outside the staff it walks signed consecutive
++ledgerLineMap indices, interpolates between ledger curves, and falls back from
++the last known line using specificInterline. For the native pre-LEDGERS BEAMS
++boundary that map is empty, so the exact fallback is -4 + 2*(y-first)/interline
++above a default five-line staff, or 4 + 2*(y-last)/interline below it. The measured
++interline matters: extrapolating the in-staff first/last span is not equivalent.
++
++native_rest_mapping::Mapping::pitch_at implements the in-staff calculation and
++this empty-ledger fallback. position still uses the actual integer beam center
++for staff-at-or-above and the actual median endpoints for pitch. External pitch
++no longer marks every beam/rest in that supported system unsupported; admission
++can reject the non-rest candidate normally and continue. Native GRID now emits
++explicit empty ledger_lines. Legacy missing fields denote the same pre-LEDGERS
++contract; nonempty or malformed ledger representations reject explicitly.
++No native ledger extraction, populated ledger interpolation or multi-staff
++association is claimed by this stage.
++
++Original multi-staff semantics traced in retained Staff/SystemInfo and
++StaffManager bytecode are area-based: getClosestStaff first enumerates staff
++areas containing the point. With multiple containing areas it uses truncated
++integer Staff.distanceTo, keeping the first staff on ties. getStaffAtOrAbove
++returns that staff if its first line is at/above the integer beam center, or
++the preceding staff in system order otherwise. Native GRID exposes system
++areas/section membership but does not yet provide these original staff areas,
++horizontal-neighbor/vertical-neighbor construction or page-clipped membership.
++A nearest-line substitute would not preserve this behavior, so those paths
++remain unsupported. Populated ledgerLineMap construction and GeoPath.yAtXExt
++evaluation are also still missing from native staff data.
++
++EmptyLedgerPitchControlProbe uses the pinned original unmodified Staff class
++with supplied sloped LineInfo curves, an empty original ledgerLineMap and actual
++specificInterline=16. Its 21 independent outputs cover line boundaries, staff
++middle, just-outside points and farther external points at three abscissas.
++Native outputs are never supplied to that oracle. The original fixture uses
++a staff span different from four specific interlines to distinguish the two
++formulas. The existing uninterrupted original conversion controls still cover
++six positive and five negative synthetic conversions. Actual beams-single CLI
++and scanned Laura checks are separately recorded: no positive real-score rest
++conversion is demonstrated, and Laura's multi-staff rest path remains explicit
++unsupported. Full debug/release at this changed source are UNVERIFIED; the
++297-test-per-profile result belongs only to e13359df and its immutable recovery
++checkpoint deec43364e2b6b348cca4b38f798f534c8bd1925.
+diff --git a/fixtures/official-empty-ledger-pitch.json b/fixtures/official-empty-ledger-pitch.json
+new file mode 100644
+index 0000000..98f766f
+--- /dev/null
++++ b/fixtures/official-empty-ledger-pitch.json
+@@ -0,0 +1 @@
++{"cases":[{"x":0.0,"y":76.0,"pitch":-7.0},{"x":0.0,"y":99.75,"pitch":-4.03125},{"x":0.0,"y":100.0,"pitch":-4.0},{"x":0.0,"y":131.5,"pitch":0.0},{"x":0.0,"y":163.0,"pitch":4.0},{"x":0.0,"y":163.25,"pitch":4.03125},{"x":0.0,"y":187.0,"pitch":7.0},{"x":64.0,"y":82.4,"pitch":-7.0},{"x":64.0,"y":106.15,"pitch":-4.03125},{"x":64.0,"y":106.4,"pitch":-4.0},{"x":64.0,"y":141.10000000000002,"pitch":1.6381388720693952E-15},{"x":64.0,"y":175.8,"pitch":4.0},{"x":64.0,"y":176.05,"pitch":4.03125},{"x":64.0,"y":199.8,"pitch":7.0},{"x":127.0,"y":88.7,"pitch":-7.0},{"x":127.0,"y":112.45,"pitch":-4.03125},{"x":127.0,"y":112.7,"pitch":-4.0},{"x":127.0,"y":150.55,"pitch":7.509038158627214E-16},{"x":127.0,"y":188.4,"pitch":4.0},{"x":127.0,"y":188.65,"pitch":4.03125},{"x":127.0,"y":212.4,"pitch":7.0}],"scope":"Unmodified original Staff.pitchPositionOf; supplied five sloped lines, measured specificInterline=16, empty original ledgerLineMap; no staff association or positive raster conversion claimed","lines":[{"points":[[0.0,100.0],[128.0,112.8]],"thickness":1.0},{"points":[[0.0,115.75],[128.0,131.75]],"thickness":1.0},{"points":[[0.0,131.5],[128.0,150.7]],"thickness":1.0},{"points":[[0.0,147.25],[128.0,169.65]],"thickness":1.0},{"points":[[0.0,163.0],[128.0,188.6]],"thickness":1.0}],"native_outputs_used":false,"specific_interline":16}
+\ No newline at end of file
+diff --git a/scripts/java/EmptyLedgerPitchControlProbe.java b/scripts/java/EmptyLedgerPitchControlProbe.java
+new file mode 100644
+index 0000000..b4871d1
+--- /dev/null
++++ b/scripts/java/EmptyLedgerPitchControlProbe.java
+@@ -0,0 +1,30 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
++// Supplied staff curves; calls unmodified original Staff.pitchPositionOf.
++import java.lang.reflect.*;
++import java.awt.geom.Point2D;
++import java.nio.file.*;
++import java.util.*;
++import com.fasterxml.jackson.databind.ObjectMapper;
++public class EmptyLedgerPitchControlProbe {
++ public static void main(String[] args) throws Exception {
++  Class<?> staffClass=Class.forName("org.audiveris.omr.sheet.Staff"),lineClass=Class.forName("org.audiveris.omr.sheet.grid.LineInfo"); List<Object> lines=new ArrayList<>();List<Object> geometry=new ArrayList<>();
++  for(int n=0;n<5;n++) {
++   final double base=100.+15.75*n,slope=.1+.025*n;
++   lines.add(Proxy.newProxyInstance(lineClass.getClassLoader(),new Class[]{lineClass},(o,m,a)->{
++    if(m.getName().equals("yAt")) {double y=base+slope*((Number)a[0]).doubleValue();if(m.getReturnType()==int.class)return (int)Math.rint(y);return y;}
++    if(m.getName().equals("getThickness"))return 1.;
++    throw new UnsupportedOperationException(m.getName());
++   }));
++   geometry.add(Map.of("points",List.of(new double[]{0,base},new double[]{128,base+128*slope}),"thickness",1.));
++  }
++  Object staff=staffClass.getConstructor().newInstance();
++  for(var e:Map.of("lines",(Object)lines,"specificInterline",(Object)16).entrySet()){Field f=staffClass.getDeclaredField(e.getKey());f.setAccessible(true);f.set(staff,e.getValue());}
++  Field ledger=staffClass.getDeclaredField("ledgerLineMap");ledger.setAccessible(true);if(!((Map<?,?>)ledger.get(staff)).isEmpty())throw new AssertionError("nonempty ledger map");
++  List<Object> cases=new ArrayList<>();
++  for(double x:new double[]{0,64,127}) {
++   double top=100.+.1*x,bottom=163.+.2*x;
++   for(double y:new double[]{top-24,top-.25,top,(top+bottom)/2,bottom,bottom+.25,bottom+24})cases.add(Map.of("x",x,"y",y,"pitch",staffClass.getMethod("pitchPositionOf",Point2D.class).invoke(staff,new Point2D.Double(x,y))));
++  }
++  new ObjectMapper().writeValue(Path.of(args[0]).toFile(),Map.of("native_outputs_used",false,"scope","Unmodified original Staff.pitchPositionOf; supplied five sloped lines, measured specificInterline=16, empty original ledgerLineMap; no staff association or positive raster conversion claimed","specific_interline",16,"lines",geometry,"cases",cases));
++ }
++}
+diff --git a/src/beams_pipeline.rs b/src/beams_pipeline.rs
+index f2d490d..b4313d9 100644
+--- a/src/beams_pipeline.rs
++++ b/src/beams_pipeline.rs
+@@ -80,7 +80,7 @@ pub fn advance(
+         })();
+         let rests = match rest_result {
+             Ok(rests) => {
+-                json!({"complete":true,"conversions":rests.rests.len(),"registered_serifs":rests.serifs.len(),"supported_scope":"single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff endpoint pitches"})
++                json!({"complete":true,"conversions":rests.rests.len(),"registered_serifs":rests.serifs.len(),"supported_scope":"single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff and empty-ledger external endpoint pitches"})
+             }
+             Err(error) => json!({"complete":false,"error":error}),
+         };
+@@ -95,6 +95,6 @@ pub fn advance(
+         json!({"complete":false,"reason":"incomplete_native_rest_boundary"})
+     };
+     Ok(
+-        json!({"stage":"BEAMS.native_through_multiple_rests","extensions_complete":true,"hooks_complete":true,"groups_complete":true,"multiple_rest_boundary_complete":rests_complete,"systems":reports,"epilog":epilog,"epilog_complete":rests_complete,"beams_complete":rests_complete,"musicxml_complete":false,"pending":["LEDGERS/HEADS/rhythm/MusicXML","multi-staff rest mapping and ledger-aware pitch"]}),
++        json!({"stage":"BEAMS.native_through_multiple_rests","extensions_complete":true,"hooks_complete":true,"groups_complete":true,"multiple_rest_boundary_complete":rests_complete,"systems":reports,"epilog":epilog,"epilog_complete":rests_complete,"beams_complete":rests_complete,"musicxml_complete":false,"pending":["LEDGERS/HEADS/rhythm/MusicXML","multi-staff staff-area mapping and populated ledger curves"]}),
+     )
+ }
+diff --git a/src/grid_ir.rs b/src/grid_ir.rs
+index 74b5961..53106b5 100644
+--- a/src/grid_ir.rs
++++ b/src/grid_ir.rs
+@@ -149,7 +149,7 @@ pub fn build(
+             .filter(|v| v["kind"] == "BarlineInter" && v["staff_id"] == id)
+             .map(|v| v["id"].clone())
+             .collect();
+-        staffs.push(json!({"barline_ids":barline_ids,"specific_interline":sc.interline.main,"id":id,"system_id":system["id"],"left":staff["left"],"right":staff["right"],"lines":lines}));
++        staffs.push(json!({"ledger_lines":[],"barline_ids":barline_ids,"specific_interline":sc.interline.main,"id":id,"system_id":system["id"],"left":staff["left"],"right":staff["right"],"lines":lines}));
+         curves.push(staff_curves);
+     }
+     // LagManager.dispatchRuns: discard long vertical runs from NO_STAFF, then build ALL horizontal sections.
+diff --git a/src/native_rest_mapping.rs b/src/native_rest_mapping.rs
+index e955e14..b964908 100644
+--- a/src/native_rest_mapping.rs
++++ b/src/native_rest_mapping.rs
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: AGPL-3.0-or-later
+-// Supported default single-system, single-five-line staff mapping for rests.
++// Default single-system/five-line staff, explicitly empty pre-LEDGERS map.
+ use crate::{
+     Run,
+     beam_candidates::CandidateInter,
+@@ -45,6 +45,13 @@ impl Mapping {
+         {
+             return Err("unsupported_rest_staff_area_mapping".into());
+         }
++        if staff["ledger_lines"]
++            .as_array()
++            .is_some_and(|v| !v.is_empty())
++            || (!staff["ledger_lines"].is_null() && !staff["ledger_lines"].is_array())
++        {
++            return Err("unsupported_rest_populated_ledger_mapping".into());
++        }
+         let raw = staff["lines"]
+             .as_array()
+             .filter(|v| v.len() == 5)
+@@ -180,6 +187,24 @@ impl Mapping {
+             fore,
+         }
+     }
++    /// Original Staff.pitchPositionOf with an empty ledgerLineMap. Outside
++    /// the staff, use specificInterline rather than extrapolating the staff span.
++    pub fn pitch_at(&self, x: f64, y: f64) -> Result<f64, String> {
++        if !x.is_finite() || !y.is_finite() {
++            return Err("invalid_rest_pitch_point".into());
++        }
++        let top = self.lines[0].y(x);
++        let bottom = self.lines[4].y(x);
++        if !top.is_finite() || !bottom.is_finite() || bottom <= top {
++            return Err("invalid_rest_pitch_staff_span".into());
++        }
++        Ok(if y >= top && y <= bottom {
++            4. * (2. * y - bottom - top) / (bottom - top)
++        } else {
++            let (base, edge) = if y < top { (-4., top) } else { (4., bottom) };
++            base + 2. * (y - edge) / self.interline as f64
++        })
++    }
+     pub fn position(&self, beam: &CandidateInter) -> Result<Option<StaffPosition>, String> {
+         let b = beam.bounds;
+         let x = f64::from(b[0] + b[2] / 2);
+@@ -195,12 +220,7 @@ impl Mapping {
+         .into_iter()
+         .enumerate()
+         {
+-            let top = self.lines[0].y(x);
+-            let bottom = self.lines[4].y(x);
+-            if y < top || y > bottom || bottom <= top {
+-                return Err("unsupported_rest_ledger_pitch_mapping".into());
+-            }
+-            pitches[i] = 4. * (2. * y - bottom - top) / (bottom - top);
++            pitches[i] = self.pitch_at(x, y)?;
+         }
+         Ok(Some(StaffPosition {
+             id: self.id,
+diff --git a/tests/native_rest_mapping.rs b/tests/native_rest_mapping.rs
+index 79ca618..4f55fa2 100644
+--- a/tests/native_rest_mapping.rs
++++ b/tests/native_rest_mapping.rs
+@@ -41,7 +41,7 @@ fn native_curve_pitch_and_lag_order_are_retained() {
+     assert_eq!(m.geometry(1).interline, 4);
+ }
+ #[test]
+-fn unsupported_staff_and_ledger_paths_are_explicit() {
++fn unsupported_staff_and_populated_ledger_paths_are_explicit() {
+     let mut g = grid();
+     let other = g["staffs"][0].clone();
+     g["staffs"].as_array_mut().unwrap().push(other);
+@@ -53,7 +53,40 @@ fn unsupported_staff_and_ledger_paths_are_explicit() {
+             .is_none()
+     );
+     assert_eq!(
+-        m.position(candidate(40.).active(1).unwrap()).unwrap_err(),
+-        "unsupported_rest_ledger_pitch_mapping"
++        m.position(candidate(40.).active(1).unwrap())
++            .unwrap()
++            .unwrap()
++            .endpoint_pitches,
++        [11., 11.]
++    );
++    let mut populated = grid();
++    populated["staffs"][0]["ledger_lines"] = json!([{"index": 1}]);
++    assert_eq!(
++        Mapping::from_grid(&populated, 128, 64, 1).err().unwrap(),
++        "unsupported_rest_populated_ledger_mapping"
+     );
+ }
++
++#[test]
++fn original_empty_ledger_pitch_controls_match_native_mapping() {
++    let fixture: Value =
++        serde_json::from_str(include_str!("../fixtures/official-empty-ledger-pitch.json")).unwrap();
++    assert_eq!(fixture["native_outputs_used"], false);
++    for case in fixture["cases"].as_array().unwrap() {
++        let mut g = grid();
++        g["staffs"][0]["lines"] = fixture["lines"].clone();
++        g["staffs"][0]["specific_interline"] = fixture["specific_interline"].clone();
++        g["staffs"][0]["ledger_lines"] = json!([]);
++        let m = Mapping::from_grid(&g, 128, 256, 1).unwrap();
++        let pitch = m
++            .pitch_at(case["x"].as_f64().unwrap(), case["y"].as_f64().unwrap())
++            .unwrap();
++        let original = case["pitch"].as_f64().unwrap();
++        assert!(
++            (pitch - original).abs() <= 1e-12,
++            "{case}: {pitch} != {original}"
++        );
++    }
++    let m = Mapping::from_grid(&grid(), 128, 64, 1).unwrap();
++    assert!(m.pitch_at(f64::NAN, 18.).is_err());
++}
