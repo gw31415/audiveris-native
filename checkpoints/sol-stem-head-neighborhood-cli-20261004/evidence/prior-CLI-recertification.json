@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "reports": [
+    {
+      "CLI": "cue",
+      "old_report_gzip_sha256_retained": "52dc4dac15bcd09b58296c7e5b1171240673b65442bb5e4c6e95558513bc4e2f",
+      "raw_report_sha256_unchanged": "64969e2f69f266d4a894d51d7c31fd8e8227706f421bfc7521ad59ac212369ce",
+      "actual_current_binary_executed": true,
+      "changed_source_pin_only": "src/main.rs"
+    },
+    {
+      "CLI": "chunks",
+      "old_report_gzip_sha256_retained": "4dce34058f5b46b0427022fc85e79e6aa12ed40e000c4816720be653a084b999",
+      "raw_report_sha256_unchanged": "aa01c9c023997ef506bb3cad76fa2d3e01f0b56eec4f32db74d4719209a1e3ed",
+      "actual_current_binary_executed": true,
+      "changed_source_pin_only": "src/main.rs"
+    },
+    {
+      "CLI": "items",
+      "old_report_gzip_sha256_retained": "7f8513b7e7501e5105047163c1a6b55afde47d5969b708014455336e4cb87c71",
+      "raw_report_sha256_unchanged": "1da1e1e171f754387e1b7fab0e8980f64f4f16b7c302deb75ab9be572a372bd1",
+      "actual_current_binary_executed": true,
+      "changed_source_pin_only": "src/main.rs"
+    }
+  ],
+  "HEADS_STEMS_remain_false": true,
+  "reexecuted_after_weighted_work_budget_fix": [
+    {
+      "CLI": "cue",
+      "raw_report_SHA256": "64969e2f69f266d4a894d51d7c31fd8e8227706f421bfc7521ad59ac212369ce",
+      "whole_bytes_equal_saved_original_report": true
+    },
+    {
+      "CLI": "chunks",
+      "raw_report_SHA256": "aa01c9c023997ef506bb3cad76fa2d3e01f0b56eec4f32db74d4719209a1e3ed",
+      "whole_bytes_equal_saved_original_report": true
+    },
+    {
+      "CLI": "items",
+      "raw_report_SHA256": "1da1e1e171f754387e1b7fab0e8980f64f4f16b7c302deb75ab9be572a372bd1",
+      "whole_bytes_equal_saved_original_report": true
+    }
+  ]
+}

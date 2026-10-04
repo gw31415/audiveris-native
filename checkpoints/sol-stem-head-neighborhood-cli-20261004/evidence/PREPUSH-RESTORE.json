@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "9afbf4e592bb6e20d678d1e67cc779a02c786d24",
+  "source_tree": "32c8a045d11cb04340098250f7bf35ffb1c5bfb9",
+  "all_fresh_restored_sha256_verified": 6587,
+  "source_clean": true,
+  "source": "/workspace/work/stem-head-neighborhood/sol-stem-head-neighborhood-cli-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/stem-head-neighborhood/sol-stem-head-neighborhood-cli-20261004-prepush/source-git"
+}

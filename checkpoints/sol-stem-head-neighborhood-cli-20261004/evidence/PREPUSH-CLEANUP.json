@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-head-neighborhood/sol-stem-head-neighborhood-cli-20261004-prepush",
+  "source_commit": "9afbf4e592bb6e20d678d1e67cc779a02c786d24",
+  "source_tree": "32c8a045d11cb04340098250f7bf35ffb1c5bfb9",
+  "all_sha256_verified": 6587,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}
