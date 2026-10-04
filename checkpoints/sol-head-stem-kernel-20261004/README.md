@@ -9,3 +9,5 @@ Next STEMS dependency kernels ported from unchanged original Audiveris5.11 HeadS
 Restore: `python checkpoints/sol-head-stem-kernel-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 5421 source hashes, plus all 639 archival files and archival tree. Saved remote commit `921e0ee25c5ec4471c28e4e57a72120fec66fcbc`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
