@@ -1,0 +1,51 @@
+[
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--beam-generation",
+    "stems_report_sha256": "e4e5488bd0f390f504f832c4ead5f81e559d23cd8f2193e505e3607636dedcfa",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  },
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--beam-targets",
+    "stems_report_sha256": "ee920c5d39c84088c649577247354c4e028ad49043772baab06988fabf90bebd",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  },
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--head-linkers",
+    "stems_report_sha256": "b81399cf0b9ef4fb7bdb8d655de6841f35cc0634f0e146e1eae6b98fc12cf631",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  },
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--sources",
+    "stems_report_sha256": "c0f4345f9d1b7a7d291bd6a0d1aad219beb97e222be874d1fd8a54fc5b9b5156",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  },
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--stumps",
+    "stems_report_sha256": "9638c673890614bdd0c7e389b027939e87d137bf4a004b9b281fff97ac3e5039",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  },
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--seeds",
+    "stems_report_sha256": "67e19b0c76158c42a3b523dcc5a9a61276d3a332d0931deb67c377b0eea4c5d2",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  },
+  {
+    "actual_current_binary_command_rerun": true,
+    "mode": "default",
+    "stems_report_sha256": "8115dd947b92c9713fa04759580ca7b0a788cea6b88b2f25c65c63a6203dfd5e",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "optional --head-parts; all prior mode bytes unchanged"
+  }
+]

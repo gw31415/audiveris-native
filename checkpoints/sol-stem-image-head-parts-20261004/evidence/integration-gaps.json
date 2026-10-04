@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "closed": [
+    "Image40beamstumps/90BLinkers generation retained",
+    "Image-selected seed/other-head/beam linker inputs connected to head builder filter",
+    "Actual1408builder yRange/start-stump clip and1884ordered physical pre-chunk items"
+  ],
+  "next": [
+    "Complete beam-origin VLinker geometry/seeds/head inputs",
+    "Automatic lookupChunks with system vertical/horizontal sections/canonical registration/head filtering",
+    "Final items/gaps/length/prefix physical glyph",
+    "Retain actual upstream owned Graph, not infer removed-edge identity history from JSON",
+    "Same-owner cache/head relations and cleaner/epilog"
+  ],
+  "unverified": [
+    "new productive physical beam-side registrations/original beam-before-head ordering",
+    "equal-abscissa seed/equal-distance section HashSet ties",
+    "fresh original transient HEADS lifetime",
+    "nonzero skew",
+    "real scans",
+    "special or mixed staff",
+    "full24shape pages"
+  ],
+  "heads_complete": false,
+  "stems_complete": false
+}

@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "removed_only_verified_duplicate_restore": "/workspace/work/head-coverage/sol-head-font-coverage-20261003-remote-restore",
+  "all_sha256": 5079,
+  "source_commit": "63ea0d7bfde1f6371806138d5b8fcec6e359294f",
+  "source_tree": "91b718cecb5f519b1bf7d0e26d161b0d8ff85546",
+  "originals_bundles_latest_fresh_pair_retained": true
+}
