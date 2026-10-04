@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "removed_only_previous_verified_fresh_recovery_duplicates": [
+    "/workspace/work/stem-image-stumps/sol-stem-image-stumps-20261004-remote-clone",
+    "/workspace/work/stem-image-stumps/sol-stem-image-stumps-20261004-remote-restore"
+  ],
+  "previous_source_commit": "55e10ae4fc6955c4de066035cb82c5a2a3a53db4",
+  "previous_source_tree": "094b1472fbedf2d45fb5b06a05a6594b499c3725",
+  "previous_all_source_sha256_verified": 6643,
+  "previous_archive_commit": "48ec3ee699f7d78ed12dbbd6858ba0d441f44a29",
+  "previous_archive_tree": "56586e61cdc97247f44c7b7f09b6de114e5fd02f",
+  "previous_all_archive_sha256_verified": 1558,
+  "latest_retained_fresh_remote_verified_main": "ad68a6d5926f819d877be02ba71cadbabdbe9ea4",
+  "latest_retained_source_commit": "671b2c166aacf542d5b9b7c840a8f04279681712",
+  "latest_retained_all_source_sha256_verified": 6656,
+  "primary_sources_archive_all_checkpoint_bundles_and_evidence_retained": true,
+  "runtime_toolchain_and_build_artifacts_unchanged": true
+}
