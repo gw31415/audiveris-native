@@ -9,3 +9,5 @@ Actual stem-items-plan CLI connects declared prefiltered physical glyph/linker s
 Restore: `python checkpoints/sol-stem-item-events-cli-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6541 source hashes, plus all 1347 archival files and archival tree. Saved remote commit `7720114ae69a76ff37ddd98539c417dc20af7a7b`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
