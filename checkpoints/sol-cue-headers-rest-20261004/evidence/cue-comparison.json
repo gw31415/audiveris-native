@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "scope": "One independent synthetic cue raster, declared HEADS Bravura51 catalog; not published scans or all24 shapes",
+  "cue_KEY_projection_peaks_and_observed_TIME_staffs": 4,
+  "cue_rest_boundary_points": 864,
+  "cue_rest_conversions": 0,
+  "cue_catalog_HEADS_terminal": {
+    "status": "passed",
+    "control": "Bravura-51",
+    "retained_physical_heads": 168,
+    "ordered_exclusions": 198,
+    "staff_note_order": true,
+    "small_beams_checked": 0,
+    "seed_epilog_dx_checked": true,
+    "prior_shared_ids_relations_preserved": true,
+    "intermediate_original_performance_or_removal_counts_claimed": false,
+    "actual_other_font_or_cue_page_parity": false,
+    "heads_complete": false,
+    "report_sha256": "b1a1bfb2454b86874ba0a2a4621a3b7f9cf7f1ed1df2812b8a2b3a01ed9c7fab"
+  },
+  "default_page_HEADS_staff_catalog_dependency_pending": true,
+  "heads_complete": false,
+  "stems_complete": false
+}
