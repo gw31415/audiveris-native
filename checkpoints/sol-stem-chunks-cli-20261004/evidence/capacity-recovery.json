@@ -1,0 +1,9 @@
+{
+  "failure": "disk_capacity_exhausted_during_fresh_restore_after_successful_push",
+  "removed_failed_generated_restore_only": "/workspace/work/stem-chunks-cli/sol-stem-chunks-cli-20261004-remote-restore",
+  "removed_verified_old_archive_clone": "/workspace/work/stem-chunk-registration/sol-stem-chunk-registration-20261004-remote-clone",
+  "all_old_archive_file_hashes_verified": 1205,
+  "old_archive_commit": "8091cf3eca86dfb389306b265ce832fbb807c9c9",
+  "primary_source_and_archive_preserved": true,
+  "latest_successful_449_restore_retained": true
+}

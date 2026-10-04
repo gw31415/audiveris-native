@@ -9,3 +9,5 @@ Actual stem-chunks-lookup CLI integrates native section selection/raw assembly w
 Restore: `python checkpoints/sol-stem-chunks-cli-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6497 source hashes, plus all 1272 archival files and archival tree. Saved remote commit `6229d9eb8c3e1906b288fed3c5ac46d5a8522af7`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
