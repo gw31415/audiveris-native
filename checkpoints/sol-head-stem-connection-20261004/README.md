@@ -9,3 +9,5 @@ Original 5.11 comparison of 2112 reference points,288 gap grades,5760 physical/n
 Restore: `python checkpoints/sol-head-stem-connection-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6212 source hashes, plus all 718 archival files and archival tree. Saved remote commit `12c0da53e1006866d772db09165e11330cf1a478`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
