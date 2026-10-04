@@ -9,3 +9,5 @@ Port remaining15 small/hollow/nonoval HEADS shapes in a separately declared exac
 Restore: `python checkpoints/sol-head-all-shapes-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6169 source hashes, plus all 660 archival files and archival tree. Saved remote commit `531bf6b9e6ff8013ae21e6126d8e3a80101ad5d9`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
