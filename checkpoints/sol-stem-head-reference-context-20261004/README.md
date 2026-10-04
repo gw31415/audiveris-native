@@ -9,3 +9,5 @@ Port explicit original HeadSeedScale XML Double1Adapter HALF_EVEN max1/min0/no-g
 Restore: `python checkpoints/sol-stem-head-reference-context-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6602 source hashes, plus all 1452 archival files and archival tree. Saved remote commit `f60f7a741945bb5ca7025f12c7dbf9180ee8e2c4`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
