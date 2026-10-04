@@ -9,3 +9,5 @@ Image-derived HEADS continuation selects existing physical seed stumps automatic
 Restore: `python checkpoints/sol-stem-image-seeds-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6630 source hashes, plus all 1524 archival files and archival tree. Saved remote commit `96b8f9e0052b2a19d61dff34048f5f5394c12e89`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
