@@ -1,0 +1,5 @@
+{
+  "issue": "New generator initially wrote generated96-shape assets into old drum directory due to incomplete path replacement; compile could not find new included asset path.",
+  "resolution": "Move generated assets to all-heads; restore six old drum files byte-for-byte from current source HEAD d04ecf6, no historical reset. Correct source generator output path. No native CLI executed with overwritten assets.",
+  "corrected": true
+}

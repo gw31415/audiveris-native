@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "5945e8aca16ff3f8ba0a43d4fcde92262094b324",
+  "source_tree": "cbfe556b0a5c8869885cd3dbe34a9fef25b349d1",
+  "all_fresh_restored_sha256_verified": 6169,
+  "source_clean": true,
+  "source": "/workspace/work/head-expansion/sol-head-all-shapes-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/head-expansion/sol-head-all-shapes-20261004-prepush/source-git"
+}

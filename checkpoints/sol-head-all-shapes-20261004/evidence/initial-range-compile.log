@@ -1,0 +1,33 @@
+   Compiling audiveris-template-bank v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-bank)
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+error[E0425]: cannot find value `catalog` in this scope
+  --> src/head_seed_search.rs:76:9
+   |
+76 |         catalog,
+   |         ^^^^^^^ not found in this scope
+   |
+help: consider importing this function
+   |
+ 4 + use crate::head_staff_catalog::catalog;
+   |
+
+error[E0425]: cannot find value `shapes` in this scope
+  --> src/head_seed_search.rs:80:9
+   |
+80 |         shapes,
+   |         ^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `bank` in this scope
+   --> src/head_seed_search.rs:122:9
+    |
+122 |         bank,
+    |         ^^^^ not found in this scope
+
+error[E0425]: cannot find value `allowed` in this scope
+   --> src/head_seed_search.rs:147:13
+    |
+147 |         if !allowed.contains(&shape) || !selected.insert(shape) {
+    |             ^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `audiveris-native` (lib) due to 4 previous errors
