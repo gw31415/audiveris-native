@@ -1,0 +1,29 @@
+{
+  "status": "identified_from_current_source_and_original_methods",
+  "closed_this_stage": [
+    "Image-derived CLinker seed collection across1408corners with248ordered physical occurrences",
+    "Image-derived existing alignment filter with original same start stump/native scale limits;246retained occurrences,2removals",
+    "Correct builder refPt-to-targetPt line and CLinker contribution yRange, distinct from collector area endpoint and later builder Line2D.getBounds range"
+  ],
+  "next": [
+    "Original lookupOtherHeads: stable byAbscissa head scan, Area intersection, self/competing exclusion removal, same note duration, signed centerY minHeadHeadDy, matching vertical corner references contained in Area",
+    "Beam-origin builder source/geometry/stump selection and BeamLinker sibling beam/side linker selection; combine both original source kinds before deriving lastHeadY and automatic section/chunk/items",
+    "Selected item prefix and final physical stem glyph; one owned live HEADS Graph/retriever/cache/head attachment; contextual cleaner/epilog"
+  ],
+  "liveGraph_ownership_gap": {
+    "native_upstream_owner": "src/main.rs page_glyphs common_graph, with physical registry in beam_context.registry",
+    "existing_registration_API_already_mutates_live_objects": "head_glyph_retrieval::analyze_for_registration takes mutable Registry; head_registration::analyze takes mutable Graph",
+    "current_image_STEMS_boundary": "audiveris-stems launches sibling native binary, then reads JSON; stumps::prepare preserves canonical physical values/IDs but live original native Graph is no longer owned",
+    "recommended_connection": "Retain/return original in-process page Graph and registry through a factored native image pipeline; preserve old report bytes and all prior vertex/edge identities. Alternatively persist complete internal graph state including removed edges and relation phase/ordinal keys. Do not invent missing history from current snapshot."
+  },
+  "unverified": [
+    "original fresh transient lifecycle",
+    "equal-contribution overlapping physical seed ties",
+    "nonzero skew",
+    "real scans",
+    "special staff",
+    "full24shape pages"
+  ],
+  "heads_complete": false,
+  "stems_complete": false
+}

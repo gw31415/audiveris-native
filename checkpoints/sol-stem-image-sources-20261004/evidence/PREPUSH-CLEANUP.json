@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-image-sources/sol-stem-image-sources-20261004-prepush",
+  "source_commit": "671b2c166aacf542d5b9b7c840a8f04279681712",
+  "source_tree": "8e19f515f1280f70b956eb1886f359cf1a78559a",
+  "all_sha256_verified": 6656,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

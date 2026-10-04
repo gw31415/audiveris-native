@@ -1,0 +1,191 @@
+{
+  "status": "difference",
+  "original_seed_occurrences": 246,
+  "native_seed_occurrences": 248,
+  "difference_counts": {
+    "selected_seeds": 2
+  },
+  "first_differences": [
+    {
+      "corner": {
+        "head_bounds": [
+          891,
+          430,
+          15,
+          12
+        ],
+        "head_id": 169,
+        "reference": [
+          891.2,
+          439.0
+        ],
+        "shape": "NOTEHEAD_BLACK",
+        "side": "LEFT",
+        "staff_id": 1,
+        "vertical": "BOTTOM"
+      },
+      "field": "selected_seeds",
+      "original": [],
+      "native": [
+        {
+          "bounds": [
+            890,
+            464,
+            6,
+            19
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              0,
+              18
+            ],
+            [
+              2,
+              0,
+              19
+            ],
+            [
+              3,
+              0,
+              18
+            ],
+            [
+              4,
+              0,
+              18
+            ],
+            [
+              5,
+              16,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "corner": {
+        "head_bounds": [
+          891,
+          556,
+          15,
+          12
+        ],
+        "head_id": 216,
+        "reference": [
+          891.2,
+          562.0
+        ],
+        "shape": "NOTEHEAD_BLACK",
+        "side": "LEFT",
+        "staff_id": 2,
+        "vertical": "TOP"
+      },
+      "field": "selected_seeds",
+      "original": [
+        {
+          "bounds": [
+            889,
+            424,
+            3,
+            30
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              29
+            ],
+            [
+              1,
+              0,
+              30
+            ],
+            [
+              2,
+              0,
+              29
+            ]
+          ]
+        }
+      ],
+      "native": [
+        {
+          "bounds": [
+            890,
+            464,
+            6,
+            19
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              0,
+              18
+            ],
+            [
+              2,
+              0,
+              19
+            ],
+            [
+              3,
+              0,
+              18
+            ],
+            [
+              4,
+              0,
+              18
+            ],
+            [
+              5,
+              16,
+              2
+            ]
+          ]
+        },
+        {
+          "bounds": [
+            889,
+            424,
+            3,
+            30
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              29
+            ],
+            [
+              1,
+              0,
+              30
+            ],
+            [
+              2,
+              0,
+              29
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

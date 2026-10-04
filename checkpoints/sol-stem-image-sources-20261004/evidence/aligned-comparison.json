@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "corner_count": 1408,
+  "original_initial_seed_occurrences": 248,
+  "native_initial_seed_occurrences": 248,
+  "original_aligned_seed_occurrences": 246,
+  "native_aligned_seed_occurrences": 246,
+  "differences": []
+}

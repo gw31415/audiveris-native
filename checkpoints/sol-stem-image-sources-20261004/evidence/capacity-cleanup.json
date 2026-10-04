@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_duplicate_restore": "/workspace/work/head-range/remote-restore",
+  "source_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+  "source_tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+  "all_source_sha256_verified": 4804,
+  "retained_checkpoint": "/workspace/audiveris-native/checkpoints/sol-head-range-prefix-20261003",
+  "retained_latest_remote_recovery": "48ec3ee699f7d78ed12dbbd6858ba0d441f44a29",
+  "primary_sources_bundles_oracle_toolchain_build_artifacts_retained": true
+}

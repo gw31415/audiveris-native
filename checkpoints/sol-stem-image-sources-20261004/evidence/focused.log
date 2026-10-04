@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.70s
+     Running tests/stem_image_sources.rs (/workspace/onboarding/target/debug/deps/stem_image_sources-404528b449818b01)
+
+running 3 tests
+test actual_image_builder_seed_collection_and_alignment_match_before_original_linking ... ok
+test empty_heads_and_late_unsupported_image_staff_or_skew_preserve_input ... ok
+test actual_image_cli_derives_builder_seed_inputs_without_corner_requests ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 52.92s
