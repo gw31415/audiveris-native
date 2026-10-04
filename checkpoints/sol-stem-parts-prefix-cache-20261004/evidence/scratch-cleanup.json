@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "deleted_only_verified_older_source_archive_duplicates": [
+    "/workspace/work/stem-lengths/sol-stem-length-map-20261004-remote-restore",
+    "/workspace/work/stem-lengths/sol-stem-length-map-20261004-remote-clone"
+  ],
+  "all_source_files": 6523,
+  "all_archive_files": 1322,
+  "source_tree": "c8377de1cc6f71db5ea06951096c430f560c7b6d",
+  "archive_tree": "c17ab96e2d08512e28541e76718e12303fbbb667",
+  "retained_newer_verified458_recovery": "6e393a555c5c275262569c46472c4e4a21c8eb3e"
+}
