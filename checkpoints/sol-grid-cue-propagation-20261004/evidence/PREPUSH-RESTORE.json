@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "9cca0063d2029f13845d95f32f741e201c0fa1e7",
+  "source_tree": "d339517dca916e5c02d0f88672dd7190746cb550",
+  "all_fresh_restored_sha256_verified": 6270,
+  "source_clean": true,
+  "source": "/workspace/work/grid-cue-propagation/sol-grid-cue-propagation-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/grid-cue-propagation/sol-grid-cue-propagation-20261004-prepush/source-git"
+}

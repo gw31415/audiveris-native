@@ -1,0 +1,31 @@
+{
+  "reason": "Retain fresh remote clone/restoration and all saved receipts; reclaim only redundant verified pre-push scratch reconstructions for next checkpoint. Primary sources/archives untouched.",
+  "removed": [
+    {
+      "removed_reproducible_scratch": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-prepush",
+      "retained_remote_verified_source": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-remote-restore",
+      "prepush_receipt": {
+        "status": "passed",
+        "source_commit": "c3ed0a1caa16570e3d99dc2a83b74edf159b208d",
+        "source_tree": "ff80fbdfa8214a7d0b4745148dad7e29f87238a5",
+        "all_fresh_restored_sha256_verified": 6238,
+        "source_clean": true,
+        "source": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-prepush/artifacts/audiveris-source",
+        "source_git": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-prepush/source-git"
+      }
+    },
+    {
+      "removed_reproducible_scratch": "/workspace/work/grid-second-pass/sol-grid-second-pass-20261004-prepush",
+      "retained_remote_verified_source": "/workspace/work/grid-second-pass/sol-grid-second-pass-20261004-remote-restore",
+      "prepush_receipt": {
+        "status": "passed",
+        "source_commit": "c5368cebbd4d4b9334dd4d9afbbd9e035b68ee67",
+        "source_tree": "dcf3b64359392dd3b8129af8f7dc03a48cf43e09",
+        "all_fresh_restored_sha256_verified": 6254,
+        "source_clean": true,
+        "source": "/workspace/work/grid-second-pass/sol-grid-second-pass-20261004-prepush/artifacts/audiveris-source",
+        "source_git": "/workspace/work/grid-second-pass/sol-grid-second-pass-20261004-prepush/source-git"
+      }
+    }
+  ]
+}
