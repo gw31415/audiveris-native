@@ -1,0 +1,19 @@
+warning: the `discarded:` in this pattern is redundant
+    --> src/clusters.rs:1029:9
+     |
+1029 |         discarded: mut discarded,
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^ help: use shorthand field pattern: `mut discarded`
+     |
+     = note: `#[warn(non_shorthand_field_patterns)]` on by default
+
+warning: `audiveris-native` (lib) generated 1 warning (run `cargo fix --lib -p audiveris-native` to apply 1 suggestion)
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.44s
+     Running tests/grid_second_pass.rs (/workspace/onboarding/target/debug/deps/grid_second_pass-3a46243b5f8ac263)
+
+running 3 tests
+test original_length_consistency_equality_empty_and_second_pass_guards ... ok
+test actual_native_cue_factory_reaches_original_initial_staffs_only ... ok
+test original_second_pass_initial_cue_staffs_and_discarded_contract ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
