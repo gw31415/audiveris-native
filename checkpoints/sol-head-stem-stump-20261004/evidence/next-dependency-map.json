@@ -1,0 +1,68 @@
+{
+  "status": "original_dependency_order_inspected_not_dynamic_automatic_STEMS_parity",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_bytecode_sha256": {
+    "StemBuilder": "5b5af5fbdbae67947ddc2a96dd73ac6db508d09e14b8cf2e33c03cf272623d4b",
+    "StemChecker": "16119632d464e4be62482ab3bb29548c8c5b1c4977755fd7de50836cf2cb376e",
+    "StemsRetriever": "f57f12c225571b8d64b97225c68985b24b3f6761567f5d2ecd8de99e540a8c18",
+    "HeadLinker": "83c23b7cfa421c5fadb811fb67d983b7cee4a161b6e17f1f7350c4f3ed0c523a",
+    "HeadStemsCleaner": "5a0c90289c5d0e4de282fd20fe0015545072488deacfeddf74e211998bf956c5",
+    "StemsStep": "507fcedd499c0b50d82cae1968b2982cabe32713177d7bee258821159a4f3c66",
+    "HeadLinker-CLinker": "c06b238266cbe09792c3811e568a70c7ead1da47d02e93b0d743e6d399ee049c"
+  },
+  "established_selected_boundary": [
+    "GlyphFactory.buildGlyph VERTICAL union, independent of input object identity",
+    "canonical glyph index acquisition; explicit StemInter constructor geometry with already assessed grade",
+    "HeadStemRelation geometry/default or explicit physical length consistency, nonmanual callbacks and shared IDs"
+  ],
+  "next_automatic_dependencies": [
+    {
+      "order": 0,
+      "target": "HeadLinker.CLinker corner-stump contact argument",
+      "reason": "CLinker passes its nullable corner stump, not full union. Native explicit stump/null API and multi-part implicit-contact rejection are now certified with6048 original controls; automatic extraction/selection of the corner stump is still pending.",
+      "status": "explicit_nullable_stump_boundary_certified_automatic_extraction_not_implemented"
+    },
+    {
+      "order": 1,
+      "target": "Physical Glyph NearLine adapter to existing StemChecker",
+      "reason": "Existing native stem_checks accepts explicit raw candidate line/start/stop/mean-distance and image/scale; automatic StemBuilder calls checkStem on the actual registered Glyph. Derive exact raw line/endpoints/mean-distance in original traversal order, not StemInter pixel-center median. Native profiles0/1 checker scope must remain explicit."
+    },
+    {
+      "order": 2,
+      "target": "StemBuilder.createStem single/multiple part identity, GlyphIndex and retriever cache",
+      "reason": "Single part bypasses GlyphFactory.buildGlyph and retains input orientation/object; multiple parts invoke factory VERTICAL union. RegisterOriginal precedes cached getStemInter and checkStem. Reproduce glyph-ID to StemInter cache and preserve registration for ordinary grade rejection; current explicit malformed-input transaction is a separate boundary."
+    },
+    {
+      "order": 3,
+      "target": "Original measured GradeImpacts, min grade gate and profile4 artificial branch",
+      "reason": "Original createStem accepts grade>=StemInter.minGrade and adds stem; otherwise profile4 adds artificialStemGrade, other profiles return null after glyph registration. Current explicit already-assessed constructor does not implement this automatic decision."
+    },
+    {
+      "order": 4,
+      "target": "StemBuilder part/section ordering and HeadLinker/BeamLinker selection",
+      "reason": "Whole automatic parts, shared-head/beam linking and candidate conflicts require original page observers and selection traces."
+    },
+    {
+      "order": 5,
+      "target": "StemsRetriever finalizer and HeadStemsCleaner",
+      "reason": "Process order inspectStems -> linkStems -> finalizeStems; current selected boundary does not execute finalizer, cleaner or global epilog."
+    }
+  ],
+  "special_staff_dependencies": [
+    "mixed7px/11px cue fails earliest native GRID clusters multiple_interline_requires_second_pass",
+    "one-line drum and six-string tab require actual processing switches and staff construction",
+    "five-line drums require HEADERS percussion state and HEADS catalog propagation",
+    "original six-string TabStaff fixture0heads0exclusions is an observed skip; mixed regular/tab parity was not established"
+  ],
+  "actual_pages_claim": "Three independent original-font synthetic whole pages only; not published score scans, globally selected upstream font OMR, all24 page catalog propagation or special-staff native parity.",
+  "automatic_stems_complete": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "current_explicit_stump_controls": {
+    "count": 6048,
+    "accepted": 4272,
+    "rejected": 1776,
+    "union_false_positives_prevented": 1104
+  }
+}
