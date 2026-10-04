@@ -1,0 +1,7 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.43s
+     Running `/workspace/onboarding/target/debug/examples/stem_image_seeds_dump fixtures/official-grid/laura-gray.png /workspace/work/stem-image-head-plan/verified-laura-report.json /workspace/work/stem-image-seeds/native-selection.json`
+
+thread 'main' (814181) panicked at examples/stem_image_seeds_dump.rs:6:77:
+called `Result::unwrap()` on an `Err` value: "invalid image seed system bounds"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

@@ -1,0 +1,8 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.52s
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_native-54c661d59a96a5a3)
+
+running 1 test
+test stem_image_seeds::tests::original_seed_rounding_and_strict_bar_overlap_boundaries ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 61 filtered out; finished in 0.14s

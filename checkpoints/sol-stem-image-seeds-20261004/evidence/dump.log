@@ -1,0 +1,20 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+error[E0277]: the trait bound `f64: From<usize>` is not satisfied
+  --> src/stem_image_seeds.rs:57:21
+   |
+57 |     let interline = f64::from(scale.interline.main);
+   |                     ^^^ the trait `From<usize>` is not implemented for `f64`
+   |
+   = help: `f64` implements trait `From<T>`:
+             From<bool>
+             From<f16>
+             From<f32>
+             From<i16>
+             From<i32>
+             From<i8>
+             From<u16>
+             From<u32>
+             From<u8>
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `audiveris-native` (lib) due to 1 previous error

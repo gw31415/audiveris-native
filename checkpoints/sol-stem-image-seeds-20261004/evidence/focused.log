@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.23s
+     Running tests/stem_image_seeds.rs (/workspace/onboarding/target/debug/deps/stem_image_seeds-c9177c65cbc5c6f4)
+
+running 3 tests
+test image_seed_branch_preserves_page_registry_and_matches_all_original_choices ... ok
+test empty_duplicate_bad_late_glyph_and_angled_bar_do_not_mutate_caller_state ... ok
+test actual_image_cli_automatically_selects_existing_physical_seeds ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 51.38s
