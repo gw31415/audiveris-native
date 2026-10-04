@@ -9,3 +9,5 @@ Connect existing native image CLI HEADS output to image-derived loaded-book-cont
 Restore: `python checkpoints/sol-stem-image-head-plan-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6617 source hashes, plus all 1491 archival files and archival tree. Saved remote commit `1c77d4141c9185114665bfd6a07eca5fac947e1e`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
