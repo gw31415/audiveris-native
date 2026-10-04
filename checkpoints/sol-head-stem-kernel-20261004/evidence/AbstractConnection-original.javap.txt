@@ -1,0 +1,185 @@
+Compiled from "AbstractConnection.java"
+public abstract class org.audiveris.omr.sig.relation.AbstractConnection extends org.audiveris.omr.sig.relation.Support {
+  private static final org.audiveris.omr.sig.relation.AbstractConnection$Constants constants;
+
+  private static final org.slf4j.Logger logger;
+
+  protected double dx;
+
+  protected double dy;
+
+  public org.audiveris.omr.sig.relation.AbstractConnection();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/sig/relation/Support."<init>":()V
+       4: return
+
+  public double getDx();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field dx:D
+       4: dreturn
+
+  public double getDy();
+    Code:
+       0: aload_0
+       1: getfield      #13                 // Field dy:D
+       4: dreturn
+
+  protected double[] getInWeights();
+    Code:
+       0: getstatic     #16                 // Field org/audiveris/omr/sig/relation/AbstractConnection$InImpacts.WEIGHTS:[D
+       3: areturn
+
+  protected double[] getOutWeights();
+    Code:
+       0: getstatic     #22                 // Field org/audiveris/omr/sig/relation/AbstractConnection$OutImpacts.WEIGHTS:[D
+       3: areturn
+
+  protected org.audiveris.omr.sheet.Scale$Fraction getXInGapMax(int);
+    Code:
+       0: new           #25                 // class java/lang/UnsupportedOperationException
+       3: dup
+       4: invokespecial #27                 // Method java/lang/UnsupportedOperationException."<init>":()V
+       7: athrow
+
+  protected abstract org.audiveris.omr.sheet.Scale$Fraction getXOutGapMax(int);
+
+  protected abstract org.audiveris.omr.sheet.Scale$Fraction getYGapMax(int);
+
+  protected java.lang.String internals();
+    Code:
+       0: new           #28                 // class java/lang/StringBuilder
+       3: dup
+       4: aload_0
+       5: invokespecial #30                 // Method org/audiveris/omr/sig/relation/Support.internals:()Ljava/lang/String;
+       8: invokespecial #34                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      11: ldc           #37                 // String @(
+      13: invokevirtual #39                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      16: ldc           #43                 // String %.2f
+      18: iconst_1
+      19: anewarray     #45                 // class java/lang/Object
+      22: dup
+      23: iconst_0
+      24: aload_0
+      25: getfield      #7                  // Field dx:D
+      28: invokestatic  #47                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      31: aastore
+      32: invokestatic  #53                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      35: invokevirtual #39                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      38: ldc           #59                 // String ,
+      40: invokevirtual #39                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      43: ldc           #43                 // String %.2f
+      45: iconst_1
+      46: anewarray     #45                 // class java/lang/Object
+      49: dup
+      50: iconst_0
+      51: aload_0
+      52: getfield      #13                 // Field dy:D
+      55: invokestatic  #47                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      58: aastore
+      59: invokestatic  #53                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      62: invokevirtual #39                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      65: ldc           #61                 // String )
+      67: invokevirtual #39                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      70: invokevirtual #63                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      73: areturn
+
+  public void setInOutGaps(double, double, int);
+    Code:
+       0: aload_0
+       1: dload_1
+       2: putfield      #7                  // Field dx:D
+       5: aload_0
+       6: dload_3
+       7: putfield      #13                 // Field dy:D
+      10: aload_0
+      11: iload         5
+      13: invokevirtual #66                 // Method getYGapMax:(I)Lorg/audiveris/omr/sheet/Scale$Fraction;
+      16: invokevirtual #70                 // Method org/audiveris/omr/sheet/Scale$Fraction.getValue:()Ljava/lang/Object;
+      19: checkcast     #48                 // class java/lang/Double
+      22: invokevirtual #76                 // Method java/lang/Double.doubleValue:()D
+      25: dstore        6
+      27: dload         6
+      29: dload_3
+      30: dsub
+      31: dload         6
+      33: ddiv
+      34: dstore        8
+      36: dload_1
+      37: dconst_0
+      38: dcmpl
+      39: iflt          90
+      42: aload_0
+      43: iload         5
+      45: invokevirtual #80                 // Method getXOutGapMax:(I)Lorg/audiveris/omr/sheet/Scale$Fraction;
+      48: invokevirtual #70                 // Method org/audiveris/omr/sheet/Scale$Fraction.getValue:()Ljava/lang/Object;
+      51: checkcast     #48                 // class java/lang/Double
+      54: invokevirtual #76                 // Method java/lang/Double.doubleValue:()D
+      57: dstore        10
+      59: dload         10
+      61: dload_1
+      62: dsub
+      63: dload         10
+      65: ddiv
+      66: dstore        12
+      68: aload_0
+      69: new           #23                 // class org/audiveris/omr/sig/relation/AbstractConnection$OutImpacts
+      72: dup
+      73: dload         12
+      75: dload         8
+      77: aload_0
+      78: invokevirtual #83                 // Method getOutWeights:()[D
+      81: invokespecial #87                 // Method org/audiveris/omr/sig/relation/AbstractConnection$OutImpacts."<init>":(DD[D)V
+      84: invokevirtual #90                 // Method setImpacts:(Lorg/audiveris/omr/sig/GradeImpacts;)V
+      87: goto          135
+      90: aload_0
+      91: iload         5
+      93: invokevirtual #94                 // Method getXInGapMax:(I)Lorg/audiveris/omr/sheet/Scale$Fraction;
+      96: invokevirtual #70                 // Method org/audiveris/omr/sheet/Scale$Fraction.getValue:()Ljava/lang/Object;
+      99: checkcast     #48                 // class java/lang/Double
+     102: invokevirtual #76                 // Method java/lang/Double.doubleValue:()D
+     105: dstore        10
+     107: dload         10
+     109: dload_1
+     110: dadd
+     111: dload         10
+     113: ddiv
+     114: dstore        12
+     116: aload_0
+     117: new           #17                 // class org/audiveris/omr/sig/relation/AbstractConnection$InImpacts
+     120: dup
+     121: dload         12
+     123: dload         8
+     125: aload_0
+     126: invokevirtual #97                 // Method getInWeights:()[D
+     129: invokespecial #100                // Method org/audiveris/omr/sig/relation/AbstractConnection$InImpacts."<init>":(DD[D)V
+     132: invokevirtual #90                 // Method setImpacts:(Lorg/audiveris/omr/sig/GradeImpacts;)V
+     135: aload_0
+     136: aload_0
+     137: getfield      #101                // Field impacts:Lorg/audiveris/omr/sig/GradeImpacts;
+     140: invokevirtual #105                // Method org/audiveris/omr/sig/GradeImpacts.getGrade:()D
+     143: invokevirtual #110                // Method setGrade:(D)V
+     146: return
+
+  public void setOutGaps(double, double, int);
+    Code:
+       0: aload_0
+       1: dload_1
+       2: invokestatic  #114                // Method java/lang/Math.abs:(D)D
+       5: dload_3
+       6: iload         5
+       8: invokevirtual #120                // Method setInOutGaps:(DDI)V
+      11: return
+
+  static {};
+    Code:
+       0: new           #124                // class org/audiveris/omr/sig/relation/AbstractConnection$Constants
+       3: dup
+       4: invokespecial #126                // Method org/audiveris/omr/sig/relation/AbstractConnection$Constants."<init>":()V
+       7: putstatic     #127                // Field constants:Lorg/audiveris/omr/sig/relation/AbstractConnection$Constants;
+      10: ldc           #8                  // class org/audiveris/omr/sig/relation/AbstractConnection
+      12: invokestatic  #131                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+      15: putstatic     #137                // Field logger:Lorg/slf4j/Logger;
+      18: return
+}

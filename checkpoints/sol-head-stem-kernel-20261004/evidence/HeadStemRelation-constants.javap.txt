@@ -1,0 +1,125 @@
+Compiled from "HeadStemRelation.java"
+class org.audiveris.omr.sig.relation.HeadStemRelation$Constants extends org.audiveris.omr.constant.ConstantSet {
+  private final org.audiveris.omr.constant.Constant$Ratio headSupportCoeff;
+
+  private final org.audiveris.omr.constant.Constant$Ratio stemSupportCoeff;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction xInGapMax;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction xInGapMax_p1;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction xOutGapMax;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction xOutGapMax_p1;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction xOutGapMax_p2;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction yGapMax;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction yGapMax_p1;
+
+  private final org.audiveris.omr.constant.Constant$Ratio anchorHeightRatio;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxInvadingDx;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxInvadingDy;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction neutralStemLength;
+
+  private org.audiveris.omr.sig.relation.HeadStemRelation$Constants();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/constant/ConstantSet."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+       8: dup
+       9: ldc2_w        #9                  // double 4.0d
+      12: ldc           #11                 // String Value for (source) head coeff in support formula
+      14: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      17: putfield      #16                 // Field headSupportCoeff:Lorg/audiveris/omr/constant/Constant$Ratio;
+      20: aload_0
+      21: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+      24: dup
+      25: ldc2_w        #22                 // double 10.0d
+      28: ldc           #24                 // String Value for (target) stem coeff in support formula
+      30: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      33: putfield      #26                 // Field stemSupportCoeff:Lorg/audiveris/omr/constant/Constant$Ratio;
+      36: aload_0
+      37: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+      40: dup
+      41: ldc2_w        #31                 // double 0.2d
+      44: ldc           #33                 // String Maximum horizontal overlap between stem & head
+      46: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      49: putfield      #36                 // Field xInGapMax:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      52: aload_0
+      53: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+      56: dup
+      57: ldc2_w        #40                 // double 0.4d
+      60: ldc           #42                 // String Idem for profile 1
+      62: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      65: putfield      #44                 // Field xInGapMax_p1:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      68: aload_0
+      69: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+      72: dup
+      73: ldc2_w        #47                 // double 0.15d
+      76: ldc           #49                 // String Maximum horizontal gap between stem & head
+      78: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      81: putfield      #51                 // Field xOutGapMax:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      84: aload_0
+      85: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+      88: dup
+      89: ldc2_w        #54                 // double 0.25d
+      92: ldc           #42                 // String Idem for profile 1
+      94: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      97: putfield      #56                 // Field xOutGapMax_p1:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     100: aload_0
+     101: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+     104: dup
+     105: ldc2_w        #59                 // double 0.35d
+     108: ldc           #61                 // String Idem for profile 2
+     110: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     113: putfield      #63                 // Field xOutGapMax_p2:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     116: aload_0
+     117: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+     120: dup
+     121: ldc2_w        #66                 // double 0.8d
+     124: ldc           #68                 // String Maximum vertical gap between stem & head
+     126: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     129: putfield      #70                 // Field yGapMax:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     132: aload_0
+     133: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+     136: dup
+     137: ldc2_w        #73                 // double 1.2d
+     140: ldc           #42                 // String Idem for profile 1
+     142: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     145: putfield      #75                 // Field yGapMax_p1:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     148: aload_0
+     149: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+     152: dup
+     153: ldc2_w        #78                 // double 0.275d
+     156: ldc           #80                 // String Vertical margin for stem anchor portion (as ratio of head height)
+     158: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     161: putfield      #82                 // Field anchorHeightRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     164: aload_0
+     165: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+     168: dup
+     169: ldc2_w        #85                 // double 0.05d
+     172: ldc           #87                 // String Maximum invading horizontal gap between stem & head
+     174: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     177: putfield      #89                 // Field maxInvadingDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     180: aload_0
+     181: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+     184: dup
+     185: dconst_0
+     186: ldc           #92                 // String Maximum invading vertical gap between stem & head
+     188: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     191: putfield      #94                 // Field maxInvadingDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     194: aload_0
+     195: new           #29                 // class org/audiveris/omr/sheet/Scale$Fraction
+     198: dup
+     199: ldc2_w        #97                 // double 2.8d
+     202: ldc           #99                 // String Neutral stem length between small and standard
+     204: invokespecial #35                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     207: putfield      #101                // Field neutralStemLength:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     210: return
+}

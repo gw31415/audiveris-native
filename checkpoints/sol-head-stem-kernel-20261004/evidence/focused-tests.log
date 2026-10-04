@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.69s
+     Running tests/head_stem_relation.rs (/workspace/onboarding/target/debug/deps/head_stem_relation-939b974ca42d24bf)
+
+running 2 tests
+test invalid_geometry_fraction_units_and_zero_length_ieee_contract_are_explicit ... ok
+test original_head_stem_portion_consistency_invading_and_profile_boundaries ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
