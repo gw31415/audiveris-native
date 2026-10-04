@@ -9,3 +9,5 @@ Original HeadStemRelation.setConsistency(head,physicalStem) and support ratios o
 Restore: `python checkpoints/sol-head-stem-support-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6220 source hashes, plus all 752 archival files and archival tree. Saved remote commit `89d5cdce62ace478430add6e3ff5582704ca5952`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
