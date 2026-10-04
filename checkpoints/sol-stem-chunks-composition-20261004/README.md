@@ -9,3 +9,5 @@ Direct original lookupChunks on612 legitimate Laura first-system builders with30
 Restore: `python checkpoints/sol-stem-chunks-composition-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6488 source hashes, plus all 1252 archival files and archival tree. Saved remote commit `bb2e07017ac989faa755eafb75c39153356a04c2`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
