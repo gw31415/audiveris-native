@@ -1,0 +1,36 @@
+{
+  "discarded_development_attempts": [
+    {
+      "attempt": "drum-oracle",
+      "observer_error": "NoSuchMethodException: getNotes; Staff exposes a protected LinkedHashSet",
+      "accepted_as_validation": false,
+      "console_sha256": "e4fe4f9416e5da1f1d7d3212957579919aa7fbb8963c9d822d148caa479a3f9f"
+    },
+    {
+      "attempt": "drum-oracle-v2",
+      "observer_error": "Staff notes collection/null observer handling",
+      "accepted_as_validation": false,
+      "console_sha256": "22e5d511cecfd01345d96b611c8854e48adb9eaf19e25de5c1ac399dbe58087a"
+    },
+    {
+      "attempt": "drum-bank-oracle",
+      "observer_error": "Small-head layoutShapeByCode is null; auxiliary export corrected, original TemplateSymbol generation untouched",
+      "accepted_as_validation": false,
+      "console_sha256": "f3bdbefb2443f9a0f56e7ab97b32dc413719ee60cfb12f31cf4669027097a61a"
+    },
+    {
+      "attempt": "drum-focused.log",
+      "native_test_failure": "Shared Graph test was given original GRID observer JSON instead of declared native GRID IR; input corrected",
+      "accepted_as_validation": false,
+      "log_sha256": "6bf8e8798a581dfd49838e16004b65e4d6f2b2e648d037cc5937ec55d199fb18"
+    },
+    {
+      "attempt": "drum-full-first-failed.log",
+      "native_regression": "Legacy candidate_decision must reject cross; original four-shape API restored while explicit selector handles additional matched shapes",
+      "accepted_as_validation": false,
+      "log_sha256": "8c239e509ab3394eab308814690821d1ad027fb76dc7ba65472dfbc5d6483f7e"
+    }
+  ],
+  "accepted_observer": "drum-oracle-certified",
+  "accepted_bank_exporter": "drum-bank-certified"
+}

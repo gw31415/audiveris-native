@@ -1,0 +1,95 @@
+{
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "native_outputs_used": false,
+  "observer_sha256": "b29442808cdb34b6b1c40873aad59a7a4bf5cc72c1bb639c06861e8352f5a4fa",
+  "compiler_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "runtime_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "java_version": "openjdk version \"25.0.3\" 2026-04-21 LTS\nOpenJDK Runtime Environment Zulu25.34+17-CRaC-CA (build 25.0.3+9-LTS)\nOpenJDK 64-Bit Server VM Zulu25.34+17-CRaC-CA (build 25.0.3+9-LTS, mixed mode)\n",
+  "compile_command": [
+    "/workspace/onboarding/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-d",
+    "/workspace/work/head-coverage/drum-bank-certified/classes",
+    "/workspace/onboarding/artifacts/audiveris-source/scripts/java/HeadDrumBankOracle.java"
+  ],
+  "families": {
+    "Bravura": {
+      "command": [
+        "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Duser.home=/workspace/work/head-coverage/drum-bank-certified/Bravura",
+        "-Djava.util.prefs.userRoot=/workspace/work/head-coverage/drum-bank-certified/Bravura/prefs",
+        "-Djava.awt.headless=true",
+        "-cp",
+        "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/head-coverage/drum-bank-certified/classes",
+        "HeadDrumBankOracle",
+        "/workspace/work/head-coverage/drum-bank-certified/Bravura",
+        "Bravura"
+      ],
+      "manifest_sha256": "acbf60cdef0862f9fc113deff8af61ccef235ef4f6a1ebd19fca4423a3f8f430",
+      "payload_sha256": "382601579c48485c838ecf65f8d1948208979c59b4d52ee7ee69881ea8f6b265",
+      "templates": 36,
+      "keypoints": 7069,
+      "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+      "calibration": [
+        50,
+        51,
+        54
+      ],
+      "font_version_label": "1.392",
+      "coverage_sha256": "228b1fa3135c706f4829bffbd32a059dba4a9131fd9d9ae4473de92010b46c45"
+    },
+    "Leland": {
+      "command": [
+        "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Duser.home=/workspace/work/head-coverage/drum-bank-certified/Leland",
+        "-Djava.util.prefs.userRoot=/workspace/work/head-coverage/drum-bank-certified/Leland/prefs",
+        "-Djava.awt.headless=true",
+        "-cp",
+        "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/head-coverage/drum-bank-certified/classes",
+        "HeadDrumBankOracle",
+        "/workspace/work/head-coverage/drum-bank-certified/Leland",
+        "Leland"
+      ],
+      "manifest_sha256": "2434b19083294a77955ebe1a6f88fa5d23096c16706bf2856a8653efa6352216",
+      "payload_sha256": "49d3f7d74eeb640d4d7b6276914ffeaedaa0eb828dd109c13f556dc122280710",
+      "templates": 36,
+      "keypoints": 7986,
+      "font_sha256": "cacca69cb750d851023d52a8e41d3373904aa82afc7247085f37d4ee6823506c",
+      "calibration": [
+        50,
+        51,
+        54
+      ],
+      "font_version_label": "bundled-in-5.11.0",
+      "coverage_sha256": "57e3093a7a7263685d7ce282d4be886c7af883aaa432c67d7f271fb11abb5867"
+    },
+    "FinaleJazz": {
+      "command": [
+        "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Duser.home=/workspace/work/head-coverage/drum-bank-certified/FinaleJazz",
+        "-Djava.util.prefs.userRoot=/workspace/work/head-coverage/drum-bank-certified/FinaleJazz/prefs",
+        "-Djava.awt.headless=true",
+        "-cp",
+        "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/head-coverage/drum-bank-certified/classes",
+        "HeadDrumBankOracle",
+        "/workspace/work/head-coverage/drum-bank-certified/FinaleJazz",
+        "FinaleJazz"
+      ],
+      "manifest_sha256": "d39f3fd8c294ff0469c27099477ea18932faddb28fe40c29ed62145de1d14f47",
+      "payload_sha256": "a1411aff0da90bc3b95617f9ed190fef8830a85a17f45e20c20ad891d459a9e6",
+      "templates": 36,
+      "keypoints": 9203,
+      "font_sha256": "a8ea0408ef7628ca38ae29eaa1b4357d2b0bf11747f6eee3c5f9ed5cca358e08",
+      "calibration": [
+        50,
+        51,
+        54
+      ],
+      "font_version_label": "bundled-in-5.11.0",
+      "coverage_sha256": "dcfaf815af13978ce4f180a6a0a997e15602950dd6a393a46ed72eaba481f8c6"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running tests/drum_coverage.rs (/workspace/onboarding/target/debug/deps/drum_coverage-644ed9794a0d6498)
+
+running 1 test
+test exact_drum_catalogs_cover_108_templates_without_changing_historical_banks ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
