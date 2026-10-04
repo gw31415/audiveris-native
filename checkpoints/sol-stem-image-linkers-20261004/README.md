@@ -9,3 +9,5 @@ Actual image CLI --head-linkers connects original lookupOtherHeads to automatica
 Restore: `python checkpoints/sol-stem-image-linkers-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6669 source hashes, plus all 1628 archival files and archival tree. Saved remote commit `a1c08af1d4a80f29fda40a8b5a1a4f07c332d5e6`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
