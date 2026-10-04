@@ -1,0 +1,612 @@
+{
+  "status": "passed",
+  "source_commit": "780e9b208f54da579ed13a0b63543a9e95b781e4",
+  "source_tree": "0df564d28f8230822438f62a5a26e7439a065646",
+  "all_fresh_restored_sha256_verified": 6283,
+  "source_clean": true,
+  "source": "/workspace/work/cue-clef-key/sol-cue-clef-20261004-remote-restore/artifacts/audiveris-source",
+  "source_git": "/workspace/work/cue-clef-key/sol-cue-clef-20261004-remote-restore/source-git",
+  "recorded_utc": "2026-10-04T04:54:48.632909+00:00",
+  "remote_main_verified": "5a583500526dd4577f7433d4cabac009e6e45663",
+  "archival_repository_tree": "5fbdf57e5ddb0cbe38fc69a4b5e194674033c87a",
+  "fresh_remote_clone": true,
+  "all_archival_files_sha256_verified": 894,
+  "recovered_from_remote_archives_and_pinned_chain": true,
+  "recovered_native_cli_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+  "recovered_cli_oracle_comparison": {
+    "status": "passed",
+    "independent_synthetic_cue_CLEF": {
+      "status": "passed",
+      "scope": "One independent synthetic cue raster; candidate and registration observers only",
+      "staffs": 4,
+      "small_staff_clef_stop": 119,
+      "small_staff_clef_bounds": [
+        101,
+        139,
+        19,
+        49
+      ],
+      "cue_HEADS_terminal_parity": false,
+      "heads_complete": false,
+      "stems_complete": false
+    },
+    "current_cue_page_CLI_dependency": "unsupported_key_mixed_specific_interline",
+    "actual_published_scan_parity": false,
+    "full24_HEADS_page_propagation": false,
+    "automatic_STEMS_complete": false,
+    "heads_complete": false,
+    "stems_complete": false,
+    "historical_prior_checkpoint_contracts": {
+      "status": "passed",
+      "independent_synthetic_cue_GRID": {
+        "status": "passed",
+        "scope": "One independent synthetic cue page, observed GRID state only",
+        "staffs": 4,
+        "systems": 4,
+        "small_staffs": 1,
+        "physical_glyphs": 32,
+        "hlag_sections": 85,
+        "vlag_sections": 483,
+        "masked_pixels": 67080,
+        "mask_sha256": "5201aa9789a58c24a7e79114b022cb908f597a296f8823af628062cc4531040a",
+        "distance_sha256_be_i16": "d4ac5c3e1c7fea5b16987ca0634c5a91a5f7539dd3a37e50a389b96e75966c86",
+        "original_cue_HEADS_target_unverified": {
+          "heads": 168,
+          "exclusions": 198
+        },
+        "heads_complete": false,
+        "stems_complete": false
+      },
+      "cue_GRID_diagnostic_CLI_supported": true,
+      "current_cue_page_CLI_dependency": "unsupported_key_mixed_specific_interline",
+      "actual_published_scan_parity": false,
+      "full24_HEADS_page_propagation": false,
+      "automatic_STEMS_complete": false,
+      "grid_complete": false,
+      "heads_complete": false,
+      "stems_complete": false,
+      "historical_prior_checkpoint_contracts": {
+        "status": "passed",
+        "original_initial_staff_second_pass_controls": [
+          {
+            "name": "cue",
+            "input_filaments": 44,
+            "first_discarded": 17,
+            "second_discarded": 8,
+            "staffs": 4,
+            "second_pass_ran": true
+          },
+          {
+            "name": "main-lines-only",
+            "input_filaments": 15,
+            "first_discarded": 0,
+            "second_discarded": 0,
+            "staffs": 3,
+            "second_pass_ran": false
+          },
+          {
+            "name": "empty",
+            "input_filaments": 0,
+            "first_discarded": 0,
+            "second_discarded": 0,
+            "staffs": 0,
+            "second_pass_ran": false
+          }
+        ],
+        "native_actual_cue_factory_initial_staffs_compared": 4,
+        "original_length_consistency_boundaries": 12,
+        "completed_GRID_cue_parity": false,
+        "cue_HEADS_terminal_parity": false,
+        "legacy_page_CLI_cue_stop_preserved": true,
+        "heads_complete": false,
+        "stems_complete": false,
+        "preserved_physical_grades_and_prior_baselines": {
+          "status": "passed",
+          "original_physical_glyph_grade_cases": 1152,
+          "finite_grades_compared": 996,
+          "nonfinite_original_cases_explicitly_unsupported": 156,
+          "automatic_STEMS_complete": false,
+          "StemBuilder_cache_complete": false,
+          "heads_complete": false,
+          "stems_complete": false,
+          "preserved_head_stem_stump_and_prior_baselines": {
+            "status": "passed",
+            "original_explicit_corner_stump_union_batches": 6048,
+            "accepted_relations": 4272,
+            "rejected_relations": 1776,
+            "null_stump_controls": 3024,
+            "whole_union_contact_false_positives_prevented": 1104,
+            "source_backed_all_original_fields_reproduced": true,
+            "automatic_corner_stump_selection_complete": false,
+            "automatic_STEMS_complete": false,
+            "heads_complete": false,
+            "stems_complete": false,
+            "preserved_support_connection_actual_pages_and_prior_baselines": {
+              "status": "passed",
+              "original_physical_length_support_batches": 1536,
+              "accepted_relations": 1152,
+              "geometrically_rejected": 384,
+              "small_head_support_relations": 192,
+              "source_backed_all_original_fields_reproduced": true,
+              "main_interline_and_small_shape_verified": true,
+              "connection_grade_and_target_support_preserved": true,
+              "automatic_STEMS_complete": false,
+              "SIG_contextual_grades_complete": false,
+              "stems_complete": false,
+              "heads_complete": false,
+              "preserved_head_connection_actual_pages_and_prior_baselines": {
+                "status": "passed",
+                "original_selected_STEMS_controls": {
+                  "references": 2112,
+                  "gaps": 288,
+                  "connections": 5760,
+                  "glyphs": 40,
+                  "lifecycle": 12,
+                  "batches": 144
+                },
+                "all_original_control_fields_reproduced": true,
+                "vertical_union_even_single_horizontal_part": true,
+                "selected_glyph_head_connection_and_SIG_batches": 144,
+                "nonmanual_parallel_relation_lifecycles": 12,
+                "automatic_STEMS_complete": false,
+                "stems_complete": false,
+                "heads_complete": false,
+                "preserved_actual_font_pages_all_shapes_and_prior_baselines": {
+                  "status": "passed",
+                  "actual_font_whole_synthetic_pages_HEADS_compared": 3,
+                  "comparisons": [
+                    {
+                      "status": "passed",
+                      "control": "Bravura-five",
+                      "retained_physical_heads": 64,
+                      "ordered_exclusions": 82,
+                      "staff_note_order": true,
+                      "small_beams_checked": 0,
+                      "seed_epilog_dx_checked": true,
+                      "prior_shared_ids_relations_preserved": true,
+                      "intermediate_original_performance_or_removal_counts_claimed": false,
+                      "actual_other_font_or_cue_page_parity": false,
+                      "heads_complete": false,
+                      "report_sha256": "a1d56ef77b75db2cd3cb93a7554d63ebfa54c0ce1857015deceacacbe68fec6b",
+                      "input_sha256": "5e952f8b40b4888b9d215730bda6a545cfb15d0c82959ae021bb0da2574d0046",
+                      "actual_other_font_page_HEADS_terminal_parity": true,
+                      "source": "Independent original-font whole synthetic score raster; original default upstream steps, selected HEADS family/51pt; not a published score scan or complete OMR."
+                    },
+                    {
+                      "status": "passed",
+                      "control": "Leland-five",
+                      "retained_physical_heads": 60,
+                      "ordered_exclusions": 68,
+                      "staff_note_order": true,
+                      "small_beams_checked": 0,
+                      "seed_epilog_dx_checked": true,
+                      "prior_shared_ids_relations_preserved": true,
+                      "intermediate_original_performance_or_removal_counts_claimed": false,
+                      "actual_other_font_or_cue_page_parity": false,
+                      "heads_complete": false,
+                      "report_sha256": "e0d4e6d82162e368a3e2f3d979b72b3f86dc1b599359dbdaa6ee5f3dadd096d7",
+                      "input_sha256": "d205f02e2b0dd7ae1276822bd7ac61cecb3198807e8a2f9268db3500ce1cece0",
+                      "actual_other_font_page_HEADS_terminal_parity": true,
+                      "source": "Independent original-font whole synthetic score raster; original default upstream steps, selected HEADS family/51pt; not a published score scan or complete OMR."
+                    },
+                    {
+                      "status": "passed",
+                      "control": "FinaleJazz-five",
+                      "retained_physical_heads": 58,
+                      "ordered_exclusions": 130,
+                      "staff_note_order": true,
+                      "small_beams_checked": 0,
+                      "seed_epilog_dx_checked": true,
+                      "prior_shared_ids_relations_preserved": true,
+                      "intermediate_original_performance_or_removal_counts_claimed": false,
+                      "actual_other_font_or_cue_page_parity": false,
+                      "heads_complete": false,
+                      "report_sha256": "3a7c32f21cce741cb4330e9e530cf3807223dac26d8e3c738c20dbd5efd317c1",
+                      "input_sha256": "0b8654319ee5b384aec8e577881da172d1cc75901e02778831f7763cb0718e9c",
+                      "actual_other_font_page_HEADS_terminal_parity": true,
+                      "source": "Independent original-font whole synthetic score raster; original default upstream steps, selected HEADS family/51pt; not a published score scan or complete OMR."
+                    }
+                  ],
+                  "new_cue_page_original_heads": 168,
+                  "cue_native_dependency": "GRID multiple_interline_requires_second_pass",
+                  "special_staff_pages": [
+                    {
+                      "name": "Bravura-cue",
+                      "parity": "unsupported",
+                      "native_dependency": "multiple_interline_requires_second_pass"
+                    },
+                    {
+                      "name": "Bravura-one-drum",
+                      "parity": "unsupported",
+                      "native_dependency": "GRID one-line processing switch propagation; HEADS default drum catalog page propagation"
+                    },
+                    {
+                      "name": "Bravura-five-drum",
+                      "parity": "unsupported",
+                      "native_dependency": "HEADERS drum processing switch/PERCUSSION_CLEF state; HEADS default drum catalog page propagation"
+                    },
+                    {
+                      "name": "Bravura-six-tab",
+                      "parity": "unsupported",
+                      "native_dependency": "GRID six-string tablature processing switch and six-line staff construction; HEADS skip"
+                    }
+                  ],
+                  "special_staff_full_page_parity": false,
+                  "heads_complete": false,
+                  "complete_STEMS_or_stem_attachment": false,
+                  "preserved_all_shapes_and_prior_baselines": {
+                    "status": "passed",
+                    "exact_head_templates": 288,
+                    "new_head_shapes": 15,
+                    "independent_original_images": 720,
+                    "range_controls": 1440,
+                    "new_hollow_seed_windows": 1440,
+                    "physical_glyph_controls": 720,
+                    "eligibility_ULP_controls": 150,
+                    "original_SIG_lifecycle_controls": 720,
+                    "all_24_shape_registration_abnormal_states": true,
+                    "actual_other_font_or_special_staff_page_parity": false,
+                    "complete_STEMS_or_stem_attachment": false,
+                    "heads_complete": false,
+                    "preserved_complete_controlled_HEADS_and_STEMS_kernel": {
+                      "status": "passed",
+                      "original_head_stem_portion_controls": 264,
+                      "original_consistency_controls": 20,
+                      "original_invading_controls": 70,
+                      "original_gap_limit_profiles": 3,
+                      "source_backed_original_kernels_reproduced": true,
+                      "small_zero_length_original_infinity_preserved": true,
+                      "complete_STEMS_or_stem_attachment": false,
+                      "heads_complete": false,
+                      "preserved_complete_controlled_HEADS": {
+                        "status": "passed",
+                        "whole_controlled_HEADS_catalog_propagation_complete": true,
+                        "source_backed_original_cue_reproduced": true,
+                        "original_controlled_page_cases": 13,
+                        "controls": [
+                          {
+                            "status": "passed",
+                            "control": "Bravura-32",
+                            "retained_physical_heads": 588,
+                            "ordered_exclusions": 653,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "896fdaf9c097f6b92a8dca864de377c04f74ac6308006ae9a8cb01562fa19554"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Bravura-40",
+                            "retained_physical_heads": 447,
+                            "ordered_exclusions": 633,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "2d71eafbe0bb0da94491aa69b431243ca9da26ca3abecd35f57618c7772deaea"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Bravura-51",
+                            "retained_physical_heads": 352,
+                            "ordered_exclusions": 513,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "e71f2f27fe5e2598308716175e68b77fe535f0918c3f8b6e7744c6322ccdc851"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Bravura-64",
+                            "retained_physical_heads": 256,
+                            "ordered_exclusions": 345,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "5fe5a27f0b73def9288c3021728566b8b1a7937d92f994515f4ebb5f3da78761"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Leland-32",
+                            "retained_physical_heads": 535,
+                            "ordered_exclusions": 737,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "93b2b8b991b7d27c3d1d8bfb3a4f60413b6ff7b30a63005483cbf81f5dccf619"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Leland-40",
+                            "retained_physical_heads": 410,
+                            "ordered_exclusions": 625,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "0b074b558ace81653aaa21dcbf80d93a7353522e957aec88692703a0fbac38d2"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Leland-51",
+                            "retained_physical_heads": 331,
+                            "ordered_exclusions": 565,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "976f6bbcf0f181e8309c550345933dc0e9144db17cc177f15a07ffa19c26073a"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Leland-64",
+                            "retained_physical_heads": 315,
+                            "ordered_exclusions": 522,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "6e2526debc3a1a744fd049268bd4f6b579825a059d8569cda00d34263da1a6cf"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "FinaleJazz-32",
+                            "retained_physical_heads": 514,
+                            "ordered_exclusions": 893,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "bd9cf10563b29cb1c6d12b16a1d2cb2dd899b90d95996dc99727b26084194a60"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "FinaleJazz-40",
+                            "retained_physical_heads": 414,
+                            "ordered_exclusions": 782,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "d4bb4c93727d3cc6464833c192f05fd63b8b7945d959d830c93fc937d621aaa3"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "FinaleJazz-51",
+                            "retained_physical_heads": 239,
+                            "ordered_exclusions": 345,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "a14f63293104ed4ce8a4c2f158ca2150c3f64b1ab94c90b373d6e74c49b43185"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "FinaleJazz-64",
+                            "retained_physical_heads": 258,
+                            "ordered_exclusions": 415,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "6f77c8d16f4736a4aa71cd87b967c5c718b4fd6ce831730d2fca88ce49fecd5d"
+                          },
+                          {
+                            "status": "passed",
+                            "control": "Bravura-51-cue",
+                            "retained_physical_heads": 386,
+                            "ordered_exclusions": 525,
+                            "staff_note_order": true,
+                            "small_beams_checked": 3,
+                            "seed_epilog_dx_checked": true,
+                            "prior_shared_ids_relations_preserved": true,
+                            "intermediate_original_performance_or_removal_counts_claimed": false,
+                            "actual_other_font_or_cue_page_parity": false,
+                            "heads_complete": false,
+                            "report_sha256": "c7d0be000c6521876c5abbeb41dc5979d3cb9027b638c7ebd50d6bc69477e319"
+                          }
+                        ],
+                        "actual_other_font_or_special_staff_page_parity": false,
+                        "heads_complete": false,
+                        "preserved_seed_quarter_staff_font_and_laura": {
+                          "status": "passed",
+                          "original_configured_seed_page_cases": 13,
+                          "seed_pitch_pairs": 14764,
+                          "veto_proposals_across_controls": 4970,
+                          "cue_staff_point_sizes": [
+                            32,
+                            51,
+                            51,
+                            51,
+                            51,
+                            51
+                          ],
+                          "source_backed_cue_reproduced": true,
+                          "legacy_CLI_catalog_unchanged": true,
+                          "whole_HEADS_catalog_propagation_complete": false,
+                          "actual_other_font_or_special_staff_page_parity": false,
+                          "heads_complete": false,
+                          "preserved_seed_quarter_staff_font_and_laura": {
+                            "status": "passed",
+                            "original_seed_windows": 2016,
+                            "independently_reproduced_existing_images": 336,
+                            "matched_stem_shapes": 7,
+                            "original_central_vetoes": 5760,
+                            "original_noncentral_vetoes": 12726,
+                            "strict_shape_order_and_legacy_Bravura51_API_preserved": true,
+                            "page_catalog_propagation_complete": false,
+                            "heads_complete": false,
+                            "preserved_quarter_staff_font_and_laura": {
+                              "status": "passed",
+                              "exact_matched_shape_templates": 108,
+                              "new_quarter_images": 240,
+                              "new_range_comparisons": 480,
+                              "new_physical_glyph_comparisons": 240,
+                              "new_same_overlap_SIG_controls": 240,
+                              "shared_SIG_registration_and_removal_order": true,
+                              "full_page_special_staff_parity": false,
+                              "heads_complete": false,
+                              "preserved_staff_catalog_font_kernel_and_laura": {
+                                "status": "passed",
+                                "staff_plan_controls": 384,
+                                "outside_drum_pitch_controls": 75,
+                                "tablature_skip_controls": 2,
+                                "main_scale_drives_offsets": true,
+                                "custom_drum_overrides_covered": false,
+                                "special_staff_full_page_parity": false,
+                                "heads_complete": false,
+                                "preserved_font_kernel_and_laura": {
+                                  "status": "passed",
+                                  "exact_templates": 48,
+                                  "original_rendered_images": 192,
+                                  "range_comparisons": 384,
+                                  "physical_glyph_comparisons": 192,
+                                  "fonts": [
+                                    "Bravura",
+                                    "Leland",
+                                    "FinaleJazz"
+                                  ],
+                                  "point_sizes": [
+                                    32,
+                                    40,
+                                    51,
+                                    64
+                                  ],
+                                  "heads_complete": false,
+                                  "page_font_or_special_staff_parity_claimed": false,
+                                  "preserved_staff_dependency": {
+                                    "status": "passed",
+                                    "staff_dependency_controls": 8,
+                                    "live_physical_scanners": 118,
+                                    "heads_complete": false,
+                                    "shared_phase_refresh_guards_verified": true,
+                                    "certified_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+                                    "preserved_registration": {
+                                      "status": "passed",
+                                      "heads": 352,
+                                      "duplicate_removals": 22,
+                                      "HEADS_exclusions": 513,
+                                      "staff_note_counts": [
+                                        44,
+                                        58,
+                                        48,
+                                        56,
+                                        112,
+                                        34
+                                      ],
+                                      "small_beams_contextualized": 3,
+                                      "purge_controls": 40,
+                                      "beam_context_controls": 7,
+                                      "small_beam_controls": 9,
+                                      "seed_tally_controls": 4,
+                                      "heads_complete": false,
+                                      "prior_shared_ids_and_edges_preserved": true,
+                                      "preserved_glyphs": {
+                                        "status": "passed",
+                                        "range_scanners": 118,
+                                        "seed_glyphs": 358,
+                                        "seed_conflicts": 438,
+                                        "range_glyphs": 16,
+                                        "foreground_controls": 16,
+                                        "heads_complete": false,
+                                        "preserved_filter": {
+                                          "status": "passed",
+                                          "range_scanners": 118,
+                                          "aggregates": 454,
+                                          "seed_conflict_controls": 21,
+                                          "live_seed_conflicts_complete": false,
+                                          "heads_complete": false,
+                                          "preserved_catalog": {
+                                            "status": "passed",
+                                            "range_scanners": 118,
+                                            "accepted_candidates": 2224,
+                                            "weak_stemless_rejected": 407,
+                                            "raw_candidates": 2631,
+                                            "accepted_stemless": {
+                                              "WHOLE_NOTE": 3
+                                            },
+                                            "preserved_prefix": {
+                                              "status": "passed",
+                                              "raw_seed_proposals": 418,
+                                              "veto_seed_proposals": 358,
+                                              "head_spot_system_references": 402,
+                                              "range_scanners": 118,
+                                              "visited_abscissae": 47790,
+                                              "skipped_windows": 869,
+                                              "black_void_prefix_proposals": 2221,
+                                              "heads_complete": false,
+                                              "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+                                              "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                                            },
+                                            "heads_complete": false,
+                                            "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+                                            "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                                          },
+                                          "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                                        },
+                                        "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                                      },
+                                      "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                                    },
+                                    "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "saved_full_workspace_passed": 420,
+  "tests_rerun_on_recovered_source": false
+}

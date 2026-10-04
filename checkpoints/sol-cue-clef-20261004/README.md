@@ -9,3 +9,5 @@ Original five-line cue CLEF candidates and registration on one actual independen
 Restore: `python checkpoints/sol-cue-clef-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6283 source hashes, plus all 894 archival files and archival tree. Saved remote commit `5a583500526dd4577f7433d4cabac009e6e45663`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
