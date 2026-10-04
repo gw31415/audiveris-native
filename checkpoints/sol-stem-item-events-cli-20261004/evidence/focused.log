@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.33s
+     Running tests/stem_item_events.rs (/workspace/onboarding/target/debug/deps/stem_item_events-a7a015bbfd2722b3)
+
+running 3 tests
+test aliases_limits_empty_and_strict_event_refusals ... ok
+test original_constructors_sort_gaps_and_composed_lengths ... ok
+test actual_cli_original_controls_and_atomic_invalid_late_input ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.10s
