@@ -1,0 +1,17 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.35s
+     Running tests/cue_default_bank.rs (/workspace/onboarding/target/debug/deps/cue_default_bank-5261dd99fba9a42c)
+
+running 2 tests
+test default_cue_exact_bank_and_staff_preflight_refuse_unsupported_sizes_without_mutation ... ok
+test original_eight_default_cue_templates_geometry_anchors_keypoints_and_scores_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/head_actual_pages.rs (/workspace/onboarding/target/debug/deps/head_actual_pages-6999fb86527dd56a)
+
+running 2 tests
+test actual_cue_page_cli_matches_original_terminal_heads_and_preserves_incomplete_flags ... ok
+test independent_three_font_score_pages_match_original_complete_heads_terminals ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 33.18s

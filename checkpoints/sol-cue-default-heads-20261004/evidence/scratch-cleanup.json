@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_duplicate_repositories": [
+    {
+      "path": "/workspace/work/cue-clef-key/sol-cue-headers-rest-20261004-prepush",
+      "commit": "823e26205ed65e0422cd979d4ce1308675e5be30",
+      "tree": "a714ca9fa8fd3a7c0be63bec5ec98b759228c6d9"
+    },
+    {
+      "path": "/workspace/work/cue-clef-key/sol-cue-clef-20261004-remote-restore",
+      "commit": "780e9b208f54da579ed13a0b63543a9e95b781e4",
+      "tree": "0df564d28f8230822438f62a5a26e7439a065646"
+    },
+    {
+      "path": "/workspace/work/cue-clef-key/sol-cue-clef-20261004-remote-clone",
+      "remote_main": "7c8d507104a092b47e0982d3e139ae85d4008635"
+    },
+    {
+      "path": "/workspace/work/grid-cue-propagation/sol-grid-cue-propagation-20261004-remote-clone",
+      "remote_main": "5ed95b1ea475d94ed655c4a8d8189bbcef37b6b1"
+    }
+  ],
+  "retained_latest_remote_restore": "/workspace/work/cue-clef-key/sol-cue-headers-rest-20261004-remote-restore"
+}

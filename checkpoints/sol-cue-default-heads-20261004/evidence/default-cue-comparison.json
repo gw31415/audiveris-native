@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "control": "Bravura-default-cue",
+  "retained_physical_heads": 156,
+  "ordered_exclusions": 189,
+  "staff_note_order": true,
+  "small_beams_checked": 0,
+  "seed_epilog_dx_checked": true,
+  "prior_shared_ids_relations_preserved": true,
+  "intermediate_original_performance_or_removal_counts_claimed": false,
+  "actual_synthetic_default_cue_page_parity": true,
+  "heads_complete": false,
+  "report_sha256": "64969e2f69f266d4a894d51d7c31fd8e8227706f421bfc7521ad59ac212369ce"
+}
