@@ -11,3 +11,5 @@ Restore: `python checkpoints/sol-stem-image-linkers-20261004/RESTORE.py --reposi
 See MANIFEST.json for complete hashes, validation and remaining work.
 
 Separate remote clone/restoration verified source commit/tree and all 6669 source hashes, plus all 1628 archival files and archival tree. Saved remote commit `a1c08af1d4a80f29fda40a8b5a1a4f07c332d5e6`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
+
+Separate remote clone/restoration verified source commit/tree and all 6669 source hashes, plus all 1629 archival files and archival tree. Saved remote commit `2197247fe32cc638dd11a53583cda109ff5f580b`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
