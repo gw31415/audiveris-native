@@ -875,11 +875,147 @@
       "tests_rerun_on_recovered_source": false
     },
     "remote_checkpoint_save": {
-      "status": "git_access_verified_pending_push",
-      "pushed": false,
-      "fresh_remote_clone_verified": false,
-      "last_verified_main": "dcb7cbdf991228b6165c4b8f458eb475076ed25a",
-      "evidence": "evidence/SAVE-BLOCKER.json"
+      "status": "passed",
+      "pushed": true,
+      "normal_non_force_push": true,
+      "fresh_remote_clone_verified": true,
+      "remote_main_verified": "581124e0906be6ea57dd52d198421162d9e5f12f",
+      "credential_configuration_changed": false
+    },
+    "remote_fresh_restore": {
+      "status": "passed",
+      "source_commit": "f4f3cd91a62af305824305b4a65e14456bd04953",
+      "source_tree": "26515045a3b6587f4a0af319c970a2328656519e",
+      "all_fresh_restored_sha256_verified": 5347,
+      "source_clean": true,
+      "source": "/workspace/work/head-coverage/sol-head-drum-quarter-20261003-remote-restore/artifacts/audiveris-source",
+      "source_git": "/workspace/work/head-coverage/sol-head-drum-quarter-20261003-remote-restore/source-git",
+      "recorded_utc": "2026-10-04T00:04:34.557674+00:00",
+      "remote_main_verified": "581124e0906be6ea57dd52d198421162d9e5f12f",
+      "archival_repository_tree": "f385eeca0c8c0701df22626b969c5d8817284f78",
+      "fresh_remote_clone": true,
+      "all_archival_files_sha256_verified": 544,
+      "recovered_from_remote_archives_and_pinned_chain": true,
+      "recovered_native_cli_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+      "recovered_cli_oracle_comparison": {
+        "status": "passed",
+        "exact_matched_shape_templates": 108,
+        "new_quarter_images": 240,
+        "new_range_comparisons": 480,
+        "new_physical_glyph_comparisons": 240,
+        "new_same_overlap_SIG_controls": 240,
+        "shared_SIG_registration_and_removal_order": true,
+        "full_page_special_staff_parity": false,
+        "heads_complete": false,
+        "preserved_staff_catalog_font_kernel_and_laura": {
+          "status": "passed",
+          "staff_plan_controls": 384,
+          "outside_drum_pitch_controls": 75,
+          "tablature_skip_controls": 2,
+          "main_scale_drives_offsets": true,
+          "custom_drum_overrides_covered": false,
+          "special_staff_full_page_parity": false,
+          "heads_complete": false,
+          "preserved_font_kernel_and_laura": {
+            "status": "passed",
+            "exact_templates": 48,
+            "original_rendered_images": 192,
+            "range_comparisons": 384,
+            "physical_glyph_comparisons": 192,
+            "fonts": [
+              "Bravura",
+              "Leland",
+              "FinaleJazz"
+            ],
+            "point_sizes": [
+              32,
+              40,
+              51,
+              64
+            ],
+            "heads_complete": false,
+            "page_font_or_special_staff_parity_claimed": false,
+            "preserved_staff_dependency": {
+              "status": "passed",
+              "staff_dependency_controls": 8,
+              "live_physical_scanners": 118,
+              "heads_complete": false,
+              "shared_phase_refresh_guards_verified": true,
+              "certified_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+              "preserved_registration": {
+                "status": "passed",
+                "heads": 352,
+                "duplicate_removals": 22,
+                "HEADS_exclusions": 513,
+                "staff_note_counts": [
+                  44,
+                  58,
+                  48,
+                  56,
+                  112,
+                  34
+                ],
+                "small_beams_contextualized": 3,
+                "purge_controls": 40,
+                "beam_context_controls": 7,
+                "small_beam_controls": 9,
+                "seed_tally_controls": 4,
+                "heads_complete": false,
+                "prior_shared_ids_and_edges_preserved": true,
+                "preserved_glyphs": {
+                  "status": "passed",
+                  "range_scanners": 118,
+                  "seed_glyphs": 358,
+                  "seed_conflicts": 438,
+                  "range_glyphs": 16,
+                  "foreground_controls": 16,
+                  "heads_complete": false,
+                  "preserved_filter": {
+                    "status": "passed",
+                    "range_scanners": 118,
+                    "aggregates": 454,
+                    "seed_conflict_controls": 21,
+                    "live_seed_conflicts_complete": false,
+                    "heads_complete": false,
+                    "preserved_catalog": {
+                      "status": "passed",
+                      "range_scanners": 118,
+                      "accepted_candidates": 2224,
+                      "weak_stemless_rejected": 407,
+                      "raw_candidates": 2631,
+                      "accepted_stemless": {
+                        "WHOLE_NOTE": 3
+                      },
+                      "preserved_prefix": {
+                        "status": "passed",
+                        "raw_seed_proposals": 418,
+                        "veto_seed_proposals": 358,
+                        "head_spot_system_references": 402,
+                        "range_scanners": 118,
+                        "visited_abscissae": 47790,
+                        "skipped_windows": 869,
+                        "black_void_prefix_proposals": 2221,
+                        "heads_complete": false,
+                        "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+                        "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                      },
+                      "heads_complete": false,
+                      "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+                      "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                    },
+                    "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                  },
+                  "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                },
+                "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+              },
+              "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+            }
+          }
+        }
+      },
+      "saved_full_workspace_passed": 379,
+      "tests_rerun_on_recovered_source": false
     }
   },
   "implemented_scope": "Exact Linux official catalogs for nine matched shapes at Bravura/Leland/FinaleJazz 32/40/51/64pt: 108 templates in a separate bounded hash-pinned bank. Newly matched quarter shapes BLACK_SMALL/CROSS/DIAMOND_FILLED/TRIANGLE_DOWN_FILLED/CIRCLE_X compare on 480 selected range, 240 physical glyph and 240 same/overlap plus original SIG staff insertion/removal controls. Native explicit shape selector preserves ordinary four-shape ALL_SHAPES; empty sets are no-ops and duplicates/unported shapes fail before veto. Generic HeadInter same/overlap/purge validation admits these exact quarter shapes, with common shared Graph identities/tombstones and earlier GRID edges tested. Historical builtin and ordinary coverage bank bytes and duplicated template keypoints/bounds are preserved. Source-backed exporter reproduces preview hashes; original small-head direct-code layout null is retained as auxiliary null, with actual original TemplateSymbol/TemplateFactory keypoints. Full original Laura reports and shared SIG remain identical. Overall HEADS stays false: these are kernel/constructor/lifecycle contracts, not full special-staff page recognition.",
@@ -897,6 +1033,7 @@
   "evidence_sha256": {
     "evidence/LOCAL-READBACK.json": "47fcfa950da244c27aac078cd295cee4806ff00dd6dcba41f1b263fa43d472d1",
     "evidence/PREPUSH-RESTORE.json": "0d9b131ffd67b76ba3778ea297e1cd3bba56dfcb689505e7790d5c8ab04279eb",
+    "evidence/REMOTE-READBACK.json": "3a2d6c241cde12f2ad451132c66c62846969e0ed382a56f02c26a5428e0376a6",
     "evidence/SAVE-BLOCKER.json": "c0ed0027a6ed704335e2be70d1de13cbe9406ea46fe25037ddc8287b05371f17",
     "evidence/bank-focused-tests.log": "8b3313ab32c40bfe1cbc24531b285f9d09d2a3ed4073aaa6f1639517eac5f2c8",
     "evidence/bundle-verify.log": "2dc5ae8454715be2c5a7a270d8741b0cdc5bfc25777ba801e9ea0fecd1cc0cac",
