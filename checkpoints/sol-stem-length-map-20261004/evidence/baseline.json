@@ -1,0 +1,22 @@
+{
+  "source_commit": "ee10c33ba64c10297197a018838fcbde0903a1fc",
+  "source_tree": "27eb9c30c4c37003b31f8c97756526cf149deaf4",
+  "all_source_sha256_files": 6510,
+  "source_clean": true,
+  "archive_commit": "2b6d59fce9cca0036cce16a4531e3d18ff9bc912",
+  "archive_tree": "034ab685bff7a74adfb5f75428c2ee7af3a82bc4",
+  "archive_files": 1299,
+  "archive_clean": true,
+  "fresh_source": {
+    "source_commit": "ee10c33ba64c10297197a018838fcbde0903a1fc",
+    "source_tree": "27eb9c30c4c37003b31f8c97756526cf149deaf4",
+    "all_source_sha256_files": 6510,
+    "source_clean": true
+  },
+  "fresh_archive": {
+    "archive_commit": "2b6d59fce9cca0036cce16a4531e3d18ff9bc912",
+    "archive_tree": "034ab685bff7a74adfb5f75428c2ee7af3a82bc4",
+    "archive_files": 1299,
+    "archive_clean": true
+  }
+}

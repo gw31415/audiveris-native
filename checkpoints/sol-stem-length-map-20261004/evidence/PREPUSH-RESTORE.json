@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "5de89391a76d3d7bf60ff69e2ed49950cd552bc0",
+  "source_tree": "c8377de1cc6f71db5ea06951096c430f560c7b6d",
+  "all_fresh_restored_sha256_verified": 6523,
+  "source_clean": true,
+  "source": "/workspace/work/stem-lengths/sol-stem-length-map-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/stem-lengths/sol-stem-length-map-20261004-prepush/source-git"
+}

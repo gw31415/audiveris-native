@@ -1,0 +1,18 @@
+{
+  "status": "read_only_dependency_identified",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "StemItem_events_bytecode_sha256": "bafb7ccb317c3ddd7eb16f8c6bd99342473c7fb37d1122e7bcf6517837577280",
+  "native_sort_gap_implementation_claimed": false,
+  "contracts": [
+    "sort only suffix, preserving startHalfLinker",
+    "both HalfLinkerItems compare reference.y; mixed pairs compare line.y1 for down and reversed line.y2 for up",
+    "non-transitive mixed comparator requires original Java small-list TimSort behavior or explicit size refusal",
+    "insertGapEvents uses directional incoming endpoint - furthest endpoint, strict > selected profile gap truncates before current item",
+    "distance >0.01 inserts GapItem, otherwise none; endpoint advances only >0.01",
+    "GapItem.contrib is Line2D.getBounds().height (floor/ceil), not rounded distance",
+    "after auto events, use certified retrieveLengths with its distinct max_profile"
+  ],
+  "page_automatic_items_parts_cache_SIG_epilog_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

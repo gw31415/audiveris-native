@@ -1,0 +1,42 @@
+{
+  "source_commit": "db8941b2df43f081f637f745a77a96d007d4b34f",
+  "source_tree": "13c8847636e38a2b1705500abaacba8329c14ba7",
+  "all_source_sha256_files": 6497,
+  "source_clean": true,
+  "archive_commit": "b3e5a6c1db566e0887dec36ec0aa0d5170f85e2a",
+  "archive_tree": "744805b64e889672a3c0b3c88a0035051febe9cd",
+  "archive_files": 1275,
+  "archive_clean": true,
+  "deleted_only_verified_duplicate_paths": [
+    "/workspace/work/stem-chunks-cli/sol-stem-chunks-cli-20261004-remote-restore",
+    "/workspace/work/stem-chunks-cli/sol-stem-chunks-cli-20261004-remote-clone"
+  ],
+  "newer_external_recovery_verified": {
+    "source_commit": "ee10c33ba64c10297197a018838fcbde0903a1fc",
+    "source_tree": "27eb9c30c4c37003b31f8c97756526cf149deaf4",
+    "all_source_sha256_files": 6510,
+    "source_clean": true,
+    "archive_commit": "2b6d59fce9cca0036cce16a4531e3d18ff9bc912",
+    "archive_tree": "034ab685bff7a74adfb5f75428c2ee7af3a82bc4",
+    "archive_files": 1299,
+    "archive_clean": true,
+    "fresh_source": {
+      "source_commit": "ee10c33ba64c10297197a018838fcbde0903a1fc",
+      "source_tree": "27eb9c30c4c37003b31f8c97756526cf149deaf4",
+      "all_source_sha256_files": 6510,
+      "source_clean": true
+    },
+    "fresh_archive": {
+      "archive_commit": "2b6d59fce9cca0036cce16a4531e3d18ff9bc912",
+      "archive_tree": "034ab685bff7a74adfb5f75428c2ee7af3a82bc4",
+      "archive_files": 1299,
+      "archive_clean": true
+    }
+  },
+  "additional_verified_older_source_duplicate": {
+    "path": "/workspace/work/head-pages/sol-head-actual-pages-20261004-remote-restore",
+    "source_commit": "2e988e3ea92993f11a73dd9dd2e89a1838304c36",
+    "tree": "382041db312a2c7a23cafd03b1809fbb9c5f670f",
+    "all_file_sha256_verified": 6202
+  }
+}
