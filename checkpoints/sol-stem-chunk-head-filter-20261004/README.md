@@ -9,3 +9,5 @@ Original filterHeadParts physical pixel membership and VIP-gated remaining-weigh
 Restore: `python checkpoints/sol-stem-chunk-head-filter-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6475 source hashes, plus all 1229 archival files and archival tree. Saved remote commit `ab16b1beaa02c49c35597d76552e4aa50b9f31ae`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
