@@ -1,0 +1,92 @@
+Compiled from "Jaxb.java"
+public class org.audiveris.omr.util.Jaxb$Line2DAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<org.audiveris.omr.util.Jaxb$Line2DAdapter$Line2DFacade, java.awt.geom.Line2D> {
+  public org.audiveris.omr.util.Jaxb$Line2DAdapter();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method javax/xml/bind/annotation/adapters/XmlAdapter."<init>":()V
+       4: return
+
+  public org.audiveris.omr.util.Jaxb$Line2DAdapter$Line2DFacade marshal(java.awt.geom.Line2D) throws java.lang.Exception;
+    Code:
+       0: aload_1
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: new           #7                  // class org/audiveris/omr/util/Jaxb$Line2DAdapter$Line2DFacade
+       9: dup
+      10: aload_1
+      11: invokespecial #9                  // Method org/audiveris/omr/util/Jaxb$Line2DAdapter$Line2DFacade."<init>":(Ljava/awt/geom/Line2D;)V
+      14: areturn
+
+  public java.awt.geom.Line2D unmarshal(org.audiveris.omr.util.Jaxb$Line2DAdapter$Line2DFacade) throws java.lang.Exception;
+    Code:
+       0: aload_1
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: aload_1
+       7: invokevirtual #12                 // Method org/audiveris/omr/util/Jaxb$Line2DAdapter$Line2DFacade.getLine:()Ljava/awt/geom/Line2D;
+      10: areturn
+
+  public java.lang.Object marshal(java.lang.Object) throws java.lang.Exception;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #16                 // class java/awt/geom/Line2D
+       5: invokevirtual #18                 // Method marshal:(Ljava/awt/geom/Line2D;)Lorg/audiveris/omr/util/Jaxb$Line2DAdapter$Line2DFacade;
+       8: areturn
+
+  public java.lang.Object unmarshal(java.lang.Object) throws java.lang.Exception;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #7                  // class org/audiveris/omr/util/Jaxb$Line2DAdapter$Line2DFacade
+       5: invokevirtual #24                 // Method unmarshal:(Lorg/audiveris/omr/util/Jaxb$Line2DAdapter$Line2DFacade;)Ljava/awt/geom/Line2D;
+       8: areturn
+}
+Compiled from "Jaxb.java"
+public class org.audiveris.omr.util.Jaxb$Point2DAdapter extends javax.xml.bind.annotation.adapters.XmlAdapter<org.audiveris.omr.util.Jaxb$Point2DFacade, java.awt.geom.Point2D> {
+  public org.audiveris.omr.util.Jaxb$Point2DAdapter();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method javax/xml/bind/annotation/adapters/XmlAdapter."<init>":()V
+       4: return
+
+  public org.audiveris.omr.util.Jaxb$Point2DFacade marshal(java.awt.geom.Point2D) throws java.lang.Exception;
+    Code:
+       0: aload_1
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: new           #7                  // class org/audiveris/omr/util/Jaxb$Point2DFacade
+       9: dup
+      10: aload_1
+      11: invokespecial #9                  // Method org/audiveris/omr/util/Jaxb$Point2DFacade."<init>":(Ljava/awt/geom/Point2D;)V
+      14: areturn
+
+  public java.awt.geom.Point2D unmarshal(org.audiveris.omr.util.Jaxb$Point2DFacade) throws java.lang.Exception;
+    Code:
+       0: aload_1
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: aload_1
+       7: invokevirtual #12                 // Method org/audiveris/omr/util/Jaxb$Point2DFacade.getPoint:()Ljava/awt/geom/Point2D;
+      10: areturn
+
+  public java.lang.Object marshal(java.lang.Object) throws java.lang.Exception;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #16                 // class java/awt/geom/Point2D
+       5: invokevirtual #18                 // Method marshal:(Ljava/awt/geom/Point2D;)Lorg/audiveris/omr/util/Jaxb$Point2DFacade;
+       8: areturn
+
+  public java.lang.Object unmarshal(java.lang.Object) throws java.lang.Exception;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #7                  // class org/audiveris/omr/util/Jaxb$Point2DFacade
+       5: invokevirtual #24                 // Method unmarshal:(Lorg/audiveris/omr/util/Jaxb$Point2DFacade;)Ljava/awt/geom/Point2D;
+       8: areturn
+}

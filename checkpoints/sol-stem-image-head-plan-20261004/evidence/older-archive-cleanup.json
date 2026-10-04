@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "verified_removed_duplicates": [
+    {
+      "removed_only_clean_verified_old_archive_clone": "/workspace/work/grid-second-pass/sol-grid-second-pass-20261004-remote-clone",
+      "commit": "8c0006fc1de5714a3793d54467f5ae8d403a5055",
+      "tree": "6fa3a2ea6b888910fa9649ef2e96e61354aede14",
+      "all_files_SHA256": 826
+    },
+    {
+      "removed_only_clean_verified_old_archive_clone": "/workspace/work/head-stem-connection/sol-head-stem-connection-20261004-remote-clone",
+      "commit": "0d0f93ede09d4154e406016178cf5c2e0becb77f",
+      "tree": "281bd16ef60b30587988496a7e8af1ead54df0d8",
+      "all_files_SHA256": 719
+    },
+    {
+      "removed_only_clean_verified_old_archive_clone": "/workspace/work/head-stem-stump/sol-head-stem-stump-20261004-remote-clone",
+      "commit": "63ff4b3bc86c4e365cee42866d854e754b7fdad2",
+      "tree": "cf9ed0582349a2987e8b0ba43ae826607e92487b",
+      "all_files_SHA256": 777
+    }
+  ],
+  "retained_latest_fresh_source_and_archive_recovery": "a2baa3e749b1d481242c8038de80b1ccda10e9b4",
+  "primary_originals_bundles_logs_retained": true
+}

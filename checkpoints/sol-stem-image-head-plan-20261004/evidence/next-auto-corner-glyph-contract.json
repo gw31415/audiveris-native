@@ -1,0 +1,19 @@
+{
+  "original_methods": "HeadLinker.CLinker retrieveStump/getSeedArea/getStumpArea/buildStump/getSubSection/standsOut; declared corner stump tests do not implement these automatic selections",
+  "next_image_connection": "existing native HEADS -> original XML-restored reference -> native stem-seed/vertical-section candidates -> automatic selected corner stump; preserve all page registry entries and rejected registered fallback glyphs",
+  "dependency_facts": {
+    "seed_area_dy_fraction": 0.25,
+    "stump_area_dy_fraction": 0.2,
+    "stump_area_dx_in_double_fraction": 0.1,
+    "stump_area_dx_out_double_fraction": 0.1,
+    "minimum_stump_outward_length_fraction": 0.5,
+    "seed_sort": "center-line ptSegDistSq; Math.round signed X-gap; inclusive in/out maxima; standsOut uses Math.rint Y",
+    "fallback": "original section Area/rectangle intersection; stable abs(areaCenter.x-ref.x); first containing truncated reference; width cap by main stem thickness; subsection fallback then canonical registration before standsOut gate",
+    "section_contains": "BasicSection Polygon.contains, not bounding rectangle alone"
+  },
+  "completion_claimed": false,
+  "page_cache_SIG_complete": false,
+  "epilog_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

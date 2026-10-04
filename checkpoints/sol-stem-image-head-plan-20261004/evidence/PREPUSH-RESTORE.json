@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "06916bb9cec9becc99aa6bf866fd2efb51775339",
+  "source_tree": "05741590d50f67ffa9efc75468f3ead53212ccc5",
+  "all_fresh_restored_sha256_verified": 6617,
+  "source_clean": true,
+  "source": "/workspace/work/stem-image-head-plan/sol-stem-image-head-plan-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/stem-image-head-plan/sol-stem-image-head-plan-20261004-prepush/source-git"
+}
