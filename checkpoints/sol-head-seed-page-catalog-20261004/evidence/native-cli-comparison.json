@@ -1,0 +1,147 @@
+{
+  "status": "passed",
+  "original_configured_seed_page_cases": 13,
+  "seed_pitch_pairs": 14764,
+  "veto_proposals_across_controls": 4970,
+  "cue_staff_point_sizes": [
+    32,
+    51,
+    51,
+    51,
+    51,
+    51
+  ],
+  "source_backed_cue_reproduced": true,
+  "legacy_CLI_catalog_unchanged": true,
+  "whole_HEADS_catalog_propagation_complete": false,
+  "actual_other_font_or_special_staff_page_parity": false,
+  "heads_complete": false,
+  "preserved_seed_quarter_staff_font_and_laura": {
+    "status": "passed",
+    "original_seed_windows": 2016,
+    "independently_reproduced_existing_images": 336,
+    "matched_stem_shapes": 7,
+    "original_central_vetoes": 5760,
+    "original_noncentral_vetoes": 12726,
+    "strict_shape_order_and_legacy_Bravura51_API_preserved": true,
+    "page_catalog_propagation_complete": false,
+    "heads_complete": false,
+    "preserved_quarter_staff_font_and_laura": {
+      "status": "passed",
+      "exact_matched_shape_templates": 108,
+      "new_quarter_images": 240,
+      "new_range_comparisons": 480,
+      "new_physical_glyph_comparisons": 240,
+      "new_same_overlap_SIG_controls": 240,
+      "shared_SIG_registration_and_removal_order": true,
+      "full_page_special_staff_parity": false,
+      "heads_complete": false,
+      "preserved_staff_catalog_font_kernel_and_laura": {
+        "status": "passed",
+        "staff_plan_controls": 384,
+        "outside_drum_pitch_controls": 75,
+        "tablature_skip_controls": 2,
+        "main_scale_drives_offsets": true,
+        "custom_drum_overrides_covered": false,
+        "special_staff_full_page_parity": false,
+        "heads_complete": false,
+        "preserved_font_kernel_and_laura": {
+          "status": "passed",
+          "exact_templates": 48,
+          "original_rendered_images": 192,
+          "range_comparisons": 384,
+          "physical_glyph_comparisons": 192,
+          "fonts": [
+            "Bravura",
+            "Leland",
+            "FinaleJazz"
+          ],
+          "point_sizes": [
+            32,
+            40,
+            51,
+            64
+          ],
+          "heads_complete": false,
+          "page_font_or_special_staff_parity_claimed": false,
+          "preserved_staff_dependency": {
+            "status": "passed",
+            "staff_dependency_controls": 8,
+            "live_physical_scanners": 118,
+            "heads_complete": false,
+            "shared_phase_refresh_guards_verified": true,
+            "certified_HEADS_substage": "HEADS.REGISTRATION_AND_EPILOG",
+            "preserved_registration": {
+              "status": "passed",
+              "heads": 352,
+              "duplicate_removals": 22,
+              "HEADS_exclusions": 513,
+              "staff_note_counts": [
+                44,
+                58,
+                48,
+                56,
+                112,
+                34
+              ],
+              "small_beams_contextualized": 3,
+              "purge_controls": 40,
+              "beam_context_controls": 7,
+              "small_beam_controls": 9,
+              "seed_tally_controls": 4,
+              "heads_complete": false,
+              "prior_shared_ids_and_edges_preserved": true,
+              "preserved_glyphs": {
+                "status": "passed",
+                "range_scanners": 118,
+                "seed_glyphs": 358,
+                "seed_conflicts": 438,
+                "range_glyphs": 16,
+                "foreground_controls": 16,
+                "heads_complete": false,
+                "preserved_filter": {
+                  "status": "passed",
+                  "range_scanners": 118,
+                  "aggregates": 454,
+                  "seed_conflict_controls": 21,
+                  "live_seed_conflicts_complete": false,
+                  "heads_complete": false,
+                  "preserved_catalog": {
+                    "status": "passed",
+                    "range_scanners": 118,
+                    "accepted_candidates": 2224,
+                    "weak_stemless_rejected": 407,
+                    "raw_candidates": 2631,
+                    "accepted_stemless": {
+                      "WHOLE_NOTE": 3
+                    },
+                    "preserved_prefix": {
+                      "status": "passed",
+                      "raw_seed_proposals": 418,
+                      "veto_seed_proposals": 358,
+                      "head_spot_system_references": 402,
+                      "range_scanners": 118,
+                      "visited_abscissae": 47790,
+                      "skipped_windows": 869,
+                      "black_void_prefix_proposals": 2221,
+                      "heads_complete": false,
+                      "oracle_sha256": "97cb02188277f125406f114d1b1c6d36877658ddbabf27ed40543f0dd498c9d4",
+                      "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                    },
+                    "heads_complete": false,
+                    "oracle_sha256": "963dbf9a4dfa55e1039aaed86ab9b0e9e181b3336dbf59b3fdd1b21ef0940591",
+                    "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                  },
+                  "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+                },
+                "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+              },
+              "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+            },
+            "report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9"
+          }
+        }
+      }
+    }
+  }
+}

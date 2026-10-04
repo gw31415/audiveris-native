@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "all_original_controlled_cue_result_fields_reproduced": true,
+  "source_backed_observer_sha256": "3826dc8607d8a44287cac3584a1964356d095a27159c0e89e5e4a45b3cc7e721",
+  "result_sha256": "b760d724966671a63127d842b814997965e300481d9bdd503d23dcef961fe226",
+  "full_other_font_page_parity": false
+}
