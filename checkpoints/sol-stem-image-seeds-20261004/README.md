@@ -11,3 +11,5 @@ Restore: `python checkpoints/sol-stem-image-seeds-20261004/RESTORE.py --reposito
 See MANIFEST.json for complete hashes, validation and remaining work.
 
 Separate remote clone/restoration verified source commit/tree and all 6630 source hashes, plus all 1524 archival files and archival tree. Saved remote commit `96b8f9e0052b2a19d61dff34048f5f5394c12e89`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
+
+Separate remote clone/restoration verified source commit/tree and all 6630 source hashes, plus all 1525 archival files and archival tree. Saved remote commit `08586517fc31fccffe34f671796c1ef67077b4e4`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
