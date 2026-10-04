@@ -9,3 +9,5 @@ Declared exact ordinary oval family/stored-point catalog now propagates through 
 Restore: `python checkpoints/sol-head-page-catalog-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 5411 source hashes, plus all 614 archival files and archival tree. Saved remote commit `497da36cf04f2ab2a214b32d81fc2dc5d79a20e5`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
