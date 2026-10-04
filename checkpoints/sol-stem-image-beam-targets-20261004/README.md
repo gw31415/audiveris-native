@@ -9,3 +9,5 @@ Actual image CLI --beam-targets derives head-origin sibling beam MEMBER discover
 Restore: `python checkpoints/sol-stem-image-beam-targets-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6682 source hashes, plus all 1661 archival files and archival tree. Saved remote commit `394b20b2f8cfe8c959474339c47c0fd8cc3a450f`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
