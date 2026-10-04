@@ -1,0 +1,158 @@
+Compiled from "Sections.java"
+public class org.audiveris.omr.lag.Sections {
+  private static final org.slf4j.Logger logger;
+
+  private org.audiveris.omr.lag.Sections();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static java.util.Comparator<org.audiveris.omr.lag.Section> byReverseLength(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: invokedynamic #7,  0              // InvokeDynamic #0:compare:(Lorg/audiveris/omr/run/Orientation;)Ljava/util/Comparator;
+       6: areturn
+
+  public static java.lang.String ids(java.util.Collection<? extends org.audiveris.omr.lag.Section>);
+    Code:
+       0: ldc           #11                 // String sections
+       2: aload_0
+       3: invokestatic  #13                 // Method org/audiveris/omr/util/Entities.ids:(Ljava/lang/String;Ljava/util/Collection;)Ljava/lang/String;
+       6: areturn
+
+  public static java.lang.String ids(java.lang.String, java.util.Collection<? extends org.audiveris.omr.lag.Section>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #13                 // Method org/audiveris/omr/util/Entities.ids:(Ljava/lang/String;Ljava/util/Collection;)Ljava/lang/String;
+       5: areturn
+
+  public static int[] indexByPosition(int, java.util.List<? extends org.audiveris.omr.lag.Section>);
+    Code:
+       0: iload_0
+       1: iconst_1
+       2: iadd
+       3: newarray       int
+       5: astore_2
+       6: aload_2
+       7: iconst_0
+       8: aload_2
+       9: arraylength
+      10: iconst_m1
+      11: invokestatic  #19                 // Method java/util/Arrays.fill:([IIII)V
+      14: iconst_m1
+      15: istore_3
+      16: iconst_0
+      17: istore        4
+      19: aload_1
+      20: invokeinterface #25,  1           // InterfaceMethod java/util/List.size:()I
+      25: istore        5
+      27: iload         4
+      29: iload         5
+      31: if_icmpge     77
+      34: aload_1
+      35: iload         4
+      37: invokeinterface #31,  2           // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      42: checkcast     #35                 // class org/audiveris/omr/lag/Section
+      45: astore        6
+      47: aload         6
+      49: invokeinterface #37,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getFirstPos:()I
+      54: istore        7
+      56: iload         7
+      58: iload_3
+      59: if_icmple     71
+      62: aload_2
+      63: iload         7
+      65: iload         4
+      67: iastore
+      68: iload         7
+      70: istore_3
+      71: iinc          4, 1
+      74: goto          27
+      77: aload_2
+      78: aload_2
+      79: arraylength
+      80: iconst_1
+      81: isub
+      82: aload_1
+      83: invokeinterface #25,  1           // InterfaceMethod java/util/List.size:()I
+      88: iastore
+      89: aload_2
+      90: areturn
+
+  public static java.util.Set<org.audiveris.omr.lag.Section> intersectedSections(java.awt.Rectangle, java.util.Collection<? extends org.audiveris.omr.lag.Section>);
+    Code:
+       0: new           #40                 // class java/util/LinkedHashSet
+       3: dup
+       4: invokespecial #42                 // Method java/util/LinkedHashSet."<init>":()V
+       7: astore_2
+       8: aload_1
+       9: invokeinterface #43,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      14: astore_3
+      15: aload_3
+      16: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          58
+      24: aload_3
+      25: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #35                 // class org/audiveris/omr/lag/Section
+      33: astore        4
+      35: aload         4
+      37: aload_0
+      38: invokeinterface #59,  2           // InterfaceMethod org/audiveris/omr/lag/Section.intersects:(Ljava/awt/Rectangle;)Z
+      43: ifeq          55
+      46: aload_2
+      47: aload         4
+      49: invokeinterface #63,  2           // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      54: pop
+      55: goto          15
+      58: aload_2
+      59: areturn
+
+  public static java.util.Set<org.audiveris.omr.lag.Section> intersectedSections(java.awt.Shape, java.util.Collection<? extends org.audiveris.omr.lag.Section>);
+    Code:
+       0: new           #40                 // class java/util/LinkedHashSet
+       3: dup
+       4: invokespecial #42                 // Method java/util/LinkedHashSet."<init>":()V
+       7: astore_2
+       8: aload_1
+       9: invokeinterface #43,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      14: astore_3
+      15: aload_3
+      16: invokeinterface #49,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          58
+      24: aload_3
+      25: invokeinterface #55,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #35                 // class org/audiveris/omr/lag/Section
+      33: astore        4
+      35: aload         4
+      37: aload_0
+      38: invokeinterface #69,  2           // InterfaceMethod org/audiveris/omr/lag/Section.intersects:(Ljava/awt/Shape;)Z
+      43: ifeq          55
+      46: aload_2
+      47: aload         4
+      49: invokeinterface #63,  2           // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+      54: pop
+      55: goto          15
+      58: aload_2
+      59: areturn
+
+  private static int lambda$byReverseLength$0(org.audiveris.omr.run.Orientation, org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_2
+       1: aload_0
+       2: invokeinterface #72,  2           // InterfaceMethod org/audiveris/omr/lag/Section.getLength:(Lorg/audiveris/omr/run/Orientation;)I
+       7: aload_1
+       8: aload_0
+       9: invokeinterface #72,  2           // InterfaceMethod org/audiveris/omr/lag/Section.getLength:(Lorg/audiveris/omr/run/Orientation;)I
+      14: isub
+      15: invokestatic  #76                 // Method java/lang/Integer.signum:(I)I
+      18: ireturn
+
+  static {};
+    Code:
+       0: ldc           #82                 // class org/audiveris/omr/lag/Sections
+       2: invokestatic  #84                 // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+       5: putstatic     #90                 // Field logger:Lorg/slf4j/Logger;
+       8: return
+}

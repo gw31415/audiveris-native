@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "latest_external_recovery_retained": "562a6169ee74fc638195df26134702942212760a",
+  "primary_sources_all_bundles_evidence_toolchain_retained": true,
+  "removed": [
+    {
+      "removed_only_clean_old_restored_duplicate": "/workspace/work/head-range-catalog/prepush-restore",
+      "source_commit": "3f015272fde1c071351296fd80c25ad8c1bc4448",
+      "source_tree": "cae6a56c2fd3526bd56819fb11b54386ca3cf4e2",
+      "all_source_sha256_verified": 4826,
+      "pinned_checkpoint_retained": "sol-head-range-catalog-20261003"
+    },
+    {
+      "removed_only_clean_old_restored_duplicate": "/workspace/work/head-range/prepush-restore",
+      "source_commit": "ab718d19748c58411f04ce9d3687d8189a416ec0",
+      "source_tree": "94b7990768a3bb0031eb9243e45b7583f7d0374c",
+      "all_source_sha256_verified": 4804,
+      "pinned_checkpoint_retained": "sol-head-range-prefix-20261003"
+    }
+  ]
+}

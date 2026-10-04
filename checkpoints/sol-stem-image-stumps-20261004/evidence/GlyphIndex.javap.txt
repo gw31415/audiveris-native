@@ -1,0 +1,525 @@
+Compiled from "GlyphIndex.java"
+public class org.audiveris.omr.glyph.GlyphIndex implements org.audiveris.omr.util.EntityIndex<org.audiveris.omr.glyph.Glyph> {
+  private static final org.audiveris.omr.glyph.GlyphIndex$Constants constants;
+
+  private static final org.slf4j.Logger logger;
+
+  private final org.audiveris.omr.glyph.GlyphIndex$WeakGlyphIndex weakIndex;
+
+  private final java.util.concurrent.ConcurrentHashMap<org.audiveris.omr.glyph.WeakGlyph, org.audiveris.omr.glyph.WeakGlyph> originals;
+
+  private org.audiveris.omr.glyph.ui.GlyphService glyphService;
+
+  public org.audiveris.omr.glyph.GlyphIndex();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex
+       8: dup
+       9: invokespecial #9                  // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex."<init>":()V
+      12: putfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+      15: aload_0
+      16: new           #16                 // class java/util/concurrent/ConcurrentHashMap
+      19: dup
+      20: invokespecial #18                 // Method java/util/concurrent/ConcurrentHashMap."<init>":()V
+      23: putfield      #19                 // Field originals:Ljava/util/concurrent/ConcurrentHashMap;
+      26: return
+
+  public java.util.List<org.audiveris.omr.glyph.Glyph> getContainedEntities(java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: invokevirtual #23                 // Method iterator:()Ljava/util/Iterator;
+       4: aload_1
+       5: invokestatic  #27                 // Method org/audiveris/omr/util/Entities.containedEntities:(Ljava/util/Iterator;Ljava/awt/Rectangle;)Ljava/util/List;
+       8: areturn
+
+  public java.util.List<org.audiveris.omr.glyph.Glyph> getContainingEntities(java.awt.Point);
+    Code:
+       0: aload_0
+       1: invokevirtual #23                 // Method iterator:()Ljava/util/Iterator;
+       4: aload_1
+       5: invokestatic  #33                 // Method org/audiveris/omr/util/Entities.containingEntities:(Ljava/util/Iterator;Ljava/awt/Point;)Ljava/util/List;
+       8: areturn
+
+  public java.util.ArrayList<org.audiveris.omr.glyph.Glyph> getEntities();
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: invokevirtual #37                 // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.getEntities:()Ljava/util/Collection;
+       7: astore_1
+       8: new           #41                 // class java/util/ArrayList
+      11: dup
+      12: invokespecial #43                 // Method java/util/ArrayList."<init>":()V
+      15: astore_2
+      16: aload_1
+      17: invokeinterface #44,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      22: astore_3
+      23: aload_3
+      24: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      29: ifeq          68
+      32: aload_3
+      33: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      38: checkcast     #57                 // class org/audiveris/omr/glyph/WeakGlyph
+      41: astore        4
+      43: aload         4
+      45: invokevirtual #59                 // Method org/audiveris/omr/glyph/WeakGlyph.get:()Ljava/lang/Object;
+      48: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      51: astore        5
+      53: aload         5
+      55: ifnull        65
+      58: aload_2
+      59: aload         5
+      61: invokevirtual #64                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      64: pop
+      65: goto          23
+      68: aload_2
+      69: areturn
+
+  public org.audiveris.omr.glyph.Glyph getEntity(int);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: iload_1
+       5: invokevirtual #68                 // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.getEntity:(I)Lorg/audiveris/omr/util/Entity;
+       8: checkcast     #57                 // class org/audiveris/omr/glyph/WeakGlyph
+      11: astore_2
+      12: aload_2
+      13: ifnull        24
+      16: aload_2
+      17: invokevirtual #59                 // Method org/audiveris/omr/glyph/WeakGlyph.get:()Ljava/lang/Object;
+      20: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      23: areturn
+      24: aconst_null
+      25: areturn
+
+  public org.audiveris.omr.glyph.ui.GlyphService getEntityService();
+    Code:
+       0: aload_0
+       1: getfield      #72                 // Field glyphService:Lorg/audiveris/omr/glyph/ui/GlyphService;
+       4: areturn
+
+  public int getIdAfter(int);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: iload_1
+       5: invokevirtual #76                 // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.getIdAfter:(I)I
+       8: ireturn
+
+  public int getIdBefore(int);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: iload_1
+       5: invokevirtual #80                 // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.getIdBefore:(I)I
+       8: ireturn
+
+  public java.util.List<org.audiveris.omr.glyph.Glyph> getIntersectedEntities(java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: invokevirtual #23                 // Method iterator:()Ljava/util/Iterator;
+       4: aload_1
+       5: invokestatic  #83                 // Method org/audiveris/omr/util/Entities.intersectedEntities:(Ljava/util/Iterator;Ljava/awt/Rectangle;)Ljava/util/List;
+       8: areturn
+
+  public int getLastId();
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: invokevirtual #86                 // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.getLastId:()I
+       7: ireturn
+
+  public java.lang.String getName();
+    Code:
+       0: ldc           #90                 // String glyphIndex
+       2: areturn
+
+  public org.audiveris.omr.glyph.Glyph getSelectedGlyph();
+    Code:
+       0: aload_0
+       1: invokevirtual #92                 // Method getSelectedGlyphList:()Ljava/util/List;
+       4: astore_1
+       5: aload_1
+       6: ifnull        18
+       9: aload_1
+      10: invokeinterface #96,  1           // InterfaceMethod java/util/List.isEmpty:()Z
+      15: ifeq          20
+      18: aconst_null
+      19: areturn
+      20: aload_1
+      21: aload_1
+      22: invokeinterface #101,  1          // InterfaceMethod java/util/List.size:()I
+      27: iconst_1
+      28: isub
+      29: invokeinterface #104,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      34: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      37: areturn
+
+  public java.util.List<org.audiveris.omr.glyph.Glyph> getSelectedGlyphList();
+    Code:
+       0: aload_0
+       1: getfield      #72                 // Field glyphService:Lorg/audiveris/omr/glyph/ui/GlyphService;
+       4: ldc           #107                // class org/audiveris/omr/ui/selection/EntityListEvent
+       6: invokevirtual #109                // Method org/audiveris/omr/glyph/ui/GlyphService.getSelection:(Ljava/lang/Class;)Ljava/lang/Object;
+       9: checkcast     #97                 // class java/util/List
+      12: astore_1
+      13: aload_1
+      14: ifnull        19
+      17: aload_1
+      18: areturn
+      19: invokestatic  #115                // Method java/util/Collections.emptyList:()Ljava/util/List;
+      22: areturn
+
+  public final void initTransients(org.audiveris.omr.sheet.Sheet);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: aload_1
+       5: invokevirtual #120                // Method org/audiveris/omr/sheet/Sheet.getPersistentIdGenerator:()Ljava/util/concurrent/atomic/AtomicInteger;
+       8: invokevirtual #126                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.setIdGenerator:(Ljava/util/concurrent/atomic/AtomicInteger;)V
+      11: aload_1
+      12: invokevirtual #130                // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+      15: invokevirtual #134                // Method org/audiveris/omr/sheet/SheetStub.isValid:()Z
+      18: ifne          25
+      21: aload_0
+      22: invokevirtual #139                // Method reset:()V
+      25: getstatic     #142                // Field constants:Lorg/audiveris/omr/glyph/GlyphIndex$Constants;
+      28: getfield      #146                // Field org/audiveris/omr/glyph/GlyphIndex$Constants.vipGlyphs:Lorg/audiveris/omr/constant/Constant$String;
+      31: invokevirtual #152                // Method org/audiveris/omr/constant/Constant$String.getValue:()Ljava/lang/Object;
+      34: checkcast     #157                // class java/lang/String
+      37: astore_2
+      38: aload_2
+      39: invokevirtual #159                // Method java/lang/String.isEmpty:()Z
+      42: ifne          64
+      45: getstatic     #160                // Field logger:Lorg/slf4j/Logger;
+      48: ldc           #164                // String VIP glyphs: {}
+      50: aload_2
+      51: invokeinterface #166,  3          // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;Ljava/lang/Object;)V
+      56: aload_0
+      57: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+      60: aload_2
+      61: invokevirtual #172                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.setVipIds:(Ljava/lang/String;)V
+      64: aload_1
+      65: invokevirtual #130                // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+      68: invokevirtual #134                // Method org/audiveris/omr/sheet/SheetStub.isValid:()Z
+      71: ifeq          131
+      74: aload_0
+      75: invokevirtual #23                 // Method iterator:()Ljava/util/Iterator;
+      78: astore_3
+      79: aload_3
+      80: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      85: ifeq          131
+      88: aload_3
+      89: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      94: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      97: astore        4
+      99: aload         4
+     101: ifnull        128
+     104: aload         4
+     106: aload_0
+     107: invokevirtual #176                // Method org/audiveris/omr/glyph/Glyph.setIndex:(Lorg/audiveris/omr/glyph/GlyphIndex;)V
+     110: aload_0
+     111: aload         4
+     113: invokevirtual #180                // Method org/audiveris/omr/glyph/Glyph.getId:()I
+     116: invokevirtual #183                // Method isVipId:(I)Z
+     119: ifeq          128
+     122: aload         4
+     124: iconst_1
+     125: invokevirtual #187                // Method org/audiveris/omr/glyph/Glyph.setVip:(Z)V
+     128: goto          79
+     131: getstatic     #191                // Field org/audiveris/omr/OMR.gui:Lorg/audiveris/omr/ui/OmrGui;
+     134: ifnull        155
+     137: aload_1
+     138: invokevirtual #197                // Method org/audiveris/omr/sheet/Sheet.getLocationService:()Lorg/audiveris/omr/ui/selection/SelectionService;
+     141: astore_3
+     142: aload_0
+     143: new           #110                // class org/audiveris/omr/glyph/ui/GlyphService
+     146: dup
+     147: aload_0
+     148: aload_3
+     149: invokespecial #201                // Method org/audiveris/omr/glyph/ui/GlyphService."<init>":(Lorg/audiveris/omr/util/EntityIndex;Lorg/audiveris/omr/ui/selection/SelectionService;)V
+     152: invokevirtual #204                // Method setEntityService:(Lorg/audiveris/omr/ui/selection/EntityService;)V
+     155: return
+
+  public void insert(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: new           #208                // class java/lang/RuntimeException
+       3: dup
+       4: ldc           #210                // String Method \'insert\' is not yet implemented
+       6: invokespecial #212                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+       9: athrow
+
+  public boolean isVipId(int);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: iload_1
+       5: invokevirtual #214                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.isVipId:(I)Z
+       8: ireturn
+
+  public java.util.Iterator<org.audiveris.omr.glyph.Glyph> iterator();
+    Code:
+       0: new           #215                // class org/audiveris/omr/glyph/GlyphIndex$SkippingIterator
+       3: dup
+       4: aload_0
+       5: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       8: invokevirtual #217                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.iterator:()Ljava/util/Iterator;
+      11: invokespecial #218                // Method org/audiveris/omr/glyph/GlyphIndex$SkippingIterator."<init>":(Ljava/util/Iterator;)V
+      14: areturn
+
+  private int privateRegister(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: aload_1
+       1: invokevirtual #180                // Method org/audiveris/omr/glyph/Glyph.getId:()I
+       4: istore_2
+       5: iload_2
+       6: ifne          32
+       9: new           #57                 // class org/audiveris/omr/glyph/WeakGlyph
+      12: dup
+      13: aload_1
+      14: invokespecial #221                // Method org/audiveris/omr/glyph/WeakGlyph."<init>":(Lorg/audiveris/omr/glyph/Glyph;)V
+      17: astore_3
+      18: aload_0
+      19: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+      22: aload_3
+      23: invokevirtual #224                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.register:(Lorg/audiveris/omr/util/Entity;)I
+      26: istore_2
+      27: aload_1
+      28: aload_0
+      29: invokevirtual #176                // Method org/audiveris/omr/glyph/Glyph.setIndex:(Lorg/audiveris/omr/glyph/GlyphIndex;)V
+      32: iload_2
+      33: ireturn
+
+  public void publish(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #228                // Field org/audiveris/omr/ui/selection/SelectionHint.ENTITY_INIT:Lorg/audiveris/omr/ui/selection/SelectionHint;
+       5: invokevirtual #234                // Method publish:(Lorg/audiveris/omr/glyph/Glyph;Lorg/audiveris/omr/ui/selection/SelectionHint;)V
+       8: return
+
+  public void publish(org.audiveris.omr.glyph.Glyph, org.audiveris.omr.ui.selection.SelectionHint);
+    Code:
+       0: aload_0
+       1: getfield      #72                 // Field glyphService:Lorg/audiveris/omr/glyph/ui/GlyphService;
+       4: ifnull        38
+       7: new           #107                // class org/audiveris/omr/ui/selection/EntityListEvent
+      10: dup
+      11: aload_0
+      12: aload_2
+      13: getstatic     #238                // Field org/audiveris/omr/ui/selection/MouseMovement.PRESSING:Lorg/audiveris/omr/ui/selection/MouseMovement;
+      16: iconst_1
+      17: anewarray     #62                 // class org/audiveris/omr/glyph/Glyph
+      20: dup
+      21: iconst_0
+      22: aload_1
+      23: aastore
+      24: invokespecial #244                // Method org/audiveris/omr/ui/selection/EntityListEvent."<init>":(Ljava/lang/Object;Lorg/audiveris/omr/ui/selection/SelectionHint;Lorg/audiveris/omr/ui/selection/MouseMovement;[Lorg/audiveris/omr/util/Entity;)V
+      27: astore_3
+      28: aload_0
+      29: aload_3
+      30: invokedynamic #247,  0            // InvokeDynamic #0:run:(Lorg/audiveris/omr/glyph/GlyphIndex;Lorg/audiveris/omr/ui/selection/EntityListEvent;)Ljava/lang/Runnable;
+      35: invokestatic  #251                // Method javax/swing/SwingUtilities.invokeLater:(Ljava/lang/Runnable;)V
+      38: return
+
+  public int register(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: new           #208                // class java/lang/RuntimeException
+       3: dup
+       4: ldc_w         #257                // String register() must not be called on GlyphIndex
+       7: invokespecial #212                // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+      10: athrow
+
+  public synchronized org.audiveris.omr.glyph.Glyph registerOriginal(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: new           #57                 // class org/audiveris/omr/glyph/WeakGlyph
+       3: dup
+       4: aload_1
+       5: invokespecial #221                // Method org/audiveris/omr/glyph/WeakGlyph."<init>":(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: astore_2
+       9: aload_0
+      10: getfield      #19                 // Field originals:Ljava/util/concurrent/ConcurrentHashMap;
+      13: aload_2
+      14: aload_2
+      15: invokevirtual #259                // Method java/util/concurrent/ConcurrentHashMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      18: checkcast     #57                 // class org/audiveris/omr/glyph/WeakGlyph
+      21: astore_3
+      22: aload_3
+      23: ifnull        36
+      26: aload_3
+      27: invokevirtual #59                 // Method org/audiveris/omr/glyph/WeakGlyph.get:()Ljava/lang/Object;
+      30: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      33: goto          37
+      36: aconst_null
+      37: astore        4
+      39: aload         4
+      41: ifnonnull     52
+      44: aload_0
+      45: aload_1
+      46: invokevirtual #263                // Method privateRegister:(Lorg/audiveris/omr/glyph/Glyph;)I
+      49: pop
+      50: aload_1
+      51: areturn
+      52: getstatic     #160                // Field logger:Lorg/slf4j/Logger;
+      55: ldc_w         #267                // String Reuse original {}
+      58: aload         4
+      60: invokeinterface #269,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+      65: aload_0
+      66: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+      69: aload_3
+      70: invokevirtual #272                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.insert:(Lorg/audiveris/omr/glyph/WeakGlyph;)V
+      73: aload         4
+      75: areturn
+
+  public org.audiveris.omr.glyph.Glyph remove(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: new           #57                 // class org/audiveris/omr/glyph/WeakGlyph
+       3: dup
+       4: aload_1
+       5: invokespecial #221                // Method org/audiveris/omr/glyph/WeakGlyph."<init>":(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: astore_2
+       9: aload_0
+      10: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+      13: aload_2
+      14: invokevirtual #276                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.remove:(Lorg/audiveris/omr/util/Entity;)Lorg/audiveris/omr/util/Entity;
+      17: checkcast     #57                 // class org/audiveris/omr/glyph/WeakGlyph
+      20: astore_3
+      21: aload_3
+      22: ifnonnull     27
+      25: aconst_null
+      26: areturn
+      27: aload_3
+      28: invokevirtual #59                 // Method org/audiveris/omr/glyph/WeakGlyph.get:()Ljava/lang/Object;
+      31: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      34: areturn
+
+  public void reset();
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: invokevirtual #280                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.reset:()V
+       7: aload_0
+       8: getfield      #19                 // Field originals:Ljava/util/concurrent/ConcurrentHashMap;
+      11: invokevirtual #281                // Method java/util/concurrent/ConcurrentHashMap.clear:()V
+      14: return
+
+  public void setEntities(java.util.Collection<org.audiveris.omr.glyph.Glyph>);
+    Code:
+       0: aload_1
+       1: ifnonnull     5
+       4: return
+       5: aload_1
+       6: invokeinterface #44,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      11: astore_2
+      12: aload_2
+      13: invokeinterface #47,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          65
+      21: aload_2
+      22: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+      30: astore_3
+      31: new           #57                 // class org/audiveris/omr/glyph/WeakGlyph
+      34: dup
+      35: aload_3
+      36: invokespecial #221                // Method org/audiveris/omr/glyph/WeakGlyph."<init>":(Lorg/audiveris/omr/glyph/Glyph;)V
+      39: astore        4
+      41: aload_0
+      42: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+      45: aload         4
+      47: invokevirtual #272                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.insert:(Lorg/audiveris/omr/glyph/WeakGlyph;)V
+      50: aload_0
+      51: getfield      #19                 // Field originals:Ljava/util/concurrent/ConcurrentHashMap;
+      54: aload         4
+      56: aload         4
+      58: invokevirtual #259                // Method java/util/concurrent/ConcurrentHashMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      61: pop
+      62: goto          12
+      65: return
+
+  public void setEntityService(org.audiveris.omr.ui.selection.EntityService<org.audiveris.omr.glyph.Glyph>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #110                // class org/audiveris/omr/glyph/ui/GlyphService
+       5: putfield      #72                 // Field glyphService:Lorg/audiveris/omr/glyph/ui/GlyphService;
+       8: aload_1
+       9: invokevirtual #284                // Method org/audiveris/omr/ui/selection/EntityService.connect:()V
+      12: return
+
+  public void setLastId(int);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field weakIndex:Lorg/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex;
+       4: iload_1
+       5: invokevirtual #289                // Method org/audiveris/omr/glyph/GlyphIndex$WeakGlyphIndex.setLastId:(I)V
+       8: return
+
+  public java.lang.String toString();
+    Code:
+       0: aload_0
+       1: invokestatic  #293                // Method org/audiveris/omr/util/ClassUtil.nameOf:(Ljava/lang/Object;)Ljava/lang/String;
+       4: areturn
+
+  public org.audiveris.omr.util.Entity remove(org.audiveris.omr.util.Entity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+       5: invokevirtual #299                // Method remove:(Lorg/audiveris/omr/glyph/Glyph;)Lorg/audiveris/omr/glyph/Glyph;
+       8: areturn
+
+  public int register(org.audiveris.omr.util.Entity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+       5: invokevirtual #302                // Method register:(Lorg/audiveris/omr/glyph/Glyph;)I
+       8: ireturn
+
+  public void insert(org.audiveris.omr.util.Entity);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #62                 // class org/audiveris/omr/glyph/Glyph
+       5: invokevirtual #304                // Method insert:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public org.audiveris.omr.ui.selection.EntityService getEntityService();
+    Code:
+       0: aload_0
+       1: invokevirtual #306                // Method getEntityService:()Lorg/audiveris/omr/glyph/ui/GlyphService;
+       4: areturn
+
+  public org.audiveris.omr.util.Entity getEntity(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokevirtual #310                // Method getEntity:(I)Lorg/audiveris/omr/glyph/Glyph;
+       5: areturn
+
+  public java.util.Collection getEntities();
+    Code:
+       0: aload_0
+       1: invokevirtual #313                // Method getEntities:()Ljava/util/ArrayList;
+       4: areturn
+
+  private void lambda$publish$0(org.audiveris.omr.ui.selection.EntityListEvent);
+    Code:
+       0: aload_0
+       1: getfield      #72                 // Field glyphService:Lorg/audiveris/omr/glyph/ui/GlyphService;
+       4: aload_1
+       5: invokevirtual #316                // Method org/audiveris/omr/glyph/ui/GlyphService.publish:(Ljava/lang/Object;)V
+       8: return
+
+  static {};
+    Code:
+       0: new           #147                // class org/audiveris/omr/glyph/GlyphIndex$Constants
+       3: dup
+       4: invokespecial #319                // Method org/audiveris/omr/glyph/GlyphIndex$Constants."<init>":()V
+       7: putstatic     #142                // Field constants:Lorg/audiveris/omr/glyph/GlyphIndex$Constants;
+      10: ldc           #11                 // class org/audiveris/omr/glyph/GlyphIndex
+      12: invokestatic  #320                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+      15: putstatic     #160                // Field logger:Lorg/slf4j/Logger;
+      18: return
+}
