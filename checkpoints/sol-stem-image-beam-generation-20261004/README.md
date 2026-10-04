@@ -9,3 +9,5 @@ Actual native image --beam-generation builds18beam catalogs from native seeds/be
 Restore: `python checkpoints/sol-stem-image-beam-generation-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6695 source hashes, plus all 1690 archival files and archival tree. Saved remote commit `ee7dab36fda488b7fd89dcb70a581c3307166d65`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
