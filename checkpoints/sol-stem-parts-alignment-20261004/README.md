@@ -9,3 +9,5 @@ Selected original StemBuilder.filterUnaligned candidate-part kernel:1500 conditi
 Restore: `python checkpoints/sol-stem-parts-alignment-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6389 source hashes, plus all 1055 archival files and archival tree. Saved remote commit `b10f0d8bb2edbc2cd4e727bd82f36940acbe9e55`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
