@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "removed_only_previous_verified_fresh_recovery_duplicates": [
+    "/workspace/work/stem-image-beam-generation/sol-stem-image-beam-generation-20261004-remote-clone",
+    "/workspace/work/stem-image-beam-generation/sol-stem-image-beam-generation-20261004-remote-restore"
+  ],
+  "previous_source_commit": "20fd12cf2457379c1af95a2135c2cf31d8282e80",
+  "previous_source_tree": "cb5831a38800a50480e6f10cf1c7c2b2e9aa29a4",
+  "previous_all_source_sha256_verified": 6695,
+  "previous_archive_commit": "5d03f8292c91411e5c3f12a21dca5a169813556c",
+  "previous_archive_tree": "f83258cacbf6ac381557df83cdf2e8498dddf44d",
+  "previous_all_archive_sha256_verified": 1692,
+  "latest_retained_fresh_remote_verified_main": "60765a9f012e25ea2b2edfa3c8996bfeaf8962e7",
+  "latest_retained_source_commit": "7f0c6288d0978e02296d5e5be6d49f2686c7c332",
+  "latest_retained_all_source_sha256_verified": 6708,
+  "primary_sources_archive_all_checkpoint_bundles_and_evidence_retained": true,
+  "runtime_toolchain_and_build_artifacts_unchanged": true
+}
