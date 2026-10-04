@@ -9,3 +9,5 @@ Actual native stem-parts-lookup REQUEST.json REPORT.json command evaluates bound
 Restore: `python checkpoints/sol-stem-parts-cli-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6423 source hashes, plus all 1133 archival files and archival tree. Saved remote commit `038e62899348eed59821bd61167d8a6c06574fdd`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
