@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "newer_external_recovery": "d6c5dce28c28c26113f486910a79980016136efb",
+  "removed": [
+    {
+      "path": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-remote-clone",
+      "commit": "a006eb4ff5d431ff0da0a07d59ad298c595b0289",
+      "tree": "ad40f7f8172dc84f9cc71e718bc085bc8e586a01",
+      "all_SHA256_verified": 803,
+      "clean": true,
+      "older_archive_clone_only": true
+    },
+    {
+      "path": "/workspace/work/head-stem-support/sol-head-stem-support-20261004-remote-clone",
+      "commit": "248b3cd5064fd1cccb30f2db9751aba1f69e7fe5",
+      "tree": "ba248d63c3b0f816c66591ce5893bcc851b84a02",
+      "all_SHA256_verified": 753,
+      "clean": true,
+      "older_archive_clone_only": true
+    }
+  ],
+  "primary_latest_restore_originals_source_bundles_and_logs_retained": true
+}

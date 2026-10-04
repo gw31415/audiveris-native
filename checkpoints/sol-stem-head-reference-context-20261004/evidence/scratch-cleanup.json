@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "removed_verified_older_clone_and_restore": [
+    "/workspace/work/stem-head-targets/sol-stem-head-targets-20261004-remote-clone",
+    "/workspace/work/stem-head-targets/sol-stem-head-targets-20261004-remote-restore"
+  ],
+  "all_old_source_SHA256": 6570,
+  "all_old_archive_SHA256": 1399,
+  "source_tree": "76a1967ae5eb18a1c01bf3e77ea670ae3e7c8d79",
+  "archive_tree": "40ecb3f591a7d06e0b2c25e2ffb4afada919ae9d",
+  "newer_external_recovery": "d6c5dce28c28c26113f486910a79980016136efb",
+  "latest_restore_primary_originals_logs_bundles_retained": true
+}
