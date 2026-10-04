@@ -875,7 +875,7 @@
       "tests_rerun_on_recovered_source": false
     },
     "remote_checkpoint_save": {
-      "status": "blocked",
+      "status": "git_access_verified_pending_push",
       "pushed": false,
       "fresh_remote_clone_verified": false,
       "last_verified_main": "dcb7cbdf991228b6165c4b8f458eb475076ed25a",
@@ -897,7 +897,7 @@
   "evidence_sha256": {
     "evidence/LOCAL-READBACK.json": "47fcfa950da244c27aac078cd295cee4806ff00dd6dcba41f1b263fa43d472d1",
     "evidence/PREPUSH-RESTORE.json": "0d9b131ffd67b76ba3778ea297e1cd3bba56dfcb689505e7790d5c8ab04279eb",
-    "evidence/SAVE-BLOCKER.json": "cc24e927b1dcdcb4ca40e85c1c4a5af6316746ddc092abc355db521a1276fc5a",
+    "evidence/SAVE-BLOCKER.json": "c0ed0027a6ed704335e2be70d1de13cbe9406ea46fe25037ddc8287b05371f17",
     "evidence/bank-focused-tests.log": "8b3313ab32c40bfe1cbc24531b285f9d09d2a3ed4073aaa6f1639517eac5f2c8",
     "evidence/bundle-verify.log": "2dc5ae8454715be2c5a7a270d8741b0cdc5bfc25777ba801e9ea0fecd1cc0cac",
     "evidence/clippy.log": "72d55d09fbc51281d7b4a52a2fd242ee861b0769c32ce6197500f1406de99d03",

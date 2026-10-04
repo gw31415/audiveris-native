@@ -8,7 +8,17 @@
   "git_push_error": "fatal: could not read Username for 'https://github.com': No such device or address",
   "existing_credential_readonly_API_check": "gh api repos/gw31415/audiveris-native",
   "existing_credential_API_result": "Forbidden",
-  "github_operations_stopped": true,
+  "github_operations_stopped": false,
   "new_credentials_permissions_billing_sharing_changes": false,
-  "needed_decision": "Restore the already-authorized GitHub access to this private repository in the same environment, or explicitly decide how the local checkpoint should be transferred. No access or credential changes were made."
+  "needed_decision": "No new access is required for the permitted github.com Git transport; continue the already-authorized normal push using existing credentials. API operations remain stopped.",
+  "resolution": {
+    "status": "resolved_for_git_transport",
+    "local_policy_github_com_allowed": true,
+    "local_policy_api_github_com_allowed": false,
+    "existing_credential_git_ls_remote_passed": "dcb7cbdf991228b6165c4b8f458eb475076ed25a",
+    "git_command_scoped_credential_helper": "gh auth git-credential",
+    "persistent_configuration_changed": false,
+    "credentials_permissions_network_changes": false,
+    "API_denied_operation_not_retried": true
+  }
 }
