@@ -11,3 +11,5 @@ Restore: `python checkpoints/sol-stem-image-beam-generation-20261004/RESTORE.py 
 See MANIFEST.json for complete hashes, validation and remaining work.
 
 Separate remote clone/restoration verified source commit/tree and all 6695 source hashes, plus all 1690 archival files and archival tree. Saved remote commit `ee7dab36fda488b7fd89dcb70a581c3307166d65`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
+
+Separate remote clone/restoration verified source commit/tree and all 6695 source hashes, plus all 1691 archival files and archival tree. Saved remote commit `a8d83544bce8b6212f472bb7e549de109b478ec4`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
