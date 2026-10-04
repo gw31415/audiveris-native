@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "main": "f21d7515483d70270ff66a6d636f768a20437835",
+  "archival_tree": "f7e7c0b110c11e3e401ca4182c4aae20401caca5",
+  "source_commit": "671b2c166aacf542d5b9b7c840a8f04279681712",
+  "source_tree": "8e19f515f1280f70b956eb1886f359cf1a78559a",
+  "all_source_sha256_verified": 6656,
+  "source_and_archive_clean": true,
+  "same_existing_git_ls_remote_main_match": true,
+  "remote_hostname": "github.com",
+  "effective_restricted_egress_hosts": 143,
+  "github_com_allowed": true,
+  "custom_additional_hosts": [],
+  "runtime_current_enforced_revision": "114",
+  "new_credentials_permissions_settings": false,
+  "model_and_speed_settings_not_inspectable_in_execution_tools": true
+}

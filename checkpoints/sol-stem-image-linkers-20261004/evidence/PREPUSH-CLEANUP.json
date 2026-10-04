@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-image-linkers/sol-stem-image-linkers-20261004-prepush",
+  "source_commit": "376377c1b017fb3880c8b969c1a29abc023716ea",
+  "source_tree": "1ccac46a8375ca2e5df42acf1bd1a054777ba690",
+  "all_sha256_verified": 6669,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

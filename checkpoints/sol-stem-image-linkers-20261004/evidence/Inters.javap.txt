@@ -1,0 +1,805 @@
+Compiled from "Inters.java"
+public abstract class org.audiveris.omr.sig.inter.Inters {
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> membersFirst;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byId;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byCenterAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byReverseCenterAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byCenterOrdinate;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byReverseCenterOrdinate;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byRightAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byFullAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byFullCenterAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byOrdinate;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byReverseWidth;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byGrade;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byReverseGrade;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byBestGrade;
+
+  public static final java.util.Comparator<org.audiveris.omr.sig.inter.Inter> byReverseBestGrade;
+
+  public static final java.util.Comparator<java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>> byReverseMeanGrade;
+
+  public static final java.util.Comparator<java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>> byReverseMeanContextualGrade;
+
+  private org.audiveris.omr.sig.inter.Inters();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static java.lang.Double computeMeanContextualGrade(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: dconst_0
+       1: dstore_1
+       2: iconst_0
+       3: istore_3
+       4: aload_0
+       5: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      10: astore        4
+      12: aload         4
+      14: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      19: ifeq          74
+      22: aload         4
+      24: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      29: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      32: astore        5
+      34: aload         5
+      36: invokeinterface #25,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getSig:()Lorg/audiveris/omr/sig/SIGraph;
+      41: astore        6
+      43: aload         6
+      45: ifnull        71
+      48: aload         6
+      50: aload         5
+      52: invokevirtual #29                 // Method org/audiveris/omr/sig/SIGraph.containsVertex:(Ljava/lang/Object;)Z
+      55: ifeq          71
+      58: dload_1
+      59: aload         5
+      61: invokeinterface #35,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBestGrade:()D
+      66: dadd
+      67: dstore_1
+      68: iinc          3, 1
+      71: goto          12
+      74: iload_3
+      75: ifle          86
+      78: dload_1
+      79: iload_3
+      80: i2d
+      81: ddiv
+      82: invokestatic  #39                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      85: areturn
+      86: aconst_null
+      87: areturn
+
+  public static java.awt.Rectangle getBounds(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aconst_null
+       1: astore_1
+       2: aload_0
+       3: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+       8: astore_2
+       9: aload_2
+      10: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      15: ifeq          62
+      18: aload_2
+      19: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      24: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      27: astore_3
+      28: aload_1
+      29: ifnonnull     49
+      32: new           #45                 // class java/awt/Rectangle
+      35: dup
+      36: aload_3
+      37: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      42: invokespecial #51                 // Method java/awt/Rectangle."<init>":(Ljava/awt/Rectangle;)V
+      45: astore_1
+      46: goto          59
+      49: aload_1
+      50: aload_3
+      51: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      56: invokevirtual #54                 // Method java/awt/Rectangle.add:(Ljava/awt/Rectangle;)V
+      59: goto          9
+      62: aload_1
+      63: areturn
+
+  public static org.audiveris.omr.sig.inter.Inter getClosestInter(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>, java.awt.geom.Point2D);
+    Code:
+       0: aconst_null
+       1: astore_2
+       2: ldc2_w        #57                 // double 1.7976931348623157E308d
+       5: dstore_3
+       6: aload_0
+       7: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      12: astore        5
+      14: aload         5
+      16: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          100
+      24: aload         5
+      26: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      31: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      34: astore        6
+      36: aload         6
+      38: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      43: astore        7
+      45: aload         7
+      47: getfield      #63                 // Field java/awt/Point.x:I
+      50: i2d
+      51: aload_1
+      52: invokevirtual #69                 // Method java/awt/geom/Point2D.getX:()D
+      55: dsub
+      56: dstore        8
+      58: aload         7
+      60: getfield      #74                 // Field java/awt/Point.y:I
+      63: i2d
+      64: aload_1
+      65: invokevirtual #77                 // Method java/awt/geom/Point2D.getY:()D
+      68: dsub
+      69: dstore        10
+      71: dload         8
+      73: dload         8
+      75: dmul
+      76: dload         10
+      78: dload         10
+      80: dmul
+      81: dadd
+      82: dstore        12
+      84: dload         12
+      86: dload_3
+      87: dcmpg
+      88: ifge          97
+      91: dload         12
+      93: dstore_3
+      94: aload         6
+      96: astore_2
+      97: goto          14
+     100: aload_2
+     101: areturn
+
+  public static java.lang.Double getMeanBestGrade(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_0
+       1: invokeinterface #80,  1           // InterfaceMethod java/util/Collection.isEmpty:()Z
+       6: ifeq          11
+       9: aconst_null
+      10: areturn
+      11: dconst_0
+      12: dstore_1
+      13: aload_0
+      14: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      19: astore_3
+      20: aload_3
+      21: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      26: ifeq          53
+      29: aload_3
+      30: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      35: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      38: astore        4
+      40: dload_1
+      41: aload         4
+      43: invokeinterface #35,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBestGrade:()D
+      48: dadd
+      49: dstore_1
+      50: goto          20
+      53: dload_1
+      54: aload_0
+      55: invokeinterface #83,  1           // InterfaceMethod java/util/Collection.size:()I
+      60: i2d
+      61: ddiv
+      62: invokestatic  #39                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      65: areturn
+
+  public static java.lang.Double getMeanGrade(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_0
+       1: invokeinterface #80,  1           // InterfaceMethod java/util/Collection.isEmpty:()Z
+       6: ifeq          11
+       9: aconst_null
+      10: areturn
+      11: dconst_0
+      12: dstore_1
+      13: aload_0
+      14: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      19: astore_3
+      20: aload_3
+      21: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      26: ifeq          56
+      29: aload_3
+      30: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      35: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      38: astore        4
+      40: dload_1
+      41: aload         4
+      43: invokeinterface #87,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGrade:()Ljava/lang/Double;
+      48: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+      51: dadd
+      52: dstore_1
+      53: goto          20
+      56: dload_1
+      57: aload_0
+      58: invokeinterface #83,  1           // InterfaceMethod java/util/Collection.size:()I
+      63: i2d
+      64: ddiv
+      65: invokestatic  #39                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      68: areturn
+
+  public static boolean hasGoodMember(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_0
+       1: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+       6: astore_1
+       7: aload_1
+       8: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          40
+      16: aload_1
+      17: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      25: astore_2
+      26: aload_2
+      27: invokeinterface #94,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.isGood:()Z
+      32: ifeq          37
+      35: iconst_1
+      36: ireturn
+      37: goto          7
+      40: iconst_0
+      41: ireturn
+
+  public static java.lang.String ids(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_0
+       1: invokestatic  #97                 // Method org/audiveris/omr/util/Entities.ids:(Ljava/util/Collection;)Ljava/lang/String;
+       4: areturn
+
+  public static java.lang.String ids(java.lang.String, java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #103                // Method org/audiveris/omr/util/Entities.ids:(Ljava/lang/String;Ljava/util/Collection;)Ljava/lang/String;
+       5: areturn
+
+  public static java.util.List<org.audiveris.omr.sig.inter.Inter> inters(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>, java.lang.Class);
+    Code:
+       0: aload_0
+       1: new           #106                // class org/audiveris/omr/sig/inter/Inters$ClassPredicate
+       4: dup
+       5: aload_1
+       6: invokespecial #108                // Method org/audiveris/omr/sig/inter/Inters$ClassPredicate."<init>":(Ljava/lang/Class;)V
+       9: invokestatic  #111                // Method inters:(Ljava/util/Collection;Ljava/util/function/Predicate;)Ljava/util/List;
+      12: areturn
+
+  public static java.util.List<org.audiveris.omr.sig.inter.Inter> inters(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>, java.util.function.Predicate<org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_0
+       1: invokeinterface #117,  1          // InterfaceMethod java/util/Collection.stream:()Ljava/util/stream/Stream;
+       6: aload_1
+       7: invokedynamic #121,  0            // InvokeDynamic #0:test:(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;
+      12: invokeinterface #125,  2          // InterfaceMethod java/util/stream/Stream.filter:(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;
+      17: invokestatic  #131                // Method java/util/stream/Collectors.toList:()Ljava/util/stream/Collector;
+      20: invokeinterface #137,  2          // InterfaceMethod java/util/stream/Stream.collect:(Ljava/util/stream/Collector;)Ljava/lang/Object;
+      25: checkcast     #141                // class java/util/List
+      28: areturn
+
+  public static java.util.List<org.audiveris.omr.sig.inter.Inter> inters(java.util.Collection<? extends org.audiveris.omr.sig.inter.Inter>, org.audiveris.omr.sheet.Staff);
+    Code:
+       0: new           #143                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #145                // Method java/util/ArrayList."<init>":()V
+       7: astore_2
+       8: aload_0
+       9: invokeinterface #7,  1            // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+      14: astore_3
+      15: aload_3
+      16: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      21: ifeq          58
+      24: aload_3
+      25: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      30: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      33: astore        4
+      35: aload         4
+      37: invokeinterface #146,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getStaff:()Lorg/audiveris/omr/sheet/Staff;
+      42: aload_1
+      43: if_acmpne     55
+      46: aload_2
+      47: aload         4
+      49: invokeinterface #150,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      54: pop
+      55: goto          15
+      58: aload_2
+      59: areturn
+
+  public static java.util.List<org.audiveris.omr.sig.inter.Inter> intersectedInters(java.util.List<? extends org.audiveris.omr.sig.inter.Inter>, org.audiveris.omr.math.GeoOrder, java.awt.Rectangle);
+    Code:
+       0: new           #143                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #145                // Method java/util/ArrayList."<init>":()V
+       7: astore_3
+       8: aload_2
+       9: getfield      #152                // Field java/awt/Rectangle.x:I
+      12: aload_2
+      13: getfield      #153                // Field java/awt/Rectangle.width:I
+      16: iadd
+      17: iconst_1
+      18: isub
+      19: istore        4
+      21: aload_2
+      22: getfield      #156                // Field java/awt/Rectangle.y:I
+      25: aload_2
+      26: getfield      #157                // Field java/awt/Rectangle.height:I
+      29: iadd
+      30: iconst_1
+      31: isub
+      32: istore        5
+      34: aload_0
+      35: invokeinterface #160,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      40: astore        6
+      42: aload         6
+      44: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      49: ifeq          150
+      52: aload         6
+      54: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      59: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      62: astore        7
+      64: aload         7
+      66: invokeinterface #161,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.isRemoved:()Z
+      71: ifeq          77
+      74: goto          42
+      77: aload         7
+      79: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      84: astore        8
+      86: aload_2
+      87: aload         8
+      89: invokevirtual #164                // Method java/awt/Rectangle.intersects:(Ljava/awt/Rectangle;)Z
+      92: ifeq          107
+      95: aload_3
+      96: aload         7
+      98: invokeinterface #150,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     103: pop
+     104: goto          147
+     107: aload_1
+     108: getstatic     #168                // Field org/audiveris/omr/math/GeoOrder.BY_ABSCISSA:Lorg/audiveris/omr/math/GeoOrder;
+     111: if_acmpne     127
+     114: aload         8
+     116: getfield      #152                // Field java/awt/Rectangle.x:I
+     119: iload         4
+     121: if_icmple     127
+     124: goto          150
+     127: aload_1
+     128: getstatic     #174                // Field org/audiveris/omr/math/GeoOrder.BY_ORDINATE:Lorg/audiveris/omr/math/GeoOrder;
+     131: if_acmpne     147
+     134: aload         8
+     136: getfield      #156                // Field java/awt/Rectangle.y:I
+     139: iload         5
+     141: if_icmple     147
+     144: goto          150
+     147: goto          42
+     150: aload_3
+     151: areturn
+
+  public static java.util.List<org.audiveris.omr.sig.inter.Inter> intersectedInters(java.util.List<org.audiveris.omr.sig.inter.Inter>, org.audiveris.omr.math.GeoOrder, java.awt.geom.Area);
+    Code:
+       0: new           #143                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #145                // Method java/util/ArrayList."<init>":()V
+       7: astore_3
+       8: aload_2
+       9: invokevirtual #177                // Method java/awt/geom/Area.getBounds:()Ljava/awt/Rectangle;
+      12: astore        4
+      14: aload         4
+      16: invokevirtual #180                // Method java/awt/Rectangle.getMaxX:()D
+      19: dstore        5
+      21: aload         4
+      23: invokevirtual #183                // Method java/awt/Rectangle.getMaxY:()D
+      26: dstore        7
+      28: aload_0
+      29: invokeinterface #160,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      34: astore        9
+      36: aload         9
+      38: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      43: ifeq          167
+      46: aload         9
+      48: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      53: checkcast     #23                 // class org/audiveris/omr/sig/inter/Inter
+      56: astore        10
+      58: aload         10
+      60: invokeinterface #161,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.isRemoved:()Z
+      65: ifeq          71
+      68: goto          36
+      71: aload         10
+      73: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      78: astore        11
+      80: aload_2
+      81: aload         11
+      83: invokevirtual #186                // Method java/awt/geom/Area.intersects:(Ljava/awt/geom/Rectangle2D;)Z
+      86: ifeq          101
+      89: aload_3
+      90: aload         10
+      92: invokeinterface #150,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      97: pop
+      98: goto          164
+     101: getstatic     #189                // Field org/audiveris/omr/sig/inter/Inters$1.$SwitchMap$org$audiveris$omr$math$GeoOrder:[I
+     104: aload_1
+     105: invokevirtual #195                // Method org/audiveris/omr/math/GeoOrder.ordinal:()I
+     108: iaload
+     109: tableswitch   { // 1 to 3
+                     1: 136
+                     2: 150
+                     3: 164
+               default: 164
+          }
+     136: aload         11
+     138: getfield      #152                // Field java/awt/Rectangle.x:I
+     141: i2d
+     142: dload         5
+     144: dcmpl
+     145: ifle          164
+     148: aload_3
+     149: areturn
+     150: aload         11
+     152: getfield      #156                // Field java/awt/Rectangle.y:I
+     155: i2d
+     156: dload         7
+     158: dcmpl
+     159: ifle          164
+     162: aload_3
+     163: areturn
+     164: goto          36
+     167: aload_3
+     168: areturn
+
+  private static boolean lambda$inters$0(java.util.function.Predicate, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: ifnull        14
+       4: aload_0
+       5: aload_1
+       6: invokeinterface #198,  2          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+      11: ifeq          18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  private static int lambda$static$17(java.util.Collection, java.util.Collection);
+    Code:
+       0: aload_1
+       1: invokestatic  #202                // Method getMeanBestGrade:(Ljava/util/Collection;)Ljava/lang/Double;
+       4: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+       7: aload_0
+       8: invokestatic  #202                // Method getMeanBestGrade:(Ljava/util/Collection;)Ljava/lang/Double;
+      11: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+      14: invokestatic  #206                // Method java/lang/Double.compare:(DD)I
+      17: ireturn
+
+  private static int lambda$static$16(java.util.Collection, java.util.Collection);
+    Code:
+       0: aload_1
+       1: invokestatic  #210                // Method getMeanGrade:(Ljava/util/Collection;)Ljava/lang/Double;
+       4: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+       7: aload_0
+       8: invokestatic  #210                // Method getMeanGrade:(Ljava/util/Collection;)Ljava/lang/Double;
+      11: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+      14: invokestatic  #206                // Method java/lang/Double.compare:(DD)I
+      17: ireturn
+
+  private static int lambda$static$15(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #35,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBestGrade:()D
+       6: aload_0
+       7: invokeinterface #35,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBestGrade:()D
+      12: invokestatic  #206                // Method java/lang/Double.compare:(DD)I
+      15: ireturn
+
+  private static int lambda$static$14(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #35,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBestGrade:()D
+       6: aload_1
+       7: invokeinterface #35,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBestGrade:()D
+      12: invokestatic  #206                // Method java/lang/Double.compare:(DD)I
+      15: ireturn
+
+  private static int lambda$static$13(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #87,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGrade:()Ljava/lang/Double;
+       6: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+       9: aload_0
+      10: invokeinterface #87,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGrade:()Ljava/lang/Double;
+      15: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+      18: invokestatic  #206                // Method java/lang/Double.compare:(DD)I
+      21: ireturn
+
+  private static int lambda$static$12(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #87,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGrade:()Ljava/lang/Double;
+       6: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+       9: aload_1
+      10: invokeinterface #87,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGrade:()Ljava/lang/Double;
+      15: invokevirtual #91                 // Method java/lang/Double.doubleValue:()D
+      18: invokestatic  #206                // Method java/lang/Double.compare:(DD)I
+      21: ireturn
+
+  private static int lambda$static$11(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+       6: getfield      #153                // Field java/awt/Rectangle.width:I
+       9: aload_0
+      10: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      15: getfield      #153                // Field java/awt/Rectangle.width:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$10(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+       6: getfield      #156                // Field java/awt/Rectangle.y:I
+       9: aload_1
+      10: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      15: getfield      #156                // Field java/awt/Rectangle.y:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$9(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: if_acmpne     7
+       5: iconst_0
+       6: ireturn
+       7: aload_0
+       8: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      13: astore_2
+      14: aload_1
+      15: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      20: astore_3
+      21: aload_2
+      22: getfield      #63                 // Field java/awt/Point.x:I
+      25: aload_3
+      26: getfield      #63                 // Field java/awt/Point.x:I
+      29: isub
+      30: istore        4
+      32: iload         4
+      34: ifeq          40
+      37: iload         4
+      39: ireturn
+      40: aload_2
+      41: getfield      #74                 // Field java/awt/Point.y:I
+      44: aload_3
+      45: getfield      #74                 // Field java/awt/Point.y:I
+      48: isub
+      49: istore        5
+      51: iload         5
+      53: ifeq          59
+      56: iload         5
+      58: ireturn
+      59: aload_0
+      60: invokeinterface #218,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getId:()I
+      65: aload_1
+      66: invokeinterface #218,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getId:()I
+      71: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      74: ireturn
+
+  private static int lambda$static$8(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: if_acmpne     7
+       5: iconst_0
+       6: ireturn
+       7: aload_0
+       8: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      13: invokevirtual #221                // Method java/awt/Rectangle.getLocation:()Ljava/awt/Point;
+      16: astore_2
+      17: aload_1
+      18: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      23: invokevirtual #221                // Method java/awt/Rectangle.getLocation:()Ljava/awt/Point;
+      26: astore_3
+      27: aload_2
+      28: getfield      #63                 // Field java/awt/Point.x:I
+      31: aload_3
+      32: getfield      #63                 // Field java/awt/Point.x:I
+      35: isub
+      36: istore        4
+      38: iload         4
+      40: ifeq          46
+      43: iload         4
+      45: ireturn
+      46: aload_2
+      47: getfield      #74                 // Field java/awt/Point.y:I
+      50: aload_3
+      51: getfield      #74                 // Field java/awt/Point.y:I
+      54: isub
+      55: istore        5
+      57: iload         5
+      59: ifeq          65
+      62: iload         5
+      64: ireturn
+      65: aload_0
+      66: invokeinterface #218,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getId:()I
+      71: aload_1
+      72: invokeinterface #218,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getId:()I
+      77: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      80: ireturn
+
+  private static int lambda$static$7(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+       6: astore_2
+       7: aload_1
+       8: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      13: astore_3
+      14: aload_2
+      15: getfield      #152                // Field java/awt/Rectangle.x:I
+      18: aload_2
+      19: getfield      #153                // Field java/awt/Rectangle.width:I
+      22: iadd
+      23: aload_3
+      24: getfield      #152                // Field java/awt/Rectangle.x:I
+      27: aload_3
+      28: getfield      #153                // Field java/awt/Rectangle.width:I
+      31: iadd
+      32: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      35: ireturn
+
+  private static int lambda$static$6(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+       6: getfield      #74                 // Field java/awt/Point.y:I
+       9: aload_0
+      10: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      15: getfield      #74                 // Field java/awt/Point.y:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$5(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+       6: getfield      #74                 // Field java/awt/Point.y:I
+       9: aload_1
+      10: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      15: getfield      #74                 // Field java/awt/Point.y:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$4(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+       6: getfield      #63                 // Field java/awt/Point.x:I
+       9: aload_0
+      10: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      15: getfield      #63                 // Field java/awt/Point.x:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$3(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+       6: getfield      #63                 // Field java/awt/Point.x:I
+       9: aload_1
+      10: invokeinterface #59,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter:()Ljava/awt/Point;
+      15: getfield      #63                 // Field java/awt/Point.x:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$2(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+       6: getfield      #152                // Field java/awt/Rectangle.x:I
+       9: aload_1
+      10: invokeinterface #47,  1           // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getBounds:()Ljava/awt/Rectangle;
+      15: getfield      #152                // Field java/awt/Rectangle.x:I
+      18: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$1(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: invokeinterface #218,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getId:()I
+       6: aload_1
+       7: invokeinterface #218,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getId:()I
+      12: invokestatic  #213                // Method java/lang/Integer.compare:(II)I
+      15: ireturn
+
+  private static int lambda$static$0(org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: instanceof    #224                // class org/audiveris/omr/sig/inter/InterEnsemble
+       4: ifeq          62
+       7: aload_0
+       8: checkcast     #224                // class org/audiveris/omr/sig/inter/InterEnsemble
+      11: astore_2
+      12: aload_1
+      13: instanceof    #224                // class org/audiveris/omr/sig/inter/InterEnsemble
+      16: ifeq          60
+      19: aload_1
+      20: checkcast     #224                // class org/audiveris/omr/sig/inter/InterEnsemble
+      23: astore_3
+      24: aload_2
+      25: invokeinterface #226,  1          // InterfaceMethod org/audiveris/omr/sig/inter/InterEnsemble.getMembers:()Ljava/util/List;
+      30: aload_1
+      31: invokeinterface #230,  2          // InterfaceMethod java/util/List.contains:(Ljava/lang/Object;)Z
+      36: ifeq          41
+      39: iconst_1
+      40: ireturn
+      41: aload_3
+      42: invokeinterface #226,  1          // InterfaceMethod org/audiveris/omr/sig/inter/InterEnsemble.getMembers:()Ljava/util/List;
+      47: aload_0
+      48: invokeinterface #230,  2          // InterfaceMethod java/util/List.contains:(Ljava/lang/Object;)Z
+      53: ifeq          58
+      56: iconst_m1
+      57: ireturn
+      58: iconst_0
+      59: ireturn
+      60: iconst_1
+      61: ireturn
+      62: aload_1
+      63: instanceof    #224                // class org/audiveris/omr/sig/inter/InterEnsemble
+      66: ifeq          71
+      69: iconst_m1
+      70: ireturn
+      71: iconst_0
+      72: ireturn
+
+  static {};
+    Code:
+       0: invokedynamic #233,  0            // InvokeDynamic #1:compare:()Ljava/util/Comparator;
+       5: putstatic     #236                // Field membersFirst:Ljava/util/Comparator;
+       8: invokedynamic #240,  0            // InvokeDynamic #2:compare:()Ljava/util/Comparator;
+      13: putstatic     #241                // Field byId:Ljava/util/Comparator;
+      16: invokedynamic #244,  0            // InvokeDynamic #3:compare:()Ljava/util/Comparator;
+      21: putstatic     #245                // Field byAbscissa:Ljava/util/Comparator;
+      24: invokedynamic #248,  0            // InvokeDynamic #4:compare:()Ljava/util/Comparator;
+      29: putstatic     #249                // Field byCenterAbscissa:Ljava/util/Comparator;
+      32: invokedynamic #252,  0            // InvokeDynamic #5:compare:()Ljava/util/Comparator;
+      37: putstatic     #253                // Field byReverseCenterAbscissa:Ljava/util/Comparator;
+      40: invokedynamic #256,  0            // InvokeDynamic #6:compare:()Ljava/util/Comparator;
+      45: putstatic     #257                // Field byCenterOrdinate:Ljava/util/Comparator;
+      48: invokedynamic #260,  0            // InvokeDynamic #7:compare:()Ljava/util/Comparator;
+      53: putstatic     #261                // Field byReverseCenterOrdinate:Ljava/util/Comparator;
+      56: invokedynamic #264,  0            // InvokeDynamic #8:compare:()Ljava/util/Comparator;
+      61: putstatic     #265                // Field byRightAbscissa:Ljava/util/Comparator;
+      64: invokedynamic #268,  0            // InvokeDynamic #9:compare:()Ljava/util/Comparator;
+      69: putstatic     #269                // Field byFullAbscissa:Ljava/util/Comparator;
+      72: invokedynamic #272,  0            // InvokeDynamic #10:compare:()Ljava/util/Comparator;
+      77: putstatic     #273                // Field byFullCenterAbscissa:Ljava/util/Comparator;
+      80: invokedynamic #276,  0            // InvokeDynamic #11:compare:()Ljava/util/Comparator;
+      85: putstatic     #277                // Field byOrdinate:Ljava/util/Comparator;
+      88: invokedynamic #280,  0            // InvokeDynamic #12:compare:()Ljava/util/Comparator;
+      93: putstatic     #281                // Field byReverseWidth:Ljava/util/Comparator;
+      96: invokedynamic #284,  0            // InvokeDynamic #13:compare:()Ljava/util/Comparator;
+     101: putstatic     #285                // Field byGrade:Ljava/util/Comparator;
+     104: invokedynamic #288,  0            // InvokeDynamic #14:compare:()Ljava/util/Comparator;
+     109: putstatic     #289                // Field byReverseGrade:Ljava/util/Comparator;
+     112: invokedynamic #292,  0            // InvokeDynamic #15:compare:()Ljava/util/Comparator;
+     117: putstatic     #293                // Field byBestGrade:Ljava/util/Comparator;
+     120: invokedynamic #296,  0            // InvokeDynamic #16:compare:()Ljava/util/Comparator;
+     125: putstatic     #297                // Field byReverseBestGrade:Ljava/util/Comparator;
+     128: invokedynamic #300,  0            // InvokeDynamic #17:compare:()Ljava/util/Comparator;
+     133: putstatic     #301                // Field byReverseMeanGrade:Ljava/util/Comparator;
+     136: invokedynamic #304,  0            // InvokeDynamic #18:compare:()Ljava/util/Comparator;
+     141: putstatic     #305                // Field byReverseMeanContextualGrade:Ljava/util/Comparator;
+     144: return
+}

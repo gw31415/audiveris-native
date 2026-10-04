@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "removed_only_verified_clean_old_duplicate": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-remote-restore",
+  "source_commit": "bbf8db60ed019ccbffae1fc54250490e86c8a5fd",
+  "source_tree": "c47ba4bf15cd168719b91515198147d89f737f54",
+  "all_sha256_verified": 4833,
+  "primary_original_bundles_and_latest_recovery_retained": true
+}
