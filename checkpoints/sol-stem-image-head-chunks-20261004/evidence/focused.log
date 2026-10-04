@@ -1,0 +1,12 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.56s
+     Running tests/stem_image_head_chunks.rs (/workspace/onboarding/target/debug/deps/stem_image_head_chunks-730494728dc9fd7d)
+
+running 4 tests
+test empty_heads_and_unsupported_skew_staff_remain_explicit ... ok
+test malformed_section_membership_and_bounds_refuse_without_changing_input ... ok
+test image_chunk_physical_sections_glyphs_and_same_owned_registry_match_original ... ok
+test actual_image_cli_retrieves_and_registers_chunks_without_condition_requests has been running for over 60 seconds
+test actual_image_cli_retrieves_and_registers_chunks_without_condition_requests ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 77.97s

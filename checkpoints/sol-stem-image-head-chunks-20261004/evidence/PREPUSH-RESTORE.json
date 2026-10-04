@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "72ff740d3f8e50138a1946641576a941c3590af5",
+  "source_tree": "acb42627f6beaab85896b4d31013fe7ca5e43880",
+  "all_fresh_restored_sha256_verified": 6721,
+  "source_clean": true,
+  "source": "/workspace/work/stem-image-head-chunks/sol-stem-image-head-chunks-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/stem-image-head-chunks/sol-stem-image-head-chunks-20261004-prepush/source-git"
+}
