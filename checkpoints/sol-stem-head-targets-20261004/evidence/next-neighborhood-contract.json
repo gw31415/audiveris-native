@@ -1,0 +1,13 @@
+{
+  "status": "read_only_original_dependency_identified",
+  "implementation_claimed": false,
+  "Inters_bytecode_SHA256": "2f7432b517c52cd03d0098d22090309d010514e4d70e99e4f420203c74c6dd78",
+  "contracts": [
+    "HeadLinker constructor computes neighborBeams via StemsRetriever.getNeighboringInters(systemBeams,headBox)",
+    "getNeighboringInters replaces rectangle y/height with system y/height, grows x by vicinityMargin, and uses Inters.intersectedInters BY_ABSCISSA",
+    "CLinker inspect subsequently selects seeds/other-head linkers and beam linkers; target lookup alone is not full items/page cache/SIG",
+    "CLinker constructor intersects the head initial Area with neighboring beam rectangles before group lookup; the supplied neighborhood kernel stage does not yet perform this prefilter"
+  ],
+  "heads_complete": false,
+  "stems_complete": false
+}

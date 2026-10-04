@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-head-targets/sol-stem-head-targets-20261004-prepush",
+  "source_commit": "41ffe9cea1ed6fe93024f52900cc5422b3113bea",
+  "source_tree": "76a1967ae5eb18a1c01bf3e77ea670ae3e7c8d79",
+  "all_sha256_verified": 6570,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

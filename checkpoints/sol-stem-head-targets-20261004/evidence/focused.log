@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s
+     Running tests/stem_head_targets.rs (/workspace/onboarding/target/debug/deps/stem_head_targets-c70101d15cb12a84)
+
+running 2 tests
+test catalog_and_late_candidate_refusals_are_read_only ... ok
+test original_actual_neighborhood_targets_small_heads_and_ulp_distances ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
