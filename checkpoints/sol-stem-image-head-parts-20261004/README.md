@@ -9,3 +9,5 @@ Actual native image --head-parts connects existing StemBuilder.filter to image-d
 Restore: `python checkpoints/sol-stem-image-head-parts-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6708 source hashes, plus all 1715 archival files and archival tree. Saved remote commit `f19594f5c16a5d11c5b5f46dafe3701c588daab9`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
