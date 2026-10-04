@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "e2a3a119549da788476685aa40b73f6d5923eb44",
+  "source_tree": "ff6a0cf5c95d8648f60e64438f475e9b592fffc3",
+  "all_fresh_restored_sha256_verified": 5411,
+  "source_clean": true,
+  "source": "/workspace/work/head-coverage/sol-head-page-catalog-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/head-coverage/sol-head-page-catalog-20261004-prepush/source-git"
+}

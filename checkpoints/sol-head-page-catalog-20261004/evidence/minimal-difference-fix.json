@@ -1,0 +1,10 @@
+{
+  "initial_failed_case": "Leland-40",
+  "initial_report_sha256": "957ec93ec800b1b43b88b294f6781c9c89d00b0d9439d8302351d185910aa0ad",
+  "difference": "Last head in system1 is retained WHOLE_NOTE: native abnormal=true, original false. All physical geometry/glyph/grade and counts410/625 matched.",
+  "original_behavior": "HeadInter.added: marks abnormal only ShapeSet.StemHeads; original checkAbnormal also tests stem-head membership.",
+  "fix": "Use certified supported StemHeads membership on registration; WHOLE/BREVE normal.",
+  "boundary_test": "stemless_registration_is_normal_and_live_sig_preserves_original_whole_note; all9 certified shapes checked against original ShapeSet metadata, with inverted input flag and shared SIG output.",
+  "default_cli_all_8_reports_and_whole_sha_preserved": true,
+  "original_bytecode_evidence": "HeadInter-original.javap.txt"
+}
