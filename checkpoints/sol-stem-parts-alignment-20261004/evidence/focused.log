@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.31s
+     Running tests/stem_parts_alignment.rs (/workspace/onboarding/target/debug/deps/stem_parts_alignment-39710da4f5d5a0cf)
+
+running 2 tests
+test alignment_inclusive_thresholds_ties_identity_and_invalid_budgets_preserve_inputs ... ok
+test original_fifteen_hundred_part_alignment_checks_match_caller_order_aliases_and_actual_stumps ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s

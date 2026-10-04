@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "f02878ab73558fad27d95374fd758e101ae58867",
+  "source_tree": "5e777b331f8f9134854a8376ace7acca72e6085e",
+  "all_fresh_restored_sha256_verified": 6389,
+  "source_clean": true,
+  "source": "/workspace/work/stem-parts-alignment/sol-stem-parts-alignment-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/stem-parts-alignment/sol-stem-parts-alignment-20261004-prepush/source-git"
+}

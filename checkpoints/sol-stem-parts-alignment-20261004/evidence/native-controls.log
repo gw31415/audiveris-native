@@ -1,0 +1,2 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `/workspace/onboarding/target/debug/examples/stem_parts_alignment_dump fixtures/official-stem-parts-alignment/controls.json /workspace/work/stem-parts-alignment/native-controls-final.json`
