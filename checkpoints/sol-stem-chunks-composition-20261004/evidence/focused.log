@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.27s
+     Running tests/stem_chunks.rs (/workspace/onboarding/target/debug/deps/stem_chunks-d5da5cfdf1677186)
+
+running 2 tests
+test atomic_refusal_alias_stump_and_stable_directional_order ... ok
+test original_complete_lookup_chunks_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s

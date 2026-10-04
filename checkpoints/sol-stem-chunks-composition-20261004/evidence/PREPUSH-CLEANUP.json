@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-chunks/sol-stem-chunks-composition-20261004-prepush",
+  "source_commit": "40be73c9404459b2aa6b2a8952524b30a6a2ab74",
+  "source_tree": "60f35fefc5accd0696daf63372e49679603479a2",
+  "all_sha256_verified": 6488,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

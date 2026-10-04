@@ -1,0 +1,20 @@
+[
+  {
+    "files": 6462,
+    "commit": "97b7313ba1e3ed11471061b032c851652e9722d1",
+    "tree": "1ac68119e1fc7bea45d06747d5ac8c89a75e7abe",
+    "removed_verified_temporary_restore": "/workspace/work/stem-chunk-registration/sol-stem-chunk-registration-20261004-remote-restore"
+  },
+  {
+    "files": 5421,
+    "commit": "d04ecf6748a2e9e97c85a12a45bbf122a937f9a8",
+    "tree": "705115a64928b09e42848fe59679776ed70bdc34",
+    "removed_verified_temporary_restore": "/workspace/work/head-coverage/sol-head-stem-kernel-20261004-prepush"
+  },
+  {
+    "files": 5376,
+    "commit": "28d521709c791e581948be5322f6b7f2e4e1d776",
+    "tree": "335cae0dfa1aff1aed1e6e91fdd26a32e837555c",
+    "removed_verified_temporary_restore": "/workspace/work/head-coverage/sol-head-seed-page-catalog-20261004-prepush"
+  }
+]
