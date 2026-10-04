@@ -9,3 +9,5 @@ Selected physical original HeadStemsCleaner.check and shared SIG edge/callback b
 Restore: `python checkpoints/sol-stem-cleaner-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6376 source hashes, plus all 1020 archival files and archival tree. Saved remote commit `cf92c01cd6c140964d957a60a70f1f607e7594b4`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
