@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "removed_only_clean_all_hash_verified_obsolete_prepush_duplicates": [
+    {
+      "path": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-prepush",
+      "source_commit": "440aea056874db6fd944327e551ca6b8d7e027f5",
+      "all_source_sha256_verified": 4870,
+      "tree": "7dca07e254d66bb16fa6d5c158ce53e4cbe116ca"
+    },
+    {
+      "path": "/workspace/work/head-lifecycle/sol-head-registration-20261003-prepush",
+      "source_commit": "8d5de292421aea36439dccbabf3fa73a1b18c79f",
+      "all_source_sha256_verified": 4865,
+      "tree": "7c8fba322e9964d72f70f3d79fa1c6d9386f804f"
+    },
+    {
+      "path": "/workspace/work/head-lifecycle/sol-head-glyph-retrieval-20261003-prepush",
+      "source_commit": "7397628fd5dd81f7337837db6da80b3294cf1d2f",
+      "all_source_sha256_verified": 4856,
+      "tree": "c1ef66e20d6c894687163996eb0dc4741826ef10"
+    }
+  ],
+  "primary_source_archive_oracle_reports_and_latest_remote_recovery_retained": true
+}

@@ -1,0 +1,14 @@
+{
+  "source_parent": "24207d9e393ef5b19daa91bc449432672c17cb7d",
+  "archive_parent": "34b5d3a6570167fe135de48b09f3a6a3ffa3c81c",
+  "previous_Library_index_receipt": {
+    "reference": "library-file:fde1_bGliZmlsZV9zWVRjejFOWnpzdnkxMUZyR3kwa2VR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+    "page_id": "page_fe0f36467a448191885de9c663caafd2",
+    "sha256": "8cca94d61b19c3184e2f1c374c32d8ccfaee4cc3bc5dab7e1b47eae9e83ce83c",
+    "byte_size": 12329,
+    "readback_verified": true,
+    "parts": 6,
+    "external_preservation_confirmed": true
+  },
+  "preserved_prototype_raw_sha256": "d9dd57740709330c4916220db21ea81e992d1e4aa11b62b214d3ed96190f3946"
+}
