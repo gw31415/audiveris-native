@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-parts-filter/sol-stem-parts-filter-20261004-prepush",
+  "source_commit": "24207d9e393ef5b19daa91bc449432672c17cb7d",
+  "source_tree": "51a43ce2324e738642e161e678daa8d35448af79",
+  "all_sha256_verified": 6402,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+use audiveris_native::{beam_dispatch,vertical_sticks::{self,SeedSection}};
+use audiveris_staff_removal::GlyphPixels;
+use audiveris_area::LinearArea;
+use serde_json::Value;
+use std::collections::BTreeSet;
+pub struct Parameters {pub direction:i8,pub slope:f64,pub max_stem_thickness:i64,pub max_line_section_dx:f64,pub last_head_y:Option<f64>,pub theoretical_line:[f64;4]}
+pub struct Selected {pub vertical_ids:Vec<u64>,pub horizontal_ids:Vec<u64>,pub raw_glyphs:Vec<Value>}
+pub fn center(s:&SeedSection)->[f64;2] {let(mut w,mut along,mut across)=(0i64,0i64,0i64);for(i,r)in s.runs.iter().enumerate(){w+=r[1];along+=r[1]*(2*r[0]+r[1]);across+=r[1]*(s.first_pos+i as i64)}if s.vertical {[across as f64/w as f64,along as f64/(2*w) as f64]}else {[along as f64/(2*w) as f64,across as f64/w as f64]}}
+fn distance(l:[f64;4],p:[f64;2])->f64 {let(dx,dy)=(l[2]-l[0],l[3]-l[1]);let(px,py)=(p[0]-l[0],p[1]-l[1]);let dot=px*dx+py*dy;let projection=dot*dot/(dx*dx+dy*dy);(px*px+py*py-projection).max(0.).sqrt()}
+pub fn collect(vertical:&[SeedSection],horizontal:&[SeedSection],points:&[[f64;2]],stump:Option<&GlyphPixels>,p:&Parameters)->Result<Selected,String>{
+ if ![-1,1].contains(&p.direction)||p.slope!=0.||!p.slope.is_finite()||!(1..=128).contains(&p.max_stem_thickness)||!p.max_line_section_dx.is_finite()||!(0.0..=1024.0).contains(&p.max_line_section_dx)||p.last_head_y.is_some_and(|v|!v.is_finite()||v.abs()>4_000_000.)||p.theoretical_line.iter().any(|v|!v.is_finite()||v.abs()>4_000_000.)||p.theoretical_line[0]==p.theoretical_line[2]&&p.theoretical_line[1]==p.theoretical_line[3] {return Err("unsupported_stem_lookup_parameters".into())}
+ if vertical.len()+horizontal.len()>32768||points.len()>128{return Err("stem_lookup_input_budget".into())}let mut ids=BTreeSet::new();let mut total=0i64;for (wanted,all)in[(true,vertical),(false,horizontal)] {for s in all{if s.id==0||!ids.insert((wanted,s.id))||s.vertical!=wanted||s.runs.is_empty()||s.runs.len()>8192||!(0..=4_000_000).contains(&s.first_pos)||s.first_pos+s.runs.len() as i64>4_000_000||s.runs.iter().any(|r|!(0..=4_000_000).contains(&r[0])||!(1..=4_000_000).contains(&r[1])||r[0]+r[1]>4_000_000){return Err("invalid_stem_lookup_section".into())}total+=s.weight();if total>16_000_000{return Err("stem_lookup_pixel_budget".into())}}}
+ let area=if points.is_empty(){None}else{Some(LinearArea::polygon(points)?)};if let Some(g)=stump {beam_dispatch::centroid(g)?;}let sb=stump.map(|g|[g.left as i64,g.top as i64,g.width as i64,g.height as i64]);
+ let mut selected_v=Vec::new();let mut selected_h=Vec::new();for (wanted,all,out)in[(true,vertical,&mut selected_v),(false,horizontal,&mut selected_h)] {for s in all {let b=s.bounds();if !match &area{Some(a)=>a.intersects_rect(b.map(|v|v as f64))?,None=>false}{continue}if b[2]>if wanted{p.max_stem_thickness}else{1}{continue}if wanted&&sb.is_some_and(|a|(b[1]+b[3]).min(a[1]+a[3])-b[1].max(a[1])>0&&b[3]<a[3]){continue}let c=center(s);if p.last_head_y.is_some_and(|y|(c[1]-y)*p.direction as f64>=0.){continue}if wanted&&distance(p.theoretical_line,c)>p.max_line_section_dx{continue}out.push(s.clone())}out.sort_by_key(|s|(s.first_pos,s.runs.iter().map(|r|r[0]).min().unwrap()));}
+ let sticks=vertical_sticks::retrieve(&selected_v,&selected_h,p.max_stem_thickness,1)?;Ok(Selected{vertical_ids:selected_v.iter().map(|s|s.id).collect(),horizontal_ids:selected_h.iter().map(|s|s.id).collect(),raw_glyphs:sticks.into_iter().map(|s|s["glyph"].clone()).collect()})
+}
