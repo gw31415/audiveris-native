@@ -9,3 +9,5 @@ LookupChunks raw-registration/removeAll prefix: every raw chunk is registered be
 Restore: `python checkpoints/sol-stem-chunk-registration-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6462 source hashes, plus all 1204 archival files and archival tree. Saved remote commit `1d7fe702457900e54496ef2a37cdc3fd3a21ede3`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
