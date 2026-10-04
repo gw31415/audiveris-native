@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-cache-head/sol-stem-cache-head-20261004-prepush",
+  "source_commit": "ee10c33ba64c10297197a018838fcbde0903a1fc",
+  "source_tree": "27eb9c30c4c37003b31f8c97756526cf149deaf4",
+  "all_sha256_verified": 6510,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

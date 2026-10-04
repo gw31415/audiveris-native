@@ -1,0 +1,39 @@
+{
+  "latest_451_remote_clone_and_restore_retained": true,
+  "receipts": [
+    {
+      "removed_verified_temporary_restore": "/workspace/work/stem-chunks/sol-stem-chunks-composition-20261004-remote-restore",
+      "files": 6488,
+      "source_commit": "40be73c9404459b2aa6b2a8952524b30a6a2ab74",
+      "source_tree": "60f35fefc5accd0696daf63372e49679603479a2"
+    },
+    {
+      "removed_verified_temporary_restore": "/workspace/work/head-stem-connection/sol-head-stem-connection-20261004-prepush",
+      "files": 6212,
+      "source_commit": "9496eb46bcb54bd52ea6f615fdf3290575f2a7ce",
+      "source_tree": "87a17d90421ce81b993e675b0f7173afefe4953b"
+    },
+    {
+      "removed_verified_temporary_restore": "/workspace/work/head-expansion/sol-head-all-shapes-20261004-prepush",
+      "files": 6169,
+      "source_commit": "5945e8aca16ff3f8ba0a43d4fcde92262094b324",
+      "source_tree": "cbfe556b0a5c8869885cd3dbe34a9fef25b349d1"
+    },
+    {
+      "removed_verified_temporary_restore": "/workspace/work/head-pages/sol-head-actual-pages-20261004-prepush",
+      "files": 6202,
+      "source_commit": "2e988e3ea92993f11a73dd9dd2e89a1838304c36",
+      "source_tree": "382041db312a2c7a23cafd03b1809fbb9c5f670f"
+    },
+    {
+      "removed_verified_temporary_restore": "/workspace/work/head-lifecycle/sol-head-candidate-filter-20261003-prepush",
+      "files": 4833,
+      "source_commit": "bbf8db60ed019ccbffae1fc54250490e86c8a5fd",
+      "source_tree": "c47ba4bf15cd168719b91515198147d89f737f54"
+    },
+    {
+      "removed_verified_temporary_archive": "/workspace/work/stem-chunks/sol-stem-chunks-composition-20261004-remote-clone",
+      "files": 1253
+    }
+  ]
+}
