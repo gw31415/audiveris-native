@@ -9,3 +9,5 @@ Actual image CLI --sources derives builder seed inputs after automatic corner st
 Restore: `python checkpoints/sol-stem-image-sources-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6656 source hashes, plus all 1591 archival files and archival tree. Saved remote commit `513367181f36c2b0927e0a41f767e85042e61822`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
