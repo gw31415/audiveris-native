@@ -9,3 +9,7 @@ Exact Linux official catalogs for nine matched shapes at Bravura/Leland/FinaleJa
 Restore: `python checkpoints/sol-head-drum-quarter-20261003/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Remote save is BLOCKED: normal git push could not obtain HTTPS credentials; a read-only check using the existing GH_TOKEN returned Forbidden. GitHub operations were stopped; no credentials, permissions, billing or sharing settings were changed. Last independently verified remote main is dcb7cbdf991228b6165c4b8f458eb475076ed25a. This third stage is a LOCAL checkpoint, not a remotely saved checkpoint.
+
+A separate local clone and fresh restoration verified all 5347 source hashes and the source tree, plus all 542 archival files and the archival tree at a7f6668373e97aa6bc64714e491739f5818f021e. The recovered saved CLI report passes the oracle comparison; the 379 tests were run on the implementation source, not rerun on the restored source. See evidence/LOCAL-READBACK.json and evidence/SAVE-BLOCKER.json.
