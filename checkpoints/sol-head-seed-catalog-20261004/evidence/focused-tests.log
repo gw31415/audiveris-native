@@ -1,0 +1,11 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.62s
+     Running tests/head_seed_coverage.rs (/workspace/onboarding/target/debug/deps/head_seed_coverage-416f5dc497f8520e)
+
+running 4 tests
+test empty_catalog_window_limits_and_veto_failure_keep_seed_contract ... ok
+test absent_assets_duplicates_and_nonstem_shapes_fail_before_veto_side_effects ... ok
+test explicit_source_order_and_legacy_builtin_51_search_are_preserved ... ok
+test original_2016_seed_windows_seven_shapes_three_fonts_four_sizes_both_anchors_and_vetoes ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.48s

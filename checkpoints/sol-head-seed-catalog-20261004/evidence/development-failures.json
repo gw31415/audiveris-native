@@ -1,0 +1,11 @@
+{
+  "discarded": [
+    {
+      "stage": "initial observer invocation",
+      "error": "Unsupported --runtime-java CLI argument; argument parser rejected before oracle execution",
+      "resolution": "Used existing --oracle-home option without bootstrap. The certified run uses the existing official runtime."
+    }
+  ],
+  "oracle_controls_from_successful_run_only": true,
+  "new_credentials_permissions_billing_sharing": false
+}
