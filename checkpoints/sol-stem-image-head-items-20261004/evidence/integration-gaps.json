@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "closed": [
+    "Image40beamstumps90BLinkers,1408corners/3413raw/2414retained chunks in same2335entry registry preserved",
+    "Automatic native image head final item sources,constructors,suffix sort,gap insertion/truncation,prefix lengths and length maps",
+    "1408head builders/3076final items/92gaps/1090truncations match original XML inspection;canonical item glyph IDs/native source metadata retained"
+  ],
+  "next": [
+    "Complete beam-origin VLinker geometry/seeds/head builders",
+    "Automatic final endpoint/physical stem glyph/grade selection",
+    "Retain actual upstream owned Graph, not infer removed-edge identity history from JSON",
+    "Same-owner cache/head relations and cleaner/epilog"
+  ],
+  "unverified": [
+    "Other book profiles than current explicit default XML-restored1",
+    "More than32 pre-gap sources (current inherited small-suffix TimSort limit;Laura max16)",
+    "new productive physical beam-side registrations/original beam-before-head ordering",
+    "equal-abscissa seed/equal-distance section HashSet ties",
+    "fresh original transient HEADS lifetime",
+    "nonzero skew",
+    "real scans",
+    "special or mixed staff",
+    "full24shape pages"
+  ],
+  "heads_complete": false,
+  "stems_complete": false
+}

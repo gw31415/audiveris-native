@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running tests/stem_image_head_items.rs (/workspace/onboarding/target/debug/deps/stem_image_head_items-66b0391dcca8a28f)
+
+running 3 tests
+test empty_heads_and_late_unsupported_skew_staff_preserve_input ... ok
+test actual_image_head_builder_items_and_lengths_match_original_with_owned_glyph_ids ... ok
+test actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests has been running for over 60 seconds
+test actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 75.79s

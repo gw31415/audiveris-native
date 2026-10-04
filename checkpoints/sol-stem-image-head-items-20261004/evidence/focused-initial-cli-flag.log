@@ -1,0 +1,25 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.03s
+     Running tests/stem_image_head_items.rs (/workspace/onboarding/target/debug/deps/stem_image_head_items-66b0391dcca8a28f)
+
+running 3 tests
+test actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests ... FAILED
+test empty_heads_and_late_unsupported_skew_staff_preserve_input ... ok
+test actual_image_head_builder_items_and_lengths_match_original_with_owned_glyph_ids ... ok
+
+failures:
+
+---- actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests stdout ----
+
+thread 'actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests' (1008129) panicked at tests/stem_image_head_items.rs:105:5:
+usage: audiveris-stems IMAGE RESIDUAL.pgm HEADS.json STEMS.json
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 26.53s
+
+error: test failed, to rerun pass `--test stem_image_head_items`
