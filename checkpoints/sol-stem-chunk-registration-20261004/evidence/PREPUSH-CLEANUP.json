@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-chunk-registration/sol-stem-chunk-registration-20261004-prepush",
+  "source_commit": "97b7313ba1e3ed11471061b032c851652e9722d1",
+  "source_tree": "1ac68119e1fc7bea45d06747d5ac8c89a75e7abe",
+  "all_sha256_verified": 6462,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}
