@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.27s
+     Running tests/stem_lookup_area.rs (/workspace/onboarding/target/debug/deps/stem_lookup_area-cc1bd71ca57b5153)
+
+running 2 tests
+test area_refuses_skew_invalid_limits_and_crossing_without_mutation ... ok
+test original_head_area_actual_references_part_edges_and_limit_ulp_controls_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
