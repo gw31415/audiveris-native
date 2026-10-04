@@ -9,3 +9,5 @@ Native explicit head/stump relation connect/disconnect on already registered ret
 Restore: `python checkpoints/sol-stem-cache-head-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6510 source hashes, plus all 1298 archival files and archival tree. Saved remote commit `f0bf6ab2a5f40303766bb5764ec9d5091b10b4f8`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
