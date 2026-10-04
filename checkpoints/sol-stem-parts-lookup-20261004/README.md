@@ -9,3 +9,5 @@ Native pure StemBuilder lookup of original supplied single-polygon areas over ac
 Restore: `python checkpoints/sol-stem-parts-lookup-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6415 source hashes, plus all 1111 archival files and archival tree. Saved remote commit `affa35a2a73628c8eafeda95b7bde171ea3d9e63`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
