@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "duplicates": [
+    {
+      "status": "passed",
+      "removed_only_verified_duplicate_restore": "/workspace/work/head-lifecycle/sol-head-staff-dependency-20261003-remote-restore",
+      "all_sha256": 4870,
+      "source_commit": "440aea056874db6fd944327e551ca6b8d7e027f5",
+      "source_tree": "7dca07e254d66bb16fa6d5c158ce53e4cbe116ca",
+      "originals_bundles_latest_fresh_pair_retained": true
+    },
+    {
+      "status": "passed",
+      "removed_only_verified_duplicate_restore": "/workspace/work/head-expansion/sol-head-all-shapes-20261004-remote-restore",
+      "all_sha256": 6169,
+      "source_commit": "5945e8aca16ff3f8ba0a43d4fcde92262094b324",
+      "source_tree": "cbfe556b0a5c8869885cd3dbe34a9fef25b349d1",
+      "originals_bundles_latest_fresh_pair_retained": true
+    }
+  ]
+}

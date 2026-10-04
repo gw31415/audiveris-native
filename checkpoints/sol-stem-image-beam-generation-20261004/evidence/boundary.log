@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.20s
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_native-54c661d59a96a5a3)
+
+running 3 tests
+test stem_image_beam_generation::tests::side_width_stops_at_first_overwide_section_and_portion_edges ... ok
+test stem_image_beam_generation::tests::original_nearest_reuse_inclusive_ulps_and_new_anchor_registration ... ok
+test stem_image_beam_generation::tests::original_purge_overlap_touch_distance_threshold_and_removal_iteration ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 66 filtered out; finished in 0.00s
