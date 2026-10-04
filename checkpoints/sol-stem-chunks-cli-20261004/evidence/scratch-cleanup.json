@@ -1,0 +1,7 @@
+{
+  "removed_only_verified_previous_restoration": "/workspace/work/stem-chunk-head-filter/sol-stem-chunk-head-filter-20261004-remote-restore",
+  "source_files_sha256": 6475,
+  "removed_only_verified_previous_archive_clone": "/workspace/work/stem-chunk-head-filter/sol-stem-chunk-head-filter-20261004-remote-clone",
+  "archive_files_sha256": 1230,
+  "retained_newer_449_remote_clone_and_source_restore": true
+}
