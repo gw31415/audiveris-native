@@ -9,3 +9,5 @@ Original bounded five-line cue GRID propagation and diagnostics: actual discarde
 Restore: `python checkpoints/sol-grid-cue-propagation-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6270 source hashes, plus all 858 archival files and archival tree. Saved remote commit `38412582b860d39f12a3d119ac1f949dd0bed56c`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
