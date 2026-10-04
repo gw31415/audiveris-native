@@ -9,3 +9,5 @@ Cue mixed staff KEY input, projection and HiLo scale propagation; typed page-mai
 Restore: `python checkpoints/sol-cue-headers-rest-20261004/RESTORE.py --repository ARCHIVAL_CLONE --destination NEW_DIRECTORY`. Destination must not exist. No new credentials, downloads or toolchain setup.
 
 See MANIFEST.json for complete hashes, validation and remaining work.
+
+Separate remote clone/restoration verified source commit/tree and all 6310 source hashes, plus all 919 archival files and archival tree. Saved remote commit `8beb8290e62f0c3c28b4a192ce84284624a29af7`. Recovered CLI oracle comparison passes; tests were not rerun on the restored source.
