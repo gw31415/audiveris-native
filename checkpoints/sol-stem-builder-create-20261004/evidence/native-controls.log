@@ -1,0 +1,2 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `/workspace/onboarding/target/debug/examples/stem_builder_dump fixtures/official-stem-builder-create/controls.json /workspace/work/cue-clef-key/stem-builder-native-final.json`

@@ -1,0 +1,1168 @@
+Compiled from "StemsRetriever.java"
+public class org.audiveris.omr.sheet.stem.StemsRetriever {
+  private static final org.audiveris.omr.sheet.stem.StemsRetriever$Constants constants;
+
+  private static final org.slf4j.Logger logger;
+
+  private final org.audiveris.omr.sheet.SystemInfo system;
+
+  private final org.audiveris.omr.sig.SIGraph sig;
+
+  private final org.audiveris.omr.sheet.Scale scale;
+
+  private org.audiveris.omr.sheet.stem.StemsRetriever$Parameters params;
+
+  private java.util.List<org.audiveris.omr.sig.inter.Inter> systemHeads;
+
+  private java.util.List<org.audiveris.omr.glyph.Glyph> systemSeeds;
+
+  private java.util.List<org.audiveris.omr.sig.inter.Inter> systemBeams;
+
+  private final java.util.HashMap<org.audiveris.omr.glyph.Glyph, org.audiveris.omr.sig.inter.StemInter> systemStems;
+
+  private final java.util.List<java.awt.geom.Area> noStemAreas;
+
+  private org.audiveris.omr.sheet.stem.StemChecker stemChecker;
+
+  private final java.util.List<org.audiveris.omr.sheet.SystemInfo> systemsAbove;
+
+  private final java.util.List<org.audiveris.omr.sheet.SystemInfo> systemsBelow;
+
+  private final java.util.TreeMap<java.lang.Integer, java.lang.Integer> gapMap;
+
+  private final java.util.LinkedHashMap<org.audiveris.omr.sig.inter.Inter, java.util.Set<org.audiveris.omr.util.HorizontalSide>> undefs;
+
+  private org.audiveris.omr.util.StopWatch watch;
+
+  public org.audiveris.omr.sheet.stem.StemsRetriever(org.audiveris.omr.sheet.SystemInfo);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #7                  // class java/util/HashMap
+       8: dup
+       9: invokespecial #9                  // Method java/util/HashMap."<init>":()V
+      12: putfield      #10                 // Field systemStems:Ljava/util/HashMap;
+      15: aload_0
+      16: new           #16                 // class java/util/LinkedHashMap
+      19: dup
+      20: invokespecial #18                 // Method java/util/LinkedHashMap."<init>":()V
+      23: putfield      #19                 // Field undefs:Ljava/util/LinkedHashMap;
+      26: aload_0
+      27: aload_1
+      28: putfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      31: aload_0
+      32: aload_1
+      33: invokevirtual #27                 // Method org/audiveris/omr/sheet/SystemInfo.getSig:()Lorg/audiveris/omr/sig/SIGraph;
+      36: putfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      39: aload_1
+      40: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+      43: astore_2
+      44: aload_0
+      45: aload_2
+      46: invokevirtual #41                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+      49: putfield      #47                 // Field scale:Lorg/audiveris/omr/sheet/Scale;
+      52: aload_0
+      53: aload_0
+      54: invokevirtual #51                 // Method buildGapMap:()Ljava/util/TreeMap;
+      57: putfield      #55                 // Field gapMap:Ljava/util/TreeMap;
+      60: aload_0
+      61: aload_0
+      62: invokevirtual #59                 // Method retrieveNoStemAreas:()Ljava/util/List;
+      65: putfield      #63                 // Field noStemAreas:Ljava/util/List;
+      68: aload_2
+      69: invokevirtual #67                 // Method org/audiveris/omr/sheet/Sheet.getSystemManager:()Lorg/audiveris/omr/sheet/SystemManager;
+      72: astore_3
+      73: aload_0
+      74: aload_3
+      75: aload_1
+      76: getstatic     #71                 // Field org/audiveris/omr/util/VerticalSide.TOP:Lorg/audiveris/omr/util/VerticalSide;
+      79: invokevirtual #77                 // Method org/audiveris/omr/sheet/SystemManager.verticalNeighbors:(Lorg/audiveris/omr/sheet/SystemInfo;Lorg/audiveris/omr/util/VerticalSide;)Ljava/util/List;
+      82: putfield      #83                 // Field systemsAbove:Ljava/util/List;
+      85: aload_0
+      86: aload_3
+      87: aload_1
+      88: getstatic     #86                 // Field org/audiveris/omr/util/VerticalSide.BOTTOM:Lorg/audiveris/omr/util/VerticalSide;
+      91: invokevirtual #77                 // Method org/audiveris/omr/sheet/SystemManager.verticalNeighbors:(Lorg/audiveris/omr/sheet/SystemInfo;Lorg/audiveris/omr/util/VerticalSide;)Ljava/util/List;
+      94: putfield      #89                 // Field systemsBelow:Ljava/util/List;
+      97: return
+
+  void addStemInter(org.audiveris.omr.sig.inter.StemInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #92                 // Method org/audiveris/omr/sig/inter/StemInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       4: ifnull        20
+       7: aload_0
+       8: getfield      #10                 // Field systemStems:Ljava/util/HashMap;
+      11: aload_1
+      12: invokevirtual #92                 // Method org/audiveris/omr/sig/inter/StemInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+      15: aload_1
+      16: invokevirtual #98                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      19: pop
+      20: return
+
+  private java.util.TreeMap<java.lang.Integer, java.lang.Integer> buildGapMap();
+    Code:
+       0: new           #102                // class java/util/TreeMap
+       3: dup
+       4: invokespecial #104                // Method java/util/TreeMap."<init>":()V
+       7: astore_1
+       8: iconst_0
+       9: istore_2
+      10: iload_2
+      11: iconst_4
+      12: if_icmpgt     44
+      15: aload_1
+      16: iload_2
+      17: invokestatic  #107                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      20: aload_0
+      21: getfield      #47                 // Field scale:Lorg/audiveris/omr/sheet/Scale;
+      24: iload_2
+      25: invokestatic  #113                // Method org/audiveris/omr/sheet/stem/StemChecker.getMaxYGap:(I)Lorg/audiveris/omr/sheet/Scale$Fraction;
+      28: invokevirtual #119                // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      31: invokestatic  #107                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      34: invokevirtual #125                // Method java/util/TreeMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      37: pop
+      38: iinc          2, 1
+      41: goto          10
+      44: getstatic     #126                // Field logger:Lorg/slf4j/Logger;
+      47: ldc           #130                // String gapMap:{}
+      49: aload_1
+      50: invokeinterface #132,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+      55: aload_1
+      56: areturn
+
+  private void checkHeadStems(org.audiveris.omr.sig.inter.HeadInter);
+    Code:
+       0: new           #138                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #140                // Method java/util/ArrayList."<init>":()V
+       7: astore_2
+       8: aload_0
+       9: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      12: aload_1
+      13: ldc           #141                // class org/audiveris/omr/sig/relation/HeadStemRelation
+      15: invokevirtual #143                // Method org/audiveris/omr/sig/SIGraph.getRelations:(Lorg/audiveris/omr/sig/inter/Inter;Ljava/lang/Class;)Ljava/util/Set;
+      18: invokeinterface #149,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      23: astore_3
+      24: aload_3
+      25: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      30: ifeq          66
+      33: aload_3
+      34: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      39: checkcast     #165                // class org/audiveris/omr/sig/relation/Relation
+      42: astore        4
+      44: aload_2
+      45: aload_0
+      46: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      49: aload         4
+      51: invokevirtual #167                // Method org/audiveris/omr/sig/SIGraph.getEdgeTarget:(Ljava/lang/Object;)Ljava/lang/Object;
+      54: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+      57: invokeinterface #173,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      62: pop
+      63: goto          24
+      66: aload_0
+      67: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      70: aconst_null
+      71: aload_2
+      72: invokevirtual #179                // Method org/audiveris/omr/sig/SIGraph.getPartitions:(Lorg/audiveris/omr/sig/inter/Inter;Ljava/util/List;)Ljava/util/List;
+      75: astore_3
+      76: aconst_null
+      77: astore        4
+      79: aload_3
+      80: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      85: astore        5
+      87: aload         5
+      89: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      94: ifeq          148
+      97: aload         5
+      99: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     104: checkcast     #174                // class java/util/List
+     107: astore        6
+     109: aload         6
+     111: invokeinterface #184,  1          // InterfaceMethod java/util/List.size:()I
+     116: iconst_1
+     117: if_icmpgt     123
+     120: goto          87
+     123: aload         4
+     125: ifnonnull     138
+     128: new           #188                // class org/audiveris/omr/sheet/stem/HeadStemsCleaner
+     131: dup
+     132: aload_1
+     133: invokespecial #190                // Method org/audiveris/omr/sheet/stem/HeadStemsCleaner."<init>":(Lorg/audiveris/omr/sig/inter/HeadInter;)V
+     136: astore        4
+     138: aload         4
+     140: aload         6
+     142: invokevirtual #193                // Method org/audiveris/omr/sheet/stem/HeadStemsCleaner.check:(Ljava/util/List;)V
+     145: goto          87
+     148: return
+
+  private void checkNeededStems(java.util.List<org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_1
+       1: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       6: astore_2
+       7: aload_2
+       8: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          178
+      16: aload_2
+      17: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+      25: astore_3
+      26: getstatic     #197                // Field org/audiveris/omr/glyph/ShapeSet.StemHeads:Ljava/util/EnumSet;
+      29: aload_3
+      30: invokeinterface #203,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getShape:()Lorg/audiveris/omr/glyph/Shape;
+      35: invokevirtual #207                // Method java/util/EnumSet.contains:(Ljava/lang/Object;)Z
+      38: ifeq          175
+      41: aload_0
+      42: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      45: aload_3
+      46: iconst_1
+      47: anewarray     #212                // class java/lang/Class
+      50: dup
+      51: iconst_0
+      52: ldc           #141                // class org/audiveris/omr/sig/relation/HeadStemRelation
+      54: aastore
+      55: invokevirtual #214                // Method org/audiveris/omr/sig/SIGraph.hasRelation:(Lorg/audiveris/omr/sig/inter/Inter;[Ljava/lang/Class;)Z
+      58: ifne          175
+      61: aload_0
+      62: getfield      #19                 // Field undefs:Ljava/util/LinkedHashMap;
+      65: aload_3
+      66: invokevirtual #218                // Method java/util/LinkedHashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      69: checkcast     #150                // class java/util/Set
+      72: astore        4
+      74: iconst_0
+      75: istore        5
+      77: aload         4
+      79: ifnull        163
+      82: aload_3
+      83: checkcast     #221                // class org/audiveris/omr/sig/inter/HeadInter
+      86: astore        6
+      88: aload         6
+      90: invokevirtual #223                // Method org/audiveris/omr/sig/inter/HeadInter.getCenter:()Ljava/awt/Point;
+      93: astore        7
+      95: aload         4
+      97: invokeinterface #149,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+     102: astore        8
+     104: aload         8
+     106: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     111: ifeq          163
+     114: aload         8
+     116: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     121: checkcast     #227                // class org/audiveris/omr/util/HorizontalSide
+     124: astore        9
+     126: aload         6
+     128: invokevirtual #229                // Method org/audiveris/omr/sig/inter/HeadInter.getLinker:()Lorg/audiveris/omr/sheet/stem/HeadLinker;
+     131: invokevirtual #233                // Method org/audiveris/omr/sheet/stem/HeadLinker.getSLinkers:()Ljava/util/Map;
+     134: aload         9
+     136: invokeinterface #239,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     141: checkcast     #242                // class org/audiveris/omr/sheet/stem/HeadLinker$SLinker
+     144: astore        10
+     146: getstatic     #126                // Field logger:Lorg/slf4j/Logger;
+     149: ldc           #244                // String {} undef  {}
+     151: aload         6
+     153: aload         10
+     155: invokeinterface #246,  4          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     160: goto          104
+     163: iload         5
+     165: ifne          175
+     168: aload_3
+     169: iconst_1
+     170: invokeinterface #249,  2          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.setAbnormal:(Z)V
+     175: goto          7
+     178: return
+
+  public void finalizeBeams();
+    Code:
+       0: aload_0
+       1: getfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+       4: ifnonnull     26
+       7: aload_0
+       8: new           #257                // class org/audiveris/omr/sheet/stem/StemsRetriever$Parameters
+      11: dup
+      12: aload_0
+      13: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      16: aload_0
+      17: getfield      #47                 // Field scale:Lorg/audiveris/omr/sheet/Scale;
+      20: invokespecial #259                // Method org/audiveris/omr/sheet/stem/StemsRetriever$Parameters."<init>":(Lorg/audiveris/omr/sheet/SystemInfo;Lorg/audiveris/omr/sheet/Scale;)V
+      23: putfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+      26: aload_0
+      27: aload_0
+      28: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      31: getstatic     #262                // Field org/audiveris/omr/glyph/GlyphGroup.VERTICAL_SEED:Lorg/audiveris/omr/glyph/GlyphGroup;
+      34: invokevirtual #268                // Method org/audiveris/omr/sheet/SystemInfo.getGroupedGlyphs:(Lorg/audiveris/omr/glyph/GlyphGroup;)Ljava/util/List;
+      37: putfield      #272                // Field systemSeeds:Ljava/util/List;
+      40: aload_0
+      41: aload_0
+      42: getfield      #272                // Field systemSeeds:Ljava/util/List;
+      45: invokevirtual #275                // Method purgeNoStemSeeds:(Ljava/util/List;)V
+      48: new           #278                // class org/audiveris/omr/sheet/stem/StemsRetriever$Finalizer
+      51: dup
+      52: aload_0
+      53: invokespecial #280                // Method org/audiveris/omr/sheet/stem/StemsRetriever$Finalizer."<init>":(Lorg/audiveris/omr/sheet/stem/StemsRetriever;)V
+      56: invokevirtual #283                // Method org/audiveris/omr/sheet/stem/StemsRetriever$Finalizer.process:()V
+      59: return
+
+  private void finalizeStems();
+    Code:
+       0: aload_0
+       1: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+       4: ldc_w         #290                // String checkHeadStems
+       7: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      10: aload_0
+      11: getfield      #298                // Field systemHeads:Ljava/util/List;
+      14: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      19: astore_1
+      20: aload_1
+      21: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      26: ifeq          50
+      29: aload_1
+      30: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      35: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+      38: astore_2
+      39: aload_0
+      40: aload_2
+      41: checkcast     #221                // class org/audiveris/omr/sig/inter/HeadInter
+      44: invokevirtual #301                // Method checkHeadStems:(Lorg/audiveris/omr/sig/inter/HeadInter;)V
+      47: goto          20
+      50: aload_0
+      51: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+      54: ldc_w         #303                // String checkNeededStems
+      57: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      60: aload_0
+      61: aload_0
+      62: getfield      #298                // Field systemHeads:Ljava/util/List;
+      65: invokevirtual #305                // Method checkNeededStems:(Ljava/util/List;)V
+      68: return
+
+  java.util.TreeMap<java.lang.Integer, java.lang.Integer> getGapMap();
+    Code:
+       0: aload_0
+       1: getfield      #55                 // Field gapMap:Ljava/util/TreeMap;
+       4: areturn
+
+  double getMaxHeadContextualGrade(org.audiveris.omr.sig.inter.HeadInter, org.audiveris.omr.sig.relation.HeadStemRelation);
+    Code:
+       0: getstatic     #307                // Field org/audiveris/omr/glyph/Grades.intrinsicRatio:D
+       3: dstore_3
+       4: dload_3
+       5: aload_2
+       6: invokevirtual #313                // Method org/audiveris/omr/sig/relation/HeadStemRelation.getTargetRatio:()D
+       9: dmul
+      10: dconst_1
+      11: dsub
+      12: dstore        5
+      14: aload_1
+      15: invokevirtual #317                // Method org/audiveris/omr/sig/inter/HeadInter.getGrade:()Ljava/lang/Double;
+      18: invokevirtual #321                // Method java/lang/Double.doubleValue:()D
+      21: dload         5
+      23: invokestatic  #326                // Method org/audiveris/omr/sig/GradeUtil.contextual:(DD)D
+      26: dstore        7
+      28: dload         7
+      30: dreturn
+
+  java.util.List<org.audiveris.omr.sig.inter.Inter> getNeighboringInters(java.util.List<? extends org.audiveris.omr.sig.inter.Inter>, java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+       4: invokevirtual #332                // Method org/audiveris/omr/sheet/SystemInfo.getBounds:()Ljava/awt/Rectangle;
+       7: astore_3
+       8: new           #336                // class java/awt/Rectangle
+      11: dup
+      12: aload_2
+      13: getfield      #338                // Field java/awt/Rectangle.x:I
+      16: aload_3
+      17: getfield      #342                // Field java/awt/Rectangle.y:I
+      20: aload_2
+      21: getfield      #345                // Field java/awt/Rectangle.width:I
+      24: aload_3
+      25: getfield      #348                // Field java/awt/Rectangle.height:I
+      28: invokespecial #351                // Method java/awt/Rectangle."<init>":(IIII)V
+      31: astore        4
+      33: aload         4
+      35: aload_0
+      36: getfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+      39: getfield      #354                // Field org/audiveris/omr/sheet/stem/StemsRetriever$Parameters.vicinityMargin:I
+      42: iconst_0
+      43: invokevirtual #357                // Method java/awt/Rectangle.grow:(II)V
+      46: aload_1
+      47: getstatic     #361                // Field org/audiveris/omr/math/GeoOrder.BY_ABSCISSA:Lorg/audiveris/omr/math/GeoOrder;
+      50: aload         4
+      52: invokestatic  #367                // Method org/audiveris/omr/sig/inter/Inters.intersectedInters:(Ljava/util/List;Lorg/audiveris/omr/math/GeoOrder;Ljava/awt/Rectangle;)Ljava/util/List;
+      55: areturn
+
+  java.util.Set<org.audiveris.omr.glyph.Glyph> getNeighboringSeeds(java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+       4: invokevirtual #332                // Method org/audiveris/omr/sheet/SystemInfo.getBounds:()Ljava/awt/Rectangle;
+       7: astore_2
+       8: new           #336                // class java/awt/Rectangle
+      11: dup
+      12: aload_1
+      13: getfield      #338                // Field java/awt/Rectangle.x:I
+      16: aload_2
+      17: getfield      #342                // Field java/awt/Rectangle.y:I
+      20: aload_1
+      21: getfield      #345                // Field java/awt/Rectangle.width:I
+      24: aload_2
+      25: getfield      #348                // Field java/awt/Rectangle.height:I
+      28: invokespecial #351                // Method java/awt/Rectangle."<init>":(IIII)V
+      31: astore_3
+      32: aload_3
+      33: aload_0
+      34: getfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+      37: getfield      #354                // Field org/audiveris/omr/sheet/stem/StemsRetriever$Parameters.vicinityMargin:I
+      40: iconst_0
+      41: invokevirtual #357                // Method java/awt/Rectangle.grow:(II)V
+      44: aload_0
+      45: getfield      #272                // Field systemSeeds:Ljava/util/List;
+      48: aload_3
+      49: invokestatic  #373                // Method org/audiveris/omr/glyph/Glyphs.intersectedGlyphs:(Ljava/util/Collection;Ljava/awt/Rectangle;)Ljava/util/Set;
+      52: areturn
+
+  java.util.List<java.awt.geom.Area> getNoStemAreas();
+    Code:
+       0: aload_0
+       1: getfield      #63                 // Field noStemAreas:Ljava/util/List;
+       4: areturn
+
+  org.audiveris.omr.sheet.stem.StemsRetriever$Parameters getParams();
+    Code:
+       0: aload_0
+       1: getfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+       4: areturn
+
+  org.audiveris.omr.sheet.stem.StemChecker getStemChecker();
+    Code:
+       0: aload_0
+       1: getfield      #379                // Field stemChecker:Lorg/audiveris/omr/sheet/stem/StemChecker;
+       4: areturn
+
+  org.audiveris.omr.sig.inter.StemInter getStemInter(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: aload_0
+       1: getfield      #10                 // Field systemStems:Ljava/util/HashMap;
+       4: aload_1
+       5: invokevirtual #383                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       8: checkcast     #93                 // class org/audiveris/omr/sig/inter/StemInter
+      11: areturn
+
+  org.audiveris.omr.sheet.SystemInfo getSystem();
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+       4: areturn
+
+  java.util.List<org.audiveris.omr.sig.inter.Inter> getSystemBeams();
+    Code:
+       0: aload_0
+       1: getfield      #384                // Field systemBeams:Ljava/util/List;
+       4: areturn
+
+  java.util.List<org.audiveris.omr.sig.inter.Inter> getSystemHeads();
+    Code:
+       0: aload_0
+       1: getfield      #298                // Field systemHeads:Ljava/util/List;
+       4: areturn
+
+  java.awt.geom.Point2D getTargetPt(java.awt.geom.Point2D, java.awt.geom.Line2D);
+    Code:
+       0: aload_1
+       1: aload_2
+       2: aload_0
+       3: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+       6: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+       9: invokevirtual #387                // Method org/audiveris/omr/sheet/Sheet.getSkew:()Lorg/audiveris/omr/sheet/Skew;
+      12: invokevirtual #391                // Method org/audiveris/omr/sheet/Skew.getSlope:()D
+      15: invokestatic  #396                // Method getTargetPt:(Ljava/awt/geom/Point2D;Ljava/awt/geom/Line2D;D)Ljava/awt/geom/Point2D;
+      18: areturn
+
+  java.awt.geom.Line2D getTheoreticalLine(java.awt.geom.Point2D, double);
+    Code:
+       0: new           #400                // class java/awt/geom/Line2D$Double
+       3: dup
+       4: aload_1
+       5: aload_0
+       6: aload_1
+       7: new           #400                // class java/awt/geom/Line2D$Double
+      10: dup
+      11: dconst_0
+      12: dload_2
+      13: ldc2_w        #402                // double 100.0d
+      16: dload_2
+      17: invokespecial #404                // Method java/awt/geom/Line2D$Double."<init>":(DDDD)V
+      20: invokevirtual #407                // Method getTargetPt:(Ljava/awt/geom/Point2D;Ljava/awt/geom/Line2D;)Ljava/awt/geom/Point2D;
+      23: invokespecial #410                // Method java/awt/geom/Line2D$Double."<init>":(Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;)V
+      26: areturn
+
+  private void inspectStems();
+    Code:
+       0: getstatic     #126                // Field logger:Lorg/slf4j/Logger;
+       3: ldc_w         #413                // String \n{} inspectStems
+       6: aload_0
+       7: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      10: invokeinterface #132,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+      15: aload_0
+      16: new           #114                // class org/audiveris/omr/sheet/stem/StemChecker
+      19: dup
+      20: aload_0
+      21: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      24: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+      27: invokespecial #415                // Method org/audiveris/omr/sheet/stem/StemChecker."<init>":(Lorg/audiveris/omr/sheet/Sheet;)V
+      30: putfield      #379                // Field stemChecker:Lorg/audiveris/omr/sheet/stem/StemChecker;
+      33: aload_0
+      34: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+      37: ldc_w         #418                // String Seeds
+      40: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      43: aload_0
+      44: aload_0
+      45: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      48: getstatic     #262                // Field org/audiveris/omr/glyph/GlyphGroup.VERTICAL_SEED:Lorg/audiveris/omr/glyph/GlyphGroup;
+      51: invokevirtual #268                // Method org/audiveris/omr/sheet/SystemInfo.getGroupedGlyphs:(Lorg/audiveris/omr/glyph/GlyphGroup;)Ljava/util/List;
+      54: putfield      #272                // Field systemSeeds:Ljava/util/List;
+      57: aload_0
+      58: aload_0
+      59: getfield      #272                // Field systemSeeds:Ljava/util/List;
+      62: invokevirtual #275                // Method purgeNoStemSeeds:(Ljava/util/List;)V
+      65: aload_0
+      66: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+      69: ldc_w         #420                // String Beams linkers
+      72: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      75: aload_0
+      76: aload_0
+      77: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      80: ldc_w         #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+      83: invokevirtual #424                // Method org/audiveris/omr/sig/SIGraph.inters:(Ljava/lang/Class;)Ljava/util/List;
+      86: putfield      #384                // Field systemBeams:Ljava/util/List;
+      89: aload_0
+      90: getfield      #384                // Field systemBeams:Ljava/util/List;
+      93: getstatic     #428                // Field org/audiveris/omr/sig/inter/Inters.byAbscissa:Ljava/util/Comparator;
+      96: invokestatic  #432                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+      99: aload_0
+     100: getfield      #384                // Field systemBeams:Ljava/util/List;
+     103: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     108: astore_1
+     109: aload_1
+     110: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     115: ifeq          173
+     118: aload_1
+     119: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     124: checkcast     #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+     127: astore_2
+     128: aload_2
+     129: invokevirtual #438                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.getLinker:()Lorg/audiveris/omr/sheet/stem/BeamLinker;
+     132: ifnonnull     170
+     135: new           #441                // class org/audiveris/omr/sheet/stem/BeamLinker
+     138: dup
+     139: aload_2
+     140: aload_0
+     141: invokespecial #443                // Method org/audiveris/omr/sheet/stem/BeamLinker."<init>":(Lorg/audiveris/omr/sig/inter/AbstractBeamInter;Lorg/audiveris/omr/sheet/stem/StemsRetriever;)V
+     144: astore_3
+     145: aload_3
+     146: invokevirtual #446                // Method org/audiveris/omr/sheet/stem/BeamLinker.looksLikeTremolo:()Z
+     149: ifeq          165
+     152: aload_1
+     153: invokeinterface #449,  1          // InterfaceMethod java/util/Iterator.remove:()V
+     158: aload_2
+     159: invokevirtual #452                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.remove:()V
+     162: goto          170
+     165: aload_2
+     166: aload_3
+     167: invokevirtual #453                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.setLinker:(Lorg/audiveris/omr/sheet/stem/BeamLinker;)V
+     170: goto          109
+     173: aload_0
+     174: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+     177: ldc_w         #457                // String Heads linkers
+     180: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     183: aload_0
+     184: aload_0
+     185: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+     188: aload_0
+     189: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+     192: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+     195: invokestatic  #459                // Method org/audiveris/omr/glyph/ShapeSet.getTemplateNotesStem:(Lorg/audiveris/omr/sheet/Sheet;)Ljava/util/EnumSet;
+     198: invokevirtual #463                // Method org/audiveris/omr/sig/SIGraph.inters:(Ljava/util/Collection;)Ljava/util/List;
+     201: putfield      #298                // Field systemHeads:Ljava/util/List;
+     204: aload_0
+     205: getfield      #298                // Field systemHeads:Ljava/util/List;
+     208: getstatic     #428                // Field org/audiveris/omr/sig/inter/Inters.byAbscissa:Ljava/util/Comparator;
+     211: invokestatic  #432                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+     214: aload_0
+     215: getfield      #298                // Field systemHeads:Ljava/util/List;
+     218: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     223: astore_1
+     224: aload_1
+     225: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     230: ifeq          264
+     233: aload_1
+     234: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     239: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+     242: astore_2
+     243: aload_2
+     244: checkcast     #221                // class org/audiveris/omr/sig/inter/HeadInter
+     247: astore_3
+     248: aload_3
+     249: new           #234                // class org/audiveris/omr/sheet/stem/HeadLinker
+     252: dup
+     253: aload_3
+     254: aload_0
+     255: invokespecial #466                // Method org/audiveris/omr/sheet/stem/HeadLinker."<init>":(Lorg/audiveris/omr/sig/inter/HeadInter;Lorg/audiveris/omr/sheet/stem/StemsRetriever;)V
+     258: invokevirtual #469                // Method org/audiveris/omr/sig/inter/HeadInter.setLinker:(Lorg/audiveris/omr/sheet/stem/HeadLinker;)V
+     261: goto          224
+     264: aload_0
+     265: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+     268: ldc_w         #472                // String Beams inspection
+     271: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     274: aload_0
+     275: getfield      #384                // Field systemBeams:Ljava/util/List;
+     278: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     283: astore_1
+     284: aload_1
+     285: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     290: ifeq          318
+     293: aload_1
+     294: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     299: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+     302: astore_2
+     303: aload_2
+     304: checkcast     #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+     307: astore_3
+     308: aload_3
+     309: invokevirtual #438                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.getLinker:()Lorg/audiveris/omr/sheet/stem/BeamLinker;
+     312: invokevirtual #474                // Method org/audiveris/omr/sheet/stem/BeamLinker.inspectVLinkers:()V
+     315: goto          284
+     318: aload_0
+     319: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+     322: ldc_w         #477                // String Heads inspection
+     325: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     328: aload_0
+     329: getfield      #298                // Field systemHeads:Ljava/util/List;
+     332: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     337: astore_1
+     338: aload_1
+     339: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     344: ifeq          372
+     347: aload_1
+     348: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     353: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+     356: astore_2
+     357: aload_2
+     358: checkcast     #221                // class org/audiveris/omr/sig/inter/HeadInter
+     361: astore_3
+     362: aload_3
+     363: invokevirtual #229                // Method org/audiveris/omr/sig/inter/HeadInter.getLinker:()Lorg/audiveris/omr/sheet/stem/HeadLinker;
+     366: invokevirtual #479                // Method org/audiveris/omr/sheet/stem/HeadLinker.inspectCLinkers:()V
+     369: goto          338
+     372: return
+
+  private void linkStems();
+    Code:
+       0: getstatic     #126                // Field logger:Lorg/slf4j/Logger;
+       3: ldc_w         #482                // String \n{} linkStems
+       6: aload_0
+       7: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      10: invokeinterface #132,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+      15: aload_0
+      16: new           #114                // class org/audiveris/omr/sheet/stem/StemChecker
+      19: dup
+      20: aload_0
+      21: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      24: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+      27: invokespecial #415                // Method org/audiveris/omr/sheet/stem/StemChecker."<init>":(Lorg/audiveris/omr/sheet/Sheet;)V
+      30: putfield      #379                // Field stemChecker:Lorg/audiveris/omr/sheet/stem/StemChecker;
+      33: aload_0
+      34: aload_0
+      35: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      38: ldc_w         #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+      41: invokevirtual #424                // Method org/audiveris/omr/sig/SIGraph.inters:(Ljava/lang/Class;)Ljava/util/List;
+      44: putfield      #384                // Field systemBeams:Ljava/util/List;
+      47: aload_0
+      48: getfield      #384                // Field systemBeams:Ljava/util/List;
+      51: getstatic     #484                // Field org/audiveris/omr/sig/inter/Inters.byReverseWidth:Ljava/util/Comparator;
+      54: invokestatic  #432                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+      57: aload_0
+      58: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+      61: ldc_w         #487                // String Beams sides linking
+      64: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      67: aload_0
+      68: getfield      #384                // Field systemBeams:Ljava/util/List;
+      71: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      76: astore_1
+      77: aload_1
+      78: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      83: ifeq          136
+      86: aload_1
+      87: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      92: checkcast     #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+      95: astore_2
+      96: aload_2
+      97: invokevirtual #438                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.getLinker:()Lorg/audiveris/omr/sheet/stem/BeamLinker;
+     100: aload_0
+     101: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+     104: invokevirtual #489                // Method org/audiveris/omr/sheet/SystemInfo.getProfile:()I
+     107: invokevirtual #492                // Method org/audiveris/omr/sheet/stem/BeamLinker.linkSides:(I)Z
+     110: istore_3
+     111: iload_3
+     112: ifne          133
+     115: getstatic     #126                // Field logger:Lorg/slf4j/Logger;
+     118: ldc_w         #496                // String Cannot link both sides of {}
+     121: aload_2
+     122: invokeinterface #132,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+     127: aload_1
+     128: invokeinterface #449,  1          // InterfaceMethod java/util/Iterator.remove:()V
+     133: goto          77
+     136: aload_0
+     137: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+     140: ldc_w         #498                // String Beams stumps linking
+     143: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     146: aload_0
+     147: getfield      #384                // Field systemBeams:Ljava/util/List;
+     150: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     155: astore_1
+     156: aload_1
+     157: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     162: ifeq          192
+     165: aload_1
+     166: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     171: checkcast     #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+     174: astore_2
+     175: aload_2
+     176: invokevirtual #438                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.getLinker:()Lorg/audiveris/omr/sheet/stem/BeamLinker;
+     179: aload_0
+     180: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+     183: invokevirtual #489                // Method org/audiveris/omr/sheet/SystemInfo.getProfile:()I
+     186: invokevirtual #500                // Method org/audiveris/omr/sheet/stem/BeamLinker.linkStumps:(I)V
+     189: goto          156
+     192: aload_0
+     193: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+     196: ldc_w         #504                // String Heads linking phase 1
+     199: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     202: aload_0
+     203: aload_0
+     204: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+     207: aload_0
+     208: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+     211: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+     214: invokestatic  #459                // Method org/audiveris/omr/glyph/ShapeSet.getTemplateNotesStem:(Lorg/audiveris/omr/sheet/Sheet;)Ljava/util/EnumSet;
+     217: invokevirtual #463                // Method org/audiveris/omr/sig/SIGraph.inters:(Ljava/util/Collection;)Ljava/util/List;
+     220: putfield      #298                // Field systemHeads:Ljava/util/List;
+     223: aload_0
+     224: getfield      #298                // Field systemHeads:Ljava/util/List;
+     227: getstatic     #506                // Field org/audiveris/omr/sig/inter/Inters.byReverseGrade:Ljava/util/Comparator;
+     230: invokestatic  #432                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+     233: new           #138                // class java/util/ArrayList
+     236: dup
+     237: invokespecial #140                // Method java/util/ArrayList."<init>":()V
+     240: astore_1
+     241: aload_0
+     242: getfield      #298                // Field systemHeads:Ljava/util/List;
+     245: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     250: astore_2
+     251: aload_2
+     252: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     257: ifeq          312
+     260: aload_2
+     261: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     266: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+     269: astore_3
+     270: aload_3
+     271: checkcast     #221                // class org/audiveris/omr/sig/inter/HeadInter
+     274: astore        4
+     276: aload         4
+     278: invokevirtual #229                // Method org/audiveris/omr/sig/inter/HeadInter.getLinker:()Lorg/audiveris/omr/sheet/stem/HeadLinker;
+     281: iconst_0
+     282: aload_0
+     283: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+     286: invokevirtual #489                // Method org/audiveris/omr/sheet/SystemInfo.getProfile:()I
+     289: aload_0
+     290: getfield      #19                 // Field undefs:Ljava/util/LinkedHashMap;
+     293: iconst_0
+     294: invokevirtual #509                // Method org/audiveris/omr/sheet/stem/HeadLinker.linkSides:(IILjava/util/LinkedHashMap;Z)Z
+     297: ifne          309
+     300: aload_1
+     301: aload         4
+     303: invokeinterface #173,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     308: pop
+     309: goto          251
+     312: aload_0
+     313: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+     316: ldc_w         #512                // String Heads linking phase 2
+     319: invokevirtual #292                // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     322: aload_1
+     323: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     328: astore_2
+     329: aload_2
+     330: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     335: ifeq          372
+     338: aload_2
+     339: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     344: checkcast     #221                // class org/audiveris/omr/sig/inter/HeadInter
+     347: astore_3
+     348: aload_3
+     349: invokevirtual #229                // Method org/audiveris/omr/sig/inter/HeadInter.getLinker:()Lorg/audiveris/omr/sheet/stem/HeadLinker;
+     352: iconst_0
+     353: aload_0
+     354: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+     357: invokevirtual #489                // Method org/audiveris/omr/sheet/SystemInfo.getProfile:()I
+     360: aload_0
+     361: getfield      #19                 // Field undefs:Ljava/util/LinkedHashMap;
+     364: iconst_1
+     365: invokevirtual #509                // Method org/audiveris/omr/sheet/stem/HeadLinker.linkSides:(IILjava/util/LinkedHashMap;Z)Z
+     368: pop
+     369: goto          329
+     372: return
+
+  public void process();
+    Code:
+       0: aload_0
+       1: new           #293                // class org/audiveris/omr/util/StopWatch
+       4: dup
+       5: aload_0
+       6: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+       9: invokevirtual #514                // Method org/audiveris/omr/sheet/SystemInfo.getId:()I
+      12: invokedynamic #517,  0            // InvokeDynamic #0:makeConcatWithConstants:(I)Ljava/lang/String;
+      17: invokespecial #521                // Method org/audiveris/omr/util/StopWatch."<init>":(Ljava/lang/String;)V
+      20: putfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+      23: aload_0
+      24: getfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+      27: ifnonnull     49
+      30: aload_0
+      31: new           #257                // class org/audiveris/omr/sheet/stem/StemsRetriever$Parameters
+      34: dup
+      35: aload_0
+      36: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      39: aload_0
+      40: getfield      #47                 // Field scale:Lorg/audiveris/omr/sheet/Scale;
+      43: invokespecial #259                // Method org/audiveris/omr/sheet/stem/StemsRetriever$Parameters."<init>":(Lorg/audiveris/omr/sheet/SystemInfo;Lorg/audiveris/omr/sheet/Scale;)V
+      46: putfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+      49: aload_0
+      50: invokevirtual #523                // Method inspectStems:()V
+      53: aload_0
+      54: invokevirtual #526                // Method linkStems:()V
+      57: aload_0
+      58: invokevirtual #529                // Method finalizeStems:()V
+      61: getstatic     #532                // Field constants:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Constants;
+      64: getfield      #536                // Field org/audiveris/omr/sheet/stem/StemsRetriever$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+      67: invokevirtual #542                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+      70: ifeq          80
+      73: aload_0
+      74: getfield      #286                // Field watch:Lorg/audiveris/omr/util/StopWatch;
+      77: invokevirtual #547                // Method org/audiveris/omr/util/StopWatch.print:()V
+      80: return
+
+  private void purgeNoStemSeeds(java.util.List<org.audiveris.omr.glyph.Glyph>);
+    Code:
+       0: aload_1
+       1: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       6: astore_2
+       7: aload_2
+       8: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      13: ifeq          187
+      16: aload_2
+      17: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      22: checkcast     #550                // class org/audiveris/omr/glyph/Glyph
+      25: astore_3
+      26: aload_3
+      27: invokevirtual #552                // Method org/audiveris/omr/glyph/Glyph.getBounds:()Ljava/awt/Rectangle;
+      30: astore        4
+      32: aload         4
+      34: getfield      #345                // Field java/awt/Rectangle.width:I
+      37: aload         4
+      39: getfield      #348                // Field java/awt/Rectangle.height:I
+      42: imul
+      43: i2d
+      44: dstore        5
+      46: aload_0
+      47: getfield      #63                 // Field noStemAreas:Ljava/util/List;
+      50: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      55: astore        7
+      57: aload         7
+      59: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      64: ifeq          184
+      67: aload         7
+      69: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      74: checkcast     #553                // class java/awt/geom/Area
+      77: astore        8
+      79: aload         8
+      81: aload         4
+      83: invokevirtual #555                // Method java/awt/geom/Area.intersects:(Ljava/awt/geom/Rectangle2D;)Z
+      86: ifeq          181
+      89: new           #553                // class java/awt/geom/Area
+      92: dup
+      93: aload         4
+      95: invokespecial #559                // Method java/awt/geom/Area."<init>":(Ljava/awt/Shape;)V
+      98: astore        9
+     100: aload         9
+     102: aload         8
+     104: invokevirtual #562                // Method java/awt/geom/Area.intersect:(Ljava/awt/geom/Area;)V
+     107: aload         9
+     109: invokevirtual #566                // Method java/awt/geom/Area.getBounds2D:()Ljava/awt/geom/Rectangle2D;
+     112: astore        10
+     114: aload         10
+     116: invokevirtual #570                // Method java/awt/geom/Rectangle2D.getWidth:()D
+     119: aload         10
+     121: invokevirtual #575                // Method java/awt/geom/Rectangle2D.getHeight:()D
+     124: dmul
+     125: dstore        11
+     127: aload         8
+     129: invokevirtual #566                // Method java/awt/geom/Area.getBounds2D:()Ljava/awt/geom/Rectangle2D;
+     132: astore        13
+     134: aload         13
+     136: invokevirtual #570                // Method java/awt/geom/Rectangle2D.getWidth:()D
+     139: aload         13
+     141: invokevirtual #575                // Method java/awt/geom/Rectangle2D.getHeight:()D
+     144: dmul
+     145: dstore        14
+     147: dload         11
+     149: dload         14
+     151: dload         5
+     153: invokestatic  #578                // Method java/lang/Math.min:(DD)D
+     156: ddiv
+     157: dstore        16
+     159: dload         16
+     161: aload_0
+     162: getfield      #253                // Field params:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Parameters;
+     165: getfield      #583                // Field org/audiveris/omr/sheet/stem/StemsRetriever$Parameters.maxBarOverlap:D
+     168: dcmpl
+     169: ifle          181
+     172: aload_2
+     173: invokeinterface #449,  1          // InterfaceMethod java/util/Iterator.remove:()V
+     178: goto          7
+     181: goto          57
+     184: goto          7
+     187: return
+
+  private java.util.List<java.awt.geom.Area> retrieveNoStemAreas();
+    Code:
+       0: new           #138                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #140                // Method java/util/ArrayList."<init>":()V
+       7: astore_1
+       8: aload_0
+       9: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      12: ldc_w         #586                // class org/audiveris/omr/sig/inter/BarlineInter
+      15: invokevirtual #424                // Method org/audiveris/omr/sig/SIGraph.inters:(Ljava/lang/Class;)Ljava/util/List;
+      18: invokeinterface #183,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      23: astore_2
+      24: aload_2
+      25: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      30: ifeq          218
+      33: aload_2
+      34: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      39: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+      42: astore_3
+      43: aload_0
+      44: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      47: aload_3
+      48: ldc_w         #588                // class org/audiveris/omr/sig/relation/BarConnectionRelation
+      51: invokevirtual #143                // Method org/audiveris/omr/sig/SIGraph.getRelations:(Lorg/audiveris/omr/sig/inter/Inter;Ljava/lang/Class;)Ljava/util/Set;
+      54: astore        4
+      56: aload         4
+      58: invokeinterface #149,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+      63: astore        5
+      65: aload         5
+      67: invokeinterface #155,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      72: ifeq          215
+      75: aload         5
+      77: invokeinterface #161,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      82: checkcast     #165                // class org/audiveris/omr/sig/relation/Relation
+      85: astore        6
+      87: aload_0
+      88: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+      91: aload         6
+      93: invokevirtual #590                // Method org/audiveris/omr/sig/SIGraph.getEdgeSource:(Ljava/lang/Object;)Ljava/lang/Object;
+      96: checkcast     #586                // class org/audiveris/omr/sig/inter/BarlineInter
+      99: astore        7
+     101: aload         7
+     103: aload_3
+     104: if_acmpne     212
+     107: aload_1
+     108: aload_3
+     109: invokeinterface #593,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getArea:()Ljava/awt/geom/Area;
+     114: invokeinterface #173,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     119: pop
+     120: aload_0
+     121: getfield      #33                 // Field sig:Lorg/audiveris/omr/sig/SIGraph;
+     124: aload         6
+     126: invokevirtual #167                // Method org/audiveris/omr/sig/SIGraph.getEdgeTarget:(Ljava/lang/Object;)Ljava/lang/Object;
+     129: checkcast     #586                // class org/audiveris/omr/sig/inter/BarlineInter
+     132: astore        8
+     134: aload_1
+     135: aload         8
+     137: invokevirtual #597                // Method org/audiveris/omr/sig/inter/BarlineInter.getArea:()Ljava/awt/geom/Area;
+     140: invokeinterface #173,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     145: pop
+     146: new           #400                // class java/awt/geom/Line2D$Double
+     149: dup
+     150: aload         7
+     152: invokevirtual #598                // Method org/audiveris/omr/sig/inter/BarlineInter.getMedian:()Ljava/awt/geom/Line2D;
+     155: invokevirtual #602                // Method java/awt/geom/Line2D.getP2:()Ljava/awt/geom/Point2D;
+     158: aload         8
+     160: invokevirtual #598                // Method org/audiveris/omr/sig/inter/BarlineInter.getMedian:()Ljava/awt/geom/Line2D;
+     163: invokevirtual #608                // Method java/awt/geom/Line2D.getP1:()Ljava/awt/geom/Point2D;
+     166: invokespecial #410                // Method java/awt/geom/Line2D$Double."<init>":(Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;)V
+     169: astore        9
+     171: ldc2_w        #611                // double 0.5d
+     174: aload         7
+     176: invokevirtual #613                // Method org/audiveris/omr/sig/inter/BarlineInter.getWidth:()Ljava/lang/Double;
+     179: invokevirtual #321                // Method java/lang/Double.doubleValue:()D
+     182: aload         8
+     184: invokevirtual #613                // Method org/audiveris/omr/sig/inter/BarlineInter.getWidth:()Ljava/lang/Double;
+     187: invokevirtual #321                // Method java/lang/Double.doubleValue:()D
+     190: dadd
+     191: dmul
+     192: dstore        10
+     194: aload         9
+     196: dload         10
+     198: invokestatic  #615                // Method org/audiveris/omr/math/AreaUtil.verticalRibbon:(Ljava/awt/Shape;D)Ljava/awt/geom/Area;
+     201: astore        12
+     203: aload_1
+     204: aload         12
+     206: invokeinterface #173,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+     211: pop
+     212: goto          65
+     215: goto          24
+     218: aload_1
+     219: invokedynamic #621,  0            // InvokeDynamic #1:compare:()Ljava/util/Comparator;
+     224: invokestatic  #432                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+     227: aload_1
+     228: areturn
+
+  public java.lang.String toString();
+    Code:
+       0: new           #625                // class java/lang/StringBuilder
+       3: dup
+       4: aload_0
+       5: invokevirtual #627                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+       8: invokevirtual #631                // Method java/lang/Class.getSimpleName:()Ljava/lang/String;
+      11: invokespecial #635                // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      14: ldc_w         #636                // String {S#
+      17: invokevirtual #638                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      20: aload_0
+      21: getfield      #23                 // Field system:Lorg/audiveris/omr/sheet/SystemInfo;
+      24: invokevirtual #514                // Method org/audiveris/omr/sheet/SystemInfo.getId:()I
+      27: invokevirtual #642                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      30: bipush        125
+      32: invokevirtual #645                // Method java/lang/StringBuilder.append:(C)Ljava/lang/StringBuilder;
+      35: invokevirtual #648                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      38: areturn
+
+  private static java.awt.geom.Line2D getLimit(org.audiveris.omr.sig.inter.AbstractBeamInter, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokestatic  #651                // Method org/audiveris/omr/util/VerticalSide.of:(I)Lorg/audiveris/omr/util/VerticalSide;
+       5: invokevirtual #655                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.getBorder:(Lorg/audiveris/omr/util/VerticalSide;)Ljava/awt/geom/Line2D;
+       8: areturn
+
+  public static java.awt.geom.Point2D getTargetPt(java.awt.geom.Point2D, java.awt.geom.Line2D, double);
+    Code:
+       0: new           #659                // class java/awt/geom/Point2D$Double
+       3: dup
+       4: aload_0
+       5: invokevirtual #661                // Method java/awt/geom/Point2D.getX:()D
+       8: ldc2_w        #402                // double 100.0d
+      11: dload_2
+      12: dmul
+      13: dsub
+      14: aload_0
+      15: invokevirtual #666                // Method java/awt/geom/Point2D.getY:()D
+      18: ldc2_w        #402                // double 100.0d
+      21: dadd
+      22: invokespecial #669                // Method java/awt/geom/Point2D$Double."<init>":(DD)V
+      25: astore        4
+      27: aload_0
+      28: aload         4
+      30: aload_1
+      31: invokevirtual #608                // Method java/awt/geom/Line2D.getP1:()Ljava/awt/geom/Point2D;
+      34: aload_1
+      35: invokevirtual #602                // Method java/awt/geom/Line2D.getP2:()Ljava/awt/geom/Point2D;
+      38: invokestatic  #672                // Method org/audiveris/omr/math/LineUtil.intersection:(Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;)Ljava/awt/geom/Point2D$Double;
+      41: areturn
+
+  public static void sortBeamsFromRef(java.awt.geom.Point2D, int, java.util.List<org.audiveris.omr.sig.inter.Inter>);
+    Code:
+       0: aload_2
+       1: invokeinterface #678,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+       6: ifeq          10
+       9: return
+      10: aload_2
+      11: iconst_0
+      12: invokeinterface #681,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      17: checkcast     #171                // class org/audiveris/omr/sig/inter/Inter
+      20: invokeinterface #684,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getSig:()Lorg/audiveris/omr/sig/SIGraph;
+      25: invokevirtual #685                // Method org/audiveris/omr/sig/SIGraph.getSystem:()Lorg/audiveris/omr/sheet/SystemInfo;
+      28: invokevirtual #37                 // Method org/audiveris/omr/sheet/SystemInfo.getSheet:()Lorg/audiveris/omr/sheet/Sheet;
+      31: invokevirtual #387                // Method org/audiveris/omr/sheet/Sheet.getSkew:()Lorg/audiveris/omr/sheet/Skew;
+      34: invokevirtual #391                // Method org/audiveris/omr/sheet/Skew.getSlope:()D
+      37: dstore_3
+      38: iload_1
+      39: aload_0
+      40: dload_3
+      41: invokedynamic #689,  0            // InvokeDynamic #2:compare:(ILjava/awt/geom/Point2D;D)Ljava/util/Comparator;
+      46: astore        5
+      48: aload_2
+      49: aload         5
+      51: invokestatic  #432                // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+      54: return
+
+  private static int lambda$sortBeamsFromRef$0(int, java.awt.geom.Point2D, double, org.audiveris.omr.sig.inter.Inter, org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload         4
+       2: checkcast     #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+       5: astore        6
+       7: aload         5
+       9: checkcast     #422                // class org/audiveris/omr/sig/inter/AbstractBeamInter
+      12: astore        7
+      14: iload_0
+      15: i2d
+      16: aload_1
+      17: aload         6
+      19: iload_0
+      20: invokestatic  #692                // Method getLimit:(Lorg/audiveris/omr/sig/inter/AbstractBeamInter;I)Ljava/awt/geom/Line2D;
+      23: dload_2
+      24: invokestatic  #396                // Method getTargetPt:(Ljava/awt/geom/Point2D;Ljava/awt/geom/Line2D;D)Ljava/awt/geom/Point2D;
+      27: invokevirtual #666                // Method java/awt/geom/Point2D.getY:()D
+      30: aload_1
+      31: invokevirtual #666                // Method java/awt/geom/Point2D.getY:()D
+      34: dsub
+      35: dmul
+      36: iload_0
+      37: i2d
+      38: aload_1
+      39: aload         7
+      41: iload_0
+      42: invokestatic  #692                // Method getLimit:(Lorg/audiveris/omr/sig/inter/AbstractBeamInter;I)Ljava/awt/geom/Line2D;
+      45: dload_2
+      46: invokestatic  #396                // Method getTargetPt:(Ljava/awt/geom/Point2D;Ljava/awt/geom/Line2D;D)Ljava/awt/geom/Point2D;
+      49: invokevirtual #666                // Method java/awt/geom/Point2D.getY:()D
+      52: aload_1
+      53: invokevirtual #666                // Method java/awt/geom/Point2D.getY:()D
+      56: dsub
+      57: dmul
+      58: invokestatic  #696                // Method java/lang/Double.compare:(DD)I
+      61: ireturn
+
+  private static int lambda$retrieveNoStemAreas$0(java.awt.geom.Area, java.awt.geom.Area);
+    Code:
+       0: aload_0
+       1: invokevirtual #566                // Method java/awt/geom/Area.getBounds2D:()Ljava/awt/geom/Rectangle2D;
+       4: invokevirtual #699                // Method java/awt/geom/Rectangle2D.getMinX:()D
+       7: aload_1
+       8: invokevirtual #566                // Method java/awt/geom/Area.getBounds2D:()Ljava/awt/geom/Rectangle2D;
+      11: invokevirtual #699                // Method java/awt/geom/Rectangle2D.getMinX:()D
+      14: invokestatic  #696                // Method java/lang/Double.compare:(DD)I
+      17: ireturn
+
+  static {};
+    Code:
+       0: new           #537                // class org/audiveris/omr/sheet/stem/StemsRetriever$Constants
+       3: dup
+       4: invokespecial #702                // Method org/audiveris/omr/sheet/stem/StemsRetriever$Constants."<init>":()V
+       7: putstatic     #532                // Field constants:Lorg/audiveris/omr/sheet/stem/StemsRetriever$Constants;
+      10: ldc           #11                 // class org/audiveris/omr/sheet/stem/StemsRetriever
+      12: invokestatic  #703                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+      15: putstatic     #126                // Field logger:Lorg/slf4j/Logger;
+      18: return
+}

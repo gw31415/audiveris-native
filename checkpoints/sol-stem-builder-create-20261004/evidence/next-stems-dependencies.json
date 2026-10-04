@@ -1,0 +1,29 @@
+{
+  "status": "read_only_original_dependency_analysis",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "sources": {
+    "pending-HeadStemsCleaner.javap.txt": "5a0c90289c5d0e4de282fd20fe0015545072488deacfeddf74e211998bf956c5",
+    "pending-StemsRetriever.javap.txt": "f57f12c225571b8d64b97225c68985b24b3f6761567f5d2ecd8de99e540a8c18",
+    "pending-StemBuilder.javap.txt": "5b5af5fbdbae67947ddc2a96dd73ac6db508d09e14b8cf2e33c03cf272623d4b"
+  },
+  "verified_selected_boundary": "Original createStem registers singleton unchanged or compounds via GlyphFactory, checks retriever cache before checker, caches accepted StemInter without SIG insertion; 144 controls certified separately. Native profiles0/1 only.",
+  "next_dependency_order": [
+    "Preserve registered cache identity when caller adds the same StemInter to SIG; bind explicit head relations and support without rebuilding singleton horizontal run tables. Existing stem_attachment always uses GlyphFactory assembly and caller-supplied grade, so blindly composing the two boundaries is unsafe.",
+    "Compare automatic StemBuilder part/filter selection using actual original CLinker/section/seed dependencies and independently recorded selected parts.",
+    "Compare HeadStemsCleaner check on actual SIG relations, including ordered ties, more than two stems and canonical opposite-side sharing; cleaner is a graph mutation boundary, not a grade threshold.",
+    "Compare StemsRetriever finalizeStems/checkNeededStems/finalizeBeams and StemStep epilog after selected and automatic graph boundaries are certified."
+  ],
+  "original_cleaner_facts": [
+    "check collects existing HeadStemRelation in supplied stem order; while more than two, removes worst contribution; with two, removes worst unless canonical share.",
+    "discardWorstContribution uses stem intrinsic getGrade times (HeadStemRelation.getTargetRatio minus one), keeps first strict minimum in order. It does not read contextual_grade.",
+    "isCanonicalShare requires relation Dy within original tiny gap, both LEFT and RIGHT stems, then HeadStemRelation.isCanonicalShare geometrical predicate. Native canonical geometry and graph cleaner oracle fixture remain missing."
+  ],
+  "profile4_pending": "Original createStem grades/checks first; only below minimum and profile4 uses params.artificialStemGrade and a null-impacts StemInter. Supporting profile4 cannot mean unconditional grade bypass; native checker profiles beyond0/1 are pending.",
+  "not_claimed": [
+    "native automatic part selection",
+    "native cleaner/epilog implementation",
+    "profile4 parity",
+    "actual scan parity",
+    "global HEADS/STEMS completion"
+  ]
+}
