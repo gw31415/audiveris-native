@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s
+     Running tests/stem_beam_lookup_area.rs (/workspace/onboarding/target/debug/deps/stem_beam_lookup_area-24f2e61e519e8d33)
+
+running 2 tests
+test beam_area_input_bounds_skew_nonconvex_and_part_empty_contracts ... ok
+test original_beam_areas_actual_borders_parts_and_ratio_ulp_controls_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s

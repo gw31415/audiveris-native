@@ -1,0 +1,55 @@
+{
+  "status": "source_read_only_dependency_order_identified",
+  "original_release": "5.11.0",
+  "pinned_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "bytecode_file_sha256": "5b5af5fbdbae67947ddc2a96dd73ac6db508d09e14b8cf2e33c03cf272623d4b",
+  "next_lookupChunks_order": [
+    "lookupVerticalSections and lookupHorizontalSections (kernel certified; caller geometry still supplied)",
+    "StickFactory.retrieveSticks (raw physical output certified)",
+    "StraightFilament.toGlyph(null) then GlyphIndex.registerOriginal for EVERY raw chunk before any removal",
+    "removeAll existing parts by registered object identity",
+    "filterHeadParts only for Head CLinker",
+    "filterUnaligned",
+    "remove starting stump once",
+    "stable byOrdinate or byReverseBottom sort"
+  ],
+  "registration_order_cannot_be_moved_after_filters": true,
+  "normalized_physical_raw_output_is_not_registry_identity_parity": true,
+  "later_dependencies": [
+    "native Head/Beam lookup-area derivation",
+    "expand parts/items and insert gaps/length maps",
+    "composed StemBuilder cache/createStem and head relations through shared SIG",
+    "cleaner contextualization/checkNeededStems/finalizeBeams epilog"
+  ],
+  "original_contextual_lookupChunks_observer_recordings_not_yet_frozen": true,
+  "production_registration_or_epilog_implementation_claimed": false,
+  "head_area_geometry_selected_controls_certified": 3000,
+  "head_reference_point_and_target_selection_complete": false,
+  "beam_area_generation_next_read_only": true,
+  "current_stage_registration_not_claimed": true,
+  "beam_geometry_dependencies": [
+    "border line on VLinker vertical side",
+    "beam reference x and halfBeamLuDx",
+    "yDir * maxBeamSeedDyRatio * scale-converted BeamStemRelation profile gap",
+    "system boundary then min/max of getStavesAround beam center part bounds, or declared limit",
+    "original intersection arithmetic and theoretical line"
+  ],
+  "beam_geometry_native_implementation_claimed": false,
+  "beam_geometry_selected_controls_certified": 72,
+  "beam_geometry_declared_inputs_certified": true,
+  "automatic_beam_neighborhood_selection_complete": false,
+  "closer_limit_selection_complete": false,
+  "next_chunk_registration_prefix_comparison_required": [
+    "Original GlyphIndex.registerOriginal invoked before any existing-part removal",
+    "Canonical object alias reuse/order and all registered rejected chunks retained in registry",
+    "Existing registered parts remove all duplicate list entries by canonical identity",
+    "Full filterHeadParts/filterUnaligned/start-stump/sort composition remains a separate stage"
+  ],
+  "registration_prefix_next_probe_contract": {
+    "source": "Original GlyphIndex.registerOriginal and ArrayList.removeAll prefix of StemBuilder.lookupChunks",
+    "legitimate_index_initialization": "Fresh original GlyphIndex.initTransients on actual sheet; hold canonical glyphs strongly during control",
+    "JVM_ids_to_normalize": "Positive canonical identity tokens in encounter order, no shared whole-page ID equality claimed",
+    "native_registry_MUTATION_order": "register all raw physical chunks before existing canonical-part removal",
+    "later_filters_and_SIG_not_claimed": true
+  }
+}

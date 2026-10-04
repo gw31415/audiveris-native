@@ -1,0 +1,14 @@
+[
+  {
+    "removed_only_verified_obsolete_source_restore": "/workspace/work/stem-parts-cli/sol-stem-parts-cli-20261004-remote-restore",
+    "all_source_sha256_verified": 6423,
+    "source_tree": "84fee60f4de87c02fe009c59b5f24bae60fe5285",
+    "latest_441_fresh_remote_clone_and_source_retained": true
+  },
+  {
+    "removed_only_verified_obsolete_source_restore": "/workspace/work/head-coverage/sol-head-seed-catalog-20261004-prepush",
+    "all_source_sha256_verified": 5354,
+    "source_tree": "25e6fca7868f32c529c786fa7a99899eb6617a01",
+    "latest_441_fresh_remote_clone_and_source_retained": true
+  }
+]
