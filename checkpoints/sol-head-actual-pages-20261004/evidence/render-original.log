@@ -1,0 +1,30 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+01:59:57.004 [main] DEBUG org.audiveris.omr.constant.ConstantManager -- [org.audiveris.omr.constant.ConstantManager] No property file /workspace/work/head-pages/render-certified/config/AudiverisLtd/audiveris/run.properties
+01:59:57.061 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- No sizeMap for Bravura
+01:59:57.061 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Null or empty sizeMap for Bravura
+01:59:57.061 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Creating fontName: Bravura fileName: Bravura.otf size: 51
+01:59:57.061 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Font url=jar:file:/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/audiveris.jar!/res/Bravura.otf
+01:59:57.061 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Found file Bravura.otf
+01:59:57.164 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=51] key:Bravura
+01:59:57.247 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Created custom font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=51] added:true
+01:59:57.247 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: org.audiveris.omr.ui.symbol.MusicFont[family=Bravura,name=Bravura,style=plain,size=51] key:Bravura
+01:59:57.397 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- No sizeMap for Leland
+01:59:57.397 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Null or empty sizeMap for Leland
+01:59:57.397 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Creating fontName: Leland fileName: Leland.otf size: 51
+01:59:57.397 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Font url=jar:file:/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/audiveris.jar!/res/Leland.otf
+01:59:57.397 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Found file Leland.otf
+01:59:57.399 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: java.awt.Font[family=Leland,name=Leland,style=plain,size=51] key:Leland
+01:59:57.399 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Created custom font: java.awt.Font[family=Leland,name=Leland,style=plain,size=51] added:true
+01:59:57.399 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: org.audiveris.omr.ui.symbol.MusicFont[family=Leland,name=Leland,style=plain,size=51] key:Leland
+01:59:57.415 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- No sizeMap for FinaleJazz
+01:59:57.415 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Null or empty sizeMap for FinaleJazz
+01:59:57.415 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Creating fontName: Finale Jazz fileName: FinaleJazz.otf size: 51
+01:59:57.415 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Font url=jar:file:/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/audiveris.jar!/res/FinaleJazz.otf
+01:59:57.415 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Found file FinaleJazz.otf
+01:59:57.416 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: java.awt.Font[family=Finale Jazz,name=FinaleJazz,style=plain,size=51] key:FinaleJazz
+01:59:57.417 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Created custom font: java.awt.Font[family=Finale Jazz,name=FinaleJazz,style=plain,size=51] added:true
+01:59:57.417 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: org.audiveris.omr.ui.symbol.MusicFont[family=Finale Jazz,name=FinaleJazz,style=plain,size=51] key:FinaleJazz

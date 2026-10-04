@@ -1,0 +1,8 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running tests/head_actual_pages.rs (/workspace/onboarding/target/debug/deps/head_actual_pages-6999fb86527dd56a)
+
+running 2 tests
+test actual_cue_main_interlines_expose_first_unported_grid_dependency_without_outputs ... ok
+test independent_three_font_score_pages_match_original_complete_heads_terminals ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 33.12s

@@ -1,0 +1,43 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /workspace/work/head-pages/leland-final-certified/Leland-five/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/onboarding/artifacts/audiveris-source/fixtures/official-head-actual-pages/images/Leland-five.png"
+INFO  [Leland-five]                      Book 560  | 1 sheet in /workspace/onboarding/artifacts/audiveris-source/fixtures/official-head-actual-pages/images/Leland-five.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/work/head-pages/leland-final-certified/Leland-five/Leland-five.omr
+INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
+INFO  [Leland-five]            StepMonitoring 98   | LOAD
+INFO  [Leland-five]                 SheetStub 1278 | Loaded image #1 1280x720 from /workspace/onboarding/artifacts/audiveris-source/fixtures/official-head-actual-pages/images/Leland-five.png
+INFO  [Leland-five]            StepMonitoring 98   | BINARY
+INFO  [Leland-five]            StepMonitoring 98   | SCALE
+INFO  [Leland-five]              ScaleBuilder 254  | Beam  guessed height:  6 -- 0.25 of [5..10] range
+INFO  [Leland-five]              ScaleBuilder 271  | Beam measured height:  6 -- 0.20 of [5..10] range at 37% of needed quorum
+INFO  [Leland-five]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
+INFO  [Leland-five]                 ScaleStep 65   | Scale{ interline(11,11,11) line(2,2,2) beam(6)}
+INFO  [Leland-five]                      Book 2584 | Book{Leland-five} storing
+INFO  [Leland-five]                      Book 2565 | Stored /book.xml
+INFO  [Leland-five]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [Leland-five]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [Leland-five]                      Book 2525 | Book stored as /workspace/work/head-pages/leland-final-certified/Leland-five/Leland-five.omr
+INFO  [Leland-five]                 SheetStub 1655 | Sheet disposed
+INFO  [Leland-five]                      Book 2050 | End of Stub#1
+INFO  [Leland-five]                      Book 2057 | End of Book{Leland-five}
+INFO  [Leland-five]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [Leland-five]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [Leland-five]         ClustersRetriever 326  | Retrieved raw line clusters: 2 of sizes [5] with interline(11,11,11)
+INFO  [Leland-five]                 PeakGraph 310  | Systems: #1[1] #2[2]
+INFO  [Leland-five]             SystemManager 800  | 1 part along 2 systems
+INFO  [Leland-five]                      Book 543  | Created scores: [{Score 1}]
+INFO  [Leland-five]             StemSeedsStep 86   | stem(2 max:2)
+INFO  [Leland-five]             HeadSeedTally 235  | Scale information: HeadSeeds{}
+INFO  [Leland-five]                      Book 2565 | Stored /book.xml
+INFO  [Leland-five]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [Leland-five]                      Book 2525 | Book stored as /workspace/work/head-pages/leland-final-certified/Leland-five/Leland-five.omr
+INFO  [Leland-five]                     Score 181  | Closing {Score 1}
