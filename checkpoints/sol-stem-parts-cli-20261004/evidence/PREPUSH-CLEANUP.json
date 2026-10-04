@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-parts-cli/sol-stem-parts-cli-20261004-prepush",
+  "source_commit": "7bbff9744b84d3c30ab46f22106793447d26e1c8",
+  "source_tree": "84fee60f4de87c02fe009c59b5f24bae60fe5285",
+  "all_sha256_verified": 6423,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

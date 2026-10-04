@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.65s
+     Running tests/stem_parts_lookup_cli.rs (/workspace/onboarding/target/debug/deps/stem_parts_lookup_cli-38f271e136b4d254)
+
+running 2 tests
+test empty_inputs_and_malformed_late_search_refuse_before_report_creation ... ok
+test cli_2343_original_controls_preserve_raw_collection_and_explicit_unfinished_flags ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.87s

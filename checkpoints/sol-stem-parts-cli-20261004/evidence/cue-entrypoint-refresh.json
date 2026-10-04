@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "default_cue_report_byte_identical": true,
+  "report_sha256": "64969e2f69f266d4a894d51d7c31fd8e8227706f421bfc7521ad59ac212369ce",
+  "saved_report_gzip_sha256_unchanged": "52dc4dac15bcd09b58296c7e5b1171240673b65442bb5e4c6e95558513bc4e2f",
+  "previous_entrypoint_source_sha256": "f2223db48181d31dc36bef81d1ef6ea850033b29a9ba6fffb13dedbf46a2bebd",
+  "current_entrypoint_source_sha256": "056f96ed8af720d3f6d60ce7b309483906e1b5c38f9296d5da55f21f7116b6de",
+  "current_native_binary_sha256": "2ee20ccd6aa2215d512ed38c85cdf52f9676e3b2da86c63cb9abae33be729da4",
+  "heads": 156,
+  "exclusions": 189,
+  "unrelated_report_files_changed": false
+}
