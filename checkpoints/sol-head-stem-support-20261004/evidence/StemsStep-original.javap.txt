@@ -1,0 +1,94 @@
+Compiled from "StemsStep.java"
+public class org.audiveris.omr.sheet.stem.StemsStep extends org.audiveris.omr.step.AbstractSystemStep<java.lang.Void> {
+  private static final org.slf4j.Logger logger;
+
+  public org.audiveris.omr.sheet.stem.StemsStep();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/step/AbstractSystemStep."<init>":()V
+       4: return
+
+  protected void doEpilog(org.audiveris.omr.sheet.Sheet, java.lang.Void) throws org.audiveris.omr.step.StepException;
+    Code:
+       0: aload_1
+       1: invokevirtual #7                  // Method org/audiveris/omr/sheet/Sheet.getSystems:()Ljava/util/List;
+       4: invokeinterface #13,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          53
+      19: aload_3
+      20: invokeinterface #25,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #29                 // class org/audiveris/omr/sheet/SystemInfo
+      28: astore        4
+      30: new           #31                 // class org/audiveris/omr/sheet/stem/StemsRetriever
+      33: dup
+      34: aload         4
+      36: invokespecial #33                 // Method org/audiveris/omr/sheet/stem/StemsRetriever."<init>":(Lorg/audiveris/omr/sheet/SystemInfo;)V
+      39: invokevirtual #36                 // Method org/audiveris/omr/sheet/stem/StemsRetriever.finalizeBeams:()V
+      42: aload         4
+      44: invokevirtual #39                 // Method org/audiveris/omr/sheet/SystemInfo.getSig:()Lorg/audiveris/omr/sig/SIGraph;
+      47: invokevirtual #43                 // Method org/audiveris/omr/sig/SIGraph.contextualize:()V
+      50: goto          10
+      53: return
+
+  protected java.lang.Void doProlog(org.audiveris.omr.sheet.Sheet) throws org.audiveris.omr.step.StepException;
+    Code:
+       0: aload_1
+       1: invokevirtual #7                  // Method org/audiveris/omr/sheet/Sheet.getSystems:()Ljava/util/List;
+       4: invokeinterface #13,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       9: astore_2
+      10: aload_2
+      11: invokeinterface #19,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          36
+      19: aload_2
+      20: invokeinterface #25,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #29                 // class org/audiveris/omr/sheet/SystemInfo
+      28: astore_3
+      29: aload_3
+      30: invokestatic  #48                 // Method org/audiveris/omr/sig/inter/BeamGroupInter.checkSystemForOldBeamGroup:(Lorg/audiveris/omr/sheet/SystemInfo;)V
+      33: goto          10
+      36: aconst_null
+      37: areturn
+
+  public void doSystem(org.audiveris.omr.sheet.SystemInfo, java.lang.Void) throws org.audiveris.omr.step.StepException;
+    Code:
+       0: new           #31                 // class org/audiveris/omr/sheet/stem/StemsRetriever
+       3: dup
+       4: aload_1
+       5: invokespecial #33                 // Method org/audiveris/omr/sheet/stem/StemsRetriever."<init>":(Lorg/audiveris/omr/sheet/SystemInfo;)V
+       8: invokevirtual #53                 // Method org/audiveris/omr/sheet/stem/StemsRetriever.process:()V
+      11: return
+
+  public void doSystem(org.audiveris.omr.sheet.SystemInfo, java.lang.Object) throws org.audiveris.omr.step.StepException;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #56                 // class java/lang/Void
+       6: invokevirtual #58                 // Method doSystem:(Lorg/audiveris/omr/sheet/SystemInfo;Ljava/lang/Void;)V
+       9: return
+
+  protected java.lang.Object doProlog(org.audiveris.omr.sheet.Sheet) throws org.audiveris.omr.step.StepException;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #64                 // Method doProlog:(Lorg/audiveris/omr/sheet/Sheet;)Ljava/lang/Void;
+       5: areturn
+
+  protected void doEpilog(org.audiveris.omr.sheet.Sheet, java.lang.Object) throws org.audiveris.omr.step.StepException;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: checkcast     #56                 // class java/lang/Void
+       6: invokevirtual #68                 // Method doEpilog:(Lorg/audiveris/omr/sheet/Sheet;Ljava/lang/Void;)V
+       9: return
+
+  static {};
+    Code:
+       0: ldc           #59                 // class org/audiveris/omr/sheet/stem/StemsStep
+       2: invokestatic  #72                 // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+       5: putstatic     #78                 // Field logger:Lorg/slf4j/Logger;
+       8: return
+}
