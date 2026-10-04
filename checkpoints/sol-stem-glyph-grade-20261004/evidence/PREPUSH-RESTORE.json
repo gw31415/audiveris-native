@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source_commit": "c3ed0a1caa16570e3d99dc2a83b74edf159b208d",
+  "source_tree": "ff80fbdfa8214a7d0b4745148dad7e29f87238a5",
+  "all_fresh_restored_sha256_verified": 6238,
+  "source_clean": true,
+  "source": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-prepush/artifacts/audiveris-source",
+  "source_git": "/workspace/work/stem-glyph-grade/sol-stem-glyph-grade-20261004-prepush/source-git"
+}
