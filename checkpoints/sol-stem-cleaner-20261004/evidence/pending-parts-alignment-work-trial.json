@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 1500,
+  "removed_entries": 2810,
+  "mismatches": [],
+  "original_sha256": "13d6ef5ffc6174186d5291b43cbebd263b6b62f0a33729cacd1dd227be0a0fc1",
+  "scope": "Work-only Python translation experiment against one original actual CLinker/filterUnaligned trial, measured slope0,dx1.65/dy44; not Rust implementation or independent original certification"
+}
