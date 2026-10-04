@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-image-beam-linkers/sol-stem-image-beam-targets-20261004-prepush",
+  "source_commit": "8a49223686ef45cfef1a5f7f5f3f4a308ddd7060",
+  "source_tree": "caefa1c547ffec638ad03f0013f2e610577cc938",
+  "all_sha256_verified": 6682,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

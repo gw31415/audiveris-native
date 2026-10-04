@@ -1,0 +1,11 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.17s
+     Running tests/stem_image_beam_targets.rs (/workspace/onboarding/target/debug/deps/stem_image_beam_targets-1a26ad6052171d86)
+
+running 4 tests
+test live_head_origin_validation_refuses_stale_snapshot_before_targets ... ok
+test actual_image_beam_sibling_members_match_before_original_linking ... ok
+test empty_heads_and_late_unsupported_image_staff_or_skew_preserve_input ... ok
+test actual_image_cli_derives_beam_sibling_members_without_corner_requests ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 57.11s

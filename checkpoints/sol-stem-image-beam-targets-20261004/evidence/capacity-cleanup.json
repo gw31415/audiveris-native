@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "removed_only_verified_clean_old_duplicate": "/workspace/work/head-lifecycle/sol-head-glyph-retrieval-20261003-remote-restore",
+  "source_commit": "7397628fd5dd81f7337837db6da80b3294cf1d2f",
+  "source_tree": "c1ef66e20d6c894687163996eb0dc4741826ef10",
+  "all_sha256_verified": 4856,
+  "original_sources_bundles_and_latest_recovery_retained": true
+}
