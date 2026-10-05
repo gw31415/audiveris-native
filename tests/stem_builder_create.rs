@@ -171,7 +171,7 @@ fn selected_builder_refuses_invalid_inputs_preserves_groups_and_keeps_cache_per_
             .is_err()
     );
     let mut invalid = params.clone();
-    invalid.profile = 4;
+    invalid.profile = 5;
     assert!(
         cache
             .create_selected(&mut registry, &parts, &image, &invalid)

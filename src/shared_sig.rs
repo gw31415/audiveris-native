@@ -836,7 +836,11 @@ impl Graph {
         let mut nodes = self
             .vertices
             .iter()
-            .filter(|v| !v.removed && matches!(v.key.phase, Phase::Head | Phase::Stem))
+            .filter(|v| {
+                !v.removed
+                    && (matches!(v.key.phase, Phase::Head | Phase::Stem)
+                        || v.data["kind"] == "BeamInter")
+            })
             .map(|v| v.data.clone())
             .collect::<Vec<_>>();
         let ids = nodes
@@ -845,6 +849,12 @@ impl Graph {
             .collect::<BTreeSet<_>>();
         let mut relations = Vec::new();
         for e in self.edges.iter().filter(|e| !e.removed) {
+            if matches!(
+                e.data["kind"].as_str(),
+                Some("Containment" | "ChordStemRelation")
+            ) {
+                continue;
+            }
             let source = ids.contains(&e.key.source);
             let target = ids.contains(&e.key.target);
             if source != target {
@@ -870,7 +880,7 @@ impl Graph {
                 !v.removed
                     && matches!(
                         v.data["kind"].as_str(),
-                        Some("HeadInter" | "StemInter" | "FlagInter")
+                        Some("HeadInter" | "StemInter" | "BeamInter" | "FlagInter")
                     )
             })
             .map(|v| v.data.clone())
@@ -912,7 +922,8 @@ impl Graph {
     pub(crate) fn purge_weak_foundations(&mut self) -> Result<Vec<usize>, String> {
         let mut remove = Vec::new();
         for (i, v) in self.vertices.iter().enumerate().filter(|(_, v)| !v.removed) {
-            if v.data["frozen"] == true
+            if v.data["kind"] == "BeamGroupInter"
+                || v.data["frozen"] == true
                 || v.data["is_frozen"] == true
                 || v.data["shape"] == "LEDGER"
             {
@@ -920,7 +931,7 @@ impl Graph {
             }
             if !matches!(
                 v.data["kind"].as_str(),
-                Some("HeadInter" | "StemInter" | "BarlineInter")
+                Some("HeadInter" | "StemInter" | "BeamInter" | "BarlineInter")
             ) {
                 return Err("unsupported_weak_foundation_kind".into());
             }

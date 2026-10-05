@@ -76,7 +76,7 @@ fn clinging_ink_reduces_clean_but_not_black_rows() {
 }
 #[test]
 fn invalid_geometry_profile_and_nonfinite_input_fail_explicitly() {
-    assert!(Parameters::new(16, 3, 0.0, 4).is_err());
+    assert!(Parameters::new(16, 3, 0.0, 5).is_err());
     assert!(Parameters::new(0, 3, 0.0, 1).is_err());
     let (image, mut c, p) = plain(1);
     c.mean_distance = f64::NAN;

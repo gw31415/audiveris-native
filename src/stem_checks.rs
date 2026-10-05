@@ -67,7 +67,7 @@ impl Parameters {
         if !(1..=128).contains(&interline) || !(1..=128).contains(&max_stem) {
             return Err("unsupported_stem_check_scale".into());
         }
-        if profile > 3 {
+        if profile > 4 {
             return Err("unsupported_stem_check_profile".into());
         }
         if !global_slope.is_finite() || global_slope.abs() > 1.0 {
@@ -279,7 +279,13 @@ pub fn check(
         ("Slope", 0.0, 0.08, false, 1.0),
         ("Straight", 0.0, 0.2, false, 1.0),
         ("Length", 1.25, 3.5, true, 2.0),
-        ("Clean", [0.5, 0.3, 0.2, 0.0][profile], 2.0, true, 2.0),
+        (
+            "Clean",
+            [0.5, 0.3, 0.2, 0.0, 0.0][profile],
+            2.0,
+            true,
+            if profile >= 4 { -1.0 } else { 2.0 },
+        ),
         (
             "Black",
             if p1 { 0.625 } else { 1.25 },
@@ -287,8 +293,14 @@ pub fn check(
             true,
             1.0,
         ),
-        ("BlackRatio", [0.5, 0.3, 0.2, 0.1][profile], 1.0, true, 1.0),
-        ("Gap", 0.0, [0.0, 0.3, 0.6, 2.0][profile], false, 5.0),
+        (
+            "BlackRatio",
+            [0.5, 0.3, 0.2, 0.1, 0.1][profile],
+            1.0,
+            true,
+            1.0,
+        ),
+        ("Gap", 0.0, [0.0, 0.3, 0.6, 2.0, 4.0][profile], false, 5.0),
     ];
     let checks = std::array::from_fn(|i| {
         let (name, low, high, covariant, weight) = specifications[i];
@@ -304,6 +316,9 @@ pub fn check(
     });
     let (mut product, mut weight_sum) = (1.0_f64, 0.0_f64);
     for c in &checks {
+        if c.weight < 0. {
+            continue;
+        }
         weight_sum += c.weight;
         if c.impact == 0.0 {
             product = 0.0;

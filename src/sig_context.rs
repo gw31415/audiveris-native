@@ -87,8 +87,10 @@ fn contextualize_head_stem_flags_impl(
 ) -> Result<(), String> {
     let mut grades = BTreeMap::new();
     for v in inters.iter() {
-        if !matches!(v["kind"].as_str(), Some("HeadInter" | "StemInter"))
-            && !(flags && v["kind"] == "FlagInter")
+        if !matches!(
+            v["kind"].as_str(),
+            Some("HeadInter" | "StemInter" | "BeamInter")
+        ) && !(flags && v["kind"] == "FlagInter")
         {
             return Err("unsupported_head_stem_context_inter".into());
         }
@@ -107,7 +109,7 @@ fn contextualize_head_stem_flags_impl(
     for r in relations {
         if !matches!(
             r["kind"].as_str(),
-            Some("HeadStemRelation" | "Exclusion" | "NoExclusion")
+            Some("HeadStemRelation" | "BeamStemRelation" | "Exclusion" | "NoExclusion")
         ) && !(flags && r["kind"] == "FlagStemRelation")
         {
             return Err("unsupported_head_stem_context_relation".into());
@@ -117,7 +119,11 @@ fn contextualize_head_stem_flags_impl(
                 return Err("invalid_head_stem_context_endpoint".into());
             }
         }
-        if r["kind"] == "HeadStemRelation" || (flags && r["kind"] == "FlagStemRelation") {
+        if matches!(
+            r["kind"].as_str(),
+            Some("HeadStemRelation" | "BeamStemRelation")
+        ) || (flags && r["kind"] == "FlagStemRelation")
+        {
             for side in ["source_ratio", "target_ratio"] {
                 if !r[side].as_f64().is_some_and(|v| v.is_finite() && v >= 1.) {
                     return Err("invalid_head_stem_context_support_ratio".into());
@@ -130,9 +136,9 @@ fn contextualize_head_stem_flags_impl(
         &grades,
         relations,
         if flags {
-            &["HeadStemRelation", "FlagStemRelation"]
+            &["HeadStemRelation", "BeamStemRelation", "FlagStemRelation"]
         } else {
-            &["HeadStemRelation"]
+            &["HeadStemRelation", "BeamStemRelation"]
         },
         "unsupported_head_stem_context_partner_limit_16",
     )

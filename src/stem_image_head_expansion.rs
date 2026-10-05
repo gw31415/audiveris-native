@@ -47,7 +47,7 @@ fn centroid(g: &GlyphPixels) -> Result<[f64; 2], String> {
 }
 /// Append only a new canonical physical glyph; line translation uses the union
 /// centroid, not an average of part centroids (overlap must count once).
-fn update(
+pub(crate) fn update(
     registry: &Registry,
     id: Option<usize>,
     ids: &mut Vec<usize>,
@@ -86,7 +86,7 @@ fn update(
     *ids = next;
     Ok(true)
 }
-fn beam_relation(
+pub(crate) fn beam_relation(
     m: &Value,
     l: [f64; 4],
     dir: i32,
@@ -139,7 +139,7 @@ pub(crate) struct Context<'a> {
     pub(crate) all: &'a [Value],
 }
 impl Context<'_> {
-    fn head_relation(
+    pub(crate) fn head_relation(
         &self,
         h: &Value,
         stump: &Value,

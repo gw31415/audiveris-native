@@ -33,6 +33,65 @@ struct Scheduler<'a> {
     budget: usize,
 }
 impl Scheduler<'_> {
+    fn beams(&mut self, builders: &[Value]) -> Result<Value, String> {
+        let mut observations = Vec::new();
+        // StemsRetriever: sides before intermediate stumps; inspected catalog
+        // preserves original side order. One-beam group has no siblings.
+        for c in builders {
+            let profile = c["profile"].as_u64().unwrap() as u8;
+            let e = crate::stem_image_beam_builders::expand(self.registry, c, &self.context)?;
+            if e.last < 0 || e.ids.is_empty() || e.relations.is_empty() {
+                observations.push(json!({"builder":c,"linked":false}));
+                continue;
+            }
+            let gs = e
+                .ids
+                .iter()
+                .map(|id| self.registry.get(*id).map(|g| g.glyph.clone()))
+                .collect::<Result<Vec<_>, _>>()?;
+            let p =
+                crate::stem_checks::Parameters::new(self.context.il, self.max_stem, 0., profile)?;
+            let Some(stem) = self
+                .cache
+                .create_selected(self.registry, &gs, self.raster, &p)?
+                .stem
+            else {
+                continue;
+            };
+            let state = stem.snapshot()?;
+            let dir = if c["vertical"] == "BOTTOM" { -1 } else { 1 };
+            let Some(rel) = crate::stem_image_head_expansion::beam_relation(
+                c,
+                line(&state["median"])?,
+                dir,
+                self.context.il,
+                self.context.thickness,
+            )?
+            else {
+                continue;
+            };
+            self.cache.register(self.registry, self.graph, &stem)?;
+            self.stems.insert(stem.glyph_id(), stem.clone());
+            let beam = Key {
+                system: self.system,
+                phase: Phase::Beam,
+                local: c["native_beam_id"].as_u64().unwrap() as usize,
+            };
+            let sk = Key {
+                system: self.system,
+                phase: Phase::Stem,
+                local: stem.glyph_id(),
+            };
+            self.graph
+                .relations(self.system, Phase::Beam, vec![(beam, sk, rel.clone())])?;
+            for r in &e.relations {
+                let i = self.corner(&r["linker"])?;
+                self.add_relations(i, &stem, std::slice::from_ref(r))?;
+            }
+            observations.push(json!({"builder":c,"linked":true,"last_index":e.last,"selected_glyph_ids":e.ids,"expanded_line":e.line,"stem":state,"head_relations":e.relations,"beam_relation":rel}));
+        }
+        Ok(json!(observations))
+    }
     fn slot(&self, i: usize) -> (usize, bool) {
         (
             self.all[i]["head"]["head_id"].as_u64().unwrap() as usize,
@@ -360,11 +419,12 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     if arr(&graph["inters"])?.iter().any(|v| {
         matches!(
             v["kind"].as_str(),
-            Some("BeamInter" | "SmallBeamInter" | "BeamHookInter" | "StemInter")
+            Some("SmallBeamInter" | "BeamHookInter" | "StemInter")
         )
     }) {
         return Err("unsupported head-only scheduler beam or existing stem".into());
     }
+    let beam_builders = crate::stem_image_beam_builders::prepare(&mut owned)?;
     let raster = GrayImage::decode(&owned.upstream_output_pixels)?;
     let scale = &owned.upstream_report["stem_seeds"]["stem_scaling"]["stem_scale"];
     let thickness = scale["main"].as_u64().ok_or("missing stem thickness")? as usize;
@@ -444,6 +504,7 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
             budget: 10000,
         };
         let mut unlinked = Vec::new();
+        let beam_observations = scheduler.beams(&beam_builders[si])?;
         for (h, _) in &order {
             if !scheduler.sides(*h, 0, false)? {
                 unlinked.push(*h)
@@ -452,7 +513,11 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
         for h in unlinked {
             scheduler.sides(h, 0, true)?;
         }
-        systems.push(json!({"system":system,"registered_stems":scheduler.stems.len(),"head_stem_relations":scheduler.attachments.len(),"glyphs":scheduler.stems.values().map(|s|s.snapshot()).collect::<Result<Vec<_>,_>>()?}));
+        let mut result = json!({"system":system,"registered_stems":scheduler.stems.len(),"head_stem_relations":scheduler.attachments.len(),"glyphs":scheduler.stems.values().map(|s|s.snapshot()).collect::<Result<Vec<_>,_>>()?});
+        if !beam_builders[si].is_empty() {
+            result["beam_origin_builders"] = beam_observations;
+        }
+        systems.push(result);
     }
     owned.graph.contextualize_head_stems()?;
     owned.prepared.report = json!({"schema":"audiveris-native.stem-image-head-linking.v1","corner_count":report["corner_count"],"head_items_plan":report,"systems":systems,"shared_sig":owned.graph.snapshot(),"comparison_scope":"Original XML-loaded beam-free linkStems head phases1/2 plus SIGraph contextual grades; cleaner/reduction/epilog pending","heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});

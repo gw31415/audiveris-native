@@ -74,5 +74,5 @@ fn original_actual_image_stem_glyphs_match_all_checks_at_retry_profiles() {
             }
         }
     }
-    assert!(stem_checks::Parameters::new(11, 5, 0., 4).is_err());
+    assert!(stem_checks::Parameters::new(11, 5, 0., 5).is_err());
 }

@@ -13,7 +13,7 @@ fn rows<'a>(v: &'a Value, max: usize, label: &str) -> Result<&'a [Value], String
         .map(Vec::as_slice)
         .ok_or_else(|| format!("invalid image chunks {label}"))
 }
-fn sections(v: &Value, vertical: bool) -> Result<BTreeMap<u64, SeedSection>, String> {
+pub(crate) fn sections(v: &Value, vertical: bool) -> Result<BTreeMap<u64, SeedSection>, String> {
     let mut out = BTreeMap::new();
     let mut runs = 0;
     for v in rows(v, 32768, "lag sections")? {
@@ -40,7 +40,10 @@ fn sections(v: &Value, vertical: bool) -> Result<BTreeMap<u64, SeedSection>, Str
     }
     Ok(out)
 }
-fn members(all: &BTreeMap<u64, SeedSection>, v: &Value) -> Result<Vec<SeedSection>, String> {
+pub(crate) fn members(
+    all: &BTreeMap<u64, SeedSection>,
+    v: &Value,
+) -> Result<Vec<SeedSection>, String> {
     let mut seen = BTreeSet::new();
     rows(v, 32768, "system sections")?
         .iter()

@@ -98,7 +98,7 @@ impl Cache {
             });
         }
         let checked = stem_checks::check_glyph(image, &glyph, &parameters)?;
-        if checked.grade < MIN_GRADE {
+        if checked.grade < MIN_GRADE && parameters.profile != 4 {
             return Ok(Creation {
                 glyph_id,
                 cache_hit: false,
@@ -110,7 +110,10 @@ impl Cache {
         }
         let geometry = stem_glyph::geometry(&glyph)?;
         let impacts = json!({"grade":checked.grade,"intrinsic_ratio":0.8,"checks":checked.checks.iter().map(|c|json!({"name":c.name,"weight":c.weight,"impact":c.impact})).collect::<Vec<_>>()});
-        let record = json!({"id":0,"in_sig":false,"grade":checked.grade,"bounds":geometry.bounds,"median":geometry.median,"width":geometry.width,"glyph":beam_dispatch::glyph_json(&glyph),"impacts":impacts});
+        // StemBuilder.createStem: only BEAM_SIDE can create an artificial
+        // stem after the normal grade fails. StemInter(glyph, grade) has no impacts.
+        let artificial = checked.grade < MIN_GRADE;
+        let record = json!({"id":0,"in_sig":false,"grade":if artificial {0.4} else {checked.grade},"bounds":geometry.bounds,"median":geometry.median,"width":geometry.width,"glyph":beam_dispatch::glyph_json(&glyph),"impacts":if artificial {Value::Null} else {impacts}});
         let stem = Arc::new(CreatedStem { glyph_id, record });
         self.stems.insert(glyph_id, Arc::clone(&stem));
         Ok(Creation {

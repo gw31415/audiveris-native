@@ -504,4 +504,5 @@ pub mod music_xml;
 pub mod stem_foundation_purge;
 mod stem_head_foundation_plan;
 pub mod stem_head_foundations;
+mod stem_image_beam_builders;
 pub mod stem_image_head_linking;
