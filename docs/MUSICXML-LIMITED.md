@@ -469,3 +469,11 @@ tuplet/polyphonic rhythm and full reduction/cleaner/epilog remain unconnected or
 unverified. Nonzero skew, real scans, other fonts/special staff/full24shape
 pages/32sources remain limitations. All original nonUI functions stay on the
 implementation ledger; no global completion flag is set.
+
+
+Original `Inters.byReverseWidth` uses actual integer bounds widths. A final
+small fidelity correction keeps same-width insertion order even when fractional
+median lengths differ; three original numeric BeamInter controls certify the
+boundary separately from the image comparisons. Full565 regression belongs
+to321abfc; the final comparator change is checked with affected targets, not
+reported as another whole-workspace run.

@@ -1,0 +1,18 @@
+{
+  "native_outputs_used" : false,
+  "scope" : "three declared numeric actual BeamInter bounds / Inters.byReverseWidth controls; not a whole-image comparison",
+  "beams" : [ {
+    "bounds" : [ 10, 17, 183, 6 ],
+    "median" : [ 10.1, 20.0, 192.2, 20.0 ],
+    "id" : 1
+  }, {
+    "bounds" : [ 10, 27, 183, 6 ],
+    "median" : [ 10.1, 30.0, 192.5, 30.0 ],
+    "id" : 2
+  }, {
+    "bounds" : [ 10, 37, 184, 6 ],
+    "median" : [ 10.1, 40.0, 193.5, 40.0 ],
+    "id" : 3
+  } ],
+  "sorted_ids" : [ 3, 1, 2 ]
+}

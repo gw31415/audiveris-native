@@ -25,7 +25,13 @@
     "both_new_image_integration": true,
     "fmt": true,
     "all_target_clippy_D_warnings": true,
-    "full_workspace": "pending final coherent run"
+    "full_workspace": {
+      "source_commit": "321abfc0ee6b26f7fe51199fab3bd1d6d6a34396",
+      "tests_passed": 565,
+      "failed": 0,
+      "ignored": 0,
+      "single_uninterrupted_workspace_run": true
+    }
   },
   "unresolved_validation_failures": 0,
   "completion_flags": false,
@@ -36,5 +42,17 @@
     "more than two levels or other flags in image export",
     "finer/tuplets/polyphonic rhythm and full cleaner/reduction/epilog",
     "nonzero skew/real scans/special staffs/full24/32sources"
-  ]
+  ],
+  "legacy_evidence_fixtures_and_checkpoints_changed": false,
+  "post_full_suite_change": {
+    "change": "stable integer actual bounds width replaces median length; original Inters.byReverseWidth",
+    "original_numeric_controls": 3,
+    "target_tests_passed": 5,
+    "failed": 0,
+    "all_target_clippy_D_warnings": true,
+    "fmt": true,
+    "new_expected_workspace_count": 566,
+    "latest_full_566_run": false,
+    "independent_clone_cli": "pending acquisition/build"
+  }
 }

@@ -23,15 +23,15 @@
 | BINARY/SCALE / adaptive filter, `ScaleBuilder` | 部分 | 原版式・histogram/peak・多数kernelあり。一般画像の全設定/分解能/失敗状態と下流伝播を広げる必要がある。 |
 | GRID / `GridBuilder`, `Staff`, `SystemInfo`, parts | 部分 | sections/filament/通常staff/system/parts・cue第二パスの比較あり。非zero skew、特殊staff、実スキャンの全工程一致は未検証。 |
 | HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
-| STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独standard beamのpositive画像経路を接続。sibling/hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
+| STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beamのpositive画像経路を接続。hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
-| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独beamからのitems/expand/profile4 glyph/cache/SIGとbeam-side supportを接続。一般sibling/hook/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
+| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
 | REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、今回のRest/TimeWhole overlap/exclusionあり。全Interのsupport contextual grade、互換性、frozen、各関係のconsistency、反復reductionとcallbacks/epilogは未接続。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
 | SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory` | 部分 | classifier・isolated/2部品rest/time・実加線へのdot距離検査と普通の1旗→stem接続あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 |
-| RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 認識済み拍子に応じた完全小節の単声の旗付き八分/四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、正のbeamと他flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
+| RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 認識済み拍子に応じた完全小節の単声の二段beam十六分/beam・旗付き八分/四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、他beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
 | PAGE/score / `ScoreReduction`, logical parts | 部分 | 単ページ改行・小節番号あり。複数ページ継続、part同定/結合、楽器/移調、跨systemの声部/slur/tie、repeat構造等の一般score統合が残る。 |
 | MusicXML / `PartwiseBuilder`, original proxymusic | 部分 | native MusicXML4 writer、限定イベント・system break・part名、schema/reimport比較あり。一般notation/direction/lyric/instrument/layout/score属性と.mxl圧縮、多ページexportの原版対応が残る。原版XMLの流用は認識完成に数えない。 |
 | プロジェクト保存・再開 / `Book`, `Sheet`, stage invalidation | 部分 | stage reportsとGit完全復元あり。native認識projectの永続化・読込・編集後の必要工程再実行、原版.omrとの対応/互換性は未対応。Gitソース保存とは別機能。 |
@@ -156,3 +156,10 @@ HEADS保存状態の8builder/items/lengthsと4共有stem grade/8関係支持の�
 次の未接続はalien closer limit/別group、hookと競合hook、cross-staff/system、
 複数旗/追加beam段、一般rhythm・補正・cleaner/epilog。台帳の最終scopeは省略なし。
 [実行手順・現在の限定](MUSICXML-LIMITED.md#two-sibling-beams--sixteenth-notes)。
+
+
+回帰記録: 321abfcで単一全workspace565件成功（失敗/ignored0、Laura352/513を含む）。
+その後、原版`Inters.byReverseWidth`の整数bounds幅・同幅stable順を境界3条件で
+修正し、対象5件とfmt/clippyが成功。最新版全566件を再実行済みとはしません。
+旧証跡・fixtures・checkpointsのGit内容は保持。次の具体的な切断点は
+[原版依存一覧](../evidence/musicxml-beam-subdivisions/NEXT-DEPENDENCY.md)に記録。

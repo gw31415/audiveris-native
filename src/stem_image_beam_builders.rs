@@ -26,6 +26,33 @@ fn canonical(registry: &mut Registry, v: &Value) -> Result<Option<usize>, String
     }
     Ok(Some(id))
 }
+// Original Inters.byReverseWidth compares actual integer Rectangle widths.
+// Median lengths can differ while bounds widths tie; preserve insertion order.
+fn order_by_width(catalogs: &mut [&Value], actual: &[&Value]) -> Result<(), String> {
+    let widths = actual
+        .iter()
+        .map(|b| {
+            let id = b["origin"]["local"]
+                .as_u64()
+                .ok_or("beam sort actual ID required")?;
+            let width = b["bounds"][2]
+                .as_i64()
+                .filter(|w| *w >= 0)
+                .ok_or("beam sort actual bounds width required")?;
+            Ok((id, width))
+        })
+        .collect::<Result<BTreeMap<_, _>, String>>()?;
+    for c in catalogs.iter() {
+        if !c["beam"]["id"]
+            .as_u64()
+            .is_some_and(|id| widths.contains_key(&id))
+        {
+            return Err("beam sort catalog owner required".into());
+        }
+    }
+    catalogs.sort_by_key(|c| std::cmp::Reverse(widths[&c["beam"]["id"].as_u64().unwrap()]));
+    Ok(())
+}
 /// Input references are current native catalogs and actual retained registry,
 /// never oracle data or selected caller coordinates.
 pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
@@ -97,12 +124,7 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
             return Err("beam builder alien/shared-glyph limits pending".into());
         }
         // StemsRetriever processes stable descending beam width.
-        active.sort_by(|a, b| {
-            let width = |c: &&Value| {
-                c["beam"]["median"][2].as_f64().unwrap() - c["beam"]["median"][0].as_f64().unwrap()
-            };
-            width(b).total_cmp(&width(a))
-        });
+        order_by_width(&mut active, &live)?;
         let ctx = &plan["systems"][si]["image_context"];
         let parts = arr(&ctx["parts"])?;
         if parts.len() != 1 {
@@ -551,4 +573,36 @@ pub(crate) fn expand(
         relations,
         line: l,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn original_reverse_actual_bounds_width_keeps_fractional_median_ties_stable() {
+        let o: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-subdivisions/width-order-controls.json"
+        ))
+        .unwrap();
+        let bs = o["beams"].as_array().unwrap();
+        let catalogs = bs
+            .iter()
+            .map(|b| json!({"beam":{"id":b["id"],"median":b["median"]}}))
+            .collect::<Vec<_>>();
+        let actual = bs
+            .iter()
+            .map(|b| json!({"origin":{"local":b["id"]},"bounds":b["bounds"]}))
+            .collect::<Vec<_>>();
+        let mut ordered = catalogs.iter().collect::<Vec<_>>();
+        order_by_width(&mut ordered, &actual.iter().collect::<Vec<_>>()).unwrap();
+        assert_eq!(
+            json!(
+                ordered
+                    .iter()
+                    .map(|b| b["beam"]["id"].clone())
+                    .collect::<Vec<_>>()
+            ),
+            o["sorted_ids"]
+        );
+    }
 }
