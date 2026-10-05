@@ -1,0 +1,13 @@
+{
+  "tested_main": "cbedb6a05473700d3a494d2ca5a9d4a814f0332f",
+  "retrieved_normal_checkout": true,
+  "build_fmt_clippy_success": true,
+  "same_input_original_full_export_events_matched": 8,
+  "fresh_XML_matches_tested_root_byte_for_byte": true,
+  "native_XML_SHA256": "75530acdd8a195ecbfc25c4f6b3fef0cf77c14dda6017278b6beecd9e495ab7e",
+  "new_full_workspace_regression_executed": false,
+  "full552_belongs_to_migration_version": true,
+  "HEADS_STEMS_MusicXML_epilog_flags": false,
+  "Releases_uploaded": false,
+  "Library_operations": 0
+}

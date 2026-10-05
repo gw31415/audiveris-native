@@ -1,0 +1,12 @@
+{
+  "main": "cbedb6a05473700d3a494d2ca5a9d4a814f0332f",
+  "repository_tree": "6f76a225e3b1ca5f6ebd6ac4246596ce7b4cfc69",
+  "root_source_tree": "2983d4866ffeabab6816a3b6debf4e5110ee8993",
+  "all_main_files_SHA256_matched": 9072,
+  "root_source_files_SHA256_blob_modes_matched": 6878,
+  "original_archive_files_retained": 2164,
+  "outer_main_history_preserved": true,
+  "source_history_ref_unchanged": true,
+  "normal_remote_checkout": true,
+  "new_full_regression_executed": false
+}
