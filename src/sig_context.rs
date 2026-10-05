@@ -125,6 +125,24 @@ fn contextualize_head_stem_flags_impl(
                 return Err("invalid_head_stem_context_endpoint".into());
             }
         }
+        // These newly connected supports have typed original endpoints:
+        // BeamStem is beam -> stem, BeamHead is beam -> head. A renamed
+        // arbitrary support must not be admitted merely because IDs exist.
+        let beam_target = match r["kind"].as_str() {
+            Some("BeamStemRelation") => Some("StemInter"),
+            Some("BeamHeadRelation") => Some("HeadInter"),
+            _ => None,
+        };
+        if let Some(target_kind) = beam_target {
+            for (side, kind) in [("source", "BeamInter"), ("target", target_kind)] {
+                if !inters
+                    .iter()
+                    .any(|n| n["id"] == r[side] && n["kind"] == kind)
+                {
+                    return Err("invalid_head_stem_context_beam_endpoint_kind".into());
+                }
+            }
+        }
         if matches!(
             r["kind"].as_str(),
             Some("HeadStemRelation" | "BeamStemRelation" | "BeamHeadRelation")
@@ -386,8 +404,32 @@ mod head_stem_tests {
         assert!(contextualize_head_stems(&mut nodes, &edges).is_err());
         assert_eq!(nodes, before);
         edges[0]["source_ratio"] = json!(4.);
-        edges[0]["kind"] = json!("BeamStemRelation");
-        assert!(contextualize_head_stems(&mut nodes, &edges).is_err());
-        assert_eq!(nodes, before);
+        for kind in ["BeamStemRelation", "BeamHeadRelation"] {
+            edges[0]["kind"] = json!(kind);
+            assert_eq!(
+                contextualize_head_stems(&mut nodes, &edges).unwrap_err(),
+                "invalid_head_stem_context_beam_endpoint_kind"
+            );
+            assert_eq!(nodes, before);
+            let target_kind = if kind == "BeamStemRelation" {
+                "StemInter"
+            } else {
+                "HeadInter"
+            };
+            let mut pair = vec![
+                json!({"id":1,"kind":"BeamInter","grade":0.5}),
+                json!({"id":2,"kind":target_kind,"grade":0.4}),
+            ];
+            let support =
+                json!({"kind":kind,"source":1,"target":2,"source_ratio":1.,"target_ratio":2.});
+            contextualize_head_stems(&mut pair, std::slice::from_ref(&support)).unwrap();
+            pair[1]["kind"] = json!("BeamInter");
+            let before = pair.clone();
+            assert_eq!(
+                contextualize_head_stems(&mut pair, &[support]).unwrap_err(),
+                "invalid_head_stem_context_beam_endpoint_kind"
+            );
+            assert_eq!(pair, before);
+        }
     }
 }

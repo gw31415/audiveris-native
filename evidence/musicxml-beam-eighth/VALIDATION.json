@@ -17,7 +17,14 @@
     "target_boundaries": "beam eraser/end-removal2 and malformed-owned-beam1 passed",
     "fmt": "passed",
     "all_target_clippy_D_warnings": "passed",
-    "full_workspace": "pending fixed-source run; historical558 is not current full validation"
+    "full_workspace": "pending endpoint-fix full run; historical558 is not current full validation",
+    "first_workspace_run": {
+      "source_commit": "31a3169ac7cf30b8e95a0b51228a30b0e962353b",
+      "stopped_at": "existing transactional BeamStem endpoint refusal",
+      "passed_before_stop": 110,
+      "failed": 1,
+      "fix": "require typed beam->stem/head endpoints before any contextual mutation; boundary expanded within existing test"
+    }
   },
   "limits": [
     "one standard beam per system, one surrounding part, zero skew",
