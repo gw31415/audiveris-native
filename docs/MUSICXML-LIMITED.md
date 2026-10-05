@@ -180,8 +180,9 @@ and native image → MusicXML agree on all six events and the 3/4 meter. Separat
 saved original OMR TimePair/number glyphs, three-decimal grades, measure durations
 and offsets are compared against native owned state. Original XML is never fed
 to the native runtime. Other integer-quarter meters use generalized propagation
-but are not claimed as whole-image verified. Header TimeWhole/common/cut,
-other clefs, fractional-quarter rhythms and time changes remain pending.
+but are not claimed as whole-image verified. At this 3/4 checkpoint Header TimeWhole/common/cut was pending; the next
+section records COMMON_TIME connection. Other clefs, fractional-quarter
+rhythms and time changes remain pending.
 
 ```sh
 cargo build --locked --bin audiveris-musicxml -j 1
@@ -197,4 +198,36 @@ Original export/OMR/provenance and a small validation summary are in
 Git SHA/tree readback; the historical encoded backup chain is not resumed.
 Global HEADS/STEMS/MusicXML/epilog completion flags remain false.
 
-Changed-source validation: MusicXML integration 7 tests (including both 4/4 and 3/4 plus the underfilled 3/4 boundary), HEADER 2 tests, and TimeColumn 1 test/37 original controls pass. Workspace all-targets clippy with warnings denied, fmt, Linux CLI and local MusicXML4 XSD pass. No new full regression was run; the last full552 result remains attached to source239535 before the TimePair/meter additions.
+3/4 checkpoint149b059 validation: MusicXML integration 7 tests (including both 4/4 and 3/4 plus the underfilled 3/4 boundary), HEADER 2 tests, and TimeColumn 1 test/37 original controls pass. Workspace all-targets clippy with warnings denied, fmt, Linux CLI and local MusicXML4 XSD pass. No new full regression was run; the last full552 result remains attached to source239535 before the TimePair/meter additions.
+
+## Recognized COMMON_TIME header → MusicXML
+
+One further original-rendered G-major image has two 4/4 measures and eight
+quarter notes B4 G4 E4 G4 | B4 D5 F♯5 D5, with a recognized frozen COMMON_TIME
+header. Unmodified original5.11 and native full-image exports agree on these
+notes and `<time symbol="common"><beats>4</beats><beat-type>4</beat-type></time>`.
+Saved OMR time glyph/grade and native owned registry/SIG comparison are separate.
+
+The existing original TimeWhole shape mapping now feeds the header import.
+PageCleaner erases the actual physical glyph; header TimeWhole is excluded
+from overlap candidates under the original `SigReducer.reduce` header filter.
+No synthetic number pair is created. `PartwiseBuilder.processTime` supplies
+the common/cut MusicXML symbol attribute. CUT and other TimeWhole forms reuse
+this mapping but lack whole-image verification; they are not claimed verified
+by the COMMON_TIME input. No default meter, incomplete-measure padding, meter
+change or fractional-quarter rhythm has been invented.
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-header-common/g-major-header-common.png \
+  header-common.musicxml header-common.report.json
+```
+
+Build as above. Original OMR/export/provenance and the small validation summary
+are in `evidence/header-common-meaning`. The CLI remains a partial port; the
+full original feature ledger, including non-treble clefs, accidentals, rhythmic
+relations, polyphony, multi-staff, correction/project support, scans/fonts/skew
+and complete cleaner/epilog/export, remains the target. No original function
+is planned for omission. All global completion flags remain false.
+
+COMMON_TIME checkpoint validation: one complete workspace regression after the coherent HEADER changes passes all554 tests, zero failures. Fmt, workspace all-targets clippy with warnings denied, Linux native CLI, normalized original MusicXML comparison and local MusicXML4 XSD pass. Prior checkpoints keep their historical source/result boundaries; old recognition reports are unchanged.

@@ -85,6 +85,10 @@ impl TimeValue {
         h ^ (h >> 16)
     }
 }
+pub(crate) fn whole_time(shape: &str) -> Result<(i64, i64), String> {
+    let value = TimeValue::whole(shape)?;
+    Ok((value.num, value.den))
+}
 pub(crate) fn supported(num: i64, den: i64) -> bool {
     matches!(
         (num, den),

@@ -1,0 +1,39 @@
+{
+  "input_SHA256": "4c853036c947746440d1595d7f6c1441ee053ddb63ff6498c02c9b595d954680",
+  "renderer_SHA256": "2d283ec9eeabb4b44f98912b4730f2056a6a3acb7ddeb9f0143deabad62278f7",
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-header-common/original/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-header-common/original/prefs",
+    "-Duser.home=/workspace/work/musicxml-header-common/original/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "RHYTHMS",
+    "-export",
+    "-output",
+    "/workspace/work/musicxml-header-common/original",
+    "--",
+    "/workspace/work/musicxml-header-common/input/g-major-header-common.png"
+  ],
+  "environment_overrides": {
+    "XDG_CONFIG_HOME": "/workspace/work/musicxml-header-common/original/config",
+    "XDG_DATA_HOME": "/workspace/work/musicxml-header-common/original/data",
+    "XDG_CACHE_HOME": "/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache"
+  },
+  "scope": "one common-time header input with eight quarter notes, no coordinate search",
+  "no_coordinate_sweep": true,
+  "existing_JNI_cache_reused": true,
+  "exit_code": 0,
+  "console_SHA256": "4462c2a21777359ff0fa101ea9865401b8e2c76b645fd9c7d5f7ea47464b5270"
+}

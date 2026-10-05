@@ -123,7 +123,7 @@ pub(crate) fn import_key(
 
 /// StaffHeader.freeze already selected the actual pair and froze its members.
 /// Retain the selected TimePair and its actual numeric members atomically.
-/// Header TimeWhole/common/cut forms remain a separate pending import.
+/// A selected TimeWhole retains its own physical glyph instead of number members.
 pub(crate) fn import_time(
     graph: &mut Graph,
     registry: &mut Registry,
@@ -134,6 +134,9 @@ pub(crate) fn import_time(
     let pair = &header["time"];
     if pair.is_null() {
         return Ok(Value::Null);
+    }
+    if pair["kind"] == "TimeWholeInter" {
+        return import_whole_time(graph, registry, header, system);
     }
     if pair["kind"] != "TimePairInter" || pair["frozen"] != true || !pair["glyph"].is_null() {
         return Err("music_other_or_unfrozen_header_time_import_pending".into());
@@ -257,6 +260,52 @@ pub(crate) fn import_time(
     )
 }
 
+fn import_whole_time(
+    graph: &mut Graph,
+    registry: &mut Registry,
+    header: &Value,
+    system: u64,
+) -> Result<Value, String> {
+    let time = &header["time"];
+    if time["frozen"] != true || time["removed"] == true {
+        return Err("music_frozen_header_time_required".into());
+    }
+    let shape = time["shape"].as_str().ok_or("music_time_shape_required")?;
+    let (numerator, denominator) = crate::time_column::whole_time(shape)?;
+    let label = match shape {
+        "COMMON_TIME" | "CUT_TIME" => shape.to_owned(),
+        _ => format!("{numerator}/{denominator}"),
+    };
+    if time["numerator"] != numerator
+        || time["denominator"] != denominator
+        || time["value"] != label
+    {
+        return Err("music_selected_time_whole_value_required".into());
+    }
+    let source_id = time["id"]
+        .as_u64()
+        .filter(|id| *id > 0)
+        .and_then(|id| usize::try_from(id).ok())
+        .ok_or("music_time_source_id_required")?;
+    let key = Key {
+        system,
+        phase: Phase::MusicTime,
+        local: source_id,
+    };
+    let mut next = graph.clone();
+    let mut physical = registry.clone();
+    let mut data = time.clone();
+    data["source_header_id"] = time["id"].clone();
+    data["staff_id"] = header["staff_id"].clone();
+    data["glyph_id"] = json!(physical.register(&beam_dispatch::glyph_from_json(&time["glyph"])?)?);
+    let id = next.vertex(key, data, false)?;
+    registry.commit_extension(physical)?;
+    *graph = next;
+    Ok(
+        json!({"id":id,"origin":key,"source_header_id":source_id,"staff_id":header["staff_id"],"numerator":numerator,"denominator":denominator,"shape":shape}),
+    )
+}
+
 /// Exact KeyInter.getAlterFor order. HeadInter first consults accidentals/ties;
 /// the current admitted image path rejects those unconnected symbol relations.
 pub(crate) fn key_alter(step: &str, fifths: Option<i64>) -> Result<i32, String> {
@@ -339,7 +388,7 @@ mod tests {
 mod time_import_tests {
     use super::*;
     #[test]
-    fn time_pair_late_member_error_preserves_graph_and_registry() {
+    fn time_import_errors_preserve_graph_and_registry() {
         let oracle: Value = serde_json::from_str(include_str!(
             "../fixtures/official-image-musicxml-header-time/observed.json"
         ))
@@ -383,6 +432,22 @@ mod time_import_tests {
         h["time"]["members"][0]["value"] = json!(4);
         h["time"]["members"][1]["glyph"]["runs"] = json!([[0, 0, 999]]);
         assert!(import_time(&mut graph, &mut registry, &h, 1, &relations).is_err());
+        assert_eq!(before, graph.snapshot());
+        assert_eq!(physical, registry.snapshot());
+        let whole: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-header-common/observed.json"
+        ))
+        .unwrap();
+        h["time"] = whole["original_nodes"][0].clone();
+        h["time"]["id"] = h["time"]["original_id"].clone();
+        h["time"]["glyph"]["runs"] = json!([[0, 0, 999]]);
+        assert!(import_time(&mut graph, &mut registry, &h, 1, &[]).is_err());
+        assert_eq!(before, graph.snapshot());
+        assert_eq!(physical, registry.snapshot());
+        h["time"] = whole["original_nodes"][0].clone();
+        h["time"]["id"] = h["time"]["original_id"].clone();
+        h["time"]["numerator"] = json!(3);
+        assert!(import_time(&mut graph, &mut registry, &h, 1, &[]).is_err());
         assert_eq!(before, graph.snapshot());
         assert_eq!(physical, registry.snapshot());
         h["time"] = Value::Null;

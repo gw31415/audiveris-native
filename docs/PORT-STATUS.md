@@ -2,7 +2,7 @@
 
 更新日: 2026-10-05。対象原版は5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
 
-最終目標は、UIの表示・入力装置を除く、原版の譜面認識・解析・補正・保存・MusicXML出力機能の同等性です。原版機能を意図的に省略する予定はありません。通常五線・Bravura・ト音記号・C major・4/4・単声などの現在の制限は、小チェックポイントで検証した範囲であり、最終スコープの縮小ではありません。GUI内にある処理も、譜面の意味・形状・関係・再計算に影響する部分は移植対象です。
+最終目標は、UIの表示・入力装置を除く、原版の譜面認識・解析・補正・保存・MusicXML出力機能の同等性です。原版機能を意図的に省略する予定はありません。通常五線・Bravura・ト音記号・単声などの現在の制限は、小チェックポイントで検証した範囲であり、最終スコープの縮小ではありません。GUI内にある処理も、譜面の意味・形状・関係・再計算に影響する部分は移植対象です。
 
 台帳は現在の実コード・保存済み原版観測・原版クラスの対応に基づく機能群の棚卸しです。全原版メソッドの網羅監査が完了したという主張ではありません。未調査の細部は未対応に含め、工程ごとに細分化します。「部分」は条件指定kernel、保存XMLからの比較、画像CLI接続のいずれかが存在する状態で、原版工程全体の完成を意味しません。HEADS/STEMS/MusicXML/epilog/全自動処理の完了フラグはfalseです。
 
@@ -47,10 +47,10 @@
 
 ## 実用CLIへ広げる依存順
 
-現在は`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。次の切断箇所はHEADERのTimeWhole/common/cutとG-clef以外の音高/export、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
+現在は`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。次の切断箇所はG-clef以外の音高/export、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
 
 1. **今回のcompound rest/SIG checkpointを固定**。実装済み部分、画像全工程比較、保存XML段階比較、条件指定競合kernelを分けて保存する。
-2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。調号と固定TimePairの実画像比較は完了。次はTimeWhole/common/cutや他clefを実音高・拍子・exportまで比較する。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
+2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。調号と固定TimePairの実画像比較は完了。固定COMMON_TIMEも追加接続。次は他clef・cut/他TimeWholeを実音高・拍子・exportまで比較する。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
 3. **positive beam/head STEMS、一般chordと音価**。自動items/glyph/beam接続→cache/SIG→cleaner/epilogを閉じ、beam/flag・whole/breve・一般加線へ広げる。単なる条件指定APIの追加ではなく実画像CLIまで通す。
 4. **generic SYMBOLS/LINKSとlateChecks**。多部品候補、全Inter factory、support grade/frozen/競合反復、dot/accidental等の関係を原版に沿って接続。実際に必要なものから小段階にする。
 5. **CURVES/TEXTSと一般MEASURES/CHORDS/RHYTHMS**。原版stage順を守り、tie/slur/連符/lyrics等をLINKS・slot/voiceへ供給。複声部・複段part・拍子変更・pickup等を段階的に画像→MusicXMLへ通す。
@@ -79,7 +79,7 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
 
 必要だった`SigReducer.checkLedgers/ledgerHasHeadOrLedger`を通常五線・system内1staffに限定して接続し、sharpの孤立加線を消します。元画像の原版export成功とは別に、保存STEMS XML再読込→原版reduceFoundationsの孤立加線削除を観測しました。物理glyph/cache/削除ID履歴は保持し、既存C4加線は残します。複数staffのshared-ledger補正は未接続です。
 
-固定HEADERの4/4 TimePairは次の1制御画像で所有SIG・数字glyph・拍数・exportを接続済みです。次の具体的未接続はTimeWhole/common/cut、他clefの音高/exportと分数拍・途中変更です。SYMBOLSで初めて認識された調号、cancel/途中調号変更、一般臨時記号はその後に接続します。これらを最終機能から省略しません。HEADS/STEMS/MusicXML/epilog完了フラグはfalseです。
+固定HEADERの4/4 TimePairは次の1制御画像で所有SIG・数字glyph・拍数・exportを接続済みです。次の具体的未接続は他clefの音高/exportと分数拍・途中変更です。cut/その他TimeWholeの全画像比較も残ります。SYMBOLSで初めて認識された調号、cancel/途中調号変更、一般臨時記号はその後に接続します。これらを最終機能から省略しません。HEADS/STEMS/MusicXML/epilog完了フラグはfalseです。
 
 
 続けて、同じG-major譜面のTime数字を原版HEADER探索範囲へ置いた1制御画像で、固定4/4 TimePairのTOP/BOTTOM実glyph、Containment/TimeTopBottomRelation、小節拍数とMusicXMLを接続しました。原版独立画像exportの8音とnativeが一致。最後の数字glyphが不正な場合のGraph/registry不変も確認します。他拍子を4/4に置換して成功扱いにせず、その他のHEADER timeは明示的に未対応です。移行版552全回帰とこの追加変更の対象回帰はソース時点を分けて記録します。
@@ -87,3 +87,9 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
 ## 固定3/4拍子の縦断追加（2026-10-05）
 
 1つの新しい2小節G-major画像を原版5.11の変更なし画像pipelineでexportし、6音 B4 G4 E4 | B4 F♯5 D5 と3/4をnativeで一致確認します。TimePair/TimeNumberのshape/valueとContainment/TimeTopBottomRelationを検査し、数字の実glyphを所有SIG/registryへ原子的に登録します。`PageRhythm.populateTimeSignatures`→`TimeRational.getValue`に沿って期待小節長を分子/分母から計算し、次小節へ継承。元のOMRに保存された3/4小節長・onsetも別途比較します。四分/二分単位で表現できない拍子長、途中拍子変更、未掲出拍子の推測は拒否を維持。その他の整数quarter拍子の経路は一般化したものの、全画像比較済みとするのは4/4と今回の3/4のみです。全機能省略なしの目標とglobal完了falseは変えません。例・コマンドは[MUSICXML-LIMITED.md](MUSICXML-LIMITED.md)。
+
+## 固定COMMON_TIMEの縦断追加（2026-10-05）
+
+3/4の次段階として1つのcommon-time/G-major画像を原版5.11の同一画像処理で比較し、8音と`<time symbol="common">`をnativeから出力します。`TimeWholeInter`の原版shape→分子/分母を既存TimeColumnから再利用し、選択済み固定glyphを所有SIG/registryへ原子的に登録。`PageCleaner.visit(TimeWholeInter)`と`SigReducer.reduce`のHEADER Inter除外に沿って接続し、`PartwiseBuilder.processTime`のCOMMON/CUT表記をwriterへ伝播しました。画像全工程の新比較はCOMMON_TIME1件であり、cut/その他TimeWholeのmapping接続を全画像検証済みと数えません。台帳は全機能省略なし・他clef/拍子変更/臨時記号/複声部など未完を保持します。
+
+このHEADERまとまりで全workspace554回帰を一度実施し全件成功。fmt、全target clippy、Linux CLI、MusicXML4 XSDも成功。過去の552/549等の報告は当時のソース記録として保持し、今回の全回帰と置換しません。通常ソースGit保存とSHA/tree readbackを用い、新規bundleや全ファイルhash一覧は生成しません。

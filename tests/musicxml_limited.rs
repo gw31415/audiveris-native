@@ -4,19 +4,28 @@ use serde_json::Value;
 use std::{fs, process::Command};
 
 #[test]
-fn image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml() {
-    for (directory, image_name, numerator, event_count) in [
+fn image_frozen_header_time_reaches_owned_sig_meter_and_music_xml() {
+    for (directory, image_name, numerator, event_count, whole_shape) in [
         (
             "official-image-musicxml-header-time",
             "g-major-header-time-quarter.png",
             4,
             8,
+            None,
         ),
         (
             "official-image-musicxml-header-meters",
             "g-major-header-three-four.png",
             3,
             6,
+            None,
+        ),
+        (
+            "official-image-musicxml-header-common",
+            "g-major-header-common.png",
+            4,
+            8,
+            Some("COMMON_TIME"),
         ),
     ] {
         let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -49,11 +58,26 @@ fn image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml() {
         }
         let sig = &report["shared_sig"];
         let nodes = sig["inters"].as_array().unwrap();
-        let pair = nodes.iter().find(|n| n["kind"] == "TimePairInter").unwrap();
+        let time_kind = if whole_shape.is_some() {
+            "TimeWholeInter"
+        } else {
+            "TimePairInter"
+        };
+        let pair = nodes.iter().find(|n| n["kind"] == time_kind).unwrap();
         assert_eq!(pair["origin"]["phase"], "MUSIC_TIME");
-        assert!(pair["glyph"].is_null());
-        assert_eq!(pair["member_ids"].as_array().unwrap().len(), 2);
-        assert!(!nodes.iter().any(|n| n["kind"] == "TimeWholeInter"));
+        if let Some(shape) = whole_shape {
+            assert_eq!(pair["shape"], shape);
+            assert!(!pair["glyph"].is_null());
+            assert!(
+                !nodes
+                    .iter()
+                    .any(|n| n["kind"] == "TimePairInter" || n["kind"] == "TimeNumberInter")
+            );
+        } else {
+            assert!(pair["glyph"].is_null());
+            assert_eq!(pair["member_ids"].as_array().unwrap().len(), 2);
+            assert!(!nodes.iter().any(|n| n["kind"] == "TimeWholeInter"));
+        }
         for original in oracle["original_nodes"].as_array().unwrap() {
             let n = nodes
                 .iter()
@@ -75,6 +99,8 @@ fn image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml() {
                 assert_eq!(n["value"], original["value"]);
                 assert_eq!(n["shape"], original["shape"]);
                 assert_eq!(n["side"], original["side"]);
+            }
+            if !original["glyph"].is_null() {
                 assert_eq!(n["glyph"], original["glyph"]);
                 let gid = n["glyph_id"].as_u64().unwrap() as usize;
                 assert_eq!(
@@ -83,34 +109,43 @@ fn image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml() {
                     ),
                     original["glyph"]
                 );
-                assert!(
-                    sig["relations"]
-                        .as_array()
-                        .unwrap()
-                        .iter()
-                        .any(|r| r["kind"] == "Containment"
-                            && r["source"] == pair["id"]
-                            && r["target"] == n["id"])
-                );
+                if original["kind"] == "TimeNumberInter" {
+                    assert!(
+                        sig["relations"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .any(|r| r["kind"] == "Containment"
+                                && r["source"] == pair["id"]
+                                && r["target"] == n["id"])
+                    );
+                }
             }
         }
-        let top = nodes
-            .iter()
-            .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "TOP")
-            .unwrap();
-        let bottom = nodes
-            .iter()
-            .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "BOTTOM")
-            .unwrap();
-        assert!(
-            sig["relations"]
-                .as_array()
-                .unwrap()
+        if whole_shape.is_none() {
+            let top = nodes
                 .iter()
-                .any(|r| r["kind"] == "TimeTopBottomRelation"
-                    && r["source"] == top["id"]
-                    && r["target"] == bottom["id"])
-        );
+                .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "TOP")
+                .unwrap();
+            let bottom = nodes
+                .iter()
+                .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "BOTTOM")
+                .unwrap();
+            assert!(
+                sig["relations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|r| r["kind"] == "TimeTopBottomRelation"
+                        && r["source"] == top["id"]
+                        && r["target"] == bottom["id"])
+            );
+        }
+        let symbol = if whole_shape.is_some() {
+            " symbol=\"common\""
+        } else {
+            ""
+        };
         assert!(
             report["measures"]
                 .as_array()
@@ -122,7 +157,7 @@ fn image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml() {
             result
                 .xml
                 .matches(&format!(
-                    "<time><beats>{numerator}</beats><beat-type>4</beat-type></time>"
+                    "<time{symbol}><beats>{numerator}</beats><beat-type>4</beat-type></time>"
                 ))
                 .count(),
             1

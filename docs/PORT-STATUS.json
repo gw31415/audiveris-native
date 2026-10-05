@@ -36,6 +36,11 @@
       "status": "implemented",
       "unit": "selected HEADER 3/4 TimePair -> physical glyph/owned SIG -> inherited measure duration/onsets -> six-note G-major image MusicXML",
       "limits": "one original5.11 full-image comparison, separately saved OMR glyph/measure comparison; other integer-quarter meters generalized but not whole-image verified; fractional-quarter rhythms and meter changes pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "frozen HEADER COMMON_TIME -> physical glyph/owned SIG -> header-aware PageCleaner/reduction -> eight-note G-major image MusicXML with symbol=common",
+      "limits": "one original5.11 full-image comparison, separately saved OMR time glyph/grade; CUT and other TimeWhole mappings reused but whole-image comparisons pending; other clefs/time changes/general rhythms remain pending"
     }
   ],
   "function_groups": [
@@ -57,7 +62,7 @@
     {
       "original_function": "HEADERS / `HeadersBuilder`, clef/key/time関連クラス",
       "status": "partial",
-      "current_and_remaining": "固定HEADER調号と4/4・3/4 TimePairを実SIG/glyph・音高・小節期待長・exportへ接続し原版成功画像で比較。TimeWhole/common/cut、他clef、途中変更、cancel/臨時記号は未接続。整数quarter拍子の一般化は他拍子の画像検証完了を意味しない。"
+      "current_and_remaining": "固定HEADER調号、4/4・3/4 TimePairとCOMMON_TIME TimeWholeを実SIG/glyph・音高・小節期待長・exportへ接続し原版成功画像で比較。cut/他TimeWholeと他整数quarter拍子はmapping接続と全画像比較を区別。G-clef以外、途中変更、cancel/臨時記号は未接続。"
     },
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",

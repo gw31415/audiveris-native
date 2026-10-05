@@ -1,0 +1,54 @@
+{
+  "base_main": "149b05991cbbfca5f2bb8b897706d38a3d6be141",
+  "source_identity": "ordinary src/tests changes in this checkpoint; no code changes after regression compilation",
+  "scope": "one new original-success COMMON_TIME G-major image -> actual owned header glyph/SIG -> native MusicXML",
+  "original_full_image_export": {
+    "exit_code": 0,
+    "normalized_events_matched": 8,
+    "meter": [
+      [
+        1,
+        4,
+        4,
+        "common"
+      ]
+    ],
+    "key_fifths": 1
+  },
+  "saved_OMR_comparison": [
+    "time glyph pixel runs",
+    "three-decimal intrinsic/effective contextual grades",
+    "selected frozen TimeWhole actual SIG/registry"
+  ],
+  "native_CLI_exit_code": 0,
+  "MusicXML_4_XSD_valid": true,
+  "targeted_header_image_test": {
+    "passed": 1,
+    "inputs": [
+      "existing 4/4 TimePair",
+      "3/4 TimePair",
+      "COMMON_TIME"
+    ],
+    "underfilled_three_four_refused": true
+  },
+  "workspace_regression": {
+    "passed": 554,
+    "failed": 0,
+    "runs": 1,
+    "command": "cargo test --workspace --offline --locked -j 1",
+    "log_location": "/workspace/work/musicxml-header-common/workspace-tests.log"
+  },
+  "cargo_fmt_passed": true,
+  "workspace_all_targets_clippy_warnings_denied_passed": true,
+  "global_completion_flags": false,
+  "historical_recognition_reports_and_fixtures_unchanged": true,
+  "preservation": "normal source commit/push + independent Git SHA/tree readback; no new bundle or file hash inventory",
+  "pending": [
+    "CUT/other TimeWhole whole-image comparisons",
+    "other clefs",
+    "meter changes",
+    "fractional-quarter rhythms",
+    "accidentals/flags/beams/dots/ties/tuplets/polyphony/multi-staff",
+    "full original feature ledger parity"
+  ]
+}

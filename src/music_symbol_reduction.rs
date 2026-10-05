@@ -8,7 +8,12 @@ use crate::{
 use audiveris_staff_removal::Orientation;
 use serde_json::{Value, json};
 fn symbol(n: &Value) -> bool {
-    matches!(n["kind"].as_str(), Some("RestInter" | "TimeWholeInter"))
+    // SigReducer.reduce excludes Staff.getHeaderInters from overlap candidates.
+    // The owned header phase is populated only by selected frozen time imports.
+    let header = n["kind"] == "TimeWholeInter"
+        && n["origin"]["phase"] == "MUSIC_TIME"
+        && n["frozen"] == true;
+    !header && matches!(n["kind"].as_str(), Some("RestInter" | "TimeWholeInter"))
 }
 fn key(n: &Value) -> Result<Key, String> {
     let k: Key =

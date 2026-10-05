@@ -154,6 +154,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     let mut events = Vec::new();
     let mut measures = Vec::new();
     let mut carried_meter = None;
+    let mut carried_time_symbol = None;
     let mut carried_key: Option<(Value, i64)> = None;
     for (mi, measure) in m.measures.iter().enumerate() {
         let mut chords = m
@@ -183,11 +184,18 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             return Err("musicxml_time_column_competition_pending".into());
         }
         let previous_meter = carried_meter;
+        let previous_time_symbol = carried_time_symbol;
         if let Some(t) = times.first() {
             if t["bounds"][0].as_i64().unwrap() >= chords[0].bounds[0] {
                 return Err("musicxml_mid_measure_meter_pending".into());
             }
-            carried_meter = if t["kind"] == "TimePairInter" {
+            carried_time_symbol = match t["shape"].as_str() {
+                Some("COMMON_TIME") => Some("common"),
+                Some("CUT_TIME") => Some("cut"),
+                _ => None,
+            };
+            carried_meter = if t["kind"] == "TimePairInter" || t["origin"]["phase"] == "MUSIC_TIME"
+            {
                 if t["frozen"] != true || t["origin"]["phase"] != "MUSIC_TIME" {
                     return Err("musicxml_selected_header_time_required".into());
                 }
@@ -206,7 +214,9 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             };
         }
         let meter = carried_meter.ok_or("musicxml_recognized_meter_required_no_default")?;
-        if previous_meter.is_some_and(|previous| previous != meter) {
+        if previous_meter.is_some_and(|previous| {
+            previous != meter || previous_time_symbol != carried_time_symbol
+        }) {
             return Err("musicxml_meter_change_range_propagation_pending".into());
         }
         // PageRhythm.populateTimeSignatures: TimeRational.getValue supplies
@@ -373,7 +383,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 measure.system, measure.index
             ));
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"expected_duration":rational(expected_quarters),"actual_duration":rational(offset),"voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_quarters),"actual_duration":rational(offset),"voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
@@ -415,7 +425,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     .ok_or("musicxml_export_clef_identity_required")?;
                 // Original PartwiseBuilder uses 3 - rint(clef.pitch / 2).
                 let line = 3 - (clef["pitch"].as_f64().unwrap() / 2.).round_ties_even() as i32;
-                write!(&mut xml, "<time><beats>{}</beats><beat-type>{}</beat-type></time><clef><sign>G</sign><line>{line}</line></clef>", measure["numerator"], measure["denominator"]).unwrap();
+                // PartwiseBuilder.processTime sets TimeSymbol for COMMON/CUT.
+                let symbol = match measure["time_symbol"].as_str() {
+                    Some("common") => " symbol=\"common\"",
+                    Some("cut") => " symbol=\"cut\"",
+                    _ => "",
+                };
+                write!(&mut xml, "<time{symbol}><beats>{}</beats><beat-type>{}</beat-type></time><clef><sign>G</sign><line>{line}</line></clef>", measure["numerator"], measure["denominator"]).unwrap();
             }
             xml.push_str("</attributes>\n");
         }
@@ -451,7 +467,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/recognized constant integer-quarter meter single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef forms, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/recognized constant integer-quarter meter single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     Ok(Export { owner: m, xml })

@@ -76,15 +76,15 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
         }
         glyph_erase(&mut im, &h["clef"]["glyph"])?;
         if !h["time"].is_null() {
-            // PageCleaner visits the actual TimePair number glyphs; the pair
-            // has no synthetic physical glyph. The upstream report is provenance.
+            // PageCleaner visits the actual TimeWhole glyph or TimePair numbers.
+            // The pair has no synthetic physical glyph; upstream is provenance.
             let snapshot = o.graph.snapshot();
             let pair = snapshot["inters"]
                 .as_array()
                 .unwrap()
                 .iter()
                 .find(|n| {
-                    n["kind"] == "TimePairInter"
+                    n["kind"] == h["time"]["kind"]
                         && n["origin"]["system"] == h["system_id"]
                         && n["staff_id"] == h["staff_id"]
                         && n["source_header_id"] == h["time"]["id"]
@@ -97,10 +97,17 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
             {
                 return Err("music_stale_frozen_header_time".into());
             }
-            for member in pair["members"]
-                .as_array()
-                .ok_or("music_time_pair_members_required")?
-            {
+            let glyph_nodes = if pair["kind"] == "TimePairInter" {
+                pair["members"]
+                    .as_array()
+                    .ok_or("music_time_pair_members_required")?
+                    .as_slice()
+            } else if pair["kind"] == "TimeWholeInter" {
+                std::slice::from_ref(pair)
+            } else {
+                return Err("music_owned_header_time_kind_required".into());
+            };
+            for member in glyph_nodes {
                 let actual = snapshot["inters"]
                     .as_array()
                     .unwrap()
@@ -255,7 +262,7 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                 }
             }
             "HeadChordInter" | "StaffBarlineInter" | "ClefInter" => {}
-            "TimePairInter" | "TimeNumberInter" => {
+            "TimePairInter" | "TimeNumberInter" | "TimeWholeInter" => {
                 if n["frozen"] != true || n["origin"]["phase"] != "MUSIC_TIME" {
                     return Err("music_nonheader_pair_cleaner_pending".into());
                 }
