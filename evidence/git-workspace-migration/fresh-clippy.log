@@ -1,0 +1,8 @@
+    Checking audiveris-classifier v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone/crates/audiveris-classifier)
+    Checking audiveris-template-match v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone/crates/audiveris-template-match)
+    Checking audiveris-template-bank v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone/crates/audiveris-template-bank)
+    Checking audiveris-staff-removal v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone/crates/audiveris-staff-removal)
+    Checking audiveris-glyph-features v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone/crates/audiveris-glyph-features)
+    Checking audiveris-area v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone/crates/audiveris-area)
+    Checking audiveris-native v0.1.0 (/workspace/work/git-workspace-migration/fresh-clone)
+    Finished `dev` profile [unoptimized] target(s) in 33.12s

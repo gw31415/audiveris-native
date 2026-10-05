@@ -1,0 +1,303 @@
+{
+  "main": "05138bfce092aee06a50a1a2612f79d07f7ddbda",
+  "checks": [
+    {
+      "label": "fresh-build",
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j",
+        "1",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "fresh-fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "fresh-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--offline",
+        "--locked",
+        "--all-targets",
+        "-j",
+        "1",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0
+    },
+    {
+      "label": "fresh-targeted",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "--lib",
+        "-j",
+        "1",
+        "music_"
+      ],
+      "exit": 0
+    }
+  ],
+  "examples": [
+    {
+      "name": "g-major",
+      "argv": [
+        "/workspace/onboarding/target/debug/audiveris-musicxml",
+        "/workspace/work/git-workspace-migration/fresh-clone/fixtures/official-image-musicxml-header/g-major-header-quarter.png",
+        "/workspace/work/git-workspace-migration/examples/g-major.musicxml",
+        "/workspace/work/git-workspace-migration/examples/g-major.json"
+      ],
+      "event_count": 8,
+      "events": [
+        {
+          "measure_number": 1,
+          "step": "B",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 1,
+          "step": "G",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 1,
+          "step": "E",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 1,
+          "step": "G",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 2,
+          "step": "B",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 2,
+          "step": "D",
+          "octave": 5,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 2,
+          "step": "F",
+          "octave": 5,
+          "alter": 1,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 2,
+          "step": "D",
+          "octave": 5,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        }
+      ],
+      "original_same_input_content_matched": true,
+      "comparison_scope": "unmodified original full-image MusicXML export",
+      "input_SHA256": "df83d06d415d33086ab5fd673361b52baf2b83609082dcedd394a1398befda50",
+      "XML_SHA256": "75530acdd8a195ecbfc25c4f6b3fef0cf77c14dda6017278b6beecd9e495ab7e",
+      "report_SHA256": "2e8a457eea428b3737f8fbb1997756a42012e85d72aa771c86d27d4638c498a2"
+    },
+    {
+      "name": "quarter-half-break",
+      "argv": [
+        "/workspace/onboarding/target/debug/audiveris-musicxml",
+        "/workspace/work/git-workspace-migration/fresh-clone/fixtures/official-image-musicxml-limited/quarter-half-break.png",
+        "/workspace/work/git-workspace-migration/examples/quarter-half-break.musicxml",
+        "/workspace/work/git-workspace-migration/examples/quarter-half-break.json"
+      ],
+      "event_count": 12,
+      "events": [
+        {
+          "measure_number": 1,
+          "step": "B",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 1,
+          "step": null,
+          "octave": null,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": true
+        },
+        {
+          "measure_number": 1,
+          "step": "E",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 1,
+          "step": "G",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 2,
+          "step": "B",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 2,
+          "voice": 1,
+          "type": "half",
+          "rest": false
+        },
+        {
+          "measure_number": 2,
+          "step": "D",
+          "octave": 5,
+          "alter": 0,
+          "duration_quarters": 2,
+          "voice": 1,
+          "type": "half",
+          "rest": false
+        },
+        {
+          "measure_number": 3,
+          "step": "B",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 3,
+          "step": null,
+          "octave": null,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": true
+        },
+        {
+          "measure_number": 3,
+          "step": "E",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 3,
+          "step": "G",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 1,
+          "voice": 1,
+          "type": "quarter",
+          "rest": false
+        },
+        {
+          "measure_number": 4,
+          "step": "D",
+          "octave": 5,
+          "alter": 0,
+          "duration_quarters": 2,
+          "voice": 1,
+          "type": "half",
+          "rest": false
+        },
+        {
+          "measure_number": 4,
+          "step": "B",
+          "octave": 4,
+          "alter": 0,
+          "duration_quarters": 2,
+          "voice": 1,
+          "type": "half",
+          "rest": false
+        }
+      ],
+      "original_same_input_content_matched": true,
+      "comparison_scope": "existing original same-input RHYTHMS saved notes; distinct from new full-image export evidence",
+      "input_SHA256": "3d27016ba5d9fca47f2cc684357096feca010cc963194e368fdff0ea33afd03e",
+      "XML_SHA256": "e67a921e9c75ef48ee2a951ea266d76b420c5bee98e6447dec0bb1053fbcb9ab",
+      "report_SHA256": "04449eb8b704175788acbec2f643f32c89aa51c19d1061528f0dbe8e30fb036c"
+    }
+  ],
+  "CLI_SHA256": "8533b7ed55c49ea1f08bd2c3a11d5b3a1c09ccc11fef29219735e07dae7738a1",
+  "linux_native_no_Java_required": true,
+  "source_reconstruction_scripts_used": false,
+  "finished": true,
+  "full_original_complete": false,
+  "Releases_uploaded": false
+}

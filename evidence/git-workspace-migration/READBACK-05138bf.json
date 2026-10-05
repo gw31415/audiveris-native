@@ -1,0 +1,16 @@
+{
+  "main": "05138bfce092aee06a50a1a2612f79d07f7ddbda",
+  "repository_tree": "c1fdb41c64f01dcd922898ff9dcb2e073d0713f2",
+  "all_main_files_SHA256_matched": 9045,
+  "root_source_SHA256_blobs_modes_matched": 6871,
+  "root_source_tree": "5c03b7732101539ac8cbd5b6cf2a545823d98dd7",
+  "source_history": "2395352558c74c26dc373d495776546fe8abfac4",
+  "source_history_commits": 114,
+  "old_outer_main_is_ancestor": true,
+  "old_archive_files_preserved": 2164,
+  "normal_unencoded_clone": true,
+  "Cargo_manifest_at_root": true,
+  "separate_clone_directory": "/workspace/work/git-workspace-migration/fresh-clone",
+  "library_operations": 0,
+  "original_omr_full_migration_complete": false
+}
