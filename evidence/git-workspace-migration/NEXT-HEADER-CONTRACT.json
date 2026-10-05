@@ -1,0 +1,26 @@
+{
+  "scope": "read-only next dependency audit; not a connected native feature",
+  "upstream": "Audiveris5.11 9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "existing_parts": [
+    "src/time_column.rs: TimePairInter/TimeWholeInter, numerator/denominator, Containment and member glyphs",
+    "src/header_finalization.rs: StaffHeader.freeze and recursive member freezing",
+    "src/music_measures.rs: owned clef/key import",
+    "src/music_xml.rs: current 4/4 carried-meter calculation and first attributes export"
+  ],
+  "exact_unconnected_paths": [
+    "src/music_symbols.rs filter refuses non-null frozen HEADER time: music_frozen_time_header_import_pending",
+    "src/music_measures.rs does not import selected TimePairInter/member glyphs into the actual owner",
+    "src/music_xml.rs currently reads TimeWholeInter shape values only; HEADER TimePair requires its actual numerator/denominator"
+  ],
+  "original_dependencies": [
+    "HeaderBuilder / StaffHeader.freeze",
+    "AbstractTimeInter / TimePairInter / TimeNumberInter / TimeWholeInter",
+    "PageCleaner time/member glyph erasure",
+    "Measure time context / rhythm expected duration",
+    "PartwiseBuilder.processTimeSignatures"
+  ],
+  "next_vertical_unit": "One original-success ordinary G-clef complete 4/4 input with an actual frozen HEADER TimePair; retain all existing success examples; no default meter fabrication",
+  "original_function_omissions_planned": [],
+  "new_input_or_fixture_added_in_this_audit": false,
+  "API_blocker_independent_of_port_work": true
+}

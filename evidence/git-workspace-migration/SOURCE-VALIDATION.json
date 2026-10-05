@@ -1,0 +1,42 @@
+{
+  "source_commit": "2395352558c74c26dc373d495776546fe8abfac4",
+  "source_tree": "5c03b7732101539ac8cbd5b6cf2a545823d98dd7",
+  "full_regression": {
+    "passed": 552,
+    "failed": 0,
+    "argv": [
+      "cargo",
+      "test",
+      "--workspace",
+      "--offline",
+      "--locked",
+      "-j",
+      "1"
+    ]
+  },
+  "fmt_exit": 0,
+  "clippy_all_targets_D_warnings_exit": 0,
+  "cargo_incremental": false,
+  "dev_and_test_debug_info": 0,
+  "same_image_original_export_new_G_major_notes": 8,
+  "key_alter_original_explicit_controls": 105,
+  "orphan_ledger_comparison": "saved original STEMS reload -> actual reduceFoundations; separate from full-image export",
+  "historical_test_baseline": {
+    "passed": 549,
+    "tested_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9"
+  },
+  "historical_Laura": {
+    "heads": 352,
+    "exclusions": 513,
+    "historical_source_commit": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+    "not_relabelled_as_new_report": true
+  },
+  "global_HEADS_STEMS_MusicXML_epilog_complete": false,
+  "remaining": "HEADER TimePair/other clefs/meters, general keys/accidentals, polyphony and full original function ledger remain partial/unimplemented",
+  "new_encoded_bundles": 0,
+  "log_SHA256": {
+    "full-regression.log": "db2d839910e37c02034b8e98c047d917a2adbb57e0316b8106fb490877934474",
+    "fmt-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "clippy-final.log": "b8ac0eb817c10f48cc65c96550f5a935abc6d1ad75e1bf54e253a889bbc2f327"
+  }
+}
