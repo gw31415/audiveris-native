@@ -283,3 +283,58 @@ semantics are not claimed as newly image-verified. The previous full554 belongs
 to51f8d44; this change uses affected MusicXML and clef tests, not a repeated
 full-workspace run. All global completion flags remain false. These are staged
 boundaries in the full nonUI parity goal, never planned feature omissions.
+
+
+## Single-flag eighth notes → MusicXML
+
+`FlagInter` is now created from classified physical glyphs using original
+`AbstractFlagInter.lookupLink/createValidAdded`: first eligible stem in x order,
+profile1 lookup/foot area, intrinsic profile0 gap impacts, head/stem polarity
+and extension point. The retained stem/cache identity is used by
+`FlagStemRelation`; no stem or duration is supplied by a fixture. Original
+`SIGraph.computeContextualGrade` includes both HeadStem and FlagStem support
+before weak flag purge. Containment/ChordStem identity relations add no support.
+
+`AbstractChordInter.getDurationSansDotOrTuplet` divides the head duration by2
+for an actual attached flag. Single-voice offsets and measure sums now use
+exact eighth-of-whole integer ticks. MusicXML uses divisions2 when eighths are
+present and keeps divisions1 on existing quarter/half inputs. Under/overfilled
+measures still refuse. Finer fractions, dots and tuplets are not guessed.
+
+One clean Bravura51 render / recognized44pt, interline11, zero-skew, ordinary
+five-line treble/C-major/4/4 two-measure image is verified through unmodified
+original5.11 full-image RHYTHMS/export and native recognition. It contains
+`B4(1/8) B4(1/8) G4(1/4) E4(1/4) G4(1/4) | B4 D5 F5 D5`.
+Native matches9 notes, offsets, two flags' physical glyphs, saved three-decimal
+flag/support grades and `<type>eighth</type><stem>up</stem>`. This input has no
+beams in either original or native output; it is **not positive beam parity**.
+The separate original lookup/grade kernels cover boundary contact,1px overlap,
+wrong vertical position and signed gap limits. Removing the two actual flag
+wing rasters produces five quarters and refuses, proving that duration does
+not come from stored note coordinates or the expected output list.
+
+```sh
+cargo build --locked --bin audiveris-musicxml -j1
+./target/debug/audiveris-musicxml   fixtures/official-image-musicxml-flags/flag-eighth-quarter.png   flag-eighth-quarter.musicxml flag-eighth-quarter.report.json
+```
+
+Use `CARGO_TARGET_DIR/debug/` when the target directory is overridden. Output
+paths must not already exist. No Java/original recognized XML is needed at runtime.
+
+Still pending: positive beam-origin builder/items/cache scheduling and beam
+finalization, positive down/small/multiple flags in full images, supported-symbol
+conflicts, finer rhythmic units, tuplets/dots/polyphony/changes/general original
+parity. A potentially reachable beam still refuses. The full original nonUI
+parity goal is unchanged; HEADS/STEMS/MusicXML/epilog/automatic flags remainfalse.
+
+This flag/support/fractional-rhythm checkpoint passed one full workspace run:
+558 tests,0 failures/ignored, plus fmt, all-target clippy with `-D warnings`,
+the direct Linux CLI and MusicXML4 XSD. Earlier checkpoint counts retain their
+own source identity. [Validation summary](../evidence/musicxml-flag-eighth/VALIDATION.json).
+
+The next positive beam input is retained at
+`fixtures/official-image-musicxml-beams/beam-eighth-quarter.png`. Original5.11
+successfully exports two eighths with beam1 begin/end and seven quarters.
+Current native still refuses `music_beam_with_stump_or_seed_pending`, with no
+output pair written. This is a prepared comparison, **not another successful
+native CLI example**. [Concrete remaining dependencies](../evidence/musicxml-beam-eighth/NEXT-DEPENDENCY.md).

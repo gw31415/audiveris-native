@@ -46,6 +46,11 @@
       "status": "implemented",
       "unit": "native frozen pitched HEADER clef -> measure-local diatonic pitch -> generic original MusicXML clef attributes; bass/alto eight-note image exports",
       "limits": "two same-image original5.11 full exports; 12 buildClef and 180 preexisting pitch kernels distinct; small/octave/other C positions not image-verified; positive arpeggiato/mid-measure changes/unpitched mapping pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary classified flag glyph -> actual FlagStem SIG/cache identity -> original support and weak flag purge -> exact eighth note/offset -> MusicXML divisions2",
+      "limits": "one original successful same-image treble/C-major4/4 two-measure9-event input; no beams on this image; lookup/grade kernels distinct; positive beam-origin/other flags/general rhythms pending"
     }
   ],
   "function_groups": [
@@ -107,12 +112,12 @@
     {
       "original_function": "SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory`",
       "status": "partial",
-      "current_and_remaining": "classifier・isolated/2部品rest/time・実加線へのdot距離検査あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。"
+      "current_and_remaining": "classifier・isolated/2部品rest/time・実加線へのdot距離検査あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 普通の1旗のglyph/lookup/FlagStem登録とweak purgeを接続。下向き/小型/複数旗・supportを伴う一般競合は未完。"
     },
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。"
+      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 実FlagStemに基づく八分音価・eighth整数tickのonset/小節sum/divisionsを追加し、原版成功1画像で比較。正のbeamは未接続。"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -146,7 +151,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "positive beam/flag/STEMS/LINKS -> shorter durations and fractional-quarter rhythm; accidental/header changes by original dependency; full original nonUI scope retained",
+  "next_image_integration": "positive BeamLinker.VLinker items/expand/createStem -> beam/head/cache SIG -> finalizeBeams -> eighth duration/beam begin-continue-end export; head-only guard removal is not a port",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -155,5 +160,5 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/header-clef-meaning/VALIDATION.json; source is the containing Git commit, independent SHA/tree readback outside repo"
+  "latest_targeted_validation": "evidence/musicxml-flag-eighth/VALIDATION.json; source is containing commit"
 }

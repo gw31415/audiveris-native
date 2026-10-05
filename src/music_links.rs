@@ -155,6 +155,7 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
 /// is not a support relation. Weak rest removal also empties its rest chord.
 pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
+    let flags = crate::music_flags::contextualize(&mut graph)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
     let removed = reduction["removed_weak_symbol_ids"]
         .as_array()
@@ -175,7 +176,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     m.chords.retain(|c| !c.members.is_empty());
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
-    m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"unsupported-support-free Rest/TimeWhole physical overlaps, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos/BeamHead relations for LINKS cleaner/epilog","full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
+    m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"unsupported-support-free Rest/TimeWhole physical overlaps, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos/BeamHead relations for LINKS cleaner/epilog","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
     Ok(m)
 }
 

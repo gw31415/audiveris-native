@@ -862,6 +862,49 @@ impl Graph {
         Ok(())
     }
 
+    pub(crate) fn contextualize_head_stem_flags(&mut self) -> Result<(), String> {
+        let mut nodes = self
+            .vertices
+            .iter()
+            .filter(|v| {
+                !v.removed
+                    && matches!(
+                        v.data["kind"].as_str(),
+                        Some("HeadInter" | "StemInter" | "FlagInter")
+                    )
+            })
+            .map(|v| v.data.clone())
+            .collect::<Vec<_>>();
+        let ids = nodes
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap() as usize)
+            .collect::<BTreeSet<_>>();
+        let mut relations = Vec::new();
+        for e in self.edges.iter().filter(|e| !e.removed) {
+            // Original getSupports excludes non-Support identity relations.
+            if matches!(
+                e.data["kind"].as_str(),
+                Some("Containment" | "ChordStemRelation")
+            ) {
+                continue;
+            }
+            let source = ids.contains(&e.key.source);
+            let target = ids.contains(&e.key.target);
+            if source != target {
+                return Err("unsupported_head_stem_flag_external_relation".into());
+            }
+            if source {
+                relations.push(e.data.clone())
+            }
+        }
+        crate::sig_context::contextualize_head_stem_flags(&mut nodes, &relations)?;
+        for n in nodes {
+            let id = n["id"].as_u64().unwrap() as usize;
+            self.vertices[id - 1].data["contextual_grade"] = n["contextual_grade"].clone();
+        }
+        Ok(())
+    }
+
     /// Original SIGraph.deleteWeakInters threshold and exceptions, on the live
     /// store. This bounded continuation cannot remove a cached StemInter yet:
     /// its retriever callback must be wired before that ownership can change.

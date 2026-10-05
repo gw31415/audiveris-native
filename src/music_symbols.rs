@@ -534,6 +534,34 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let b = [g.left as i64, g.top as i64, g.width as i64, g.height as i64];
             let rest = shape.ends_with("_REST");
             let meter = time(shape);
+            if matches!(shape, "FLAG_1" | "FLAG_1_DOWN") {
+                let max = m.owner.upstream_report["stem_seeds"]["stem_scaling"]["stem_scale"]["max"]
+                    .as_u64()
+                    .ok_or("flag_max_stem_required")? as usize;
+                if let Some((stem, rel)) =
+                    crate::music_flags::lookup(shape, b, il, max, sid, &graph.snapshot())?
+                {
+                    let key = Key {
+                        system: sid,
+                        phase: Phase::Symbol,
+                        local: gid * 2 + created.len(),
+                    };
+                    let data = json!({"kind":"FlagInter","shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"value":1});
+                    graph.vertex(key, data, false)?;
+                    graph.relations(sid, Phase::Symbol, vec![(key, stem, rel)])?;
+                    created.push(key);
+                    accepted.push(
+                        graph.snapshot()["inters"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .find(|n| n["id"] == graph.id(key).unwrap())
+                            .unwrap()
+                            .clone(),
+                    );
+                }
+                continue;
+            }
             if meter.is_none() && !rest {
                 continue;
             }

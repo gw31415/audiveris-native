@@ -4,6 +4,118 @@ use serde_json::Value;
 use std::{fs, process::Command};
 
 #[test]
+fn actual_flag_connections_supply_eighth_duration_onsets_and_xml_divisions() {
+    let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures/official-image-musicxml-flags");
+    let o: Value = serde_json::from_slice(&fs::read(f.join("observed.json")).unwrap()).unwrap();
+    let image = GrayImage::decode(&fs::read(f.join("flag-eighth-quarter.png")).unwrap()).unwrap();
+    let result = music_xml::recognize(&image).unwrap();
+    let report = &result.owner.owner.prepared.report;
+    let events = report["events"].as_array().unwrap();
+    assert_eq!(events.len(), 9);
+    for (e, c) in events.iter().zip(o["events"].as_array().unwrap()) {
+        for field in [
+            "measure_number",
+            "step",
+            "octave",
+            "alter",
+            "duration_quarters",
+            "offset_quarters",
+            "voice",
+            "type",
+            "rest",
+        ] {
+            assert_eq!(e[field], c[field], "{field}")
+        }
+        assert_eq!(e["beam_ids"], serde_json::json!([]));
+        assert!(c["beams"].as_array().unwrap().is_empty());
+        if e["type"] == "eighth" {
+            assert_eq!(e["stem_direction"], c["original_stem_direction"]);
+            assert_eq!(e["flag_ids"].as_array().unwrap().len(), 1);
+            assert_eq!(e["duration"], "1/8");
+        }
+    }
+    assert_eq!(events[1]["time_offset"], "1/8");
+    assert!(result.xml.contains("<divisions>2</divisions>"));
+    assert_eq!(
+        result
+            .xml
+            .matches("<duration>1</duration><voice>1</voice><type>eighth</type><stem>up</stem>")
+            .count(),
+        2
+    );
+    assert_eq!(result.xml.matches("<beam").count(), 0);
+    let sig = &report["shared_sig"];
+    let nodes = sig["inters"].as_array().unwrap();
+    let edges = sig["relations"].as_array().unwrap();
+    for c in o["original_flags"].as_array().unwrap() {
+        let flag = nodes
+            .iter()
+            .find(|n| n["kind"] == "FlagInter" && n["bounds"] == c["bounds"])
+            .unwrap();
+        assert_eq!(flag["shape"], c["shape"]);
+        assert_eq!(flag["glyph"], c["glyph"]);
+        for field in ["grade", "contextual_grade"] {
+            assert_eq!(
+                (flag[field].as_f64().unwrap() * 1000.).round_ties_even(),
+                c[field].as_f64().unwrap() * 1000.
+            )
+        }
+        let gid = flag["glyph_id"].as_u64().unwrap() as usize;
+        assert_eq!(
+            audiveris_native::beam_dispatch::glyph_json(
+                &result.owner.owner.prepared.registry.get(gid).unwrap().glyph
+            ),
+            c["glyph"]
+        );
+        let rel = edges
+            .iter()
+            .find(|e| e["kind"] == "FlagStemRelation" && e["source"] == flag["id"])
+            .unwrap();
+        let c = &o["original_flag_stem_relations"][0];
+        for field in ["grade", "dx", "dy"] {
+            assert_eq!(
+                (rel[field].as_f64().unwrap() * 1000.).round_ties_even(),
+                c[field].as_f64().unwrap() * 1000.
+            )
+        }
+    }
+    assert!(
+        report["measures"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|m| m["expected_duration"] == "1" && m["actual_duration"] == "1")
+    );
+    for field in [
+        "heads_complete",
+        "stems_complete",
+        "musicxml_complete",
+        "epilog_complete",
+        "automatic_raster_pipeline_complete",
+    ] {
+        assert_eq!(report[field], false)
+    }
+    // Erase just the recognized flag wing runs, retaining staff pixels. Both
+    // unflagged notes become quarters, and this five-quarter measure must refuse.
+    let mut no_flags = GrayImage::new(image.width, image.height, image.pixels.clone()).unwrap();
+    for flag in o["original_flags"].as_array().unwrap() {
+        let b = &flag["glyph"]["bounds"];
+        for run in flag["glyph"]["runs"].as_array().unwrap() {
+            let x = b[0].as_u64().unwrap() as usize + run[0].as_u64().unwrap() as usize;
+            let start = b[1].as_u64().unwrap() as usize + run[1].as_u64().unwrap() as usize;
+            for y in start..start + run[2].as_u64().unwrap() as usize {
+                if ![220, 221, 231, 232, 242, 243, 253, 254, 264, 265].contains(&y) {
+                    no_flags.pixels[y * no_flags.width + x] = 255
+                }
+            }
+        }
+    }
+    let error = music_xml::recognize(&no_flags).err().unwrap();
+    assert!(error.ends_with("quarters=5:expected=4"), "{error}");
+}
+
+#[test]
 fn recognized_bass_and_alto_headers_reach_native_pitch_and_musicxml() {
     let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("fixtures/official-image-musicxml-clefs");

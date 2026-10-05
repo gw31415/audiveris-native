@@ -30,8 +30,8 @@
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
-| SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory` | 部分 | classifier・isolated/2部品rest/time・実加線へのdot距離検査あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 |
-| RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 認識済み拍子に応じた完全小節の単声四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
+| SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory` | 部分 | classifier・isolated/2部品rest/time・実加線へのdot距離検査と普通の1旗→stem接続あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 |
+| RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 認識済み拍子に応じた完全小節の単声の旗付き八分/四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、正のbeamと他flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
 | PAGE/score / `ScoreReduction`, logical parts | 部分 | 単ページ改行・小節番号あり。複数ページ継続、part同定/結合、楽器/移調、跨systemの声部/slur/tie、repeat構造等の一般score統合が残る。 |
 | MusicXML / `PartwiseBuilder`, original proxymusic | 部分 | native MusicXML4 writer、限定イベント・system break・part名、schema/reimport比較あり。一般notation/direction/lyric/instrument/layout/score属性と.mxl圧縮、多ページexportの原版対応が残る。原版XMLの流用は認識完成に数えない。 |
 | プロジェクト保存・再開 / `Book`, `Sheet`, stage invalidation | 部分 | stage reportsとGit完全復元あり。native認識projectの永続化・読込・編集後の必要工程再実行、原版.omrとの対応/互換性は未対応。Gitソース保存とは別機能。 |
@@ -102,3 +102,10 @@ G-clef固定ガードとwriterのsign=G固定を撤去し、既存`ClefInter.not
 Altoで必要だった左端残留線のARPEGGIATO候補には、原版`InterFactory`→`ArpeggiatoInter.lookupLink/createValidAdded`の接続先無しnull分岐を移植。既存profile1の2.5 interline右側矩形にhead chordが無ければ記号を作らず、可能性があれば未対応として拒否します。原版kernelのnull/接触/1px重複境界を比較。正のarpeggiato接続・grade・exportは未完です。
 
 次の具体的未接続は、短音価を支える正のbeam/flagとSTEMS/LINKS、臨時記号・途中調号/拍子/clef、分数拍の単声rhythmです。cut/他HEADER形・ledger・多声部/多段/移調・保存/補正・他入力条件も全機能台帳に残します。途中clef変更や打楽器は現在拒否し、全機能完了フラグfalseを維持します。実行例は[MUSICXML-LIMITED.md](MUSICXML-LIMITED.md#recognized-bassalto-header--musicxml)。直前全554は51f8d44での結果で、今回は対象検証を行い不必要に全suiteを反復しません。
+
+
+## 旗付き八分音符・分数拍の小単位（2026-10-05）
+
+`AbstractFlagInter.lookupLink/createValidAdded`と`FlagStemRelation`を、分類済み実glyph・所有SIGのstem/headへ接続。旗の位置/foot・stem方向・gap impacts・first-valid順を原版から移し、HeadStem/FlagStemの元support計算と弱旗purgeを実行します。`AbstractChordInter.getDurationSansDotOrTuplet`の接続数に由来する1/8音価を、整数eighth tickによる単声onset・小節検査とMusicXML divisionsへ伝播。原版成功1画像で八分2音/四分7音、旗glyph/保存grade/関係とMusicXML意味を比較しました。これはbeamの無い入力で、正のbeam一致とは区別します。
+
+次の切断箇所は`BeamLinker.BLinker.VLinker`のbeam-origin items収集・expand/createStem・頭との接続順、`SigReducer.checkBeamsHaveBothStems/checkHooksHaveStem`と`StemsRetriever.finalizeBeams`、`AbstractChordInter.getBeams`と`PartwiseBuilder`のbeam begin/continue/end出力です。既存head-origin builder/kernelは部品として再利用できますが、head-onlyガード撤去で代用しません。旗の下向き/小型/複数・一般リズムや原版全機能も台帳の未完として保持します。

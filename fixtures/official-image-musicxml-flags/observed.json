@@ -1,0 +1,323 @@
+{
+  "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "comparison_scope": "same input through unmodified5.11 full-image RHYTHMS/export; saved flag glyph/grade/relations separately observed; no original output imported into native",
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0,
+      "voice": 1,
+      "type": "eighth",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0.5,
+      "voice": 1,
+      "type": "eighth",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 1,
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 2,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 3,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 0,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 2,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 3,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false,
+      "original_stem_direction": "up",
+      "beams": []
+    }
+  ],
+  "original_flags": [
+    {
+      "original_id": 297,
+      "shape": "FLAG_1",
+      "bounds": [
+        290,
+        207,
+        12,
+        41
+      ],
+      "grade": 0.793,
+      "contextual_grade": 0.916,
+      "glyph": {
+        "bounds": [
+          290,
+          207,
+          12,
+          41
+        ],
+        "orientation": "VERTICAL",
+        "runs": [
+          [
+            0,
+            0,
+            15
+          ],
+          [
+            1,
+            4,
+            11
+          ],
+          [
+            2,
+            6,
+            9
+          ],
+          [
+            3,
+            8,
+            9
+          ],
+          [
+            4,
+            10,
+            8
+          ],
+          [
+            5,
+            12,
+            7
+          ],
+          [
+            6,
+            13,
+            8
+          ],
+          [
+            7,
+            16,
+            7
+          ],
+          [
+            8,
+            17,
+            10
+          ],
+          [
+            8,
+            35,
+            6
+          ],
+          [
+            9,
+            20,
+            21
+          ],
+          [
+            10,
+            23,
+            16
+          ],
+          [
+            11,
+            27,
+            10
+          ]
+        ]
+      }
+    },
+    {
+      "original_id": 298,
+      "shape": "FLAG_1",
+      "bounds": [
+        410,
+        207,
+        12,
+        41
+      ],
+      "grade": 0.793,
+      "contextual_grade": 0.916,
+      "glyph": {
+        "bounds": [
+          410,
+          207,
+          12,
+          41
+        ],
+        "orientation": "VERTICAL",
+        "runs": [
+          [
+            0,
+            0,
+            15
+          ],
+          [
+            1,
+            4,
+            11
+          ],
+          [
+            2,
+            6,
+            9
+          ],
+          [
+            3,
+            8,
+            9
+          ],
+          [
+            4,
+            10,
+            8
+          ],
+          [
+            5,
+            12,
+            7
+          ],
+          [
+            6,
+            13,
+            8
+          ],
+          [
+            7,
+            16,
+            7
+          ],
+          [
+            8,
+            17,
+            10
+          ],
+          [
+            8,
+            35,
+            6
+          ],
+          [
+            9,
+            20,
+            21
+          ],
+          [
+            10,
+            23,
+            16
+          ],
+          [
+            11,
+            27,
+            10
+          ]
+        ]
+      }
+    }
+  ],
+  "original_flag_stem_relations": [
+    {
+      "grade": 0.786,
+      "dx": 0.091,
+      "dy": 0.0,
+      "extension_point": [
+        289.0,
+        207.0
+      ]
+    },
+    {
+      "grade": 0.786,
+      "dx": 0.091,
+      "dy": 0.0,
+      "extension_point": [
+        409.0,
+        207.0
+      ]
+    }
+  ],
+  "divisions": 2,
+  "beam_image_parity_claimed": false
+}

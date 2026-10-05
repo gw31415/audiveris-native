@@ -61,7 +61,7 @@ pub fn contextualize(inters: &mut [Value], relations: &[Value]) -> Result<(), St
         inters,
         &grades,
         &adapted,
-        "BarConnectionRelation",
+        &["BarConnectionRelation"],
         "unsupported_grid_context_partner_limit_16",
     )
 }
@@ -72,9 +72,24 @@ pub(crate) fn contextualize_head_stems(
     inters: &mut [Value],
     relations: &[Value],
 ) -> Result<(), String> {
+    contextualize_head_stem_flags_impl(inters, relations, false)
+}
+pub(crate) fn contextualize_head_stem_flags(
+    inters: &mut [Value],
+    relations: &[Value],
+) -> Result<(), String> {
+    contextualize_head_stem_flags_impl(inters, relations, true)
+}
+fn contextualize_head_stem_flags_impl(
+    inters: &mut [Value],
+    relations: &[Value],
+    flags: bool,
+) -> Result<(), String> {
     let mut grades = BTreeMap::new();
     for v in inters.iter() {
-        if !matches!(v["kind"].as_str(), Some("HeadInter" | "StemInter")) {
+        if !matches!(v["kind"].as_str(), Some("HeadInter" | "StemInter"))
+            && !(flags && v["kind"] == "FlagInter")
+        {
             return Err("unsupported_head_stem_context_inter".into());
         }
         let id = v["id"]
@@ -93,7 +108,8 @@ pub(crate) fn contextualize_head_stems(
         if !matches!(
             r["kind"].as_str(),
             Some("HeadStemRelation" | "Exclusion" | "NoExclusion")
-        ) {
+        ) && !(flags && r["kind"] == "FlagStemRelation")
+        {
             return Err("unsupported_head_stem_context_relation".into());
         }
         for side in ["source", "target"] {
@@ -101,7 +117,7 @@ pub(crate) fn contextualize_head_stems(
                 return Err("invalid_head_stem_context_endpoint".into());
             }
         }
-        if r["kind"] == "HeadStemRelation" {
+        if r["kind"] == "HeadStemRelation" || (flags && r["kind"] == "FlagStemRelation") {
             for side in ["source_ratio", "target_ratio"] {
                 if !r[side].as_f64().is_some_and(|v| v.is_finite() && v >= 1.) {
                     return Err("invalid_head_stem_context_support_ratio".into());
@@ -113,7 +129,11 @@ pub(crate) fn contextualize_head_stems(
         inters,
         &grades,
         relations,
-        "HeadStemRelation",
+        if flags {
+            &["HeadStemRelation", "FlagStemRelation"]
+        } else {
+            &["HeadStemRelation"]
+        },
         "unsupported_head_stem_context_partner_limit_16",
     )
 }
@@ -122,7 +142,7 @@ fn apply_context(
     inters: &mut [Value],
     grades: &BTreeMap<u64, f64>,
     relations: &[Value],
-    support_kind: &str,
+    support_kinds: &[&str],
     partner_limit_error: &str,
 ) -> Result<(), String> {
     let stem_ids = inters
@@ -137,7 +157,11 @@ fn apply_context(
         let mut contributions = BTreeMap::new();
         // JGraphT directed edgesOf enumerates incoming before outgoing edges.
         // This matters when opposite directed supports share the same partner.
-        let supports = relations.iter().filter(|r| r["kind"] == support_kind);
+        let supports = relations.iter().filter(|r| {
+            r["kind"]
+                .as_str()
+                .is_some_and(|k| support_kinds.contains(&k))
+        });
         for r in supports
             .clone()
             .filter(|r| r["target"] == id)

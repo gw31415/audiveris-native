@@ -11,11 +11,23 @@ pub struct Export {
     pub owner: OwnedMusic,
     pub xml: String,
 }
-fn rational(quarters: u32) -> String {
-    match quarters % 4 {
-        0 => format!("{}", quarters / 4),
-        2 => format!("{}/2", quarters / 2),
-        _ => format!("{quarters}/4"),
+// Exact eighth-of-whole ticks; floats are only outward report quarter values.
+fn rational(ticks: u32) -> String {
+    let mut gcd = 8;
+    while !ticks.is_multiple_of(gcd) {
+        gcd /= 2;
+    }
+    if gcd == 8 {
+        format!("{}", ticks / 8)
+    } else {
+        format!("{}/{}", ticks / gcd, 8 / gcd)
+    }
+}
+fn quarters(ticks: u32) -> Value {
+    if ticks.is_multiple_of(2) {
+        json!(ticks / 2)
+    } else {
+        json!(ticks as f64 / 2.)
     }
 }
 // PartwiseBuilder.buildClef / areEqual: semantic identity, not header Inter id.
@@ -179,13 +191,27 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                     }
                 }
                 s if music_symbols::time(s).is_some()
-                    || matches!(s, "QUARTER_REST" | "HALF_REST") =>
+                    || matches!(s, "QUARTER_REST" | "HALF_REST" | "FLAG_1" | "FLAG_1_DOWN") =>
                 {
                     if t["created_inter_ids"]
                         .as_array()
                         .is_none_or(|ids| ids.is_empty())
                     {
                         return Err("musicxml_registered_symbol_identity_required".into());
+                    }
+                    if matches!(s, "FLAG_1" | "FLAG_1_DOWN") {
+                        let snapshot = m.owner.graph.snapshot();
+                        let ids = t["created_inter_ids"].as_array().unwrap();
+                        if !snapshot["inters"].as_array().unwrap().iter().any(|n| {
+                            n["kind"] == "FlagInter"
+                                && n["shape"] == s
+                                && ids.contains(&n["id"])
+                                && snapshot["relations"].as_array().unwrap().iter().any(|e| {
+                                    e["kind"] == "FlagStemRelation" && e["source"] == n["id"]
+                                })
+                        }) {
+                            return Err("musicxml_surviving_flag_stem_identity_required".into());
+                        }
                     }
                 }
                 _ => return Err(format!("musicxml_unported_symbol_interpretation:{shape}")),
@@ -231,6 +257,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     admit_symbols(&m)?;
     let initial = m.owner.graph.snapshot();
     let nodes = initial["inters"].as_array().unwrap();
+    let edges = initial["relations"].as_array().unwrap();
     let mut graph = m.owner.graph.clone();
     let mut events = Vec::new();
     let mut measures = Vec::new();
@@ -302,12 +329,12 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         }
         // PageRhythm.populateTimeSignatures: TimeRational.getValue supplies
         // the range duration, inherited by stacks until the next time event.
-        // The present quarter/half-only voice uses integer quarter units.
-        let whole_quarters = meter.0.checked_mul(4).ok_or("musicxml_meter_overflow")?;
-        if meter.0 == 0 || meter.1 == 0 || whole_quarters % meter.1 != 0 {
-            return Err("musicxml_fractional_quarter_measure_duration_pending".into());
+        // Exact binary fractions through eighths. Finer/tuplets remain pending.
+        let whole_ticks = meter.0.checked_mul(8).ok_or("musicxml_meter_overflow")?;
+        if meter.0 == 0 || meter.1 == 0 || whole_ticks % meter.1 != 0 {
+            return Err("musicxml_measure_duration_finer_than_eighth_pending".into());
         }
-        let expected_quarters = whole_quarters / meter.1;
+        let expected_ticks = whole_ticks / meter.1;
         // PartwiseBuilder.processKeys updates current.keys only on an actual
         // key event. Its absent-key case preserves the previous part/staff key.
         let keys = nodes
@@ -339,7 +366,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         }
         let fifths = carried_key.as_ref().map(|k| k.1);
         let key_id = carried_key.as_ref().map(|k| k.0.clone());
-        let mut offset = 0;
+        let mut offset = 0_u32;
         let mut previous_right = None;
         // PartwiseBuilder processes the measure clef even for rest-only music.
         // Use an actual native header Inter, never a writer default.
@@ -369,8 +396,40 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             let shape = note["shape"]
                 .as_str()
                 .ok_or("musicxml_note_shape_required")?;
-            let (duration, note_type) = note_duration(shape)?;
+            let (base, mut note_type) = note_duration(shape)?;
+            let mut duration = base * 2;
             let rest = note["kind"] == "RestInter";
+            let flags = if let Some(stem) = chord.stem {
+                let stem_id = graph
+                    .id(stem)
+                    .ok_or("musicxml_actual_chord_stem_required")?;
+                nodes
+                    .iter()
+                    .filter(|n| {
+                        n["kind"] == "FlagInter"
+                            && edges.iter().any(|e| {
+                                e["kind"] == "FlagStemRelation"
+                                    && e["source"] == n["id"]
+                                    && e["target"] == stem_id
+                            })
+                    })
+                    .collect::<Vec<_>>()
+            } else {
+                Vec::new()
+            };
+            if !flags.is_empty() {
+                if rest || shape != "NOTEHEAD_BLACK" || flags.len() != 1 || flags[0]["value"] != 1 {
+                    return Err("musicxml_flagged_void_rest_or_multiple_flags_pending".into());
+                }
+                // AbstractChordInter.getDurationSansDotOrTuplet divides by2
+                // for each actual beam/flag, not by recognizing the note's x.
+                duration /= 2;
+                note_type = "eighth";
+            }
+            let flag_ids = flags.iter().map(|f| f["id"].clone()).collect::<Vec<_>>();
+            let flag_direction = flags
+                .first()
+                .map(|f| if f["shape"] == "FLAG_1" { "up" } else { "down" });
             let mut step = None;
             let mut octave = None;
             let mut cid = None;
@@ -454,24 +513,37 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             c["voice"] = json!(1);
             c["measure_number"] = json!(mi + 1);
             graph.vertex(chord.key, c, false)?;
-            events.push(json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":duration,"time_offset":rational(offset),"offset_quarters":offset,"voice":1,"type":note_type,"dots":0,"effective_clef_id":cid}));
-            offset += duration;
+            events.push(json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":duration,"flag_ids":flag_ids,"beam_ids":[],"stem_direction":flag_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":1,"type":note_type,"dots":0,"effective_clef_id":cid}));
+            offset = offset
+                .checked_add(duration)
+                .ok_or("musicxml_voice_duration_overflow")?;
         }
         // Voice.getEndTime/checkDuration + strict complete-measure admission.
         // Pickup/underfilled measures require MeasureFixer and refuse here.
-        if offset != expected_quarters {
+        if offset != expected_ticks {
             return Err(format!(
-                "musicxml_incomplete_or_excess_measure:{}:{}:quarters={offset}:expected={expected_quarters}",
-                measure.system, measure.index
+                "musicxml_incomplete_or_excess_measure:{}:{}:quarters={}:expected={}",
+                measure.system,
+                measure.index,
+                quarters(offset),
+                quarters(expected_ticks)
             ));
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_quarters),"actual_duration":rational(offset),"voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
     }
-    // Quarter and half durations have integer quarter units. Keep divisions
-    // positive even for all-half pages (unlike an unguarded divisor/4=0).
+    // PartwiseBuilder uses a positive division value for exact durations.
+    // Eighth notes need2 divisions; preserve1 on quarter/half-only pages.
+    let divisions = if events
+        .iter()
+        .any(|e| e["duration_eighths"].as_u64().is_some_and(|n| n % 2 != 0))
+    {
+        2
+    } else {
+        1
+    };
     let escaped_name = part_name
         .replace('&', "&amp;")
         .replace('<', "&lt;")
@@ -501,7 +573,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         if number == 1 || key_changed || clef_changed {
             xml.push_str("<attributes>");
             if number == 1 {
-                xml.push_str("<divisions>1</divisions>");
+                write!(&mut xml, "<divisions>{divisions}</divisions>").unwrap();
             }
             if key_changed {
                 write!(&mut xml, "<key><fifths>{}</fifths></key>", new_key.unwrap()).unwrap();
@@ -547,9 +619,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             }
             writeln!(
                 &mut xml,
-                "<duration>{}</duration><voice>1</voice><type>{}</type></note>",
-                e["duration_quarters"],
-                e["type"].as_str().unwrap()
+                "<duration>{}</duration><voice>1</voice><type>{}</type>{}</note>",
+                e["duration_eighths"].as_u64().unwrap() * divisions / 2,
+                e["type"].as_str().unwrap(),
+                e["stem_direction"]
+                    .as_str()
+                    .map(|d| format!("<stem>{d}</stem>"))
+                    .unwrap_or_default()
             )
             .unwrap();
         }
@@ -559,7 +635,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant integer-quarter meter single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter two-measure image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     Ok(Export { owner: m, xml })
