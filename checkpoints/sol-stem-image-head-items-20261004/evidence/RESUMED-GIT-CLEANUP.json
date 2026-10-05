@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "removed_only_verified_Library_recovery_duplicates": [
+    "/workspace/work/stem-image-head-items/Library-save/restored-archive",
+    "/workspace/work/stem-image-head-items/Library-save/restored-source"
+  ],
+  "all_removed_archive_file_sha256_verified": 1766,
+  "removed_archive_commit": "299f471104cf96f68cbd0ff2046d9b492c98fc29",
+  "removed_archive_tree": "1b87ade972a21a9c2787c3133bf1286d4166ebaf",
+  "all_removed_source_sha256_verified": 6734,
+  "removed_source_commit": "32242ed7ba29ae1c6bd7b025ea824c2c9fbe8f3a",
+  "removed_source_tree": "fde330fc68e254bf4bf7c315e0a980e35a206d5b",
+  "latest_retained_fresh_remote_verified_main": "097e5a3b0d8c293de98f187f2ffeefb5ca723dac",
+  "latest_retained_source_tree": "fde330fc68e254bf4bf7c315e0a980e35a206d5b",
+  "latest_retained_all_source_sha256_verified": 6734,
+  "original_Library_parts_bundles_readback_manifests_and_primary_sources_retained": true,
+  "new_authentication_or_settings_changes": false
+}
