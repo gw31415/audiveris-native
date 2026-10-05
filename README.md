@@ -6,6 +6,8 @@ UI表示を除く原Audiveris5.11の認識・解析・補正・保存・MusicXML
 
 直近の追加は、認識済み固定3/4 TimePairから小節長・6音（F♯を含む）をMusicXMLへ伝える縦経路です。[入力例と実行手順](docs/MUSICXML-LIMITED.md#recognized-34-header--musicxml)。続けて固定COMMON_TIMEの実glyph・HEADER競合除外・`symbol="common"`を8音の原版成功画像で接続しました。4/4の既存入力を保持し、他拍子・他clef等は台帳に残して段階的に接続します。
 
+次の追加は、既存HEADERのヘ音記号/ハ音記号を所有SIGの音高とMusicXMLへ接続する経路です。2つの原版成功画像で各8音・2小節を比較しました。[入力と実行例](docs/MUSICXML-LIMITED.md#recognized-bassalto-header--musicxml)。sign/line/octave-changeは原版の汎用変換を用い、small/8va/8vbはkernel比較と全画像検証を区別します。
+
 # Audiveris native port — experimental page glyph pipeline
 
 [Linux上の独立検証・音部記号候補の登録](docs/CLEF-REGISTRATION.md)。Javaを使わないnative実行で、候補の理論外形・重心補正・競合関係・header stopまで追加しました。調号・拍子後の最終clef選択とheader固定まで接続済みです。対応範囲は [HEADERS検証境界](docs/HEADERS.md) を参照してください。

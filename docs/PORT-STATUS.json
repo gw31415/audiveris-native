@@ -41,6 +41,11 @@
       "status": "implemented",
       "unit": "frozen HEADER COMMON_TIME -> physical glyph/owned SIG -> header-aware PageCleaner/reduction -> eight-note G-major image MusicXML with symbol=common",
       "limits": "one original5.11 full-image comparison, separately saved OMR time glyph/grade; CUT and other TimeWhole mappings reused but whole-image comparisons pending; other clefs/time changes/general rhythms remain pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "native frozen pitched HEADER clef -> measure-local diatonic pitch -> generic original MusicXML clef attributes; bass/alto eight-note image exports",
+      "limits": "two same-image original5.11 full exports; 12 buildClef and 180 preexisting pitch kernels distinct; small/octave/other C positions not image-verified; positive arpeggiato/mid-measure changes/unpitched mapping pending"
     }
   ],
   "function_groups": [
@@ -62,7 +67,7 @@
     {
       "original_function": "HEADERS / `HeadersBuilder`, clef/key/time関連クラス",
       "status": "partial",
-      "current_and_remaining": "固定HEADER調号、4/4・3/4 TimePairとCOMMON_TIME TimeWholeを実SIG/glyph・音高・小節期待長・exportへ接続し原版成功画像で比較。cut/他TimeWholeと他整数quarter拍子はmapping接続と全画像比較を区別。G-clef以外、途中変更、cancel/臨時記号は未接続。"
+      "current_and_remaining": "固定HEADER調号、4/4・3/4 TimePairとCOMMON_TIME TimeWholeを実SIG/glyph・音高・小節期待長・exportへ接続し原版成功画像で比較。cut/他TimeWholeと他整数quarter拍子はmapping接続と全画像比較を区別。その他clefの全画像条件、途中変更、cancel/臨時記号は未完。 G/F/C汎用意味伝播を接続しBass/Alto各1原版成功画像を追加比較。small/8va/8vbはkernelのみ。"
     },
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",
@@ -141,13 +146,14 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "existing HEADER state -> actual measure pitch/alter/meter -> native MusicXML; example not yet selected/verified",
+  "next_image_integration": "positive beam/flag/STEMS/LINKS -> shorter durations and fractional-quarter rhythm; accidental/header changes by original dependency; full original nonUI scope retained",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
   "musicxml_complete": false,
   "epilog_complete": false,
   "automatic_raster_pipeline_complete": false,
-  "validated_code_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
-  "validated_code_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005"
+  "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
+  "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
+  "latest_targeted_validation": "evidence/header-clef-meaning/VALIDATION.json; source is the containing Git commit, independent SHA/tree readback outside repo"
 }

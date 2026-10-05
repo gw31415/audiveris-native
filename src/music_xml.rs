@@ -18,6 +18,56 @@ fn rational(quarters: u32) -> String {
         _ => format!("{quarters}/4"),
     }
 }
+// PartwiseBuilder.buildClef / areEqual: semantic identity, not header Inter id.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct ClefAttributes {
+    sign: &'static str,
+    line: i32,
+    octave_change: i32,
+}
+fn clef_attributes(clef: &Value) -> Result<ClefAttributes, String> {
+    let pitch = clef["pitch"]
+        .as_f64()
+        .ok_or("musicxml_native_clef_pitch_required")?;
+    if !pitch.is_finite() || pitch.abs() > 12. {
+        return Err("musicxml_native_clef_pitch_outside_verified_range".into());
+    }
+    let (sign, octave_change) = match clef["shape"].as_str() {
+        Some("G_CLEF" | "G_CLEF_SMALL") => ("G", 0),
+        Some("G_CLEF_8VA") => ("G", 1),
+        Some("G_CLEF_8VB") => ("G", -1),
+        Some("C_CLEF") => ("C", 0),
+        Some("F_CLEF" | "F_CLEF_SMALL") => ("F", 0),
+        Some("F_CLEF_8VA") => ("F", 1),
+        Some("F_CLEF_8VB") => ("F", -1),
+        Some("PERCUSSION_CLEF") => {
+            return Err("unpitched_percussion_requires_separate_mapping".into());
+        }
+        _ => return Err("unsupported_diatonic_clef".into()),
+    };
+    Ok(ClefAttributes {
+        sign,
+        line: 3 - (pitch / 2.).round_ties_even() as i32,
+        octave_change,
+    })
+}
+fn write_clef(xml: &mut String, clef: ClefAttributes) {
+    write!(
+        xml,
+        "<clef><sign>{}</sign><line>{}</line>",
+        clef.sign, clef.line
+    )
+    .unwrap();
+    if clef.octave_change != 0 {
+        write!(
+            xml,
+            "<clef-octave-change>{}</clef-octave-change>",
+            clef.octave_change
+        )
+        .unwrap();
+    }
+    xml.push_str("</clef>");
+}
 fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
     match shape {
         "NOTEHEAD_BLACK" | "QUARTER_REST" => Ok((1, "quarter")),
@@ -26,6 +76,23 @@ fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
             "musicxml_note_duration_outside_quarter_half_scope:{shape}"
         )),
     }
+}
+// ArpeggiatoInter.lookupLink builds a right-side half-open AWT rectangle.
+// The existing automatic path uses system profile1 (xGapMax_p1=2.5).
+// This only proves an empty chord search; positive arpeggiation stays pending.
+fn arpeggiato_may_link(bounds: [i64; 4], interline: usize, chords: &[[i64; 4]]) -> bool {
+    let lookup = [
+        bounds[0] + bounds[2],
+        bounds[1],
+        (2.5 * interline as f64).round_ties_even() as i64,
+        bounds[3],
+    ];
+    chords.iter().any(|b| {
+        lookup[0] < b[0] + b[2]
+            && b[0] < lookup[0] + lookup[2]
+            && lookup[1] < b[1] + b[3]
+            && b[1] < lookup[1] + lookup[3]
+    })
 }
 fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
     let staffs = m.owner.upstream_report["grid_ir"]["staffs"]
@@ -47,6 +114,20 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                 .ok_or("musicxml_symbol_shape_required")?;
             match shape {
                 "CLUTTER" | "NOISE" => {}
+                "ARPEGGIATO" => {
+                    let bounds = serde_json::from_value(t["bounds"].clone())
+                        .map_err(|_| "musicxml_arpeggiato_bounds_required")?;
+                    let chords = m
+                        .chords
+                        .iter()
+                        .filter(|c| c.stem.is_some())
+                        .map(|c| c.bounds)
+                        .collect::<Vec<_>>();
+                    if arpeggiato_may_link(bounds, m.owner.interline, &chords) {
+                        return Err("musicxml_arpeggiato_chord_link_pending".into());
+                    }
+                    // InterFactory.createValidAdded returns null without a link.
+                }
                 "DOT_set" => {
                     let b: [i64; 4] = serde_json::from_value(t["bounds"].clone())
                         .map_err(|_| "musicxml_dot_bounds_required")?;
@@ -274,10 +355,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             })
             .max_by_key(|n| n["bounds"][0].as_i64())
             .ok_or("musicxml_measure_local_clef_required")?;
-        if initial_clef["shape"] != "G_CLEF" || initial_clef["pitch"] != 2. {
-            return Err("musicxml_verified_treble_clef_scope_required".into());
-        }
-        let mut clef_id = initial_clef["id"].as_u64();
+        let initial_attributes = clef_attributes(initial_clef)?;
+        let clef_id = initial_clef["id"].as_u64();
         for chord in chords {
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());
@@ -309,8 +388,10 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     })
                     .max_by_key(|n| n["bounds"][0].as_i64())
                     .ok_or("musicxml_measure_local_clef_required")?;
-                if clef["shape"] != "G_CLEF" || clef["pitch"] != 2. {
-                    return Err("musicxml_verified_treble_clef_scope_required".into());
+                // A measure-start header change can be exported in attributes.
+                // A mid-measure change needs ordered clef events, still pending.
+                if clef_attributes(clef)? != initial_attributes {
+                    return Err("musicxml_mid_measure_clef_change_pending".into());
                 }
                 let pitch = note["pitch"]
                     .as_f64()
@@ -321,7 +402,9 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     // original-successful image, retaining its actual native ledger.
                     let hx = note["bounds"][0].as_f64().unwrap_or(f64::NAN)
                         + note["bounds"][2].as_f64().unwrap_or(f64::NAN) / 2.;
-                    let concrete = pitch == 6.
+                    let concrete = clef["shape"] == "G_CLEF"
+                        && clef["pitch"] == 2.
+                        && pitch == 6.
                         && nodes.iter().any(|n| {
                             n["kind"] == "LedgerInter"
                                 && n["staff_id"] == measure.staff
@@ -343,7 +426,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 step = Some(s);
                 octave = Some(o);
                 cid = clef["id"].as_u64();
-                clef_id = cid;
             }
             let key: Key = serde_json::from_value(note["origin"].clone())
                 .map_err(|_| "musicxml_native_note_origin_required")?;
@@ -401,6 +483,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     );
     let mut previous_system = None;
     let mut written_key = None;
+    let mut written_clef = None;
     for measure in &measures {
         let number = measure["number"].as_u64().unwrap();
         writeln!(&mut xml, "<measure number=\"{number}\">").unwrap();
@@ -409,7 +492,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         }
         let new_key = measure["fifths"].as_i64();
         let key_changed = new_key.is_some() && new_key != written_key;
-        if number == 1 || key_changed {
+        let clef = nodes
+            .iter()
+            .find(|n| n["id"] == measure["clef_id"])
+            .ok_or("musicxml_export_clef_identity_required")?;
+        let new_clef = clef_attributes(clef)?;
+        let clef_changed = written_clef != Some(new_clef);
+        if number == 1 || key_changed || clef_changed {
             xml.push_str("<attributes>");
             if number == 1 {
                 xml.push_str("<divisions>1</divisions>");
@@ -419,19 +508,22 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 written_key = new_key;
             }
             if number == 1 {
-                let clef = nodes
-                    .iter()
-                    .find(|n| n["id"] == measure["clef_id"])
-                    .ok_or("musicxml_export_clef_identity_required")?;
-                // Original PartwiseBuilder uses 3 - rint(clef.pitch / 2).
-                let line = 3 - (clef["pitch"].as_f64().unwrap() / 2.).round_ties_even() as i32;
                 // PartwiseBuilder.processTime sets TimeSymbol for COMMON/CUT.
                 let symbol = match measure["time_symbol"].as_str() {
                     Some("common") => " symbol=\"common\"",
                     Some("cut") => " symbol=\"cut\"",
                     _ => "",
                 };
-                write!(&mut xml, "<time{symbol}><beats>{}</beats><beat-type>{}</beat-type></time><clef><sign>G</sign><line>{line}</line></clef>", measure["numerator"], measure["denominator"]).unwrap();
+                write!(
+                    &mut xml,
+                    "<time{symbol}><beats>{}</beats><beat-type>{}</beat-type></time>",
+                    measure["numerator"], measure["denominator"]
+                )
+                .unwrap();
+            }
+            if clef_changed {
+                write_clef(&mut xml, new_clef);
+                written_clef = Some(new_clef);
             }
             xml.push_str("</attributes>\n");
         }
@@ -467,7 +559,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/recognized constant integer-quarter meter single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant integer-quarter meter single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     Ok(Export { owner: m, xml })
@@ -489,4 +581,37 @@ pub fn recognize_named(image: &GrayImage, part_name: &str) -> Result<Export, Str
     let owner = crate::music_links::finalize_stems(owner)?;
     let m = crate::music_measures::continue_measures(owner)?;
     continue_export_named(crate::music_symbols::continue_symbols(m)?, part_name)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn original_clef_export_and_arpeggiato_empty_search_boundaries() {
+        let o: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-clefs/dependency-controls.json"
+        ))
+        .unwrap();
+        for c in o["clef_attributes"].as_array().unwrap() {
+            let a = clef_attributes(c).unwrap();
+            assert_eq!(a.sign, c["sign"].as_str().unwrap());
+            assert_eq!(a.line, c["line"].as_i64().unwrap() as i32);
+            assert_eq!(a.octave_change, c["octave_change"].as_i64().unwrap() as i32);
+        }
+        assert_eq!(o["profile"], 1);
+        let chords: Vec<[i64; 4]> = serde_json::from_value(o["head_chord_bounds"].clone()).unwrap();
+        for c in o["arpeggiato"].as_array().unwrap() {
+            assert_eq!(
+                arpeggiato_may_link(
+                    serde_json::from_value(c["bounds"].clone()).unwrap(),
+                    11,
+                    &chords
+                ),
+                c["link_found"].as_bool().unwrap()
+            );
+        }
+        assert!(clef_attributes(&json!({"shape":"PERCUSSION_CLEF","pitch":0})).is_err());
+        assert!(clef_attributes(&json!({"shape":"C_CLEF"})).is_err());
+        assert!(clef_attributes(&json!({"shape":"C_CLEF","pitch":100})).is_err());
+    }
 }

@@ -22,7 +22,7 @@
 | LOAD / `ImageLoading`, `Book`, `Sheet` | 部分 | grayscale PNG/PGM単画像・複数独立画像CLIあり。RGB/alpha/JPEG/TIFF/PDF・複数ページbook・原版画像変換/ページ選択は未接続。4M画素等は現ガードで、最終的な省略ではない。 |
 | BINARY/SCALE / adaptive filter, `ScaleBuilder` | 部分 | 原版式・histogram/peak・多数kernelあり。一般画像の全設定/分解能/失敗状態と下流伝播を広げる必要がある。 |
 | GRID / `GridBuilder`, `Staff`, `SystemInfo`, parts | 部分 | sections/filament/通常staff/system/parts・cue第二パスの比較あり。非zero skew、特殊staff、実スキャンの全工程一致は未検証。 |
-| HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG-clefに限定。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
+| HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。positive beam-origin STEMS、cue beam、一般加線音高・共有staffの全工程は未接続。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
 | STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。beamからの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 |
@@ -47,10 +47,10 @@
 
 ## 実用CLIへ広げる依存順
 
-現在は`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。次の切断箇所はG-clef以外の音高/export、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
+現在は`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。G/F/Cの音高/exportは汎用接続し、bass/alto画像も比較しました。次の切断箇所は他clefの全画像条件、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
 
 1. **今回のcompound rest/SIG checkpointを固定**。実装済み部分、画像全工程比較、保存XML段階比較、条件指定競合kernelを分けて保存する。
-2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。調号と固定TimePairの実画像比較は完了。固定COMMON_TIMEも追加接続。次は他clef・cut/他TimeWholeを実音高・拍子・exportまで比較する。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
+2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。調号と固定TimePairの実画像比較は完了。固定COMMON_TIMEも追加接続。bass/altoの実音高/exportを接続。次はcut/他TimeWhole、他clef条件や短音価に必要なbeam/STEMS・臨時記号を依存順に接続する。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
 3. **positive beam/head STEMS、一般chordと音価**。自動items/glyph/beam接続→cache/SIG→cleaner/epilogを閉じ、beam/flag・whole/breve・一般加線へ広げる。単なる条件指定APIの追加ではなく実画像CLIまで通す。
 4. **generic SYMBOLS/LINKSとlateChecks**。多部品候補、全Inter factory、support grade/frozen/競合反復、dot/accidental等の関係を原版に沿って接続。実際に必要なものから小段階にする。
 5. **CURVES/TEXTSと一般MEASURES/CHORDS/RHYTHMS**。原版stage順を守り、tie/slur/連符/lyrics等をLINKS・slot/voiceへ供給。複声部・複段part・拍子変更・pickup等を段階的に画像→MusicXMLへ通す。
@@ -93,3 +93,12 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
 3/4の次段階として1つのcommon-time/G-major画像を原版5.11の同一画像処理で比較し、8音と`<time symbol="common">`をnativeから出力します。`TimeWholeInter`の原版shape→分子/分母を既存TimeColumnから再利用し、選択済み固定glyphを所有SIG/registryへ原子的に登録。`PageCleaner.visit(TimeWholeInter)`と`SigReducer.reduce`のHEADER Inter除外に沿って接続し、`PartwiseBuilder.processTime`のCOMMON/CUT表記をwriterへ伝播しました。画像全工程の新比較はCOMMON_TIME1件であり、cut/その他TimeWholeのmapping接続を全画像検証済みと数えません。台帳は全機能省略なし・他clef/拍子変更/臨時記号/複声部など未完を保持します。
 
 このHEADERまとまりで全workspace554回帰を一度実施し全件成功。fmt、全target clippy、Linux CLI、MusicXML4 XSDも成功。過去の552/549等の報告は当時のソース記録として保持し、今回の全回帰と置換しません。通常ソースGit保存とSHA/tree readbackを用い、新規bundleや全ファイルhash一覧は生成しません。
+
+
+## HEADER clef意味伝播とfactory-null依存（2026-10-05）
+
+G-clef固定ガードとwriterのsign=G固定を撤去し、既存`ClefInter.noteStepOf/octaveOf`を所有measureの実ClefInterへ接続。`PartwiseBuilder.buildClef/areEqual/processClef`に沿い、sign/line/octave-changeを出力し、同じ意味の改行HEADERを重複出力しません。音高を成功例のリストから供給しません。Bass/Alto各1画像の8音・2小節が原版の同一画像exportと一致しました。12条件のexport kernelと既存180音高条件は全画像一致と別に扱います。
+
+Altoで必要だった左端残留線のARPEGGIATO候補には、原版`InterFactory`→`ArpeggiatoInter.lookupLink/createValidAdded`の接続先無しnull分岐を移植。既存profile1の2.5 interline右側矩形にhead chordが無ければ記号を作らず、可能性があれば未対応として拒否します。原版kernelのnull/接触/1px重複境界を比較。正のarpeggiato接続・grade・exportは未完です。
+
+次の具体的未接続は、短音価を支える正のbeam/flagとSTEMS/LINKS、臨時記号・途中調号/拍子/clef、分数拍の単声rhythmです。cut/他HEADER形・ledger・多声部/多段/移調・保存/補正・他入力条件も全機能台帳に残します。途中clef変更や打楽器は現在拒否し、全機能完了フラグfalseを維持します。実行例は[MUSICXML-LIMITED.md](MUSICXML-LIMITED.md#recognized-bassalto-header--musicxml)。直前全554は51f8d44での結果で、今回は対象検証を行い不必要に全suiteを反復しません。

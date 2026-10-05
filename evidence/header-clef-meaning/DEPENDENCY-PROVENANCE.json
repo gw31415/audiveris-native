@@ -1,0 +1,11 @@
+{
+  "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "helper": "scripts/java/ClefExportDependencyProbe.java",
+  "helper_SHA256": "9e8fb4820d17bad8e748b475e54e681059ed8689b1e1a2cf93602ad5aab92087",
+  "controls": "fixtures/official-image-musicxml-clefs/dependency-controls.json",
+  "controls_SHA256": "bb63e745f34e133b1e0754cd86282507eb180880f03933b284ac054322046fbb",
+  "scope": "original buildClef kernels and arpeggiato lookup on native left-border raster plus saved original RHYTHMS chord context; not extra original full-image parity cases",
+  "exit_code": 0,
+  "no_coordinate_sweep": true
+}

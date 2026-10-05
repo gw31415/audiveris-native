@@ -1,0 +1,111 @@
+{
+  "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "comparison_scope": "same input image through unmodified original5.11 RHYTHMS/export, separate saved-state clef identity; original XML never fed to native",
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "D",
+      "octave": 3,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 2,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 2,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 2,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 3,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 3,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "A",
+      "octave": 3,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 3,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    }
+  ],
+  "clef_events": [
+    {
+      "measure_number": 1,
+      "sign": "F",
+      "line": 4,
+      "octave_change": 0
+    }
+  ],
+  "original_clefs": [
+    {
+      "kind": "ClefInter",
+      "original_id": 20,
+      "shape": "F_CLEF",
+      "pitch": -2.0,
+      "clef_kind": "BASS",
+      "frozen": true,
+      "bounds": [
+        101,
+        221,
+        30,
+        39
+      ]
+    }
+  ]
+}

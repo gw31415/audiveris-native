@@ -231,3 +231,55 @@ and complete cleaner/epilog/export, remains the target. No original function
 is planned for omission. All global completion flags remain false.
 
 COMMON_TIME checkpoint validation: one complete workspace regression after the coherent HEADER changes passes all554 tests, zero failures. Fmt, workspace all-targets clippy with warnings denied, Linux native CLI, normalized original MusicXML comparison and local MusicXML4 XSD pass. Prior checkpoints keep their historical source/result boundaries; old recognition reports are unchanged.
+
+
+## Recognized bass/alto header → MusicXML
+
+The same image-owned `ClefInter` now supplies both `ClefInter.noteStepOf/octaveOf`
+and `PartwiseBuilder.buildClef` semantics. The writer selects G/F/C, computes
+`line = 3 - rint(pitch / 2)` and emits octave changes for 8va/8vb shapes. It
+compares sign/line/octave-change, rather than physical Inter identity, before
+writing a new clef. Repeated unchanged headers do not duplicate attributes.
+A different clef inside a measure still refuses until ordered clef events are
+connected; measure-start changes have writer support, not a new image-parity claim.
+Percussion requires unpitched note mapping and still refuses. Missing headers
+never create default notes or clefs.
+
+Two development inputs use Bravura51 rendering / recognized44pt, interline11,
+ordinary five-line staff, zero skew, C major, explicit4/4, one voice and two
+complete measures of quarter notes. F clef is placed on the fourth line and C
+clef on the middle line using original font baselines; there is no coordinate
+search. Unmodified original5.11 processes each *same image* through RHYTHMS and
+export; native does not load its XML or Java. Native output matches:
+
+- Bass: `D3 B2 G2 B2 | D3 F3 A3 F3`, `<sign>F</sign><line>4</line>`.
+- Alto: `C4 A3 F3 A3 | C4 E4 G4 E4`, `<sign>C</sign><line>3</line>`.
+
+The alto image exposed a genuine connection gap: a left border residue yielded
+an ARPEGGIATO evaluation. Original `InterFactory.create` calls
+`ArpeggiatoInter.createValidAdded`, which returns null without a possible chord
+link. Native now applies the empty-search branch using the original profile1
+right-side lookup rectangle (`rint(2.5 * interline)`, half-open intersections).
+It uses all retained head-chord bounds conservatively. Any possible chord link
+still refuses; positive arpeggiation, relation grades and export remain pending.
+The original null/edge/one-pixel-overlap controls are separate kernels on the
+actual residue and saved RHYTHMS chord context, not extra successful images.
+
+```sh
+cargo build --locked --bin audiveris-musicxml -j1
+mkdir clef-output
+./target/debug/audiveris-musicxml --output-dir clef-output   fixtures/official-image-musicxml-clefs/bass-header-quarter.png   fixtures/official-image-musicxml-clefs/alto-header-quarter.png
+```
+
+Output paths must not already exist. Each input produces a `.musicxml` and a
+`.report.json`. With `CARGO_TARGET_DIR`, use that directory's `debug/` binary.
+Product execution requires neither Java nor original recognized output.
+
+Original buildClef controls cover nine pitched shapes and four C-clef positions
+(12 cases), separately from the preexisting180 pitch controls. Small/octave
+clefs, tenor/soprano images, percussion, general ledgers, short notes/beams,
+mid-measure changes, scans/skew/other fonts/staffs and complete rhythm/score
+semantics are not claimed as newly image-verified. The previous full554 belongs
+to51f8d44; this change uses affected MusicXML and clef tests, not a repeated
+full-workspace run. All global completion flags remain false. These are staged
+boundaries in the full nonUI parity goal, never planned feature omissions.

@@ -1,0 +1,76 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /workspace/work/musicxml-clef-meaning/original/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/work/musicxml-clef-meaning/input/bass-header-quarter.png"
+INFO  [bass-header-quarter]                      Book 560  | 1 sheet in /workspace/work/musicxml-clef-meaning/input/bass-header-quarter.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/work/musicxml-clef-meaning/original/bass-header-quarter.omr
+INFO  []                      Book 1929 | Book reaching RHYTHMS on sheets:[#1]
+INFO  [bass-header-quarter]            StepMonitoring 98   | LOAD
+INFO  [bass-header-quarter]                 SheetStub 1278 | Loaded image #1 1280x420 from /workspace/work/musicxml-clef-meaning/input/bass-header-quarter.png
+INFO  [bass-header-quarter]            StepMonitoring 98   | BINARY
+INFO  [bass-header-quarter]            StepMonitoring 98   | SCALE
+INFO  [bass-header-quarter]              ScaleBuilder 254  | Beam  guessed height:  6 -- 0.25 of [5..10] range
+INFO  [bass-header-quarter]              ScaleBuilder 271  | Beam measured height:  7 -- 0.40 of [5..10] range at 44% of needed quorum
+INFO  [bass-header-quarter]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
+INFO  [bass-header-quarter]                 ScaleStep 65   | Scale{ interline(11,11,11) line(2,2,2) beam(7)}
+INFO  [bass-header-quarter]            StepMonitoring 98   | GRID
+INFO  [bass-header-quarter]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [bass-header-quarter]         ClustersRetriever 326  | Retrieved raw line clusters: 1 of sizes [5] with interline(11,11,11)
+INFO  [bass-header-quarter]                 PeakGraph 310  | Systems: #1[1]
+INFO  [bass-header-quarter]             SystemManager 800  | 1 part along 1 system
+INFO  [bass-header-quarter]                      Book 543  | Created scores: [{Score 1}]
+INFO  [bass-header-quarter]            StepMonitoring 98   | HEADERS
+INFO  [bass-header-quarter]            StepMonitoring 98   | STEM_SEEDS
+INFO  [bass-header-quarter]             StemSeedsStep 86   | stem(2 max:2)
+INFO  [bass-header-quarter]            StepMonitoring 98   | BEAMS
+INFO  [bass-header-quarter]            StepMonitoring 98   | LEDGERS
+INFO  [bass-header-quarter]            StepMonitoring 98   | HEADS
+INFO  [bass-header-quarter]           TemplateFactory 940  | Rebuilding WHOLE_NOTE template at resolution 88
+INFO  [bass-header-quarter]             HeadSeedTally 235  | Scale information: HeadSeeds{}
+INFO  [bass-header-quarter]            StepMonitoring 98   | STEMS
+INFO  [bass-header-quarter]            StepMonitoring 98   | REDUCTION
+INFO  [bass-header-quarter]             ReductionStep 105  | Stems free length median value: 36 pixels, 3.3 interlines
+INFO  [bass-header-quarter]            StepMonitoring 98   | CUE_BEAMS
+INFO  [bass-header-quarter]              CueBeamsStep 81   | Step CUE_BEAMS is skipped because small heads switch is off
+INFO  [bass-header-quarter]            StepMonitoring 98   | TEXTS
+WARN  [bass-header-quarter]              TesseractOCR 335  | The collection of supported languages is empty
+INFO  [bass-header-quarter]                   OcrUtil 106  | Missing support for 'eng' language(s)
+INFO  [bass-header-quarter]            StepMonitoring 98   | MEASURES
+INFO  [bass-header-quarter]                      Page 307  | 2 raw measures: [2 in system#1]
+INFO  [bass-header-quarter]            StepMonitoring 98   | CHORDS
+INFO  [bass-header-quarter]            StepMonitoring 98   | CURVES
+INFO  [bass-header-quarter]              SlursBuilder 240  | Slurs: 0
+INFO  [bass-header-quarter]           SegmentsBuilder 155  | Segments: 0
+INFO  [bass-header-quarter]            StepMonitoring 98   | SYMBOLS
+INFO  [bass-header-quarter]            StepMonitoring 98   | LINKS
+INFO  [bass-header-quarter]            StepMonitoring 98   | RHYTHMS
+INFO  [bass-header-quarter]                      Book 2584 | Book{bass-header-quarter} storing
+INFO  [bass-header-quarter]                      Book 2565 | Stored /book.xml
+INFO  [bass-header-quarter]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [bass-header-quarter]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [bass-header-quarter]                      Book 2525 | Book stored as /workspace/work/musicxml-clef-meaning/original/bass-header-quarter.omr
+INFO  [bass-header-quarter]                 SheetStub 1655 | Sheet disposed
+INFO  [bass-header-quarter]                      Book 2050 | End of Stub#1
+INFO  [bass-header-quarter]                      Book 2057 | End of Book{bass-header-quarter}
+INFO  [bass-header-quarter]                      Book 1929 | Book reaching PAGE on sheets:[#1]
+INFO  [bass-header-quarter]            StepMonitoring 98   | PAGE
+INFO  [bass-header-quarter]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [bass-header-quarter]                      Book 2584 | Book{bass-header-quarter} storing
+INFO  [bass-header-quarter]                      Book 2565 | Stored /book.xml
+INFO  [bass-header-quarter]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [bass-header-quarter]                      Book 2525 | Book stored as /workspace/work/musicxml-clef-meaning/original/bass-header-quarter.omr
+INFO  [bass-header-quarter]                 SheetStub 1655 | Sheet disposed
+INFO  [bass-header-quarter]                      Book 2050 | End of Stub#1
+INFO  [bass-header-quarter]                      Book 2057 | End of Book{bass-header-quarter}
+INFO  [bass-header-quarter]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [bass-header-quarter]           PartwiseBuilder 2707 | Exporting sheet(s): [#1]
+INFO  [bass-header-quarter]             ScoreExporter 164  | Score bass-header-quarter exported to /workspace/work/musicxml-clef-meaning/original/bass-header-quarter.mxl
+INFO  [bass-header-quarter]                     Score 181  | Closing {Score 1}

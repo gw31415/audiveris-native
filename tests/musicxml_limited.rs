@@ -4,6 +4,56 @@ use serde_json::Value;
 use std::{fs, process::Command};
 
 #[test]
+fn recognized_bass_and_alto_headers_reach_native_pitch_and_musicxml() {
+    let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures/official-image-musicxml-clefs");
+    for name in ["bass-header-quarter", "alto-header-quarter"] {
+        let oracle: Value =
+            serde_json::from_slice(&fs::read(f.join(format!("{name}-observed.json"))).unwrap())
+                .unwrap();
+        let image = GrayImage::decode(&fs::read(f.join(format!("{name}.png"))).unwrap()).unwrap();
+        let result = music_xml::recognize(&image).unwrap();
+        let report = &result.owner.owner.prepared.report;
+        let events = report["events"].as_array().unwrap();
+        assert_eq!(events.len(), oracle["events"].as_array().unwrap().len());
+        for (n, o) in events.iter().zip(oracle["events"].as_array().unwrap()) {
+            for field in [
+                "measure_number",
+                "step",
+                "octave",
+                "alter",
+                "duration_quarters",
+                "voice",
+                "type",
+                "rest",
+            ] {
+                assert_eq!(n[field], o[field], "{name}:{field}");
+            }
+        }
+        let nodes = report["shared_sig"]["inters"].as_array().unwrap();
+        let clef = nodes.iter().find(|n| n["kind"] == "ClefInter").unwrap();
+        for field in ["shape", "pitch", "bounds", "frozen"] {
+            assert_eq!(
+                clef[field], oracle["original_clefs"][0][field],
+                "{name}:{field}"
+            );
+        }
+        assert_eq!(clef["origin"]["phase"], "MUSIC_HEADER");
+        assert!(events.iter().all(|e| e["effective_clef_id"] == clef["id"]));
+        let c = &oracle["clef_events"][0];
+        let xml = format!(
+            "<clef><sign>{}</sign><line>{}</line></clef>",
+            c["sign"].as_str().unwrap(),
+            c["line"]
+        );
+        assert_eq!(result.xml.matches(&xml).count(), 1);
+        assert_eq!(result.xml.matches("<clef>").count(), 1);
+        assert_eq!(report["musicxml_complete"], false);
+        assert_eq!(report["stems_complete"], false);
+    }
+}
+
+#[test]
 fn image_frozen_header_time_reaches_owned_sig_meter_and_music_xml() {
     for (directory, image_name, numerator, event_count, whole_shape) in [
         (
@@ -647,6 +697,8 @@ fn batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_re
             assert_eq!(report["measures"].as_array().unwrap().len(), 4);
             assert_eq!(xml.matches("<print new-system=\"yes\"/>").count(), 1);
             assert_eq!(report["measures"][2]["system_id"], 2);
+            // PartwiseBuilder.isNewClef compares meaning across distinct header IDs.
+            assert_eq!(xml.matches("<clef>").count(), 1);
         }
         assert_eq!(report["part_name"], "Flute & <lead>");
         assert_eq!(report["musicxml_complete"], false);
