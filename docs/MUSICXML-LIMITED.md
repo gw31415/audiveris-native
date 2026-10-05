@@ -484,3 +484,42 @@ XML pitches/durations/onsets/beam1/2 match original5.11 (10/11 events); both
 MusicXML4 XSD checks pass. This readback is distinct from the full565 run on
 321abfc and the five affected target checks after the bounds-width correction.
 See [validation summary](../evidence/musicxml-beam-subdivisions/SIXTEENTH-VALIDATION.json).
+## Separate ordinary beam groups → MusicXML
+
+Current additional runnable unit: one clean Bravura44/interline11, ordinary
+five-line treble/C-major/4/4 single-voice image has two separate pairs of eighth
+notes and two quarters in measure1, followed by four quarters in measure2.
+Native recognizes the input and emits ten events, with independent
+`begin/end`, `begin/end` beam marks. It does not import original XML or oracle
+recognition results. Original5.11 full-image RHYTHMS/PAGE/export agrees on pitch,
+duration, onset, voice, beam marks and the beamed stem directions; native and
+original output validate against MusicXML4 XSD. Broader engraving, including
+original explicit quarter-note stem directives, is not claimed identical.
+
+```sh
+cargo build --locked --bin audiveris-musicxml -j1
+mkdir -p work/beam-groups
+./target/debug/audiveris-musicxml --output-dir work/beam-groups \
+  fixtures/official-image-musicxml-beam-groups/beam-two-groups.png
+```
+
+The CLI requires no Java runtime. With `CARGO_TARGET_DIR` set, use its debug
+binary path instead of `./target/debug`. Output files must not already exist.
+For low-space builds, retain the established `CARGO_INCREMENTAL=0` and
+`CARGO_PROFILE_DEV_DEBUG=0` settings; sources/inputs/evidence are not disposable
+build caches.
+
+The generic original closer-limit algorithm now runs on actual owned beam
+bounds/grade/group geometry before seeds, heads and chunks are selected.
+Sixteen original numeric controls cover positive limits and boundaries. The new
+image has nonintersecting groups and null limits; its four HEADS-loaded
+builders/items/lengths/selected glyphs are a separate comparison. Original
+AA-off fill/stroke rows verify the fractional contours needed on this image.
+General sloping contours, hooks/competing hooks, aliases/cross-staff ownership,
+more beam levels/flags/dots/tuplets and full rhythm/reduction/cleaner/epilog are
+still pending. No final nonUI original feature is planned for omission.
+
+This stage uses meaningful affected regressions and fmt/clippy. The previous
+full565 result belongs to source321abfc; no new full-workspace result is claimed.
+[Verification summary](../evidence/musicxml-beam-groups/VALIDATION.json) and
+[next dependencies](../evidence/musicxml-beam-groups/NEXT-DEPENDENCY.md).

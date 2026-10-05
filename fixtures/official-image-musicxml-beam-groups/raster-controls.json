@@ -1,0 +1,40 @@
+{
+  "scope" : "original PageCleaner BasicStroke 1.1/AA-off fill+draw on restored areas and five declared numeric controls; not full-image recognition parity",
+  "native_outputs_used" : false,
+  "cases" : [ {
+    "scope" : "actual HEADS-restored beam",
+    "median" : [ 288.0, 209.0, 350.0, 209.1 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 288, 351 ], [ 207, 288, 351 ], [ 208, 288, 351 ], [ 209, 288, 351 ], [ 210, 288, 351 ], [ 211, 288, 351 ], [ 212, 288, 351 ] ]
+  }, {
+    "scope" : "actual HEADS-restored beam",
+    "median" : [ 408.0, 209.0, 470.0, 209.1 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 408, 471 ], [ 207, 408, 471 ], [ 208, 408, 471 ], [ 209, 408, 471 ], [ 210, 408, 471 ], [ 211, 408, 471 ], [ 212, 408, 471 ] ]
+  }, {
+    "scope" : "declared numeric area control",
+    "median" : [ 288.0, 209.0, 350.0, 209.1 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 288, 351 ], [ 207, 288, 351 ], [ 208, 288, 351 ], [ 209, 288, 351 ], [ 210, 288, 351 ], [ 211, 288, 351 ], [ 212, 288, 351 ] ]
+  }, {
+    "scope" : "declared numeric area control",
+    "median" : [ 288.0, 209.1, 350.0, 209.2 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 288, 351 ], [ 207, 288, 351 ], [ 208, 288, 351 ], [ 209, 288, 351 ], [ 210, 288, 351 ], [ 211, 288, 351 ], [ 212, 288, 351 ] ]
+  }, {
+    "scope" : "declared numeric area control",
+    "median" : [ 288.0, 209.7, 350.0, 209.8 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 288, 338 ], [ 207, 288, 351 ], [ 208, 288, 351 ], [ 209, 288, 351 ], [ 210, 288, 351 ], [ 211, 288, 351 ], [ 212, 288, 351 ], [ 213, 332, 351 ] ]
+  }, {
+    "scope" : "declared numeric area control",
+    "median" : [ 288.0, 208.9, 350.0, 209.1 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 288, 351 ], [ 207, 288, 351 ], [ 208, 288, 351 ], [ 209, 288, 351 ], [ 210, 288, 351 ], [ 211, 288, 351 ], [ 212, 288, 351 ] ]
+  }, {
+    "scope" : "declared numeric area control",
+    "median" : [ 288.2, 209.0, 350.2, 209.1 ],
+    "height" : 6.0,
+    "white_rows" : [ [ 206, 288, 351 ], [ 207, 288, 351 ], [ 208, 288, 351 ], [ 209, 288, 351 ], [ 210, 288, 351 ], [ 211, 288, 351 ], [ 212, 288, 351 ] ]
+  } ]
+}

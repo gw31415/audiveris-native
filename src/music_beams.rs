@@ -96,7 +96,7 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stems()?;
     Ok(
-        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; hooks/alien groups remain admission refusals"}),
+        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; hooks/shared-glyph aliases remain admission refusals"}),
     )
 }
 /// BeamHeadCleaner.process removes temporary beam/head supports at LINKS.
@@ -116,7 +116,8 @@ pub(crate) fn clean_head_supports(graph: &mut Graph) -> Result<Vec<usize>, Strin
 }
 /// PageCleaner.visit(AbstractBeamInter)/processArea in the restored HEADS
 /// context. The certified Java2D AA-off normalized one-pixel contour branch
-/// is rectangular only. Wider strokes/sloping restored borders stay pending.
+/// is rectangular after contour normalization. Wider strokes and slopes that
+/// cross normalized pixel rows stay pending.
 fn rectangle_rows(b: [f64; 4], margin: f32) -> Result<Vec<[i64; 3]>, String> {
     if !(1.0..1.5).contains(&margin)
         || b.iter().any(|v| !v.is_finite() || v.abs() > 4_000_000.)
@@ -151,7 +152,17 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
     let margin = (interline as f64 * 0.1) as f32;
     let top = l[1] - h / 2.;
     let bottom = l[1] + h / 2.;
-    if n["kind"] != "BeamInter" || l[1] != l[3] || l[0] >= l[2] || h <= 0. {
+    let pixel = |v: f64| (v + 0.25).floor();
+    // DMarlin normalizes each path vertex to NearestPixelQuarter before the
+    // thin AA-off contour. A slightly sloping physical area can normalize to
+    // exactly the same rectangle; the contour also contains its fill. Admit
+    // only that branch, not a bounding-box erasure of arbitrary sloping ink.
+    if n["kind"] != "BeamInter"
+        || l[0] >= l[2]
+        || h <= 0.
+        || pixel(top) != pixel(l[3] - h / 2.)
+        || pixel(bottom) != pixel(l[3] + h / 2.)
+    {
         return Err("beam PageCleaner sloping/wider stroke raster pending".into());
     }
     rectangle_rows([l[0], top, l[2], bottom], margin)
@@ -185,6 +196,21 @@ mod tests {
                 json!(rectangle_rows(bounds, 1.1).unwrap()),
                 case["white_rows"]
             );
+        }
+        let controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-groups/raster-controls.json"
+        ))
+        .unwrap();
+        for c in controls["cases"].as_array().unwrap() {
+            let n = json!({"kind":"BeamInter","median":c["median"],"height":c["height"]});
+            let median = c["median"].as_array().unwrap();
+            if median[1] == 209.7 && median[3] == 209.8 {
+                // Normalization crosses a row: this branch still refuses,
+                // rather than erasing the rectangular hull of sloping ink.
+                assert!(area_rows(&n, 11).is_err());
+            } else {
+                assert_eq!(json!(area_rows(&n, 11).unwrap()), c["white_rows"]);
+            }
         }
         let continuation: Value = serde_json::from_str(include_str!(
             "../fixtures/official-image-musicxml-beam-subdivisions/eighth-continuation.json"

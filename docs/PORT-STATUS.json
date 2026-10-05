@@ -66,6 +66,11 @@
       "status": "implemented",
       "unit": "ordinary sibling beam full items, all sides before stumps, linkSiblings/canonical stem/SIG and BeamBeam support -> eleven-event two-level sixteenth image MusicXML",
       "limits": "one physical standard group/system, one part, zero skew/horizontal thin eraser, up to two levels in export; hook/alien/aliases/cross-staff/more levels/other flags/full parity pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary distinct-glyph beam groups with original zero-skew getCloserLimit -> actual builders/cache/SIG -> independent begin/end native image MusicXML",
+      "limits": "one ten-event two-nonintersecting-group full-image export; 16 declared numeric original limits and four HEADS-loaded builders compared separately; fractional contours admitted only when normalizing to certified thin rectangle; hooks/aliases/cross-staff/positive-alien full-image/general parity remain pending"
     }
   ],
   "function_groups": [
@@ -92,7 +97,7 @@
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",
       "status": "partial",
-      "current_and_remaining": "種/beam/ledgerの既存比較あり。単独standard beamの接続は下記の限定範囲。cue beam、一般加線音高・共有staffの全工程は未接続。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。"
+      "current_and_remaining": "種/beam/ledgerの既存比較あり。単独standard beamの接続は下記の限定範囲。cue beam、一般加線音高・共有staffの全工程は未接続。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。 通常beamのside/intermediate/siblingと別group closer limitを接続済み。hook/alias/cross-staff/一般finalizer/cleanerは未完。"
     },
     {
       "original_function": "HEADS / `HeadsBuilder`, template catalog",
@@ -102,7 +107,7 @@
     {
       "original_function": "STEMS / `StemBuilder`, `StemsStep`, head/beam linkers",
       "status": "partial",
-      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。一般beam群からの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。"
+      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。一般beam群からの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。 通常beamのside/intermediate/siblingと別group closer limitを接続済み。hook/alias/cross-staff/一般finalizer/cleanerは未完。"
     },
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
@@ -132,7 +137,7 @@
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、一般beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 実FlagStemに基づく八分音価・eighth整数tickのonset/小節sum/divisionsを追加し、原版成功1画像で比較。正の単独beam由来の八分音価/分数onset/番号1 begin-endも同一画像9イベントで確認。一般beam群/複声部は未完。"
+      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、一般beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 実FlagStemに基づく八分音価・eighth整数tickのonset/小節sum/divisionsを追加し、原版成功1画像で比較。正の単独beam由来の八分音価/分数onset/番号1 begin-endも同一画像9イベントで確認。一般beam群/複声部は未完。 通常2段beamの十六分音価/番号1・2 continueと、別通常groupの独立begin/endは画像比較済み。"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -166,7 +171,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "original side-first/failed-side intermediate stump scheduling and positive continue image, then sibling/multiple-level/hook beam builders and closer limits/cross-staff-system ownership; other flag/accidental/dot/general rhythm dependencies and all original nonUI functions retained",
+  "next_image_integration": "original hook linkSides profile/competing-hook state and removal -> typed SIG/cache support/checkHooksHaveStem/contour -> PartwiseBuilder forward/backward hook; aliases/cross-staff/full reduction and all nonUI parity retained",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -175,5 +180,5 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/musicxml-beam-eighth/VALIDATION.json; fixed production trees, all563 unique tests via partitioned full coverage, fmt/clippy and independently fetched clone Linux CLI/XSD"
+  "latest_targeted_validation": "evidence/musicxml-beam-groups/VALIDATION.json; affected library/image/geometry/Laura tests plus fmt/clippy; previous full565 belongs to source321abfc, no new full-workspace claim"
 }

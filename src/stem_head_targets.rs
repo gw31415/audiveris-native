@@ -53,7 +53,7 @@ fn finite(v: f64) -> bool {
 fn line_ok(l: [f64; 4]) -> bool {
     l.iter().all(|v| finite(*v)) && l[0] != l[2]
 }
-fn intersection(a: [f64; 4], b: [f64; 4]) -> [f64; 2] {
+pub(crate) fn intersection(a: [f64; 4], b: [f64; 4]) -> [f64; 2] {
     let [x1, y1, x2, y2] = a;
     let [x3, y3, x4, y4] = b;
     let d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
@@ -107,7 +107,7 @@ fn ccw(l: [f64; 4], p: [f64; 2]) -> i32 {
         0
     }
 }
-fn intersects(a: [f64; 4], b: [f64; 4]) -> bool {
+pub(crate) fn intersects(a: [f64; 4], b: [f64; 4]) -> bool {
     ccw(a, [b[0], b[1]]) * ccw(a, [b[2], b[3]]) <= 0
         && ccw(b, [a[0], a[1]]) * ccw(b, [a[2], a[3]]) <= 0
 }

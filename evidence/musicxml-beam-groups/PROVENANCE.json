@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-beam-groups/original-full/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-beam-groups/original-full/prefs",
+    "-Duser.home=/workspace/work/musicxml-beam-groups/original-full/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "RHYTHMS",
+    "-export",
+    "-output",
+    "/workspace/work/musicxml-beam-groups/original-full",
+    "--",
+    "/workspace/work/musicxml-beam-groups/input/beam-two-groups.png"
+  ],
+  "exit_code": 0,
+  "input_sha256": "1469b7c95a32679e41e86dd39c765d33ffb92f07d23e8cc6e566fb38536622a3",
+  "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "one independent two-group eighth input, no coordinate sweep, unmodified original5.11 full-image export"
+}

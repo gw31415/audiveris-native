@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! BeamLinker.VLinker geometry/filterHeads/StemBuilder and expand on image-owned
-//! physical glyphs. Ordinary sibling beam groups; hooks/alien limits remain bounded.
+//! physical glyphs. Ordinary beam groups with actual alien search limits.
 use crate::{
     beam_dispatch::{self, Registry},
-    stem_beam_lookup_area, stem_chunks, stem_glyph,
+    stem_beam_closer_limit, stem_beam_lookup_area, stem_chunks, stem_glyph,
     stem_image_head_chunks::{members, sections},
     stem_image_head_expansion::{Context, Expansion, arr, bounds, line, update},
     stem_image_owned::OwnedItems,
@@ -110,19 +110,39 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                     .ok_or("beam builder actual beam required")
             })
             .collect::<Result<Vec<_>, _>>()?;
-        // No alien-beam limit is silently dropped. Admit a single physical,
-        // ordinary sibling group until getCloserLimit is connected.
-        if active
-            .iter()
-            .any(|c| c["beam"]["group"] != active[0]["beam"]["group"])
-            || active.iter().enumerate().any(|(i, c)| {
-                active[..i]
-                    .iter()
-                    .any(|a| a["beam"]["glyph_id"] == c["beam"]["glyph_id"])
-            })
-        {
-            return Err("beam builder alien/shared-glyph limits pending".into());
+        // Aliases require original removal/callback handling, independently
+        // of the now-connected ordinary alien-group lookup limits.
+        if active.iter().enumerate().any(|(i, c)| {
+            active[..i]
+                .iter()
+                .any(|a| a["beam"]["glyph_id"] == c["beam"]["glyph_id"])
+        }) {
+            return Err("beam builder shared-glyph aliases pending".into());
         }
+        let limit_beams = active
+            .iter()
+            .map(|c| {
+                let n = live
+                    .iter()
+                    .find(|b| b["origin"]["local"] == c["beam"]["id"])
+                    .ok_or("beam limit actual owner required")?;
+                Ok(stem_beam_closer_limit::Beam {
+                    id: c["beam"]["id"].as_u64().ok_or("beam limit ID required")?,
+                    group: c["beam"]["group"]
+                        .as_u64()
+                        .ok_or("beam limit group required")?,
+                    bounds: bounds(&n["bounds"])?,
+                    median: line(&c["beam"]["median"])?,
+                    height: c["beam"]["height"]
+                        .as_f64()
+                        .ok_or("beam limit height required")?,
+                    grade: n["grade"]
+                        .as_f64()
+                        .ok_or("beam limit intrinsic grade required")?,
+                    hook: false, // The typed live-kind admission above still refuses hooks.
+                })
+            })
+            .collect::<Result<Vec<_>, String>>()?;
         // StemsRetriever processes stable descending beam width.
         order_by_width(&mut active, &live)?;
         let ctx = &plan["systems"][si]["image_context"];
@@ -156,7 +176,7 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                     } else {
                         return Err("beam builder direction required".into());
                     };
-                    let geo = stem_beam_lookup_area::generate(&stem_beam_lookup_area::Request {
+                    let mut lookup = stem_beam_lookup_area::Request {
                         reference: serde_json::from_value(b["reference"].clone())
                             .map_err(|_| "beam builder reference required")?,
                         border: line(&cat["beam"][if dir > 0 { "bottom" } else { "top" }])?,
@@ -169,7 +189,31 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                         system_bounds: layout.system_areas[si].bounds()?,
                         surrounding_part_bounds: vec![bounds(&parts[0]["bounds"])?],
                         limit: None,
-                    })?;
+                    };
+                    let initial = stem_beam_lookup_area::generate(&lookup)?;
+                    let current = limit_beams
+                        .iter()
+                        .find(|a| a.id == cat["beam"]["id"].as_u64().unwrap())
+                        .ok_or("beam limit current owner required")?;
+                    let closer = stem_beam_closer_limit::select(
+                        &stem_beam_closer_limit::Search {
+                            group: current.group,
+                            beam_bounds: current.bounds,
+                            system_bounds: lookup.system_bounds,
+                            reference: lookup.reference,
+                            theoretical_line: initial.theoretical_line,
+                            direction: dir,
+                            left: b["side"] == "LEFT",
+                            interline: o.interline as i32,
+                        },
+                        &limit_beams,
+                    )?;
+                    lookup.limit = closer.map(|(_, border)| border);
+                    let geo = if closer.is_some() {
+                        stem_beam_lookup_area::generate(&lookup)?
+                    } else {
+                        initial
+                    };
                     let area = LinearArea::polygon(&geo.polygon)?;
                     let choices = arr(&system["beam_origin_sibling_choices"])?;
                     let chosen = choices
@@ -458,7 +502,7 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                         profile,
                         &BTreeMap::new(),
                     )?;
-                    cases.push(json!({"native_beam_id":cat["beam"]["id"],"native_linker_id":bli+1,"sibling_linkers":sibling_linkers,"side":b["side"],"vertical":side,"profile":profile,"beam_median":cat["beam"]["median"],"beam_height":cat["beam"]["height"],"reference":b["reference"],"polygon":geo.polygon,"theoretical_line":geo.theoretical_line,"items":items,"gap_map":gap_map,"length_map":lengths}));
+                    cases.push(json!({"native_beam_id":cat["beam"]["id"],"native_linker_id":bli+1,"sibling_linkers":sibling_linkers,"closer_beam_id":closer.map(|(id,_)|id),"closer_limit":lookup.limit,"side":b["side"],"vertical":side,"profile":profile,"beam_median":cat["beam"]["median"],"beam_height":cat["beam"]["height"],"reference":b["reference"],"polygon":geo.polygon,"theoretical_line":geo.theoretical_line,"items":items,"gap_map":gap_map,"length_map":lengths}));
                 }
             }
         }

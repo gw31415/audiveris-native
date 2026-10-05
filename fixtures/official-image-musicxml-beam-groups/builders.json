@@ -1,0 +1,610 @@
+{
+  "scope": "original HEADS inspectStems, beam-origin expand/createStem; distinct from full-image RHYTHMS/export",
+  "native_outputs_used": false,
+  "cases": [
+    {
+      "beam_median": [
+        288.0,
+        209.0,
+        350.0,
+        209.1
+      ],
+      "horizontal": "LEFT",
+      "theoretical_line": [
+        289.0,
+        209.00161290322586,
+        288.9999999999999,
+        419.0
+      ],
+      "items": [
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            289.0,
+            206.0,
+            289.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              288,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            289.0,
+            206.0,
+            289.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              288,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            289.0,
+            206.0,
+            289.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              288,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 0,
+          "line": [
+            285.5,
+            240.0,
+            285.5,
+            240.0
+          ],
+          "glyph": null
+        }
+      ],
+      "length_map": {
+        "0": 39,
+        "1": 39,
+        "2": 39,
+        "3": 39,
+        "4": 39
+      },
+      "stem": {
+        "glyph": {
+          "bounds": [
+            288,
+            206,
+            2,
+            38
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              38
+            ],
+            [
+              1,
+              0,
+              38
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "beam_median": [
+        288.0,
+        209.0,
+        350.0,
+        209.1
+      ],
+      "horizontal": "RIGHT",
+      "theoretical_line": [
+        349.0,
+        209.09838709677425,
+        349.0000000000001,
+        419.0
+      ],
+      "items": [
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            349.0,
+            206.0,
+            349.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              348,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            349.0,
+            206.0,
+            349.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              348,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            349.0,
+            206.0,
+            349.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              348,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 0,
+          "line": [
+            345.5,
+            240.0,
+            345.5,
+            240.0
+          ],
+          "glyph": null
+        }
+      ],
+      "length_map": {
+        "0": 39,
+        "1": 39,
+        "2": 39,
+        "3": 39,
+        "4": 39
+      },
+      "stem": {
+        "glyph": {
+          "bounds": [
+            348,
+            206,
+            2,
+            38
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              38
+            ],
+            [
+              1,
+              0,
+              38
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "beam_median": [
+        408.0,
+        209.0,
+        470.0,
+        209.1
+      ],
+      "horizontal": "LEFT",
+      "theoretical_line": [
+        409.0,
+        209.0016129032257,
+        409.0,
+        419.0
+      ],
+      "items": [
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            409.0,
+            206.0,
+            409.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              408,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            409.0,
+            206.0,
+            409.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              408,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            409.0,
+            206.0,
+            409.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              408,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 0,
+          "line": [
+            405.5,
+            240.0,
+            405.5,
+            240.0
+          ],
+          "glyph": null
+        }
+      ],
+      "length_map": {
+        "0": 39,
+        "1": 39,
+        "2": 39,
+        "3": 39,
+        "4": 39
+      },
+      "stem": {
+        "glyph": {
+          "bounds": [
+            408,
+            206,
+            2,
+            38
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              38
+            ],
+            [
+              1,
+              0,
+              38
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "beam_median": [
+        408.0,
+        209.0,
+        470.0,
+        209.1
+      ],
+      "horizontal": "RIGHT",
+      "theoretical_line": [
+        469.0,
+        209.09838709677408,
+        468.99999999999983,
+        419.0
+      ],
+      "items": [
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            469.0,
+            206.0,
+            469.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              468,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            469.0,
+            206.0,
+            469.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              468,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 35,
+          "line": [
+            469.0,
+            206.0,
+            469.0,
+            244.0
+          ],
+          "glyph": {
+            "bounds": [
+              468,
+              206,
+              2,
+              38
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                38
+              ],
+              [
+                1,
+                0,
+                38
+              ]
+            ]
+          }
+        },
+        {
+          "kind": "HalfLinkerItem",
+          "contrib": 0,
+          "line": [
+            465.5,
+            240.0,
+            465.5,
+            240.0
+          ],
+          "glyph": null
+        }
+      ],
+      "length_map": {
+        "0": 39,
+        "1": 39,
+        "2": 39,
+        "3": 39,
+        "4": 39
+      },
+      "stem": {
+        "glyph": {
+          "bounds": [
+            468,
+            206,
+            2,
+            38
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              38
+            ],
+            [
+              1,
+              0,
+              38
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

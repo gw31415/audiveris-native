@@ -1,0 +1,145 @@
+{
+  "scope": "unmodified original5.11 full-image RHYTHMS/PAGE/export; explicit stem direction compared on beamed notes, broader engraving remains pending",
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "begin"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0.5,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "end"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 0.5,
+      "offset_quarters": 1,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "begin"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 0.5,
+      "offset_quarters": 1.5,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "end"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 2,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 3,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": "up"
+    },
+    {
+      "measure_number": 2,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": "up"
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 1,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": "up"
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 2,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": "up"
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "offset_quarters": 3,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": "up"
+    }
+  ]
+}

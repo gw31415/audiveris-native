@@ -163,3 +163,21 @@ HEADS保存状態の8builder/items/lengthsと4共有stem grade/8関係支持の�
 修正し、対象5件とfmt/clippyが成功。最新版全566件を再実行済みとはしません。
 旧証跡・fixtures・checkpointsのGit内容は保持。次の具体的な切断点は
 [原版依存一覧](../evidence/musicxml-beam-subdivisions/NEXT-DEPENDENCY.md)に記録。
+## 複数の通常beam groupと探索制限（2026-10-05）
+
+原版`BeamLinker.VLinker.getCloserLimit`を実所有beamの境界・grade・groupから接続。
+別group/良好beam/線分交差/近隣side例外/方向別borderソートを原版の16数値条件で比較。
+PageCleanerの薄いAA-off contourでは、端点正規化で同じ矩形になるfractional slopeも
+原版画素と比較して接続しました。任意傾斜を矩形の塗り潰しで通す処理ではありません。
+
+新入力1件の2連八分×2group→実cache/HeadStem/BeamStem→独立begin/end→MusicXMLで
+10イベントの音高・音価・onset・voice・beamと連桁音符のstem方向を原版と比較。
+同入力の4 HEADS builders/items/lengths/glyph比較と数値kernel比較は別の証跡です。
+画像上のpositive alien limitや全SIG/全MusicXML描画属性一致を確認したとはしません。
+
+対象検証、98 library tests、旧beam/二分休符、Laura352/513、fmt/clippyが成功。
+直近の全565回帰と後続境界検証は当時のソースに属し、今回は全workspaceを反復せず。
+次はhookのprofile/競合整理/typed SIG/`checkHooksHaveStem`/forward-backward export。
+cross-staff/system、alias、一般rhythm・補正・cleaner/epilog等も未完。
+UI以外全機能同等性の最終目標を維持し、HEADS/STEMS等の完了フラグはfalse。
+[CLI例・範囲](MUSICXML-LIMITED.md#separate-ordinary-beam-groups--musicxml)。

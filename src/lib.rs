@@ -443,6 +443,7 @@ pub mod head_registration;
 
 pub mod stem_lookup_area;
 
+mod stem_beam_closer_limit;
 pub mod stem_beam_lookup_area;
 
 pub mod stem_chunk_registration;
