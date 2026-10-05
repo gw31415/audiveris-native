@@ -101,7 +101,12 @@
     "evidence/HALFREST-FINAL-GIT-PUSH-VERIFIED.json": "0c9fadb00989e2a966d88b59e96bcdc76b73fcbf2f0ab366cc95948e8a7df5b9",
     "evidence/LIBRARY-HALFREST-READ-DIAGNOSIS.json": "53a5b0ea922c238775382511b5ecb989d9b28cdbb8c64d302f69904a85398378",
     "evidence/CLI-GUIDE-VERIFIED.json": "dcdc9d602e8a59f7f381c17aa0bc0c958218526ccf8c393ff8f5482f940e283a",
-    "evidence/LIMITED-CLI-GUIDE-FRESH-GIT-VERIFIED.json": "2b284ea129dedb493e63c300be0d22884ef7c12aa897065a8c8eaf7b5389d135"
+    "evidence/LIMITED-CLI-GUIDE-FRESH-GIT-VERIFIED.json": "2b284ea129dedb493e63c300be0d22884ef7c12aa897065a8c8eaf7b5389d135",
+    "evidence/CENTRAL-REST-ORIGINAL-COMPARED.json": "1c4f351879904b10a7a677c15cd4150e74edd9d1097c89a5ee713885a05309ff",
+    "evidence/central-rest-original-full.musicxml": "4d8e404a14e7c87fcd92048c5f03fefd27d8a7b0d387f03315a60427d0a12bf2",
+    "evidence/central-rest-native-refusal.log": "4af729e025919707c7429b10d9c9224bef81b2643c59e4ad95f6e842a5144235",
+    "evidence/central-rest-original-full-console.log.gz": "4f5cecd6bae990ccfe430899b895551ab5f170d90f98c0912daa1bc41ef1ab78",
+    "evidence/central-rest-original-full-PROVENANCE.json": "00ae4bd656d7ec516f830b52be8772abd99bd41d435cea5ca02c1c882a87b21e"
   },
   "validation": {
     "previous_full542_source": "48e6177f4befa696523935e634accd11509a4975",
@@ -363,6 +368,409 @@
       "sha256": "df8dbc58bf8f67d97cf047d86073e53920c63ff0d4a8e48374eff544d0095657",
       "bytes": 5056,
       "this_is_old_saved_index_not_current_delta": true
+    },
+    "central_rest_original_same_input_diagnosis": {
+      "status": "compared; original incorrect at same rest; native conservatively refuses",
+      "baseline_saved_main": "614b445c2307ca43875018933048e1a420915aa0",
+      "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+      "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+      "input_sha256": "b6f451c73f243ae192d3f58a3f61f0ea1ddb6cd4910a73c7f5f6aca6f8cbc133",
+      "input_path": "fixtures/official-image-musicxml-limited/central-rest-ambiguous.png",
+      "original_Java_version": "Audiveris5.11.0",
+      "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "expected_declared_renderer_events": [
+        [
+          "B4",
+          1
+        ],
+        [
+          "G4",
+          1
+        ],
+        [
+          "E4",
+          1
+        ],
+        [
+          "G4",
+          1
+        ],
+        [
+          "B4",
+          2
+        ],
+        [
+          "rest",
+          1
+        ],
+        [
+          "D5",
+          1
+        ]
+      ],
+      "original_full_image_actual_events": [
+        {
+          "measure": 1,
+          "pitch": "B4",
+          "type": "quarter",
+          "duration_quarters": 1,
+          "voice": 1
+        },
+        {
+          "measure": 1,
+          "pitch": "G4",
+          "type": "quarter",
+          "duration_quarters": 1,
+          "voice": 1
+        },
+        {
+          "measure": 1,
+          "pitch": "E4",
+          "type": "quarter",
+          "duration_quarters": 1,
+          "voice": 1
+        },
+        {
+          "measure": 1,
+          "pitch": "G4",
+          "type": "quarter",
+          "duration_quarters": 1,
+          "voice": 1
+        },
+        {
+          "measure": 2,
+          "pitch": "B4",
+          "type": "half",
+          "duration_quarters": 2,
+          "voice": 1
+        },
+        {
+          "measure": 2,
+          "pitch": "G4",
+          "type": "quarter",
+          "duration_quarters": 1,
+          "voice": 1
+        },
+        {
+          "measure": 2,
+          "pitch": "D5",
+          "type": "quarter",
+          "duration_quarters": 1,
+          "voice": 1
+        }
+      ],
+      "original_runs_after_baseline": 1,
+      "original_scope": "unmodified image pipeline through RHYTHMS; export also advances PAGE; no custom foundation/linking probe; input/image/grade/meter unmodified",
+      "original_correct_at_same_input": false,
+      "original_native_outputs_used": false,
+      "original_MusicXML_SHA256": "4d8e404a14e7c87fcd92048c5f03fefd27d8a7b0d387f03315a60427d0a12bf2",
+      "native_release_binary_SHA256": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
+      "native_error": "music_filter_weak_head_optionals_pending",
+      "native_output_created": false,
+      "native_false_head": {
+        "abnormal": false,
+        "anchor": "MIDDLE_LEFT",
+        "bounds": [
+          990,
+          248,
+          13,
+          10
+        ],
+        "contextual_grade": 0.5862097187017205,
+        "eligibility": {
+          "create_inter_eligible": true,
+          "future_staff_grade": 0.48167539267015713,
+          "intrinsic_grade": 0.48167539267015713,
+          "pending_stemless_boost": 0.0,
+          "range_eligible": true,
+          "stemless": false,
+          "weak_stemless": false
+        },
+        "glyph": {
+          "bounds": [
+            990,
+            248,
+            13,
+            10
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              5,
+              2
+            ],
+            [
+              1,
+              3,
+              4
+            ],
+            [
+              2,
+              2,
+              6
+            ],
+            [
+              3,
+              1,
+              9
+            ],
+            [
+              4,
+              1,
+              9
+            ],
+            [
+              5,
+              0,
+              10
+            ],
+            [
+              6,
+              0,
+              10
+            ],
+            [
+              7,
+              0,
+              7
+            ],
+            [
+              8,
+              0,
+              7
+            ],
+            [
+              9,
+              0,
+              4
+            ],
+            [
+              9,
+              5,
+              2
+            ],
+            [
+              10,
+              0,
+              4
+            ],
+            [
+              10,
+              5,
+              2
+            ],
+            [
+              11,
+              1,
+              6
+            ],
+            [
+              12,
+              2,
+              3
+            ]
+          ]
+        },
+        "glyph_id": 56,
+        "glyph_id_namespace": "native sheet glyph registry (BEAMS/HEADS)",
+        "grade": 0.48167539267015713,
+        "id": 36,
+        "kind": "HeadInter",
+        "left_dx": null,
+        "origin": {
+          "local": 32,
+          "phase": "HEAD",
+          "system": 1
+        },
+        "pitch": 2.0,
+        "removed": false,
+        "right_dx": null,
+        "score": 0.19895287958115182,
+        "shape": "NOTEHEAD_BLACK",
+        "slim_bounds": [
+          990,
+          248,
+          13,
+          10
+        ],
+        "source_shape": "NOTEHEAD_BLACK",
+        "staff_id": 1,
+        "x": 989,
+        "y": 253
+      },
+      "native_false_stem": {
+        "abnormal": false,
+        "bounds": [
+          995,
+          226,
+          5,
+          29
+        ],
+        "contextual_grade": 0.6503908632308005,
+        "glyph": {
+          "bounds": [
+            996,
+            226,
+            3,
+            29
+          ],
+          "orientation": "VERTICAL",
+          "runs": [
+            [
+              0,
+              0,
+              20
+            ],
+            [
+              1,
+              1,
+              28
+            ],
+            [
+              2,
+              2,
+              27
+            ]
+          ]
+        },
+        "glyph_id": 8,
+        "glyph_id_namespace": "shared physical registry",
+        "grade": 0.41588476614732495,
+        "id": 49,
+        "impacts": {
+          "checks": [
+            {
+              "impact": 0.6650493425885742,
+              "name": "Slope",
+              "weight": 1.0
+            },
+            {
+              "impact": 0.655591438561934,
+              "name": "Straight",
+              "weight": 1.0
+            },
+            {
+              "impact": 0.5757575757575757,
+              "name": "Length",
+              "weight": 2.0
+            },
+            {
+              "impact": 0.037433155080213915,
+              "name": "Clean",
+              "weight": 2.0
+            },
+            {
+              "impact": 1.0,
+              "name": "Black",
+              "weight": 1.0
+            },
+            {
+              "impact": 1.0,
+              "name": "BlackRatio",
+              "weight": 1.0
+            },
+            {
+              "impact": 1.0,
+              "name": "Gap",
+              "weight": 5.0
+            }
+          ],
+          "grade": 0.41588476614732495,
+          "intrinsic_ratio": 0.8
+        },
+        "kind": "StemInter",
+        "manual": false,
+        "median": [
+          997.2356953513932,
+          226.0,
+          997.9859848239948,
+          255.0
+        ],
+        "origin": {
+          "local": 8,
+          "phase": "STEM",
+          "system": 1
+        },
+        "removed": false,
+        "shape": "STEM",
+        "width": 2.586206896551724
+      },
+      "previous_XML_loaded_HEADS_comparison": {
+        "input_SHA256": "b6f451c73f243ae192d3f58a3f61f0ea1ddb6cd4910a73c7f5f6aca6f8cbc133",
+        "result_SHA256": "7b82bbb8ea023bd5d34b0cd26abfe036438f5c7f6385ea8343be81fe46068a06",
+        "optional_glyphs": [
+          {
+            "bounds": [
+              996,
+              226,
+              3,
+              29
+            ],
+            "orientation": "VERTICAL",
+            "runs": [
+              [
+                0,
+                0,
+                20
+              ],
+              [
+                1,
+                1,
+                28
+              ],
+              [
+                2,
+                2,
+                27
+              ]
+            ]
+          }
+        ],
+        "misrecognized_event": {
+          "shape": "NOTEHEAD_BLACK",
+          "rest": false,
+          "bounds": [
+            990,
+            248,
+            13,
+            10
+          ],
+          "step": "G",
+          "octave": 4,
+          "duration_without_dots_or_tuplet": "1/4",
+          "duration": "1/4",
+          "time_offset": "1/2",
+          "voice": 1,
+          "dots": 0,
+          "measure_index": 2,
+          "measure_left": 711,
+          "measure_right": 1199
+        }
+      },
+      "cause_observed": "Rest pixels already admitted as NOTEHEAD_BLACK and StemInter. Foundation support retains head contextual grade0.5862 (above weak removal0.5 but below SymbolsFilter head threshold0.6); native refuses unported weak optionals. Original export retains G4 quarter note instead of rest.",
+      "Java_source_mechanism": "SymbolsFilter.SymbolsCleaner handles ensembles through AbstractChordInter; PageCleaner.visit(chord) visits its heads; strong-head foreground dilation erases head pixels, weak stem glyph is optional; SymbolsBuilder.buildSymbols/cluster decomposition did not recover RestInter in saved observation. Full original export independently confirms absence of the required quarter rest.",
+      "implementation_fix_performed": false,
+      "reason_no_fix": "User authorized minimum translation when original correctly recognizes identical input. Condition false. Merely relaxing guard or cloning wrong G4 output would corrupt declared score content.",
+      "unresolved_layout": "central-rest-ambiguous quarter-rest layout remains rejected; weak optional/GlyphCluster/chord handling generalization remains unported, and a correct original output for this exact input is unavailable",
+      "existing_target_regression": {
+        "command": "/workspace/onboarding/target/debug/deps/musicxml_limited-c932902edba561ac batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_refusal --exact --nocapture",
+        "passed": 1,
+        "failed": 0,
+        "filtered_out": 2,
+        "seconds": 39.68,
+        "uses_existing_a2bf13c_compiled_test": true,
+        "tests_added_or_removed": 0
+      },
+      "existing_full_regression": 544,
+      "source_and_binary_unchanged": true,
+      "full_regression_rerun": false,
+      "build_performed": false,
+      "half_rest_weak1px_refusal_unchanged": true,
+      "Library_unknown_preserved_no_lookup_or_upload": true,
+      "test_reduction_started": false,
+      "GHA_dispatch_rerun": false,
+      "Mac_new_auth_billing_permissions_changed": false
     }
   },
   "implemented": "Image CLI admits only zero-stump/seed beam candidates whose enlarged original lookup envelope cannot reach any head, removes orphan hooks/beams and empty groups, performs isolated rest/time weak LINKS purge and actual empty-rest-chord cleanup, checks canonical caches and existing one-stem/head cleaner plus bounded no-live-beam epilog.",
@@ -416,7 +824,7 @@
     "kind": "documentation and read-only Library diagnosis; no implementation or binary changes",
     "baseline_saved_main": "2ec4704f13817ca04a83eac41686a7abb0e2f1cb",
     "guide_path": "checkpoints/sol-musicxml-half-rest-links-20261005/CLI-GUIDE.md",
-    "guide_SHA256": "ee17b238b373397d46303f58e0c4306d7f4f5b98208a4337db9312a622da1bfa",
+    "guide_SHA256": "692e0696554f9c5f47fb952cbefe01a359054815092cda63abb8a9cd8e9014f0",
     "prior_full_regression": 544,
     "full_regression_rerun": false,
     "build_performed": false,
@@ -445,5 +853,18 @@
       "normal_non_force_main_push": true,
       "test_reduction_started": false
     }
+  },
+  "central_rest_diagnosis_update": {
+    "parent_archive_main": "614b445c2307ca43875018933048e1a420915aa0",
+    "implementation_source_unchanged": true,
+    "binary_unchanged": true,
+    "source_tree_unchanged": true,
+    "original_correct_same_input": false,
+    "native_refusal_preserved": true,
+    "targeted_existing_regressions_passed": 1,
+    "full_544_result_reused_no_rerun": true,
+    "Library_unknown_no_exploration_or_upload": true,
+    "central_rest_layout_not_fixed": true,
+    "test_reduction_started": false
   }
 }

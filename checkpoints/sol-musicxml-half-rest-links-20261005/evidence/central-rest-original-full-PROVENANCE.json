@@ -1,0 +1,40 @@
+{
+  "scope": "original5.11 unchanged image through native original RHYTHMS and export, no custom linking/foundation probe",
+  "input": "/workspace/onboarding/artifacts/audiveris-source/fixtures/official-image-musicxml-limited/central-rest-ambiguous.png",
+  "input_SHA256": "b6f451c73f243ae192d3f58a3f61f0ea1ddb6cd4910a73c7f5f6aca6f8cbc133",
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-central-rest/original-full-central/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-central-rest/original-full-central/prefs",
+    "-Duser.home=/workspace/work/musicxml-central-rest/original-full-central/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "RHYTHMS",
+    "-export",
+    "-output",
+    "/workspace/work/musicxml-central-rest/original-full-central",
+    "--",
+    "/workspace/onboarding/artifacts/audiveris-source/fixtures/official-image-musicxml-limited/central-rest-ambiguous.png"
+  ],
+  "environment_overrides": {
+    "XDG_CONFIG_HOME": "/workspace/work/musicxml-central-rest/original-full-central/config",
+    "XDG_DATA_HOME": "/workspace/work/musicxml-central-rest/original-full-central/data",
+    "XDG_CACHE_HOME": "/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache"
+  },
+  "exit_code": 0,
+  "console_SHA256": "b154c65f2362b2d76bbf885218c619bf5563bf9a4b9738c0a855eac60c9f3f18",
+  "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "native_outputs_used": false,
+  "shared_existing_JNI_cache": "/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache"
+}

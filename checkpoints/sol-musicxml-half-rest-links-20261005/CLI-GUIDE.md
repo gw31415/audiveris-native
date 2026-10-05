@@ -91,7 +91,7 @@ cmp out/half-rest-y241.musicxml expected/half-rest-y241.musicxml
 
 | 条件 | 現在の結果・理由 |
 | --- | --- |
-| central-rest-ambiguous.png（ソースfixture） | `music_filter_weak_head_optionals_pending` で拒否。中央の四分休符配置に生じる弱いhead候補の扱いが未移植。符号種は範囲内だがこの配置は未対応。正しい出力の原版比較を確立していない |
+| central-rest-ambiguous.png（ソースfixture） | `music_filter_weak_head_optionals_pending` で拒否。中央の四分休符配置に生じる弱いhead候補の扱いが未移植。符号種は範囲内だがこの配置は未対応。同じ入力の原版通常画像処理→RHYTHMS/PAGE/exportでも休符をG4の四分音符と誤認識したため、安全な拒否を保持。閾値の緩和や誤った音符出力を修正とは扱わない |
 | half-rest-y240.png（ソースfixture） | `musicxml_incomplete_or_excess_measure` で拒否。1px境界で原版の二分休符gradeが0.4834となりLINKSで除去される。nativeも弱閾値0.5で除去し、足りない拍を補造しない。これは保存済み原版との不一致ではない |
 | headに届き得るbeam/flag候補 | `music_beam_...` 等で拒否。実際のbeam接続スケジューラは未移植。到達しない孤立候補だけ限定処理 |
 | 拍子記号を認識できない | `musicxml_recognized_meter_required_no_default` で拒否。4/4を既定値として補わない |
@@ -116,6 +116,6 @@ cmp out/half-rest-y241.musicxml expected/half-rest-y241.musicxml
 
 Gitの実装・Linux実行物の保全は確認済みです。Libraryの今回のソース差分アップロードは成功IDのない `page_reference_upload_outcome_unknown`（再試行不可）です。既存receiptとPage読取を照合しましたが、ファイル一覧の読取ツールがなく、同一原本の参照IDは未特定です。アクセス拒否や確定失敗とは区別し、重複アップロードをしていません。
 
-対象は `Audiveris half-rest image CLI source delta a2bf13c`、61,701 bytes、SHA256 `00434e4092758baa9f289a9ad0bc6d2b0d2203b841a50f81162379ef05751b6a`。既存Libraryの正規Filesでこのファイルの参照IDが確認できれば、同一原本を再取得して照合できます。原本・receiptはGitにも保全済みです。
+対象は `Audiveris half-rest image CLI source delta a2bf13c`、61,701 bytes、SHA256 `00434e4092758baa9f289a9ad0bc6d2b0d2203b841a50f81162379ef05751b6a`。親の既存Library検索・当日一覧でも特定できなかったとのユーザー確認を受け、未確認のまま保持します。原本・receiptはGitにも保全済みです。再探索・再アップロードは行わず、GitHubで完全復元を確認した成果を基準に移植作業を継続します。
 
-Libraryの結果不明は未解消の引き継ぎ事項です。テスト削減は着手せず、次の明示指示を待ちます。Mac/GitHub Actions dispatch・rerun/新認証/課金/権限変更は行っていません。
+Libraryの結果不明は未解消の引き継ぎ事項ですが、実装を止める理由にはしません。中央四分休符の原版通常画像処理の証跡は `evidence/CENTRAL-REST-ORIGINAL-COMPARED.json` に保存しました。現入力は原版でも誤認識するため、正しく通る同一入力を前提にした最小修正の条件は成立しません。ソースと実行物は変更していません。テスト削減は未着手です。Mac/GitHub Actions dispatch・rerun/新認証/課金/権限変更は行っていません。
