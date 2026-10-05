@@ -50,7 +50,12 @@
     {
       "status": "implemented",
       "unit": "ordinary classified flag glyph -> actual FlagStem SIG/cache identity -> original support and weak flag purge -> exact eighth note/offset -> MusicXML divisions2",
-      "limits": "one original successful same-image treble/C-major4/4 two-measure9-event input; no beams on this image; lookup/grade kernels distinct; positive beam-origin/other flags/general rhythms pending"
+      "limits": "one original successful same-image treble/C-major4/4 two-measure9-event input; no beams on this image; lookup/grade kernels distinct; single positive beam connected in the next unit; other flags/general rhythms pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "image single-standard-beam-origin items/expand/profile4 cache/HeadStem+BeamStem/temporary BeamHead support -> retained reduction/cleaner -> owned chord eighth durations/onsets/MusicXML begin-end",
+      "limits": "one original successful same-image nine-event comparison; original HEADS kernels/reduction and Java2D eraser observations distinct; one beam per system/one part/horizontal restored eraser; sibling/hook/alien/shared-system/32sources/full parity pending"
     }
   ],
   "function_groups": [
@@ -77,7 +82,7 @@
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",
       "status": "partial",
-      "current_and_remaining": "種/beam/ledgerの既存比較あり。positive beam-origin STEMS、cue beam、一般加線音高・共有staffの全工程は未接続。"
+      "current_and_remaining": "種/beam/ledgerの既存比較あり。単独standard beamの接続は下記の限定範囲。cue beam、一般加線音高・共有staffの全工程は未接続。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。"
     },
     {
       "original_function": "HEADS / `HeadsBuilder`, template catalog",
@@ -87,7 +92,7 @@
     {
       "original_function": "STEMS / `StemBuilder`, `StemsStep`, head/beam linkers",
       "status": "partial",
-      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。beamからの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。"
+      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。一般beam群からの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。"
     },
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
@@ -117,7 +122,7 @@
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 実FlagStemに基づく八分音価・eighth整数tickのonset/小節sum/divisionsを追加し、原版成功1画像で比較。正のbeamは未接続。"
+      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、一般beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 実FlagStemに基づく八分音価・eighth整数tickのonset/小節sum/divisionsを追加し、原版成功1画像で比較。正の単独beam由来の八分音価/分数onset/番号1 begin-endも同一画像9イベントで確認。一般beam群/複声部は未完。"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -151,7 +156,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "positive BeamLinker.VLinker items/expand/createStem -> beam/head/cache SIG -> finalizeBeams -> eighth duration/beam begin-continue-end export; head-only guard removal is not a port",
+  "next_image_integration": "sibling/multiple-level/hook beam builders and closer limits/cross-staff-system ownership, then other flag/accidental/dot and general rhythm dependencies; all original nonUI functions retained in final scope",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -160,5 +165,5 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/musicxml-flag-eighth/VALIDATION.json; source is containing commit"
+  "latest_targeted_validation": "evidence/musicxml-beam-eighth/VALIDATION.json; implementation source is containing commit; full regression status recorded there"
 }

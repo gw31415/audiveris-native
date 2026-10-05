@@ -8,7 +8,7 @@ UI表示を除く原Audiveris5.11の認識・解析・補正・保存・MusicXML
 
 次の追加は、既存HEADERのヘ音記号/ハ音記号を所有SIGの音高とMusicXMLへ接続する経路です。2つの原版成功画像で各8音・2小節を比較しました。[入力と実行例](docs/MUSICXML-LIMITED.md#recognized-bassalto-header--musicxml)。sign/line/octave-changeは原版の汎用変換を用い、small/8va/8vbはkernel比較と全画像検証を区別します。
 
-旗付き八分音符の小単位を追加しました。実glyph→FlagStemRelation→support/弱候補処理→1/8音価・onset→MusicXMLの`divisions=2`を原版の同一画像で比較します。正のbeam-origin経路は未接続です。[入力と実行例](docs/MUSICXML-LIMITED.md#single-flag-eighth-notes--musicxml)。
+旗付き八分音符の小単位を追加しました。実glyph→FlagStemRelation→support/弱候補処理→1/8音価・onset→MusicXMLの`divisions=2`を原版の同一画像で比較します。正の単独beamも画像由来builder→cache/SIG→音価・begin/endへ接続しました。[入力と実行例](docs/MUSICXML-LIMITED.md#single-standard-beam-eighth-notes--musicxml)。
 
 # Audiveris native port — experimental page glyph pipeline
 

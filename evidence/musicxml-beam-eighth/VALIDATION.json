@@ -1,0 +1,30 @@
+{
+  "source_identity": "implementation in containing source commit; final regression source recorded after the one complete run",
+  "original_version": "5.11.0",
+  "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "input": "fixtures/official-image-musicxml-beams/beam-eighth-quarter.png",
+  "input_sha256": "4f6e7581281ca5cb55068938648f88ef144831b57bb2b5e7e28351f56775364c",
+  "builder_saved_checkpoint": "069a44153809865583fad5a4bcf1056708fcce80",
+  "comparison": {
+    "unmodified_original_full_image_export": "9 pitches/durations/onsets and beam1 begin/end match native; divisions2",
+    "original_HEADS_inspection": "two beam-side builders/items/lengths/glyph selection/grades and cache behavior; continuation/reduction/temporary supports separately observed",
+    "eraser": "original actual beam area with declared Java2D AA-off fill/draw; not full SymbolsFilter replay",
+    "native_MusicXML4_XSD": true,
+    "whole_BEAMS_STEMS_SIG_parity": false
+  },
+  "validation": {
+    "target_integration": "musicxml_limited10 + stem_image_beam_builders2 passed, including old examples and incomplete-measure refusal",
+    "target_boundaries": "beam eraser/end-removal2 and malformed-owned-beam1 passed",
+    "fmt": "passed",
+    "all_target_clippy_D_warnings": "passed",
+    "full_workspace": "pending fixed-source run; historical558 is not current full validation"
+  },
+  "limits": [
+    "one standard beam per system, one surrounding part, zero skew",
+    "horizontal XML-restored integer beam borders and normalized one-pixel eraser",
+    "siblings/multiple levels/hooks/alien/closer limits/cross-system/shared glyph pending",
+    "continue ordering implemented but not whole-image compared",
+    "raw beam metadata and final original stem trimming differ; 32sources and broad original dependencies pending"
+  ],
+  "global_completion_flags": false
+}

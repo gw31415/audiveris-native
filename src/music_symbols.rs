@@ -261,6 +261,17 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                     }
                 }
             }
+            "BeamInter" => {
+                if n["contextual_grade"].as_f64().is_none_or(|g| g < 0.7) {
+                    return Err("music_filter_weak_beam_optionals_pending".into());
+                }
+                for [y, left, right] in crate::music_beams::area_rows(n, o.interline)? {
+                    for x in left..right {
+                        white(&mut im, x, y);
+                    }
+                }
+            }
+            "BeamGroupInter" => {}
             "HeadChordInter" | "StaffBarlineInter" | "ClefInter" => {}
             "TimePairInter" | "TimeNumberInter" | "TimeWholeInter" => {
                 if n["frozen"] != true || n["origin"]["phase"] != "MUSIC_TIME" {

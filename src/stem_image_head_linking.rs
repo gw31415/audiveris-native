@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original HeadLinker.linkSides/CLinker.link on the native image owner.
-//! Bounded beam-free, ordinary-head continuation; cleaner/reduction/epilog pending.
+//! Bounded ordinary-head/single-beam continuation; full reduction/epilog pending.
 use crate::{
     GrayImage,
     beam_dispatch::Registry,
@@ -408,7 +408,7 @@ impl Scheduler<'_> {
     }
 }
 /// Image-derived selections register actual cache objects and original head links.
-/// Beam-free linking only. No finalized notes, rhythm, cleaner or export claim.
+/// Beam side/intermediate builders precede head phases. Full STEMS remains pending.
 pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     let report = owned.prepared.report.clone();
     if report["schema"] != "audiveris-native.stem-image-head-items.v1" {
@@ -519,7 +519,13 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
         }
         systems.push(result);
     }
-    owned.graph.contextualize_head_stems()?;
+    let beam_finalizer = crate::music_beams::boost_sides(&mut owned.graph)?;
     owned.prepared.report = json!({"schema":"audiveris-native.stem-image-head-linking.v1","corner_count":report["corner_count"],"head_items_plan":report,"systems":systems,"shared_sig":owned.graph.snapshot(),"comparison_scope":"Original XML-loaded beam-free linkStems head phases1/2 plus SIGraph contextual grades; cleaner/reduction/epilog pending","heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    if beam_builders.iter().any(|s| !s.is_empty()) {
+        owned.prepared.report["limited_beam_finalizer"] = beam_finalizer;
+        owned.prepared.report["comparison_scope"] = json!(
+            "Original HEADS beam-origin builder/expand/createStem, beam-first then head phases1/2 and single-beam Finalizer.boostBeamSides, actual cache/SIG support; full STEMS/reduction/epilog parity pending"
+        );
+    }
     Ok(owned)
 }

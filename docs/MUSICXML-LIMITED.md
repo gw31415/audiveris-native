@@ -8,7 +8,7 @@ Verified inputs so far are three independent clean opaque PNG pages with Bravura
 
 Native quarter, quarter-rest, half-note and four-measure outputs were also checked with MusicXML 4.0 XSD and original proxymusic reimport. A fixed development renderer reconstructed that first input exactly; it is not a general engraver. The CLI refuses missing recognized meter, incomplete/excess measures, ambiguous symbols and existing outputs. It does not guess omitted music.
 
-The batch entry is `audiveris-musicxml --output-dir EXISTING_DIR [--part-name NAME] IMAGE...`. It writes one MusicXML/report pair per input, with preflight collision/no-overwrite checks. A later recognition failure stops the batch and retains individually reported successful pairs; failed writes remove that pair. Part name is metadata for one nontransposing melodic part, not instrument inference or recognition control. Three independent synthetic scores, including four measures and a system break, are verified; arbitrary real-score admission remains unverified. A central quarter-rest configuration refuses weak head optionals instead of emitting an invented note. Half rests are additionally verified at two controlled positions, including a page with provably unreachable orphan beam candidates (details below). PDF, scans/photos, nonzero skew, other fonts/scales, special staffs, full24 shapes, accidentals, shorter beamed/flagged notes, dots/ties/slurs/tuplets, polyphony, pickups, multi-staff or transposing instruments remain outside this bounded path. Complete cleaner/epilog and full reduction parity are pending. All global completion flags remain false.
+The batch entry is `audiveris-musicxml --output-dir EXISTING_DIR [--part-name NAME] IMAGE...`. It writes one MusicXML/report pair per input, with preflight collision/no-overwrite checks. A later recognition failure stops the batch and retains individually reported successful pairs; failed writes remove that pair. Part name is metadata for one nontransposing melodic part, not instrument inference or recognition control. Three independent synthetic scores, including four measures and a system break, are verified; arbitrary real-score admission remains unverified. A central quarter-rest configuration refuses weak head optionals instead of emitting an invented note. Half rests are additionally verified at two controlled positions, including a page with provably unreachable orphan beam candidates (details below). PDF, scans/photos, nonzero skew, other fonts/scales, special staffs, full24 shapes, accidentals, general beamed/flagged short notes, dots/ties/slurs/tuplets, polyphony, pickups, multi-staff or transposing instruments remain outside this bounded path. Complete cleaner/epilog and full reduction parity are pending. All global completion flags remain false.
 
 The accepted full542 regression belongs to source48e6177; changed-source validation is recorded by checkpoint. Existing test reduction audit is deferred until current implementation/verification/necessary fixes finish. No Actions dispatch/rerun is used.
 
@@ -21,8 +21,9 @@ VLinkers reach zero heads. Native admission uses a larger horizontal envelope
 than the original lookup areas, including all final BLinker reference points,
 head bounds and corner references. Only zero-skew candidates with no stump/seed
 and no potentially reachable head are removed by the original orphan checks;
-empty beam groups and incident relations become tombstones. Positive beam
-linking remains unsupported and a beamed-note page is refused.
+empty beam groups and incident relations become tombstones. That orphan removal remains separate from the subsequently connected positive
+single-beam path below. The old beamed-note negative has only three quarter
+beats in its first4/4 measure and still refuses after correct eighth recognition.
 
 Position240 is a negative boundary: original creates a half rest with grade
 0.48341279568379303, then removes it at LINKS. Native isolated contextualization
@@ -321,10 +322,10 @@ cargo build --locked --bin audiveris-musicxml -j1
 Use `CARGO_TARGET_DIR/debug/` when the target directory is overridden. Output
 paths must not already exist. No Java/original recognized XML is needed at runtime.
 
-Still pending: positive beam-origin builder/items/cache scheduling and beam
+Historical125e928 boundary, closed for the single-beam case below: positive beam-origin builder/items/cache scheduling and beam
 finalization, positive down/small/multiple flags in full images, supported-symbol
 conflicts, finer rhythmic units, tuplets/dots/polyphony/changes/general original
-parity. A potentially reachable beam still refuses. The full original nonUI
+parity. At that checkpoint a potentially reachable beam refused. The full original nonUI
 parity goal is unchanged; HEADS/STEMS/MusicXML/epilog/automatic flags remainfalse.
 
 This flag/support/fractional-rhythm checkpoint passed one full workspace run:
@@ -335,6 +336,59 @@ own source identity. [Validation summary](../evidence/musicxml-flag-eighth/VALID
 The next positive beam input is retained at
 `fixtures/official-image-musicxml-beams/beam-eighth-quarter.png`. Original5.11
 successfully exports two eighths with beam1 begin/end and seven quarters.
-Current native still refuses `music_beam_with_stump_or_seed_pending`, with no
-output pair written. This is a prepared comparison, **not another successful
-native CLI example**. [Concrete remaining dependencies](../evidence/musicxml-beam-eighth/NEXT-DEPENDENCY.md).
+At the historical125e928 checkpoint native refused
+`music_beam_with_stump_or_seed_pending`, with no output pair written. The
+following section records the newly connected successful native image path. [Concrete remaining dependencies](../evidence/musicxml-beam-eighth/NEXT-DEPENDENCY.md).
+
+
+## Single standard beam eighth notes → MusicXML
+
+The saved positive image now runs without Java:
+
+```sh
+cargo build --locked --bin audiveris-musicxml
+mkdir -p work/beam-example
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-beams/beam-eighth-quarter.png \
+  work/beam-example/score.musicxml work/beam-example/report.json
+```
+
+Use absent output filenames; the CLI refuses overwrite. A custom target directory
+changes the executable path, not the input or recognition settings.
+
+This is the same Bravura44/interline11, ordinary five-line treble/C-major4/4,
+single-voice, two-complete-measure image that original5.11 exports successfully.
+First measure: B4 eighth, B4 eighth, G4 quarter, E4 quarter, G4 quarter.
+Second: B4, D5, F5, D5 quarters. All nine pitches/durations/onsets and the two
+`beam number="1"` begin/end values match; divisions2 and MusicXML4 XSD pass.
+The existing quarter/rest/half/ledger/key/meter/clef/flag examples remain usable.
+The incomplete old beamed-note negative now reaches the correct three-beat
+measure-duration refusal rather than being stopped before beam recognition.
+
+Original dependencies connected: `BeamLinker.VLinker.buildLuArea/filterHeads`
+and automatic `StemBuilder.filter/lookupChunks/items`, `VLinker.expand/link`
+with side profile4/artificial-grade fallback, beam-first head scheduling and
+actual canonical cache/SIG attachments; `Finalizer.boostBeamSides` temporary
+supports; beam-aware contextualization/retained-owner head competition,
+`SigReducer.checkBeamsHaveBothStems`, bounded `PageCleaner.processArea`,
+`BeamHeadCleaner.process`; `AbstractChordInter.getBeams/getDurationSansDotOrTuplet`
+and `PartwiseBuilder` beam ordering and numbering. Membership comes from actual
+BeamStem/ChordStem links, not fixture coordinates or output reuse.
+
+The original HEADS reflection builder/reduction and declared artificial-stem
+controls are separate from the successful original full-image RHYTHMS/export.
+Native preserves raw prior beam metadata, while lookup/eraser geometry follows
+the existing one-decimal XML-restored context. Raw beam bounds and final original
+stem-glyph trimming are not whole BEAMS/STEMS/SIG equality. Reduced head bounds
+match; raw versus saved-three-decimal grades retain small differences.
+
+Current positive admission: one standard beam per system, one surrounding part,
+no sibling/alien/cross-system shared-glyph beam, zero skew and uniform ordinary
+staff. The eraser currently certifies horizontal restored integer borders and
+Java2D's normalized one-pixel contour. Siblings/multiple beam levels/hooks,
+closer limits, cross-staff/system, sloping/fractional/wider eraser strokes,
+mirrored/void beamed heads and broader cleaner/reduction/rhythm remain pending.
+`continue` is implemented by ordered owned membership but has no whole-image
+comparison yet. Nonzero skew, real scans, other fonts/special staffs/full24
+pages and32sources remain managed limitations, not planned omissions.
+All global completion flags stay false. Releases/Library/GHA are unchanged.

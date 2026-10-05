@@ -1,4 +1,4 @@
-# Positive beam comparison prepared; native export remains pending
+# Positive beam comparison: historical preparation and current connection
 
 `fixtures/official-image-musicxml-beams/beam-eighth-quarter.png` is one fixed
 Bravura44/interline11, ordinary five-line treble/C-major4/4 two-measure input.
@@ -7,11 +7,13 @@ concrete beam instead of flags. No coordinate sweep was performed.
 
 Unmodified original5.11 completes RHYTHMS/export on this input. The first
 two B4 notes have duration1/divisions2 and beam number1 `begin`/`end`.
-Native recognizes the beam and two physical side stumps, then refuses with
+At125e928 native recognized the beam and two physical side stumps, then refused with
 `music_beam_with_stump_or_seed_pending`. Neither native output file is created.
 This evidence is **preparation/comparison, not a completed beam export**.
 
-The next dependencies, in original execution order, are:
+The dependency chain below was closed for one standard beam per system in the current checkpoint; see VALIDATION.json and docs/MUSICXML-LIMITED.md. Sibling/alien/shared-system and general parity remain pending. The recorded preparation state is historical.
+
+Original execution order:
 
 1. `BeamLinker.VLinker.buildGeometry/filterHeads/inspect` → automatic beam-origin
    seeds, head corners, sections/chunks and StemBuilder items. Existing native

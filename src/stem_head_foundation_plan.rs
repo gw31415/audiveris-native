@@ -85,7 +85,14 @@ fn plan(input: &Value) -> Value {
                 .filter(|e| e["kind"] == "HeadStemRelation" && e["target"] == stem["id"])
                 .cloned()
                 .collect::<Vec<_>>();
-            let line = extended(stem, &links);
+            let beam_links = edges
+                .iter()
+                .filter(|e| e["kind"] == "BeamStemRelation" && e["target"] == stem["id"])
+                .cloned()
+                .collect::<Vec<_>>();
+            let mut extensions = links.clone();
+            extensions.extend(beam_links);
+            let line = extended(stem, &extensions);
             let bad = links.iter().find(|e| {
                 let h = nodes.iter().find(|h| h["id"] == e["source"]).unwrap();
                 assert!(matches!(
@@ -143,7 +150,12 @@ fn contextualize(g: &mut Value) {
         .as_array()
         .unwrap()
         .iter()
-        .filter(|n| matches!(n["kind"].as_str(), Some("HeadInter" | "StemInter")))
+        .filter(|n| {
+            matches!(
+                n["kind"].as_str(),
+                Some("HeadInter" | "StemInter" | "BeamInter")
+            )
+        })
         .cloned()
         .collect::<Vec<_>>();
     let ids = nodes
@@ -178,7 +190,8 @@ fn purge(g: &mut Value, events: &mut Vec<Event>) {
         .unwrap()
         .iter()
         .filter(|n| {
-            n["frozen"] != true
+            n["kind"] != "BeamGroupInter"
+                && n["frozen"] != true
                 && n["shape"] != "LEDGER"
                 && n["contextual_grade"].as_f64().unwrap() < 0.5
         })
@@ -209,7 +222,16 @@ fn direction(g: &Value, s: &Value) -> i32 {
         .filter(|e| e["kind"] == "HeadStemRelation" && e["target"] == s["id"])
         .cloned()
         .collect::<Vec<_>>();
-    let line = extended(s, &links);
+    let mut extensions = links.clone();
+    extensions.extend(
+        g["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "BeamStemRelation" && e["target"] == s["id"])
+            .cloned(),
+    );
+    let line = extended(s, &extensions);
     links.sort_by(|a, b| {
         let grade = |e: &Value| {
             nodes.iter().find(|n| n["id"] == e["source"]).unwrap()["contextual_grade"]
@@ -343,7 +365,10 @@ fn reduce(g: &mut Value, events: &mut Vec<Event>) {
             .unwrap()
             .iter()
             .filter(|r| {
-                r["kind"] == "HeadStemRelation" && (r["source"] == weak || r["target"] == weak)
+                matches!(
+                    r["kind"].as_str(),
+                    Some("HeadStemRelation" | "BeamStemRelation" | "BeamHeadRelation")
+                ) && (r["source"] == weak || r["target"] == weak)
             })
             .map(|r| {
                 if r["source"] == weak {
@@ -357,8 +382,10 @@ fn reduce(g: &mut Value, events: &mut Vec<Event>) {
         let before = g.clone();
         contextualize(g);
         for node in g["inters"].as_array_mut().unwrap() {
-            if matches!(node["kind"].as_str(), Some("HeadInter" | "StemInter"))
-                && !partners.contains(&node["id"].as_u64().unwrap())
+            if matches!(
+                node["kind"].as_str(),
+                Some("HeadInter" | "StemInter" | "BeamInter")
+            ) && !partners.contains(&node["id"].as_u64().unwrap())
             {
                 node["contextual_grade"] = before["inters"]
                     .as_array()
@@ -383,7 +410,7 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
     for n in nodes {
         // SIGraph.deleteWeakInters explicitly exempts ledgers. They remain
         // owned geometry; head/stem support does not assign their ctx grade.
-        if n["kind"] == "LedgerInter" && n["shape"] == "LEDGER" {
+        if n["kind"] == "BeamGroupInter" || (n["kind"] == "LedgerInter" && n["shape"] == "LEDGER") {
             if n["id"].as_u64().is_none_or(|id| id == 0) {
                 return Err("invalid_foundation_ledger_id".into());
             }
@@ -397,7 +424,7 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
         }
         if !matches!(
             n["kind"].as_str(),
-            Some("HeadInter" | "StemInter" | "BarlineInter")
+            Some("HeadInter" | "StemInter" | "BeamInter" | "BarlineInter")
         ) {
             return Err("unsupported_head_foundation_kind".into());
         }
@@ -436,7 +463,12 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
     }
     let mut verify = nodes
         .iter()
-        .filter(|n| matches!(n["kind"].as_str(), Some("HeadInter" | "StemInter")))
+        .filter(|n| {
+            matches!(
+                n["kind"].as_str(),
+                Some("HeadInter" | "StemInter" | "BeamInter")
+            )
+        })
         .cloned()
         .collect::<Vec<_>>();
     let ids = verify

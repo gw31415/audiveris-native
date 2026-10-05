@@ -1,6 +1,6 @@
 {
-  "comparison_scope": "unmodified original5.11 full-image successful MusicXML; native still refuses; not consumed by native recognition",
-  "native_supported": false,
+  "comparison_scope": "unmodified original5.11 full-image successful MusicXML; compared to newly connected native image pipeline; not consumed by native recognition",
+  "native_supported": true,
   "events": [
     {
       "measure_number": 1,

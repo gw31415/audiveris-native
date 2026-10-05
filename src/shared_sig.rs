@@ -290,6 +290,21 @@ impl Graph {
         }
         Ok(())
     }
+    pub(crate) fn remove_beam_head_supports(&mut self, ids: &[usize]) -> Result<(), String> {
+        for id in ids {
+            let e = self
+                .edges
+                .get(id.checked_sub(1).ok_or("invalid beam head support id")?)
+                .ok_or("missing beam head support")?;
+            if e.removed || e.key.kind != "BeamHeadRelation" {
+                return Err("invalid live beam head support".into());
+            }
+        }
+        for id in ids {
+            self.edges[*id - 1].removed = true;
+        }
+        Ok(())
+    }
     pub(crate) fn relations(
         &mut self,
         system: u64,
@@ -922,6 +937,14 @@ impl Graph {
     pub(crate) fn purge_weak_foundations(&mut self) -> Result<Vec<usize>, String> {
         let mut remove = Vec::new();
         for (i, v) in self.vertices.iter().enumerate().filter(|(_, v)| !v.removed) {
+            if v.data["kind"] == "BeamInter"
+                && (v.key.phase != Phase::Beam
+                    || !v.data["grade"]
+                        .as_f64()
+                        .is_some_and(|g| (0.0..=1.0).contains(&g)))
+            {
+                return Err("invalid_owned_weak_foundation_beam".into());
+            }
             if v.data["kind"] == "BeamGroupInter"
                 || v.data["frozen"] == true
                 || v.data["is_frozen"] == true
@@ -991,7 +1014,10 @@ impl Graph {
                         .get_mut(id.checked_sub(1).ok_or("invalid_foundation_vertex_id")? as usize)
                         .ok_or("missing_foundation_vertex")?;
                     if v.removed
-                        || !matches!(v.data["kind"].as_str(), Some("HeadInter" | "StemInter"))
+                        || !matches!(
+                            v.data["kind"].as_str(),
+                            Some("HeadInter" | "StemInter" | "BeamInter" | "BeamGroupInter")
+                        )
                     {
                         return Err("unsupported_foundation_vertex_removal".into());
                     }
@@ -1063,6 +1089,9 @@ impl Graph {
             if matches!(v.key.phase, Phase::Head | Phase::Stem) {
                 expected["contextual_grade"] = n["contextual_grade"].clone();
                 expected["abnormal"] = n["abnormal"].clone();
+            }
+            if v.data["kind"] == "BeamInter" {
+                expected["contextual_grade"] = n["contextual_grade"].clone();
             }
             if expected != *n {
                 return Err("changed_foundation_intrinsic_vertex".into());

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Conservative original BeamLinker empty-head case and isolated LINKS subset.
-//! This never schedules a beam with a potentially reachable head.
+//! Original empty-head removal or delegation to connected positive beam builders,
+//! plus the bounded retained-owner LINKS/cleaner continuation.
 use crate::{
     music_measures::OwnedMusic,
     shared_sig::{Key, Phase},
@@ -50,11 +50,18 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
             .iter()
             .find(|b| b["beam"]["id"] == key.local)
             .ok_or("music_beam_catalog_identity_required")?;
-        // No physical stump/seed may enter an unimplemented beam builder.
-        for field in ["stumps", "admitted_seeds"] {
-            if cat[field].as_array().is_none_or(|v| !v.is_empty()) {
-                return Err("music_beam_with_stump_or_seed_pending".into());
+        // Positive standard beams now go through the actual VLinker builder,
+        // profile4 cache/SIG scheduler and endpoint checks. Hooks still require
+        // their corresponding sibling and lookup rules.
+        let physical = ["stumps", "admitted_seeds"]
+            .iter()
+            .any(|field| cat[*field].as_array().is_some_and(|v| !v.is_empty()));
+        if physical {
+            if n["kind"] != "BeamInter" {
+                return Err("music_beam_hook_builder_pending".into());
             }
+            evidence.push(json!({"native_beam_id":n["id"],"scheduled_positive_beam":true}));
+            continue;
         }
         let context = contexts
             .as_array()
@@ -104,7 +111,11 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
                         .is_none_or(|x| x >= left && x <= right)
                 })
         {
-            return Err("music_beam_potentially_reachable_head_pending".into());
+            if n["kind"] != "BeamInter" {
+                return Err("music_beam_hook_builder_pending".into());
+            }
+            evidence.push(json!({"native_beam_id":n["id"],"scheduled_positive_beam":true}));
+            continue;
         }
         if initial["relations"].as_array().unwrap().iter().any(|r| {
             (r["source"] == n["id"] || r["target"] == n["id"])
@@ -133,7 +144,15 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
                     .is_none_or(|id| !removed_ids.contains(&(id as usize)))
             })
         {
-            return Err("music_beam_group_positive_linking_pending".into());
+            if n["members"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|id| removed_ids.contains(&(id.as_u64().unwrap() as usize)))
+            {
+                return Err("music_mixed_removed_beam_group_pending".into());
+            }
+            continue;
         }
         groups.push(
             serde_json::from_value::<Key>(n["origin"].clone())
@@ -157,6 +176,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
     let flags = crate::music_flags::contextualize(&mut graph)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
+    let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
     let removed = reduction["removed_weak_symbol_ids"]
         .as_array()
         .unwrap()
@@ -176,27 +196,24 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     m.chords.retain(|c| !c.members.is_empty());
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
-    m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"unsupported-support-free Rest/TimeWhole physical overlaps, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos/BeamHead relations for LINKS cleaner/epilog","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
+    m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"unsupported-support-free Rest/TimeWhole physical overlaps, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
+    if !removed_beam_head_supports.is_empty() {
+        m.owner.prepared.report["limited_links"]["BeamHeadCleaner_removed_relation_ids"] =
+            json!(removed_beam_head_supports);
+    }
     Ok(m)
 }
 
 /// StemsRetriever.checkHeadStems/HeadStemsCleaner and StemsStep.doEpilog
-/// on the admitted no-live-beam, one-stem-per-head subset. Cross-system beam
-/// finalization is empty only after the proven unreachable-beam reduction.
+/// on the admitted one-stem-per-head subset, plus owned single-beam endpoint
+/// checks. Shared-glyph cross-system beams remain admission refusals.
 pub(crate) fn finalize_stems(mut o: OwnedItems) -> Result<OwnedItems, String> {
     o = crate::music_ledger_reduction::check(o)?;
+    let beam_checks = crate::music_beams::check_ends(&mut o.graph)?;
     let snap = o.graph.snapshot();
     let nodes = snap["inters"]
         .as_array()
         .ok_or("music_finalizer_SIG_required")?;
-    if nodes.iter().any(|n| {
-        matches!(
-            n["kind"].as_str(),
-            Some("BeamInter" | "BeamHookInter" | "SmallBeamInter")
-        )
-    }) {
-        return Err("music_finalizer_live_beam_pending".into());
-    }
     let mut checked = Vec::new();
     for head in nodes.iter().filter(|n| n["kind"] == "HeadInter") {
         let key: Key = serde_json::from_value(head["origin"].clone())
@@ -233,7 +250,10 @@ pub(crate) fn finalize_stems(mut o: OwnedItems) -> Result<OwnedItems, String> {
     }
     o.graph.contextualize_head_stems()?;
     o.prepared.report["shared_sig"] = o.graph.snapshot();
-    o.prepared.report["limited_stem_finalizer"] = json!({"head_checks":checked,"canonical_stem_cache_checked":true,"no_live_beam_finalizer":true,"contextualize_after_epilog":true,"full_STEMS_epilog_complete":false});
+    o.prepared.report["limited_stem_finalizer"] = json!({"head_checks":checked,"canonical_stem_cache_checked":true,"no_live_beam_finalizer":!nodes.iter().any(|n|n["kind"]=="BeamInter"),"contextualize_after_epilog":true,"full_STEMS_epilog_complete":false});
+    if nodes.iter().any(|n| n["kind"] == "BeamInter") {
+        o.prepared.report["limited_stem_finalizer"]["beam_checks"] = beam_checks;
+    }
     Ok(o)
 }
 

@@ -61,7 +61,14 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     if nodes.iter().any(|n| {
         !matches!(
             n["kind"].as_str(),
-            Some("BarlineInter" | "HeadInter" | "StemInter" | "LedgerInter")
+            Some(
+                "BarlineInter"
+                    | "HeadInter"
+                    | "StemInter"
+                    | "LedgerInter"
+                    | "BeamInter"
+                    | "BeamGroupInter"
+            )
         )
     }) || edges.iter().any(|e| e["kind"] == "BarGroupRelation")
     {

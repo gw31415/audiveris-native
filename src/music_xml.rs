@@ -399,6 +399,26 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             let (base, mut note_type) = note_duration(shape)?;
             let mut duration = base * 2;
             let rest = note["kind"] == "RestInter";
+            // AbstractChordInter.getBeams: actual beam→stem and chord→stem
+            // relations supply membership; x positions only order members.
+            let beams = if let Some(stem) = chord.stem {
+                let id = graph
+                    .id(stem)
+                    .ok_or("musicxml_actual_beamed_stem_required")?;
+                nodes
+                    .iter()
+                    .filter(|n| {
+                        n["kind"] == "BeamInter"
+                            && edges.iter().any(|e| {
+                                e["kind"] == "BeamStemRelation"
+                                    && e["source"] == n["id"]
+                                    && e["target"] == id
+                            })
+                    })
+                    .collect::<Vec<_>>()
+            } else {
+                Vec::new()
+            };
             let flags = if let Some(stem) = chord.stem {
                 let stem_id = graph
                     .id(stem)
@@ -417,8 +437,12 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             } else {
                 Vec::new()
             };
-            if !flags.is_empty() {
-                if rest || shape != "NOTEHEAD_BLACK" || flags.len() != 1 || flags[0]["value"] != 1 {
+            if !flags.is_empty() || !beams.is_empty() {
+                if rest
+                    || shape != "NOTEHEAD_BLACK"
+                    || flags.len() + beams.len() != 1
+                    || flags.first().is_some_and(|f| f["value"] != 1)
+                {
                     return Err("musicxml_flagged_void_rest_or_multiple_flags_pending".into());
                 }
                 // AbstractChordInter.getDurationSansDotOrTuplet divides by2
@@ -430,6 +454,54 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             let flag_direction = flags
                 .first()
                 .map(|f| if f["shape"] == "FLAG_1" { "up" } else { "down" });
+            let mut beam_marks = Vec::new();
+            let mut stem_direction = flag_direction;
+            for (number, beam) in beams.iter().enumerate() {
+                let mut members = m
+                    .chords
+                    .iter()
+                    .filter(|c| {
+                        c.stem.is_some_and(|s| {
+                            edges.iter().any(|e| {
+                                e["kind"] == "BeamStemRelation"
+                                    && e["source"] == beam["id"]
+                                    && e["target"] == graph.id(s).unwrap()
+                            })
+                        })
+                    })
+                    .collect::<Vec<_>>();
+                members.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+                if members.len() < 2 || members.iter().any(|c| c.measure != chord.measure) {
+                    return Err("musicxml_incomplete_or_cross_measure_beam_group_pending".into());
+                }
+                let index = members
+                    .iter()
+                    .position(|c| c.id == chord.id)
+                    .ok_or("musicxml_beam_chord_membership_required")?;
+                let value = if index == 0 {
+                    "begin"
+                } else if index + 1 == members.len() {
+                    "end"
+                } else {
+                    "continue"
+                };
+                beam_marks.push(json!({"number":number+1,"value":value}));
+                let stem_id = graph.id(chord.stem.unwrap()).unwrap();
+                let hs = edges
+                    .iter()
+                    .find(|e| {
+                        e["kind"] == "HeadStemRelation"
+                            && e["source"] == note["id"]
+                            && e["target"] == stem_id
+                    })
+                    .ok_or("musicxml_beam_head_direction_required")?;
+                stem_direction = Some(if hs["head_side"] == "RIGHT" {
+                    "up"
+                } else {
+                    "down"
+                });
+            }
+            let beam_ids = beams.iter().map(|b| b["id"].clone()).collect::<Vec<_>>();
             let mut step = None;
             let mut octave = None;
             let mut cid = None;
@@ -512,8 +584,15 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             c["time_offset"] = json!(rational(offset));
             c["voice"] = json!(1);
             c["measure_number"] = json!(mi + 1);
+            if !beams.is_empty() {
+                c["beam_ids"] = json!(beam_ids);
+            }
             graph.vertex(chord.key, c, false)?;
-            events.push(json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":duration,"flag_ids":flag_ids,"beam_ids":[],"stem_direction":flag_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":1,"type":note_type,"dots":0,"effective_clef_id":cid}));
+            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":duration,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":1,"type":note_type,"dots":0,"effective_clef_id":cid});
+            if !beam_marks.is_empty() {
+                event["beams"] = json!(beam_marks);
+            }
+            events.push(event);
             offset = offset
                 .checked_add(duration)
                 .ok_or("musicxml_voice_duration_overflow")?;
@@ -619,12 +698,23 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             }
             writeln!(
                 &mut xml,
-                "<duration>{}</duration><voice>1</voice><type>{}</type>{}</note>",
+                "<duration>{}</duration><voice>1</voice><type>{}</type>{}{}</note>",
                 e["duration_eighths"].as_u64().unwrap() * divisions / 2,
                 e["type"].as_str().unwrap(),
                 e["stem_direction"]
                     .as_str()
                     .map(|d| format!("<stem>{d}</stem>"))
+                    .unwrap_or_default(),
+                e["beams"]
+                    .as_array()
+                    .map(|beams| beams
+                        .iter()
+                        .map(|b| format!(
+                            "<beam number=\"{}\">{}</beam>",
+                            b["number"],
+                            b["value"].as_str().unwrap()
+                        ))
+                        .collect::<String>())
                     .unwrap_or_default()
             )
             .unwrap();
@@ -638,6 +728,16 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter two-measure image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
+    if m.owner.prepared.report["events"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(|e| e["beam_ids"].as_array().is_some_and(|b| !b.is_empty()))
+    {
+        m.owner.prepared.report["beam_comparison_scope"] = json!(
+            "One original full-image successful single-standard-beam Bravura44/C-major4/4 two-measure input: nine events/pitches/durations/onsets and beam1 begin/end; builder/control/HEADS reduction comparisons are separate; full BEAMS/STEMS/SIG/cleaner/rhythm parity unclaimed"
+        );
+    }
     Ok(Export { owner: m, xml })
 }
 pub fn recognize(image: &GrayImage) -> Result<Export, String> {

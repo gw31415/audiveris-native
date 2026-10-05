@@ -109,7 +109,13 @@ fn contextualize_head_stem_flags_impl(
     for r in relations {
         if !matches!(
             r["kind"].as_str(),
-            Some("HeadStemRelation" | "BeamStemRelation" | "Exclusion" | "NoExclusion")
+            Some(
+                "HeadStemRelation"
+                    | "BeamStemRelation"
+                    | "BeamHeadRelation"
+                    | "Exclusion"
+                    | "NoExclusion"
+            )
         ) && !(flags && r["kind"] == "FlagStemRelation")
         {
             return Err("unsupported_head_stem_context_relation".into());
@@ -121,7 +127,7 @@ fn contextualize_head_stem_flags_impl(
         }
         if matches!(
             r["kind"].as_str(),
-            Some("HeadStemRelation" | "BeamStemRelation")
+            Some("HeadStemRelation" | "BeamStemRelation" | "BeamHeadRelation")
         ) || (flags && r["kind"] == "FlagStemRelation")
         {
             for side in ["source_ratio", "target_ratio"] {
@@ -136,9 +142,14 @@ fn contextualize_head_stem_flags_impl(
         &grades,
         relations,
         if flags {
-            &["HeadStemRelation", "BeamStemRelation", "FlagStemRelation"]
+            &[
+                "HeadStemRelation",
+                "BeamStemRelation",
+                "BeamHeadRelation",
+                "FlagStemRelation",
+            ]
         } else {
-            &["HeadStemRelation", "BeamStemRelation"]
+            &["HeadStemRelation", "BeamStemRelation", "BeamHeadRelation"]
         },
         "unsupported_head_stem_context_partner_limit_16",
     )

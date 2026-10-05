@@ -23,9 +23,9 @@
 | BINARY/SCALE / adaptive filter, `ScaleBuilder` | 部分 | 原版式・histogram/peak・多数kernelあり。一般画像の全設定/分解能/失敗状態と下流伝播を広げる必要がある。 |
 | GRID / `GridBuilder`, `Staff`, `SystemInfo`, parts | 部分 | sections/filament/通常staff/system/parts・cue第二パスの比較あり。非zero skew、特殊staff、実スキャンの全工程一致は未検証。 |
 | HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
-| STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。positive beam-origin STEMS、cue beam、一般加線音高・共有staffの全工程は未接続。 |
+| STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独standard beamのpositive画像経路を接続。sibling/hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
-| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。beamからの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 |
+| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独beamからのitems/expand/profile4 glyph/cache/SIGとbeam-side supportを接続。一般sibling/hook/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
 | REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、今回のRest/TimeWhole overlap/exclusionあり。全Interのsupport contextual grade、互換性、frozen、各関係のconsistency、反復reductionとcallbacks/epilogは未接続。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
@@ -108,4 +108,20 @@ Altoで必要だった左端残留線のARPEGGIATO候補には、原版`InterFac
 
 `AbstractFlagInter.lookupLink/createValidAdded`と`FlagStemRelation`を、分類済み実glyph・所有SIGのstem/headへ接続。旗の位置/foot・stem方向・gap impacts・first-valid順を原版から移し、HeadStem/FlagStemの元support計算と弱旗purgeを実行します。`AbstractChordInter.getDurationSansDotOrTuplet`の接続数に由来する1/8音価を、整数eighth tickによる単声onset・小節検査とMusicXML divisionsへ伝播。原版成功1画像で八分2音/四分7音、旗glyph/保存grade/関係とMusicXML意味を比較しました。これはbeamの無い入力で、正のbeam一致とは区別します。
 
-次の切断箇所は`BeamLinker.BLinker.VLinker`のbeam-origin items収集・expand/createStem・頭との接続順、`SigReducer.checkBeamsHaveBothStems/checkHooksHaveStem`と`StemsRetriever.finalizeBeams`、`AbstractChordInter.getBeams`と`PartwiseBuilder`のbeam begin/continue/end出力です。既存head-origin builder/kernelは部品として再利用できますが、head-onlyガード撤去で代用しません。旗の下向き/小型/複数・一般リズムや原版全機能も台帳の未完として保持します。
+旗checkpoint時点の次の切断箇所は`BeamLinker.BLinker.VLinker`のbeam-origin items収集・expand/createStem・頭との接続順、`SigReducer.checkBeamsHaveBothStems/checkHooksHaveStem`と`StemsRetriever.finalizeBeams`、`AbstractChordInter.getBeams`と`PartwiseBuilder`のbeam begin/continue/end出力です。既存head-origin builder/kernelは部品として再利用できますが、head-onlyガード撤去で代用しません。旗の下向き/小型/複数・一般リズムや原版全機能も台帳の未完として保持します。
+
+
+## 正の単独beamと八分音価（2026-10-05）
+
+保存済み1画像を原版成功exportと比較し、画像由来beam-origin builder→
+profile4/実cache/BeamStem・HeadStem→beam-aware support/競合整理→実chord membership→
+分数音価・onset・MusicXML番号1 begin/endまで接続。9イベントの意味が一致しXSDも成功。
+途中の2builder/items/選択glyph/grade/関係、6人工stem制御、原版HEADS reduction、
+PageCleaner area rasterとBeamHeadCleanerはそれぞれ別の比較境界です。
+全BEAMS/STEMS/SIG一致とは区別します。旧成功例と不足小節の拒否を保持。
+
+次はsibling/multiple-level/hook・alien closer limit・cross-staff/systemと所有接続、
+下向き/複数旗、臨時記号・付点lateChecks・一般rhythmへ依存順で進める必要があります。
+現在は1system1standard beam/1part、水平restored eraserに限定した小単位であり、
+原版非UI全機能の最終目標と省略なし方針は維持。試す手順は
+[MUSICXML-LIMITED.md](MUSICXML-LIMITED.md#single-standard-beam-eighth-notes--musicxml)。

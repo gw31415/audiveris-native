@@ -51,7 +51,7 @@ impl Cache {
     /// Validated parts are registered before cache/grade rejection. A singleton
     /// retains its run orientation; compounds use the original vertical union.
     /// Cache hits return the same object without regrading, even if the valid
-    /// supplied image/profile changed. New head profiles0..3; artificial beam-side4 pending.
+    /// supplied image/profile changed. Profiles0..3 require grade; BEAM_SIDE4 alone permits artificial grade0.4.
     /// A cache belongs to one system and physical registry. Reusing it with a
     /// conflicting registry ID refuses rather than returning another glyph.
     /// This method never adds a SIG vertex or HeadStemRelation.
