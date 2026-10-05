@@ -1,0 +1,13 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.75s
+     Running tests/stem_image_owned.rs (/workspace/onboarding/target/debug/deps/stem_image_owned-1065f6e4f7521ff9)
+
+running 3 tests
+test actual_head_items_cli_runs_in_process_without_sibling_upstream_binary has been running for over 60 seconds
+test actual_upstream_registry_run_storage_graph_history_and_heads_survive_image_items has been running for over 60 seconds
+test mismatched_live_graph_or_registry_refuses_before_stems has been running for over 60 seconds
+test actual_upstream_registry_run_storage_graph_history_and_heads_survive_image_items ... ok
+test actual_head_items_cli_runs_in_process_without_sibling_upstream_binary ... ok
+test mismatched_live_graph_or_registry_refuses_before_stems ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 96.59s

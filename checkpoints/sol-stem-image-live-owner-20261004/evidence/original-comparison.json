@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "independent_original_runs": 2,
+  "original_probe": "StemImageHeadItemsProbe",
+  "native_outputs_used": false,
+  "original_result_sha256": "b4c7e0c675564849f85e4d47c4daf08e388f1b1ef0f1dd2f2db2051d08a0747e",
+  "both_systems_and_all_head_cases": 1408,
+  "final_items": 3076,
+  "gap_items": 92,
+  "XML_loaded_inspection_replay": true,
+  "fresh_transient_automatic_STEMS_certified": false
+}

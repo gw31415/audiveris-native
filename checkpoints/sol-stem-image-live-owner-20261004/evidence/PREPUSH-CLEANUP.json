@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "removed_only_clean_verified_prepush_duplicate": "/workspace/work/stem-image-live-owner/sol-stem-image-live-owner-20261004-prepush",
+  "source_commit": "3d2482fe6e28a1912c3bc03dfbe53cd628092e47",
+  "source_tree": "be0e81f3e7738a7af45543b249040b50495dfcf8",
+  "all_sha256_verified": 6745,
+  "retained_current_primary_source": true,
+  "retained_previous_latest_remote_restoration": true,
+  "fresh_remote_clone_and_restoration_follow": true
+}

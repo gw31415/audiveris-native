@@ -1,0 +1,2 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `/workspace/onboarding/target/debug/examples/stem_chunks_dump /workspace/onboarding/artifacts/audiveris-source/fixtures/official-stem-chunks/controls.json`

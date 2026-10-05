@@ -1,0 +1,26 @@
+{
+  "actual_native_image_pipeline_executed": true,
+  "actual_private_Graph_history_retained": true,
+  "cache_entries_or_stem_SIG_vertices_created": false,
+  "cleaner_epilog_complete": false,
+  "context": "Original XML-restored profile1/zero-skew Laura context; fresh original transient/full automatic STEMS unverified",
+  "corner_count": 1408,
+  "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+  "final_head_item_count": 3076,
+  "final_registry_count": 2335,
+  "gap_item_count": 92,
+  "heads_complete": false,
+  "initialized_cache_systems": [
+    1,
+    2
+  ],
+  "page_cache_sig_complete": false,
+  "physical_endpoint_stem_glyph_grade_selection_complete": false,
+  "private_Graph_debug_sha256": "96d213eb3744d1d278a52734c285a43da2bb60b7ca88835b7157bf4f72d63d34",
+  "serialized_Graph_reconstructed": false,
+  "source_image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "status": "passed",
+  "stems_complete": false,
+  "upstream_physical_run_allocations_retained": 1220,
+  "upstream_registry_entries_groups_and_IDs_exact": true
+}

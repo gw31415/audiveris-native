@@ -1,0 +1,56 @@
+[
+  {
+    "fixture": "official-stem-chunks",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "0f55c543dd8b4cfc793fe6a4f9faede493cc3967eb0321c4f665dd59d1049b47",
+    "updated_stale_source_paths": [
+      "src/stem_chunks.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  },
+  {
+    "fixture": "official-stem-chunk-registration",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "2c8eb69cba1fbf6b838b2c788c0ce991cfadece39e09858935b69e95b1369d48",
+    "updated_stale_source_paths": [
+      "src/stem_chunk_registration.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  },
+  {
+    "fixture": "official-stem-chunks-cli",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "aa01c9c023997ef506bb3cad76fa2d3e01f0b56eec4f32db74d4719209a1e3ed",
+    "updated_stale_source_paths": [
+      "src/main.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  },
+  {
+    "fixture": "official-stem-item-events",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "1da1e1e171f754387e1b7fab0e8980f64f4f16b7c302deb75ab9be572a372bd1",
+    "updated_stale_source_paths": [
+      "src/main.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  },
+  {
+    "fixture": "official-stem-head-neighborhood",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "127a9eb9a9560d3e3a8f0cce583bd8ac9279090e2866a6797e65292bb9ba7465",
+    "updated_stale_source_paths": [
+      "src/main.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  },
+  {
+    "fixture": "official-cue-default-heads",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "64969e2f69f266d4a894d51d7c31fd8e8227706f421bfc7521ad59ac212369ce",
+    "updated_stale_source_paths": [
+      "src/main.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  }
+]

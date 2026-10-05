@@ -1,0 +1,1547 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 50.43s
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_area-ce7da9986fdaeaea)
+
+running 8 tests
+test linear::tests::resource_and_nonfinite_inputs_fail_closed ... ok
+test linear::tests::rectangle_difference_retains_half_open_hole ... ok
+test linear::tests::rectangle_contact_and_hole_intersections_are_distinct ... ok
+test tests::polynomial_degeneracy_reduces_to_original_line_boundary ... ok
+test tests::rectangle_is_half_open_and_auto_closed ... ok
+test tests::sloped_boundary_and_winding_reversal_preserve_crossing_semantics ... ok
+test tests::malformed_paths_and_queries_fail_without_unbounded_work ... ok
+test fdlibm_hypot::tests::matches_original_java_hypot_vectors ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_classifier-c2e08f08ff7d9c99)
+
+running 1 test
+test tests::rejects_nonfinite_model_values_even_before_json_encoding ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+
+     Running unittests src/bin/classify.rs (/workspace/onboarding/target/debug/deps/audiveris_classify-48bdd40d415c549c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (/workspace/onboarding/target/debug/deps/golden-b93a3ba6d818e891)
+
+running 1 test
+test matches_136_official_java_cases_and_55488_values ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/validation.rs (/workspace/onboarding/target/debug/deps/validation-16b29379755b1d7c)
+
+running 4 tests
+test rejects_malformed_or_nonfinite_json ... ok
+test rejects_invalid_feature_vectors_and_arithmetic_overflow ... ok
+test cli_emits_ordered_scores_and_rejects_bad_input ... ok
+test rejects_bad_shapes_labels_norms_and_provenance ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s
+
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_glyph_features-de2182ccf63330ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (/workspace/onboarding/target/debug/deps/golden-c320ed8eaeb26b9d)
+
+running 2 tests
+test invalid_inputs_are_explicit_errors ... ok
+test java_glyph_features_and_classifier_chain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_native-54c661d59a96a5a3)
+
+running 69 tests
+test beam_structure::tests::rejects_bad_parameters_without_mutation ... ok
+test beam_structure::tests::empty_and_one_shot_contracts ... ok
+test beam_structure::tests::rejects_invalid_glyphs_and_budgets ... ok
+test clef_competition::tests::x_is_strict_only_for_anchor_and_foreign_or_duplicate_partners_are_skipped ... ok
+test clef_competition::tests::stable_left_ties_anchor_last_then_incoming_precedes_outgoing ... ok
+test clef_competition::tests::duplicate_ids_and_budget_violations_are_explicit ... ok
+test clef_registration::tests::centroid_uses_pixel_coordinates_and_ties_even ... ok
+test clef_registration::tests::bbox_centroid_translation_ignores_y_and_preserves_clef_pitch ... ok
+test clef_registration::column_tests::column_offsets_are_relative_per_system_and_do_not_select_clef ... ok
+test filament_merge::tests::contact_excludes_diagonal_corner_only ... ok
+test clef_registration::tests::reverse_grade_sort_is_stable_and_exclusions_are_all_pairs ... ok
+test key_clef::tests::all_percussion_is_excluded_without_pitch_table_error ... ok
+test clef_registration::tests::second_pass_empty_cases_and_unsupported_metrics ... ok
+test key_clef::tests::all_fourteen_pitch_tables_match_key_inter ... ok
+test key_clef::tests::compatible_clef_gets_contextual_support_and_first_tie_wins ... ok
+test key_clef::tests::empty_and_missing_slices_do_not_select_a_clef ... ok
+test key_clef::tests::incompatible_and_percussion_clefs_still_compete_in_second_pass ... ok
+test key_clef::tests::overall_equal_grade_preserves_input_order_even_for_incompatible_clef ... ok
+test key_clef::tests::rejection_preserves_earlier_writes_and_leaves_later_entries_zero ... ok
+test key_clef::tests::invalid_inputs_and_resource_bounds_are_explicit ... ok
+test key_clef::tests::support_uses_ratio_six_and_actual_non_null_count ... ok
+test key_clef::tests::thresholds_use_slice_count_and_accept_equality_with_zero_grade ... ok
+test key_clef::tests::zero_pitched_grade_can_still_be_compatible_but_zero_clef_cannot_win ... ok
+test key_column::tests::em_handles_collapse_and_half_even_means ... ok
+test key_column::tests::extensive_key_removal_keeps_removed_slice_aliases ... ok
+test key_column::tests::key_column_offset_preserves_previous_stop_when_no_key ... ok
+test key_column::tests::ink_threshold_and_image_clamp_are_exact ... ok
+test key_column::tests::nearest_is_inclusive_and_first_tie ... ok
+test key_column::tests::removing_member_keeps_stale_contextual_grade ... ok
+test key_components::neighbor_oracle_test::exact_original_cropped_pixels_erase_240_neighbor_pixels ... ok
+test key_column::tests::independent_original_clustering_controls ... ok
+test key_components::tests::clip_background_and_erase_exact_neighbor_pixels ... ok
+test key_components::tests::connected_decomposition_visits_each_connected_subset_once_and_prunes_weight ... ok
+test key_components::tests::glyph_centroid_rounds_integer_pixels_ties_even ... ok
+test key_components::tests::tiny_parts_and_last_column_parts_follow_source_filter ... ok
+test key_peaks::tests::gain_equal_threshold_expands_and_quorum_is_inclusive ... ok
+test key_peaks::tests::terminal_hilo_is_not_flushed_and_absolute_domain_is_preserved ... ok
+test beam_structure::tests::direct_original_method_controls ... ok
+test key_peaks::tests::tied_peak_heights_keep_abscissa_order_and_bad_domains_are_rejected ... ok
+test key_slices::tests::explicit_stop_preserves_null_semantics ... ok
+test key_slices::tests::light_peak_distance_uses_strict_cutoff ... ok
+test key_slices::tests::odd_sharp_peak_is_removed_and_interval_outlier_truncates_flat_items ... ok
+test key_slices::tests::refine_stop_keeps_first_minimum_and_empty_hilos_preserve_nullable_range ... ok
+test key_slices::tests::malformed_or_overlapping_hilos_are_refused ... ok
+test key_slices::tests::stem_row_quorum_is_inclusive_and_uses_grown_narrow_peak ... ok
+test key_state::tests::destruction_keeps_selected_clef_and_duplicate_retention_is_exact ... ok
+test key_state::tests::one_column_empty_space_does_not_bypass_original_else_if ... ok
+test key_state::tests::ensemble_grade_uses_current_intrinsic_mean_and_member_center_order ... ok
+test key_state::tests::post_fill_pitch_rejection_keeps_partial_grade_writes ... ok
+test key_state::tests::singleton_clef_skips_refresh_but_duplicate_working_refs_trigger_it ... ok
+test stem_image_beam_generation::tests::original_nearest_reuse_inclusive_ulps_and_new_anchor_registration ... ok
+test stem_image_beam_generation::tests::side_width_stops_at_first_overwide_section_and_portion_edges ... ok
+test stem_image_beam_generation::tests::original_purge_overlap_touch_distance_threshold_and_removal_iteration ... ok
+test stem_image_beam_targets::tests::original_sibling_side_ulps_and_empty_duplicate_parallel_equal_height ... ok
+test stem_image_linkers::tests::original_other_head_boundary_observations_and_invalid_identity ... ok
+test stem_image_sources::tests::original_seed_source_filter_boundaries_and_unverified_ties ... ok
+test stem_image_seeds::tests::original_seed_rounding_and_strict_bar_overlap_boundaries ... ok
+test stem_scale::tests::empty_and_terminal_peak_use_foreground_fallback ... ok
+test stem_scale::tests::equal_peaks_keep_first_hilo_and_large_counts_are_supported ... ok
+test stem_scale::tests::horizontal_runs_use_whole_image_and_exclude_overlong_runs ... ok
+test stem_scale::tests::independent_original_histogram_controls_are_exact ... ok
+test stem_scale::tests::malformed_buffers_scales_and_overflow_fail_without_mutation ... ok
+test stem_scale::tests::thresholds_use_run_count_and_half_even_rounding ... ok
+test stem_scale::tests::unchanged_no_staff_runtime_contract_has_visible_effect ... ok
+test stem_image_stumps::tests::original_run_intersection_polygon_crop_and_registry_boundaries ... ok
+test vertical_sticks::tests::original_multisection_line_fits_preserve_sampler_boundaries ... ok
+test time_column::tests::independent_original_filter_vector_and_selection_controls ... ok
+test key_components::retry_oracle_tests::original_three_extract_alter_controls_preserve_prior_eval_and_identity ... ok
+test key_components::retry_oracle_tests::original_twenty_one_pitch_rectangles_preserve_java_casts_and_odd_heights ... ok
+
+test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
+     Running unittests src/main.rs (/workspace/onboarding/target/debug/deps/audiveris_native-cfe6f3cd10239731)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/audiveris-stems.rs (/workspace/onboarding/target/debug/deps/audiveris_stems-262c3c97a570cceb)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_candidates.rs (/workspace/onboarding/target/debug/deps/beam_candidates-499501770b4103fe)
+
+running 2 tests
+test singleton_geometry_is_explicitly_undefined_and_bounds_are_checked ... ok
+test original_glyph_metrics_match_all_thirteen_raster_diagnostics ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+
+     Running tests/beam_dispatch.rs (/workspace/onboarding/target/debug/deps/beam_dispatch-c976bd0e94e926c8)
+
+running 9 tests
+test centroid_is_half_even_with_signed_origins ... ok
+test dispatch_includes_right_limit_and_overlapping_systems ... ok
+test initial_free_glyph_order_survives_duplicate_dispatch_and_parser_roundtrip ... ok
+test epilog_removes_only_exclusively_beam_grouped_free_glyphs ... ok
+test invalid_sheet_epilog_reference_rejects_before_any_owner_mutates ... ok
+test registry_preserves_existing_canonical_object_and_groups ... ok
+test invalid_registry_and_geometry_inputs_fail_explicitly ... ok
+test sheet_epilog_preserves_shared_identity_groups_and_survivor_order ... ok
+test supplied_clipped_ends_bound_beam_sides_without_changing_staff_limits ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_dispatch_neighbors.rs (/workspace/onboarding/target/debug/deps/beam_dispatch_neighbors-6c9030b8f61019f5)
+
+running 2 tests
+test original_neighbor_dispatch_selection_and_beam_ends_match ... ok
+test original_two_column_spots_preserve_pixel_order_and_identity ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.68s
+
+     Running tests/beam_extend_in_parallel.rs (/workspace/onboarding/target/debug/deps/beam_extend_in_parallel-ef3c0b13ddb2ecbf)
+
+running 2 tests
+test invalid_target_is_a_noop_and_system_boundary_uses_both_endpoints ... ok
+test original_parallel_scan_geometry_order_and_point_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/beam_extend_to_beam.rs (/workspace/onboarding/target/debug/deps/beam_extend_to_beam-22a99dee7b5216ec)
+
+running 2 tests
+test invalid_endpoints_fail_before_state_or_registry_mutation ... ok
+test independent_original_gap_gate_and_extend_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/beam_extend_to_point.rs (/workspace/onboarding/target/debug/deps/beam_extend_to_point-cd0d077a7c0f8ee9)
+
+running 2 tests
+test invalid_target_and_point_preserve_state ... ok
+test original_point_method_geometry_grade_and_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_extend_to_spot.rs (/workspace/onboarding/target/debug/deps/beam_extend_to_spot-b9e9a3bb217339d2)
+
+running 2 tests
+test foreign_owner_and_negative_reach_are_noops ... ok
+test original_spot_pool_selection_point_and_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/beam_extend_to_stem.rs (/workspace/onboarding/target/debug/deps/beam_extend_to_stem-c1391b9ca8436b01)
+
+running 4 tests
+test composition_stops_at_real_stem_or_pending_spot ... ok
+test owner_mismatch_and_missing_seed_identity_preserve_state ... ok
+test original_merge_prefix_success_skips_stem_branch ... ok
+test original_stem_selection_point_and_lifecycle_match ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/beam_extension_geometry.rs (/workspace/onboarding/target/debug/deps/beam_extension_geometry-3b36484228551c12)
+
+running 6 tests
+test horizontal_sides_preserve_pixel_offset_and_half_open_edges ... ok
+test collapsed_areas_are_empty_but_zero_reach_is_not_clamped ... ok
+test fractional_overlap_crosses_endpoint_and_keeps_integer_bounds ... ok
+test invalid_or_out_of_bounds_geometry_is_rejected ... ok
+test positive_and_negative_slopes_use_parallelograms_on_both_sides ... ok
+test direct_official_side_area_bounds_and_membership_match_exactly ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_extension_loop.rs (/workspace/onboarding/target/debug/deps/beam_extension_loop-55249ae588bfe048)
+
+running 2 tests
+test original_whole_loop_controls_preserve_snapshot_removal_and_replacement_order ... ok
+test original_uninterrupted_loop_matches_thirteen_stage_boundaries ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.39s
+
+     Running tests/beam_extension_prefix.rs (/workspace/onboarding/target/debug/deps/beam_extension_prefix-90cd6443fbc453b1)
+
+running 2 tests
+test empty_prefix_finishes_and_invalid_target_is_a_noop ... ok
+test original_side_decisions_and_initial_snapshot_prefix_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_groups.rs (/workspace/onboarding/target/debug/deps/beam_groups-de24be65c51c42cf)
+
+running 3 tests
+test rejects_invalid_before_grouping ... ok
+test original_group_removal_preserves_survivors_and_incident_support_order ... ok
+test original_uninterrupted_group_controls ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_groups_images.rs (/workspace/onboarding/target/debug/deps/beam_groups_images-228ea6ccebb90692)
+
+running 1 test
+test original_groups_after_late_hooks_match_thirteen_images ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.90s
+
+     Running tests/beam_header_clips.rs (/workspace/onboarding/target/debug/deps/beam_header_clips-e93d0ae465af97ec)
+
+running 3 tests
+test certified_curved_neighbor_clip_bounds_enable_header_erasure ... ok
+test original_system_area_header_rectangles_match ... ok
+test original_horizontal_header_erasure_pixels_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.92s
+
+     Running tests/beam_impacts.rs (/workspace/onboarding/target/debug/deps/beam_impacts-a8583bfb7004f220)
+
+running 3 tests
+test grade_gate_equality_and_clamping_are_separate_from_method_acceptance ... ok
+test validates_bounds_and_limits_without_mutating_image ... ok
+test original_item_masks_and_impacts ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running tests/beam_impacts_review.rs (/workspace/onboarding/target/debug/deps/beam_impacts_review-12cd5cf44ea851df)
+
+running 4 tests
+test review_resource_and_parameter_boundaries ... ok
+test empty_masks_preserve_original_nonfinite_impacts_and_zero_grade ... ok
+test original_cached_bounds_counts_change_core_threshold_and_grade ... ok
+test independent_original_beam_item_integer_masks ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/beam_late_hooks.rs (/workspace/onboarding/target/debug/deps/beam_late_hooks-3231e1d38807835c)
+
+running 2 tests
+test inconsistent_late_hook_owner_is_rejected_before_mutation ... ok
+test uninterrupted_original_late_hooks_match_order_geometry_grade_and_assignment ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/beam_late_hooks_images.rs (/workspace/onboarding/target/debug/deps/beam_late_hooks_images-01baa767bd59066e)
+
+running 1 test
+test original_late_hooks_after_snapshot_loop_match_thirteen_images ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 20.60s
+
+     Running tests/beam_lifecycle.rs (/workspace/onboarding/target/debug/deps/beam_lifecycle-df8e8b2ca35b2473)
+
+running 2 tests
+test accepted_application_is_atomic_for_invalid_endpoints_and_preserves_raw_order ... ok
+test original_registration_removal_and_rejection_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_merge.rs (/workspace/onboarding/target/debug/deps/beam_merge-e71a760aa12de213)
+
+running 2 tests
+test invalid_merge_inputs_fail_without_mutating_the_raster ... ok
+test direct_original_merge_candidates_match_and_inputs_are_unchanged ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/beam_middle_area.rs (/workspace/onboarding/target/debug/deps/beam_middle_area-0dfea8e23bbdd25d)
+
+running 5 tests
+test sloped_bridge_uses_nearest_endpoints_in_both_argument_orders ... ok
+test unsupported_inputs_and_generated_vertices_are_rejected ... ok
+test weighted_height_and_swapped_arguments_keep_exact_horizontal_edges ... ok
+test touching_zero_height_overlap_and_equal_starts_retain_original_geometry ... ok
+test direct_official_middle_area_bounds_and_membership_match_exactly ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_observer_oracle.rs (/workspace/onboarding/target/debug/deps/beam_observer_oracle-62d116db56ccbc9f)
+
+running 1 test
+test atomic_beam_prolog_observer_preserves_original_whole_final_and_v15_evidence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.57s
+
+     Running tests/beam_preparation.rs (/workspace/onboarding/target/debug/deps/beam_preparation-55b08ddbff9a936e)
+
+running 5 tests
+test native_adapter_rejects_incomplete_or_inconsistent_dependencies ... ok
+test initial_candidates_reject_partial_prolog_without_mutating_it ... ok
+test native_adapter_has_explicit_stage_and_scale_boundary ... ok
+test beam_spots_cli_is_native_and_refuses_existing_outputs ... ok
+test original_beam_spots_match_complete_native_pipeline ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.74s
+
+     Running tests/beam_prolog_review.rs (/workspace/onboarding/target/debug/deps/beam_prolog_review-df8b92f972d81180)
+
+running 7 tests
+test malformed_geometry_is_rejected_without_panicking ... ok
+test aggregate_geometry_work_is_rejected_before_registry_or_system_mutation ... ok
+test supported_straight_clip_keeps_half_open_edges_and_dispatch_span ... ok
+test malformed_seed_dependencies_are_rejected_without_panicking ... ok
+test valid_empty_prolog_reports_only_its_completed_scope ... ok
+test original_boundary_control_hashes_match_retained_provenance ... ok
+test original_area_boundary_controls_match_lines_quadratics_cubics_and_knots ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/beam_side_lookup.rs (/workspace/onboarding/target/debug/deps/beam_side_lookup-527d3604052ff870)
+
+running 3 tests
+test invalid_inputs_fail_and_equal_gap_order_is_stable ... ok
+test typed_state_lookup_preserves_state_and_ignores_removed_candidates ... ok
+test original_side_lookup_and_rectangle_intersections_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/beam_spots.rs (/workspace/onboarding/target/debug/deps/beam_spots-d620623fcbbae7e5)
+
+running 8 tests
+test length_filter_is_inclusive_and_preserves_original_input ... ok
+test invalid_images_and_unbounded_work_fail_explicitly ... ok
+test median_has_unmodified_boundary ... ok
+test radius_disk_has_strict_plus_one_support ... ok
+test roi_is_inclusive_and_clipped ... ok
+test prepared_empty_image_remains_empty_without_complete_beams_claim ... ok
+test threshold_equality_and_four_connected_component_order ... ok
+test small_images_and_constant_images_are_stable ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_spots_oracle.rs (/workspace/onboarding/target/debug/deps/beam_spots_oracle-d1b02924c9672101)
+
+running 6 tests
+test original_42_staff_line_samples_match_header_rectangles_with_half_even_rounding ... ok
+test original_120_length_filters_and_24_glyph_sets_match_in_original_order ... ok
+test original_24_seeded_gray_controls_and_240_direct_radius_closes_match ... ok
+test original_gaussian_kernel_bits_and_ten_structure_vectors_match ... ok
+test original_roi_clipping_matches_and_overflowing_java_case_is_rejected ... ok
+test original_32_filter_inputs_and_224_close_results_match_exact_bytes ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/beam_structure.rs (/workspace/onboarding/target/debug/deps/beam_structure-e66a8444d126d04f)
+
+running 2 tests
+test direct_original_synthetic_geometry_controls ... ok
+test original_geometry_invocations_in_thirteen_full_image_observers ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+
+     Running tests/beam_structure_review.rs (/workspace/onboarding/target/debug/deps/beam_structure_review-b05b4cca15e64e85)
+
+running 3 tests
+test exact_work_budget_and_transactional_rejection ... ok
+test exact_page_and_pixel_boundaries ... ok
+test seeded_direct_original_geometry_and_minimized_split_branches ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.43s
+
+     Running tests/black_head_sizer.rs (/workspace/onboarding/target/debug/deps/black_head_sizer-522e91ba6f070c5e)
+
+running 11 tests
+test control_and_font_artifacts_match_retained_original_provenance_hashes ... ok
+test below_quorum_is_no_scale_update_and_group_gap_is_untagged ... ok
+test horizontal_and_vertical_input_buffers_close_identically_and_coordinates_are_checked ... ok
+test invalid_inputs_and_aggregate_work_fail_before_any_registration ... ok
+test all_128_parameter_sets_match_original_including_half_even_boundaries ... ok
+test original_2048_music_font_interpolations_match_pinned_generic_font_metrics ... ok
+test duplicate_unregistered_singles_count_and_unknown_font_keeps_measured_heads ... ok
+test repeated_measurement_references_hit_aggregate_run_bound ... ok
+test original_11_measurement_lists_match_stable_width_sort_core_and_sample_statistics ... ok
+test all_13_official_sheet_spot_lists_reproduce_black_head_and_music_font_scales ... ok
+test original_728_check_close_and_actual_process_controls_match_exactly ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.19s
+
+     Running tests/clef_candidates.rs (/workspace/onboarding/target/debug/deps/clef_candidates-a3ae3ce9ec5113e8)
+
+running 4 tests
+test clef_browse_extreme_header_start_returns_error ... ok
+test original_clef_neighbor_browse_rectangle_controls_match ... ok
+test controlled_original_registration_checks_ties_and_complete_exclusions ... ok
+test native_clef_parts_and_candidate_maps_match_original_rasters ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.17s
+
+     Running tests/clef_competition.rs (/workspace/onboarding/target/debug/deps/clef_competition-799e02c02571d41a)
+
+running 1 test
+test original_get_competing_clefs_controls_match_order_exactly ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/clusters.rs (/workspace/onboarding/target/debug/deps/clusters-f0457a6a8fc03b8f)
+
+running 1 test
+test pinned_java_cluster_and_initial_staff_goldens ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/core.rs (/workspace/onboarding/target/debug/deps/core-0d13b1ae1045cd5d)
+
+running 6 tests
+test constant_black_white_and_inclusive_zero_threshold ... ok
+test pgm_preserves_binary_whitespace_pixels_and_rejects_bad_input ... ok
+test run_tables_round_trip_in_both_orientations ... ok
+test png_matches_pgm_without_color_conversion ... ok
+test vertical_ring_matches_full_integrals_across_wrap_and_degenerate_images ... ok
+test integral_matches_brute_force_at_every_pixel ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/cue_clef.rs (/workspace/onboarding/target/debug/deps/cue_clef-1808ca01adfd3062)
+
+running 2 tests
+test explicit_clef_scale_and_sheet_centroid_metric_are_bounded_without_input_mutation ... ok
+test actual_cue_raster_clef_parts_candidates_and_registration_match_original ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.68s
+
+     Running tests/cue_default_bank.rs (/workspace/onboarding/target/debug/deps/cue_default_bank-79d81d54d06d3278)
+
+running 2 tests
+test default_cue_exact_bank_and_staff_preflight_refuse_unsupported_sizes_without_mutation ... ok
+test original_eight_default_cue_templates_geometry_anchors_keypoints_and_scores_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/cue_headers_rest.rs (/workspace/onboarding/target/debug/deps/cue_headers_rest-e58b34d3653c6627)
+
+running 3 tests
+test cue_rest_actual_grid_staff_selection_and_pitch_match_original_864_boundary_points ... ok
+test cue_key_projection_peak_scales_and_observed_time_column_match_original ... ok
+test mixed_staff_adapters_reject_unknown_scales_and_legacy_inference_without_mutation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.01s
+
+     Running tests/curved_filaments.rs (/workspace/onboarding/target/debug/deps/curved_filaments-106968bd628277bf)
+
+running 2 tests
+test section_budget_rejects_before_returning_partial_factory_output ... ok
+test pinned_java_merge_curve_filter_and_comb_goldens ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/curved_system_bounds.rs (/workspace/onboarding/target/debug/deps/curved_system_bounds-d6f69cea86542acb)
+
+running 2 tests
+test bounded_curve_clip_rejects_invalid_or_non_monotone_parameters ... ok
+test original_curved_clipped_bounds_selection_and_lag_rectangles_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/filaments.rs (/workspace/onboarding/target/debug/deps/filaments-74d89cbb0aa706a2)
+
+running 1 test
+test pinned_java_seed_and_restricted_comb_goldens ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/grid_cue_completion.rs (/workspace/onboarding/target/debug/deps/grid_cue_completion-0e9eec54ff3e54d0)
+
+running 3 tests
+test projection_refuses_unknown_or_inconsistent_staff_scale_without_partial_candidates ... ok
+test actual_cue_grid_cli_runs_second_pass_and_completed_line_state_with_global_flags_false ... ok
+test completed_independent_cue_grid_matches_original_all_observed_physical_state ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.02s
+
+     Running tests/grid_ir.rs (/workspace/onboarding/target/debug/deps/grid_ir-71cca1e24bff041a)
+
+running 3 tests
+test exact_pixel_registry_reuses_content_and_keeps_distinct_origins_and_orientations ... ok
+test incomplete_brace_raster_stops_at_explicit_fallback_boundary ... ok
+test native_persistent_staff_sections_membership_and_ordinary_sig_match_final_official_grid ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.53s
+
+     Running tests/grid_second_pass.rs (/workspace/onboarding/target/debug/deps/grid_second_pass-9d5effebf4cdd72c)
+
+running 3 tests
+test original_length_consistency_equality_empty_and_second_pass_guards ... ok
+test actual_native_cue_factory_reaches_original_initial_staffs_only ... ok
+test original_second_pass_initial_cue_staffs_and_discarded_contract ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests/head_actual_pages.rs (/workspace/onboarding/target/debug/deps/head_actual_pages-e008715be589e636)
+
+running 2 tests
+test actual_cue_page_cli_matches_original_terminal_heads_and_preserves_incomplete_flags ... ok
+test independent_three_font_score_pages_match_original_complete_heads_terminals ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.29s
+
+     Running tests/head_all_shape_boundaries.rs (/workspace/onboarding/target/debug/deps/head_all_shape_boundaries-0b0b4fcc7818121f)
+
+running 2 tests
+test selected_catalog_preflight_preserves_veto_transaction_and_legacy_api ... ok
+test original_150_ulp_boundaries_and_all_24_registration_abnormal_states ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/head_all_shape_seeds.rs (/workspace/onboarding/target/debug/deps/head_all_shape_seeds-43778e4ed2035f51)
+
+running 1 test
+test original_1440_new_hollow_seed_windows_both_anchors_and_bar_vetoes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.40s
+
+     Running tests/head_all_shapes.rs (/workspace/onboarding/target/debug/deps/head_all_shapes-975c57bb38788550)
+
+running 3 tests
+test original_new_shapes_same_overlap_abnormal_and_shared_sig_lifecycle ... ok
+test original_720_new_head_physical_foreground_glyphs_and_clipped_bounds ... ok
+test original_1440_all_head_range_controls_on_720_new_shape_images ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 47.99s
+
+     Running tests/head_candidate_filter.rs (/workspace/onboarding/target/debug/deps/head_candidate_filter-acd5db33860e592c)
+
+running 3 tests
+test malformed_and_unsorted_inputs_fail_without_mutation ... ok
+test original_stable_duplicates_parallel_candidates_iou_and_grade_boundaries ... ok
+test original_all_118_live_range_candidate_aggregates ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+     Running tests/head_drum_coverage.rs (/workspace/onboarding/target/debug/deps/head_drum_coverage-3d638661c3a81d7e)
+
+running 4 tests
+test explicit_catalog_rejects_unported_shape_duplicate_and_size_without_veto_mutation ... ok
+test original_quarter_same_overlap_and_shared_sig_add_remove_order_contracts ... ok
+test original_240_quarter_physical_foreground_glyphs_with_small_and_edge_bounds ... ok
+test original_480_selected_quarter_range_controls_three_fonts_four_sizes ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.34s
+
+     Running tests/head_font_coverage.rs (/workspace/onboarding/target/debug/deps/head_font_coverage-22353a17b4e1f30d)
+
+running 3 tests
+test missing_size_or_shape_is_explicit_and_matching_veto_still_abandons_center ... ok
+test original_three_fonts_four_sizes_physical_glyphs_clean_erased_clipped_and_empty ... ok
+test original_three_fonts_four_sizes_four_shapes_range_and_stemless_gates ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.58s
+
+     Running tests/head_glyph_retrieval.rs (/workspace/onboarding/target/debug/deps/head_glyph_retrieval-d5f53f5f560792f4)
+
+running 4 tests
+test original_integer_ordinate_and_determinant_seed_pivots ... ok
+test canonical_registry_reuses_glyphs_and_malformed_retrieval_is_rejected ... ok
+test original_four_shapes_foreground_keypoints_edges_erasure_and_empty ... ok
+test original_all_seed_glyphs_live_conflicts_and_range_glyphs ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.05s
+
+     Running tests/head_ledger_search.rs (/workspace/onboarding/target/debug/deps/head_ledger_search-6929c60ce30ca12a)
+
+running 2 tests
+test signed_contiguous_levels_and_merged_limits_preserve_original_traversal ... ok
+test original_real_laura_ledger_scanners_references_and_seed_proposals_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.87s
+
+     Running tests/head_page_catalog.rs (/workspace/onboarding/target/debug/deps/head_page_catalog-0f3a46a0c31c77f6)
+
+running 4 tests
+test required_catalog_cannot_disappear_at_aggregation_or_sig_transaction ... ok
+test control_cli_rejects_invalid_catalog_and_existing_outputs_before_reading_input ... ok
+test exact_range_size_is_preflighted_even_for_empty_ranges_before_callbacks ... ok
+test stemless_registration_is_normal_and_live_sig_preserves_original_whole_note ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/head_range_catalog.rs (/workspace/onboarding/target/debug/deps/head_range_catalog-0a64a24da5aaab80)
+
+running 3 tests
+test original_stemless_and_constructor_grade_ulp_boundaries ... ok
+test original_whole_breve_renders_with_and_without_black_spots ... ok
+test original_laura_all_118_default_catalog_scanners ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.00s
+
+     Running tests/head_range_search.rs (/workspace/onboarding/target/debug/deps/head_range_search-1b7416aa59b74624)
+
+running 3 tests
+test black_relevance_slice_touching_edges_and_inclusive_range ... ok
+test safety_skip_stride_integer_chamfer_and_unknown_pixels ... ok
+test original_laura_head_spots_and_all_118_range_prefix_scanners ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.74s
+
+     Running tests/head_registration.rs (/workspace/onboarding/target/debug/deps/head_registration-21f4b180f81f2c03)
+
+running 7 tests
+test original_empty_nine_ten_and_removed_seed_tally_quorum ... ok
+test original_nine_small_beam_area_grade_tie_width_and_removal_order_controls ... ok
+test original_40_duplicate_overlap_seed_transfer_epsilon_and_geometry_controls ... ok
+test original_seven_beam_context_support_partition_and_parallel_relation_controls ... ok
+test shared_head_identity_tombstone_dangling_edge_and_transaction_contract ... ok
+test empty_and_malformed_registration_do_not_partially_mutate_graph ... ok
+test original_352_heads_513_exclusions_staff_note_order_and_epilog ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+
+     Running tests/head_seed_coverage.rs (/workspace/onboarding/target/debug/deps/head_seed_coverage-883100ee0c9dda34)
+
+running 4 tests
+test empty_catalog_window_limits_and_veto_failure_keep_seed_contract ... ok
+test absent_assets_duplicates_and_nonstem_shapes_fail_before_veto_side_effects ... ok
+test explicit_source_order_and_legacy_builtin_51_search_are_preserved ... ok
+test original_2016_seed_windows_seven_shapes_three_fonts_four_sizes_both_anchors_and_vetoes ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.66s
+
+     Running tests/head_seed_page_catalog.rs (/workspace/onboarding/target/debug/deps/head_seed_page_catalog-1f67ad5306d91e0e)
+
+running 3 tests
+test declared_catalog_validation_missing_assets_and_legacy_scope_remain_explicit ... ok
+test stale_staff_size_and_inconsistent_range_glyph_contexts_fail_without_registry_mutation ... ok
+test original_thirteen_controlled_page_seed_staff_ledger_and_veto_catalogs has been running for over 60 seconds
+test original_thirteen_controlled_page_seed_staff_ledger_and_veto_catalogs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 107.36s
+
+     Running tests/head_seed_search.rs (/workspace/onboarding/target/debug/deps/head_seed_search-cd1d934084c93e5a)
+
+running 2 tests
+test original_offset_order_and_strict_curved_seed_slice ... ok
+test independent_original_laura_seed_search_and_decision_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.81s
+
+     Running tests/head_seed_veto.rs (/workspace/onboarding/target/debug/deps/head_seed_veto-14f6034001a365b7)
+
+running 3 tests
+test veto_uses_positive_area_original_grade_and_group_long_beam ... ok
+test central_veto_abandons_each_source_shape_before_other_offsets ... ok
+test original_real_score_competitor_selection_slices_and_eval_veto ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.42s
+
+     Running tests/head_staff_catalog.rs (/workspace/onboarding/target/debug/deps/head_staff_catalog-50e7deab126c980f)
+
+running 3 tests
+test original_75_unmapped_or_boundary_drum_pitches_and_two_tablature_skips ... ok
+test original_384_staff_shape_order_switch_and_main_specific_scale_cases ... ok
+test main_scale_reaches_ledger_search_and_unsupported_staff_templates_are_explicit ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests/head_staff_dependency.rs (/workspace/onboarding/target/debug/deps/head_staff_dependency-b808cf9b9ec8284a)
+
+running 3 tests
+test removed_seed_skipping_and_upstream_phase_refresh_reject_without_mutation ... ok
+test original_eight_previous_staff_retirement_and_next_staff_seed_conflicts ... ok
+test original_118_physical_scanners_with_staff_retirement ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.88s
+
+     Running tests/head_stem_connection.rs (/workspace/onboarding/target/debug/deps/head_stem_connection-d31fb47d661d113a)
+
+running 6 tests
+test malformed_stale_duplicate_and_manual_inputs_roll_back_both_indexes_and_prior_phases ... ok
+test original_40_physical_glyph_part_unions_geometry_and_registry_acquisition ... ok
+test original_288_gap_grades_and_5760_checked_physical_and_median_connections ... ok
+test original_144_selected_physical_stem_and_head_batches_commit_both_indexes ... ok
+test original_twelve_nonmanual_shared_sig_parallel_remove_and_retirement_lifecycles ... ok
+test original_2112_template_and_learned_scale_reference_points ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+
+     Running tests/head_stem_relation.rs (/workspace/onboarding/target/debug/deps/head_stem_relation-49da59aee3d5bd0e)
+
+running 2 tests
+test invalid_geometry_fraction_units_and_zero_length_ieee_contract_are_explicit ... ok
+test original_head_stem_portion_consistency_invading_and_profile_boundaries ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/head_stem_stump.rs (/workspace/onboarding/target/debug/deps/head_stem_stump-0cf67d854196c481)
+
+running 2 tests
+test multiple_parts_require_stump_contract_and_invalid_stumps_roll_back ... ok
+test original_6048_explicit_corner_stumps_on_two_part_stems_match_gaps_support_and_sig ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.02s
+
+     Running tests/head_stem_support.rs (/workspace/onboarding/target/debug/deps/head_stem_support-2a54448c10a96ff3)
+
+running 2 tests
+test measured_support_context_guards_roll_back_and_preserve_unset_api ... ok
+test original_1536_selected_physical_stem_length_support_and_sig_batches ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.24s
+
+     Running tests/header_finalization.rs (/workspace/onboarding/target/debug/deps/header_finalization-8a2603ceddb5269f)
+
+running 6 tests
+test context_selects_supported_clef_and_freezes_key_members ... ok
+test purge_uses_strict_integer_center_boundary_and_left_end_protection ... ok
+test malformed_header_range_and_member_bounds_are_errors_not_panics ... ok
+test rejects_duplicate_staffs_and_empty_complete_pipeline ... ok
+test rejects_dangling_relations_without_mutating_input ... ok
+test contextual_partition_maximizes_each_rounded_grade_not_contribution ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/headers.rs (/workspace/onboarding/target/debug/deps/headers-ef050d43c8f583f8)
+
+running 1 test
+test complete_headers_match_live_original ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 40.37s
+
+     Running tests/key_clef.rs (/workspace/onboarding/target/debug/deps/key_clef-ecf8ed6f1d7a9036)
+
+running 1 test
+test original_controlled_key_clef_methods_match_exactly ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/key_column.rs (/workspace/onboarding/target/debug/deps/key_column-2aa33a3478691ba4)
+
+running 1 test
+test original_column_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 25.33s
+
+     Running tests/key_components.rs (/workspace/onboarding/target/debug/deps/key_components-28c22728098db950)
+
+running 1 test
+test all_original_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.33s
+
+     Running tests/key_fallback.rs (/workspace/onboarding/target/debug/deps/key_fallback-6fe35db914831d4e)
+
+running 1 test
+test all_original_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.11s
+
+     Running tests/key_peaks.rs (/workspace/onboarding/target/debug/deps/key_peaks-771a8ba6c588230c)
+
+running 2 tests
+test ten_original_keybuilder_peak_observations_match_exactly ... ok
+test original_hilo_113_controlled_cases_preserve_order_and_threshold_edges ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/key_preparation.rs (/workspace/onboarding/target/debug/deps/key_preparation-b51dd999ed429e71)
+
+running 11 tests
+test clamps_pixel_rectangle_without_rewriting_original_browse_range ... ok
+test barline_iteration_matches_integer_center_order_not_left_order ... ok
+test adapter_requires_explicit_supported_interline_and_unique_inputs ... ok
+test connected_bar_cutoff_is_inclusive_point_six_and_strictly_after_start ... ok
+test bar_at_last_browse_column_clips_but_bar_after_it_does_not ... ok
+test follows_upstream_xmin_only_geometry_and_ties_even_rounding ... ok
+test projects_real_ink_including_measure_columns_before_browse_start ... ok
+test uses_header_stop_fallback_and_separate_sheet_and_staff_interlines ... ok
+test rejects_invalid_or_unsupported_inputs_without_a_partial_result ... ok
+test parser_rejects_oversized_inputs_before_collecting_geometry ... ok
+test native_image_pipeline_matches_all_ten_independent_key_projections ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.21s
+
+     Running tests/key_slices.rs (/workspace/onboarding/target/debug/deps/key_slices-149b05af69b0ddff)
+
+running 1 test
+test all_original_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.82s
+
+     Running tests/key_state.rs (/workspace/onboarding/target/debug/deps/key_state-93efba787d671ded)
+
+running 1 test
+test original_live_process_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.68s
+
+     Running tests/ledger_beam_purge.rs (/workspace/onboarding/target/debug/deps/ledger_beam_purge-e56fdd292856ecf5)
+
+running 3 tests
+test original_all_beam_area_purge_and_intrinsic_full_beam_selection_match ... ok
+test invalid_beam_geometry_and_removed_beams_stop_or_are_excluded ... ok
+test real_laura_native_ledger_candidate_prerequisites_match_original_beams ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+
+     Running tests/ledger_candidates.rs (/workspace/onboarding/target/debug/deps/ledger_candidates-21fbf8153205a877)
+
+running 2 tests
+test malformed_scale_orientation_and_good_beam_order_stop_explicitly ... ok
+test original_ledger_candidate_prefix_matches_members_geometry_and_purges ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/ledger_checks.rs (/workspace/onboarding/target/debug/deps/ledger_checks-26bf9f0f737478f7)
+
+running 2 tests
+test malformed_raster_and_nonfinite_geometry_stop_explicitly ... ok
+test original_ledger_suite_matches_every_raw_check_impact_grade_and_decision ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.26s
+
+     Running tests/ledger_post_analysis.rs (/workspace/onboarding/target/debug/deps/ledger_post_analysis-fe321597b475263d)
+
+running 2 tests
+test original_sample_variance_and_rounded_statistical_cutoffs_match ... ok
+test original_real_laura_post_filter_rebuild_and_translated_paths_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests/ledger_reference_grid.rs (/workspace/onboarding/target/debug/deps/ledger_reference_grid-c722baca1fd98f7d)
+
+running 2 tests
+test original_signed_reference_order_strict_overlap_and_orphans_match ... ok
+test real_laura_no_staff_raster_matches_original_ledger_filter_lag_and_dispatch ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/ledger_registration.rs (/workspace/onboarding/target/debug/deps/ledger_registration-e2288fba6db13f1b)
+
+running 2 tests
+test original_exclusion_strongest_edge_and_registration_tie_order_match ... ok
+test original_real_laura_acceptance_reduction_and_staff_maps_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running tests/line_completion.rs (/workspace/onboarding/target/debug/deps/line_completion-51554c36b0dae447)
+
+running 1 test
+test original_rasters_match_official_completion_phases_and_native_removal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.46s
+
+     Running tests/line_root.rs (/workspace/onboarding/target/debug/deps/line_root-b416553ed494d0f7)
+
+running 1 test
+test controlled_original_projector_positive_root_correction ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/multiple_rest_admission.rs (/workspace/onboarding/target/debug/deps/multiple_rest_admission-839b75a923391766)
+
+running 2 tests
+test missing_staff_tablature_removed_and_invalid_measurements ... ok
+test original_process_admission_and_serif_queries ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/multiple_rest_detection.rs (/workspace/onboarding/target/debug/deps/multiple_rest_detection-a62461ac66dd2e2c)
+
+running 2 tests
+test admission_rejection_and_missing_side_leave_no_plan ... ok
+test ordered_detection_selection_and_registration_geometry ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/multiple_rest_pipeline.rs (/workspace/onboarding/target/debug/deps/multiple_rest_pipeline-cf1f7534270dfb0c)
+
+running 1 test
+test uninterrupted_original_complete_rest_conversions_match_integrated_native_pass ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/multiple_rest_registration.rs (/workspace/onboarding/target/debug/deps/multiple_rest_registration-df759c87af17a87f)
+
+running 3 tests
+test absent_filament_rejects_before_graph_or_glyph_mutation ... ok
+test ordered_vertices_relations_and_canonical_glyph_identity ... ok
+test final_cleanup_updates_real_candidates_groups_and_exclusions ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/native_rest_mapping.rs (/workspace/onboarding/target/debug/deps/native_rest_mapping-3bdf202eadc51950)
+
+running 9 tests
+test invalid_ledger_identity_shape_and_order_are_rejected ... ok
+test native_curve_pitch_and_lag_order_are_retained ... ok
+test clipped_curved_areas_and_invalid_ends_are_explicitly_rejected ... ok
+test original_empty_ledger_pitch_controls_match_native_mapping ... ok
+test original_populated_ledger_pitch_controls_match_native_mapping ... ok
+test unsupported_staff_and_populated_ledger_paths_are_explicit ... ok
+test original_multistaff_areas_closest_and_above_controls_match ... ok
+test original_scanned_score_multisystem_area_selection_and_bounds_match ... ok
+test original_supplied_clipped_system_areas_match ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/note_mask_cli.rs (/workspace/onboarding/target/debug/deps/note_mask_cli-d461f67dff56a8ed)
+
+running 1 test
+test automatic_mask_cli_needs_no_probe_coordinates_and_preserves_outputs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.45s
+
+     Running tests/official_grid.rs (/workspace/onboarding/target/debug/deps/official_grid-76ad91c830d486de)
+
+running 2 tests
+test no_system_cli_does_not_claim_grid_completion ... ok
+test original_raster_to_initial_staff_peaks_sticks_and_systems_matches_official_jar ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.17s
+
+     Running tests/rest_neighbor_mapping.rs (/workspace/onboarding/target/debug/deps/rest_neighbor_mapping-c5715c6445c376f3)
+
+running 2 tests
+test certified_curved_clipped_system_bounds_enable_native_rest_mapping ... ok
+test original_horizontal_closest_above_and_certified_bounds_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/review_regressions.rs (/workspace/onboarding/target/debug/deps/review_regressions-cdbe2a53f422c40a)
+
+running 2 tests
+test grayscale_png_transparency_is_rejected ... ok
+test blocked_filaments_does_not_claim_completion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scale.rs (/workspace/onboarding/target/debug/deps/scale-ebf838fa2cedf043)
+
+running 5 tests
+test hilo_matches_128_unmodified_java_goldens ... ok
+test clean_staff_and_two_population_results_match_java ... ok
+test histogram_limit_rounding_and_out_of_domain_runs_match_java ... ok
+test beam_selection_and_inverted_signed_bounds_match_java ... ok
+test all_five_scale_failure_classes_match_java ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+     Running tests/sections.rs (/workspace/onboarding/target/debug/deps/sections-fb6c6a1fd03249ca)
+
+running 3 tests
+test split_merge_empty_gap_and_integer_mean_boundaries ... ok
+test section_factory_partitions_all_pixels_and_masks_preserve_origins ... ok
+test grid_preparation_is_not_staff_detection ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/serif_glyphs.rs (/workspace/onboarding/target/debug/deps/serif_glyphs-f4bc2504d99e0ec7)
+
+running 1 test
+test original_filament_acceptance_and_exact_glyph_pixels ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/serif_peaks.rs (/workspace/onboarding/target/debug/deps/serif_peaks-7f6b7a6af81663bc)
+
+running 2 tests
+test malformed_rows_and_search_ranges_reject ... ok
+test synthetic_original_accepted_and_rejected_serif_peaks_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+
+     Running tests/serif_raster.rs (/workspace/onboarding/target/debug/deps/serif_raster-1738569e27170374)
+
+running 2 tests
+test malformed_rows_and_search_ranges_reject ... ok
+test synthetic_original_positive_serifs_match_projection_and_prefilter ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/shared_sig.rs (/workspace/onboarding/target/debug/deps/shared_sig-4f15bee71e20b23f)
+
+running 4 tests
+test dangling_relations_and_duplicate_sources_reject_transactionally ... ok
+test systems_with_same_local_ids_are_separate ... ok
+test removed_beam_retains_identity_and_rest_relations_share_one_store ... ok
+test colliding_phase_ids_relations_and_replay_are_stable ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/short_staff_system_graph.rs (/workspace/onboarding/target/debug/deps/short_staff_system_graph-5bf61a64ad7aab71)
+
+running 1 test
+test native_rasters_match_original_short_staff_peak_graph ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/sig_context.rs (/workspace/onboarding/target/debug/deps/sig_context-ef239dee91e22a58)
+
+running 2 tests
+test original_jar_controlled_exclusion_cases ... ok
+test unsupported_context_is_rejected_without_partial_writes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/stem_beam_lookup_area.rs (/workspace/onboarding/target/debug/deps/stem_beam_lookup_area-96122d99dc00b543)
+
+running 2 tests
+test beam_area_input_bounds_skew_nonconvex_and_part_empty_contracts ... ok
+test original_beam_areas_actual_borders_parts_and_ratio_ulp_controls_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/stem_builder_create.rs (/workspace/onboarding/target/debug/deps/stem_builder_create-aa084b83ccb2f864)
+
+running 2 tests
+test selected_builder_refuses_invalid_inputs_preserves_groups_and_keeps_cache_per_system ... ok
+test original_selected_stem_builder_144_grade_registration_orientation_and_cache_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/stem_cache_head.rs (/workspace/onboarding/target/debug/deps/stem_cache_head-48b88ced0a672945)
+
+running 2 tests
+test preserve_other_edges_owned_cache_and_atomic_refusals ... ok
+test original_cache_head_connections_and_callbacks_1152 ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.63s
+
+     Running tests/stem_cache_sig.rs (/workspace/onboarding/target/debug/deps/stem_cache_sig-e0a1b39f766e246d)
+
+running 2 tests
+test cached_sig_rejects_foreign_stale_collision_and_wrong_registry_without_mutation_and_prunes_head_edges ... ok
+test original_twelve_cache_sig_lifecycles_keep_glyph_grade_identity_and_removed_cache ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/stem_checks.rs (/workspace/onboarding/target/debug/deps/stem_checks-af210f746148f258)
+
+running 6 tests
+test invalid_geometry_profile_and_nonfinite_input_fail_explicitly ... ok
+test clinging_ink_reduces_clean_but_not_black_rows ... ok
+test clean_vertical_both_profiles_reach_intrinsic_ceiling ... ok
+test profile_gap_and_endpoint_sampling_follow_source ... ok
+test valid_side_belt_linear_index_wrap_is_not_silently_clamped ... ok
+test original_356_check_contexts_match_independent_pixels_and_geometry ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/stem_chunk_head_filter.rs (/workspace/onboarding/target/debug/deps/stem_chunk_head_filter-8587e0786bf997a7)
+
+running 2 tests
+test physical_mask_vip_and_nonpositive_overlap_differ_from_bbox_without_mutation ... ok
+test original_actual_head_chunks_vip_remaining_14_15_16_and_zero_overlap_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/stem_chunk_registration.rs (/workspace/onboarding/target/debug/deps/stem_chunk_registration-0bfea24299e6d470)
+
+running 2 tests
+test register_before_removal_keeps_groups_aliases_and_refuses_invalid_late_input ... ok
+test original_actual_raw_chunk_registration_alias_and_existing_removal_prefix_matches ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests/stem_chunks.rs (/workspace/onboarding/target/debug/deps/stem_chunks-307a580f9a7caca0)
+
+running 2 tests
+test atomic_refusal_alias_stump_and_stable_directional_order ... ok
+test original_complete_lookup_chunks_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+
+     Running tests/stem_chunks_cli.rs (/workspace/onboarding/target/debug/deps/stem_chunks_cli-8373bd1bbc17736a)
+
+running 2 tests
+test empty_catalog_late_identity_skew_and_budgets_refuse_before_output ... ok
+test cli_original_3048_lookup_and_chunk_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.03s
+
+     Running tests/stem_cleaner.rs (/workspace/onboarding/target/debug/deps/stem_cleaner-d43bd28a209359c4)
+
+running 2 tests
+test cleaner_refuses_duplicate_nonfinite_stale_and_parallel_context_and_keeps_empty_graph_unchanged ... ok
+test original_eight_hundred_cleaner_checks_match_ordered_ties_canonical_sharing_and_sig_callbacks ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.80s
+
+     Running tests/stem_glyph_grade.rs (/workspace/onboarding/target/debug/deps/stem_glyph_grade-045691af790dfd79)
+
+running 2 tests
+test physical_check_boundary_and_pixel_center_are_distinct ... ok
+test original_physical_glyph_nearline_and_grade_on_independent_rasters ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+
+     Running tests/stem_head_neighborhood.rs (/workspace/onboarding/target/debug/deps/stem_head_neighborhood-f928ca4f8996dfb7)
+
+running 3 tests
+test original_full_laura_state_neighborhood_area_targets_and_rectangle_edges ... ok
+test actual_cli_page_state_and_atomic_late_refusal ... ok
+test late_unknown_ids_empty_page_and_catalog_budgets_are_explicit ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+
+     Running tests/stem_head_reference_context.rs (/workspace/onboarding/target/debug/deps/stem_head_reference_context-9aa5aacd4c855c08)
+
+running 2 tests
+test null_signed_zero_and_invalid_context_leave_live_reference_api_unchanged ... ok
+test original_xml_rounding_and_loaded_context_refs_from_native_laura_image_report ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.35s
+
+     Running tests/stem_head_targets.rs (/workspace/onboarding/target/debug/deps/stem_head_targets-8d33b5d762f0a78e)
+
+running 2 tests
+test catalog_and_late_candidate_refusals_are_read_only ... ok
+test original_actual_neighborhood_targets_small_heads_and_ulp_distances ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
+     Running tests/stem_image_beam_generation.rs (/workspace/onboarding/target/debug/deps/stem_image_beam_generation-8897f6c21b7f412c)
+
+running 3 tests
+test original_ordered_physical_beam_stumps_and_all_ninety_linkers ... ok
+test empty_heads_and_late_unsupported_inputs_are_explicit ... ok
+test actual_image_cli_generates_stumps_linkers_without_oracle_at_runtime ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 57.18s
+
+     Running tests/stem_image_beam_targets.rs (/workspace/onboarding/target/debug/deps/stem_image_beam_targets-1a26ad6052171d86)
+
+running 4 tests
+test live_head_origin_validation_refuses_stale_snapshot_before_targets ... ok
+test actual_image_beam_sibling_members_match_before_original_linking ... ok
+test empty_heads_and_late_unsupported_image_staff_or_skew_preserve_input ... ok
+test actual_image_cli_derives_beam_sibling_members_without_corner_requests ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.27s
+
+     Running tests/stem_image_head_chunks.rs (/workspace/onboarding/target/debug/deps/stem_image_head_chunks-730494728dc9fd7d)
+
+running 4 tests
+test empty_heads_and_unsupported_skew_staff_remain_explicit ... ok
+test malformed_section_membership_and_bounds_refuse_without_changing_input ... ok
+test image_chunk_physical_sections_glyphs_and_same_owned_registry_match_original ... ok
+test actual_image_cli_retrieves_and_registers_chunks_without_condition_requests has been running for over 60 seconds
+test actual_image_cli_retrieves_and_registers_chunks_without_condition_requests ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 74.00s
+
+     Running tests/stem_image_head_items.rs (/workspace/onboarding/target/debug/deps/stem_image_head_items-66b0391dcca8a28f)
+
+running 3 tests
+test empty_heads_and_late_unsupported_skew_staff_preserve_input ... ok
+test actual_image_head_builder_items_and_lengths_match_original_with_owned_glyph_ids ... ok
+test actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests has been running for over 60 seconds
+test actual_image_cli_constructs_final_items_gaps_and_lengths_without_condition_requests ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 72.19s
+
+     Running tests/stem_image_head_parts.rs (/workspace/onboarding/target/debug/deps/stem_image_head_parts-f7b94cb5dcb55d16)
+
+running 3 tests
+test empty_head_input_and_unsupported_skew_staff_remain_explicit ... ok
+test image_sources_and_all_head_pre_chunk_filter_items_match_original ... ok
+test actual_image_cli_connects_head_builder_inputs_without_condition_requests ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 58.23s
+
+     Running tests/stem_image_head_plan.rs (/workspace/onboarding/target/debug/deps/stem_image_head_plan-f517ce5f5baa23f5)
+
+running 3 tests
+test image_heads_parts_and_all_corners_derive_original_targets_without_oracle_inputs ... ok
+test late_bad_staff_skew_font_membership_and_empty_heads_preserve_source_state ... ok
+test actual_image_cli_preserves_entire_old_report_and_refuses_existing_outputs ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 50.33s
+
+     Running tests/stem_image_linkers.rs (/workspace/onboarding/target/debug/deps/stem_image_linkers-57e254a271fee97e)
+
+running 4 tests
+test live_head_origin_validation_refuses_stale_snapshot_before_targets ... ok
+test actual_image_other_head_linkers_match_before_original_linking ... ok
+test empty_heads_and_late_unsupported_image_staff_or_skew_preserve_input ... ok
+test actual_image_cli_derives_other_head_targets_without_corner_requests ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.17s
+
+     Running tests/stem_image_owned.rs (/workspace/onboarding/target/debug/deps/stem_image_owned-1065f6e4f7521ff9)
+
+running 3 tests
+test actual_head_items_cli_runs_in_process_without_sibling_upstream_binary has been running for over 60 seconds
+test actual_upstream_registry_run_storage_graph_history_and_heads_survive_image_items has been running for over 60 seconds
+test mismatched_live_graph_or_registry_refuses_before_stems has been running for over 60 seconds
+test actual_upstream_registry_run_storage_graph_history_and_heads_survive_image_items ... ok
+test actual_head_items_cli_runs_in_process_without_sibling_upstream_binary ... ok
+test mismatched_live_graph_or_registry_refuses_before_stems ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 94.11s
+
+     Running tests/stem_image_seeds.rs (/workspace/onboarding/target/debug/deps/stem_image_seeds-c9177c65cbc5c6f4)
+
+running 3 tests
+test image_seed_branch_preserves_page_registry_and_matches_all_original_choices ... ok
+test empty_duplicate_bad_late_glyph_and_angled_bar_do_not_mutate_caller_state ... ok
+test actual_image_cli_automatically_selects_existing_physical_seeds ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 50.40s
+
+     Running tests/stem_image_sources.rs (/workspace/onboarding/target/debug/deps/stem_image_sources-404528b449818b01)
+
+running 3 tests
+test actual_image_builder_seed_collection_and_alignment_match_before_original_linking ... ok
+test empty_heads_and_late_unsupported_image_staff_or_skew_preserve_input ... ok
+test actual_image_cli_derives_builder_seed_inputs_without_corner_requests ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 53.41s
+
+     Running tests/stem_image_stumps.rs (/workspace/onboarding/target/debug/deps/stem_image_stumps-e7845d3c38c37cf8)
+
+running 3 tests
+test image_stump_selection_and_both_system_section_catalogs_match_original ... ok
+test late_corrupt_sections_unknown_duplicate_members_and_empty_heads_preserve_input ... ok
+test actual_image_cli_selects_seed_and_section_stumps_preserving_old_heads ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 54.04s
+
+     Running tests/stem_item_events.rs (/workspace/onboarding/target/debug/deps/stem_item_events-e37b814d131e84c0)
+
+running 3 tests
+test aliases_limits_empty_and_strict_event_refusals ... ok
+test original_constructors_sort_gaps_and_composed_lengths ... ok
+test actual_cli_original_controls_and_atomic_invalid_late_input ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.20s
+
+     Running tests/stem_length_map.rs (/workspace/onboarding/target/debug/deps/stem_length_map-9b7b24dbb6d4680e)
+
+running 2 tests
+test gap_order_first_stop_null_bounds_and_invalid_inputs ... ok
+test original_612_builders_gap_profile_threshold_empty_sticky_and_fractional_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+
+     Running tests/stem_lookup_area.rs (/workspace/onboarding/target/debug/deps/stem_lookup_area-b75dc53967eb6f9b)
+
+running 2 tests
+test area_refuses_skew_invalid_limits_and_crossing_without_mutation ... ok
+test original_head_area_actual_references_part_edges_and_limit_ulp_controls_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/stem_parts_alignment.rs (/workspace/onboarding/target/debug/deps/stem_parts_alignment-4d0464e5e6cd9088)
+
+running 2 tests
+test alignment_inclusive_thresholds_ties_identity_and_invalid_budgets_preserve_inputs ... ok
+test original_fifteen_hundred_part_alignment_checks_match_caller_order_aliases_and_actual_stumps ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+
+     Running tests/stem_parts_cache.rs (/workspace/onboarding/target/debug/deps/stem_parts_cache-858fdaaaf10c4abb)
+
+running 3 tests
+test empty_bounds_and_invalid_late_owner_leave_registry_cache_unchanged ... ok
+test identical_pixels_different_run_orientation_preserve_first_physical_occurrence ... ok
+test original_prefix_equality_gap_and_selected_cache_sig_plus_prior_head_composition ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.61s
+
+     Running tests/stem_parts_filter.rs (/workspace/onboarding/target/debug/deps/stem_parts_filter-81a9ebe9a956ab69)
+
+running 2 tests
+test filter_inclusive_head_stop_y_only_clipping_empty_ranges_and_invalid_identity_preserve_inputs ... ok
+test original_4152_real_head_beam_filter_controls_match_null_stumps_clipping_aliases_and_items ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+
+     Running tests/stem_parts_lookup.rs (/workspace/onboarding/target/debug/deps/stem_parts_lookup-a807f4afae291f57)
+
+running 2 tests
+test empty_invalid_skew_identity_and_centroid_overflow_refuse_without_mutation ... ok
+test original_2343_actual_and_ulp_controls_match_centroids_section_order_and_raw_glyphs ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.67s
+
+     Running tests/stem_parts_lookup_cli.rs (/workspace/onboarding/target/debug/deps/stem_parts_lookup_cli-5340499caad9b485)
+
+running 2 tests
+test empty_inputs_and_malformed_late_search_refuse_before_report_creation ... ok
+test cli_2343_original_controls_preserve_raw_collection_and_explicit_unfinished_flags ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.98s
+
+     Running tests/stem_registry_owner.rs (/workspace/onboarding/target/debug/deps/stem_registry_owner-162eeb50ef5b4a0c)
+
+running 2 tests
+test late_chunk_refusal_preserves_allocations_and_complete_registry ... ok
+test chunk_success_retains_existing_physical_allocations_groups_and_aliases ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/stem_scale.rs (/workspace/onboarding/target/debug/deps/stem_scale-d13f97c89ce51988)
+
+running 1 test
+test original_stem_scaler_matches_complete_native_pipeline ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.88s
+
+     Running tests/stem_seeds.rs (/workspace/onboarding/target/debug/deps/stem_seeds-484a769ed0d86df2)
+
+running 4 tests
+test seed_scope_and_identity_rejections_also_apply_without_candidates ... ok
+test vertical_lag_run_cap_precedes_deserialization ... ok
+test original_clipped_neighbor_chain_staff_selection_matches ... ok
+test original_stem_seeds_match_complete_native_pipeline ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.92s
+
+     Running tests/system_area_ends.rs (/workspace/onboarding/target/debug/deps/system_area_ends-8000d706486c9915)
+
+running 2 tests
+test malformed_and_duplicate_native_system_coordinates_reject ... ok
+test original_horizontal_neighbor_and_area_end_controls_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/system_area_geometry.rs (/workspace/onboarding/target/debug/deps/system_area_geometry-ba2dec2a04f14264)
+
+running 2 tests
+test incomplete_membership_and_nonfinite_points_reject ... ok
+test original_horizontal_chains_vertical_neighbors_and_area_points_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/template_page.rs (/workspace/onboarding/target/debug/deps/template_page-10d444ea20205089)
+
+running 3 tests
+test cli_error_has_no_success_artifact_and_existing_output_is_preserved ... ok
+test input_contract_rejects_unsupported_and_malformed_requests ... ok
+test official_full_raster_distance_and_template_scores ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.51s
+
+     Running tests/time_candidates.rs (/workspace/onboarding/target/debug/deps/time_candidates-0491ec5f74d9c2be)
+
+running 1 test
+test time_preparation_and_provisional_candidates_match_original ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 35.03s
+
+     Running tests/time_column.rs (/workspace/onboarding/target/debug/deps/time_column-5184a0cbca54666f)
+
+running 1 test
+test complete_time_column_matches_original ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 40.07s
+
+     Running tests/time_preparation.rs (/workspace/onboarding/target/debug/deps/time_preparation-22dfe31fbf535c18)
+
+running 6 tests
+test scale_rounding_uses_ties_even_and_sheet_staff_scales_separately ... ok
+test rejects_nonbinary_and_unbounded_inputs ... ok
+test whitespace_includes_single_columns_threshold_and_terminal_space ... ok
+test blank_roi_is_not_a_signature_and_starts_at_header_stop ... ok
+test sloped_bottom_uses_stop_only_and_image_edges_are_clamped ... ok
+test range_retains_edge_space_and_half_height_uses_integer_division ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/time_registration.rs (/workspace/onboarding/target/debug/deps/time_registration-af24d92f3ccf5cde)
+
+running 2 tests
+test malformed_public_geometry_returns_error ... ok
+test generic_font_bank_covers_all_scales_and_matches_original_combo_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.46s
+
+     Running tests/vertical_sticks.rs (/workspace/onboarding/target/debug/deps/vertical_sticks-c24c6d042c7a95b4)
+
+running 2 tests
+test direct_original_factory_boundaries_preserve_order_and_membership ... ok
+test original_section_inputs_produce_identical_stick_members_and_geometry ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_staff_removal-543ab64edd454a83)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/boundaries.rs (/workspace/onboarding/target/debug/deps/boundaries-05c0de7330360567)
+
+running 6 tests
+test empty_inputs_invalid_runs_nonbinary_and_resource_budgets ... ok
+test four_connectivity_order_orientation_origin_empty_and_limits ... ok
+test membership_preserves_crossing_stem_and_notehead_and_duplicates_are_idempotent ... ok
+test signed_origins_clip_both_orientations_and_white_pixels_are_not_removed ... ok
+test many_nonoverlapping_sequences_are_bounded_without_recursive_union ... ok
+test a4_300dpi_fits_default_budget_but_excess_page_and_origin_extent_do_not ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/official.rs (/workspace/onboarding/target/debug/deps/official-03cbdcc6f03a314c)
+
+running 2 tests
+test thirty_official_staff_glyphs_match_every_java_residual_and_removed_pixel ... ok
+test official_glyphfactory_matches_connectivity_order_runs_boxes_origins_and_weights ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_template_bank-74c1a53e3c6572fa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/coverage.rs (/workspace/onboarding/target/debug/deps/coverage-754ccce5dcf96b19)
+
+running 2 tests
+test unsupported_font_names_do_not_fall_back_or_change_staff_rounding ... ok
+test exact_family_size_coverage_and_legacy_bank_are_separate ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/drum_coverage.rs (/workspace/onboarding/target/debug/deps/drum_coverage-644ed9794a0d6498)
+
+running 1 test
+test exact_drum_catalogs_cover_108_templates_without_changing_historical_banks ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/loader.rs (/workspace/onboarding/target/debug/deps/loader-931ce61842b82fe6)
+
+running 6 tests
+test bounded_files_missing_files_and_symlinks ... ok
+test integrity_identity_and_raw_field_duplicates ... ok
+test official_coverage_calibration_and_scores ... ok
+test unsupported_does_not_interpolate ... ok
+test duplicate_case_collisions_and_missing_keys ... ok
+test invalid_dimensions_points_anchors_and_numbers ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_template_match-2c3ef92b62f9962f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (/workspace/onboarding/target/debug/deps/golden-816d27024b83564f)
+
+running 3 tests
+test boundaries_and_rejected_inputs ... ok
+test official_font_templates_scores_and_anchors ... ok
+test official_distance_arrays ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+   Doc-tests audiveris_area
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_classifier
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_glyph_features
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_staff_removal
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_template_bank
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_template_match
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
