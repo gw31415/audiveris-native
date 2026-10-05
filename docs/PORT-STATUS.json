@@ -64,13 +64,13 @@
     },
     {
       "status": "implemented",
-      "unit": "ordinary sibling beam full items, all sides before stumps, linkSiblings/canonical stem/SIG and BeamBeam support -> eleven-event two-level sixteenth image MusicXML",
+      "unit": "ordinary sibling beam full items, all sides before stumps, linkSiblings/canonical stem/SIG and BeamBeam support -> eleven-event two-level seventeenth image MusicXML",
       "limits": "one physical standard group/system, one part, zero skew/horizontal thin eraser, up to two levels in export; hook/alien/aliases/cross-staff/more levels/other flags/full parity pending"
     },
     {
       "status": "implemented",
       "unit": "ordinary distinct-glyph beam groups with original zero-skew getCloserLimit -> actual builders/cache/SIG -> independent begin/end native image MusicXML",
-      "limits": "one ten-event two-nonintersecting-group full-image export; 16 declared numeric original limits and four HEADS-loaded builders compared separately; fractional contours admitted only when normalizing to certified thin rectangle; hooks/aliases/cross-staff/positive-alien full-image/general parity remain pending"
+      "limits": "one ten-event two-nonintersecting-group full-image export; 17 declared numeric original limits and four HEADS-loaded builders compared separately; fractional contours admitted only when normalizing to certified thin rectangle; hooks/aliases/cross-staff/positive-alien full-image/general parity remain pending"
     }
   ],
   "function_groups": [

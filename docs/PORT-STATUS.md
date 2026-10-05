@@ -155,7 +155,7 @@ HEADS保存状態の8builder/items/lengthsと4共有stem grade/8関係支持の�
 
 次の未接続はalien closer limit/別group、hookと競合hook、cross-staff/system、
 複数旗/追加beam段、一般rhythm・補正・cleaner/epilog。台帳の最終scopeは省略なし。
-[実行手順・現在の限定](MUSICXML-LIMITED.md#two-sibling-beams--sixteenth-notes)。
+[実行手順・現在の限定](MUSICXML-LIMITED.md#two-sibling-beams--seventeenth-notes)。
 
 
 回帰記録: 321abfcで単一全workspace565件成功（失敗/ignored0、Laura352/513を含む）。
@@ -166,7 +166,7 @@ HEADS保存状態の8builder/items/lengthsと4共有stem grade/8関係支持の�
 ## 複数の通常beam groupと探索制限（2026-10-05）
 
 原版`BeamLinker.VLinker.getCloserLimit`を実所有beamの境界・grade・groupから接続。
-別group/良好beam/線分交差/近隣side例外/方向別borderソートを原版の16数値条件で比較。
+別group/良好beam/線分交差/近隣side例外/方向別borderソートを原版の17数値条件で比較。
 PageCleanerの薄いAA-off contourでは、端点正規化で同じ矩形になるfractional slopeも
 原版画素と比較して接続しました。任意傾斜を矩形の塗り潰しで通す処理ではありません。
 

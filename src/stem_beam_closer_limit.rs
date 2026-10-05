@@ -25,9 +25,6 @@ pub(crate) struct Search {
     pub left: bool,
     pub interline: i32,
 }
-fn y_at_x(l: [f64; 4], x: f64) -> f64 {
-    l[1] + (x - l[0]) * (l[3] - l[1]) / (l[2] - l[0])
-}
 fn intersects(a: [i32; 4], b: [i32; 4]) -> bool {
     a[0] < b[0] + b[2] && b[0] < a[0] + a[2] && a[1] < b[1] + b[3] && b[1] < a[1] + a[3]
 }
@@ -98,8 +95,20 @@ pub(crate) fn select(s: &Search, beams: &[Beam]) -> Result<Option<(u64, [f64; 4]
     });
     neighbors.sort_by(|a, b| {
         let distance = |b: &Beam| {
-            f64::from(s.direction)
-                * (y_at_x(b.median, x) + f64::from(s.direction) * b.height / 2. - s.reference[1])
+            // StemsRetriever.getTargetPt uses LineUtil.intersection even at
+            // zero skew. Keep its arithmetic; yAtX can change fractional ties.
+            let shift = f64::from(s.direction) * b.height / 2.;
+            let border = [
+                b.median[0],
+                b.median[1] + shift,
+                b.median[2],
+                b.median[3] + shift,
+            ];
+            let target = crate::stem_head_targets::intersection(
+                [x, s.reference[1], x, s.reference[1] + 100.],
+                border,
+            );
+            f64::from(s.direction) * (target[1] - s.reference[1])
         };
         distance(a).total_cmp(&distance(b))
     });

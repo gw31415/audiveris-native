@@ -1,6 +1,6 @@
 {
   "base_main": "366d96e49225c29917d2163781398ebb2e65f47d",
-  "source_tree": "59a1624fdd5f80cc45fe473a47880ced3e998639",
+  "source_tree": "268560e82fd0b426e5d9b4f57f91ed5622354780",
   "stage": "ordinary separate beam groups and original closer-limit image integration",
   "original_full_image": {
     "input": "fixtures/official-image-musicxml-beam-groups/beam-two-groups.png",
@@ -17,7 +17,7 @@
     "native_original_MusicXML4_XSD": true
   },
   "separate_original_observations": {
-    "numeric_getCloserLimit_controls": 16,
+    "numeric_getCloserLimit_controls": 17,
     "HEADS_builders_items_lines_lengths_selected_glyphs": 4,
     "restored_actual_beam_area_rows": 2,
     "declared_numeric_area_controls": 5,
@@ -36,7 +36,10 @@
     "previous_full_workspace_source": "321abfc0ee6b26f7fe51199fab3bd1d6d6a34396",
     "previous_full_workspace_tests": 565,
     "Laura_retained_heads": 352,
-    "Laura_exclusions": 513
+    "Laura_exclusions": 513,
+    "prior_affected_integration_source": "88d1850a269b4f037f039303bb421141e21f13df",
+    "fractional_getTargetPt_arithmetic_correction": "targeted library and image regression, no repeated full workspace",
+    "fractional_same_x_tie_17th_original_control": true
   },
   "completion_flags": false,
   "pending": [

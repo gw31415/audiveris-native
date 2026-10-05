@@ -1,5 +1,5 @@
 {
-  "scope" : "16 declared numeric original getCloserLimit controls in explicitly substituted geometry; separate from full-image comparison",
+  "scope" : "17 declared numeric original getCloserLimit controls in explicitly substituted geometry; separate from full-image comparison",
   "native_outputs_used" : false,
   "controls" : [ {
     "name" : "empty",
@@ -392,6 +392,39 @@
     "selected" : {
       "id" : 2,
       "border" : [ 450.0, 227.0, 550.0, 227.0 ]
+    }
+  }, {
+    "name" : "fractional-nearest-border",
+    "search" : {
+      "group" : 1,
+      "beam_bounds" : [ 450, 195, 100, 10 ],
+      "system_bounds" : [ 0, 0, 1280, 420 ],
+      "reference" : [ 500.1, 200.1 ],
+      "theoretical_line" : [ 500.1, 200.1, 500.1, 350.0 ],
+      "direction" : 1,
+      "left" : true,
+      "interline" : 11
+    },
+    "beams" : [ {
+      "id" : 2,
+      "group" : 2,
+      "bounds" : [ 450, 227, 101, 7 ],
+      "median" : [ 450.2, 230.1, 550.7, 230.1 ],
+      "height" : 6.1,
+      "grade" : 0.8,
+      "hook" : false
+    }, {
+      "id" : 3,
+      "group" : 3,
+      "bounds" : [ 440, 227, 111, 7 ],
+      "median" : [ 440.3, 230.1, 550.8, 230.1 ],
+      "height" : 6.1,
+      "grade" : 0.8,
+      "hook" : false
+    } ],
+    "selected" : {
+      "id" : 3,
+      "border" : [ 440.3, 227.04999999999998, 550.8, 227.04999999999998 ]
     }
   } ]
 }

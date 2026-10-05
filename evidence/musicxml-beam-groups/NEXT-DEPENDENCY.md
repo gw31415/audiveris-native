@@ -4,7 +4,7 @@ The image owner now connects ordinary, distinct-glyph beam groups to native
 MusicXML. `BeamLinker.VLinker.getCloserLimit` is connected at zero skew: actual
 neighbor bounds, own-group exclusion, **AbstractBeamInter.isGood = 0.35**,
 nonhook segment intersection, side-aligned exception and stable nearest
-direction-facing border sort, returning the opposite border. Sixteen declared
+direction-facing border sort, returning the opposite border. Seventeen declared
 numeric original controls cover positive shrinking; the one new full-image
 comparison has two nonintersecting groups, so its four closer limits are null.
 These are different validation scopes.
