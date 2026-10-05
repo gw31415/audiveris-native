@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "normal_non_force_main_push": true,
+  "archive_main": "7749bfd135b0310cf8cbb6ddd8d500dbe7c064b5",
+  "remote_main": "7749bfd135b0310cf8cbb6ddd8d500dbe7c064b5",
+  "archive_tree": "159b4e1920d9bd7beb2e97cb9c70ba00c51dd7d4",
+  "hostname": "github.com",
+  "existing_credential_helper_only": true,
+  "new_auth_settings_permissions_sharing_changes": false,
+  "Actions_dispatch_rerun": false
+}

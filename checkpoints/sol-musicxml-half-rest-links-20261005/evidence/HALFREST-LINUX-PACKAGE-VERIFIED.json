@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+  "archive": "/workspace/audiveris-native/checkpoints/sol-musicxml-half-rest-links-20261005/audiveris-musicxml-linux-x86_64.tar.gz",
+  "archive_SHA256": "94913eff21633791d9e961bcc978395f79afcef4f54bfd98f5e947ac3271eb20",
+  "archive_bytes": 3893856,
+  "binary_SHA256": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
+  "members_SHA256": {
+    "audiveris-musicxml": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
+    "README.txt": "7cfd56924860907b7b95827763cceeaf600fa84e70034b59e1501ca14b6629aa",
+    "LICENSE": "76a97c878c9c7a8321bb395c2b44d3fe2f8d81314d219b20138ed0e2dddd5182",
+    "SOURCE.json": "1c94b29ea1f96fa2f520b3c2bcc63ff7cbda15c3af36a54700ddea67f724d664",
+    "examples/quarter-rest.png": "34594036b601dd771e1bce7c3350ad7bf4e15fb9c4d95c6b1e1cdf608c81845b",
+    "expected/quarter-rest.musicxml": "0516206733e598cd301a6adc1678f80c1de0b4f4a737cb6670676705258fee92",
+    "examples/half-two-measures.png": "238b397c363dcca2fce4c97a63c59d20dc0a44ef1ef5a600c11e24de9168414a",
+    "expected/half-two-measures.musicxml": "b3697f4a1bcb2fc60ec1abc408a03e0509c94eed58c118185e2a022ad07d7660",
+    "examples/quarter-half-break.png": "3d27016ba5d9fca47f2cc684357096feca010cc963194e368fdff0ea33afd03e",
+    "expected/quarter-half-break.musicxml": "dc16ae17e2a888f6c2ac54d8ce50aee9a04699687644972a4770e8a3696d69fc",
+    "examples/half-rest-y239.png": "895ba31b8904198439fce83bf42df129fe39fc1dbabaf4a417bf960f3ecbc803",
+    "expected/half-rest-y239.musicxml": "bef71d104013274a2f6fcea9ab6accbef130652e4fc6f2f3d3d3994bac0594dd",
+    "examples/half-rest-y241.png": "a1d29fd4de9500175c51a6865bff3246d4e8964961f9a3b8023d678a619d232e",
+    "expected/half-rest-y241.musicxml": "bef71d104013274a2f6fcea9ab6accbef130652e4fc6f2f3d3d3994bac0594dd",
+    "SHA256SUMS": "ef47a30198bd6f0e4765bf4cb6f451ddcb5879ab3b6ef9b36526730487780651"
+  },
+  "packaged_binary_readback_verified": true,
+  "fresh_remote_binary_restoration_not_yet_verified": true,
+  "Linux_scope": "x86_64 dynamic GLIBC_2.35/libgcc_s/libm/libc; tested Cloud host only"
+}

@@ -1,0 +1,12 @@
+from pathlib import Path
+import json,tarfile,hashlib,subprocess,os
+from lxml import etree
+W=Path('/workspace/work/musicxml-stems44');A=W/'fresh-music-halfrest-final-archive/checkpoints/sol-musicxml-half-rest-links-20261005';p=A/'audiveris-musicxml-linux-x86_64.tar.gz';expected=json.loads((A/'evidence/HALFREST-LINUX-PACKAGE-VERIFIED.json').read_text());sha=lambda b:hashlib.sha256(b).hexdigest();assert sha(p.read_bytes())==expected['archive_SHA256'];out=W/'fresh-half-rest-linux-executable';out.mkdir();(out/'out').mkdir()
+with tarfile.open(p,'r:gz') as tar:
+ names=tar.getnames();assert set(names)==set(expected['members_SHA256'])
+ for n,h in expected['members_SHA256'].items():assert sha(tar.extractfile(n).read())==h
+ for n,target in [('audiveris-musicxml','audiveris-musicxml'),('examples/half-rest-y241.png','half-rest-y241.png'),('expected/half-rest-y241.musicxml','expected.musicxml')]:
+  (out/target).write_bytes(tar.extractfile(n).read())
+exe=out/'audiveris-musicxml';exe.chmod(0o755);assert sha(exe.read_bytes())==expected['binary_SHA256'];argv=[str(exe),'--output-dir',str(out/'out'),'--part-name','Flute',str(out/'half-rest-y241.png')];p=subprocess.run(argv,cwd=out,capture_output=True);(out/'console.log').write_bytes(p.stdout+p.stderr);assert p.returncode==0,p.stderr
+xml=out/'out/half-rest-y241.musicxml';assert xml.read_bytes()==(out/'expected.musicxml').read_bytes();etree.XMLSchema(etree.parse(str(W/'MusicXML-schema/musicxml.xsd'))).assertValid(etree.parse(str(xml)));r=json.loads((out/'out/half-rest-y241.report.json').read_text());assert len(r['events'])==5 and r['events'][0]['shape']=='HALF_REST' and r['musicxml_complete']==False
+fresh=json.loads((W/'FRESH-MUSIC-HALFREST-FINAL-VERIFIED.json').read_text());proof={'status':'passed','remote_archive_main':fresh['fresh_remote_main'],'archive_tree':fresh['archive_tree'],'source_commit':fresh['source_commit'],'source_tree':fresh['source_tree'],'artifact_SHA256':expected['archive_SHA256'],'all_artifact_member_SHA256_verified':len(expected['members_SHA256']),'binary_SHA256':expected['binary_SHA256'],'restored_from_fresh_archive_not_target_binary':True,'argv':argv,'cwd':str(out),'native_executable_exit':p.returncode,'events':5,'half_rest':True,'MusicXML_SHA256':sha(xml.read_bytes()),'same_XML_as_packed_expected':True,'XSD':'passed'};(W/'HALFREST-FRESH-LINUX-EXECUTABLE-VERIFIED.json').write_text(json.dumps(proof,indent=2)+'\n');print(json.dumps(proof))
