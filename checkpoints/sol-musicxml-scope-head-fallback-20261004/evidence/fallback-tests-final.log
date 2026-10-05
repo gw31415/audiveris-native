@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.99s
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_native-54c661d59a96a5a3)
+
+running 2 tests
+test page_runtime::catalog_tests::unmeasured_empty_unknown_size_and_special_staff_remain_unsupported ... ok
+test page_runtime::catalog_tests::ordinary_unmeasured_default_and_existing_cue_use_known_banks ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 71 filtered out; finished in 0.00s
+

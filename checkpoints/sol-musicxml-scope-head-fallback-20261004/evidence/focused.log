@@ -1,0 +1,12 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.28s
+     Running tests/stem_image_head_expansion.rs (/workspace/onboarding/target/debug/deps/stem_image_head_expansion-21b865fc78575dd4)
+
+running 2 tests
+test actual_standalone_image_cli_executes_expansion_without_an_upstream_binary has been running for over 60 seconds
+test whole_image_head_expansion_parts_relations_grades_and_actual_cache_match_original has been running for over 60 seconds
+test actual_standalone_image_cli_executes_expansion_without_an_upstream_binary ... ok
+test whole_image_head_expansion_parts_relations_grades_and_actual_cache_match_original ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 164.33s
+

@@ -1,0 +1,16 @@
+{
+  "purpose": "independent image-to-MusicXML vertical-path investigation, not a certified input fixture",
+  "rendering": {"font": "Bravura", "point_size": 51, "image_size": [1280, 420], "interline": 11, "skew": 0, "staves": 1},
+  "score": {"clef": "G", "clef_line": 2, "fifths": 0, "time": [4, 4], "voices": 1, "parts": 1},
+  "expected_notes": [
+    {"measure": 1, "step": "B", "octave": 4, "duration_quarters": 1, "staff_pitch": 0},
+    {"measure": 1, "step": "G", "octave": 4, "duration_quarters": 1, "staff_pitch": 2},
+    {"measure": 1, "step": "E", "octave": 4, "duration_quarters": 1, "staff_pitch": 4},
+    {"measure": 1, "step": "G", "octave": 4, "duration_quarters": 1, "staff_pitch": 2},
+    {"measure": 2, "step": "B", "octave": 4, "duration_quarters": 1, "staff_pitch": 0},
+    {"measure": 2, "step": "D", "octave": 5, "duration_quarters": 1, "staff_pitch": -2},
+    {"measure": 2, "step": "F", "octave": 5, "duration_quarters": 1, "staff_pitch": -4},
+    {"measure": 2, "step": "D", "octave": 5, "duration_quarters": 1, "staff_pitch": -2}
+  ],
+  "ground_truth_source": "manually declared before native recognition; no native or original MusicXML outputs used"
+}

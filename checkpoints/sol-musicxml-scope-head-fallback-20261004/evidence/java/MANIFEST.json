@@ -1,0 +1,101 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "files": [
+    {
+      "class": "sheet/symbol/SymbolsBuilder",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/symbol/SymbolsBuilder.java",
+      "sha256": "47c18cc7605d0c5a91ed3c2fccb174d79bdaa003f584872261841ba445ec1cbf",
+      "bytes": 18016
+    },
+    {
+      "class": "sheet/symbol/InterFactory",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/symbol/InterFactory.java",
+      "sha256": "2230888cc56c1dc2d3e6678572079afe78984fc333cb2e1c35105697cd4c361d",
+      "bytes": 40218
+    },
+    {
+      "class": "sig/inter/RestInter",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/RestInter.java",
+      "sha256": "cae927879fa97f0b16098ab07b6c49f8ae0bc41779db61d01521dd22786d320a",
+      "bytes": 8738
+    },
+    {
+      "class": "sheet/note/ChordsBuilder",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/note/ChordsBuilder.java",
+      "sha256": "ab1b0467c92fa3157e1d6d59d7a96fec40de787b54d512d9f69fd329f5427f4b",
+      "bytes": 22892
+    },
+    {
+      "class": "sheet/note/ChordsStep",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/note/ChordsStep.java",
+      "sha256": "70eb6a8022498dac214b831eaae0192771d74ee88319d25be3899fc93bbd86e0",
+      "bytes": 2701
+    },
+    {
+      "class": "sheet/rhythm/MeasuresBuilder",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/MeasuresBuilder.java",
+      "sha256": "4222036cce38a1f457f177bd78992b22952f9f619c67fa1ee7684d87d77924d8",
+      "bytes": 24568
+    },
+    {
+      "class": "sheet/rhythm/PageRhythm",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/PageRhythm.java",
+      "sha256": "257ae1e4261fcfab65ece13c35ea0189f6a7b3db4a24fc946f745fa4b1afeb5a",
+      "bytes": 14840
+    },
+    {
+      "class": "sheet/rhythm/StackRhythm",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/StackRhythm.java",
+      "sha256": "acce4c9e88b0b4cdd633b64143d6fa795d72a893d48a182df1e62c3999eea3fa",
+      "bytes": 9116
+    },
+    {
+      "class": "sheet/rhythm/MeasureFiller",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/MeasureFiller.java",
+      "sha256": "d78916d4cf5c5e9802b80b519435580234a84cfb00da7dcc56c58349227682c9",
+      "bytes": 3664
+    },
+    {
+      "class": "sheet/rhythm/RhythmsStep",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/RhythmsStep.java",
+      "sha256": "12f20e88e7ad45b7d6bddaf74e887a3934dfc33e32206d1524e679013d104114",
+      "bytes": 13642
+    },
+    {
+      "class": "score/MeasureFixer",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/MeasureFixer.java",
+      "sha256": "cba0ae2a238c7b6592de384285d3c90d60f188436073d0f392c3dc707da63c26",
+      "bytes": 13095
+    },
+    {
+      "class": "score/PartwiseBuilder",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/PartwiseBuilder.java",
+      "sha256": "490ce0a76e54be61778f887e6e5d5a00a478ab6e83454cf6cfdfba19ea8f6e61",
+      "bytes": 157209
+    },
+    {
+      "class": "score/ScoreExporter",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/score/ScoreExporter.java",
+      "sha256": "99ccbb388b91897536fdb2d12c00b574723f19abcd6e8fe2bb34c3239a01a1ba",
+      "bytes": 6233
+    },
+    {
+      "class": "sheet/rhythm/MeasureRhythm",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/MeasureRhythm.java",
+      "sha256": "48715c726cc2ec451e10b905a8695659176395ae947819d14cdf946ee29f2fcb",
+      "bytes": 61353
+    },
+    {
+      "class": "sheet/rhythm/Voice",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/rhythm/Voice.java",
+      "sha256": "5cb2bd8f4e667f283679d8de13b1f774ba32a35eb0cbb9f6138e40337d8a89c1",
+      "bytes": 35035
+    },
+    {
+      "class": "sig/inter/AbstractChordInter",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractChordInter.java",
+      "sha256": "c65453b636f624054c40675aaa877d17d0e7b1551fb4457702e91d33b0f7588c",
+      "bytes": 42695
+    }
+  ]
+}

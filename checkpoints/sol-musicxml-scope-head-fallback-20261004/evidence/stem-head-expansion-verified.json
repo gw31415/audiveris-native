@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "head_corners": 1408,
+  "accepted_creations": 409,
+  "system_cache_sizes": [
+    43,
+    51
+  ],
+  "parts_endpoints_relations_physical_stem_grades_and_cache_reuse_match": true,
+  "XML_inspection_replay_before_original_linking_and_epilog": true,
+  "full_original_image_scheduler_and_SIG_attachments_verified": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "historical_source_evidence": {
+    "status": "passed",
+    "historical_source_commit": "3d2482fe6e28a1912c3bc03dfbe53cd628092e47",
+    "historical_source_tree": "be0e81f3e7738a7af45543b249040b50495dfcf8",
+    "unchanged_historical_fixture_files": 2587,
+    "old_native_source_hashes_verified_against_parent_Git_objects": 140,
+    "old_reports_relabelled_as_current_source": false
+  },
+  "original_update_line_boundary_conditions": 12
+}

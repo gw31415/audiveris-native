@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.99s
+     Running unittests src/lib.rs (/workspace/onboarding/target/debug/deps/audiveris_native-54c661d59a96a5a3)
+
+running 2 tests
+test stem_image_head_expansion::tests::unknown_physical_id_refuses_without_changing_selected_parts_or_line ... ok
+test stem_image_head_expansion::tests::original_update_line_overlap_duplicates_null_and_threshold_ulps ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 69 filtered out; finished in 0.09s
+
