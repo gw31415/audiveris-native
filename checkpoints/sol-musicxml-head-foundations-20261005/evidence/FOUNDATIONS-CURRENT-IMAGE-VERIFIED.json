@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "source_commit": "8f67cf8b021673e100fcb685d54c11044767e86e",
+  "source_tree": "cd006e4db2e95cc0b16344809008fba1a99a52e7",
+  "native_image_CLI_runtime_only": true,
+  "input_sha256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+  "mode": "--head-foundations",
+  "retained_counts": {
+    "HeadInter": 8,
+    "StemInter": 8,
+    "BarlineInter": 3
+  },
+  "retained_HeadStem_relations": 8,
+  "removed_actual_canonical_cached_stems": 2,
+  "private_Graph_tombstone_vertices": 38,
+  "native_raw_intrinsic_grades_and_registry_allocations_preserved": true,
+  "comparison_stage_counts": {
+    "ending": {
+      "head_stem_relations": 21,
+      "heads": 30,
+      "stems": 10
+    },
+    "ending_purge": {
+      "head_stem_relations": 21,
+      "heads": 29,
+      "stems": 10
+    },
+    "heads": {
+      "head_stem_relations": 16,
+      "heads": 18,
+      "stems": 8
+    },
+    "heads_purge": {
+      "head_stem_relations": 16,
+      "heads": 16,
+      "stems": 8
+    },
+    "reduced": {
+      "head_stem_relations": 8,
+      "heads": 8,
+      "stems": 8
+    }
+  },
+  "actual_live_Graph_and_cache_updated": true,
+  "full_original_SIG_exclusion_parity_claimed": false,
+  "musical_pitch_duration_rest_rhythm_export_implemented": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "musicxml_complete": false,
+  "current_full538_not_run": true,
+  "targeted_current_tests_passed": 101
+}
