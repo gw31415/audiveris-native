@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "remote_archive_main": "e73c2a067c14bbdbfbff0bfde3fc6ee3f5d36711",
+  "archive_tree": "56df4ef2ac6a6bf58d2287ebb71a76e55043c883",
+  "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+  "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+  "artifact_SHA256": "94913eff21633791d9e961bcc978395f79afcef4f54bfd98f5e947ac3271eb20",
+  "all_artifact_member_SHA256_verified": 15,
+  "binary_SHA256": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
+  "restored_from_fresh_archive_not_target_binary": true,
+  "argv": [
+    "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable/audiveris-musicxml",
+    "--output-dir",
+    "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable/out",
+    "--part-name",
+    "Flute",
+    "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable/half-rest-y241.png"
+  ],
+  "cwd": "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable",
+  "native_executable_exit": 0,
+  "events": 5,
+  "half_rest": true,
+  "MusicXML_SHA256": "bef71d104013274a2f6fcea9ab6accbef130652e4fc6f2f3d3d3994bac0594dd",
+  "same_XML_as_packed_expected": true,
+  "XSD": "passed"
+}

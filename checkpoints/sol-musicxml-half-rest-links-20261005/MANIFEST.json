@@ -70,6 +70,7 @@
     "evidence/quarter-rest.report.json.gz": "d23283263dffaadffb3c4e340bf42a5b3853da3683149f49aa5ae56027d6c424",
     "evidence/HALFREST-GIT-PUSH-VERIFIED.json": "df615fa660cc2492e9ee1fe2d866f7e336b3a817e95231afd57b33599d3d4d2a",
     "evidence/half-rest-fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/HALFREST-FRESH-LINUX-EXECUTABLE-VERIFIED.json": "53b4d443cc645c85002d661994ef3a37e429032ebcd4e4bb418053dc10f41914",
     "evidence/HALF-REST-CACHE-EXACT-DEDUP.json": "2c7948e6c8a44932f133ea7f54fb9dacc03f81a086f31dd956b2aaee6b2a9dbb",
     "evidence/HALFREST-CHECKPOINT-FINDINGS.json": "4eb216362851eee0263abcda7c1f3486c07a87d9b3db2589b207313f5e63202d",
     "evidence/HALFREST-RELEASE-XSD-ORACLE-REIMPORT-VERIFIED.json": "48d503642b68d5a81ff093d681fef1753a8595fb49742f0902ff6c153182ec69",
@@ -82,6 +83,7 @@
     "evidence/LIBRARY-HALFREST-SOURCE.json": "00434e4092758baa9f289a9ad0bc6d2b0d2203b841a50f81162379ef05751b6a",
     "evidence/half-rest-clippy.log": "14fffdccae32901e69482f37b18627a9e4c41d1edeb5c2c8ba4a73ea47f0d572",
     "evidence/half-rest-release-build.log": "01e7006d266a9db02bfd7ab604dc7a3e9384aeb8d6586fbb5418115ce01774d5",
+    "evidence/verify_half_rest_final_metadata.py": "52330edaa4b7d7c79f4f648af1c3277348cf4428b8436cbb3452e860bd4ce7ae",
     "evidence/HALFREST-LINUX-PACKAGE-VERIFIED.json": "34b30b887d1d5458a6f600746109c8ca466bc673cc1ce20712c0baeb41490b2b",
     "evidence/quarter-rest-reimport.json": "9c100b6342c67e6a51f90a58c636b82ecd797b2088f1939f2ea6388996513a37",
     "evidence/half-rest-y239-reimport.json": "ffa06cf7cbc306937ad20aa850aa011d60fe1b8edc7a15c2c6e71e6f434fe3aa",
@@ -89,12 +91,14 @@
     "evidence/half-rest-final-workspace.log": "46394a3239f77b73900591eb823f09229554d44a6a70789fb55531a7d1264e30",
     "evidence/package_half_rest_linux.py": "57f47dfbd097ab0cb848597985df286688c55df4d08fa27dbdc087ac03a34139",
     "evidence/half-rest-release-validation.log": "5f5eaad1bb1b5e01ea8dbb7868d3043952a41f73f95e13fc783342dda036f787",
+    "evidence/FRESH-MUSIC-HALFREST-FINAL-VERIFIED.json": "d4d7eef8e033fe6b236195d0ea3eb967b4af3bb2718f70347741b8d21f487b52",
     "evidence/FRESH-MUSIC-HALFREST-VERIFIED.json": "a5647c092650cf7e76039e66cb4b47db31e58369e077bbb6343f169e7f17390d",
     "evidence/HALFREST-VERIFIED-FRESH-DUPLICATE-CLEANUP.json": "8f8df24af0da20f6045022998afd567672356070b143ac5c038ece57b839ff7e",
     "evidence/LIBRARY-HALFREST-SOURCE-RESTORE-VERIFIED.json": "8b92fadddc34b9a10869dec9760acd9ec1e00d7141ab5f3f3b889b24836ce38d",
     "evidence/half-rest-cache-focused.log": "d22d98e2713663272e78e0f84d8839b5b28c070626f6a4d71ba705e22ebc0122",
     "evidence/HALFREST-FULL-WORKSPACE-VERIFIED.json": "d94ac8a4a0dbd92b03c36f288c3d7c89cd4ed64fda1e2f86e6b6726d5f8c599b",
-    "evidence/half-rest-y241-reimport.json": "ffa06cf7cbc306937ad20aa850aa011d60fe1b8edc7a15c2c6e71e6f434fe3aa"
+    "evidence/half-rest-y241-reimport.json": "ffa06cf7cbc306937ad20aa850aa011d60fe1b8edc7a15c2c6e71e6f434fe3aa",
+    "evidence/HALFREST-FINAL-GIT-PUSH-VERIFIED.json": "0c9fadb00989e2a966d88b59e96bcdc76b73fcbf2f0ab366cc95948e8a7df5b9"
   },
   "validation": {
     "previous_full542_source": "48e6177f4befa696523935e634accd11509a4975",
@@ -330,7 +334,33 @@
       "full_practical_scope_complete": false
     },
     "Library_current_upload": "outcome unknown; metadata read succeeded, old saved index readback SHA matched; no listing tool and no blind upload retry",
-    "source_fixture_hashes_preserved": true
+    "source_fixture_hashes_preserved": true,
+    "fresh_final_source_restore": {
+      "status": "passed",
+      "fresh_remote_main": "e73c2a067c14bbdbfbff0bfde3fc6ee3f5d36711",
+      "archive_tree": "56df4ef2ac6a6bf58d2287ebb71a76e55043c883",
+      "all_fresh_archive_blob_SHA256_verified": 2083,
+      "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+      "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+      "all_separate_restored_source_SHA256_verified": 6841,
+      "source_clean": true,
+      "archive_clean": true,
+      "saved_archive_bundles_patch_chain_verified": 104,
+      "immutable_files_reused_from_prior_independently_verified_historical_restore": 5393,
+      "historical_reused_files_SHA256_unchanged": 5393,
+      "primary_source_not_hardlinked": true,
+      "standalone_RESTORE_py_not_run_this_stage": true,
+      "source": "/workspace/work/musicxml-stems44/fresh-music-halfrest-final-source/artifacts/audiveris-source",
+      "source_git": "/workspace/work/musicxml-stems44/fresh-music-halfrest-final-source/source-git",
+      "source_materialized": true
+    },
+    "existing_Library_index_readback": {
+      "status": "passed",
+      "reference": "library-file:fde1_bGliZmlsZV9Ebjd0Y1R6TzNacDlFeVVHai0tQ29n_FileDrive_860dacf66f308191a98d88753eed9f4d",
+      "sha256": "df8dbc58bf8f67d97cf047d86073e53920c63ff0d4a8e48374eff544d0095657",
+      "bytes": 5056,
+      "this_is_old_saved_index_not_current_delta": true
+    }
   },
   "implemented": "Image CLI admits only zero-stump/seed beam candidates whose enlarged original lookup envelope cannot reach any head, removes orphan hooks/beams and empty groups, performs isolated rest/time weak LINKS purge and actual empty-rest-chord cleanup, checks canonical caches and existing one-stem/head cleaner plus bounded no-live-beam epilog.",
   "comparison_limits": "Original5.11 XML-loaded HEADS onward versus image-native continuation: two controlled half-rest positions, five events each; weak1px boundary removed at LINKS; positive beam scheduling refused. Separate from prior three synthetic scores24 events and original full transient recognition.",
@@ -352,6 +382,31 @@
     "bytes": 3893856,
     "binary_SHA256": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
     "scope": "x86_64 dynamic GLIBC_2.35/libgcc_s/libm/libc; tested Cloud host only",
-    "fresh_remote_artifact_execution": "pending separate post-push verification"
+    "fresh_remote_artifact_execution": {
+      "status": "passed",
+      "remote_archive_main": "e73c2a067c14bbdbfbff0bfde3fc6ee3f5d36711",
+      "archive_tree": "56df4ef2ac6a6bf58d2287ebb71a76e55043c883",
+      "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+      "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+      "artifact_SHA256": "94913eff21633791d9e961bcc978395f79afcef4f54bfd98f5e947ac3271eb20",
+      "all_artifact_member_SHA256_verified": 15,
+      "binary_SHA256": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
+      "restored_from_fresh_archive_not_target_binary": true,
+      "argv": [
+        "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable/audiveris-musicxml",
+        "--output-dir",
+        "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable/out",
+        "--part-name",
+        "Flute",
+        "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable/half-rest-y241.png"
+      ],
+      "cwd": "/workspace/work/musicxml-stems44/fresh-half-rest-linux-executable",
+      "native_executable_exit": 0,
+      "events": 5,
+      "half_rest": true,
+      "MusicXML_SHA256": "bef71d104013274a2f6fcea9ab6accbef130652e4fc6f2f3d3d3994bac0594dd",
+      "same_XML_as_packed_expected": true,
+      "XSD": "passed"
+    }
   }
 }

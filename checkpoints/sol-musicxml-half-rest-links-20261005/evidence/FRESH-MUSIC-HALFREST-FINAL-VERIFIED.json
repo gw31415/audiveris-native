@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "fresh_remote_main": "e73c2a067c14bbdbfbff0bfde3fc6ee3f5d36711",
+  "archive_tree": "56df4ef2ac6a6bf58d2287ebb71a76e55043c883",
+  "all_fresh_archive_blob_SHA256_verified": 2083,
+  "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+  "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+  "all_separate_restored_source_SHA256_verified": 6841,
+  "source_clean": true,
+  "archive_clean": true,
+  "saved_archive_bundles_patch_chain_verified": 104,
+  "immutable_files_reused_from_prior_independently_verified_historical_restore": 5393,
+  "historical_reused_files_SHA256_unchanged": 5393,
+  "primary_source_not_hardlinked": true,
+  "standalone_RESTORE_py_not_run_this_stage": true,
+  "source": "/workspace/work/musicxml-stems44/fresh-music-halfrest-final-source/artifacts/audiveris-source",
+  "source_git": "/workspace/work/musicxml-stems44/fresh-music-halfrest-final-source/source-git",
+  "source_materialized": true
+}
