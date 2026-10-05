@@ -1,0 +1,110 @@
+{
+  "status": "read-only investigation; no implementation change",
+  "source_commit": "48e6177f4befa696523935e634accd11509a4975",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "known_stop": "unsupported head-only scheduler beam or existing stem",
+  "observed_native_candidates": {
+    "system": 2,
+    "bounds": [
+      271,
+      556,
+      14,
+      8
+    ],
+    "kinds": [
+      "BeamHookInter",
+      "BeamInter"
+    ],
+    "physical_glyph_shared": true
+  },
+  "original_dependency_order": [
+    "StemsRetriever.inspectStems -> beam linker and possible-head inspection",
+    "StemsRetriever.linkStems beam phases before head phases",
+    "finalizeStems",
+    "SigReducer.checkHooksHaveStem: hook without a non-center BeamStemRelation is removed",
+    "SigReducer.checkBeamsHaveBothStems: beam lacking either LEFT/RIGHT stem is removed",
+    "SymbolsFilter uses resulting SIG; remaining physical rectangle can be classified as a rest"
+  ],
+  "safety_contract": "Do not remove all beam candidates or disable the head-only scheduler guard just to admit this fixture: genuine beamed notes could silently become quarter notes. Add original beam-origin selection/linking or an original-validated no-reachable-head subset before orphan-beam cleanup and rest recognition.",
+  "unverified": [
+    "original recognition of correctly scaled/positioned half-rest glyph",
+    "native beam-origin no-reachable-head admission",
+    "original/current complete cleaner/epilog"
+  ],
+  "original_methods_locally_read": {
+    "SigReducer.checkHooksHaveStem": "/workspace/work/musicxml-stems44/java/sig-SigReducer.java:872",
+    "SigReducer.checkBeamsHaveBothStems": "/workspace/work/musicxml-stems44/java/sig-SigReducer.java:680",
+    "BeamLinker.looksLikeTremolo": "/workspace/work/musicxml-stems44/music-dependency-audit/BeamLinker.java:623"
+  },
+  "heads_complete": false,
+  "stems_complete": false,
+  "classifier_subdiagnostic": {
+    "not_a_page_recognition_result": true,
+    "actual_original_no_staff_rectangle": [
+      271,
+      556,
+      14,
+      8
+    ],
+    "glyph_PGM_SHA256": "19975e5351fa016a4784ff1effa3ae0ec432c7cc7f41cb2486dcf727c8bf2fa4",
+    "classifier_output_SHA256": "cb9120ececacdcdbaf3684f9b612dfe449ff905723f3d1cb369882ff500cea85",
+    "top5": [
+      [
+        "HW_REST_set",
+        0.6042659946047416
+      ],
+      [
+        "BREVE_REST",
+        0.07193075372504087
+      ],
+      [
+        "PERCUSSION_CLEF",
+        0.055647776898694906
+      ],
+      [
+        "TIME_ONE",
+        0.018609256838147223
+      ],
+      [
+        "MORDENT_INVERTED",
+        0.014912038479533742
+      ]
+    ]
+  },
+  "additional_original_boundary_observation": {
+    "before_LINKS": [
+      {
+        "system": 1,
+        "rests": []
+      },
+      {
+        "system": 2,
+        "rests": [
+          {
+            "shape": "HALF_REST",
+            "grade": 0.48341279568379303,
+            "bounds": [
+              271,
+              556,
+              14,
+              8
+            ]
+          }
+        ]
+      }
+    ],
+    "after_LINKS_RHYTHMS_rest_symbols": [
+      {
+        "system": 1,
+        "rests": []
+      },
+      {
+        "system": 2,
+        "rests": []
+      }
+    ],
+    "probe_result_SHA256": "1f93358eab54741e3b61d95980b019aaedc20866708ad214287da38d77285f54",
+    "original_runtime_confirmed_half_rest_does_not_survive_this_page": true,
+    "interpretation": "Original LINK-stage rest reduction is also necessary; raw HW score0.6042659946047416 * intrinsic ratio0.8 yields0.48341279568379303, below minimum contextual grade0.5. Exact internal removal check was not individually traced, so LINK-stage disappearance is the confirmed boundary."
+  }
+}
