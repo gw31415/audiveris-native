@@ -106,7 +106,8 @@
     "evidence/central-rest-original-full.musicxml": "4d8e404a14e7c87fcd92048c5f03fefd27d8a7b0d387f03315a60427d0a12bf2",
     "evidence/central-rest-native-refusal.log": "4af729e025919707c7429b10d9c9224bef81b2643c59e4ad95f6e842a5144235",
     "evidence/central-rest-original-full-console.log.gz": "4f5cecd6bae990ccfe430899b895551ab5f170d90f98c0912daa1bc41ef1ab78",
-    "evidence/central-rest-original-full-PROVENANCE.json": "00ae4bd656d7ec516f830b52be8772abd99bd41d435cea5ca02c1c882a87b21e"
+    "evidence/central-rest-original-full-PROVENANCE.json": "00ae4bd656d7ec516f830b52be8772abd99bd41d435cea5ca02c1c882a87b21e",
+    "evidence/CENTRAL-REST-FRESH-GIT-VERIFIED.json": "b93a2237a8e2eaf535a888dc05638af2397518fc8e8dd81eff874ac9e14d5bc0"
   },
   "validation": {
     "previous_full542_source": "48e6177f4befa696523935e634accd11509a4975",
@@ -865,6 +866,26 @@
     "full_544_result_reused_no_rerun": true,
     "Library_unknown_no_exploration_or_upload": true,
     "central_rest_layout_not_fixed": true,
-    "test_reduction_started": false
+    "test_reduction_started": false,
+    "fresh_Git_verification": {
+      "status": "passed",
+      "remote_main": "bd9c0e0084bc5345b342bef4909b934d73d3b783",
+      "archive_tree": "bb3d538c8393bcede4660123ad59fdef3cd1fb7a",
+      "all_fresh_archive_blob_SHA256_verified": 2096,
+      "fresh_remote_shallow_bare_clone_no_reference_or_alternates": true,
+      "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+      "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+      "all_primary_source_SHA256_verified_unchanged": 6841,
+      "source_unchanged_since_prior_independent_full_restore": true,
+      "no_duplicate_full_source_copy_created": true,
+      "binary_and_package_unchanged": true,
+      "original_correct_at_central_rest_input": false,
+      "native_refusal_preserved": true,
+      "existing_target_regression_passed": 1,
+      "prior_full_544_source_unchanged_no_rerun": true,
+      "Library_unknown_no_search_or_upload": true,
+      "normal_non_force_main_push": true,
+      "test_reduction_started": false
+    }
   }
 }

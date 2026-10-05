@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "remote_main": "bd9c0e0084bc5345b342bef4909b934d73d3b783",
+  "archive_tree": "bb3d538c8393bcede4660123ad59fdef3cd1fb7a",
+  "all_fresh_archive_blob_SHA256_verified": 2096,
+  "fresh_remote_shallow_bare_clone_no_reference_or_alternates": true,
+  "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+  "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+  "all_primary_source_SHA256_verified_unchanged": 6841,
+  "source_unchanged_since_prior_independent_full_restore": true,
+  "no_duplicate_full_source_copy_created": true,
+  "binary_and_package_unchanged": true,
+  "original_correct_at_central_rest_input": false,
+  "native_refusal_preserved": true,
+  "existing_target_regression_passed": 1,
+  "prior_full_544_source_unchanged_no_rerun": true,
+  "Library_unknown_no_search_or_upload": true,
+  "normal_non_force_main_push": true,
+  "test_reduction_started": false
+}
