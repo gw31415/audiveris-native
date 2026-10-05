@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "quarter-rest",
+      "XSD": "passed",
+      "original_events_matched": 8,
+      "MusicXML_SHA256": "1428117865942781c0b52e8a831aa846a8a0c6622921104910946c20d043695a",
+      "native_report_SHA256": "2e61058c753fa72ab99f51242703d16ae6c90305a6101481a603504789834ce7",
+      "native_source_before_layout_only_fix": "5790f40073495c9f88e4b6297109328c5eebf321"
+    },
+    {
+      "case": "half-two-measures",
+      "XSD": "passed",
+      "original_events_matched": 4,
+      "MusicXML_SHA256": "6bdd6e273ae73172a64a65341b6fa1639064441684ef0e54edf60f24bc0901e7",
+      "native_report_SHA256": "77fe89b16cfe68662b0c2c4209d5552a5e37ac446d2d2ea6578ccaf4680d6b09",
+      "native_source_before_layout_only_fix": "5790f40073495c9f88e4b6297109328c5eebf321"
+    }
+  ],
+  "full_regression_after_changes": "not run"
+}

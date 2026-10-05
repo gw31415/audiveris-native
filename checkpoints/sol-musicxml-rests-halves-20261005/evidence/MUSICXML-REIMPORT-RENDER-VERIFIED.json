@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "source_commit": "5790f40073495c9f88e4b6297109328c5eebf321",
+  "native_XML_SHA256": "6d11f4b046cebc6e1d2c701ad35635c3c02319d309d86ed254493baf13f1e888",
+  "original_proxymusic_reimport_native_notes_matched": 8,
+  "reference_layout_render_size": [
+    1280,
+    420
+  ],
+  "source_input_pixels_differing": 0,
+  "pixel_exact_source_input_reconstruction": true,
+  "native_reimport_PNG_SHA256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+  "render_raw_pixels_SHA256": "23ba37c5a844895f5cb4090b0668a9b0a1125b29ce9695b76f8003125d4bfa83",
+  "original_XML_output_reused": false,
+  "fixed_reference_layout_render_not_general_MusicXML_engraver": true,
+  "first_two_bar_check_not_practical_scope_completion": true
+}
