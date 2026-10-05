@@ -160,3 +160,41 @@ The full552 regression/fmt/clippy belongs to migration source2395352 / main80340
 this following TimePair change uses targeted MusicXML/header checks and a fresh
 normal checkout. A new full554 regression is not claimed. All global completion
 flags remain false; test deletion remains deferred.
+
+## Recognized 3/4 header → MusicXML
+
+The fixed 4/4 restriction is removed. A selected frozen TimePair and its actual
+TOP/BOTTOM number shapes, values, relations and physical glyphs now determine
+the meter; no default meter or synthetic glyph is inserted. Following original
+`PageRhythm.populateTimeSignatures` / `TimeRational.getValue`, measure duration
+is numerator/denominator in whole-note units, inherited when no new time is
+present. The strict complete-measure check uses that duration instead of four
+quarters. The current voice still supports quarter/half notes/rests only, so
+a measure duration requiring fractional-quarter units refuses; meter changes
+also refuse until time-range/export propagation is connected.
+
+One new original-rendered Bravura44, treble, G-major, ordinary five-line, zero-skew
+3/4 image contains two complete measures and six quarter notes:
+B4 G4 E4 | B4 F♯5 D5. Unmodified original5.11 full image → RHYTHMS/PAGE/export
+and native image → MusicXML agree on all six events and the 3/4 meter. Separately,
+saved original OMR TimePair/number glyphs, three-decimal grades, measure durations
+and offsets are compared against native owned state. Original XML is never fed
+to the native runtime. Other integer-quarter meters use generalized propagation
+but are not claimed as whole-image verified. Header TimeWhole/common/cut,
+other clefs, fractional-quarter rhythms and time changes remain pending.
+
+```sh
+cargo build --locked --bin audiveris-musicxml -j 1
+# Choose fresh output paths; Java is not required.
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-header-meters/g-major-header-three-four.png \
+  three-four.musicxml three-four.report.json
+```
+
+The input/expected observations are in `fixtures/official-image-musicxml-header-meters`.
+Original export/OMR/provenance and a small validation summary are in
+`evidence/header-meter-meaning`. Preservation uses normal source commits and
+Git SHA/tree readback; the historical encoded backup chain is not resumed.
+Global HEADS/STEMS/MusicXML/epilog completion flags remain false.
+
+Changed-source validation: MusicXML integration 7 tests (including both 4/4 and 3/4 plus the underfilled 3/4 boundary), HEADER 2 tests, and TimeColumn 1 test/37 original controls pass. Workspace all-targets clippy with warnings denied, fmt, Linux CLI and local MusicXML4 XSD pass. No new full regression was run; the last full552 result remains attached to source239535 before the TimePair/meter additions.

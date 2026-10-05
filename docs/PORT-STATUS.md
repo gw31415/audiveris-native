@@ -22,7 +22,7 @@
 | LOAD / `ImageLoading`, `Book`, `Sheet` | 部分 | grayscale PNG/PGM単画像・複数独立画像CLIあり。RGB/alpha/JPEG/TIFF/PDF・複数ページbook・原版画像変換/ページ選択は未接続。4M画素等は現ガードで、最終的な省略ではない。 |
 | BINARY/SCALE / adaptive filter, `ScaleBuilder` | 部分 | 原版式・histogram/peak・多数kernelあり。一般画像の全設定/分解能/失敗状態と下流伝播を広げる必要がある。 |
 | GRID / `GridBuilder`, `Staff`, `SystemInfo`, parts | 部分 | sections/filament/通常staff/system/parts・cue第二パスの比較あり。非zero skew、特殊staff、実スキャンの全工程一致は未検証。 |
-| HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG-clef/4/4のガードが残る。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
+| HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG-clefに限定。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。positive beam-origin STEMS、cue beam、一般加線音高・共有staffの全工程は未接続。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
 | STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。beamからの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 |
@@ -31,7 +31,7 @@
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
 | SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory` | 部分 | classifier・isolated/2部品rest/time・実加線へのdot距離検査あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 |
-| RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 完全4/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
+| RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 認識済み拍子に応じた完全小節の単声四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
 | PAGE/score / `ScoreReduction`, logical parts | 部分 | 単ページ改行・小節番号あり。複数ページ継続、part同定/結合、楽器/移調、跨systemの声部/slur/tie、repeat構造等の一般score統合が残る。 |
 | MusicXML / `PartwiseBuilder`, original proxymusic | 部分 | native MusicXML4 writer、限定イベント・system break・part名、schema/reimport比較あり。一般notation/direction/lyric/instrument/layout/score属性と.mxl圧縮、多ページexportの原版対応が残る。原版XMLの流用は認識完成に数えない。 |
 | プロジェクト保存・再開 / `Book`, `Sheet`, stage invalidation | 部分 | stage reportsとGit完全復元あり。native認識projectの永続化・読込・編集後の必要工程再実行、原版.omrとの対応/互換性は未対応。Gitソース保存とは別機能。 |
@@ -47,10 +47,10 @@
 
 ## 実用CLIへ広げる依存順
 
-実コード上の直近の切断箇所は、`key_state.rs`にKeyInter/fifths生成がある一方、`music_symbols.rs`のPageCleaner接続が非nullのheader key/timeを拒否し、`music_xml.rs`がG-clef/4/4を限定、note alterを0固定、writerをG-clef/4/4固定にしている点です。これらを単にガード解除するのではなく、原版の有効調号・臨時記号・拍子依存を繋いでから実画像で確認します。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`の公開APIも実クラスで確認済みで、調号fifthsだけの出力ではなくこの音のalter決定依存を追います。
+現在は`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。次の切断箇所はHEADERのTimeWhole/common/cutとG-clef以外の音高/export、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
 
 1. **今回のcompound rest/SIG checkpointを固定**。実装済み部分、画像全工程比較、保存XML段階比較、条件指定競合kernelを分けて保存する。
-2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。まず既存資料で原版が成功する小さな一入力の他調号を選び、調号だけを出力するのではなく実音のalterまで比較する。入力は未選定・未検証であり、今回の成果には数えない。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
+2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。調号と固定TimePairの実画像比較は完了。次はTimeWhole/common/cutや他clefを実音高・拍子・exportまで比較する。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
 3. **positive beam/head STEMS、一般chordと音価**。自動items/glyph/beam接続→cache/SIG→cleaner/epilogを閉じ、beam/flag・whole/breve・一般加線へ広げる。単なる条件指定APIの追加ではなく実画像CLIまで通す。
 4. **generic SYMBOLS/LINKSとlateChecks**。多部品候補、全Inter factory、support grade/frozen/競合反復、dot/accidental等の関係を原版に沿って接続。実際に必要なものから小段階にする。
 5. **CURVES/TEXTSと一般MEASURES/CHORDS/RHYTHMS**。原版stage順を守り、tie/slur/連符/lyrics等をLINKS・slot/voiceへ供給。複声部・複段part・拍子変更・pickup等を段階的に画像→MusicXMLへ通す。
@@ -79,7 +79,11 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
 
 必要だった`SigReducer.checkLedgers/ledgerHasHeadOrLedger`を通常五線・system内1staffに限定して接続し、sharpの孤立加線を消します。元画像の原版export成功とは別に、保存STEMS XML再読込→原版reduceFoundationsの孤立加線削除を観測しました。物理glyph/cache/削除ID履歴は保持し、既存C4加線は残します。複数staffのshared-ledger補正は未接続です。
 
-固定HEADERの4/4 TimePairは次の1制御画像で所有SIG・数字glyph・拍数・exportを接続済みです。次の具体的未接続はTimeWhole/common/cut、他拍子、他clefの音高/export接続です。SYMBOLSで初めて認識された調号、cancel/途中調号変更、一般臨時記号はその後に接続します。これらを最終機能から省略しません。HEADS/STEMS/MusicXML/epilog完了フラグはfalseです。
+固定HEADERの4/4 TimePairは次の1制御画像で所有SIG・数字glyph・拍数・exportを接続済みです。次の具体的未接続はTimeWhole/common/cut、他clefの音高/exportと分数拍・途中変更です。SYMBOLSで初めて認識された調号、cancel/途中調号変更、一般臨時記号はその後に接続します。これらを最終機能から省略しません。HEADS/STEMS/MusicXML/epilog完了フラグはfalseです。
 
 
 続けて、同じG-major譜面のTime数字を原版HEADER探索範囲へ置いた1制御画像で、固定4/4 TimePairのTOP/BOTTOM実glyph、Containment/TimeTopBottomRelation、小節拍数とMusicXMLを接続しました。原版独立画像exportの8音とnativeが一致。最後の数字glyphが不正な場合のGraph/registry不変も確認します。他拍子を4/4に置換して成功扱いにせず、その他のHEADER timeは明示的に未対応です。移行版552全回帰とこの追加変更の対象回帰はソース時点を分けて記録します。
+
+## 固定3/4拍子の縦断追加（2026-10-05）
+
+1つの新しい2小節G-major画像を原版5.11の変更なし画像pipelineでexportし、6音 B4 G4 E4 | B4 F♯5 D5 と3/4をnativeで一致確認します。TimePair/TimeNumberのshape/valueとContainment/TimeTopBottomRelationを検査し、数字の実glyphを所有SIG/registryへ原子的に登録します。`PageRhythm.populateTimeSignatures`→`TimeRational.getValue`に沿って期待小節長を分子/分母から計算し、次小節へ継承。元のOMRに保存された3/4小節長・onsetも別途比較します。四分/二分単位で表現できない拍子長、途中拍子変更、未掲出拍子の推測は拒否を維持。その他の整数quarter拍子の経路は一般化したものの、全画像比較済みとするのは4/4と今回の3/4のみです。全機能省略なしの目標とglobal完了falseは変えません。例・コマンドは[MUSICXML-LIMITED.md](MUSICXML-LIMITED.md)。

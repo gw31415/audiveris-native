@@ -1,0 +1,576 @@
+{
+  "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "image_scope": "unmodified original5.11 same input image through RHYTHMS/PAGE/export; original XML not fed to native",
+  "saved_state_scope": "final saved original OMR time identities/glyph pixels/three-decimal grades and measure durations; distinct from full image MusicXML",
+  "input_SHA256": "02dfe89fb9a2f7e8895b93e2898ce5ea7984f3b02e1f2daad8bb99e1b71471c4",
+  "original_MusicXML_SHA256": "d646a4f4088e3a92acf8307582dbbdf511f84b6fadb7c2bbcf158f745aa7819a",
+  "original_OMR_SHA256": "0be9d95d4b66742c80adf75bb885e21a42c4e84e3dd220a87fa08db4d114b012",
+  "original_header": {
+    "start": 82,
+    "stop": 185,
+    "key_fifths": 1,
+    "time": "3/4",
+    "frozen": true
+  },
+  "original_nodes": [
+    {
+      "kind": "TimeNumberInter",
+      "original_id": 27,
+      "shape": "TIME_THREE",
+      "bounds": [
+        167,
+        221,
+        17,
+        22
+      ],
+      "frozen": true,
+      "grade": 0.774,
+      "contextual_grade": 0.934,
+      "side": "TOP",
+      "value": 3,
+      "glyph": {
+        "bounds": [
+          166,
+          222,
+          19,
+          20
+        ],
+        "orientation": "VERTICAL",
+        "runs": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            14,
+            4
+          ],
+          [
+            1,
+            0,
+            5
+          ],
+          [
+            1,
+            13,
+            7
+          ],
+          [
+            2,
+            0,
+            5
+          ],
+          [
+            2,
+            12,
+            8
+          ],
+          [
+            3,
+            0,
+            6
+          ],
+          [
+            3,
+            12,
+            8
+          ],
+          [
+            4,
+            0,
+            6
+          ],
+          [
+            4,
+            12,
+            8
+          ],
+          [
+            5,
+            0,
+            6
+          ],
+          [
+            5,
+            8,
+            3
+          ],
+          [
+            5,
+            12,
+            8
+          ],
+          [
+            6,
+            0,
+            5
+          ],
+          [
+            6,
+            8,
+            3
+          ],
+          [
+            6,
+            13,
+            7
+          ],
+          [
+            7,
+            1,
+            3
+          ],
+          [
+            7,
+            8,
+            3
+          ],
+          [
+            7,
+            14,
+            2
+          ],
+          [
+            7,
+            19,
+            1
+          ],
+          [
+            8,
+            7,
+            4
+          ],
+          [
+            8,
+            18,
+            2
+          ],
+          [
+            9,
+            7,
+            4
+          ],
+          [
+            9,
+            18,
+            2
+          ],
+          [
+            10,
+            6,
+            5
+          ],
+          [
+            10,
+            18,
+            2
+          ],
+          [
+            11,
+            5,
+            6
+          ],
+          [
+            11,
+            18,
+            2
+          ],
+          [
+            12,
+            0,
+            20
+          ],
+          [
+            13,
+            0,
+            20
+          ],
+          [
+            14,
+            0,
+            7
+          ],
+          [
+            14,
+            9,
+            11
+          ],
+          [
+            15,
+            0,
+            7
+          ],
+          [
+            15,
+            9,
+            11
+          ],
+          [
+            16,
+            0,
+            6
+          ],
+          [
+            16,
+            9,
+            11
+          ],
+          [
+            17,
+            0,
+            5
+          ],
+          [
+            17,
+            9,
+            10
+          ],
+          [
+            18,
+            12,
+            6
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "TimeNumberInter",
+      "original_id": 29,
+      "shape": "TIME_FOUR",
+      "bounds": [
+        167,
+        244,
+        19,
+        22
+      ],
+      "frozen": true,
+      "grade": 0.624,
+      "contextual_grade": 0.89,
+      "side": "BOTTOM",
+      "value": 4,
+      "glyph": {
+        "bounds": [
+          166,
+          245,
+          20,
+          20
+        ],
+        "orientation": "VERTICAL",
+        "runs": [
+          [
+            0,
+            12,
+            1
+          ],
+          [
+            1,
+            8,
+            6
+          ],
+          [
+            2,
+            8,
+            6
+          ],
+          [
+            3,
+            7,
+            7
+          ],
+          [
+            4,
+            5,
+            6
+          ],
+          [
+            4,
+            12,
+            2
+          ],
+          [
+            5,
+            3,
+            7
+          ],
+          [
+            5,
+            12,
+            2
+          ],
+          [
+            6,
+            0,
+            10
+          ],
+          [
+            6,
+            12,
+            2
+          ],
+          [
+            7,
+            0,
+            10
+          ],
+          [
+            7,
+            12,
+            2
+          ],
+          [
+            8,
+            0,
+            6
+          ],
+          [
+            8,
+            12,
+            2
+          ],
+          [
+            9,
+            0,
+            5
+          ],
+          [
+            9,
+            12,
+            2
+          ],
+          [
+            9,
+            18,
+            2
+          ],
+          [
+            10,
+            0,
+            4
+          ],
+          [
+            10,
+            11,
+            3
+          ],
+          [
+            10,
+            17,
+            3
+          ],
+          [
+            11,
+            0,
+            3
+          ],
+          [
+            11,
+            6,
+            14
+          ],
+          [
+            12,
+            0,
+            1
+          ],
+          [
+            12,
+            5,
+            15
+          ],
+          [
+            13,
+            3,
+            17
+          ],
+          [
+            14,
+            2,
+            18
+          ],
+          [
+            15,
+            1,
+            19
+          ],
+          [
+            16,
+            0,
+            20
+          ],
+          [
+            17,
+            11,
+            3
+          ],
+          [
+            17,
+            17,
+            3
+          ],
+          [
+            18,
+            12,
+            2
+          ],
+          [
+            19,
+            12,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "TimePairInter",
+      "original_id": 30,
+      "shape": null,
+      "bounds": [
+        167,
+        221,
+        19,
+        45
+      ],
+      "frozen": true,
+      "grade": 0.912,
+      "contextual_grade": 0.912,
+      "numerator": 3,
+      "denominator": 4,
+      "value": "3/4",
+      "glyph": null
+    }
+  ],
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 5,
+      "alter": 1,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    }
+  ],
+  "meter_events": [
+    {
+      "measure_number": 1,
+      "numerator": 3,
+      "denominator": 4
+    }
+  ],
+  "measures": [
+    {
+      "number": 1,
+      "expected_duration": "3/4",
+      "actual_duration": "3/4",
+      "time_offsets": [
+        "0",
+        "1/4",
+        "1/2"
+      ]
+    },
+    {
+      "number": 2,
+      "expected_duration": "3/4",
+      "actual_duration": "3/4",
+      "time_offsets": [
+        "0",
+        "1/4",
+        "1/2"
+      ]
+    }
+  ],
+  "original_provenance": {
+    "input_SHA256": "02dfe89fb9a2f7e8895b93e2898ce5ea7984f3b02e1f2daad8bb99e1b71471c4",
+    "renderer_SHA256": "53f29e748619fd4fa5b1cd094d71b403ee411534aed57f0630f55eb180c56ebe",
+    "argv": [
+      "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Xmx512m",
+      "-XX:ActiveProcessorCount=2",
+      "-Djava.awt.headless=true",
+      "-Djava.io.tmpdir=/workspace/work/musicxml-header-meters/original/tmp",
+      "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+      "-Djava.util.prefs.userRoot=/workspace/work/musicxml-header-meters/original/prefs",
+      "-Duser.home=/workspace/work/musicxml-header-meters/original/home",
+      "-cp",
+      "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+      "Audiveris",
+      "-batch",
+      "-constant",
+      "org.audiveris.omr.Main.persistBatchCliConstants=false",
+      "-constant",
+      "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+      "-step",
+      "RHYTHMS",
+      "-export",
+      "-output",
+      "/workspace/work/musicxml-header-meters/original",
+      "--",
+      "/workspace/work/musicxml-header-meters/input/g-major-header-three-four.png"
+    ],
+    "environment_overrides": {
+      "XDG_CONFIG_HOME": "/workspace/work/musicxml-header-meters/original/config",
+      "XDG_DATA_HOME": "/workspace/work/musicxml-header-meters/original/data",
+      "XDG_CACHE_HOME": "/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache"
+    },
+    "scope": "one 3/4 header input with six quarter notes, no coordinate search",
+    "no_coordinate_sweep": true,
+    "existing_JNI_cache_reused": true,
+    "exit_code": 0,
+    "console_SHA256": "2bfea43befd440c9782f4ff96c0b7df50453499df683c08cd72c7f79cb17bbdd"
+  },
+  "variant_scope": "one 3/4 two-measure input; original glyph placement, no coordinate search"
+}

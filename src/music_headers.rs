@@ -122,7 +122,8 @@ pub(crate) fn import_key(
 }
 
 /// StaffHeader.freeze already selected the actual pair and froze its members.
-/// Import only the verified 4/4 pair. Other header time forms remain explicit.
+/// Retain the selected TimePair and its actual numeric members atomically.
+/// Header TimeWhole/common/cut forms remain a separate pending import.
 pub(crate) fn import_time(
     graph: &mut Graph,
     registry: &mut Registry,
@@ -134,14 +135,19 @@ pub(crate) fn import_time(
     if pair.is_null() {
         return Ok(Value::Null);
     }
-    if pair["kind"] != "TimePairInter"
-        || pair["numerator"] != 4
-        || pair["denominator"] != 4
-        || pair["value"] != "4/4"
-        || pair["frozen"] != true
-        || !pair["glyph"].is_null()
-    {
+    if pair["kind"] != "TimePairInter" || pair["frozen"] != true || !pair["glyph"].is_null() {
         return Err("music_other_or_unfrozen_header_time_import_pending".into());
+    }
+    let numerator = pair["numerator"]
+        .as_i64()
+        .ok_or("music_time_numerator_required")?;
+    let denominator = pair["denominator"]
+        .as_i64()
+        .ok_or("music_time_denominator_required")?;
+    if !crate::time_column::supported(numerator, denominator)
+        || pair["value"] != format!("{numerator}/{denominator}")
+    {
+        return Err("music_selected_time_pair_value_required".into());
     }
     let identity = |n: &Value| -> Result<usize, String> {
         if n["frozen"] != true || n["removed"] == true {
@@ -163,11 +169,14 @@ pub(crate) fn import_time(
     if source_id == top || source_id == bottom || top == bottom {
         return Err("music_time_duplicate_source_identity".into());
     }
-    for (n, side) in members.iter().zip(["TOP", "BOTTOM"]) {
+    for (n, (side, value)) in members
+        .iter()
+        .zip([("TOP", numerator), ("BOTTOM", denominator)])
+    {
         if n["kind"] != "TimeNumberInter"
             || n["side"] != side
-            || n["value"] != 4
-            || n["shape"] != "TIME_FOUR"
+            || n["value"] != value
+            || crate::time_column::time_number(n["shape"].as_str().unwrap_or(""))? != value
         {
             return Err("music_selected_time_pair_number_required".into());
         }
@@ -244,7 +253,7 @@ pub(crate) fn import_time(
     registry.commit_extension(physical)?;
     *graph = next;
     Ok(
-        json!({"id":id,"origin":key,"source_header_id":source_id,"staff_id":header["staff_id"],"numerator":4,"denominator":4,"member_ids":retained.iter().map(|n|&n["id"]).collect::<Vec<_>>()}),
+        json!({"id":id,"origin":key,"source_header_id":source_id,"staff_id":header["staff_id"],"numerator":numerator,"denominator":denominator,"member_ids":retained.iter().map(|n|&n["id"]).collect::<Vec<_>>()}),
     )
 }
 
@@ -365,6 +374,13 @@ mod time_import_tests {
         let mut registry = Registry::default();
         let before = graph.snapshot();
         let physical = registry.snapshot();
+        // A selected pair and its physical numbers must agree; reject the
+        // inconsistent value before registering any member or relation.
+        h["time"]["members"][0]["value"] = json!(3);
+        assert!(import_time(&mut graph, &mut registry, &h, 1, &relations).is_err());
+        assert_eq!(before, graph.snapshot());
+        assert_eq!(physical, registry.snapshot());
+        h["time"]["members"][0]["value"] = json!(4);
         h["time"]["members"][1]["glyph"]["runs"] = json!([[0, 0, 999]]);
         assert!(import_time(&mut graph, &mut registry, &h, 1, &relations).is_err());
         assert_eq!(before, graph.snapshot());

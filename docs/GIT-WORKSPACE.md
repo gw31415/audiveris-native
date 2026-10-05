@@ -16,6 +16,6 @@ Rust2024対応toolchainが必要です。認識の実行にはJavaを使いま�
 
 移行はmainへの追加commitです。旧mainの全履歴とarchive/checkpointsは保持し、内側のソース実装履歴を同じrepoの`source-history`参照に保存します。mainルートは新たな開発の正本です。過去のbundle等は過去時点の復元資料として残ります。force push/rewriteはしません。
 
-実行物は同じprivate repoのReleasesを配布先とします。ただし今回環境の既存Git接続は成功してもGitHub API（api.github.com）はForbiddenでした。Releases公開/asset uploadは未実行です。新認証・ネットワーク設定変更・別資格情報での回避は行いません。旧保存実行物は既存checkpointsに保持し、現在ソースからCLIを再ビルドできます。
+実行物は同じprivate repoのReleasesを配布先とします。ただし既存読取記録はコマンド終了値1、`Post https://api.github.com/graphql: Forbidden`です。HTTPステータス/応答本文は未保存。実効restricted host規則にapi.github.comが含まれないネットワーク境界と整合しますが、GitHub側の認証/権限拒否とは確認できません。通常Gitの成功はAPI権限の証明ではありません。Releases公開/asset uploadは未実行です。新認証・ネットワーク設定変更・別資格情報での回避は行いません。旧保存実行物は既存checkpointsに保持し、現在ソースからCLIを再ビルドできます。
 
 全Audiveris機能の同等性は未完です。機能と例は[MUSICXML-LIMITED.md](MUSICXML-LIMITED.md)、原版全機能の移植台帳は[PORT-STATUS.md](PORT-STATUS.md)を参照してください。HEADERの固定調号伝播は原版成功1画像で追加検証した単位であり、他clef/time、一般調号/臨時記号、複声部、実スキャンなどの全面対応を意味しません。

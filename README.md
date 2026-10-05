@@ -4,6 +4,8 @@
 
 UI表示を除く原Audiveris5.11の認識・解析・補正・保存・MusicXML出力機能の同等性が最終目標です。原版機能を省略する予定はありません。限定画像CLIは小段階の成果です。[実装済み/部分/未対応/GUIのみ除外と接続順](docs/PORT-STATUS.md)、[現段階CLI手順](docs/MUSICXML-LIMITED.md)。以下の個別記録は当時の境界・ソースSHAとして保持します。
 
+直近の追加は、認識済み固定3/4 TimePairから小節長・6音（F♯を含む）をMusicXMLへ伝える縦経路です。[入力例と実行手順](docs/MUSICXML-LIMITED.md#recognized-34-header--musicxml)。4/4の既存入力を保持し、他拍子・他clef等は台帳に残して段階的に接続します。
+
 # Audiveris native port — experimental page glyph pipeline
 
 [Linux上の独立検証・音部記号候補の登録](docs/CLEF-REGISTRATION.md)。Javaを使わないnative実行で、候補の理論外形・重心補正・競合関係・header stopまで追加しました。調号・拍子後の最終clef選択とheader固定まで接続済みです。対応範囲は [HEADERS検証境界](docs/HEADERS.md) を参照してください。

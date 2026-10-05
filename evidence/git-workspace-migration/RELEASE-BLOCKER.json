@@ -8,5 +8,9 @@
   "new_credentials_or_settings": false,
   "retry_or_bypass": false,
   "normal_git_read_and_source_history_push_success": true,
-  "needed_decision": "If Releases must be written from this task, GitHub API and upload endpoint access via the existing connection is required; no change made."
+  "needed_decision": "If Releases must be written from this task, GitHub API and upload endpoint access via the existing connection is required; no change made.",
+  "http_status_recorded": null,
+  "response_body_recorded": null,
+  "boundary_assessment": "existing transport Forbidden is consistent with api.github.com absent from enforced restricted host policy; GitHub API permission rejection is not established",
+  "new_network_request_for_assessment": false
 }

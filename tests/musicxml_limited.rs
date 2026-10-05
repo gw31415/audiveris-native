@@ -5,123 +5,179 @@ use std::{fs, process::Command};
 
 #[test]
 fn image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml() {
-    let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("fixtures/official-image-musicxml-header-time");
-    let oracle: Value =
-        serde_json::from_slice(&fs::read(f.join("observed.json")).unwrap()).unwrap();
-    let image =
-        GrayImage::decode(&fs::read(f.join("g-major-header-time-quarter.png")).unwrap()).unwrap();
-    let result = music_xml::recognize(&image).unwrap();
-    let report = &result.owner.owner.prepared.report;
-    assert_eq!(report["events"].as_array().unwrap().len(), 8);
-    for (native, original) in report["events"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .zip(oracle["events"].as_array().unwrap())
-    {
-        for field in [
-            "measure_number",
-            "step",
-            "octave",
-            "alter",
-            "duration_quarters",
-            "voice",
-            "type",
-            "rest",
-        ] {
-            assert_eq!(native[field], original[field], "{field}");
-        }
-    }
-    let sig = &report["shared_sig"];
-    let nodes = sig["inters"].as_array().unwrap();
-    let pair = nodes.iter().find(|n| n["kind"] == "TimePairInter").unwrap();
-    assert_eq!(pair["origin"]["phase"], "MUSIC_TIME");
-    assert!(pair["glyph"].is_null());
-    assert_eq!(pair["member_ids"].as_array().unwrap().len(), 2);
-    assert!(!nodes.iter().any(|n| n["kind"] == "TimeWholeInter"));
-    for original in oracle["original_nodes"].as_array().unwrap() {
-        let n = nodes
+    for (directory, image_name, numerator, event_count) in [
+        (
+            "official-image-musicxml-header-time",
+            "g-major-header-time-quarter.png",
+            4,
+            8,
+        ),
+        (
+            "official-image-musicxml-header-meters",
+            "g-major-header-three-four.png",
+            3,
+            6,
+        ),
+    ] {
+        let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("fixtures")
+            .join(directory);
+        let oracle: Value =
+            serde_json::from_slice(&fs::read(f.join("observed.json")).unwrap()).unwrap();
+        let image = GrayImage::decode(&fs::read(f.join(image_name)).unwrap()).unwrap();
+        let result = music_xml::recognize(&image).unwrap();
+        let report = &result.owner.owner.prepared.report;
+        assert_eq!(report["events"].as_array().unwrap().len(), event_count);
+        for (native, original) in report["events"]
+            .as_array()
+            .unwrap()
             .iter()
-            .find(|n| n["kind"] == original["kind"] && n["bounds"] == original["bounds"])
-            .unwrap();
-        assert_eq!(n["frozen"], true);
-        assert_eq!(
-            (n["grade"].as_f64().unwrap() * 1000.).round_ties_even(),
-            original["grade"].as_f64().unwrap() * 1000.
-        );
-        let effective = n["contextual_grade"]
-            .as_f64()
-            .unwrap_or(n["grade"].as_f64().unwrap());
-        assert_eq!(
-            (effective * 1000.).round_ties_even(),
-            original["contextual_grade"].as_f64().unwrap() * 1000.
-        );
-        if original["kind"] == "TimeNumberInter" {
-            assert_eq!(n["side"], original["side"]);
-            assert_eq!(n["glyph"], original["glyph"]);
-            let gid = n["glyph_id"].as_u64().unwrap() as usize;
+            .zip(oracle["events"].as_array().unwrap())
+        {
+            for field in [
+                "measure_number",
+                "step",
+                "octave",
+                "alter",
+                "duration_quarters",
+                "voice",
+                "type",
+                "rest",
+            ] {
+                assert_eq!(native[field], original[field], "{field}");
+            }
+        }
+        let sig = &report["shared_sig"];
+        let nodes = sig["inters"].as_array().unwrap();
+        let pair = nodes.iter().find(|n| n["kind"] == "TimePairInter").unwrap();
+        assert_eq!(pair["origin"]["phase"], "MUSIC_TIME");
+        assert!(pair["glyph"].is_null());
+        assert_eq!(pair["member_ids"].as_array().unwrap().len(), 2);
+        assert!(!nodes.iter().any(|n| n["kind"] == "TimeWholeInter"));
+        for original in oracle["original_nodes"].as_array().unwrap() {
+            let n = nodes
+                .iter()
+                .find(|n| n["kind"] == original["kind"] && n["bounds"] == original["bounds"])
+                .unwrap();
+            assert_eq!(n["frozen"], true);
             assert_eq!(
-                audiveris_native::beam_dispatch::glyph_json(
-                    &result.owner.owner.prepared.registry.get(gid).unwrap().glyph
-                ),
-                original["glyph"]
+                (n["grade"].as_f64().unwrap() * 1000.).round_ties_even(),
+                original["grade"].as_f64().unwrap() * 1000.
             );
+            let effective = n["contextual_grade"]
+                .as_f64()
+                .unwrap_or(n["grade"].as_f64().unwrap());
+            assert_eq!(
+                (effective * 1000.).round_ties_even(),
+                original["contextual_grade"].as_f64().unwrap() * 1000.
+            );
+            if original["kind"] == "TimeNumberInter" {
+                assert_eq!(n["value"], original["value"]);
+                assert_eq!(n["shape"], original["shape"]);
+                assert_eq!(n["side"], original["side"]);
+                assert_eq!(n["glyph"], original["glyph"]);
+                let gid = n["glyph_id"].as_u64().unwrap() as usize;
+                assert_eq!(
+                    audiveris_native::beam_dispatch::glyph_json(
+                        &result.owner.owner.prepared.registry.get(gid).unwrap().glyph
+                    ),
+                    original["glyph"]
+                );
+                assert!(
+                    sig["relations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|r| r["kind"] == "Containment"
+                            && r["source"] == pair["id"]
+                            && r["target"] == n["id"])
+                );
+            }
+        }
+        let top = nodes
+            .iter()
+            .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "TOP")
+            .unwrap();
+        let bottom = nodes
+            .iter()
+            .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "BOTTOM")
+            .unwrap();
+        assert!(
+            sig["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|r| r["kind"] == "TimeTopBottomRelation"
+                    && r["source"] == top["id"]
+                    && r["target"] == bottom["id"])
+        );
+        assert!(
+            report["measures"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|m| m["numerator"] == numerator && m["denominator"] == 4)
+        );
+        assert_eq!(
+            result
+                .xml
+                .matches(&format!(
+                    "<time><beats>{numerator}</beats><beat-type>4</beat-type></time>"
+                ))
+                .count(),
+            1
+        );
+        assert!(
+            result
+                .xml
+                .contains("<pitch><step>F</step><alter>1</alter><octave>5</octave></pitch>")
+        );
+        if numerator == 3 {
+            // Remove the final head and stem, preserving the original staff
+            // foreground. An underfilled 3/4 measure must refuse, not pad or
+            // fall back to the old hard-coded four-quarter admission.
+            let mut missing =
+                GrayImage::new(image.width, image.height, image.pixels.clone()).unwrap();
+            for y in 190..239 {
+                for x in 1108..1135 {
+                    if ![220, 221, 231, 232, 242, 243, 253, 254, 264, 265].contains(&y) {
+                        missing.pixels[y * missing.width + x] = 255;
+                    }
+                }
+            }
+            let error = music_xml::recognize(&missing).err().unwrap();
             assert!(
-                sig["relations"]
+                error.starts_with("musicxml_incomplete_or_excess_measure"),
+                "{error}"
+            );
+            assert!(error.ends_with("quarters=2:expected=3"), "{error}");
+            for (native, original) in report["measures"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .zip(oracle["measures"].as_array().unwrap())
+            {
+                assert_eq!(native["expected_duration"], original["expected_duration"]);
+                assert_eq!(native["actual_duration"], original["actual_duration"]);
+                let offsets = report["events"]
                     .as_array()
                     .unwrap()
                     .iter()
-                    .any(|r| r["kind"] == "Containment"
-                        && r["source"] == pair["id"]
-                        && r["target"] == n["id"])
-            );
+                    .filter(|e| e["measure_number"] == native["number"])
+                    .map(|e| e["time_offset"].clone())
+                    .collect::<Vec<_>>();
+                assert_eq!(serde_json::json!(offsets), original["time_offsets"]);
+            }
         }
-    }
-    let top = nodes
-        .iter()
-        .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "TOP")
-        .unwrap();
-    let bottom = nodes
-        .iter()
-        .find(|n| n["kind"] == "TimeNumberInter" && n["side"] == "BOTTOM")
-        .unwrap();
-    assert!(
-        sig["relations"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .any(|r| r["kind"] == "TimeTopBottomRelation"
-                && r["source"] == top["id"]
-                && r["target"] == bottom["id"])
-    );
-    assert!(
-        report["measures"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .all(|m| m["numerator"] == 4 && m["denominator"] == 4)
-    );
-    assert_eq!(
-        result
-            .xml
-            .matches("<time><beats>4</beats><beat-type>4</beat-type></time>")
-            .count(),
-        1
-    );
-    assert!(
-        result
-            .xml
-            .contains("<pitch><step>F</step><alter>1</alter><octave>5</octave></pitch>")
-    );
-    for flag in [
-        "heads_complete",
-        "stems_complete",
-        "musicxml_complete",
-        "epilog_complete",
-        "automatic_raster_pipeline_complete",
-    ] {
-        assert_eq!(report[flag], false);
+        for flag in [
+            "heads_complete",
+            "stems_complete",
+            "musicxml_complete",
+            "epilog_complete",
+            "automatic_raster_pipeline_complete",
+        ] {
+            assert_eq!(report[flag], false);
+        }
     }
 }
 

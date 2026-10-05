@@ -30,7 +30,12 @@
     {
       "status": "implemented",
       "unit": "frozen 4/4 HEADER TimePair/number glyphs/owned SIG -> actual meter -> native MusicXML",
-      "limits": "one controlled G-major image variant; original full-image export distinct from saved time/glyph comparison; other header time forms/meters/clefs remain pending; last full regression belongs to pre-change migration version"
+      "limits": "historical 4/4 image unit; next unit adds 3/4; TimeWhole/common/cut, other clefs, meter changes and fractional-quarter rhythms remain pending; last full regression belongs to pre-TimePair migration version"
+    },
+    {
+      "status": "implemented",
+      "unit": "selected HEADER 3/4 TimePair -> physical glyph/owned SIG -> inherited measure duration/onsets -> six-note G-major image MusicXML",
+      "limits": "one original5.11 full-image comparison, separately saved OMR glyph/measure comparison; other integer-quarter meters generalized but not whole-image verified; fractional-quarter rhythms and meter changes pending"
     }
   ],
   "function_groups": [
@@ -52,7 +57,7 @@
     {
       "original_function": "HEADERS / `HeadersBuilder`, clef/key/time関連クラス",
       "status": "partial",
-      "current_and_remaining": "固定HEADER調号の実SIG/glyphと音高/exportをG-major1画像で比較。続けて同譜面の1制御画像で固定4/4 TimePair/数字glyph/拍数を接続。G-clef/4/4ガードは残る。TimeWhole/common/cut、他拍子/clef、途中変更、cancel/臨時記号は未接続。"
+      "current_and_remaining": "固定HEADER調号と4/4・3/4 TimePairを実SIG/glyph・音高・小節期待長・exportへ接続し原版成功画像で比較。TimeWhole/common/cut、他clef、途中変更、cancel/臨時記号は未接続。整数quarter拍子の一般化は他拍子の画像検証完了を意味しない。"
     },
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",
@@ -97,7 +102,7 @@
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "完全4/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。"
+      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",

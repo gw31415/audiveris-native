@@ -182,6 +182,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         if times.len() > 1 {
             return Err("musicxml_time_column_competition_pending".into());
         }
+        let previous_meter = carried_meter;
         if let Some(t) = times.first() {
             if t["bounds"][0].as_i64().unwrap() >= chords[0].bounds[0] {
                 return Err("musicxml_mid_measure_meter_pending".into());
@@ -205,9 +206,17 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             };
         }
         let meter = carried_meter.ok_or("musicxml_recognized_meter_required_no_default")?;
-        if meter != (4, 4) {
-            return Err("musicxml_verified_four_four_scope_required".into());
+        if previous_meter.is_some_and(|previous| previous != meter) {
+            return Err("musicxml_meter_change_range_propagation_pending".into());
         }
+        // PageRhythm.populateTimeSignatures: TimeRational.getValue supplies
+        // the range duration, inherited by stacks until the next time event.
+        // The present quarter/half-only voice uses integer quarter units.
+        let whole_quarters = meter.0.checked_mul(4).ok_or("musicxml_meter_overflow")?;
+        if meter.0 == 0 || meter.1 == 0 || whole_quarters % meter.1 != 0 {
+            return Err("musicxml_fractional_quarter_measure_duration_pending".into());
+        }
+        let expected_quarters = whole_quarters / meter.1;
         // PartwiseBuilder.processKeys updates current.keys only on an actual
         // key event. Its absent-key case preserves the previous part/staff key.
         let keys = nodes
@@ -358,13 +367,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         }
         // Voice.getEndTime/checkDuration + strict complete-measure admission.
         // Pickup/underfilled measures require MeasureFixer and refuse here.
-        if offset != 4 {
+        if offset != expected_quarters {
             return Err(format!(
-                "musicxml_incomplete_or_excess_measure:{}:{}:quarters={offset}:expected=4",
+                "musicxml_incomplete_or_excess_measure:{}:{}:quarters={offset}:expected={expected_quarters}",
                 measure.system, measure.index
             ));
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"expected_duration":"1","actual_duration":"1","voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"expected_duration":rational(expected_quarters),"actual_duration":rational(offset),"voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
@@ -442,7 +451,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/4-4 single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/recognized constant integer-quarter meter single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef forms, meter changes and fractional-quarter rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     Ok(Export { owner: m, xml })

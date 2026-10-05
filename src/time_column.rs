@@ -34,7 +34,7 @@ fn union(a: [i64; 4], b: [i64; 4]) -> [i64; 4] {
         (a[1] + a[3]).max(b[1] + b[3]) - y,
     ]
 }
-fn time_number(shape: &str) -> Result<i64, String> {
+pub(crate) fn time_number(shape: &str) -> Result<i64, String> {
     Ok(match shape {
         "TIME_ZERO" => 0,
         "TIME_ONE" => 1,
@@ -85,7 +85,7 @@ impl TimeValue {
         h ^ (h >> 16)
     }
 }
-fn supported(num: i64, den: i64) -> bool {
+pub(crate) fn supported(num: i64, den: i64) -> bool {
     matches!(
         (num, den),
         (2, 2)
