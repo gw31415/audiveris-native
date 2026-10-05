@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "reference": "library-file:fde1_bGliZmlsZV8wSk5aWEpRcEl3S1JDOWV4b3AxRHN3_FileDrive_860dacf66f308191a98d88753eed9f4d",
+  "retrieved_sha256": "e04f4191ae6816a2fad41f4f353d71d8ae7de0507397a7f1398027f1417c0435",
+  "changed_source_files_restored": 13,
+  "all_source_SHA256_verified": 6782,
+  "source_commit_preimage_verified": true,
+  "source_tree_restored": "83a4bb131813dd9b243d38a33bf7212e8e43dbf1",
+  "full_source_materialized": false,
+  "unchanged_source_base_objects_reused": true,
+  "full_current529_not_run": true,
+  "Git_main_pushed": false
+}

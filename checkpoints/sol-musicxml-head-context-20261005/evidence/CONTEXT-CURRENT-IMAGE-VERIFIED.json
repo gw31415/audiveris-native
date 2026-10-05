@@ -1,0 +1,599 @@
+{
+  "status": "passed",
+  "source_commit": "0d96b92a2ac3c167569aa43f6c7e0cda633201b1",
+  "source_tree": "83a4bb131813dd9b243d38a33bf7212e8e43dbf1",
+  "native_image_CLI_only_runtime": true,
+  "input_SHA256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+  "heads": 43,
+  "actual_cached_stems": 10,
+  "actual_SIG_links": 25,
+  "computed_context_nodes": 53,
+  "native_raw_head_grades_retained": true,
+  "raw_context_differences_from_XML_projection": [
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        996,
+        214,
+        13,
+        8
+      ],
+      "original_XML_contextual_grade": 0.6251409515296067,
+      "native_raw_contextual_grade": 0.6256240348111012
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        996,
+        215,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        877,
+        221,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.605919420184907,
+      "native_raw_contextual_grade": 0.6061557511684594
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        1117,
+        221,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.605919420184907,
+      "native_raw_contextual_grade": 0.6061557511684594
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        876,
+        226,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        1116,
+        226,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        277,
+        233,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.6389300730456393,
+      "native_raw_contextual_grade": 0.6394134983610199
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        757,
+        233,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.6389300730456393,
+      "native_raw_contextual_grade": 0.6394134983610199
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        276,
+        237,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        756,
+        237,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        397,
+        243,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.605919420184907,
+      "native_raw_contextual_grade": 0.6061557511684594
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        637,
+        243,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.605919420184907,
+      "native_raw_contextual_grade": 0.6061557511684594
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        396,
+        248,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        636,
+        248,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        517,
+        255,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.6389300730456393,
+      "native_raw_contextual_grade": 0.6394134983610199
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        516,
+        259,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.7698825030084621,
+      "native_raw_contextual_grade": 0.7698588205950898
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        993,
+        216,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        171,
+        221,
+        12,
+        10
+      ],
+      "original_XML_contextual_grade": 0.5482248640963896,
+      "native_raw_contextual_grade": 0.5481829130627467
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        871,
+        220,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.277,
+      "native_raw_contextual_grade": 0.27677725118483415
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        1111,
+        220,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.277,
+      "native_raw_contextual_grade": 0.27677725118483415
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        167,
+        220,
+        10,
+        10
+      ],
+      "original_XML_contextual_grade": 0.197,
+      "native_raw_contextual_grade": 0.1971563981042654
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        873,
+        227,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        1113,
+        227,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        168,
+        227,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.614075144883992,
+      "native_raw_contextual_grade": 0.6144164714464544
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        174,
+        227,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.274,
+      "native_raw_contextual_grade": 0.27397260273972607
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        174,
+        233,
+        12,
+        10
+      ],
+      "original_XML_contextual_grade": 0.653701393190446,
+      "native_raw_contextual_grade": 0.6535944176557769
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        169,
+        233,
+        12,
+        10
+      ],
+      "original_XML_contextual_grade": 0.3823345870211157,
+      "native_raw_contextual_grade": 0.38280680846816717
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        271,
+        232,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.217,
+      "native_raw_contextual_grade": 0.21691973969631234
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        751,
+        232,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.217,
+      "native_raw_contextual_grade": 0.21691973969631234
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        273,
+        238,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        753,
+        238,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        171,
+        238,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.427,
+      "native_raw_contextual_grade": 0.4273972602739726
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        171,
+        243,
+        12,
+        10
+      ],
+      "original_XML_contextual_grade": 0.5471211730279396,
+      "native_raw_contextual_grade": 0.5470792041778711
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        391,
+        242,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.277,
+      "native_raw_contextual_grade": 0.27677725118483415
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        631,
+        242,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.277,
+      "native_raw_contextual_grade": 0.27677725118483415
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        393,
+        249,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        633,
+        249,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        168,
+        249,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.5423842446533745,
+      "native_raw_contextual_grade": 0.5427417632994841
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        174,
+        249,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.46182828403755044,
+      "native_raw_contextual_grade": 0.46179405201311613
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        175,
+        254,
+        12,
+        10
+      ],
+      "original_XML_contextual_grade": 0.6612489509542847,
+      "native_raw_contextual_grade": 0.6611459733683716
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        511,
+        254,
+        9,
+        10
+      ],
+      "original_XML_contextual_grade": 0.217,
+      "native_raw_contextual_grade": 0.21691973969631234
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        170,
+        255,
+        12,
+        10
+      ],
+      "original_XML_contextual_grade": 0.31675672136629357,
+      "native_raw_contextual_grade": 0.3169712811204274
+    },
+    {
+      "kind": "HeadInter",
+      "bounds": [
+        513,
+        260,
+        13,
+        10
+      ],
+      "original_XML_contextual_grade": 0.712,
+      "native_raw_contextual_grade": 0.7123287671232877
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        1008,
+        184,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        888,
+        195,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        1128,
+        195,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        288,
+        206,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        768,
+        206,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        408,
+        217,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        648,
+        217,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        528,
+        228,
+        2,
+        38
+      ],
+      "original_XML_contextual_grade": 0.932839321341344,
+      "native_raw_contextual_grade": 0.9328362206876786
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        176,
+        228,
+        3,
+        38
+      ],
+      "original_XML_contextual_grade": 0.8553748285914414,
+      "native_raw_contextual_grade": 0.8553460176477014
+    },
+    {
+      "kind": "StemInter",
+      "bounds": [
+        179,
+        223,
+        4,
+        43
+      ],
+      "original_XML_contextual_grade": 0.8135972200562283,
+      "native_raw_contextual_grade": 0.8136360283296143
+    }
+  ],
+  "raw_context_not_claimed_equal_to_original_XML": true,
+  "native_reduction_final_notes_or_MusicXML_complete": false
+}

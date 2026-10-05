@@ -1,0 +1,444 @@
+{
+  "status": "passed",
+  "scope": "native automatic image head-only actual linkStems phases1/2 compared with original XML-loaded scheduler",
+  "heads": 43,
+  "registered_actual_cached_stems": 10,
+  "head_stem_relations": 25,
+  "head_shapes_bounds_abnormal_states_stem_physical_geometry_grades_and_relation_fields_match": true,
+  "HEADS_raw_grade_difference_from_XML_three_decimal_rounding": [
+    {
+      "bounds": [
+        996,
+        214,
+        13,
+        8
+      ],
+      "original_XML_grade": 0.338,
+      "native_preserved_raw_grade": 0.33846153846153854
+    },
+    {
+      "bounds": [
+        996,
+        215,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        877,
+        221,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.261,
+      "native_preserved_raw_grade": 0.26119096509240247
+    },
+    {
+      "bounds": [
+        1117,
+        221,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.261,
+      "native_preserved_raw_grade": 0.26119096509240247
+    },
+    {
+      "bounds": [
+        876,
+        226,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        1116,
+        226,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        277,
+        233,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.289,
+      "native_preserved_raw_grade": 0.28943089430894314
+    },
+    {
+      "bounds": [
+        757,
+        233,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.289,
+      "native_preserved_raw_grade": 0.28943089430894314
+    },
+    {
+      "bounds": [
+        276,
+        237,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        756,
+        237,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        397,
+        243,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.261,
+      "native_preserved_raw_grade": 0.26119096509240247
+    },
+    {
+      "bounds": [
+        637,
+        243,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.261,
+      "native_preserved_raw_grade": 0.26119096509240247
+    },
+    {
+      "bounds": [
+        396,
+        248,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        636,
+        248,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        517,
+        255,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.289,
+      "native_preserved_raw_grade": 0.28943089430894314
+    },
+    {
+      "bounds": [
+        516,
+        259,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.506,
+      "native_preserved_raw_grade": 0.5059665871121718
+    },
+    {
+      "bounds": [
+        993,
+        216,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        171,
+        221,
+        12,
+        10
+      ],
+      "original_XML_grade": 0.323,
+      "native_preserved_raw_grade": 0.32296296296296295
+    },
+    {
+      "bounds": [
+        871,
+        220,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.277,
+      "native_preserved_raw_grade": 0.27677725118483415
+    },
+    {
+      "bounds": [
+        1111,
+        220,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.277,
+      "native_preserved_raw_grade": 0.27677725118483415
+    },
+    {
+      "bounds": [
+        167,
+        220,
+        10,
+        10
+      ],
+      "original_XML_grade": 0.197,
+      "native_preserved_raw_grade": 0.1971563981042654
+    },
+    {
+      "bounds": [
+        873,
+        227,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        1113,
+        227,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        168,
+        227,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.386,
+      "native_preserved_raw_grade": 0.38634146341463416
+    },
+    {
+      "bounds": [
+        174,
+        227,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.274,
+      "native_preserved_raw_grade": 0.27397260273972607
+    },
+    {
+      "bounds": [
+        174,
+        233,
+        12,
+        10
+      ],
+      "original_XML_grade": 0.432,
+      "native_preserved_raw_grade": 0.4318840579710145
+    },
+    {
+      "bounds": [
+        169,
+        233,
+        12,
+        10
+      ],
+      "original_XML_grade": 0.226,
+      "native_preserved_raw_grade": 0.2263498920086393
+    },
+    {
+      "bounds": [
+        271,
+        232,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.217,
+      "native_preserved_raw_grade": 0.21691973969631234
+    },
+    {
+      "bounds": [
+        751,
+        232,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.217,
+      "native_preserved_raw_grade": 0.21691973969631234
+    },
+    {
+      "bounds": [
+        273,
+        238,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        753,
+        238,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        171,
+        238,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.427,
+      "native_preserved_raw_grade": 0.4273972602739726
+    },
+    {
+      "bounds": [
+        171,
+        243,
+        12,
+        10
+      ],
+      "original_XML_grade": 0.323,
+      "native_preserved_raw_grade": 0.32296296296296295
+    },
+    {
+      "bounds": [
+        391,
+        242,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.277,
+      "native_preserved_raw_grade": 0.27677725118483415
+    },
+    {
+      "bounds": [
+        631,
+        242,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.277,
+      "native_preserved_raw_grade": 0.27677725118483415
+    },
+    {
+      "bounds": [
+        393,
+        249,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        633,
+        249,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    },
+    {
+      "bounds": [
+        168,
+        249,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.386,
+      "native_preserved_raw_grade": 0.38634146341463416
+    },
+    {
+      "bounds": [
+        174,
+        249,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.274,
+      "native_preserved_raw_grade": 0.27397260273972607
+    },
+    {
+      "bounds": [
+        175,
+        254,
+        12,
+        10
+      ],
+      "original_XML_grade": 0.409,
+      "native_preserved_raw_grade": 0.40888888888888886
+    },
+    {
+      "bounds": [
+        511,
+        254,
+        9,
+        10
+      ],
+      "original_XML_grade": 0.217,
+      "native_preserved_raw_grade": 0.21691973969631234
+    },
+    {
+      "bounds": [
+        170,
+        255,
+        12,
+        10
+      ],
+      "original_XML_grade": 0.202,
+      "native_preserved_raw_grade": 0.20215982721382295
+    },
+    {
+      "bounds": [
+        513,
+        260,
+        13,
+        10
+      ],
+      "original_XML_grade": 0.712,
+      "native_preserved_raw_grade": 0.7123287671232877
+    }
+  ],
+  "native_raw_HEADS_grades_preserved": true,
+  "production_integrated": false,
+  "cleaner_reduction_epilog_complete": false,
+  "native_MusicXML_export_complete": false
+}

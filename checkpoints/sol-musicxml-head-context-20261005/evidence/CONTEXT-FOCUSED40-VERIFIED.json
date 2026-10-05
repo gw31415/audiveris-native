@@ -1,0 +1,8 @@
+{
+  "independent_original_control_runs_identical": true,
+  "cases": 40,
+  "sha256": "514772a22d77d39c3a72893833ef995396b9a8d8007e808d01952b0119c9ee1f",
+  "covered": "0..4 stem partners, tied/distinct grades, reversed support insertion, parallel relation map overwrite and focused-head stem concurrency",
+  "native_test_log": "context-prototype-tests-focused40.log",
+  "production_integrated": false
+}
