@@ -1,0 +1,13 @@
+{
+  "page_id": "page_fe0f36467a448191885de9c663caafd2",
+  "reference": "library-file:fde1_bGliZmlsZV9iMnY3OXF0c0wyZWRiUTh6RVZTdTBR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+  "file_name": "LIBRARY-FOUNDATION-CHAIN-PROTOTYPE-675c6be100a641eb994684d04e084377.json",
+  "mime_type": "application/json",
+  "byte_size": 30819,
+  "sha256": "bccb93a396483a8e4c3a59ee0fa8d903e135a404df699da6aea385021eeedd29",
+  "file_access_confirmed": true,
+  "is_image": false,
+  "markdown": "[Audiveris画像候補のJava依存に沿った8音削減・Graph/cache未統合試作](library-file:fde1_bGliZmlsZV9iMnY3OXF0c0wyZWRiUTh6RVZTdTBR_FileDrive_860dacf66f308191a98d88753eed9f4d)",
+  "inserted": false,
+  "next_step": "Read the Page and use edit_page with its fresh guards to insert markdown."
+}

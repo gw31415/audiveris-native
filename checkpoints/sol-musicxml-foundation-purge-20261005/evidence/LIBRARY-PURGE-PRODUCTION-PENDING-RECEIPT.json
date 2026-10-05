@@ -1,0 +1,13 @@
+{
+  "page_id": "page_fe0f36467a448191885de9c663caafd2",
+  "reference": "library-file:fde1_bGliZmlsZV9OYnJiLV9nUjRJLXhYUVhJclduVmhR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+  "file_name": "LIBRARY-PURGE-PRODUCTION-PENDING-52aafc3507034921b3ea5622598c1b83.json",
+  "mime_type": "application/json",
+  "byte_size": 22819,
+  "sha256": "17b0732e39e88b08288888b517f0eb7ee10949ca64d894d571d83a2aa31a938b",
+  "file_access_confirmed": true,
+  "is_image": false,
+  "markdown": "[Audiveris画像CLI実SIG弱候補削減・全回帰検証中ソース差分](library-file:fde1_bGliZmlsZV9OYnJiLV9nUjRJLXhYUVhJclduVmhR_FileDrive_860dacf66f308191a98d88753eed9f4d)",
+  "inserted": false,
+  "next_step": "Read the Page and use edit_page with its fresh guards to insert markdown."
+}

@@ -1,0 +1,13 @@
+{
+  "page_id": "page_fe0f36467a448191885de9c663caafd2",
+  "reference": "library-file:fde1_bGliZmlsZV9zekl1WnpSQ29IdGRPekh1Nk1DbS13_FileDrive_860dacf66f308191a98d88753eed9f4d",
+  "file_name": "LIBRARY-ENDING-HEAD-PROTOTYPE-9e0bd8ac3e0647c48573b8d12ae1b51e.json",
+  "mime_type": "application/json",
+  "byte_size": 17613,
+  "sha256": "52ca8f86968d9c2c486073049070a04f78f36584ca191b09455f8d08e8ce2d7f",
+  "file_access_confirmed": true,
+  "is_image": false,
+  "markdown": "[Audiveris原版終端head接続チェック・実画像SIG試作](library-file:fde1_bGliZmlsZV9zekl1WnpSQ29IdGRPekh1Nk1DbS13_FileDrive_860dacf66f308191a98d88753eed9f4d)",
+  "inserted": false,
+  "next_step": "Read the Page and use edit_page with its fresh guards to insert markdown."
+}

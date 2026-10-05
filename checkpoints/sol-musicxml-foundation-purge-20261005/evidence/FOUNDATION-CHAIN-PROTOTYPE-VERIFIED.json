@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "source_base_commit": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+  "native_stage_original_mapping": {
+    "ending": "1.1.checkStemEndingHeads",
+    "ending_purge": "1.1.purgeAfter.checkStemEndingHeads",
+    "heads": "1.1.checkHeads",
+    "heads_purge": "1.1.purgeAfter.checkHeads",
+    "reduced": "1.reduceExclusions"
+  },
+  "comparison_scope": "Original5.11 XML-loaded head/stem/HeadStem retained geometry/raw-head XML projection/abnormal/stem record/relation fields at five stages; original full exclusion sets and raw contextual grades NOT matched",
+  "retained_final_heads_stems_links": [
+    8,
+    8,
+    8
+  ],
+  "additional_chain_test_passed": true,
+  "synthetic_new_exclusion_IDs_in_plan_only": true,
+  "actual_cache_removal_and_Graph_callbacks_NOT_updated": true,
+  "prototype_only": true,
+  "musicxml_implemented": false
+}

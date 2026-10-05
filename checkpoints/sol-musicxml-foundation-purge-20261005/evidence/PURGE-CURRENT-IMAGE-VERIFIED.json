@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "source_commit": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+  "source_tree": "0e92e7bff21b4bac2aa55902a7601f94b45a5543",
+  "native_image_CLI_runtime_only": true,
+  "native_input_sha256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+  "mode": "--weak-foundations",
+  "retained_counts": {
+    "HeadInter": 30,
+    "StemInter": 10,
+    "BarlineInter": 3
+  },
+  "retained_HeadStem_relations": 22,
+  "removed_vertices": 14,
+  "actual_live_Graph_updated": true,
+  "registry_cached_Arc_and_existing_native_ID_identity_test_passed": true,
+  "new_boundary_and_actual_CLI_tests_passed": 4,
+  "full_SIG_exclusions_comparison": false,
+  "comparison_scope": "Original XML-loaded retained head/stem/HeadStem first-purge subset; native raw HEADS grade retained, only three-decimal projection compared",
+  "entire_current_Laura_HEADS_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+  "entire_current_Laura_inspection_STEMS_sha256": "c891c61bbeb894e460e5f4c95ae7cfb64b40fca0cdaa19161082bfedb81c3bba",
+  "heads_complete": false,
+  "stems_complete": false,
+  "musicxml_complete": false,
+  "epilog_complete": false
+}

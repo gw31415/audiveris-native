@@ -1,0 +1,182 @@
+{
+  "recorded_utc": "2026-10-05T06:51:47.348057+00:00",
+  "branch": "main",
+  "parent_checkpoint_commit": "0aedcdb799e420ea461f503216a3e6901a276a55",
+  "parent_implementation_commit": "0d96b92a2ac3c167569aa43f6c7e0cda633201b1",
+  "local_implementation_commit": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+  "local_implementation_tree": "0e92e7bff21b4bac2aa55902a7601f94b45a5543",
+  "tracked_files": 6789,
+  "changed_files_from_parent": [
+    "docs/STEM-IMAGE-CONTINUATION.md",
+    "fixtures/official-stem-foundation-purge/JAVA-SHA256.json",
+    "fixtures/official-stem-foundation-purge/PROVENANCE.json",
+    "fixtures/official-stem-foundation-purge/README.md",
+    "fixtures/official-stem-foundation-purge/StemReductionTraceProbe.java",
+    "fixtures/official-stem-foundation-purge/first-purge-subset.json",
+    "src/bin/audiveris-stems.rs",
+    "src/lib.rs",
+    "src/shared_sig.rs",
+    "src/stem_foundation_purge.rs",
+    "tests/stem_foundation_purge.rs"
+  ],
+  "file_sha256": {
+    "docs/STEM-IMAGE-CONTINUATION.md": "f1fd62cc73d2c0315dcb4f705b8433ee5de8efa8292a31193e968b924dd45419",
+    "fixtures/official-stem-foundation-purge/JAVA-SHA256.json": "3c9fb44233dfc2c25f8df56931c4903d01902c66163282b03029c18983c1a480",
+    "fixtures/official-stem-foundation-purge/PROVENANCE.json": "85af90cf2f8071359b36101009204dfb6820b10f097b723c0791948c1edfa3eb",
+    "fixtures/official-stem-foundation-purge/README.md": "3ba4381b2448406bbc33abad011ca7b3bc698f76802e1219c8aa370c659cfa85",
+    "fixtures/official-stem-foundation-purge/StemReductionTraceProbe.java": "932d963e301ac835565031c19309b933b3051c567096ed6185af3dfec3834bd0",
+    "fixtures/official-stem-foundation-purge/first-purge-subset.json": "04ec3195031dfdda95219ac768856efe070efac8e757f3ff202fb17b265458b3",
+    "src/bin/audiveris-stems.rs": "4956834d71bfd89cfefd64b7f7dc0f5895e4a0b6e361b2478f5eb3e35f8ed61a",
+    "src/lib.rs": "272951d32d945c53bdc7bd4cfdb4e8259e735e12b5a74aee7deb29f31ccd4c5d",
+    "src/shared_sig.rs": "7e5de894a6a7619bd43d7c8b9bad4c66cbc785fa18c7424d9859eb71f48cd9fc",
+    "src/stem_foundation_purge.rs": "a08ea6871fa356aecd38f540006bb0f8a8c2e6d53f781d2748e914294c358134",
+    "tests/stem_foundation_purge.rs": "cdb152fffb83df9bb372626867092145bf0bf93a24e7c974e4dd0c25adaa8914"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-musicxml-foundation-purge-20261005/SOURCE-SHA256.json",
+    "sha256": "d0aa246576acbf31fa69950f2a0642217f8b7dfa73bfed60f618fe3acd70b832",
+    "files": 6789
+  },
+  "bundle": {
+    "path": "checkpoints/sol-musicxml-foundation-purge-20261005/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 13408,
+    "decoded_sha256": "6b1fe75d5e659cd6517b3f9293bcca8bfda876faca7542c0b4bd705c485fda91",
+    "base64_sha256": "99dc26f562a4ac0282036940c09f1bb01afdd23ff2d182f4d5a96c030c363f24",
+    "prerequisite": "0d96b92a2ac3c167569aa43f6c7e0cda633201b1"
+  },
+  "restore_script_sha256": "b1a75087e7a344b6954a950f8845b5fa602e347a8577f601c98781b4754f900b",
+  "evidence_file_sha256": {
+    "evidence/ENDING-HEAD-PROTOTYPE-VERIFIED.json": "c44bde1a568a89a1083335bab13899107d37601c84625f1151ba67aa93bef72b",
+    "evidence/FOUNDATION-CHAIN-PROTOTYPE-VERIFIED.json": "770aa8bdf765930b7833de08763623e987d9dcbfbbc65de60df2f0f63227ff45",
+    "evidence/LIBRARY-ENDING-HEAD-PROTOTYPE-RECEIPT.json": "9087fd6871f30a34e7f4e06ddcb7aad3638a6adb88ca96b6fad1b65e50fd8cab",
+    "evidence/LIBRARY-ENDING-HEAD-PROTOTYPE-RESTORE-VERIFIED.json": "17f948f9a33f8078cee20ef6ca08a20842a33c0c93c532f7e8b07d2987c67aac",
+    "evidence/LIBRARY-FOUNDATION-CHAIN-PROTOTYPE-RECEIPT.json": "980465292e38ded609bfaa13cbaf03a5cb274c997e7a9ada57dbeb83af755790",
+    "evidence/LIBRARY-FOUNDATION-CHAIN-PROTOTYPE-RESTORE-VERIFIED.json": "49c25c79a045c0ee3fd535eaece8265ff4f0ae61b5078488d66b481caf9c89b7",
+    "evidence/LIBRARY-PURGE-PRODUCTION-PENDING-RECEIPT.json": "5d8cb4fec48c446f3b27b7bbab515302089537824f223ddc807b0103b7c9916e",
+    "evidence/LIBRARY-PURGE-PRODUCTION-PENDING-RESTORE-VERIFIED.json": "a534763bb04a157b13ea10a67381b9dbeb63e97de2c941bc98eabc254bf75b75",
+    "evidence/PURGE-CURRENT-IMAGE-VERIFIED.json": "f3616f433dfb1877923538863f92ce1e5b07b878a7e3771c0421e424f9834aa9",
+    "evidence/purge-clippy.log": "2f4c4828e60d869faf97c2f83c3e4836156c0b59cac111bc10ee13f610348ec3",
+    "evidence/purge-fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/purge-full-workspace-exit.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/purge-full-workspace.log.gz": "22b3065ae5ad114d5f71e5142cdc28596d7701a00e0bf99e67c677c2d6d05995",
+    "evidence/purge-image-tests-exit.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/purge-image-tests.log.gz": "cf30cb204244c6f327fae276bdc7a5002483778896176657ca690620e7dbcac5",
+    "evidence/purge-unit-tests.log.gz": "561b4dc1a0f8bee45ecd979811bb1b3d9cb7a68ae354dd687f311b8e142e75ed"
+  },
+  "validation": {
+    "full_current_workspace_tests_run": true,
+    "full_workspace_tests_passed": 533,
+    "failed": 0,
+    "ignored": 0,
+    "source_commit_tested": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+    "source_tree_tested": "0e92e7bff21b4bac2aa55902a7601f94b45a5543",
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "preexisting_fixture_files_SHA256_unchanged": 2615,
+    "current_entire_Laura_HEADS_and_inspection_STEMS_SHA256_unchanged": true,
+    "HEADS_Laura_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "STEMS_Laura_sha256": "c891c61bbeb894e460e5f4c95ae7cfb64b40fca0cdaa19161082bfedb81c3bba",
+    "current_native_image": {
+      "status": "passed",
+      "source_commit": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+      "source_tree": "0e92e7bff21b4bac2aa55902a7601f94b45a5543",
+      "native_image_CLI_runtime_only": true,
+      "native_input_sha256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+      "mode": "--weak-foundations",
+      "retained_counts": {
+        "HeadInter": 30,
+        "StemInter": 10,
+        "BarlineInter": 3
+      },
+      "retained_HeadStem_relations": 22,
+      "removed_vertices": 14,
+      "actual_live_Graph_updated": true,
+      "registry_cached_Arc_and_existing_native_ID_identity_test_passed": true,
+      "new_boundary_and_actual_CLI_tests_passed": 4,
+      "full_SIG_exclusions_comparison": false,
+      "comparison_scope": "Original XML-loaded retained head/stem/HeadStem first-purge subset; native raw HEADS grade retained, only three-decimal projection compared",
+      "entire_current_Laura_HEADS_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+      "entire_current_Laura_inspection_STEMS_sha256": "c891c61bbeb894e460e5f4c95ae7cfb64b40fca0cdaa19161082bfedb81c3bba",
+      "heads_complete": false,
+      "stems_complete": false,
+      "musicxml_complete": false,
+      "epilog_complete": false
+    },
+    "Library_source_diff_retrieval_and_overlay_recovery": {
+      "status": "passed",
+      "reference": "library-file:fde1_bGliZmlsZV9OYnJiLV9nUjRJLXhYUVhJclduVmhR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+      "retrieved_sha256": "17b0732e39e88b08288888b517f0eb7ee10949ca64d894d571d83a2aa31a938b",
+      "changed_source_files_restored": 11,
+      "all_source_SHA256_verified": 6789,
+      "source_commit_preimage_verified": true,
+      "source_tree_restored": "0e92e7bff21b4bac2aa55902a7601f94b45a5543",
+      "full_source_materialized": false,
+      "full_current_suite_pending": true,
+      "Git_main_pushed": false
+    }
+  },
+  "implemented": "--weak-foundations takes the actual image-linked owner and applies original SIGraph.deleteWeakInters threshold0.5 with frozen/LEDGER exceptions, actual vertex tombstones and incident edge pruning, abnormal callbacks; canonical cache/registry identities and native raw grades retained. Quarter30heads10stems22HeadStem links match original first-purge retained subset.",
+  "comparison_limits": "Original5.11 XML-loaded heads/stems/HeadStem subset only, head grades compared through three-decimal XML projection. Native image inputs require no original outputs/runtime. Overlap/chord exclusions and full SigReducer not yet reproduced;30 candidate heads are not8 finalized notes.",
+  "next_endpoint_prototype": {
+    "status": "passed",
+    "production_source_base": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+    "scope": "Original SigReducer.pruneStemHeads geometry on actual native image weak-purge SIG; retained21 HeadStem relations fields match XML-loaded first endpoint check",
+    "native_relations_before": 22,
+    "native_relations_projected_after": 21,
+    "native_removed_relation_ids": [
+      64
+    ],
+    "new_overlap_exclusion_planned": {
+      "source": 22,
+      "target": 57
+    },
+    "original_full_exclusion_set_not_compared": true,
+    "prototype_tests_passed": 2,
+    "production_integrated": false,
+    "live_Graph_updated": false,
+    "cache_updated": false,
+    "musicxml_complete": false
+  },
+  "next_foundation_chain_prototype": {
+    "status": "passed",
+    "source_base_commit": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+    "native_stage_original_mapping": {
+      "ending": "1.1.checkStemEndingHeads",
+      "ending_purge": "1.1.purgeAfter.checkStemEndingHeads",
+      "heads": "1.1.checkHeads",
+      "heads_purge": "1.1.purgeAfter.checkHeads",
+      "reduced": "1.reduceExclusions"
+    },
+    "comparison_scope": "Original5.11 XML-loaded head/stem/HeadStem retained geometry/raw-head XML projection/abnormal/stem record/relation fields at five stages; original full exclusion sets and raw contextual grades NOT matched",
+    "retained_final_heads_stems_links": [
+      8,
+      8,
+      8
+    ],
+    "additional_chain_test_passed": true,
+    "synthetic_new_exclusion_IDs_in_plan_only": true,
+    "actual_cache_removal_and_Graph_callbacks_NOT_updated": true,
+    "prototype_only": true,
+    "musicxml_implemented": false
+  },
+  "native_image_to_MusicXML_complete": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "musicxml_complete": false,
+  "unverified": [
+    "weak StemInter cache-aware automatic removal",
+    "original overlap/chord exclusions and full consistency/competition reduction",
+    "finalizeStems/cleaner/epilog and beam-linked scheduler",
+    "pitch/duration/chords/measure/rhythm/export integration",
+    "ordinary rests and single voice rhythms",
+    "nonzero skew",
+    "real scans",
+    "special/mixed staff",
+    "full24shape pages",
+    "32sources selected-glyph bound",
+    "raw transient original/native persistence-boundary differences"
+  ],
+  "GitHub_Actions_dispatch_rerun_performed": false,
+  "GitHub_Actions_dispatch_rerun_hold_until": "2026-11-01T09:00:00+09:00"
+}
