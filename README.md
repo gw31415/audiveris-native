@@ -1,4 +1,8 @@
-# 最新：C4加線付き1譜面のMusicXML接続
+# 最新：複合四分休符を画像CLIへ接続
+
+[Linux CLI手順/入力例](checkpoints/sol-musicxml-compound-sig-20261005/CLI-GUIDE.md) / [実行物](checkpoints/sol-musicxml-compound-sig-20261005/audiveris-musicxml-linux-x86_64.tar.gz) / [MANIFEST](checkpoints/sol-musicxml-compound-sig-20261005/MANIFEST.json)。変更後の全workspace回帰549件・fmt・全workspace/all-targets clippy成功。原版成功の画像8イベントに一致。画像ページ・saved XML段階観測・条件指定競合kernelを区別しています。最終目標はUI表示を除く原版機能同等性で、限定範囲は小checkpointの現在の検証境界です。全体完了false、Library再探索/再upload・GHA dispatch/rerun無し。
+
+# 前工程：C4加線付き1譜面のMusicXML接続
 
 [CLI手順・限定範囲](checkpoints/sol-musicxml-ledger-cluster-20261005/CLI-GUIDE.md) / [Linux実行物](checkpoints/sol-musicxml-ledger-cluster-20261005/audiveris-musicxml-linux-x86_64.tar.gz) / [MANIFEST](checkpoints/sol-musicxml-ledger-cluster-20261005/MANIFEST.json)。対象回帰7件・fmt・clippy成功。新ソースの全回帰は未実行。旧544全回帰とreleaseは下記の当時の版として保持。新たな原版成功入力1件8イベントをnative画像処理で確認し、中央四分休符の拒否を維持。Library再探索・再upload無し。
 

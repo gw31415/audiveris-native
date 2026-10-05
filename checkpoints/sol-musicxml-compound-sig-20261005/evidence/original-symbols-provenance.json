@@ -1,0 +1,31 @@
+{
+  "exit_code": 0,
+  "scope": "original same input to SYMBOLS then CLI run callback reload of saved SYMBOLS XML; actual LinksStep and separately explicit-grade conflict controls",
+  "runtime_argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Dnative.probe.output=/workspace/work/musicxml-compound-rest/original-symbols/result.json",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-compound-rest/original-symbols/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-compound-rest/original-symbols/prefs",
+    "-Duser.home=/workspace/work/musicxml-compound-rest/original-symbols/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/musicxml-stems44/original44-first/observer-classes:/workspace/work/musicxml-stems44/original44-schedule-third/observer-classes:/workspace/work/musicxml-compound-rest/original-symbols/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SYMBOLS",
+    "-output",
+    "/workspace/work/musicxml-compound-rest/original-symbols",
+    "-run",
+    "CompoundSymbolsProbe",
+    "--",
+    "/workspace/work/musicxml-compound-rest/input/compound-quarter-rest.png"
+  ]
+}
