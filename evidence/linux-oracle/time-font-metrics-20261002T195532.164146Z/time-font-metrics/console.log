@@ -1,0 +1,56 @@
+04:55:37.126 [main] WARN org.audiveris.omr.WellKnowns -- Error creating /home/agent/.cache/AudiverisLtd/audiveris/log
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)
+	at org.audiveris.omr.constant.ConstantManager.<init>(ConstantManager.java:151)
+	at org.audiveris.omr.constant.ConstantManager.<clinit>(ConstantManager.java:140)
+	at org.audiveris.omr.constant.Constant.setUnitAndName(Constant.java:398)
+	at org.audiveris.omr.constant.Constant$Double.<clinit>(Constant.java:682)
+	at org.audiveris.omr.ui.symbol.OmrFont$Constants.<init>(OmrFont.java:459)
+	at org.audiveris.omr.ui.symbol.OmrFont.<clinit>(OmrFont.java:67)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at TimeFontMetricsProbe.main(TimeFontMetricsProbe.java:6)
+04:55:37.131 [main] WARN org.audiveris.omr.WellKnowns -- Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)
+	at org.audiveris.omr.constant.ConstantManager.<init>(ConstantManager.java:151)
+	at org.audiveris.omr.constant.ConstantManager.<clinit>(ConstantManager.java:140)
+	at org.audiveris.omr.constant.Constant.setUnitAndName(Constant.java:398)
+	at org.audiveris.omr.constant.Constant$Double.<clinit>(Constant.java:682)
+	at org.audiveris.omr.ui.symbol.OmrFont$Constants.<init>(OmrFont.java:459)
+	at org.audiveris.omr.ui.symbol.OmrFont.<clinit>(OmrFont.java:67)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at TimeFontMetricsProbe.main(TimeFontMetricsProbe.java:6)
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+04:55:37.282 [main] DEBUG org.audiveris.omr.constant.ConstantManager -- [org.audiveris.omr.constant.ConstantManager] No property file /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195532.164146Z/time-font-metrics/config/AudiverisLtd/audiveris/run.properties
+04:55:37.341 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- No sizeMap for Bravura
+04:55:37.342 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Null or empty sizeMap for Bravura
+04:55:37.342 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Creating fontName: Bravura fileName: Bravura.otf size: 4
+04:55:37.343 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Font url=jar:file:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/audiveris.jar!/res/Bravura.otf
+04:55:37.343 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Found file Bravura.otf
+04:55:37.841 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=4] key:Bravura
+04:55:37.925 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Created custom font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=4] added:true
+04:55:37.925 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: org.audiveris.omr.ui.symbol.MusicFont[family=Bravura,name=Bravura,style=plain,size=4] key:Bravura

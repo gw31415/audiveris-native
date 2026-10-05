@@ -1,0 +1,31 @@
+2026-10-03 04:55:20,303 INFO [rendered-header-three-sharps]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-three-sharps.png
+2026-10-03 04:55:20,443 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:20,444 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-three-sharps/rendered-header-three-sharps.omr
+2026-10-03 04:55:20,445 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:55:20,447 INFO [rendered-header-three-sharps]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:55:20,465 INFO [rendered-header-three-sharps]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-three-sharps.png
+2026-10-03 04:55:20,468 INFO [rendered-header-three-sharps]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:55:20,550 INFO [rendered-header-three-sharps]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:55:20,559 INFO [rendered-header-three-sharps]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:55:20,560 INFO [rendered-header-three-sharps]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 39% of needed quorum
+2026-10-03 04:55:20,561 WARN [rendered-header-three-sharps]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:55:20,561 INFO [rendered-header-three-sharps]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:55:20,561 INFO [rendered-header-three-sharps]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:55:20,562 INFO [rendered-header-three-sharps]                 Book.java:2584 | Book{rendered-header-three-sharps} storing
+2026-10-03 04:55:20,595 INFO [rendered-header-three-sharps]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:20,611 INFO [rendered-header-three-sharps]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:55:20,835 INFO [rendered-header-three-sharps]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:20,836 INFO [rendered-header-three-sharps]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-three-sharps/rendered-header-three-sharps.omr
+2026-10-03 04:55:20,837 INFO [rendered-header-three-sharps]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:55:20,877 INFO [rendered-header-three-sharps]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:55:20,879 INFO [rendered-header-three-sharps]                 Book.java:2057 | End of Book{rendered-header-three-sharps}
+2026-10-03 04:55:20,894 INFO [rendered-header-three-sharps]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:55:20,986 INFO [rendered-header-three-sharps]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:55:20,995 INFO [rendered-header-three-sharps]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:55:21,017 INFO [rendered-header-three-sharps]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:55:21,050 INFO [rendered-header-three-sharps]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:55:21,050 INFO [rendered-header-three-sharps]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:55:21,774 INFO [rendered-header-three-sharps]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:21,791 INFO [rendered-header-three-sharps]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:21,792 INFO [rendered-header-three-sharps]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-three-sharps/rendered-header-three-sharps.omr
+2026-10-03 04:55:21,793 INFO [rendered-header-three-sharps]                Score.java:181  | Closing {Score 1}

@@ -1,0 +1,206 @@
+{
+  "stage": "connected_components_before_hard_slice_fallback",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "hard_slice_fallback_performed": false,
+  "key_clef_consistency_performed": false,
+  "full_native_key_recognition_claimed": false,
+  "flat_mass_pitch_offset": 0.65,
+  "area_pitch_offsets": {
+    "FLAT": 1.0559375,
+    "SHARP": 0
+  },
+  "retained_part_observation": "Replay of original getAreaPixels, RunTableFactory, GlyphFactory, purgeParts; no replacement recognition algorithm",
+  "candidate_observation": "Original retrieveCandidates after overlap purge; assignment independently via original retrieveComponents",
+  "source_sha256": {
+    "scripts/java/KeyComponentsProbe.java": "97688b98548e38523c92d90068cb116dbe1f95881a8552844dcfea3300106322",
+    "scripts/linux_oracle.py": "7bad7d99f6a40f25e5f57978f3b31d6d96024feb5ef4807c2f48297ab734815a"
+  },
+  "provenance_file": "evidence/linux-oracle/key-components-20261002T182716.855508Z/provenance.json",
+  "provenance_sha256": "7bfafe340a79ea3a62b8fcf17e7f7f3d615b42f993bceed59a26ba698d80b3c9",
+  "fixtures": [
+    {
+      "input": "fixtures/official-grid/laura-gray.png",
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "result": "fixtures/official-grid/laura-gray-key-components.json",
+      "result_sha256": "fe317234a7c4d72154df221c53e04fdea5ffac6d20a8699d7364b1e4040618cb",
+      "retained_parts": 24,
+      "candidates": 24,
+      "assigned_alterations": 24,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/synthetic-system-bars.png",
+      "input_sha256": "2e1bf10093d9c39482c7289659dab6f419f95002bd9e7fcf48a523fb598b2417",
+      "result": "fixtures/official-grid/synthetic-system-bars-key-components.json",
+      "result_sha256": "b40ec0e750a4aeb66c572942776085ea00149d5c48c2a840ba7513dd5c376dc9",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/cclef-pair.png",
+      "input_sha256": "6ad712c2fa2ef5d499fe6ef1eb8e08415a614e2ee50ffda2065652640aa698a9",
+      "result": "fixtures/official-grid/cclef-pair-key-components.json",
+      "result_sha256": "7814851b0f92a439140e726d1a14c767f4b7b4863f4c4b1c4c8dfc5c0f203702",
+      "retained_parts": 1,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 1,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/bracket-pair.png",
+      "input_sha256": "98c22e85d449ac523c467c91a99d3cb5bfedd7597422d3f644182bc8d55b7559",
+      "result": "fixtures/official-grid/bracket-pair-key-components.json",
+      "result_sha256": "a5b0f7bd54eba8d165b2a7f864bd58a06f87d98469780c9e1aee0a22be6e34e4",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/line-root.png",
+      "input_sha256": "4cc659988b083cf511b872178991dd729b81aa7b4657427fed60c4452f43b80b",
+      "result": "fixtures/official-grid/line-root-key-components.json",
+      "result_sha256": "e836a5ed7ac19438c6bbf828d37a00503357143fba2211a8d1b5a3baa9631a87",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-g_clef.png",
+      "input_sha256": "57b5ef3fb138bd3937c806d6974cee21de682144d76b06e76657feddd66b57d8",
+      "result": "fixtures/official-grid/rendered-clef-g_clef-key-components.json",
+      "result_sha256": "cab07f339210695fe322b957fbb404a6c1bce0f7180501368ce16dad67077b5e",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-f_clef.png",
+      "input_sha256": "ccc8969acbc59adb4e4af8ae5d0a090f3ea68eb9fddb21e19affee9f19c4da5e",
+      "result": "fixtures/official-grid/rendered-clef-f_clef-key-components.json",
+      "result_sha256": "65c5defd342d902ddd3835c9bdb352e807804db3dded087bc40fafc0388ecca1",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-c_clef.png",
+      "input_sha256": "ba3918e8beb6c95ab37b813e3ed3c9ce98edee72461b1fa76d6a38c88eef9dd1",
+      "result": "fixtures/official-grid/rendered-clef-c_clef-key-components.json",
+      "result_sha256": "78777db01e35ca36f5dceeeca7fa1d599a5df7159068611ac51469147427b8a9",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-empty.png",
+      "input_sha256": "3217c10f13a42cedf8af46349743a256b31ac5557a72840ccbe81f5548b689e3",
+      "result": "fixtures/official-grid/rendered-clef-empty-key-components.json",
+      "result_sha256": "31bd1d97f279e210ef8e360bbda97be84a2ada3bbbaf53f046d0e09a304a76cc",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-noise.png",
+      "input_sha256": "1e6ab688887eeb4899c3b769da93c40bbce736fa3dd8bfe91b0cc9ed48d81686",
+      "result": "fixtures/official-grid/rendered-clef-noise-key-components.json",
+      "result_sha256": "a8aa4a747c26b6411f65566f9fb5c071bf6f3d62b296b8de293d8705052bb106",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-empty.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "result": "fixtures/official-grid/rendered-header-empty-key-components.json",
+      "result_sha256": "c4c0f4201a276249a14cf6b837fbfc9aa50aeb94be3d016e44d5b9067029ce47",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-four-flats.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "result": "fixtures/official-grid/rendered-header-four-flats-key-components.json",
+      "result_sha256": "becf7bb465af33836ddeb8397799b70079a3d12ec7320dc72f9807518a45793d",
+      "retained_parts": 4,
+      "candidates": 4,
+      "assigned_alterations": 4,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-noise.png",
+      "input_sha256": "5286804a4376ad60152f6b18fe0e7d68faeec2fa521ef3a6b819f0d4225cb50e",
+      "result": "fixtures/official-grid/rendered-header-noise-key-components.json",
+      "result_sha256": "2b82010f4a357fcc06807ff655a2b85b13d310f8cbba2260e6da6887869de5ac",
+      "retained_parts": 0,
+      "candidates": 0,
+      "assigned_alterations": 0,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-flat.png",
+      "input_sha256": "cbb1483bb8c0e0062a22c8f49bdc637c29f52ab947bcfb76c5178032ac284a24",
+      "result": "fixtures/official-grid/rendered-header-one-flat-key-components.json",
+      "result_sha256": "20bb69d7183c010aa4c73bb620bbd704d769edfa1407541ab4bce85513cd5340",
+      "retained_parts": 1,
+      "candidates": 1,
+      "assigned_alterations": 1,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-sharp.png",
+      "input_sha256": "cf8322aa798f99e6f8bb09a13e1dc90506adb0c88c4204535e34e482814114bd",
+      "result": "fixtures/official-grid/rendered-header-one-sharp-key-components.json",
+      "result_sha256": "22f75e6feba80e332240ae2fc10c8307c97a1432451816458708f6d182925723",
+      "retained_parts": 1,
+      "candidates": 1,
+      "assigned_alterations": 1,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-three-sharps.png",
+      "input_sha256": "c745e312405bffb11bea86ce888afdd6bb55a7335b87bb87b01e6c1e6736fc77",
+      "result": "fixtures/official-grid/rendered-header-three-sharps-key-components.json",
+      "result_sha256": "3ac643dfd08a24052cdc791a7333c46aacaf77f9e1c962b8422381e9ffdaf548",
+      "retained_parts": 3,
+      "candidates": 3,
+      "assigned_alterations": 3,
+      "empty_allocated_slices": 0,
+      "candidate_assignment_exact": true
+    }
+  ],
+  "totals": {
+    "fixtures": 16,
+    "retained_parts": 34,
+    "candidates_after_overlap_purge": 33,
+    "assigned_alterations": 33,
+    "empty_allocated_slices_before_fallback": 1
+  }
+}

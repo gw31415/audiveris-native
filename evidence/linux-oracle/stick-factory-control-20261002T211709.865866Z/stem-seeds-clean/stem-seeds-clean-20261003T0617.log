@@ -1,0 +1,31 @@
+2026-10-03 06:17:14,000 INFO [stem-seeds-clean]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/stem-seeds-clean.png
+2026-10-03 06:17:14,129 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 06:17:14,129 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stick-factory-control/20261002T211709.865866Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 06:17:14,131 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 06:17:14,133 INFO [stem-seeds-clean]       StepMonitoring.java:98   | LOAD
+2026-10-03 06:17:14,154 INFO [stem-seeds-clean]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/stem-seeds-clean.png
+2026-10-03 06:17:14,157 INFO [stem-seeds-clean]       StepMonitoring.java:98   | BINARY
+2026-10-03 06:17:14,248 INFO [stem-seeds-clean]       StepMonitoring.java:98   | SCALE
+2026-10-03 06:17:14,257 INFO [stem-seeds-clean]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 06:17:14,258 INFO [stem-seeds-clean]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 39% of needed quorum
+2026-10-03 06:17:14,258 WARN [stem-seeds-clean]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 06:17:14,258 INFO [stem-seeds-clean]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 06:17:14,259 INFO [stem-seeds-clean]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 06:17:14,260 INFO [stem-seeds-clean]                 Book.java:2584 | Book{stem-seeds-clean} storing
+2026-10-03 06:17:14,282 INFO [stem-seeds-clean]                 Book.java:2565 | Stored /book.xml
+2026-10-03 06:17:14,301 INFO [stem-seeds-clean]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 06:17:14,533 INFO [stem-seeds-clean]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 06:17:14,534 INFO [stem-seeds-clean]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stick-factory-control/20261002T211709.865866Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 06:17:14,536 INFO [stem-seeds-clean]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 06:17:14,558 INFO [stem-seeds-clean]                 Book.java:2050 | End of Stub#1
+2026-10-03 06:17:14,560 INFO [stem-seeds-clean]                 Book.java:2057 | End of Book{stem-seeds-clean}
+2026-10-03 06:17:14,574 INFO [stem-seeds-clean]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 06:17:14,669 INFO [stem-seeds-clean]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 06:17:14,677 INFO [stem-seeds-clean]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 06:17:14,700 INFO [stem-seeds-clean]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 06:17:14,742 INFO [stem-seeds-clean]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 06:17:14,744 INFO [stem-seeds-clean]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 06:17:14,837 INFO [stem-seeds-clean]                 Book.java:2565 | Stored /book.xml
+2026-10-03 06:17:14,860 INFO [stem-seeds-clean]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 06:17:14,860 INFO [stem-seeds-clean]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stick-factory-control/20261002T211709.865866Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 06:17:14,862 INFO [stem-seeds-clean]                Score.java:181  | Closing {Score 1}

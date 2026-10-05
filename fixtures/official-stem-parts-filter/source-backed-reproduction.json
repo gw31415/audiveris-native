@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "original_fields_byte_reproduced": true,
+  "independent_compilations_and_runs": 2,
+  "original_sha256": "cb441ec7ad3c736c17566e0c2aacd04ab52d136fe76763635846b39d16349daa",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "cases": 4152,
+  "builders_observed": 612
+}

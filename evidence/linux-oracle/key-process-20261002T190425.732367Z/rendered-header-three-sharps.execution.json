@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-three-sharps.png",
+  "input_sha256": "c745e312405bffb11bea86ce888afdd6bb55a7335b87bb87b01e6c1e6736fc77",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "KeyBuilderProcessProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-three-sharps.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T190425.732367Z/rendered-header-three-sharps/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "81323151713b6d657b489fd6a9342797d4482563ff64b259276737d87b6fec6c",
+  "ok": true,
+  "result_sha256": "695dce28e848912df1b947a2d61ac7893ba00fcf3dea2bd495c9a4f7257847ee"
+}

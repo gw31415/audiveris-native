@@ -1,0 +1,58 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-sol/source/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.31s
+     Running tests/beam_extend_to_beam.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_extend_to_beam-b5a436f79fb57de1)
+
+running 2 tests
+test invalid_endpoints_fail_before_state_or_registry_mutation ... ok
+test independent_original_gap_gate_and_extend_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/beam_extension_geometry.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_extension_geometry-0415938b9cc03d24)
+
+running 6 tests
+test fractional_overlap_crosses_endpoint_and_keeps_integer_bounds ... ok
+test collapsed_areas_are_empty_but_zero_reach_is_not_clamped ... ok
+test horizontal_sides_preserve_pixel_offset_and_half_open_edges ... ok
+test invalid_or_out_of_bounds_geometry_is_rejected ... ok
+test positive_and_negative_slopes_use_parallelograms_on_both_sides ... ok
+test direct_official_side_area_bounds_and_membership_match_exactly ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_lifecycle.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_lifecycle-ab8658dcc0281d53)
+
+running 2 tests
+test accepted_application_is_atomic_for_invalid_endpoints_and_preserves_raw_order ... ok
+test original_registration_removal_and_rejection_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_merge.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_merge-5e431e45942e1461)
+
+running 2 tests
+test invalid_merge_inputs_fail_without_mutating_the_raster ... ok
+test direct_original_merge_candidates_match_and_inputs_are_unchanged ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/beam_middle_area.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_middle_area-56523218d9a5edee)
+
+running 5 tests
+test unsupported_inputs_and_generated_vertices_are_rejected ... ok
+test touching_zero_height_overlap_and_equal_starts_retain_original_geometry ... ok
+test sloped_bridge_uses_nearest_endpoints_in_both_argument_orders ... ok
+test weighted_height_and_swapped_arguments_keep_exact_horizontal_edges ... ok
+test direct_official_middle_area_bounds_and_membership_match_exactly ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_side_lookup.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_side_lookup-82423e450eb399cd)
+
+running 3 tests
+test invalid_inputs_fail_and_equal_gap_order_is_stable ... ok
+test typed_state_lookup_preserves_state_and_ignores_removed_candidates ... ok
+test original_side_lookup_and_rectangle_intersections_match ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+

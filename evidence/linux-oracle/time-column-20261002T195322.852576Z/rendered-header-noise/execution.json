@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-noise.png",
+  "input_sha256": "5286804a4376ad60152f6b18fe0e7d68faeec2fa521ef3a6b819f0d4225cb50e",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "HeaderTimeColumnProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-noise.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-noise/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "8f07cc51b3d92315141409adbfca02e42948f74d30ce12ee0fd92ac57752fda0",
+  "ok": true,
+  "result_sha256": "2ee925c33d306dc4e8d7b4b69c28dea2554742ebc42794605af8c994b4fea7bd"
+}

@@ -1,0 +1,31 @@
+2026-10-03 04:55:55,183 INFO [key-column-last-sharp-missing]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-last-sharp-missing.png
+2026-10-03 04:55:55,324 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:55,324 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-last-sharp-missing/key-column-last-sharp-missing.omr
+2026-10-03 04:55:55,326 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:55:55,328 INFO [key-column-last-sharp-missing]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:55:55,347 INFO [key-column-last-sharp-missing]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-last-sharp-missing.png
+2026-10-03 04:55:55,351 INFO [key-column-last-sharp-missing]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:55:55,443 INFO [key-column-last-sharp-missing]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:55:55,453 INFO [key-column-last-sharp-missing]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:55:55,454 INFO [key-column-last-sharp-missing]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 40% of needed quorum
+2026-10-03 04:55:55,454 WARN [key-column-last-sharp-missing]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:55:55,455 INFO [key-column-last-sharp-missing]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:55:55,455 INFO [key-column-last-sharp-missing]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:55:55,456 INFO [key-column-last-sharp-missing]                 Book.java:2584 | Book{key-column-last-sharp-missing} storing
+2026-10-03 04:55:55,476 INFO [key-column-last-sharp-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:55,495 INFO [key-column-last-sharp-missing]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:55:55,707 INFO [key-column-last-sharp-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:55,707 INFO [key-column-last-sharp-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-last-sharp-missing/key-column-last-sharp-missing.omr
+2026-10-03 04:55:55,708 INFO [key-column-last-sharp-missing]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:55:55,729 INFO [key-column-last-sharp-missing]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:55:55,730 INFO [key-column-last-sharp-missing]                 Book.java:2057 | End of Book{key-column-last-sharp-missing}
+2026-10-03 04:55:55,743 INFO [key-column-last-sharp-missing]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:55:55,820 INFO [key-column-last-sharp-missing]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:55:55,830 INFO [key-column-last-sharp-missing]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:55:55,857 INFO [key-column-last-sharp-missing]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:55:55,902 INFO [key-column-last-sharp-missing]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:55:55,903 INFO [key-column-last-sharp-missing]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:55:56,579 INFO [key-column-last-sharp-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:56,606 INFO [key-column-last-sharp-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:56,607 INFO [key-column-last-sharp-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-last-sharp-missing/key-column-last-sharp-missing.omr
+2026-10-03 04:55:56,608 INFO [key-column-last-sharp-missing]                Score.java:181  | Closing {Score 1}

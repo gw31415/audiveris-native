@@ -1,0 +1,78 @@
+{
+  "environment": "env -i PATH=/nonexistent; no external runtime tools available",
+  "cases": [
+    {
+      "input": "time-column-cut",
+      "headers_complete": true,
+      "staffs": 1,
+      "time_shapes": [
+        "CUT_TIME"
+      ],
+      "time_values": [
+        [
+          2,
+          2
+        ]
+      ],
+      "report_sha256": "6fea06b9dbc88d2ed7cb866f0bc7c2d8d1ceb91b08c4af5068df89497410dbdf"
+    },
+    {
+      "input": "laura-gray",
+      "headers_complete": true,
+      "staffs": 6,
+      "time_shapes": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "time_values": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        null,
+        null,
+        null
+      ],
+      "report_sha256": "15043b9e2b1b200655430f48d32ecd717e7dac8fc15ac53c2c9f7f55d1684d29"
+    },
+    {
+      "input": "time-column-pair-12-8",
+      "headers_complete": true,
+      "staffs": 1,
+      "time_shapes": [
+        null
+      ],
+      "time_values": [
+        null
+      ],
+      "report_sha256": "ddcf0a7b8d5674902b684b9d95d14d84d3c14ec8f0c0682d30c84152fcc1fbce"
+    },
+    {
+      "input": "time-column-pair-3-4",
+      "headers_complete": true,
+      "staffs": 1,
+      "time_shapes": [
+        null
+      ],
+      "time_values": [
+        [
+          3,
+          4
+        ]
+      ],
+      "report_sha256": "75cad4e6617e3ecc45fe7bb18e823bb138d7e040115de7775e185bd7c6fd7fe1"
+    }
+  ]
+}

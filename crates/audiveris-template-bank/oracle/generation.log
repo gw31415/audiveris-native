@@ -1,0 +1,26 @@
+00:39:09.573 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- No sizeMap for Bravura
+00:39:09.575 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Null or empty sizeMap for Bravura
+00:39:09.575 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Creating fontName: Bravura fileName: Bravura.otf size: 51
+00:39:09.581 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Font url=jar:file:/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/app/audiveris.jar!/res/Bravura.otf
+00:39:09.581 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Found file Bravura.otf
+00:39:09.609 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=51] key:Bravura
+00:39:09.752 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Created custom font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=51] added:true
+00:39:09.752 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: org.audiveris.omr.ui.symbol.MusicFont[family=Bravura,name=Bravura,style=plain,size=51] key:Bravura
+00:39:09.875 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- Building template for BREVE Bravura 51
+00:39:09.880 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- BREVE size:51 
+Template{BREVE w:35,h:20 keyPoints:null
+ slim:java.awt.Rectangle[x=2,y=2,width=30,height=16]}
+00:39:09.936 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- Building template for WHOLE_NOTE Bravura 51
+00:39:09.937 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- WHOLE_NOTE size:51 
+Template{WHOLE_NOTE w:26,h:17 keyPoints:null
+ slim:java.awt.Rectangle[x=2,y=2,width=21,height=12]}
+00:39:09.942 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- Building template for NOTEHEAD_VOID Bravura 51
+00:39:09.943 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- NOTEHEAD_VOID size:51 
+Template{NOTEHEAD_VOID w:20,h:17 keyPoints:null
+ slim:java.awt.Rectangle[x=2,y=2,width=15,height=12]}
+00:39:09.947 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- Building template for NOTEHEAD_BLACK Bravura 51
+00:39:09.948 [main] DEBUG org.audiveris.omr.image.TemplateFactory -- NOTEHEAD_BLACK size:51 
+Template{NOTEHEAD_BLACK w:20,h:17 keyPoints:null
+ slim:java.awt.Rectangle[x=2,y=2,width=15,height=12]}
+00:39:09.952 [main] DEBUG org.audiveris.omr.ui.symbol.MusicFont -- width:15.0
+00:39:09.953 [main] DEBUG org.audiveris.omr.ui.symbol.MusicFont -- v1:50,w1:14.75 v:51,w:15.046875 v2:54,w2:15.9375

@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "conditions": 72,
+  "actual_beam_builders": 12,
+  "exact_polygon_nonzero_edges_and_theoretical_lines": true,
+  "ring_start_winding_and_exact_zero_length_edges_normalized_only": true,
+  "native_controls_gzip_sha256": "3bbb3976b7ae64c4c71bc33b16430f8804c57aa442960954d2ab313fde021224",
+  "native_source_sha256": {
+    "src/stem_beam_lookup_area.rs": "b863dfcb6a71a92a846daedaa7d6064962c44d343ace48dae48bc4a1180ac734",
+    "examples/support/stem_beam_lookup_area_controls.rs": "8227df446c38e4b34692e0fbb68893b29f3aa28619ca98394f3ec39b6f0b6e1a",
+    "examples/stem_beam_lookup_area_dump.rs": "59d788f36f35c55e37e14c05b18baf24811c95612d2c474c10d24e7d4822804c",
+    "tests/stem_beam_lookup_area.rs": "32a2fdac1375ba60aa6917655a8828a0998fcee2702b4ce2db605805b846c000"
+  },
+  "declared_profile_gap_pixels_and_neighborhoods": true,
+  "automatic_neighborhood_and_closer_limit_selection_complete": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "observed_original_profiles": [
+    1
+  ],
+  "observed_profile_gap_pixels": [
+    13
+  ]
+}

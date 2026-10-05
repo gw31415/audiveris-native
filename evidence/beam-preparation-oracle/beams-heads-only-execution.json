@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-heads-only.png",
+  "input_sha256": "5da19dd851d4b8864f47c6de20d01bf67ee30bf6de17bf5cb774192545c2bf98",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-heads-only.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/beams-heads-only/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "d2745eddb906614e88f44604ca5f701465d445d44c06d2555cf4b7b0f8325328",
+  "ok": true,
+  "result_sha256": "1c5addeaf3a0371a8b8911cf4d0d079ec4f23fa1d6c611f1278d686d9887c9ec"
+}

@@ -1,0 +1,25 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.26
+   Compiling serde_core v1.0.228
+   Compiling simd-adler32 v0.3.10
+   Compiling zmij v1.0.23
+   Compiling adler2 v2.0.1
+   Compiling crc32fast v1.5.2
+   Compiling syn v2.0.119
+   Compiling serde v1.0.228
+   Compiling cfg-if v1.0.5
+   Compiling serde_json v1.0.150
+   Compiling serde_derive v1.0.228
+   Compiling miniz_oxide v0.9.1
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.3
+   Compiling flate2 v1.1.10
+   Compiling miniz_oxide v0.8.9
+   Compiling fdeflate v0.3.7
+   Compiling bitflags v2.13.2
+   Compiling audiveris-classifier v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5/crates/audiveris-classifier)
+   Compiling png v0.18.1
+   Compiling audiveris-glyph-features v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5/crates/audiveris-glyph-features)
+   Compiling audiveris-native v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5)
+    Finished `release` profile [optimized] target(s) in 16.53s

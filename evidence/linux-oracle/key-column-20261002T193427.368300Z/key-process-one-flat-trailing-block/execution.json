@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-process-one-flat-trailing-block.png",
+  "input_sha256": "a688d76e753ae0ad44bcb1ba2ddb8aeea0b04c5153e7e7fd2a5497152e9f8329",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "KeyColumnProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-process-one-flat-trailing-block.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/key-process-one-flat-trailing-block/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "7f35d81cd24b9a370b8f56d60ffa7bc87a0d89606d052bd6aae7befa78955f8a",
+  "ok": true,
+  "result_sha256": "0afd79206e0c31f3df46bc08c3a616848b01dcf2b4df46620b84e9fc2496f6d7"
+}

@@ -1,0 +1,31 @@
+2026-10-03 05:42:29,965 INFO [stem-seeds-noise]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/stem-seeds-noise.png
+2026-10-03 05:42:30,085 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:42:30,085 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds/20261002T204159.659668Z/stem-seeds-noise/stem-seeds-noise.omr
+2026-10-03 05:42:30,087 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:42:30,088 INFO [stem-seeds-noise]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:42:30,105 INFO [stem-seeds-noise]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/stem-seeds-noise.png
+2026-10-03 05:42:30,108 INFO [stem-seeds-noise]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:42:30,171 INFO [stem-seeds-noise]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:42:30,180 INFO [stem-seeds-noise]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:42:30,181 INFO [stem-seeds-noise]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 38% of needed quorum
+2026-10-03 05:42:30,181 WARN [stem-seeds-noise]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:42:30,182 INFO [stem-seeds-noise]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:42:30,182 INFO [stem-seeds-noise]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:42:30,183 INFO [stem-seeds-noise]                 Book.java:2584 | Book{stem-seeds-noise} storing
+2026-10-03 05:42:30,201 INFO [stem-seeds-noise]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:42:30,217 INFO [stem-seeds-noise]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:42:30,404 INFO [stem-seeds-noise]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:42:30,405 INFO [stem-seeds-noise]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds/20261002T204159.659668Z/stem-seeds-noise/stem-seeds-noise.omr
+2026-10-03 05:42:30,406 INFO [stem-seeds-noise]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:42:30,422 INFO [stem-seeds-noise]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:42:30,424 INFO [stem-seeds-noise]                 Book.java:2057 | End of Book{stem-seeds-noise}
+2026-10-03 05:42:30,438 INFO [stem-seeds-noise]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:42:30,513 INFO [stem-seeds-noise]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:42:30,520 INFO [stem-seeds-noise]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:42:30,538 INFO [stem-seeds-noise]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:42:30,587 INFO [stem-seeds-noise]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:42:30,588 INFO [stem-seeds-noise]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:42:31,275 INFO [stem-seeds-noise]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:42:31,289 INFO [stem-seeds-noise]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:42:31,289 INFO [stem-seeds-noise]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds/20261002T204159.659668Z/stem-seeds-noise/stem-seeds-noise.omr
+2026-10-03 05:42:31,290 INFO [stem-seeds-noise]                Score.java:181  | Closing {Score 1}

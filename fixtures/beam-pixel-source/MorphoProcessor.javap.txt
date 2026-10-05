@@ -1,0 +1,1029 @@
+Compiled from "MorphoProcessor.java"
+public class org.audiveris.omr.image.MorphoProcessor implements org.audiveris.omr.image.MorphoConstants {
+  private static final org.slf4j.Logger logger;
+
+  public static final int BINF;
+
+  private static final int ORIG;
+
+  private static final int PLUS;
+
+  private static final int MINUS;
+
+  private final org.audiveris.omr.image.StructureElement se;
+
+  private final org.audiveris.omr.image.StructureElement minus_se;
+
+  private final org.audiveris.omr.image.StructureElement plus_se;
+
+  private final org.audiveris.omr.image.LocalHistogram bh;
+
+  private final org.audiveris.omr.image.LocalHistogram p_h;
+
+  private final org.audiveris.omr.image.LocalHistogram m_h;
+
+  private final int[][] pg;
+
+  private final int[][] pg_plus;
+
+  private final int[][] pg_minus;
+
+  int width;
+
+  int height;
+
+  public org.audiveris.omr.image.MorphoProcessor(org.audiveris.omr.image.StructureElement);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #7                  // Field se:Lorg/audiveris/omr/image/StructureElement;
+       9: aload_0
+      10: aload_1
+      11: invokevirtual #13                 // Method org/audiveris/omr/image/StructureElement.getWidth:()I
+      14: putfield      #19                 // Field width:I
+      17: aload_0
+      18: aload_1
+      19: invokevirtual #23                 // Method org/audiveris/omr/image/StructureElement.getHeight:()I
+      22: putfield      #26                 // Field height:I
+      25: aload_0
+      26: new           #14                 // class org/audiveris/omr/image/StructureElement
+      29: dup
+      30: aload_1
+      31: aload_1
+      32: getstatic     #29                 // Field SGRAD:[I
+      35: invokevirtual #33                 // Method org/audiveris/omr/image/StructureElement.Delta:([I)[I
+      38: iconst_m1
+      39: invokevirtual #39                 // Method org/audiveris/omr/image/StructureElement.H:([II)[I
+      42: aload_0
+      43: getfield      #19                 // Field width:I
+      46: invokespecial #43                 // Method org/audiveris/omr/image/StructureElement."<init>":([II)V
+      49: putfield      #46                 // Field minus_se:Lorg/audiveris/omr/image/StructureElement;
+      52: aload_0
+      53: new           #14                 // class org/audiveris/omr/image/StructureElement
+      56: dup
+      57: aload_1
+      58: aload_1
+      59: getstatic     #49                 // Field NGRAD:[I
+      62: invokevirtual #33                 // Method org/audiveris/omr/image/StructureElement.Delta:([I)[I
+      65: iconst_m1
+      66: invokevirtual #39                 // Method org/audiveris/omr/image/StructureElement.H:([II)[I
+      69: aload_0
+      70: getfield      #19                 // Field width:I
+      73: invokespecial #43                 // Method org/audiveris/omr/image/StructureElement."<init>":([II)V
+      76: putfield      #52                 // Field plus_se:Lorg/audiveris/omr/image/StructureElement;
+      79: aload_0
+      80: new           #55                 // class org/audiveris/omr/image/LocalHistogram
+      83: dup
+      84: invokespecial #57                 // Method org/audiveris/omr/image/LocalHistogram."<init>":()V
+      87: putfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+      90: aload_0
+      91: new           #55                 // class org/audiveris/omr/image/LocalHistogram
+      94: dup
+      95: invokespecial #57                 // Method org/audiveris/omr/image/LocalHistogram."<init>":()V
+      98: putfield      #62                 // Field p_h:Lorg/audiveris/omr/image/LocalHistogram;
+     101: aload_0
+     102: new           #55                 // class org/audiveris/omr/image/LocalHistogram
+     105: dup
+     106: invokespecial #57                 // Method org/audiveris/omr/image/LocalHistogram."<init>":()V
+     109: putfield      #65                 // Field m_h:Lorg/audiveris/omr/image/LocalHistogram;
+     112: aload_0
+     113: aload_1
+     114: invokevirtual #68                 // Method org/audiveris/omr/image/StructureElement.getVect:()[[I
+     117: putfield      #72                 // Field pg:[[I
+     120: aload_0
+     121: aload_0
+     122: getfield      #52                 // Field plus_se:Lorg/audiveris/omr/image/StructureElement;
+     125: invokevirtual #68                 // Method org/audiveris/omr/image/StructureElement.getVect:()[[I
+     128: putfield      #76                 // Field pg_plus:[[I
+     131: aload_0
+     132: aload_0
+     133: getfield      #46                 // Field minus_se:Lorg/audiveris/omr/image/StructureElement;
+     136: invokevirtual #68                 // Method org/audiveris/omr/image/StructureElement.getVect:()[[I
+     139: putfield      #79                 // Field pg_minus:[[I
+     142: return
+
+  public void close(ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: invokevirtual #82                 // Method ij/process/ByteProcessor.getWidth:()I
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #85                 // Method ij/process/ByteProcessor.getHeight:()I
+       9: istore_3
+      10: aload_0
+      11: getfield      #19                 // Field width:I
+      14: istore        4
+      16: aload_0
+      17: getfield      #26                 // Field height:I
+      20: istore        5
+      22: iconst_0
+      23: istore        6
+      25: sipush        255
+      28: istore        7
+      30: aload_0
+      31: getfield      #72                 // Field pg:[[I
+      34: arraylength
+      35: istore        8
+      37: aload_1
+      38: invokevirtual #86                 // Method ij/process/ByteProcessor.getPixels:()Ljava/lang/Object;
+      41: checkcast     #90                 // class "[B"
+      44: astore        9
+      46: aload         9
+      48: arraylength
+      49: newarray       byte
+      51: astore        10
+      53: aload         9
+      55: arraylength
+      56: newarray       byte
+      58: astore        11
+      60: iload         8
+      62: newarray       int
+      64: astore        12
+      66: iconst_1
+      67: istore        13
+      69: iload         13
+      71: iload_3
+      72: if_icmpgt     225
+      75: iconst_0
+      76: istore        14
+      78: iload         14
+      80: iload_2
+      81: if_icmpge     219
+      84: iload         13
+      86: iconst_1
+      87: isub
+      88: iload_2
+      89: imul
+      90: iload         14
+      92: iadd
+      93: istore        15
+      95: iload         15
+      97: aload         9
+      99: arraylength
+     100: if_icmpge     143
+     103: aload_0
+     104: iload         15
+     106: iload_2
+     107: iload_3
+     108: aload         9
+     110: aload_0
+     111: getfield      #72                 // Field pg:[[I
+     114: bipush        64
+     116: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+     119: astore        12
+     121: aload         12
+     123: iconst_1
+     124: iaload
+     125: sipush        255
+     128: isub
+     129: istore        7
+     131: aload         10
+     133: iload         15
+     135: iload         7
+     137: sipush        255
+     140: iand
+     141: i2b
+     142: bastore
+     143: iload         13
+     145: iload         5
+     147: isub
+     148: iconst_1
+     149: isub
+     150: iload_2
+     151: imul
+     152: iload         14
+     154: iadd
+     155: iload         4
+     157: isub
+     158: istore        16
+     160: iload         16
+     162: iflt          213
+     165: iload         16
+     167: aload         9
+     169: arraylength
+     170: if_icmpge     213
+     173: aload_0
+     174: iload         16
+     176: iload_2
+     177: iload_3
+     178: aload         10
+     180: aload_0
+     181: getfield      #72                 // Field pg:[[I
+     184: bipush        32
+     186: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+     189: astore        12
+     191: aload         12
+     193: iconst_0
+     194: iaload
+     195: sipush        255
+     198: iadd
+     199: istore        6
+     201: aload         11
+     203: iload         16
+     205: iload         6
+     207: sipush        255
+     210: iand
+     211: i2b
+     212: bastore
+     213: iinc          14, 1
+     216: goto          78
+     219: iinc          13, 1
+     222: goto          69
+     225: iload_3
+     226: istore        13
+     228: iload         13
+     230: iload_3
+     231: iload         5
+     233: iadd
+     234: if_icmpgt     331
+     237: iconst_0
+     238: istore        14
+     240: iload         14
+     242: iload_2
+     243: iload         4
+     245: iadd
+     246: if_icmpge     325
+     249: iload         13
+     251: iload         5
+     253: isub
+     254: iconst_1
+     255: isub
+     256: iload_2
+     257: imul
+     258: iload         14
+     260: iadd
+     261: iload         4
+     263: isub
+     264: istore        15
+     266: iload         15
+     268: iflt          319
+     271: iload         15
+     273: aload         9
+     275: arraylength
+     276: if_icmpge     319
+     279: aload_0
+     280: iload         15
+     282: iload_2
+     283: iload_3
+     284: aload         10
+     286: aload_0
+     287: getfield      #72                 // Field pg:[[I
+     290: bipush        32
+     292: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+     295: astore        12
+     297: aload         12
+     299: iconst_0
+     300: iaload
+     301: sipush        255
+     304: iadd
+     305: istore        6
+     307: aload         11
+     309: iload         15
+     311: iload         6
+     313: sipush        255
+     316: iand
+     317: i2b
+     318: bastore
+     319: iinc          14, 1
+     322: goto          240
+     325: iinc          13, 1
+     328: goto          228
+     331: aload         11
+     333: iconst_0
+     334: aload         9
+     336: iconst_0
+     337: aload         9
+     339: arraylength
+     340: invokestatic  #96                 // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+     343: return
+
+  public void dilate(ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: invokevirtual #82                 // Method ij/process/ByteProcessor.getWidth:()I
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #85                 // Method ij/process/ByteProcessor.getHeight:()I
+       9: istore_3
+      10: ldc           #102                // int 32768
+      12: istore        4
+      14: aload_0
+      15: getfield      #72                 // Field pg:[[I
+      18: arraylength
+      19: istore        5
+      21: aload_1
+      22: invokevirtual #86                 // Method ij/process/ByteProcessor.getPixels:()Ljava/lang/Object;
+      25: checkcast     #90                 // class "[B"
+      28: astore        6
+      30: iload         5
+      32: newarray       int
+      34: astore        7
+      36: aload         6
+      38: arraylength
+      39: newarray       byte
+      41: astore        8
+      43: iconst_0
+      44: istore        9
+      46: iload         9
+      48: aload         6
+      50: arraylength
+      51: if_icmpge     100
+      54: aload_0
+      55: iload         9
+      57: iload_2
+      58: iload_3
+      59: aload         6
+      61: aload_0
+      62: getfield      #72                 // Field pg:[[I
+      65: bipush        64
+      67: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+      70: astore        7
+      72: aload         7
+      74: iconst_1
+      75: iaload
+      76: sipush        255
+      79: isub
+      80: istore        4
+      82: aload         8
+      84: iload         9
+      86: iload         4
+      88: sipush        255
+      91: iand
+      92: i2b
+      93: bastore
+      94: iinc          9, 1
+      97: goto          46
+     100: aload         8
+     102: iconst_0
+     103: aload         6
+     105: iconst_0
+     106: aload         6
+     108: arraylength
+     109: invokestatic  #96                 // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+     112: return
+
+  public void erode(ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: invokevirtual #82                 // Method ij/process/ByteProcessor.getWidth:()I
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #85                 // Method ij/process/ByteProcessor.getHeight:()I
+       9: istore_3
+      10: sipush        -32767
+      13: istore        4
+      15: aload_0
+      16: getfield      #72                 // Field pg:[[I
+      19: arraylength
+      20: istore        5
+      22: aload_1
+      23: invokevirtual #86                 // Method ij/process/ByteProcessor.getPixels:()Ljava/lang/Object;
+      26: checkcast     #90                 // class "[B"
+      29: astore        6
+      31: iload         5
+      33: newarray       int
+      35: astore        7
+      37: aload         6
+      39: arraylength
+      40: newarray       byte
+      42: astore        8
+      44: iconst_0
+      45: istore        9
+      47: iload         9
+      49: aload         6
+      51: arraylength
+      52: if_icmpge     101
+      55: aload_0
+      56: iload         9
+      58: iload_2
+      59: iload_3
+      60: aload         6
+      62: aload_0
+      63: getfield      #72                 // Field pg:[[I
+      66: bipush        32
+      68: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+      71: astore        7
+      73: aload         7
+      75: iconst_0
+      76: iaload
+      77: sipush        255
+      80: iadd
+      81: istore        4
+      83: aload         8
+      85: iload         9
+      87: iload         4
+      89: sipush        255
+      92: iand
+      93: i2b
+      94: bastore
+      95: iinc          9, 1
+      98: goto          47
+     101: aload         8
+     103: iconst_0
+     104: aload         6
+     106: iconst_0
+     107: aload         6
+     109: arraylength
+     110: invokestatic  #96                 // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+     113: return
+
+  public void fclose(ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: invokevirtual #82                 // Method ij/process/ByteProcessor.getWidth:()I
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #85                 // Method ij/process/ByteProcessor.getHeight:()I
+       9: istore_3
+      10: sipush        32767
+      13: istore        4
+      15: aload_1
+      16: invokevirtual #86                 // Method ij/process/ByteProcessor.getPixels:()Ljava/lang/Object;
+      19: checkcast     #90                 // class "[B"
+      22: astore        5
+      24: aload         5
+      26: arraylength
+      27: newarray       byte
+      29: astore        6
+      31: iconst_0
+      32: istore        7
+      34: iconst_0
+      35: istore        8
+      37: iconst_0
+      38: istore        9
+      40: iconst_1
+      41: istore        7
+      43: iload         7
+      45: iload_3
+      46: if_icmpgt     232
+      49: iload         7
+      51: iconst_1
+      52: isub
+      53: iload_2
+      54: imul
+      55: istore        8
+      57: aload_0
+      58: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+      61: iload         8
+      63: iload_2
+      64: iload_3
+      65: aload         5
+      67: aload_0
+      68: getfield      #72                 // Field pg:[[I
+      71: iconst_0
+      72: invokevirtual #103                // Method org/audiveris/omr/image/LocalHistogram.init:(III[B[[II)V
+      75: aload_0
+      76: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+      79: invokevirtual #107                // Method org/audiveris/omr/image/LocalHistogram.getMaximum:()I
+      82: istore        4
+      84: aload         6
+      86: iload         8
+      88: iload         4
+      90: sipush        255
+      93: iand
+      94: i2b
+      95: bastore
+      96: iconst_1
+      97: istore        10
+      99: iload         10
+     101: iload_2
+     102: if_icmpge     226
+     105: iload         8
+     107: iload         10
+     109: iadd
+     110: istore        9
+     112: aload_0
+     113: getfield      #62                 // Field p_h:Lorg/audiveris/omr/image/LocalHistogram;
+     116: iload         9
+     118: iload_2
+     119: iload_3
+     120: aload         5
+     122: aload_0
+     123: getfield      #76                 // Field pg_plus:[[I
+     126: iconst_0
+     127: invokevirtual #103                // Method org/audiveris/omr/image/LocalHistogram.init:(III[B[[II)V
+     130: aload_0
+     131: getfield      #65                 // Field m_h:Lorg/audiveris/omr/image/LocalHistogram;
+     134: iload         9
+     136: iconst_1
+     137: isub
+     138: iload_2
+     139: iload_3
+     140: aload         5
+     142: aload_0
+     143: getfield      #79                 // Field pg_minus:[[I
+     146: iconst_0
+     147: invokevirtual #103                // Method org/audiveris/omr/image/LocalHistogram.init:(III[B[[II)V
+     150: aload_0
+     151: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     154: aload_0
+     155: getfield      #65                 // Field m_h:Lorg/audiveris/omr/image/LocalHistogram;
+     158: invokevirtual #110                // Method org/audiveris/omr/image/LocalHistogram.sub:(Lorg/audiveris/omr/image/LocalHistogram;)V
+     161: aload_0
+     162: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     165: aload_0
+     166: getfield      #62                 // Field p_h:Lorg/audiveris/omr/image/LocalHistogram;
+     169: invokevirtual #114                // Method org/audiveris/omr/image/LocalHistogram.add:(Lorg/audiveris/omr/image/LocalHistogram;)V
+     172: aload_0
+     173: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     176: invokevirtual #117                // Method org/audiveris/omr/image/LocalHistogram.doMaximum:()V
+     179: aload_0
+     180: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     183: invokevirtual #107                // Method org/audiveris/omr/image/LocalHistogram.getMaximum:()I
+     186: istore        4
+     188: aload         6
+     190: iload         9
+     192: iload         4
+     194: sipush        255
+     197: iand
+     198: i2b
+     199: bastore
+     200: goto          220
+     203: astore        11
+     205: getstatic     #122                // Field logger:Lorg/slf4j/Logger;
+     208: iload         9
+     210: invokedynamic #126,  0            // InvokeDynamic #0:makeConcatWithConstants:(I)Ljava/lang/String;
+     215: invokeinterface #130,  2          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;)V
+     220: iinc          10, 1
+     223: goto          99
+     226: iinc          7, 1
+     229: goto          43
+     232: sipush        -32767
+     235: istore        10
+     237: aload         5
+     239: arraylength
+     240: newarray       byte
+     242: astore        11
+     244: iconst_1
+     245: istore        7
+     247: iload         7
+     249: iload_3
+     250: if_icmpgt     441
+     253: iload         7
+     255: iconst_1
+     256: isub
+     257: iload_2
+     258: imul
+     259: istore        8
+     261: aload_0
+     262: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     265: iload         8
+     267: iload_2
+     268: iload_3
+     269: aload         6
+     271: aload_0
+     272: getfield      #72                 // Field pg:[[I
+     275: iconst_1
+     276: invokevirtual #103                // Method org/audiveris/omr/image/LocalHistogram.init:(III[B[[II)V
+     279: aload_0
+     280: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     283: invokevirtual #136                // Method org/audiveris/omr/image/LocalHistogram.getMinimum:()I
+     286: istore        10
+     288: aload         11
+     290: iload         8
+     292: iload         10
+     294: sipush        255
+     297: iand
+     298: i2b
+     299: bastore
+     300: iconst_1
+     301: istore        12
+     303: iload         12
+     305: iload_2
+     306: if_icmpge     435
+     309: iload         8
+     311: iload         12
+     313: iadd
+     314: istore        9
+     316: aload_0
+     317: getfield      #62                 // Field p_h:Lorg/audiveris/omr/image/LocalHistogram;
+     320: iload         9
+     322: iload_2
+     323: iload_3
+     324: aload         6
+     326: aload_0
+     327: getfield      #76                 // Field pg_plus:[[I
+     330: iconst_1
+     331: invokevirtual #103                // Method org/audiveris/omr/image/LocalHistogram.init:(III[B[[II)V
+     334: aload_0
+     335: getfield      #65                 // Field m_h:Lorg/audiveris/omr/image/LocalHistogram;
+     338: iload         9
+     340: iconst_1
+     341: isub
+     342: iload_2
+     343: iload_3
+     344: aload         6
+     346: aload_0
+     347: getfield      #79                 // Field pg_minus:[[I
+     350: iconst_1
+     351: invokevirtual #103                // Method org/audiveris/omr/image/LocalHistogram.init:(III[B[[II)V
+     354: aload_0
+     355: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     358: aload_0
+     359: getfield      #65                 // Field m_h:Lorg/audiveris/omr/image/LocalHistogram;
+     362: invokevirtual #110                // Method org/audiveris/omr/image/LocalHistogram.sub:(Lorg/audiveris/omr/image/LocalHistogram;)V
+     365: aload_0
+     366: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     369: aload_0
+     370: getfield      #62                 // Field p_h:Lorg/audiveris/omr/image/LocalHistogram;
+     373: invokevirtual #114                // Method org/audiveris/omr/image/LocalHistogram.add:(Lorg/audiveris/omr/image/LocalHistogram;)V
+     376: aload_0
+     377: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     380: invokevirtual #139                // Method org/audiveris/omr/image/LocalHistogram.doMinimum:()V
+     383: aload_0
+     384: getfield      #58                 // Field bh:Lorg/audiveris/omr/image/LocalHistogram;
+     387: invokevirtual #136                // Method org/audiveris/omr/image/LocalHistogram.getMinimum:()I
+     390: istore        10
+     392: aload         11
+     394: iload         9
+     396: iload         10
+     398: sipush        255
+     401: iand
+     402: i2b
+     403: bastore
+     404: goto          429
+     407: astore        13
+     409: getstatic     #122                // Field logger:Lorg/slf4j/Logger;
+     412: ldc           #142                // String  out index: {} min {}
+     414: iload         9
+     416: invokestatic  #144                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     419: iload         10
+     421: invokestatic  #144                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     424: invokeinterface #150,  4          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+     429: iinc          12, 1
+     432: goto          303
+     435: iinc          7, 1
+     438: goto          247
+     441: aload         11
+     443: iconst_0
+     444: aload         5
+     446: iconst_0
+     447: aload         5
+     449: arraylength
+     450: invokestatic  #96                 // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+     453: return
+    Exception table:
+       from    to  target type
+         112   200   203   Class java/lang/ArrayIndexOutOfBoundsException
+         316   404   407   Class java/lang/ArrayIndexOutOfBoundsException
+
+  private int[] getMinMax(int, int, int, byte[], int[][], int);
+    Code:
+       0: aload         5
+       2: arraylength
+       3: istore        7
+       5: iconst_2
+       6: newarray       int
+       8: astore        8
+      10: iconst_0
+      11: istore        11
+      13: iconst_0
+      14: istore        13
+      16: sipush        255
+      19: istore        14
+      21: iconst_0
+      22: istore        15
+      24: iload_1
+      25: iload_2
+      26: idiv
+      27: istore        9
+      29: iload_1
+      30: iload_2
+      31: irem
+      32: istore        10
+      34: iconst_0
+      35: istore        16
+      37: iload         16
+      39: iload         7
+      41: if_icmpge     249
+      44: iload         9
+      46: aload         5
+      48: iload         16
+      50: aaload
+      51: iconst_0
+      52: iaload
+      53: iadd
+      54: istore        13
+      56: iload         10
+      58: aload         5
+      60: iload         16
+      62: aaload
+      63: iconst_1
+      64: iaload
+      65: iadd
+      66: istore        12
+      68: iload         12
+      70: iload_2
+      71: if_icmpge     90
+      74: iload         13
+      76: iload_3
+      77: if_icmpge     90
+      80: iload         12
+      82: iflt          90
+      85: iload         13
+      87: ifge          115
+      90: iload         6
+      92: bipush        64
+      94: if_icmpne     100
+      97: iconst_0
+      98: istore        11
+     100: iload         6
+     102: bipush        32
+     104: if_icmpne     131
+     107: sipush        255
+     110: istore        11
+     112: goto          131
+     115: aload         4
+     117: iload         12
+     119: iload_2
+     120: iload         13
+     122: imul
+     123: iadd
+     124: baload
+     125: sipush        255
+     128: iand
+     129: istore        11
+     131: goto          183
+     134: astore        17
+     136: iload         12
+     138: iload_2
+     139: iload         13
+     141: imul
+     142: iadd
+     143: istore        11
+     145: getstatic     #122                // Field logger:Lorg/slf4j/Logger;
+     148: ldc           #153                // String AIOB x: {} y: {} index: {}
+     150: iconst_3
+     151: anewarray     #2                  // class java/lang/Object
+     154: dup
+     155: iconst_0
+     156: iload         12
+     158: invokestatic  #144                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     161: aastore
+     162: dup
+     163: iconst_1
+     164: iload         13
+     166: invokestatic  #144                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     169: aastore
+     170: dup
+     171: iconst_2
+     172: iload         11
+     174: invokestatic  #144                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     177: aastore
+     178: invokeinterface #155,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+     183: iload         6
+     185: bipush        64
+     187: if_icmpne     202
+     190: iload         11
+     192: aload         5
+     194: iload         16
+     196: aaload
+     197: iconst_2
+     198: iaload
+     199: iadd
+     200: istore        11
+     202: iload         6
+     204: bipush        32
+     206: if_icmpne     221
+     209: iload         11
+     211: aload         5
+     213: iload         16
+     215: aaload
+     216: iconst_2
+     217: iaload
+     218: isub
+     219: istore        11
+     221: iload         11
+     223: iload         14
+     225: if_icmpge     232
+     228: iload         11
+     230: istore        14
+     232: iload         11
+     234: iload         15
+     236: if_icmple     243
+     239: iload         11
+     241: istore        15
+     243: iinc          16, 1
+     246: goto          37
+     249: aload         8
+     251: iconst_0
+     252: iload         14
+     254: sipush        255
+     257: iand
+     258: iastore
+     259: aload         8
+     261: iconst_1
+     262: iload         15
+     264: sipush        255
+     267: iand
+     268: iastore
+     269: aload         8
+     271: areturn
+    Exception table:
+       from    to  target type
+          68   131   134   Class java/lang/ArrayIndexOutOfBoundsException
+
+  public void open(ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: invokevirtual #82                 // Method ij/process/ByteProcessor.getWidth:()I
+       4: istore_2
+       5: aload_1
+       6: invokevirtual #85                 // Method ij/process/ByteProcessor.getHeight:()I
+       9: istore_3
+      10: sipush        -32767
+      13: istore        4
+      15: ldc           #102                // int 32768
+      17: istore        5
+      19: aload_0
+      20: getfield      #19                 // Field width:I
+      23: istore        6
+      25: aload_0
+      26: getfield      #26                 // Field height:I
+      29: istore        7
+      31: aload_0
+      32: getfield      #72                 // Field pg:[[I
+      35: arraylength
+      36: istore        8
+      38: aload_1
+      39: invokevirtual #86                 // Method ij/process/ByteProcessor.getPixels:()Ljava/lang/Object;
+      42: checkcast     #90                 // class "[B"
+      45: astore        9
+      47: aload         9
+      49: arraylength
+      50: newarray       byte
+      52: astore        10
+      54: aload         9
+      56: arraylength
+      57: newarray       byte
+      59: astore        11
+      61: iload         8
+      63: newarray       int
+      65: astore        12
+      67: iconst_1
+      68: istore        13
+      70: iload         13
+      72: iload_3
+      73: if_icmpgt     226
+      76: iconst_0
+      77: istore        14
+      79: iload         14
+      81: iload_2
+      82: if_icmpge     220
+      85: iload         13
+      87: iconst_1
+      88: isub
+      89: iload_2
+      90: imul
+      91: iload         14
+      93: iadd
+      94: istore        15
+      96: iload         15
+      98: aload         9
+     100: arraylength
+     101: if_icmpge     144
+     104: aload_0
+     105: iload         15
+     107: iload_2
+     108: iload_3
+     109: aload         9
+     111: aload_0
+     112: getfield      #72                 // Field pg:[[I
+     115: bipush        32
+     117: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+     120: astore        12
+     122: aload         12
+     124: iconst_0
+     125: iaload
+     126: sipush        255
+     129: iadd
+     130: istore        4
+     132: aload         10
+     134: iload         15
+     136: iload         4
+     138: sipush        255
+     141: iand
+     142: i2b
+     143: bastore
+     144: iload         13
+     146: iload         7
+     148: isub
+     149: iconst_1
+     150: isub
+     151: iload_2
+     152: imul
+     153: iload         14
+     155: iadd
+     156: iload         6
+     158: isub
+     159: istore        16
+     161: iload         16
+     163: iflt          214
+     166: iload         16
+     168: aload         9
+     170: arraylength
+     171: if_icmpge     214
+     174: aload_0
+     175: iload         16
+     177: iload_2
+     178: iload_3
+     179: aload         10
+     181: aload_0
+     182: getfield      #72                 // Field pg:[[I
+     185: bipush        64
+     187: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+     190: astore        12
+     192: aload         12
+     194: iconst_1
+     195: iaload
+     196: sipush        255
+     199: isub
+     200: istore        5
+     202: aload         11
+     204: iload         16
+     206: iload         5
+     208: sipush        255
+     211: iand
+     212: i2b
+     213: bastore
+     214: iinc          14, 1
+     217: goto          79
+     220: iinc          13, 1
+     223: goto          70
+     226: iload_3
+     227: istore        13
+     229: iload         13
+     231: iload_3
+     232: iload         7
+     234: iadd
+     235: if_icmpgt     332
+     238: iconst_0
+     239: istore        14
+     241: iload         14
+     243: iload_2
+     244: iload         6
+     246: iadd
+     247: if_icmpge     326
+     250: iload         13
+     252: iload         7
+     254: isub
+     255: iconst_1
+     256: isub
+     257: iload_2
+     258: imul
+     259: iload         14
+     261: iadd
+     262: iload         6
+     264: isub
+     265: istore        15
+     267: iload         15
+     269: iflt          320
+     272: iload         15
+     274: aload         9
+     276: arraylength
+     277: if_icmpge     320
+     280: aload_0
+     281: iload         15
+     283: iload_2
+     284: iload_3
+     285: aload         10
+     287: aload_0
+     288: getfield      #72                 // Field pg:[[I
+     291: bipush        64
+     293: invokevirtual #92                 // Method getMinMax:(III[B[[II)[I
+     296: astore        12
+     298: aload         12
+     300: iconst_1
+     301: iaload
+     302: sipush        255
+     305: isub
+     306: istore        5
+     308: aload         11
+     310: iload         15
+     312: iload         5
+     314: sipush        255
+     317: iand
+     318: i2b
+     319: bastore
+     320: iinc          14, 1
+     323: goto          241
+     326: iinc          13, 1
+     329: goto          229
+     332: aload         11
+     334: iconst_0
+     335: aload         9
+     337: iconst_0
+     338: aload         9
+     340: arraylength
+     341: invokestatic  #96                 // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+     344: return
+
+  static {};
+    Code:
+       0: ldc           #8                  // class org/audiveris/omr/image/MorphoProcessor
+       2: invokestatic  #158                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+       5: putstatic     #122                // Field logger:Lorg/slf4j/Logger;
+       8: return
+}

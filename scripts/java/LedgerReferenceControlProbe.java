@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Original GRID/NO_STAFF/LedgersFilter plus direct original getYReference controls.
+import org.audiveris.omr.sheet.Book;import java.util.*;import java.lang.reflect.*;import java.nio.file.*;
+public class LedgerReferenceControlProbe extends LedgerCandidateControlProbe {
+ public LedgerReferenceControlProbe(Book b,SortedSet<Integer> ids){super(b,ids);}
+ static Object call(Object target,String name,Object... args)throws Exception{
+  for(Method m:target.getClass().getMethods())if(m.getName().equals(name)&&m.getParameterCount()==args.length){try{return m.invoke(target,args);}catch(IllegalArgumentException e){}}
+  for(Class<?> c=target.getClass();c!=null;c=c.getSuperclass())for(Method m:c.getDeclaredMethods())if(m.getName().equals(name)&&m.getParameterCount()==args.length){m.setAccessible(true);try{return m.invoke(target,args);}catch(IllegalArgumentException e){}}
+  throw new NoSuchMethodException(target.getClass()+"."+name);
+ }
+ String previous(Object ledger)throws Exception{Object g=call(ledger,"getGlyph");var line=(java.awt.geom.Line2D)call(g,"getCenterLine");return "{\"id\":"+call(ledger,"getId")+",\"index\":"+call(ledger,"getIndex")+",\"bounds\":"+rect(call(ledger,"getBounds"))+",\"center_line\":["+line.getX1()+","+line.getY1()+","+line.getX2()+","+line.getY2()+"],\"start\":"+StemSeedsProbe.point(call(g,"getStartPoint",horizontal))+",\"stop\":"+StemSeedsProbe.point(call(g,"getStopPoint",horizontal))+"}";}
+ public void process(){try{
+  sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");call(make("sheet.grid.GridStep"),"doit",sheet);system=((List<?>)call(sheet,"getSystems")).get(0);Class<?> o=Class.forName("org.audiveris.omr.run.Orientation");vertical=o.getField("VERTICAL").get(null);horizontal=o.getField("HORIZONTAL").get(null);int il=(Integer)call(call(sheet,"getScale"),"getInterline");List<String> staffs=new ArrayList<>(),systems=new ArrayList<>();
+  for(Object staff:(List<?>)call(call(sheet,"getStaffManager"),"getStaves")){List<String> lines=new ArrayList<>();for(Object line:(List<?>)call(staff,"getLines")){List<String> pts=new ArrayList<>();for(Object pt:(List<?>)get(line,"points"))pts.add(StemSeedsProbe.point(pt));lines.add("{\"points\":["+String.join(",",pts)+"],\"thickness\":"+call(line,"getThickness")+"}");}staffs.add("{\"id\":"+call(staff,"getId")+",\"system_id\":"+call(call(staff,"getSystem"),"getId")+",\"left\":"+get(staff,"left")+",\"right\":"+get(staff,"right")+",\"specific_interline\":"+call(staff,"getSpecificInterline")+",\"lines\":["+String.join(",",lines)+"]}");}
+  Object source=call(call(sheet,"getPicture"),"getSource",Class.forName("org.audiveris.omr.sheet.Picture$SourceKey").getField("NO_STAFF").get(null));String raster=StemSeedsProbe.mask(source);
+  Map<?,?> sections=(Map<?,?>)call(make("sheet.ledger.LedgersFilter",sheet),"process");
+  for(Object sys:(List<?>)call(sheet,"getSystems")){Object sig=call(sys,"getSig");if(!((List<?>)call(sig,"inters",Class.forName("org.audiveris.omr.sig.inter.AbstractBeamInter"))).isEmpty())throw new AssertionError("GRID contains beams");systems.add("{\"id\":"+call(sys,"getId")+",\"staff_ids\":"+GridFinalProbe.ids((List<?>)call(sys,"getStaves"))+",\"coordinates\":["+call(sys,"getLeft")+","+call(sys,"getTop")+","+call(sys,"getWidth")+","+call(sys,"getBottom")+","+call(sys,"getDeltaY")+"],\"sections\":"+StemSeedsProbe.sectionList((Collection<?>)sections.get(sys))+"}");}
+  Object staff=((List<?>)call(system,"getStaves")).get(0),builder=make("sheet.ledger.LedgersBuilder",system);Method ref=builder.getClass().getDeclaredMethod("getYReference",Class.forName("org.audiveris.omr.sheet.Staff"),int.class,Class.forName("org.audiveris.omr.glyph.dynamic.Filament"),Class.forName("org.audiveris.omr.util.Wrapper"));ref.setAccessible(true);List<String> cases=new ArrayList<>();
+  for(int sign:new int[]{-1,1})for(int level:new int[]{1,2,3})for(int x:new int[]{68,69,80,100,116,119,120,132,144})for(boolean reverse:new boolean[]{false,true}){
+   ((Map<?,?>)call(staff,"getLedgerMap")).clear();List<Object> ledgers=new ArrayList<>();
+   for(int n=0;n<2;n++){Object f=make("glyph.dynamic.StraightFilament",il);call(f,"addSection",ledgerSection(1,60+8*n,100,32,2));Object g=call(f,"toGlyph",(Object)null),l=make("sig.inter.LedgerInter");call(l,"setGlyph",g);call(l,"setIndex",sign);call(l,"setId",n+1);ledgers.add(l);}
+   if(reverse)Collections.reverse(ledgers);List<String> ls=new ArrayList<>();for(Object l:ledgers){call(staff,"addLedger",l,sign);ls.add(previous(l));}
+   Object f=make("glyph.dynamic.StraightFilament",il);call(f,"addSection",ledgerSection(3,100,x,32,1));Object wrapper=make("util.Wrapper",(Object)null),value=ref.invoke(builder,staff,sign*level,f,wrapper),chosen=get(wrapper,"value");
+   cases.add("{\"index\":"+(sign*level)+",\"bounds\":"+rect(call(f,"getBounds"))+",\"ledgers\":["+String.join(",",ls)+"],\"expected\":"+(value==null?"null":"{\"y\":"+value+",\"previous_id\":"+(chosen==null?"null":call(chosen,"getId"))+"}")+"}");
+  }
+  Files.writeString(Path.of(System.getProperty("native.probe.output")),"{\"native_outputs_used\":false,\"interline\":"+il+",\"no_staff\":"+raster+",\"grid\":{\"staffs\":["+String.join(",",staffs)+"],\"systems\":["+String.join(",",systems)+"]},\"reference_staff_id\":"+call(staff,"getId")+",\"reference_cases\":["+String.join(",",cases)+"],\"scope\":\"Real raster through untouched GRID/NO_STAFF/LedgersFilter with no beam inters at GRID; supplied detached previous ledgers and original getYReference; no registration or full LEDGERS/rest claim.\"}\n");
+ }catch(Exception e){throw new RuntimeException(e);}}
+}

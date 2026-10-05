@@ -1,0 +1,22 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.50s
+     Running tests/beam_preparation.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/beam_preparation-377f3440c91e2c14)
+
+running 1 test
+test initial_candidates_reject_partial_prolog_without_mutating_it ... FAILED
+
+failures:
+
+---- initial_candidates_reject_partial_prolog_without_mutating_it stdout ----
+
+thread 'initial_candidates_reject_partial_prolog_without_mutating_it' (465) panicked at tests/beam_preparation.rs:448:90:
+called `Result::unwrap()` on an `Err` value: "invalid_beam_dispatch_coordinate"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    initial_candidates_reject_partial_prolog_without_mutating_it
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `--test beam_preparation`

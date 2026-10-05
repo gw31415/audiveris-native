@@ -1,0 +1,13 @@
+[package]
+name = "audiveris-template-bank"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+publish = false
+[dependencies]
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = { version = "=1.0.150", features = ["float_roundtrip"] }
+sha2 = "=0.10.9"
+audiveris-template-match = { path = "../audiveris-template-match" }
+[target.'cfg(unix)'.dependencies]
+libc = "=0.2.186"

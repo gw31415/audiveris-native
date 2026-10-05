@@ -1,0 +1,21 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.67s
+     Running tests/beam_candidates.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/beam_candidates-ea8a1fa32e73e038)
+
+running 2 tests
+test singleton_geometry_is_explicitly_undefined_and_bounds_are_checked ... ok
+test original_glyph_metrics_match_all_thirteen_raster_diagnostics ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+
+     Running tests/beam_preparation.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/beam_preparation-377f3440c91e2c14)
+
+running 5 tests
+test native_adapter_rejects_incomplete_or_inconsistent_dependencies ... ok
+test native_adapter_has_explicit_stage_and_scale_boundary ... ok
+test initial_candidates_reject_partial_prolog_without_mutating_it ... ok
+test beam_spots_cli_is_native_and_refuses_existing_outputs ... ok
+test original_beam_spots_match_complete_native_pipeline ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.41s
+

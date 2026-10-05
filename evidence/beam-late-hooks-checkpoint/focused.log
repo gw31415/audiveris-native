@@ -1,0 +1,11 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.63s
+     Running tests/beam_late_hooks.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_late_hooks-efbe4bdf34cbced7)
+
+running 2 tests
+test inconsistent_late_hook_owner_is_rejected_before_mutation ... ok
+66 original cases, 26 accepted hooks
+test uninterrupted_original_late_hooks_match_order_geometry_grade_and_assignment ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

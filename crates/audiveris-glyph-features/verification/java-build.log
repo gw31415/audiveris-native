@@ -1,0 +1,135 @@
+----------
+1. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/moments/GeometricMoments.java (at line 41)
+	private static final Logger logger = LoggerFactory.getLogger(GeometricMoments.class);
+	                            ^^^^^^
+The value of the field GeometricMoments.logger is not used
+----------
+----------
+2. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/util/AbstractEntity.java (at line 51)
+	private static final Logger logger = LoggerFactory.getLogger(AbstractEntity.class);
+	                            ^^^^^^
+The value of the field AbstractEntity.logger is not used
+----------
+----------
+3. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/NeuralNetwork.java (at line 129)
+	private NeuralNetwork ()
+	        ^^^^^^^^^^^^^^^^
+The constructor NeuralNetwork() is never used locally
+----------
+4. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/NeuralNetwork.java (at line 235)
+	private String dumpOfMatrix (double[][] matrix)
+	               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The method dumpOfMatrix(double[][]) from the type NeuralNetwork is never used locally
+----------
+5. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/NeuralNetwork.java (at line 437)
+	private double relu (double val)
+	               ^^^^^^^^^^^^^^^^^
+The method relu(double) from the type NeuralNetwork is never used locally
+----------
+6. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/NeuralNetwork.java (at line 451)
+	private double reluDif (double val)
+	               ^^^^^^^^^^^^^^^^^^^^
+The method reluDif(double) from the type NeuralNetwork is never used locally
+----------
+7. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/NeuralNetwork.java (at line 840)
+	StringArray ()
+	^^^^^^^^^^^^^^
+The constructor NeuralNetwork.StringArray() is never used locally
+----------
+----------
+8. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/PoorManAlgebra.java (at line 45)
+	private static final Logger logger = LoggerFactory.getLogger(PoorManAlgebra.class);
+	                            ^^^^^^
+The value of the field PoorManAlgebra.logger is not used
+----------
+9. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/PoorManAlgebra.java (at line 497)
+	private Vector ()
+	        ^^^^^^^^^
+The constructor PoorManAlgebra.Vector() is never used locally
+----------
+----------
+10. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/Line.java (at line 183)
+	static class NonInvertibleLineException
+	             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+The serializable class NonInvertibleLineException does not declare a static final serialVersionUID field of type long
+----------
+11. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/math/Line.java (at line 195)
+	static class UndefinedLineException
+	             ^^^^^^^^^^^^^^^^^^^^^^
+The serializable class UndefinedLineException does not declare a static final serialVersionUID field of type long
+----------
+----------
+12. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/classifier/MixGlyphDescriptor.java (at line 42)
+	private static final Logger logger = LoggerFactory.getLogger(MixGlyphDescriptor.class);
+	                            ^^^^^^
+The value of the field MixGlyphDescriptor.logger is not used
+----------
+----------
+13. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/classifier/Sample.java (at line 51)
+	private static final Logger logger = LoggerFactory.getLogger(Sample.class);
+	                            ^^^^^^
+The value of the field Sample.logger is not used
+----------
+14. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/classifier/Sample.java (at line 117)
+	private Sample ()
+	        ^^^^^^^^^
+The constructor Sample() is never used locally
+----------
+----------
+15. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/glyph/Glyph.java (at line 24)
+	import org.audiveris.omr.classifier.Sample;
+	       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The import org.audiveris.omr.classifier.Sample is never used
+----------
+16. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/glyph/Glyph.java (at line 34)
+	import org.audiveris.omr.sig.inter.Inter;
+	       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The import org.audiveris.omr.sig.inter.Inter is never used
+----------
+17. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/glyph/Glyph.java (at line 86)
+	private static final Logger logger = LoggerFactory.getLogger(Glyph.class);
+	                            ^^^^^^
+The value of the field Glyph.logger is not used
+----------
+18. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/glyph/Glyph.java (at line 140)
+	private Glyph ()
+	        ^^^^^^^^
+The constructor Glyph() is never used locally
+----------
+----------
+19. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/run/Run.java (at line 57)
+	private Run ()
+	        ^^^^^^
+The constructor Run() is never used locally
+----------
+----------
+20. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/run/RunTable.java (at line 160)
+	private RunTable ()
+	        ^^^^^^^^^^^
+The constructor RunTable() is never used locally
+----------
+21. INFO in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/run/RunTable.java (at line 336)
+	@SuppressWarnings("unused")
+	                  ^^^^^^^^
+At least one of the problems in category 'unused' is not analysed due to a compiler option being ignored
+----------
+22. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/upstream/org/audiveris/omr/run/RunTable.java (at line 1512)
+	if (false) {
+            sb.append(" runs:").append(getTotalRunCount());
+        }
+	           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Dead code
+----------
+----------
+23. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/NetworkOracle.java (at line 3)
+	import java.nio.file.*;
+	       ^^^^^^^^^^^^^
+The import java.nio.file is never used
+----------
+----------
+24. WARNING in /Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features/oracle/GlyphOracle.java (at line 2)
+	import java.util.*;import java.util.zip.*;import java.io.*;import java.nio.file.*;
+	                                                                  ^^^^^^^^^^^^^
+The import java.nio.file is never used
+----------
+24 problems (0 errors, 23 warnings, 1 info)

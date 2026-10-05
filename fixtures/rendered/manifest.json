@@ -1,0 +1,22 @@
+{
+  "source": "OpenScore/Lieder lc6019054.mscx",
+  "source_sha256": "c884cf023a152e0af29be3719f158a8ec8903cd312b6f1d880bc6b43dcbc1682",
+  "license": "CC0-1.0; see ../openscore-lieder/LICENSE.txt",
+  "renderer": "Installed MuseScore",
+  "version": "4.7.2",
+  "build": "260525085",
+  "dpi": 180,
+  "page": 1,
+  "width": 1489,
+  "height": 2104,
+  "resized": false,
+  "conversion": "examples/normalize_fixture.rs: PNG alpha composite white, integer BT.601 grayscale",
+  "png_sha256": "958288a4fcefefa8ea899cbd58dd6d77598dd592974072fff8baa3f5566243df",
+  "pgm_sha256": "cb43f760b96b4b0806972527c6d547e4c6f765ff2f286338ba964ccf3c42631a",
+  "renderer_exit": -6,
+  "qualification": "Cocoa CLI wrote a complete decodable PNG then crashed under write-restricted sandbox; process success is NOT claimed. Fixture pixels and CRC decoded successfully.",
+  "png_file": "laura-180dpi.png",
+  "source_pages_rendered": 1,
+  "png_integrity": "all chunks CRC verified; IDAT decompressed; normalized pixel buffer read successfully",
+  "representative_page_only": true
+}

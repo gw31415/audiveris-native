@@ -1,0 +1,246 @@
+Compiled from "FdLibm.java"
+final class java.lang.FdLibm$Hypot {
+  public static final double TWO_MINUS_600;
+
+  public static final double TWO_PLUS_600;
+
+  static final boolean $assertionsDisabled;
+
+  private java.lang.FdLibm$Hypot();
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/lang/Object."<init>":()V
+       4: new           #9                  // class java/lang/UnsupportedOperationException
+       7: dup
+       8: invokespecial #11                 // Method java/lang/UnsupportedOperationException."<init>":()V
+      11: athrow
+
+  public static double compute(double, double);
+    Code:
+       0: dload_0
+       1: invokestatic  #12                 // Method java/lang/Math.abs:(D)D
+       4: dstore        4
+       6: dload_2
+       7: invokestatic  #12                 // Method java/lang/Math.abs:(D)D
+      10: dstore        6
+      12: dload         4
+      14: invokestatic  #18                 // Method java/lang/Double.isFinite:(D)Z
+      17: ifeq          28
+      20: dload         6
+      22: invokestatic  #18                 // Method java/lang/Double.isFinite:(D)Z
+      25: ifne          56
+      28: dload         4
+      30: ldc2_w        #24                 // double Infinityd
+      33: dcmpl
+      34: ifeq          46
+      37: dload         6
+      39: ldc2_w        #24                 // double Infinityd
+      42: dcmpl
+      43: ifne          50
+      46: ldc2_w        #24                 // double Infinityd
+      49: dreturn
+      50: dload         4
+      52: dload         6
+      54: dadd
+      55: dreturn
+      56: dload         6
+      58: dload         4
+      60: dcmpl
+      61: ifle          76
+      64: dload         4
+      66: dstore        8
+      68: dload         6
+      70: dstore        4
+      72: dload         8
+      74: dstore        6
+      76: getstatic     #26                 // Field $assertionsDisabled:Z
+      79: ifne          98
+      82: dload         4
+      84: dload         6
+      86: dcmpl
+      87: ifge          98
+      90: new           #32                 // class java/lang/AssertionError
+      93: dup
+      94: invokespecial #34                 // Method java/lang/AssertionError."<init>":()V
+      97: athrow
+      98: dload         4
+     100: invokestatic  #35                 // Method java/lang/FdLibm.__HI:(D)I
+     103: istore        8
+     105: dload         6
+     107: invokestatic  #35                 // Method java/lang/FdLibm.__HI:(D)I
+     110: istore        9
+     112: iload         8
+     114: iload         9
+     116: isub
+     117: ldc           #39                 // int 62914560
+     119: if_icmple     128
+     122: dload         4
+     124: dload         6
+     126: dadd
+     127: dreturn
+     128: iconst_0
+     129: istore        10
+     131: dload         4
+     133: ldc2_w        #40                 // double 3.2733937296446915E150d
+     136: dcmpl
+     137: ifle          176
+     140: iload         8
+     142: ldc           #42                 // int 629145600
+     144: isub
+     145: istore        8
+     147: iload         9
+     149: ldc           #42                 // int 629145600
+     151: isub
+     152: istore        9
+     154: dload         4
+     156: ldc2_w        #43                 // double 2.409919865102884E-181d
+     159: dmul
+     160: dstore        4
+     162: dload         6
+     164: ldc2_w        #43                 // double 2.409919865102884E-181d
+     167: dmul
+     168: dstore        6
+     170: iinc_w        10, 600
+     176: dload         6
+     178: ldc2_w        #45                 // double 3.054936363499605E-151d
+     181: dcmpg
+     182: ifge          268
+     185: dload         6
+     187: ldc2_w        #47                 // double 2.2250738585072014E-308d
+     190: dcmpg
+     191: ifge          232
+     194: dload         6
+     196: dconst_0
+     197: dcmpl
+     198: ifne          204
+     201: dload         4
+     203: dreturn
+     204: ldc2_w        #49                 // double 4.49423283715579E307d
+     207: dstore        11
+     209: dload         6
+     211: dload         11
+     213: dmul
+     214: dstore        6
+     216: dload         4
+     218: dload         11
+     220: dmul
+     221: dstore        4
+     223: iinc_w        10, -1022
+     229: goto          268
+     232: iload         8
+     234: ldc           #42                 // int 629145600
+     236: iadd
+     237: istore        8
+     239: iload         9
+     241: ldc           #42                 // int 629145600
+     243: iadd
+     244: istore        9
+     246: dload         4
+     248: ldc2_w        #51                 // double 4.149515568880993E180d
+     251: dmul
+     252: dstore        4
+     254: dload         6
+     256: ldc2_w        #51                 // double 4.149515568880993E180d
+     259: dmul
+     260: dstore        6
+     262: iinc_w        10, -600
+     268: dload         4
+     270: dload         6
+     272: dsub
+     273: dstore        15
+     275: dload         15
+     277: dload         6
+     279: dcmpl
+     280: ifle          331
+     283: dconst_0
+     284: dstore        11
+     286: dload         11
+     288: iload         8
+     290: invokestatic  #53                 // Method java/lang/FdLibm.__HI:(DI)D
+     293: dstore        11
+     295: dload         4
+     297: dload         11
+     299: dsub
+     300: dstore        13
+     302: dload         11
+     304: dload         11
+     306: dmul
+     307: dload         6
+     309: dload         6
+     311: dneg
+     312: dmul
+     313: dload         13
+     315: dload         4
+     317: dload         11
+     319: dadd
+     320: dmul
+     321: dsub
+     322: dsub
+     323: invokestatic  #56                 // Method java/lang/Math.sqrt:(D)D
+     326: dstore        15
+     328: goto          408
+     331: dload         4
+     333: dload         4
+     335: dadd
+     336: dstore        4
+     338: dconst_0
+     339: dstore        17
+     341: dload         17
+     343: iload         9
+     345: invokestatic  #53                 // Method java/lang/FdLibm.__HI:(DI)D
+     348: dstore        17
+     350: dload         6
+     352: dload         17
+     354: dsub
+     355: dstore        19
+     357: dconst_0
+     358: dstore        11
+     360: dload         11
+     362: iload         8
+     364: ldc           #59                 // int 1048576
+     366: iadd
+     367: invokestatic  #53                 // Method java/lang/FdLibm.__HI:(DI)D
+     370: dstore        11
+     372: dload         4
+     374: dload         11
+     376: dsub
+     377: dstore        13
+     379: dload         11
+     381: dload         17
+     383: dmul
+     384: dload         15
+     386: dload         15
+     388: dneg
+     389: dmul
+     390: dload         11
+     392: dload         19
+     394: dmul
+     395: dload         13
+     397: dload         6
+     399: dmul
+     400: dadd
+     401: dsub
+     402: dsub
+     403: invokestatic  #56                 // Method java/lang/Math.sqrt:(D)D
+     406: dstore        15
+     408: iload         10
+     410: ifeq          422
+     413: iload         10
+     415: invokestatic  #60                 // Method java/lang/Math.powerOfTwoD:(I)D
+     418: dload         15
+     420: dmul
+     421: dreturn
+     422: dload         15
+     424: dreturn
+
+  static {};
+    Code:
+       0: ldc           #1                  // class java/lang/FdLibm
+       2: invokevirtual #64                 // Method java/lang/Class.desiredAssertionStatus:()Z
+       5: ifne          12
+       8: iconst_1
+       9: goto          13
+      12: iconst_0
+      13: putstatic     #26                 // Field $assertionsDisabled:Z
+      16: return
+}

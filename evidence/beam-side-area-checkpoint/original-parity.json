@@ -1,0 +1,147 @@
+{
+  "checkpoint_kind": "direct original sideAreaOf comparison for the bounded pure geometry kernel",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "base_commit": "03ff3040a1b31042cf7a62c938ba1cf8ba792e11",
+  "official_setup": {
+    "started_utc": "2026-10-03T07:48:58.344673+00:00",
+    "scope": "official pinned Audiveris distribution and JDK only; no source batch fetch; no auth retries",
+    "success": true,
+    "distribution_url": "https://github.com/Audiveris/audiveris/releases/download/5.11.0/Audiveris-5.11.0-ubuntu22.04-x86_64.deb",
+    "distribution_sha256": "ae714594f40e54b1a4951fc3f914f08ae38fe5d07b7f2283b1a904fdb6e0a318",
+    "compiler_url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1%2B1/OpenJDK21U-jdk_x64_linux_hotspot_21.0.12.1_1.tar.gz",
+    "compiler_sha256": "ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94",
+    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "java": "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "javac": "/workspace/audiveris-toolchain/side-area-oracle/jdk-21.0.12.1+1/bin/javac",
+    "jar": "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/audiveris.jar",
+    "runtime_version": "openjdk version \"25.0.3\" 2026-04-21 LTS\nOpenJDK Runtime Environment Zulu25.34+17-CRaC-CA (build 25.0.3+9-LTS)\nOpenJDK 64-Bit Server VM Zulu25.34+17-CRaC-CA (build 25.0.3+9-LTS, mixed mode)\n",
+    "compiler_version": "javac 21.0.12.1\n",
+    "source_setup_sha256": "153651ee135e4c4fca5b30d2b7ba84f7422561d4ed8dcfa54012309f06a89589",
+    "finished_utc": "2026-10-03T07:49:04.131136+00:00",
+    "elapsed_seconds": 5.786
+  },
+  "observer_source": "scripts/java/BeamSideAreaControlProbe.java",
+  "observer_source_sha256": "598c083af3917032c036ed40df3c8dd157f3e53f73bb631c3f22a2ec3f4f7c11",
+  "native_outputs_used_to_generate_oracle": false,
+  "builder_instantiation": "Unsafe allocates only the stateless enclosing builder; original BeamInter/Impacts constructors and unmodified sideAreaOf execute. Null attachment label avoids diagnostic side effects.",
+  "fixture": "fixtures/official-beam-side-area.json",
+  "fixture_sha256": "9817fa794e5800963ce05c3d1d15537eebc89ab9e1b02ad62028d5281f2de0a7",
+  "case_count": 120,
+  "query_count": 10934,
+  "empty_case_count": 48,
+  "coverage": "Both sides of horizontal, positive/negative slope, fractional and negative-coordinate medians; margins, overlap, zero height/reach, coincident/reversed endpoints; integer points and nextDown/exact/nextUp values around original contour vertices and edge midpoints.",
+  "comparison": "Exact integer bounds and boolean point membership; no tolerance. Equality established on these 120 finite supported-domain cases, not on all possible inputs.",
+  "mismatches": 0,
+  "production_algorithm_changes": false,
+  "generation_steps": [
+    {
+      "name": "side-area-oracle-compile",
+      "argv": [
+        "/workspace/audiveris-toolchain/side-area-oracle/jdk-21.0.12.1+1/bin/javac",
+        "--release",
+        "21",
+        "-d",
+        "/workspace/audiveris-toolchain/side-area-oracle/control/classes",
+        "/workspace/audiveris-restart/scripts/java/BeamSideAreaControlProbe.java"
+      ],
+      "started_utc": "2026-10-03T07:52:32.107100+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.555,
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-oracle-compile.log"
+    },
+    {
+      "name": "side-area-oracle-generate",
+      "argv": [
+        "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Xmx256m",
+        "-XX:ActiveProcessorCount=2",
+        "-Djava.awt.headless=true",
+        "-Duser.home=/workspace/audiveris-toolchain/side-area-oracle/control/home",
+        "-Djava.util.prefs.userRoot=/workspace/audiveris-toolchain/side-area-oracle/control/prefs",
+        "-cp",
+        "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-toolchain/side-area-oracle/control/classes",
+        "BeamSideAreaControlProbe",
+        "/workspace/audiveris-restart/fixtures/official-beam-side-area.json"
+      ],
+      "started_utc": "2026-10-03T07:52:32.662394+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.487,
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-oracle-generate.log"
+    }
+  ],
+  "validation_steps": [
+    {
+      "name": "side-area-parity-fmt",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "fmt",
+        "--all"
+      ],
+      "started_utc": "2026-10-03T07:52:59.924102+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.415,
+      "finished_utc": "2026-10-03T07:53:00.339146+00:00",
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-parity-fmt.log"
+    },
+    {
+      "name": "side-area-parity-tests",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "test",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--test",
+        "beam_extension_geometry",
+        "--test",
+        "beam_candidates",
+        "--test",
+        "beam_structure"
+      ],
+      "started_utc": "2026-10-03T07:53:00.339604+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 1.882,
+      "finished_utc": "2026-10-03T07:53:02.221997+00:00",
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-parity-tests.log"
+    },
+    {
+      "name": "side-area-parity-clippy",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "started_utc": "2026-10-03T07:53:02.222416+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 2.104,
+      "finished_utc": "2026-10-03T07:53:04.326396+00:00",
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-parity-clippy.log"
+    }
+  ],
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "ignored": 0,
+    "filtered_out": 0,
+    "hand_calculated_kernel_tests": 5,
+    "direct_original_kernel_test": 1,
+    "candidate_regressions": 2,
+    "structure_regressions": 2
+  },
+  "unretrieved_7cdd_comparison_performed": false,
+  "next_kernel_implemented": false,
+  "runtime_executable_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "compiler_executable_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb"
+}

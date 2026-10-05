@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "previous_implementation_commit": "c4102ae6146b42d9edc392f236e2a1d21bc71243",
+  "focused_tests_passed": 38,
+  "focused_tests_failed": 0,
+  "original_control_cases": 104,
+  "accepted_parallel_extensions": 28,
+  "original_stem_spot_parallel_schedule_controls": 2,
+  "point_rejection_no_fallback_controls": 2,
+  "fmt": "passed",
+  "workspace_all_targets_clippy": "passed",
+  "full_workspace_release_checks": "Historical 259 debug/259 release validation at 549d409 preserved; no full rerun this stage.",
+  "scope": "Parallel scan/order/geometry, system containment, obstruction lookup, one selected point lifecycle, and one-side merge/stem/spot/parallel integration. Full initial snapshot loop, groups/hooks, notes/rhythm/MusicXML and CLI unfinished."
+}

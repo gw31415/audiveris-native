@@ -1,0 +1,42 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "ClefCandidateProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/laura-gray/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "3614fb863a4fd00f9f2a70816be632ff8868e80e67ed8d2c928801661369e21a",
+  "ok": true,
+  "result_sha256": "c7dc7e66ed6c091ba77b03c4a34a580671cb35ddf0fc5779e95a129c6f0544bf",
+  "preserved_fixture_sha256": "c7dc7e66ed6c091ba77b03c4a34a580671cb35ddf0fc5779e95a129c6f0544bf",
+  "matches_preserved_fixture_json": true
+}

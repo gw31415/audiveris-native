@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/beams-sloped.png",
+  "input_sha256": "33c7d23d1312a6edef1e761facfbd2e44112e833140d82707ff6d41f82ba4a34",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsFaithfulProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/beams-sloped.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-sloped/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "23ef4802bed94e986bc7054a75deee2740c6a1c60398fabb6b3ed60f9a14d4d2",
+  "ok": true,
+  "result_sha256": "ea8eba9fd234faa46031c3b41bfbdce09a6bc0a2c5bbd525e105b45c97b2a2fe"
+}

@@ -1,0 +1,88 @@
+Compiled from "AreaMask.java"
+public class org.audiveris.omr.image.AreaMask {
+  private final java.awt.geom.Area area;
+
+  private final java.awt.Rectangle rect;
+
+  public org.audiveris.omr.image.AreaMask(java.awt.geom.Area);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #7                  // Field area:Ljava/awt/geom/Area;
+       9: aload_0
+      10: aload_1
+      11: invokevirtual #13                 // Method java/awt/geom/Area.getBounds:()Ljava/awt/Rectangle;
+      14: putfield      #19                 // Field rect:Ljava/awt/Rectangle;
+      17: return
+
+  public int apply(org.audiveris.omr.image.AreaMask$AreaMaskAdapter);
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: aload_0
+       3: getfield      #19                 // Field rect:Ljava/awt/Rectangle;
+       6: getfield      #23                 // Field java/awt/Rectangle.y:I
+       9: istore_3
+      10: aload_0
+      11: getfield      #19                 // Field rect:Ljava/awt/Rectangle;
+      14: getfield      #23                 // Field java/awt/Rectangle.y:I
+      17: aload_0
+      18: getfield      #19                 // Field rect:Ljava/awt/Rectangle;
+      21: getfield      #29                 // Field java/awt/Rectangle.height:I
+      24: iadd
+      25: istore        4
+      27: iload_3
+      28: iload         4
+      30: if_icmpge     105
+      33: aload_0
+      34: getfield      #19                 // Field rect:Ljava/awt/Rectangle;
+      37: getfield      #32                 // Field java/awt/Rectangle.x:I
+      40: istore        5
+      42: aload_0
+      43: getfield      #19                 // Field rect:Ljava/awt/Rectangle;
+      46: getfield      #32                 // Field java/awt/Rectangle.x:I
+      49: aload_0
+      50: getfield      #19                 // Field rect:Ljava/awt/Rectangle;
+      53: getfield      #35                 // Field java/awt/Rectangle.width:I
+      56: iadd
+      57: istore        6
+      59: iload         5
+      61: iload         6
+      63: if_icmpge     99
+      66: aload_0
+      67: getfield      #7                  // Field area:Ljava/awt/geom/Area;
+      70: iload         5
+      72: i2d
+      73: iload_3
+      74: i2d
+      75: invokevirtual #38                 // Method java/awt/geom/Area.contains:(DD)Z
+      78: ifeq          93
+      81: aload_1
+      82: iload         5
+      84: iload_3
+      85: invokeinterface #42,  3           // InterfaceMethod org/audiveris/omr/image/AreaMask$AreaMaskAdapter.process:(II)V
+      90: iinc          2, 1
+      93: iinc          5, 1
+      96: goto          59
+      99: iinc          3, 1
+     102: goto          27
+     105: iload_2
+     106: ireturn
+
+  public int fore(org.audiveris.omr.util.Wrapper<java.lang.Integer>, ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: iconst_0
+       2: invokestatic  #48                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       5: putfield      #54                 // Field org/audiveris/omr/util/Wrapper.value:Ljava/lang/Object;
+       8: aload_0
+       9: new           #60                 // class org/audiveris/omr/image/AreaMask$ForeCounter
+      12: dup
+      13: aload_2
+      14: aload_1
+      15: invokespecial #62                 // Method org/audiveris/omr/image/AreaMask$ForeCounter."<init>":(Lij/process/ByteProcessor;Lorg/audiveris/omr/util/Wrapper;)V
+      18: invokevirtual #65                 // Method apply:(Lorg/audiveris/omr/image/AreaMask$AreaMaskAdapter;)I
+      21: ireturn
+}

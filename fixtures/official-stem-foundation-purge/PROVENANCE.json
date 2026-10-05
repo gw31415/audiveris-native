@@ -1,0 +1,378 @@
+{
+  "status": "passed",
+  "scope": "original-only XML-loaded private-method reduction order trace, independently compared with unmodified reduceFoundations final state",
+  "trace_observer_sha256": "932d963e301ac835565031c19309b933b3051c567096ed6185af3dfec3834bd0",
+  "trace_result_sha256": "0054a944a92d70271a7035330c3ce0e8bce7caaae1c0ff208df683d6f1c28997",
+  "exact_final_state_matches_original_public_reduceFoundations": true,
+  "native_reduction_implemented": false,
+  "stages": [
+    {
+      "stage": "finalized",
+      "changes": 0,
+      "heads": 43,
+      "stems": 10,
+      "relations": 25,
+      "exclusions": 52
+    },
+    {
+      "stage": "overlaps",
+      "changes": 0,
+      "heads": 43,
+      "stems": 10,
+      "relations": 25,
+      "exclusions": 53
+    },
+    {
+      "stage": "prolog",
+      "changes": 0,
+      "heads": 43,
+      "stems": 10,
+      "relations": 25,
+      "exclusions": 62
+    },
+    {
+      "stage": "1.purge",
+      "changes": 14,
+      "heads": 30,
+      "stems": 10,
+      "relations": 22,
+      "exclusions": 30
+    },
+    {
+      "stage": "1.1.checkStemEndingHeads",
+      "changes": 1,
+      "heads": 30,
+      "stems": 10,
+      "relations": 21,
+      "exclusions": 31
+    },
+    {
+      "stage": "1.1.purgeAfter.checkStemEndingHeads",
+      "changes": 1,
+      "heads": 29,
+      "stems": 10,
+      "relations": 21,
+      "exclusions": 28
+    },
+    {
+      "stage": "1.1.checkHeads",
+      "changes": 13,
+      "heads": 18,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.purgeAfter.checkHeads",
+      "changes": 2,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.checkHooksHaveStem",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.purgeAfter.checkHooksHaveStem",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.checkBeamsHaveBothStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.purgeAfter.checkBeamsHaveBothStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.checkLedgers",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.purgeAfter.checkLedgers",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.checkStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.1.purgeAfter.checkStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.checkStemEndingHeads",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.purgeAfter.checkStemEndingHeads",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.checkHeads",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.purgeAfter.checkHeads",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.checkHooksHaveStem",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.purgeAfter.checkHooksHaveStem",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.checkBeamsHaveBothStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.purgeAfter.checkBeamsHaveBothStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.checkLedgers",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.purgeAfter.checkLedgers",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.checkStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.2.purgeAfter.checkStems",
+      "changes": 0,
+      "heads": 16,
+      "stems": 8,
+      "relations": 16,
+      "exclusions": 8
+    },
+    {
+      "stage": "1.reduceExclusions",
+      "changes": 8,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "1.late",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.purge",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.checkStemEndingHeads",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.purgeAfter.checkStemEndingHeads",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.checkHeads",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.purgeAfter.checkHeads",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.checkHooksHaveStem",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.purgeAfter.checkHooksHaveStem",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.checkBeamsHaveBothStems",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.purgeAfter.checkBeamsHaveBothStems",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.checkLedgers",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.purgeAfter.checkLedgers",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.checkStems",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.1.purgeAfter.checkStems",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.reduceExclusions",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    },
+    {
+      "stage": "2.late",
+      "changes": 0,
+      "heads": 8,
+      "stems": 8,
+      "relations": 8,
+      "exclusions": 0
+    }
+  ],
+  "new_overlap_exclusion": {
+    "kinds": [
+      "BarlineInter",
+      "StemInter"
+    ],
+    "required_future_cross_phase_SIG_preservation": true
+  },
+  "HEADS_STEMS_MusicXML_complete": false
+}

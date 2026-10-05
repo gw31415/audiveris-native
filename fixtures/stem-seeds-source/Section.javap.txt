@@ -1,0 +1,233 @@
+Compiled from "Section.java"
+public interface org.audiveris.omr.lag.Section extends org.audiveris.omr.util.Entity,org.audiveris.omr.run.Oriented {
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> idComparator;
+
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> reverseWeightComparator;
+
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> byCoordinate;
+
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> byPosition;
+
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> byFullPosition;
+
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> byAbscissa;
+
+  public static final java.util.Comparator<org.audiveris.omr.lag.Section> byFullAbscissa;
+
+  public abstract boolean contains(double, double);
+
+  public abstract void cumulate(org.audiveris.omr.math.Barycenter, java.awt.Rectangle);
+
+  public abstract void cumulate(org.audiveris.omr.math.PointsCollector);
+
+  public abstract void drawAscii();
+
+  public abstract void fillBuffer(ij.process.ByteProcessor, java.awt.Point);
+
+  public abstract void fillTable(char[][], java.awt.Rectangle);
+
+  public abstract org.audiveris.omr.math.Line getAbsoluteLine();
+
+  public abstract java.awt.Point getAreaCenter();
+
+  public abstract double getAspect(org.audiveris.omr.run.Orientation);
+
+  public abstract java.awt.Rectangle getBounds();
+
+  public abstract java.awt.Point getCentroid();
+
+  public abstract java.awt.geom.Point2D getCentroid2D();
+
+  public abstract int getFirstPos();
+
+  public abstract org.audiveris.omr.run.Run getFirstRun();
+
+  public abstract org.audiveris.omr.lag.Lag getLag();
+
+  public abstract int getLastPos();
+
+  public abstract org.audiveris.omr.run.Run getLastRun();
+
+  public abstract int getLength(org.audiveris.omr.run.Orientation);
+
+  public abstract int getMaxRunLength();
+
+  public abstract double getMeanAspect(org.audiveris.omr.run.Orientation);
+
+  public abstract int getMeanRunLength();
+
+  public abstract double getMeanThickness(org.audiveris.omr.run.Orientation);
+
+  public abstract java.awt.Rectangle getOrientedBounds();
+
+  public abstract org.audiveris.omr.math.Line getOrientedLine();
+
+  public abstract java.awt.geom.PathIterator getPathIterator();
+
+  public abstract java.awt.Polygon getPolygon();
+
+  public abstract java.awt.Point getRectangleCentroid(java.awt.Rectangle);
+
+  public abstract int getRunCount();
+
+  public abstract java.util.List<org.audiveris.omr.run.Run> getRuns();
+
+  public abstract int getStartCoord();
+
+  public abstract int getStopCoord();
+
+  public abstract int getThickness(org.audiveris.omr.run.Orientation);
+
+  public abstract int getWeight();
+
+  public abstract boolean intersects(java.awt.Shape);
+
+  public abstract boolean intersects(java.awt.Rectangle);
+
+  public abstract boolean intersects(org.audiveris.omr.lag.Section);
+
+  public abstract boolean isVertical();
+
+  public abstract boolean render(java.awt.Graphics, boolean, java.awt.Color);
+
+  public abstract boolean renderSelected(java.awt.Graphics);
+
+  public abstract void setLag(org.audiveris.omr.lag.Lag);
+
+  public abstract boolean touches(org.audiveris.omr.lag.Section);
+
+  public abstract void translateAbsolute(int, int);
+
+  private static int lambda$static$6(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: if_acmpne     7
+       5: iconst_0
+       6: ireturn
+       7: aload_0
+       8: invokeinterface #1,  1            // InterfaceMethod getBounds:()Ljava/awt/Rectangle;
+      13: invokevirtual #7                  // Method java/awt/Rectangle.getLocation:()Ljava/awt/Point;
+      16: astore_2
+      17: aload_1
+      18: invokeinterface #1,  1            // InterfaceMethod getBounds:()Ljava/awt/Rectangle;
+      23: invokevirtual #7                  // Method java/awt/Rectangle.getLocation:()Ljava/awt/Point;
+      26: astore_3
+      27: aload_2
+      28: getfield      #13                 // Field java/awt/Point.x:I
+      31: aload_3
+      32: getfield      #13                 // Field java/awt/Point.x:I
+      35: isub
+      36: istore        4
+      38: iload         4
+      40: ifeq          46
+      43: iload         4
+      45: ireturn
+      46: aload_2
+      47: getfield      #19                 // Field java/awt/Point.y:I
+      50: aload_3
+      51: getfield      #19                 // Field java/awt/Point.y:I
+      54: isub
+      55: istore        5
+      57: iload         5
+      59: ifeq          65
+      62: iload         5
+      64: ireturn
+      65: aload_0
+      66: invokeinterface #22,  1           // InterfaceMethod getId:()I
+      71: aload_1
+      72: invokeinterface #22,  1           // InterfaceMethod getId:()I
+      77: invokestatic  #26                 // Method java/lang/Integer.compare:(II)I
+      80: ireturn
+
+  private static int lambda$static$5(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: invokeinterface #1,  1            // InterfaceMethod getBounds:()Ljava/awt/Rectangle;
+       6: getfield      #32                 // Field java/awt/Rectangle.x:I
+       9: aload_1
+      10: invokeinterface #1,  1            // InterfaceMethod getBounds:()Ljava/awt/Rectangle;
+      15: getfield      #32                 // Field java/awt/Rectangle.x:I
+      18: invokestatic  #26                 // Method java/lang/Integer.compare:(II)I
+      21: ireturn
+
+  private static int lambda$static$4(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: invokeinterface #33,  1           // InterfaceMethod getFirstPos:()I
+       6: istore_2
+       7: aload_1
+       8: invokeinterface #33,  1           // InterfaceMethod getFirstPos:()I
+      13: istore_3
+      14: iload_2
+      15: iload_3
+      16: if_icmpeq     23
+      19: iload_2
+      20: iload_3
+      21: isub
+      22: ireturn
+      23: aload_0
+      24: invokeinterface #36,  1           // InterfaceMethod getStartCoord:()I
+      29: istore        4
+      31: aload_1
+      32: invokeinterface #36,  1           // InterfaceMethod getStartCoord:()I
+      37: istore        5
+      39: iload         4
+      41: iload         5
+      43: isub
+      44: ireturn
+
+  private static int lambda$static$3(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: invokeinterface #33,  1           // InterfaceMethod getFirstPos:()I
+       6: aload_1
+       7: invokeinterface #33,  1           // InterfaceMethod getFirstPos:()I
+      12: invokestatic  #26                 // Method java/lang/Integer.compare:(II)I
+      15: ireturn
+
+  private static int lambda$static$2(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: invokeinterface #36,  1           // InterfaceMethod getStartCoord:()I
+       6: aload_1
+       7: invokeinterface #36,  1           // InterfaceMethod getStartCoord:()I
+      12: invokestatic  #26                 // Method java/lang/Integer.compare:(II)I
+      15: ireturn
+
+  private static int lambda$static$1(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_1
+       1: invokeinterface #39,  1           // InterfaceMethod getWeight:()I
+       6: aload_0
+       7: invokeinterface #39,  1           // InterfaceMethod getWeight:()I
+      12: invokestatic  #26                 // Method java/lang/Integer.compare:(II)I
+      15: ireturn
+
+  private static int lambda$static$0(org.audiveris.omr.lag.Section, org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: invokeinterface #22,  1           // InterfaceMethod getId:()I
+       6: aload_1
+       7: invokeinterface #22,  1           // InterfaceMethod getId:()I
+      12: invokestatic  #26                 // Method java/lang/Integer.compare:(II)I
+      15: ireturn
+
+  static {};
+    Code:
+       0: invokedynamic #42,  0             // InvokeDynamic #0:compare:()Ljava/util/Comparator;
+       5: putstatic     #45                 // Field idComparator:Ljava/util/Comparator;
+       8: invokedynamic #49,  0             // InvokeDynamic #1:compare:()Ljava/util/Comparator;
+      13: putstatic     #50                 // Field reverseWeightComparator:Ljava/util/Comparator;
+      16: invokedynamic #53,  0             // InvokeDynamic #2:compare:()Ljava/util/Comparator;
+      21: putstatic     #54                 // Field byCoordinate:Ljava/util/Comparator;
+      24: invokedynamic #57,  0             // InvokeDynamic #3:compare:()Ljava/util/Comparator;
+      29: putstatic     #58                 // Field byPosition:Ljava/util/Comparator;
+      32: invokedynamic #61,  0             // InvokeDynamic #4:compare:()Ljava/util/Comparator;
+      37: putstatic     #62                 // Field byFullPosition:Ljava/util/Comparator;
+      40: invokedynamic #65,  0             // InvokeDynamic #5:compare:()Ljava/util/Comparator;
+      45: putstatic     #66                 // Field byAbscissa:Ljava/util/Comparator;
+      48: invokedynamic #69,  0             // InvokeDynamic #6:compare:()Ljava/util/Comparator;
+      53: putstatic     #70                 // Field byFullAbscissa:Ljava/util/Comparator;
+      56: return
+}

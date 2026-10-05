@@ -1,0 +1,25 @@
+2026-10-03 06:03:13,878 INFO [stem-seeds-clean]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/stem-seeds-clean.png
+2026-10-03 06:03:14,001 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 06:03:14,001 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-scale-control/20261002T210309.967160Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 06:03:14,003 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 06:03:14,005 INFO [stem-seeds-clean]       StepMonitoring.java:98   | LOAD
+2026-10-03 06:03:14,028 INFO [stem-seeds-clean]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/stem-seeds-clean.png
+2026-10-03 06:03:14,033 INFO [stem-seeds-clean]       StepMonitoring.java:98   | BINARY
+2026-10-03 06:03:14,120 INFO [stem-seeds-clean]       StepMonitoring.java:98   | SCALE
+2026-10-03 06:03:14,128 INFO [stem-seeds-clean]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 06:03:14,129 INFO [stem-seeds-clean]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 39% of needed quorum
+2026-10-03 06:03:14,129 WARN [stem-seeds-clean]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 06:03:14,130 INFO [stem-seeds-clean]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 06:03:14,130 INFO [stem-seeds-clean]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 06:03:14,130 INFO [stem-seeds-clean]                 Book.java:2584 | Book{stem-seeds-clean} storing
+2026-10-03 06:03:14,150 INFO [stem-seeds-clean]                 Book.java:2565 | Stored /book.xml
+2026-10-03 06:03:14,167 INFO [stem-seeds-clean]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 06:03:14,372 INFO [stem-seeds-clean]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 06:03:14,372 INFO [stem-seeds-clean]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-scale-control/20261002T210309.967160Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 06:03:14,373 INFO [stem-seeds-clean]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 06:03:14,392 INFO [stem-seeds-clean]                 Book.java:2050 | End of Stub#1
+2026-10-03 06:03:14,393 INFO [stem-seeds-clean]                 Book.java:2057 | End of Book{stem-seeds-clean}
+2026-10-03 06:03:14,406 INFO [stem-seeds-clean]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 06:03:14,415 INFO [stem-seeds-clean]           StemScaler.java:143  | No stem peak found, computing defaults
+2026-10-03 06:03:14,417 INFO [stem-seeds-clean]           StemScaler.java:143  | No stem peak found, computing defaults
+2026-10-03 06:03:14,418 INFO [stem-seeds-clean]           StemScaler.java:143  | No stem peak found, computing defaults

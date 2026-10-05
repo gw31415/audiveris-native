@@ -1,0 +1,14 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `release` profile [optimized] target(s) in 3.76s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/release/deps/audiveris_native-b5b24e5f8579e34e)
+
+running 6 tests
+test key_slices::tests::explicit_stop_preserves_null_semantics ... ok
+test key_slices::tests::light_peak_distance_uses_strict_cutoff ... ok
+test key_slices::tests::malformed_or_overlapping_hilos_are_refused ... ok
+test key_slices::tests::refine_stop_keeps_first_minimum_and_empty_hilos_preserve_nullable_range ... ok
+test key_slices::tests::odd_sharp_peak_is_removed_and_interval_outlier_truncates_flat_items ... ok
+test key_slices::tests::stem_row_quorum_is_inclusive_and_uses_grown_narrow_peak ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+

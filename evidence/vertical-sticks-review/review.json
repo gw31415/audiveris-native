@@ -1,0 +1,34 @@
+{
+  "reviewed_module": "src/vertical_sticks.rs",
+  "reviewed_sha256": "edcf46b8801d8ca16fece63aac8d580dfb4b6f3da166b0003f9e0d4db0450d87",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "method": "Independent read of cached pinned local Java bytecode and available VerticalsBuilder/SystemInfo sources; no network or runtime recognition wrapper",
+  "matched_algorithms": [
+    "Strict system-boundary integer-center filtering and one-pixel opposite strips",
+    "System section full-position order and stable descending core lengths",
+    "Neighbor overlap/early termination and directed list mutations",
+    "TreeSet byCoordinate first-object ties",
+    "Source/target side traversal and partial processed/compound ownership",
+    "Weighted-consistency rounding, side coverage and stopping conditions",
+    "Sticker collection before insertion; sorted/deduplicated final members",
+    "BasicSection pixel inclusion order and BasicLine includeLine grouping",
+    "Math.hypot normalization, mean squared distance, rough/best-fit orientations and inclusive endpoints",
+    "Filament center and exact glyph pixel union"
+  ],
+  "guard_findings": {
+    "fixed_and_rechecked": [
+      "first_pos + run_count coordinate cap",
+      "Java-int sumLengths/sumWidths/commonLength overflow rejected explicitly",
+      "analyze must bound raw runs before json!/serde cloning and enforce aggregate run/weight limits while parsing lag banks, not only after selecting/retrieving sections"
+    ],
+    "pending_parent_fix": []
+  },
+  "supporting_local_bytecode": {
+    "path": "evidence/vertical-sticks-review/AbstractWeightedEntity.javap.txt",
+    "sha256": "e42fb5c71a66d6f9690d99218bc7446e3e3415e2bf3bbd1c8c2270ddfc6f0d06",
+    "class": "org.audiveris.omr.glyph.AbstractWeightedEntity",
+    "method": "getMeanThickness returns getWeight()/getLength(orientation)"
+  },
+  "native_parity": "Parent complete native GRID/HEADERS/STEM_SEEDS11-raster integration and original-section-input11-raster test passed independent release recheck; see evidence/stem-seeds-review/recheck-release.log",
+  "algorithmic_mismatches_found": 0
+}

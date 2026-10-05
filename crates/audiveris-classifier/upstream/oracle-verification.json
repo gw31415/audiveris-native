@@ -1,0 +1,13 @@
+{
+  "cases": 136,
+  "compared_values": 55488,
+  "independent_checker": "Python stdlib binary64 XML arithmetic; Java JSON is the oracle, not this checker",
+  "max_absolute_error": {
+    "normalized": 0.0,
+    "hidden": 1.1102230246251565e-16,
+    "scores": 2.220446049250313e-16
+  },
+  "acceptance": "abs(actual-reference) <= 1e-12 + 1e-10*abs(reference); labels and dimensions exact",
+  "golden_sha256": "432e7003d8c2b319575e79c023a6f378cd4f18f9092b5ce47fb8aa1d46dfe983",
+  "model_export_sha256": "4650334a8a1fe8d5f65e9bc53bee5f2df7fff85e90c53665d8f6f75805fc9a5f"
+}

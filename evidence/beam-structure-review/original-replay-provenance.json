@@ -1,0 +1,61 @@
+{
+  "scope": "Direct original geometry and numerical primitives only; no production builder acceptance decisions",
+  "geometry_seed": 20261002,
+  "hypot_seed": 51102026,
+  "geometry_cases": 1002,
+  "hypot_cases": 5321,
+  "original_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "java_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "javac_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "sources": {
+    "BeamStructureControlProbe.java": "27ccc38be5420f513ce9e360d72a3e2f551c9d96b0585e006619aa6bab69961b",
+    "run_beam_structure_review.py": "1ea043ca1ec021887bb835830ff2203f0a4d3b2eaa48c73a4ce5c80ca004c1cd",
+    "HypotProbe.java": "13503ef4762178217f988aeb5e638efbf9c831f76813afd2718d3449d18d12ec"
+  },
+  "outputs": {
+    "geometry-input.json": "eaaf69f5a8fdb56b618c742ef9ad1fbcd04d937d797e054bb253a7bb786f00cb",
+    "geometry-original.json": "f8222a3b381415fa7411e39d8cd547b570026584877f2729789d10ace075c7d2",
+    "hypot-input.txt": "58e589721dd306d6b19624c4c88537947a7221186a18e16347a1564cb540381d",
+    "hypot-original.txt": "7678f839d94fb28837f9fadbe25d31a2768994e35776422fc8dcb9723ee446ec"
+  },
+  "executions": [
+    {
+      "command": [
+        "/workspace/shared/audiveris-cloud-continuation/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+        "--release",
+        "21",
+        "-cp",
+        "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*",
+        "-d",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/classes",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/sources/BeamStructureControlProbe.java",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/sources/HypotProbe.java"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Djava.awt.headless=true",
+        "-cp",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/classes:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*",
+        "BeamStructureControlProbe",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/geometry-input.json",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/geometry-original.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-cp",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/classes",
+        "HypotProbe",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/hypot-input.txt",
+        "/workspace/shared/audiveris-cloud-continuation/beam-structure-review/replay/hypot-original.txt"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "retained_fixture_replay": "matched parsed geometry JSON and exact hypot vector bytes"
+}

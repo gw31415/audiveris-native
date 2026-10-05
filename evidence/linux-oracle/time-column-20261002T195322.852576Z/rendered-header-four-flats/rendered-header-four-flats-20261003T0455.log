@@ -1,0 +1,31 @@
+2026-10-03 04:55:07,140 INFO [rendered-header-four-flats]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-four-flats.png
+2026-10-03 04:55:07,382 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:07,384 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-four-flats/rendered-header-four-flats.omr
+2026-10-03 04:55:07,387 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:55:07,388 INFO [rendered-header-four-flats]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:55:07,410 INFO [rendered-header-four-flats]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-four-flats.png
+2026-10-03 04:55:07,414 INFO [rendered-header-four-flats]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:55:07,508 INFO [rendered-header-four-flats]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:55:07,518 INFO [rendered-header-four-flats]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:55:07,519 INFO [rendered-header-four-flats]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 50% of needed quorum
+2026-10-03 04:55:07,519 WARN [rendered-header-four-flats]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:55:07,519 INFO [rendered-header-four-flats]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:55:07,519 INFO [rendered-header-four-flats]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:55:07,520 INFO [rendered-header-four-flats]                 Book.java:2584 | Book{rendered-header-four-flats} storing
+2026-10-03 04:55:07,546 INFO [rendered-header-four-flats]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:07,563 INFO [rendered-header-four-flats]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:55:07,777 INFO [rendered-header-four-flats]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:07,777 INFO [rendered-header-four-flats]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-four-flats/rendered-header-four-flats.omr
+2026-10-03 04:55:07,778 INFO [rendered-header-four-flats]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:55:07,798 INFO [rendered-header-four-flats]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:55:07,799 INFO [rendered-header-four-flats]                 Book.java:2057 | End of Book{rendered-header-four-flats}
+2026-10-03 04:55:07,811 INFO [rendered-header-four-flats]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:55:07,887 INFO [rendered-header-four-flats]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:55:07,894 INFO [rendered-header-four-flats]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:55:07,916 INFO [rendered-header-four-flats]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:55:07,942 INFO [rendered-header-four-flats]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:55:07,943 INFO [rendered-header-four-flats]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:55:08,619 INFO [rendered-header-four-flats]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:08,637 INFO [rendered-header-four-flats]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:08,637 INFO [rendered-header-four-flats]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/rendered-header-four-flats/rendered-header-four-flats.omr
+2026-10-03 04:55:08,638 INFO [rendered-header-four-flats]                Score.java:181  | Closing {Score 1}

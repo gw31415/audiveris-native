@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-process-one-sharp-trailing-block.png",
+  "input_sha256": "ec8d1a4ba3b9e56022f0a2932d6cc939f17bed8b157715290065b4dde7e9c05f",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "HEADERS",
+    "-run",
+    "HeadersFinalProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-process-one-sharp-trailing-block.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-one-sharp-trailing-block/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "e34aa25b8f4f4e63c76529791cb8cef14646a9aa73d4566640c3a7d7f1bb8aea",
+  "ok": true,
+  "result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240"
+}

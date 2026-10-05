@@ -1,0 +1,13 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `release` profile [optimized] target(s) in 7.44s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/release/deps/audiveris_native-b5b24e5f8579e34e)
+
+running 5 tests
+test key_state::tests::one_column_empty_space_does_not_bypass_original_else_if ... ok
+test key_state::tests::ensemble_grade_uses_current_intrinsic_mean_and_member_center_order ... ok
+test key_state::tests::singleton_clef_skips_refresh_but_duplicate_working_refs_trigger_it ... ok
+test key_state::tests::destruction_keeps_selected_clef_and_duplicate_retention_is_exact ... ok
+test key_state::tests::post_fill_pitch_rejection_keeps_partial_grade_writes ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 34 filtered out; finished in 0.00s
+

@@ -1,0 +1,22 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.44s
+     Running tests/beam_extension_loop.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_extension_loop-91e100c1c0a4f85c)
+
+running 1 test
+checking beams-double
+checking beams-empty
+checking beams-heads-only
+checking beams-hook
+checking beams-noise
+checking beams-short
+checking beams-single
+checking beams-sloped
+checking beams-split
+checking beams-steep
+checking beams-thin
+checking beams-triple
+checking laura-gray
+test original_uninterrupted_loop_matches_thirteen_stage_boundaries ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.75s
+

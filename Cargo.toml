@@ -1,0 +1,27 @@
+[package]
+name = "audiveris-native"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+description = "Native Audiveris preprocessing, sections, and isolated glyph classifier; not a full OMR engine"
+default-run = "audiveris-native"
+publish = false
+
+[workspace]
+members = [".", "crates/audiveris-classifier", "crates/audiveris-glyph-features", "crates/audiveris-staff-removal", "crates/audiveris-template-match", "crates/audiveris-template-bank", "crates/audiveris-area"]
+default-members = ["."]
+resolver = "3"
+
+[dependencies]
+audiveris-staff-removal = { path = "crates/audiveris-staff-removal" }
+audiveris-classifier = { path = "crates/audiveris-classifier" }
+audiveris-glyph-features = { path = "crates/audiveris-glyph-features" }
+serde_json = { version = "=1.0.150", features = ["float_roundtrip"] }
+png = "=0.18.1"
+
+serde = { version = "=1.0.228", features = ["derive"] }
+audiveris-template-match = { path = "crates/audiveris-template-match" }
+audiveris-template-bank = { path = "crates/audiveris-template-bank" }
+sha2 = "=0.10.9"
+
+audiveris-area = { path = "crates/audiveris-area" }

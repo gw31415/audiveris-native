@@ -1,0 +1,39 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "full_grid_complete": false,
+  "comparison_source": "official unmodified jar, original raster; plus independently captured full GRID glyphs and residual",
+  "cases": [
+    "laura-gray",
+    "synthetic-system-bars"
+  ],
+  "anlaura": {
+    "staff_count": 6,
+    "line_count": 30,
+    "checkpoint_count": 9,
+    "section_totals": [
+      569,
+      569,
+      569,
+      619,
+      781,
+      781,
+      781,
+      818,
+      818
+    ],
+    "all_checkpoint_members_and_points_match": true,
+    "final_glyph_boxes_origins_runs_match": true,
+    "removed_pixels": 54466,
+    "residual_foreground": 135311,
+    "residual_raw_sha256": "26146ee6b8cd7d198ba3dd8b409a354c5aa7f93e2d66439fa357932a65b0b6ff",
+    "connected_components": 604,
+    "features_per_component": 110,
+    "scores_per_component": 149
+  },
+  "remaining": [
+    "full BarsRetriever semantic filters",
+    "canonical glyph IDs and StaffLine persistence",
+    "HLAG rebuild/system population",
+    "musical grouping/rhythm/MusicXML"
+  ]
+}

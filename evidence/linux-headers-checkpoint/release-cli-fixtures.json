@@ -1,0 +1,92 @@
+[
+  {
+    "case": "laura-gray",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 3.18
+  },
+  {
+    "case": "synthetic-system-bars",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.07
+  },
+  {
+    "case": "cclef-pair",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.08
+  },
+  {
+    "case": "bracket-pair",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.08
+  },
+  {
+    "case": "line-root",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.06
+  },
+  {
+    "case": "rendered-clef-g_clef",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.09
+  },
+  {
+    "case": "rendered-clef-f_clef",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.09
+  },
+  {
+    "case": "rendered-clef-c_clef",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.1
+  },
+  {
+    "case": "rendered-clef-empty",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.06
+  },
+  {
+    "case": "rendered-clef-noise",
+    "exit": 0,
+    "clef_staffs_match": true,
+    "registration_match": true,
+    "key_projection_match": true,
+    "key_peaks_match": true,
+    "seconds": 0.23
+  }
+]

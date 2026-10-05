@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-uniform-flats.png",
+  "input_sha256": "b74bea44de2a97a192743d97b584f471b1abf05cfa6453c74eb3c1ea5a9429a1",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "HEADERS",
+    "-run",
+    "HeadersFinalProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-uniform-flats.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-column-uniform-flats/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "33ff70fae0398998df31ffbf7a493cf739773c87968428d098379f1f220b3efb",
+  "ok": true,
+  "result_sha256": "7377f88a2eedad0f55a3e89d9d5cc5427a595525006817b0d3b4cbbe8d6f8d7a"
+}

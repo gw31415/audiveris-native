@@ -1,0 +1,42 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/bracket-pair.png",
+  "input_sha256": "98c22e85d449ac523c467c91a99d3cb5bfedd7597422d3f644182bc8d55b7559",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "ClefCandidateProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/bracket-pair.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/clef-candidates/20261002T175134.209715Z/bracket-pair/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "33400b5c10b40bb06797621295e9be0e69e5376daa35f686cc10b3b9a300f378",
+  "ok": true,
+  "result_sha256": "9cefc53c958618573f1677c92128d89759d6cb6234247078b448e8dc3d40924d",
+  "preserved_fixture_sha256": "9cefc53c958618573f1677c92128d89759d6cb6234247078b448e8dc3d40924d",
+  "matches_preserved_fixture_json": true
+}

@@ -1,0 +1,20 @@
+{
+  "debug_tests": "6 passed",
+  "release_tests": "6 passed",
+  "clippy": "passed -D warnings",
+  "format": "passed",
+  "oracle_exit": 0,
+  "oracle_seconds": 6.628315125,
+  "asset_regeneration": "payload SHA unchanged across original generation and reproduce.py",
+  "manifest_sha256": "e682c02bbfbc83b382edac8e7e44755ebff1f0973fc289b0c9bf3ad4fcf01678",
+  "payload_sha256": "3501498ad40c12b8205dfc303cfddfc4a12d29f6de06f1db77a2044059810620",
+  "sources": {
+    "oracle/upstream/glyph/ShapeSet.java": "07f7e6b9baf318c0897e54df7da3883eb9481fbdad69882e41d20fa80666cab8",
+    "oracle/upstream/image/TemplateFactory.java": "4c7f9b6cfc90cf5cc89530f152d00f6295ab52f189fb827586384f6c52e1cb49",
+    "oracle/upstream/sheet/Staff.java": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57",
+    "oracle/upstream/sheet/beam/BlackHeadSizer.java": "f23aed49e8b8297e4960c977d748c27087151228a194b99405ae066a1570cdac",
+    "oracle/upstream/sheet/note/NoteHeadsBuilder.java": "397de423f9168337b9f9b2acc693739cf49422122d48237e2107e6c896bc3b2c",
+    "oracle/upstream/ui/symbol/MusicFont.java": "0e56cf2174e36c9c6e99a6f50a45bcb86c9b689e5bc841fcedf6528597de3d8e",
+    "oracle/upstream/ui/symbol/TemplateSymbol.java": "fb95eee098535a27537facef7194839bf8356f70804e157bbd8127247218d2a3"
+  }
+}

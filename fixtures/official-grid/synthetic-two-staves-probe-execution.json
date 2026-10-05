@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/runtime/Contents/Home/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/official-probe/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/official-probe/cache",
+    "-Djava.util.prefs.userRoot=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/official-probe/prefs",
+    "-Dnative.probe.output=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/official-probe/synthetic-two-staves/projection.json",
+    "-cp",
+    "/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/app/*:/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/official-probe",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "GridProbe",
+    "-output",
+    "/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/official-probe/synthetic-two-staves",
+    "--",
+    "/Users/ama/Documents/Codex/2026-10-02/task-5/fixtures/official-grid/synthetic-two-staves.png"
+  ],
+  "exit": 0,
+  "input_sha256": "1f217e82c7fc3f4881597f29f01d1133c60002f381bac962c146521c6ca8b759"
+}

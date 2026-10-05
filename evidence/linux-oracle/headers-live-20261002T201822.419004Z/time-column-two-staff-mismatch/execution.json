@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-two-staff-mismatch.png",
+  "input_sha256": "026a4d0b790f7f3af81a1c2bab85b5fc4f072b763feb36bbaa2a3ef643b10601",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "HeadersLiveProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-two-staff-mismatch.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-two-staff-mismatch/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "984790a2b8c55a0cb2ca05fd1d3b5680b97686223f4697c0bf1c027bc2de26e3",
+  "ok": true,
+  "result_sha256": "6d7a9180a37d88e9dae09eb91bc90745ce5749da0432b915d779ddcf3d2872b6"
+}

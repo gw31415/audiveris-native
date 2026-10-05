@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "/workspace/audiveris-toolchain/side-area-oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/*",
+      "-d",
+      "/workspace/audiveris-toolchain/side-area-oracle/side-lookup/classes",
+      "/workspace/audiveris-restart/scripts/java/BeamImpactsControlProbe.java",
+      "/workspace/audiveris-restart/scripts/java/BeamSideLookupControlProbe.java"
+    ],
+    "seconds": 0.8981617520003056,
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Djava.awt.headless=true",
+      "-Duser.home=/workspace/audiveris-toolchain/side-area-oracle/side-lookup",
+      "-cp",
+      "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-toolchain/side-area-oracle/side-lookup/classes",
+      "BeamSideLookupControlProbe",
+      "/workspace/audiveris-restart/fixtures/official-beam-side-lookup.json"
+    ],
+    "seconds": 0.6658962040000915,
+    "exit_code": 0
+  }
+]

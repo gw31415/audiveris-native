@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.67s
+     Running tests/key_state.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_state-2ba27aca5eb620ea)
+
+running 1 test
+test original_live_process_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 23.18s
+

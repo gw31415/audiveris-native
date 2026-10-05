@@ -1,0 +1,17 @@
+   Compiling beam-structure-research v0.0.0 (/workspace/shared/audiveris-cloud-continuation/beam-structure-research)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.86s
+     Running unittests main.rs (target/debug/deps/beam_structure_research-647be2894c9470a5)
+
+running 6 tests
+test beam_structure::tests::rejects_bad_parameters_without_mutation ... ok
+test beam_structure::tests::empty_and_one_shot_contracts ... ok
+test beam_structure::tests::rejects_invalid_glyphs_and_budgets ... ok
+test beam_structure::tests::direct_original_method_controls ... ok
+beam_structure_direct_controls: cases=279 null_borders=111 stuck_splits=35 multiple_lines=43 multiple_items=13 floating_values=11512 max_abs_error=1.970001939355e-11 tolerance=1e-8
+test integration_tests::direct_original_synthetic_geometry_controls ... ok
+beam_structure_delta: /workspace/shared/audiveris-cloud-continuation/beam-structure-research/../latest/fixtures/official-beam-prolog/laura-gray.json:51.global_distance actual=0.41985239274393138 original=0.41985239195507290 absolute_error=7.888584785398e-10
+beam_structure_full_image_geometry: images=13 original_geometry_calls=144 replayed_prechecks_skipped=339 floating_values=3412 max_abs_error=7.888584785398e-10 tolerance=1e-8
+test integration_tests::original_geometry_invocations_in_thirteen_full_image_observers ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+

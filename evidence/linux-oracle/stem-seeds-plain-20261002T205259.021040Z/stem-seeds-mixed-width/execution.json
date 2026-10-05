@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/stem-seeds-mixed-width.png",
+  "input_sha256": "754c0cdee08b22cc269ec0b7ad8d01996007f7866b0284e2a9301beb370296f8",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "StemSeedsPlainProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/stem-seeds-mixed-width.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z/stem-seeds-mixed-width/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "e88a9449331ac8d1205527d8594bf2e5c273211e244e3cdb0b33be85d1e2be81",
+  "ok": true,
+  "result_sha256": "2298b18a1684522893cc496da7ff0e0cb914ec6a6942ec9bc9e97d46a85297a8"
+}

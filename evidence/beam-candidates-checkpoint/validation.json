@@ -1,0 +1,40 @@
+{
+  "checkpoint_kind": "WIP source handoff; no full current release sweep",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "previous_verified_source_commit": "23f4f8f94aa5d9945be0a7a7fceea53f174e5b71",
+  "final_focused_debug_tests": 7,
+  "final_focused_test_command": "cargo test --locked --offline -j 2 --test beam_preparation --test beam_candidates",
+  "final_focused_log": "final-focused-tests.log",
+  "complete_native_pipeline_rasters": 13,
+  "initial_inters": 27,
+  "initial_exclusions": 1,
+  "original_glyph_metric_controls": 483,
+  "cli_final_debug_cases": 1,
+  "cli_PATH": "/nonexistent",
+  "cli_existing_outputs_refused": true,
+  "partial_prolog_guard": "passed; rejects before registry mutation",
+  "initial_guard_test_setup_failure": "Historical final-guard-test.log retained: synthetic GRID lacked vertical_margin. Fixture repaired; final-focused-tests.log passes. Production guard was unchanged.",
+  "geometry_review": "evidence/beam-structure-review/validation.json",
+  "grading_review": "evidence/beam-impacts-review/validation.json",
+  "candidate_review": "evidence/candidate-review/review.md",
+  "workspace_clippy": "passed before final partial-prolog guard and test-only additions; not rerun after them",
+  "full_current_debug_workspace_tests": "not run",
+  "full_current_release_workspace_tests": "not run",
+  "new_release_binary": "not built; archive deliberately retains clearly labeled verified v16 binary",
+  "new_five_case_release_CLI_sweep": "not run",
+  "full_beams_complete": false,
+  "musicxml_complete": false,
+  "remaining_review": [
+    "additional retry/identity/error-path and memory controls",
+    "full workspace fmt/clippy/debug/release/build and isolated release CLI sweep"
+  ],
+  "source_hashes": {
+    "src/beam_candidates.rs": "90ab67d7fac6d5087dff1b50c9aa02a75d2c20e2cddd6db1beff94b2e5202c5d",
+    "src/beam_structure.rs": "d66205b26bb2f5114acc6991d0943d3675635541f357bfda6d2031e33cd37af9",
+    "src/beam_impacts.rs": "d2692b8843ab2f92c649696799b158e041744bfdcdc115c253a8e682e9577b21",
+    "src/main.rs": "eb5fcab955a04ea3c0a5e1713cacd950ef0b4456c1a2998296d5797c0e54102c",
+    "crates/audiveris-area/src/linear.rs": "4d833d749d9f7ee46123cbd883c1484f4f597b134a4f1cb04871ccd80f517ea0",
+    "tests/beam_preparation.rs": "50029b7b55d9a3418c68b24f39fde9587678ceb729a7586e706be5da5bc0e764",
+    "docs/CLOUD-HANDOFF.md": "fa9504045691254142eb4cc51ce5ad6c2c5a02f12f43e0a8c7a28adaafb8ed0b"
+  }
+}

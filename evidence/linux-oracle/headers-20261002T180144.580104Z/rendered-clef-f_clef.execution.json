@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-clef-f_clef.png",
+  "input_sha256": "ccc8969acbc59adb4e4af8ae5d0a090f3ea68eb9fddb21e19affee9f19c4da5e",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "HEADERS",
+    "-run",
+    "HeadersFinalProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-clef-f_clef.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T180144.580104Z/rendered-clef-f_clef/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "5716ba14204d878239c9928e52ff222ea39c03fe15f75b4987f45d150fa1b205",
+  "ok": true,
+  "result_sha256": "31700fa53306908ac341e0e1420e9302b675b3fa9274c1e61490954c19f3c1b6"
+}

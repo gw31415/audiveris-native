@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-two-staff-same.png",
+  "input_sha256": "99492c58b0ddfedb5da6e4b782a90fb90e24f3ccedd74823e81fe7465c54f026",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "HeaderTimeColumnProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-two-staff-same.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/time-column-two-staff-same/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "1013ea2377befa1c2a31dd8b8079d4ae822cca5d0255791a9471401347f5fdb4",
+  "ok": true,
+  "result_sha256": "de97f5cea3dd97d6437114254b7d1b03e02f7f9f492bc48c4ca3f0ddc12137ac"
+}

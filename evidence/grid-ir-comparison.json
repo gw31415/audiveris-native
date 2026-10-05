@@ -1,0 +1,90 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "official_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "cases": [
+    {
+      "case": "laura-gray",
+      "hlag_sections": 6162,
+      "vlag_sections": 3673,
+      "system_memberships": [
+        {
+          "id": 1,
+          "horizontal": 1645,
+          "vertical": 1390
+        },
+        {
+          "id": 2,
+          "horizontal": 4552,
+          "vertical": 2346
+        }
+      ],
+      "ordinary_bar_inters": 36,
+      "relations": 30,
+      "unimplemented_reference_inters": [
+        {
+          "id": 2,
+          "kind": "BraceInter",
+          "shape": "BRACE",
+          "staff_id": null,
+          "glyph_id": 1,
+          "bounds": [
+            214,
+            516,
+            16,
+            167
+          ],
+          "grade": 0.8,
+          "contextual_grade": 0.8
+        },
+        {
+          "id": 4,
+          "kind": "BraceInter",
+          "shape": "BRACE",
+          "staff_id": null,
+          "glyph_id": 3,
+          "bounds": [
+            52,
+            1028,
+            15,
+            173
+          ],
+          "grade": 0.8,
+          "contextual_grade": 0.8
+        }
+      ],
+      "verified_by": "tests/grid_ir.rs: native original-raster pipeline compared to official full in-memory GRID",
+      "comparison": [
+        "all StaffLine points/thickness and glyph content",
+        "all horizontal/vertical sections and integer centroids",
+        "every system section membership",
+        "all ordinary bar/connector geometry and intrinsic/contextual scores",
+        "all reference relation kinds and endpoints via content-based ID mapping"
+      ],
+      "grid_complete": false
+    },
+    {
+      "case": "synthetic-system-bars",
+      "hlag_sections": 0,
+      "vlag_sections": 5,
+      "system_memberships": [
+        {
+          "id": 1,
+          "horizontal": 0,
+          "vertical": 5
+        }
+      ],
+      "ordinary_bar_inters": 7,
+      "relations": 3,
+      "unimplemented_reference_inters": [],
+      "verified_by": "tests/grid_ir.rs: native original-raster pipeline compared to official full in-memory GRID",
+      "comparison": [
+        "all StaffLine points/thickness and glyph content",
+        "all horizontal/vertical sections and integer centroids",
+        "every system section membership",
+        "all ordinary bar/connector geometry and intrinsic/contextual scores",
+        "all reference relation kinds and endpoints via content-based ID mapping"
+      ],
+      "grid_complete": false
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+2026-10-03 05:19:17,056 INFO [time-column-two-staff-missing]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-two-staff-missing.png
+2026-10-03 05:19:17,181 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:17,181 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/time-column-two-staff-missing/time-column-two-staff-missing.omr
+2026-10-03 05:19:17,183 INFO []                 Book.java:1929 | Book reaching HEADERS on sheets:[#1]
+2026-10-03 05:19:17,184 INFO [time-column-two-staff-missing]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:19:17,202 INFO [time-column-two-staff-missing]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-two-staff-missing.png
+2026-10-03 05:19:17,206 INFO [time-column-two-staff-missing]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:19:17,297 INFO [time-column-two-staff-missing]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:19:17,307 INFO [time-column-two-staff-missing]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:19:17,308 INFO [time-column-two-staff-missing]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 51% of needed quorum
+2026-10-03 05:19:17,308 WARN [time-column-two-staff-missing]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:19:17,308 INFO [time-column-two-staff-missing]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:19:17,309 INFO [time-column-two-staff-missing]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:19:17,309 INFO [time-column-two-staff-missing]       StepMonitoring.java:98   | GRID
+2026-10-03 05:19:17,403 INFO [time-column-two-staff-missing]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:19:17,413 INFO [time-column-two-staff-missing]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 05:19:17,441 INFO [time-column-two-staff-missing]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 05:19:17,488 INFO [time-column-two-staff-missing]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:19:17,489 INFO [time-column-two-staff-missing]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:19:17,490 INFO [time-column-two-staff-missing]       StepMonitoring.java:98   | HEADERS
+2026-10-03 05:19:18,326 INFO [time-column-two-staff-missing]                 Book.java:2584 | Book{time-column-two-staff-missing} storing
+2026-10-03 05:19:18,368 INFO [time-column-two-staff-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:18,384 INFO [time-column-two-staff-missing]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:19:18,578 INFO [time-column-two-staff-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:19:18,578 INFO [time-column-two-staff-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/time-column-two-staff-missing/time-column-two-staff-missing.omr
+2026-10-03 05:19:18,579 INFO [time-column-two-staff-missing]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:19:18,610 INFO [time-column-two-staff-missing]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:19:18,613 INFO [time-column-two-staff-missing]                 Book.java:2057 | End of Book{time-column-two-staff-missing}
+2026-10-03 05:19:18,656 INFO [time-column-two-staff-missing]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:19:18,707 INFO [time-column-two-staff-missing]                Score.java:181  | Closing {Score 1}

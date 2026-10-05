@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "conditions": 3000,
+  "actual_head_builder_references": 600,
+  "exact_polygon_vertices_adjacent_edges_and_theoretical_lines": true,
+  "ring_start_and_winding_normalized_only": true,
+  "native_controls_gzip_sha256": "b9d509afc95216206af0c5db9ed4cd59986c222970df7201a4dbe2516a9e2b06",
+  "native_source_sha256": {
+    "src/stem_lookup_area.rs": "e0dda14b72fdd280bd4044b2eaa0c663b9ae6978b9e38bec084025a8234a6bab",
+    "examples/support/stem_lookup_area_controls.rs": "9cb40e4c6d1a29d03089da9fc385c8d945eb9697489feb290f680680c4e32782",
+    "examples/stem_lookup_area_dump.rs": "0c81c6e3138033b3da9eae5101f6a1cdc1ca1146ba73eca78942bdce4a5eb2fe",
+    "tests/stem_lookup_area.rs": "bfeceb2aac32c447e93b3cdbc4f97550cea6b72f7cda978ce37282f6aa980e0f"
+  },
+  "declared_limits": true,
+  "automatic_target_selection_complete": false,
+  "beam_lookup_area_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

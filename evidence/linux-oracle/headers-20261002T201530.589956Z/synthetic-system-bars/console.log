@@ -1,0 +1,42 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/synthetic-system-bars/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/synthetic-system-bars.png"
+INFO  [synthetic-system-bars]                      Book 560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/synthetic-system-bars.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/synthetic-system-bars/synthetic-system-bars.omr
+INFO  []                      Book 1929 | Book reaching HEADERS on sheets:[#1]
+INFO  [synthetic-system-bars]            StepMonitoring 98   | LOAD
+INFO  [synthetic-system-bars]                 SheetStub 1278 | Loaded image #1 640x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/synthetic-system-bars.png
+INFO  [synthetic-system-bars]            StepMonitoring 98   | BINARY
+INFO  [synthetic-system-bars]            StepMonitoring 98   | SCALE
+INFO  [synthetic-system-bars]              ScaleBuilder 254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+WARN  [synthetic-system-bars]              ScaleBuilder 300  | No reliable beam height found, guessed value: 9
+INFO  [synthetic-system-bars]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
+INFO  [synthetic-system-bars]                 ScaleStep 65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+INFO  [synthetic-system-bars]            StepMonitoring 98   | GRID
+INFO  [synthetic-system-bars]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [synthetic-system-bars]         ClustersRetriever 326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+INFO  [synthetic-system-bars]                 PeakGraph 310  | Systems: #1[1, 2]
+INFO  [synthetic-system-bars]             SystemManager 800  | 2 parts along 1 system
+INFO  [synthetic-system-bars]                      Book 543  | Created scores: [{Score 1}]
+INFO  [synthetic-system-bars]            StepMonitoring 98   | HEADERS
+WARN  [synthetic-system-bars]               ClefBuilder 658  | Staff#1 no recognized header clef.
+WARN  [synthetic-system-bars]               ClefBuilder 658  | Staff#2 no recognized header clef.
+INFO  [synthetic-system-bars]                      Book 2584 | Book{synthetic-system-bars} storing
+INFO  [synthetic-system-bars]                      Book 2565 | Stored /book.xml
+INFO  [synthetic-system-bars]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [synthetic-system-bars]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [synthetic-system-bars]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/synthetic-system-bars/synthetic-system-bars.omr
+INFO  [synthetic-system-bars]                 SheetStub 1655 | Sheet disposed
+INFO  [synthetic-system-bars]                      Book 2050 | End of Stub#1
+INFO  [synthetic-system-bars]                      Book 2057 | End of Book{synthetic-system-bars}
+INFO  [synthetic-system-bars]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [synthetic-system-bars]                     Score 181  | Closing {Score 1}

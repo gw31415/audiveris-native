@@ -1,0 +1,8 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running tests/clef_competition.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/clef_competition-9ebe7959e62a3c07)
+
+running 1 test
+test original_get_competing_clefs_controls_match_order_exactly ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+

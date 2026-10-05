@@ -1,0 +1,12 @@
+
+running 2 tests
+test invalid_inputs_fail_and_equal_gap_order_is_stable ... ok
+original side lookup cases=300 selected=125 rejected=175
+test original_side_lookup_and_rectangle_intersections_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Compiling audiveris-area v0.1.0 (/workspace/audiveris-restart/crates/audiveris-area)
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-restart)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.94s
+     Running tests/beam_side_lookup.rs (/workspace/audiveris-toolchain/target/debug/deps/beam_side_lookup-82423e450eb399cd)

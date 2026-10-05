@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "actual_image_CLI_executed": true,
+  "command": [
+    "audiveris-stems",
+    "--head-items",
+    "fixtures/official-grid/laura-gray.png",
+    "RESIDUAL.pgm",
+    "HEADS.json",
+    "STEMS.json"
+  ],
+  "native_source_sha256": {
+    "src/bin/audiveris-stems.rs": "b0d0de8d57f6033bab64a0d4d6f257468bf3ddc1bbb2284b205a11aa86c8c363",
+    "src/stem_image_head_items.rs": "1dc43bd79a97577279b321d542505b8fe11b00a8a0322578f0d2c1aad6357ae8",
+    "src/stem_item_events.rs": "ad84b9c1f6d74e89a4d1bfc67bed95d85db371e7ddaa1fc8a2afafd7875b8866",
+    "src/stem_length_map.rs": "017e8f925ea6e1bb3a55ec6feab886bb728cb69c317c795e77ccedb2b2b0b212",
+    "src/stem_image_head_chunks.rs": "9ff0941c9e8994da8ac824a4c2463b66a1c10422d8ba5f0bbf8ec46ba3778659",
+    "src/stem_image_head_parts.rs": "550de3257516ebdfb88c21f29a8c3c7ff0e86301b4e7bde3493c23396a1ae43b",
+    "src/stem_image_beam_generation.rs": "5de08feced27de4828b02ac580b84732b924f4d8731267cf9bd64d1f001927d6",
+    "src/stem_image_beam_targets.rs": "59a2e8884c7e8fbf7dce4fd6cb6f34ad97b66879fa5b045d3d8b504962ec920e",
+    "src/stem_image_linkers.rs": "6de33a0d362455c2b95510fa9357266c09cd3ec8eb7bf531c225ad29c83411e2",
+    "src/stem_image_sources.rs": "ec4bcac8dac30190876c609f2ab3eb3be57b30827c7f32988aeb6d343c82699b",
+    "src/stem_image_stumps.rs": "1e6e811c42364b13f2c895cf55606bbfa4a4ea4270fa5602a8c91d0e216aab60",
+    "src/stem_image_seeds.rs": "ce6cc437594efcd1c0c9711dac40e9dd4183ebbb32d1ab6b8c8f574d8910123f",
+    "src/stem_image_head_plan.rs": "41259113afaefec18b711637ada8d7f652a2f5b55e3f3aa21110c1c9c1d70bd2",
+    "src/stem_parts_lookup.rs": "82ddb49fbe4eaa2bf5fdee10a298fd43f017e596fed41abd2b7bba0c48ced7e0",
+    "src/vertical_sticks.rs": "71b38a1696ca9ac31759620a725c7d0dc49d785691d9a72da688259f9c76e03e",
+    "src/stem_chunks.rs": "1b5739f5ec4363c79979932bee411b52fe528c0e19171a8ff95c86a9ed4d761e",
+    "src/stem_chunk_registration.rs": "5828ad6932fffc17ca4e79b1e92464ce4e32a4183cebd90928ae35b0f28f18a9",
+    "src/stem_chunk_head_filter.rs": "183a4453ad49d9079ac5ba7cfd83e2f3bb946780a81aee251b31b0c5b8dc547d",
+    "src/stem_parts_alignment.rs": "4a07ab3e18a059cbc7bbec1f9068c4a389950e05ac65ab12c1ceffde56de90de",
+    "src/main.rs": "a222b2b4ab2927ad4395c6e6d66dec23c8cd1cc65a85b4a72bfd996b7cbeaffa",
+    "examples/support/stem_image_head_items_controls.rs": "c6cf4b252c2af2cc1f16a3d84a12c7c7fcfdd7c9a44dd4bccfafdf17e759ff5e",
+    "examples/stem_image_head_items_dump.rs": "163fa537d80ef29d43eac6051cadb64d80dc6f0f86e00e70a7f51220ae8ceba3",
+    "src/page_runtime.rs": "eb659ea39f5adf9ca1cb4a3d49b6d02a4a0af6f7fd0d74a21faa14a159bfea34",
+    "src/stem_image_owned.rs": "9244c31343d0b9785e262d9e39f22ac7c6de1a498112ba0b53ff93000989e9eb"
+  },
+  "native_stems_report_gzip_sha256": "3937871afe0d398f1b4299e6099aa2da6c4c66f51b58d232dd1af4b95b4c72c4",
+  "native_stems_report_raw_sha256": "6560fb64b32bd2e6611b1741fee574ab4620b5ff365a86829c7c75b318e0d08a",
+  "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+  "nine_prior_image_modes_report_bytes_unchanged": true,
+  "heads_complete": false,
+  "stems_complete": false,
+  "unchanged_report_after_head_items_mode_recertification": {
+    "actual_current_binary_command_rerun": true,
+    "mode": "--head-items",
+    "stems_report_sha256": "6560fb64b32bd2e6611b1741fee574ab4620b5ff365a86829c7c75b318e0d08a",
+    "entire_old_HEADS_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "reason": "in-process owned page HEADS Graph/registry continuation; all ten previous mode bytes unchanged"
+  }
+}

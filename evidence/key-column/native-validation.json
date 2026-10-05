@@ -1,0 +1,30 @@
+{
+  "stage": "native KeyColumn and HeaderBuilder key-stop propagation",
+  "counts": {
+    "rasters": 51,
+    "systems": 52,
+    "staffs": 73,
+    "final_keys": 44,
+    "replication_statuses": {
+      "Destroy": 5,
+      "Ok": 9,
+      "Shrink": 2,
+      "NoReplicate": 1,
+      "NoClef": 1
+    }
+  },
+  "independent_original": "evidence/key-column-oracle-validation.json",
+  "rasters": "fixtures/official-grid/*-key-column.json (51)",
+  "post_key_stop_original": "corresponding *-time-column.json chronology before_builders_values_1",
+  "comparison": "All expected state fields; arrays/cardinality/order/null/booleans/integers exact. Inter numeric IDs canonicalized by live semantic identity. Floating grades/pitches tolerance1e-9. Frozen key alters matched separately from pre-existing GRID frozen IDs.",
+  "controlled_em": {
+    "fixture": "fixtures/official-grid/clustering-controls.json",
+    "finite_cases": 13,
+    "finite_means_sigma_pi_tolerance": 1e-12,
+    "offsets": "exact",
+    "gaussian_probability_cases": 20,
+    "underflow_cases_explicitly_unsupported": 1
+  },
+  "unit_test_count": 7,
+  "scope_claim": "key-column recognition/finalization on bounded fresh GRID, before time and final header clef selection"
+}

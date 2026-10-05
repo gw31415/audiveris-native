@@ -1,0 +1,8 @@
+
+running 1 test
+Top: BasicLine { n: 9, sx: 2790.0, sy: 10603.0, xx: 864960.0, yy: 12491513.0, xy: 3286926.0, xmin: 306.0, xmax: 314.0, ymin: 1178.0, ymax: 1179.0 } abc=(-0.06651901052377393, -0.997785157856609, 1196.122674234995, false) mean_distance=0.26235451665670323 raw_a=-0.06666666666666667 norm=1.00221975855819379
+Bottom: BasicLine { n: 9, sx: 2790.0, sy: 10713.0, xx: 864960.0, yy: 12752051.0, xy: 3321010.0, xmin: 306.0, xmax: 314.0, ymin: 1188.0, ymax: 1191.0 } abc=(-0.3162277660168379, -0.9486832980505138, 1227.279959911348, false) mean_distance=0.57735026883115959 raw_a=-0.33333333333333331 norm=1.05409255338945984
+test beam_structure::float_debug::debug_numerical_fit ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.17s
+

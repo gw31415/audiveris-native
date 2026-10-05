@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-short.png",
+  "input_sha256": "afc987214ad75a8c122b03191a661b1ea417bc11467ff9545829d3fcfdda24a6",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsPlainProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-short.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-short/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "ac758ecfc4fb9e3fe17060dee7f348e21600e59aae88933561e0499ea2ab8205",
+  "ok": true,
+  "result_sha256": "0e892da748a11738a87a65657c7b7cf071fb0eaa78ddd389617c9a5450daa410"
+}

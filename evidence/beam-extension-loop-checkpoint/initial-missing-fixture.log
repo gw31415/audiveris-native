@@ -1,0 +1,20 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-savedlatest-20261003)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.06s
+     Running tests/beam_extension_loop.rs (/workspace/audiveris-debug-check-20261003/target/debug/deps/beam_extension_loop-91e100c1c0a4f85c)
+
+running 1 test
+checking beams-double
+
+thread 'original_uninterrupted_loop_matches_thirteen_stage_boundaries' (14953) panicked at tests/beam_extension_loop.rs:324:18:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test original_uninterrupted_loop_matches_thirteen_stage_boundaries ... FAILED
+
+failures:
+
+failures:
+    original_uninterrupted_loop_matches_thirteen_stage_boundaries
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.92s
+
+error: test failed, to rerun pass `--test beam_extension_loop`

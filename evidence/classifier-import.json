@@ -1,0 +1,13 @@
+{
+  "source_path": "/Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-classifier",
+  "source_commit": "185b0992172197a41cbfa5ec85f335471b01df7b",
+  "source_tree": "83ae2175f558c79bf119d01e70acbc5c0b6de278",
+  "import_commit": "ee5f3ff",
+  "import_method": "local fetch fixed commit; ours merge preserving second-parent history; read-tree into crates/audiveris-classifier",
+  "imported_files_changed": false,
+  "manifest_sha256": "224fc9c3f9c00f92cff1057614503880f86a06caf61f7f2efc4afaa8db89dfbe",
+  "verified_manifest_files": 53,
+  "public_library": "audiveris_classifier::Model::from_json/evaluate",
+  "root_cli": "classify-features MODEL.json FEATURES.json",
+  "image_feature_extraction": "not connected"
+}

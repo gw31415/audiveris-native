@@ -1,0 +1,32 @@
+2026-10-03 04:56:12,141 INFO [key-column-bottom-ink-blocks]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-bottom-ink-blocks.png
+2026-10-03 04:56:12,412 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:12,412 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-ink-blocks/key-column-bottom-ink-blocks.omr
+2026-10-03 04:56:12,414 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:56:12,415 INFO [key-column-bottom-ink-blocks]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:56:12,435 INFO [key-column-bottom-ink-blocks]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-bottom-ink-blocks.png
+2026-10-03 04:56:12,438 INFO [key-column-bottom-ink-blocks]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:56:12,521 INFO [key-column-bottom-ink-blocks]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:56:12,532 INFO [key-column-bottom-ink-blocks]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:56:12,533 INFO [key-column-bottom-ink-blocks]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 45% of needed quorum
+2026-10-03 04:56:12,533 WARN [key-column-bottom-ink-blocks]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:56:12,533 INFO [key-column-bottom-ink-blocks]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:56:12,533 INFO [key-column-bottom-ink-blocks]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:56:12,534 INFO [key-column-bottom-ink-blocks]                 Book.java:2584 | Book{key-column-bottom-ink-blocks} storing
+2026-10-03 04:56:12,568 INFO [key-column-bottom-ink-blocks]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:12,593 INFO [key-column-bottom-ink-blocks]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:56:12,836 INFO [key-column-bottom-ink-blocks]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:12,837 INFO [key-column-bottom-ink-blocks]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-ink-blocks/key-column-bottom-ink-blocks.omr
+2026-10-03 04:56:12,838 INFO [key-column-bottom-ink-blocks]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:56:12,867 INFO [key-column-bottom-ink-blocks]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:56:12,869 INFO [key-column-bottom-ink-blocks]                 Book.java:2057 | End of Book{key-column-bottom-ink-blocks}
+2026-10-03 04:56:12,884 INFO [key-column-bottom-ink-blocks]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:56:12,998 INFO [key-column-bottom-ink-blocks]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:56:13,011 INFO [key-column-bottom-ink-blocks]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:56:13,048 INFO [key-column-bottom-ink-blocks]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:56:13,092 INFO [key-column-bottom-ink-blocks]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:56:13,093 INFO [key-column-bottom-ink-blocks]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:56:13,700 INFO [key-column-bottom-ink-blocks]           KeyBuilder.java:1380 | Staff#2 key replication failed.
+2026-10-03 04:56:13,885 INFO [key-column-bottom-ink-blocks]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:13,907 INFO [key-column-bottom-ink-blocks]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:13,907 INFO [key-column-bottom-ink-blocks]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-ink-blocks/key-column-bottom-ink-blocks.omr
+2026-10-03 04:56:13,908 INFO [key-column-bottom-ink-blocks]                Score.java:181  | Closing {Score 1}

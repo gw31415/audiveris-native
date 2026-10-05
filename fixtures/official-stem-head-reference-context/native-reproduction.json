@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "native_source_sha256": {
+    "src/stem_head_reference_context.rs": "619b42c8cbd6ce96890b3439589dcc32479a02f023ba78aeb342135aa22566e3",
+    "src/head_stem_relation.rs": "6ab8faacced65aa24259bc34baad8761da86ede367f7b2ce173f08a51b656076",
+    "examples/support/stem_head_reference_context_controls.rs": "1738f2cb0bb0cb7429abd1d48011fb7cc0bbbba0a16f79fcad0843a3a32f05ca",
+    "examples/stem_head_reference_context_dump.rs": "1cb429d210665aeb8355b83dbfa34d2ebcf6c842f0c4942397c32546b0fb5261"
+  },
+  "native_controls_gzip_sha256": "65c239dbbde175ca3596a32c5fc0f87e098ffc05949f799102fcee18684e1b2f",
+  "native_Laura_report_gzip_sha256": "1cbb100ba7e17647b72b6b66f68b10d19f6d2a66d758ad26cc22be02542e789a",
+  "native_Laura_report_raw_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+  "native_Laura_image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "explicit_XML_restored_context": true,
+  "raw_seed_scale_report_unchanged": true,
+  "old_raw_reference_API_unchanged": true,
+  "automatic_raster_target_pipeline_complete": false,
+  "page_cache_SIG_complete": false,
+  "epilog_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

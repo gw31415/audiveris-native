@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-boundaries/laura-gray/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "a6bef987d9796f7e04ab6cc7298ac7a5ef1f5648aa1994575e866ac905cac57a",
+  "ok": true,
+  "result_sha256": "cf5675ad4cb419e4ac71b69f8102e6d987653200bd093b71e874b0a9c3bcfda2"
+}

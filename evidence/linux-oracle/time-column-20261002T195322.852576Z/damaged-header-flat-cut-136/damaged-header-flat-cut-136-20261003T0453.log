@@ -1,0 +1,31 @@
+2026-10-03 04:53:37,353 INFO [damaged-header-flat-cut-136]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-flat-cut-136.png
+2026-10-03 04:53:37,468 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:53:37,469 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/damaged-header-flat-cut-136/damaged-header-flat-cut-136.omr
+2026-10-03 04:53:37,472 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:53:37,473 INFO [damaged-header-flat-cut-136]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:53:37,491 INFO [damaged-header-flat-cut-136]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-flat-cut-136.png
+2026-10-03 04:53:37,494 INFO [damaged-header-flat-cut-136]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:53:37,565 INFO [damaged-header-flat-cut-136]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:53:37,574 INFO [damaged-header-flat-cut-136]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:53:37,575 INFO [damaged-header-flat-cut-136]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 42% of needed quorum
+2026-10-03 04:53:37,575 WARN [damaged-header-flat-cut-136]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:53:37,576 INFO [damaged-header-flat-cut-136]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:53:37,576 INFO [damaged-header-flat-cut-136]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:53:37,577 INFO [damaged-header-flat-cut-136]                 Book.java:2584 | Book{damaged-header-flat-cut-136} storing
+2026-10-03 04:53:37,608 INFO [damaged-header-flat-cut-136]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:53:37,624 INFO [damaged-header-flat-cut-136]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:53:37,856 INFO [damaged-header-flat-cut-136]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:53:37,857 INFO [damaged-header-flat-cut-136]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/damaged-header-flat-cut-136/damaged-header-flat-cut-136.omr
+2026-10-03 04:53:37,858 INFO [damaged-header-flat-cut-136]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:53:37,877 INFO [damaged-header-flat-cut-136]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:53:37,878 INFO [damaged-header-flat-cut-136]                 Book.java:2057 | End of Book{damaged-header-flat-cut-136}
+2026-10-03 04:53:37,892 INFO [damaged-header-flat-cut-136]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:53:37,981 INFO [damaged-header-flat-cut-136]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:53:37,990 INFO [damaged-header-flat-cut-136]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:53:38,013 INFO [damaged-header-flat-cut-136]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:53:38,043 INFO [damaged-header-flat-cut-136]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:53:38,044 INFO [damaged-header-flat-cut-136]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:53:38,839 INFO [damaged-header-flat-cut-136]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:53:38,858 INFO [damaged-header-flat-cut-136]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:53:38,859 INFO [damaged-header-flat-cut-136]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/damaged-header-flat-cut-136/damaged-header-flat-cut-136.omr
+2026-10-03 04:53:38,860 INFO [damaged-header-flat-cut-136]                Score.java:181  | Closing {Score 1}

@@ -1,0 +1,18 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `release` profile [optimized] target(s) in 33.50s
+     Running tests/stem_seeds.rs (/workspace/shared/audiveris-cloud-continuation/target/release/deps/stem_seeds-7e7e75f7d5e49b99)
+
+running 3 tests
+test seed_scope_and_identity_rejections_also_apply_without_candidates ... ok
+test vertical_lag_run_cap_precedes_deserialization ... ok
+test original_stem_seeds_match_complete_native_pipeline ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.78s
+
+     Running tests/vertical_sticks.rs (/workspace/shared/audiveris-cloud-continuation/target/release/deps/vertical_sticks-3853bfa87222c024)
+
+running 1 test
+test original_section_inputs_produce_identical_stick_members_and_geometry ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

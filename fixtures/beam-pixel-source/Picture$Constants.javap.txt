@@ -1,0 +1,37 @@
+Compiled from "Picture.java"
+class org.audiveris.omr.sheet.Picture$Constants extends org.audiveris.omr.constant.ConstantSet {
+  private final org.audiveris.omr.constant.Constant$Boolean printWatch;
+
+  private final org.audiveris.omr.constant.Constant$Integer gaussianRadius;
+
+  private final org.audiveris.omr.constant.Constant$Integer medianRadius;
+
+  private org.audiveris.omr.sheet.Picture$Constants();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/constant/ConstantSet."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+       8: dup
+       9: iconst_0
+      10: ldc           #9                  // String Should we print out the stop watch?
+      12: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      15: putfield      #14                 // Field printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+      18: aload_0
+      19: new           #20                 // class org/audiveris/omr/constant/Constant$Integer
+      22: dup
+      23: ldc           #22                 // String pixels
+      25: iconst_1
+      26: ldc           #24                 // String Radius of Gaussian filtering kernel (1 for 3x3, 2 for 5x5, etc)
+      28: invokespecial #26                 // Method org/audiveris/omr/constant/Constant$Integer."<init>":(Ljava/lang/String;ILjava/lang/String;)V
+      31: putfield      #29                 // Field gaussianRadius:Lorg/audiveris/omr/constant/Constant$Integer;
+      34: aload_0
+      35: new           #20                 // class org/audiveris/omr/constant/Constant$Integer
+      38: dup
+      39: ldc           #22                 // String pixels
+      41: iconst_1
+      42: ldc           #33                 // String Radius of Median filtering kernel (1 for 3x3, 2 for 5x5)
+      44: invokespecial #26                 // Method org/audiveris/omr/constant/Constant$Integer."<init>":(Ljava/lang/String;ILjava/lang/String;)V
+      47: putfield      #35                 // Field medianRadius:Lorg/audiveris/omr/constant/Constant$Integer;
+      50: return
+}

@@ -1,0 +1,15 @@
+{
+  "rust_tests": 14,
+  "fmt": "passed",
+  "clippy": "passed -D warnings",
+  "java_cases": 9,
+  "synthetic_cases": 8,
+  "rendered_cc0_cases": 1,
+  "exact_partition_and_dispatch_match": true,
+  "real_score_h_sections": 2576,
+  "real_score_v_sections": 3673,
+  "grid_complete": false,
+  "staff_detection": false,
+  "renderer_exit": -6,
+  "renderer_pixels_validated": true
+}

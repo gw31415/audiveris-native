@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-hook.png",
+  "input_sha256": "7578257e44c62a3ab015123e11c56c09f5cc800b66bc7b2b9a344cec401a767b",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsPlainProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-hook.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-hook/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "a8f0dfe69307f476ff48d75cce8a4cd534b7b0531a4d274ba16910f0dfd7f440",
+  "ok": true,
+  "result_sha256": "bb55793f9639bf126376fcb69b8e2a04bf66adcaabb9ba833a9d92c6de527bd9"
+}

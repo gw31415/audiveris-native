@@ -1,0 +1,13 @@
+{
+  "rust_tests": 5,
+  "rust_test_result": "passed",
+  "clippy": "passed with -D warnings",
+  "fmt": "passed",
+  "java_parity": "27,027 binary pixels; both run tables exact; 6 threshold probes exact",
+  "png_vs_pgm_cli_outputs": "byte-identical binary PGM and JSON",
+  "existing_output_refusal": "verified exit 1",
+  "openscore_cc0_sources": "3 MSCX and license/README copied and SHA256 verified; rendering/comparison pending",
+  "original_files_preserved": "third-party whitespace retained intentionally",
+  "full_omr": "not implemented",
+  "pdf": "not implemented"
+}

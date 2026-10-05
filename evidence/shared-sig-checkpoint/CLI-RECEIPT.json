@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "command": [
+    "cargo",
+    "run",
+    "--locked",
+    "--offline",
+    "-j",
+    "2",
+    "--",
+    "beam-spots",
+    "fixtures/official-grid/beams-single.png",
+    "/workspace/audiveris-shared-sig-check-20261003/spots.pgm",
+    "/workspace/audiveris-shared-sig-check-20261003/report.json"
+  ],
+  "seconds": 1.3704186109998773,
+  "input_sha256": "9e70dcea82c8e8a5ae4e9ba107eee54f60f1b6f950066870b7010e5ad0a4ca76",
+  "report_sha256": "e71d5a44fb2eac7e4b14c69c41614237ad3f15ae490204752303795b5f7aadff",
+  "graph_vertices": 2,
+  "graph_relations": 0,
+  "by_phase": {
+    "GRID": 1,
+    "BEAM": 1,
+    "GROUP": 0,
+    "REST": 0
+  },
+  "scope": "Actual native raster path through GRID and initial candidates, not later BEAMS/rest CLI execution",
+  "musicxml_complete": false,
+  "replay_status": "passed; complete report and shared IDs identical",
+  "replay_command": [
+    "cargo",
+    "run",
+    "--locked",
+    "--offline",
+    "-j",
+    "2",
+    "--",
+    "beam-spots",
+    "fixtures/official-grid/beams-single.png",
+    "/workspace/audiveris-shared-sig-check-20261003/replay-spots.pgm",
+    "/workspace/audiveris-shared-sig-check-20261003/replay-report.json"
+  ],
+  "replay_seconds": 1.3226181019999785,
+  "replay_report_sha256": "e71d5a44fb2eac7e4b14c69c41614237ad3f15ae490204752303795b5f7aadff"
+}

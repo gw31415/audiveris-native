@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "original_provenance": "source-backed-reproduction.json",
+  "native_source_sha256": {
+    "examples/grid_cue_dump.rs": "016c5effad13f7413400b89626b8c279ed464a2805a6a8af7975eefaf77e79ab",
+    "src/clusters.rs": "2febdb954d7241ad2d25c45acb1998da7ec91dac66d55c54ca70904422a9dff0",
+    "src/staff_projection.rs": "a9abb2a2a215bb98534854a982542c291e15acce5ab58f53ef7d655916e108fc",
+    "src/line_completion.rs": "c2957e9a140cc8886bd6cf2d56a6838a9b1aefd51c7141567520ee5ce2f8fd20",
+    "src/grid_ir.rs": "2e08d2f91af8f84df5af568eb1d5367b52c62d97e373fe5ba50133eb070d0692",
+    "src/page_glyphs.rs": "ce0d9a3454f587e19e7f814230c058ce16a7f3861d3fa76927ab0e7b6d67b318",
+    "src/note_mask.rs": "46c56a374398cc23665929ec463723b660488279dfd61c83125c4ae2b6517104",
+    "src/bar_sticks.rs": "8baac24b31bd2abe2fea501373c558777a6b6c3c19cf41c7676652a0f4b36ea9",
+    "src/system_graph.rs": "60fdd2a7b1f9d190405bb7bf6e9fb46877d551b04a6bc25e5ace7c599c8f4105",
+    "src/bar_semantics.rs": "f1f3005566f6e31c5540199bed78f5452fa7b781a6215532d139efb66d4c61ef",
+    "src/curves.rs": "82f07804a1017a94cf7cdbbbca4e507fba10b094e24af848ba1c348fe6e9f40e",
+    "src/scale.rs": "84b6cd8a892102dbd7530f464da488e1c95d1bae775a2f46b169ad0f8ae0bdfc",
+    "src/sections.rs": "cce4a08768fc286a4dc7f742a5e5cc40e019cad053b3f3437b4a6650b681c86e",
+    "src/filament_merge.rs": "9cae53fce932f52a922bc4d07e534fdd75574a8e3637914273824d106cd43e9d"
+  },
+  "native_report_gzip_sha256": "7c6b87a3d3203027b31abc26f8c2865702fb5b7123d36cfa09d9708ec552a182",
+  "command": [
+    "cargo",
+    "run",
+    "--locked",
+    "--offline",
+    "-j2",
+    "--example",
+    "grid_cue_dump",
+    "--",
+    "fixtures/official-head-actual-pages/images/Bravura-cue.png",
+    "NEW_OUTPUT.json"
+  ],
+  "comparison": {
+    "status": "passed",
+    "scope": "One independent synthetic cue page, observed GRID state only",
+    "staffs": 4,
+    "systems": 4,
+    "small_staffs": 1,
+    "physical_glyphs": 32,
+    "hlag_sections": 85,
+    "vlag_sections": 483,
+    "masked_pixels": 67080,
+    "mask_sha256": "5201aa9789a58c24a7e79114b022cb908f597a296f8823af628062cc4531040a",
+    "distance_sha256_be_i16": "d4ac5c3e1c7fea5b16987ca0634c5a91a5f7539dd3a37e50a389b96e75966c86",
+    "original_cue_HEADS_target_unverified": {
+      "heads": 168,
+      "exclusions": 198
+    },
+    "heads_complete": false,
+    "stems_complete": false
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "official_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "a9ff4efd888be556ef54b0c31f579f691ff7fa94b2b97677a1d9a4bb03cc6e21",
+  "runtime": "official Audiveris 5.11.0 bundled Java 25.0.3",
+  "compiler": "existing Java21 with compile-only Book/RunClass ABI shims; shim folder excluded from runtime classpath; actual jar precedes observer classes",
+  "independence": "Each run starts with input raster, official LOAD/BINARY/SCALE and official unchanged GRID algorithms, no native IR input",
+  "outputs": {
+    "synthetic-system-bars-binary.png": "a67f2afc158eaf1a1b867e2b05ce043d552a1e35be660a05409c110bacf24ec4",
+    "synthetic-system-bars-graph.json": "20d304a938b0fba415b739171814014cded7e28cf8479634490b97e5380a85e6",
+    "synthetic-system-bars-projection.json": "9eec286595753fa8ae3f29d1864b4a84bec5b942abd7f8929723a8ca1d93a008",
+    "SYNTHETIC-LICENSE.txt": "9f86abb6bf9ea3741627f1c86fb20013635de2a0fe2ebdd120078b3c6a2b6335",
+    "laura-gray.png": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+    "laura-source-manifest.json": "4009bc557b9b916947980f6c6352ce92eed35579e846a08bf8ef45a48a9071d6",
+    "laura-gray-sticks.json": "fb661fc02452749c13af5a00b9f9e0db71b008fb71a12b6a37f4904051a73b3d",
+    "laura-gray-projection.json": "0565a90b13091dbdb0506df74594079e189896d22701af8cac56439f917de69a",
+    "synthetic-two-staves-binary.png": "5d1aefb115dfba01e66206dd1aed852c7d5e68d6a9e1eed0f8753bb3012d9cb0",
+    "synthetic-two-staves-graph.json": "d006b413cb37467d616b138f7697bb1cdeda99d7f2b96c59ac137ac5eb844d61",
+    "synthetic-system-bars-probe-execution.json": "952f9e848e0f9ae7f8efb843bea9acf3df43baf3dd6da97613b35613be74c144",
+    "synthetic-two-staves-projection.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "README.md": "6aec5a7dfd2a12066acb7aaccb7f9ef6e71f925f5b9049ec1ead474429a2cfee",
+    "synthetic-two-staves-probe-execution.json": "968c7ad5b575cf0b650798dea809666cb4e5b943674938936fc96b16ea2872e1",
+    "synthetic-system-bars-sticks.json": "2d829497434b28c09c06933504a93e328c2fe263c1f41a22212d8b875f9eb6ad",
+    "synthetic-two-staves.png": "1f217e82c7fc3f4881597f29f01d1133c60002f381bac962c146521c6ca8b759",
+    "laura-gray-probe-execution.json": "b2a118f850e125056af0dbd134eac150499f13a2e20f6777f5469cbf4b7ded8e",
+    "manifest.json": "bf039ed1a472191705a2e40cc95b7d8d80d3c7725c77d58484f070bcfb57d159",
+    "laura-gray-binary.png": "97d80f5c9687c4920525c2e5dd7c9ee5986fb932575329e7fd4c17980883140a",
+    "laura-gray-graph.json": "25507ece88d2682d8fda77c62fe1f93388b10e1a940cdc0c38798419bee972fe",
+    "synthetic-two-staves-sticks.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "golden.json": "eda36098742d604e7a9bc024ecc33c7cfc9e376ac7f9e0e23f36c91a21430286",
+    "CC0-LICENSE.txt": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+    "synthetic-system-bars.png": "2e1bf10093d9c39482c7289659dab6f419f95002bd9e7fcf48a523fb598b2417"
+  }
+}

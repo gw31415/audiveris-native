@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-noise.png",
+  "input_sha256": "cbd78003ee552726e3e70d239430dd4bf194caf217a27eb79a656cb6a23faca5",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsPlainProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/rendered-beams/beams-noise.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/full-beams-plain/beams-noise/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "9e73b3e875c9d9b638f96ae8260146b6692a9e63c59e14976665ae2eb90a701b",
+  "ok": true,
+  "result_sha256": "0757f8cd19c2fdf019800d18a621d3e8c9ee70df666ac4762368f638cb4ed533"
+}

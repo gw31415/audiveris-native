@@ -1,0 +1,15 @@
+[package]
+name = "audiveris-classifier"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+description = "Native f64 inference for the pinned Audiveris 5.11.0 glyph classifier"
+publish = false
+
+[dependencies]
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = { version = "=1.0.150", features = ["float_roundtrip"] }
+
+[[bin]]
+name = "audiveris-classify"
+path = "src/bin/classify.rs"

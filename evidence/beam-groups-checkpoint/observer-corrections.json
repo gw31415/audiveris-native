@@ -1,0 +1,5 @@
+{
+  "first_attempt": "wrong generic reflection helper for static populateSystem; no usable image outputs",
+  "second_attempt": "overloaded SIGraph.inters selected incorrectly by generic helper; no usable image outputs",
+  "third_attempt": "explicit method signatures; all 13 image executions successful"
+}

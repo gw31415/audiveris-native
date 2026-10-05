@@ -1,0 +1,37 @@
+{
+  "platform": "Linux x86_64",
+  "rust": "1.98.1",
+  "tests": {
+    "debug": 166,
+    "release": 166
+  },
+  "fmt": "pass",
+  "clippy": "pass",
+  "release_build": "pass",
+  "native_pipeline_rasters": 11,
+  "raw_check_contexts": 352,
+  "histogram_controls": 16,
+  "stick_factory_controls": 26,
+  "line_fit_controls": 4,
+  "accepted_seed_total": 317,
+  "pixel_and_sampling_comparison": "exact",
+  "end_to_end_float_tolerance": 1e-08,
+  "standalone_checker_float_delta": 0.0,
+  "stem_seeds_complete_for_supported_inputs": true,
+  "overall_port_complete": false,
+  "runtime_java": false,
+  "cli_cases": 5,
+  "cli_environment": "env -i PATH=/nonexistent",
+  "supported_scope": "fresh single-column five-line full-width native GRID, profile1, four-million-pixel cap and explicit section/graph/spline budgets",
+  "review": "independent review clear; identity/order, Java-int saturation/overflow, allocation and scope guards included",
+  "source_access": "cached pinned Java files and official local JAR bytecode only; cancelled GitHub source batch was not retried",
+  "previous_checkpoint_commit": "df3ed0d57aa1ceef2ecaea55d5b88640238f83bb",
+  "remaining": [
+    "BEAMS",
+    "LEDGERS",
+    "automatic HEADS/stem attachment",
+    "rhythm",
+    "MusicXML",
+    "bounded-memory300DPI PDF"
+  ]
+}

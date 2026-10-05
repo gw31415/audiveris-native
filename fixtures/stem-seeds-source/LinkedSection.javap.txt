@@ -1,0 +1,511 @@
+Compiled from "LinkedSection.java"
+public class org.audiveris.omr.glyph.dynamic.LinkedSection implements org.audiveris.omr.lag.Section {
+  private final org.audiveris.omr.lag.Section section;
+
+  private java.util.List<org.audiveris.omr.glyph.dynamic.LinkedSection> sources;
+
+  private java.util.List<org.audiveris.omr.glyph.dynamic.LinkedSection> targets;
+
+  private boolean processed;
+
+  private org.audiveris.omr.glyph.dynamic.SectionCompound compound;
+
+  public org.audiveris.omr.glyph.dynamic.LinkedSection(org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       9: return
+
+  public void addSource(org.audiveris.omr.glyph.dynamic.LinkedSection);
+    Code:
+       0: aload_0
+       1: getfield      #13                 // Field sources:Ljava/util/List;
+       4: ifnonnull     18
+       7: aload_0
+       8: new           #17                 // class java/util/ArrayList
+      11: dup
+      12: invokespecial #19                 // Method java/util/ArrayList."<init>":()V
+      15: putfield      #13                 // Field sources:Ljava/util/List;
+      18: aload_0
+      19: getfield      #13                 // Field sources:Ljava/util/List;
+      22: aload_1
+      23: invokeinterface #20,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      28: pop
+      29: return
+
+  public void addTarget(org.audiveris.omr.glyph.dynamic.LinkedSection);
+    Code:
+       0: aload_0
+       1: getfield      #26                 // Field targets:Ljava/util/List;
+       4: ifnonnull     18
+       7: aload_0
+       8: new           #17                 // class java/util/ArrayList
+      11: dup
+      12: invokespecial #19                 // Method java/util/ArrayList."<init>":()V
+      15: putfield      #26                 // Field targets:Ljava/util/List;
+      18: aload_0
+      19: getfield      #26                 // Field targets:Ljava/util/List;
+      22: aload_1
+      23: invokeinterface #20,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      28: pop
+      29: return
+
+  public boolean contains(double, double);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: dload_1
+       5: dload_3
+       6: invokeinterface #29,  5           // InterfaceMethod org/audiveris/omr/lag/Section.contains:(DD)Z
+      11: ireturn
+
+  public boolean contains(java.awt.Point);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #35,  2           // InterfaceMethod org/audiveris/omr/lag/Section.contains:(Ljava/awt/Point;)Z
+      10: ireturn
+
+  public void cumulate(org.audiveris.omr.math.Barycenter, java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: aload_2
+       6: invokeinterface #38,  3           // InterfaceMethod org/audiveris/omr/lag/Section.cumulate:(Lorg/audiveris/omr/math/Barycenter;Ljava/awt/Rectangle;)V
+      11: return
+
+  public void cumulate(org.audiveris.omr.math.PointsCollector);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #42,  2           // InterfaceMethod org/audiveris/omr/lag/Section.cumulate:(Lorg/audiveris/omr/math/PointsCollector;)V
+      10: return
+
+  public void drawAscii();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #45,  1           // InterfaceMethod org/audiveris/omr/lag/Section.drawAscii:()V
+       9: return
+
+  public java.lang.String dumpOf();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #48,  1           // InterfaceMethod org/audiveris/omr/lag/Section.dumpOf:()Ljava/lang/String;
+       9: areturn
+
+  public void fillBuffer(ij.process.ByteProcessor, java.awt.Point);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: aload_2
+       6: invokeinterface #52,  3           // InterfaceMethod org/audiveris/omr/lag/Section.fillBuffer:(Lij/process/ByteProcessor;Ljava/awt/Point;)V
+      11: return
+
+  public void fillTable(char[][], java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: aload_2
+       6: invokeinterface #56,  3           // InterfaceMethod org/audiveris/omr/lag/Section.fillTable:([[CLjava/awt/Rectangle;)V
+      11: return
+
+  public org.audiveris.omr.math.Line getAbsoluteLine();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #60,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getAbsoluteLine:()Lorg/audiveris/omr/math/Line;
+       9: areturn
+
+  public java.awt.Point getAreaCenter();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #64,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getAreaCenter:()Ljava/awt/Point;
+       9: areturn
+
+  public double getAspect(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #68,  2           // InterfaceMethod org/audiveris/omr/lag/Section.getAspect:(Lorg/audiveris/omr/run/Orientation;)D
+      10: dreturn
+
+  public java.awt.Rectangle getBounds();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #72,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getBounds:()Ljava/awt/Rectangle;
+       9: areturn
+
+  public java.awt.Point getCentroid();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #76,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getCentroid:()Ljava/awt/Point;
+       9: areturn
+
+  public java.awt.geom.Point2D getCentroid2D();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #79,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getCentroid2D:()Ljava/awt/geom/Point2D;
+       9: areturn
+
+  public org.audiveris.omr.glyph.dynamic.SectionCompound getCompound();
+    Code:
+       0: aload_0
+       1: getfield      #83                 // Field compound:Lorg/audiveris/omr/glyph/dynamic/SectionCompound;
+       4: areturn
+
+  public int getFirstPos();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #87,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getFirstPos:()I
+       9: ireturn
+
+  public org.audiveris.omr.run.Run getFirstRun();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #91,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getFirstRun:()Lorg/audiveris/omr/run/Run;
+       9: areturn
+
+  public java.lang.String getFullId();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #95,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getFullId:()Ljava/lang/String;
+       9: areturn
+
+  public int getId();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #98,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getId:()I
+       9: ireturn
+
+  public org.audiveris.omr.lag.Lag getLag();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #101,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getLag:()Lorg/audiveris/omr/lag/Lag;
+       9: areturn
+
+  public int getLastPos();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #105,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getLastPos:()I
+       9: ireturn
+
+  public org.audiveris.omr.run.Run getLastRun();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #108,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getLastRun:()Lorg/audiveris/omr/run/Run;
+       9: areturn
+
+  public int getLength(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #111,  2          // InterfaceMethod org/audiveris/omr/lag/Section.getLength:(Lorg/audiveris/omr/run/Orientation;)I
+      10: ireturn
+
+  public int getMaxRunLength();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #115,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getMaxRunLength:()I
+       9: ireturn
+
+  public double getMeanAspect(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #118,  2          // InterfaceMethod org/audiveris/omr/lag/Section.getMeanAspect:(Lorg/audiveris/omr/run/Orientation;)D
+      10: dreturn
+
+  public int getMeanRunLength();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #121,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getMeanRunLength:()I
+       9: ireturn
+
+  public double getMeanThickness(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #124,  2          // InterfaceMethod org/audiveris/omr/lag/Section.getMeanThickness:(Lorg/audiveris/omr/run/Orientation;)D
+      10: dreturn
+
+  public org.audiveris.omr.run.Orientation getOrientation();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #127,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getOrientation:()Lorg/audiveris/omr/run/Orientation;
+       9: areturn
+
+  public java.awt.Rectangle getOrientedBounds();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #131,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getOrientedBounds:()Ljava/awt/Rectangle;
+       9: areturn
+
+  public org.audiveris.omr.math.Line getOrientedLine();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #134,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getOrientedLine:()Lorg/audiveris/omr/math/Line;
+       9: areturn
+
+  public java.awt.geom.PathIterator getPathIterator();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #137,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getPathIterator:()Ljava/awt/geom/PathIterator;
+       9: areturn
+
+  public java.awt.Polygon getPolygon();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #141,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getPolygon:()Ljava/awt/Polygon;
+       9: areturn
+
+  public java.awt.Point getRectangleCentroid(java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #145,  2          // InterfaceMethod org/audiveris/omr/lag/Section.getRectangleCentroid:(Ljava/awt/Rectangle;)Ljava/awt/Point;
+      10: areturn
+
+  public int getRunCount();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #149,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getRunCount:()I
+       9: ireturn
+
+  public java.util.List<org.audiveris.omr.run.Run> getRuns();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #152,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getRuns:()Ljava/util/List;
+       9: areturn
+
+  public java.util.List<org.audiveris.omr.glyph.dynamic.LinkedSection> getSources();
+    Code:
+       0: aload_0
+       1: getfield      #13                 // Field sources:Ljava/util/List;
+       4: ifnonnull     11
+       7: invokestatic  #156                // Method java/util/Collections.emptyList:()Ljava/util/List;
+      10: areturn
+      11: aload_0
+      12: getfield      #13                 // Field sources:Ljava/util/List;
+      15: areturn
+
+  public int getStartCoord();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #161,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getStartCoord:()I
+       9: ireturn
+
+  public int getStopCoord();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #164,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getStopCoord:()I
+       9: ireturn
+
+  public java.util.List<org.audiveris.omr.glyph.dynamic.LinkedSection> getTargets();
+    Code:
+       0: aload_0
+       1: getfield      #26                 // Field targets:Ljava/util/List;
+       4: ifnonnull     11
+       7: invokestatic  #156                // Method java/util/Collections.emptyList:()Ljava/util/List;
+      10: areturn
+      11: aload_0
+      12: getfield      #26                 // Field targets:Ljava/util/List;
+      15: areturn
+
+  public int getThickness(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #167,  2          // InterfaceMethod org/audiveris/omr/lag/Section.getThickness:(Lorg/audiveris/omr/run/Orientation;)I
+      10: ireturn
+
+  public int getWeight();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #170,  1          // InterfaceMethod org/audiveris/omr/lag/Section.getWeight:()I
+       9: ireturn
+
+  public boolean intersects(java.awt.Rectangle);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #173,  2          // InterfaceMethod org/audiveris/omr/lag/Section.intersects:(Ljava/awt/Rectangle;)Z
+      10: ireturn
+
+  public boolean intersects(org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #177,  2          // InterfaceMethod org/audiveris/omr/lag/Section.intersects:(Lorg/audiveris/omr/lag/Section;)Z
+      10: ireturn
+
+  public boolean intersects(java.awt.Shape);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #180,  2          // InterfaceMethod org/audiveris/omr/lag/Section.intersects:(Ljava/awt/Shape;)Z
+      10: ireturn
+
+  public boolean isProcessed();
+    Code:
+       0: aload_0
+       1: getfield      #183                // Field processed:Z
+       4: ireturn
+
+  public boolean isVertical();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #187,  1          // InterfaceMethod org/audiveris/omr/lag/Section.isVertical:()Z
+       9: ireturn
+
+  public boolean isVip();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: invokeinterface #191,  1          // InterfaceMethod org/audiveris/omr/lag/Section.isVip:()Z
+       9: ireturn
+
+  public boolean render(java.awt.Graphics, boolean, java.awt.Color);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: iload_2
+       6: aload_3
+       7: invokeinterface #194,  4          // InterfaceMethod org/audiveris/omr/lag/Section.render:(Ljava/awt/Graphics;ZLjava/awt/Color;)Z
+      12: ireturn
+
+  public boolean renderSelected(java.awt.Graphics);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #198,  2          // InterfaceMethod org/audiveris/omr/lag/Section.renderSelected:(Ljava/awt/Graphics;)Z
+      10: ireturn
+
+  public void setCompound(org.audiveris.omr.glyph.dynamic.SectionCompound);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #83                 // Field compound:Lorg/audiveris/omr/glyph/dynamic/SectionCompound;
+       5: return
+
+  public void setId(int);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: iload_1
+       5: invokeinterface #202,  2          // InterfaceMethod org/audiveris/omr/lag/Section.setId:(I)V
+      10: return
+
+  public void setLag(org.audiveris.omr.lag.Lag);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #206,  2          // InterfaceMethod org/audiveris/omr/lag/Section.setLag:(Lorg/audiveris/omr/lag/Lag;)V
+      10: return
+
+  public void setProcessed();
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: putfield      #183                // Field processed:Z
+       5: return
+
+  public void setVip(boolean);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: iload_1
+       5: invokeinterface #210,  2          // InterfaceMethod org/audiveris/omr/lag/Section.setVip:(Z)V
+      10: return
+
+  public java.lang.String toString();
+    Code:
+       0: new           #214                // class java/lang/StringBuilder
+       3: dup
+       4: aload_0
+       5: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       8: invokeinterface #216,  1          // InterfaceMethod org/audiveris/omr/lag/Section.toString:()Ljava/lang/String;
+      13: invokespecial #219                // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      16: astore_1
+      17: aload_1
+      18: ldc           #222                // String -L:
+      20: invokevirtual #224                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      23: aload_0
+      24: invokevirtual #228                // Method getSources:()Ljava/util/List;
+      27: invokeinterface #231,  1          // InterfaceMethod java/util/List.size:()I
+      32: invokevirtual #234                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      35: pop
+      36: aload_1
+      37: ldc           #237                // String -R:
+      39: invokevirtual #224                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      42: aload_0
+      43: invokevirtual #239                // Method getTargets:()Ljava/util/List;
+      46: invokeinterface #231,  1          // InterfaceMethod java/util/List.size:()I
+      51: invokevirtual #234                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      54: pop
+      55: aload_1
+      56: invokevirtual #242                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      59: areturn
+
+  public boolean touches(org.audiveris.omr.lag.Section);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: aload_1
+       5: invokeinterface #243,  2          // InterfaceMethod org/audiveris/omr/lag/Section.touches:(Lorg/audiveris/omr/lag/Section;)Z
+      10: ireturn
+
+  public void translateAbsolute(int, int);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field section:Lorg/audiveris/omr/lag/Section;
+       4: iload_1
+       5: iload_2
+       6: invokeinterface #246,  3          // InterfaceMethod org/audiveris/omr/lag/Section.translateAbsolute:(II)V
+      11: return
+}

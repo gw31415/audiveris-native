@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "native_controls_gzip_sha256": "873833ac8b3de68f5a0d53289776d4dbbb25da4d4da828a1c49d27d69e8ff7bc",
+  "native_source_sha256": {
+    "src/stem_parts_alignment.rs": "4a07ab3e18a059cbc7bbec1f9068c4a389950e05ac65ab12c1ceffde56de90de",
+    "examples/stem_parts_alignment_dump.rs": "f879aa32f3c251428c377eb066b4bd5d2793d8a452b489275eb8c00865b2e8c6",
+    "examples/support/stem_parts_alignment_controls.rs": "52994338f1ee90be76eeeb2b396b898765d4942f536d2446e38841266d0852af"
+  },
+  "scope": "Selected actual original part alignment1500; prescribed candidates/skew0; automatic collection/full filter and epilog pending"
+}

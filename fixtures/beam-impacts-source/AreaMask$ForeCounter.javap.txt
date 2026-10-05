@@ -1,0 +1,70 @@
+Compiled from "AreaMask.java"
+class org.audiveris.omr.image.AreaMask$ForeCounter implements org.audiveris.omr.image.AreaMask$AreaMaskAdapter {
+  private final ij.process.ByteProcessor filter;
+
+  private final int filterWidth;
+
+  private final int filterHeight;
+
+  private final org.audiveris.omr.util.Wrapper<java.lang.Integer> fore;
+
+  org.audiveris.omr.image.AreaMask$ForeCounter(ij.process.ByteProcessor, org.audiveris.omr.util.Wrapper<java.lang.Integer>);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #7                  // Field filter:Lij/process/ByteProcessor;
+       9: aload_0
+      10: aload_2
+      11: putfield      #13                 // Field fore:Lorg/audiveris/omr/util/Wrapper;
+      14: aload_0
+      15: aload_1
+      16: invokevirtual #17                 // Method ij/process/ByteProcessor.getWidth:()I
+      19: putfield      #23                 // Field filterWidth:I
+      22: aload_0
+      23: aload_1
+      24: invokevirtual #27                 // Method ij/process/ByteProcessor.getHeight:()I
+      27: putfield      #30                 // Field filterHeight:I
+      30: return
+
+  public void process(int, int);
+    Code:
+       0: iload_1
+       1: iflt          72
+       4: iload_1
+       5: aload_0
+       6: getfield      #23                 // Field filterWidth:I
+       9: if_icmpge     72
+      12: iload_2
+      13: iflt          72
+      16: iload_2
+      17: aload_0
+      18: getfield      #30                 // Field filterHeight:I
+      21: if_icmpge     72
+      24: aload_0
+      25: getfield      #7                  // Field filter:Lij/process/ByteProcessor;
+      28: iload_1
+      29: iload_2
+      30: invokevirtual #33                 // Method ij/process/ByteProcessor.get:(II)I
+      33: ifne          72
+      36: aload_0
+      37: getfield      #13                 // Field fore:Lorg/audiveris/omr/util/Wrapper;
+      40: astore_3
+      41: aload_3
+      42: getfield      #37                 // Field org/audiveris/omr/util/Wrapper.value:Ljava/lang/Object;
+      45: checkcast     #43                 // class java/lang/Integer
+      48: astore        4
+      50: aload_3
+      51: aload_3
+      52: getfield      #37                 // Field org/audiveris/omr/util/Wrapper.value:Ljava/lang/Object;
+      55: checkcast     #43                 // class java/lang/Integer
+      58: invokevirtual #45                 // Method java/lang/Integer.intValue:()I
+      61: iconst_1
+      62: iadd
+      63: invokestatic  #48                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      66: putfield      #37                 // Field org/audiveris/omr/util/Wrapper.value:Ljava/lang/Object;
+      69: aload         4
+      71: pop
+      72: return
+}

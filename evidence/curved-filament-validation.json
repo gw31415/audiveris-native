@@ -1,0 +1,20 @@
+{
+  "workspace_tests_passed": 26,
+  "new_tests": [
+    "pinned_java_merge_curve_filter_and_comb_goldens",
+    "contact_excludes_diagonal_corner_only",
+    "section_budget_rejects_before_returning_partial_factory_output"
+  ],
+  "java_populated_fixtures": 8,
+  "blank_fixture": "scale blocked",
+  "golden_sha256": "5cbb5d34546cb4516913c613341087a4aad14c79ce5d2990afabd6a0912fe230",
+  "membership_event_order_exact": true,
+  "max_geometry_error": 0.0,
+  "absolute_tolerance": 1e-09,
+  "relative_tolerance": 1e-12,
+  "clippy": "all targets -D warnings passed",
+  "format": "cargo fmt --all -- --check",
+  "svg_comparisons_added": 6,
+  "formal_staff_detection": false,
+  "pdf_adapter_integrated": false
+}

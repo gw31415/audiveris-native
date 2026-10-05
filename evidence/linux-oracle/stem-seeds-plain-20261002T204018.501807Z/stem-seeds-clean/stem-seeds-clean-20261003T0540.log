@@ -1,0 +1,32 @@
+2026-10-03 05:40:37,596 INFO [stem-seeds-clean]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/stem-seeds-clean.png
+2026-10-03 05:40:37,764 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:40:37,765 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T204018.501807Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 05:40:37,767 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:40:37,768 INFO [stem-seeds-clean]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:40:37,794 INFO [stem-seeds-clean]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/stem-seeds-clean.png
+2026-10-03 05:40:37,800 INFO [stem-seeds-clean]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:40:37,936 INFO [stem-seeds-clean]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:40:37,945 INFO [stem-seeds-clean]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:40:37,946 INFO [stem-seeds-clean]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 39% of needed quorum
+2026-10-03 05:40:37,946 WARN [stem-seeds-clean]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:40:37,946 INFO [stem-seeds-clean]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:40:37,947 INFO [stem-seeds-clean]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:40:37,947 INFO [stem-seeds-clean]                 Book.java:2584 | Book{stem-seeds-clean} storing
+2026-10-03 05:40:37,974 INFO [stem-seeds-clean]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:40:37,991 INFO [stem-seeds-clean]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:40:38,223 INFO [stem-seeds-clean]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:40:38,223 INFO [stem-seeds-clean]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T204018.501807Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 05:40:38,224 INFO [stem-seeds-clean]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:40:38,248 INFO [stem-seeds-clean]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:40:38,251 INFO [stem-seeds-clean]                 Book.java:2057 | End of Book{stem-seeds-clean}
+2026-10-03 05:40:38,267 INFO [stem-seeds-clean]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:40:38,353 INFO [stem-seeds-clean]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:40:38,360 INFO [stem-seeds-clean]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:40:38,381 INFO [stem-seeds-clean]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:40:38,408 INFO [stem-seeds-clean]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:40:38,409 INFO [stem-seeds-clean]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:40:39,046 INFO [stem-seeds-clean]        StemSeedsStep.java:86   | stem(2 max:3)
+2026-10-03 05:40:39,137 INFO [stem-seeds-clean]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:40:39,157 INFO [stem-seeds-clean]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:40:39,158 INFO [stem-seeds-clean]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-seeds-plain/20261002T204018.501807Z/stem-seeds-clean/stem-seeds-clean.omr
+2026-10-03 05:40:39,159 INFO [stem-seeds-clean]                Score.java:181  | Closing {Score 1}

@@ -1,0 +1,31 @@
+2026-10-03 05:19:57,742 INFO [key-column-middle-flat-missing]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-middle-flat-missing.png
+2026-10-03 05:19:58,007 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:58,009 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/key-column-middle-flat-missing/key-column-middle-flat-missing.omr
+2026-10-03 05:19:58,011 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:19:58,013 INFO [key-column-middle-flat-missing]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:19:58,034 INFO [key-column-middle-flat-missing]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-middle-flat-missing.png
+2026-10-03 05:19:58,037 INFO [key-column-middle-flat-missing]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:19:58,121 INFO [key-column-middle-flat-missing]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:19:58,131 INFO [key-column-middle-flat-missing]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:19:58,131 INFO [key-column-middle-flat-missing]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 49% of needed quorum
+2026-10-03 05:19:58,132 WARN [key-column-middle-flat-missing]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:19:58,132 INFO [key-column-middle-flat-missing]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:19:58,135 INFO [key-column-middle-flat-missing]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:19:58,135 INFO [key-column-middle-flat-missing]                 Book.java:2584 | Book{key-column-middle-flat-missing} storing
+2026-10-03 05:19:58,158 INFO [key-column-middle-flat-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:58,174 INFO [key-column-middle-flat-missing]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:19:58,354 INFO [key-column-middle-flat-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:19:58,355 INFO [key-column-middle-flat-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/key-column-middle-flat-missing/key-column-middle-flat-missing.omr
+2026-10-03 05:19:58,356 INFO [key-column-middle-flat-missing]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:19:58,374 INFO [key-column-middle-flat-missing]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:19:58,375 INFO [key-column-middle-flat-missing]                 Book.java:2057 | End of Book{key-column-middle-flat-missing}
+2026-10-03 05:19:58,387 INFO [key-column-middle-flat-missing]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:19:58,472 INFO [key-column-middle-flat-missing]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:19:58,480 INFO [key-column-middle-flat-missing]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 05:19:58,503 INFO [key-column-middle-flat-missing]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 05:19:58,536 INFO [key-column-middle-flat-missing]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:19:58,537 INFO [key-column-middle-flat-missing]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:19:59,144 INFO [key-column-middle-flat-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:59,168 INFO [key-column-middle-flat-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:19:59,169 INFO [key-column-middle-flat-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/key-column-middle-flat-missing/key-column-middle-flat-missing.omr
+2026-10-03 05:19:59,170 INFO [key-column-middle-flat-missing]                Score.java:181  | Closing {Score 1}

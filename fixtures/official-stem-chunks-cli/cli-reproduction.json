@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "actual_CLI_execution": true,
+  "cases": 3048,
+  "argv": [
+    "audiveris-native",
+    "stem-chunks-lookup",
+    "REQUEST.json",
+    "REPORT.json"
+  ],
+  "request_gzip_sha256": "30a94e954bb48b30892e4f49decbf41b7ffabd37e20618d582cafa89d94a3987",
+  "report_gzip_sha256": "4dce34058f5b46b0427022fc85e79e6aa12ed40e000c4816720be653a084b999",
+  "native_source_sha256": {
+    "src/stem_chunks_cli.rs": "3da2b7c46c0a143576db7750c6f66324db877ef5928df17debc5049397f4b80a",
+    "src/main.rs": "a222b2b4ab2927ad4395c6e6d66dec23c8cd1cc65a85b4a72bfd996b7cbeaffa",
+    "tests/stem_chunks_cli.rs": "111d4030b79a5c3f3fd622b042b7aac9c9977545649bd13a5204f6109144503f",
+    "scripts/stem_chunks_lookup_request.py": "0dad3f744e99ed1c7f59c7c73e0fd5fc9c00f3b71131293abe682bd8a50d461d",
+    "src/page_runtime.rs": "eb659ea39f5adf9ca1cb4a3d49b6d02a4a0af6f7fd0d74a21faa14a159bfea34"
+  },
+  "original_direct_lookupChunks_fixture_sha256": "7d5aaeb3f76d3dcc50a8c052c770d6889d790917abacb7b36dd8064478d8a7e6",
+  "upstream_section_lookup_fixture_sha256": "d9dd57740709330c4916220db21ea81e992d1e4aa11b62b214d3ed96190f3946",
+  "heads_complete": false,
+  "stems_complete": false,
+  "entrypoint_source_refresh": {
+    "reason": "Added page-state head neighborhood/target CLI; prior CLI reexecuted with current binary",
+    "prior_report_byte_identical": true,
+    "prior_report_sha256": "aa01c9c023997ef506bb3cad76fa2d3e01f0b56eec4f32db74d4719209a1e3ed",
+    "previous_entrypoint_source_sha256": "3ed76f0e8c92cb2336b3aeda1ecf8e3d7ed17c2a68319fec0a3bdf61320b8d5c"
+  },
+  "unchanged_after_actual_owner_recertification": {
+    "fixture": "official-stem-chunks-cli",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "aa01c9c023997ef506bb3cad76fa2d3e01f0b56eec4f32db74d4719209a1e3ed",
+    "updated_stale_source_paths": [
+      "src/main.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png",
+  "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "HeaderTimeColumnPlainProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/fallback-header-flats-bridge-120/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "3983a3b626b42e4839043465de6cacb00a4da776c94d1aed270bd9d1962eac03",
+  "ok": true,
+  "result_sha256": "fe4c187b27bfda236c848471b46d7286e9bb5d2f9964dda5b89892f478972b3b"
+}

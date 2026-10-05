@@ -1,0 +1,31 @@
+2026-10-03 05:21:32,212 INFO [time-column-noise]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-noise.png
+2026-10-03 05:21:32,309 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:21:32,310 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-noise/time-column-noise.omr
+2026-10-03 05:21:32,312 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:21:32,313 INFO [time-column-noise]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:21:32,330 INFO [time-column-noise]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-noise.png
+2026-10-03 05:21:32,334 INFO [time-column-noise]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:21:32,424 INFO [time-column-noise]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:21:32,573 INFO [time-column-noise]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:21:32,579 INFO [time-column-noise]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 38% of needed quorum
+2026-10-03 05:21:32,579 WARN [time-column-noise]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:21:32,580 INFO [time-column-noise]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:21:32,580 INFO [time-column-noise]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:21:32,583 INFO [time-column-noise]                 Book.java:2584 | Book{time-column-noise} storing
+2026-10-03 05:21:32,619 INFO [time-column-noise]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:21:32,638 INFO [time-column-noise]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:21:32,841 INFO [time-column-noise]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:21:32,842 INFO [time-column-noise]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-noise/time-column-noise.omr
+2026-10-03 05:21:32,843 INFO [time-column-noise]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:21:32,861 INFO [time-column-noise]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:21:32,863 INFO [time-column-noise]                 Book.java:2057 | End of Book{time-column-noise}
+2026-10-03 05:21:32,878 INFO [time-column-noise]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:21:32,977 INFO [time-column-noise]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:21:32,984 INFO [time-column-noise]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:21:33,005 INFO [time-column-noise]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:21:33,036 INFO [time-column-noise]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:21:33,037 INFO [time-column-noise]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:21:33,639 INFO [time-column-noise]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:21:33,655 INFO [time-column-noise]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:21:33,656 INFO [time-column-noise]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/time-column-noise/time-column-noise.omr
+2026-10-03 05:21:33,657 INFO [time-column-noise]                Score.java:181  | Closing {Score 1}

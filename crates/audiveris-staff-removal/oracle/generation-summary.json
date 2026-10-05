@@ -1,0 +1,72 @@
+[
+  {
+    "input": "diagonal.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 2
+  },
+  {
+    "input": "diagonal.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 2
+  },
+  {
+    "input": "bridge.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 1
+  },
+  {
+    "input": "bridge.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 1
+  },
+  {
+    "input": "empty.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 0
+  },
+  {
+    "input": "empty.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 0
+  },
+  {
+    "input": "singleton.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 1
+  },
+  {
+    "input": "singleton.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 1
+  },
+  {
+    "input": "order.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 3
+  },
+  {
+    "input": "order.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 3
+  },
+  {
+    "input": "split-merge.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 1
+  },
+  {
+    "input": "split-merge.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 1
+  },
+  {
+    "input": "official-no-staff.png",
+    "orientation": "HORIZONTAL",
+    "glyph_count": 604
+  },
+  {
+    "input": "official-no-staff.png",
+    "orientation": "VERTICAL",
+    "glyph_count": 604
+  }
+]

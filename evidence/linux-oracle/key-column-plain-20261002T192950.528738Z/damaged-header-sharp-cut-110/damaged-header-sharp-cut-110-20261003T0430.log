@@ -1,0 +1,31 @@
+2026-10-03 04:30:20,931 INFO [damaged-header-sharp-cut-110]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-sharp-cut-110.png
+2026-10-03 04:30:21,054 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:30:21,055 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/damaged-header-sharp-cut-110/damaged-header-sharp-cut-110.omr
+2026-10-03 04:30:21,056 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:30:21,058 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:30:21,077 INFO [damaged-header-sharp-cut-110]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-sharp-cut-110.png
+2026-10-03 04:30:21,085 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:30:21,222 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:30:21,231 INFO [damaged-header-sharp-cut-110]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:30:21,232 INFO [damaged-header-sharp-cut-110]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 41% of needed quorum
+2026-10-03 04:30:21,232 WARN [damaged-header-sharp-cut-110]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:30:21,232 INFO [damaged-header-sharp-cut-110]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:30:21,232 INFO [damaged-header-sharp-cut-110]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:30:21,233 INFO [damaged-header-sharp-cut-110]                 Book.java:2584 | Book{damaged-header-sharp-cut-110} storing
+2026-10-03 04:30:21,257 INFO [damaged-header-sharp-cut-110]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:30:21,277 INFO [damaged-header-sharp-cut-110]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:30:21,526 INFO [damaged-header-sharp-cut-110]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:30:21,527 INFO [damaged-header-sharp-cut-110]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/damaged-header-sharp-cut-110/damaged-header-sharp-cut-110.omr
+2026-10-03 04:30:21,528 INFO [damaged-header-sharp-cut-110]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:30:21,555 INFO [damaged-header-sharp-cut-110]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:30:21,557 INFO [damaged-header-sharp-cut-110]                 Book.java:2057 | End of Book{damaged-header-sharp-cut-110}
+2026-10-03 04:30:21,571 INFO [damaged-header-sharp-cut-110]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:30:21,657 INFO [damaged-header-sharp-cut-110]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:30:21,667 INFO [damaged-header-sharp-cut-110]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:30:21,689 INFO [damaged-header-sharp-cut-110]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:30:21,720 INFO [damaged-header-sharp-cut-110]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:30:21,721 INFO [damaged-header-sharp-cut-110]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:30:22,514 INFO [damaged-header-sharp-cut-110]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:30:22,534 INFO [damaged-header-sharp-cut-110]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:30:22,534 INFO [damaged-header-sharp-cut-110]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/damaged-header-sharp-cut-110/damaged-header-sharp-cut-110.omr
+2026-10-03 04:30:22,535 INFO [damaged-header-sharp-cut-110]                Score.java:181  | Closing {Score 1}

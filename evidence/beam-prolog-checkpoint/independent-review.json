@@ -1,0 +1,24 @@
+{
+  "independent": true,
+  "blocking_findings_remaining": false,
+  "resolved_findings": [
+    "exact sloped/curved Area crossings replace y-interval approximation",
+    "aggregate measurement and dispatch query-work bounds",
+    "early duplicate membership rejection",
+    "bounded root failures are explicit; source/license provenance retained"
+  ],
+  "focused_review_tests": 24,
+  "original_fixture_repeated_exactly": true,
+  "reviewed_files": {
+    "src/beam_dispatch.rs": "d137c83d5f3ba426d2ec2b2f4439a38a0183a71a5333683df8ebc8c6099a8c9e",
+    "src/beam_prolog.rs": "47e3874b2e63ed44710a5a238d48ca1ea7cab0825f25dd8b4262abdde71300b9",
+    "src/black_head_sizer.rs": "ec1268cc90d3264cedeb5c11f41ed5c1a2d84eff8042ba0c94cd9a336fe319a2",
+    "crates/audiveris-area/src/lib.rs": "c4a2e4e4d7380cf7b6b8dbc40192df9e1af772853c4484ac1d01ff6734b5c7b5",
+    "src/main.rs": "ab0e2fe4370c007b83b126c8a6f67a9c43c01f1cebfdb1116ec0e4b03d10d596",
+    "tests/beam_prolog_review.rs": "8d833f801632083420ef60b76d9fb42f619c54185c2637ad47a3ffa796f11dfb",
+    "tests/beam_dispatch.rs": "1b720ab2ecac473feb364547a9e89d1fa8312c007b4593cc384073fc2d3a42bf",
+    "tests/black_head_sizer.rs": "49800ce2065a3cf8a55ef4e5ead679e541599a8e0316299ca500c0751bcbf823",
+    "tests/beam_preparation.rs": "9b51d96f4032d871d9fb33c49ae4544711fdd58baace8d73ff50112278049d2b",
+    "docs/BEAM-PROLOG.md": "afe74047970433c2877fde9e447f26474d704c17fa1ff9c4b45f2833a701e8c0"
+  }
+}

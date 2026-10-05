@@ -1,0 +1,8 @@
+   Compiling audiveris-native v0.1.0 (/Users/ama/Documents/Codex/2026-10-03/task-2/audiveris-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.76s
+     Running tests/grid_ir.rs (target/debug/deps/grid_ir-cb6f4d8f99e1ae61)
+
+running 1 test
+test incomplete_brace_raster_stops_at_explicit_fallback_boundary ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1.42s

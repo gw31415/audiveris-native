@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "all_original_kernel_fields_reproduced": true,
+  "controls_sha256": "845d8f5117b62c411da04c61f209b063dc53a9f1f2bafb1cf85fec5fcb8aecf6",
+  "observer_sha256": "9e3ceec4374854911f9fa912c38cea0d049f93f42e1850253ec58a2920198721",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "native_outputs_used": false
+}

@@ -1,0 +1,30 @@
+2026-10-03 05:15:56,127 INFO [damaged-header-flat-speck-132]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-flat-speck-132.png
+2026-10-03 05:15:56,240 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:15:56,241 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/damaged-header-flat-speck-132/damaged-header-flat-speck-132.omr
+2026-10-03 05:15:56,243 INFO []                 Book.java:1929 | Book reaching HEADERS on sheets:[#1]
+2026-10-03 05:15:56,244 INFO [damaged-header-flat-speck-132]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:15:56,263 INFO [damaged-header-flat-speck-132]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-flat-speck-132.png
+2026-10-03 05:15:56,268 INFO [damaged-header-flat-speck-132]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:15:56,346 INFO [damaged-header-flat-speck-132]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:15:56,354 INFO [damaged-header-flat-speck-132]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:15:56,355 INFO [damaged-header-flat-speck-132]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 42% of needed quorum
+2026-10-03 05:15:56,356 WARN [damaged-header-flat-speck-132]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:15:56,356 INFO [damaged-header-flat-speck-132]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:15:56,356 INFO [damaged-header-flat-speck-132]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:15:56,357 INFO [damaged-header-flat-speck-132]       StepMonitoring.java:98   | GRID
+2026-10-03 05:15:56,444 INFO [damaged-header-flat-speck-132]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:15:56,453 INFO [damaged-header-flat-speck-132]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:15:56,479 INFO [damaged-header-flat-speck-132]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:15:56,509 INFO [damaged-header-flat-speck-132]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:15:56,510 INFO [damaged-header-flat-speck-132]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:15:56,510 INFO [damaged-header-flat-speck-132]       StepMonitoring.java:98   | HEADERS
+2026-10-03 05:15:57,057 INFO [damaged-header-flat-speck-132]                 Book.java:2584 | Book{damaged-header-flat-speck-132} storing
+2026-10-03 05:15:57,083 INFO [damaged-header-flat-speck-132]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:15:57,100 INFO [damaged-header-flat-speck-132]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:15:57,269 INFO [damaged-header-flat-speck-132]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:15:57,269 INFO [damaged-header-flat-speck-132]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/damaged-header-flat-speck-132/damaged-header-flat-speck-132.omr
+2026-10-03 05:15:57,270 INFO [damaged-header-flat-speck-132]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:15:57,297 INFO [damaged-header-flat-speck-132]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:15:57,299 INFO [damaged-header-flat-speck-132]                 Book.java:2057 | End of Book{damaged-header-flat-speck-132}
+2026-10-03 05:15:57,353 INFO [damaged-header-flat-speck-132]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:15:57,392 INFO [damaged-header-flat-speck-132]                Score.java:181  | Closing {Score 1}

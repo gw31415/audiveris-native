@@ -1,0 +1,30 @@
+2026-10-03 04:31:09,926 INFO [rendered-clef-f_clef]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-clef-f_clef.png
+2026-10-03 04:31:10,047 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:31:10,048 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/rendered-clef-f_clef/rendered-clef-f_clef.omr
+2026-10-03 04:31:10,050 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:31:10,051 INFO [rendered-clef-f_clef]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:31:10,070 INFO [rendered-clef-f_clef]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-clef-f_clef.png
+2026-10-03 04:31:10,075 INFO [rendered-clef-f_clef]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:31:10,158 INFO [rendered-clef-f_clef]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:31:10,165 INFO [rendered-clef-f_clef]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:31:10,166 INFO [rendered-clef-f_clef]         ScaleBuilder.java:271  | Beam measured height:  8 -- 0.13 of [7..15] range at 21% of needed quorum
+2026-10-03 04:31:10,166 INFO [rendered-clef-f_clef]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:31:10,166 INFO [rendered-clef-f_clef]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(8)}
+2026-10-03 04:31:10,167 INFO [rendered-clef-f_clef]                 Book.java:2584 | Book{rendered-clef-f_clef} storing
+2026-10-03 04:31:10,191 INFO [rendered-clef-f_clef]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:31:10,209 INFO [rendered-clef-f_clef]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:31:10,427 INFO [rendered-clef-f_clef]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:31:10,428 INFO [rendered-clef-f_clef]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/rendered-clef-f_clef/rendered-clef-f_clef.omr
+2026-10-03 04:31:10,429 INFO [rendered-clef-f_clef]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:31:10,448 INFO [rendered-clef-f_clef]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:31:10,449 INFO [rendered-clef-f_clef]                 Book.java:2057 | End of Book{rendered-clef-f_clef}
+2026-10-03 04:31:10,462 INFO [rendered-clef-f_clef]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:31:10,544 INFO [rendered-clef-f_clef]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:31:10,552 INFO [rendered-clef-f_clef]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:31:10,572 INFO [rendered-clef-f_clef]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:31:10,605 INFO [rendered-clef-f_clef]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:31:10,606 INFO [rendered-clef-f_clef]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:31:11,195 INFO [rendered-clef-f_clef]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:31:11,211 INFO [rendered-clef-f_clef]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:31:11,212 INFO [rendered-clef-f_clef]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/rendered-clef-f_clef/rendered-clef-f_clef.omr
+2026-10-03 04:31:11,213 INFO [rendered-clef-f_clef]                Score.java:181  | Closing {Score 1}

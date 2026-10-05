@@ -1,0 +1,136 @@
+{
+  "scope": "original_XML_loaded_reduce_MEASURES_head_CHORDS_SYMBOLS_rest_CHORDS_before_LINKS_RHYTHMS",
+  "systems": [
+    {
+      "system": 1,
+      "measure_stacks": 2,
+      "notes": [
+        {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "step": "B",
+          "octave": 4,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 1,
+          "measure_left": 81,
+          "measure_right": 711
+        },
+        {
+          "bounds": [
+            396,
+            248,
+            13,
+            10
+          ],
+          "step": "G",
+          "octave": 4,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 1,
+          "measure_left": 81,
+          "measure_right": 711
+        },
+        {
+          "bounds": [
+            516,
+            259,
+            13,
+            10
+          ],
+          "step": "E",
+          "octave": 4,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 1,
+          "measure_left": 81,
+          "measure_right": 711
+        },
+        {
+          "bounds": [
+            636,
+            248,
+            13,
+            10
+          ],
+          "step": "G",
+          "octave": 4,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 1,
+          "measure_left": 81,
+          "measure_right": 711
+        },
+        {
+          "bounds": [
+            756,
+            237,
+            13,
+            10
+          ],
+          "step": "B",
+          "octave": 4,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 2,
+          "measure_left": 711,
+          "measure_right": 1199
+        },
+        {
+          "bounds": [
+            876,
+            226,
+            13,
+            10
+          ],
+          "step": "D",
+          "octave": 5,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 2,
+          "measure_left": 711,
+          "measure_right": 1199
+        },
+        {
+          "bounds": [
+            996,
+            215,
+            13,
+            10
+          ],
+          "step": "F",
+          "octave": 5,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 2,
+          "measure_left": 711,
+          "measure_right": 1199
+        },
+        {
+          "bounds": [
+            1116,
+            226,
+            13,
+            10
+          ],
+          "step": "D",
+          "octave": 5,
+          "duration_without_dots_or_tuplet": "1/4",
+          "measure_index": 2,
+          "measure_left": 711,
+          "measure_right": 1199
+        }
+      ],
+      "symbols": [
+        {
+          "kind": "TimeWholeInter",
+          "shape": "TIME_FOUR_FOUR",
+          "bounds": [
+            166,
+            218,
+            22,
+            48
+          ],
+          "grade": 0.7079369105062577
+        }
+      ]
+    }
+  ]
+}

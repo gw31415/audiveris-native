@@ -1,0 +1,357 @@
+Compiled from "CheckSuite.java"
+public class org.audiveris.omr.check.CheckSuite<C> {
+  private static final org.slf4j.Logger logger;
+
+  protected final java.lang.String name;
+
+  protected final double minThreshold;
+
+  protected final double goodThreshold;
+
+  private final java.util.List<org.audiveris.omr.check.Check<C>> checks;
+
+  private final java.util.List<java.lang.Double> weights;
+
+  private double totalWeight;
+
+  public org.audiveris.omr.check.CheckSuite(java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: getstatic     #1                  // Field org/audiveris/omr/glyph/Grades.minInterGrade:D
+       5: getstatic     #7                  // Field org/audiveris/omr/glyph/Grades.goodInterGrade:D
+       8: invokespecial #10                 // Method "<init>":(Ljava/lang/String;DD)V
+      11: return
+
+  public org.audiveris.omr.check.CheckSuite(java.lang.String, double, double);
+    Code:
+       0: aload_0
+       1: invokespecial #16                 // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #21                 // class java/util/ArrayList
+       8: dup
+       9: invokespecial #23                 // Method java/util/ArrayList."<init>":()V
+      12: putfield      #24                 // Field checks:Ljava/util/List;
+      15: aload_0
+      16: new           #21                 // class java/util/ArrayList
+      19: dup
+      20: invokespecial #23                 // Method java/util/ArrayList."<init>":()V
+      23: putfield      #28                 // Field weights:Ljava/util/List;
+      26: aload_0
+      27: dconst_0
+      28: putfield      #31                 // Field totalWeight:D
+      31: aload_0
+      32: aload_1
+      33: putfield      #34                 // Field name:Ljava/lang/String;
+      36: aload_0
+      37: dload_2
+      38: putfield      #38                 // Field minThreshold:D
+      41: aload_0
+      42: dload         4
+      44: putfield      #41                 // Field goodThreshold:D
+      47: return
+
+  public void add(double, org.audiveris.omr.check.Check<C>);
+    Code:
+       0: aload_0
+       1: getfield      #24                 // Field checks:Ljava/util/List;
+       4: aload_3
+       5: invokeinterface #44,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      10: pop
+      11: aload_0
+      12: getfield      #28                 // Field weights:Ljava/util/List;
+      15: dload_1
+      16: invokestatic  #50                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      19: invokeinterface #44,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+      24: pop
+      25: dload_1
+      26: dconst_0
+      27: dcmpl
+      28: iflt          41
+      31: aload_0
+      32: dup
+      33: getfield      #31                 // Field totalWeight:D
+      36: dload_1
+      37: dadd
+      38: putfield      #31                 // Field totalWeight:D
+      41: return
+
+  public org.audiveris.omr.check.CheckSuite<C> addAll(org.audiveris.omr.check.CheckSuite<C>);
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: aload_1
+       3: getfield      #24                 // Field checks:Ljava/util/List;
+       6: invokeinterface #56,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      11: astore_3
+      12: aload_3
+      13: invokeinterface #60,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      18: ifeq          64
+      21: aload_3
+      22: invokeinterface #66,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      27: checkcast     #70                 // class org/audiveris/omr/check/Check
+      30: astore        4
+      32: aload_1
+      33: getfield      #28                 // Field weights:Ljava/util/List;
+      36: iload_2
+      37: iinc          2, 1
+      40: invokeinterface #72,  2           // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      45: checkcast     #51                 // class java/lang/Double
+      48: invokevirtual #76                 // Method java/lang/Double.doubleValue:()D
+      51: dstore        5
+      53: aload_0
+      54: dload         5
+      56: aload         4
+      58: invokevirtual #80                 // Method add:(DLorg/audiveris/omr/check/Check;)V
+      61: goto          12
+      64: aload_0
+      65: areturn
+
+  public void dump();
+    Code:
+       0: new           #83                 // class java/lang/StringBuilder
+       3: dup
+       4: ldc           #85                 // String %n
+       6: iconst_0
+       7: anewarray     #17                 // class java/lang/Object
+      10: invokestatic  #87                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      13: invokespecial #93                 // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+      16: astore_1
+      17: aload_0
+      18: getfield      #34                 // Field name:Ljava/lang/String;
+      21: ifnull        33
+      24: aload_1
+      25: aload_0
+      26: getfield      #34                 // Field name:Ljava/lang/String;
+      29: invokevirtual #96                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      32: pop
+      33: aload_1
+      34: ldc           #100                // String  Check Suite: min=%f good=%f%n
+      36: iconst_2
+      37: anewarray     #17                 // class java/lang/Object
+      40: dup
+      41: iconst_0
+      42: aload_0
+      43: getfield      #38                 // Field minThreshold:D
+      46: invokestatic  #50                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      49: aastore
+      50: dup
+      51: iconst_1
+      52: aload_0
+      53: getfield      #41                 // Field goodThreshold:D
+      56: invokestatic  #50                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      59: aastore
+      60: invokestatic  #87                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      63: invokevirtual #96                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      66: pop
+      67: aload_0
+      68: aload_1
+      69: invokevirtual #102                // Method dumpSpecific:(Ljava/lang/StringBuilder;)V
+      72: aload_1
+      73: ldc           #106                // String Weight    Name             Covariant    Low       High%n
+      75: iconst_0
+      76: anewarray     #17                 // class java/lang/Object
+      79: invokestatic  #87                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      82: invokevirtual #96                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      85: pop
+      86: aload_1
+      87: ldc           #108                // String ------    ----                ------    ---       ----%n
+      89: iconst_0
+      90: anewarray     #17                 // class java/lang/Object
+      93: invokestatic  #87                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      96: invokevirtual #96                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      99: pop
+     100: iconst_0
+     101: istore_2
+     102: aload_0
+     103: getfield      #24                 // Field checks:Ljava/util/List;
+     106: invokeinterface #56,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+     111: astore_3
+     112: aload_3
+     113: invokeinterface #60,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     118: ifeq          206
+     121: aload_3
+     122: invokeinterface #66,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     127: checkcast     #70                 // class org/audiveris/omr/check/Check
+     130: astore        4
+     132: aload_1
+     133: ldc           #110                // String %4.1f      %-19s  %5b  % 6.2f    % 6.2f%n
+     135: iconst_5
+     136: anewarray     #17                 // class java/lang/Object
+     139: dup
+     140: iconst_0
+     141: aload_0
+     142: getfield      #28                 // Field weights:Ljava/util/List;
+     145: iload_2
+     146: iinc          2, 1
+     149: invokeinterface #72,  2           // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+     154: aastore
+     155: dup
+     156: iconst_1
+     157: aload         4
+     159: invokevirtual #112                // Method org/audiveris/omr/check/Check.getName:()Ljava/lang/String;
+     162: aastore
+     163: dup
+     164: iconst_2
+     165: aload         4
+     167: invokevirtual #116                // Method org/audiveris/omr/check/Check.isCovariant:()Z
+     170: invokestatic  #119                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+     173: aastore
+     174: dup
+     175: iconst_3
+     176: aload         4
+     178: invokevirtual #124                // Method org/audiveris/omr/check/Check.getLow:()D
+     181: invokestatic  #50                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+     184: aastore
+     185: dup
+     186: iconst_4
+     187: aload         4
+     189: invokevirtual #127                // Method org/audiveris/omr/check/Check.getHigh:()D
+     192: invokestatic  #50                 // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+     195: aastore
+     196: invokestatic  #87                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     199: invokevirtual #96                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     202: pop
+     203: goto          112
+     206: getstatic     #130                // Field logger:Lorg/slf4j/Logger;
+     209: aload_1
+     210: invokevirtual #134                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     213: invokeinterface #137,  2          // InterfaceMethod org/slf4j/Logger.info:(Ljava/lang/String;)V
+     218: return
+
+  protected void dumpSpecific(java.lang.StringBuilder);
+    Code:
+       0: return
+
+  public java.util.List<org.audiveris.omr.check.Check<C>> getChecks();
+    Code:
+       0: aload_0
+       1: getfield      #24                 // Field checks:Ljava/util/List;
+       4: areturn
+
+  public double getGoodThreshold();
+    Code:
+       0: aload_0
+       1: getfield      #41                 // Field goodThreshold:D
+       4: dreturn
+
+  public org.audiveris.omr.check.SuiteImpacts getImpacts(C);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #142                // Method org/audiveris/omr/check/SuiteImpacts.newInstance:(Lorg/audiveris/omr/check/CheckSuite;Ljava/lang/Object;)Lorg/audiveris/omr/check/SuiteImpacts;
+       5: areturn
+
+  public double getMinThreshold();
+    Code:
+       0: aload_0
+       1: getfield      #38                 // Field minThreshold:D
+       4: dreturn
+
+  public java.lang.String getName();
+    Code:
+       0: aload_0
+       1: getfield      #34                 // Field name:Ljava/lang/String;
+       4: areturn
+
+  public double getTotalWeight();
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field totalWeight:D
+       4: dreturn
+
+  public java.util.List<java.lang.Double> getWeights();
+    Code:
+       0: aload_0
+       1: getfield      #28                 // Field weights:Ljava/util/List;
+       4: areturn
+
+  public double pass(C, org.audiveris.omr.check.SuiteImpacts);
+    Code:
+       0: new           #148                // class org/audiveris/omr/check/CheckResult
+       3: dup
+       4: invokespecial #150                // Method org/audiveris/omr/check/CheckResult."<init>":()V
+       7: astore_3
+       8: dconst_1
+       9: dstore        4
+      11: iconst_0
+      12: istore        6
+      14: aload_0
+      15: getfield      #24                 // Field checks:Ljava/util/List;
+      18: invokeinterface #56,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      23: astore        7
+      25: aload         7
+      27: invokeinterface #60,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      32: ifeq          137
+      35: aload         7
+      37: invokeinterface #66,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      42: checkcast     #70                 // class org/audiveris/omr/check/Check
+      45: astore        8
+      47: aload         8
+      49: aload_1
+      50: aload_3
+      51: invokevirtual #151                // Method org/audiveris/omr/check/Check.pass:(Ljava/lang/Object;Lorg/audiveris/omr/check/CheckResult;)Lorg/audiveris/omr/check/CheckResult;
+      54: pop
+      55: aload_2
+      56: ifnull        69
+      59: aload_2
+      60: iload         6
+      62: aload_3
+      63: getfield      #155                // Field org/audiveris/omr/check/CheckResult.grade:D
+      66: invokevirtual #158                // Method org/audiveris/omr/check/SuiteImpacts.setImpact:(ID)V
+      69: aload_0
+      70: getfield      #28                 // Field weights:Ljava/util/List;
+      73: iload         6
+      75: invokeinterface #72,  2           // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+      80: checkcast     #51                 // class java/lang/Double
+      83: invokevirtual #76                 // Method java/lang/Double.doubleValue:()D
+      86: dstore        9
+      88: dload         9
+      90: dconst_0
+      91: dcmpl
+      92: iflt          131
+      95: aload_3
+      96: getfield      #155                // Field org/audiveris/omr/check/CheckResult.grade:D
+      99: dconst_0
+     100: dcmpl
+     101: ifne          110
+     104: dconst_0
+     105: dstore        4
+     107: goto          131
+     110: dload         9
+     112: dconst_0
+     113: dcmpl
+     114: ifeq          131
+     117: dload         4
+     119: aload_3
+     120: getfield      #155                // Field org/audiveris/omr/check/CheckResult.grade:D
+     123: dload         9
+     125: invokestatic  #162                // Method java/lang/Math.pow:(DD)D
+     128: dmul
+     129: dstore        4
+     131: iinc          6, 1
+     134: goto          25
+     137: dload         4
+     139: dconst_1
+     140: aload_0
+     141: getfield      #31                 // Field totalWeight:D
+     144: ddiv
+     145: invokestatic  #162                // Method java/lang/Math.pow:(DD)D
+     148: getstatic     #168                // Field org/audiveris/omr/glyph/Grades.intrinsicRatio:D
+     151: dmul
+     152: dstore        4
+     154: aload_2
+     155: ifnull        164
+     158: aload_2
+     159: dload         4
+     161: invokevirtual #171                // Method org/audiveris/omr/check/SuiteImpacts.setGrade:(D)V
+     164: dload         4
+     166: dreturn
+
+  static {};
+    Code:
+       0: ldc           #11                 // class org/audiveris/omr/check/CheckSuite
+       2: invokestatic  #175                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+       5: putstatic     #130                // Field logger:Lorg/slf4j/Logger;
+       8: return
+}

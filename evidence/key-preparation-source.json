@@ -1,0 +1,46 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "license": "AGPL-3.0-or-later",
+  "sources": [
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/key/KeyColumn.java",
+      "local_path": "fixtures/key-preparation-source/KeyColumn.java",
+      "sha256": "f4c76698b918fb90d7432513fed066cca38b19e84f45cc295b8b8b04822545cb"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/key/KeyBuilder.java",
+      "local_path": "fixtures/key-preparation-source/KeyBuilder.java",
+      "sha256": "009c58b47f8aba41e5210feccd04aa85c3a5303366794b92eab30513b10362e4"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/key/KeyExtractor.java",
+      "local_path": "fixtures/key-preparation-source/KeyExtractor.java",
+      "sha256": "1f153edb8eaa2ba633656e3e347bf5aae7a4886953bb40ca07aa76ac8d9dfe33"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sig/inter/BarlineInter.java",
+      "local_path": "fixtures/key-preparation-source/BarlineInter.java",
+      "sha256": "04fbca03c0b2aa7bfc1fb4a1328be886d608795427a7c77ee7826d1fad06a132"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/Sheet.java",
+      "local_path": "fixtures/key-preparation-source/Sheet.java",
+      "sha256": "ec99566a50314dc3f1a026c6767ad0be7d6bdb40b7ccbaf5f8cfb7a5499e59f8"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/Picture.java",
+      "local_path": "fixtures/key-preparation-source/Picture.java",
+      "sha256": "53bad3e22aac88a109c3670c21cadd89c680078d619c4f03bac49a5cfb4974bf"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/Staff.java",
+      "local_path": "fixtures/grid-context-source/Staff.java",
+      "sha256": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57"
+    },
+    {
+      "upstream_path": "app/src/main/java/org/audiveris/omr/sheet/header/HeaderBuilder.java",
+      "local_path": "fixtures/grid-context-source/HeaderBuilder.java",
+      "sha256": "dfb50ab17f9a443049d2037a20c385e2f22d2fd4e353762bdc18c17721325140"
+    }
+  ]
+}

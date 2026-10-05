@@ -1,0 +1,15 @@
+     Locking 37 packages to latest Rust 1.98.1 compatible versions
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+   Compiling audiveris-finalization-review v0.1.0 (/workspace/shared/audiveris-cloud-continuation/header-research/finalization-review)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.49s
+     Running `/workspace/shared/audiveris-cloud-continuation/target/debug/audiveris-finalization-review`
+partition actual 0.25; source expected 0.25000000000000006
+
+thread 'main' (9) panicked at /workspace/shared/audiveris-cloud-continuation/latest/src/header_finalization.rs:192:13:
+attempt to add with overflow
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+header_start_overflow_panics=true
+
+thread 'main' (9) panicked at /workspace/shared/audiveris-cloud-continuation/latest/src/header_finalization.rs:309:45:
+called `Option::unwrap()` on a `None` value
+malformed_member_bounds_panics=true

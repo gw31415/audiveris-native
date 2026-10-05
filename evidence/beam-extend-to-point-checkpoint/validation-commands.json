@@ -1,0 +1,62 @@
+[
+  {
+    "name": "focused-tests",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "--test",
+      "beam_extend_to_point",
+      "--test",
+      "beam_extension_prefix",
+      "--test",
+      "beam_extend_to_beam",
+      "--test",
+      "beam_merge",
+      "--test",
+      "beam_side_lookup",
+      "--test",
+      "beam_extension_geometry",
+      "--test",
+      "beam_lifecycle",
+      "--test",
+      "beam_middle_area",
+      "-j",
+      "2"
+    ],
+    "exit_code": 0,
+    "log": "focused-tests.log",
+    "passed": 24
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0,
+    "seconds": 0.4275544759998411
+  },
+  {
+    "name": "clippy",
+    "command": [
+      "cargo",
+      "clippy",
+      "--workspace",
+      "--locked",
+      "--offline",
+      "--all-targets",
+      "-j",
+      "2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "seconds": 0.18290555400017183
+  }
+]

@@ -1,0 +1,31 @@
+2026-10-03 05:19:19,678 INFO [fallback-header-sharps-bridge-125]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-sharps-bridge-125.png
+2026-10-03 05:19:19,799 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:19,799 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-sharps-bridge-125/fallback-header-sharps-bridge-125.omr
+2026-10-03 05:19:19,801 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:19:19,802 INFO [fallback-header-sharps-bridge-125]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:19:19,819 INFO [fallback-header-sharps-bridge-125]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-sharps-bridge-125.png
+2026-10-03 05:19:19,823 INFO [fallback-header-sharps-bridge-125]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:19:19,897 INFO [fallback-header-sharps-bridge-125]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:19:19,907 INFO [fallback-header-sharps-bridge-125]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:19:19,908 INFO [fallback-header-sharps-bridge-125]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 38% of needed quorum
+2026-10-03 05:19:19,908 WARN [fallback-header-sharps-bridge-125]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:19:19,908 INFO [fallback-header-sharps-bridge-125]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:19:19,909 INFO [fallback-header-sharps-bridge-125]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:19:19,910 INFO [fallback-header-sharps-bridge-125]                 Book.java:2584 | Book{fallback-header-sharps-bridge-125} storing
+2026-10-03 05:19:19,931 INFO [fallback-header-sharps-bridge-125]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:19,947 INFO [fallback-header-sharps-bridge-125]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:19:20,198 INFO [fallback-header-sharps-bridge-125]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:19:20,198 INFO [fallback-header-sharps-bridge-125]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-sharps-bridge-125/fallback-header-sharps-bridge-125.omr
+2026-10-03 05:19:20,199 INFO [fallback-header-sharps-bridge-125]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:19:20,221 INFO [fallback-header-sharps-bridge-125]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:19:20,223 INFO [fallback-header-sharps-bridge-125]                 Book.java:2057 | End of Book{fallback-header-sharps-bridge-125}
+2026-10-03 05:19:20,242 INFO [fallback-header-sharps-bridge-125]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:19:20,346 INFO [fallback-header-sharps-bridge-125]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:19:20,355 INFO [fallback-header-sharps-bridge-125]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:19:20,377 INFO [fallback-header-sharps-bridge-125]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:19:20,411 INFO [fallback-header-sharps-bridge-125]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:19:20,412 INFO [fallback-header-sharps-bridge-125]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:19:21,060 INFO [fallback-header-sharps-bridge-125]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:19:21,082 INFO [fallback-header-sharps-bridge-125]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:19:21,083 INFO [fallback-header-sharps-bridge-125]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-sharps-bridge-125/fallback-header-sharps-bridge-125.omr
+2026-10-03 05:19:21,084 INFO [fallback-header-sharps-bridge-125]                Score.java:181  | Closing {Score 1}

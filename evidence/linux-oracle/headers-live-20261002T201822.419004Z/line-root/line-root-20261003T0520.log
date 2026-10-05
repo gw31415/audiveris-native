@@ -1,0 +1,31 @@
+2026-10-03 05:20:29,707 INFO [line-root]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/line-root.png
+2026-10-03 05:20:29,823 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:20:29,824 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/line-root/line-root.omr
+2026-10-03 05:20:29,827 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:20:29,829 INFO [line-root]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:20:29,853 INFO [line-root]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/line-root.png
+2026-10-03 05:20:29,857 INFO [line-root]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:20:29,940 INFO [line-root]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:20:29,949 INFO [line-root]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:20:29,950 WARN [line-root]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:20:29,950 INFO [line-root]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:20:29,950 INFO [line-root]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:20:29,951 INFO [line-root]                 Book.java:2584 | Book{line-root} storing
+2026-10-03 05:20:29,973 INFO [line-root]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:20:29,991 INFO [line-root]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:20:30,228 INFO [line-root]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:20:30,229 INFO [line-root]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/line-root/line-root.omr
+2026-10-03 05:20:30,230 INFO [line-root]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:20:30,259 INFO [line-root]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:20:30,262 INFO [line-root]                 Book.java:2057 | End of Book{line-root}
+2026-10-03 05:20:30,279 INFO [line-root]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:20:30,376 INFO [line-root]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:20:30,386 INFO [line-root]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:20:30,413 INFO [line-root]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:20:30,443 INFO [line-root]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:20:30,444 INFO [line-root]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:20:30,745 WARN [line-root]          ClefBuilder.java:658  | Staff#1 no recognized header clef.
+2026-10-03 05:20:30,805 INFO [line-root]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:20:30,828 INFO [line-root]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:20:30,829 INFO [line-root]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/line-root/line-root.omr
+2026-10-03 05:20:30,830 INFO [line-root]                Score.java:181  | Closing {Score 1}

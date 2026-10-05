@@ -1,0 +1,819 @@
+Compiled from "PageCleaner.java"
+public abstract class org.audiveris.omr.sheet.PageCleaner extends org.audiveris.omr.sig.inter.AbstractInterVisitor {
+  private static final org.audiveris.omr.sheet.PageCleaner$Constants constants;
+
+  private static final org.slf4j.Logger logger;
+
+  protected final ij.process.ByteProcessor buffer;
+
+  protected final java.awt.Graphics2D g;
+
+  protected final org.audiveris.omr.sheet.Sheet sheet;
+
+  private final java.awt.Stroke marginStroke;
+
+  private final java.awt.Stroke lineStroke;
+
+  private final org.audiveris.omr.ui.symbol.MusicFamily family;
+
+  private final int enlargedSize;
+
+  private final int enlargedHeadSize;
+
+  private final int smallPointSize;
+
+  private final int smallHeadSize;
+
+  public org.audiveris.omr.sheet.PageCleaner(ij.process.ByteProcessor, java.awt.Graphics2D, org.audiveris.omr.sheet.Sheet);
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method org/audiveris/omr/sig/inter/AbstractInterVisitor."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #9                  // Field buffer:Lij/process/ByteProcessor;
+       9: aload_0
+      10: aload_2
+      11: putfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      14: aload_0
+      15: aload_3
+      16: putfield      #19                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      19: aload_3
+      20: invokevirtual #23                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+      23: astore        4
+      25: aload_0
+      26: aload_3
+      27: invokevirtual #29                 // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+      30: invokevirtual #33                 // Method org/audiveris/omr/sheet/SheetStub.getMusicFamily:()Lorg/audiveris/omr/ui/symbol/MusicFamily;
+      33: putfield      #39                 // Field family:Lorg/audiveris/omr/ui/symbol/MusicFamily;
+      36: aload         4
+      38: invokevirtual #43                 // Method org/audiveris/omr/sheet/Scale.getInterline:()Ljava/lang/Integer;
+      41: invokevirtual #49                 // Method java/lang/Integer.intValue:()I
+      44: istore        5
+      46: aload_0
+      47: aload_0
+      48: iload         5
+      50: invokestatic  #55                 // Method org/audiveris/omr/ui/symbol/MusicFont.getPointSize:(I)I
+      53: invokevirtual #61                 // Method enlarged:(I)I
+      56: putfield      #64                 // Field enlargedSize:I
+      59: aload_0
+      60: aload_0
+      61: aload         4
+      63: iload         5
+      65: i2d
+      66: invokestatic  #68                 // Method org/audiveris/omr/ui/symbol/MusicFont.getHeadPointSize:(Lorg/audiveris/omr/sheet/Scale;D)I
+      69: invokevirtual #61                 // Method enlarged:(I)I
+      72: putfield      #72                 // Field enlargedHeadSize:I
+      75: aload         4
+      77: invokevirtual #75                 // Method org/audiveris/omr/sheet/Scale.getSmallInterline:()Ljava/lang/Integer;
+      80: astore        6
+      82: aload_0
+      83: aload         6
+      85: ifnull        99
+      88: aload         6
+      90: invokevirtual #49                 // Method java/lang/Integer.intValue:()I
+      93: invokestatic  #55                 // Method org/audiveris/omr/ui/symbol/MusicFont.getPointSize:(I)I
+      96: goto          100
+      99: iconst_0
+     100: putfield      #78                 // Field smallPointSize:I
+     103: aload_0
+     104: aload         4
+     106: iload         5
+     108: i2d
+     109: getstatic     #81                 // Field org/audiveris/omr/ui/symbol/OmrFont.RATIO_SMALL:D
+     112: dmul
+     113: invokestatic  #68                 // Method org/audiveris/omr/ui/symbol/MusicFont.getHeadPointSize:(Lorg/audiveris/omr/sheet/Scale;D)I
+     116: putfield      #87                 // Field smallHeadSize:I
+     119: aload         4
+     121: getstatic     #90                 // Field constants:Lorg/audiveris/omr/sheet/PageCleaner$Constants;
+     124: getfield      #94                 // Field org/audiveris/omr/sheet/PageCleaner$Constants.lineMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     127: invokevirtual #100                // Method org/audiveris/omr/sheet/Scale.toPixelsDouble:(Lorg/audiveris/omr/sheet/Scale$Fraction;)D
+     130: d2f
+     131: fstore        7
+     133: aload_0
+     134: new           #1                  // class java/awt/BasicStroke
+     137: dup
+     138: fload         7
+     140: iconst_2
+     141: iconst_0
+     142: invokespecial #104                // Method java/awt/BasicStroke."<init>":(FII)V
+     145: putfield      #107                // Field marginStroke:Ljava/awt/Stroke;
+     148: aload         4
+     150: invokevirtual #111                // Method org/audiveris/omr/sheet/Scale.getFore:()Ljava/lang/Integer;
+     153: invokevirtual #49                 // Method java/lang/Integer.intValue:()I
+     156: i2f
+     157: fconst_2
+     158: fload         7
+     160: fmul
+     161: fadd
+     162: fstore        8
+     164: aload_0
+     165: new           #1                  // class java/awt/BasicStroke
+     168: dup
+     169: fload         8
+     171: iconst_2
+     172: iconst_0
+     173: invokespecial #104                // Method java/awt/BasicStroke."<init>":(FII)V
+     176: putfield      #114                // Field lineStroke:Ljava/awt/Stroke;
+     179: aload_2
+     180: getstatic     #117                // Field java/awt/RenderingHints.KEY_ANTIALIASING:Ljava/awt/RenderingHints$Key;
+     183: getstatic     #123                // Field java/awt/RenderingHints.VALUE_ANTIALIAS_OFF:Ljava/lang/Object;
+     186: invokevirtual #127                // Method java/awt/Graphics2D.setRenderingHint:(Ljava/awt/RenderingHints$Key;Ljava/lang/Object;)V
+     189: aload_2
+     190: getstatic     #133                // Field java/awt/Color.WHITE:Ljava/awt/Color;
+     193: invokevirtual #139                // Method java/awt/Graphics2D.setColor:(Ljava/awt/Color;)V
+     196: return
+
+  protected boolean canHide(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #143,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.isFrozen:()Z
+       6: ifne          18
+       9: aload_1
+      10: invokeinterface #149,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.isContextuallyGood:()Z
+      15: ifeq          22
+      18: iconst_1
+      19: goto          23
+      22: iconst_0
+      23: ireturn
+
+  private int enlarged(int);
+    Code:
+       0: iload_1
+       1: i2d
+       2: getstatic     #90                 // Field constants:Lorg/audiveris/omr/sheet/PageCleaner$Constants;
+       5: getfield      #152                // Field org/audiveris/omr/sheet/PageCleaner$Constants.enlargementRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+       8: invokevirtual #156                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+      11: checkcast     #162                // class java/lang/Double
+      14: invokevirtual #164                // Method java/lang/Double.doubleValue:()D
+      17: dmul
+      18: invokestatic  #168                // Method java/lang/Math.rint:(D)D
+      21: d2i
+      22: ireturn
+
+  protected void eraseStavesHeader(org.audiveris.omr.sheet.SystemInfo, org.audiveris.omr.sheet.Scale$Fraction);
+    Code:
+       0: aload_1
+       1: invokevirtual #174                // Method org/audiveris/omr/sheet/SystemInfo.getStaves:()Ljava/util/List;
+       4: invokeinterface #180,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #186,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          128
+      19: aload_3
+      20: invokeinterface #191,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #194                // class org/audiveris/omr/sheet/Staff
+      28: astore        4
+      30: aload         4
+      32: invokevirtual #196                // Method org/audiveris/omr/sheet/Staff.isTablature:()Z
+      35: ifeq          41
+      38: goto          10
+      41: aload         4
+      43: invokevirtual #199                // Method org/audiveris/omr/sheet/Staff.getSpecificInterline:()I
+      46: aload_2
+      47: invokestatic  #202                // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(ILorg/audiveris/omr/sheet/Scale$Fraction;)I
+      50: istore        5
+      52: aload         4
+      54: invokevirtual #208                // Method org/audiveris/omr/sheet/Staff.getHeaderStart:()I
+      57: istore        6
+      59: aload         4
+      61: invokevirtual #211                // Method org/audiveris/omr/sheet/Staff.getHeaderStop:()I
+      64: istore        7
+      66: aload         4
+      68: invokevirtual #214                // Method org/audiveris/omr/sheet/Staff.getFirstLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
+      71: iload         7
+      73: invokeinterface #218,  2          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.yAt:(I)I
+      78: iload         5
+      80: isub
+      81: istore        8
+      83: aload         4
+      85: invokevirtual #223                // Method org/audiveris/omr/sheet/Staff.getLastLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
+      88: iload         7
+      90: invokeinterface #218,  2          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.yAt:(I)I
+      95: iload         5
+      97: iadd
+      98: istore        9
+     100: aload_0
+     101: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+     104: iload         6
+     106: iload         8
+     108: iload         7
+     110: iload         6
+     112: isub
+     113: iconst_1
+     114: iadd
+     115: iload         9
+     117: iload         8
+     119: isub
+     120: iconst_1
+     121: iadd
+     122: invokevirtual #226                // Method java/awt/Graphics2D.fillRect:(IIII)V
+     125: goto          10
+     128: return
+
+  protected void eraseSystemHeader(org.audiveris.omr.sheet.SystemInfo, org.audiveris.omr.sheet.Scale$Fraction);
+    Code:
+       0: aload_0
+       1: getfield      #19                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+       4: invokevirtual #23                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+       7: aload_2
+       8: invokevirtual #230                // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      11: istore_3
+      12: aload_1
+      13: invokevirtual #233                // Method org/audiveris/omr/sheet/SystemInfo.getFirstStaff:()Lorg/audiveris/omr/sheet/Staff;
+      16: astore        4
+      18: aload_1
+      19: invokevirtual #237                // Method org/audiveris/omr/sheet/SystemInfo.getLastStaff:()Lorg/audiveris/omr/sheet/Staff;
+      22: astore        5
+      24: aload_1
+      25: invokevirtual #174                // Method org/audiveris/omr/sheet/SystemInfo.getStaves:()Ljava/util/List;
+      28: invokeinterface #180,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      33: astore        6
+      35: aload         6
+      37: invokeinterface #186,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      42: ifeq          133
+      45: aload         6
+      47: invokeinterface #191,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      52: checkcast     #194                // class org/audiveris/omr/sheet/Staff
+      55: astore        7
+      57: aload         7
+      59: invokevirtual #240                // Method org/audiveris/omr/sheet/Staff.getHeader:()Lorg/audiveris/omr/sheet/header/StaffHeader;
+      62: ifnull        130
+      65: aload         7
+      67: invokevirtual #211                // Method org/audiveris/omr/sheet/Staff.getHeaderStop:()I
+      70: istore        8
+      72: aload         4
+      74: invokevirtual #214                // Method org/audiveris/omr/sheet/Staff.getFirstLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
+      77: iload         8
+      79: invokeinterface #218,  2          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.yAt:(I)I
+      84: iload_3
+      85: isub
+      86: istore        9
+      88: aload         5
+      90: invokevirtual #223                // Method org/audiveris/omr/sheet/Staff.getLastLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
+      93: iload         8
+      95: invokeinterface #218,  2          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.yAt:(I)I
+     100: iload_3
+     101: iadd
+     102: istore        10
+     104: aload_0
+     105: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+     108: aload_1
+     109: invokevirtual #244                // Method org/audiveris/omr/sheet/SystemInfo.getBounds:()Ljava/awt/Rectangle;
+     112: getfield      #248                // Field java/awt/Rectangle.x:I
+     115: iload         9
+     117: iload         8
+     119: iload         10
+     121: iload         9
+     123: isub
+     124: iconst_1
+     125: iadd
+     126: invokevirtual #226                // Method java/awt/Graphics2D.fillRect:(IIII)V
+     129: return
+     130: goto          35
+     133: return
+
+  public void eraseTablatures(org.audiveris.omr.sheet.Scale$Fraction);
+    Code:
+       0: aload_0
+       1: getfield      #19                 // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+       4: invokevirtual #253                // Method org/audiveris/omr/sheet/Sheet.getSystems:()Ljava/util/List;
+       7: aload_0
+       8: aload_1
+       9: invokedynamic #256,  0            // InvokeDynamic #0:accept:(Lorg/audiveris/omr/sheet/PageCleaner;Lorg/audiveris/omr/sheet/Scale$Fraction;)Ljava/util/function/Consumer;
+      14: invokeinterface #260,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      19: return
+
+  protected void eraseTablatures(org.audiveris.omr.sheet.SystemInfo, org.audiveris.omr.sheet.Scale$Fraction);
+    Code:
+       0: aload_1
+       1: invokevirtual #174                // Method org/audiveris/omr/sheet/SystemInfo.getStaves:()Ljava/util/List;
+       4: invokeinterface #180,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       9: astore_3
+      10: aload_3
+      11: invokeinterface #186,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      16: ifeq          71
+      19: aload_3
+      20: invokeinterface #191,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      25: checkcast     #194                // class org/audiveris/omr/sheet/Staff
+      28: astore        4
+      30: aload         4
+      32: invokevirtual #196                // Method org/audiveris/omr/sheet/Staff.isTablature:()Z
+      35: ifeq          68
+      38: aload         4
+      40: invokevirtual #199                // Method org/audiveris/omr/sheet/Staff.getSpecificInterline:()I
+      43: aload_2
+      44: invokestatic  #202                // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(ILorg/audiveris/omr/sheet/Scale$Fraction;)I
+      47: istore        5
+      49: aload         4
+      51: iconst_0
+      52: iload         5
+      54: invokestatic  #264                // Method org/audiveris/omr/sheet/StaffManager.getCoreArea:(Lorg/audiveris/omr/sheet/Staff;II)Ljava/awt/geom/Area;
+      57: astore        6
+      59: aload_0
+      60: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      63: aload         6
+      65: invokevirtual #270                // Method java/awt/Graphics2D.fill:(Ljava/awt/Shape;)V
+      68: goto          10
+      71: return
+
+  protected void processArea(java.awt.geom.Area);
+    Code:
+       0: aload_0
+       1: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+       4: aload_1
+       5: invokevirtual #270                // Method java/awt/Graphics2D.fill:(Ljava/awt/Shape;)V
+       8: aload_0
+       9: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      12: aload_0
+      13: getfield      #107                // Field marginStroke:Ljava/awt/Stroke;
+      16: invokevirtual #274                // Method java/awt/Graphics2D.setStroke:(Ljava/awt/Stroke;)V
+      19: aload_0
+      20: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      23: aload_1
+      24: invokevirtual #278                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      27: return
+
+  protected void processGlyph(org.audiveris.omr.glyph.Glyph);
+    Code:
+       0: aload_1
+       1: ifnull        19
+       4: aload_1
+       5: invokevirtual #281                // Method org/audiveris/omr/glyph/Glyph.getRunTable:()Lorg/audiveris/omr/run/RunTable;
+       8: aload_0
+       9: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      12: aload_1
+      13: invokevirtual #287                // Method org/audiveris/omr/glyph/Glyph.getTopLeft:()Ljava/awt/Point;
+      16: invokevirtual #291                // Method org/audiveris/omr/run/RunTable.render:(Ljava/awt/Graphics2D;Ljava/awt/Point;)V
+      19: return
+
+  public void visit(org.audiveris.omr.sig.inter.AbstractBeamInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #297                // Method org/audiveris/omr/sig/inter/AbstractBeamInter.getArea:()Ljava/awt/geom/Area;
+       5: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.AbstractChordInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #307                // Method org/audiveris/omr/sig/inter/AbstractChordInter.getNotes:()Ljava/util/List;
+       4: aload_0
+       5: invokedynamic #312,  0            // InvokeDynamic #1:accept:(Lorg/audiveris/omr/sheet/PageCleaner;)Ljava/util/function/Consumer;
+      10: invokeinterface #260,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      15: return
+
+  public void visit(org.audiveris.omr.sig.inter.AbstractFlagInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #315                // Method org/audiveris/omr/sig/inter/AbstractFlagInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.AbstractNumberInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #325                // Method org/audiveris/omr/sig/inter/AbstractNumberInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.ArpeggiatoInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #328                // Method org/audiveris/omr/sig/inter/ArpeggiatoInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.BarConnectorInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #331                // Method org/audiveris/omr/sig/inter/BarConnectorInter.getArea:()Ljava/awt/geom/Area;
+       5: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.BarlineInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #334                // Method org/audiveris/omr/sig/inter/BarlineInter.getArea:()Ljava/awt/geom/Area;
+       5: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.BeatUnitInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #337                // Method org/audiveris/omr/sig/inter/BeatUnitInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.BraceInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #340                // Method org/audiveris/omr/sig/inter/BraceInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.BracketConnectorInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #343                // Method org/audiveris/omr/sig/inter/BracketConnectorInter.getArea:()Ljava/awt/geom/Area;
+       5: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.BracketInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #346                // Method org/audiveris/omr/sig/inter/BracketInter.getArea:()Ljava/awt/geom/Area;
+       5: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.ClefInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #349                // Method org/audiveris/omr/sig/inter/ClefInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.EndingInter);
+    Code:
+       0: aload_0
+       1: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+       4: aload_0
+       5: getfield      #114                // Field lineStroke:Ljava/awt/Stroke;
+       8: invokevirtual #274                // Method java/awt/Graphics2D.setStroke:(Ljava/awt/Stroke;)V
+      11: aload_0
+      12: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      15: aload_1
+      16: invokevirtual #352                // Method org/audiveris/omr/sig/inter/EndingInter.getLine:()Ljava/awt/geom/Line2D;
+      19: invokevirtual #278                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      22: aload_1
+      23: invokevirtual #358                // Method org/audiveris/omr/sig/inter/EndingInter.getLeftLeg:()Ljava/awt/geom/Line2D;
+      26: ifnull        40
+      29: aload_0
+      30: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      33: aload_1
+      34: invokevirtual #358                // Method org/audiveris/omr/sig/inter/EndingInter.getLeftLeg:()Ljava/awt/geom/Line2D;
+      37: invokevirtual #278                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      40: aload_1
+      41: invokevirtual #361                // Method org/audiveris/omr/sig/inter/EndingInter.getRightLeg:()Ljava/awt/geom/Line2D;
+      44: ifnull        58
+      47: aload_0
+      48: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      51: aload_1
+      52: invokevirtual #361                // Method org/audiveris/omr/sig/inter/EndingInter.getRightLeg:()Ljava/awt/geom/Line2D;
+      55: invokevirtual #278                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      58: return
+
+  public void visit(org.audiveris.omr.sig.inter.HeadInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #364                // Method org/audiveris/omr/sig/inter/HeadInter.getShape:()Lorg/audiveris/omr/glyph/Shape;
+       4: invokevirtual #370                // Method org/audiveris/omr/glyph/Shape.isSmallHead:()Z
+       7: ifeq          17
+      10: aload_0
+      11: getfield      #87                 // Field smallHeadSize:I
+      14: goto          21
+      17: aload_0
+      18: getfield      #72                 // Field enlargedHeadSize:I
+      21: istore_2
+      22: aload_1
+      23: invokevirtual #364                // Method org/audiveris/omr/sig/inter/HeadInter.getShape:()Lorg/audiveris/omr/glyph/Shape;
+      26: aload_0
+      27: getfield      #39                 // Field family:Lorg/audiveris/omr/ui/symbol/MusicFamily;
+      30: iload_2
+      31: invokevirtual #375                // Method org/audiveris/omr/glyph/Shape.getFontSymbolBySize:(Lorg/audiveris/omr/ui/symbol/MusicFamily;I)Lorg/audiveris/omr/ui/symbol/FontSymbol;
+      34: astore_3
+      35: aload_3
+      36: getfield      #379                // Field org/audiveris/omr/ui/symbol/FontSymbol.symbol:Lorg/audiveris/omr/ui/symbol/ShapeSymbol;
+      39: ifnonnull     55
+      42: getstatic     #385                // Field logger:Lorg/slf4j/Logger;
+      45: ldc_w         #389                // String No symbol for head {}
+      48: aload_1
+      49: invokeinterface #391,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+      54: return
+      55: aload_1
+      56: invokevirtual #397                // Method org/audiveris/omr/sig/inter/HeadInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+      59: astore        4
+      61: aload         4
+      63: ifnull        74
+      66: aload         4
+      68: invokevirtual #398                // Method org/audiveris/omr/glyph/Glyph.getCenter2D:()Ljava/awt/geom/Point2D;
+      71: goto          78
+      74: aload_1
+      75: invokevirtual #402                // Method org/audiveris/omr/sig/inter/HeadInter.getCenter2D:()Ljava/awt/geom/Point2D;
+      78: astore        5
+      80: aload_3
+      81: getfield      #379                // Field org/audiveris/omr/ui/symbol/FontSymbol.symbol:Lorg/audiveris/omr/ui/symbol/ShapeSymbol;
+      84: aload_0
+      85: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      88: aload_3
+      89: getfield      #403                // Field org/audiveris/omr/ui/symbol/FontSymbol.font:Lorg/audiveris/omr/ui/symbol/MusicFont;
+      92: aload         5
+      94: getstatic     #407                // Field org/audiveris/omr/ui/symbol/Alignment.AREA_CENTER:Lorg/audiveris/omr/ui/symbol/Alignment;
+      97: invokevirtual #413                // Method org/audiveris/omr/ui/symbol/ShapeSymbol.paintSymbol:(Ljava/awt/Graphics2D;Lorg/audiveris/omr/ui/symbol/MusicFont;Ljava/awt/geom/Point2D;Lorg/audiveris/omr/ui/symbol/Alignment;)V
+     100: return
+
+  public void visit(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: invokeinterface #419,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.isImplicit:()Z
+       6: ifeq          10
+       9: return
+      10: aload_1
+      11: invokeinterface #422,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+      16: astore_2
+      17: aload_2
+      18: ifnull        29
+      21: aload_0
+      22: aload_2
+      23: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      26: goto          152
+      29: aload_1
+      30: invokeinterface #423,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getStaff:()Lorg/audiveris/omr/sheet/Staff;
+      35: ifnull        54
+      38: aload_1
+      39: invokeinterface #423,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getStaff:()Lorg/audiveris/omr/sheet/Staff;
+      44: invokevirtual #426                // Method org/audiveris/omr/sheet/Staff.isSmall:()Z
+      47: ifeq          54
+      50: iconst_1
+      51: goto          55
+      54: iconst_0
+      55: istore_3
+      56: iload_3
+      57: ifeq          67
+      60: aload_0
+      61: getfield      #78                 // Field smallPointSize:I
+      64: goto          71
+      67: aload_0
+      68: getfield      #64                 // Field enlargedSize:I
+      71: istore        4
+      73: aload_1
+      74: invokeinterface #429,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getShape:()Lorg/audiveris/omr/glyph/Shape;
+      79: aload_0
+      80: getfield      #39                 // Field family:Lorg/audiveris/omr/ui/symbol/MusicFamily;
+      83: iload         4
+      85: invokevirtual #375                // Method org/audiveris/omr/glyph/Shape.getFontSymbolBySize:(Lorg/audiveris/omr/ui/symbol/MusicFamily;I)Lorg/audiveris/omr/ui/symbol/FontSymbol;
+      88: astore        5
+      90: aload         5
+      92: getfield      #379                // Field org/audiveris/omr/ui/symbol/FontSymbol.symbol:Lorg/audiveris/omr/ui/symbol/ShapeSymbol;
+      95: ifnonnull     111
+      98: getstatic     #385                // Field logger:Lorg/slf4j/Logger;
+     101: ldc_w         #430                // String No symbol for inter {}
+     104: aload_1
+     105: invokeinterface #391,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;)V
+     110: return
+     111: aload_2
+     112: ifnull        122
+     115: aload_2
+     116: invokevirtual #398                // Method org/audiveris/omr/glyph/Glyph.getCenter2D:()Ljava/awt/geom/Point2D;
+     119: goto          128
+     122: aload_1
+     123: invokeinterface #432,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getCenter2D:()Ljava/awt/geom/Point2D;
+     128: astore        6
+     130: aload         5
+     132: getfield      #379                // Field org/audiveris/omr/ui/symbol/FontSymbol.symbol:Lorg/audiveris/omr/ui/symbol/ShapeSymbol;
+     135: aload_0
+     136: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+     139: aload         5
+     141: getfield      #403                // Field org/audiveris/omr/ui/symbol/FontSymbol.font:Lorg/audiveris/omr/ui/symbol/MusicFont;
+     144: aload         6
+     146: getstatic     #407                // Field org/audiveris/omr/ui/symbol/Alignment.AREA_CENTER:Lorg/audiveris/omr/ui/symbol/Alignment;
+     149: invokevirtual #413                // Method org/audiveris/omr/ui/symbol/ShapeSymbol.paintSymbol:(Ljava/awt/Graphics2D;Lorg/audiveris/omr/ui/symbol/MusicFont;Ljava/awt/geom/Point2D;Lorg/audiveris/omr/ui/symbol/Alignment;)V
+     152: return
+
+  public void visit(org.audiveris.omr.sig.inter.KeyAlterInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #433                // Method org/audiveris/omr/sig/inter/KeyAlterInter.getEnsemble:()Lorg/audiveris/omr/sig/inter/InterEnsemble;
+       4: ifnonnull     15
+       7: aload_0
+       8: aload_1
+       9: invokevirtual #439                // Method org/audiveris/omr/sig/inter/KeyAlterInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+      12: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      15: return
+
+  public void visit(org.audiveris.omr.sig.inter.KeyInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #440                // Method org/audiveris/omr/sig/inter/KeyInter.getMembers:()Ljava/util/List;
+       4: aload_0
+       5: invokedynamic #445,  0            // InvokeDynamic #2:accept:(Lorg/audiveris/omr/sheet/PageCleaner;)Ljava/util/function/Consumer;
+      10: invokeinterface #260,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      15: return
+
+  public void visit(org.audiveris.omr.sig.inter.LedgerInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #446                // Method org/audiveris/omr/sig/inter/LedgerInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.MultipleRestInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #449                // Method org/audiveris/omr/sig/inter/MultipleRestInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       4: ifnull        18
+       7: aload_0
+       8: aload_1
+       9: invokevirtual #449                // Method org/audiveris/omr/sig/inter/MultipleRestInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+      12: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      15: goto          26
+      18: aload_0
+      19: aload_1
+      20: invokevirtual #452                // Method org/audiveris/omr/sig/inter/MultipleRestInter.getArea:()Ljava/awt/geom/Area;
+      23: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+      26: return
+
+  public void visit(org.audiveris.omr.sig.inter.OctaveShiftInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #453                // Method org/audiveris/omr/sig/inter/OctaveShiftInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.SentenceInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #456                // Method org/audiveris/omr/sig/inter/SentenceInter.getMembers:()Ljava/util/List;
+       4: aload_0
+       5: invokedynamic #459,  0            // InvokeDynamic #3:accept:(Lorg/audiveris/omr/sheet/PageCleaner;)Ljava/util/function/Consumer;
+      10: invokeinterface #260,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      15: return
+
+  public void visit(org.audiveris.omr.sig.inter.SlurInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #460                // Method org/audiveris/omr/sig/inter/SlurInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.StaffBarlineInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #463                // Method org/audiveris/omr/sig/inter/StaffBarlineInter.getMembers:()Ljava/util/List;
+       4: astore_2
+       5: aload_2
+       6: invokeinterface #466,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+      11: ifne          29
+      14: aload_2
+      15: aload_0
+      16: invokedynamic #469,  0            // InvokeDynamic #4:accept:(Lorg/audiveris/omr/sheet/PageCleaner;)Ljava/util/function/Consumer;
+      21: invokeinterface #260,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      26: goto          41
+      29: aload_1
+      30: invokevirtual #470                // Method org/audiveris/omr/sig/inter/StaffBarlineInter.getShape:()Lorg/audiveris/omr/glyph/Shape;
+      33: ifnull        41
+      36: aload_0
+      37: aload_1
+      38: invokevirtual #471                // Method visit:(Lorg/audiveris/omr/sig/inter/Inter;)V
+      41: return
+
+  public void visit(org.audiveris.omr.sig.inter.StemInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #475                // Method org/audiveris/omr/sig/inter/StemInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       4: ifnull        18
+       7: aload_0
+       8: aload_1
+       9: invokevirtual #475                // Method org/audiveris/omr/sig/inter/StemInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+      12: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      15: goto          33
+      18: aload_0
+      19: new           #478                // class java/awt/geom/Area
+      22: dup
+      23: aload_1
+      24: invokevirtual #480                // Method org/audiveris/omr/sig/inter/StemInter.getBounds:()Ljava/awt/Rectangle;
+      27: invokespecial #481                // Method java/awt/geom/Area."<init>":(Ljava/awt/Shape;)V
+      30: invokevirtual #303                // Method processArea:(Ljava/awt/geom/Area;)V
+      33: return
+
+  public void visit(org.audiveris.omr.sig.inter.TimeCustomInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #483                // Method org/audiveris/omr/sig/inter/TimeCustomInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.TimePairInter);
+    Code:
+       0: aload_1
+       1: invokevirtual #486                // Method org/audiveris/omr/sig/inter/TimePairInter.getMembers:()Ljava/util/List;
+       4: aload_0
+       5: invokedynamic #489,  0            // InvokeDynamic #5:accept:(Lorg/audiveris/omr/sheet/PageCleaner;)Ljava/util/function/Consumer;
+      10: invokeinterface #260,  2          // InterfaceMethod java/util/List.forEach:(Ljava/util/function/Consumer;)V
+      15: return
+
+  public void visit(org.audiveris.omr.sig.inter.TimeWholeInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #490                // Method org/audiveris/omr/sig/inter/TimeWholeInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.VerticalSerifInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #493                // Method org/audiveris/omr/sig/inter/VerticalSerifInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  public void visit(org.audiveris.omr.sig.inter.WedgeInter);
+    Code:
+       0: aload_0
+       1: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+       4: aload_0
+       5: getfield      #114                // Field lineStroke:Ljava/awt/Stroke;
+       8: invokevirtual #274                // Method java/awt/Graphics2D.setStroke:(Ljava/awt/Stroke;)V
+      11: aload_0
+      12: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      15: aload_1
+      16: invokevirtual #496                // Method org/audiveris/omr/sig/inter/WedgeInter.getLine1:()Ljava/awt/geom/Line2D;
+      19: invokevirtual #278                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      22: aload_0
+      23: getfield      #15                 // Field g:Ljava/awt/Graphics2D;
+      26: aload_1
+      27: invokevirtual #501                // Method org/audiveris/omr/sig/inter/WedgeInter.getLine2:()Ljava/awt/geom/Line2D;
+      30: invokevirtual #278                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      33: return
+
+  public void visit(org.audiveris.omr.sig.inter.WordInter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #504                // Method org/audiveris/omr/sig/inter/WordInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       5: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+       8: return
+
+  private void lambda$visit$4(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #422,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       7: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      10: return
+
+  private void lambda$visit$3(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokeinterface #507,  2          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.accept:(Lorg/audiveris/omr/sig/inter/InterVisitor;)V
+       7: return
+
+  private void lambda$visit$2(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokeinterface #422,  1          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       7: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      10: return
+
+  private void lambda$visit$1(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #434                // class org/audiveris/omr/sig/inter/KeyAlterInter
+       5: invokevirtual #439                // Method org/audiveris/omr/sig/inter/KeyAlterInter.getGlyph:()Lorg/audiveris/omr/glyph/Glyph;
+       8: invokevirtual #321                // Method processGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+      11: return
+
+  private void lambda$visit$0(org.audiveris.omr.sig.inter.Inter);
+    Code:
+       0: aload_1
+       1: aload_0
+       2: invokeinterface #507,  2          // InterfaceMethod org/audiveris/omr/sig/inter/Inter.accept:(Lorg/audiveris/omr/sig/inter/InterVisitor;)V
+       7: return
+
+  private void lambda$eraseTablatures$0(org.audiveris.omr.sheet.Scale$Fraction, org.audiveris.omr.sheet.SystemInfo);
+    Code:
+       0: aload_0
+       1: aload_2
+       2: aload_1
+       3: invokevirtual #510                // Method eraseTablatures:(Lorg/audiveris/omr/sheet/SystemInfo;Lorg/audiveris/omr/sheet/Scale$Fraction;)V
+       6: return
+
+  static {};
+    Code:
+       0: new           #95                 // class org/audiveris/omr/sheet/PageCleaner$Constants
+       3: dup
+       4: invokespecial #514                // Method org/audiveris/omr/sheet/PageCleaner$Constants."<init>":()V
+       7: putstatic     #90                 // Field constants:Lorg/audiveris/omr/sheet/PageCleaner$Constants;
+      10: ldc           #10                 // class org/audiveris/omr/sheet/PageCleaner
+      12: invokestatic  #515                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+      15: putstatic     #385                // Field logger:Lorg/slf4j/Logger;
+      18: return
+}

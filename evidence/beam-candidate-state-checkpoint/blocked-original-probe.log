@@ -1,0 +1,17 @@
+08:24:00.456 [main] DEBUG org.audiveris.omr.constant.ConstantManager -- [org.audiveris.omr.constant.ConstantManager] No property file /workspace/audiveris-toolchain/side-area-oracle/lifecycle-control/config/AudiverisLtd/audiveris/run.properties
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+Exception in thread "main" java.lang.reflect.InvocationTargetException
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at BeamImpactsControlProbe.call(BeamImpactsControlProbe.java:18)
+	at BeamLifecycleControlProbe.main(BeamLifecycleControlProbe.java:28)
+Caused by: java.lang.NullPointerException: Cannot invoke "org.audiveris.omr.sheet.SheetStub.setModified(boolean)" because the return value of "org.audiveris.omr.sheet.Sheet.getStub()" is null
+	at org.audiveris.omr.sig.inter.AbstractInter.setAbnormal(AbstractInter.java:1431)
+	at org.audiveris.omr.sig.inter.AbstractBeamInter.added(AbstractBeamInter.java:188)
+	at org.audiveris.omr.sig.SIGraph.addVertex(SIGraph.java:175)
+	at org.audiveris.omr.sig.SIGraph.addVertex(SIGraph.java:78)
+	... 4 more

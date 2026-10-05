@@ -1,0 +1,30 @@
+2026-10-03 05:18:09,677 INFO [rendered-header-one-sharp]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-one-sharp.png
+2026-10-03 05:18:09,849 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:09,850 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/rendered-header-one-sharp/rendered-header-one-sharp.omr
+2026-10-03 05:18:09,852 INFO []                 Book.java:1929 | Book reaching HEADERS on sheets:[#1]
+2026-10-03 05:18:09,855 INFO [rendered-header-one-sharp]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:18:09,880 INFO [rendered-header-one-sharp]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-one-sharp.png
+2026-10-03 05:18:09,888 INFO [rendered-header-one-sharp]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:18:10,003 INFO [rendered-header-one-sharp]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:18:10,013 INFO [rendered-header-one-sharp]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:18:10,014 INFO [rendered-header-one-sharp]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 39% of needed quorum
+2026-10-03 05:18:10,015 WARN [rendered-header-one-sharp]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:18:10,015 INFO [rendered-header-one-sharp]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:18:10,015 INFO [rendered-header-one-sharp]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:18:10,016 INFO [rendered-header-one-sharp]       StepMonitoring.java:98   | GRID
+2026-10-03 05:18:10,120 INFO [rendered-header-one-sharp]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:18:10,130 INFO [rendered-header-one-sharp]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:18:10,161 INFO [rendered-header-one-sharp]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:18:10,203 INFO [rendered-header-one-sharp]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:18:10,204 INFO [rendered-header-one-sharp]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:18:10,205 INFO [rendered-header-one-sharp]       StepMonitoring.java:98   | HEADERS
+2026-10-03 05:18:11,089 INFO [rendered-header-one-sharp]                 Book.java:2584 | Book{rendered-header-one-sharp} storing
+2026-10-03 05:18:11,136 INFO [rendered-header-one-sharp]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:11,156 INFO [rendered-header-one-sharp]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:18:11,362 INFO [rendered-header-one-sharp]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:18:11,363 INFO [rendered-header-one-sharp]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/rendered-header-one-sharp/rendered-header-one-sharp.omr
+2026-10-03 05:18:11,364 INFO [rendered-header-one-sharp]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:18:11,391 INFO [rendered-header-one-sharp]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:18:11,393 INFO [rendered-header-one-sharp]                 Book.java:2057 | End of Book{rendered-header-one-sharp}
+2026-10-03 05:18:11,430 INFO [rendered-header-one-sharp]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:18:11,477 INFO [rendered-header-one-sharp]                Score.java:181  | Closing {Score 1}

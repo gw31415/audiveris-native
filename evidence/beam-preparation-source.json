@@ -1,0 +1,45 @@
+{
+  "upstream_release": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "inspection": "local javap -p -c of already-authorized official JAR; no network source retrieval",
+  "license": "AGPL-3.0-or-later",
+  "sources": [
+    {
+      "path": "fixtures/beam-pixel-source/SpotsBuilder.javap.txt",
+      "sha256": "4d850bf80044929464749694b3b5f62ffaa41134c25bb6c581d3605f3f45dca1"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/SpotsBuilder$Constants.javap.txt",
+      "sha256": "8865559fbee0fba0237dede429c2a558e41ece85bbe0ccc65a63d1f503bfeea6"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/Picture.javap.txt",
+      "sha256": "726dbd1d464996191f7948ab603da2844bd39b44d7b6ecfe45d363349928ff1d"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/Picture$Constants.javap.txt",
+      "sha256": "54411466845f25a20b3374df73a7d504196e9c88b47f29a1b59a860b7b1091f2"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/GaussianGrayFilter.javap.txt",
+      "sha256": "91e0d2e410cbaafc6132334d20aea9705c95c14667c69c9c090f653405681dc9"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/MedianGrayFilter.javap.txt",
+      "sha256": "55d35efbffdea9a2c84eac471638d505248eee2447d30c2529fd7b3411045c80"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/MorphoProcessor.javap.txt",
+      "sha256": "7b2181c9fcdac3b04706479d12d2cf38a500addc11e2b2ea6f0bf862981799a6"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/StructureElement.javap.txt",
+      "sha256": "8339d7b36193273a057413b61e5297820aa94d4fd3b711638672fa957a63c83a"
+    },
+    {
+      "path": "fixtures/beam-pixel-source/StaffLine.javap.txt",
+      "sha256": "1036e30f652595110245a3e209423cbdab5d8eda77495667b58aff7ca1c5ea76"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "input": null,
+  "input_sha256": null,
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/observer-classes",
+    "TimeFontMetricsProbe",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/result.json"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-font-metrics/20261002T195611.239442Z/time-font-metrics/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "f5f66cd6dd1d371181a4ea6b9c36b46f2fd659ad246c130081bd496b0d8e81b3",
+  "ok": true,
+  "result_sha256": "1bac706f0bf8c786e8a899daad7cf637ec838bbe4c13f5f063ba60025ec8a8f6"
+}

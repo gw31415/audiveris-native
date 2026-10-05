@@ -1,0 +1,22 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+  "font_family": "Bravura",
+  "font_version": "1.392",
+  "interlines": [
+    11,
+    16
+  ],
+  "java_argv": [
+    "/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/runtime/Contents/Home/bin/java",
+    "-Djava.awt.headless=true",
+    "-cp",
+    "/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/app/*:/Users/ama/Documents/Codex/2026-10-03/task-2/audiveris-native/evidence/generated/semantic-final-probe",
+    "BracketFontProbe",
+    "/Users/ama/Documents/Codex/2026-10-03/task-2/audiveris-native/fixtures/official-grid/bracket-font-metrics.json"
+  ],
+  "java_exit": 0,
+  "metrics_sha256": "c643f873ef5b1a6fb6d9967e363f0a873b940a5e9e4cbff54cdb93ef7a6505c1",
+  "license": "SIL OFL 1.1; see crates/audiveris-template-bank/assets/BRAVURA-OFL.txt"
+}

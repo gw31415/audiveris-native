@@ -1,0 +1,40 @@
+{
+  "purpose": "Development-only constructed pure key/clef scoring controls; not image parity or production Java dependency",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "release": "5.11.0",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_source": "scripts/java/KeyClefControlProbe.java",
+  "observer_source_sha256": "89e4c31453cd6c28e3a06e8615a299a5a28086fd1d2186f80ae358ab6baa6caa",
+  "source_snapshots_dir": "evidence/linux-oracle/key-clef-control-20261002/observer-sources",
+  "fixture_path": "fixtures/key-clef/official-controlled.json",
+  "fixture_sha256": "d2c1c4fd553fcc093da3b4c5b27137c522b7c3641ae17a18a8f5a106e4559fc0",
+  "raw_result_path": "evidence/linux-oracle/key-clef-control-20261002/key-clef-control/result.json",
+  "raw_result_sha256": "d2c1c4fd553fcc093da3b4c5b27137c522b7c3641ae17a18a8f5a106e4559fc0",
+  "runner_provenance_path": "evidence/linux-oracle/key-clef-control-20261002/provenance.json",
+  "runner_provenance_sha256": "1533dec4bb4fd4ffba7810cf5a884389a41e4062b0e862787c995c73332b1c94",
+  "execution_receipt_path": "evidence/linux-oracle/key-clef-control-20261002/key-clef-control/execution.json",
+  "execution_receipt_sha256": "fd344c766ff97dcab82a1cccabcf72e91f49e4fcdbb08c704b9e052b82d0a510",
+  "case_count": 286,
+  "original_final_winner_captures": 230,
+  "original_false_returns": 56,
+  "methods_observed": [
+    "KeyInter.getPitches",
+    "KeyBuilder.ShapeBuilder.computePitchedGrades",
+    "KeyBuilder.ShapeBuilder.computeKeyGrade",
+    "GradeUtil.contributionOf",
+    "GradeUtil.contextual",
+    "KeyBuilder.ShapeBuilder.checkWithClefs through retainAll or false return"
+  ],
+  "source_replayed_fields": [
+    "best_compatible_index",
+    "best_compatible_contextual_grade",
+    "key_accepted for intercepted decisions"
+  ],
+  "params": {
+    "max_delta_pitch_1": 0.5,
+    "max_delta_pitch_4": 2.0,
+    "key_alters_source_ratio": 6.0,
+    "clef_key_source_ratio": 6.0
+  },
+  "status": "Original-JAR fixture generation completed; native comparison is performed separately"
+}

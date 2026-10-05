@@ -1,0 +1,64 @@
+[
+  {
+    "command": [
+      "/workspace/audiveris-toolchain/side-area-oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/stubs",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/stub-src/Book.java",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/stub-src/RunClass.java"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.5042610289997356
+  },
+  {
+    "command": [
+      "/workspace/audiveris-toolchain/side-area-oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/stubs:/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/*",
+      "-sourcepath",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/empty",
+      "-d",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/classes",
+      "/workspace/audiveris-restart/scripts/java/GridProbe.java",
+      "/workspace/audiveris-restart/scripts/java/BeamImpactsControlProbe.java",
+      "/workspace/audiveris-restart/scripts/java/BeamLifecycleFixtureProbe.java"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.9102549919998637
+  },
+  {
+    "command": [
+      "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Xmx512m",
+      "-XX:ActiveProcessorCount=2",
+      "-Djava.awt.headless=true",
+      "-Djava.io.tmpdir=/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/tmp",
+      "-Dorg.bytedeco.javacpp.cachedir=/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/cache",
+      "-Djava.util.prefs.userRoot=/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/prefs",
+      "-Duser.home=/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/home",
+      "-Dnative.probe.output=/workspace/audiveris-restart/fixtures/official-beam-lifecycle.json",
+      "-cp",
+      "/workspace/audiveris-toolchain/side-area-oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/classes",
+      "Audiveris",
+      "-batch",
+      "-constant",
+      "org.audiveris.omr.Main.persistBatchCliConstants=false",
+      "-constant",
+      "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+      "-step",
+      "SCALE",
+      "-run",
+      "BeamLifecycleFixtureProbe",
+      "-output",
+      "/workspace/audiveris-toolchain/side-area-oracle/lifecycle-fixture/output",
+      "--",
+      "/workspace/audiveris-restart/fixtures/official-grid/beams-single.png"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.144007990999853
+  }
+]

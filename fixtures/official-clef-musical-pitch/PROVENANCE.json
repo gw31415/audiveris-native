@@ -1,0 +1,22 @@
+{
+  "release": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "355bdf482c9fff1c83047376d0fedec44c7815e94b12cd86697ed547025db193",
+  "result_sha256": "d9d2c1d53196abcc4c6255a916f4e1dccabe95650ed37b35ceec0c453f36fe18",
+  "cases": 180,
+  "native_outputs_used": false,
+  "scope": "original_ClefInter_static_pitch_controls_not_page_recognition",
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-stems44/original-clef-pitch-controls/runtime/tmp",
+    "-Duser.home=/workspace/work/musicxml-stems44/original-clef-pitch-controls/runtime/home",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-stems44/original-clef-pitch-controls/runtime/prefs",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/musicxml-stems44/original44-first/observer-classes:/workspace/work/musicxml-stems44/original-clef-pitch-controls/classes",
+    "ClefPitchControls",
+    "/workspace/work/musicxml-stems44/original-clef-pitch-controls/result.json"
+  ],
+  "source_ClefInter_sha256": "0b8a281e6a96473ba8364cba63bb5c83fc99718e93819d528bf62d502ddc9f45"
+}

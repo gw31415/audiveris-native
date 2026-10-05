@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "independent_original_runs": 2,
+  "original_sha256": "25d64d0ba2a5ad815f24ca7dd4dec9017fc437f7e069517e1ea52f5e45c99efc",
+  "all_actual_corner_stumps": 1408,
+  "selected_seed_corners": 577,
+  "selected_section_stump_corners": 147,
+  "section_fallback_corners": 831,
+  "registered_then_rejected_corner_count": 554,
+  "no_section_glyph_corners": 130,
+  "new_distinct_fallback_physical_registrations": 346,
+  "system_section_catalog_sizes": [
+    1390,
+    2346
+  ],
+  "condition_specified_run_intersection_controls": 8,
+  "condition_specified_polygon_membership_controls": 6,
+  "condition_specified_subsection_controls": 7,
+  "condition_specified_registry_identity_and_retention_controls": 2,
+  "original_fresh_transient_context_newly_verified": false,
+  "scope": "Both Laura systems in original 5.11 XML-loaded HEADS context: actual getStump presence and full pixels, exact section catalog identities/order/runs, plus separately named explicit run/crop/canonical-registration boundary controls. Image CLI derives sections automatically; final stem glyph/cache/head/SIG/epilog remain incomplete."
+}

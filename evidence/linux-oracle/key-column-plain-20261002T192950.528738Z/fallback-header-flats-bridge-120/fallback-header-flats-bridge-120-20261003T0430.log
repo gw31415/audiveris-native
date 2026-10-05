@@ -1,0 +1,31 @@
+2026-10-03 04:30:33,858 INFO [fallback-header-flats-bridge-120]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png
+2026-10-03 04:30:33,986 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:30:33,986 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/fallback-header-flats-bridge-120/fallback-header-flats-bridge-120.omr
+2026-10-03 04:30:33,988 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:30:33,989 INFO [fallback-header-flats-bridge-120]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:30:34,006 INFO [fallback-header-flats-bridge-120]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png
+2026-10-03 04:30:34,009 INFO [fallback-header-flats-bridge-120]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:30:34,082 INFO [fallback-header-flats-bridge-120]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:30:34,089 INFO [fallback-header-flats-bridge-120]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:30:34,090 INFO [fallback-header-flats-bridge-120]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 50% of needed quorum
+2026-10-03 04:30:34,090 WARN [fallback-header-flats-bridge-120]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:30:34,090 INFO [fallback-header-flats-bridge-120]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:30:34,090 INFO [fallback-header-flats-bridge-120]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:30:34,091 INFO [fallback-header-flats-bridge-120]                 Book.java:2584 | Book{fallback-header-flats-bridge-120} storing
+2026-10-03 04:30:34,114 INFO [fallback-header-flats-bridge-120]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:30:34,132 INFO [fallback-header-flats-bridge-120]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:30:34,521 INFO [fallback-header-flats-bridge-120]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:30:34,522 INFO [fallback-header-flats-bridge-120]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/fallback-header-flats-bridge-120/fallback-header-flats-bridge-120.omr
+2026-10-03 04:30:34,524 INFO [fallback-header-flats-bridge-120]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:30:34,556 INFO [fallback-header-flats-bridge-120]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:30:34,558 INFO [fallback-header-flats-bridge-120]                 Book.java:2057 | End of Book{fallback-header-flats-bridge-120}
+2026-10-03 04:30:34,573 INFO [fallback-header-flats-bridge-120]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:30:34,655 INFO [fallback-header-flats-bridge-120]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:30:34,663 INFO [fallback-header-flats-bridge-120]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:30:34,684 INFO [fallback-header-flats-bridge-120]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:30:34,713 INFO [fallback-header-flats-bridge-120]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:30:34,714 INFO [fallback-header-flats-bridge-120]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:30:35,393 INFO [fallback-header-flats-bridge-120]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:30:35,415 INFO [fallback-header-flats-bridge-120]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:30:35,415 INFO [fallback-header-flats-bridge-120]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/fallback-header-flats-bridge-120/fallback-header-flats-bridge-120.omr
+2026-10-03 04:30:35,416 INFO [fallback-header-flats-bridge-120]                Score.java:181  | Closing {Score 1}

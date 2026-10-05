@@ -1,0 +1,14 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "result": "fixtures/official-grid/context-partition-controls.json",
+  "result_sha256": "09fcc57681264a5aff28f81885302a51e8378b8e7098a40fa0fee46a0b4c0d0b",
+  "cases": 8,
+  "receipt": "evidence/linux-oracle/context-partition-control-20261002T203507.644979Z",
+  "original_methods": [
+    "SIGraph.getPartitions",
+    "SIGraph.computeContextualGrade(Inter,Collection)",
+    "SIGraph.computeContextualGrade(Inter)"
+  ],
+  "critical_observation": "With intrinsic clef0.1 and exclusive keys0.4/0.4000000000000001, original partition contexts are0.25000000000000006/0.25 and original chooses0.25000000000000006. Maximizing support sum before evaluating context is not equivalent."
+}

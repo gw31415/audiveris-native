@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="688" height="410" viewBox="0 0 688 410"><rect width="100%" height="100%" fill="white"/><style>text{font-family:Arial,sans-serif;font-size:14px}</style>
+<text x="12" y="20">two-staves — original (left) / native debug overlay (right)</text>
+<text x="12" y="42">Cyan: rectangular seeds; orange: other seeds; magenta: combs. Java matched. NOT detected staves.</text>
+<image x="12" y="66" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAAAAADo+/p2AAAB10lEQVR42u3doQ3AMBAEwe+/6ZikgEiRLVk7i4wHPDjiefSrQQAQIECAAggQIEABBAgQoAACBAhQAAECBCiAAK8BHH0O4A5AuYEAAQIUQIAAAQogQIAABfAkoJHKHmgPdAMBCiBAgAAFECBAgAIIEGAH0EhlD7QHuoEABRAgQIACCBAgQAEECLADaKSyB9oD3UCAAggQIEABBAgQoAACBNgBNFLZA+2BbiBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIEOD7lB9t/GjjBgIUQIAAAQogQIAABRAgwAygkcoeaA90AwEKIECAAAUQIECAAggQYAfQSGUPtAe6gQAFECBAgAIIECBAAQQIsANopLIH2gPdQIACCBAgQAEECBCgAAIE2AE0UtkD7YFuIEABBAgQoAACBAhQAAECBCiAAAECFECAAAEKIECAAAUQIECAAggQIECAAggQIEABBAgQoAACBAhQAAECBCiAAAECFECAAAEKIECAAAUQIECAAggQIEABBAgQoAACBAgQoAACBBhtAR/fLWowRJyYAAAAAElFTkSuQmCC"/>
+<image x="356" y="66" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAAAAADo+/p2AAAB10lEQVR42u3doQ3AMBAEwe+/6ZikgEiRLVk7i4wHPDjiefSrQQAQIECAAggQIEABBAgQoAACBAhQAAECBCiAAK8BHH0O4A5AuYEAAQIUQIAAAQogQIAABfAkoJHKHmgPdAMBCiBAgAAFECBAgAIIEGAH0EhlD7QHuoEABRAgQIACCBAgQAEECLADaKSyB9oD3UCAAggQIEABBAgQoAACBNgBNFLZA+2BbiBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIEOD7lB9t/GjjBgIUQIAAAQogQIAABRAgwAygkcoeaA90AwEKIECAAAUQIECAAggQYAfQSGUPtAe6gQAFECBAgAIIECBAAQQIsANopLIH2gPdQIACCBAgQAEECBCgAAIE2AE0UtkD7YFuIEABBAgQoAACBAhQAAECBCiAAAECFECAAAEKIECAAAUQIECAAggQIECAAggQIEABBAgQoAACBAhQAAECBCiAAAECFECAAAEKIECAAAUQIECAAggQIEABBAgQoAACBAgQoAACBBhtAR/fLWowRJyYAAAAAElFTkSuQmCC"/>
+<g transform="translate(356,66)">
+<rect x="10" y="24" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 1</title></rect>
+<rect x="10" y="40" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 2</title></rect>
+<rect x="10" y="56" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 3</title></rect>
+<rect x="10" y="72" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 4</title></rect>
+<rect x="10" y="88" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 5</title></rect>
+<rect x="10" y="170" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 6</title></rect>
+<rect x="10" y="186" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 7</title></rect>
+<rect x="10" y="202" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 8</title></rect>
+<rect x="10" y="218" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 9</title></rect>
+<rect x="10" y="234" width="300" height="2" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 10</title></rect>
+<path d="M 16 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 16 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 32 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 32 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 48 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 48 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 64 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 64 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 80 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 80 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 96 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 96 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 112 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 112 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 128 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 128 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 144 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 144 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 160 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 160 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 176 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 176 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 192 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 192 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 208 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 208 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 224 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 224 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 240 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 240 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 256 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 256 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 272 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 272 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 288 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 288 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 304 24.5 V 88.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 304 170.5 V 234.5" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+</g></svg>

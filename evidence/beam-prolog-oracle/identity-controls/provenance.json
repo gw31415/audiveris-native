@@ -1,0 +1,44 @@
+{
+  "purpose": "Offline development-only original observer controls. Original JAR and helpers unchanged.",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "runtime_executable_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "compiler_executable_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "sources": {
+    "evidence/beam-prolog-oracle/identity-controls/IdentityFullProbe.java": "e4bf2f8a8a233aebf22b3241391d30387579aa416a01b8567920b82f3714cf15",
+    "evidence/beam-prolog-oracle/identity-controls/IdentityControlProbe.java": "54f10d17aef881d6de76e15ab3960e10a5858045b8f6284e5d9469beb5553784"
+  },
+  "parent_helper_sources": {
+    "scripts/java/GridProbe.java": "a9ff4efd888be556ef54b0c31f579f691ff7fa94b2b97677a1d9a4bb03cc6e21",
+    "scripts/java/GridFinalProbe.java": "0fb2cc2d96c2ba14503391d2428f70de3db37d59cab40811d273ef0f08b4f1ff",
+    "scripts/java/KeyBuilderProcessProbe.java": "b872b186b7c6e3012da0374a976c8504b7e2507518f32c070fff51998451f64b",
+    "scripts/java/StemSeedsProbe.java": "8f9ad33cdea0b5698c155a010d0158266612792d4296c3ec2f428cf8109ee304",
+    "scripts/java/BeamsProbe.java": "6f533222b8b2724c0c86eeafd5f051217c4ebc6959096aab6eb6149aec8153f6",
+    "scripts/java/BeamsFaithfulProbe.java": "39005a0fd453c6051583dad9d414eda4598a2d7b6cb43d13047884e2e950a195"
+  },
+  "compile_only": true,
+  "runtime_shims_present": false,
+  "compile_command_templates": [
+    [
+      "javac",
+      "--release",
+      "21",
+      "-cp",
+      "COMPILE_ONLY_STUB_CLASSES:BASE_OBSERVER_CLASSES",
+      "-d",
+      "CONTROL_CLASSES",
+      "IdentityControlProbe.java"
+    ],
+    [
+      "javac",
+      "--release",
+      "21",
+      "-cp",
+      "COMPILE_ONLY_STUB_CLASSES:BASE_OBSERVER_CLASSES:CONTROL_CLASSES",
+      "-d",
+      "CONTROL_CLASSES",
+      "IdentityFullProbe.java"
+    ]
+  ],
+  "command_and_environment_evidence": "Each case execution.json records original runtime argv, including input, runtime classpath, mode properties and output directory. Original output and GC logs are preserved beside it."
+}

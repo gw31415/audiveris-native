@@ -1,0 +1,8 @@
+{
+  "images_independently_reproduced": 336,
+  "all_original_rendered_png_bytes_match_existing_fixtures": true,
+  "original_windows": 2016,
+  "original_central_vetoes": 5760,
+  "original_noncentral_vetoes": 12726,
+  "controls_sha256": "71d17bb8ae3f31d311ffceabc5951bea1a9f86c347cd89d12045908d85eec202"
+}

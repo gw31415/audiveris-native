@@ -1,0 +1,19 @@
+/workspace/audiveris-restart/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                   ^
+/workspace/audiveris-restart/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                              ^
+/workspace/audiveris-restart/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                                                      ^
+/workspace/audiveris-restart/scripts/java/BeamLifecycleFixtureProbe.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                   ^
+/workspace/audiveris-restart/scripts/java/BeamLifecycleFixtureProbe.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                              ^
+/workspace/audiveris-restart/scripts/java/BeamLifecycleFixtureProbe.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                                                      ^
+6 warnings

@@ -1,0 +1,11 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "result": "fixtures/official-grid/clustering-controls.json",
+  "result_sha256": "4f3e0fd137ea728db0621bb9d33f81753edffc43463253daf4ea1b02001d8659",
+  "em_case_count": 14,
+  "gaussian_probability_case_count": 20,
+  "receipt": "evidence/linux-oracle/clustering-control-20261002T195947.227514Z",
+  "inputs": "Explicit population values; original Population means; original Gaussian initial sigma1; direct original Clustering.EM",
+  "nonfinite_case": "underflow intentionally retains original NaN strings and Java rounded0"
+}

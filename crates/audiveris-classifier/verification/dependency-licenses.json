@@ -1,0 +1,112 @@
+[
+  {
+    "name": "itoa",
+    "version": "1.0.18",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/dtolnay/itoa",
+    "notices": [
+      "third-party/itoa-1.0.18/LICENSE-APACHE",
+      "third-party/itoa-1.0.18/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "memchr",
+    "version": "2.8.3",
+    "license_expression": "Unlicense OR MIT",
+    "repository": "https://github.com/BurntSushi/memchr",
+    "notices": [
+      "third-party/memchr-2.8.3/COPYING",
+      "third-party/memchr-2.8.3/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "proc-macro2",
+    "version": "1.0.107",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/dtolnay/proc-macro2",
+    "notices": [
+      "third-party/proc-macro2-1.0.107/LICENSE-APACHE",
+      "third-party/proc-macro2-1.0.107/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "quote",
+    "version": "1.0.47",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/dtolnay/quote",
+    "notices": [
+      "third-party/quote-1.0.47/LICENSE-APACHE",
+      "third-party/quote-1.0.47/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde",
+    "version": "1.0.228",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/serde-rs/serde",
+    "notices": [
+      "third-party/serde-1.0.228/LICENSE-APACHE",
+      "third-party/serde-1.0.228/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde_core",
+    "version": "1.0.228",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/serde-rs/serde",
+    "notices": [
+      "third-party/serde_core-1.0.228/LICENSE-APACHE",
+      "third-party/serde_core-1.0.228/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde_derive",
+    "version": "1.0.228",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/serde-rs/serde",
+    "notices": [
+      "third-party/serde_derive-1.0.228/LICENSE-APACHE",
+      "third-party/serde_derive-1.0.228/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "serde_json",
+    "version": "1.0.150",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/serde-rs/json",
+    "notices": [
+      "third-party/serde_json-1.0.150/LICENSE-APACHE",
+      "third-party/serde_json-1.0.150/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "syn",
+    "version": "2.0.119",
+    "license_expression": "MIT OR Apache-2.0",
+    "repository": "https://github.com/dtolnay/syn",
+    "notices": [
+      "third-party/syn-2.0.119/LICENSE-APACHE",
+      "third-party/syn-2.0.119/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "unicode-ident",
+    "version": "1.0.26",
+    "license_expression": "(MIT OR Apache-2.0) AND Unicode-3.0",
+    "repository": "https://github.com/dtolnay/unicode-ident",
+    "notices": [
+      "third-party/unicode-ident-1.0.26/LICENSE-UNICODE",
+      "third-party/unicode-ident-1.0.26/LICENSE-APACHE",
+      "third-party/unicode-ident-1.0.26/LICENSE-MIT"
+    ]
+  },
+  {
+    "name": "zmij",
+    "version": "1.0.23",
+    "license_expression": "MIT",
+    "repository": "https://github.com/dtolnay/zmij",
+    "notices": [
+      "third-party/zmij-1.0.23/LICENSE-MIT"
+    ]
+  }
+]

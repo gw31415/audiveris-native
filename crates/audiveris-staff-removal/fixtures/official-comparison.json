@@ -1,0 +1,13 @@
+{
+  "width": 1489,
+  "height": 2104,
+  "staff_line_glyphs": 30,
+  "binary_pixel_sha256": "a217f4ccc273afe4a7a86be2ef27504a953af5b2bb6e8d9e6a9e9582cd4a5126",
+  "residual_pixel_sha256": "26146ee6b8cd7d198ba3dd8b409a354c5aa7f93e2d66439fa357932a65b0b6ff",
+  "removed_pixel_sha256": "d271f1494884e2972ddb01ec9bdd6ab79f18e6bcd9ac826a4ec9ee87e5b7b41f",
+  "removed_black_pixels": 54466,
+  "glyph_mask_black_pixels": 54466,
+  "residual_black_pixels": 135311,
+  "java_vs_glyph_mask_mismatches": 0,
+  "non_erase_changes": 0
+}

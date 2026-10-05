@@ -1,0 +1,30 @@
+{
+  "independent_renderer": "scripts/java/HalfRestScopeRenderer.java",
+  "positive_positions": [
+    239,
+    241
+  ],
+  "events": [
+    [
+      "rest",
+      2
+    ],
+    [
+      "B4",
+      1
+    ],
+    [
+      "D5",
+      1
+    ],
+    [
+      "D5",
+      2
+    ],
+    [
+      "B4",
+      2
+    ]
+  ],
+  "weak_position240": "original creates HALF_REST grade0.48341279568379303 then removes it at LINKS; not a positive complete score oracle"
+}

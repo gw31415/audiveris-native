@@ -1,0 +1,54 @@
+{
+  "beams_complete": false,
+  "extensions_complete": true,
+  "groups_complete": true,
+  "hooks_complete": true,
+  "multiple_rest_boundary_complete": true,
+  "musicxml_complete": false,
+  "pending": [
+    "BEAMS epilog/free glyph cleanup",
+    "LEDGERS/HEADS/rhythm/MusicXML",
+    "multi-staff rest mapping and ledger-aware pitch"
+  ],
+  "stage": "BEAMS.native_through_multiple_rests",
+  "systems": [
+    {
+      "extensions": {
+        "initial_ids": [
+          1
+        ],
+        "side_attempts": 2,
+        "skipped_removed": []
+      },
+      "groups": [
+        {
+          "bounds": [
+            280,
+            86,
+            112,
+            8
+          ],
+          "id": 1,
+          "members": [
+            1
+          ]
+        }
+      ],
+      "hooks": {
+        "appended": 0,
+        "attempts": 0,
+        "initial_ids": [
+          1
+        ]
+      },
+      "rests": {
+        "complete": true,
+        "conversions": 0,
+        "registered_serifs": 0,
+        "supported_scope": "single system, single five-line staff; native GRID curves and complete native vLag/hLag; in-staff endpoint pitches"
+      },
+      "supports": [],
+      "system_id": 1
+    }
+  ]
+}

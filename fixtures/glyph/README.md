@@ -1,0 +1,1 @@
+Synthetic filled ellipse copied from the imported glyph Java golden case `filled_ellipse_il8_o0_HORIZONTAL`; no score or font input. CC0-1.0 as original generated fixture artwork. Preserve the 25×31 bounding box and use interline=8, horizontal run orientation, origin=(0,0). This tests feature/score parity; its highest-scoring class is not a claim of musical recognition accuracy.

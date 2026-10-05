@@ -1,0 +1,21 @@
+   Compiling audiveris-area v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-area)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_area-ce7da9986fdaeaea)
+
+running 7 tests
+test linear::tests::rectangle_difference_retains_half_open_hole ... ok
+test linear::tests::resource_and_nonfinite_inputs_fail_closed ... ok
+test tests::rectangle_is_half_open_and_auto_closed ... ok
+test tests::polynomial_degeneracy_reduces_to_original_line_boundary ... ok
+test tests::sloped_boundary_and_winding_reversal_preserve_crossing_semantics ... ok
+test fdlibm_hypot::tests::matches_original_java_hypot_vectors ... ok
+test tests::malformed_paths_and_queries_fail_without_unbounded_work ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests audiveris_area
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

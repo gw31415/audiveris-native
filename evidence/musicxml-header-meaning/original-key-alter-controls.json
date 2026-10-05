@@ -1,0 +1,530 @@
+{
+  "scope": "original KeyInter.getAlterFor explicit fifths/step kernels, separate from image comparison",
+  "cases": [
+    {
+      "fifths": -7,
+      "step": "A",
+      "alter": -1
+    },
+    {
+      "fifths": -7,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -7,
+      "step": "C",
+      "alter": -1
+    },
+    {
+      "fifths": -7,
+      "step": "D",
+      "alter": -1
+    },
+    {
+      "fifths": -7,
+      "step": "E",
+      "alter": -1
+    },
+    {
+      "fifths": -7,
+      "step": "F",
+      "alter": -1
+    },
+    {
+      "fifths": -7,
+      "step": "G",
+      "alter": -1
+    },
+    {
+      "fifths": -6,
+      "step": "A",
+      "alter": -1
+    },
+    {
+      "fifths": -6,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -6,
+      "step": "C",
+      "alter": -1
+    },
+    {
+      "fifths": -6,
+      "step": "D",
+      "alter": -1
+    },
+    {
+      "fifths": -6,
+      "step": "E",
+      "alter": -1
+    },
+    {
+      "fifths": -6,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": -6,
+      "step": "G",
+      "alter": -1
+    },
+    {
+      "fifths": -5,
+      "step": "A",
+      "alter": -1
+    },
+    {
+      "fifths": -5,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -5,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": -5,
+      "step": "D",
+      "alter": -1
+    },
+    {
+      "fifths": -5,
+      "step": "E",
+      "alter": -1
+    },
+    {
+      "fifths": -5,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": -5,
+      "step": "G",
+      "alter": -1
+    },
+    {
+      "fifths": -4,
+      "step": "A",
+      "alter": -1
+    },
+    {
+      "fifths": -4,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -4,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": -4,
+      "step": "D",
+      "alter": -1
+    },
+    {
+      "fifths": -4,
+      "step": "E",
+      "alter": -1
+    },
+    {
+      "fifths": -4,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": -4,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": -3,
+      "step": "A",
+      "alter": -1
+    },
+    {
+      "fifths": -3,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -3,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": -3,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": -3,
+      "step": "E",
+      "alter": -1
+    },
+    {
+      "fifths": -3,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": -3,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": -2,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": -2,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -2,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": -2,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": -2,
+      "step": "E",
+      "alter": -1
+    },
+    {
+      "fifths": -2,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": -2,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": -1,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": -1,
+      "step": "B",
+      "alter": -1
+    },
+    {
+      "fifths": -1,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": -1,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": -1,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": -1,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": -1,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "F",
+      "alter": 0
+    },
+    {
+      "fifths": 0,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": 1,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": 1,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 1,
+      "step": "C",
+      "alter": 0
+    },
+    {
+      "fifths": 1,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": 1,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": 1,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 1,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": 2,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": 2,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 2,
+      "step": "C",
+      "alter": 1
+    },
+    {
+      "fifths": 2,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": 2,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": 2,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 2,
+      "step": "G",
+      "alter": 0
+    },
+    {
+      "fifths": 3,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": 3,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 3,
+      "step": "C",
+      "alter": 1
+    },
+    {
+      "fifths": 3,
+      "step": "D",
+      "alter": 0
+    },
+    {
+      "fifths": 3,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": 3,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 3,
+      "step": "G",
+      "alter": 1
+    },
+    {
+      "fifths": 4,
+      "step": "A",
+      "alter": 0
+    },
+    {
+      "fifths": 4,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 4,
+      "step": "C",
+      "alter": 1
+    },
+    {
+      "fifths": 4,
+      "step": "D",
+      "alter": 1
+    },
+    {
+      "fifths": 4,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": 4,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 4,
+      "step": "G",
+      "alter": 1
+    },
+    {
+      "fifths": 5,
+      "step": "A",
+      "alter": 1
+    },
+    {
+      "fifths": 5,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 5,
+      "step": "C",
+      "alter": 1
+    },
+    {
+      "fifths": 5,
+      "step": "D",
+      "alter": 1
+    },
+    {
+      "fifths": 5,
+      "step": "E",
+      "alter": 0
+    },
+    {
+      "fifths": 5,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 5,
+      "step": "G",
+      "alter": 1
+    },
+    {
+      "fifths": 6,
+      "step": "A",
+      "alter": 1
+    },
+    {
+      "fifths": 6,
+      "step": "B",
+      "alter": 0
+    },
+    {
+      "fifths": 6,
+      "step": "C",
+      "alter": 1
+    },
+    {
+      "fifths": 6,
+      "step": "D",
+      "alter": 1
+    },
+    {
+      "fifths": 6,
+      "step": "E",
+      "alter": 1
+    },
+    {
+      "fifths": 6,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 6,
+      "step": "G",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "A",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "B",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "C",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "D",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "E",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "F",
+      "alter": 1
+    },
+    {
+      "fifths": 7,
+      "step": "G",
+      "alter": 1
+    }
+  ]
+}

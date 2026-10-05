@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/beams-empty.png",
+  "input_sha256": "af33fe8ab813bbc7d857817a5cf89bfcf5feedea7754ddea48b26aa80eeea8b7",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamsFaithfulProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/beams-empty.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/faithful-prolog-boundaries/beams-empty/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "7e65c7cfb842f8b088d943344d1e6f5e8f4813f8efdd1836d6811b6d0a3d7650",
+  "ok": true,
+  "result_sha256": "e298985f9e3a91ed9c3c9ab201d3232aa1f236215c920e74c4f28ceb80f1c470"
+}

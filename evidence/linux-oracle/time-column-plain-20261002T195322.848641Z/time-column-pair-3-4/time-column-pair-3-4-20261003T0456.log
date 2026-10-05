@@ -1,0 +1,31 @@
+2026-10-03 04:56:54,242 INFO [time-column-pair-3-4]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-pair-3-4.png
+2026-10-03 04:56:54,360 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:54,361 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-pair-3-4/time-column-pair-3-4.omr
+2026-10-03 04:56:54,363 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:56:54,364 INFO [time-column-pair-3-4]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:56:54,380 INFO [time-column-pair-3-4]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-pair-3-4.png
+2026-10-03 04:56:54,383 INFO [time-column-pair-3-4]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:56:54,460 INFO [time-column-pair-3-4]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:56:54,469 INFO [time-column-pair-3-4]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:56:54,470 INFO [time-column-pair-3-4]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 61% of needed quorum
+2026-10-03 04:56:54,470 WARN [time-column-pair-3-4]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:56:54,470 INFO [time-column-pair-3-4]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:56:54,470 INFO [time-column-pair-3-4]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:56:54,471 INFO [time-column-pair-3-4]                 Book.java:2584 | Book{time-column-pair-3-4} storing
+2026-10-03 04:56:54,493 INFO [time-column-pair-3-4]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:54,511 INFO [time-column-pair-3-4]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:56:54,730 INFO [time-column-pair-3-4]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:54,730 INFO [time-column-pair-3-4]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-pair-3-4/time-column-pair-3-4.omr
+2026-10-03 04:56:54,731 INFO [time-column-pair-3-4]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:56:54,753 INFO [time-column-pair-3-4]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:56:54,754 INFO [time-column-pair-3-4]                 Book.java:2057 | End of Book{time-column-pair-3-4}
+2026-10-03 04:56:54,770 INFO [time-column-pair-3-4]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:56:54,976 INFO [time-column-pair-3-4]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:56:54,986 INFO [time-column-pair-3-4]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:56:55,007 INFO [time-column-pair-3-4]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:56:55,045 INFO [time-column-pair-3-4]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:56:55,046 INFO [time-column-pair-3-4]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:56:55,822 INFO [time-column-pair-3-4]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:55,839 INFO [time-column-pair-3-4]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:55,839 INFO [time-column-pair-3-4]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-pair-3-4/time-column-pair-3-4.omr
+2026-10-03 04:56:55,840 INFO [time-column-pair-3-4]                Score.java:181  | Closing {Score 1}

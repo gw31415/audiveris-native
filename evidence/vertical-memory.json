@@ -1,0 +1,14 @@
+{
+  "pixel_cap": 4000000,
+  "encoded_byte_cap": 32000000,
+  "tile_byte_formula": "16 * min(width,38) * height",
+  "raster_byte_formula": "2 * width * height",
+  "example_2000x2000": {
+    "old_integral_bytes": 64064016,
+    "new_integral_bytes": 1216000
+  },
+  "skinny_1x4000000_tile_bytes": 64000000,
+  "rss_measured": false,
+  "java_binary_and_runs": "unchanged for existing 27027 pixels",
+  "headless_renderer": "MuseScore offscreen Qt plugin unavailable; no GUI attempted"
+}

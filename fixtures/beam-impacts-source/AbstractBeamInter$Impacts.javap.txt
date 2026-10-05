@@ -1,0 +1,105 @@
+Compiled from "AbstractBeamInter.java"
+public class org.audiveris.omr.sig.inter.AbstractBeamInter$Impacts extends org.audiveris.omr.sig.GradeImpacts {
+  private static final java.lang.String[] NAMES;
+
+  private static final int DIST_INDEX;
+
+  private static final double[] WEIGHTS;
+
+  public org.audiveris.omr.sig.inter.AbstractBeamInter$Impacts(double, double, double, double, double, double);
+    Code:
+       0: aload_0
+       1: getstatic     #1                  // Field NAMES:[Ljava/lang/String;
+       4: getstatic     #7                  // Field WEIGHTS:[D
+       7: invokespecial #11                 // Method org/audiveris/omr/sig/GradeImpacts."<init>":([Ljava/lang/String;[D)V
+      10: aload_0
+      11: iconst_0
+      12: dload_1
+      13: invokevirtual #17                 // Method setImpact:(ID)V
+      16: aload_0
+      17: iconst_1
+      18: dload_3
+      19: invokevirtual #17                 // Method setImpact:(ID)V
+      22: aload_0
+      23: iconst_2
+      24: dload         5
+      26: invokevirtual #17                 // Method setImpact:(ID)V
+      29: aload_0
+      30: iconst_3
+      31: dload         7
+      33: invokevirtual #17                 // Method setImpact:(ID)V
+      36: aload_0
+      37: iconst_4
+      38: dload         9
+      40: invokevirtual #17                 // Method setImpact:(ID)V
+      43: aload_0
+      44: iconst_5
+      45: dload         11
+      47: invokevirtual #17                 // Method setImpact:(ID)V
+      50: return
+
+  public double getDistImpact();
+    Code:
+       0: aload_0
+       1: iconst_5
+       2: invokevirtual #21                 // Method getImpact:(I)D
+       5: dreturn
+
+  static {};
+    Code:
+       0: bipush        6
+       2: anewarray     #25                 // class java/lang/String
+       5: dup
+       6: iconst_0
+       7: ldc           #27                 // String wdth
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: ldc           #29                 // String minH
+      14: aastore
+      15: dup
+      16: iconst_2
+      17: ldc           #31                 // String maxH
+      19: aastore
+      20: dup
+      21: iconst_3
+      22: ldc           #33                 // String core
+      24: aastore
+      25: dup
+      26: iconst_4
+      27: ldc           #35                 // String belt
+      29: aastore
+      30: dup
+      31: iconst_5
+      32: ldc           #37                 // String jit
+      34: aastore
+      35: putstatic     #1                  // Field NAMES:[Ljava/lang/String;
+      38: bipush        6
+      40: newarray       double
+      42: dup
+      43: iconst_0
+      44: ldc2_w        #39                 // double 0.5d
+      47: dastore
+      48: dup
+      49: iconst_1
+      50: dconst_1
+      51: dastore
+      52: dup
+      53: iconst_2
+      54: dconst_1
+      55: dastore
+      56: dup
+      57: iconst_3
+      58: ldc2_w        #41                 // double 2.0d
+      61: dastore
+      62: dup
+      63: iconst_4
+      64: ldc2_w        #41                 // double 2.0d
+      67: dastore
+      68: dup
+      69: iconst_5
+      70: ldc2_w        #41                 // double 2.0d
+      73: dastore
+      74: putstatic     #7                  // Field WEIGHTS:[D
+      77: return
+}

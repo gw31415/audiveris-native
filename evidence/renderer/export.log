@@ -1,0 +1,12 @@
+2026-10-02 22:16:09.566 mscore[75489:2192131] TISFileInterrogator updateSystemInputSources false but old data invalid: currentCacheHeaderPtr nonNULL? 0, ->cacheFormatVersion 0, ->magicCookie 00000000, inputSourceTableCountSys 0
+Keyboard Layouts: duplicate keyboard layout identifier -17410.
+Keyboard Layouts: keyboard layout identifier -17410 has been replaced with -28673.
+Keyboard Layouts: duplicate keyboard layout identifier -30769.
+Keyboard Layouts: keyboard layout identifier -30769 has been replaced with -28674.
+Keyboard Layouts: duplicate keyboard layout identifier -14934.
+Keyboard Layouts: keyboard layout identifier -14934 has been replaced with -28675.
+failed open log file: /Users/ama/Library/Application Support/MuseScore/MuseScore4/logs/MuseScore_261002_221609.log
+[75489:2192131:20261002,221609.862005:ERROR file_io_posix.cc:207] open /Users/ama/Library/Application Support/MuseScore/MuseScore4/logs/dumps/settings.dat: Operation not permitted (1)
+[75491:2192170:20261002,221609.879945:FATAL close_stdio.cc:38] Check failed: fd.get() >= 0. open: Operation not permitted (1)
+[75489:2192131:20261002,221609.995233:ERROR file_io.cc:90] ReadExactly: expected 8, observed 0
+libc++abi: terminating due to uncaught exception of type std::__1::system_error: mutex lock failed: Invalid argument

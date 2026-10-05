@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "bank_id": "audiveris-5.11.0-bravura-default-cue-v1",
+  "upstream_version": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "font_family": "Bravura",
+  "font_version": "1.392",
+  "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+  "model_name": "basic-classifier.zip",
+  "model_sha256": "327194c47116a8ebf5771d04cea08a4e563ec93d2955e1efd990a54a9245f29e",
+  "coverage_input_sha256": "9e1597e9b18dd72c564b51eb0b2979ea834e76fcd8a64f47a08e9990a47a57ab",
+  "generator": "CueHeadFontBankOracle; unmodified official 5.11 JAR; 25.0.3; Linux amd64; default TemplateFactory constants",
+  "asset_sha256": "68757805478ec99c64e7b7f0b9b71729a31cd0a78522e4c1c4f6027ef56a3fa4",
+  "keys": [
+    {
+      "shape": "BREVE",
+      "point_size": 28
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 28
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 28
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 28
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 44
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 44
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 44
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 44
+    }
+  ],
+  "calibration_sizes": [
+    50,
+    51,
+    54
+  ]
+}

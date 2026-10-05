@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-sharps-bridge-130.png",
+  "input_sha256": "08d0fc399af557992762743ab5632a569215f25f1b1941ce0ba2fae6eab6cb18",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "KeyBuilderProcessPlainProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-sharps-bridge-130.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process-plain/20261002T190427.258696Z/fallback-header-sharps-bridge-130/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "dd21b928f7b67633c813e98e60149a04963612d0caa893f064265a02bacb26ae",
+  "ok": true,
+  "result_sha256": "fd30bdb3ddb02d5c66e058b96b7be8afb00f6893358db98e28d46872790b57d1"
+}

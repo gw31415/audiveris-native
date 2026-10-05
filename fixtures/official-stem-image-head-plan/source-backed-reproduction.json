@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "independent_original_runs": 2,
+  "original_sha256": "7ee3c30b9dc684e5a5aded272c7c5001ed2aa8a90fe313d9695b8fb5f155c6ea",
+  "actual_image_corners_targets": 1408,
+  "scope": "Actual original loaded image HEADS context, all2 systems/18 beams and hooks/parts/1408 corners. Native values are derived from native image HEADS output, not supplied corner conditions. Raw seed DX and beam geometry stay unchanged; explicit original XML adapter applied on native loaded-context boundary. Items/glyph/cache/SIG/epilog are incomplete."
+}

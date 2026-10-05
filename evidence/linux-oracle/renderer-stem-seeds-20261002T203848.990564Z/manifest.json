@@ -1,0 +1,39 @@
+{
+  "kind": "synthetic independent input raster",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "font_resource": "res/Bravura.otf",
+  "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+  "source": "scripts/java/MakeStemSeedsFixtures.java",
+  "source_sha256": "855c32531e35eef7fad8114be76ed08df295ca5a299120b29189b3d353bb382e",
+  "source_snapshot": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/MakeStemSeedsFixtures.java",
+  "commands": [
+    [
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/classes",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/MakeStemSeedsFixtures.java"
+    ],
+    [
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Djava.awt.headless=true",
+      "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z",
+      "-cp",
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z/classes",
+      "MakeStemSeedsFixtures",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/stem-seeds-20261002T203848.990564Z"
+    ]
+  ],
+  "fixtures": {
+    "stem-seeds-broken.png": "329c65d1ea143f148841883abb2cacf1b67a8fa2509db18d7b97ad385ac9a14a",
+    "stem-seeds-clean.png": "74e87c47c56e5b0753d86e1957a864a7b94fb5d69ecea51ca07bbebb02f735d6",
+    "stem-seeds-empty.png": "22de90af2955145091b4c442b2ecd8d7c1c586e897b58f55cfb2c1cec15d776e",
+    "stem-seeds-heads.png": "4bd95d7971c7e0473f14042b13380e51bb1f4b793f1af38358e2a135dc1e4247",
+    "stem-seeds-mixed-width.png": "754c0cdee08b22cc269ec0b7ad8d01996007f7866b0284e2a9301beb370296f8",
+    "stem-seeds-noise.png": "52da8c2a6969f808928143b979cce95dae802e85887369de60f7dc96faa3172f",
+    "stem-seeds-short.png": "3167f1923c38f3eb0b72589d475d9d3128cc38af1645e45009d7887a9f85681d",
+    "stem-seeds-sloped.png": "cdcf224588105aeccc3301be27aebb80a375c8648adb254aabba82206b2a187f"
+  },
+  "render_log_sha256": "6d957e66265bedf2ba37b8b7910974fdcab62da6c0aed77f2d60f31d8143656f"
+}

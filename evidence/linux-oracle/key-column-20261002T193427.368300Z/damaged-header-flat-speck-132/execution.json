@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-flat-speck-132.png",
+  "input_sha256": "013cb264bcc29b44675970f8b749b7b0a91685d60bab719d9ab55ab23d654488",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "KeyColumnProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-flat-speck-132.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column/20261002T193427.368300Z/damaged-header-flat-speck-132/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "20916a576520d1a95581292c66229e57645d85bd65889ccf3fc31d402889e3c7",
+  "ok": true,
+  "result_sha256": "f1f11530d71390816ccec5d177383ba0ff85fd9bbc9e570c6861c4c4013e596d"
+}

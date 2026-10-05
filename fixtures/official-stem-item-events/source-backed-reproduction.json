@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "original_sha256": "e73c268aa094a61f64c960ce59c4d27069895e613920a7a9e9daeb0f47df8b7e",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "native_outputs_used": false,
+  "independent_compilations_and_runs": 2,
+  "builders": 612,
+  "source_controls": 4432,
+  "declared_line_boundary_controls": 18,
+  "original_constructors_sortItems_insertGapEvents_retrieveLengths_called": true
+}

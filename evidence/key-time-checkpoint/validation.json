@@ -1,0 +1,34 @@
+{
+  "key_checkpoint_commit": "2225bb3202286a9a6bf8688ff3d28e1c65f73d5e",
+  "platform": "Linux x86_64",
+  "rust": "1.98.1",
+  "debug_tests": 137,
+  "release_tests": 137,
+  "fmt": "pass",
+  "clippy": "pass",
+  "release_build": "pass",
+  "key_column_rasters": 51,
+  "time_candidate_rasters": 71,
+  "time_constructor_staffs": 97,
+  "time_visited_staffs": 78,
+  "time_candidate_count": 69,
+  "generic_time_font_metrics": 2688,
+  "original_combo_bounds_controls": 1152,
+  "headers_complete": false,
+  "time_system_selection_complete": false,
+  "runtime_java": false,
+  "cli_smoke": {
+    "input": "fixtures/official-grid/time-column-pair-3-4.png",
+    "report_sha256": "54f34116c1dbbe580696f3c0926f9a79f4ce10853cb9aff01f82b1ce16b36b40",
+    "key_column_stage": "HEADERS.key_column",
+    "time_candidate_stage": "HEADERS.time_candidates",
+    "headers_complete": false
+  },
+  "limitations": [
+    "4M pixels",
+    "single-scale five-line native GRID scope",
+    "time candidate retained parts <=8",
+    "system time selection not in this checkpoint",
+    "HEADERS finalization, automatic note recognition, rhythm and MusicXML still incomplete"
+  ]
+}

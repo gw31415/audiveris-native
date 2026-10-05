@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "bank_id": "audiveris-5.11.0-finalejazz-heads-coverage-v1",
+  "upstream_version": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "font_family": "FinaleJazz",
+  "font_version": "bundled-in-5.11.0",
+  "font_sha256": "a8ea0408ef7628ca38ae29eaa1b4357d2b0bf11747f6eee3c5f9ed5cca358e08",
+  "model_name": "basic-classifier.zip",
+  "model_sha256": "327194c47116a8ebf5771d04cea08a4e563ec93d2955e1efd990a54a9245f29e",
+  "coverage_input_sha256": "92ef7fb22061908b8ec078e6fb1dd1e22d94199aa29cb2096af1a0de46464897",
+  "generator": "HeadFontBankOracle; official unmodified 5.11 JAR; 25.0.3; Linux amd64; default TemplateFactory constants",
+  "asset_sha256": "568b13dc4d217e95c655b8824e06569da948c6b4641e1d4be82bf4998f54615e",
+  "keys": [
+    {
+      "shape": "BREVE",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 64
+    }
+  ],
+  "calibration_sizes": [
+    50,
+    51,
+    54
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "input": null,
+  "input_sha256": null,
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/observer-classes",
+    "KeyClefControlProbe",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/result.json"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/key-clef-control-20261002/key-clef-control/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "0c0565e07a8481a0d0483b9d015764fe4c6ca48671f536e29b9475708e35ad1d",
+  "ok": true,
+  "result_sha256": "d2c1c4fd553fcc093da3b4c5b27137c522b7c3641ae17a18a8f5a106e4559fc0"
+}

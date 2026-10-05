@@ -1,0 +1,1 @@
+See docs/STEM-PARTS-CACHE.md for original prefix/cache scope, prior head-record native composition and outstanding whole-page dependencies. Failed first observer attempt used SIG.removeVertex directly and is excluded from independent certification; successful runs use StemInter.remove.

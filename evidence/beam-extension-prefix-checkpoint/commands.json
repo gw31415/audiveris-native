@@ -1,0 +1,65 @@
+[
+  {
+    "command": [
+      "/workspace/audiveris-sol/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/workspace/audiveris-sol/prefix-oracle/stubs",
+      "/workspace/audiveris-sol/prefix-oracle/stub-src/Book.java",
+      "/workspace/audiveris-sol/prefix-oracle/stub-src/RunClass.java"
+    ],
+    "exit_code": 0,
+    "seconds": 0.5178637090002667
+  },
+  {
+    "command": [
+      "/workspace/audiveris-sol/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/workspace/audiveris-sol/prefix-oracle/stubs:/workspace/audiveris-sol/oracle/official/opt/audiveris/lib/app/*",
+      "-sourcepath",
+      "/workspace/audiveris-sol/prefix-oracle/empty",
+      "-d",
+      "/workspace/audiveris-sol/prefix-oracle/classes",
+      "/workspace/audiveris-sol/source/audiveris-source/scripts/java/GridProbe.java",
+      "/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamImpactsControlProbe.java",
+      "/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamExtensionPrefixControlProbe.java"
+    ],
+    "exit_code": 0,
+    "seconds": 0.9662444299997333
+  },
+  {
+    "command": [
+      "/workspace/audiveris-sol/oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Xmx512m",
+      "-XX:ActiveProcessorCount=2",
+      "-Djava.awt.headless=true",
+      "-Djava.io.tmpdir=/workspace/audiveris-sol/prefix-oracle/tmp",
+      "-Dorg.bytedeco.javacpp.cachedir=/workspace/audiveris-sol/prefix-oracle/cache",
+      "-Djava.util.prefs.userRoot=/workspace/audiveris-sol/prefix-oracle/prefs",
+      "-Duser.home=/workspace/audiveris-sol/prefix-oracle/home",
+      "-Dnative.probe.inputs=/workspace/audiveris-sol/prefix-oracle/inputs.json",
+      "-Dnative.probe.output=/workspace/audiveris-sol/prefix-oracle/original.json",
+      "-cp",
+      "/workspace/audiveris-sol/oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-sol/prefix-oracle/classes",
+      "Audiveris",
+      "-batch",
+      "-constant",
+      "org.audiveris.omr.Main.persistBatchCliConstants=false",
+      "-constant",
+      "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+      "-step",
+      "SCALE",
+      "-run",
+      "BeamExtensionPrefixControlProbe",
+      "-output",
+      "/workspace/audiveris-sol/prefix-oracle/output",
+      "--",
+      "/workspace/audiveris-sol/source/audiveris-source/fixtures/official-grid/beams-single.png"
+    ],
+    "exit_code": 0,
+    "seconds": 1.9213820270001634
+  }
+]

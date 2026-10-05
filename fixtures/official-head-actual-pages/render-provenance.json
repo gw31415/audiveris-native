@@ -1,0 +1,38 @@
+{
+  "native_outputs_used": false,
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "fb245ddd03f6bdce43d8095a5313b1233fb7447e67884038eecf3b44e6f273cd",
+  "runtime_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "compiler_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "font_sha256": {
+    "Bravura": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+    "Leland": "cacca69cb750d851023d52a8e41d3373904aa82afc7247085f37d4ee6823506c",
+    "FinaleJazz": "a8ea0408ef7628ca38ae29eaa1b4357d2b0bf11747f6eee3c5f9ed5cca358e08"
+  },
+  "compile_argv": [
+    "/workspace/onboarding/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+    "-d",
+    "/workspace/work/head-pages/render-certified/classes",
+    "/workspace/onboarding/artifacts/audiveris-source/scripts/java/HeadActualPageRenderer.java"
+  ],
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/workspace/work/head-pages/render-certified/home",
+    "-Djava.util.prefs.userRoot=/workspace/work/head-pages/render-certified/prefs",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/head-pages/render-certified/classes",
+    "HeadActualPageRenderer",
+    "/workspace/work/head-pages/render-certified/images"
+  ],
+  "images": {
+    "Bravura-cue.png": "351bf814b84377304f9c900c45d87dcf9970b06e6613ec1131959f91c6265937",
+    "Bravura-five-drum.png": "8d89e445118cff298fe095955f0bd2e82bbe969ecd9c3365fe8f0e9444664850",
+    "Bravura-five.png": "5e952f8b40b4888b9d215730bda6a545cfb15d0c82959ae021bb0da2574d0046",
+    "Bravura-one-drum.png": "14d14af39f5b7a6340dd60a789427b685cdf3c6cb1c9a344ee72caf54c1ed352",
+    "Bravura-six-tab.png": "2169bcae88123542d00f20a2daf4ead5ad45d751804f9edf3ca831260454f865",
+    "FinaleJazz-five.png": "0b8654319ee5b384aec8e577881da172d1cc75901e02778831f7763cb0718e9c",
+    "Leland-five.png": "d205f02e2b0dd7ae1276822bd7ac61cecb3198807e8a2f9268db3500ce1cece0"
+  },
+  "scope": "Whole synthetic score pages in actual official fonts; regular five-line staves, percussion headers/one-line and six-line drawings, mixed cue/main interlines. Six-line drawing uses G clef because original Shape enum has no TAB_CLEF symbol. Recognized special staff structure requires explicit original switches and is recorded separately. Generated pages are not scans of externally published scores."
+}

@@ -1,0 +1,23 @@
+{
+  "phase": "streaming binarization and default automatic SCALE",
+  "rust_tests": 11,
+  "fmt": "passed",
+  "clippy": "passed -D warnings",
+  "java_scale_fixtures": 18,
+  "java_scale_pixels": 3935040,
+  "exact_fields": "binary raster hash, black/combo bins, finder peaks, selected line/interline/beam(s), failure code",
+  "java_peak_goldens": 128,
+  "peak_goldens_sha256": "a5fa1acc47c6dd3c146b46867f58bf45aa81f540880dbf47c871928a912df895",
+  "failure_codes": [
+    "interline_too_high",
+    "interline_too_low",
+    "no_regular_lines",
+    "no_significant_black_lines",
+    "too_few_black_pixels"
+  ],
+  "real_score_validation": false,
+  "reason": "Installed MuseScore Qt platform plugins lack offscreen; GUI not attempted",
+  "production_java_dependency": false,
+  "grid_implemented": false,
+  "classifier_implemented": false
+}

@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native beam-spots fixtures/official-grid/beams-single.png /workspace/audiveris-shared-sig-check-20261003/replay-spots.pgm /workspace/audiveris-shared-sig-check-20261003/replay-report.json`
+Native beam spots: 6; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete

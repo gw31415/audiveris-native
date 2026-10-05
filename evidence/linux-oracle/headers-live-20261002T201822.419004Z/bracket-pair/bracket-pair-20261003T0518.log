@@ -1,0 +1,34 @@
+2026-10-03 05:18:26,243 INFO [bracket-pair]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/bracket-pair.png
+2026-10-03 05:18:26,362 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:26,363 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/bracket-pair/bracket-pair.omr
+2026-10-03 05:18:26,364 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 05:18:26,365 INFO [bracket-pair]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:18:26,385 INFO [bracket-pair]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/bracket-pair.png
+2026-10-03 05:18:26,389 INFO [bracket-pair]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:18:26,474 INFO [bracket-pair]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:18:26,486 INFO [bracket-pair]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:18:26,487 WARN [bracket-pair]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:18:26,487 INFO [bracket-pair]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:18:26,487 INFO [bracket-pair]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:18:26,488 INFO [bracket-pair]                 Book.java:2584 | Book{bracket-pair} storing
+2026-10-03 05:18:26,517 INFO [bracket-pair]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:26,539 INFO [bracket-pair]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:18:26,741 INFO [bracket-pair]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:18:26,741 INFO [bracket-pair]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/bracket-pair/bracket-pair.omr
+2026-10-03 05:18:26,743 INFO [bracket-pair]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:18:26,763 INFO [bracket-pair]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:18:26,764 INFO [bracket-pair]                 Book.java:2057 | End of Book{bracket-pair}
+2026-10-03 05:18:26,779 INFO [bracket-pair]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:18:26,860 INFO [bracket-pair]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:18:26,869 INFO [bracket-pair]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 05:18:26,894 INFO [bracket-pair]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 05:18:26,918 INFO [bracket-pair]        BarsRetriever.java:1305 | System#1
+2026-10-03 05:18:26,919 INFO [bracket-pair]        BarsRetriever.java:1308 |    PartGroup{bracket number:1 barline:true staves:1-2}
+2026-10-03 05:18:26,948 INFO [bracket-pair]        SystemManager.java:800  | 2 parts along 1 system
+2026-10-03 05:18:26,949 INFO [bracket-pair]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:18:27,513 WARN [bracket-pair]          ClefBuilder.java:658  | Staff#1 no recognized header clef.
+2026-10-03 05:18:27,516 WARN [bracket-pair]          ClefBuilder.java:658  | Staff#2 no recognized header clef.
+2026-10-03 05:18:27,733 INFO [bracket-pair]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:27,770 INFO [bracket-pair]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:18:27,771 INFO [bracket-pair]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/bracket-pair/bracket-pair.omr
+2026-10-03 05:18:27,772 INFO [bracket-pair]                Score.java:181  | Closing {Score 1}

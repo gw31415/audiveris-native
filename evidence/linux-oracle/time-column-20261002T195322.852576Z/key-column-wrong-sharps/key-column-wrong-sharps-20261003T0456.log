@@ -1,0 +1,31 @@
+2026-10-03 04:56:08,770 INFO [key-column-wrong-sharps]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-wrong-sharps.png
+2026-10-03 04:56:08,893 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:08,893 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-wrong-sharps/key-column-wrong-sharps.omr
+2026-10-03 04:56:08,895 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:56:08,896 INFO [key-column-wrong-sharps]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:56:08,913 INFO [key-column-wrong-sharps]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-wrong-sharps.png
+2026-10-03 04:56:08,917 INFO [key-column-wrong-sharps]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:56:09,005 INFO [key-column-wrong-sharps]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:56:09,015 INFO [key-column-wrong-sharps]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:56:09,017 INFO [key-column-wrong-sharps]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 45% of needed quorum
+2026-10-03 04:56:09,017 WARN [key-column-wrong-sharps]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:56:09,017 INFO [key-column-wrong-sharps]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:56:09,017 INFO [key-column-wrong-sharps]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:56:09,018 INFO [key-column-wrong-sharps]                 Book.java:2584 | Book{key-column-wrong-sharps} storing
+2026-10-03 04:56:09,038 INFO [key-column-wrong-sharps]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:09,057 INFO [key-column-wrong-sharps]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:56:09,244 INFO [key-column-wrong-sharps]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:09,245 INFO [key-column-wrong-sharps]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-wrong-sharps/key-column-wrong-sharps.omr
+2026-10-03 04:56:09,246 INFO [key-column-wrong-sharps]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:56:09,268 INFO [key-column-wrong-sharps]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:56:09,270 INFO [key-column-wrong-sharps]                 Book.java:2057 | End of Book{key-column-wrong-sharps}
+2026-10-03 04:56:09,283 INFO [key-column-wrong-sharps]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:56:09,373 INFO [key-column-wrong-sharps]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:56:09,383 INFO [key-column-wrong-sharps]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:56:09,412 INFO [key-column-wrong-sharps]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:56:09,449 INFO [key-column-wrong-sharps]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:56:09,449 INFO [key-column-wrong-sharps]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:56:10,305 INFO [key-column-wrong-sharps]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:10,322 INFO [key-column-wrong-sharps]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:10,323 INFO [key-column-wrong-sharps]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-wrong-sharps/key-column-wrong-sharps.omr
+2026-10-03 04:56:10,324 INFO [key-column-wrong-sharps]                Score.java:181  | Closing {Score 1}

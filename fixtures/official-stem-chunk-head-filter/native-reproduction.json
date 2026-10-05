@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "conditions": 6600,
+  "actual_head_builders": 600,
+  "exact_physical_pixel_remaining_weights_and_retained_canonical_token_order": true,
+  "original_VIP_branch_preserved": true,
+  "native_controls_gzip_sha256": "2946ee88b0b25bcf0d2b100e4b7fccfb219e2ba058378f5bb060ed9422cc49b2",
+  "native_source_sha256": {
+    "src/stem_chunk_head_filter.rs": "183a4453ad49d9079ac5ba7cfd83e2f3bb946780a81aee251b31b0c5b8dc547d",
+    "examples/support/stem_chunk_head_filter_controls.rs": "1d5dd4c677ed28625d3d2820405fb4fc61fe36f1a5076cc7a61f3794df857336",
+    "examples/stem_chunk_head_filter_dump.rs": "2f17b0e7c2f1e17d8336623a22eb10cef90a22790bdbc5ad01bd81acc72fd56a",
+    "tests/stem_chunk_head_filter.rs": "385d8e51f1ae51d8676ec2e45f63290cf539c453cd2eaa66be72781a8abcd8c9"
+  },
+  "registry_unchanged_in_all_controls": true,
+  "original_JVM_ids_normalized": true,
+  "full_lookupChunks_composition_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

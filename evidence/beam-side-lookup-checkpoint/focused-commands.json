@@ -1,0 +1,27 @@
+[
+  {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "fmt",
+      "--all"
+    ],
+    "seconds": 0.4012222820001625,
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "test",
+      "--locked",
+      "--offline",
+      "--test",
+      "beam_side_lookup",
+      "--",
+      "--nocapture"
+    ],
+    "seconds": 4.992752051000025,
+    "exit_code": 0
+  }
+]

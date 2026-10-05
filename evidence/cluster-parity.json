@@ -1,0 +1,416 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "method_sha256": {
+    "glyph/dynamic/Filament/public int getTrueLength ()": "c3715fa273e66ef48069295aabee15f7d6086e98ad0a1372248ae84791428c32",
+    "sheet/grid/StaffFilament/public void addComb": "babda094d5199748afc6dc97654e8a819057bd762f3fad7ae7c02f5476b1be53",
+    "sheet/grid/StaffFilament/public SortedMap<Integer, FilamentComb> getCombs": "5caf516afa148e796960ef1c7c18d35c8c32f2a3d2fd860acafaa221dd63691c",
+    "sheet/grid/StaffFilament/public LineCluster getCluster": "f66a3aaff0a485065f1a10bf3f6b581c415ad221e79c4f4e494336349fd64170",
+    "sheet/grid/StaffFilament/public int getClusterPos": "3f35939669502f3a59e820a609a8be39647824548bb9214855b0550ef2b95659",
+    "sheet/grid/StaffFilament/public void include (StaffFilament that)": "6cd9a5f74df01e0be343acd2bba18ca9f525da0cbb34509e6fa6ed6c2ce29d97",
+    "sheet/grid/StaffFilament/public boolean isWithinRange": "5623149a6171f482004027d8906b981fcb09b0dc11b9c2714e69564b22692719",
+    "class_body/FilamentComb": "6225c1a2822a4f854adb101a7542d87f7688f8f28d680eb6b9eba89939d8d5b2",
+    "class_body/LineCluster": "0b3b5b43a214d5b785f9e9c8ad46776c564c78844c1ece7e99d7a945d24a423b",
+    "math/GeoUtil/public static int xOverlap": "16c4379029b884bdd9189f540ac42b073adf172f166a079f25f05a61388ec09f",
+    "math/GeoUtil/public static int xGap": "b8002730b006d06811c35eda159433e2837835b2bd310187acf27a458faaa6b2",
+    "sheet/grid/ClustersRetriever/private void followCombsNetwork": "b0b25762afa7224a2631633f017daff5a5638eb5963ca7d5b3cb55c9f790779a",
+    "sheet/grid/ClustersRetriever/private void connectAncestors": "be74ce4cece802118ba16e19a87d2113a19256e55112a590d55751d0ee3b7e07",
+    "sheet/grid/ClustersRetriever/private List<LineCluster> createClusters": "887b74def337df63dbb9910a14edb3547677031601dd8ed94053f465aaefe279",
+    "sheet/grid/ClustersRetriever/private void expandCluster (": "205f182d394d7fea038d8c4367e25cb35b3c6a798e7f387c0890ff4d4e9f3f6e",
+    "sheet/grid/ClustersRetriever/private void expandClusters (": "ac3fed366a41be92f03b71cef466a74e68d4b2938fed9a6fedd9bb77b71474e5",
+    "sheet/grid/ClustersRetriever/private double bestMatch": "512e68a3648cc3888c862c89bf2d8629e1eab651809a90514c1f9fa0209fc586",
+    "sheet/grid/ClustersRetriever/private boolean canMerge": "8f40704eb193e059d2a4a626ab0ac0a4d09ec3ddb18d7407d12379e173cf9dfb",
+    "sheet/grid/ClustersRetriever/private boolean checkCollision": "01cfd94b00e1d222e192b6e46f29c39608215bcffa7842aebf5f1f2e936dce77",
+    "sheet/grid/ClustersRetriever/private void mergeClusters": "62cbfabf25e26dc988fb02b6e820cc8b43b62982e0b28aceb2c409f9a5d29b0a",
+    "sheet/grid/ClustersRetriever/private void trimClusters": "17496bb4ae881493fdba78570fe2cfa38eda4775ff780c8128b95522bb611be6",
+    "sheet/grid/ClustersRetriever/private void destroyNonDesiredClusters": "4d8734f3d75fb56f96f4423d20c46cdecef36192b4c4c7bbbb183ef62bc21103",
+    "sheet/grid/ClustersRetriever/private void mergeClusterPairs": "3dada5f4e4569fb3348d36080374faf0861b3c7ff1d8d8b5020ebdfda3c3952c",
+    "sheet/grid/ClustersRetriever/private double computeAcceptableLength": "e90f41bea324f0b3d8e6667fced7a22f5fa2bc9a1ddba00e4f617306485ee692",
+    "sheet/grid/ClustersRetriever/private void discardNonClusteredFilaments": "385738924e3a82ba97bb51cd98399e1e7a9c83b27e8e9e88d1db6a23883a7b26",
+    "sheet/grid/ClustersRetriever/private void removeMergedClusters": "5545546380ee5f7d044f12b4526d8250409224aa7402e5732db6c5e72d665db0",
+    "sheet/grid/ClustersRetriever/private void removeMergedFilaments": "e1010eac5c96cda0b6599fb6a347699cd245f34dc5bbb539cf89f549b6c1a79e",
+    "sheet/grid/ClustersRetriever/private double ordinateOf (LineCluster": "9f833704373b4a4742e8e78e1c474132957ee47243fd71e3b69f4191b26f7d27",
+    "sheet/grid/ClustersRetriever/private Double ordinateOf (Point2D": "1273729852e29b5e9dfae5e274a883ed3923d33f190ca43b1054c92c8280042f",
+    "sheet/grid/ClustersRetriever/private Double[] ordinatesOf": "a868b33c524bc5d57340e588cbfe14a58b05c126c771c3ea125e7263804a674e",
+    "sheet/grid/LinesRetriever/private void buildStaves ()": "57ee13cf7c44c1fd7b21dc4bf79a4f4f9f9bb067c5b772ac0915618f312036db",
+    "sheet/grid/LinesRetriever/private void purgeClusters (": "24c3e824479ca6a034b1d7db92c26fb7f3459071580044e9097c8a906f91beb2",
+    "sheet/grid/LinesRetriever/private void purgeOneLineClustersRightIndented (": "481bf8b94a11cda30a16a6f575f025eef54282eacf82cb90724b660117202faa",
+    "sheet/grid/ClustersRetriever/public static LineCluster getClusterBelow": "f1c28106c72b96779839081326ae0c654bfecdd1ace42c3e98899ced07f62888",
+    "sheet/grid/ClustersRetriever/public static List<LineCluster> getHalfClusters": "f2b8fd5f818f647fc828e6ead57f26554e9399221ad02c9386e14e95bba1ecc0",
+    "sheet/Staff/public boolean yOverlaps (Staff that)": "eb28056aaedeb315f1c9e7053b7ba280ad250e7e484829fa1f2bdaabab1f9c0b",
+    "sheet/StaffManager/public void detectShortStaves ()": "1cbcb222a91667818e2fdadf9ac242486a66229e96548df1e524e8b906ebbd87",
+    "sheet/StaffManager/public Staff horiNeighbor (Staff current,": "22721b51e4dfaf8ad6979b36af45e2a2f1ff7f8e4c2a194531d4968b9595b5d8"
+  },
+  "harness_sha256": "cb31f03a9c0bfe790901a51a9d2c5586e3e36964645523a5cd35f44399e59e6e",
+  "independence": "native scale and sections into independent Java filament/cluster/Staff stage; not whole-image app parity",
+  "fixtures": [
+    {
+      "file": "fixtures/sections/broken.pgm",
+      "input_lines": 5,
+      "after_network": 5,
+      "cluster_counts": [
+        [
+          "create",
+          1
+        ],
+        [
+          "expand_1",
+          1
+        ],
+        [
+          "merge",
+          1
+        ],
+        [
+          "trim",
+          1
+        ],
+        [
+          "desired_size",
+          1
+        ],
+        [
+          "pair_and_length",
+          1
+        ],
+        [
+          "expand_2",
+          1
+        ],
+        [
+          "build_staves_length_layout",
+          0
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 0
+    },
+    {
+      "file": "fixtures/sections/crossings.pgm",
+      "input_lines": 5,
+      "after_network": 5,
+      "cluster_counts": [
+        [
+          "create",
+          1
+        ],
+        [
+          "expand_1",
+          1
+        ],
+        [
+          "merge",
+          1
+        ],
+        [
+          "trim",
+          1
+        ],
+        [
+          "desired_size",
+          1
+        ],
+        [
+          "pair_and_length",
+          1
+        ],
+        [
+          "expand_2",
+          1
+        ],
+        [
+          "build_staves_length_layout",
+          0
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 0
+    },
+    {
+      "file": "fixtures/sections/noisy.pgm",
+      "input_lines": 5,
+      "after_network": 5,
+      "cluster_counts": [
+        [
+          "create",
+          1
+        ],
+        [
+          "expand_1",
+          1
+        ],
+        [
+          "merge",
+          1
+        ],
+        [
+          "trim",
+          1
+        ],
+        [
+          "desired_size",
+          1
+        ],
+        [
+          "pair_and_length",
+          1
+        ],
+        [
+          "expand_2",
+          1
+        ],
+        [
+          "build_staves_length_layout",
+          0
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 0
+    },
+    {
+      "file": "fixtures/sections/sloped.pgm",
+      "input_lines": 5,
+      "after_network": 5,
+      "cluster_counts": [
+        [
+          "create",
+          1
+        ],
+        [
+          "expand_1",
+          1
+        ],
+        [
+          "merge",
+          1
+        ],
+        [
+          "trim",
+          1
+        ],
+        [
+          "desired_size",
+          1
+        ],
+        [
+          "pair_and_length",
+          1
+        ],
+        [
+          "expand_2",
+          1
+        ],
+        [
+          "build_staves_length_layout",
+          0
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 0
+    },
+    {
+      "file": "fixtures/sections/straight.pgm",
+      "input_lines": 5,
+      "after_network": 5,
+      "cluster_counts": [
+        [
+          "create",
+          1
+        ],
+        [
+          "expand_1",
+          1
+        ],
+        [
+          "merge",
+          1
+        ],
+        [
+          "trim",
+          1
+        ],
+        [
+          "desired_size",
+          1
+        ],
+        [
+          "pair_and_length",
+          1
+        ],
+        [
+          "expand_2",
+          1
+        ],
+        [
+          "build_staves_length_layout",
+          0
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 0
+    },
+    {
+      "file": "fixtures/sections/two-staves.pgm",
+      "input_lines": 10,
+      "after_network": 10,
+      "cluster_counts": [
+        [
+          "create",
+          2
+        ],
+        [
+          "expand_1",
+          2
+        ],
+        [
+          "merge",
+          2
+        ],
+        [
+          "trim",
+          2
+        ],
+        [
+          "desired_size",
+          2
+        ],
+        [
+          "pair_and_length",
+          2
+        ],
+        [
+          "expand_2",
+          2
+        ],
+        [
+          "build_staves_length_layout",
+          0
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 0
+    },
+    {
+      "file": "fixtures/rendered/laura-180dpi.pgm",
+      "input_lines": 163,
+      "after_network": 121,
+      "cluster_counts": [
+        [
+          "create",
+          8
+        ],
+        [
+          "expand_1",
+          8
+        ],
+        [
+          "merge",
+          8
+        ],
+        [
+          "trim",
+          8
+        ],
+        [
+          "desired_size",
+          6
+        ],
+        [
+          "pair_and_length",
+          6
+        ],
+        [
+          "expand_2",
+          6
+        ],
+        [
+          "build_staves_length_layout",
+          6
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 6
+    },
+    {
+      "file": "fixtures/staff/wide-straight.pgm",
+      "input_lines": 5,
+      "after_network": 5,
+      "cluster_counts": [
+        [
+          "create",
+          1
+        ],
+        [
+          "expand_1",
+          1
+        ],
+        [
+          "merge",
+          1
+        ],
+        [
+          "trim",
+          1
+        ],
+        [
+          "desired_size",
+          1
+        ],
+        [
+          "pair_and_length",
+          1
+        ],
+        [
+          "expand_2",
+          1
+        ],
+        [
+          "build_staves_length_layout",
+          1
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 1
+    },
+    {
+      "file": "fixtures/staff/wide-two-staves.pgm",
+      "input_lines": 10,
+      "after_network": 10,
+      "cluster_counts": [
+        [
+          "create",
+          2
+        ],
+        [
+          "expand_1",
+          2
+        ],
+        [
+          "merge",
+          2
+        ],
+        [
+          "trim",
+          2
+        ],
+        [
+          "desired_size",
+          2
+        ],
+        [
+          "pair_and_length",
+          2
+        ],
+        [
+          "expand_2",
+          2
+        ],
+        [
+          "build_staves_length_layout",
+          2
+        ]
+      ],
+      "stages_exact": true,
+      "staffs": 2
+    }
+  ]
+}

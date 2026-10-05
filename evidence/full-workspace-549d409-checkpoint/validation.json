@@ -1,0 +1,131 @@
+{
+  "status": "passed",
+  "started_utc": "2026-10-03T09:41:04.884896+00:00",
+  "tested_source_commit": "549d4090977e960e36703a29b9dea68d03574e6c",
+  "tested_source_tree": "c3c94e49e607605458f9a30c626422225498f9ca",
+  "source_clean_before_checks": true,
+  "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+  "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+  "checks": [
+    {
+      "name": "debug",
+      "command": [
+        "cargo",
+        "+1.98.1",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "exit_code": 0,
+      "seconds": 285.6394047059998,
+      "log": "debug.log",
+      "completed_utc": "2026-10-03T09:45:50.562970+00:00",
+      "test_summary": {
+        "suites": 77,
+        "passed": 259,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "release",
+      "command": [
+        "cargo",
+        "+1.98.1",
+        "test",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "exit_code": 0,
+      "seconds": 127.40934824899978,
+      "log": "release.log",
+      "completed_utc": "2026-10-03T09:47:57.974016+00:00",
+      "test_summary": {
+        "suites": 77,
+        "passed": 259,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "+1.98.1",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.39796496200006004,
+      "log": "fmt.log",
+      "completed_utc": "2026-10-03T09:47:58.373146+00:00"
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "+1.98.1",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "seconds": 0.09043009000015445,
+      "log": "clippy.log",
+      "completed_utc": "2026-10-03T09:47:58.464453+00:00"
+    },
+    {
+      "name": "release-build",
+      "command": [
+        "cargo",
+        "+1.98.1",
+        "build",
+        "--workspace",
+        "--release",
+        "--locked",
+        "--offline",
+        "-j",
+        "2"
+      ],
+      "exit_code": 0,
+      "seconds": 0.05465350299982674,
+      "log": "release-build.log",
+      "completed_utc": "2026-10-03T09:47:58.519895+00:00"
+    }
+  ],
+  "new_features_added": false,
+  "nonfinite_edge": {
+    "classification": "NaN",
+    "operation": "0 / 0 when side area contains no integer samples",
+    "original_dcmpg_ifge_accepts": true,
+    "native_point_gate_accepts": true,
+    "representation": "Explicit classification string; no nonfinite floating value serialized or coerced to zero."
+  },
+  "source_unchanged_after_checks": true,
+  "finished_utc": "2026-10-03T09:47:58.534409+00:00",
+  "scope": "Full workspace validation of current bounded native implementation. Stem selection/extension loop/CLI integration and full BEAMS/OMR remain unfinished.",
+  "release_cli_artifact": {
+    "path": "/workspace/audiveris-sol/toolchain/target/release/audiveris-native",
+    "bytes": 7425344,
+    "sha256": "93c41f591e4cfd630a60778d00e36016a74eeff5bd9c74cf33e45e01292a33ee",
+    "packaged": false,
+    "feature_completeness_claim": false
+  },
+  "source_code_changed_in_validation_commit": false
+}

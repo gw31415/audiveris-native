@@ -1,0 +1,372 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.90s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_classifier-c2e08f08ff7d9c99)
+
+running 1 test
+test tests::rejects_nonfinite_model_values_even_before_json_encoding ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+     Running unittests src/bin/classify.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_classify-48bdd40d415c549c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/golden-b93a3ba6d818e891)
+
+running 1 test
+test matches_136_official_java_cases_and_55488_values ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/validation.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/validation-16b29379755b1d7c)
+
+running 4 tests
+test rejects_malformed_or_nonfinite_json ... ok
+test rejects_invalid_feature_vectors_and_arithmetic_overflow ... ok
+test cli_emits_ordered_scores_and_rejects_bad_input ... ok
+test rejects_bad_shapes_labels_norms_and_provenance ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.26s
+
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_glyph_features-de2182ccf63330ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/golden-c320ed8eaeb26b9d)
+
+running 2 tests
+test invalid_inputs_are_explicit_errors ... ok
+test java_glyph_features_and_classifier_chain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_native-7a2385417c16bc34)
+
+running 34 tests
+test clef_competition::tests::stable_left_ties_anchor_last_then_incoming_precedes_outgoing ... ok
+test clef_competition::tests::x_is_strict_only_for_anchor_and_foreign_or_duplicate_partners_are_skipped ... ok
+test key_clef::tests::all_fourteen_pitch_tables_match_key_inter ... ok
+test clef_registration::tests::centroid_uses_pixel_coordinates_and_ties_even ... ok
+test clef_registration::tests::second_pass_empty_cases_and_unsupported_metrics ... ok
+test clef_competition::tests::duplicate_ids_and_budget_violations_are_explicit ... ok
+test clef_registration::tests::bbox_centroid_translation_ignores_y_and_preserves_clef_pitch ... ok
+test clef_registration::tests::reverse_grade_sort_is_stable_and_exclusions_are_all_pairs ... ok
+test key_clef::tests::all_percussion_is_excluded_without_pitch_table_error ... ok
+test key_clef::tests::compatible_clef_gets_contextual_support_and_first_tie_wins ... ok
+test key_clef::tests::empty_and_missing_slices_do_not_select_a_clef ... ok
+test key_clef::tests::incompatible_and_percussion_clefs_still_compete_in_second_pass ... ok
+test key_clef::tests::invalid_inputs_and_resource_bounds_are_explicit ... ok
+test key_clef::tests::zero_pitched_grade_can_still_be_compatible_but_zero_clef_cannot_win ... ok
+test key_clef::tests::overall_equal_grade_preserves_input_order_even_for_incompatible_clef ... ok
+test key_clef::tests::rejection_preserves_earlier_writes_and_leaves_later_entries_zero ... ok
+test key_clef::tests::support_uses_ratio_six_and_actual_non_null_count ... ok
+test key_clef::tests::thresholds_use_slice_count_and_accept_equality_with_zero_grade ... ok
+test key_peaks::tests::gain_equal_threshold_expands_and_quorum_is_inclusive ... ok
+test key_components::tests::clip_background_and_erase_exact_neighbor_pixels ... ok
+test key_components::tests::tiny_parts_and_last_column_parts_follow_source_filter ... ok
+test key_components::neighbor_oracle_test::exact_original_cropped_pixels_erase_240_neighbor_pixels ... ok
+test key_components::tests::glyph_centroid_rounds_integer_pixels_ties_even ... ok
+test key_peaks::tests::terminal_hilo_is_not_flushed_and_absolute_domain_is_preserved ... ok
+test key_peaks::tests::tied_peak_heights_keep_abscissa_order_and_bad_domains_are_rejected ... ok
+test key_slices::tests::explicit_stop_preserves_null_semantics ... ok
+test key_slices::tests::odd_sharp_peak_is_removed_and_interval_outlier_truncates_flat_items ... ok
+test key_slices::tests::light_peak_distance_uses_strict_cutoff ... ok
+test key_slices::tests::stem_row_quorum_is_inclusive_and_uses_grown_narrow_peak ... ok
+test key_components::tests::connected_decomposition_visits_each_connected_subset_once_and_prunes_weight ... ok
+test key_slices::tests::refine_stop_keeps_first_minimum_and_empty_hilos_preserve_nullable_range ... ok
+test clef_registration::column_tests::column_offsets_are_relative_per_system_and_do_not_select_clef ... ok
+test key_slices::tests::malformed_or_overlapping_hilos_are_refused ... ok
+test filament_merge::tests::contact_excludes_diagonal_corner_only ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_native-bfb838f8c3475acd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/clef_candidates.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/clef_candidates-6316d39dca439c0f)
+
+running 2 tests
+test controlled_original_registration_checks_ties_and_complete_exclusions ... ok
+test native_clef_parts_and_candidate_maps_match_original_rasters ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.83s
+
+     Running tests/clef_competition.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/clef_competition-9ebe7959e62a3c07)
+
+running 1 test
+test original_get_competing_clefs_controls_match_order_exactly ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/clusters.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/clusters-604e3bbc58a65017)
+
+running 1 test
+test pinned_java_cluster_and_initial_staff_goldens ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/core.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/core-e74f5d05f1afd2d5)
+
+running 6 tests
+test run_tables_round_trip_in_both_orientations ... ok
+test constant_black_white_and_inclusive_zero_threshold ... ok
+test pgm_preserves_binary_whitespace_pixels_and_rejects_bad_input ... ok
+test png_matches_pgm_without_color_conversion ... ok
+test vertical_ring_matches_full_integrals_across_wrap_and_degenerate_images ... ok
+test integral_matches_brute_force_at_every_pixel ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/curved_filaments.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/curved_filaments-25619725e3a5471c)
+
+running 2 tests
+test section_budget_rejects_before_returning_partial_factory_output ... ok
+test pinned_java_merge_curve_filter_and_comb_goldens ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running tests/filaments.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/filaments-ef4ee333e5467775)
+
+running 1 test
+test pinned_java_seed_and_restricted_comb_goldens ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/grid_ir.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/grid_ir-69a9500c0352a341)
+
+running 3 tests
+test exact_pixel_registry_reuses_content_and_keeps_distinct_origins_and_orientations ... ok
+test incomplete_brace_raster_stops_at_explicit_fallback_boundary ... ok
+test native_persistent_staff_sections_membership_and_ordinary_sig_match_final_official_grid ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.99s
+
+     Running tests/key_clef.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_clef-7092553b9cb4b8d1)
+
+running 1 test
+test original_controlled_key_clef_methods_match_exactly ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/key_components.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_components-fa6c29f8810d3083)
+
+running 1 test
+test all_original_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.58s
+
+     Running tests/key_fallback.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_fallback-3adba9af49ca94da)
+
+running 1 test
+test all_original_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 16.48s
+
+     Running tests/key_peaks.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_peaks-9d21d90324f35aad)
+
+running 2 tests
+test ten_original_keybuilder_peak_observations_match_exactly ... ok
+test original_hilo_113_controlled_cases_preserve_order_and_threshold_edges ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/key_preparation.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_preparation-2b6eb3f5afc30905)
+
+running 11 tests
+test follows_upstream_xmin_only_geometry_and_ties_even_rounding ... ok
+test barline_iteration_matches_integer_center_order_not_left_order ... ok
+test clamps_pixel_rectangle_without_rewriting_original_browse_range ... ok
+test connected_bar_cutoff_is_inclusive_point_six_and_strictly_after_start ... ok
+test adapter_requires_explicit_supported_interline_and_unique_inputs ... ok
+test projects_real_ink_including_measure_columns_before_browse_start ... ok
+test bar_at_last_browse_column_clips_but_bar_after_it_does_not ... ok
+test uses_header_stop_fallback_and_separate_sheet_and_staff_interlines ... ok
+test rejects_invalid_or_unsupported_inputs_without_a_partial_result ... ok
+test parser_rejects_oversized_inputs_before_collecting_geometry ... ok
+test native_image_pipeline_matches_all_ten_independent_key_projections ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.53s
+
+     Running tests/key_slices.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/key_slices-f6bd7eb18b45b985)
+
+running 1 test
+test all_original_rasters ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.79s
+
+     Running tests/line_completion.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/line_completion-1d61d374c68d2f0c)
+
+running 1 test
+test original_rasters_match_official_completion_phases_and_native_removal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.60s
+
+     Running tests/line_root.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/line_root-d9f0df342c33b098)
+
+running 1 test
+test controlled_original_projector_positive_root_correction ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/note_mask_cli.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/note_mask_cli-a1b98f2df53d417e)
+
+running 1 test
+test automatic_mask_cli_needs_no_probe_coordinates_and_preserves_outputs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.85s
+
+     Running tests/official_grid.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/official_grid-378bf592ff7a63a9)
+
+running 2 tests
+test no_system_cli_does_not_claim_grid_completion ... ok
+test original_raster_to_initial_staff_peaks_sticks_and_systems_matches_official_jar ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.38s
+
+     Running tests/review_regressions.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/review_regressions-d92eed6bb432c600)
+
+running 2 tests
+test grayscale_png_transparency_is_rejected ... ok
+test blocked_filaments_does_not_claim_completion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/scale.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/scale-861c5de4c3723eab)
+
+running 5 tests
+test hilo_matches_128_unmodified_java_goldens ... ok
+test histogram_limit_rounding_and_out_of_domain_runs_match_java ... ok
+test clean_staff_and_two_population_results_match_java ... ok
+test beam_selection_and_inverted_signed_bounds_match_java ... ok
+test all_five_scale_failure_classes_match_java ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running tests/sections.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/sections-9c7a85402d8c6cdc)
+
+running 3 tests
+test split_merge_empty_gap_and_integer_mean_boundaries ... ok
+test section_factory_partitions_all_pixels_and_masks_preserve_origins ... ok
+test grid_preparation_is_not_staff_detection ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/sig_context.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/sig_context-1a1a0d75e0ef56f3)
+
+running 2 tests
+test original_jar_controlled_exclusion_cases ... ok
+test unsupported_context_is_rejected_without_partial_writes ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/template_page.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/template_page-ab532e66c88423e4)
+
+running 3 tests
+test cli_error_has_no_success_artifact_and_existing_output_is_preserved ... ok
+test input_contract_rejects_unsupported_and_malformed_requests ... ok
+test official_full_raster_distance_and_template_scores ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.86s
+
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_staff_removal-543ab64edd454a83)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/boundaries.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/boundaries-05c0de7330360567)
+
+running 6 tests
+test four_connectivity_order_orientation_origin_empty_and_limits ... ok
+test membership_preserves_crossing_stem_and_notehead_and_duplicates_are_idempotent ... ok
+test signed_origins_clip_both_orientations_and_white_pixels_are_not_removed ... ok
+test empty_inputs_invalid_runs_nonbinary_and_resource_budgets ... ok
+test many_nonoverlapping_sequences_are_bounded_without_recursive_union ... ok
+test a4_300dpi_fits_default_budget_but_excess_page_and_origin_extent_do_not ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests/official.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/official-03cbdcc6f03a314c)
+
+running 2 tests
+test thirty_official_staff_glyphs_match_every_java_residual_and_removed_pixel ... ok
+test official_glyphfactory_matches_connectivity_order_runs_boxes_origins_and_weights ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.39s
+
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_template_bank-74c1a53e3c6572fa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/loader.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/loader-931ce61842b82fe6)
+
+running 6 tests
+test unsupported_does_not_interpolate ... ok
+test integrity_identity_and_raw_field_duplicates ... ok
+test bounded_files_missing_files_and_symlinks ... ok
+test official_coverage_calibration_and_scores ... ok
+test duplicate_case_collisions_and_missing_keys ... ok
+test invalid_dimensions_points_anchors_and_numbers ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_template_match-2c3ef92b62f9962f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/golden-816d27024b83564f)
+
+running 3 tests
+test boundaries_and_rejected_inputs ... ok
+test official_font_templates_scores_and_anchors ... ok
+test official_distance_arrays ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+   Doc-tests audiveris_classifier
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_glyph_features
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_staff_removal
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_template_bank
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_template_match
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

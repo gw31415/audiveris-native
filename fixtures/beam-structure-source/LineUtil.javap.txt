@@ -1,0 +1,556 @@
+Compiled from "LineUtil.java"
+public abstract class org.audiveris.omr.math.LineUtil {
+  private org.audiveris.omr.math.LineUtil();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static java.awt.geom.Line2D bisector(java.awt.geom.Line2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #7                  // Method java/awt/geom/Line2D.getP1:()Ljava/awt/geom/Point2D;
+       4: aload_0
+       5: invokevirtual #13                 // Method java/awt/geom/Line2D.getP2:()Ljava/awt/geom/Point2D;
+       8: invokestatic  #16                 // Method bisector:(Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;)Ljava/awt/geom/Line2D;
+      11: areturn
+
+  public static java.awt.geom.Line2D bisector(java.awt.geom.Point2D, java.awt.geom.Point2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: dstore_2
+       5: aload_0
+       6: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       9: dstore        4
+      11: aload_1
+      12: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      15: dload_2
+      16: dsub
+      17: ldc2_w        #31                 // double 2.0d
+      20: ddiv
+      21: dstore        6
+      23: aload_1
+      24: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      27: dload         4
+      29: dsub
+      30: ldc2_w        #31                 // double 2.0d
+      33: ddiv
+      34: dstore        8
+      36: dload_2
+      37: dload         6
+      39: dadd
+      40: dstore        10
+      42: dload         4
+      44: dload         8
+      46: dadd
+      47: dstore        12
+      49: dload         10
+      51: dload         8
+      53: dadd
+      54: dstore        14
+      56: dload         12
+      58: dload         6
+      60: dsub
+      61: dstore        16
+      63: dload         10
+      65: dload         8
+      67: dsub
+      68: dstore        18
+      70: dload         12
+      72: dload         6
+      74: dadd
+      75: dstore        20
+      77: new           #33                 // class java/awt/geom/Line2D$Double
+      80: dup
+      81: dload         14
+      83: dload         16
+      85: dload         18
+      87: dload         20
+      89: invokespecial #35                 // Method java/awt/geom/Line2D$Double."<init>":(DDDD)V
+      92: areturn
+
+  public static double getInvertedSlope(double, double, double, double);
+    Code:
+       0: dload         4
+       2: dload_0
+       3: dsub
+       4: dload         6
+       6: dload_2
+       7: dsub
+       8: ddiv
+       9: dreturn
+
+  public static double getInvertedSlope(java.awt.geom.Line2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: aload_0
+       9: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      12: aload_0
+      13: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      16: invokestatic  #50                 // Method getInvertedSlope:(DDDD)D
+      19: dreturn
+
+  public static double getInvertedSlope(java.awt.geom.Point2D, java.awt.geom.Point2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_1
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: aload_1
+      13: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      16: invokestatic  #50                 // Method getInvertedSlope:(DDDD)D
+      19: dreturn
+
+  public static double getSlope(java.awt.geom.Line2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: dsub
+       9: aload_0
+      10: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      13: aload_0
+      14: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+      17: dsub
+      18: ddiv
+      19: dreturn
+
+  public static double getSlope(java.awt.geom.Point2D, java.awt.geom.Point2D);
+    Code:
+       0: aload_1
+       1: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: dsub
+       9: aload_1
+      10: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      13: aload_0
+      14: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      17: dsub
+      18: ddiv
+      19: dreturn
+
+  public static java.awt.geom.Point2D$Double intersection(double, double, double, double, double, double, double, double);
+    Code:
+       0: dload_0
+       1: dload         4
+       3: dsub
+       4: dload         10
+       6: dload         14
+       8: dsub
+       9: dmul
+      10: dload_2
+      11: dload         6
+      13: dsub
+      14: dload         8
+      16: dload         12
+      18: dsub
+      19: dmul
+      20: dsub
+      21: dstore        16
+      23: dload_0
+      24: dload         6
+      26: dmul
+      27: dload_2
+      28: dload         4
+      30: dmul
+      31: dsub
+      32: dstore        18
+      34: dload         8
+      36: dload         14
+      38: dmul
+      39: dload         10
+      41: dload         12
+      43: dmul
+      44: dsub
+      45: dstore        20
+      47: dload         18
+      49: dload         8
+      51: dload         12
+      53: dsub
+      54: dmul
+      55: dload_0
+      56: dload         4
+      58: dsub
+      59: dload         20
+      61: dmul
+      62: dsub
+      63: dload         16
+      65: ddiv
+      66: dstore        22
+      68: dload         18
+      70: dload         10
+      72: dload         14
+      74: dsub
+      75: dmul
+      76: dload_2
+      77: dload         6
+      79: dsub
+      80: dload         20
+      82: dmul
+      83: dsub
+      84: dload         16
+      86: ddiv
+      87: dstore        24
+      89: new           #54                 // class java/awt/geom/Point2D$Double
+      92: dup
+      93: dload         22
+      95: dload         24
+      97: invokespecial #56                 // Method java/awt/geom/Point2D$Double."<init>":(DD)V
+     100: areturn
+
+  public static java.awt.geom.Point2D$Double intersection(java.awt.geom.Line2D, java.awt.geom.Line2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: aload_0
+       9: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      12: aload_0
+      13: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      16: aload_1
+      17: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+      20: aload_1
+      21: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+      24: aload_1
+      25: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      28: aload_1
+      29: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      32: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      35: areturn
+
+  public static java.awt.geom.Point2D$Double intersection(java.awt.geom.Point2D, java.awt.geom.Point2D, java.awt.geom.Point2D, java.awt.geom.Point2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_1
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: aload_1
+      13: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      16: aload_2
+      17: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      20: aload_2
+      21: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      24: aload_3
+      25: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      28: aload_3
+      29: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      32: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      35: areturn
+
+  public static java.awt.geom.Point2D$Double intersectionAtX(java.awt.geom.Line2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: aload_0
+       9: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      12: aload_0
+      13: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      16: dload_1
+      17: dconst_0
+      18: dload_1
+      19: ldc2_w        #63                 // double 1000.0d
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: areturn
+
+  public static java.awt.geom.Point2D$Double intersectionAtX(java.awt.geom.Point2D, double, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_0
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: ldc2_w        #63                 // double 1000.0d
+      15: dadd
+      16: aload_0
+      17: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      20: ldc2_w        #63                 // double 1000.0d
+      23: dload_1
+      24: dmul
+      25: dadd
+      26: dload_3
+      27: dconst_0
+      28: dload_3
+      29: ldc2_w        #63                 // double 1000.0d
+      32: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      35: areturn
+
+  public static java.awt.geom.Point2D$Double intersectionAtX(java.awt.geom.Point2D, java.awt.geom.Point2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_1
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: aload_1
+      13: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      16: dload_2
+      17: dconst_0
+      18: dload_2
+      19: ldc2_w        #63                 // double 1000.0d
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: areturn
+
+  public static java.awt.geom.Point2D$Double intersectionAtY(java.awt.geom.Line2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: aload_0
+       9: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      12: aload_0
+      13: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      16: dconst_0
+      17: dload_1
+      18: ldc2_w        #63                 // double 1000.0d
+      21: dload_1
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: areturn
+
+  public static java.awt.geom.Point2D$Double intersectionAtY(java.awt.geom.Point2D, double, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_0
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: ldc2_w        #63                 // double 1000.0d
+      15: dload_1
+      16: dmul
+      17: dadd
+      18: aload_0
+      19: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      22: ldc2_w        #63                 // double 1000.0d
+      25: dadd
+      26: dconst_0
+      27: dload_3
+      28: ldc2_w        #63                 // double 1000.0d
+      31: dload_3
+      32: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      35: areturn
+
+  public static java.awt.geom.Point2D$Double intersectionAtY(java.awt.geom.Point2D, java.awt.geom.Point2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_1
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: aload_1
+      13: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      16: dconst_0
+      17: dload_2
+      18: ldc2_w        #63                 // double 1000.0d
+      21: dload_2
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: areturn
+
+  public static double rotation(java.awt.geom.Line2D, java.awt.geom.Point2D);
+    Code:
+       0: aload_0
+       1: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+       4: aload_0
+       5: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       8: dsub
+       9: dstore_2
+      10: aload_0
+      11: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      14: aload_0
+      15: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+      18: dsub
+      19: dstore        4
+      21: dload_2
+      22: dload_2
+      23: dmul
+      24: dload         4
+      26: dload         4
+      28: dmul
+      29: dadd
+      30: ldc2_w        #65                 // double 4.0d
+      33: ddiv
+      34: dstore        6
+      36: aload_0
+      37: aload_1
+      38: invokevirtual #67                 // Method java/awt/geom/Line2D.ptLineDistSq:(Ljava/awt/geom/Point2D;)D
+      41: dstore        8
+      43: ldc2_w        #65                 // double 4.0d
+      46: dload         8
+      48: dload         6
+      50: ddiv
+      51: invokestatic  #71                 // Method java/lang/Math.sqrt:(D)D
+      54: invokestatic  #77                 // Method java/lang/Math.atan:(D)D
+      57: dmul
+      58: dreturn
+
+  public static double rotation(java.awt.geom.Point2D, java.awt.geom.Point2D, java.awt.geom.Point2D);
+    Code:
+       0: new           #33                 // class java/awt/geom/Line2D$Double
+       3: dup
+       4: aload_0
+       5: aload_1
+       6: invokespecial #80                 // Method java/awt/geom/Line2D$Double."<init>":(Ljava/awt/geom/Point2D;Ljava/awt/geom/Point2D;)V
+       9: aload_2
+      10: invokestatic  #83                 // Method rotation:(Ljava/awt/geom/Line2D;Ljava/awt/geom/Point2D;)D
+      13: dreturn
+
+  public static java.lang.String toString(java.awt.geom.Line2D);
+    Code:
+       0: new           #87                 // class java/lang/StringBuilder
+       3: dup
+       4: invokespecial #89                 // Method java/lang/StringBuilder."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: ldc           #90                 // String Line{
+      11: invokevirtual #92                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      14: aload_0
+      15: invokevirtual #7                  // Method java/awt/geom/Line2D.getP1:()Ljava/awt/geom/Point2D;
+      18: invokestatic  #96                 // Method org/audiveris/omr/math/PointUtil.toString:(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+      21: invokevirtual #92                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      24: ldc           #102                // String -
+      26: invokevirtual #92                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      29: aload_0
+      30: invokevirtual #13                 // Method java/awt/geom/Line2D.getP2:()Ljava/awt/geom/Point2D;
+      33: invokestatic  #96                 // Method org/audiveris/omr/math/PointUtil.toString:(Ljava/awt/geom/Point2D;)Ljava/lang/String;
+      36: invokevirtual #92                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      39: ldc           #104                // String }
+      41: invokevirtual #92                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: pop
+      45: aload_1
+      46: invokevirtual #106                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      49: areturn
+
+  public static void translate(java.awt.geom.Line2D, double, double);
+    Code:
+       0: aload_0
+       1: aload_0
+       2: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       5: dload_1
+       6: dadd
+       7: aload_0
+       8: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+      11: dload_3
+      12: dadd
+      13: aload_0
+      14: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      17: dload_1
+      18: dadd
+      19: aload_0
+      20: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      23: dload_3
+      24: dadd
+      25: invokevirtual #109                // Method java/awt/geom/Line2D.setLine:(DDDD)V
+      28: return
+
+  public static double xAtY(java.awt.geom.Line2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: aload_0
+       9: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      12: aload_0
+      13: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      16: dconst_0
+      17: dload_1
+      18: ldc2_w        #63                 // double 1000.0d
+      21: dload_1
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: getfield      #112                // Field java/awt/geom/Point2D$Double.x:D
+      28: dreturn
+
+  public static double xAtY(java.awt.geom.Point2D, java.awt.geom.Point2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_1
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: aload_1
+      13: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      16: dconst_0
+      17: dload_2
+      18: ldc2_w        #63                 // double 1000.0d
+      21: dload_2
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: getfield      #112                // Field java/awt/geom/Point2D$Double.x:D
+      28: dreturn
+
+  public static double yAtX(java.awt.geom.Line2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #38                 // Method java/awt/geom/Line2D.getX1:()D
+       4: aload_0
+       5: invokevirtual #41                 // Method java/awt/geom/Line2D.getY1:()D
+       8: aload_0
+       9: invokevirtual #44                 // Method java/awt/geom/Line2D.getX2:()D
+      12: aload_0
+      13: invokevirtual #47                 // Method java/awt/geom/Line2D.getY2:()D
+      16: dload_1
+      17: dconst_0
+      18: dload_1
+      19: ldc2_w        #63                 // double 1000.0d
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: getfield      #116                // Field java/awt/geom/Point2D$Double.y:D
+      28: dreturn
+
+  public static double yAtX(java.awt.geom.Point2D, double, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_0
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: ldc2_w        #63                 // double 1000.0d
+      15: dadd
+      16: aload_0
+      17: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      20: ldc2_w        #63                 // double 1000.0d
+      23: dload_1
+      24: dmul
+      25: dadd
+      26: dload_3
+      27: dconst_0
+      28: dload_3
+      29: ldc2_w        #63                 // double 1000.0d
+      32: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      35: getfield      #116                // Field java/awt/geom/Point2D$Double.y:D
+      38: dreturn
+
+  public static double yAtX(java.awt.geom.Point2D, java.awt.geom.Point2D, double);
+    Code:
+       0: aload_0
+       1: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+       4: aload_0
+       5: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+       8: aload_1
+       9: invokevirtual #22                 // Method java/awt/geom/Point2D.getX:()D
+      12: aload_1
+      13: invokevirtual #28                 // Method java/awt/geom/Point2D.getY:()D
+      16: dload_2
+      17: dconst_0
+      18: dload_2
+      19: ldc2_w        #63                 // double 1000.0d
+      22: invokestatic  #59                 // Method intersection:(DDDDDDDD)Ljava/awt/geom/Point2D$Double;
+      25: getfield      #116                // Field java/awt/geom/Point2D$Double.y:D
+      28: dreturn
+}

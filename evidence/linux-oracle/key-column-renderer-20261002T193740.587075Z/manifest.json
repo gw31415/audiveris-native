@@ -1,0 +1,46 @@
+{
+  "kind": "synthetic independent input raster",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "font_resource": "res/Bravura.otf",
+  "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+  "source": "scripts/java/MakeKeyColumnFixtures.java",
+  "source_sha256": "63f192d1dcd329039af85751ccb82fcd1c8dd4190a26da342a6f4fc930d73e31",
+  "source_snapshot": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/key-column-20261002T193740.587075Z/MakeKeyColumnFixtures.java",
+  "commands": [
+    [
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/key-column-20261002T193740.587075Z/classes",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/key-column-20261002T193740.587075Z/MakeKeyColumnFixtures.java"
+    ],
+    [
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Djava.awt.headless=true",
+      "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/key-column-20261002T193740.587075Z",
+      "-cp",
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/key-column-20261002T193740.587075Z/classes",
+      "MakeKeyColumnFixtures",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/key-column-20261002T193740.587075Z"
+    ]
+  ],
+  "fixtures": {
+    "key-column-all-bottom-missing.png": "a198610243348dec9172f7ad4f1bd6726419e8195870d4c275c8a90d03586726",
+    "key-column-bottom-bridge.png": "31a28c575a969c453179b6fe9af214c05d6372319655e9b0c71ecf69ea896b42",
+    "key-column-bottom-first-only.png": "dc343c8b0eab02c0be4bdd8412e20dc821068f15c358a156920edf72d0610342",
+    "key-column-bottom-ink-blocks.png": "552cda15cb3e2cf2edd3a33a37a56a0eb460c5ce388ea97717870d910b0a5b93",
+    "key-column-bottom-no-clef.png": "5d8b028a0b3d45e0770d751081d41b2c3cbe29f076a96e7b1a1568e037e7a6c9",
+    "key-column-bottom-noise.png": "2a2ba6e3ddc5e18bd092d666ea03934447e8fc580319ea0f266b95cb66a38e1d",
+    "key-column-bottom-shifted.png": "b900c64f62f0e697cc867d840175f7143dda6a43b47071fe4271e27268041de9",
+    "key-column-bottom-trailing-block.png": "76745266c663656778b244ba55cb53dbbdb68f52b90c429eaf1dd49f6d3fcba8",
+    "key-column-last-flat-missing.png": "f02833ac002512340950ac93bfd8cb7991954238060f20012d403efbddcef0fd",
+    "key-column-last-sharp-missing.png": "12c7675eb91f04016979e7a16ca41a1d884226c6d219cecda48a4fdcc273359d",
+    "key-column-middle-flat-missing.png": "b6263e86330235d6f6c0499069e298e82b81257db06f96882499aa54dbd41863",
+    "key-column-one-flat-trailing.png": "c073dd9fdac35f62323c3b29926bbe7f2147aad353e6ecc5df97849941d5dceb",
+    "key-column-uniform-empty.png": "8f57ae6952440fdc0e793eb09025f0789182f52a4de47e5ba21990c32e098ed5",
+    "key-column-uniform-flats.png": "b74bea44de2a97a192743d97b584f471b1abf05cfa6453c74eb3c1ea5a9429a1",
+    "key-column-wrong-sharps.png": "ea16b7af0a7eae0ba6fc01de3f84a0ed5221bc27d026decb182995ca11c1799f"
+  },
+  "render_log_sha256": "93cd55809be3fa7dceaba2d2371930e00c82963c49eac2bf9b34253c0f465915"
+}

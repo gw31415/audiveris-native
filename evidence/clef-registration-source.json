@@ -1,0 +1,37 @@
+{
+  "release": "5.11.0",
+  "commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "license": "AGPL-3.0-or-later",
+  "files": [
+    {
+      "path": "fixtures/clef-registration-source/ClefBuilder.java",
+      "sha256": "54d977954a8e7c84392581d6cff9f5d6f0e07ce1c1906d7c374c083c33f0bb72",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/clef/ClefBuilder.java"
+    },
+    {
+      "path": "fixtures/clef-registration-source/ClefInter.java",
+      "sha256": "0b8a281e6a96473ba8364cba63bb5c83fc99718e93819d528bf62d502ddc9f45",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/ClefInter.java"
+    },
+    {
+      "path": "fixtures/clef-registration-source/AbstractInter.java",
+      "sha256": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractInter.java"
+    },
+    {
+      "path": "fixtures/clef-registration-source/ShapeSymbol.java",
+      "sha256": "6d6b9844ff0fdb4c1b1b2c1d7750794a343cb0dd7e641003898bddaca62b3db5",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/ui/symbol/ShapeSymbol.java"
+    },
+    {
+      "path": "fixtures/clef-registration-source/RunTable.java",
+      "sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/run/RunTable.java"
+    },
+    {
+      "path": "fixtures/clef-registration-source/GeoUtil.java",
+      "sha256": "965330f11b923a258d7ead0a0edcd12f2f9821c05683bbbf7554d58aa36a22ba",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/math/GeoUtil.java"
+    }
+  ]
+}

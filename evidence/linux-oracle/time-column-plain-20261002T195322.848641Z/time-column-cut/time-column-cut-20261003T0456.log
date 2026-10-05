@@ -1,0 +1,31 @@
+2026-10-03 04:56:26,963 INFO [time-column-cut]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-cut.png
+2026-10-03 04:56:27,257 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:27,259 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-cut/time-column-cut.omr
+2026-10-03 04:56:27,260 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:56:27,262 INFO [time-column-cut]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:56:27,286 INFO [time-column-cut]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-cut.png
+2026-10-03 04:56:27,290 INFO [time-column-cut]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:56:27,371 INFO [time-column-cut]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:56:27,381 INFO [time-column-cut]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:56:27,382 INFO [time-column-cut]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 39% of needed quorum
+2026-10-03 04:56:27,382 WARN [time-column-cut]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:56:27,383 INFO [time-column-cut]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:56:27,383 INFO [time-column-cut]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:56:27,384 INFO [time-column-cut]                 Book.java:2584 | Book{time-column-cut} storing
+2026-10-03 04:56:27,425 INFO [time-column-cut]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:27,446 INFO [time-column-cut]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:56:27,690 INFO [time-column-cut]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:27,690 INFO [time-column-cut]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-cut/time-column-cut.omr
+2026-10-03 04:56:27,721 INFO [time-column-cut]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:56:27,745 INFO [time-column-cut]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:56:27,746 INFO [time-column-cut]                 Book.java:2057 | End of Book{time-column-cut}
+2026-10-03 04:56:27,762 INFO [time-column-cut]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:56:27,843 INFO [time-column-cut]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:56:27,851 INFO [time-column-cut]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:56:27,867 INFO [time-column-cut]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:56:27,888 INFO [time-column-cut]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:56:27,888 INFO [time-column-cut]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:56:28,541 INFO [time-column-cut]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:28,555 INFO [time-column-cut]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:28,555 INFO [time-column-cut]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-cut/time-column-cut.omr
+2026-10-03 04:56:28,556 INFO [time-column-cut]                Score.java:181  | Closing {Score 1}

@@ -1,0 +1,130 @@
+Compiled from "GradeUtil.java"
+public abstract class org.audiveris.omr.sig.GradeUtil {
+  private static final org.slf4j.Logger logger;
+
+  private org.audiveris.omr.sig.GradeUtil();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static double clamp(double);
+    Code:
+       0: dload_0
+       1: dconst_0
+       2: dcmpg
+       3: ifge          8
+       6: dconst_0
+       7: dstore_0
+       8: dload_0
+       9: dconst_1
+      10: dcmpl
+      11: ifle          16
+      14: dconst_1
+      15: dstore_0
+      16: dload_0
+      17: dreturn
+
+  public static double contextual(double, double);
+    Code:
+       0: dconst_1
+       1: dload_2
+       2: dadd
+       3: dload_0
+       4: dmul
+       5: dconst_1
+       6: dload_2
+       7: dload_0
+       8: dmul
+       9: dadd
+      10: ddiv
+      11: dreturn
+
+  public static double contextual(double, double[]);
+    Code:
+       0: aload_2
+       1: ifnonnull     6
+       4: dload_0
+       5: dreturn
+       6: dconst_0
+       7: dstore_3
+       8: iconst_0
+       9: istore        5
+      11: iload         5
+      13: aload_2
+      14: arraylength
+      15: if_icmpge     31
+      18: dload_3
+      19: aload_2
+      20: iload         5
+      22: daload
+      23: dadd
+      24: dstore_3
+      25: iinc          5, 1
+      28: goto          11
+      31: dload_0
+      32: dload_3
+      33: invokestatic  #7                  // Method contextual:(DD)D
+      36: dreturn
+
+  public static double contextual(double, double[], double[]);
+    Code:
+       0: aload_3
+       1: ldc           #13                 // String Null ratios array
+       3: invokestatic  #15                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+       6: pop
+       7: aload_2
+       8: ldc           #21                 // String Null sources array
+      10: invokestatic  #15                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;Ljava/lang/String;)Ljava/lang/Object;
+      13: pop
+      14: aload_3
+      15: arraylength
+      16: aload_2
+      17: arraylength
+      18: if_icmpeq     31
+      21: new           #23                 // class java/lang/IllegalArgumentException
+      24: dup
+      25: ldc           #25                 // String Arrays of different lengths
+      27: invokespecial #27                 // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      30: athrow
+      31: dconst_0
+      32: dstore        4
+      34: iconst_0
+      35: istore        6
+      37: iload         6
+      39: aload_2
+      40: arraylength
+      41: if_icmpge     66
+      44: dload         4
+      46: aload_2
+      47: iload         6
+      49: daload
+      50: aload_3
+      51: iload         6
+      53: daload
+      54: invokestatic  #30                 // Method contributionOf:(DD)D
+      57: dadd
+      58: dstore        4
+      60: iinc          6, 1
+      63: goto          37
+      66: dload_0
+      67: dload         4
+      69: invokestatic  #7                  // Method contextual:(DD)D
+      72: dreturn
+
+  public static double contributionOf(double, double);
+    Code:
+       0: dload_0
+       1: dload_2
+       2: dconst_1
+       3: dsub
+       4: dmul
+       5: dreturn
+
+  static {};
+    Code:
+       0: ldc           #8                  // class org/audiveris/omr/sig/GradeUtil
+       2: invokestatic  #33                 // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+       5: putstatic     #39                 // Field logger:Lorg/slf4j/Logger;
+       8: return
+}

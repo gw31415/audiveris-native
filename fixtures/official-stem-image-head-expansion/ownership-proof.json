@@ -1,0 +1,13 @@
+{
+  "accepted_creations": 409,
+  "all2335_preexisting_registry_run_allocations_retained": true,
+  "cache_sizes": [
+    43,
+    51
+  ],
+  "full_private_Graph_unchanged": true,
+  "original_scheduler_SIG_head_beam_attachment_cleaner_epilog_verified": false,
+  "registered_physical_glyphs": 2361,
+  "same_actual_cache_entries_reused_with_white_image_and_changed_profile": true,
+  "status": "passed"
+}

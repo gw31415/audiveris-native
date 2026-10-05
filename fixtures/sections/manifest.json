@@ -1,0 +1,50 @@
+[
+  {
+    "file": "straight.pgm",
+    "sha256": "6f9a7e128eb3965d7f3066e41ee8d0ec7c17e866a0f40fc2aed92b68dc478fda",
+    "license": "CC0-1.0",
+    "case": "straight"
+  },
+  {
+    "file": "sloped.pgm",
+    "sha256": "651e906f8bf095809ac00df076b6ed8ba71161d4b0c543a2486a08d3c24c0229",
+    "license": "CC0-1.0",
+    "case": "sloped"
+  },
+  {
+    "file": "curved.pgm",
+    "sha256": "5d660b042db011f3fc8eacf7e5364c650c19c4282a85e2c167fc8218b5878d01",
+    "license": "CC0-1.0",
+    "case": "curved"
+  },
+  {
+    "file": "noisy.pgm",
+    "sha256": "76a9ade1cc598fe0ec80a5ebb6d8b28e69ece013a83150d6f84e88bc92166655",
+    "license": "CC0-1.0",
+    "case": "noisy"
+  },
+  {
+    "file": "two-staves.pgm",
+    "sha256": "9e5e31907810b017599b89f978a883bdd42e8adc7eb34b43a2f2b38ed74a81d6",
+    "license": "CC0-1.0",
+    "case": "two-staves"
+  },
+  {
+    "file": "broken.pgm",
+    "sha256": "f6e72a3ffb8f79fb86417618c00e3615fcf879001e652331d63a186de4f4a2a8",
+    "license": "CC0-1.0",
+    "case": "broken"
+  },
+  {
+    "file": "crossings.pgm",
+    "sha256": "d7a5d346e661595cafd7936b4edc062082a9e9e3fbbb55e737912bb1a6026fe3",
+    "license": "CC0-1.0",
+    "case": "crossings"
+  },
+  {
+    "file": "blank.pgm",
+    "sha256": "77c9a8b2433c79d38bf9eb24b8dba2c6b1c8033033e2e69eb261d28a03264262",
+    "license": "CC0-1.0",
+    "case": "blank"
+  }
+]

@@ -1,0 +1,206 @@
+{
+  "raster_count": 13,
+  "spot_count": 483,
+  "preparation_outputs_exact_in_all": true,
+  "full_BEAMS_parity_claimed": false,
+  "caveat": "Laura original plain step retains one grouped BEAM_SPOT per system while explicit boundary epilog retains none. Pixel preparation, head sizing, vertices and relations agree. Cause not established; glyph indexing/tagging/dispatch and full BEAMS are outside the native milestone.",
+  "cases": [
+    {
+      "name": "beams-double",
+      "boundary_result_sha256": "a21fc9f619ea3df629fa030e6e5d6051aa41a0dcbf0200b6679de624f9b05125",
+      "plain_result_sha256": "40f0b6464e7ee3b8ea4b2b77bdb76297ce87501fd771e20cdde02f10166e2366",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 7,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-empty",
+      "boundary_result_sha256": "2acd0b89463a5459b5806f86ecc299f6f2f062acfe2c1114a490c4445efd0ddf",
+      "plain_result_sha256": "2a41df62a41d2982a88af1d2b997f2cb0781cf953119eed996b16ec6a2e40d6c",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 3,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-heads-only",
+      "boundary_result_sha256": "1c5addeaf3a0371a8b8911cf4d0d079ec4f23fa1d6c611f1278d686d9887c9ec",
+      "plain_result_sha256": "d28feaba87d4cfe04334e8559ee7696798305d2f5f03acb2484ffdb9492ec6a0",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 5,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-hook",
+      "boundary_result_sha256": "a06607e242940be7a736847d6518bf9db1a5f69b08ad8b7da7b05351319d2216",
+      "plain_result_sha256": "bb55793f9639bf126376fcb69b8e2a04bf66adcaabb9ba833a9d92c6de527bd9",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 7,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-noise",
+      "boundary_result_sha256": "788d37162e38932c822bc197c4181cf5f3c0a4a59a083fda40e4e14377dc0c94",
+      "plain_result_sha256": "0757f8cd19c2fdf019800d18a621d3e8c9ee70df666ac4762368f638cb4ed533",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 3,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-short",
+      "boundary_result_sha256": "ecfb1293c515005b5eecf61b0bb899189236887092d02fbd04a643a5449dc772",
+      "plain_result_sha256": "0e892da748a11738a87a65657c7b7cf071fb0eaa78ddd389617c9a5450daa410",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 6,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-single",
+      "boundary_result_sha256": "fc4ee7eb6f904bea8ae0cf337f18d1a630041169f717d7145f3bb5146ca4b1e9",
+      "plain_result_sha256": "145cb0e4fc582914257241d5b376515c5be3802649df903968634622b8335493",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 6,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-sloped",
+      "boundary_result_sha256": "2d7f98632f58fe72b3938c361bf3b60949be5a96ae377f6eed9e91cfd766aaa4",
+      "plain_result_sha256": "79c213a07f29750ba439fd2bed5c78f32808e472ab2f63bd1f100bcad69a4062",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 6,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-split",
+      "boundary_result_sha256": "b08662edd259aef7cda03b411248657c91217c8494f2948a278ac378491752dc",
+      "plain_result_sha256": "d412246b49b358fd43f7662a200d446a0f6674639a8a3876bbd2b42e3666654a",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 7,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-steep",
+      "boundary_result_sha256": "a3904e157cc0d327b158a1f00134157a818645acf51ad24c9b55800581520cd0",
+      "plain_result_sha256": "8fd3ac8f6100875bf67a2812631d4c28b9268625a26333ddda2044adae246300",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 11,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-thin",
+      "boundary_result_sha256": "e13671668939c34cf37bb8569a4787670c7cafb61c7bcdefdc10562293d344cb",
+      "plain_result_sha256": "a7cd2fb21088c0e4bf1d1f7287dd7a103fbd91d37ccf865c24fc1028a37649d1",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 5,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "beams-triple",
+      "boundary_result_sha256": "ae4eb3a8f1922139e0b6a79d1d4f3c2e2e2490a486e6206c4d67883e4e5ce129",
+      "plain_result_sha256": "9165d2ef856b3ad6493ac7945f20c276228035247028fb9d04b3eb59df60d71a",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": true,
+      "spots": 8,
+      "grouped_spot_counts_boundary": [
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        0
+      ]
+    },
+    {
+      "name": "laura-gray",
+      "boundary_result_sha256": "cf5675ad4cb419e4ac71b69f8102e6d987653200bd093b71e874b0a9c3bcfda2",
+      "plain_result_sha256": "c65c82d19434dd52d3e5a955d8b0dbc8531e728e5eab5ca5c79a8eb31419a729",
+      "head_scale_head_spots_and_no_staff_exact": true,
+      "beam_inters_and_relations_exact": true,
+      "whole_final_equal": false,
+      "spots": 409,
+      "grouped_spot_counts_boundary": [
+        0,
+        0
+      ],
+      "grouped_spot_counts_plain": [
+        1,
+        1
+      ]
+    }
+  ]
+}

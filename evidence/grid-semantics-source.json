@@ -1,0 +1,14 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "license": "AGPL-3.0-or-later",
+  "source_sha256": {
+    "sheet/grid/BarsRetriever.java": "6d040d5c7a1c963ffbcc33cafb4025fb00f4234d71fb3e81da608897e0b9781b",
+    "sheet/grid/StaffProjector.java": "4fd07b324a7d289de42a9909e805d56afbec9b5ceaa57dc6fc4ae0e1783a83ef",
+    "sheet/grid/StaffPeak.java": "4d1f6172bcd8b77d190b0b7dd98ca3c9b0bb9c5c5aa8b56e2a80b4077e38a5f7",
+    "sheet/grid/PartGroup.java": "d6be48f98d62be186b416ddccbf969abbc75c1ece7c0d48f6d39ce8b0b998bd2",
+    "sheet/note/DistancesBuilder.java": "31464fd855407b2258cb22c441b44da5184f114f608d0d6963debc31e4285181",
+    "sig/inter/BracketInter.java": "3eebd8b47545947618bf06944942d6850dccfc74c82cd21a08c80810ffb39a62",
+    "sig/inter/BracketConnectorInter.java": "e6c73e03e1fe745b09d1531da77fb7a3dec1cbe6755dd42961c2dafde6bd7b8f",
+    "glyph/dynamic/CompoundFactory.java": "78cdbbe237efe076814784a8a3fd639feee170e36b54dd54fad0d71320cecfe7"
+  }
+}

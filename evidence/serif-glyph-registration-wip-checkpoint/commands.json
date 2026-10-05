@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "/workspace/audiveris-loop-check-20261003/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*",
+      "-d",
+      "/workspace/audiveris-serif-glyphs-check-20261003/classes",
+      "/workspace/audiveris-savedlatest-20261003/scripts/java/BeamImpactsControlProbe.java",
+      "/workspace/audiveris-savedlatest-20261003/scripts/java/SerifFilamentControlProbe.java"
+    ],
+    "exit_code": 0,
+    "seconds": 1.0232340679995104
+  },
+  {
+    "command": [
+      "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Xmx512m",
+      "-XX:ActiveProcessorCount=2",
+      "-Djava.awt.headless=true",
+      "-cp",
+      "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-serif-glyphs-check-20261003/classes",
+      "SerifFilamentControlProbe",
+      "/workspace/audiveris-serif-glyphs-check-20261003/inputs.json",
+      "/workspace/audiveris-serif-glyphs-check-20261003/original.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.6154894319997766
+  }
+]

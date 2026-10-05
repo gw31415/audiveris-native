@@ -1,0 +1,19 @@
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.13s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_native-7a2385417c16bc34)
+
+running 11 tests
+test key_clef::tests::empty_and_missing_slices_do_not_select_a_clef ... ok
+test key_clef::tests::incompatible_and_percussion_clefs_still_compete_in_second_pass ... ok
+test key_clef::tests::overall_equal_grade_preserves_input_order_even_for_incompatible_clef ... ok
+test key_clef::tests::support_uses_ratio_six_and_actual_non_null_count ... ok
+test key_clef::tests::all_percussion_is_excluded_without_pitch_table_error ... ok
+test key_clef::tests::compatible_clef_gets_contextual_support_and_first_tie_wins ... ok
+test key_clef::tests::rejection_preserves_earlier_writes_and_leaves_later_entries_zero ... ok
+test key_clef::tests::invalid_inputs_and_resource_bounds_are_explicit ... ok
+test key_clef::tests::all_fourteen_pitch_tables_match_key_inter ... ok
+test key_clef::tests::zero_pitched_grade_can_still_be_compatible_but_zero_clef_cannot_win ... ok
+test key_clef::tests::thresholds_use_slice_count_and_accept_equality_with_zero_grade ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="688" height="410" viewBox="0 0 688 410"><rect width="100%" height="100%" fill="white"/><style>text{font-family:Arial,sans-serif;font-size:14px}</style>
+<text x="12" y="20">sloped — original (left) / native debug overlay (right)</text>
+<text x="12" y="42">Cyan: rectangular seeds; orange: other seeds; magenta: combs. Java matched. NOT detected staves.</text>
+<image x="12" y="66" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAAAAADo+/p2AAACP0lEQVR42u3YwRHDMAhFQfXfNKnAlzAYgfdVkNmMJfufUKqDACBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAAbAM9TlJKAZJOPMNmqM5Bs1SXyIdmXf/k+2Vt+4FjZ+//hy2UHHz53yG68F1+V/dQrW4Wsr4mkLMC/ZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQA7gO0rVQBkk0+wmSrzkCy9sBpt7A9kOy090B74HJZe6A9sFfW10TYAxtkAbpEAO4DtK1UAZJNPsJkq85AsvbAabewPZDstPdAe+ByWXugPbBX1tdE2AMbZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQAAhRAgAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQIUAABDu4HemzaVxeNcycAAAAASUVORK5CYII="/>
+<image x="356" y="66" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAAAAADo+/p2AAACP0lEQVR42u3YwRHDMAhFQfXfNKnAlzAYgfdVkNmMJfufUKqDACBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAAbAM9TlJKAZJOPMNmqM5Bs1SXyIdmXf/k+2Vt+4FjZ+//hy2UHHz53yG68F1+V/dQrW4Wsr4mkLMC/ZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQA7gO0rVQBkk0+wmSrzkCy9sBpt7A9kOy090B74HJZe6A9sFfW10TYAxtkAbpEAO4DtK1UAZJNPsJkq85AsvbAabewPZDstPdAe+ByWXugPbBX1tdE2AMbZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQAAhRAgAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQIUAABDu4HemzaVxeNcycAAAAASUVORK5CYII="/>
+<g transform="translate(356,66)">
+<rect x="10" y="60" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 1</title></rect>
+<rect x="10" y="61" width="300" height="11" fill="none" stroke="#ed9200" stroke-width="1.1"><title>section 2</title></rect>
+<rect x="285" y="72" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 3</title></rect>
+<rect x="10" y="76" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 4</title></rect>
+<rect x="10" y="77" width="300" height="11" fill="none" stroke="#ed9200" stroke-width="1.1"><title>section 5</title></rect>
+<rect x="285" y="88" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 6</title></rect>
+<rect x="10" y="92" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 7</title></rect>
+<rect x="10" y="93" width="300" height="11" fill="none" stroke="#ed9200" stroke-width="1.1"><title>section 8</title></rect>
+<rect x="285" y="104" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 9</title></rect>
+<rect x="10" y="108" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 10</title></rect>
+<rect x="10" y="109" width="300" height="11" fill="none" stroke="#ed9200" stroke-width="1.1"><title>section 11</title></rect>
+<rect x="285" y="120" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 12</title></rect>
+<rect x="10" y="124" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 13</title></rect>
+<rect x="10" y="125" width="300" height="11" fill="none" stroke="#ed9200" stroke-width="1.1"><title>section 14</title></rect>
+<rect x="285" y="136" width="25" height="1" fill="none" stroke="#00a7c4" stroke-width="1.1"><title>section 15</title></rect>
+<path d="M 16 60.0 V 124.0" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 32 60.0 V 124.0" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 288 72.0 V 136.0" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+<path d="M 304 72.0 V 136.0" fill="none" stroke="#d00072" stroke-opacity=".32" stroke-width=".7"/>
+</g></svg>

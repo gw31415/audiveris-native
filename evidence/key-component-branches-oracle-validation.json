@@ -1,0 +1,227 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "synthetic_input": true,
+  "native_outputs_used": false,
+  "injected_candidate_controls_used": false,
+  "provenance": "evidence/linux-oracle/key-component-branches-20261002T183502.541966Z/provenance.json",
+  "perturbations": "evidence/linux-oracle/key-component-branches-20261002T183502.541966Z/perturbations.json",
+  "observer_sha256": "d38916385b6147e1d015a9ee6263b135eb937981295a59c8908aecc45b83ec86",
+  "renderer_sha256": "434cef82d436cdb6e7fdf9c0e37c8d8d32b474cd776bcc3977f55bb5a4582e75",
+  "fixtures": [
+    {
+      "name": "damaged-header-flat-cut-128",
+      "input_sha256": "c9e91a11bb4cfe02f78d52cb2fb2b320213dfbb375a203466343948682b2367c",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-128-key-component-branches.json",
+      "result_sha256": "b21737ab1836e593d2f8d7e6356e33dab3f9bf4fbc1b33fa6f3f9fbda53cfea7",
+      "observations": [
+        {
+          "shape": "FLAT",
+          "parts": 2,
+          "before_purge": 2,
+          "after_purge": 1,
+          "removed": 1,
+          "assigned_part_counts": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-flat-cut-136",
+      "input_sha256": "c204d2db02a426baaa573fdc400f964d2156e9845f7c333db8c2ee8acdb5308c",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-136-key-component-branches.json",
+      "result_sha256": "5f26323f8168f89452694efa36a9c97427767771412cceec15ad71fa6ac26e6b",
+      "observations": [
+        {
+          "shape": "FLAT",
+          "parts": 2,
+          "before_purge": 1,
+          "after_purge": 1,
+          "removed": 0,
+          "assigned_part_counts": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-flat-cut-143",
+      "input_sha256": "6c88dfd37804e4504d9b94112b7051a6b755bbfa262cd3a777097b99c57e2c79",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-143-key-component-branches.json",
+      "result_sha256": "577e99237d0327862ee3a2b4c056c1ad40be1fdb33b98e7911f3e7b20a6e2e7e",
+      "observations": [
+        {
+          "shape": "FLAT",
+          "parts": 3,
+          "before_purge": 2,
+          "after_purge": 1,
+          "removed": 1,
+          "assigned_part_counts": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-flat-cut-147",
+      "input_sha256": "a89c94dd080efbd2fe13842956d35e30f4c579de2a6b7a40b1d572cf8e6cfb49",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-147-key-component-branches.json",
+      "result_sha256": "3ba18333b1a6f9218176ed10bea92c85a52ee2154ad9882b0c0e02f7870f4bfd",
+      "observations": [
+        {
+          "shape": "FLAT",
+          "parts": 2,
+          "before_purge": 1,
+          "after_purge": 1,
+          "removed": 0,
+          "assigned_part_counts": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-flat-speck-125",
+      "input_sha256": "663b3adb9a0e3cf40bec761266afa8ea5a34e26fd13f1c25c1d81600489ad9b0",
+      "result": "fixtures/official-grid/damaged-header-flat-speck-125-key-component-branches.json",
+      "result_sha256": "3df554a7707bd843b638865392d48eeaf79742e84e1fe08d03d23ce14b505fa5",
+      "observations": [
+        {
+          "shape": "FLAT",
+          "parts": 2,
+          "before_purge": 2,
+          "after_purge": 1,
+          "removed": 1,
+          "assigned_part_counts": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-flat-speck-132",
+      "input_sha256": "013cb264bcc29b44675970f8b749b7b0a91685d60bab719d9ab55ab23d654488",
+      "result": "fixtures/official-grid/damaged-header-flat-speck-132-key-component-branches.json",
+      "result_sha256": "1c3f70f18fb5e30e0a2a4d5e54ba8ad3156511ba7d13fd14f0a76a3da28e672e",
+      "observations": [
+        {
+          "shape": "FLAT",
+          "parts": 2,
+          "before_purge": 2,
+          "after_purge": 1,
+          "removed": 1,
+          "assigned_part_counts": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-sharp-cut-110",
+      "input_sha256": "5da90870d3bc0ae9fa209ae9b7c8425abc38d12e88bf4da27dd12733448ca463",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-110-key-component-branches.json",
+      "result_sha256": "ecb5d0056b0632e55fa7425d705e1751a1d9661342cf7c9ecbec36432204735d",
+      "observations": [
+        {
+          "shape": "SHARP",
+          "parts": 2,
+          "before_purge": 1,
+          "after_purge": 1,
+          "removed": 0,
+          "assigned_part_counts": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-sharp-cut-120",
+      "input_sha256": "c27c853db8ad4b692e3fa7815dc0bbbab2106d17eb690b0ca52529569f64aa2b",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-120-key-component-branches.json",
+      "result_sha256": "98d58652422dade487135efdde72e3270840086a28ca51620f18cace6c73ee3b",
+      "observations": [
+        {
+          "shape": "SHARP",
+          "parts": 2,
+          "before_purge": 1,
+          "after_purge": 1,
+          "removed": 0,
+          "assigned_part_counts": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-sharp-cut-130",
+      "input_sha256": "d603647b79608fbf95b20cb30ee873412e64984ee92c363f0ea48063c913c02a",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-130-key-component-branches.json",
+      "result_sha256": "3501ef633df71f084ada3bd59c45192e25a2702f0e8d60897f4ea5daf38d3e4e",
+      "observations": [
+        {
+          "shape": "SHARP",
+          "parts": 3,
+          "before_purge": 3,
+          "after_purge": 1,
+          "removed": 2,
+          "assigned_part_counts": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "damaged-header-sharp-speck-98",
+      "input_sha256": "35ec4062520199651e741945384bcb2077585afcfb5f0e8cc1893690e48d7e2c",
+      "result": "fixtures/official-grid/damaged-header-sharp-speck-98-key-component-branches.json",
+      "result_sha256": "fc5009df5dfd8f6d5eab5d87b341b49f5d9f61ac61c60052c78ee3976ba221b8",
+      "observations": [
+        {
+          "shape": "SHARP",
+          "parts": 2,
+          "before_purge": 2,
+          "after_purge": 1,
+          "removed": 1,
+          "assigned_part_counts": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "rendered-header-empty",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "result": "fixtures/official-grid/rendered-header-empty-key-component-branches.json",
+      "result_sha256": "c4c0f4201a276249a14cf6b837fbfc9aa50aeb94be3d016e44d5b9067029ce47",
+      "observations": []
+    },
+    {
+      "name": "rendered-header-noise",
+      "input_sha256": "5286804a4376ad60152f6b18fe0e7d68faeec2fa521ef3a6b819f0d4225cb50e",
+      "result": "fixtures/official-grid/rendered-header-noise-key-component-branches.json",
+      "result_sha256": "2b82010f4a357fcc06807ff655a2b85b13d310f8cbba2260e6da6887869de5ac",
+      "observations": []
+    }
+  ],
+  "coverage": {
+    "assigned_multipart_cases": [
+      "damaged-header-flat-cut-128",
+      "damaged-header-flat-cut-136",
+      "damaged-header-flat-cut-143",
+      "damaged-header-flat-cut-147",
+      "damaged-header-sharp-cut-110",
+      "damaged-header-sharp-cut-120",
+      "damaged-header-sharp-cut-130",
+      "damaged-header-sharp-speck-98"
+    ],
+    "overlap_purge_cases": [
+      "damaged-header-flat-cut-128",
+      "damaged-header-flat-cut-143",
+      "damaged-header-flat-speck-125",
+      "damaged-header-flat-speck-132",
+      "damaged-header-sharp-cut-130",
+      "damaged-header-sharp-speck-98"
+    ]
+  }
+}

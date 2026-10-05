@@ -1,0 +1,12 @@
+{
+  "source_path": "/Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-glyph-features",
+  "source_commit": "225d081c888086e8617be920e3f3ca1bc1f9e4b2",
+  "source_tree": "9df76405a2d93070e34bc2bba4f42626abf75c10",
+  "import_commit": "bbb6d91",
+  "import_method": "local fetch fixed commit; ours merge preserving second-parent history; read-tree into crates/audiveris-glyph-features",
+  "imported_files_changed": false,
+  "manifest_sha256": "d6d85c0bedda2e667a6192bb2624ed1065a3256fd38f2a1aa9d78c116c9a284e",
+  "verified_manifest_files": 72,
+  "root_cli": "classify-glyph MODEL.json BINARY_IMAGE INTERLINE [horizontal|vertical [LEFT TOP]]",
+  "page_segmentation": "not implemented"
+}

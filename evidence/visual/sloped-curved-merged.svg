@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="688" height="410"><rect width="100%" height="100%" fill="white"/><style>text{font:14px Arial,sans-serif}</style>
+<text x="12" y="20">sloped: original / merged curves. 5 filaments, 5 after line filters.</text>
+<text x="12" y="42">Cyan: retained; red: rejected; magenta: combs. Sampled curves only. NOT Staff detections.</text>
+<image x="12" y="66" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAAAAADo+/p2AAACP0lEQVR42u3YwRHDMAhFQfXfNKnAlzAYgfdVkNmMJfufUKqDACBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAAbAM9TlJKAZJOPMNmqM5Bs1SXyIdmXf/k+2Vt+4FjZ+//hy2UHHz53yG68F1+V/dQrW4Wsr4mkLMC/ZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQA7gO0rVQBkk0+wmSrzkCy9sBpt7A9kOy090B74HJZe6A9sFfW10TYAxtkAbpEAO4DtK1UAZJNPsJkq85AsvbAabewPZDstPdAe+ByWXugPbBX1tdE2AMbZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQAAhRAgAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQIUAABDu4HemzaVxeNcycAAAAASUVORK5CYII="/>
+<image x="356" y="66" width="320" height="320" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAAAAADo+/p2AAACP0lEQVR42u3YwRHDMAhFQfXfNKnAlzAYgfdVkNmMJfufUKqDACBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAAbAM9TlJKAZJOPMNmqM5Bs1SXyIdmXf/k+2Vt+4FjZ+//hy2UHHz53yG68F1+V/dQrW4Wsr4mkLMC/ZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQA7gO0rVQBkk0+wmSrzkCy9sBpt7A9kOy090B74HJZe6A9sFfW10TYAxtkAbpEAO4DtK1UAZJNPsJkq85AsvbAabewPZDstPdAe+ByWXugPbBX1tdE2AMbZAG6RADuA7StVAGSTT7CZKvOQLL2wGm3sD2Q7LT3QHvgcll7oD2wV9bXRNgDG2QBukQAAhRAgAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAgAIIECBAAQQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIEKAAAgQIUAABAgQogAABAhRAgAABCiBAgAAFECBAgAIIECBAAQQIEKAAAgQIUAABAgQIUAABDu4HemzaVxeNcycAAAAASUVORK5CYII="/>
+<g transform="translate(356,66)">
+<polyline points="10.00000,60.50000 47.37500,61.65002 84.75000,62.90905 122.12500,64.38605 159.50000,66.04420 196.87500,67.62957 234.25000,68.89591 271.62500,70.13554 309.00000,71.50000" fill="none" stroke="#00a7c4" stroke-width="1.8"><title>filament 1; sections [1, 2, 3]</title></polyline>
+<circle cx="10.00000" cy="60.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="73.50000" cy="62.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="133.50000" cy="64.87500" r="1.5" fill="#00a7c4"/>
+<circle cx="193.50000" cy="67.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="253.50000" cy="69.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="309.00000" cy="71.50000" r="1.5" fill="#00a7c4"/>
+<polyline points="10.00000,76.50000 47.37500,77.65002 84.75000,78.90905 122.12500,80.38605 159.50000,82.04420 196.87500,83.62957 234.25000,84.89591 271.62500,86.13554 309.00000,87.50000" fill="none" stroke="#00a7c4" stroke-width="1.8"><title>filament 4; sections [4, 5, 6]</title></polyline>
+<circle cx="10.00000" cy="76.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="73.50000" cy="78.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="133.50000" cy="80.87500" r="1.5" fill="#00a7c4"/>
+<circle cx="193.50000" cy="83.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="253.50000" cy="85.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="309.00000" cy="87.50000" r="1.5" fill="#00a7c4"/>
+<polyline points="10.00000,92.50000 47.37500,93.65002 84.75000,94.90905 122.12500,96.38605 159.50000,98.04420 196.87500,99.62957 234.25000,100.89591 271.62500,102.13554 309.00000,103.50000" fill="none" stroke="#00a7c4" stroke-width="1.8"><title>filament 7; sections [7, 8, 9]</title></polyline>
+<circle cx="10.00000" cy="92.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="73.50000" cy="94.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="133.50000" cy="96.87500" r="1.5" fill="#00a7c4"/>
+<circle cx="193.50000" cy="99.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="253.50000" cy="101.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="309.00000" cy="103.50000" r="1.5" fill="#00a7c4"/>
+<polyline points="10.00000,108.50000 47.37500,109.65002 84.75000,110.90905 122.12500,112.38605 159.50000,114.04420 196.87500,115.62957 234.25000,116.89591 271.62500,118.13554 309.00000,119.50000" fill="none" stroke="#00a7c4" stroke-width="1.8"><title>filament 10; sections [10, 11, 12]</title></polyline>
+<circle cx="10.00000" cy="108.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="73.50000" cy="110.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="133.50000" cy="112.87500" r="1.5" fill="#00a7c4"/>
+<circle cx="193.50000" cy="115.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="253.50000" cy="117.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="309.00000" cy="119.50000" r="1.5" fill="#00a7c4"/>
+<polyline points="10.00000,124.50000 47.37500,125.65002 84.75000,126.90905 122.12500,128.38605 159.50000,130.04420 196.87500,131.62957 234.25000,132.89591 271.62500,134.13554 309.00000,135.50000" fill="none" stroke="#00a7c4" stroke-width="1.8"><title>filament 13; sections [13, 14, 15]</title></polyline>
+<circle cx="10.00000" cy="124.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="73.50000" cy="126.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="133.50000" cy="128.87500" r="1.5" fill="#00a7c4"/>
+<circle cx="193.50000" cy="131.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="253.50000" cy="133.50000" r="1.5" fill="#00a7c4"/>
+<circle cx="309.00000" cy="135.50000" r="1.5" fill="#00a7c4"/>
+<path d="M 16 60.682367488948515 V 124.68236748894849" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 32 61.17139739003887 V 125.17139739003885" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 48 61.669741338766855 V 125.66974133876687" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 64 62.18417318795983 V 126.18417318795983" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 80 62.734470669205756 V 126.73447066920575" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 96 63.33387106571472 V 127.33387106571473" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 112 63.96692377482334 V 127.96692377482333" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 128 64.63614660620736 V 128.63614660620738" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 144 65.34241622121709 V 129.3424162212171" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 160 66.06679127659545 V 130.06679127659544" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 176 66.77718440746555 V 130.77718440746557" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 192 67.44127238150419 V 131.44127238150418" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 208 68.03411818292575 V 132.03411818292574" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 224 68.56998119905192 V 132.5699811990519" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 240 69.07607281698566 V 133.07607281698563" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 256 69.58606643837894 V 133.5860664383789" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 272 70.14894559631404 V 134.14894559631404" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 288 70.72773100059632 V 134.72773100059635" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+<path d="M 304 71.31554427442705 V 135.31554427442705" fill="none" stroke="#bc1676" stroke-opacity=".3" stroke-width=".7"/>
+</g></svg>

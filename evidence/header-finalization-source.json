@@ -1,0 +1,33 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "sources": {
+    "fixtures/header-finalization-source/AbstractInter.java": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548",
+    "fixtures/header-finalization-source/ClefBuilder.java": "54d977954a8e7c84392581d6cff9f5d6f0e07ce1c1906d7c374c083c33f0bb72",
+    "fixtures/header-finalization-source/HeaderBuilder.java": "dfb50ab17f9a443049d2037a20c385e2f22d2fd4e353762bdc18c17721325140",
+    "fixtures/header-finalization-source/StaffHeader.java": "e01920687bc16d23e141872ce927d2c84499090cbc7f4aaaeb1960dfe5bd370e"
+  },
+  "validation": {
+    "live_original_rasters": 71,
+    "comparison": "selected headers, ranges, graph node/relation semantics, geometry, glyph pixels, freezing; absolute grade tolerance1e-9; native numeric IDs canonicalized",
+    "persisted_oracle": "separate; transient ranges absent and grades serialized to three decimals",
+    "original_contextual_partition_controls": 8,
+    "contextual_control_comparison": "exact f64 bits including one-ULP excluded-partner case"
+  },
+  "supported_scope": "fresh automatic five-line native GRID, current resource limits",
+  "not_complete": [
+    "general GRID",
+    "STEM_SEEDS",
+    "BEAMS",
+    "LEDGERS",
+    "HEADS",
+    "rhythm",
+    "MusicXML",
+    "300 DPI PDF"
+  ],
+  "review_fixes": [
+    "original partition-sequence enumeration and per-partition contextual rounding",
+    "validated header bounds before eager fallback addition",
+    "validated ensemble member bounds before sorting",
+    "duplicate staff/system and empty-system rejection"
+  ]
+}

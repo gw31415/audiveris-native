@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/runtime/Contents/Home/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/final-probe/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/final-probe/cache",
+    "-Djava.util.prefs.userRoot=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/final-probe/prefs",
+    "-Dnative.probe.output=/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/final-probe/laura-gray/final.json",
+    "-cp",
+    "/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/app/*:/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/final-probe",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "GridFinalProbe",
+    "-output",
+    "/Users/ama/Documents/Codex/2026-10-02/task-5/evidence/generated/final-probe/laura-gray",
+    "--",
+    "/Users/ama/Documents/Codex/2026-10-02/task-5/fixtures/official-grid/laura-gray.png"
+  ],
+  "exit": 0,
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "reference_sha256": "15070f4662b151a809a81faccaa1b54f8a2e8acea4231db4684f3d36582453ef"
+}

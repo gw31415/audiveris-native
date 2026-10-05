@@ -1,0 +1,30 @@
+2026-10-03 05:15:59,122 INFO [damaged-header-sharp-cut-110]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-sharp-cut-110.png
+2026-10-03 05:15:59,238 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:15:59,239 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/damaged-header-sharp-cut-110/damaged-header-sharp-cut-110.omr
+2026-10-03 05:15:59,241 INFO []                 Book.java:1929 | Book reaching HEADERS on sheets:[#1]
+2026-10-03 05:15:59,243 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:15:59,264 INFO [damaged-header-sharp-cut-110]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/damaged-header-sharp-cut-110.png
+2026-10-03 05:15:59,267 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:15:59,342 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:15:59,350 INFO [damaged-header-sharp-cut-110]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:15:59,351 INFO [damaged-header-sharp-cut-110]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 41% of needed quorum
+2026-10-03 05:15:59,351 WARN [damaged-header-sharp-cut-110]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:15:59,351 INFO [damaged-header-sharp-cut-110]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:15:59,351 INFO [damaged-header-sharp-cut-110]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:15:59,352 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | GRID
+2026-10-03 05:15:59,447 INFO [damaged-header-sharp-cut-110]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:15:59,457 INFO [damaged-header-sharp-cut-110]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:15:59,484 INFO [damaged-header-sharp-cut-110]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:15:59,514 INFO [damaged-header-sharp-cut-110]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:15:59,515 INFO [damaged-header-sharp-cut-110]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:15:59,516 INFO [damaged-header-sharp-cut-110]       StepMonitoring.java:98   | HEADERS
+2026-10-03 05:16:00,210 INFO [damaged-header-sharp-cut-110]                 Book.java:2584 | Book{damaged-header-sharp-cut-110} storing
+2026-10-03 05:16:00,245 INFO [damaged-header-sharp-cut-110]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:16:00,263 INFO [damaged-header-sharp-cut-110]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:16:00,466 INFO [damaged-header-sharp-cut-110]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:16:00,466 INFO [damaged-header-sharp-cut-110]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/damaged-header-sharp-cut-110/damaged-header-sharp-cut-110.omr
+2026-10-03 05:16:00,467 INFO [damaged-header-sharp-cut-110]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:16:00,494 INFO [damaged-header-sharp-cut-110]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:16:00,497 INFO [damaged-header-sharp-cut-110]                 Book.java:2057 | End of Book{damaged-header-sharp-cut-110}
+2026-10-03 05:16:00,575 INFO [damaged-header-sharp-cut-110]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:16:00,661 INFO [damaged-header-sharp-cut-110]                Score.java:181  | Closing {Score 1}

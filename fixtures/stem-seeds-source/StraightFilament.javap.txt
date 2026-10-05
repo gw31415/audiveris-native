@@ -1,0 +1,387 @@
+Compiled from "StraightFilament.java"
+public class org.audiveris.omr.glyph.dynamic.StraightFilament extends org.audiveris.omr.glyph.dynamic.Filament implements org.audiveris.omr.glyph.NearLine {
+  protected org.audiveris.omr.math.BasicLine line;
+
+  public org.audiveris.omr.glyph.dynamic.StraightFilament(int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: invokespecial #1                  // Method org/audiveris/omr/glyph/dynamic/Filament."<init>":(I)V
+       5: return
+
+  private void checkLine();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+       4: ifnonnull     11
+       7: aload_0
+       8: invokevirtual #13                 // Method computeLine:()V
+      11: return
+
+  public void computeLine();
+    Code:
+       0: aload_0
+       1: new           #17                 // class org/audiveris/omr/math/BasicLine
+       4: dup
+       5: invokespecial #19                 // Method org/audiveris/omr/math/BasicLine."<init>":()V
+       8: putfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+      11: aload_0
+      12: invokevirtual #21                 // Method getMembers:()Ljava/util/SortedSet;
+      15: invokeinterface #25,  1           // InterfaceMethod java/util/SortedSet.iterator:()Ljava/util/Iterator;
+      20: astore_1
+      21: aload_1
+      22: invokeinterface #31,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+      27: ifeq          105
+      30: aload_1
+      31: invokeinterface #37,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      36: checkcast     #41                 // class org/audiveris/omr/lag/Section
+      39: astore_2
+      40: aload_2
+      41: invokeinterface #43,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getAbsoluteLine:()Lorg/audiveris/omr/math/Line;
+      46: astore_3
+      47: aload_3
+      48: ifnull        63
+      51: aload_0
+      52: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+      55: aload_3
+      56: invokevirtual #47                 // Method org/audiveris/omr/math/BasicLine.includeLine:(Lorg/audiveris/omr/math/Line;)Lorg/audiveris/omr/math/Line;
+      59: pop
+      60: goto          102
+      63: new           #51                 // class java/awt/Point
+      66: dup
+      67: aload_2
+      68: invokeinterface #53,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getStartCoord:()I
+      73: aload_2
+      74: invokeinterface #57,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getFirstPos:()I
+      79: invokespecial #60                 // Method java/awt/Point."<init>":(II)V
+      82: astore        4
+      84: aload_0
+      85: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+      88: aload_2
+      89: invokeinterface #63,  1           // InterfaceMethod org/audiveris/omr/lag/Section.getOrientation:()Lorg/audiveris/omr/run/Orientation;
+      94: aload         4
+      96: invokevirtual #67                 // Method org/audiveris/omr/run/Orientation.absolute:(Ljava/awt/Point;)Ljava/awt/Point;
+      99: invokevirtual #73                 // Method org/audiveris/omr/math/BasicLine.includePoint:(Ljava/awt/geom/Point2D;)V
+     102: goto          21
+     105: aload_0
+     106: invokevirtual #77                 // Method getBounds:()Ljava/awt/Rectangle;
+     109: astore_1
+     110: aload_0
+     111: invokevirtual #81                 // Method getWeight:()I
+     114: iconst_1
+     115: if_icmpgt     132
+     118: aload_0
+     119: aload_0
+     120: aload_1
+     121: invokevirtual #84                 // Method java/awt/Rectangle.getLocation:()Ljava/awt/Point;
+     124: dup_x1
+     125: putfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+     128: putfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+     131: return
+     132: aload_1
+     133: getfield      #97                 // Field java/awt/Rectangle.y:I
+     136: i2d
+     137: dstore_2
+     138: aload_1
+     139: getfield      #97                 // Field java/awt/Rectangle.y:I
+     142: aload_1
+     143: getfield      #101                // Field java/awt/Rectangle.height:I
+     146: iadd
+     147: iconst_1
+     148: isub
+     149: i2d
+     150: dstore        4
+     152: aload_1
+     153: getfield      #104                // Field java/awt/Rectangle.x:I
+     156: i2d
+     157: dstore        6
+     159: aload_1
+     160: getfield      #104                // Field java/awt/Rectangle.x:I
+     163: aload_1
+     164: getfield      #107                // Field java/awt/Rectangle.width:I
+     167: iadd
+     168: iconst_1
+     169: isub
+     170: i2d
+     171: dstore        8
+     173: aload_0
+     174: invokevirtual #110                // Method getRoughOrientation:()Lorg/audiveris/omr/run/Orientation;
+     177: invokevirtual #113                // Method org/audiveris/omr/run/Orientation.isVertical:()Z
+     180: ifeq          228
+     183: aload_0
+     184: new           #116                // class java/awt/geom/Point2D$Double
+     187: dup
+     188: aload_0
+     189: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+     192: dload_2
+     193: invokevirtual #118                // Method org/audiveris/omr/math/BasicLine.xAtY:(D)D
+     196: dload_2
+     197: invokespecial #122                // Method java/awt/geom/Point2D$Double."<init>":(DD)V
+     200: putfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+     203: aload_0
+     204: new           #116                // class java/awt/geom/Point2D$Double
+     207: dup
+     208: aload_0
+     209: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+     212: dload         4
+     214: invokevirtual #118                // Method org/audiveris/omr/math/BasicLine.xAtY:(D)D
+     217: dload         4
+     219: invokespecial #122                // Method java/awt/geom/Point2D$Double."<init>":(DD)V
+     222: putfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+     225: goto          272
+     228: aload_0
+     229: new           #116                // class java/awt/geom/Point2D$Double
+     232: dup
+     233: dload         6
+     235: aload_0
+     236: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+     239: dload         6
+     241: invokevirtual #125                // Method org/audiveris/omr/math/BasicLine.yAtX:(D)D
+     244: invokespecial #122                // Method java/awt/geom/Point2D$Double."<init>":(DD)V
+     247: putfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+     250: aload_0
+     251: new           #116                // class java/awt/geom/Point2D$Double
+     254: dup
+     255: dload         8
+     257: aload_0
+     258: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+     261: dload         8
+     263: invokevirtual #125                // Method org/audiveris/omr/math/BasicLine.yAtX:(D)D
+     266: invokespecial #122                // Method java/awt/geom/Point2D$Double."<init>":(DD)V
+     269: putfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+     272: return
+
+  public org.audiveris.omr.math.BasicLine getBasicLine();
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method checkLine:()V
+       4: aload_0
+       5: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+       8: areturn
+
+  public java.awt.geom.Line2D getCenterLine();
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method checkLine:()V
+       4: aload_0
+       5: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+       8: invokevirtual #131                // Method org/audiveris/omr/math/BasicLine.toCenterLine:()Ljava/awt/geom/Line2D$Double;
+      11: areturn
+
+  public double getInvertedSlope();
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method checkLine:()V
+       4: aload_0
+       5: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+       8: invokevirtual #135                // Method org/audiveris/omr/math/BasicLine.toDouble:()Ljava/awt/geom/Line2D$Double;
+      11: invokestatic  #138                // Method org/audiveris/omr/math/LineUtil.getInvertedSlope:(Ljava/awt/geom/Line2D;)D
+      14: dreturn
+
+  public java.awt.geom.Line2D getLine();
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method checkLine:()V
+       4: aload_0
+       5: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+       8: invokevirtual #135                // Method org/audiveris/omr/math/BasicLine.toDouble:()Ljava/awt/geom/Line2D$Double;
+      11: areturn
+
+  public double getMeanCurvature();
+    Code:
+       0: ldc2_w        #146                // double Infinityd
+       3: dreturn
+
+  public double getMeanDistance();
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method checkLine:()V
+       4: aload_0
+       5: getfield      #7                  // Field line:Lorg/audiveris/omr/math/BasicLine;
+       8: invokevirtual #148                // Method org/audiveris/omr/math/BasicLine.getMeanDistance:()D
+      11: dreturn
+
+  public double getPositionAt(double, org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_3
+       1: getstatic     #152                // Field org/audiveris/omr/run/Orientation.HORIZONTAL:Lorg/audiveris/omr/run/Orientation;
+       4: if_acmpne     16
+       7: aload_0
+       8: invokevirtual #156                // Method getBasicLine:()Lorg/audiveris/omr/math/BasicLine;
+      11: dload_1
+      12: invokevirtual #125                // Method org/audiveris/omr/math/BasicLine.yAtX:(D)D
+      15: dreturn
+      16: aload_0
+      17: invokevirtual #156                // Method getBasicLine:()Lorg/audiveris/omr/math/BasicLine;
+      20: dload_1
+      21: invokevirtual #118                // Method org/audiveris/omr/math/BasicLine.xAtY:(D)D
+      24: dreturn
+
+  public double getSlopeAt(double, org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: invokevirtual #128                // Method checkLine:()V
+       4: aload_3
+       5: getstatic     #152                // Field org/audiveris/omr/run/Orientation.HORIZONTAL:Lorg/audiveris/omr/run/Orientation;
+       8: if_acmpne     43
+      11: aload_0
+      12: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+      15: invokevirtual #160                // Method java/awt/geom/Point2D.getY:()D
+      18: aload_0
+      19: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      22: invokevirtual #160                // Method java/awt/geom/Point2D.getY:()D
+      25: dsub
+      26: aload_0
+      27: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+      30: invokevirtual #165                // Method java/awt/geom/Point2D.getX:()D
+      33: aload_0
+      34: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      37: invokevirtual #165                // Method java/awt/geom/Point2D.getX:()D
+      40: dsub
+      41: ddiv
+      42: dreturn
+      43: aload_0
+      44: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+      47: invokevirtual #165                // Method java/awt/geom/Point2D.getX:()D
+      50: aload_0
+      51: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      54: invokevirtual #165                // Method java/awt/geom/Point2D.getX:()D
+      57: dsub
+      58: aload_0
+      59: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+      62: invokevirtual #160                // Method java/awt/geom/Point2D.getY:()D
+      65: aload_0
+      66: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      69: invokevirtual #160                // Method java/awt/geom/Point2D.getY:()D
+      72: dsub
+      73: ddiv
+      74: dreturn
+
+  public java.awt.geom.Point2D getStartPoint(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+       4: ifnonnull     11
+       7: aload_0
+       8: invokevirtual #13                 // Method computeLine:()V
+      11: aload_1
+      12: aload_0
+      13: invokevirtual #110                // Method getRoughOrientation:()Lorg/audiveris/omr/run/Orientation;
+      16: if_acmpne     24
+      19: aload_0
+      20: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      23: areturn
+      24: new           #168                // class java/lang/IllegalArgumentException
+      27: dup
+      28: ldc           #170                // String Orientation does not match
+      30: invokespecial #172                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      33: athrow
+
+  public java.awt.geom.Point2D getStopPoint(org.audiveris.omr.run.Orientation);
+    Code:
+       0: aload_0
+       1: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+       4: ifnonnull     11
+       7: aload_0
+       8: invokevirtual #13                 // Method computeLine:()V
+      11: aload_1
+      12: aload_0
+      13: invokevirtual #110                // Method getRoughOrientation:()Lorg/audiveris/omr/run/Orientation;
+      16: if_acmpne     24
+      19: aload_0
+      20: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+      23: areturn
+      24: new           #168                // class java/lang/IllegalArgumentException
+      27: dup
+      28: ldc           #170                // String Orientation does not match
+      30: invokespecial #172                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      33: athrow
+
+  public void renderLine(java.awt.Graphics2D);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_0
+       3: dconst_0
+       4: invokevirtual #175                // Method renderLine:(Ljava/awt/Graphics2D;ZD)V
+       7: return
+
+  public void renderLine(java.awt.Graphics2D, boolean, double);
+    Code:
+       0: aload_1
+       1: invokevirtual #179                // Method java/awt/Graphics2D.getClipBounds:()Ljava/awt/Rectangle;
+       4: astore        5
+       6: aload         5
+       8: ifnull        23
+      11: aload         5
+      13: aload_0
+      14: invokevirtual #77                 // Method getBounds:()Ljava/awt/Rectangle;
+      17: invokevirtual #184                // Method java/awt/Rectangle.intersects:(Ljava/awt/Rectangle;)Z
+      20: ifeq          149
+      23: aload_0
+      24: invokevirtual #128                // Method checkLine:()V
+      27: aload_0
+      28: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      31: ifnull        149
+      34: aload_1
+      35: aload_0
+      36: invokevirtual #188                // Method getCenterLine:()Ljava/awt/geom/Line2D;
+      39: invokevirtual #192                // Method java/awt/Graphics2D.draw:(Ljava/awt/Shape;)V
+      42: iload_2
+      43: ifeq          149
+      46: dload_3
+      47: ldc2_w        #196                // double 2.0d
+      50: ddiv
+      51: dstore        6
+      53: new           #198                // class java/awt/geom/Ellipse2D$Double
+      56: dup
+      57: invokespecial #200                // Method java/awt/geom/Ellipse2D$Double."<init>":()V
+      60: astore        8
+      62: iconst_2
+      63: anewarray     #161                // class java/awt/geom/Point2D
+      66: dup
+      67: iconst_0
+      68: aload_0
+      69: getfield      #94                 // Field startPoint:Ljava/awt/geom/Point2D;
+      72: aastore
+      73: dup
+      74: iconst_1
+      75: aload_0
+      76: getfield      #90                 // Field stopPoint:Ljava/awt/geom/Point2D;
+      79: aastore
+      80: astore        9
+      82: aload         9
+      84: arraylength
+      85: istore        10
+      87: iconst_0
+      88: istore        11
+      90: iload         11
+      92: iload         10
+      94: if_icmpge     149
+      97: aload         9
+      99: iload         11
+     101: aaload
+     102: astore        12
+     104: aload         8
+     106: aload         12
+     108: invokevirtual #165                // Method java/awt/geom/Point2D.getX:()D
+     111: dload         6
+     113: dsub
+     114: aload         12
+     116: invokevirtual #160                // Method java/awt/geom/Point2D.getY:()D
+     119: dload         6
+     121: dsub
+     122: ldc2_w        #196                // double 2.0d
+     125: dload         6
+     127: dmul
+     128: ldc2_w        #196                // double 2.0d
+     131: dload         6
+     133: dmul
+     134: invokevirtual #201                // Method java/awt/geom/Ellipse2D.setFrame:(DDDD)V
+     137: aload_1
+     138: aload         8
+     140: invokevirtual #207                // Method java/awt/Graphics2D.fill:(Ljava/awt/Shape;)V
+     143: iinc          11, 1
+     146: goto          90
+     149: return
+}

@@ -1,0 +1,217 @@
+Compiled from "BeamsBuilder.java"
+class org.audiveris.omr.sheet.beam.BeamsBuilder$Parameters {
+  final int maxSideBeamDx;
+
+  final int minBeamsGapX;
+
+  final int maxBeamsGapX;
+
+  final int maxBeamsGapY;
+
+  final int beamsXMargin;
+
+  final int maxStemBeamGapX;
+
+  final int maxStemBeamGapY;
+
+  final int maxExtensionToStem;
+
+  final int maxExtensionToSpot;
+
+  final int beltMarginDx;
+
+  final int beltMarginDy;
+
+  final double maxBeamSlope;
+
+  final double maxBorderSlopeGap;
+
+  final double maxDistanceToBorder;
+
+  final double maxJitterRatio;
+
+  final double maxBeltBlackRatio;
+
+  final double minCoreBlackRatio;
+
+  final double minExtBlackRatio;
+
+  final int cueXMargin;
+
+  final int cueYMargin;
+
+  final int cueBoxDx;
+
+  final int cueBoxDy;
+
+  final double cueBeamRatio;
+
+  final int cueMinBeamHeadDy;
+
+  org.audiveris.omr.sheet.beam.BeamsBuilder$Parameters(org.audiveris.omr.sheet.Scale);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+       9: getfield      #13                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxSideBeamDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      12: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      15: putfield      #25                 // Field maxSideBeamDx:I
+      18: aload_0
+      19: aload_1
+      20: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+      23: getfield      #30                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.minBeamsGapX:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      26: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      29: putfield      #33                 // Field minBeamsGapX:I
+      32: aload_0
+      33: aload_1
+      34: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+      37: getfield      #35                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxBeamsGapX:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      40: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      43: putfield      #38                 // Field maxBeamsGapX:I
+      46: aload_0
+      47: aload_1
+      48: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+      51: getfield      #40                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxBeamsGapY:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      54: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      57: putfield      #43                 // Field maxBeamsGapY:I
+      60: aload_0
+      61: aload_1
+      62: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+      65: getfield      #45                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.beamsXMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      68: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      71: putfield      #48                 // Field beamsXMargin:I
+      74: aload_0
+      75: aload_1
+      76: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+      79: getfield      #50                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxStemBeamGapX:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      82: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      85: putfield      #53                 // Field maxStemBeamGapX:I
+      88: aload_0
+      89: aload_1
+      90: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+      93: getfield      #55                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxStemBeamGapY:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      96: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      99: putfield      #58                 // Field maxStemBeamGapY:I
+     102: aload_0
+     103: aload_1
+     104: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     107: getfield      #60                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxExtensionToStem:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     110: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     113: putfield      #63                 // Field maxExtensionToStem:I
+     116: aload_0
+     117: aload_1
+     118: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     121: getfield      #65                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxExtensionToSpot:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     124: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     127: putfield      #68                 // Field maxExtensionToSpot:I
+     130: aload_0
+     131: aload_1
+     132: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     135: getfield      #70                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.beltMarginDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     138: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     141: putfield      #73                 // Field beltMarginDx:I
+     144: aload_0
+     145: aload_1
+     146: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     149: getfield      #75                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.beltMarginDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     152: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     155: putfield      #78                 // Field beltMarginDy:I
+     158: aload_0
+     159: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     162: getfield      #80                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxBeamSlope:Lorg/audiveris/omr/constant/Constant$Double;
+     165: invokevirtual #84                 // Method org/audiveris/omr/constant/Constant$Double.getValue:()Ljava/lang/Object;
+     168: checkcast     #90                 // class java/lang/Double
+     171: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     174: putfield      #96                 // Field maxBeamSlope:D
+     177: aload_0
+     178: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     181: getfield      #99                 // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxBorderSlopeGap:Lorg/audiveris/omr/constant/Constant$Double;
+     184: invokevirtual #84                 // Method org/audiveris/omr/constant/Constant$Double.getValue:()Ljava/lang/Object;
+     187: checkcast     #90                 // class java/lang/Double
+     190: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     193: putfield      #102                // Field maxBorderSlopeGap:D
+     196: aload_0
+     197: aload_1
+     198: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     201: getfield      #104                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxDistanceToBorder:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     204: invokevirtual #107                // Method org/audiveris/omr/sheet/Scale.toPixelsDouble:(Lorg/audiveris/omr/sheet/Scale$Fraction;)D
+     207: putfield      #111                // Field maxDistanceToBorder:D
+     210: aload_0
+     211: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     214: getfield      #113                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxJitterRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     217: invokevirtual #117                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+     220: checkcast     #90                 // class java/lang/Double
+     223: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     226: putfield      #120                // Field maxJitterRatio:D
+     229: aload_0
+     230: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     233: getfield      #122                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.maxBeltBlackRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     236: invokevirtual #117                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+     239: checkcast     #90                 // class java/lang/Double
+     242: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     245: putfield      #125                // Field maxBeltBlackRatio:D
+     248: aload_0
+     249: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     252: getfield      #127                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.minCoreBlackRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     255: invokevirtual #117                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+     258: checkcast     #90                 // class java/lang/Double
+     261: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     264: putfield      #130                // Field minCoreBlackRatio:D
+     267: aload_0
+     268: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     271: getfield      #132                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.minExtBlackRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     274: invokevirtual #117                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+     277: checkcast     #90                 // class java/lang/Double
+     280: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     283: putfield      #135                // Field minExtBlackRatio:D
+     286: aload_0
+     287: aload_1
+     288: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     291: getfield      #137                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.cueXMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     294: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     297: putfield      #140                // Field cueXMargin:I
+     300: aload_0
+     301: aload_1
+     302: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     305: getfield      #142                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.cueYMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     308: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     311: putfield      #145                // Field cueYMargin:I
+     314: aload_0
+     315: aload_1
+     316: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     319: getfield      #147                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.cueBoxDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     322: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     325: putfield      #150                // Field cueBoxDx:I
+     328: aload_0
+     329: aload_1
+     330: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     333: getfield      #152                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.cueBoxDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     336: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     339: putfield      #155                // Field cueBoxDy:I
+     342: aload_0
+     343: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     346: getfield      #157                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.cueBeamRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     349: invokevirtual #117                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+     352: checkcast     #90                 // class java/lang/Double
+     355: invokevirtual #92                 // Method java/lang/Double.doubleValue:()D
+     358: putfield      #160                // Field cueBeamRatio:D
+     361: aload_0
+     362: aload_1
+     363: getstatic     #7                  // Field org/audiveris/omr/sheet/beam/BeamsBuilder.constants:Lorg/audiveris/omr/sheet/beam/BeamsBuilder$Constants;
+     366: getfield      #162                // Field org/audiveris/omr/sheet/beam/BeamsBuilder$Constants.cueMinBeamHeadDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     369: invokevirtual #19                 // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     372: putfield      #165                // Field cueMinBeamHeadDy:I
+     375: getstatic     #167                // Field org/audiveris/omr/sheet/beam/BeamsBuilder.logger:Lorg/slf4j/Logger;
+     378: invokeinterface #171,  1          // InterfaceMethod org/slf4j/Logger.isDebugEnabled:()Z
+     383: ifeq          401
+     386: new           #177                // class org/audiveris/omr/util/Dumping
+     389: dup
+     390: iconst_0
+     391: anewarray     #179                // class java/lang/Package
+     394: invokespecial #181                // Method org/audiveris/omr/util/Dumping."<init>":([Ljava/lang/Package;)V
+     397: aload_0
+     398: invokevirtual #184                // Method org/audiveris/omr/util/Dumping.dump:(Ljava/lang/Object;)V
+     401: return
+}

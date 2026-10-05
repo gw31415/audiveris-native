@@ -1,0 +1,7 @@
+# Original physical Glyph NearLine and StemChecker boundary
+
+Pinned Audiveris 5.11 at 9e1e55cd2746037d059345881c53e6a6754bffbd; original JAR SHA256 is recorded in both provenance files. Two independently compiled source-backed observers reproduce every control byte. Compile-only ABI shims are absent from runtime.
+
+1,152 independently constructed glyph/raster/profile controls: vertical and horizontal run orientation, heights 2/3/7/15/20/31/40/64, widths 1/2/3, straight and both slants and alternating pixels, isolated/adjacent/erased raster contexts, profiles 0/1. Raster runs are exported from the original ByteProcessor, not produced by native code. The original checker is supplied that controlled NO_STAFF pixel filter after the existing Laura prerequisite steps; these are kernel inputs, not an automatic STEMS run on Laura or another scan.
+
+Native raw pixel-fit endpoints and mean distance feed existing StemChecker. The StemInter half-pixel center line is deliberately a different contract. All 996 finite cases compare raw values, check parameters, impacts, context and grade within absolute 1e-12. All 156 original nonfinite sanity cases remain explicitly unsupported by the bounded native check API; original NaN tokens are preserved as strings in JSON. Single pixels, malformed runs, out-of-image and negative origins are guarded. Profiles beyond 0/1, StemBuilder identity/cache/register-before-grade behavior, automatic stump/parts, cleaner/epilog and full-page STEMS remain pending. Global HEADS/STEMS completion remains false.

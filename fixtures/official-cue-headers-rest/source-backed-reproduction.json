@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "input_sha256": "351bf814b84377304f9c900c45d87dcf9970b06e6613ec1131959f91c6265937",
+  "cases": [
+    {
+      "name": "preparation",
+      "sha256": "4e4e71d2e4d6eac6e1eb7512baa85899d1c06f0e29ef311f5c311f63d6893cb4",
+      "original_fields_byte_reproduced": true
+    },
+    {
+      "name": "peaks",
+      "sha256": "049248db52d7ed6e8f99dc5fa31a42901ba72b05463d3b547b8f9e427da4fb1b",
+      "original_fields_byte_reproduced": true
+    },
+    {
+      "name": "time",
+      "sha256": "ab3d00c74452d3df4d1282bde7513fece5b51825b3e47bf4785b1ff814ddfc75",
+      "original_fields_byte_reproduced": true
+    },
+    {
+      "name": "beams",
+      "sha256": "3e27c49a283a9cfe160901e03e257ff1d0a235d5adce98d97866cf6b15c35671",
+      "original_fields_byte_reproduced": true
+    },
+    {
+      "name": "rest-mapping",
+      "sha256": "31faace036d52e07babd372bbeeb161ebc38e55838d3d0e5c4d2e820d6596acf",
+      "original_fields_byte_reproduced": true
+    },
+    {
+      "name": "heads",
+      "sha256": "0ff0d932d8c7468220b4d6170c3038667f59c82e22615dc7fca372d150b6b06b",
+      "original_fields_byte_reproduced": true
+    }
+  ]
+}

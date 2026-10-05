@@ -1,0 +1,10 @@
+{
+  "normal_non_force_push": true,
+  "refs": {
+    "refs/heads/main": "6867e10ab67f8203f7e8c9fcc1b3ff53fcff8451",
+    "refs/heads/source-history": "2395352558c74c26dc373d495776546fe8abfac4"
+  },
+  "source_history_contains_all_local_source_commits": true,
+  "all_source_commits": 114,
+  "main_not_yet_migrated": true
+}

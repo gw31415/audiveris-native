@@ -1,0 +1,31 @@
+2026-10-03 04:37:13,104 INFO [key-column-all-bottom-missing]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-inputs/20261002T1935/key-column-all-bottom-missing.png
+2026-10-03 04:37:13,228 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:37:13,228 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T193708.805900Z/key-column-all-bottom-missing/key-column-all-bottom-missing.omr
+2026-10-03 04:37:13,230 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:37:13,231 INFO [key-column-all-bottom-missing]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:37:13,249 INFO [key-column-all-bottom-missing]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-inputs/20261002T1935/key-column-all-bottom-missing.png
+2026-10-03 04:37:13,253 INFO [key-column-all-bottom-missing]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:37:13,348 INFO [key-column-all-bottom-missing]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:37:13,363 INFO [key-column-all-bottom-missing]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:37:13,364 INFO [key-column-all-bottom-missing]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 45% of needed quorum
+2026-10-03 04:37:13,365 WARN [key-column-all-bottom-missing]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:37:13,365 INFO [key-column-all-bottom-missing]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:37:13,365 INFO [key-column-all-bottom-missing]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:37:13,366 INFO [key-column-all-bottom-missing]                 Book.java:2584 | Book{key-column-all-bottom-missing} storing
+2026-10-03 04:37:13,386 INFO [key-column-all-bottom-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:37:13,405 INFO [key-column-all-bottom-missing]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:37:13,607 INFO [key-column-all-bottom-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:37:13,607 INFO [key-column-all-bottom-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T193708.805900Z/key-column-all-bottom-missing/key-column-all-bottom-missing.omr
+2026-10-03 04:37:13,609 INFO [key-column-all-bottom-missing]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:37:13,625 INFO [key-column-all-bottom-missing]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:37:13,627 INFO [key-column-all-bottom-missing]                 Book.java:2057 | End of Book{key-column-all-bottom-missing}
+2026-10-03 04:37:13,643 INFO [key-column-all-bottom-missing]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:37:13,739 INFO [key-column-all-bottom-missing]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:37:13,748 INFO [key-column-all-bottom-missing]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:37:13,770 INFO [key-column-all-bottom-missing]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:37:13,811 INFO [key-column-all-bottom-missing]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:37:13,812 INFO [key-column-all-bottom-missing]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:37:14,669 INFO [key-column-all-bottom-missing]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:37:14,691 INFO [key-column-all-bottom-missing]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:37:14,691 INFO [key-column-all-bottom-missing]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-process/20261002T193708.805900Z/key-column-all-bottom-missing/key-column-all-bottom-missing.omr
+2026-10-03 04:37:14,692 INFO [key-column-all-bottom-missing]                Score.java:181  | Closing {Score 1}

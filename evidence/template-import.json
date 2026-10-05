@@ -1,0 +1,16 @@
+{
+  "audiveris-template-bank": {
+    "source_commit": "2b6a2e15f5612c4bffcd8669116a809ee2405d65",
+    "source_status": "",
+    "copied_tracked_files": 89,
+    "changed_on_import": [
+      "Cargo.toml"
+    ]
+  },
+  "audiveris-template-match": {
+    "source_commit": "593d1c5d4cddfed4085371ef6a25447151a923d0",
+    "source_status": "",
+    "copied_tracked_files": 25,
+    "changed_on_import": []
+  }
+}

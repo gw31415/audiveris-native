@@ -1,0 +1,2708 @@
+{
+  "stage": "original KeyColumn.retrieveKeys, including finalizeKey, before HeaderBuilder.setSystemKeyStop and time column",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "raster_count": 51,
+  "baseline_raster_count": 36,
+  "independent_multistaff_raster_count": 15,
+  "method": "Untouched original KeyColumn.retrieveKeys(maxHeaderWidth), after original GRID, computeHeaderStarts, retrieveClefs and setSystemClefStop",
+  "observation": "Map facades delegate original entries and operations; snapshot direct builder fields; no observer getBestKeyInter or computeContextualGrade. Original caller stack includes exact method/line. No replacement recognition or injected recognition state.",
+  "crosscheck": "All final system fields exactly equal to separate original-map, no-hook runs",
+  "limitations": [
+    "Chronology samples original map-operation boundaries; it does not directly intercept PartStatus return values or Gaussian internal iterations. Branch names below are source-supported interpretations of observed original state transitions.",
+    "The untouched official complete HEADERS oracle is separate. No native parity claim follows from this development oracle."
+  ],
+  "branch_examples": {
+    "successful_replication": "key-column-one-flat-trailing: bottom key null after staff process, final −1 on both staves",
+    "shrink": [
+      "key-column-last-flat-missing: −4/−3 -> −3/−3, global offsets shortened",
+      "key-column-last-sharp-missing: +3/+2 -> +2/+2, global offsets shortened"
+    ],
+    "destroy": [
+      "key-column-all-bottom-missing",
+      "key-column-bottom-first-only",
+      "key-column-middle-flat-missing",
+      "key-column-wrong-sharps",
+      "key-column-bottom-noise"
+    ],
+    "no_clef": "key-column-bottom-no-clef: top −4 retained, bottom remains null",
+    "no_replicate": "key-column-bottom-ink-blocks: top −4 retained; bottom has four FLAT slices with no assigned alterations and no key",
+    "already_consistent": [
+      "key-column-uniform-flats",
+      "key-column-bottom-shifted",
+      "key-column-bottom-bridge",
+      "key-column-bottom-trailing-block"
+    ],
+    "no_keys": "key-column-uniform-empty"
+  },
+  "renderer_receipt": "evidence/linux-oracle/key-column-renderer-20261002T193740.587075Z",
+  "receipts": [
+    "evidence/linux-oracle/key-column-20261002T193427.368300Z",
+    "evidence/linux-oracle/key-column-plain-20261002T192950.528738Z",
+    "evidence/linux-oracle/key-column-20261002T193237.484839Z",
+    "evidence/linux-oracle/key-column-plain-20261002T193302.540052Z",
+    "evidence/linux-oracle/key-column-20261002T193356.251610Z",
+    "evidence/linux-oracle/key-column-plain-20261002T193539.925357Z",
+    "evidence/linux-oracle/key-column-20261002T193540.909122Z",
+    "evidence/linux-oracle/key-column-plain-20261002T193707.241390Z"
+  ],
+  "fixtures": [
+    {
+      "input": "fixtures/official-grid/bracket-pair.png",
+      "input_sha256": "98c22e85d449ac523c467c91a99d3cb5bfedd7597422d3f644182bc8d55b7559",
+      "result": "fixtures/official-grid/bracket-pair-key-column.json",
+      "result_sha256": "e1b4f1242d7f8c341b169a53be8ab20c5fdaab997f80afc09829f13981e8ee36",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            },
+            {
+              "id": 2,
+              "staff_ids": [
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [],
+          "final_global_offsets": [],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/cclef-pair.png",
+      "input_sha256": "6ad712c2fa2ef5d499fe6ef1eb8e08415a614e2ee50ffda2065652640aa698a9",
+      "result": "fixtures/official-grid/cclef-pair-key-column.json",
+      "result_sha256": "6a6f0c577a36288e7490f3ebdddc45543f266e53b0fe758e51c9c67984ff021e",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-128.png",
+      "input_sha256": "c9e91a11bb4cfe02f78d52cb2fb2b320213dfbb375a203466343948682b2367c",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-128-key-column.json",
+      "result_sha256": "1f8047aad25f2dc1f1683e0047f3be15ab064cf26b94516fd5f367c2d25deb49",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-136.png",
+      "input_sha256": "c204d2db02a426baaa573fdc400f964d2156e9845f7c333db8c2ee8acdb5308c",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-136-key-column.json",
+      "result_sha256": "620e09c6514c71d1649746268cfb7433c8f13876954a300bb457bc6e971a9134",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-143.png",
+      "input_sha256": "6c88dfd37804e4504d9b94112b7051a6b755bbfa262cd3a777097b99c57e2c79",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-143-key-column.json",
+      "result_sha256": "1502faf95608aa93b06222d235d9b5a3fe8cccf47ed62b25b889c5d8c26405ea",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-147.png",
+      "input_sha256": "a89c94dd080efbd2fe13842956d35e30f4c579de2a6b7a40b1d572cf8e6cfb49",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-147-key-column.json",
+      "result_sha256": "06359d9329568696ac0be2f8dae476a84319a5a644a175659bdf7ee6092ea923",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-speck-125.png",
+      "input_sha256": "663b3adb9a0e3cf40bec761266afa8ea5a34e26fd13f1c25c1d81600489ad9b0",
+      "result": "fixtures/official-grid/damaged-header-flat-speck-125-key-column.json",
+      "result_sha256": "f1f11530d71390816ccec5d177383ba0ff85fd9bbc9e570c6861c4c4013e596d",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-speck-132.png",
+      "input_sha256": "013cb264bcc29b44675970f8b749b7b0a91685d60bab719d9ab55ab23d654488",
+      "result": "fixtures/official-grid/damaged-header-flat-speck-132-key-column.json",
+      "result_sha256": "f1f11530d71390816ccec5d177383ba0ff85fd9bbc9e570c6861c4c4013e596d",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-110.png",
+      "input_sha256": "5da90870d3bc0ae9fa209ae9b7c8425abc38d12e88bf4da27dd12733448ca463",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-110-key-column.json",
+      "result_sha256": "e618c839e8fe3a5e8d0c00afc23a9b97d349f863f2404a867e3c6aa3564c33c5",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 89,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                1
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 1,
+              "key_stop": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-120.png",
+      "input_sha256": "c27c853db8ad4b692e3fa7815dc0bbbab2106d17eb690b0ca52529569f64aa2b",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-120-key-column.json",
+      "result_sha256": "c0af8b8eba7c0f7b1e959813349c46857e1bda8f415a053482a709b074f4b38b",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 89,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                1
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 1,
+              "key_stop": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-130.png",
+      "input_sha256": "d603647b79608fbf95b20cb30ee873412e64984ee92c363f0ea48063c913c02a",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-130-key-column.json",
+      "result_sha256": "694d3f970a339b3944f6778428a3e942c3e8864a120c9beae2ea9c17bbec4cc6",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 89,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                1
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 1,
+              "key_stop": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-speck-98.png",
+      "input_sha256": "35ec4062520199651e741945384bcb2077585afcfb5f0e8cc1893690e48d7e2c",
+      "result": "fixtures/official-grid/damaged-header-sharp-speck-98-key-column.json",
+      "result_sha256": "b03ffce931c31e4df3f3cb2295411d34855a59cdd014737ae5fe38875a4d3c3a",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 89,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                1
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 1,
+              "key_stop": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-120.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "result": "fixtures/official-grid/fallback-header-flats-bridge-120-key-column.json",
+      "result_sha256": "26848c2b3a91fd0e8521077fa697d238a6fff7986b574474faf3d43a5b0d4d34",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-125.png",
+      "input_sha256": "d5fe294f3a65218b2f0b9975dc8d1b3753a3c13c52e9ca6540b7b27e4405f624",
+      "result": "fixtures/official-grid/fallback-header-flats-bridge-125-key-column.json",
+      "result_sha256": "cf36d6f211680aeb8d1a7cd2b42fedb0fcead3b270fce1fe7d2f3a65f1602b4f",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-130.png",
+      "input_sha256": "cbe2834999d4bf80c7316fbaee6fb4b571f371fe37cca8e6a8bb2b71f3d2933f",
+      "result": "fixtures/official-grid/fallback-header-flats-bridge-130-key-column.json",
+      "result_sha256": "c7154e9f2bb41b5ed733b1e51aace25239ff07b86b735a5acd3c27e12b2193e5",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-thick-bridge-125.png",
+      "input_sha256": "9459ccbac7951274fdebd868ee24ef940d9807bf22a139bd35c2d28c3e414476",
+      "result": "fixtures/official-grid/fallback-header-flats-thick-bridge-125-key-column.json",
+      "result_sha256": "2e13af6b61a99fd0e5b045edee0fb562cc0acff665152105632c1955a44c688b",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -3,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -3,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-sharps-bridge-125.png",
+      "input_sha256": "e7cd0d3c860b8f5d97a6aaa8e998cc464950bff51fd34ad2c19684cd8a88ea54",
+      "result": "fixtures/official-grid/fallback-header-sharps-bridge-125-key-column.json",
+      "result_sha256": "99951c400d3f53fd146cf83800d8d11500b890ff7c906a444a9767b497a95661",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 137,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                3
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 3,
+              "key_stop": 237
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-sharps-bridge-130.png",
+      "input_sha256": "08d0fc399af557992762743ab5632a569215f25f1b1941ce0ba2fae6eab6cb18",
+      "result": "fixtures/official-grid/fallback-header-sharps-bridge-130-key-column.json",
+      "result_sha256": "84cc3c686a0b562218a2a850c58ee7ae33ad022c38e781cad3eff6f4597a4373",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 137,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                3
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 3,
+              "key_stop": 237
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-flats-upper-bridge-122.png",
+      "input_sha256": "42cf7fc599dbc156b20484787f8893bb9089e1ffcb9a106daf6a6063826fe82b",
+      "result": "fixtures/official-grid/key-process-flats-upper-bridge-122-key-column.json",
+      "result_sha256": "c3bf27936633742802ed0cb436c0b74415edb2bc77dedbc81fa5bb56ae9d6914",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-flats-upper-bridge-123.png",
+      "input_sha256": "b964afa1aefe78e63a151844b1ff203ea520f2b05f885b26e986cfdc2b2ebf9d",
+      "result": "fixtures/official-grid/key-process-flats-upper-bridge-123-key-column.json",
+      "result_sha256": "c3bf27936633742802ed0cb436c0b74415edb2bc77dedbc81fa5bb56ae9d6914",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-one-flat-trailing-block.png",
+      "input_sha256": "a688d76e753ae0ad44bcb1ba2ddb8aeea0b04c5153e7e7fd2a5497152e9f8329",
+      "result": "fixtures/official-grid/key-process-one-flat-trailing-block-key-column.json",
+      "result_sha256": "0afd79206e0c31f3df46bc08c3a616848b01dcf2b4df46620b84e9fc2496f6d7",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-one-sharp-trailing-block.png",
+      "input_sha256": "ec8d1a4ba3b9e56022f0a2932d6cc939f17bed8b157715290065b4dde7e9c05f",
+      "result": "fixtures/official-grid/key-process-one-sharp-trailing-block-key-column.json",
+      "result_sha256": "bf92e23382d681ba1e6bcc7feacb5676a2c1be2a743c3f39fdd32e72db641ef1",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/laura-gray.png",
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "result": "fixtures/official-grid/laura-gray-key-column.json",
+      "result_sha256": "4717b1ad38c7022271e59fc6fca701f53318cf20381326dfa631e80389a1d23c",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 99,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            },
+            {
+              "id": 2,
+              "staff_ids": [
+                2,
+                3
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 3,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            48,
+            61,
+            75,
+            89
+          ],
+          "final_global_offsets": [
+            48,
+            61,
+            75,
+            89
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 334
+            },
+            {
+              "staff_id": 2,
+              "fifths": -4,
+              "key_stop": 334
+            },
+            {
+              "staff_id": 3,
+              "fifths": -4,
+              "key_stop": 334
+            }
+          ]
+        },
+        {
+          "system_id": 2,
+          "returned_offset": 99,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                4
+              ]
+            },
+            {
+              "id": 2,
+              "staff_ids": [
+                5,
+                6
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 4,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 5,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 6,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            47,
+            61,
+            75,
+            88
+          ],
+          "final_global_offsets": [
+            47,
+            61,
+            75,
+            88
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 4,
+              "fifths": -4,
+              "key_stop": 172
+            },
+            {
+              "staff_id": 5,
+              "fifths": -4,
+              "key_stop": 172
+            },
+            {
+              "staff_id": 6,
+              "fifths": -4,
+              "key_stop": 172
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/line-root.png",
+      "input_sha256": "4cc659988b083cf511b872178991dd729b81aa7b4657427fed60c4452f43b80b",
+      "result": "fixtures/official-grid/line-root-key-column.json",
+      "result_sha256": "c0b0170908061a2231325011c1101f606d79e6cb96e3bd58079ba3c828324e83",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-c_clef.png",
+      "input_sha256": "ba3918e8beb6c95ab37b813e3ed3c9ce98edee72461b1fa76d6a38c88eef9dd1",
+      "result": "fixtures/official-grid/rendered-clef-c_clef-key-column.json",
+      "result_sha256": "24523723e1ba9a7a3fdbab933bea743201dec7a21112006f404d574d8ca4b4e7",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-empty.png",
+      "input_sha256": "3217c10f13a42cedf8af46349743a256b31ac5557a72840ccbe81f5548b689e3",
+      "result": "fixtures/official-grid/rendered-clef-empty-key-column.json",
+      "result_sha256": "512ad6a747873072ed3a16efe7463a2028d4467dd5c41519dcedaae6b4847564",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-f_clef.png",
+      "input_sha256": "ccc8969acbc59adb4e4af8ae5d0a090f3ea68eb9fddb21e19affee9f19c4da5e",
+      "result": "fixtures/official-grid/rendered-clef-f_clef-key-column.json",
+      "result_sha256": "594914372a169d3debf08b061e161ce12e35768d53986339166eafe916d562b3",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-g_clef.png",
+      "input_sha256": "57b5ef3fb138bd3937c806d6974cee21de682144d76b06e76657feddd66b57d8",
+      "result": "fixtures/official-grid/rendered-clef-g_clef-key-column.json",
+      "result_sha256": "3949be8bf75e270bbc5baeb7e92609fc66cc5f35bf85822ebb0176d11b743982",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-noise.png",
+      "input_sha256": "1e6ab688887eeb4899c3b769da93c40bbce736fa3dd8bfe91b0cc9ed48d81686",
+      "result": "fixtures/official-grid/rendered-clef-noise-key-column.json",
+      "result_sha256": "512ad6a747873072ed3a16efe7463a2028d4467dd5c41519dcedaae6b4847564",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-empty.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "result": "fixtures/official-grid/rendered-header-empty-key-column.json",
+      "result_sha256": "ba2b575a7ad3599c2e1f8db199a5688453cc3b8dd0adc50cad47670484cf9e2d",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-four-flats.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "result": "fixtures/official-grid/rendered-header-four-flats-key-column.json",
+      "result_sha256": "26848c2b3a91fd0e8521077fa697d238a6fff7986b574474faf3d43a5b0d4d34",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 153,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-noise.png",
+      "input_sha256": "5286804a4376ad60152f6b18fe0e7d68faeec2fa521ef3a6b819f0d4225cb50e",
+      "result": "fixtures/official-grid/rendered-header-noise-key-column.json",
+      "result_sha256": "ba2b575a7ad3599c2e1f8db199a5688453cc3b8dd0adc50cad47670484cf9e2d",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-flat.png",
+      "input_sha256": "cbb1483bb8c0e0062a22c8f49bdc637c29f52ab947bcfb76c5178032ac284a24",
+      "result": "fixtures/official-grid/rendered-header-one-flat-key-column.json",
+      "result_sha256": "9371a5f13c1434c4ba926101143dcd95f37b082b37545282a709f7b8e0a2ef1f",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 87,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-sharp.png",
+      "input_sha256": "cf8322aa798f99e6f8bb09a13e1dc90506adb0c88c4204535e34e482814114bd",
+      "result": "fixtures/official-grid/rendered-header-one-sharp-key-column.json",
+      "result_sha256": "0bfc4778a253df1bac43290095677bef419a56846bd02c9f2d25c4ae548ed4ba",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 89,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                1
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 1,
+              "key_stop": 189
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-three-sharps.png",
+      "input_sha256": "c745e312405bffb11bea86ce888afdd6bb55a7335b87bb87b01e6c1e6736fc77",
+      "result": "fixtures/official-grid/rendered-header-three-sharps-key-column.json",
+      "result_sha256": "ac6fe1a94195a0c7575be3556d6fd088b1a8f998f59f751e20ec0a5060f5cc17",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 137,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                3
+              ]
+            }
+          ],
+          "first_observed_global_offsets": null,
+          "final_global_offsets": null,
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 3,
+              "key_stop": 237
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/synthetic-system-bars.png",
+      "input_sha256": "2e1bf10093d9c39482c7289659dab6f419f95002bd9e7fcf48a523fb598b2417",
+      "result": "fixtures/official-grid/synthetic-system-bars-key-column.json",
+      "result_sha256": "55f06a385071876123a58f19486d20798539810130f5223e8ec1b8fb5bed2af4",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193427.368300Z",
+      "plain_run": "key-column-plain/20261002T192950.528738Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1
+              ]
+            },
+            {
+              "id": 2,
+              "staff_ids": [
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [],
+          "final_global_offsets": [],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-all-bottom-missing.png",
+      "input_sha256": "a198610243348dec9172f7ad4f1bd6726419e8195870d4c275c8a90d03586726",
+      "result": "fixtures/official-grid/key-column-all-bottom-missing-key-column.json",
+      "result_sha256": "d75e9870cde1bd190c6c0054cde2305a333e5712d2f425ae5c795506ad029997",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-bridge.png",
+      "input_sha256": "31a28c575a969c453179b6fe9af214c05d6372319655e9b0c71ecf69ea896b42",
+      "result": "fixtures/official-grid/key-column-bottom-bridge-key-column.json",
+      "result_sha256": "d6396c90f21d79712ade6e5197d03a4a9ff40b9d4d2fe829701f28b44e4acdb0",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 151,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            },
+            {
+              "staff_id": 2,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-first-only.png",
+      "input_sha256": "dc343c8b0eab02c0be4bdd8412e20dc821068f15c358a156920edf72d0610342",
+      "result": "fixtures/official-grid/key-column-bottom-first-only-key-column.json",
+      "result_sha256": "976c7f675cd3af7bb1c47299e1c87adc99c43bc4e1562eb84fa7c7c03e0dbcd2",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-no-clef.png",
+      "input_sha256": "5d8b028a0b3d45e0770d751081d41b2c3cbe29f076a96e7b1a1568e037e7a6c9",
+      "result": "fixtures/official-grid/key-column-bottom-no-clef-key-column.json",
+      "result_sha256": "a5477e7d5d010db6bc988ac1481ca3cbd8fa1437f0f1a2550ba9f2c05d598ed2",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 151,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-noise.png",
+      "input_sha256": "2a2ba6e3ddc5e18bd092d666ea03934447e8fc580319ea0f266b95cb66a38e1d",
+      "result": "fixtures/official-grid/key-column-bottom-noise-key-column.json",
+      "result_sha256": "d75e9870cde1bd190c6c0054cde2305a333e5712d2f425ae5c795506ad029997",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-shifted.png",
+      "input_sha256": "b900c64f62f0e697cc867d840175f7143dda6a43b47071fe4271e27268041de9",
+      "result": "fixtures/official-grid/key-column-bottom-shifted-key-column.json",
+      "result_sha256": "b82244f92d7319c0bef79609486e2a7dc14da162923d3d18f2ac32c8b3144bf9",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 163,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            78,
+            100,
+            122,
+            144
+          ],
+          "final_global_offsets": [
+            78,
+            100,
+            122,
+            144
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            },
+            {
+              "staff_id": 2,
+              "fifths": -4,
+              "key_stop": 265
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-flat-missing.png",
+      "input_sha256": "f02833ac002512340950ac93bfd8cb7991954238060f20012d403efbddcef0fd",
+      "result": "fixtures/official-grid/key-column-last-flat-missing-key-column.json",
+      "result_sha256": "44cf32e306d15ac3fbe28e2104e11a135de0aa577e53653980f26e21a982673d",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 130,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -3,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -3,
+              "key_stop": 232
+            },
+            {
+              "staff_id": 2,
+              "fifths": -3,
+              "key_stop": 231
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-sharp-missing.png",
+      "input_sha256": "12c7675eb91f04016979e7a16ca41a1d884226c6d219cecda48a4fdcc273359d",
+      "result": "fixtures/official-grid/key-column-last-sharp-missing-key-column.json",
+      "result_sha256": "4b537a5cc8af9587f4e894bbcebb6f4245a057e7457584b66ea883a86b75c61b",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 111,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                3
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                2
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            92,
+            116
+          ],
+          "final_global_offsets": [
+            72,
+            92
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": 2,
+              "key_stop": 213
+            },
+            {
+              "staff_id": 2,
+              "fifths": 2,
+              "key_stop": 213
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-middle-flat-missing.png",
+      "input_sha256": "b6263e86330235d6f6c0499069e298e82b81257db06f96882499aa54dbd41863",
+      "result": "fixtures/official-grid/key-column-middle-flat-missing-key-column.json",
+      "result_sha256": "976c7f675cd3af7bb1c47299e1c87adc99c43bc4e1562eb84fa7c7c03e0dbcd2",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-empty.png",
+      "input_sha256": "8f57ae6952440fdc0e793eb09025f0789182f52a4de47e5ba21990c32e098ed5",
+      "result": "fixtures/official-grid/key-column-uniform-empty-key-column.json",
+      "result_sha256": "7c2031bcbb0c05e3950aba532880a50177d21031794b985bcc698d73c5567003",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [],
+          "final_global_offsets": [],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-flats.png",
+      "input_sha256": "b74bea44de2a97a192743d97b584f471b1abf05cfa6453c74eb3c1ea5a9429a1",
+      "result": "fixtures/official-grid/key-column-uniform-flats-key-column.json",
+      "result_sha256": "72f10325de680da5878dd57179664e1306d2d0b14884a3cfbb697decda5ccbee",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 151,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            },
+            {
+              "staff_id": 2,
+              "fifths": -4,
+              "key_stop": 253
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-wrong-sharps.png",
+      "input_sha256": "ea16b7af0a7eae0ba6fc01de3f84a0ed5221bc27d026decb182995ca11c1799f",
+      "result": "fixtures/official-grid/key-column-wrong-sharps-key-column.json",
+      "result_sha256": "6ff09fe732bfa67e6c4a10c8122e23e499569d6b7cd7678addd3e24d132fa6c6",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193237.484839Z",
+      "plain_run": "key-column-plain/20261002T193302.540052Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 0,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                3
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            93,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            93,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": null,
+              "key_stop": null
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-ink-blocks.png",
+      "input_sha256": "552cda15cb3e2cf2edd3a33a37a56a0eb460c5ce388ea97717870d910b0a5b93",
+      "result": "fixtures/official-grid/key-column-bottom-ink-blocks-key-column.json",
+      "result_sha256": "530eb5833216ed889f7a289d132d8da4e20ecaed290342cbabd8e8ee8003a1d8",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193356.251610Z",
+      "plain_run": "key-column-plain/20261002T193539.925357Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 151,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            },
+            {
+              "staff_id": 2,
+              "fifths": null,
+              "key_stop": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-trailing-block.png",
+      "input_sha256": "76745266c663656778b244ba55cb53dbbdb68f52b90c429eaf1dd49f6d3fcba8",
+      "result": "fixtures/official-grid/key-column-bottom-trailing-block-key-column.json",
+      "result_sha256": "b48d9a50198ec90db1f5e3f550cee2866f44433ec48d26257d80a1d19fba01f4",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193356.251610Z",
+      "plain_run": "key-column-plain/20261002T193539.925357Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 152,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                -4,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_global_offsets": [
+            72,
+            94,
+            116,
+            138
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -4,
+              "key_stop": 253
+            },
+            {
+              "staff_id": 2,
+              "fifths": -4,
+              "key_stop": 254
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-one-flat-trailing.png",
+      "input_sha256": "c073dd9fdac35f62323c3b29926bbe7f2147aad353e6ecc5df97849941d5dceb",
+      "result": "fixtures/official-grid/key-column-one-flat-trailing-key-column.json",
+      "result_sha256": "71d344fc1e41c021e87d57f3fe8ebb8f0d851a7b3c936705255ee96928dcb233",
+      "hook_free_final_equality": true,
+      "observed_run": "key-column/20261002T193540.909122Z",
+      "plain_run": "key-column-plain/20261002T193707.241390Z",
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 85,
+          "parts": [
+            {
+              "id": 1,
+              "staff_ids": [
+                1,
+                2
+              ]
+            }
+          ],
+          "before_alignment_shape_fifths": [
+            {
+              "staff_id": 1,
+              "shape_fifths": [
+                -1,
+                null
+              ]
+            },
+            {
+              "staff_id": 2,
+              "shape_fifths": [
+                null,
+                null
+              ]
+            }
+          ],
+          "first_observed_global_offsets": [
+            72
+          ],
+          "final_global_offsets": [
+            72
+          ],
+          "final_staff_keys": [
+            {
+              "staff_id": 1,
+              "fifths": -1,
+              "key_stop": 187
+            },
+            {
+              "staff_id": 2,
+              "fifths": -1,
+              "key_stop": 187
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auxiliary_process_receipt": "evidence/linux-oracle/key-process-20261002T193708.805900Z",
+  "auxiliary_process_fixtures": [
+    {
+      "input": "fixtures/official-grid/key-column-all-bottom-missing.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-all-bottom-missing.json",
+      "result_sha256": "f57a4b6f68f87a461226c4469702f1aa6e37ad63ea2183690259e4d00d12a831",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-bridge.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-bridge.json",
+      "result_sha256": "da238cbc24ad24e474c570b4c4a21ab9edda269c4dc480d46ac9bb2f96895aea",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-first-only.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-first-only.json",
+      "result_sha256": "0ebf0406915f121372a8e5d82581f61e829341d083059c4278349b38ec30d18d",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-ink-blocks.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-ink-blocks.json",
+      "result_sha256": "ff3dabb9a79ca3381660bffbd3b26c85a925c0857b92c75cec6da032fa40a193",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-no-clef.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-no-clef.json",
+      "result_sha256": "8c077ff88e46909e01816b5c2c0bdc054d8a2cf492a4a065fe8160b9768692bc",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-noise.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-noise.json",
+      "result_sha256": "f57a4b6f68f87a461226c4469702f1aa6e37ad63ea2183690259e4d00d12a831",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-shifted.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-shifted.json",
+      "result_sha256": "f2cacfac31f74d358d6890eb424b8a5b9f6a31f53fe884ba3e0056d5c5c7958c",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-trailing-block.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-bottom-trailing-block.json",
+      "result_sha256": "91103c2c34fc8ae12d993c216a42fc655b989d977c7a885231e30b7ad40f3c2a",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-flat-missing.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-last-flat-missing.json",
+      "result_sha256": "2472b2e07b1c5e3bdcf23fefeac8dd006e2ff4c94ecf60ae94d2539d4aa8be56",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-sharp-missing.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-last-sharp-missing.json",
+      "result_sha256": "c5d96e4d63bd636a49bb793a0d77a509124a6ddd3180749d6b21a68a50f8cc31",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-middle-flat-missing.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-middle-flat-missing.json",
+      "result_sha256": "0ebf0406915f121372a8e5d82581f61e829341d083059c4278349b38ec30d18d",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-one-flat-trailing.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-one-flat-trailing.json",
+      "result_sha256": "5e2d356878791051c0bfc3ec91c3ea38d74a97b5dd4e524a77a9fc112d6fc341",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-empty.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-uniform-empty.json",
+      "result_sha256": "f8ab3197849d3051e6b59aa5a643acef456692f91d1bd70ee9041b2f9be31877",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-flats.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-uniform-flats.json",
+      "result_sha256": "e31b0dd4e168a6ed42304c20abba1ddff535e676efe73e186b61baa768ebaaa7",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    },
+    {
+      "input": "fixtures/official-grid/key-column-wrong-sharps.png",
+      "result": "evidence/linux-oracle/key-process-20261002T193708.805900Z/results/key-column-wrong-sharps.json",
+      "result_sha256": "3a0755ccf3ea3ae67bc86768f23b7f383fa4105338c4404916929b85eda1ec1a",
+      "post_process_equality_with_original_column_no_extractor_hooks": true
+    }
+  ]
+}

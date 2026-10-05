@@ -1,0 +1,73 @@
+{
+  "scope": "Independent BeamStructure geometry review; no production builder decision or broad phase-completion claim",
+  "finding_before_fix": {
+    "seeded_cases": 1000,
+    "branch_divergent_cases": 1,
+    "float_values_over_1e_8": 31,
+    "max_global_distance_error": 2.4802113463007203e-07,
+    "cause": "Platform hypot differed from pinned Java fdlibm; raw-moment arithmetic amplified differences and strict split-height branches could flip",
+    "minimized_regressions": [
+      "minimized_sub_34_18",
+      "minimized_sub_42_18"
+    ],
+    "minimized_run_count_each": 18
+  },
+  "after_fix": {
+    "geometry_cases": 1002,
+    "compared_numeric_values": 223043,
+    "max_absolute_error": 0,
+    "all_structures_and_branches_match": true,
+    "existing_original_geometry_cases": 423,
+    "existing_max_absolute_error": 0,
+    "method_only_cases": 27,
+    "hypot_vectors": 5321,
+    "hypot_finite_bits_exact": true
+  },
+  "validation": {
+    "review_tests_passed": 3,
+    "beam_structure_unit_tests_passed": 4,
+    "existing_geometry_tests_passed": 2,
+    "hypot_unit_test_passed": 1,
+    "clippy_at_review": "blocked by five concurrent linear.rs lints; see retained log, no warning reported in fdlibm_hypot.rs",
+    "whole_workspace_status": "Parent owns final integration tests and clippy",
+    "hypot_release_test": "passed: all 5,321 vectors",
+    "geometry_release_tests": "passed: 3 tests including 1,002 cases, max absolute error 0",
+    "clippy_final": "passed: cargo clippy --offline --locked -p audiveris-area --all-targets -- -D warnings",
+    "shared_metadata_hashes": "verified: 12 retained license/source/vector files, fdlibm native hash and LinearArea native hash"
+  },
+  "source_checks": [
+    "BasicLine moment accumulation, coefficients and mean-distance operation order match pinned bytecode",
+    "LineUtil determinant intersection and reference-line operation order match pinned bytecode",
+    "Cached JDK and official runtime FdLibm.Hypot javap outputs are identical"
+  ],
+  "fixture": {
+    "path": "fixtures/beam-structure-review-controls.json",
+    "sha256": "f5079e647efdb64d528418c92150293f42f0312d4e12deacbaaad01e7af89970"
+  },
+  "hypot_vectors": {
+    "path": "crates/audiveris-area/upstream/hypot-vectors.txt",
+    "sha256": "7678f839d94fb28837f9fadbe25d31a2768994e35776422fc8dcb9723ee446ec"
+  },
+  "files": {
+    "minimized-input.json": "1b19320bc2310c934c861db6bdce98be8abdf3964adf2c7e52c44f95a8894ee2",
+    "original-replay-provenance.json": "cdd387a3a334ca506b97ddbc295bbcd05aacd1401fb2b819696f015958066c66",
+    "clippy-final.log": "6d77f64dfc8c5325b90fdbe05d8be367bdd578bcccec24f275c5ffee7d03dd6e",
+    "original-replay-summary.log": "b4d85bcbde7adada646790e967836691ba142396c3cad80c87e55ddce1c95f8c",
+    "after-native-1002.json.gz": "61e02478789ce84d91e7c1b9d2bba0217cbbb85c18495ce63ed623f8cb96aebf",
+    "hypot-release.log": "d07696338d1057d363ab216eb8e1a2fce18e4d7be27272c1358eb38c3cdd1307",
+    "before-native-1000.json.gz": "b2b0490f52ae358ab753fc6b247e2958449f12a115fed1c1e22095b1a7e5c0aa",
+    "original-1000.json.gz": "fba578f31199ffe5922c6980976ae35065f9911546cbd469f48e2a6f5f72c268",
+    "beam_structure-before-fix.rs": "e7e5ea20cb85fe1859eac861edc3591e7f0c35ab46b0c7485df4615638b35a2f",
+    "clippy-integration-at-review.log": "646b17d3889552d7189f753597a9e9d08dfe681ce704164b1655a2dd1f5451a0",
+    "jdk-fdlibm-hypot.javap.txt": "14fc75010b28f07d79026f024d96bb3846db3adb4b36225ded85d59bb0d277fe",
+    "original-console-1000.log.gz": "d794320b7d63e7f87f51ccd4f33865ea46f7bc66fd366e9c25f61d36b9c361df",
+    "runtime-fdlibm-hypot.javap.txt": "14fc75010b28f07d79026f024d96bb3846db3adb4b36225ded85d59bb0d277fe",
+    "review-release.log": "207096eb2e0659ae748eaaa6b15480a9e29fd26dc3037dc2b56df97e332ea77d",
+    "review-test.log": "8e1ad0c142a8fee5b03e2e4c5cbceeb65c046bbb713499eb6a8df0287415b5a9",
+    "before-differences.json": "cc3e6c7c8ffffb6e774394b064e7dc576398eecf12e0f719a490d53d16441687",
+    "hypot-test.log": "629bcf4e6e05ab7f7b72c0f33f2ab9e4f75cf3b0f27d27d0301253485fcac8f7",
+    "seeded-input-1000.json.gz": "03c7a6eb6797af76e0cc225411df9672723105bb7e45c93e1a0186cfc3259e97",
+    "unit-after.log": "95e98dd4f9ae9875fa47427121aa12b0efa8ba7f77001485d447053b0cfca125",
+    "existing-controls-after.log": "83883d0698e1760a01fefbe66d02619832502c11f1c50683f0e59b598838cba5"
+  }
+}

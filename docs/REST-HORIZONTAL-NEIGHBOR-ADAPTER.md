@@ -1,0 +1,9 @@
+# Native rest staff selection across columns
+
+Declared native GRID now uses the original global system/staff neighbor areas already used for STEM_SEEDS and beam dispatch. Selection preserves system membership order, Java integer distance truncation, and SystemInfo.getStaffAtOrAbove semantics. No page-wide common-overlap column is inferred. Independent supplied vertical-column geometry keeps its existing contract. Native metadata is validated against the dispatch area plan; mixed native interlines remain unsupported.
+
+Lag sections are selected by original integer system area bounds. Bounds are available for existing full-width paths and certified non-crossing straight clips: clip endpoint/interior-vertex extrema, rectangle clipping, floor/ceil. Clipped curved system boundaries remain explicitly unsupported. Curved staff-area point containment uses exact path/rectangle intersection; it does not require curved system bounds.
+
+The original Java observer runs unmodified StaffManager.getClosestStaff, SystemInfo.getStaffAtOrAbove, and Area.getBounds on nine supplied configurations, including horizontal layouts, curved clipped staff chains and independently observed Laura geometry. Existing mapping/ledger/registration tests remain required. The horizontal double-beam raster exercises native GRID through rest mapping and preserves the shared GRID graph during pure geometry adaptation. CLI checks distinguish completed supported rest/epilog boundaries from positive rest conversion. Full OMR and MusicXML remain unfinished.
+
+The recovery checkpoint uses an incremental Git bundle plus a manifest and one combined evidence file. The bundle retains exact commit/tree identities, depends on the pinned preceding source, and is decoded, fetched and checked in a fresh isolated restore. This replaces duplicated manifests, per-log blobs and a large textual patch without losing source or validation receipts.

@@ -1,0 +1,100 @@
+Compiled from "SpotsBuilder.java"
+class org.audiveris.omr.sheet.beam.SpotsBuilder$Constants extends org.audiveris.omr.constant.ConstantSet {
+  private final org.audiveris.omr.constant.Constant$Boolean displayBeamSpots;
+
+  private final org.audiveris.omr.constant.Constant$Boolean displayGraySpots;
+
+  private final org.audiveris.omr.constant.Constant$Boolean printWatch;
+
+  private final org.audiveris.omr.constant.Constant$Boolean saveBeamSpots;
+
+  private final org.audiveris.omr.constant.Constant$Boolean saveHeadSpots;
+
+  private final org.audiveris.omr.constant.Constant$Boolean saveCueSpots;
+
+  private final org.audiveris.omr.constant.Constant$Ratio beamCircleDiameterRatio;
+
+  private final org.audiveris.omr.constant.Constant$Integer beamBinarizationThreshold;
+
+  private final org.audiveris.omr.constant.Constant$Integer headBinarizationThreshold;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction staffVerticalMargin;
+
+  private org.audiveris.omr.sheet.beam.SpotsBuilder$Constants();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/constant/ConstantSet."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+       8: dup
+       9: iconst_0
+      10: ldc           #9                  // String Should we display the beam Spots view?
+      12: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      15: putfield      #14                 // Field displayBeamSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      18: aload_0
+      19: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+      22: dup
+      23: iconst_0
+      24: ldc           #20                 // String Should we display the gray Spots view?
+      26: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      29: putfield      #22                 // Field displayGraySpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      32: aload_0
+      33: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+      36: dup
+      37: iconst_0
+      38: ldc           #25                 // String Should we print out the stop watch?
+      40: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      43: putfield      #27                 // Field printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+      46: aload_0
+      47: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+      50: dup
+      51: iconst_0
+      52: ldc           #30                 // String Should we save sheet beam spot images on disk?
+      54: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      57: putfield      #32                 // Field saveBeamSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      60: aload_0
+      61: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+      64: dup
+      65: iconst_0
+      66: ldc           #35                 // String Should we save sheet head spot images on disk?
+      68: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      71: putfield      #37                 // Field saveHeadSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      74: aload_0
+      75: new           #7                  // class org/audiveris/omr/constant/Constant$Boolean
+      78: dup
+      79: iconst_0
+      80: ldc           #40                 // String Should we save cue spot images on disk?
+      82: invokespecial #11                 // Method org/audiveris/omr/constant/Constant$Boolean."<init>":(ZLjava/lang/String;)V
+      85: putfield      #42                 // Field saveCueSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      88: aload_0
+      89: new           #45                 // class org/audiveris/omr/constant/Constant$Ratio
+      92: dup
+      93: ldc2_w        #47                 // double 0.8d
+      96: ldc           #49                 // String Diameter of circle used to close beam spots, as ratio of beam height
+      98: invokespecial #51                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     101: putfield      #54                 // Field beamCircleDiameterRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     104: aload_0
+     105: new           #58                 // class org/audiveris/omr/constant/Constant$Integer
+     108: dup
+     109: ldc           #60                 // String pixel
+     111: sipush        140
+     114: ldc           #62                 // String Global binarization threshold for beams
+     116: invokespecial #64                 // Method org/audiveris/omr/constant/Constant$Integer."<init>":(Ljava/lang/String;ILjava/lang/String;)V
+     119: putfield      #67                 // Field beamBinarizationThreshold:Lorg/audiveris/omr/constant/Constant$Integer;
+     122: aload_0
+     123: new           #58                 // class org/audiveris/omr/constant/Constant$Integer
+     126: dup
+     127: ldc           #60                 // String pixel
+     129: sipush        170
+     132: ldc           #71                 // String Global binarization threshold for heads
+     134: invokespecial #64                 // Method org/audiveris/omr/constant/Constant$Integer."<init>":(Ljava/lang/String;ILjava/lang/String;)V
+     137: putfield      #73                 // Field headBinarizationThreshold:Lorg/audiveris/omr/constant/Constant$Integer;
+     140: aload_0
+     141: new           #76                 // class org/audiveris/omr/sheet/Scale$Fraction
+     144: dup
+     145: ldc2_w        #78                 // double 2.0d
+     148: ldc           #80                 // String Margin erased above & below staff header area
+     150: invokespecial #82                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     153: putfield      #83                 // Field staffVerticalMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     156: return
+}

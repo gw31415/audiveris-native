@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "conditions": 1152,
+  "cached_stems": 12,
+  "accepted_relations": 768,
+  "native_controls_gzip_sha256": "656292a922ea775c7f41ba452628b639c49ac21276ee572dcac4dc13ff697f7b",
+  "native_source_sha256": {
+    "src/stem_cache_attachment.rs": "20c01b674a2697cfa68bf37e974364679c729c73e7e83d4d3cd2d9ea825dcbad",
+    "examples/stem_cache_head_dump.rs": "08c4e4e3ef4b8315b6574cc5e9d987fd44e0c1e9c584addf1eff5fd7bc3363b6",
+    "examples/support/stem_cache_head_controls.rs": "dcd33ef03d7a4ed730d9db24862e49c7124f63b6d7949b130cf82b9a63981faf",
+    "tests/stem_cache_head.rs": "2dc7e3a55d386f7bdb61a9a5a865c93deeb6ff192aceaf8254314725fe77a341"
+  },
+  "float_absolute_tolerance": 1e-12,
+  "registry_and_cached_Arc_identity_unchanged": true,
+  "exact_SIG_callback_states": true,
+  "heads_complete": false,
+  "stems_complete": false
+}

@@ -1,0 +1,31 @@
+2026-10-03 04:55:44,615 INFO [key-column-bottom-noise]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-bottom-noise.png
+2026-10-03 04:55:44,742 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:44,743 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-noise/key-column-bottom-noise.omr
+2026-10-03 04:55:44,745 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:55:44,746 INFO [key-column-bottom-noise]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:55:44,765 INFO [key-column-bottom-noise]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-bottom-noise.png
+2026-10-03 04:55:44,768 INFO [key-column-bottom-noise]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:55:44,842 INFO [key-column-bottom-noise]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:55:44,850 INFO [key-column-bottom-noise]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:55:44,851 INFO [key-column-bottom-noise]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 45% of needed quorum
+2026-10-03 04:55:44,852 WARN [key-column-bottom-noise]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:55:44,852 INFO [key-column-bottom-noise]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:55:44,852 INFO [key-column-bottom-noise]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:55:44,853 INFO [key-column-bottom-noise]                 Book.java:2584 | Book{key-column-bottom-noise} storing
+2026-10-03 04:55:44,876 INFO [key-column-bottom-noise]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:44,896 INFO [key-column-bottom-noise]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:55:45,107 INFO [key-column-bottom-noise]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:45,107 INFO [key-column-bottom-noise]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-noise/key-column-bottom-noise.omr
+2026-10-03 04:55:45,108 INFO [key-column-bottom-noise]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:55:45,130 INFO [key-column-bottom-noise]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:55:45,132 INFO [key-column-bottom-noise]                 Book.java:2057 | End of Book{key-column-bottom-noise}
+2026-10-03 04:55:45,146 INFO [key-column-bottom-noise]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:55:45,246 INFO [key-column-bottom-noise]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:55:45,257 INFO [key-column-bottom-noise]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:55:45,287 INFO [key-column-bottom-noise]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:55:45,327 INFO [key-column-bottom-noise]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:55:45,328 INFO [key-column-bottom-noise]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:55:46,192 INFO [key-column-bottom-noise]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:55:46,213 INFO [key-column-bottom-noise]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:55:46,214 INFO [key-column-bottom-noise]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-noise/key-column-bottom-noise.omr
+2026-10-03 04:55:46,215 INFO [key-column-bottom-noise]                Score.java:181  | Closing {Score 1}

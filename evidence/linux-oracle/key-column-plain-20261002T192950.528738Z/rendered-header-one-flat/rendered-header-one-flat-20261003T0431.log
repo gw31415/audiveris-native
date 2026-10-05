@@ -1,0 +1,31 @@
+2026-10-03 04:31:30,361 INFO [rendered-header-one-flat]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-one-flat.png
+2026-10-03 04:31:30,499 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:31:30,499 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/rendered-header-one-flat/rendered-header-one-flat.omr
+2026-10-03 04:31:30,501 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:31:30,502 INFO [rendered-header-one-flat]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:31:30,527 INFO [rendered-header-one-flat]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/rendered-header-one-flat.png
+2026-10-03 04:31:30,532 INFO [rendered-header-one-flat]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:31:30,630 INFO [rendered-header-one-flat]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:31:30,639 INFO [rendered-header-one-flat]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:31:30,640 INFO [rendered-header-one-flat]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 42% of needed quorum
+2026-10-03 04:31:30,640 WARN [rendered-header-one-flat]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:31:30,641 INFO [rendered-header-one-flat]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:31:30,641 INFO [rendered-header-one-flat]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:31:30,644 INFO [rendered-header-one-flat]                 Book.java:2584 | Book{rendered-header-one-flat} storing
+2026-10-03 04:31:30,677 INFO [rendered-header-one-flat]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:31:30,697 INFO [rendered-header-one-flat]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:31:30,907 INFO [rendered-header-one-flat]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:31:30,907 INFO [rendered-header-one-flat]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/rendered-header-one-flat/rendered-header-one-flat.omr
+2026-10-03 04:31:30,908 INFO [rendered-header-one-flat]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:31:30,932 INFO [rendered-header-one-flat]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:31:30,934 INFO [rendered-header-one-flat]                 Book.java:2057 | End of Book{rendered-header-one-flat}
+2026-10-03 04:31:30,948 INFO [rendered-header-one-flat]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:31:31,045 INFO [rendered-header-one-flat]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:31:31,058 INFO [rendered-header-one-flat]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 04:31:31,264 INFO [rendered-header-one-flat]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 04:31:31,308 INFO [rendered-header-one-flat]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:31:31,309 INFO [rendered-header-one-flat]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:31:32,022 INFO [rendered-header-one-flat]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:31:32,040 INFO [rendered-header-one-flat]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:31:32,040 INFO [rendered-header-one-flat]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-column-plain/20261002T192950.528738Z/rendered-header-one-flat/rendered-header-one-flat.omr
+2026-10-03 04:31:32,042 INFO [rendered-header-one-flat]                Score.java:181  | Closing {Score 1}

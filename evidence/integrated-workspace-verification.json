@@ -1,0 +1,17 @@
+{
+  "workspace_tests": 20,
+  "fmt_all": "passed",
+  "clippy_workspace_all_targets": "passed -D warnings",
+  "build_workspace_locked_offline": "passed",
+  "classifier_manifest": "53 hashes verified unchanged",
+  "root_cli_golden": "136 cases,20264 output values, top5 exact; max abs delta 2.220446049250313e-16",
+  "section_java_cases": 9,
+  "real_score_section_counts": [
+    2576,
+    3673
+  ],
+  "grid_complete": false,
+  "image_to_classifier": false,
+  "renderer_process_success": false,
+  "renderer_artifact_decoded_and_visually_inspected": true
+}

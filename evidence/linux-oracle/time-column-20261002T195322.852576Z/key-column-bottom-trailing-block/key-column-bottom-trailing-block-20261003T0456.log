@@ -1,0 +1,31 @@
+2026-10-03 04:56:15,801 INFO [key-column-bottom-trailing-block]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-bottom-trailing-block.png
+2026-10-03 04:56:15,927 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:15,928 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-trailing-block/key-column-bottom-trailing-block.omr
+2026-10-03 04:56:15,930 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:56:15,931 INFO [key-column-bottom-trailing-block]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:56:15,949 INFO [key-column-bottom-trailing-block]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-bottom-trailing-block.png
+2026-10-03 04:56:15,951 INFO [key-column-bottom-trailing-block]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:56:16,024 INFO [key-column-bottom-trailing-block]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:56:16,034 INFO [key-column-bottom-trailing-block]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:56:16,035 INFO [key-column-bottom-trailing-block]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 51% of needed quorum
+2026-10-03 04:56:16,035 WARN [key-column-bottom-trailing-block]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:56:16,035 INFO [key-column-bottom-trailing-block]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:56:16,035 INFO [key-column-bottom-trailing-block]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:56:16,036 INFO [key-column-bottom-trailing-block]                 Book.java:2584 | Book{key-column-bottom-trailing-block} storing
+2026-10-03 04:56:16,058 INFO [key-column-bottom-trailing-block]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:16,075 INFO [key-column-bottom-trailing-block]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:56:16,276 INFO [key-column-bottom-trailing-block]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:16,276 INFO [key-column-bottom-trailing-block]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-trailing-block/key-column-bottom-trailing-block.omr
+2026-10-03 04:56:16,277 INFO [key-column-bottom-trailing-block]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:56:16,304 INFO [key-column-bottom-trailing-block]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:56:16,306 INFO [key-column-bottom-trailing-block]                 Book.java:2057 | End of Book{key-column-bottom-trailing-block}
+2026-10-03 04:56:16,321 INFO [key-column-bottom-trailing-block]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:56:16,412 INFO [key-column-bottom-trailing-block]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:56:16,423 INFO [key-column-bottom-trailing-block]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:56:16,454 INFO [key-column-bottom-trailing-block]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:56:16,593 INFO [key-column-bottom-trailing-block]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:56:16,596 INFO [key-column-bottom-trailing-block]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:56:17,336 INFO [key-column-bottom-trailing-block]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:56:17,360 INFO [key-column-bottom-trailing-block]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:56:17,361 INFO [key-column-bottom-trailing-block]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-bottom-trailing-block/key-column-bottom-trailing-block.omr
+2026-10-03 04:56:17,362 INFO [key-column-bottom-trailing-block]                Score.java:181  | Closing {Score 1}

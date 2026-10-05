@@ -1,0 +1,78 @@
+[
+  {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "fmt",
+      "--all"
+    ],
+    "started_utc": "2026-10-03T08:40:06.197443+00:00",
+    "seconds": 0.4257790869996825,
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "test",
+      "--locked",
+      "--offline",
+      "-j",
+      "2",
+      "--test",
+      "beam_side_lookup",
+      "--test",
+      "beam_lifecycle",
+      "--test",
+      "beam_preparation",
+      "--test",
+      "beam_candidates",
+      "--test",
+      "beam_extension_geometry",
+      "--test",
+      "beam_middle_area",
+      "--test",
+      "beam_merge",
+      "--test",
+      "beam_impacts",
+      "--",
+      "--nocapture"
+    ],
+    "started_utc": "2026-10-03T08:40:06.623246+00:00",
+    "seconds": 22.946583220999855,
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "audiveris-area"
+    ],
+    "started_utc": "2026-10-03T08:40:29.569927+00:00",
+    "seconds": 0.22972286000003805,
+    "exit_code": 0
+  },
+  {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "clippy",
+      "--workspace",
+      "--locked",
+      "--offline",
+      "--all-targets",
+      "-j",
+      "2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "started_utc": "2026-10-03T08:40:29.799676+00:00",
+    "seconds": 3.8600998660003825,
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "upstream_SHA": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_trace_SHA256": "0054a944a92d70271a7035330c3ce0e8bce7caaae1c0ff208df683d6f1c28997",
+  "subset_from_original_stage": "1.reduceExclusions",
+  "full_SigReducer_or_exclusion_set_parity_claimed": false,
+  "native_original_raw_grades_compared": false,
+  "original_head_XML_three_decimal_projection_only": true,
+  "original_full_trace_Library_reference": "library-file:fde1_bGliZmlsZV9BR3IzNERTSExsMXJURVZtZGc3dVZ3_FileDrive_860dacf66f308191a98d88753eed9f4d"
+}

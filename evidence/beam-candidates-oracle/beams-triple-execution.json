@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/beams-triple.png",
+  "input_sha256": "52c30da4149a72864a82628552006f655afbb4ab4d685bd85d7ab154eae691e8",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamCandidatesProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/beams-triple.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/beam-research/original-create-beams/beams-triple/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "c48c5b436946f3e38e448fcb53a691e978258ae64f45cb227a9aca50e878dbba",
+  "ok": true,
+  "result_sha256": "fb197bad431371c5518870c3f7d7f0b4a7476e4da080560c2dd07c978b10aa88"
+}

@@ -1,0 +1,258 @@
+{
+  "beams_complete": false,
+  "extensions_complete": true,
+  "groups_complete": true,
+  "hooks_complete": true,
+  "multiple_rest_boundary_complete": false,
+  "musicxml_complete": false,
+  "pending": [
+    "BEAMS epilog/free glyph cleanup",
+    "LEDGERS/HEADS/rhythm/MusicXML",
+    "multi-staff rest mapping and ledger-aware pitch"
+  ],
+  "stage": "BEAMS.native_through_multiple_rests",
+  "systems": [
+    {
+      "extensions": {
+        "initial_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "side_attempts": 14,
+        "skipped_removed": []
+      },
+      "groups": [
+        {
+          "bounds": [
+            485,
+            379,
+            87,
+            27
+          ],
+          "id": 1,
+          "members": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "bounds": [
+            485,
+            504,
+            87,
+            27
+          ],
+          "id": 2,
+          "members": [
+            4,
+            5,
+            6
+          ]
+        },
+        {
+          "bounds": [
+            994,
+            681,
+            255,
+            7
+          ],
+          "id": 3,
+          "members": [
+            7
+          ]
+        }
+      ],
+      "hooks": {
+        "appended": 0,
+        "attempts": 0,
+        "initial_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "rests": {
+        "complete": false,
+        "error": "unsupported_rest_multi_staff_mapping"
+      },
+      "supports": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "system_id": 1
+    },
+    {
+      "extensions": {
+        "initial_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "side_attempts": 16,
+        "skipped_removed": []
+      },
+      "groups": [
+        {
+          "bounds": [
+            923,
+            874,
+            101,
+            25
+          ],
+          "id": 1,
+          "members": [
+            1,
+            2,
+            9
+          ]
+        },
+        {
+          "bounds": [
+            923,
+            1016,
+            101,
+            25
+          ],
+          "id": 2,
+          "members": [
+            3,
+            4,
+            10
+          ]
+        },
+        {
+          "bounds": [
+            216,
+            1144,
+            496,
+            19
+          ],
+          "id": 3,
+          "members": [
+            5
+          ]
+        },
+        {
+          "bounds": [
+            824,
+            1145,
+            200,
+            24
+          ],
+          "id": 4,
+          "members": [
+            6,
+            8,
+            11
+          ]
+        },
+        {
+          "bounds": [
+            1120,
+            1150,
+            101,
+            13
+          ],
+          "id": 5,
+          "members": [
+            7
+          ]
+        }
+      ],
+      "hooks": {
+        "appended": 3,
+        "attempts": 4,
+        "initial_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "rests": {
+        "complete": false,
+        "error": "unsupported_rest_multi_staff_mapping"
+      },
+      "supports": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          8,
+          11
+        ]
+      ],
+      "system_id": 2
+    }
+  ]
+}

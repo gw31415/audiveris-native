@@ -1,0 +1,13 @@
+   Compiling audiveris-area v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-area)
+   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.26s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_native-54c661d59a96a5a3)
+
+running 4 tests
+test beam_structure::tests::empty_and_one_shot_contracts ... ok
+test beam_structure::tests::rejects_bad_parameters_without_mutation ... ok
+test beam_structure::tests::rejects_invalid_glyphs_and_budgets ... ok
+test beam_structure::tests::direct_original_method_controls ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 57 filtered out; finished in 0.01s
+

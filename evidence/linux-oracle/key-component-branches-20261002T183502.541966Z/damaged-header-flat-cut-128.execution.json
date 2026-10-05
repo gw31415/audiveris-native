@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/linux-oracle/damaged-header-fixtures/damaged-header-flat-cut-128.png",
+  "input_sha256": "c9e91a11bb4cfe02f78d52cb2fb2b320213dfbb375a203466343948682b2367c",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "KeyComponentBranchesProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/damaged-header-fixtures/damaged-header-flat-cut-128.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-component-branches/20261002T183502.541966Z/damaged-header-flat-cut-128/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "7e67b14b60c33172fe505bb7bf1006136246c120398f64cfc014a53cd92ca93a",
+  "ok": true,
+  "result_sha256": "b21737ab1836e593d2f8d7e6356e33dab3f9bf4fbc1b33fa6f3f9fbda53cfea7"
+}

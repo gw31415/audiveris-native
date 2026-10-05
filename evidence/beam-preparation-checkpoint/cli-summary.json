@@ -1,0 +1,59 @@
+{
+  "binary_sha256": "deff511c21d72c6805d06aa99c1e01c68f840b56d9c965834ab9679b6b0ccd35",
+  "environment": {
+    "PATH": "/nonexistent"
+  },
+  "other_environment_variables": false,
+  "cases": [
+    {
+      "name": "beams-empty",
+      "exit": 0,
+      "spot_count": 3,
+      "spot_mask_sha256": "397431d02d108958f32233f690bb844f24221abb32382be4af27f8e33eea2005",
+      "original_exact": true,
+      "existing_output_refused": true,
+      "outputs_preserved": true,
+      "stdout": "Native beam spot preparation: 3 spots; beam interpretation and MusicXML remain incomplete"
+    },
+    {
+      "name": "beams-double",
+      "exit": 0,
+      "spot_count": 7,
+      "spot_mask_sha256": "6bba7bd966d9228d678daea6b992990725d653344ee9e8b4e36cdd0613792e65",
+      "original_exact": true,
+      "existing_output_refused": true,
+      "outputs_preserved": true,
+      "stdout": "Native beam spot preparation: 7 spots; beam interpretation and MusicXML remain incomplete"
+    },
+    {
+      "name": "beams-sloped",
+      "exit": 0,
+      "spot_count": 6,
+      "spot_mask_sha256": "db8567ea030af89bf509531e373ed1faa00ec6f47491ae4ad2fbd2f2c722c474",
+      "original_exact": true,
+      "existing_output_refused": true,
+      "outputs_preserved": true,
+      "stdout": "Native beam spot preparation: 6 spots; beam interpretation and MusicXML remain incomplete"
+    },
+    {
+      "name": "beams-triple",
+      "exit": 0,
+      "spot_count": 8,
+      "spot_mask_sha256": "ee1d8ce9767ad452d480e948367dd349615bb2c8ea12eced4d6db0b464ff9351",
+      "original_exact": true,
+      "existing_output_refused": true,
+      "outputs_preserved": true,
+      "stdout": "Native beam spot preparation: 8 spots; beam interpretation and MusicXML remain incomplete"
+    },
+    {
+      "name": "laura-gray",
+      "exit": 0,
+      "spot_count": 409,
+      "spot_mask_sha256": "f8e1aed60c5858bab249c740163ddca8170641764912037eb93a5bbbd3a8b575",
+      "original_exact": true,
+      "existing_output_refused": true,
+      "outputs_preserved": true,
+      "stdout": "Native beam spot preparation: 409 spots; beam interpretation and MusicXML remain incomplete"
+    }
+  ]
+}

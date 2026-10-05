@@ -1,0 +1,19 @@
+{
+  "controlled_input": true,
+  "method": "original KeyExtractor.extractAlter",
+  "fixture": "fixtures/official-grid/key-extract-retention-controls.json",
+  "fixture_sha256": "dc2bb4ba2cc61771ebf9688d1a245f473787ccdbae0a4880ed6cae13329a11ab",
+  "provenance": "evidence/linux-oracle/key-extract-retention-control-20261002T191724.028467Z/provenance.json",
+  "provenance_sha256": "195210b0823cfa879cd85e6ae88ae914efd5bdeaf2c8b46f01a0092dd94db27b",
+  "verified_cases": [
+    "higher_eval_different_crop_trial",
+    "equal_eval_same_glyph_retains_injected_grade_and_cache",
+    "low_grade_null_return_preserves_old_alter"
+  ],
+  "independent_candidate_trials": {
+    "narrower_crop_raw_grade": 0.9961120240344752,
+    "stored_raw_grade": 0.9983391404348029,
+    "same_crop_equal_raw_and_glyph_identity": true
+  },
+  "preserves_old_alter_on_null_return": true
+}

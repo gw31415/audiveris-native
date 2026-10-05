@@ -1,0 +1,153 @@
+Compiled from "MedianGrayFilter.java"
+public class org.audiveris.omr.image.MedianGrayFilter extends org.audiveris.omr.image.AbstractGrayFilter {
+  private final int radius;
+
+  public org.audiveris.omr.image.MedianGrayFilter(int);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/image/AbstractGrayFilter."<init>":()V
+       4: aload_0
+       5: iload_1
+       6: putfield      #7                  // Field radius:I
+       9: return
+
+  public void filter(ij.process.ByteProcessor, ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: invokevirtual #13                 // Method ij/process/ByteProcessor.getWidth:()I
+       4: istore_3
+       5: aload_1
+       6: invokevirtual #19                 // Method ij/process/ByteProcessor.getHeight:()I
+       9: istore        4
+      11: sipush        256
+      14: newarray       int
+      16: astore        5
+      18: aload         5
+      20: iconst_0
+      21: invokestatic  #22                 // Method java/util/Arrays.fill:([II)V
+      24: iconst_0
+      25: istore        6
+      27: iload         6
+      29: iload         4
+      31: if_icmpge     254
+      34: iconst_0
+      35: istore        7
+      37: iload         7
+      39: iload_3
+      40: if_icmpge     248
+      43: aload_0
+      44: getfield      #7                  // Field radius:I
+      47: istore        8
+      49: iload         7
+      51: iload         8
+      53: isub
+      54: ifge          61
+      57: iload         7
+      59: istore        8
+      61: iload         6
+      63: iload         8
+      65: isub
+      66: ifge          73
+      69: iload         6
+      71: istore        8
+      73: iload         7
+      75: iload         8
+      77: iadd
+      78: iload_3
+      79: if_icmplt     90
+      82: iload_3
+      83: iconst_1
+      84: isub
+      85: iload         7
+      87: isub
+      88: istore        8
+      90: iload         6
+      92: iload         8
+      94: iadd
+      95: iload         4
+      97: if_icmplt     109
+     100: iload         4
+     102: iconst_1
+     103: isub
+     104: iload         6
+     106: isub
+     107: istore        8
+     109: aload         5
+     111: iconst_0
+     112: invokestatic  #22                 // Method java/util/Arrays.fill:([II)V
+     115: iload         7
+     117: iload         8
+     119: isub
+     120: istore        9
+     122: iload         9
+     124: iload         7
+     126: iload         8
+     128: iadd
+     129: if_icmpgt     180
+     132: iload         6
+     134: iload         8
+     136: isub
+     137: istore        10
+     139: iload         10
+     141: iload         6
+     143: iload         8
+     145: iadd
+     146: if_icmpgt     174
+     149: aload_1
+     150: iload         9
+     152: iload         10
+     154: invokevirtual #28                 // Method ij/process/ByteProcessor.get:(II)I
+     157: istore        11
+     159: aload         5
+     161: iload         11
+     163: dup2
+     164: iaload
+     165: iconst_1
+     166: iadd
+     167: iastore
+     168: iinc          10, 1
+     171: goto          139
+     174: iinc          9, 1
+     177: goto          122
+     180: iconst_2
+     181: iload         8
+     183: imul
+     184: iconst_1
+     185: iadd
+     186: istore        9
+     188: iload         9
+     190: iload         9
+     192: imul
+     193: iconst_1
+     194: iadd
+     195: iconst_2
+     196: idiv
+     197: istore        10
+     199: sipush        255
+     202: istore        11
+     204: iconst_0
+     205: istore        12
+     207: iload         12
+     209: iload         10
+     211: if_icmpge     230
+     214: iload         12
+     216: aload         5
+     218: iload         11
+     220: iaload
+     221: iadd
+     222: istore        12
+     224: iinc          11, -1
+     227: goto          207
+     230: aload_2
+     231: iload         7
+     233: iload         6
+     235: iload         11
+     237: iconst_1
+     238: iadd
+     239: invokevirtual #32                 // Method ij/process/ByteProcessor.set:(III)V
+     242: iinc          7, 1
+     245: goto          37
+     248: iinc          6, 1
+     251: goto          27
+     254: return
+}

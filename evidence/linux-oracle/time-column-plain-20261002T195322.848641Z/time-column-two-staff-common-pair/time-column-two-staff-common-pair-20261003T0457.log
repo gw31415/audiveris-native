@@ -1,0 +1,31 @@
+2026-10-03 04:57:10,386 INFO [time-column-two-staff-common-pair]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-two-staff-common-pair.png
+2026-10-03 04:57:10,500 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:57:10,501 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-two-staff-common-pair/time-column-two-staff-common-pair.omr
+2026-10-03 04:57:10,503 INFO []                 Book.java:1929 | Book reaching SCALE on sheets:[#1]
+2026-10-03 04:57:10,504 INFO [time-column-two-staff-common-pair]       StepMonitoring.java:98   | LOAD
+2026-10-03 04:57:10,522 INFO [time-column-two-staff-common-pair]            SheetStub.java:1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195229.821060Z/time-column-two-staff-common-pair.png
+2026-10-03 04:57:10,525 INFO [time-column-two-staff-common-pair]       StepMonitoring.java:98   | BINARY
+2026-10-03 04:57:10,615 INFO [time-column-two-staff-common-pair]       StepMonitoring.java:98   | SCALE
+2026-10-03 04:57:10,623 INFO [time-column-two-staff-common-pair]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 04:57:10,624 INFO [time-column-two-staff-common-pair]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 42% of needed quorum
+2026-10-03 04:57:10,624 WARN [time-column-two-staff-common-pair]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 04:57:10,625 INFO [time-column-two-staff-common-pair]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 04:57:10,625 INFO [time-column-two-staff-common-pair]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 04:57:10,625 INFO [time-column-two-staff-common-pair]                 Book.java:2584 | Book{time-column-two-staff-common-pair} storing
+2026-10-03 04:57:10,650 INFO [time-column-two-staff-common-pair]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:57:10,669 INFO [time-column-two-staff-common-pair]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 04:57:10,861 INFO [time-column-two-staff-common-pair]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:57:10,862 INFO [time-column-two-staff-common-pair]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-two-staff-common-pair/time-column-two-staff-common-pair.omr
+2026-10-03 04:57:10,863 INFO [time-column-two-staff-common-pair]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 04:57:10,884 INFO [time-column-two-staff-common-pair]                 Book.java:2050 | End of Stub#1
+2026-10-03 04:57:10,886 INFO [time-column-two-staff-common-pair]                 Book.java:2057 | End of Book{time-column-two-staff-common-pair}
+2026-10-03 04:57:10,901 INFO [time-column-two-staff-common-pair]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 04:57:10,992 INFO [time-column-two-staff-common-pair]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 04:57:11,001 INFO [time-column-two-staff-common-pair]    ClustersRetriever.java:326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+2026-10-03 04:57:11,024 INFO [time-column-two-staff-common-pair]            PeakGraph.java:310  | Systems: #1[1, 2]
+2026-10-03 04:57:11,058 INFO [time-column-two-staff-common-pair]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 04:57:11,059 INFO [time-column-two-staff-common-pair]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 04:57:11,849 INFO [time-column-two-staff-common-pair]                 Book.java:2565 | Stored /book.xml
+2026-10-03 04:57:11,875 INFO [time-column-two-staff-common-pair]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 04:57:11,875 INFO [time-column-two-staff-common-pair]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column-plain/20261002T195322.848641Z/time-column-two-staff-common-pair/time-column-two-staff-common-pair.omr
+2026-10-03 04:57:11,877 INFO [time-column-two-staff-common-pair]                Score.java:181  | Closing {Score 1}

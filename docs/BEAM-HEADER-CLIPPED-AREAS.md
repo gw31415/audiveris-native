@@ -1,0 +1,9 @@
+# Beam header erasure using clipped system areas
+
+Original SpotsBuilder.eraseHeaderAreas starts each rectangle at SystemInfo.getBounds().x, uses the first available staff header stop, evaluates the system's first/last staff lines at that integer stop, and applies the original two-interline vertical margin and inclusive pixel bounds.
+
+The native adapter now accepts horizontal GRID clips whose system-area bounds can be certified: the global north/south paths must be straight and x-monotone, with positive height inside the sheet across every breakpoint and clip endpoint. Such a non-crossing area intersects the entire clip and its exact integer left bound equals the discovered clip end. Clipped curved or overlapping bands retain unsupported_beam_header_area_bounds; this is not a general boolean-intersection bounds implementation. Full-width behavior remains unchanged. Supplied clip ends must match original native SystemInfo end discovery.
+
+Nine independently observed original layouts compare header rectangles, including horizontal/vertical chains and original Laura geometry. The actual two-column treble/bass raster runs original GRID, live HEADERS, STEM_SEEDS and private SpotsBuilder erasure; native Gaussian and header-erased mask hashes and black pixels match. Erasure removes positive header pixels; this header-only raster need not produce positive beam spots. The existing thirteen original beam rasters retain their checks, including Laura, and shared GRID graph identity remains unchanged during pure preparation. Curved-neighbor clipped bounds and malformed supplied ends have explicit negative controls.
+
+General horizontal beam dispatch and rest mapping remain separate prerequisites. The native CLI checkpoint records its actual next boundary. Full regression at this new source is unverified; the 314-pass debug/release baseline remains separately pinned. No complete OMR or positive real-score rest conversion is claimed.

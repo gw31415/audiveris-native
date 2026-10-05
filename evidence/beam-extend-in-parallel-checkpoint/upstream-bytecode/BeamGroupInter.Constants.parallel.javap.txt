@@ -1,0 +1,83 @@
+Compiled from "BeamGroupInter.java"
+class org.audiveris.omr.sig.inter.BeamGroupInter$Constants extends org.audiveris.omr.constant.ConstantSet {
+  private final org.audiveris.omr.constant.Constant$Integer maxSplitLoops;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxChordDy;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction minXOverlap;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueMinXOverlap;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxYDistance;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueMaxYDistance;
+
+  private final org.audiveris.omr.constant.Constant$Double maxSlopeDiff;
+
+  private final org.audiveris.omr.constant.Constant$Double cueMaxSlopeDiff;
+
+  private org.audiveris.omr.sig.inter.BeamGroupInter$Constants();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/constant/ConstantSet."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/constant/Constant$Integer
+       8: dup
+       9: ldc           #9                  // String loops
+      11: bipush        10
+      13: ldc           #11                 // String Maximum number of loops allowed for splitting beam groups
+      15: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Integer."<init>":(Ljava/lang/String;ILjava/lang/String;)V
+      18: putfield      #16                 // Field maxSplitLoops:Lorg/audiveris/omr/constant/Constant$Integer;
+      21: aload_0
+      22: new           #22                 // class org/audiveris/omr/sheet/Scale$Fraction
+      25: dup
+      26: ldc2_w        #24                 // double 0.5d
+      29: ldc           #26                 // String Maximum vertical gap between a chord and a beam
+      31: invokespecial #28                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      34: putfield      #31                 // Field maxChordDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      37: aload_0
+      38: new           #22                 // class org/audiveris/omr/sheet/Scale$Fraction
+      41: dup
+      42: ldc2_w        #35                 // double 0.7d
+      45: ldc           #37                 // String Minimum horizontal overlap between subsequent beams of a group
+      47: invokespecial #28                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      50: putfield      #39                 // Field minXOverlap:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      53: aload_0
+      54: new           #22                 // class org/audiveris/omr/sheet/Scale$Fraction
+      57: dup
+      58: ldc2_w        #35                 // double 0.7d
+      61: ldc           #42                 // String (Cue) Minimum horizontal overlap between subsequent beams of a group
+      63: invokespecial #28                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      66: putfield      #44                 // Field cueMinXOverlap:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      69: aload_0
+      70: new           #22                 // class org/audiveris/omr/sheet/Scale$Fraction
+      73: dup
+      74: ldc2_w        #47                 // double 1.2d
+      77: ldc           #49                 // String Maximum vertical distance between subsequent beams of a group
+      79: invokespecial #28                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      82: putfield      #51                 // Field maxYDistance:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      85: aload_0
+      86: new           #22                 // class org/audiveris/omr/sheet/Scale$Fraction
+      89: dup
+      90: dconst_1
+      91: ldc           #54                 // String (Cue) Maximum vertical distance between subsequent beams of a group
+      93: invokespecial #28                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      96: putfield      #56                 // Field cueMaxYDistance:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      99: aload_0
+     100: new           #59                 // class org/audiveris/omr/constant/Constant$Double
+     103: dup
+     104: ldc           #61                 // String tangent
+     106: ldc2_w        #63                 // double 0.065d
+     109: ldc           #65                 // String Maximum slope difference between beams of a group
+     111: invokespecial #67                 // Method org/audiveris/omr/constant/Constant$Double."<init>":(Ljava/lang/String;DLjava/lang/String;)V
+     114: putfield      #70                 // Field maxSlopeDiff:Lorg/audiveris/omr/constant/Constant$Double;
+     117: aload_0
+     118: new           #59                 // class org/audiveris/omr/constant/Constant$Double
+     121: dup
+     122: ldc           #61                 // String tangent
+     124: ldc2_w        #74                 // double 0.2d
+     127: ldc           #76                 // String (Cue) Maximum slope difference between beams of a group
+     129: invokespecial #67                 // Method org/audiveris/omr/constant/Constant$Double."<init>":(Ljava/lang/String;DLjava/lang/String;)V
+     132: putfield      #78                 // Field cueMaxSlopeDiff:Lorg/audiveris/omr/constant/Constant$Double;
+     135: return
+}

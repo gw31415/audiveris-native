@@ -1,0 +1,42 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-flats-bridge-120/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png"
+INFO  [fallback-header-flats-bridge-120]                      Book 560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-flats-bridge-120/fallback-header-flats-bridge-120.omr
+INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
+INFO  [fallback-header-flats-bridge-120]            StepMonitoring 98   | LOAD
+INFO  [fallback-header-flats-bridge-120]                 SheetStub 1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/fallback-header-flats-bridge-120.png
+INFO  [fallback-header-flats-bridge-120]            StepMonitoring 98   | BINARY
+INFO  [fallback-header-flats-bridge-120]            StepMonitoring 98   | SCALE
+INFO  [fallback-header-flats-bridge-120]              ScaleBuilder 254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+INFO  [fallback-header-flats-bridge-120]              ScaleBuilder 271  | Beam measured height: 13 -- 0.75 of [7..15] range at 50% of needed quorum
+WARN  [fallback-header-flats-bridge-120]              ScaleBuilder 300  | No reliable beam height found, guessed value: 9
+INFO  [fallback-header-flats-bridge-120]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
+INFO  [fallback-header-flats-bridge-120]                 ScaleStep 65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+INFO  [fallback-header-flats-bridge-120]                      Book 2584 | Book{fallback-header-flats-bridge-120} storing
+INFO  [fallback-header-flats-bridge-120]                      Book 2565 | Stored /book.xml
+INFO  [fallback-header-flats-bridge-120]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [fallback-header-flats-bridge-120]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [fallback-header-flats-bridge-120]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-flats-bridge-120/fallback-header-flats-bridge-120.omr
+INFO  [fallback-header-flats-bridge-120]                 SheetStub 1655 | Sheet disposed
+INFO  [fallback-header-flats-bridge-120]                      Book 2050 | End of Stub#1
+INFO  [fallback-header-flats-bridge-120]                      Book 2057 | End of Book{fallback-header-flats-bridge-120}
+INFO  [fallback-header-flats-bridge-120]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [fallback-header-flats-bridge-120]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [fallback-header-flats-bridge-120]         ClustersRetriever 326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+INFO  [fallback-header-flats-bridge-120]                 PeakGraph 310  | Systems: #1[1]
+INFO  [fallback-header-flats-bridge-120]             SystemManager 800  | 1 part along 1 system
+INFO  [fallback-header-flats-bridge-120]                      Book 543  | Created scores: [{Score 1}]
+INFO  [fallback-header-flats-bridge-120]                      Book 2565 | Stored /book.xml
+INFO  [fallback-header-flats-bridge-120]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [fallback-header-flats-bridge-120]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers-live/20261002T201822.419004Z/fallback-header-flats-bridge-120/fallback-header-flats-bridge-120.omr
+INFO  [fallback-header-flats-bridge-120]                     Score 181  | Closing {Score 1}

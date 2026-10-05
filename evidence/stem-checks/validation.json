@@ -1,0 +1,55 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "module": "src/stem_checks.rs",
+  "runtime": "pure Rust, parameterized original geometry and NO_STAFF pixels; no fixture lookup or Java invocation",
+  "scope": "StemChecker profiles0/1 only. No lib/main exports changed by this worker. Filament construction and header/staff skip decisions belong to caller.",
+  "api": "Candidate{bounds,start,stop,line,mean_distance}; Parameters{interline,max_stem,global_slope,profile}; check(image,candidate,parameters)->Result<CheckResult,String>",
+  "independent_original_context_count": 352,
+  "observed_profiles": [
+    1
+  ],
+  "context_count_and_acceptance": "all exact",
+  "maximum_absolute_float_delta_debug": 0.0,
+  "maximum_absolute_float_delta_release": 0.0,
+  "tests": {
+    "debug": "6 passed",
+    "release": "6 passed",
+    "clippy": "cargo clippy --offline --test stem_checks -- -D warnings passed"
+  },
+  "source_derived_unit_coverage": [
+    "profiles0/1 intrinsic ceiling",
+    "profile gap thresholds and forced-black endpoints",
+    "clinging ink black-versus-clean distinction",
+    "unsupported profile/nonfinite/invalid geometry rejection",
+    "valid Java linear-index wrap in side belt"
+  ],
+  "explicit_bounds": [
+    "interline/max_stem1..128",
+    "profile0 or1",
+    "max4million image pixels",
+    "max16million estimated per-candidate sample accesses",
+    "finite geometry within bounded image rectangle",
+    "reject actual array-out-of-range and near-horizontal sanity/NaN cases"
+  ],
+  "subtleties": [
+    "Preserve LineUtil general line-intersection arithmetic before ceil/floor, not simplified interpolation.",
+    "ByteProcessor.get indexes y*width+x directly; valid side-belt row wrapping is retained.",
+    "All global slopes were independently observed through original step and stored in scalar supplement.",
+    "Original masks were decoded/hash-checked and losslessly materialized as test-only PNG inputs."
+  ],
+  "sha256": {
+    "src/stem_checks.rs": "839d7a3e876db338c80d0900cc9ef671eeb38a2a13b0759f55bd1b52ca3fe4a0",
+    "tests/stem_checks.rs": "328c4f97ce7ffaa8e7dce3022e9b33cd702e06be9065a62d7304b0402b40949b",
+    "fixtures/official-stem-seeds-parameters.json": "66099f3c6c7532200339fea56e8062a3b34c05041966cd6771d608fd504dbbee",
+    "evidence/stem-check-pixel-inputs.json": "9df4d2da998267f714b46a19d76577b96a2426a7b7888540bbb5db914438e99b",
+    "fixtures/stem-seeds-source/StemChecker.java": "b943d41c3916b303e1d0981e271699c314ead59adc7acef9bf8c54c2d4d9e531",
+    "fixtures/stem-seeds-source/Check.javap.txt": "137aa24ed01d2d9460e73096541529d16aee48df886d03c7d098d40357d006a9",
+    "fixtures/stem-seeds-source/CheckSuite.javap.txt": "694a52e24871c404df2c686baa9c84171d95d6f6388856a5b6262ee25fa8c79a",
+    "fixtures/stem-seeds-source/LineUtil.javap.txt": "2abf1244b936bae4bb581f7cbd2faf3cbd136b0cf999d07cd4dd34937c6dc7c5"
+  },
+  "log_sha256": {
+    "release-test.log": "1eaf54fedf37591d209d4667d23edb3e0094c8ffb02fb8821bef0a6fdd92b288",
+    "clippy.log": "ea9864f373db2449c4826f405a896888c2892cc012c008fcdfdcd698ae28e937",
+    "debug-test.log": "1ac2a25c13868c2ea50df3ab0dbee7d08b0104c668feb73ed3b15d06965871bb"
+  }
+}

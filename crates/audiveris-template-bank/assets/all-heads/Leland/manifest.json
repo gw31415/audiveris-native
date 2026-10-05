@@ -1,0 +1,405 @@
+{
+  "schema": 1,
+  "bank_id": "audiveris-5.11.0-leland-heads-all-shapes-v1",
+  "upstream_version": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "font_family": "Leland",
+  "font_version": "bundled-in-5.11.0",
+  "font_sha256": "cacca69cb750d851023d52a8e41d3373904aa82afc7247085f37d4ee6823506c",
+  "model_name": "basic-classifier.zip",
+  "model_sha256": "327194c47116a8ebf5771d04cea08a4e563ec93d2955e1efd990a54a9245f29e",
+  "coverage_input_sha256": "9a27ee70a863c6a3932bf3c749f1c1c7a65fa97c0508534b47a9d7f3d60099ff",
+  "generator": "HeadAllShapesBankOracle; official unmodified 5.11 JAR; 25.0.3; Linux amd64; default TemplateFactory constants",
+  "asset_sha256": "f12657f87b2388adf4a5f04ae7dda96c39dbe4e2beaa8bef228399a558691a44",
+  "keys": [
+    {
+      "shape": "BREVE",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE_SMALL",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE_CROSS",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE_DIAMOND",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE_TRIANGLE_DOWN",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE_CIRCLE_X",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE_SMALL",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE_CROSS",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE_DIAMOND",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE_TRIANGLE_DOWN",
+      "point_size": 32
+    },
+    {
+      "shape": "WHOLE_NOTE_CIRCLE_X",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_VOID_SMALL",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_CROSS_VOID",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_VOID",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_VOID",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X_VOID",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_BLACK_SMALL",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_CROSS",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_FILLED",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_FILLED",
+      "point_size": 32
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X",
+      "point_size": 32
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE_SMALL",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE_CROSS",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE_DIAMOND",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE_TRIANGLE_DOWN",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE_CIRCLE_X",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE_SMALL",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE_CROSS",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE_DIAMOND",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE_TRIANGLE_DOWN",
+      "point_size": 40
+    },
+    {
+      "shape": "WHOLE_NOTE_CIRCLE_X",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_VOID_SMALL",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_CROSS_VOID",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_VOID",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_VOID",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X_VOID",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_BLACK_SMALL",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_CROSS",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_FILLED",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_FILLED",
+      "point_size": 40
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X",
+      "point_size": 40
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE_SMALL",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE_CROSS",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE_DIAMOND",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE_TRIANGLE_DOWN",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE_CIRCLE_X",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE_SMALL",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE_CROSS",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE_DIAMOND",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE_TRIANGLE_DOWN",
+      "point_size": 51
+    },
+    {
+      "shape": "WHOLE_NOTE_CIRCLE_X",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_VOID_SMALL",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_CROSS_VOID",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_VOID",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_VOID",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X_VOID",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_BLACK_SMALL",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_CROSS",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_FILLED",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_FILLED",
+      "point_size": 51
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X",
+      "point_size": 51
+    },
+    {
+      "shape": "BREVE",
+      "point_size": 64
+    },
+    {
+      "shape": "BREVE_SMALL",
+      "point_size": 64
+    },
+    {
+      "shape": "BREVE_CROSS",
+      "point_size": 64
+    },
+    {
+      "shape": "BREVE_DIAMOND",
+      "point_size": 64
+    },
+    {
+      "shape": "BREVE_TRIANGLE_DOWN",
+      "point_size": 64
+    },
+    {
+      "shape": "BREVE_CIRCLE_X",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE_SMALL",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE_CROSS",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE_DIAMOND",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE_TRIANGLE_DOWN",
+      "point_size": 64
+    },
+    {
+      "shape": "WHOLE_NOTE_CIRCLE_X",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_VOID",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_VOID_SMALL",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_CROSS_VOID",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_VOID",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_VOID",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X_VOID",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_BLACK",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_BLACK_SMALL",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_CROSS",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_DIAMOND_FILLED",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_TRIANGLE_DOWN_FILLED",
+      "point_size": 64
+    },
+    {
+      "shape": "NOTEHEAD_CIRCLE_X",
+      "point_size": 64
+    }
+  ],
+  "calibration_sizes": [
+    50,
+    51,
+    54
+  ]
+}

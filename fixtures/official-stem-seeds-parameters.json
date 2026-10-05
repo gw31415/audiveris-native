@@ -1,0 +1,80 @@
+{
+  "source_run": "evidence/generated/linux-oracle/stem-seeds-plain/20261002T205259.021040Z",
+  "parameters": [
+    {
+      "name": "laura-gray",
+      "global_slope": 0.0,
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "original_result_sha256": "10970785652189b27dd7add1b45081168ae5d93d2867ad2127b6dd53b3190a8f"
+    },
+    {
+      "name": "rendered-header-empty",
+      "global_slope": 0.0,
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "original_result_sha256": "e9ff73a9c995e5c28b1ef960b8050d04d87169c1efd6cf4e008182bf6fc903cd"
+    },
+    {
+      "name": "rendered-header-four-flats",
+      "global_slope": 0.0,
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "original_result_sha256": "55ea3bd2ac6aeca45f5dcc795f994192ed4ce5ba9f76f75bccd56094b51b2163"
+    },
+    {
+      "name": "stem-seeds-broken",
+      "global_slope": 0.0,
+      "input_sha256": "329c65d1ea143f148841883abb2cacf1b67a8fa2509db18d7b97ad385ac9a14a",
+      "original_result_sha256": "e06def3fc78a23ea899320e2329f402e962eee938352c8443d128aa402784ee0"
+    },
+    {
+      "name": "stem-seeds-clean",
+      "global_slope": 0.0,
+      "input_sha256": "74e87c47c56e5b0753d86e1957a864a7b94fb5d69ecea51ca07bbebb02f735d6",
+      "original_result_sha256": "e38cfe0b642347113e3c4fe18970f3944c4a2baea0f5449b54efba8d3e979939"
+    },
+    {
+      "name": "stem-seeds-empty",
+      "global_slope": 0.0,
+      "input_sha256": "22de90af2955145091b4c442b2ecd8d7c1c586e897b58f55cfb2c1cec15d776e",
+      "original_result_sha256": "d903c162d8ca06592c094e100e0e3b8c328b240c787682dcf356807e9f8531a9"
+    },
+    {
+      "name": "stem-seeds-heads",
+      "global_slope": 0.0,
+      "input_sha256": "4bd95d7971c7e0473f14042b13380e51bb1f4b793f1af38358e2a135dc1e4247",
+      "original_result_sha256": "01e008aa855df8780beac407c3e6d60ddb70a57b7b14a07e39e7f697d8debeb3"
+    },
+    {
+      "name": "stem-seeds-mixed-width",
+      "global_slope": 0.0,
+      "input_sha256": "754c0cdee08b22cc269ec0b7ad8d01996007f7866b0284e2a9301beb370296f8",
+      "original_result_sha256": "2298b18a1684522893cc496da7ff0e0cb914ec6a6942ec9bc9e97d46a85297a8"
+    },
+    {
+      "name": "stem-seeds-noise",
+      "global_slope": 0.0,
+      "input_sha256": "52da8c2a6969f808928143b979cce95dae802e85887369de60f7dc96faa3172f",
+      "original_result_sha256": "2b2cbd077d5dbd69600b7d91de91eb442e658ea8db93762b80db504372074965"
+    },
+    {
+      "name": "stem-seeds-short",
+      "global_slope": 0.0,
+      "input_sha256": "3167f1923c38f3eb0b72589d475d9d3128cc38af1645e45009d7887a9f85681d",
+      "original_result_sha256": "12db1c42a76f99e80bbe01771caaa5f91aae27f36500bce4a8f9beca46512c10"
+    },
+    {
+      "name": "stem-seeds-sloped",
+      "global_slope": 0.0,
+      "input_sha256": "cdcf224588105aeccc3301be27aebb80a375c8648adb254aabba82206b2a187f",
+      "original_result_sha256": "85be7ac3d0fa60366503e33f76adf6c83432fbf372508ac704d13684a911b031"
+    },
+    {
+      "name": "horizontal-rendered-clefs",
+      "global_slope": 0.0,
+      "input_sha256": "f28f109f9b11023f64f6c7231391d62a490b9a82af1483ef24c4d7e27d5bcbd7",
+      "original_result_sha256": "778262fa4e0801dad3b4709a2bace6fdb81d167ee82922360213c1efc44681af",
+      "source_run": "Original live GRID/HEADERS/VerticalsBuilder execution retained in checkpoints/sol-seed-horizontal-20261003/original/raster-oracle.log",
+      "original_no_staff_pixel_sha256": "6a2f46221ab5340c2a6e30f212175725b5abf12b925830f8ee4b54560f12dd9a"
+    }
+  ],
+  "receipt": "evidence/linux-oracle/stem-seeds-plain-20261002T205259.021040Z"
+}

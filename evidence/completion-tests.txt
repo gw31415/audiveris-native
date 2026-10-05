@@ -1,0 +1,187 @@
+   Compiling audiveris-native v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5)
+   Compiling audiveris-staff-removal v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5/crates/audiveris-staff-removal)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.38s
+     Running unittests src/lib.rs (target/debug/deps/audiveris_classifier-e46403d7e0db88db)
+
+running 1 test
+test tests::rejects_nonfinite_model_values_even_before_json_encoding ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.28s
+
+     Running unittests src/bin/classify.rs (target/debug/deps/audiveris_classify-e700e1f2c97b1540)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (target/debug/deps/golden-b93e7cbe11b5d07f)
+
+running 1 test
+test matches_136_official_java_cases_and_55488_values ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/validation.rs (target/debug/deps/validation-97c4105b91ba7422)
+
+running 4 tests
+test rejects_malformed_or_nonfinite_json ... ok
+test rejects_invalid_feature_vectors_and_arithmetic_overflow ... ok
+test cli_emits_ordered_scores_and_rejects_bad_input ... ok
+test rejects_bad_shapes_labels_norms_and_provenance ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.90s
+
+     Running unittests src/lib.rs (target/debug/deps/audiveris_glyph_features-fa67c2de70a5a942)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/golden.rs (target/debug/deps/golden-ff7a8cdd96a73a76)
+
+running 2 tests
+test invalid_inputs_are_explicit_errors ... ok
+test java_glyph_features_and_classifier_chain ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+
+     Running unittests src/lib.rs (target/debug/deps/audiveris_native-7843e6831c735141)
+
+running 1 test
+test filament_merge::tests::contact_excludes_diagonal_corner_only ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/audiveris_native-221171aa192e1c74)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/clusters.rs (target/debug/deps/clusters-95f6a7e51a08bc35)
+
+running 1 test
+test pinned_java_cluster_and_initial_staff_goldens ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/core.rs (target/debug/deps/core-85e269ae9f7e399b)
+
+running 6 tests
+test constant_black_white_and_inclusive_zero_threshold ... ok
+test run_tables_round_trip_in_both_orientations ... ok
+test pgm_preserves_binary_whitespace_pixels_and_rejects_bad_input ... ok
+test png_matches_pgm_without_color_conversion ... ok
+test vertical_ring_matches_full_integrals_across_wrap_and_degenerate_images ... ok
+test integral_matches_brute_force_at_every_pixel ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+     Running tests/curved_filaments.rs (target/debug/deps/curved_filaments-129f083b661710bd)
+
+running 2 tests
+test section_budget_rejects_before_returning_partial_factory_output ... ok
+test pinned_java_merge_curve_filter_and_comb_goldens ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+
+     Running tests/filaments.rs (target/debug/deps/filaments-ed6fe76b7a23c49f)
+
+running 1 test
+test pinned_java_seed_and_restricted_comb_goldens ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+     Running tests/line_completion.rs (target/debug/deps/line_completion-998a581fd382358e)
+
+running 1 test
+test original_rasters_match_official_completion_phases_and_native_removal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.00s
+
+     Running tests/official_grid.rs (target/debug/deps/official_grid-e5738333da86a8d2)
+
+running 2 tests
+test no_system_cli_does_not_claim_grid_completion ... ok
+test original_raster_to_initial_staff_peaks_sticks_and_systems_matches_official_jar ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.38s
+
+     Running tests/review_regressions.rs (target/debug/deps/review_regressions-81030f5fd5600d6c)
+
+running 2 tests
+test grayscale_png_transparency_is_rejected ... ok
+test blocked_filaments_does_not_claim_completion ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/scale.rs (target/debug/deps/scale-094a3c32a7d4c013)
+
+running 5 tests
+test hilo_matches_128_unmodified_java_goldens ... ok
+test histogram_limit_rounding_and_out_of_domain_runs_match_java ... ok
+test clean_staff_and_two_population_results_match_java ... ok
+test beam_selection_and_inverted_signed_bounds_match_java ... ok
+test all_five_scale_failure_classes_match_java ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+
+     Running tests/sections.rs (target/debug/deps/sections-c21015aa3c7b3fe7)
+
+running 3 tests
+test split_merge_empty_gap_and_integer_mean_boundaries ... ok
+test section_factory_partitions_all_pixels_and_masks_preserve_origins ... ok
+test grid_preparation_is_not_staff_detection ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (target/debug/deps/audiveris_staff_removal-cf2a95fa596d3772)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/boundaries.rs (target/debug/deps/boundaries-7b25efffce353af0)
+
+running 6 tests
+test membership_preserves_crossing_stem_and_notehead_and_duplicates_are_idempotent ... ok
+test four_connectivity_order_orientation_origin_empty_and_limits ... ok
+test empty_inputs_invalid_runs_nonbinary_and_resource_budgets ... ok
+test signed_origins_clip_both_orientations_and_white_pixels_are_not_removed ... ok
+test many_nonoverlapping_sequences_are_bounded_without_recursive_union ... ok
+test a4_300dpi_fits_default_budget_but_excess_page_and_origin_extent_do_not ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/official.rs (target/debug/deps/official-70a347e8388dfaa2)
+
+running 2 tests
+test thirty_official_staff_glyphs_match_every_java_residual_and_removed_pixel ... ok
+test official_glyphfactory_matches_connectivity_order_runs_boxes_origins_and_weights ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+   Doc-tests audiveris_classifier
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_glyph_features
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_native
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests audiveris_staff_removal
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

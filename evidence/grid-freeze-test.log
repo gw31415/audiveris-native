@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/Users/ama/Documents/Codex/2026-10-03/task-2/audiveris-native)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.12s
+     Running tests/grid_ir.rs (target/debug/deps/grid_ir-cb6f4d8f99e1ae61)
+
+running 2 tests
+test exact_pixel_registry_reuses_content_and_keeps_distinct_origins_and_orientations ... ok
+test native_persistent_staff_sections_membership_and_ordinary_sig_match_final_official_grid ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.41s

@@ -1,0 +1,12 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "license": "AGPL-3.0-or-later",
+  "files": [
+    {
+      "path": "fixtures/key-peaks-source/HiLoPeakFinder.java",
+      "sha256": "cb2293479b3377aba702af84c9d45fce7251f6233ed61b9dbb22b5d57c8d4883",
+      "source_url": "https://github.com/Audiveris/audiveris/blob/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/math/HiLoPeakFinder.java"
+    }
+  ],
+  "additional_source": "evidence/key-preparation-source.json"
+}

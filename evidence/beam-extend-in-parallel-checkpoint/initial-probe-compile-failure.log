@@ -1,0 +1,23 @@
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                   ^
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                              ^
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamImpactsControlProbe.java:22: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                                                      ^
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamExtendInParallelControlProbe.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                   ^
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamExtendInParallelControlProbe.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                              ^
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamExtendInParallelControlProbe.java:31: warning: Unsafe is internal proprietary API and may be removed in a future release
+  Field uf=sun.misc.Unsafe.class.getDeclaredField("theUnsafe");uf.setAccessible(true);sun.misc.Unsafe unsafe=(sun.misc.Unsafe)uf.get(null);
+                                                                                                                      ^
+/workspace/audiveris-sol/source/audiveris-source/scripts/java/BeamExtendInParallelControlProbe.java:54: error: variable m is already defined in method process()
+   if(accepted){Object merged=raw.get(raw.size()-1);Line2D m=(Line2D)call(merged,"getMedian");row.put("merged",Map.of("median",new double[]{m.getX1(),m.getY1(),m.getX2(),m.getY2()},"height",call(merged,"getHeight"),"grade",call(merged,"getGrade")));}
+                                                           ^
+1 error
+6 warnings

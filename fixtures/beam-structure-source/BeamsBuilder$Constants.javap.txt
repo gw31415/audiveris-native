@@ -1,0 +1,316 @@
+Compiled from "BeamsBuilder.java"
+class org.audiveris.omr.sheet.beam.BeamsBuilder$Constants extends org.audiveris.omr.constant.ConstantSet {
+  private final org.audiveris.omr.sheet.Scale$Fraction minBeamWidthLow;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction minBeamWidthHigh;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction minHookWidthLow;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction minHookWidthHigh;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxHookWidth;
+
+  private final org.audiveris.omr.constant.Constant$Ratio minHeightRatioLow;
+
+  private final org.audiveris.omr.constant.Constant$Ratio maxHeightRatioHigh;
+
+  private final org.audiveris.omr.constant.Constant$Ratio cornerMarginRatio;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxItemXGap;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction coreSectionWidth;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxSideBeamDx;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxBeamsGapX;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction minBeamsGapX;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxBeamsGapY;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction beamsXMargin;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxStemBeamGapX;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxStemBeamGapY;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxExtensionToStem;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxExtensionToSpot;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction beltMarginDx;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction beltMarginDy;
+
+  private final org.audiveris.omr.constant.Constant$Double maxBeamSlope;
+
+  private final org.audiveris.omr.constant.Constant$Double maxBorderSlopeGap;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction maxDistanceToBorder;
+
+  private final org.audiveris.omr.constant.Constant$Ratio maxJitterRatio;
+
+  private final org.audiveris.omr.constant.Constant$Ratio maxBeltBlackRatio;
+
+  private final org.audiveris.omr.constant.Constant$Ratio minCoreBlackRatio;
+
+  private final org.audiveris.omr.constant.Constant$Ratio minExtBlackRatio;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueMinBeamHeadDy;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueXMargin;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueYMargin;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueBoxDx;
+
+  private final org.audiveris.omr.sheet.Scale$Fraction cueBoxDy;
+
+  private final org.audiveris.omr.constant.Constant$Ratio cueBeamRatio;
+
+  private org.audiveris.omr.sheet.beam.BeamsBuilder$Constants();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/constant/ConstantSet."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+       8: dup
+       9: dconst_1
+      10: ldc           #9                  // String Low minimum width for a beam
+      12: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      15: putfield      #14                 // Field minBeamWidthLow:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      18: aload_0
+      19: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+      22: dup
+      23: ldc2_w        #20                 // double 4.0d
+      26: ldc           #22                 // String High minimum width for a beam
+      28: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      31: putfield      #24                 // Field minBeamWidthHigh:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      34: aload_0
+      35: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+      38: dup
+      39: ldc2_w        #27                 // double 0.7d
+      42: ldc           #29                 // String Low minimum width for a hook
+      44: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      47: putfield      #31                 // Field minHookWidthLow:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      50: aload_0
+      51: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+      54: dup
+      55: dconst_1
+      56: ldc           #34                 // String High minimum width for a hook
+      58: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      61: putfield      #36                 // Field minHookWidthHigh:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      64: aload_0
+      65: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+      68: dup
+      69: ldc2_w        #39                 // double 2.0d
+      72: ldc           #41                 // String Maximum width for a hook
+      74: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+      77: putfield      #43                 // Field maxHookWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      80: aload_0
+      81: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+      84: dup
+      85: ldc2_w        #27                 // double 0.7d
+      88: ldc           #48                 // String Low minimum height for a beam or hook, specified as ratio of typical beam
+      90: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      93: putfield      #51                 // Field minHeightRatioLow:Lorg/audiveris/omr/constant/Constant$Ratio;
+      96: aload_0
+      97: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     100: dup
+     101: ldc2_w        #55                 // double 1.4d
+     104: ldc           #57                 // String High maximum height for a beam or hook, specified as ratio of typical beam
+     106: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     109: putfield      #59                 // Field maxHeightRatioHigh:Lorg/audiveris/omr/constant/Constant$Ratio;
+     112: aload_0
+     113: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     116: dup
+     117: ldc2_w        #62                 // double 0.2d
+     120: ldc           #64                 // String Corner margin for a beam or hook, specified as ratio of typical beam
+     122: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     125: putfield      #66                 // Field cornerMarginRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     128: aload_0
+     129: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     132: dup
+     133: ldc2_w        #69                 // double 0.5d
+     136: ldc           #71                 // String Acceptable abscissa gap within a beam item
+     138: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     141: putfield      #73                 // Field maxItemXGap:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     144: aload_0
+     145: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     148: dup
+     149: ldc2_w        #76                 // double 0.15d
+     152: ldc           #78                 // String Minimum width for a core section to define borders
+     154: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     157: putfield      #80                 // Field coreSectionWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     160: aload_0
+     161: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     164: dup
+     165: ldc2_w        #20                 // double 4.0d
+     168: ldc           #83                 // String Maximum abscissa gap to detect side beams
+     170: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     173: putfield      #85                 // Field maxSideBeamDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     176: aload_0
+     177: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     180: dup
+     181: dconst_1
+     182: ldc           #88                 // String Maximum abscissa gap to merge aligned beams
+     184: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     187: putfield      #90                 // Field maxBeamsGapX:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     190: aload_0
+     191: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     194: dup
+     195: ldc2_w        #62                 // double 0.2d
+     198: ldc           #93                 // String Minimum abscissa gap to check inner area
+     200: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     203: putfield      #95                 // Field minBeamsGapX:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     206: aload_0
+     207: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     210: dup
+     211: ldc2_w        #98                 // double 0.25d
+     214: ldc           #100                // String Maximum ordinate mismatch to merge aligned beams
+     216: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     219: putfield      #102                // Field maxBeamsGapY:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     222: aload_0
+     223: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     226: dup
+     227: ldc2_w        #98                 // double 0.25d
+     230: ldc           #105                // String Abscissa margin around beams to exclude beam stems
+     232: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     235: putfield      #107                // Field beamsXMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     238: aload_0
+     239: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     242: dup
+     243: ldc2_w        #62                 // double 0.2d
+     246: ldc           #110                // String Maximum abscissa gap between stem and beam
+     248: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     251: putfield      #112                // Field maxStemBeamGapX:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     254: aload_0
+     255: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     258: dup
+     259: ldc2_w        #115                // double 0.8d
+     262: ldc           #117                // String Maximum ordinate gap between stem and beam
+     264: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     267: putfield      #119                // Field maxStemBeamGapY:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     270: aload_0
+     271: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     274: dup
+     275: dconst_1
+     276: ldc           #122                // String Maximum beam horizontal extension to stem seed
+     278: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     281: putfield      #124                // Field maxExtensionToStem:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     284: aload_0
+     285: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     288: dup
+     289: ldc2_w        #69                 // double 0.5d
+     292: ldc           #127                // String Maximum beam horizontal extension to spot
+     294: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     297: putfield      #129                // Field maxExtensionToSpot:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     300: aload_0
+     301: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     304: dup
+     305: ldc2_w        #98                 // double 0.25d
+     308: ldc           #132                // String Horizontal belt margin checked around beam
+     310: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     313: putfield      #134                // Field beltMarginDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     316: aload_0
+     317: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     320: dup
+     321: ldc2_w        #76                 // double 0.15d
+     324: ldc           #137                // String Vertical belt margin checked around beam
+     326: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     329: putfield      #139                // Field beltMarginDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     332: aload_0
+     333: new           #142                // class org/audiveris/omr/constant/Constant$Double
+     336: dup
+     337: ldc           #144                // String tangent
+     339: dconst_1
+     340: ldc           #146                // String Maximum absolute tangent value for a beam angle
+     342: invokespecial #148                // Method org/audiveris/omr/constant/Constant$Double."<init>":(Ljava/lang/String;DLjava/lang/String;)V
+     345: putfield      #151                // Field maxBeamSlope:Lorg/audiveris/omr/constant/Constant$Double;
+     348: aload_0
+     349: new           #142                // class org/audiveris/omr/constant/Constant$Double
+     352: dup
+     353: ldc           #144                // String tangent
+     355: ldc2_w        #76                 // double 0.15d
+     358: ldc           #155                // String Maximum delta slope between top and bottom borders of a beam
+     360: invokespecial #148                // Method org/audiveris/omr/constant/Constant$Double."<init>":(Ljava/lang/String;DLjava/lang/String;)V
+     363: putfield      #157                // Field maxBorderSlopeGap:Lorg/audiveris/omr/constant/Constant$Double;
+     366: aload_0
+     367: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     370: dup
+     371: ldc2_w        #76                 // double 0.15d
+     374: ldc           #160                // String Maximum mean distance to average beam border
+     376: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     379: putfield      #162                // Field maxDistanceToBorder:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     382: aload_0
+     383: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     386: dup
+     387: ldc2_w        #165                // double 0.02d
+     390: ldc           #167                // String Maximum border jitter ratio
+     392: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     395: putfield      #169                // Field maxJitterRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     398: aload_0
+     399: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     402: dup
+     403: ldc2_w        #172                // double 0.4d
+     406: ldc           #174                // String Maximum ratio of black pixels around beam
+     408: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     411: putfield      #176                // Field maxBeltBlackRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     414: aload_0
+     415: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     418: dup
+     419: ldc2_w        #27                 // double 0.7d
+     422: ldc           #179                // String Minimum ratio of black pixels inside beam
+     424: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     427: putfield      #181                // Field minCoreBlackRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     430: aload_0
+     431: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     434: dup
+     435: ldc2_w        #184                // double 0.6d
+     438: ldc           #186                // String Minimum ratio of black pixels inside beam extension
+     440: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     443: putfield      #188                // Field minExtBlackRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     446: aload_0
+     447: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     450: dup
+     451: dconst_1
+     452: ldc           #191                // String Minimum vertical distance between cue beam and head
+     454: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     457: putfield      #193                // Field cueMinBeamHeadDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     460: aload_0
+     461: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     464: dup
+     465: ldc2_w        #39                 // double 2.0d
+     468: ldc           #196                // String Abscissa margin to aggregate cues
+     470: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     473: putfield      #198                // Field cueXMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     476: aload_0
+     477: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     480: dup
+     481: ldc2_w        #201                // double 3.0d
+     484: ldc           #203                // String Ordinate margin to aggregate cues
+     486: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     489: putfield      #205                // Field cueYMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     492: aload_0
+     493: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     496: dup
+     497: ldc2_w        #98                 // double 0.25d
+     500: ldc           #208                // String Abscissa expansion of aggregate box
+     502: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     505: putfield      #210                // Field cueBoxDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     508: aload_0
+     509: new           #7                  // class org/audiveris/omr/sheet/Scale$Fraction
+     512: dup
+     513: dconst_1
+     514: ldc           #213                // String Ordinate shift of aggregate box
+     516: invokespecial #11                 // Method org/audiveris/omr/sheet/Scale$Fraction."<init>":(DLjava/lang/String;)V
+     519: putfield      #215                // Field cueBoxDy:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     522: aload_0
+     523: new           #46                 // class org/audiveris/omr/constant/Constant$Ratio
+     526: dup
+     527: ldc2_w        #184                // double 0.6d
+     530: ldc           #218                // String Ratio applied for cue beams height
+     532: invokespecial #50                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     535: putfield      #220                // Field cueBeamRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+     538: return
+}

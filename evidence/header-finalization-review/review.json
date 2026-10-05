@@ -1,0 +1,37 @@
+{
+  "reviewed_module": "src/header_finalization.rs",
+  "reviewed_sha256": "67f701b7901ac763045abbb3114d3914110e71a245dd249d5b2b349e36e8a147",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "source_methods": [
+    "ClefBuilder.selectClef",
+    "SIGraph.computeContextualGrade/getPartitions",
+    "HeaderBuilder.processHeader/purgeBarlines/freezeHeaders",
+    "StaffHeader.freeze",
+    "AbstractInter.freeze"
+  ],
+  "findings_fixed": [
+    {
+      "finding": "Maximizing contribution before contextual rounding can choose a lower contextual value",
+      "before": 0.25,
+      "after": 0.25000000000000006,
+      "fix": "Original conflict sequence enumeration and maximum of each contextual grade"
+    },
+    {
+      "finding": "Eager default clef-range calculation could overflow on invalid header_start",
+      "fix": "Staff header coordinate/range validation before arithmetic"
+    },
+    {
+      "finding": "Malformed key/time ensemble member bounds could panic during integer-center sort",
+      "fix": "Validated bounds and fallible key extraction before sort"
+    }
+  ],
+  "additional_validation": "Duplicate staff/system IDs, cross-system staff duplicates and empty complete-pipeline inputs now rejected explicitly",
+  "verified_tests": {
+    "header_finalization": 6,
+    "scratch_cases": 3,
+    "outcome": "all pass; two formerly panicking cases now return errors"
+  },
+  "independent_original_partition_controls": "fixtures/official-grid/context-partition-controls.json (8 original-method cases, collected independently; native golden integration owned by parent)",
+  "other_reviewed_behavior": "Stable competing-clef/best-grade selection, post-time ordering, strict integer-center and left-end bar protection, detached header pointers, recursive member freezing, and source member-order reconstruction match the pinned source in the supported fresh-header domain",
+  "remaining_review_blockers": []
+}

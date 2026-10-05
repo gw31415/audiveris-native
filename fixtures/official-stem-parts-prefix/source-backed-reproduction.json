@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "original_sha256": "8dcbc2859b5c7a9bc10855113c377329568a56a257bc3518d22a76cf976e5aef",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "native_outputs_used": false,
+  "independent_compilations_and_runs": 2,
+  "actual_builders": 612,
+  "prefix_controls": 4680,
+  "last_gap_controls": 4680,
+  "direct_selected_prefix_cache_SIG_controls": 12,
+  "original_getGlyphsUntil_getLastGapBefore_createStem_SIG_called": true
+}

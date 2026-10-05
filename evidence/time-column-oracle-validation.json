@@ -1,0 +1,1286 @@
+{
+  "stage": "original HeaderTimeColumn.retrieveTime plus original system time-stop propagation, before final clef selection/bar purge/header freeze",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "raster_count": 71,
+  "baseline_raster_count": 51,
+  "independent_time_raster_count": 20,
+  "all_original_no_hook_comparisons_exact": true,
+  "candidate_replay_trial_count": 98,
+  "maximum_retained_parts": 3,
+  "observation": "Delegating map/list facades record constructor, adapter, before-filter, system consistency and cleanup boundaries. Every getter used by snapshot is read-side; no candidate filtering/selection/context algorithm is replaced.",
+  "candidate_replay": "After all systems complete, fresh ORIGINAL whole/half adapters and original GlyphCluster enumerate retained parts. A proxy delegates every method, records glyph/part membership and repeats original classifier evaluation for exact raw ranks. Best per-shape glyph/grade maps and trial counts must match primary pipeline or run fails. Replay results are explicitly separated from actual primary chronology.",
+  "limitations": [
+    "No complete HEADERS or native parity claim.",
+    "Raster set has maximum three retained parts; larger combinations remain untested.",
+    "Rendered pair-2-2 and pair-12-8 are original negative results, not fabricated recognition successes.",
+    "Rendered mixed 3/4 and4/4 selects4/4 through competing candidates; COMMON_TIME versus numeric4/4 rejects system.",
+    "Unsupported raw pairs may be removed before after-filter snapshot; controlled relation-event coverage is separate."
+  ],
+  "font_metrics": {
+    "result": "fixtures/official-grid/time-font-metrics.json",
+    "sha256": "1bac706f0bf8c786e8a899daad7cf637ec838bbe4c13f5f063ba60025ec8a8f6",
+    "shape_count": 21,
+    "entry_count": 2688,
+    "interlines": [
+      1,
+      128
+    ],
+    "repeat_exact_count": 3,
+    "single_method": "layout_rint_half",
+    "combo_method": "numden_dimension_integer_half, verified by original TimeWholeInter.getSymbolBounds at generic test bounds"
+  },
+  "renderer_receipts": [
+    "evidence/linux-oracle/renderer-time-column-20261002T195229.821060Z",
+    "evidence/linux-oracle/renderer-time-column-20261002T195948.821333Z"
+  ],
+  "receipts": [
+    "evidence/linux-oracle/time-column-20261002T195322.852576Z",
+    "evidence/linux-oracle/time-column-plain-20261002T195322.848641Z",
+    "evidence/linux-oracle/time-font-metrics-20261002T195532.164146Z",
+    "evidence/linux-oracle/time-font-metrics-20261002T195611.239442Z",
+    "evidence/linux-oracle/time-font-metrics-20261002T195726.678873Z"
+  ],
+  "fixtures": [
+    {
+      "input": "fixtures/official-grid/bracket-pair.png",
+      "input_sha256": "98c22e85d449ac523c467c91a99d3cb5bfedd7597422d3f644182bc8d55b7559",
+      "result": "fixtures/official-grid/bracket-pair-time-column.json",
+      "result_sha256": "149c0b780e89510dfc653cf962cbc7b8a8c231b56e1007b0211f203fb1bae8d0",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/cclef-pair.png",
+      "input_sha256": "6ad712c2fa2ef5d499fe6ef1eb8e08415a614e2ee50ffda2065652640aa698a9",
+      "result": "fixtures/official-grid/cclef-pair-time-column.json",
+      "result_sha256": "9f15796e8a05a7636572f6f7fa801f0c6c870a2d086c1559c294fc839863a687",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-128.png",
+      "input_sha256": "c9e91a11bb4cfe02f78d52cb2fb2b320213dfbb375a203466343948682b2367c",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-128-time-column.json",
+      "result_sha256": "7ac53f6d7d55152aa942226b24a4aa823c9e1def7b3bf8c1d4e1a745270382d7",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-136.png",
+      "input_sha256": "c204d2db02a426baaa573fdc400f964d2156e9845f7c333db8c2ee8acdb5308c",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-136-time-column.json",
+      "result_sha256": "7aca7a8ed8f6ff9e2f399f98a67b119ae9694d1b0bf80f1bf575a64074469c76",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-143.png",
+      "input_sha256": "6c88dfd37804e4504d9b94112b7051a6b755bbfa262cd3a777097b99c57e2c79",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-143-time-column.json",
+      "result_sha256": "5c9a1f64a15a459fdd42036fc4c4706389ce3df2fa09d6f4b3ecb43192655727",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-147.png",
+      "input_sha256": "a89c94dd080efbd2fe13842956d35e30f4c579de2a6b7a40b1d572cf8e6cfb49",
+      "result": "fixtures/official-grid/damaged-header-flat-cut-147-time-column.json",
+      "result_sha256": "c7fd70d44409d0944c79f16cc49df1ad8ecd5a43d2d07d71d7a50d2de2399e86",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-speck-125.png",
+      "input_sha256": "663b3adb9a0e3cf40bec761266afa8ea5a34e26fd13f1c25c1d81600489ad9b0",
+      "result": "fixtures/official-grid/damaged-header-flat-speck-125-time-column.json",
+      "result_sha256": "032201db3c68d1c0fc28e7a1d938a8854c0c56c805be89331ed50ecc93c47a11",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-speck-132.png",
+      "input_sha256": "013cb264bcc29b44675970f8b749b7b0a91685d60bab719d9ab55ab23d654488",
+      "result": "fixtures/official-grid/damaged-header-flat-speck-132-time-column.json",
+      "result_sha256": "032201db3c68d1c0fc28e7a1d938a8854c0c56c805be89331ed50ecc93c47a11",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-110.png",
+      "input_sha256": "5da90870d3bc0ae9fa209ae9b7c8425abc38d12e88bf4da27dd12733448ca463",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-110-time-column.json",
+      "result_sha256": "fa1b8ecd681661829534ecf6534fc0af1314f64cd904c8d770af0e675e15569d",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-120.png",
+      "input_sha256": "c27c853db8ad4b692e3fa7815dc0bbbab2106d17eb690b0ca52529569f64aa2b",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-120-time-column.json",
+      "result_sha256": "2119c50deb83dbef18c0660d803e77285f8138ea0818bd7ac48c85454e9f3a27",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-130.png",
+      "input_sha256": "d603647b79608fbf95b20cb30ee873412e64984ee92c363f0ea48063c913c02a",
+      "result": "fixtures/official-grid/damaged-header-sharp-cut-130-time-column.json",
+      "result_sha256": "d67bc18805c69bd41b7e9faeec3c7ac70b8b5891de14c1c9f9ecf23af9c63109",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-speck-98.png",
+      "input_sha256": "35ec4062520199651e741945384bcb2077585afcfb5f0e8cc1893690e48d7e2c",
+      "result": "fixtures/official-grid/damaged-header-sharp-speck-98-time-column.json",
+      "result_sha256": "8f82788051dbbb7b0d5309359a073438897b1540a6d9b0c90901a6a1e2622d86",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-120.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "result": "fixtures/official-grid/fallback-header-flats-bridge-120-time-column.json",
+      "result_sha256": "6aaf32d8cb7d2ff294dc8703a8be12409976c51263a222042938af68d2606db5",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-125.png",
+      "input_sha256": "d5fe294f3a65218b2f0b9975dc8d1b3753a3c13c52e9ca6540b7b27e4405f624",
+      "result": "fixtures/official-grid/fallback-header-flats-bridge-125-time-column.json",
+      "result_sha256": "a10cffc390e630154963e4a8a7b632ec6dd0f437429b94681ae8681b10c137fb",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-130.png",
+      "input_sha256": "cbe2834999d4bf80c7316fbaee6fb4b571f371fe37cca8e6a8bb2b71f3d2933f",
+      "result": "fixtures/official-grid/fallback-header-flats-bridge-130-time-column.json",
+      "result_sha256": "a645cc9a61120f2064ab5909be9d1b6d89483f1e726ee08e9af605bd66b6340b",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-thick-bridge-125.png",
+      "input_sha256": "9459ccbac7951274fdebd868ee24ef940d9807bf22a139bd35c2d28c3e414476",
+      "result": "fixtures/official-grid/fallback-header-flats-thick-bridge-125-time-column.json",
+      "result_sha256": "ba1a49ff6bcd689e36d54271b9ee356b829080186c30c99ab67dc9ca495faa31",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-sharps-bridge-125.png",
+      "input_sha256": "e7cd0d3c860b8f5d97a6aaa8e998cc464950bff51fd34ad2c19684cd8a88ea54",
+      "result": "fixtures/official-grid/fallback-header-sharps-bridge-125-time-column.json",
+      "result_sha256": "bfa5c3baa575985922a22c54175318d52f7cfc6976df9766de9f6e8d7705d514",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-sharps-bridge-130.png",
+      "input_sha256": "08d0fc399af557992762743ab5632a569215f25f1b1941ce0ba2fae6eab6cb18",
+      "result": "fixtures/official-grid/fallback-header-sharps-bridge-130-time-column.json",
+      "result_sha256": "42c34f3c79a6a2f86968b1a103e2f5054189589b1728f54d594a114fa44ed97a",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-all-bottom-missing.png",
+      "input_sha256": "a198610243348dec9172f7ad4f1bd6726419e8195870d4c275c8a90d03586726",
+      "result": "fixtures/official-grid/key-column-all-bottom-missing-time-column.json",
+      "result_sha256": "ff487fec43359e164ee4685b171a2415ea1cc6d6cbe44f6774b9ce030d9d8430",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-bridge.png",
+      "input_sha256": "31a28c575a969c453179b6fe9af214c05d6372319655e9b0c71ecf69ea896b42",
+      "result": "fixtures/official-grid/key-column-bottom-bridge-time-column.json",
+      "result_sha256": "ae33d83e51fb23f203414ab6a94f2c6303d06dff8bb88aa35d8a1f78e25fb086",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-first-only.png",
+      "input_sha256": "dc343c8b0eab02c0be4bdd8412e20dc821068f15c358a156920edf72d0610342",
+      "result": "fixtures/official-grid/key-column-bottom-first-only-time-column.json",
+      "result_sha256": "41f1377bb0b58539a2e03f9df541eacf5a176d20fb7862198d273832bf72230a",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-ink-blocks.png",
+      "input_sha256": "552cda15cb3e2cf2edd3a33a37a56a0eb460c5ce388ea97717870d910b0a5b93",
+      "result": "fixtures/official-grid/key-column-bottom-ink-blocks-time-column.json",
+      "result_sha256": "bdc0e06b5fb71d9f07ddce95ffed3e9269213a4f0d56ae50c7ab5bae9cba392e",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-no-clef.png",
+      "input_sha256": "5d8b028a0b3d45e0770d751081d41b2c3cbe29f076a96e7b1a1568e037e7a6c9",
+      "result": "fixtures/official-grid/key-column-bottom-no-clef-time-column.json",
+      "result_sha256": "d77106fcc27db16f8345134f3ba28a2ebf9558e879c7e287183263f3db621386",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-noise.png",
+      "input_sha256": "2a2ba6e3ddc5e18bd092d666ea03934447e8fc580319ea0f266b95cb66a38e1d",
+      "result": "fixtures/official-grid/key-column-bottom-noise-time-column.json",
+      "result_sha256": "8ea91a3f0e756831f19f0475098a577ffe3bab9aa68a78b3694360514206a69a",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-shifted.png",
+      "input_sha256": "b900c64f62f0e697cc867d840175f7143dda6a43b47071fe4271e27268041de9",
+      "result": "fixtures/official-grid/key-column-bottom-shifted-time-column.json",
+      "result_sha256": "3df99b9140b9a11cca45feb7b9c9d8d536f1b665d85f3a15540113e67d467602",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-trailing-block.png",
+      "input_sha256": "76745266c663656778b244ba55cb53dbbdb68f52b90c429eaf1dd49f6d3fcba8",
+      "result": "fixtures/official-grid/key-column-bottom-trailing-block-time-column.json",
+      "result_sha256": "4165b06caf8054f652e62f3b80e9420fd703b8047809edf4d3e96ff089d30854",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-flat-missing.png",
+      "input_sha256": "f02833ac002512340950ac93bfd8cb7991954238060f20012d403efbddcef0fd",
+      "result": "fixtures/official-grid/key-column-last-flat-missing-time-column.json",
+      "result_sha256": "47ffc82619675de9b41ce9e05fa2d50f5705189f05f4d2a286022ed89303c514",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-sharp-missing.png",
+      "input_sha256": "12c7675eb91f04016979e7a16ca41a1d884226c6d219cecda48a4fdcc273359d",
+      "result": "fixtures/official-grid/key-column-last-sharp-missing-time-column.json",
+      "result_sha256": "b14ff6097181f80368698f8adb815d80d3d14431dc5e5bfcfd0f0e94a7f7ebdf",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-middle-flat-missing.png",
+      "input_sha256": "b6263e86330235d6f6c0499069e298e82b81257db06f96882499aa54dbd41863",
+      "result": "fixtures/official-grid/key-column-middle-flat-missing-time-column.json",
+      "result_sha256": "7c9c9435932a4605272dd4af678a3705988902607316d591439c8e7e0883a16f",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-one-flat-trailing.png",
+      "input_sha256": "c073dd9fdac35f62323c3b29926bbe7f2147aad353e6ecc5df97849941d5dceb",
+      "result": "fixtures/official-grid/key-column-one-flat-trailing-time-column.json",
+      "result_sha256": "9039a4b91fc869e310a99c27737c764263f85f1ee934eb680fb9aa153085537e",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-empty.png",
+      "input_sha256": "8f57ae6952440fdc0e793eb09025f0789182f52a4de47e5ba21990c32e098ed5",
+      "result": "fixtures/official-grid/key-column-uniform-empty-time-column.json",
+      "result_sha256": "245b974f1d8d1d8e202cce794355144ecd3993cff2a415b883895e1255da5cf3",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-flats.png",
+      "input_sha256": "b74bea44de2a97a192743d97b584f471b1abf05cfa6453c74eb3c1ea5a9429a1",
+      "result": "fixtures/official-grid/key-column-uniform-flats-time-column.json",
+      "result_sha256": "dae1e0fc5386549964b4de9f50c363943c5a7f6d098f2cbf33c655d5d44696bb",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-column-wrong-sharps.png",
+      "input_sha256": "ea16b7af0a7eae0ba6fc01de3f84a0ed5221bc27d026decb182995ca11c1799f",
+      "result": "fixtures/official-grid/key-column-wrong-sharps-time-column.json",
+      "result_sha256": "9b5c32212e7415538b31541286539c59d9bac97a7092c711713e48d8de930a59",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-flats-upper-bridge-122.png",
+      "input_sha256": "42cf7fc599dbc156b20484787f8893bb9089e1ffcb9a106daf6a6063826fe82b",
+      "result": "fixtures/official-grid/key-process-flats-upper-bridge-122-time-column.json",
+      "result_sha256": "73343f52319cf75c36ae58029ee876db57165477c868b46856f9e65cb121680b",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-flats-upper-bridge-123.png",
+      "input_sha256": "b964afa1aefe78e63a151844b1ff203ea520f2b05f885b26e986cfdc2b2ebf9d",
+      "result": "fixtures/official-grid/key-process-flats-upper-bridge-123-time-column.json",
+      "result_sha256": "73343f52319cf75c36ae58029ee876db57165477c868b46856f9e65cb121680b",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-one-flat-trailing-block.png",
+      "input_sha256": "a688d76e753ae0ad44bcb1ba2ddb8aeea0b04c5153e7e7fd2a5497152e9f8329",
+      "result": "fixtures/official-grid/key-process-one-flat-trailing-block-time-column.json",
+      "result_sha256": "1e3b17a0186b36655cb171e57c17997b157b7d79968337a045da7cc6f0809061",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/key-process-one-sharp-trailing-block.png",
+      "input_sha256": "ec8d1a4ba3b9e56022f0a2932d6cc939f17bed8b157715290065b4dde7e9c05f",
+      "result": "fixtures/official-grid/key-process-one-sharp-trailing-block-time-column.json",
+      "result_sha256": "570208781a9e66b032ae4afd1e031827a746ecdebd9bed3c437f43210ccd2a88",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/laura-gray.png",
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "result": "fixtures/official-grid/laura-gray-time-column.json",
+      "result_sha256": "e6b2b2500f041f75733b92cbbbe9107cbf6d0152b7f49afac447553072ff9717",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 128,
+          "time_value": "3/4",
+          "staff_time_kinds": [
+            "TimePairInter",
+            "TimePairInter",
+            "TimePairInter"
+          ]
+        },
+        {
+          "system_id": 2,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/line-root.png",
+      "input_sha256": "4cc659988b083cf511b872178991dd729b81aa7b4657427fed60c4452f43b80b",
+      "result": "fixtures/official-grid/line-root-time-column.json",
+      "result_sha256": "cf9ef121fe220c7273305f80067740d0b9b1bbdf54c4523d04092d763853a9af",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-c_clef.png",
+      "input_sha256": "ba3918e8beb6c95ab37b813e3ed3c9ce98edee72461b1fa76d6a38c88eef9dd1",
+      "result": "fixtures/official-grid/rendered-clef-c_clef-time-column.json",
+      "result_sha256": "5610b715a41626936d820a73e5c5740fb716806e9a1dcb2ede7ed1807aac4ffc",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-empty.png",
+      "input_sha256": "3217c10f13a42cedf8af46349743a256b31ac5557a72840ccbe81f5548b689e3",
+      "result": "fixtures/official-grid/rendered-clef-empty-time-column.json",
+      "result_sha256": "f8527ae3334cafa480dc977771f1968c492d1cd2ef0eece2dc0389e51182d793",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-f_clef.png",
+      "input_sha256": "ccc8969acbc59adb4e4af8ae5d0a090f3ea68eb9fddb21e19affee9f19c4da5e",
+      "result": "fixtures/official-grid/rendered-clef-f_clef-time-column.json",
+      "result_sha256": "d2b0db48b2be1d767ebe8c9d8905fa36f863f6276ec140962b3f498465937600",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-g_clef.png",
+      "input_sha256": "57b5ef3fb138bd3937c806d6974cee21de682144d76b06e76657feddd66b57d8",
+      "result": "fixtures/official-grid/rendered-clef-g_clef-time-column.json",
+      "result_sha256": "a6d1b136dce3f2b0f452cf2e97ed53cc11920e4ceaaf4eb9e269c17d8dee9fc1",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-noise.png",
+      "input_sha256": "1e6ab688887eeb4899c3b769da93c40bbce736fa3dd8bfe91b0cc9ed48d81686",
+      "result": "fixtures/official-grid/rendered-clef-noise-time-column.json",
+      "result_sha256": "aafc9fcb2b2164f8652e7326b1ba2ee67e8aa802ff9f101e11309430d8ba74aa",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-empty.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "result": "fixtures/official-grid/rendered-header-empty-time-column.json",
+      "result_sha256": "476861bd8f5055e2897ced53d79cb17ef9686e1d70379e4d667813c3767e594b",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-four-flats.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "result": "fixtures/official-grid/rendered-header-four-flats-time-column.json",
+      "result_sha256": "6aaf32d8cb7d2ff294dc8703a8be12409976c51263a222042938af68d2606db5",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-noise.png",
+      "input_sha256": "5286804a4376ad60152f6b18fe0e7d68faeec2fa521ef3a6b819f0d4225cb50e",
+      "result": "fixtures/official-grid/rendered-header-noise-time-column.json",
+      "result_sha256": "2ee925c33d306dc4e8d7b4b69c28dea2554742ebc42794605af8c994b4fea7bd",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-flat.png",
+      "input_sha256": "cbb1483bb8c0e0062a22c8f49bdc637c29f52ab947bcfb76c5178032ac284a24",
+      "result": "fixtures/official-grid/rendered-header-one-flat-time-column.json",
+      "result_sha256": "d68dc9cb873ebaa1ee0cbbb29a1fe54856c4f83d57ac698aea7970e172b873c2",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-sharp.png",
+      "input_sha256": "cf8322aa798f99e6f8bb09a13e1dc90506adb0c88c4204535e34e482814114bd",
+      "result": "fixtures/official-grid/rendered-header-one-sharp-time-column.json",
+      "result_sha256": "356e39c82e00b983e9fe16e441b18f8858837e396468148f529ea8367de3a392",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-three-sharps.png",
+      "input_sha256": "c745e312405bffb11bea86ce888afdd6bb55a7335b87bb87b01e6c1e6736fc77",
+      "result": "fixtures/official-grid/rendered-header-three-sharps-time-column.json",
+      "result_sha256": "28c648d9ce151761d0640fa10f3df9ffdd6fa1903f9874ff59e7c7579bd464ad",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/synthetic-system-bars.png",
+      "input_sha256": "2e1bf10093d9c39482c7289659dab6f419f95002bd9e7fcf48a523fb598b2417",
+      "result": "fixtures/official-grid/synthetic-system-bars-time-column.json",
+      "result_sha256": "d57bab83219f9e8124ff27c32464d642b5f2cc18f6e139c96c75c27077dfc32b",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-absent.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "result": "fixtures/official-grid/time-column-absent-time-column.json",
+      "result_sha256": "476861bd8f5055e2897ced53d79cb17ef9686e1d70379e4d667813c3767e594b",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-common.png",
+      "input_sha256": "559af35df44f5e957c3129620b21bccde37f015795c331484d3619888c631dda",
+      "result": "fixtures/official-grid/time-column-common-time-column.json",
+      "result_sha256": "3dadef471ebe379debb146e89d916aa3ed4d6ae5b53aea5f3f91c9812d4a6f7c",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 96,
+          "time_value": "COMMON_TIME",
+          "staff_time_kinds": [
+            "TimeWholeInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-cut.png",
+      "input_sha256": "88babe02c889331a649fa1221b992e580543cc00136a833024311d39f92d0a93",
+      "result": "fixtures/official-grid/time-column-cut-time-column.json",
+      "result_sha256": "a43594894b935061db8eb42a7e3e459baa4e4d6c94239d8fec48302d059571db",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 97,
+          "time_value": "CUT_TIME",
+          "staff_time_kinds": [
+            "TimeWholeInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-far-3-4.png",
+      "input_sha256": "67452be580043f3738e130bae8fc91f9323dc28e46bae9ac8d1a3a814d0baf85",
+      "result": "fixtures/official-grid/time-column-far-3-4-time-column.json",
+      "result_sha256": "b8aac8c2a7a87d8da87164c2ad227d95ed2e8d84760c1130430d9ec1c66a28c7",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-misaligned-3-4.png",
+      "input_sha256": "7b42cb364a4fc5d120d2437f44cebf3f047fb25ef6643dd1ae33afdb2166d9da",
+      "result": "fixtures/official-grid/time-column-misaligned-3-4-time-column.json",
+      "result_sha256": "9541681e33d09a28147ed1dd2f42a499aa3a0341abddaf0cf53ff9f41c501f29",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-noise.png",
+      "input_sha256": "9b7504b1e6a9f0e921c87f205dba46fe136b7d59e20ed89bc16d40de90c5616c",
+      "result": "fixtures/official-grid/time-column-noise-time-column.json",
+      "result_sha256": "39b11e0b69c66c522e0de954a023b66e2235c9a1e6d6f18a459cfabac0f5dfe2",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-numerator-only.png",
+      "input_sha256": "1d3e5b1a7d7751ec9ac2e0c4564f9b0dcfd7024ab32ab954f205b1981676d185",
+      "result": "fixtures/official-grid/time-column-numerator-only-time-column.json",
+      "result_sha256": "11b0ded4ba6ee042bf2428054fe36332236d21a2cef2b29d719501e951581472",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-12-8.png",
+      "input_sha256": "8214d9a342a3f217a7c5863a4f7d23daa0d188df632294a147e4206538d5f9c4",
+      "result": "fixtures/official-grid/time-column-pair-12-8-time-column.json",
+      "result_sha256": "4af2ade3dae9de4d14fb72ee52a4833968ad6c31138826fc8a92bcd3a699adbc",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-2-2.png",
+      "input_sha256": "9dbfec562a01efe20d2f4384f6e4a9559258f9681cdaaf444f2deb1321900271",
+      "result": "fixtures/official-grid/time-column-pair-2-2-time-column.json",
+      "result_sha256": "820f04a09b6c88ee4294e8aab8f2effa873913796db6ae127a94160cb4757ada",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-2-4.png",
+      "input_sha256": "c72223d80bedd912702847a8314883589fa3e82a6422f8967dfd3693ae9ed34a",
+      "result": "fixtures/official-grid/time-column-pair-2-4-time-column.json",
+      "result_sha256": "c3b15c2610f35c26d8759edf6ba38a0de37e1d34bf2f7eab10a92d3ad8ab50a7",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 97,
+          "time_value": "2/4",
+          "staff_time_kinds": [
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-3-4.png",
+      "input_sha256": "4b1077daf8973fd47c20672e0ec1eea7ed76aea12feb899aaa80f902dc574b04",
+      "result": "fixtures/official-grid/time-column-pair-3-4-time-column.json",
+      "result_sha256": "c1402cda36a725583a8e825cfd1c286c25f8f39da17a1b1247fff62bc276e0b9",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 97,
+          "time_value": "3/4",
+          "staff_time_kinds": [
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-4-4.png",
+      "input_sha256": "8a9cd27380e61fc289534ce5e6ef306ba8877e625e9cf7d055ee53f9778153ec",
+      "result": "fixtures/official-grid/time-column-pair-4-4-time-column.json",
+      "result_sha256": "c8949106ffaf4ab0fdda5460652824965e0c4543c5370e0d2b211d18352f944e",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 97,
+          "time_value": "4/4",
+          "staff_time_kinds": [
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-5-4.png",
+      "input_sha256": "d3b3c24c6839faed5e590dd21eb18bc585d3ee7c8812542a54a4684a20354a24",
+      "result": "fixtures/official-grid/time-column-pair-5-4-time-column.json",
+      "result_sha256": "668559e50437c678927e9e52cb5ba2745505603ac19422d57897818bf503680f",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 97,
+          "time_value": "5/4",
+          "staff_time_kinds": [
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-6-8.png",
+      "input_sha256": "e858e6779cf8501d5f42b5f9e689f2e891419f0d1c87ca1f4b1fe9181b16959f",
+      "result": "fixtures/official-grid/time-column-pair-6-8-time-column.json",
+      "result_sha256": "a05b3e7cfce22fadb9bbe5c66b27fa15d7bf04270882bc4e65051da726f6d7a8",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 95,
+          "time_value": "6/8",
+          "staff_time_kinds": [
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-7-8.png",
+      "input_sha256": "c69de92716ed5a48af1d9b3ec796117e5a1fa7f6d3ca559cf047111b11ceb5ff",
+      "result": "fixtures/official-grid/time-column-pair-7-8-time-column.json",
+      "result_sha256": "cc90a69ef116a5dceee57221938f43ed699e390660b866e5e7de18a526f5b93f",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 96,
+          "time_value": "7/8",
+          "staff_time_kinds": [
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-common-pair.png",
+      "input_sha256": "daf674a825c4ef4f094eea9dd7f246d5c104dd9563f2b05c5bc7bd3492f0fd23",
+      "result": "fixtures/official-grid/time-column-two-staff-common-pair-time-column.json",
+      "result_sha256": "f1cdc8af6ae5324e46afd9ab3da20df04934419e6faab902ac039a6f8143c198",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-mismatch.png",
+      "input_sha256": "026a4d0b790f7f3af81a1c2bab85b5fc4f072b763feb36bbaa2a3ef643b10601",
+      "result": "fixtures/official-grid/time-column-two-staff-mismatch-time-column.json",
+      "result_sha256": "92eb17a39981ce44f96afbd6fa48c28988466a91817f3521d5087c9fd55c5fd1",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 95,
+          "time_value": "4/4",
+          "staff_time_kinds": [
+            "TimeWholeInter",
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-missing.png",
+      "input_sha256": "a9124e1aa3544df51fc261e92e3e505f4ab85dc4c741f910105ddcf8fd7e0e5d",
+      "result": "fixtures/official-grid/time-column-two-staff-missing-time-column.json",
+      "result_sha256": "2e426aa4891fc23f874983d36b5fecfca319e29c0e6587a7e08b63467ed63389",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-same.png",
+      "input_sha256": "99492c58b0ddfedb5da6e4b782a90fb90e24f3ccedd74823e81fe7465c54f026",
+      "result": "fixtures/official-grid/time-column-two-staff-same-time-column.json",
+      "result_sha256": "de97f5cea3dd97d6437114254b7d1b03e02f7f9f492bc48c4ca3f0ddc12137ac",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": 95,
+          "time_value": "3/4",
+          "staff_time_kinds": [
+            "TimePairInter",
+            "TimePairInter"
+          ]
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/time-column-unsupported-3-3.png",
+      "input_sha256": "29230791ed94e957a1dec28c3d43466d9a9aa77ab4d6e88c038cb2e8f4b7daca",
+      "result": "fixtures/official-grid/time-column-unsupported-3-3-time-column.json",
+      "result_sha256": "b92f862f2ed970deb1f2fcc3f1125167748257a4e8f88c814325629d397af188",
+      "hook_free_final_and_replay_equality": true,
+      "systems": [
+        {
+          "system_id": 1,
+          "returned_offset": -1,
+          "time_value": null,
+          "staff_time_kinds": [
+            null
+          ]
+        }
+      ]
+    }
+  ]
+}

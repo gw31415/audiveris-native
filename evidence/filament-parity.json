@@ -1,0 +1,103 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "verbatim initial seed selection/fatness/BasicLine numerical methods and comb sampling; horizontal Section adapter; comb input restricted to constant rectangular unmerged seeds, NOT full StaffFilament/LineCluster pipeline",
+  "method_sha256": {
+    "math/BasicLine/private void compute ()": "8604ded70c2e7f25699f564c71d6897b5166d4130e854868e932a75a7b8668cf",
+    "math/BasicLine/private void normalize ()": "a8b2580f748875bdb5959b54c6816db7a7127ed53683cf90039af2cbad46b8a4",
+    "math/BasicLine/public void includePoint (double x,": "eccb24a368b893d2c70d71845adc994688edd1ce44706ce9117e1f27e523dff1",
+    "math/BasicLine/public void checkLineParameters ()": "c15899e00cb5a6e7f7168e468f7c8ac07619030e888ed9ff7740168067238b49",
+    "math/BasicLine/public double getSlope ()": "88d9c02a304c1309bf459c40fb6c7cd6226767b12a9f229a803cdf41b92b326d",
+    "math/BasicLine/public double yAtX (double x)": "26a7f4e6f073970c3ef1a16982317da2a5d01342ccfb637d1400667e498b05be",
+    "math/BasicLine/public int yAtX (int x)": "35c206fa21eddecaab8103b03f3cfe4aa0e320de10657fbf51810034cd3a9076",
+    "glyph/dynamic/FilamentFactory/public boolean isSectionFat": "501cb98c55598c3d54d4861892f2f777f2a269a9c53bc471697b39da346c25d0",
+    "glyph/dynamic/FilamentFactory/private void createInitialFilaments": "1157f17bdc4f9adccdca96639069beeb8c32a4d853936540d533f61a17b37a4d",
+    "sheet/grid/ClustersRetriever/private void retrieveCombs ()": "56e00248d2322a6f17081f2092bce66e39252cc82d4d74442bc6e021a5b55273",
+    "sheet/grid/ClustersRetriever/private List<FilY> retrieveFilamentsAtX": "2b984b7950ccebe7cf11d06faab0253c4bbb77791bf23f78c500304e83a1a27a"
+  },
+  "fixtures": [
+    {
+      "file": "fixtures/sections/blank.pgm",
+      "scale_blocked": true
+    },
+    {
+      "file": "fixtures/sections/broken.pgm",
+      "sections": 15,
+      "seeds": 15,
+      "rectangular_seeds": 15,
+      "combs": 17,
+      "diagnostic_five_line_groups": 3,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/sections/crossings.pgm",
+      "sections": 20,
+      "seeds": 20,
+      "rectangular_seeds": 20,
+      "combs": 18,
+      "diagnostic_five_line_groups": 4,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/sections/curved.pgm",
+      "sections": 50,
+      "seeds": 50,
+      "rectangular_seeds": 30,
+      "combs": 40,
+      "diagnostic_five_line_groups": 4,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/sections/noisy.pgm",
+      "sections": 11,
+      "seeds": 11,
+      "rectangular_seeds": 11,
+      "combs": 19,
+      "diagnostic_five_line_groups": 7,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/sections/sloped.pgm",
+      "sections": 15,
+      "seeds": 15,
+      "rectangular_seeds": 10,
+      "combs": 4,
+      "diagnostic_five_line_groups": 2,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/sections/straight.pgm",
+      "sections": 5,
+      "seeds": 5,
+      "rectangular_seeds": 5,
+      "combs": 19,
+      "diagnostic_five_line_groups": 1,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/sections/two-staves.pgm",
+      "sections": 10,
+      "seeds": 10,
+      "rectangular_seeds": 10,
+      "combs": 38,
+      "diagnostic_five_line_groups": 2,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    },
+    {
+      "file": "fixtures/rendered/laura-180dpi.pgm",
+      "sections": 2576,
+      "seeds": 727,
+      "rectangular_seeds": 652,
+      "combs": 712,
+      "diagnostic_five_line_groups": 87,
+      "decisions_combs_exact": true,
+      "max_line_coefficient_error": 0.0
+    }
+  ]
+}

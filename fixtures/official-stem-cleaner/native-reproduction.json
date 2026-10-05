@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "native_controls_gzip_sha256": "41fb6f71d7dd83e36f5c3917361914dd7c6f112abd20ec09a2150e92d25fdf55",
+  "native_source_sha256": {
+    "src/stem_cleaner.rs": "ca24b806690f9b25ea3aadc7085cc11c752818d4427e488463a49421946ee256",
+    "examples/stem_cleaner_dump.rs": "53e8355243f379d5a6dc40f529bbe3cd07017b3ec054f402feedb7c46f24a292",
+    "examples/support/stem_cleaner_controls.rs": "f8a4b29b746688fdd1869ef793f187e35e49304aae501eb7fd21fc0bdfbb8ad1"
+  },
+  "scope": "Selected physical cleaner/check+SIG callbacks800 controls; auto parts and full STEMS epilog remain pending"
+}

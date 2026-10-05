@@ -1,0 +1,4 @@
+   Compiling audiveris-staff-removal v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-staff-removal)
+   Compiling staff-feature-bridge-check v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-6/audiveris-staff-removal/oracle/feature-bridge)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
+     Running `audiveris-staff-removal/oracle/feature-bridge/target/debug/staff-feature-bridge-check`

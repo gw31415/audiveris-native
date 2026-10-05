@@ -1,0 +1,169 @@
+{
+  "checkpoint_kind": "side_area_of pure geometry kernel; hand-calculated and direct official controls passed",
+  "base_commit": "18639b22cc33c1194d4be1ca4a661ce7bb5c1a90",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_oracle_verified": true,
+  "semantics": [
+    "original one-pixel offset, vertical margins, outward reach and inward overlap",
+    "retained determinant intersection operation order via existing beam_structure helper",
+    "original parallelogram vertex order, existing LinearArea normalization/bounds/containment",
+    "zero expanded height and coincident endpoints return empty area; zero reach retains reversed original polygon"
+  ],
+  "native_supported_domain": "Finite increasing-x median; nonnegative finite height, margin, reach, overlap; input values and generated polygon vertices bounded to 16,000,000. Unsupported values return errors.",
+  "runtime_scope": "Pure geometry only. Not connected to CLI stages or beam extension orchestration; no Java/runtime subprocess/fixture lookup.",
+  "commands": [
+    {
+      "name": "side-area-fmt",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "fmt",
+        "--all"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-03T07:42:58.315424+00:00",
+      "finished_utc": "2026-10-03T07:42:58.730546+00:00",
+      "elapsed_seconds": 0.415,
+      "log_file": "side-area-fmt.log"
+    },
+    {
+      "name": "side-area-tests",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "test",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--test",
+        "beam_extension_geometry",
+        "--test",
+        "beam_candidates",
+        "--test",
+        "beam_structure"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-03T07:42:58.731052+00:00",
+      "finished_utc": "2026-10-03T07:43:04.069979+00:00",
+      "elapsed_seconds": 5.339,
+      "log_file": "side-area-tests.log"
+    },
+    {
+      "name": "side-area-clippy",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-03T07:43:04.070321+00:00",
+      "finished_utc": "2026-10-03T07:43:08.215935+00:00",
+      "elapsed_seconds": 4.146,
+      "log_file": "side-area-clippy.log"
+    }
+  ],
+  "bytecode_sha256": {
+    "fixtures/beam-structure-source/BeamsBuilder.javap.txt": "e8c9b8dabc971e96b0e73c4a1197fc16b1cfc271eea0c75ba0bf5780c644fdf6",
+    "fixtures/beam-structure-source/LineUtil.javap.txt": "2abf1244b936bae4bb581f7cbd2faf3cbd136b0cf999d07cd4dd34937c6dc7c5",
+    "fixtures/beam-impacts-source/AreaUtil.javap.txt": "f84d10eedfcd3a6679cf40b0a021494741315d8acfff059631f899bb693a7dca"
+  },
+  "new_file_sha256": {
+    "src/beam_extension_geometry.rs": "ea1de26a3c7da607bc4c72444c1f31af448ffda992da1539cb71da19b055b9a7",
+    "tests/beam_extension_geometry.rs": "ae87788ad26050a8ef5c0bd78be638eb31253a1dfd2a6743384ac274803f19ba"
+  },
+  "next_bounded_step": "No next kernel in this checkpoint; side-area bounds and membership matched the recorded direct original controls.",
+  "unretrieved_7cdd_comparison_performed": false,
+  "initial_hand_calculated_phase_tests": {
+    "new_hand_calculated_geometry": 5,
+    "existing_candidate_regressions": 2,
+    "existing_structure_original_controls": 2,
+    "passed": 9,
+    "failed": 0,
+    "ignored": 0,
+    "filtered_out": 0,
+    "full_post_change_workspace_suite_run": false,
+    "baseline_workspace_passed_before_change": 234
+  },
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "ignored": 0,
+    "filtered_out": 0,
+    "hand_calculated_kernel_tests": 5,
+    "direct_original_kernel_test": 1,
+    "candidate_regressions": 2,
+    "structure_regressions": 2
+  },
+  "original_parity_evidence": "evidence/beam-side-area-checkpoint/original-parity.json",
+  "current_commands": [
+    {
+      "name": "side-area-parity-fmt",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "fmt",
+        "--all"
+      ],
+      "started_utc": "2026-10-03T07:52:59.924102+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.415,
+      "finished_utc": "2026-10-03T07:53:00.339146+00:00",
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-parity-fmt.log"
+    },
+    {
+      "name": "side-area-parity-tests",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "test",
+        "--locked",
+        "--offline",
+        "-j",
+        "2",
+        "--test",
+        "beam_extension_geometry",
+        "--test",
+        "beam_candidates",
+        "--test",
+        "beam_structure"
+      ],
+      "started_utc": "2026-10-03T07:53:00.339604+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 1.882,
+      "finished_utc": "2026-10-03T07:53:02.221997+00:00",
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-parity-tests.log"
+    },
+    {
+      "name": "side-area-parity-clippy",
+      "argv": [
+        "/workspace/audiveris-toolchain/cargo/bin/cargo",
+        "+1.98.1",
+        "clippy",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--all-targets",
+        "-j",
+        "2",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "started_utc": "2026-10-03T07:53:02.222416+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 2.104,
+      "finished_utc": "2026-10-03T07:53:04.326396+00:00",
+      "log": "/workspace/audiveris-toolchain/receipts/side-area-parity-clippy.log"
+    }
+  ]
+}

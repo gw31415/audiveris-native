@@ -1,0 +1,10 @@
+{
+  "manifest_sha256": "e682c02bbfbc83b382edac8e7e44755ebff1f0973fc289b0c9bf3ad4fcf01678",
+  "payload_sha256": "3501498ad40c12b8205dfc303cfddfc4a12d29f6de06f1db77a2044059810620",
+  "manifest_bytes": 1062,
+  "payload_bytes": 28585,
+  "total_points": 1157,
+  "generation_input_sha256": "fc4507551dc1bb601cd013c7c52adce66f148fdc2f0b68be7a12c997050d464b",
+  "official_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "input_sha256": "958288a4fcefefa8ea899cbd58dd6d77598dd592974072fff8baa3f5566243df"
+}

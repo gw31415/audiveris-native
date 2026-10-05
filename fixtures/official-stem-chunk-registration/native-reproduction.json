@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "conditions": 2448,
+  "actual_builders": 612,
+  "actual_raw_glyphs": 1364,
+  "exact_normalized_canonical_registry_tokens_aliases_order_and_counts": true,
+  "native_controls_gzip_sha256": "0cae90d3199d36fd918845ceca62e0b0721b36590c46689c307aff6c3cc30cd1",
+  "native_source_sha256": {
+    "src/stem_chunk_registration.rs": "5828ad6932fffc17ca4e79b1e92464ce4e32a4183cebd90928ae35b0f28f18a9",
+    "examples/support/stem_chunk_registration_controls.rs": "3ab9ed9d89fc99b2ea455e0515ec923eea6c135bbd1b18208b40cde3160e24b7",
+    "examples/stem_chunk_registration_dump.rs": "50bd5a0982977e95b50fd1a58210e03753f006fff24fec12909de75d7f03df30",
+    "tests/stem_chunk_registration.rs": "7758c78cab55973861978c8f164cd41a05075e0f76e67ab248bb27d9cc9c86c6",
+    "src/beam_dispatch.rs": "0b60f2a80334794ae2bb67b69ffabbd1d7dffd28990910c1cb90c9a53375c4f6"
+  },
+  "registered_excluded_glyphs_retained": true,
+  "original_JVM_ids_normalized": true,
+  "full_page_shared_registry_composition_complete": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "unchanged_after_actual_owner_recertification": {
+    "fixture": "official-stem-chunk-registration",
+    "actual_current_native_execution": true,
+    "unchanged_raw_report_sha256": "2c8eb69cba1fbf6b838b2c788c0ce991cfadece39e09858935b69e95b1369d48",
+    "updated_stale_source_paths": [
+      "src/stem_chunk_registration.rs"
+    ],
+    "original_controls_and_native_report_bytes_unchanged": true
+  }
+}

@@ -1,0 +1,96 @@
+[
+  {
+    "name": "toolchain",
+    "command": [
+      "rustc",
+      "--version"
+    ],
+    "exit_code": 0,
+    "seconds": 0.01,
+    "log": "toolchain.log"
+  },
+  {
+    "name": "cargo-version",
+    "command": [
+      "cargo",
+      "--version"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0,
+    "log": "cargo-version.log"
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exit_code": 0,
+    "seconds": 0.27,
+    "log": "fmt.log"
+  },
+  {
+    "name": "clippy",
+    "command": [
+      "cargo",
+      "clippy",
+      "--workspace",
+      "--locked",
+      "--all-targets",
+      "-j",
+      "2",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "seconds": 3.95,
+    "log": "clippy.log"
+  },
+  {
+    "name": "test-debug",
+    "command": [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "-j",
+      "2"
+    ],
+    "exit_code": 0,
+    "seconds": 57.29,
+    "log": "test-debug.log"
+  },
+  {
+    "name": "test-release",
+    "command": [
+      "cargo",
+      "test",
+      "--workspace",
+      "--release",
+      "--locked",
+      "-j",
+      "2"
+    ],
+    "exit_code": 0,
+    "seconds": 42.22,
+    "log": "test-release.log"
+  },
+  {
+    "name": "build-release",
+    "command": [
+      "cargo",
+      "build",
+      "--workspace",
+      "--release",
+      "--locked",
+      "-j",
+      "2"
+    ],
+    "exit_code": 0,
+    "seconds": 0.07,
+    "log": "build-release.log"
+  }
+]

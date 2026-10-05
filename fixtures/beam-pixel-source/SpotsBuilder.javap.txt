@@ -1,0 +1,703 @@
+Compiled from "SpotsBuilder.java"
+public class org.audiveris.omr.sheet.beam.SpotsBuilder {
+  private static final org.audiveris.omr.sheet.beam.SpotsBuilder$Constants constants;
+
+  private static final org.slf4j.Logger logger;
+
+  public static final org.audiveris.omr.run.Orientation SPOT_ORIENTATION;
+
+  private final org.audiveris.omr.sheet.Sheet sheet;
+
+  public org.audiveris.omr.sheet.beam.SpotsBuilder(org.audiveris.omr.sheet.Sheet);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+       9: return
+
+  public void buildSheetSpots(org.audiveris.omr.lag.Lag);
+    Code:
+       0: new           #13                 // class org/audiveris/omr/util/StopWatch
+       3: dup
+       4: ldc           #15                 // String buildSheetSpots
+       6: invokespecial #17                 // Method org/audiveris/omr/util/StopWatch."<init>":(Ljava/lang/String;)V
+       9: astore_2
+      10: aload_2
+      11: ldc           #20                 // String getBuffer
+      13: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      16: aload_0
+      17: invokevirtual #25                 // Method getBuffer:()Lij/process/ByteProcessor;
+      20: astore_3
+      21: aload_2
+      22: ldc           #28                 // String buildSpots
+      24: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      27: aload_0
+      28: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      31: invokevirtual #30                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+      34: astore        4
+      36: aload         4
+      38: getstatic     #36                 // Field org/audiveris/omr/sheet/Scale$Item.beam:Lorg/audiveris/omr/sheet/Scale$Item;
+      41: invokevirtual #42                 // Method org/audiveris/omr/sheet/Scale.getItemValue:(Lorg/audiveris/omr/sheet/Scale$Item;)Ljava/lang/Integer;
+      44: astore        5
+      46: aload         5
+      48: ifnonnull     61
+      51: new           #48                 // class java/lang/RuntimeException
+      54: dup
+      55: ldc           #50                 // String No scale information on beam thickness
+      57: invokespecial #52                 // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+      60: athrow
+      61: aload         4
+      63: getstatic     #53                 // Field org/audiveris/omr/sheet/Scale$Item.smallBeam:Lorg/audiveris/omr/sheet/Scale$Item;
+      66: invokevirtual #42                 // Method org/audiveris/omr/sheet/Scale.getItemValue:(Lorg/audiveris/omr/sheet/Scale$Item;)Ljava/lang/Integer;
+      69: astore        6
+      71: aload         6
+      73: ifnonnull     117
+      76: aload_0
+      77: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      80: invokevirtual #56                 // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+      83: invokevirtual #60                 // Method org/audiveris/omr/sheet/SheetStub.getProcessingSwitches:()Lorg/audiveris/omr/sheet/ProcessingSwitches;
+      86: getstatic     #66                 // Field org/audiveris/omr/sheet/ProcessingSwitch.smallBeams:Lorg/audiveris/omr/sheet/ProcessingSwitch;
+      89: invokevirtual #72                 // Method org/audiveris/omr/sheet/ProcessingSwitches.getValue:(Lorg/audiveris/omr/sheet/ProcessingSwitch;)Ljava/lang/Boolean;
+      92: invokevirtual #78                 // Method java/lang/Boolean.booleanValue:()Z
+      95: ifeq          117
+      98: aload         5
+     100: invokevirtual #84                 // Method java/lang/Integer.intValue:()I
+     103: i2d
+     104: invokestatic  #90                 // Method org/audiveris/omr/sheet/beam/BeamsBuilder.getCueBeamRatio:()D
+     107: dmul
+     108: invokestatic  #96                 // Method java/lang/Math.rint:(D)D
+     111: d2i
+     112: invokestatic  #102                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     115: astore        6
+     117: aload         6
+     119: ifnull        140
+     122: aload         5
+     124: invokevirtual #84                 // Method java/lang/Integer.intValue:()I
+     127: aload         6
+     129: invokevirtual #84                 // Method java/lang/Integer.intValue:()I
+     132: invokestatic  #106                // Method java/lang/Math.min:(II)I
+     135: invokestatic  #102                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     138: astore        5
+     140: aload_0
+     141: aload_3
+     142: aconst_null
+     143: aload         5
+     145: invokevirtual #84                 // Method java/lang/Integer.intValue:()I
+     148: i2d
+     149: aconst_null
+     150: invokevirtual #110                // Method buildSpots:(Lij/process/ByteProcessor;Ljava/awt/Point;DLjava/lang/String;)Ljava/util/List;
+     153: astore        7
+     155: aload_2
+     156: ldc           #113                // String dispatchSheetSpots
+     158: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     161: aload_0
+     162: aload         7
+     164: invokevirtual #115                // Method dispatchSheetSpots:(Ljava/util/List;)V
+     167: getstatic     #118                // Field org/audiveris/omr/OMR.gui:Lorg/audiveris/omr/ui/OmrGui;
+     170: ifnull        212
+     173: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     176: getfield      #128                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.displayBeamSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+     179: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     182: ifeq          212
+     185: aload_2
+     186: ldc           #139                // String spotsController
+     188: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     191: new           #141                // class org/audiveris/omr/sheet/beam/SpotsController
+     194: dup
+     195: aload_0
+     196: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     199: aload         7
+     201: aload_1
+     202: invokespecial #143                // Method org/audiveris/omr/sheet/beam/SpotsController."<init>":(Lorg/audiveris/omr/sheet/Sheet;Ljava/util/List;Lorg/audiveris/omr/lag/Lag;)V
+     205: astore        8
+     207: aload         8
+     209: invokevirtual #146                // Method org/audiveris/omr/sheet/beam/SpotsController.refresh:()V
+     212: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     215: getfield      #149                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+     218: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     221: ifeq          283
+     224: aload_2
+     225: invokevirtual #152                // Method org/audiveris/omr/util/StopWatch.print:()V
+     228: goto          283
+     231: astore_3
+     232: getstatic     #157                // Field logger:Lorg/slf4j/Logger;
+     235: ldc           #161                // String Error building spots
+     237: aload_3
+     238: invokeinterface #163,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Throwable;)V
+     243: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     246: getfield      #149                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+     249: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     252: ifeq          283
+     255: aload_2
+     256: invokevirtual #152                // Method org/audiveris/omr/util/StopWatch.print:()V
+     259: goto          283
+     262: astore        9
+     264: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     267: getfield      #149                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+     270: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     273: ifeq          280
+     276: aload_2
+     277: invokevirtual #152                // Method org/audiveris/omr/util/StopWatch.print:()V
+     280: aload         9
+     282: athrow
+     283: return
+    Exception table:
+       from    to  target type
+          10   212   231   Class java/lang/Exception
+          10   212   262   any
+         231   243   262   any
+         262   264   262   any
+
+  public java.util.List<org.audiveris.omr.glyph.Glyph> buildSpots(ij.process.ByteProcessor, java.awt.Point, double, java.lang.String);
+    Code:
+       0: new           #13                 // class org/audiveris/omr/util/StopWatch
+       3: dup
+       4: ldc           #28                 // String buildSpots
+       6: invokespecial #17                 // Method org/audiveris/omr/util/StopWatch."<init>":(Ljava/lang/String;)V
+       9: astore        6
+      11: aload         5
+      13: ifnonnull     21
+      16: aload_0
+      17: aload_1
+      18: invokevirtual #169                // Method eraseHeaderAreas:(Lij/process/ByteProcessor;)V
+      21: aload         6
+      23: ldc           #173                // String close
+      25: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      28: aload_0
+      29: aload_1
+      30: dload_3
+      31: invokevirtual #175                // Method close:(Lij/process/ByteProcessor;D)V
+      34: aload         6
+      36: ldc           #178                // String visualCheck
+      38: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      41: aload         5
+      43: ifnonnull     185
+      46: aconst_null
+      47: astore        7
+      49: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+      52: getfield      #180                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.saveBeamSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      55: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+      58: ifeq          81
+      61: aload_1
+      62: invokevirtual #183                // Method ij/process/ByteProcessor.getBufferedImage:()Ljava/awt/image/BufferedImage;
+      65: astore        7
+      67: aload         7
+      69: aload_0
+      70: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      73: invokevirtual #189                // Method org/audiveris/omr/sheet/Sheet.getId:()Ljava/lang/String;
+      76: ldc           #193                // String beam-spots
+      78: invokestatic  #195                // Method org/audiveris/omr/image/ImageUtil.saveOnDisk:(Ljava/awt/image/BufferedImage;Ljava/lang/String;Ljava/lang/String;)V
+      81: getstatic     #118                // Field org/audiveris/omr/OMR.gui:Lorg/audiveris/omr/ui/OmrGui;
+      84: ifnull        171
+      87: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+      90: getfield      #201                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.displayGraySpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      93: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+      96: ifeq          171
+      99: aload         7
+     101: ifnonnull     110
+     104: aload_1
+     105: invokevirtual #183                // Method ij/process/ByteProcessor.getBufferedImage:()Ljava/awt/image/BufferedImage;
+     108: astore        7
+     110: aload_0
+     111: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     114: invokevirtual #56                 // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+     117: invokevirtual #204                // Method org/audiveris/omr/sheet/SheetStub.getAssembly:()Lorg/audiveris/omr/sheet/ui/SheetAssembly;
+     120: getstatic     #208                // Field org/audiveris/omr/sheet/ui/SheetTab.GRAY_SPOT_TAB:Lorg/audiveris/omr/sheet/ui/SheetTab;
+     123: new           #214                // class org/audiveris/omr/sheet/ui/ScrollImageView
+     126: dup
+     127: aload_0
+     128: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     131: new           #216                // class org/audiveris/omr/sheet/ui/ImageView
+     134: dup
+     135: aload         7
+     137: invokespecial #218                // Method org/audiveris/omr/sheet/ui/ImageView."<init>":(Ljava/awt/image/RenderedImage;)V
+     140: invokespecial #221                // Method org/audiveris/omr/sheet/ui/ScrollImageView."<init>":(Lorg/audiveris/omr/sheet/Sheet;Lorg/audiveris/omr/sheet/ui/ImageView;)V
+     143: new           #224                // class org/audiveris/omr/ui/BoardsPane
+     146: dup
+     147: iconst_1
+     148: anewarray     #226                // class org/audiveris/omr/ui/Board
+     151: dup
+     152: iconst_0
+     153: new           #228                // class org/audiveris/omr/sheet/ui/PixelBoard
+     156: dup
+     157: aload_0
+     158: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     161: invokespecial #230                // Method org/audiveris/omr/sheet/ui/PixelBoard."<init>":(Lorg/audiveris/omr/sheet/Sheet;)V
+     164: aastore
+     165: invokespecial #233                // Method org/audiveris/omr/ui/BoardsPane."<init>":([Lorg/audiveris/omr/ui/Board;)V
+     168: invokevirtual #236                // Method org/audiveris/omr/sheet/ui/SheetAssembly.addViewTab:(Lorg/audiveris/omr/sheet/ui/SheetTab;Lorg/audiveris/omr/ui/view/ScrollView;Lorg/audiveris/omr/ui/BoardsPane;)V
+     171: aload_0
+     172: aload_1
+     173: invokevirtual #242                // Method ij/process/ByteProcessor.duplicate:()Lij/process/ImageProcessor;
+     176: checkcast     #184                // class ij/process/ByteProcessor
+     179: invokevirtual #246                // Method saveHeadRuns:(Lij/process/ByteProcessor;)V
+     182: goto          222
+     185: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     188: getfield      #249                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.saveCueSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+     191: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     194: ifeq          222
+     197: aload_1
+     198: invokevirtual #183                // Method ij/process/ByteProcessor.getBufferedImage:()Ljava/awt/image/BufferedImage;
+     201: astore        7
+     203: aload         7
+     205: aload_0
+     206: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     209: invokevirtual #189                // Method org/audiveris/omr/sheet/Sheet.getId:()Ljava/lang/String;
+     212: aload         5
+     214: invokedynamic #252,  0            // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;)Ljava/lang/String;
+     219: invokestatic  #195                // Method org/audiveris/omr/image/ImageUtil.saveOnDisk:(Ljava/awt/image/BufferedImage;Ljava/lang/String;Ljava/lang/String;)V
+     222: aload         6
+     224: ldc_w         #256                // String binarize
+     227: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     230: aload_1
+     231: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     234: getfield      #258                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.beamBinarizationThreshold:Lorg/audiveris/omr/constant/Constant$Integer;
+     237: invokevirtual #262                // Method org/audiveris/omr/constant/Constant$Integer.getValue:()Ljava/lang/Object;
+     240: checkcast     #85                 // class java/lang/Integer
+     243: invokevirtual #84                 // Method java/lang/Integer.intValue:()I
+     246: invokevirtual #267                // Method ij/process/ByteProcessor.threshold:(I)V
+     249: aload         6
+     251: ldc_w         #271                // String createTable
+     254: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     257: new           #273                // class org/audiveris/omr/run/RunTableFactory
+     260: dup
+     261: getstatic     #275                // Field SPOT_ORIENTATION:Lorg/audiveris/omr/run/Orientation;
+     264: invokespecial #279                // Method org/audiveris/omr/run/RunTableFactory."<init>":(Lorg/audiveris/omr/run/Orientation;)V
+     267: astore        7
+     269: aload         7
+     271: aload_1
+     272: invokevirtual #282                // Method org/audiveris/omr/run/RunTableFactory.createTable:(Lij/process/ByteProcessor;)Lorg/audiveris/omr/run/RunTable;
+     275: astore        8
+     277: aload         6
+     279: ldc_w         #285                // String buildGlyphs
+     282: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     285: aload         8
+     287: aload_2
+     288: invokestatic  #287                // Method org/audiveris/omr/glyph/GlyphFactory.buildGlyphs:(Lorg/audiveris/omr/run/RunTable;Ljava/awt/Point;)Ljava/util/List;
+     291: astore        9
+     293: aload_0
+     294: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     297: invokevirtual #56                 // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+     300: invokevirtual #60                 // Method org/audiveris/omr/sheet/SheetStub.getProcessingSwitches:()Lorg/audiveris/omr/sheet/ProcessingSwitches;
+     303: astore        10
+     305: aload         10
+     307: getstatic     #292                // Field org/audiveris/omr/sheet/ProcessingSwitch.oneLineStaves:Lorg/audiveris/omr/sheet/ProcessingSwitch;
+     310: invokevirtual #72                 // Method org/audiveris/omr/sheet/ProcessingSwitches.getValue:(Lorg/audiveris/omr/sheet/ProcessingSwitch;)Ljava/lang/Boolean;
+     313: invokevirtual #78                 // Method java/lang/Boolean.booleanValue:()Z
+     316: ifne          357
+     319: aload         10
+     321: getstatic     #295                // Field org/audiveris/omr/sheet/ProcessingSwitch.drumNotation:Lorg/audiveris/omr/sheet/ProcessingSwitch;
+     324: invokevirtual #72                 // Method org/audiveris/omr/sheet/ProcessingSwitches.getValue:(Lorg/audiveris/omr/sheet/ProcessingSwitch;)Ljava/lang/Boolean;
+     327: invokevirtual #78                 // Method java/lang/Boolean.booleanValue:()Z
+     330: ifne          357
+     333: aload         6
+     335: ldc_w         #298                // String computeHeadSizing
+     338: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     341: new           #300                // class org/audiveris/omr/sheet/beam/BlackHeadSizer
+     344: dup
+     345: aload_0
+     346: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+     349: invokespecial #302                // Method org/audiveris/omr/sheet/beam/BlackHeadSizer."<init>":(Lorg/audiveris/omr/sheet/Sheet;)V
+     352: aload         9
+     354: invokevirtual #303                // Method org/audiveris/omr/sheet/beam/BlackHeadSizer.process:(Ljava/util/List;)V
+     357: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     360: getfield      #149                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+     363: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     366: ifeq          374
+     369: aload         6
+     371: invokevirtual #152                // Method org/audiveris/omr/util/StopWatch.print:()V
+     374: aload         9
+     376: areturn
+
+  private void close(ij.process.ByteProcessor, double);
+    Code:
+       0: dload_2
+       1: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+       4: getfield      #306                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.beamCircleDiameterRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+       7: invokevirtual #310                // Method org/audiveris/omr/constant/Constant$Ratio.getValue:()Ljava/lang/Object;
+      10: checkcast     #313                // class java/lang/Double
+      13: invokevirtual #315                // Method java/lang/Double.doubleValue:()D
+      16: dmul
+      17: dstore        4
+      19: dload         4
+      21: dconst_1
+      22: dsub
+      23: d2f
+      24: fconst_2
+      25: fdiv
+      26: fstore        6
+      28: getstatic     #157                // Field logger:Lorg/slf4j/Logger;
+      31: ldc_w         #318                // String Spots retrieval beam: {}, diameter: {}, radius: {} ...
+      34: iconst_3
+      35: anewarray     #2                  // class java/lang/Object
+      38: dup
+      39: iconst_0
+      40: ldc_w         #320                // String %.1f
+      43: iconst_1
+      44: anewarray     #2                  // class java/lang/Object
+      47: dup
+      48: iconst_0
+      49: dload_2
+      50: invokestatic  #322                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      53: aastore
+      54: invokestatic  #325                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      57: aastore
+      58: dup
+      59: iconst_1
+      60: ldc_w         #320                // String %.1f
+      63: iconst_1
+      64: anewarray     #2                  // class java/lang/Object
+      67: dup
+      68: iconst_0
+      69: dload         4
+      71: invokestatic  #322                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+      74: aastore
+      75: invokestatic  #325                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      78: aastore
+      79: dup
+      80: iconst_2
+      81: ldc_w         #320                // String %.1f
+      84: iconst_1
+      85: anewarray     #2                  // class java/lang/Object
+      88: dup
+      89: iconst_0
+      90: fload         6
+      92: invokestatic  #331                // Method java/lang/Float.valueOf:(F)Ljava/lang/Float;
+      95: aastore
+      96: invokestatic  #325                // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      99: aastore
+     100: invokeinterface #336,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;[Ljava/lang/Object;)V
+     105: iconst_2
+     106: newarray       int
+     108: dup
+     109: iconst_0
+     110: iconst_0
+     111: iastore
+     112: dup
+     113: iconst_1
+     114: iconst_0
+     115: iastore
+     116: astore        7
+     118: new           #340                // class org/audiveris/omr/image/StructureElement
+     121: dup
+     122: iconst_0
+     123: iconst_1
+     124: fload         6
+     126: aload         7
+     128: invokespecial #342                // Method org/audiveris/omr/image/StructureElement."<init>":(IIF[I)V
+     131: astore        8
+     133: new           #345                // class org/audiveris/omr/image/MorphoProcessor
+     136: dup
+     137: aload         8
+     139: invokespecial #347                // Method org/audiveris/omr/image/MorphoProcessor."<init>":(Lorg/audiveris/omr/image/StructureElement;)V
+     142: aload_1
+     143: invokevirtual #350                // Method org/audiveris/omr/image/MorphoProcessor.close:(Lij/process/ByteProcessor;)V
+     146: return
+
+  private void dispatchSheetSpots(java.util.List<org.audiveris.omr.glyph.Glyph>);
+    Code:
+       0: iconst_0
+       1: istore_2
+       2: aload_0
+       3: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+       6: invokevirtual #352                // Method org/audiveris/omr/sheet/Sheet.getGlyphIndex:()Lorg/audiveris/omr/glyph/GlyphIndex;
+       9: astore_3
+      10: new           #356                // class java/util/ArrayList
+      13: dup
+      14: invokespecial #358                // Method java/util/ArrayList."<init>":()V
+      17: astore        4
+      19: aload_0
+      20: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      23: invokevirtual #359                // Method org/audiveris/omr/sheet/Sheet.getSystemManager:()Lorg/audiveris/omr/sheet/SystemManager;
+      26: astore        5
+      28: aload_1
+      29: invokeinterface #363,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      34: astore        6
+      36: aload         6
+      38: invokeinterface #369,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      43: ifeq          175
+      46: aload         6
+      48: invokeinterface #374,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      53: checkcast     #377                // class org/audiveris/omr/glyph/Glyph
+      56: astore        7
+      58: aload         7
+      60: invokevirtual #379                // Method org/audiveris/omr/glyph/Glyph.getCentroid:()Ljava/awt/Point;
+      63: astore        8
+      65: aload         5
+      67: aload         8
+      69: aload         4
+      71: invokevirtual #383                // Method org/audiveris/omr/sheet/SystemManager.getSystemsOf:(Ljava/awt/geom/Point2D;Ljava/util/List;)Ljava/util/List;
+      74: pop
+      75: iconst_0
+      76: istore        9
+      78: aload         4
+      80: invokeinterface #363,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      85: astore        10
+      87: aload         10
+      89: invokeinterface #369,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      94: ifeq          164
+      97: aload         10
+      99: invokeinterface #374,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     104: checkcast     #389                // class org/audiveris/omr/sheet/SystemInfo
+     107: astore        11
+     109: aload         8
+     111: getfield      #391                // Field java/awt/Point.x:I
+     114: aload         11
+     116: invokevirtual #397                // Method org/audiveris/omr/sheet/SystemInfo.getLeft:()I
+     119: if_icmplt     161
+     122: aload         8
+     124: getfield      #391                // Field java/awt/Point.x:I
+     127: aload         11
+     129: invokevirtual #400                // Method org/audiveris/omr/sheet/SystemInfo.getRight:()I
+     132: if_icmpgt     161
+     135: aload_3
+     136: aload         7
+     138: invokevirtual #403                // Method org/audiveris/omr/glyph/GlyphIndex.registerOriginal:(Lorg/audiveris/omr/glyph/Glyph;)Lorg/audiveris/omr/glyph/Glyph;
+     141: astore        7
+     143: aload         7
+     145: getstatic     #409                // Field org/audiveris/omr/glyph/GlyphGroup.BEAM_SPOT:Lorg/audiveris/omr/glyph/GlyphGroup;
+     148: invokevirtual #415                // Method org/audiveris/omr/glyph/Glyph.addGroup:(Lorg/audiveris/omr/glyph/GlyphGroup;)V
+     151: aload         11
+     153: aload         7
+     155: invokevirtual #419                // Method org/audiveris/omr/sheet/SystemInfo.addFreeGlyph:(Lorg/audiveris/omr/glyph/Glyph;)V
+     158: iconst_1
+     159: istore        9
+     161: goto          87
+     164: iload         9
+     166: ifeq          172
+     169: iinc          2, 1
+     172: goto          36
+     175: getstatic     #157                // Field logger:Lorg/slf4j/Logger;
+     178: ldc_w         #423                // String Spots retrieved: {}
+     181: iload_2
+     182: invokestatic  #102                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     185: invokeinterface #425,  3          // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;)V
+     190: return
+
+  private void eraseHeaderAreas(ij.process.ByteProcessor);
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+       4: invokevirtual #30                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+       7: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+      10: getfield      #428                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.staffVerticalMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      13: invokevirtual #432                // Method org/audiveris/omr/sheet/Scale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      16: istore_2
+      17: aload_1
+      18: ldc2_w        #436                // double 255.0d
+      21: invokevirtual #438                // Method ij/process/ByteProcessor.setValue:(D)V
+      24: aload_0
+      25: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      28: invokevirtual #442                // Method org/audiveris/omr/sheet/Sheet.getSystems:()Ljava/util/List;
+      31: invokeinterface #363,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      36: astore_3
+      37: aload_3
+      38: invokeinterface #369,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      43: ifeq          201
+      46: aload_3
+      47: invokeinterface #374,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      52: checkcast     #389                // class org/audiveris/omr/sheet/SystemInfo
+      55: astore        4
+      57: aload         4
+      59: invokevirtual #446                // Method org/audiveris/omr/sheet/SystemInfo.getFirstStaff:()Lorg/audiveris/omr/sheet/Staff;
+      62: astore        5
+      64: aload         4
+      66: invokevirtual #450                // Method org/audiveris/omr/sheet/SystemInfo.getLastStaff:()Lorg/audiveris/omr/sheet/Staff;
+      69: astore        6
+      71: aload         4
+      73: invokevirtual #453                // Method org/audiveris/omr/sheet/SystemInfo.getBounds:()Ljava/awt/Rectangle;
+      76: getfield      #457                // Field java/awt/Rectangle.x:I
+      79: istore        7
+      81: aload         4
+      83: invokevirtual #460                // Method org/audiveris/omr/sheet/SystemInfo.getStaves:()Ljava/util/List;
+      86: invokeinterface #363,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+      91: astore        8
+      93: aload         8
+      95: invokeinterface #369,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     100: ifeq          198
+     103: aload         8
+     105: invokeinterface #374,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     110: checkcast     #463                // class org/audiveris/omr/sheet/Staff
+     113: astore        9
+     115: aload         9
+     117: invokevirtual #465                // Method org/audiveris/omr/sheet/Staff.getHeader:()Lorg/audiveris/omr/sheet/header/StaffHeader;
+     120: ifnull        195
+     123: aload         9
+     125: invokevirtual #469                // Method org/audiveris/omr/sheet/Staff.getHeaderStop:()I
+     128: istore        10
+     130: aload         5
+     132: invokevirtual #472                // Method org/audiveris/omr/sheet/Staff.getFirstLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
+     135: iload         10
+     137: invokeinterface #476,  2          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.yAt:(I)I
+     142: iload_2
+     143: isub
+     144: istore        11
+     146: aload         6
+     148: invokevirtual #482                // Method org/audiveris/omr/sheet/Staff.getLastLine:()Lorg/audiveris/omr/sheet/grid/LineInfo;
+     151: iload         10
+     153: invokeinterface #476,  2          // InterfaceMethod org/audiveris/omr/sheet/grid/LineInfo.yAt:(I)I
+     158: iload_2
+     159: iadd
+     160: istore        12
+     162: aload_1
+     163: iload         7
+     165: iload         11
+     167: iload         10
+     169: iload         7
+     171: isub
+     172: iconst_1
+     173: iadd
+     174: iload         12
+     176: iload         11
+     178: isub
+     179: iconst_1
+     180: iadd
+     181: invokevirtual #485                // Method ij/process/ByteProcessor.setRoi:(IIII)V
+     184: aload_1
+     185: invokevirtual #489                // Method ij/process/ByteProcessor.fill:()V
+     188: aload_1
+     189: invokevirtual #492                // Method ij/process/ByteProcessor.resetRoi:()V
+     192: goto          198
+     195: goto          93
+     198: goto          37
+     201: aload_1
+     202: dconst_0
+     203: invokevirtual #438                // Method ij/process/ByteProcessor.setValue:(D)V
+     206: return
+
+  private ij.process.ByteProcessor getBuffer();
+    Code:
+       0: new           #13                 // class org/audiveris/omr/util/StopWatch
+       3: dup
+       4: ldc_w         #495                // String SpotsBuilder.getBuffer
+       7: invokespecial #17                 // Method org/audiveris/omr/util/StopWatch."<init>":(Ljava/lang/String;)V
+      10: astore_1
+      11: aload_0
+      12: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      15: invokevirtual #497                // Method org/audiveris/omr/sheet/Sheet.getPicture:()Lorg/audiveris/omr/sheet/Picture;
+      18: astore_2
+      19: aload_0
+      20: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      23: invokevirtual #30                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+      26: invokevirtual #501                // Method org/audiveris/omr/sheet/Scale.getMaxStem:()I
+      29: istore_3
+      30: aload_1
+      31: ldc_w         #504                // String getSource NO_STAFF
+      34: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      37: aload_2
+      38: getstatic     #506                // Field org/audiveris/omr/sheet/Picture$SourceKey.NO_STAFF:Lorg/audiveris/omr/sheet/Picture$SourceKey;
+      41: invokevirtual #512                // Method org/audiveris/omr/sheet/Picture.getSource:(Lorg/audiveris/omr/sheet/Picture$SourceKey;)Lij/process/ByteProcessor;
+      44: astore        4
+      46: aload_1
+      47: ldc_w         #518                // String createtable
+      50: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      53: new           #273                // class org/audiveris/omr/run/RunTableFactory
+      56: dup
+      57: getstatic     #520                // Field org/audiveris/omr/run/Orientation.HORIZONTAL:Lorg/audiveris/omr/run/Orientation;
+      60: new           #525                // class org/audiveris/omr/run/RunTableFactory$LengthFilter
+      63: dup
+      64: iload_3
+      65: invokespecial #527                // Method org/audiveris/omr/run/RunTableFactory$LengthFilter."<init>":(I)V
+      68: invokespecial #529                // Method org/audiveris/omr/run/RunTableFactory."<init>":(Lorg/audiveris/omr/run/Orientation;Lorg/audiveris/omr/run/RunTableFactory$Filter;)V
+      71: astore        5
+      73: aload         5
+      75: aload         4
+      77: invokevirtual #282                // Method org/audiveris/omr/run/RunTableFactory.createTable:(Lij/process/ByteProcessor;)Lorg/audiveris/omr/run/RunTable;
+      80: astore        6
+      82: aload_1
+      83: ldc_w         #532                // String table to buffer
+      86: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+      89: aload         6
+      91: invokevirtual #534                // Method org/audiveris/omr/run/RunTable.getBuffer:()Lij/process/ByteProcessor;
+      94: astore        4
+      96: aload_1
+      97: ldc_w         #537                // String median
+     100: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     103: aload_2
+     104: aload         4
+     106: invokevirtual #539                // Method org/audiveris/omr/sheet/Picture.medianFiltered:(Lij/process/ByteProcessor;)Lij/process/ByteProcessor;
+     109: astore        4
+     111: aload_1
+     112: ldc_w         #543                // String gaussian
+     115: invokevirtual #22                 // Method org/audiveris/omr/util/StopWatch.start:(Ljava/lang/String;)V
+     118: aload_2
+     119: aload         4
+     121: invokevirtual #545                // Method org/audiveris/omr/sheet/Picture.gaussianFiltered:(Lij/process/ByteProcessor;)Lij/process/ByteProcessor;
+     124: astore        7
+     126: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     129: getfield      #149                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+     132: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     135: ifeq          142
+     138: aload_1
+     139: invokevirtual #152                // Method org/audiveris/omr/util/StopWatch.print:()V
+     142: aload         7
+     144: areturn
+     145: astore        8
+     147: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+     150: getfield      #149                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.printWatch:Lorg/audiveris/omr/constant/Constant$Boolean;
+     153: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+     156: ifeq          163
+     159: aload_1
+     160: invokevirtual #152                // Method org/audiveris/omr/util/StopWatch.print:()V
+     163: aload         8
+     165: athrow
+    Exception table:
+       from    to  target type
+          11   126   145   any
+         145   147   145   any
+
+  private void saveHeadRuns(ij.process.ByteProcessor);
+    Code:
+       0: aload_1
+       1: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+       4: getfield      #548                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.headBinarizationThreshold:Lorg/audiveris/omr/constant/Constant$Integer;
+       7: invokevirtual #262                // Method org/audiveris/omr/constant/Constant$Integer.getValue:()Ljava/lang/Object;
+      10: checkcast     #85                 // class java/lang/Integer
+      13: invokevirtual #84                 // Method java/lang/Integer.intValue:()I
+      16: invokevirtual #267                // Method ij/process/ByteProcessor.threshold:(I)V
+      19: new           #273                // class org/audiveris/omr/run/RunTableFactory
+      22: dup
+      23: getstatic     #275                // Field SPOT_ORIENTATION:Lorg/audiveris/omr/run/Orientation;
+      26: invokespecial #279                // Method org/audiveris/omr/run/RunTableFactory."<init>":(Lorg/audiveris/omr/run/Orientation;)V
+      29: astore_2
+      30: aload_2
+      31: aload_1
+      32: invokevirtual #282                // Method org/audiveris/omr/run/RunTableFactory.createTable:(Lij/process/ByteProcessor;)Lorg/audiveris/omr/run/RunTable;
+      35: astore_3
+      36: getstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+      39: getfield      #551                // Field org/audiveris/omr/sheet/beam/SpotsBuilder$Constants.saveHeadSpots:Lorg/audiveris/omr/constant/Constant$Boolean;
+      42: invokevirtual #134                // Method org/audiveris/omr/constant/Constant$Boolean.isSet:()Z
+      45: ifeq          69
+      48: aload_3
+      49: invokevirtual #554                // Method org/audiveris/omr/run/RunTable.getBufferedImage:()Ljava/awt/image/BufferedImage;
+      52: astore        4
+      54: aload         4
+      56: aload_0
+      57: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      60: invokevirtual #189                // Method org/audiveris/omr/sheet/Sheet.getId:()Ljava/lang/String;
+      63: ldc_w         #555                // String head-spots
+      66: invokestatic  #195                // Method org/audiveris/omr/image/ImageUtil.saveOnDisk:(Ljava/awt/image/BufferedImage;Ljava/lang/String;Ljava/lang/String;)V
+      69: aload_0
+      70: getfield      #7                  // Field sheet:Lorg/audiveris/omr/sheet/Sheet;
+      73: invokevirtual #497                // Method org/audiveris/omr/sheet/Sheet.getPicture:()Lorg/audiveris/omr/sheet/Picture;
+      76: getstatic     #557                // Field org/audiveris/omr/sheet/Picture$TableKey.HEAD_SPOTS:Lorg/audiveris/omr/sheet/Picture$TableKey;
+      79: aload_3
+      80: iconst_1
+      81: invokevirtual #563                // Method org/audiveris/omr/sheet/Picture.setTable:(Lorg/audiveris/omr/sheet/Picture$TableKey;Lorg/audiveris/omr/run/RunTable;Z)V
+      84: return
+
+  static {};
+    Code:
+       0: new           #129                // class org/audiveris/omr/sheet/beam/SpotsBuilder$Constants
+       3: dup
+       4: invokespecial #567                // Method org/audiveris/omr/sheet/beam/SpotsBuilder$Constants."<init>":()V
+       7: putstatic     #124                // Field constants:Lorg/audiveris/omr/sheet/beam/SpotsBuilder$Constants;
+      10: ldc           #8                  // class org/audiveris/omr/sheet/beam/SpotsBuilder
+      12: invokestatic  #568                // Method org/slf4j/LoggerFactory.getLogger:(Ljava/lang/Class;)Lorg/slf4j/Logger;
+      15: putstatic     #157                // Field logger:Lorg/slf4j/Logger;
+      18: getstatic     #574                // Field org/audiveris/omr/run/Orientation.VERTICAL:Lorg/audiveris/omr/run/Orientation;
+      21: putstatic     #275                // Field SPOT_ORIENTATION:Lorg/audiveris/omr/run/Orientation;
+      24: return
+}

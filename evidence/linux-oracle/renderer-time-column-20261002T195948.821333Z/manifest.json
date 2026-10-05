@@ -1,0 +1,51 @@
+{
+  "kind": "synthetic independent input raster",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "font_resource": "res/Bravura.otf",
+  "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+  "source": "scripts/java/MakeTimeColumnFixtures.java",
+  "source_sha256": "ecd5bc55205d912c0c1ff78cf853be2b752f2e96689313bfa98275c26ef25c82",
+  "source_snapshot": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195948.821333Z/MakeTimeColumnFixtures.java",
+  "commands": [
+    [
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195948.821333Z/classes",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195948.821333Z/MakeTimeColumnFixtures.java"
+    ],
+    [
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Djava.awt.headless=true",
+      "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195948.821333Z",
+      "-cp",
+      "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195948.821333Z/classes",
+      "MakeTimeColumnFixtures",
+      "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/header-fixtures/time-column-20261002T195948.821333Z"
+    ]
+  ],
+  "fixtures": {
+    "time-column-absent.png": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+    "time-column-common.png": "559af35df44f5e957c3129620b21bccde37f015795c331484d3619888c631dda",
+    "time-column-cut.png": "88babe02c889331a649fa1221b992e580543cc00136a833024311d39f92d0a93",
+    "time-column-far-3-4.png": "67452be580043f3738e130bae8fc91f9323dc28e46bae9ac8d1a3a814d0baf85",
+    "time-column-misaligned-3-4.png": "7b42cb364a4fc5d120d2437f44cebf3f047fb25ef6643dd1ae33afdb2166d9da",
+    "time-column-noise.png": "9b7504b1e6a9f0e921c87f205dba46fe136b7d59e20ed89bc16d40de90c5616c",
+    "time-column-numerator-only.png": "1d3e5b1a7d7751ec9ac2e0c4564f9b0dcfd7024ab32ab954f205b1981676d185",
+    "time-column-pair-12-8.png": "8214d9a342a3f217a7c5863a4f7d23daa0d188df632294a147e4206538d5f9c4",
+    "time-column-pair-2-2.png": "9dbfec562a01efe20d2f4384f6e4a9559258f9681cdaaf444f2deb1321900271",
+    "time-column-pair-2-4.png": "c72223d80bedd912702847a8314883589fa3e82a6422f8967dfd3693ae9ed34a",
+    "time-column-pair-3-4.png": "4b1077daf8973fd47c20672e0ec1eea7ed76aea12feb899aaa80f902dc574b04",
+    "time-column-pair-4-4.png": "8a9cd27380e61fc289534ce5e6ef306ba8877e625e9cf7d055ee53f9778153ec",
+    "time-column-pair-5-4.png": "d3b3c24c6839faed5e590dd21eb18bc585d3ee7c8812542a54a4684a20354a24",
+    "time-column-pair-6-8.png": "e858e6779cf8501d5f42b5f9e689f2e891419f0d1c87ca1f4b1fe9181b16959f",
+    "time-column-pair-7-8.png": "c69de92716ed5a48af1d9b3ec796117e5a1fa7f6d3ca559cf047111b11ceb5ff",
+    "time-column-two-staff-common-pair.png": "daf674a825c4ef4f094eea9dd7f246d5c104dd9563f2b05c5bc7bd3492f0fd23",
+    "time-column-two-staff-mismatch.png": "026a4d0b790f7f3af81a1c2bab85b5fc4f072b763feb36bbaa2a3ef643b10601",
+    "time-column-two-staff-missing.png": "a9124e1aa3544df51fc261e92e3e505f4ab85dc4c741f910105ddcf8fd7e0e5d",
+    "time-column-two-staff-same.png": "99492c58b0ddfedb5da6e4b782a90fb90e24f3ccedd74823e81fe7465c54f026",
+    "time-column-unsupported-3-3.png": "29230791ed94e957a1dec28c3d43466d9a9aa77ab4d6e88c038cb2e8f4b7daca"
+  },
+  "render_log_sha256": "ca8717b31f306d6c74ccbb216a7e34f764e682efb3f619e64c93a204617687fc"
+}

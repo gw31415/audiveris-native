@@ -1,0 +1,38 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "official_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "sources": {
+    "scripts/java/BeamSideLookupControlProbe.java": "5a17f68edd29c1515039c5f14800427b9f2b255e0092f378e9742a1226f2b497",
+    "scripts/java/BeamImpactsControlProbe.java": "9e659e63af0fdbfc6f20b8d6ad6a87f6af49d7ec713673ee708afffab95896ff",
+    "fixtures/beam-structure-source/BeamsBuilder.javap.txt": "e8c9b8dabc971e96b0e73c4a1197fc16b1cfc271eea0c75ba0bf5780c644fdf6",
+    "crates/audiveris-area/upstream/Area.java": "128fbd86d42f462acf3e011458450381ef70f826f3e34877746e1166ff0afe91",
+    "crates/audiveris-area/upstream/Order1.java": "a8af7312e94cf39d6f3718b5ef6d1dfed274c59def521b5e8168cc3c30a9e266"
+  },
+  "fixture_sha256": "44dc04d922b494371d19830ca31b632da3079dc856c68a6fea54da248ce49db9",
+  "native_outputs_used": false,
+  "case_count": 300,
+  "selected": 147,
+  "no_candidate": 153,
+  "multiple_eligible": 76,
+  "removed_entries": 75,
+  "reach_counts": {
+    "None": 38,
+    "0.0": 38,
+    "0.5": 38,
+    "1.0": 38,
+    "1.0000000000000002": 37,
+    "4.0": 37,
+    "16.0": 37,
+    "64.0": 37
+  },
+  "boundary": "Original getSideBeam and Inters.intersectedInters GeoOrder.NONE; original beam constructors/getBounds; independent supplied geometry. Removed is supplied initial state, not lifecycle under test. Full original ordering observed by repeated getSideBeam calls on a temporary shrinking input list. No original method is modified.",
+  "native_limits": "100000 entries, distinct native IDs, finite increasing-x medians, bounded geometry, default original constants; no runtime Java",
+  "non_goals": [
+    "No extension loop",
+    "No page-level lookup orchestration",
+    "No original diagnostic attachment retention",
+    "No interpretation of this focused run as workspace/release validation"
+  ],
+  "raw_candidate_entries": 3000,
+  "active_rectangle_queries": 2925
+}

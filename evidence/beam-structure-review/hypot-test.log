@@ -1,0 +1,9 @@
+   Compiling audiveris-area v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-area)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.46s
+     Running unittests src/lib.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/audiveris_area-ce7da9986fdaeaea)
+
+running 1 test
+test fdlibm_hypot::tests::matches_original_java_hypot_vectors ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.02s
+

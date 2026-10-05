@@ -1,0 +1,20 @@
+    Checking serde_core v1.0.228
+    Checking zmij v1.0.23
+    Checking generic-array v0.14.7
+    Checking crc32fast v1.5.2
+    Checking block-buffer v0.10.4
+    Checking crypto-common v0.1.7
+    Checking digest v0.10.7
+    Checking flate2 v1.1.10
+    Checking sha2 v0.10.9
+    Checking png v0.18.1
+    Checking serde_json v1.0.150
+    Checking serde v1.0.228
+    Checking libc v0.2.186
+    Checking audiveris-classifier v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-classifier)
+    Checking audiveris-glyph-features v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-glyph-features)
+    Checking audiveris-staff-removal v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-staff-removal)
+    Checking audiveris-template-match v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-template-match)
+    Checking audiveris-template-bank v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest/crates/audiveris-template-bank)
+    Checking audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.32s

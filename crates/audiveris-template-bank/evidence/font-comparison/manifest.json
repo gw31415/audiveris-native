@@ -1,0 +1,71 @@
+{
+  "schema": "audiveris-template-assets-manifest-v1",
+  "upstream_version": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "official_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "font": {
+    "family": "Bravura",
+    "version": "1.392",
+    "sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+    "license": "SIL-OFL-1.1"
+  },
+  "environment": {
+    "java": "25.0.3",
+    "os": "Mac OS X aarch64",
+    "headless": true
+  },
+  "constants": {
+    "binarization_threshold": 140,
+    "min_cells_per_side": 2,
+    "stem_dx": -0.1,
+    "stem_dy": -0.2,
+    "hole_larger_ratio": 2,
+    "max_raw_distance": 8,
+    "default_point_size": 80,
+    "small_ratio": 0.67,
+    "normalizer": 3
+  },
+  "supported_sizes": [
+    24,
+    44,
+    64
+  ],
+  "supported_shapes": [
+    "NOTEHEAD_BLACK",
+    "NOTEHEAD_CROSS",
+    "NOTEHEAD_DIAMOND_FILLED",
+    "NOTEHEAD_VOID",
+    "WHOLE_NOTE"
+  ],
+  "whole_note_fallback": {
+    "24": 48,
+    "44": 88,
+    "64": null
+  },
+  "native_probe": {
+    "ttf-parser": "0.25.1",
+    "tiny-skia": "0.11.4",
+    "renderer": "unhinted CFF outlines with AA off/on",
+    "not_awt_compatible": true
+  },
+  "asset_sha256": "ca55872b79b63bc2f4f7837c5d6a7bc07e97deb814e5f5fa3b0d5542a4928ec7",
+  "font_binary_included_unmodified": true,
+  "scope": "15 sampled assets; no interpolation, complete native generation or complete OMR claim",
+  "sources": {
+    "oracle/upstream/glyph/ShapeSet.java": "07f7e6b9baf318c0897e54df7da3883eb9481fbdad69882e41d20fa80666cab8",
+    "oracle/upstream/image/FloodFiller.java": "defebd08f4ccf5a47f72d7dbf0056bf694a05f4fab73342aa247105d45e30482",
+    "oracle/upstream/image/Template.java": "a67df896f0327bf9cbe00a8ac9a60cface8617c6158f2196e81ce31d89883adb",
+    "oracle/upstream/image/TemplateFactory.java": "4c7f9b6cfc90cf5cc89530f152d00f6295ab52f189fb827586384f6c52e1cb49",
+    "oracle/upstream/sheet/Scale.java": "25ab64d3a18063bd5cc5249c05c649e3cff27c79b69ce3a501515329276fecfa",
+    "oracle/upstream/sheet/Staff.java": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57",
+    "oracle/upstream/sheet/beam/BlackHeadSizer.java": "f23aed49e8b8297e4960c977d748c27087151228a194b99405ae066a1570cdac",
+    "oracle/upstream/sheet/note/HeadSeedTally.java": "cb77046b3162c2c36a831738d179825b71fd86bbc45e6834d22c4f5e62115fe4",
+    "oracle/upstream/ui/symbol/BravuraSymbols.java": "f5accfd5711386365f71089cd41009a763f2834ffdeeb7b41a56baf6cf8959bf",
+    "oracle/upstream/ui/symbol/MusicFamily.java": "b1889f3c526311a7dee70b67fd8908216756d8e5f90feeeb42065f57bd8139f1",
+    "oracle/upstream/ui/symbol/MusicFont.java": "0e56cf2174e36c9c6e99a6f50a45bcb86c9b689e5bc841fcedf6528597de3d8e",
+    "oracle/upstream/ui/symbol/OmrFont.java": "f335a923775f968f0768cba0ea76de0113d806a96c51a259689e587f20eb388d",
+    "oracle/upstream/ui/symbol/ShapeSymbol.java": "6d6b9844ff0fdb4c1b1b2c1d7750794a343cb0dd7e641003898bddaca62b3db5",
+    "oracle/upstream/ui/symbol/Symbols.java": "a1c781dccab950bbf766bc49a45d4e24cf147fd7d33753f3cf2c4181e7ffc909",
+    "oracle/upstream/ui/symbol/TemplateSymbol.java": "fb95eee098535a27537facef7194839bf8356f70804e157bbd8127247218d2a3"
+  }
+}

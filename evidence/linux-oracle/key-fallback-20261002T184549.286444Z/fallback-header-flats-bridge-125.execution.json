@@ -1,0 +1,40 @@
+{
+  "input": "/workspace/shared/audiveris-cloud-continuation/linux-oracle/fallback-header-fixtures/fallback-header-flats-bridge-125.png",
+  "input_sha256": "d5fe294f3a65218b2f0b9975dc8d1b3753a3c13c52e9ca6540b7b27e4405f624",
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "KeyFallbackProbe",
+    "-output",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125",
+    "--",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/fallback-header-fixtures/fallback-header-flats-bridge-125.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/key-fallback/20261002T184549.286444Z/fallback-header-flats-bridge-125/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "f587d8ea16a01f0bd36ad517cac80d56e062c86882078a81376892bd016bd162",
+  "ok": true,
+  "result_sha256": "e6a63fb7a749742d21a7897587bde99aae2184589494f2a844895177aa8073d4"
+}

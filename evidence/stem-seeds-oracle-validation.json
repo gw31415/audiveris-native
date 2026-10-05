@@ -1,0 +1,270 @@
+{
+  "stage": "after original live HEADERS and STEM_SEEDS before BEAMS/LEDGERS",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "raster_count": 11,
+  "independent_rendered_count": 8,
+  "method": "Detailed mode calls original StemScaler.getBuffer, original horizontal RunTableFactory, original HistoKeeper, original computeStem, original VerticalsBuilder.retrieveCandidates/checkVerticals. Plain mode runs untouched StemSeedsStep.doit. Final scale, NO_STAFF, all section arrays, accepted seed geometry and staff prerequisites compare exactly.",
+  "checks": "Original StemChecker suite and StickContext replays expose raw checks, low/high, covariant flags, impacts/weights and black/white/gap context. Replayed suite grade is bit-identical to original checkStem.",
+  "mask_behavior": "On all11 PNGs, original StemScaler.getBuffer returns unchanged NO_STAFF bytes. Its Graphics2D painting operates on a copied BufferedImage in the pinned ImageJ runtime. An independent5x4 control confirms painting image white leaves original ByteProcessor unchanged. Do not substitute intended erasure as actual buffer mutation.",
+  "buffer_control": {
+    "result": "fixtures/official-grid/stem-buffer-image-control.json",
+    "sha256": "786458b2bf09ec5771bb5d40826da5e2c4b134cfde3da3e4fe91de98bc2b8511"
+  },
+  "limitations": [
+    "Only default-profile, non-tablature PNG inputs and unassigned initial stem scales are tested.",
+    "Accepted VERTICAL_SEED free glyphs are not StemInter recognition.",
+    "Broken rendered strokes produce two accepted fragment seeds per stroke; no inferred complete stem joining is claimed.",
+    "Additional GitHub source batch was blocked by cancelled network approval and not retried; only the four successful source fetches plus local authorized-JAR bytecode are retained."
+  ],
+  "source_receipt": "evidence/stem-seeds-source.json",
+  "receipts": [
+    "evidence/linux-oracle/stem-seeds-20261002T204159.659668Z",
+    "evidence/linux-oracle/stem-seeds-plain-20261002T204018.501807Z",
+    "evidence/linux-oracle/stem-buffer-control-20261002T203942.653159Z"
+  ],
+  "renderer_receipts": [
+    "evidence/linux-oracle/renderer-stem-seeds-20261002T203848.990564Z",
+    "evidence/linux-oracle/renderer-stem-seeds-20261002T204345.251328Z"
+  ],
+  "fixtures": [
+    {
+      "input": "fixtures/official-grid/laura-gray.png",
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "result": "fixtures/official-stem-seeds/laura-gray.json",
+      "result_sha256": "b899ba83383a7ba88db77669f22a10a95524317e222b0d71cd9bcc85fe340a29",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 4,
+        "max": 5
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 153,
+          "skipped_header_or_staff": 37,
+          "accepted_count": 98
+        },
+        {
+          "system_id": 2,
+          "profile": 1,
+          "candidate_count": 256,
+          "skipped_header_or_staff": 37,
+          "accepted_count": 202
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-empty.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "result": "fixtures/official-stem-seeds/rendered-header-empty.json",
+      "result_sha256": "a01a06d0ff4f18d9f18f0eac30e08cd347089287640b6d4ddda3b78ad8cfd476",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 7,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 1
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-four-flats.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "result": "fixtures/official-stem-seeds/rendered-header-four-flats.json",
+      "result_sha256": "966d214791d8f5dce267df0ca51d4cdc92facf64460eb4c75c583babde2d46f2",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 3,
+        "max": 4
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 11,
+          "skipped_header_or_staff": 10,
+          "accepted_count": 1
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-broken.png",
+      "input_sha256": "329c65d1ea143f148841883abb2cacf1b67a8fa2509db18d7b97ad385ac9a14a",
+      "result": "fixtures/official-stem-seeds/stem-seeds-broken.json",
+      "result_sha256": "429fffbc3089c04008f70d5bde8f887fb8366565941dbd7ba1e146151b6dde8c",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 12,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 6
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-clean.png",
+      "input_sha256": "74e87c47c56e5b0753d86e1957a864a7b94fb5d69ecea51ca07bbebb02f735d6",
+      "result": "fixtures/official-stem-seeds/stem-seeds-clean.json",
+      "result_sha256": "a8baa4c7f0182a05a6dcfb55e08ebc2e17bb239f86aaf6108d4db1e46bbc62cc",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 9,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 3
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-empty.png",
+      "input_sha256": "22de90af2955145091b4c442b2ecd8d7c1c586e897b58f55cfb2c1cec15d776e",
+      "result": "fixtures/official-stem-seeds/stem-seeds-empty.json",
+      "result_sha256": "aaa04a901d8b8ff4dc79bcd69729b61e00a33825bce42c09d6f331a3eb74e7b5",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 5
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 6,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 0
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-heads.png",
+      "input_sha256": "4bd95d7971c7e0473f14042b13380e51bb1f4b793f1af38358e2a135dc1e4247",
+      "result": "fixtures/official-stem-seeds/stem-seeds-heads.json",
+      "result_sha256": "b3f550dd5ed298f99d51f9fde4d0d23fb8ffbea507a8fb7391c7c13ffc5770a8",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 9,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 3
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-mixed-width.png",
+      "input_sha256": "754c0cdee08b22cc269ec0b7ad8d01996007f7866b0284e2a9301beb370296f8",
+      "result": "fixtures/official-stem-seeds/stem-seeds-mixed-width.json",
+      "result_sha256": "1254649af91701341a1d72e470006928391fd3374ee60fe3e0e98ffd66ad0e76",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 4
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 9,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 3
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-noise.png",
+      "input_sha256": "52da8c2a6969f808928143b979cce95dae802e85887369de60f7dc96faa3172f",
+      "result": "fixtures/official-stem-seeds/stem-seeds-noise.json",
+      "result_sha256": "9df08d611dad2b9043a1ae868d1d04fe1b8e12d536b9ebf36d3a8a323b704bb6",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 6,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 0
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-short.png",
+      "input_sha256": "3167f1923c38f3eb0b72589d475d9d3128cc38af1645e45009d7887a9f85681d",
+      "result": "fixtures/official-stem-seeds/stem-seeds-short.json",
+      "result_sha256": "cded2a6c0064970419426471e6ccb51a5597cc6d4d52d903a1b18afb182d7b57",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 6,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 0
+        }
+      ]
+    },
+    {
+      "input": "fixtures/official-grid/stem-seeds-sloped.png",
+      "input_sha256": "cdcf224588105aeccc3301be27aebb80a375c8648adb254aabba82206b2a187f",
+      "result": "fixtures/official-stem-seeds/stem-seeds-sloped.json",
+      "result_sha256": "e7362545ff11b8b10a4a938d12b9ac5fd3a4853c7db7aa164574541472c80d22",
+      "original_step_final_equality": true,
+      "no_staff_buffer_unchanged": true,
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "systems": [
+        {
+          "system_id": 1,
+          "profile": 1,
+          "candidate_count": 6,
+          "skipped_header_or_staff": 6,
+          "accepted_count": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+Audiveris isolated glyph features — Rust translation dated 2026-10-02.
+Original Java copyright © Audiveris 2026. All rights reserved.
+Original author: Hervé Bitteur.
+Source: https://github.com/Audiveris/audiveris
+Tag 5.11.0, commit 9e1e55cd2746037d059345881c53e6a6754bffbd.
+
+This program is free software under the GNU Affero General Public License,
+version 3 or (at your option) any later version. It is supplied WITHOUT ANY
+WARRANTY, including MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+The full license is in LICENSE. Unmodified source files retain their headers.
+
+Translated: MixGlyphDescriptor feature order, AbstractExtractor centroid and
+radius, BasicARTExtractor/BasicLUT angular-radial moments, GeometricMoments,
+and the no-ROI pixel enumeration in RunTable.cumulate. Added explicit input
+validation, Rust OnceLock LUT reuse, and binary/run adapters. No page processing.
+
+oracle/Bravura.otf is unmodified Audiveris 5.11.0 bundled Bravura 1.392.
+Its embedded copyright is © 2021 Steinberg Media Technologies GmbH,
+with Reserved Font Name "Bravura", under SIL Open Font License 1.1.
+The embedded complete notice/license is reproduced in oracle/OFL-Bravura.txt.
+Three glyph bitmaps are rendered locally from that font for tests. Other
+bitmaps are synthetic. No scanned score or uncertain training image is used.
+
+The Java oracle uses unchanged numerical/Glyph/RunTable classes. Two test-only
+configuration stubs disable registration and the ART printWatch timing flag;
+they do not replace numerical operations. See README for the exact scope.
+
+Production crate dependencies: Rust standard library only. Classifier and JSON
+libraries are development-only dependencies used to verify the end-to-end
+feature->score chain. Their notices remain with the sibling classifier crate.

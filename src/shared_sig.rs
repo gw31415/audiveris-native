@@ -1,0 +1,1056 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// Deterministic native identities and relation store across existing phases.
+use crate::{
+    beam_candidates::SystemCandidates, beam_groups::GroupPass,
+    multiple_rest_registration::RestGraph,
+};
+use serde::{Deserialize, Serialize};
+use serde_json::{Value, json};
+use std::collections::{BTreeMap, BTreeSet};
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
+pub enum Phase {
+    Grid,
+    Beam,
+    Group,
+    Rest,
+    Ledger,
+    Head,
+    Stem,
+    MusicHeader,
+    StaffBarline,
+    Chord,
+    Symbol,
+    MusicKey,
+}
+
+#[cfg(test)]
+mod weak_foundation_tests {
+    use super::*;
+    fn add(g: &mut Graph, local: usize, data: Value) {
+        g.vertex(
+            Key {
+                system: 1,
+                phase: Phase::Head,
+                local,
+            },
+            data,
+            false,
+        )
+        .unwrap();
+    }
+    #[test]
+    fn weak_threshold_frozen_ledger_and_incident_edges_retain_identities() {
+        let mut g = Graph::default();
+        add(
+            &mut g,
+            1,
+            json!({"kind":"HeadInter","shape":"NOTEHEAD_BLACK","contextual_grade":0.5}),
+        );
+        add(
+            &mut g,
+            2,
+            json!({"kind":"HeadInter","contextual_grade":0.5_f64.next_down()}),
+        );
+        add(
+            &mut g,
+            3,
+            json!({"kind":"HeadInter","contextual_grade":0.1,"frozen":true}),
+        );
+        add(&mut g, 4, json!({"kind":"LedgerInter","shape":"LEDGER"}));
+        add(
+            &mut g,
+            5,
+            json!({"kind":"StemInter","contextual_grade":0.6}),
+        );
+        for source in [1, 2] {
+            g.edges.push(Edge {
+                key: EdgeKey {
+                    system: 1,
+                    phase: Phase::Stem,
+                    source,
+                    target: 5,
+                    kind: "HeadStemRelation".into(),
+                    ordinal: source,
+                },
+                data: json!({"id":source,"source":source,"target":5,"kind":"HeadStemRelation"}),
+                removed: false,
+            });
+        }
+        assert_eq!(g.purge_weak_foundations().unwrap(), vec![2]);
+        let s = g.snapshot();
+        assert_eq!(s["tombstones"][0]["id"], 2);
+        assert_eq!(s["relations"].as_array().unwrap().len(), 1);
+        assert_eq!(s["inters"][0]["id"], 1);
+        assert_eq!(s["inters"][0]["abnormal"], false);
+        assert_eq!(s["inters"][3]["abnormal"], false);
+        assert!(g.purge_weak_foundations().unwrap().is_empty());
+        assert_eq!(s, g.snapshot());
+        assert_eq!(
+            g.id(Key {
+                system: 1,
+                phase: Phase::Head,
+                local: 2
+            }),
+            Some(2)
+        );
+        assert!(
+            Graph::default()
+                .purge_weak_foundations()
+                .unwrap()
+                .is_empty()
+        );
+    }
+    #[test]
+    fn weak_stem_or_invalid_context_refuses_before_any_mutation() {
+        for bad in [
+            json!({"kind":"StemInter","contextual_grade":0.1}),
+            json!({"kind":"HeadInter"}),
+            json!({"kind":"HeadInter","contextual_grade":1.01}),
+            json!({"kind":"BeamInter","contextual_grade":0.1}),
+        ] {
+            let mut g = Graph::default();
+            add(
+                &mut g,
+                1,
+                json!({"kind":"HeadInter","contextual_grade":0.1}),
+            );
+            add(&mut g, 2, bad);
+            let before = g.snapshot();
+            assert!(g.purge_weak_foundations().is_err());
+            assert_eq!(before, g.snapshot());
+        }
+    }
+    #[test]
+    fn automatic_foundation_plan_failure_keeps_private_identity_store_unchanged() {
+        use crate::stem_head_foundation_plan::{Event, Plan};
+        let mut g = Graph::default();
+        add(
+            &mut g,
+            1,
+            json!({"kind":"HeadInter","grade":0.8,"contextual_grade":0.8}),
+        );
+        let before = g.snapshot();
+        let bad = Plan {
+            events: vec![Event::RemoveVertex(1), Event::RemoveVertex(999)],
+            final_state: json!({"inters":[],"relations":[]}),
+            stages: Value::Null,
+        };
+        assert!(g.apply_head_foundation_plan(&bad).is_err());
+        assert_eq!(before, g.snapshot());
+        let mut changed = before.clone();
+        changed["inters"][0]["grade"] = json!(0.9);
+        let bad = Plan {
+            events: vec![],
+            final_state: changed,
+            stages: Value::Null,
+        };
+        assert!(g.apply_head_foundation_plan(&bad).is_err());
+        assert_eq!(before, g.snapshot());
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
+pub struct Key {
+    pub system: u64,
+    pub phase: Phase,
+    pub local: usize,
+}
+/// Stable caller-owned relation identity distinguishes parallel relations when
+/// one is removed. Head keys use their existing native HEAD registration key.
+pub struct HeadStemAttachment {
+    pub local: usize,
+    pub head: Key,
+    pub stem_local: usize,
+    pub relation: Value,
+}
+#[derive(Clone, Debug)]
+struct Vertex {
+    key: Key,
+    data: Value,
+    removed: bool,
+}
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+struct EdgeKey {
+    system: u64,
+    phase: Phase,
+    source: usize,
+    target: usize,
+    kind: String,
+    ordinal: usize,
+}
+#[derive(Clone, Debug)]
+struct Edge {
+    key: EdgeKey,
+    data: Value,
+    removed: bool,
+}
+#[derive(Clone, Default, Debug)]
+pub struct Graph {
+    vertices: Vec<Vertex>,
+    keys: BTreeMap<Key, usize>,
+    edges: Vec<Edge>,
+    edge_keys: BTreeMap<EdgeKey, usize>,
+}
+impl Graph {
+    fn require_pre_heads(&self, system: u64) -> Result<(), String> {
+        if self.vertices.iter().any(|v| {
+            v.key.system == system && matches!(v.key.phase, Phase::Head | Phase::Stem) && !v.removed
+        }) {
+            return Err("complete_shared_sig_heads_state_required".into());
+        }
+        Ok(())
+    }
+    pub fn id(&self, key: Key) -> Option<usize> {
+        self.keys.get(&key).copied()
+    }
+    pub(crate) fn vertex(
+        &mut self,
+        key: Key,
+        mut data: Value,
+        removed: bool,
+    ) -> Result<usize, String> {
+        if key.system == 0 || key.local == 0 || !data.is_object() {
+            return Err("invalid_shared_sig_vertex".into());
+        }
+        let id = if let Some(id) = self.id(key) {
+            id
+        } else {
+            if self.vertices.len() >= 100000 {
+                return Err("shared_sig_vertex_budget".into());
+            }
+            let id = self.vertices.len() + 1;
+            self.keys.insert(key, id);
+            self.vertices.push(Vertex {
+                key,
+                data: Value::Null,
+                removed,
+            });
+            id
+        };
+        data["id"] = json!(id);
+        data["origin"] = json!(key);
+        // Context lives on the registered Inter, not the glyph cache. Re-registering
+        // the same intrinsic stem/head must retain it, as original addVertex does.
+        let old = &self.vertices[id - 1];
+        if matches!(key.phase, Phase::Head | Phase::Stem)
+            && !removed
+            && old.data["grade"] == data["grade"]
+            && data["contextual_grade"].is_null()
+            && !old.data["contextual_grade"].is_null()
+        {
+            data["contextual_grade"] = old.data["contextual_grade"].clone();
+        }
+        self.vertices[id - 1] = Vertex { key, data, removed };
+        Ok(id)
+    }
+    fn endpoint(&self, key: Key) -> Result<usize, String> {
+        let id = self.id(key).ok_or("missing_shared_sig_endpoint")?;
+        if self.vertices[id - 1].removed {
+            return Err("removed_shared_sig_endpoint".into());
+        }
+        Ok(id)
+    }
+    fn phase(&mut self, system: u64, phase: Phase) {
+        for v in &mut self.vertices {
+            if v.key.system == system && v.key.phase == phase {
+                v.removed = true;
+            }
+        }
+        for e in &mut self.edges {
+            if e.key.system == system && e.key.phase == phase {
+                e.removed = true;
+            }
+        }
+    }
+    /// Bounded ledger/beam/symbol/container removals retain IDs and incident tombstones.
+    /// Cached stems and head callbacks must use their dedicated removal path.
+    pub(crate) fn remove_music_inter(&mut self, key: Key) -> Result<(), String> {
+        if !matches!(
+            key.phase,
+            Phase::Beam | Phase::Group | Phase::Symbol | Phase::Chord | Phase::Ledger
+        ) {
+            return Err("music_removal_requires_uncached_ledger_beam_symbol_or_chord".into());
+        }
+        let id = self.endpoint(key)?;
+        if key.phase == Phase::Group && self.vertices[id - 1].data["kind"] != "BeamGroupInter" {
+            return Err("music_removal_only_beam_group_supported".into());
+        }
+        if key.phase == Phase::Ledger && self.vertices[id - 1].data["kind"] != "LedgerInter" {
+            return Err("music_removal_only_ledger_supported".into());
+        }
+        if self.vertices[id - 1].data["frozen"] == true {
+            return Err("music_removal_frozen_inter".into());
+        }
+        self.vertices[id - 1].removed = true;
+        for e in &mut self.edges {
+            if e.key.source == id || e.key.target == id {
+                e.removed = true;
+            }
+        }
+        Ok(())
+    }
+    pub(crate) fn relations(
+        &mut self,
+        system: u64,
+        phase: Phase,
+        relations: Vec<(Key, Key, Value)>,
+    ) -> Result<(), String> {
+        let mut counts = BTreeMap::new();
+        for (a, b, mut data) in relations {
+            if a.system != system || b.system != system || !data.is_object() {
+                return Err("invalid_shared_sig_relation".into());
+            }
+            let source = self.endpoint(a)?;
+            let target = self.endpoint(b)?;
+            let kind = data["kind"]
+                .as_str()
+                .filter(|s| !s.is_empty())
+                .ok_or("invalid_shared_sig_relation_kind")?
+                .to_owned();
+            let count = counts
+                .entry((source, target, kind.clone()))
+                .or_insert(0usize);
+            let key = EdgeKey {
+                system,
+                phase,
+                source,
+                target,
+                kind,
+                ordinal: if phase == Phase::Stem {
+                    data["local_relation_id"]
+                        .as_u64()
+                        .and_then(|i| usize::try_from(i).ok())
+                        .filter(|i| *i > 0)
+                        .ok_or("invalid_shared_stem_relation_id")?
+                } else {
+                    *count
+                },
+            };
+            *count += 1;
+            let id = if let Some(id) = self.edge_keys.get(&key) {
+                *id
+            } else {
+                if self.edges.len() >= 1000000 {
+                    return Err("shared_sig_relation_budget".into());
+                }
+                let id = self.edges.len() + 1;
+                self.edge_keys.insert(key.clone(), id);
+                self.edges.push(Edge {
+                    key: key.clone(),
+                    data: Value::Null,
+                    removed: false,
+                });
+                id
+            };
+            data["id"] = json!(id);
+            data["source"] = json!(source);
+            data["target"] = json!(target);
+            data["system_id"] = json!(system);
+            self.edges[id - 1] = Edge {
+                key,
+                data,
+                removed: false,
+            };
+        }
+        Ok(())
+    }
+    fn prune(&mut self) {
+        for e in &mut self.edges {
+            if self.vertices[e.key.source - 1].removed || self.vertices[e.key.target - 1].removed {
+                e.removed = true;
+            }
+        }
+    }
+    /// Import GRID vertices/relations in existing system and registration order.
+    /// IDs in payload are rewritten; source identities remain in origin. Glyph
+    /// IDs retain the explicit GRID namespace, not a fabricated shared index.
+    pub fn import_grid(&mut self, grid: &Value) -> Result<(), String> {
+        let mut next = self.clone();
+        let systems = grid["bar_semantics"]["systems"]
+            .as_array()
+            .ok_or("missing_shared_sig_grid_systems")?;
+        let mut seen = BTreeSet::new();
+        for s in systems {
+            let system = s["id"]
+                .as_u64()
+                .filter(|id| *id > 0)
+                .ok_or("invalid_shared_sig_system")?;
+            if !seen.insert(system) {
+                return Err("duplicate_shared_sig_system".into());
+            }
+            next.require_pre_heads(system)?;
+            next.phase(system, Phase::Grid);
+            let mut locals = BTreeSet::new();
+            for v in s["inters"]
+                .as_array()
+                .ok_or("missing_shared_sig_grid_inters")?
+            {
+                let local = v["id"]
+                    .as_u64()
+                    .and_then(|id| usize::try_from(id).ok())
+                    .filter(|id| *id > 0)
+                    .ok_or("invalid_shared_sig_local_id")?;
+                if !locals.insert(local) {
+                    return Err("duplicate_shared_sig_local_id".into());
+                }
+                let mut data = v.clone();
+                data["glyph_id_namespace"] = json!("GRID");
+                next.vertex(
+                    Key {
+                        system,
+                        phase: Phase::Grid,
+                        local,
+                    },
+                    data,
+                    false,
+                )?;
+            }
+            let mut relations = Vec::new();
+            for r in s["relations"]
+                .as_array()
+                .ok_or("missing_shared_sig_grid_relations")?
+            {
+                let key = |field| -> Result<Key, String> {
+                    let local = r[field]
+                        .as_u64()
+                        .and_then(|id| usize::try_from(id).ok())
+                        .ok_or("invalid_shared_sig_grid_endpoint")?;
+                    Ok(Key {
+                        system,
+                        phase: Phase::Grid,
+                        local,
+                    })
+                };
+                relations.push((key("source")?, key("target")?, r.clone()));
+            }
+            next.relations(system, Phase::Grid, relations)?;
+        }
+        next.prune();
+        *self = next;
+        Ok(())
+    }
+    pub fn sync_candidates(&mut self, state: &SystemCandidates) -> Result<(), String> {
+        if self.vertices.iter().any(|v| {
+            v.key.system == state.system_id()
+                && matches!(v.key.phase, Phase::Group | Phase::Rest | Phase::Head)
+                && !v.removed
+        }) {
+            return Err("complete_shared_sig_phase_state_required".into());
+        }
+        let mut next = self.clone();
+        next.beams(state)?;
+        next.prune();
+        *self = next;
+        Ok(())
+    }
+    fn beams(&mut self, state: &SystemCandidates) -> Result<(), String> {
+        let system = state.system_id();
+        self.phase(system, Phase::Beam);
+        for b in state.inters() {
+            self.vertex(Key{system,phase:Phase::Beam,local:b.id()},json!({"kind":b.kind,"shape":b.shape,"bounds":b.bounds,"median":b.item.median,"height":b.item.height,"grade":b.impacts.grade,"glyph_id":b.glyph_id(),"glyph_id_namespace":"BEAMS","glyph":crate::beam_dispatch::glyph_json(&b.glyph)}),b.is_removed())?;
+        }
+        let key = |local| Key {
+            system,
+            phase: Phase::Beam,
+            local,
+        };
+        self.relations(
+            system,
+            Phase::Beam,
+            state
+                .exclusions()
+                .iter()
+                .map(|&(a, b)| (key(a), key(b), json!({"kind":"Exclusion"})))
+                .collect(),
+        )
+    }
+    /// Synchronize all mutable BEAMS/rest phase snapshots transactionally. Phase
+    /// logic is unchanged; absent vertices and incident edges become tombstones.
+    pub fn sync_system(
+        &mut self,
+        state: &SystemCandidates,
+        groups: &GroupPass,
+        rests: &RestGraph,
+    ) -> Result<(), String> {
+        let mut next = self.clone();
+        let system = state.system_id();
+        next.require_pre_heads(system)?;
+        next.beams(state)?;
+        next.phase(system, Phase::Group);
+        next.phase(system, Phase::Rest);
+        let beam = |local| Key {
+            system,
+            phase: Phase::Beam,
+            local,
+        };
+        let group = |local| Key {
+            system,
+            phase: Phase::Group,
+            local,
+        };
+        let rest = |local| Key {
+            system,
+            phase: Phase::Rest,
+            local,
+        };
+        let mut relations = Vec::new();
+        let mut ids = BTreeSet::new();
+        for g in &groups.groups {
+            if !ids.insert(g.id) {
+                return Err("duplicate_shared_sig_group".into());
+            }
+            let members = g
+                .members
+                .iter()
+                .map(|&id| next.endpoint(beam(id)))
+                .collect::<Result<Vec<_>, _>>()?;
+            next.vertex(
+                group(g.id),
+                json!({"kind":"BeamGroupInter","members":members,"bounds":g.bounds}),
+                false,
+            )?;
+            for &id in &g.members {
+                relations.push((group(g.id), beam(id), json!({"kind":"Containment"})));
+            }
+        }
+        for &(a, b) in &groups.supports {
+            relations.push((beam(a), beam(b), json!({"kind":"BeamBeamRelation"})));
+        }
+        next.relations(system, Phase::Group, relations)?;
+        let mut ids = BTreeSet::new();
+        for r in &rests.rests {
+            if !ids.insert(r.id) {
+                return Err("duplicate_shared_sig_rest_id".into());
+            }
+            let source = next
+                .id(beam(r.source_beam))
+                .ok_or("missing_shared_sig_rest_source")?;
+            next.vertex(rest(r.id),json!({"kind":"MultipleRestInter","staff_id":r.staff_id,"median":r.median,"height":r.height,"grade":r.grade,"source_beam_id":source}),false)?;
+        }
+        for s in &rests.serifs {
+            if !ids.insert(s.id) {
+                return Err("duplicate_shared_sig_rest_id".into());
+            }
+            next.vertex(rest(s.id),json!({"kind":"VerticalSerifInter","glyph_id":s.glyph_id,"glyph_id_namespace":"BEAMS","median":s.plan.median,"width":s.plan.width,"grade":s.plan.peak.grade,"impacts":s.plan.peak.impacts}),false)?;
+        }
+        for relation in &rests.relations {
+            if !rests.rests.iter().any(|r| r.id == relation.rest_id)
+                || !rests
+                    .serifs
+                    .iter()
+                    .any(|s| s.id == relation.serif_id && s.plan.left == relation.left)
+            {
+                return Err("invalid_shared_sig_rest_relation_types".into());
+            }
+        }
+        next.relations(system,Phase::Rest,rests.relations.iter().map(|r|(rest(r.rest_id),rest(r.serif_id),json!({"kind":"MultipleRestSerifRelation","rest_side":if r.left{"LEFT"}else{"RIGHT"}}))).collect())?;
+        next.prune();
+        *self = next;
+        Ok(())
+    }
+    /// Fresh ledger phase registration order; reduced nodes remain tombstones.
+    pub fn sync_ledgers(&mut self, system: u64, ledgers: &[Value]) -> Result<(), String> {
+        let mut next = self.clone();
+        next.require_pre_heads(system)?;
+        next.phase(system, Phase::Ledger);
+        for node in ledgers {
+            let local = node["id"].as_u64().ok_or("invalid_shared_ledger_id")? as usize;
+            let mut data = node.clone();
+            data["kind"] = json!("LedgerInter");
+            data["shape"] = json!("LEDGER");
+            data["glyph_id_namespace"] = json!("BEAMS");
+            next.vertex(
+                Key {
+                    system,
+                    phase: Phase::Ledger,
+                    local,
+                },
+                data,
+                node["removed"] == true,
+            )?;
+        }
+        next.prune();
+        *self = next;
+        Ok(())
+    }
+    /// HEADS continuation on the same graph. Earlier identities remain stable;
+    /// removed heads/beams and incident relations become tombstones transactionally.
+    pub fn sync_heads(
+        &mut self,
+        system: u64,
+        heads: &[Value],
+        exclusions: &[Value],
+        beam_changes: &[Value],
+    ) -> Result<(), String> {
+        if system == 0 {
+            return Err("invalid_shared_head_system".into());
+        }
+        if self
+            .vertices
+            .iter()
+            .any(|v| v.key.system == system && v.key.phase == Phase::Stem && !v.removed)
+        {
+            return Err("complete_shared_sig_stems_state_required".into());
+        }
+        let mut next = self.clone();
+        next.phase(system, Phase::Head);
+        let mut seen = BTreeSet::new();
+        for h in heads {
+            let local = h["id"]
+                .as_u64()
+                .and_then(|i| usize::try_from(i).ok())
+                .filter(|i| *i > 0)
+                .ok_or("invalid_shared_head_id")?;
+            if !seen.insert(local) || h["kind"] != "HeadInter" {
+                return Err("invalid_shared_head_vertex".into());
+            }
+            next.vertex(
+                Key {
+                    system,
+                    phase: Phase::Head,
+                    local,
+                },
+                h.clone(),
+                h["removed"] == true,
+            )?;
+        }
+        let mut changed = BTreeSet::new();
+        for b in beam_changes {
+            let key: Key = serde_json::from_value(b["origin"].clone())
+                .map_err(|_| "invalid_shared_head_beam_origin")?;
+            if key.system != system
+                || key.phase != Phase::Beam
+                || !changed.insert(key)
+                || next.id(key) != b["id"].as_u64().map(|x| x as usize)
+            {
+                return Err("invalid_shared_head_beam_update".into());
+            }
+            next.vertex(key, b.clone(), b["removed"] == true)?;
+        }
+        let mut relations = Vec::new();
+        let mut unique = BTreeSet::new();
+        for r in exclusions {
+            let a = r["source"]
+                .as_u64()
+                .ok_or("invalid_shared_head_exclusion")? as usize;
+            let b = r["target"]
+                .as_u64()
+                .ok_or("invalid_shared_head_exclusion")? as usize;
+            if r["kind"] != "Exclusion" || a >= b || !unique.insert((a, b)) {
+                return Err("invalid_shared_head_exclusion".into());
+            }
+            relations.push((
+                Key {
+                    system,
+                    phase: Phase::Head,
+                    local: a,
+                },
+                Key {
+                    system,
+                    phase: Phase::Head,
+                    local: b,
+                },
+                r.clone(),
+            ));
+        }
+        next.relations(system, Phase::Head, relations)?;
+        next.prune();
+        *self = next;
+        Ok(())
+    }
+    /// Replace a system's explicitly selected nonmanual STEMS boundary in one
+    /// transaction. Existing HEADS exclusions, glyphs, staff order and other
+    /// phases are retained; added/removed head–stem edges refresh abnormal
+    /// state exactly as the original relation callbacks. No automatic STEMS,
+    /// chords, SIG contextual grades, cleaner or epilog is certified here.
+    pub fn sync_stems(
+        &mut self,
+        system: u64,
+        stems: &[Value],
+        attachments: &[HeadStemAttachment],
+    ) -> Result<(), String> {
+        if system == 0 || stems.len() > 100_000 || attachments.len() > 1_000_000 {
+            return Err("invalid_shared_stem_system_or_budget".into());
+        }
+        let mut next = self.clone();
+        next.phase(system, Phase::Stem);
+        let mut seen = BTreeSet::new();
+        for stem in stems {
+            let local = stem["id"]
+                .as_u64()
+                .and_then(|i| usize::try_from(i).ok())
+                .filter(|i| *i > 0)
+                .ok_or("invalid_shared_stem_id")?;
+            if !seen.insert(local) || stem["manual"] == true || stem["is_manual"] == true {
+                return Err("unsupported_shared_stem_vertex".into());
+            }
+            let glyph = crate::beam_dispatch::glyph_from_json(&stem["glyph"])?;
+            let grade = stem["grade"].as_f64().ok_or("invalid_shared_stem_grade")?;
+            let expected = crate::stem_glyph::record(local, &glyph, grade)?;
+            for field in ["kind", "shape", "bounds", "median", "width"] {
+                if stem[field] != expected[field] {
+                    return Err("inconsistent_shared_stem_geometry".into());
+                }
+            }
+            let key = Key {
+                system,
+                phase: Phase::Stem,
+                local,
+            };
+            let mut data = stem.clone();
+            data["abnormal"] = if stem["removed"] == true {
+                next.id(key)
+                    .map(|id| next.vertices[id - 1].data["abnormal"].clone())
+                    .unwrap_or(json!(true))
+            } else {
+                json!(true)
+            };
+            next.vertex(key, data, stem["removed"] == true)?;
+        }
+        let mut relation_ids = BTreeSet::new();
+        let mut relations = Vec::new();
+        for attachment in attachments {
+            if attachment.local == 0
+                || !relation_ids.insert(attachment.local)
+                || attachment.head.system != system
+                || attachment.head.phase != Phase::Head
+            {
+                return Err("invalid_shared_head_stem_attachment".into());
+            }
+            let source = next.endpoint(attachment.head)?;
+            let target_key = Key {
+                system,
+                phase: Phase::Stem,
+                local: attachment.stem_local,
+            };
+            let target = next.endpoint(target_key)?;
+            let head = &next.vertices[source - 1].data;
+            if head["kind"] != "HeadInter"
+                || !head["shape"]
+                    .as_str()
+                    .is_some_and(|s| crate::head_seed_search::ALL_STEM_SHAPES.contains(&s))
+                || head["manual"] == true
+                || head["is_manual"] == true
+            {
+                return Err("unsupported_shared_stem_head".into());
+            }
+            let r = &attachment.relation;
+            if r["kind"] != "HeadStemRelation"
+                || r["manual"] == true
+                || r["is_manual"] == true
+                || !r["head_side"]
+                    .as_str()
+                    .is_some_and(|s| ["LEFT", "RIGHT"].contains(&s))
+            {
+                return Err("unsupported_shared_head_stem_relation".into());
+            }
+            let point: [f64; 2] = serde_json::from_value(r["extension_point"].clone())
+                .map_err(|_| "invalid_shared_stem_extension_point")?;
+            if point.iter().any(|v| !v.is_finite() || v.abs() > 4_000_000.) {
+                return Err("unsupported_shared_stem_relation_context".into());
+            }
+            let profile = r["profile"]
+                .as_u64()
+                .and_then(|n| u8::try_from(n).ok())
+                .ok_or("invalid_shared_stem_profile")?;
+            let dx = r["dx"].as_f64().ok_or("invalid_shared_stem_gap")?;
+            let dy = r["dy"].as_f64().ok_or("invalid_shared_stem_gap")?;
+            let mut expected = crate::head_stem_relation::gap_grade(dx, dy, profile)?;
+            let consistency = if let Some(main) = r.get("consistency_interline") {
+                let interline = main
+                    .as_u64()
+                    .and_then(|n| usize::try_from(n).ok())
+                    .ok_or("invalid_shared_stem_consistency_interline")?;
+                let median: [f64; 4] =
+                    serde_json::from_value(next.vertices[target - 1].data["median"].clone())
+                        .map_err(|_| "invalid_shared_stem_consistency_median")?;
+                crate::head_stem_relation::measured_consistency(
+                    head["shape"].as_str().unwrap(),
+                    median,
+                    interline,
+                )?
+            } else {
+                1.
+            };
+            if !r["consistency"]
+                .as_f64()
+                .is_some_and(|v| v.is_finite() && (v - consistency).abs() < 1e-12)
+            {
+                return Err("inconsistent_shared_stem_consistency".into());
+            }
+            expected["source_ratio"] =
+                json!(1. + (4. * consistency) * expected["grade"].as_f64().unwrap());
+            if expected["eligible"] != true {
+                return Err("ineligible_shared_stem_relation".into());
+            }
+            for field in ["grade", "source_ratio", "target_ratio"] {
+                if !r[field].as_f64().is_some_and(|v| {
+                    v.is_finite() && (v - expected[field].as_f64().unwrap()).abs() < 1e-12
+                }) {
+                    return Err("inconsistent_shared_stem_relation_grade".into());
+                }
+            }
+            if r["invading"].as_bool() != Some(crate::head_stem_relation::is_invading(dx, dy)?) {
+                return Err("inconsistent_shared_stem_invading".into());
+            }
+            if next.edges.iter().any(|e| {
+                e.key.system == system
+                    && e.key.phase == Phase::Stem
+                    && e.data["local_relation_id"] == attachment.local
+                    && (e.key.source != source || e.key.target != target)
+            }) {
+                return Err("changed_shared_stem_relation_endpoints".into());
+            }
+            let mut data = r.clone();
+            data["local_relation_id"] = json!(attachment.local);
+            relations.push((attachment.head, target_key, data));
+        }
+        next.relations(system, Phase::Stem, relations)?;
+        next.prune();
+        let linked = next
+            .edges
+            .iter()
+            .filter(|e| !e.removed && e.key.system == system && e.key.kind == "HeadStemRelation")
+            .flat_map(|e| [e.key.source, e.key.target])
+            .collect::<BTreeSet<_>>();
+        for (i, v) in next.vertices.iter_mut().enumerate() {
+            if v.removed || v.key.system != system {
+                continue;
+            }
+            if v.key.phase == Phase::Stem
+                || (v.key.phase == Phase::Head
+                    && v.data["shape"]
+                        .as_str()
+                        .is_some_and(|s| crate::head_seed_search::ALL_STEM_SHAPES.contains(&s)))
+            {
+                v.data["abnormal"] = json!(!linked.contains(&(i + 1)));
+            }
+        }
+        *self = next;
+        Ok(())
+    }
+    // Bounded native head/stem support computation after image linking. Prior
+    // GRID/ledger nodes are retained; no reduction or completion flag is implied.
+    pub(crate) fn contextualize_head_stems(&mut self) -> Result<(), String> {
+        let mut nodes = self
+            .vertices
+            .iter()
+            .filter(|v| !v.removed && matches!(v.key.phase, Phase::Head | Phase::Stem))
+            .map(|v| v.data.clone())
+            .collect::<Vec<_>>();
+        let ids = nodes
+            .iter()
+            .map(|v| v["id"].as_u64().unwrap() as usize)
+            .collect::<BTreeSet<_>>();
+        let mut relations = Vec::new();
+        for e in self.edges.iter().filter(|e| !e.removed) {
+            let source = ids.contains(&e.key.source);
+            let target = ids.contains(&e.key.target);
+            if source != target {
+                return Err("unsupported_head_stem_context_external_relation".into());
+            }
+            if source {
+                relations.push(e.data.clone());
+            }
+        }
+        crate::sig_context::contextualize_head_stems(&mut nodes, &relations)?;
+        for node in nodes {
+            let id = node["id"].as_u64().unwrap() as usize;
+            self.vertices[id - 1].data["contextual_grade"] = node["contextual_grade"].clone();
+        }
+        Ok(())
+    }
+
+    /// Original SIGraph.deleteWeakInters threshold and exceptions, on the live
+    /// store. This bounded continuation cannot remove a cached StemInter yet:
+    /// its retriever callback must be wired before that ownership can change.
+    /// Validate the entire pass before deleting any vertex or incident relation.
+    pub(crate) fn purge_weak_foundations(&mut self) -> Result<Vec<usize>, String> {
+        let mut remove = Vec::new();
+        for (i, v) in self.vertices.iter().enumerate().filter(|(_, v)| !v.removed) {
+            if v.data["frozen"] == true
+                || v.data["is_frozen"] == true
+                || v.data["shape"] == "LEDGER"
+            {
+                continue;
+            }
+            if !matches!(
+                v.data["kind"].as_str(),
+                Some("HeadInter" | "StemInter" | "BarlineInter")
+            ) {
+                return Err("unsupported_weak_foundation_kind".into());
+            }
+            let grade = v.data["contextual_grade"]
+                .as_f64()
+                .filter(|g| (0.0..=1.0).contains(g))
+                .ok_or("missing_validated_foundation_contextual_grade")?;
+            if grade < 0.5 {
+                if v.data["kind"] == "StemInter" {
+                    return Err("weak_stem_requires_owned_cache_removal_callback".into());
+                }
+                remove.push(i + 1);
+            }
+        }
+        for id in &remove {
+            self.vertices[*id - 1].removed = true;
+        }
+        self.prune();
+        // Original HeadStemRelation.removed callbacks refresh each live endpoint.
+        let linked = self
+            .edges
+            .iter()
+            .filter(|e| !e.removed && e.key.kind == "HeadStemRelation")
+            .flat_map(|e| [e.key.source, e.key.target])
+            .collect::<BTreeSet<_>>();
+        for (i, v) in self
+            .vertices
+            .iter_mut()
+            .enumerate()
+            .filter(|(_, v)| !v.removed)
+        {
+            if v.data["kind"] == "StemInter"
+                || (v.data["kind"] == "HeadInter"
+                    && v.data["shape"]
+                        .as_str()
+                        .is_some_and(|s| crate::head_seed_search::ALL_STEM_SHAPES.contains(&s)))
+            {
+                v.data["abnormal"] = json!(!linked.contains(&(i + 1)));
+            }
+        }
+        Ok(remove)
+    }
+
+    // Apply an automatic plan to the private identity store, preserving all keys
+    // and tombstones. The owner locks canonical cache states before this call.
+    pub(crate) fn apply_head_foundation_plan(
+        &mut self,
+        plan: &crate::stem_head_foundation_plan::Plan,
+    ) -> Result<(), String> {
+        use crate::stem_head_foundation_plan::Event;
+        let mut next = self.clone();
+        for event in &plan.events {
+            match *event {
+                Event::RemoveVertex(id) => {
+                    let v = next
+                        .vertices
+                        .get_mut(id.checked_sub(1).ok_or("invalid_foundation_vertex_id")? as usize)
+                        .ok_or("missing_foundation_vertex")?;
+                    if v.removed
+                        || !matches!(v.data["kind"].as_str(), Some("HeadInter" | "StemInter"))
+                    {
+                        return Err("unsupported_foundation_vertex_removal".into());
+                    }
+                    v.removed = true;
+                    next.prune();
+                }
+                Event::RemoveRelation(id) => {
+                    let e = next
+                        .edges
+                        .get_mut(id.checked_sub(1).ok_or("invalid_foundation_edge_id")? as usize)
+                        .ok_or("missing_foundation_edge")?;
+                    if e.removed || e.key.kind != "HeadStemRelation" {
+                        return Err("unsupported_foundation_relation_removal".into());
+                    }
+                    e.removed = true;
+                }
+                Event::Exclusion(a, b) => {
+                    let source = next
+                        .vertices
+                        .get(a.checked_sub(1).ok_or("invalid_foundation_exclusion_id")? as usize)
+                        .ok_or("missing_foundation_exclusion_vertex")?;
+                    let target = next
+                        .vertices
+                        .get(b.checked_sub(1).ok_or("invalid_foundation_exclusion_id")? as usize)
+                        .ok_or("missing_foundation_exclusion_vertex")?;
+                    if source.removed
+                        || target.removed
+                        || source.key.system != target.key.system
+                        || source.key.phase != Phase::Head
+                        || target.key.phase != Phase::Stem
+                    {
+                        return Err("invalid_foundation_exclusion_endpoints".into());
+                    }
+                    if next.edges.iter().any(|e| {
+                        !e.removed
+                            && e.key.kind == "Exclusion"
+                            && ((e.key.source == a as usize && e.key.target == b as usize)
+                                || (e.key.source == b as usize && e.key.target == a as usize))
+                    }) {
+                        continue;
+                    }
+                    let system = source.key.system;
+                    let s = source.key;
+                    let t = target.key;
+                    next.relations(
+                        system,
+                        Phase::Head,
+                        vec![(s, t, json!({"kind":"Exclusion","cause":"OVERLAP"}))],
+                    )?;
+                }
+            }
+        }
+        let final_nodes = plan.final_state["inters"]
+            .as_array()
+            .ok_or("missing_foundation_final_nodes")?;
+        if final_nodes.len() != next.vertices.iter().filter(|v| !v.removed).count() {
+            return Err("inconsistent_foundation_final_vertex_count".into());
+        }
+        for n in final_nodes {
+            let id = n["id"].as_u64().ok_or("invalid_foundation_final_id")? as usize;
+            let v = next
+                .vertices
+                .get_mut(id.checked_sub(1).ok_or("invalid_foundation_final_id")?)
+                .ok_or("missing_foundation_final_vertex")?;
+            if v.removed {
+                return Err("removed_foundation_final_vertex".into());
+            }
+            let mut expected = v.data.clone();
+            if matches!(v.key.phase, Phase::Head | Phase::Stem) {
+                expected["contextual_grade"] = n["contextual_grade"].clone();
+                expected["abnormal"] = n["abnormal"].clone();
+            }
+            if expected != *n {
+                return Err("changed_foundation_intrinsic_vertex".into());
+            }
+            v.data = expected;
+        }
+        let expected_edges = plan.final_state["relations"]
+            .as_array()
+            .ok_or("missing_foundation_final_edges")?;
+        if expected_edges.len() != next.edges.iter().filter(|e| !e.removed).count() {
+            return Err("inconsistent_foundation_final_edge_count".into());
+        }
+        for e in expected_edges {
+            let id = e["id"].as_u64().ok_or("invalid_foundation_final_edge_id")?;
+            if e["planned_synthetic_id"] == true {
+                if !next.edges.iter().any(|r| {
+                    !r.removed
+                        && r.data["kind"] == e["kind"]
+                        && r.data["source"] == e["source"]
+                        && r.data["target"] == e["target"]
+                        && r.data["cause"] == e["cause"]
+                }) {
+                    return Err("missing_foundation_new_exclusion".into());
+                }
+            } else {
+                let actual = next
+                    .edges
+                    .get(
+                        id.checked_sub(1)
+                            .ok_or("invalid_foundation_final_edge_id")?
+                            as usize,
+                    )
+                    .ok_or("missing_foundation_final_edge")?;
+                if actual.removed || actual.data != *e {
+                    return Err("changed_foundation_retained_edge".into());
+                }
+            }
+        }
+        *self = next;
+        Ok(())
+    }
+
+    pub fn snapshot(&self) -> Value {
+        json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false})
+    }
+}

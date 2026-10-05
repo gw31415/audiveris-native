@@ -1,0 +1,61 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-sol/source/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests/beam_candidates.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_candidates-ea8a1fa32e73e038)
+
+running 2 tests
+test singleton_geometry_is_explicitly_undefined_and_bounds_are_checked ... ok
+test original_glyph_metrics_match_all_thirteen_raster_diagnostics ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/beam_dispatch.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_dispatch-3acb279573ad8cdb)
+
+running 6 tests
+test centroid_is_half_even_with_signed_origins ... ok
+test epilog_removes_only_exclusively_beam_grouped_free_glyphs ... ok
+test registry_preserves_existing_canonical_object_and_groups ... ok
+test dispatch_includes_right_limit_and_overlapping_systems ... ok
+test initial_free_glyph_order_survives_duplicate_dispatch_and_parser_roundtrip ... ok
+test invalid_registry_and_geometry_inputs_fail_explicitly ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/beam_extend_to_beam.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_extend_to_beam-b5a436f79fb57de1)
+
+running 2 tests
+test invalid_endpoints_fail_before_state_or_registry_mutation ... ok
+test independent_original_gap_gate_and_extend_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running tests/beam_extend_to_point.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_extend_to_point-52bf8871d82b51ef)
+
+running 2 tests
+test invalid_target_and_point_preserve_state ... ok
+test original_point_method_geometry_grade_and_lifecycle_match ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/beam_extend_to_spot.rs (/workspace/audiveris-sol/toolchain/target/debug/deps/beam_extend_to_spot-26b1e9d54c41e90f)
+
+running 2 tests
+test foreign_owner_and_negative_reach_are_noops ... ok
+test original_spot_pool_selection_point_and_lifecycle_match ... FAILED
+
+failures:
+
+---- original_spot_pool_selection_point_and_lifecycle_match stdout ----
+
+thread 'original_spot_pool_selection_point_and_lifecycle_match' (23342) panicked at tests/beam_extend_to_spot.rs:110:9:
+assertion `left == right` failed
+  left: 8
+ right: 6
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    original_spot_pool_selection_point_and_lifecycle_match
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+error: test failed, to rerun pass `--test beam_extend_to_spot`

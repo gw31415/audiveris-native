@@ -1,0 +1,227 @@
+{
+  "native_outputs_used": false,
+  "scope": "Same Laura raster with explicit original HEADS catalog controls; seed/staff/ledger/veto propagation, not true other-font page recognition or complete HEADS.",
+  "cases": [
+    {
+      "name": "Bravura-32",
+      "family": "Bravura",
+      "stored_point_size": 32,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 604,
+      "point_sizes": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "fixture_sha256": "61ba265576ead8d0bffb366f73c8a5be7905ad6d8f5625dcc4f3d60aa95f6428"
+    },
+    {
+      "name": "Bravura-40",
+      "family": "Bravura",
+      "stored_point_size": 40,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 474,
+      "point_sizes": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "fixture_sha256": "ec808a4f0c8bf91a359b824bbbaf37dfb68ec06d3496652279ae1b30adcf04af"
+    },
+    {
+      "name": "Bravura-51",
+      "family": "Bravura",
+      "stored_point_size": 51,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 358,
+      "point_sizes": [
+        51,
+        51,
+        51,
+        51,
+        51,
+        51
+      ],
+      "fixture_sha256": "6f3a9fc1016b4828583725e1719c42f3b6d97f600d5ab70f18282fd5101cb036"
+    },
+    {
+      "name": "Bravura-64",
+      "family": "Bravura",
+      "stored_point_size": 64,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 237,
+      "point_sizes": [
+        64,
+        64,
+        64,
+        64,
+        64,
+        64
+      ],
+      "fixture_sha256": "c9f47ef2fd1d115727977abbc01fbde933425df020de8176adea0437aec2ab3b"
+    },
+    {
+      "name": "Leland-32",
+      "family": "Leland",
+      "stored_point_size": 32,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 569,
+      "point_sizes": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "fixture_sha256": "61f472086911b35103b55fe951463edadb8bfad5cd655eb2e1a7266db58b63b3"
+    },
+    {
+      "name": "Leland-40",
+      "family": "Leland",
+      "stored_point_size": 40,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 427,
+      "point_sizes": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "fixture_sha256": "3f5515ea0e13b5bf80f971e13a3245e72b7b632d9a1dd475e92ab0359d95d951"
+    },
+    {
+      "name": "Leland-51",
+      "family": "Leland",
+      "stored_point_size": 51,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 333,
+      "point_sizes": [
+        51,
+        51,
+        51,
+        51,
+        51,
+        51
+      ],
+      "fixture_sha256": "2aa2593da4d22cbb1a1d62f12a9d7e93d97f03e7af62e67cf3466a0b808d3e32"
+    },
+    {
+      "name": "Leland-64",
+      "family": "Leland",
+      "stored_point_size": 64,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 197,
+      "point_sizes": [
+        64,
+        64,
+        64,
+        64,
+        64,
+        64
+      ],
+      "fixture_sha256": "ef8eb50873bb17f23bc8721a2e3b3ab2025f5310ef8ae043655a86e83549bfa5"
+    },
+    {
+      "name": "FinaleJazz-32",
+      "family": "FinaleJazz",
+      "stored_point_size": 32,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 561,
+      "point_sizes": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ],
+      "fixture_sha256": "c3007f4bbc13da49df4749b9d0576518d20247175add2be689e93682847be04e"
+    },
+    {
+      "name": "FinaleJazz-40",
+      "family": "FinaleJazz",
+      "stored_point_size": 40,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 427,
+      "point_sizes": [
+        40,
+        40,
+        40,
+        40,
+        40,
+        40
+      ],
+      "fixture_sha256": "7c31b84b790e72051d15289f56f12cfbf6dec4bec40001322b5a80691bac9173"
+    },
+    {
+      "name": "FinaleJazz-51",
+      "family": "FinaleJazz",
+      "stored_point_size": 51,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 246,
+      "point_sizes": [
+        51,
+        51,
+        51,
+        51,
+        51,
+        51
+      ],
+      "fixture_sha256": "7f14bb9f708798e54934c4912849d0d5fa0e05bde033d0d6a722d6001aa67292"
+    },
+    {
+      "name": "FinaleJazz-64",
+      "family": "FinaleJazz",
+      "stored_point_size": 64,
+      "cue_first_staff": false,
+      "seed_pitch_pairs": 1137,
+      "veto_proposals": 155,
+      "point_sizes": [
+        64,
+        64,
+        64,
+        64,
+        64,
+        64
+      ],
+      "fixture_sha256": "e21f5c9ac1cf04bda177fb9020245236d3000491378b3ddece2984807469b9ce"
+    },
+    {
+      "name": "Bravura-51-cue",
+      "family": "Bravura",
+      "stored_point_size": 51,
+      "cue_first_staff": true,
+      "seed_pitch_pairs": 1120,
+      "veto_proposals": 382,
+      "point_sizes": [
+        32,
+        51,
+        51,
+        51,
+        51,
+        51
+      ],
+      "fixture_sha256": "ef36a0cb4716a73616ab396842f0b02e905666a72bc96114f93cf72d89aa1a20"
+    }
+  ]
+}

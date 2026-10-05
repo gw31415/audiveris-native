@@ -1,0 +1,41 @@
+{
+  "input": "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/laura-gray.png",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "argv": [
+    "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/cache",
+    "-Djava.util.prefs.userRoot=/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/prefs",
+    "-Duser.home=/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/home",
+    "-Dnative.probe.output=/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/result.json",
+    "-cp",
+    "/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/*:/workspace/audiveris-loop-check-20261003/original-loop/observer-classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "BeamExtensionLoopProbe",
+    "-output",
+    "/workspace/audiveris-loop-check-20261003/original-loop/laura-gray",
+    "--",
+    "/workspace/audiveris-savedlatest-20261003/fixtures/official-grid/laura-gray.png"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/home",
+    "XDG_CONFIG_HOME": "/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/config",
+    "XDG_DATA_HOME": "/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/data",
+    "XDG_CACHE_HOME": "/workspace/audiveris-loop-check-20261003/original-loop/laura-gray/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "7e5889f271e87888a8c533d9a1e417a8b4c1b3035636836e1ea86f2f1bd9d565",
+  "ok": true,
+  "result_sha256": "d25524d750cfe2de2c729712abb4f88a683577e155eefcfbd0c0e6895527b14b"
+}

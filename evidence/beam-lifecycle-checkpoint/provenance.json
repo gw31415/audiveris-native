@@ -1,0 +1,13 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "official_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "9db7d423f6873003f163aaebfbc76bb112edc54f6a5007aaaa050374a0598732",
+  "fixture_sha256": "50ca3efde1d43630e6ef686ae9783606391bfa55546360095ed5ab887ad8b4c7",
+  "initialization": "real Audiveris CLI LOAD/BINARY/SCALE followed by GridStep.doit; actual Book/SheetStub/Sheet/SystemInfo/SIGraph/InterIndex",
+  "method_boundary": "Original registerBeam and mergeOf via reflection; original remove/addVertex methods unchanged. Fresh beam candidates before chords, ensembles or groups. Only BeamsBuilder parameters/pixelFilter injected to supply deterministic independent raster.",
+  "compile_stubs": "Only Book/RunClass stubs for compiler compatibility, excluded from runtime classpath",
+  "native_outputs_used": false,
+  "snapshot_count": 6,
+  "scope": "one standard-beam accepted/rejected lifecycle, IDs normalized by registration order; full graph/general musical lifecycle not claimed",
+  "warnings": "Original startup emitted nonfatal OCR/font-cache availability warnings; output fixture and all observer assertions completed."
+}

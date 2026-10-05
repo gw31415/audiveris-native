@@ -1,0 +1,96 @@
+[0.003s][info][gc] Using G1
+[0.379s][info][gc] GC(0) Pause Young (Normal) (G1 Evacuation Pause) 14M->4M(156M) 8.552ms
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /workspace/shared/audiveris-cloud-continuation/beam-research/identity-discrepancy/serialize__ordered/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+[0.940s][info][gc] GC(1) Pause Young (Concurrent Start) (Metadata GC Threshold) 27M->6M(156M) 8.754ms
+[0.940s][info][gc] GC(2) Concurrent Mark Cycle
+[0.947s][info][gc] GC(2) Pause Remark 7M->7M(27M) 1.740ms
+[0.950s][info][gc] GC(2) Pause Cleanup 7M->7M(27M) 0.010ms
+[0.951s][info][gc] GC(2) Concurrent Mark Cycle 10.258ms
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png"
+[1.507s][info][gc] GC(3) Pause Young (Normal) (G1 Evacuation Pause) 17M->8M(27M) 13.079ms
+[1.604s][info][gc] GC(4) Pause Young (Normal) (G1 Evacuation Pause) 17M->9M(27M) 4.327ms
+INFO  [laura-gray]                      Book 560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png
+[1.719s][info][gc] GC(5) Pause Full (System.gc()) 18M->8M(27M) 15.654ms
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/beam-research/identity-discrepancy/serialize__ordered/laura-gray.omr
+INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
+INFO  [laura-gray]            StepMonitoring 98   | LOAD
+INFO  [laura-gray]                 SheetStub 1278 | Loaded image #1 1489x2104 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/laura-gray.png
+INFO  [laura-gray]            StepMonitoring 98   | BINARY
+[1.928s][info][gc] GC(6) Pause Young (Concurrent Start) (G1 Humongous Allocation) 19M->13M(27M) 2.140ms
+[1.930s][info][gc] GC(7) Concurrent Undo Cycle
+[1.931s][info][gc] GC(7) Concurrent Undo Cycle 0.131ms
+[2.073s][info][gc] GC(8) Pause Young (Concurrent Start) (G1 Humongous Allocation) 18M->16M(27M) 2.233ms
+[2.073s][info][gc] GC(9) Concurrent Mark Cycle
+[2.087s][info][gc] GC(9) Pause Remark 20M->20M(35M) 2.461ms
+[2.090s][info][gc] GC(9) Pause Cleanup 20M->20M(35M) 0.014ms
+[2.090s][info][gc] GC(9) Concurrent Mark Cycle 17.150ms
+INFO  [laura-gray]            StepMonitoring 98   | SCALE
+INFO  [laura-gray]              ScaleBuilder 254  | Beam  guessed height:  6 -- 0.25 of [5..10] range
+INFO  [laura-gray]              ScaleBuilder 271  | Beam measured height:  6 -- 0.20 of [5..10] range at 333% of needed quorum
+INFO  [laura-gray]              ScaleBuilder 401  | Normalized black jitter: 18.18 %
+INFO  [laura-gray]                 ScaleStep 65   | Scale{ interline(11,11,12) line(1,2,3) beam(6)}
+INFO  [laura-gray]                      Book 2584 | Book{laura-gray} storing
+[2.155s][info][gc] GC(10) Pause Full (System.gc()) 20M->15M(35M) 13.187ms
+INFO  [laura-gray]                      Book 2565 | Stored /book.xml
+INFO  [laura-gray]                DataHolder 348  | Stored /sheet#1/BINARY.png
+[2.456s][info][gc] GC(11) Pause Young (Concurrent Start) (G1 Evacuation Pause) 27M->17M(35M) 4.812ms
+[2.456s][info][gc] GC(12) Concurrent Mark Cycle
+INFO  [laura-gray]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [laura-gray]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/beam-research/identity-discrepancy/serialize__ordered/laura-gray.omr
+INFO  [laura-gray]                 SheetStub 1655 | Sheet disposed
+[2.488s][info][gc] GC(13) Pause Full (System.gc()) 17M->11M(35M) 15.921ms
+[2.488s][info][gc] GC(12) Concurrent Mark Cycle 31.957ms
+INFO  [laura-gray]                      Book 2050 | End of Stub#1
+INFO  [laura-gray]                      Book 2057 | End of Book{laura-gray}
+INFO  [laura-gray]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+[2.553s][info][gc] GC(14) Pause Young (Concurrent Start) (G1 Humongous Allocation) 23M->15M(96M) 3.215ms
+[2.553s][info][gc] GC(15) Concurrent Undo Cycle
+[2.553s][info][gc] GC(15) Concurrent Undo Cycle 0.132ms
+[2.934s][info][gc] GC(16) Pause Young (Normal) (G1 Evacuation Pause) 73M->20M(96M) 13.667ms
+INFO  [laura-gray]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [laura-gray]         ClustersRetriever 326  | Retrieved raw line clusters: 6 of sizes [5] with interline(11,11,12)
+[3.071s][info][gc] GC(17) Pause Young (Normal) (G1 Evacuation Pause) 71M->22M(96M) 6.016ms
+INFO  [laura-gray]                 PeakGraph 310  | Systems: #1[1, 2, 3] #2[4, 5, 6]
+INFO  [laura-gray]             BarsRetriever 1807 | too wide bracePeak Peak{127-196 T#1 [BRACE]}
+INFO  [laura-gray]             SystemManager 134  | Indentation detected for system #1
+INFO  [laura-gray]             SystemManager 800  | 2 parts along 2 systems
+INFO  [laura-gray]                      Book 543  | Created scores: [{Score 1}]
+[3.542s][info][gc] GC(18) Pause Young (Normal) (G1 Evacuation Pause) 81M->29M(96M) 12.914ms
+INFO  [laura-gray]             StemSeedsStep 86   | stem(4 max:5)
+[4.152s][info][gc] GC(19) Pause Young (Normal) (G1 Evacuation Pause) 84M->50M(112M) 38.272ms
+IDENTITY_MARKER 109958801293559
+[4.376s][info][gc] GC(20) Pause Young (Concurrent Start) (G1 Humongous Allocation) 61M->55M(128M) 5.352ms
+[4.376s][info][gc] GC(21) Concurrent Undo Cycle
+[4.376s][info][gc] GC(21) Concurrent Undo Cycle 0.342ms
+[4.378s][info][gc] GC(22) Pause Young (Concurrent Start) (G1 Humongous Allocation) 59M->57M(128M) 1.236ms
+[4.378s][info][gc] GC(23) Concurrent Mark Cycle
+[4.429s][info][gc] GC(23) Pause Remark 64M->61M(128M) 7.014ms
+[4.439s][info][gc] GC(23) Pause Cleanup 61M->61M(128M) 0.024ms
+[4.440s][info][gc] GC(23) Concurrent Mark Cycle 62.348ms
+IDENTITY_MARKER 109959398460410
+[4.809s][info][gc] GC(24) Pause Young (Prepare Mixed) (G1 Evacuation Pause) 119M->55M(128M) 4.865ms
+[4.839s][info][gc] GC(25) Pause Young (Mixed) (G1 Evacuation Pause) 107M->53M(128M) 3.388ms
+IDENTITY_MARKER 109959472663636
+IDENTITY_MARKER 109959473634338
+[4.893s][info][gc] GC(26) Pause Young (Normal) (G1 Evacuation Pause) 109M->51M(128M) 3.098ms
+[4.949s][info][gc] GC(27) Pause Young (Normal) (G1 Evacuation Pause) 113M->50M(128M) 3.975ms
+[5.074s][info][gc] GC(28) Pause Young (Concurrent Start) (G1 Humongous Allocation) 117M->50M(128M) 2.620ms
+[5.074s][info][gc] GC(29) Concurrent Undo Cycle
+[5.075s][info][gc] GC(29) Concurrent Undo Cycle 0.283ms
+[5.157s][info][gc] GC(30) Pause Full (System.gc()) 55M->45M(128M) 44.566ms
+INFO  [laura-gray]                      Book 2565 | Stored /book.xml
+INFO  [laura-gray]                DataHolder 348  | Stored /sheet#1/HEAD_SPOTS.png
+INFO  [laura-gray]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [laura-gray]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/beam-research/identity-discrepancy/serialize__ordered/laura-gray.omr
+INFO  [laura-gray]                     Score 181  | Closing {Score 1}
+[5.346s][info][gc] GC(31) Pause Full (System.gc()) 54M->45M(128M) 37.560ms

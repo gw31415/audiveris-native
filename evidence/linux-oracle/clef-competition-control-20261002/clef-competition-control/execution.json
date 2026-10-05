@@ -1,0 +1,28 @@
+{
+  "input": null,
+  "input_sha256": null,
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/observer-classes",
+    "ClefCompetitionControlProbe",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/result.json"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/data"
+  },
+  "exit_code": 0,
+  "console_sha256": "6524122f523948e73a87d18291cdd1987e1cbbbc0be5bb057e4a4232968682f7",
+  "ok": true,
+  "result_sha256": "a23b44ebb49e7d6dabc42cccf42a9d271d414bf1db7cbea4c3e96544fbeef626"
+}

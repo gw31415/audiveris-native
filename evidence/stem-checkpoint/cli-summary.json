@@ -1,0 +1,55 @@
+{
+  "environment": "env -i PATH=/nonexistent; no external runtime tools available",
+  "cases": [
+    {
+      "input": "stem-seeds-clean",
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "seed_count": 3,
+      "last_completed_stage": "STEM_SEEDS",
+      "report_sha256": "60d47e0a1e52eae37027655d4c6f9ba9c61dadec631082f3473590ef9da29d0a"
+    },
+    {
+      "input": "laura-gray",
+      "stem_scale": {
+        "main": 4,
+        "max": 5
+      },
+      "seed_count": 300,
+      "last_completed_stage": "STEM_SEEDS",
+      "report_sha256": "1164b0150ff06e2b289c847637770e0fb8516edb96868053a809d89b66c54c88"
+    },
+    {
+      "input": "stem-seeds-sloped",
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "seed_count": 0,
+      "last_completed_stage": "STEM_SEEDS",
+      "report_sha256": "c9b3d863da689e371d29916879c3854aa666cff418b459731932ec0cb01ae6e8"
+    },
+    {
+      "input": "stem-seeds-broken",
+      "stem_scale": {
+        "main": 2,
+        "max": 3
+      },
+      "seed_count": 6,
+      "last_completed_stage": "STEM_SEEDS",
+      "report_sha256": "1de382346a6ef3ede35359ef07be1d834c7b7aa213986d0e2f13c67d328af07c"
+    },
+    {
+      "input": "stem-seeds-empty",
+      "stem_scale": {
+        "main": 2,
+        "max": 5
+      },
+      "seed_count": 0,
+      "last_completed_stage": "STEM_SEEDS",
+      "report_sha256": "a83db4d6aef62a440f93d15a6e7fce8faf5df949afa68272ecd760c25e677559"
+    }
+  ]
+}

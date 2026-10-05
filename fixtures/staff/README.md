@@ -1,0 +1,1 @@
+Original synthetic fixtures, CC0-1.0. 800x400 grayscale, 760-pixel lines, 16-pixel interline, two-pixel thickness. One/two five-line staffs at y=60/220. These pass the unmodified 30-interline minimum staff length; earlier 320-pixel fixtures intentionally exercise rejection. They are not derived from the real score or its expected staff count.

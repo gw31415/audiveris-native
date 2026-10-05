@@ -1,0 +1,48 @@
+{
+  "status": "verified single candidate lookup boundary",
+  "base_commit": "d7a0c4ecec7d5bcb4107120825aa5629fe9b52c1",
+  "task_started_utc": "2026-10-03T08:35:40Z",
+  "validated_utc": "2026-10-03T08:41:13.028622+00:00",
+  "original_lookup_cases": 300,
+  "raw_candidate_entries": 3000,
+  "active_rectangle_queries": 2925,
+  "selected": 147,
+  "no_candidate": 153,
+  "compared": [
+    "Original intersected IDs",
+    "Full original stable gap ordering",
+    "Selected ID",
+    "No input mutation"
+  ],
+  "retained_lifecycle_snapshots": 6,
+  "original_pipeline_images": 13,
+  "root_focused_tests": {
+    "passed": 28,
+    "failed": 0,
+    "ignored": 0,
+    "filtered_out": 0
+  },
+  "area_crate_tests": {
+    "passed": 8,
+    "failed": 0,
+    "ignored": 0,
+    "filtered_out": 0
+  },
+  "test_command_seconds": 22.946583220999855,
+  "area_command_seconds": 0.22972286000003805,
+  "clippy_command_seconds": 3.8600998660003825,
+  "first_clippy_issue": "constant chunks_exact changed to as_chunks::<2>; full focused validation rerun and passed",
+  "full_workspace_debug_release_executed_this_turn": false,
+  "next_gate": [
+    "cargo +1.98.1 test --workspace --locked --offline -j 2",
+    "cargo +1.98.1 test --workspace --release --locked --offline -j 2",
+    "cargo +1.98.1 build --release --locked --offline",
+    "fmt check and workspace all-targets clippy; timing/count/log/binary-hash evidence before further features"
+  ],
+  "remaining": [
+    "No page-level lookup/extension loop",
+    "No new stages before full debug/release checkpoint",
+    "No original constant overrides or diagnostic attachments",
+    "7cdd not retrieved or compared"
+  ]
+}

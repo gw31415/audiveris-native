@@ -1,0 +1,587 @@
+13:06:23.254 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.257 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.257 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.257 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.292 [main] WARN org.audiveris.omr.WellKnowns -- Error creating /home/agent/.cache/AudiverisLtd/audiveris/log
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)
+	at org.audiveris.omr.constant.ConstantManager.<init>(ConstantManager.java:151)
+	at org.audiveris.omr.constant.ConstantManager.<clinit>(ConstantManager.java:140)
+	at org.audiveris.omr.constant.Constant.setUnitAndName(Constant.java:398)
+	at org.audiveris.omr.constant.Constant$Double.<clinit>(Constant.java:682)
+	at org.audiveris.omr.sheet.grid.BarFilamentFactory$Constants.<init>(BarFilamentFactory.java:234)
+	at org.audiveris.omr.sheet.grid.BarFilamentFactory.<clinit>(BarFilamentFactory.java:62)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at BeamImpactsControlProbe.cls(BeamImpactsControlProbe.java:14)
+	at BeamImpactsControlProbe.make(BeamImpactsControlProbe.java:15)
+	at SerifFilamentControlProbe.make(SerifFilamentControlProbe.java:7)
+	at SerifFilamentControlProbe.main(SerifFilamentControlProbe.java:12)
+13:06:23.294 [main] WARN org.audiveris.omr.WellKnowns -- Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)
+	at org.audiveris.omr.constant.ConstantManager.<init>(ConstantManager.java:151)
+	at org.audiveris.omr.constant.ConstantManager.<clinit>(ConstantManager.java:140)
+	at org.audiveris.omr.constant.Constant.setUnitAndName(Constant.java:398)
+	at org.audiveris.omr.constant.Constant$Double.<clinit>(Constant.java:682)
+	at org.audiveris.omr.sheet.grid.BarFilamentFactory$Constants.<init>(BarFilamentFactory.java:234)
+	at org.audiveris.omr.sheet.grid.BarFilamentFactory.<clinit>(BarFilamentFactory.java:62)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at java.base/java.lang.Class.forName(Unknown Source)
+	at BeamImpactsControlProbe.cls(BeamImpactsControlProbe.java:14)
+	at BeamImpactsControlProbe.make(BeamImpactsControlProbe.java:15)
+	at SerifFilamentControlProbe.make(SerifFilamentControlProbe.java:7)
+	at SerifFilamentControlProbe.main(SerifFilamentControlProbe.java:12)
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/audiveris-loop-check-20261003/oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+13:06:23.392 [main] DEBUG org.audiveris.omr.constant.ConstantManager -- [org.audiveris.omr.constant.ConstantManager] No property file /home/agent/.config/AudiverisLtd/audiveris/run.properties
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.405 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.406 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.407 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.444 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.444 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.444 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.444 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.445 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.445 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.445 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.445 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.446 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.446 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.446 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.446 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.447 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.447 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.447 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.447 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.447 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.447 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.448 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.448 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.448 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.449 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.449 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.449 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.449 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.450 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.450 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.451 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.452 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.452 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.452 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.452 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.454 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.455 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.456 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.456 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.456 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=15
+13:06:23.457 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.458 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.459 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.460 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.460 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.460 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.461 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.462 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.462 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.462 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.462 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.463 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.464 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.465 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.466 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.466 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.466 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.466 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.467 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.468 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/6} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.469 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/7} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.470 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/8} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.471 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/9} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.472 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+13:06:23.473 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/16} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.474 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.475 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.475 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.475 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+13:06:23.475 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.476 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+13:06:23.477 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{100/4} to DynamicSection#1{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=17
+13:06:23.478 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.478 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.479 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.479 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.479 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/36} to DynamicSection#1{V}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{102/2} to DynamicSection#2{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.480 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{102/2} to DynamicSection#2{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.481 [main] INFO org.audiveris.omr.sheet.grid.BarFilamentFactory -- VIP merging CurvedFilament#0{} w/ DynamicSection#2{H}
+13:06:23.481 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.481 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.482 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{102/2} to DynamicSection#2{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.482 [main] INFO org.audiveris.omr.sheet.grid.BarFilamentFactory -- VIP merging CurvedFilament#0{} w/ DynamicSection#2{H}
+13:06:23.482 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.482 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.482 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{102/2} to DynamicSection#2{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+13:06:23.483 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.483 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{130/30} to DynamicSection#1{V}
+13:06:23.483 [main] DEBUG org.audiveris.omr.lag.DynamicSection -- Appended Run{102/2} to DynamicSection#2{H}
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16
+
+org.audiveris.omr.sheet.grid.BarFilamentFactory$Parameters :
+   minCoreSectionLength=8
+   segmentLength=16

@@ -1,0 +1,734 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "raster_count": 71,
+  "live_method": "Original GRID then original HeaderBuilder.processHeader on each system, no collection/graph hooks, snapshot before any save/reload",
+  "reload_method": "Original official CLI -step HEADERS checked complete; sheet disposed/reloaded before observer snapshot",
+  "primary_numeric_and_range_oracle": "fixtures/official-headers-live",
+  "reload_oracle": "fixtures/official-headers-expanded",
+  "legacy16_preserved_exact": true,
+  "comparison": "Every selected inter, glyph/run geometry, ID/order, bounds, freeze state, rational/key value, staff stop and SIG relation matches. Only transient ranges and grade/context three-decimal Jaxb.Double3Adapter serialization differ. Compare native live grades to live evidence, never rounded reload values.",
+  "serialization_source_reference": "fixtures/grid-context-source/AbstractInter.java:136-141 annotates grade/contextualGrade with Jaxb.Double3Adapter",
+  "observed_differences": {
+    "changed_grade_fields": 908,
+    "maximum_grade_delta": 0.0004995666341037763,
+    "live_non_null_ranges": 239,
+    "discarded_ranges_on_reload": 239
+  },
+  "receipts": [
+    "evidence/linux-oracle/headers-live-20261002T201822.419004Z",
+    "evidence/linux-oracle/headers-20261002T201530.589956Z"
+  ],
+  "fixtures": [
+    {
+      "input": "fixtures/official-grid/bracket-pair.png",
+      "input_sha256": "98c22e85d449ac523c467c91a99d3cb5bfedd7597422d3f644182bc8d55b7559",
+      "live_result": "fixtures/official-headers-live/bracket-pair.json",
+      "live_result_sha256": "3190460b21beb45df1b238227b5d8df971e275429761741b09826aadca40af1c",
+      "reloaded_result": "fixtures/official-headers-expanded/bracket-pair.json",
+      "reloaded_result_sha256": "1fd43df6e23da1b2815942f543d9b9d3028e1e825f36c130b604ab5efa307646",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/cclef-pair.png",
+      "input_sha256": "6ad712c2fa2ef5d499fe6ef1eb8e08415a614e2ee50ffda2065652640aa698a9",
+      "live_result": "fixtures/official-headers-live/cclef-pair.json",
+      "live_result_sha256": "7917c6726d68330d829be24e985b476deb52191e1c095bcf705041bf9eb79a4c",
+      "reloaded_result": "fixtures/official-headers-expanded/cclef-pair.json",
+      "reloaded_result_sha256": "15dc3db1ededbe4204fde80c5daada9148e3da626ec66d4f6451574d57041e11",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-128.png",
+      "input_sha256": "c9e91a11bb4cfe02f78d52cb2fb2b320213dfbb375a203466343948682b2367c",
+      "live_result": "fixtures/official-headers-live/damaged-header-flat-cut-128.json",
+      "live_result_sha256": "47cd67325157505574e9a7cbb2f3f8c41e5fbdd71f1598af6144eb6e95708462",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-flat-cut-128.json",
+      "reloaded_result_sha256": "4009760bad2f3e6d0187910f27c3d1acd7ed913feb675ffdcf314547e80c26d2",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-136.png",
+      "input_sha256": "c204d2db02a426baaa573fdc400f964d2156e9845f7c333db8c2ee8acdb5308c",
+      "live_result": "fixtures/official-headers-live/damaged-header-flat-cut-136.json",
+      "live_result_sha256": "25739afee56a1d00f507d13fc9f17104c1e611b8eca0020f6a7681c817245356",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-flat-cut-136.json",
+      "reloaded_result_sha256": "23be1ffe8ca8e00929eea077e29eb5fca322455fc08c56460eeb64a5a9499844",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-143.png",
+      "input_sha256": "6c88dfd37804e4504d9b94112b7051a6b755bbfa262cd3a777097b99c57e2c79",
+      "live_result": "fixtures/official-headers-live/damaged-header-flat-cut-143.json",
+      "live_result_sha256": "46f366c834162f4915e07c3ad05013e8660eefe56640e7f1080f336f49dcb97a",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-flat-cut-143.json",
+      "reloaded_result_sha256": "fde7030d6d1ce2475bfe5dd642a46f83204b7d2b6dba4559f8046907ca91bff5",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-cut-147.png",
+      "input_sha256": "a89c94dd080efbd2fe13842956d35e30f4c579de2a6b7a40b1d572cf8e6cfb49",
+      "live_result": "fixtures/official-headers-live/damaged-header-flat-cut-147.json",
+      "live_result_sha256": "476210d214c1bb5f330ab4763b2e1d871abd5554cc9821d6114a2ec65cb78ebb",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-flat-cut-147.json",
+      "reloaded_result_sha256": "e03aede4709a6ebdc823f6d78a0f98f9cc0d22158611570436558ecd8035ca47",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-speck-125.png",
+      "input_sha256": "663b3adb9a0e3cf40bec761266afa8ea5a34e26fd13f1c25c1d81600489ad9b0",
+      "live_result": "fixtures/official-headers-live/damaged-header-flat-speck-125.json",
+      "live_result_sha256": "798c99225ef7f702eb9ca03b828c51c62cc320d8759ddfb64286ea743b598401",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-flat-speck-125.json",
+      "reloaded_result_sha256": "693f46fe6858879e65a541b8f58d22fa34b5cdcdbd77b34e23c131d8786ad9a6",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-flat-speck-132.png",
+      "input_sha256": "013cb264bcc29b44675970f8b749b7b0a91685d60bab719d9ab55ab23d654488",
+      "live_result": "fixtures/official-headers-live/damaged-header-flat-speck-132.json",
+      "live_result_sha256": "798c99225ef7f702eb9ca03b828c51c62cc320d8759ddfb64286ea743b598401",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-flat-speck-132.json",
+      "reloaded_result_sha256": "693f46fe6858879e65a541b8f58d22fa34b5cdcdbd77b34e23c131d8786ad9a6",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-110.png",
+      "input_sha256": "5da90870d3bc0ae9fa209ae9b7c8425abc38d12e88bf4da27dd12733448ca463",
+      "live_result": "fixtures/official-headers-live/damaged-header-sharp-cut-110.json",
+      "live_result_sha256": "a48b9a70bab7bc1ca69ca47d8a463d292a95ce0d8e3ccce77813854cebf2a10a",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-sharp-cut-110.json",
+      "reloaded_result_sha256": "9863c367251420b13f1d79a706715cb04b66613e46c0ebb87cc71091830c6b5e",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-120.png",
+      "input_sha256": "c27c853db8ad4b692e3fa7815dc0bbbab2106d17eb690b0ca52529569f64aa2b",
+      "live_result": "fixtures/official-headers-live/damaged-header-sharp-cut-120.json",
+      "live_result_sha256": "1e46f85c44932d68690c5e05b8811c9764c92e2139346ec2b1e956aa4a633dea",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-sharp-cut-120.json",
+      "reloaded_result_sha256": "efd152b21ed7f188cbf97c4d75067470f315de5462571460e4da1de095f1440d",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-cut-130.png",
+      "input_sha256": "d603647b79608fbf95b20cb30ee873412e64984ee92c363f0ea48063c913c02a",
+      "live_result": "fixtures/official-headers-live/damaged-header-sharp-cut-130.json",
+      "live_result_sha256": "9023a6646e0d7ea01a318516e57c60a5cd9465154e505f0a86cd49fb8f78b408",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-sharp-cut-130.json",
+      "reloaded_result_sha256": "4df5bf240fae4729d713bfa9f33bf617ae39a99854fc4bfdff38f1772a2114b6",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/damaged-header-sharp-speck-98.png",
+      "input_sha256": "35ec4062520199651e741945384bcb2077585afcfb5f0e8cc1893690e48d7e2c",
+      "live_result": "fixtures/official-headers-live/damaged-header-sharp-speck-98.json",
+      "live_result_sha256": "59d111764e73b8de6f1efb985e60b0a2eef9dd0a59be73431e006e342413a432",
+      "reloaded_result": "fixtures/official-headers-expanded/damaged-header-sharp-speck-98.json",
+      "reloaded_result_sha256": "8a2a9fee68bddcd9879811faed45e7b03113b08b5c1e4b0e92096d6482237788",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-120.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "live_result": "fixtures/official-headers-live/fallback-header-flats-bridge-120.json",
+      "live_result_sha256": "653b772548f5a3d3ca04fc86d057912ac688719e9875c023197f61c8782cc052",
+      "reloaded_result": "fixtures/official-headers-expanded/fallback-header-flats-bridge-120.json",
+      "reloaded_result_sha256": "c8a6a12c8d176e829a9f15d503d1c97f5c570e80f126a0fa4517fd9b3b5ac292",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-125.png",
+      "input_sha256": "d5fe294f3a65218b2f0b9975dc8d1b3753a3c13c52e9ca6540b7b27e4405f624",
+      "live_result": "fixtures/official-headers-live/fallback-header-flats-bridge-125.json",
+      "live_result_sha256": "7360f3f9170e2853901c2a0ec878e5807f54f74cd14f0e40f825878b3738a21d",
+      "reloaded_result": "fixtures/official-headers-expanded/fallback-header-flats-bridge-125.json",
+      "reloaded_result_sha256": "a97aad67640e5870cc5b5bb3a6f904e5d4be24440c8a153e33dba9914405375b",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-bridge-130.png",
+      "input_sha256": "cbe2834999d4bf80c7316fbaee6fb4b571f371fe37cca8e6a8bb2b71f3d2933f",
+      "live_result": "fixtures/official-headers-live/fallback-header-flats-bridge-130.json",
+      "live_result_sha256": "9f1af7abbe92e39fea26ebaf2799022c23412a29efe474499c80af7a051a6f9d",
+      "reloaded_result": "fixtures/official-headers-expanded/fallback-header-flats-bridge-130.json",
+      "reloaded_result_sha256": "418c13348064fcc60d3bb3a85bb9db409ac3ce1ac887366fa4ef69fd16c59cf4",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-flats-thick-bridge-125.png",
+      "input_sha256": "9459ccbac7951274fdebd868ee24ef940d9807bf22a139bd35c2d28c3e414476",
+      "live_result": "fixtures/official-headers-live/fallback-header-flats-thick-bridge-125.json",
+      "live_result_sha256": "d4e86b67677fc356d802735f59aca25654fde93c1e0b55facf554c57cbbd0e48",
+      "reloaded_result": "fixtures/official-headers-expanded/fallback-header-flats-thick-bridge-125.json",
+      "reloaded_result_sha256": "a2584909f05068e98c6a0dba83b89e8cdc1e4c3ae3175f848611f62ee338496f",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-sharps-bridge-125.png",
+      "input_sha256": "e7cd0d3c860b8f5d97a6aaa8e998cc464950bff51fd34ad2c19684cd8a88ea54",
+      "live_result": "fixtures/official-headers-live/fallback-header-sharps-bridge-125.json",
+      "live_result_sha256": "9f8c78eb1f1667e86c1fad029efab653a467ffb104a77f0a7e41c7d75986a5a0",
+      "reloaded_result": "fixtures/official-headers-expanded/fallback-header-sharps-bridge-125.json",
+      "reloaded_result_sha256": "19a9bfd2d6e120c191c61e7ddd0b3202c19b2f43f66deeec26faeac668bf7283",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/fallback-header-sharps-bridge-130.png",
+      "input_sha256": "08d0fc399af557992762743ab5632a569215f25f1b1941ce0ba2fae6eab6cb18",
+      "live_result": "fixtures/official-headers-live/fallback-header-sharps-bridge-130.json",
+      "live_result_sha256": "a7e80fdb25c53c680c4a34e4f3d797963eccbf0add04da6c0f20b191e6826e58",
+      "reloaded_result": "fixtures/official-headers-expanded/fallback-header-sharps-bridge-130.json",
+      "reloaded_result_sha256": "131d0878600fb8965a0f34c5e6835230dcbb684dab3b7249e2f596a4767c5d63",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/key-column-all-bottom-missing.png",
+      "input_sha256": "a198610243348dec9172f7ad4f1bd6726419e8195870d4c275c8a90d03586726",
+      "live_result": "fixtures/official-headers-live/key-column-all-bottom-missing.json",
+      "live_result_sha256": "fd89ce83bc29884edd7798c0e4d72b36de4e9be55532967fcd20599a42977348",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-all-bottom-missing.json",
+      "reloaded_result_sha256": "bc13d3e18ae81e97690f7b988976ec5b2728939ea77ade0a5ddbdc52d32ee1e1",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-bridge.png",
+      "input_sha256": "31a28c575a969c453179b6fe9af214c05d6372319655e9b0c71ecf69ea896b42",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-bridge.json",
+      "live_result_sha256": "f405cfa2b12890e6e6985d1b7d28082f8da826dead902d7f8efb6065c40282fd",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-bridge.json",
+      "reloaded_result_sha256": "7e65ea44ca09aa0cc4fc8ee4c72317d53d5584521a35a8fb490cbe9eb0c75ee0",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-first-only.png",
+      "input_sha256": "dc343c8b0eab02c0be4bdd8412e20dc821068f15c358a156920edf72d0610342",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-first-only.json",
+      "live_result_sha256": "fd89ce83bc29884edd7798c0e4d72b36de4e9be55532967fcd20599a42977348",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-first-only.json",
+      "reloaded_result_sha256": "bc13d3e18ae81e97690f7b988976ec5b2728939ea77ade0a5ddbdc52d32ee1e1",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-ink-blocks.png",
+      "input_sha256": "552cda15cb3e2cf2edd3a33a37a56a0eb460c5ce388ea97717870d910b0a5b93",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-ink-blocks.json",
+      "live_result_sha256": "d7dd9648eb0c2e19f65fe08b6ac36d0cda7a6ac95ea45b4a7bcd90ac2d4ee0a3",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-ink-blocks.json",
+      "reloaded_result_sha256": "279e033f28724772adf4161a375a5d81cb133a2d5ddf596300cc5f1dd9d44c6a",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-no-clef.png",
+      "input_sha256": "5d8b028a0b3d45e0770d751081d41b2c3cbe29f076a96e7b1a1568e037e7a6c9",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-no-clef.json",
+      "live_result_sha256": "21c14cde2b36c874e330a54633f2c07ddd8482d2ae9a2f97ef7ba7ab080ee416",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-no-clef.json",
+      "reloaded_result_sha256": "380b6081997fab2730c3b1cf83f09f4a6debba3274310132aec9a95fee5908f4",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-noise.png",
+      "input_sha256": "2a2ba6e3ddc5e18bd092d666ea03934447e8fc580319ea0f266b95cb66a38e1d",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-noise.json",
+      "live_result_sha256": "fd89ce83bc29884edd7798c0e4d72b36de4e9be55532967fcd20599a42977348",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-noise.json",
+      "reloaded_result_sha256": "bc13d3e18ae81e97690f7b988976ec5b2728939ea77ade0a5ddbdc52d32ee1e1",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-shifted.png",
+      "input_sha256": "b900c64f62f0e697cc867d840175f7143dda6a43b47071fe4271e27268041de9",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-shifted.json",
+      "live_result_sha256": "34804144ce0d01485c1020db37d14fa39e69dda0e988c5581cd0152f7ee0f98e",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-shifted.json",
+      "reloaded_result_sha256": "0186c645086ea31202c22ca82fe7a08c473680b375d118ac5a0ec1f924b27a7e",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-bottom-trailing-block.png",
+      "input_sha256": "76745266c663656778b244ba55cb53dbbdb68f52b90c429eaf1dd49f6d3fcba8",
+      "live_result": "fixtures/official-headers-live/key-column-bottom-trailing-block.json",
+      "live_result_sha256": "4d1de19da2e92c7f7b9dc1e3f563b16e989c9841423e1bb1f661a090ed804aec",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-bottom-trailing-block.json",
+      "reloaded_result_sha256": "f8d720c0cf10f21e7763c0a5908157d8f9924000388a883ffedce152cc2dc25d",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-flat-missing.png",
+      "input_sha256": "f02833ac002512340950ac93bfd8cb7991954238060f20012d403efbddcef0fd",
+      "live_result": "fixtures/official-headers-live/key-column-last-flat-missing.json",
+      "live_result_sha256": "9a512b16ef2e4457e5e430a7078284746afe1a5ecb28f3ea742aa15079a7b795",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-last-flat-missing.json",
+      "reloaded_result_sha256": "e87e082796b3123d8a53b8d528121a7d0fd149bde1e5c24a0869ad60178a66a9",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-last-sharp-missing.png",
+      "input_sha256": "12c7675eb91f04016979e7a16ca41a1d884226c6d219cecda48a4fdcc273359d",
+      "live_result": "fixtures/official-headers-live/key-column-last-sharp-missing.json",
+      "live_result_sha256": "517fdf0bb83c8e7344e4dbcd5a07f1a5e9017a2148b1f99c5e02bf9244a8b424",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-last-sharp-missing.json",
+      "reloaded_result_sha256": "831f2ee3681b0637a2dd340bd2801d0a8be3d0cb84a383a54ca885e38d377baa",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-middle-flat-missing.png",
+      "input_sha256": "b6263e86330235d6f6c0499069e298e82b81257db06f96882499aa54dbd41863",
+      "live_result": "fixtures/official-headers-live/key-column-middle-flat-missing.json",
+      "live_result_sha256": "fd89ce83bc29884edd7798c0e4d72b36de4e9be55532967fcd20599a42977348",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-middle-flat-missing.json",
+      "reloaded_result_sha256": "bc13d3e18ae81e97690f7b988976ec5b2728939ea77ade0a5ddbdc52d32ee1e1",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-one-flat-trailing.png",
+      "input_sha256": "c073dd9fdac35f62323c3b29926bbe7f2147aad353e6ecc5df97849941d5dceb",
+      "live_result": "fixtures/official-headers-live/key-column-one-flat-trailing.json",
+      "live_result_sha256": "828ae89687b2daec52cbbbf9b4b9dd2a9e1dfebd15df103c842f2abf1b920a62",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-one-flat-trailing.json",
+      "reloaded_result_sha256": "cdc5ae5f6e28059b87da8230bfbf2512450bb0c127c79a8068326d852da84d76",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-empty.png",
+      "input_sha256": "8f57ae6952440fdc0e793eb09025f0789182f52a4de47e5ba21990c32e098ed5",
+      "live_result": "fixtures/official-headers-live/key-column-uniform-empty.json",
+      "live_result_sha256": "206a8504bd73e2681c2324fb7934433e5968aa9de2db06b5193bba402794c1dd",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-uniform-empty.json",
+      "reloaded_result_sha256": "bc13d3e18ae81e97690f7b988976ec5b2728939ea77ade0a5ddbdc52d32ee1e1",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-uniform-flats.png",
+      "input_sha256": "b74bea44de2a97a192743d97b584f471b1abf05cfa6453c74eb3c1ea5a9429a1",
+      "live_result": "fixtures/official-headers-live/key-column-uniform-flats.json",
+      "live_result_sha256": "4b7ac1647fd76fd92d8003b0e0fc756209a6d246c2f206d37a91d400b74850c5",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-uniform-flats.json",
+      "reloaded_result_sha256": "7377f88a2eedad0f55a3e89d9d5cc5427a595525006817b0d3b4cbbe8d6f8d7a",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-column-wrong-sharps.png",
+      "input_sha256": "ea16b7af0a7eae0ba6fc01de3f84a0ed5221bc27d026decb182995ca11c1799f",
+      "live_result": "fixtures/official-headers-live/key-column-wrong-sharps.json",
+      "live_result_sha256": "fd89ce83bc29884edd7798c0e4d72b36de4e9be55532967fcd20599a42977348",
+      "reloaded_result": "fixtures/official-headers-expanded/key-column-wrong-sharps.json",
+      "reloaded_result_sha256": "bc13d3e18ae81e97690f7b988976ec5b2728939ea77ade0a5ddbdc52d32ee1e1",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/key-process-flats-upper-bridge-122.png",
+      "input_sha256": "42cf7fc599dbc156b20484787f8893bb9089e1ffcb9a106daf6a6063826fe82b",
+      "live_result": "fixtures/official-headers-live/key-process-flats-upper-bridge-122.json",
+      "live_result_sha256": "fafc93c9377fa9dc5f8a864808af0edd5109a90b196b8a10cc4941af23dfcf8d",
+      "reloaded_result": "fixtures/official-headers-expanded/key-process-flats-upper-bridge-122.json",
+      "reloaded_result_sha256": "c11ce0d5b26f0153c5775efa04ed9ec6744230a73358f39937ada2e6bebcaae9",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/key-process-flats-upper-bridge-123.png",
+      "input_sha256": "b964afa1aefe78e63a151844b1ff203ea520f2b05f885b26e986cfdc2b2ebf9d",
+      "live_result": "fixtures/official-headers-live/key-process-flats-upper-bridge-123.json",
+      "live_result_sha256": "fafc93c9377fa9dc5f8a864808af0edd5109a90b196b8a10cc4941af23dfcf8d",
+      "reloaded_result": "fixtures/official-headers-expanded/key-process-flats-upper-bridge-123.json",
+      "reloaded_result_sha256": "c11ce0d5b26f0153c5775efa04ed9ec6744230a73358f39937ada2e6bebcaae9",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/key-process-one-flat-trailing-block.png",
+      "input_sha256": "a688d76e753ae0ad44bcb1ba2ddb8aeea0b04c5153e7e7fd2a5497152e9f8329",
+      "live_result": "fixtures/official-headers-live/key-process-one-flat-trailing-block.json",
+      "live_result_sha256": "14388fb32ecddb70a7b06d9e8c32003ebcec1fa019dc11033ff561246872264a",
+      "reloaded_result": "fixtures/official-headers-expanded/key-process-one-flat-trailing-block.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/key-process-one-sharp-trailing-block.png",
+      "input_sha256": "ec8d1a4ba3b9e56022f0a2932d6cc939f17bed8b157715290065b4dde7e9c05f",
+      "live_result": "fixtures/official-headers-live/key-process-one-sharp-trailing-block.json",
+      "live_result_sha256": "8e85d7466c00c90744bc1f7ac066afcd8b6f5e61b084ea1cfb5a88c28e2824b8",
+      "reloaded_result": "fixtures/official-headers-expanded/key-process-one-sharp-trailing-block.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/laura-gray.png",
+      "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "live_result": "fixtures/official-headers-live/laura-gray.json",
+      "live_result_sha256": "a73e399ddea906c53bff9ba88cb012eee4f113f91f412007b6ce64f794de0c8f",
+      "reloaded_result": "fixtures/official-headers-expanded/laura-gray.json",
+      "reloaded_result_sha256": "7a4f49a4a85433f06f2c1f32ee50ab358cc0f2e31c8c8ab468d4b989476943cc",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 6
+    },
+    {
+      "input": "fixtures/official-grid/line-root.png",
+      "input_sha256": "4cc659988b083cf511b872178991dd729b81aa7b4657427fed60c4452f43b80b",
+      "live_result": "fixtures/official-headers-live/line-root.json",
+      "live_result_sha256": "ed231f8c7c7732e4b013bea06a1ddef2255e39e42ead844e2384981b771d3455",
+      "reloaded_result": "fixtures/official-headers-expanded/line-root.json",
+      "reloaded_result_sha256": "4d31b3ceb96188e1a06715e756e117d2edbc169435f8902d77bc89222c1965c3",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-c_clef.png",
+      "input_sha256": "ba3918e8beb6c95ab37b813e3ed3c9ce98edee72461b1fa76d6a38c88eef9dd1",
+      "live_result": "fixtures/official-headers-live/rendered-clef-c_clef.json",
+      "live_result_sha256": "d0894c5354fa615939f874c178fc07b26306031b5d2448e7ee0df66469e8815c",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-clef-c_clef.json",
+      "reloaded_result_sha256": "015a03bc0a04f2632f80395e3c61a429a4dbfc05bfd3008b3f54e0327c7c03ef",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-empty.png",
+      "input_sha256": "3217c10f13a42cedf8af46349743a256b31ac5557a72840ccbe81f5548b689e3",
+      "live_result": "fixtures/official-headers-live/rendered-clef-empty.json",
+      "live_result_sha256": "6b1b3e7faea3192ff0c70bdfec68776226ad0c4d8a5100a28a0caf4100765ec4",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-clef-empty.json",
+      "reloaded_result_sha256": "15dc3db1ededbe4204fde80c5daada9148e3da626ec66d4f6451574d57041e11",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-f_clef.png",
+      "input_sha256": "ccc8969acbc59adb4e4af8ae5d0a090f3ea68eb9fddb21e19affee9f19c4da5e",
+      "live_result": "fixtures/official-headers-live/rendered-clef-f_clef.json",
+      "live_result_sha256": "2b41a78c6237744ff0c0de546082b230c4b19eecb5ba3d61750c7edde38f4787",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-clef-f_clef.json",
+      "reloaded_result_sha256": "31700fa53306908ac341e0e1420e9302b675b3fa9274c1e61490954c19f3c1b6",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-g_clef.png",
+      "input_sha256": "57b5ef3fb138bd3937c806d6974cee21de682144d76b06e76657feddd66b57d8",
+      "live_result": "fixtures/official-headers-live/rendered-clef-g_clef.json",
+      "live_result_sha256": "d075fd448336e94a954bec5867f9f2c986ffecb390715a8bc733ab51e6d8bbcb",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-clef-g_clef.json",
+      "reloaded_result_sha256": "18399c38f512a8685c823c580594f9a3a13c1b42b8e9f762882e135dbc6834b8",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-clef-noise.png",
+      "input_sha256": "1e6ab688887eeb4899c3b769da93c40bbce736fa3dd8bfe91b0cc9ed48d81686",
+      "live_result": "fixtures/official-headers-live/rendered-clef-noise.json",
+      "live_result_sha256": "6b1b3e7faea3192ff0c70bdfec68776226ad0c4d8a5100a28a0caf4100765ec4",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-clef-noise.json",
+      "reloaded_result_sha256": "15dc3db1ededbe4204fde80c5daada9148e3da626ec66d4f6451574d57041e11",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-empty.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "live_result": "fixtures/official-headers-live/rendered-header-empty.json",
+      "live_result_sha256": "a06e958bd08a83641ec7f509a9cf3265e1a01aa5d92960d4eec7bf697a8c7624",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-header-empty.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-four-flats.png",
+      "input_sha256": "d8c9bb099000f06d757a9971ec1168d653efac7d29e0977eb2123b798ff49f01",
+      "live_result": "fixtures/official-headers-live/rendered-header-four-flats.json",
+      "live_result_sha256": "653b772548f5a3d3ca04fc86d057912ac688719e9875c023197f61c8782cc052",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-header-four-flats.json",
+      "reloaded_result_sha256": "c8a6a12c8d176e829a9f15d503d1c97f5c570e80f126a0fa4517fd9b3b5ac292",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-noise.png",
+      "input_sha256": "5286804a4376ad60152f6b18fe0e7d68faeec2fa521ef3a6b819f0d4225cb50e",
+      "live_result": "fixtures/official-headers-live/rendered-header-noise.json",
+      "live_result_sha256": "a06e958bd08a83641ec7f509a9cf3265e1a01aa5d92960d4eec7bf697a8c7624",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-header-noise.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-flat.png",
+      "input_sha256": "cbb1483bb8c0e0062a22c8f49bdc637c29f52ab947bcfb76c5178032ac284a24",
+      "live_result": "fixtures/official-headers-live/rendered-header-one-flat.json",
+      "live_result_sha256": "403469332c97911f5826706cf6df92754e65a594705eb6291ff30e8c4f09af76",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-header-one-flat.json",
+      "reloaded_result_sha256": "2d7a07d4899f458a4a4e20911604802b0181fe96afb40a1177bd6a8abc574d9f",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-one-sharp.png",
+      "input_sha256": "cf8322aa798f99e6f8bb09a13e1dc90506adb0c88c4204535e34e482814114bd",
+      "live_result": "fixtures/official-headers-live/rendered-header-one-sharp.json",
+      "live_result_sha256": "3c567e63e89c9a71450180e48df92814e2b0116adc45284f9df89ac97570dead",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-header-one-sharp.json",
+      "reloaded_result_sha256": "94c133e680bf022959ab19e055683bbf4345754f76d2c917dfdd5887566a86c9",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/rendered-header-three-sharps.png",
+      "input_sha256": "c745e312405bffb11bea86ce888afdd6bb55a7335b87bb87b01e6c1e6736fc77",
+      "live_result": "fixtures/official-headers-live/rendered-header-three-sharps.json",
+      "live_result_sha256": "f68519522e226cbfd943033617161c4461e7ee1a26f30d1695bcf9f070f1b179",
+      "reloaded_result": "fixtures/official-headers-expanded/rendered-header-three-sharps.json",
+      "reloaded_result_sha256": "5779e1a54ac8592f5954ea85474a4dd63dbd3f51c609b2274b8596e0af8c06ac",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/synthetic-system-bars.png",
+      "input_sha256": "2e1bf10093d9c39482c7289659dab6f419f95002bd9e7fcf48a523fb598b2417",
+      "live_result": "fixtures/official-headers-live/synthetic-system-bars.json",
+      "live_result_sha256": "8ccb23375ae5a3fabd1a2f96729298f473e60241cca3a3a92203c8a213d691cf",
+      "reloaded_result": "fixtures/official-headers-expanded/synthetic-system-bars.json",
+      "reloaded_result_sha256": "4299ab6656af51524127bcdf9592f4a31ebc8ac05b8cda14f3ca2f5856f9a51e",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/time-column-absent.png",
+      "input_sha256": "787892029e99f49be7b02b9d0b6826629b80b216775bf1f066bf6895516348e4",
+      "live_result": "fixtures/official-headers-live/time-column-absent.json",
+      "live_result_sha256": "a06e958bd08a83641ec7f509a9cf3265e1a01aa5d92960d4eec7bf697a8c7624",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-absent.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-common.png",
+      "input_sha256": "559af35df44f5e957c3129620b21bccde37f015795c331484d3619888c631dda",
+      "live_result": "fixtures/official-headers-live/time-column-common.json",
+      "live_result_sha256": "c750fa66a95420f48ec9d867a7c08222146c976120f94fdf4a257c166a09a50f",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-common.json",
+      "reloaded_result_sha256": "f4814a823eeb817848127f73588cef7cfa9e65f2b1945ebd37db9737b0c9ad41",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-cut.png",
+      "input_sha256": "88babe02c889331a649fa1221b992e580543cc00136a833024311d39f92d0a93",
+      "live_result": "fixtures/official-headers-live/time-column-cut.json",
+      "live_result_sha256": "46ef7efce8ca17816365930ea9700420a882987e323ab3a6950ddf0954290983",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-cut.json",
+      "reloaded_result_sha256": "bc376c49cb1ee752fa5c76462eb31ec83b672dcd194121634fe9828aae812181",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-far-3-4.png",
+      "input_sha256": "67452be580043f3738e130bae8fc91f9323dc28e46bae9ac8d1a3a814d0baf85",
+      "live_result": "fixtures/official-headers-live/time-column-far-3-4.json",
+      "live_result_sha256": "a06e958bd08a83641ec7f509a9cf3265e1a01aa5d92960d4eec7bf697a8c7624",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-far-3-4.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-misaligned-3-4.png",
+      "input_sha256": "7b42cb364a4fc5d120d2437f44cebf3f047fb25ef6643dd1ae33afdb2166d9da",
+      "live_result": "fixtures/official-headers-live/time-column-misaligned-3-4.json",
+      "live_result_sha256": "aafc20fef6a494fd3e2003ca5388862a2cee82cc75259af7829847e8ba3ed469",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-misaligned-3-4.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-noise.png",
+      "input_sha256": "9b7504b1e6a9f0e921c87f205dba46fe136b7d59e20ed89bc16d40de90c5616c",
+      "live_result": "fixtures/official-headers-live/time-column-noise.json",
+      "live_result_sha256": "a06e958bd08a83641ec7f509a9cf3265e1a01aa5d92960d4eec7bf697a8c7624",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-noise.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-numerator-only.png",
+      "input_sha256": "1d3e5b1a7d7751ec9ac2e0c4564f9b0dcfd7024ab32ab954f205b1981676d185",
+      "live_result": "fixtures/official-headers-live/time-column-numerator-only.json",
+      "live_result_sha256": "a9f00f7c9234f0dabcd71c452f377fb74d8ab31d4c8cf10bcaed6924a64d165d",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-numerator-only.json",
+      "reloaded_result_sha256": "aaec399a73e9fcf53041f8e61042000c41738f356f87e00b98c2d7ca7c0e5240",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-12-8.png",
+      "input_sha256": "8214d9a342a3f217a7c5863a4f7d23daa0d188df632294a147e4206538d5f9c4",
+      "live_result": "fixtures/official-headers-live/time-column-pair-12-8.json",
+      "live_result_sha256": "4b9d1ec8f54231ee6c2933990677d646bf961ce39b55dc7dd6210d13fdbe865b",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-12-8.json",
+      "reloaded_result_sha256": "5451633309721a21a10b438c1fe2a08590f57806c205a6337a3290d35e1cd99c",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-2-2.png",
+      "input_sha256": "9dbfec562a01efe20d2f4384f6e4a9559258f9681cdaaf444f2deb1321900271",
+      "live_result": "fixtures/official-headers-live/time-column-pair-2-2.json",
+      "live_result_sha256": "b0f931a53bec88d088c17ca023ff99b232e3933b365136c56c6a374434cf5471",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-2-2.json",
+      "reloaded_result_sha256": "7563052bd2be5a319f0b1419d6904011f15961200c68d7d09c239cb298058efc",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-2-4.png",
+      "input_sha256": "c72223d80bedd912702847a8314883589fa3e82a6422f8967dfd3693ae9ed34a",
+      "live_result": "fixtures/official-headers-live/time-column-pair-2-4.json",
+      "live_result_sha256": "9232bad43dfd6e6e02eac212c66492eb4aff1cfcfec5be72c246f160a65429a0",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-2-4.json",
+      "reloaded_result_sha256": "2c256533fc06f1eaa62dc2e1d085d7fdae11ac3aca8c8506cc8e4467cd43f69c",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-3-4.png",
+      "input_sha256": "4b1077daf8973fd47c20672e0ec1eea7ed76aea12feb899aaa80f902dc574b04",
+      "live_result": "fixtures/official-headers-live/time-column-pair-3-4.json",
+      "live_result_sha256": "667062eb802384ac231158d77e871b86b2d11e9202def813f8933afa7d9bde5a",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-3-4.json",
+      "reloaded_result_sha256": "11da86dd3892dfbca2d5f0777439344c376ac0c67320f6dfbdff99f619479e6d",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-4-4.png",
+      "input_sha256": "8a9cd27380e61fc289534ce5e6ef306ba8877e625e9cf7d055ee53f9778153ec",
+      "live_result": "fixtures/official-headers-live/time-column-pair-4-4.json",
+      "live_result_sha256": "3bc027c51c0d5624661a7c5c0633fa3e7956b90b0d456baf264d007b399c04be",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-4-4.json",
+      "reloaded_result_sha256": "c08b8969d709c26c3ed3f24d160f324ee0df389a075ca308069a6baad6348b5f",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-5-4.png",
+      "input_sha256": "d3b3c24c6839faed5e590dd21eb18bc585d3ee7c8812542a54a4684a20354a24",
+      "live_result": "fixtures/official-headers-live/time-column-pair-5-4.json",
+      "live_result_sha256": "6c10e4d2ea4c4efd8ad62e01d0c6e6b32b52d22b9e8e29d5d961a020367c494f",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-5-4.json",
+      "reloaded_result_sha256": "9ff71cf912618e2c0a66798f102ba4799d76f1dd870ae9cb7c80cf43f0a71443",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-6-8.png",
+      "input_sha256": "e858e6779cf8501d5f42b5f9e689f2e891419f0d1c87ca1f4b1fe9181b16959f",
+      "live_result": "fixtures/official-headers-live/time-column-pair-6-8.json",
+      "live_result_sha256": "d8c7d8b52441997275b9f8ae8300defffc13e207378a3b62c8fd78e871b0246a",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-6-8.json",
+      "reloaded_result_sha256": "5353be34cb9bd089d14c65c6471b4fc184fb650123ef7145763ae6e38a45666b",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-pair-7-8.png",
+      "input_sha256": "c69de92716ed5a48af1d9b3ec796117e5a1fa7f6d3ca559cf047111b11ceb5ff",
+      "live_result": "fixtures/official-headers-live/time-column-pair-7-8.json",
+      "live_result_sha256": "63f5a6d820582071511ababc08cf41392e175ccbbe20edb7007c3c1cda93f8b8",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-pair-7-8.json",
+      "reloaded_result_sha256": "88b8ba4d9f72f5a4ef01f4d6246c3091e18ba65afaac1af44c3fed5c1c258f1d",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-common-pair.png",
+      "input_sha256": "daf674a825c4ef4f094eea9dd7f246d5c104dd9563f2b05c5bc7bd3492f0fd23",
+      "live_result": "fixtures/official-headers-live/time-column-two-staff-common-pair.json",
+      "live_result_sha256": "9111cd7167d7b0c90417f3d0a6ec9ee9afc17c2c0866453ff8b2ff3a2d93c62d",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-two-staff-common-pair.json",
+      "reloaded_result_sha256": "056b7acfcec17138911c799cca712b364b521488ecb8059442b3ca50f80dd6b0",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-mismatch.png",
+      "input_sha256": "026a4d0b790f7f3af81a1c2bab85b5fc4f072b763feb36bbaa2a3ef643b10601",
+      "live_result": "fixtures/official-headers-live/time-column-two-staff-mismatch.json",
+      "live_result_sha256": "6d7a9180a37d88e9dae09eb91bc90745ce5749da0432b915d779ddcf3d2872b6",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-two-staff-mismatch.json",
+      "reloaded_result_sha256": "cbf152802b99ca114d0b48d797f964c04905fde0ab52444ae640d81294c6c9e9",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-missing.png",
+      "input_sha256": "a9124e1aa3544df51fc261e92e3e505f4ab85dc4c741f910105ddcf8fd7e0e5d",
+      "live_result": "fixtures/official-headers-live/time-column-two-staff-missing.json",
+      "live_result_sha256": "da16475c931b194a5cbe1f17964b903654cef0e2a93096e63e6b4e82299bbd24",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-two-staff-missing.json",
+      "reloaded_result_sha256": "26240ca2bc190050031a4beb042ecaed6bb798f7924d3c6bdce08530b96d2ca8",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/time-column-two-staff-same.png",
+      "input_sha256": "99492c58b0ddfedb5da6e4b782a90fb90e24f3ccedd74823e81fe7465c54f026",
+      "live_result": "fixtures/official-headers-live/time-column-two-staff-same.json",
+      "live_result_sha256": "2f04b570fda4f41a7681af298830f65eb66cef3433bd1f11e4fa204d15beebd1",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-two-staff-same.json",
+      "reloaded_result_sha256": "c15b09f19758bca097fa45994ea8dd6a85d28e4491a016c4c48661190ae681dc",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 2
+    },
+    {
+      "input": "fixtures/official-grid/time-column-unsupported-3-3.png",
+      "input_sha256": "29230791ed94e957a1dec28c3d43466d9a9aa77ab4d6e88c038cb2e8f4b7daca",
+      "live_result": "fixtures/official-headers-live/time-column-unsupported-3-3.json",
+      "live_result_sha256": "6ed0d7b18a1a3523e3720d6ab2e7d320f5fa43cd45b4c54cce8645f3c26b6711",
+      "reloaded_result": "fixtures/official-headers-expanded/time-column-unsupported-3-3.json",
+      "reloaded_result_sha256": "c3d60c02a741046483c729c46d8a9cd2b38c27e8a0a5e17acf65a594df153410",
+      "selected_and_sig_equal_except_grade_serialization": true,
+      "live_staff_count": 1
+    }
+  ]
+}

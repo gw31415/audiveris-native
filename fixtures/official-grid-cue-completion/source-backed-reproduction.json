@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "input_sha256": "351bf814b84377304f9c900c45d87dcf9970b06e6613ec1131959f91c6265937",
+  "cases": [
+    {
+      "name": "cue-final",
+      "sha256": "ef4bb3042b4666b0378255bb1e7a928bc966913f6e46efcd0a6610081e4fadf8",
+      "original_fields_byte_reproduced": true,
+      "first_observer_sources": {
+        "scripts/java/GridProbe.java": "a9ff4efd888be556ef54b0c31f579f691ff7fa94b2b97677a1d9a4bb03cc6e21",
+        "scripts/java/GridFinalProbe.java": "0fb2cc2d96c2ba14503391d2428f70de3db37d59cab40811d273ef0f08b4f1ff",
+        "scripts/java/GridCueCompletionProbe.java": "3cbb292fe1e6ead71d095096ee0b2e7a270a5b76738ad89922ed1f354ffe4e53"
+      },
+      "second_observer_sources": {
+        "scripts/java/GridProbe.java": "a9ff4efd888be556ef54b0c31f579f691ff7fa94b2b97677a1d9a4bb03cc6e21",
+        "scripts/java/GridFinalProbe.java": "0fb2cc2d96c2ba14503391d2428f70de3db37d59cab40811d273ef0f08b4f1ff",
+        "scripts/java/GridCueCompletionProbe.java": "3cbb292fe1e6ead71d095096ee0b2e7a270a5b76738ad89922ed1f354ffe4e53"
+      }
+    },
+    {
+      "name": "cue-projection",
+      "sha256": "25abfd9639fa5d782911995bb6b55d526f06a55d9391802c05114d0e697cdff4",
+      "original_fields_byte_reproduced": true,
+      "first_observer_sources": {
+        "scripts/java/GridProbe.java": "a9ff4efd888be556ef54b0c31f579f691ff7fa94b2b97677a1d9a4bb03cc6e21",
+        "scripts/java/GridFinalProbe.java": "0fb2cc2d96c2ba14503391d2428f70de3db37d59cab40811d273ef0f08b4f1ff"
+      },
+      "second_observer_sources": {
+        "scripts/java/GridProbe.java": "a9ff4efd888be556ef54b0c31f579f691ff7fa94b2b97677a1d9a4bb03cc6e21",
+        "scripts/java/GridFinalProbe.java": "0fb2cc2d96c2ba14503391d2428f70de3db37d59cab40811d273ef0f08b4f1ff"
+      }
+    }
+  ],
+  "scope": "Independent synthetic cue raster full original GRID snapshot and separately observed initial projection; not actual published scans or HEADS/STEMS."
+}

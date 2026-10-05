@@ -1,0 +1,29 @@
+{
+  "input": null,
+  "input_sha256": null,
+  "argv": [
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/cache",
+    "-Djava.util.prefs.userRoot=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/prefs",
+    "-Duser.home=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/home",
+    "-Dnative.probe.output=/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/result.json",
+    "-cp",
+    "/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/observer-classes",
+    "StemBufferControlProbe",
+    "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/result.json"
+  ],
+  "environment_overrides": {
+    "HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/home",
+    "XDG_CONFIG_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/config",
+    "XDG_DATA_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/data",
+    "XDG_CACHE_HOME": "/workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/stem-buffer-control/20261002T203942.653159Z/stem-buffer-control/cache"
+  },
+  "exit_code": 0,
+  "console_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "ok": true,
+  "result_sha256": "786458b2bf09ec5771bb5d40826da5e2c4b134cfde3da3e4fe91de98bc2b8511"
+}

@@ -1,0 +1,17 @@
+{
+  "native_outputs_used": false,
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "distribution_sha256": "ae714594f40e54b1a4951fc3f914f08ae38fe5d07b7f2283b1a904fdb6e0a318",
+  "jdk_sha256": "ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "cases": 126,
+  "accepted_extensions": 58,
+  "fixture_sha256": "ff8599b25c31f85ee6f2fb923b188958665a34bdd8cfc6977c1dc9dd38ef7036",
+  "inputs_sha256": "c07d75a2df529276d042d9b09902a3f015022ad6711c5e50097443a97bf69c66",
+  "observer_sha256": "057371f858d764b8b2038462000cc531ba3d5ef265f5b2319984ca573b978ea4",
+  "runtime_excludes_compile_shims": true,
+  "additional_local_jar_bytecode_sha256": {
+    "Glyph.stem.javap.txt": "246ef4d90e95826f60a46fae48e626564007202721b105943403d69e031e2722",
+    "SystemInfo.stem.javap.txt": "65d2aa963ed1605014307a12cb6ff1c1aedf44907a1854f2faca7503716ff728"
+  }
+}

@@ -1,0 +1,68 @@
+WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:190)
+	at org.audiveris.omr.Main.<clinit>(Main.java:70)
+	at Audiveris.main(Audiveris.java:50)
+WARN  []                WellKnowns 238  | Error creating /home/agent/.cache/AudiverisLtd/audiveris/log/temp
+java.nio.file.FileSystemException: /home/agent/.cache/AudiverisLtd: Read-only file system
+	at java.base/sun.nio.fs.UnixException.translateToIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createAndCheckIsDirectory(Unknown Source)
+	at java.base/java.nio.file.Files.createDirectories(Unknown Source)
+	at org.audiveris.omr.WellKnowns.createFolder(WellKnowns.java:235)
+	at org.audiveris.omr.WellKnowns.<clinit>(WellKnowns.java:196)
+	at org.audiveris.omr.Main.<clinit>(Main.java:70)
+	at Audiveris.main(Audiveris.java:50)
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/shared/audiveris-cloud-continuation/linux-oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-uniform-flats/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-uniform-flats.png"
+INFO  [key-column-uniform-flats]                      Book 560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-uniform-flats.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-uniform-flats/key-column-uniform-flats.omr
+INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
+INFO  [key-column-uniform-flats]            StepMonitoring 98   | LOAD
+INFO  [key-column-uniform-flats]                 SheetStub 1278 | Loaded image #1 960x470 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-column-uniform-flats.png
+INFO  [key-column-uniform-flats]            StepMonitoring 98   | BINARY
+INFO  [key-column-uniform-flats]            StepMonitoring 98   | SCALE
+INFO  [key-column-uniform-flats]              ScaleBuilder 254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+INFO  [key-column-uniform-flats]              ScaleBuilder 271  | Beam measured height: 13 -- 0.75 of [7..15] range at 51% of needed quorum
+WARN  [key-column-uniform-flats]              ScaleBuilder 300  | No reliable beam height found, guessed value: 9
+INFO  [key-column-uniform-flats]              ScaleBuilder 401  | Normalized black jitter: 0.00 %
+INFO  [key-column-uniform-flats]                 ScaleStep 65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+INFO  [key-column-uniform-flats]                      Book 2584 | Book{key-column-uniform-flats} storing
+INFO  [key-column-uniform-flats]                      Book 2565 | Stored /book.xml
+INFO  [key-column-uniform-flats]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [key-column-uniform-flats]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [key-column-uniform-flats]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-uniform-flats/key-column-uniform-flats.omr
+INFO  [key-column-uniform-flats]                 SheetStub 1655 | Sheet disposed
+INFO  [key-column-uniform-flats]                      Book 2050 | End of Stub#1
+INFO  [key-column-uniform-flats]                      Book 2057 | End of Book{key-column-uniform-flats}
+INFO  [key-column-uniform-flats]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [key-column-uniform-flats]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [key-column-uniform-flats]         ClustersRetriever 326  | Retrieved raw line clusters: 2 of sizes [5] with interline(16,16,16)
+INFO  [key-column-uniform-flats]                 PeakGraph 310  | Systems: #1[1, 2]
+INFO  [key-column-uniform-flats]             SystemManager 800  | 1 part along 1 system
+INFO  [key-column-uniform-flats]                      Book 543  | Created scores: [{Score 1}]
+INFO  [key-column-uniform-flats]                      Book 2565 | Stored /book.xml
+INFO  [key-column-uniform-flats]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [key-column-uniform-flats]                      Book 2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/time-column/20261002T195322.852576Z/key-column-uniform-flats/key-column-uniform-flats.omr
+INFO  [key-column-uniform-flats]                     Score 181  | Closing {Score 1}

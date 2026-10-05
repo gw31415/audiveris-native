@@ -1,0 +1,187 @@
+Compiled from "StaffProjector.java"
+class org.audiveris.omr.sheet.grid.StaffProjector$Parameters {
+  final int chunkWidth;
+
+  final int staffAbscissaMargin;
+
+  final int barChunkDx;
+
+  final int barRefineDx;
+
+  final int minSmallBlankWidth;
+
+  final int minStandardBlankWidth;
+
+  final int minWideBlankWidth;
+
+  final int maxBarWidth;
+
+  final int maxLeftExtremum;
+
+  final int maxRightExtremum;
+
+  final boolean useOneLineHalfMode;
+
+  final int verticalSerifWidth;
+
+  final int barThreshold;
+
+  final int braceThreshold;
+
+  final int gapThreshold;
+
+  int linesThreshold;
+
+  int blankThreshold;
+
+  int chunkThreshold;
+
+  org.audiveris.omr.sheet.grid.StaffProjector$Parameters(org.audiveris.omr.sheet.grid.StaffProjector);
+    Code:
+       0: aload_1
+       1: dup
+       2: invokestatic  #1                  // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+       5: pop
+       6: pop
+       7: aload_0
+       8: invokespecial #7                  // Method java/lang/Object."<init>":()V
+      11: aload_1
+      12: getfield      #13                 // Field org/audiveris/omr/sheet/grid/StaffProjector.sheet:Lorg/audiveris/omr/sheet/Sheet;
+      15: invokevirtual #19                 // Method org/audiveris/omr/sheet/Sheet.getScale:()Lorg/audiveris/omr/sheet/Scale;
+      18: astore_2
+      19: aload_1
+      20: getfield      #25                 // Field org/audiveris/omr/sheet/grid/StaffProjector.staff:Lorg/audiveris/omr/sheet/Staff;
+      23: invokevirtual #29                 // Method org/audiveris/omr/sheet/Staff.getSpecificInterline:()I
+      26: istore_3
+      27: aload_2
+      28: invokevirtual #35                 // Method org/audiveris/omr/sheet/Scale.getInterlineScale:()Lorg/audiveris/omr/sheet/Scale$InterlineScale;
+      31: astore        4
+      33: aload_0
+      34: aload         4
+      36: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+      39: getfield      #45                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.staffAbscissaMargin:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      42: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      45: putfield      #57                 // Field staffAbscissaMargin:I
+      48: aload_0
+      49: aload         4
+      51: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+      54: getfield      #62                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.barChunkDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      57: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      60: putfield      #65                 // Field barChunkDx:I
+      63: aload_0
+      64: aload         4
+      66: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+      69: getfield      #67                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.barRefineDx:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      72: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      75: putfield      #70                 // Field barRefineDx:I
+      78: aload_0
+      79: aload         4
+      81: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+      84: getfield      #72                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.minSmallBlankWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+      87: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+      90: putfield      #75                 // Field minSmallBlankWidth:I
+      93: aload_0
+      94: aload         4
+      96: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+      99: getfield      #77                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.minStandardBlankWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     102: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     105: putfield      #80                 // Field minStandardBlankWidth:I
+     108: aload_0
+     109: aload         4
+     111: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     114: getfield      #82                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.minWideBlankWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     117: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     120: putfield      #85                 // Field minWideBlankWidth:I
+     123: aload_0
+     124: aload         4
+     126: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     129: getfield      #87                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.maxBarWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     132: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     135: putfield      #90                 // Field maxBarWidth:I
+     138: aload_0
+     139: aload         4
+     141: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     144: getfield      #92                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.maxLeftExtremum:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     147: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     150: putfield      #95                 // Field maxLeftExtremum:I
+     153: aload_0
+     154: aload         4
+     156: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     159: getfield      #97                 // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.maxRightExtremum:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     162: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     165: putfield      #100                // Field maxRightExtremum:I
+     168: aload_0
+     169: aload         4
+     171: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     174: getfield      #102                // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.chunkWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     177: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     180: putfield      #105                // Field chunkWidth:I
+     183: aload_0
+     184: aload         4
+     186: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     189: getfield      #107                // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.verticalSerifWidth:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     192: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     195: putfield      #110                // Field verticalSerifWidth:I
+     198: iload_3
+     199: ifne          209
+     202: aload_2
+     203: invokevirtual #35                 // Method org/audiveris/omr/sheet/Scale.getInterlineScale:()Lorg/audiveris/omr/sheet/Scale$InterlineScale;
+     206: goto          214
+     209: aload_2
+     210: iload_3
+     211: invokevirtual #112                // Method org/audiveris/omr/sheet/Scale.getInterlineScale:(I)Lorg/audiveris/omr/sheet/Scale$InterlineScale;
+     214: astore        4
+     216: aload_0
+     217: aload_1
+     218: getfield      #25                 // Field org/audiveris/omr/sheet/grid/StaffProjector.staff:Lorg/audiveris/omr/sheet/Staff;
+     221: invokevirtual #115                // Method org/audiveris/omr/sheet/Staff.isOneLineStaff:()Z
+     224: ifne          241
+     227: aload         4
+     229: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     232: getfield      #119                // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.barThreshold:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     235: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     238: goto          270
+     241: aload_1
+     242: invokevirtual #122                // Method org/audiveris/omr/sheet/grid/StaffProjector.getBarlineHeight:()I
+     245: i2d
+     246: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     249: getfield      #119                // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.barThreshold:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     252: invokevirtual #125                // Method org/audiveris/omr/sheet/Scale$Fraction.getValue:()Ljava/lang/Object;
+     255: checkcast     #131                // class java/lang/Double
+     258: invokevirtual #133                // Method java/lang/Double.doubleValue:()D
+     261: dmul
+     262: ldc2_w        #137                // double 4.0d
+     265: ddiv
+     266: invokestatic  #139                // Method java/lang/Math.rint:(D)D
+     269: d2i
+     270: putfield      #145                // Field barThreshold:I
+     273: aload_0
+     274: aload         4
+     276: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     279: getfield      #147                // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.braceThreshold:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     282: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     285: putfield      #150                // Field braceThreshold:I
+     288: aload_0
+     289: aload         4
+     291: getstatic     #41                 // Field org/audiveris/omr/sheet/grid/StaffProjector.constants:Lorg/audiveris/omr/sheet/grid/StaffProjector$Constants;
+     294: getfield      #152                // Field org/audiveris/omr/sheet/grid/StaffProjector$Constants.gapThreshold:Lorg/audiveris/omr/sheet/Scale$Fraction;
+     297: invokevirtual #51                 // Method org/audiveris/omr/sheet/Scale$InterlineScale.toPixels:(Lorg/audiveris/omr/sheet/Scale$Fraction;)I
+     300: putfield      #155                // Field gapThreshold:I
+     303: aload_1
+     304: getfield      #13                 // Field org/audiveris/omr/sheet/grid/StaffProjector.sheet:Lorg/audiveris/omr/sheet/Sheet;
+     307: invokevirtual #157                // Method org/audiveris/omr/sheet/Sheet.getStub:()Lorg/audiveris/omr/sheet/SheetStub;
+     310: invokevirtual #161                // Method org/audiveris/omr/sheet/SheetStub.getBarlineHeight:()Lorg/audiveris/omr/sheet/BarlineHeight;
+     313: astore        4
+     315: aload_0
+     316: aload         4
+     318: getstatic     #166                // Field org/audiveris/omr/sheet/BarlineHeight.oneThenTwo:Lorg/audiveris/omr/sheet/BarlineHeight;
+     321: if_acmpeq     332
+     324: aload         4
+     326: getstatic     #172                // Field org/audiveris/omr/sheet/BarlineHeight.twoThenFour:Lorg/audiveris/omr/sheet/BarlineHeight;
+     329: if_acmpne     336
+     332: iconst_1
+     333: goto          337
+     336: iconst_0
+     337: putfield      #175                // Field useOneLineHalfMode:Z
+     340: return
+}

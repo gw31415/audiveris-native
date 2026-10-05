@@ -1,0 +1,30 @@
+2026-10-03 05:17:20,971 INFO [key-process-flats-upper-bridge-122]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-process-flats-upper-bridge-122.png
+2026-10-03 05:17:21,079 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:17:21,079 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-flats-upper-bridge-122/key-process-flats-upper-bridge-122.omr
+2026-10-03 05:17:21,081 INFO []                 Book.java:1929 | Book reaching HEADERS on sheets:[#1]
+2026-10-03 05:17:21,082 INFO [key-process-flats-upper-bridge-122]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:17:21,097 INFO [key-process-flats-upper-bridge-122]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/key-process-flats-upper-bridge-122.png
+2026-10-03 05:17:21,100 INFO [key-process-flats-upper-bridge-122]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:17:21,168 INFO [key-process-flats-upper-bridge-122]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:17:21,176 INFO [key-process-flats-upper-bridge-122]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:17:21,177 INFO [key-process-flats-upper-bridge-122]         ScaleBuilder.java:271  | Beam measured height: 13 -- 0.75 of [7..15] range at 50% of needed quorum
+2026-10-03 05:17:21,177 WARN [key-process-flats-upper-bridge-122]         ScaleBuilder.java:300  | No reliable beam height found, guessed value: 9
+2026-10-03 05:17:21,177 INFO [key-process-flats-upper-bridge-122]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:17:21,178 INFO [key-process-flats-upper-bridge-122]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9 extra)}
+2026-10-03 05:17:21,178 INFO [key-process-flats-upper-bridge-122]       StepMonitoring.java:98   | GRID
+2026-10-03 05:17:21,255 INFO [key-process-flats-upper-bridge-122]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:17:21,263 INFO [key-process-flats-upper-bridge-122]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:17:21,286 INFO [key-process-flats-upper-bridge-122]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:17:21,314 INFO [key-process-flats-upper-bridge-122]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:17:21,315 INFO [key-process-flats-upper-bridge-122]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:17:21,315 INFO [key-process-flats-upper-bridge-122]       StepMonitoring.java:98   | HEADERS
+2026-10-03 05:17:21,864 INFO [key-process-flats-upper-bridge-122]                 Book.java:2584 | Book{key-process-flats-upper-bridge-122} storing
+2026-10-03 05:17:21,893 INFO [key-process-flats-upper-bridge-122]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:17:21,908 INFO [key-process-flats-upper-bridge-122]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:17:22,082 INFO [key-process-flats-upper-bridge-122]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:17:22,083 INFO [key-process-flats-upper-bridge-122]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/key-process-flats-upper-bridge-122/key-process-flats-upper-bridge-122.omr
+2026-10-03 05:17:22,084 INFO [key-process-flats-upper-bridge-122]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:17:22,105 INFO [key-process-flats-upper-bridge-122]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:17:22,106 INFO [key-process-flats-upper-bridge-122]                 Book.java:2057 | End of Book{key-process-flats-upper-bridge-122}
+2026-10-03 05:17:22,145 INFO [key-process-flats-upper-bridge-122]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:17:22,187 INFO [key-process-flats-upper-bridge-122]                Score.java:181  | Closing {Score 1}

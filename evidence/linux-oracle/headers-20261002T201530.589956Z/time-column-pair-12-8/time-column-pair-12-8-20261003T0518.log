@@ -1,0 +1,29 @@
+2026-10-03 05:18:41,240 INFO [time-column-pair-12-8]                 Book.java:560  | 1 sheet in /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-pair-12-8.png
+2026-10-03 05:18:41,361 INFO []                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:41,361 INFO []                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/time-column-pair-12-8/time-column-pair-12-8.omr
+2026-10-03 05:18:41,363 INFO []                 Book.java:1929 | Book reaching HEADERS on sheets:[#1]
+2026-10-03 05:18:41,364 INFO [time-column-pair-12-8]       StepMonitoring.java:98   | LOAD
+2026-10-03 05:18:41,381 INFO [time-column-pair-12-8]            SheetStub.java:1278 | Loaded image #1 960x420 from /workspace/shared/audiveris-cloud-continuation/latest/fixtures/official-grid/time-column-pair-12-8.png
+2026-10-03 05:18:41,385 INFO [time-column-pair-12-8]       StepMonitoring.java:98   | BINARY
+2026-10-03 05:18:41,459 INFO [time-column-pair-12-8]       StepMonitoring.java:98   | SCALE
+2026-10-03 05:18:41,468 INFO [time-column-pair-12-8]         ScaleBuilder.java:254  | Beam  guessed height:  9 -- 0.25 of [7..15] range
+2026-10-03 05:18:41,469 INFO [time-column-pair-12-8]         ScaleBuilder.java:271  | Beam measured height:  9 -- 0.25 of [7..15] range at 58% of needed quorum
+2026-10-03 05:18:41,470 INFO [time-column-pair-12-8]         ScaleBuilder.java:401  | Normalized black jitter: 0.00 %
+2026-10-03 05:18:41,470 INFO [time-column-pair-12-8]            ScaleStep.java:65   | Scale{ interline(16,16,16) line(2,2,2) beam(9)}
+2026-10-03 05:18:41,471 INFO [time-column-pair-12-8]       StepMonitoring.java:98   | GRID
+2026-10-03 05:18:41,562 INFO [time-column-pair-12-8]       LinesRetriever.java:1508 | Global slope: 0.00000
+2026-10-03 05:18:41,571 INFO [time-column-pair-12-8]    ClustersRetriever.java:326  | Retrieved raw line clusters: 1 of sizes [5] with interline(16,16,16)
+2026-10-03 05:18:41,596 INFO [time-column-pair-12-8]            PeakGraph.java:310  | Systems: #1[1]
+2026-10-03 05:18:41,627 INFO [time-column-pair-12-8]        SystemManager.java:800  | 1 part along 1 system
+2026-10-03 05:18:41,627 INFO [time-column-pair-12-8]                 Book.java:543  | Created scores: [{Score 1}]
+2026-10-03 05:18:41,628 INFO [time-column-pair-12-8]       StepMonitoring.java:98   | HEADERS
+2026-10-03 05:18:42,368 INFO [time-column-pair-12-8]                 Book.java:2584 | Book{time-column-pair-12-8} storing
+2026-10-03 05:18:42,404 INFO [time-column-pair-12-8]                 Book.java:2565 | Stored /book.xml
+2026-10-03 05:18:42,422 INFO [time-column-pair-12-8]           DataHolder.java:348  | Stored /sheet#1/BINARY.png
+2026-10-03 05:18:42,633 INFO [time-column-pair-12-8]                Sheet.java:1583 | Stored /sheet#1/sheet#1.xml
+2026-10-03 05:18:42,634 INFO [time-column-pair-12-8]                 Book.java:2525 | Book stored as /workspace/shared/audiveris-cloud-continuation/latest/evidence/generated/linux-oracle/headers/20261002T201530.589956Z/time-column-pair-12-8/time-column-pair-12-8.omr
+2026-10-03 05:18:42,635 INFO [time-column-pair-12-8]            SheetStub.java:1655 | Sheet disposed
+2026-10-03 05:18:42,670 INFO [time-column-pair-12-8]                 Book.java:2050 | End of Stub#1
+2026-10-03 05:18:42,673 INFO [time-column-pair-12-8]                 Book.java:2057 | End of Book{time-column-pair-12-8}
+2026-10-03 05:18:42,707 INFO [time-column-pair-12-8]            SheetStub.java:1000 | Loaded /sheet#1/sheet#1.xml
+2026-10-03 05:18:42,755 INFO [time-column-pair-12-8]                Score.java:181  | Closing {Score 1}

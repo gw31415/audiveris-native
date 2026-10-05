@@ -1,0 +1,126 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "oracle": "unmodified SectionFactory/JunctionRatioPolicy/JunctionShiftPolicy; verbatim transplanted LagManager.dispatchRuns/buildHorizontalLag/buildVerticalLag and LinesRetriever.createBothLags; infrastructure/data adapters",
+  "source_sha256": {
+    "lag/SectionFactory": "6cd4e597bc1df76430cc78ccd031ba99bf977df93436c48f544721b743849d7d",
+    "lag/JunctionPolicy": "1538b66571cac8e80b7464b4b72eef755297894d2e270211033932c31269bf61",
+    "lag/JunctionRatioPolicy": "722df580dc635a8a5f2419b4a3fe854d608177261fa1cc9f785a856fb37f024b",
+    "lag/JunctionShiftPolicy": "3b9bc10b0c435a5e7c5ac05e6d7238f9ff51fea019832c71603404867182463c"
+  },
+  "verbatim_method_sha256": {
+    "lag/LagManager/public RunTable dispatchRuns": "af2533b837f2be76445c2da6301256b9127ed289b3e28c05498076f010b24719",
+    "lag/LagManager/public Lag buildHorizontalLag": "ccbdae99f1d1855dcf6f0c099590c63c18d1255c18cfa1e91674d9528091e905",
+    "lag/LagManager/public Lag buildVerticalLag": "9e659602c9ba652bef148eb9cb35ed4f9f985034c3aa026b4ddc970651e338e0",
+    "sheet/grid/LinesRetriever/public void createBothLags": "dd550287fe0550df3568a7a528014ef71ca54add1bce8eb8eb817f1dc2693151"
+  },
+  "fixtures": [
+    {
+      "file": "fixtures/sections/blank.pgm",
+      "input_sha256": "77c9a8b2433c79d38bf9eb24b8dba2c6b1c8033033e2e69eb261d28a03264262",
+      "width": 320,
+      "height": 320,
+      "exit": 2,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 0,
+      "vertical_sections": 0,
+      "scale_blocked": true,
+      "result_sha256": "a5e241ac9f60ed5e92712f581c318c64cdefe3f86c520bc7bfcca854bb733f86"
+    },
+    {
+      "file": "fixtures/sections/broken.pgm",
+      "input_sha256": "f6e72a3ffb8f79fb86417618c00e3615fcf879001e652331d63a186de4f4a2a8",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 15,
+      "vertical_sections": 0,
+      "scale_blocked": false,
+      "result_sha256": "df5b657d5f7a5d37d227926a961aa12b89e695315eb5e4836129399b9fcbc6d1"
+    },
+    {
+      "file": "fixtures/sections/crossings.pgm",
+      "input_sha256": "d7a5d346e661595cafd7936b4edc062082a9e9e3fbbb55e737912bb1a6026fe3",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 20,
+      "vertical_sections": 3,
+      "scale_blocked": false,
+      "result_sha256": "64ece5501f5e0bb3b00da43ff6d597c4fa1ea0e11900afca836675a86e8d253d"
+    },
+    {
+      "file": "fixtures/sections/curved.pgm",
+      "input_sha256": "5d660b042db011f3fc8eacf7e5364c650c19c4282a85e2c167fc8218b5878d01",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 50,
+      "vertical_sections": 0,
+      "scale_blocked": false,
+      "result_sha256": "42f4a87f765e396e5f7d9fa9e5a770f14d6a1ea62f7673e5103c912087b1d1d2"
+    },
+    {
+      "file": "fixtures/sections/noisy.pgm",
+      "input_sha256": "76a9ade1cc598fe0ec80a5ebb6d8b28e69ece013a83150d6f84e88bc92166655",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 11,
+      "vertical_sections": 6,
+      "scale_blocked": false,
+      "result_sha256": "a1be7f70c87b3e0b9da7bd01a7cb27d67a3d78048b4846f4c6ea29773f381277"
+    },
+    {
+      "file": "fixtures/sections/sloped.pgm",
+      "input_sha256": "651e906f8bf095809ac00df076b6ed8ba71161d4b0c543a2486a08d3c24c0229",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 15,
+      "vertical_sections": 0,
+      "scale_blocked": false,
+      "result_sha256": "ee1e9ab90823ff29a283c4fe1300e53e0fce4afb5f937077f3b1e36201ca9445"
+    },
+    {
+      "file": "fixtures/sections/straight.pgm",
+      "input_sha256": "6f9a7e128eb3965d7f3066e41ee8d0ec7c17e866a0f40fc2aed92b68dc478fda",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 5,
+      "vertical_sections": 0,
+      "scale_blocked": false,
+      "result_sha256": "a4cd8b62b7922b1d75c8b298173d4e2053e0eb6da93ca198fad6faf9bc710624"
+    },
+    {
+      "file": "fixtures/sections/two-staves.pgm",
+      "input_sha256": "9e5e31907810b017599b89f978a883bdd42e8adc7eb34b43a2f2b38ed74a81d6",
+      "width": 320,
+      "height": 320,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 10,
+      "vertical_sections": 0,
+      "scale_blocked": false,
+      "result_sha256": "896aacc34c2e75efaa179eb06a87432c524eea22fc6a52716300e68316b42c4e"
+    },
+    {
+      "file": "fixtures/rendered/laura-180dpi.pgm",
+      "input_sha256": "cb43f760b96b4b0806972527c6d547e4c6f765ff2f286338ba964ccf3c42631a",
+      "width": 1489,
+      "height": 2104,
+      "exit": 0,
+      "exact_grid_json_match": true,
+      "horizontal_sections": 2576,
+      "vertical_sections": 3673,
+      "scale_blocked": false,
+      "result_sha256": "b4e031cffbff014b70d251863024588e5187b88e986125d40e3a6eedbb666d6f"
+    }
+  ]
+}

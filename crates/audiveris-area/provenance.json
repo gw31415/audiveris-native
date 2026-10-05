@@ -1,0 +1,59 @@
+{
+  "origin": "already-local Temurin JDK 21.0.12.1+1 src.zip; no new network retrieval",
+  "source_archive_sha256": "2fb0fb7eef6330656944cdd42a3ba36ea819deab00acf958468feb002bdf11e2",
+  "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+  "translated_scope": "Curve.crossingsFor; Order1/Order2/Order3 monotone splitting, coefficients and inversion; bounded native closed-path assembly",
+  "runtime_comparison": "official Audiveris5.11.0 Linux runtime Java25.0.3, independently retained control hashes in evidence/beam-prolog-review/provenance.json",
+  "files": {
+    "LICENSE": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+    "NOTICE": "2670109fbcef6f7fe2952c2028acd0eae09da6330a35fa156045828081fa7765",
+    "upstream/Curve.java": "578c74681f643fb72eb95ef45d08a6eeb79d9a1f22dfdb6c1ec4c1a543ca2d15",
+    "upstream/Order1.java": "a8af7312e94cf39d6f3718b5ef6d1dfed274c59def521b5e8168cc3c30a9e266",
+    "upstream/Order2.java": "e9b9e9526e76b1b22cab97e4e3bfa73f89c8c26a8f0c244342ce87cc0bdc045d",
+    "upstream/Order3.java": "c6c7cb0aa99cde1e0dde1c4e4c415e13300e4e2de7f335461fde2fb92ecb707b",
+    "upstream/AreaOp.java": "e315b0443bd28cf12fd4caaa4e0b584814434fec5f664cb825dad24640febf55",
+    "upstream/Edge.java": "a2ccf8d63d5a171fb6b52bf6af0ab2af5780dade86170c69ff7dddef5b95f2ea",
+    "upstream/CurveLink.java": "6c7d699825c8c5a29d245840127fbde333809d3d7ea9b202656528383450db26",
+    "upstream/ChainEnd.java": "2efb3ced05d8090facb3c8631a9f7ad9965c4d5e5e7b0ac22b3057742e0eeda3",
+    "upstream/FdLibm.java": "f1c8f58db6d010532182fd2370f35e1cf7ac03f71f90a793fd15f4f88323dc46",
+    "upstream/hypot-vectors.txt": "7678f839d94fb28837f9fadbe25d31a2768994e35776422fc8dcb9723ee446ec",
+    "upstream/Area.java": "128fbd86d42f462acf3e011458450381ef70f826f3e34877746e1166ff0afe91",
+    "upstream/Rectangle2D.java": "9efff49d8bbd1cf50cd3d789aee3a691f103dfbfc93ed873d12fd6c539885ab1",
+    "upstream/RectangularShape.java": "cea8e5ca4c4dc889378f1fae5e6ea978f4aa871e592d4ddc25c735b44e1b741a"
+  },
+  "fdlibm_hypot": {
+    "source": "already-local jdk-21.0.12.1+1/lib/src.zip!java.base/java/lang/FdLibm.java",
+    "source_sha256": "f1c8f58db6d010532182fd2370f35e1cf7ac03f71f90a793fd15f4f88323dc46",
+    "scope": "Math.hypot/StrictMath.hypot numerical primitive, preserving fdlibm operation order and high-word splitting",
+    "runtime_bytecode_check": "java.lang.FdLibm$Hypot is bytecode-identical under local javap between the cached JDK and official Audiveris runtime",
+    "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+    "native_source_sha256": "a8f52550a6ad0ca2144a5b1fc6d7e56bc85005a0d4024f604160959b8a11e5ba",
+    "hypot_vectors_sha256": "7678f839d94fb28837f9fadbe25d31a2768994e35776422fc8dcb9723ee446ec",
+    "hypot_vector_count": 5321,
+    "hypot_vector_check": "Exact finite/infinite bits and NaN classification; both debug and release passed against official runtime25",
+    "runtime_bytecode_sha256": "14fc75010b28f07d79026f024d96bb3846db3adb4b36225ded85d59bb0d277fe"
+  },
+  "linear_area": {
+    "source": "already-local jdk-21.0.12.1+1/lib/src.zip!java.desktop/{sun/awt/geom/{AreaOp,Order1,Edge,CurveLink,ChainEnd},java/awt/geom/{Area,Rectangle2D,RectangularShape}}.java",
+    "scope": "Bounded line-only nonzero-winding normalization and CAG subtraction; original Y-band sorting, equality selection, link/chain assembly, absorption and subcurve arithmetic; no curved CAG or renderer; original contour-order Rectangle2D cached bounds, integer conversion and containment precheck",
+    "runtime_bytecode_check": "All eight complete classes have identical javap -c -p outputs between cached JDK21 and official runtime25",
+    "runtime_bytecode_sha256": {
+      "AreaOp": "dac9a95dd882534ada18b3d7bde145bbc2eecf6167615e5df9b233f73e3d1b20",
+      "Order1": "4da9db1ead8d7013df43f7bb0daf0be9794c997d6e2304b6a8e977e9ba50ef4a",
+      "Edge": "5f39d5d7ecb0e42d9ae0eec5fce74294579033aae9ba94203222d54e725aa0b8",
+      "CurveLink": "8f248939bf11306011a580d22a9de7db7f55e9a950e36ac00f4a060669e0a510",
+      "ChainEnd": "c4d3187ab0ce918c807b5842dd523aa4b823fda8b83e0204306c23db80446bde",
+      "Area": "4a5188bdbc726ff52274ed32cc10b3f9a3ed8576241087e1846633cd215e845e",
+      "Rectangle2D": "7c0982360b49ef9131c3811c973abb0ce8676a60ea5e5560d8084a76af56015d",
+      "RectangularShape": "d351dc55349d23ced8ef31700c9861b06d49013480af0485a7cdd46ea5d9ae30"
+    },
+    "native_source_sha256": "4d833d749d9f7ee46123cbd883c1484f4f597b134a4f1cb04871ccd80f517ea0",
+    "license": "GPL-2.0-only WITH Classpath-exception-2.0",
+    "native_limits": {
+      "max_input_edges": 128,
+      "max_links": 1024,
+      "max_y_bands": 1024,
+      "unsupported_branch": "fail before original large-operation intermediate-consumption branch"
+    }
+  }
+}

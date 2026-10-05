@@ -1,0 +1,13 @@
+{
+  "native_outputs_used": false,
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "distribution_sha256": "ae714594f40e54b1a4951fc3f914f08ae38fe5d07b7f2283b1a904fdb6e0a318",
+  "jdk_sha256": "ce79869e1307ed8ee1e2baa86a412b1eb5b75d10a01006d788a6f968bcfaee94",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "cases": 104,
+  "accepted_extensions": 28,
+  "fixture_sha256": "ca91a00dad2359a1684c93c95d14c139199730020af996ccbf37d74e77193ca4",
+  "inputs_sha256": "5bc4fcf3ce71b6bb5b2b86db60a7387d8c10acd1d97c751c4f6259332b44e7cc",
+  "observer_sha256": "cbf7047849a90dc399bddb55bcac9abd970b10756c36e4c72dae1467fe77a041",
+  "runtime_excludes_compile_shims": true
+}

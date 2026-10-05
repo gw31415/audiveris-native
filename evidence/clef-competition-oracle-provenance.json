@@ -1,0 +1,23 @@
+{
+  "purpose": "Development-only constructed original Staff.getCompetingClefs ordering; not image parity",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "release": "5.11.0",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_source": "scripts/java/ClefCompetitionControlProbe.java",
+  "observer_source_sha256": "4082c931c153177fd937411e654f79533f8691be262e6d2692cb65e5305fd7cb",
+  "fixture_path": "fixtures/clef-competition/official-controlled.json",
+  "fixture_sha256": "a23b44ebb49e7d6dabc42cccf42a9d271d414bf1db7cbea4c3e96544fbeef626",
+  "raw_result_path": "evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/result.json",
+  "raw_result_sha256": "a23b44ebb49e7d6dabc42cccf42a9d271d414bf1db7cbea4c3e96544fbeef626",
+  "runner_provenance_path": "evidence/linux-oracle/clef-competition-control-20261002/provenance.json",
+  "runner_provenance_sha256": "39edcb95e1f86dda1318505d74a86bf2a0702a0fb8a01b4db69673956d8d2c64",
+  "execution_receipt_path": "evidence/linux-oracle/clef-competition-control-20261002/clef-competition-control/execution.json",
+  "execution_receipt_sha256": "40e8e8133142b87d6f67f6248739094383e20b4d09d59d6e4a9682869c799f2b",
+  "case_count": 76,
+  "methods_observed": [
+    "Staff.getCompetingClefs",
+    "SIGraph.getExclusions",
+    "DirectedMultigraph.addEdge"
+  ],
+  "status": "Durable pinned original run completed; native comparisons pass debug and release"
+}

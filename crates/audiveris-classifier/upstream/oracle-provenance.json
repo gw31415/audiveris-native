@@ -1,0 +1,70 @@
+{
+  "java": "/Applications/Audiveris.app/Contents/runtime/Contents/Home/bin/java",
+  "java_version": "openjdk version \"21.0.7\" 2025-04-15 LTS\nOpenJDK Runtime Environment Zulu21.42+19-CA (build 21.0.7+6-LTS)\nOpenJDK 64-Bit Server VM Zulu21.42+19-CA (build 21.0.7+6-LTS, mixed mode)\n",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "runtime_audiveris_jar": false,
+  "repeat_byte_identical": true,
+  "golden_sha256": "432e7003d8c2b319575e79c023a6f378cd4f18f9092b5ce47fb8aa1d46dfe983",
+  "golden_bytes": 1385561,
+  "runtime_dependencies": [
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/slf4j-api-2.0.16.jar",
+      "sha256": "a12578dde1ba00bd9b816d388a0b879928d00bab3c83c240f7013bf4196c579a"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/logback-classic-1.4.14.jar",
+      "sha256": "8e832f7263ca606ae36dabb2d8b24c2f43d82cf634e81dad9d1640fa6ee3c596"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/logback-core-1.4.14.jar",
+      "sha256": "f8c2f05f42530b1852739507c1792f0080167850ed8f396444c6913d6617a293"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/jaxb-api-2.3.1.jar",
+      "sha256": "88b955a0df57880a26a74708bc34f74dcaf8ebf4e78843a28b50eae945732b06"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/jaxb-core-2.3.0.1.jar",
+      "sha256": "d2ecba63615f317a11fb55c6468f6a9480f6411c10951d9881bafd9a9a8d0467"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/jaxb-impl-2.3.1.jar",
+      "sha256": "e6c9e0f1830fd5f7c30c25ecf5e2046c5668b06d304add89d2f027d5072297d0"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/javax.activation-api-1.2.0.jar",
+      "sha256": "43fdef0b5b6ceb31b0424b208b930c74ab58fac2ceeb7b3f6fd3aeb8b5ca4393"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/jackson-databind-2.13.0.jar",
+      "sha256": "9c826d27176268777adcf97e1c6e2051c7e33a7aaa2c370c2e8c6077fd9da3f4"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/jackson-core-2.13.0.jar",
+      "sha256": "348bc59b348df2e807b356f1d62d2afb41a974073328abc773eb0932b855d2c8"
+    },
+    {
+      "path": "/Applications/Audiveris.app/Contents/app/jackson-annotations-2.13.0.jar",
+      "sha256": "81f9724d8843e8b08f8f6c0609e7a2b030d00c34861c4ac7e2099a7235047d6f"
+    }
+  ],
+  "compile_time_only_audiveris_jar_sha256": "defed127f4b95ef3c11aa1d6abf0c6597779d5349a0d7fa22b082869fb016df5",
+  "sources": [
+    {
+      "path": "oracle/upstream/org/audiveris/omr/math/NeuralNetwork.java",
+      "sha256": "b0659cdeae65702ed7e2676ce0116f763ccdaa70bc6c21ac2e41a14d016cfb28"
+    },
+    {
+      "path": "oracle/upstream/org/audiveris/omr/math/PoorManAlgebra.java",
+      "sha256": "c007e63694dbb7b363f0f8fd1a1e26fe266fc8d1e4c0b6f8e92562332fb38203"
+    },
+    {
+      "path": "oracle/upstream/org/audiveris/omr/classifier/TrainingMonitor.java",
+      "sha256": "df389edcbbd05b5d89f52d534f92749bb2ef08a356ca6a935842195b3d9dbf61"
+    },
+    {
+      "path": "oracle/src/NetworkOracle.java",
+      "sha256": "c3feb7cd74878d80c21ec57ce7d31f49287f0dfce2b628aeee45f7e1749c44c8"
+    }
+  ]
+}

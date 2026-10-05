@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "original_fields_byte_reproduced": true,
+  "original_sha256": "1e25a3bd3a44d9dd3ae58b2f0bdf5b39989ac0b481cb97297408903d07725f27",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "independent_compilations_and_runs": 2,
+  "cases": 800
+}

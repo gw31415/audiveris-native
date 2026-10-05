@@ -1,0 +1,143 @@
+Compiled from "Grades.java"
+class org.audiveris.omr.glyph.Grades$Constants extends org.audiveris.omr.constant.ConstantSet {
+  private final org.audiveris.omr.constant.Constant$Ratio intrinsicRatio;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade validationMinGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio minContextualGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio goodBarConnectorGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio goodInterGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio goodRelationGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio goodBeamGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio ratherGoodHeadGrade;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade symbolMinGrade;
+
+  private final org.audiveris.omr.constant.Constant$Ratio minInterGrade;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade keyAlterMinGrade1;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade timeMinGrade;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade clefMinGrade;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade keySigMinGrade;
+
+  private final org.audiveris.omr.classifier.Evaluation$Grade keyAlterMinGrade2;
+
+  private org.audiveris.omr.glyph.Grades$Constants();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method org/audiveris/omr/constant/ConstantSet."<init>":()V
+       4: aload_0
+       5: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+       8: dup
+       9: ldc2_w        #9                  // double 0.8d
+      12: ldc           #11                 // String Reduction ratio applied on any intrinsic grade
+      14: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      17: putfield      #16                 // Field intrinsicRatio:Lorg/audiveris/omr/constant/Constant$Ratio;
+      20: aload_0
+      21: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+      24: dup
+      25: ldc2_w        #9                  // double 0.8d
+      28: ldc           #24                 // String Minimum grade for a validation
+      30: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+      33: putfield      #27                 // Field validationMinGrade:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+      36: aload_0
+      37: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+      40: dup
+      41: ldc2_w        #31                 // double 0.5d
+      44: ldc           #33                 // String Default minimum interpretation contextual grade
+      46: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      49: putfield      #35                 // Field minContextualGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+      52: aload_0
+      53: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+      56: dup
+      57: ldc2_w        #38                 // double 0.65d
+      60: ldc           #40                 // String Good interpretation grade for a bar connector
+      62: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      65: putfield      #42                 // Field goodBarConnectorGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+      68: aload_0
+      69: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+      72: dup
+      73: ldc2_w        #31                 // double 0.5d
+      76: ldc           #45                 // String Default good interpretation grade
+      78: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      81: putfield      #47                 // Field goodInterGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+      84: aload_0
+      85: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+      88: dup
+      89: ldc2_w        #31                 // double 0.5d
+      92: ldc           #50                 // String Default good relation grade
+      94: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+      97: putfield      #52                 // Field goodRelationGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+     100: aload_0
+     101: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+     104: dup
+     105: ldc2_w        #55                 // double 0.35d
+     108: ldc           #57                 // String Minimum grade for being a good beam
+     110: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     113: putfield      #59                 // Field goodBeamGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+     116: aload_0
+     117: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+     120: dup
+     121: ldc2_w        #62                 // double 0.3d
+     124: ldc           #64                 // String Rather good interpretation grade for a head
+     126: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     129: putfield      #66                 // Field ratherGoodHeadGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+     132: aload_0
+     133: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+     136: dup
+     137: ldc2_w        #69                 // double 0.15d
+     140: ldc           #71                 // String Minimum grade for a symbol
+     142: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+     145: putfield      #73                 // Field symbolMinGrade:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+     148: aload_0
+     149: new           #7                  // class org/audiveris/omr/constant/Constant$Ratio
+     152: dup
+     153: ldc2_w        #76                 // double 0.1d
+     156: ldc           #78                 // String Default minimum interpretation grade
+     158: invokespecial #13                 // Method org/audiveris/omr/constant/Constant$Ratio."<init>":(DLjava/lang/String;)V
+     161: putfield      #80                 // Field minInterGrade:Lorg/audiveris/omr/constant/Constant$Ratio;
+     164: aload_0
+     165: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+     168: dup
+     169: ldc2_w        #76                 // double 0.1d
+     172: ldc           #83                 // String Minimum grade for a key item symbol, phase 1 (component)
+     174: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+     177: putfield      #85                 // Field keyAlterMinGrade1:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+     180: aload_0
+     181: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+     184: dup
+     185: ldc2_w        #76                 // double 0.1d
+     188: ldc           #88                 // String Minimum grade for a time sig
+     190: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+     193: putfield      #90                 // Field timeMinGrade:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+     196: aload_0
+     197: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+     200: dup
+     201: ldc2_w        #93                 // double 0.03d
+     204: ldc           #95                 // String Minimum grade for a clef
+     206: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+     209: putfield      #97                 // Field clefMinGrade:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+     212: aload_0
+     213: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+     216: dup
+     217: ldc2_w        #100                // double 0.01d
+     220: ldc           #102                // String Minimum grade for a key signature
+     222: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+     225: putfield      #104                // Field keySigMinGrade:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+     228: aload_0
+     229: new           #22                 // class org/audiveris/omr/classifier/Evaluation$Grade
+     232: dup
+     233: ldc2_w        #100                // double 0.01d
+     236: ldc           #107                // String Minimum grade for a key item symbol, phase 2 (staff slice)
+     238: invokespecial #26                 // Method org/audiveris/omr/classifier/Evaluation$Grade."<init>":(DLjava/lang/String;)V
+     241: putfield      #109                // Field keyAlterMinGrade2:Lorg/audiveris/omr/classifier/Evaluation$Grade;
+     244: return
+}

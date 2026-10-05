@@ -1,0 +1,12 @@
+Derived from Audiveris 5.11.0, commit 9e1e55cd2746037d059345881c53e6a6754bffbd.
+Copyright © Audiveris 2026. All rights reserved.
+Original author: Hervé Bitteur.
+Rust translation and bounded-input validation: 2026-10-02.
+
+Source algorithms: Picture.buildNoStaffBuffer, RunTable.render,
+GlyphFactory.scanTable/createLut/buildAllGlyphs/buildGlyph, RunTableFactory.
+Licensed under GNU AGPL version 3 or, at your option, any later version.
+See LICENSE. Java infrastructure is used only to generate test references.
+
+The An Laura fixture is derived from OpenScore Lieder CC0 data; see fixtures/.
+Synthetic black/white fixtures created for this module are dedicated under CC0-1.0.

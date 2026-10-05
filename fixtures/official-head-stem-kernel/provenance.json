@@ -1,0 +1,35 @@
+{
+  "native_outputs_used": false,
+  "release": "5.11.0",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "9e3ceec4374854911f9fa912c38cea0d049f93f42e1850253ec58a2920198721",
+  "controls_sha256": "845d8f5117b62c411da04c61f209b063dc53a9f1f2bafb1cf85fec5fcb8aecf6",
+  "compiler_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "runtime_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "compile_argv": [
+    "/workspace/onboarding/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+    "-d",
+    "/workspace/work/head-coverage/stem-kernel-source-certified-first/classes",
+    "/workspace/onboarding/artifacts/audiveris-source/scripts/java/HeadStemKernelProbe.java"
+  ],
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx256m",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/workspace/work/head-coverage/stem-kernel-source-certified-first/home",
+    "-Djava.util.prefs.userRoot=/workspace/work/head-coverage/stem-kernel-source-certified-first/prefs",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/head-coverage/stem-kernel-source-certified-first/classes",
+    "HeadStemKernelProbe",
+    "/workspace/work/head-coverage/stem-kernel-source-certified-first/controls.json"
+  ],
+  "exit_code": 0,
+  "controlled_counts": {
+    "portions": 264,
+    "consistency": 20,
+    "invading": 70,
+    "gap_limits": 3
+  },
+  "scope": "Default constants/direct HeadStemRelation kernels; no native input, stem attachment, shared SIG update, complete HEADS or STEMS claim."
+}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "independent_compilations_and_runs": 2,
+  "original_sha256": "633afd538283f475d131aa011ccdf8843c34c2ec37fed1f1e5fcb4d369b9c913",
+  "input_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "actual_head_builders": 600,
+  "cases": 6600,
+  "original_VIP_removal_condition_preserved": true,
+  "original_GeoUtil_yOverlap_called_for_diagnostics": true,
+  "original_JVM_ids_normalized": true,
+  "native_full_lookupChunks_composition_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

@@ -1,0 +1,18 @@
+{
+  "debug": {
+    "passed": 55,
+    "command": "cargo test --workspace --offline --locked -j 2",
+    "exit": 0
+  },
+  "release": {
+    "passed": 55,
+    "command": "cargo test --workspace --release --offline --locked -j 2",
+    "exit": 0
+  },
+  "clippy": {
+    "command": "cargo clippy --workspace --offline --locked --all-targets -j 2 -- -D warnings",
+    "exit": 0
+  },
+  "original_rasters": 13,
+  "coverage": "Full GRID graph, line geometry and glyphs, HLAG/VLAG and system membership, parts/groups, automatic GRID staff masks and distance tables. HEADS not complete."
+}

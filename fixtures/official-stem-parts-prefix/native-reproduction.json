@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "native_controls_gzip_sha256": "fccbee208d4741aab44a65e55b807511b85328c7668f103369851fd9f79033c6",
+  "native_source_sha256": {
+    "src/stem_parts_cache.rs": "dd9fb417a9858c082cd998cc337acfb6b303f3ca3b1a240daf7d427efd089652",
+    "examples/stem_parts_prefix_dump.rs": "c2bf5c3e6876127ea1c1285d30934c4697575f3356328c9191aad5aaac708e15",
+    "examples/support/stem_parts_prefix_controls.rs": "13b4ae0e5760c7d32c876d89783b2b3b33c1bfcb926ac10e8542aaeb1f8dfa66",
+    "examples/support/stem_parts_cache_head_controls.rs": "01db578fb55355c5706edfd0604dadccda8d638bd8313f0d34a90f2207cbe63b",
+    "tests/stem_parts_cache.rs": "cee13fac1ab99ff27352fb3c2bd5e37c5afe87b1fe8d1bbe922df07be422bf95"
+  },
+  "prefix_controls": 4680,
+  "last_gap_controls": 4680,
+  "direct_selected_original_cache_controls": 12,
+  "prior_direct_original_head_records_replayed_via_native_prefix_cache": 1152,
+  "fresh_direct_original_whole_prefix_head_chain_observed": false,
+  "float_absolute_tolerance": 1e-12,
+  "automatic_image_endpoint_selection_complete": false,
+  "page_cache_SIG_complete": false,
+  "epilog_complete": false,
+  "heads_complete": false,
+  "stems_complete": false
+}

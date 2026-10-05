@@ -1,0 +1,15 @@
+{
+  "cases": 136,
+  "cli_scores_compared": 20264,
+  "max_absolute_score_error": 2.220446049250313e-16,
+  "absolute_tolerance": 1e-12,
+  "relative_tolerance": 1e-10,
+  "top5_order_match": true,
+  "invalid_input_cases": 4,
+  "root_cli_error_exit": 1,
+  "import_commit": "185b0992172197a41cbfa5ec85f335471b01df7b",
+  "history_import_commit": "ee5f3ff",
+  "golden_sha256": "432e7003d8c2b319575e79c023a6f378cd4f18f9092b5ce47fb8aa1d46dfe983",
+  "image_to_classifier": false,
+  "profile": "target/debug/audiveris-native"
+}
