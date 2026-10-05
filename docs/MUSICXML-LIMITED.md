@@ -346,7 +346,7 @@ following section records the newly connected successful native image path. [Con
 The saved positive image now runs without Java:
 
 ```sh
-cargo build --locked --bin audiveris-musicxml
+CARGO_INCREMENTAL=0 CARGO_PROFILE_DEV_DEBUG=0 cargo build --locked --bin audiveris-musicxml -j1
 mkdir -p work/beam-example
 ./target/debug/audiveris-musicxml \
   fixtures/official-image-musicxml-beams/beam-eighth-quarter.png \
@@ -388,7 +388,16 @@ staff. The eraser currently certifies horizontal restored integer borders and
 Java2D's normalized one-pixel contour. Siblings/multiple beam levels/hooks,
 closer limits, cross-staff/system, sloping/fractional/wider eraser strokes,
 mirrored/void beamed heads and broader cleaner/reduction/rhythm remain pending.
-`continue` is implemented by ordered owned membership but has no whole-image
-comparison yet. Nonzero skew, real scans, other fonts/special staffs/full24
+`continue` is implemented by ordered owned chord membership but has no whole-image
+comparison yet. The validated image has two side stumps and no intermediate
+stump; the original side-first/failed-side scheduling branch must be connected
+and compared before claiming intermediate-stump image support. Nonzero skew, real scans, other fonts/special staffs/full24
 pages and32sources remain managed limitations, not planned omissions.
 All global completion flags stay false. Releases/Library/GHA are unchanged.
+
+This checkpoint covers all563 unique workspace tests using the passed fixed-production
+prefix and the corrected boundary/unrun targets/crates/doc-tests. Two stopped runs
+and their fixes are recorded separately; this is not an uninterrupted full-suite
+run. Cargo test-list coverage found no missing or extra tests; fmt and all-target
+clippy passed. An independently fetched clean clone built the Linux CLI and
+repeated the nine-event comparison/XSD check. [Validation](../evidence/musicxml-beam-eighth/VALIDATION.json).

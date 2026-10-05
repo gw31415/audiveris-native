@@ -120,8 +120,14 @@ profile4/実cache/BeamStem・HeadStem→beam-aware support/競合整理→実cho
 PageCleaner area rasterとBeamHeadCleanerはそれぞれ別の比較境界です。
 全BEAMS/STEMS/SIG一致とは区別します。旧成功例と不足小節の拒否を保持。
 
-次はsibling/multiple-level/hook・alien closer limit・cross-staff/systemと所有接続、
+次は中間stumpのside-first/失敗時分岐と正のcontinue画像比較、
+sibling/multiple-level/hook・alien closer limit・cross-staff/systemと所有接続、
 下向き/複数旗、臨時記号・付点lateChecks・一般rhythmへ依存順で進める必要があります。
 現在は1system1standard beam/1part、水平restored eraserに限定した小単位であり、
 原版非UI全機能の最終目標と省略なし方針は維持。試す手順は
 [MUSICXML-LIMITED.md](MUSICXML-LIMITED.md#single-standard-beam-eighth-notes--musicxml)。
+
+この実装treeの全563一意テストを分割回帰で確認し、Cargo全一覧との照合で漏れ・重複計上なし。
+途中停止は検証要約へ別記し、単一無停止の全suiteとは区別。fmt/clippy、別cloneのLinux CLI
+ビルド・同一画像9イベント・MusicXML4 XSDも成功。
+[最小検証要約](../evidence/musicxml-beam-eighth/VALIDATION.json)。

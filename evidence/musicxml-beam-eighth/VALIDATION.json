@@ -1,5 +1,11 @@
 {
-  "source_identity": "implementation in containing source commit; final regression source recorded after the one complete run",
+  "source_identity": {
+    "production_source_commit": "efd8ed8a7a807ca1f263b541c91c43b96b19a80a",
+    "test_boundary_checkpoint": "89254f3864484e861203813597a1bfa54d36182c",
+    "src_tree": "f9dab8e11450b4f2d9208062d7f8b7c4b5070732",
+    "crates_tree": "5838d35bd0a83e7f7397e2b6b7611ce580ac323a",
+    "production_trees_unchanged_after_passed_prefix": true
+  },
   "original_version": "5.11.0",
   "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
   "input": "fixtures/official-image-musicxml-beams/beam-eighth-quarter.png",
@@ -16,8 +22,21 @@
     "target_integration": "musicxml_limited10 + stem_image_beam_builders2 passed, including old examples and incomplete-measure refusal",
     "target_boundaries": "beam eraser/end-removal2 and malformed-owned-beam1 passed",
     "fmt": "passed",
-    "all_target_clippy_D_warnings": "passed",
-    "full_workspace": "in progress: keep fixed-production passed targets; rerun corrected boundary and all not-yet-run targets/crates/docs; do not repeat the passed prefix",
+    "all_target_clippy_D_warnings": "passed after test boundary update",
+    "full_workspace": {
+      "status": "passed_complete_coverage_partitioned",
+      "unique_tests_passed": 563,
+      "unresolved_failures": 0,
+      "ignored": 0,
+      "method": "fixed-production workspace prefix + corrected profile-boundary target + unrun root targets/crates/doc-tests; full Cargo --list matched successful target/name pairs without duplicates",
+      "passed_prefix": 444,
+      "corrected_boundary": 2,
+      "remaining_root_targets": 98,
+      "remaining_crates": 20,
+      "duplicate_success_excluded": 1,
+      "doc_tests": 0,
+      "single_uninterrupted_workspace_run": false
+    },
     "first_workspace_run": {
       "source_commit": "31a3169ac7cf30b8e95a0b51228a30b0e962353b",
       "stopped_at": "existing transactional BeamStem endpoint refusal",
@@ -31,13 +50,23 @@
       "failed": 1,
       "stopped_at": "stem_glyph_grade old unsupported-profile4 assertion; original BEAM_SIDE4 now supported; invalid boundary moved to5",
       "production_changes_required": false
+    },
+    "independent_clone": {
+      "source_commit": "89254f3864484e861203813597a1bfa54d36182c",
+      "root_tree": "ff688984bc8c519423b9acab66e94fc76b775c40",
+      "clean": true,
+      "offline_locked_cargo_build": "passed, audiveris-musicxml Linux binary, Java-free runtime",
+      "fmt": "passed",
+      "same_input_native_cli": "passed: nine pitches/durations/onsets, first two up-stems and beam1 begin/end, divisions2",
+      "MusicXML4_XSD": true,
+      "global_completion_flags_false": true
     }
   },
   "limits": [
     "one standard beam per system, one surrounding part, zero skew",
     "horizontal XML-restored integer beam borders and normalized one-pixel eraser",
     "siblings/multiple levels/hooks/alien/closer limits/cross-system/shared glyph pending",
-    "continue ordering implemented but not whole-image compared",
+    "continue ordering in owned chord export implemented; intermediate-stump scheduler side-first/failed-side branch and whole-image continue comparison remain next dependencies",
     "raw beam metadata and final original stem trimming differ; 32sources and broad original dependencies pending"
   ],
   "global_completion_flags": false

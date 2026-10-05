@@ -13,7 +13,8 @@ This evidence is **preparation/comparison, not a completed beam export**.
 
 The dependency chain below was closed for one standard beam per system in the current checkpoint; see VALIDATION.json and docs/MUSICXML-LIMITED.md. Sibling/alien/shared-system and general parity remain pending. The recorded preparation state is historical.
 
-Original execution order:
+Historical125e928 cut list, following original execution order (closed for the
+validated two-side-stump image; hooks and general branches remain pending):
 
 1. `BeamLinker.VLinker.buildGeometry/filterHeads/inspect` → automatic beam-origin
    seeds, head corners, sections/chunks and StemBuilder items. Existing native
@@ -40,3 +41,21 @@ height and rounded grade, but its enclosing SIG bounds differ from the saved
 final original bounds. Whole BEAMS/STEMS/SIG equality is not claimed. Sibling
 beams/hooks, multiple head/stem ownership and general cleaner/rhythm still
 require their corresponding original dependencies; none are planned omissions.
+
+## Next original dependencies
+
+1. Preserve `StemsRetriever.linkStems` / `BeamLinker.linkSides` LEFT/RIGHT side
+   passes before `linkStumps`, including skipping intermediate stump linking
+   after a failed side. The current original-success image has two side stumps
+   only; a positive intermediate/`continue` image remains unverified.
+2. Connect existing sibling/closer-limit catalogs to actual cached stems and
+   owned SIG, then original longest-beam-first order and competing-hook cleanup.
+   `SigReducer.checkHooksHaveStem` and `PartwiseBuilder` hook/beam ordering and
+   finer duration divisions remain necessary before multiple levels/hooks.
+3. Extend original beam-area stroked-raster erasure, cross-system shared-glyph
+   finalization, mirrors/void heads and broader consistency/cleaner callbacks.
+   Retain admission refusals until each dependency is connected and compared.
+
+These are staged dependencies, not planned omissions from original nonUI parity.
+The same-image nine-event native export is now confirmed; details, partitioned
+563-test coverage and independent-clone build/XSD are in VALIDATION.json.
