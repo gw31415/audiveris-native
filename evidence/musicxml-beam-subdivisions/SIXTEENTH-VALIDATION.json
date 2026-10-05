@@ -53,6 +53,29 @@
     "fmt": true,
     "new_expected_workspace_count": 566,
     "latest_full_566_run": false,
-    "independent_clone_cli": "pending acquisition/build"
+    "independent_clone_cli": {
+      "source_commit": "9b14a4e362edaba559f2aa10199f9b354baa6478",
+      "repository_tree": "3188e49676c805773ce8d2ee0a5d44a1289b5e03",
+      "src_tree": "77d450089572282f1e816f7ba8ca8bc63161b9d7",
+      "normal_fetched_clean_workspace": true,
+      "offline_locked_Linux_Cargo_build": true,
+      "original_Java_runtime_required_by_native_CLI": false,
+      "inputs": [
+        {
+          "input": "beam-four-eighth-quarter.png",
+          "events": 10,
+          "direct_XML_pitch_duration_onset_beams_match_original": true,
+          "MusicXML4_XSD": true,
+          "completion_flags": false
+        },
+        {
+          "input": "beam-four-sixteenth-quarter.png",
+          "events": 11,
+          "direct_XML_pitch_duration_onset_beams_match_original": true,
+          "MusicXML4_XSD": true,
+          "completion_flags": false
+        }
+      ]
+    }
   }
 }

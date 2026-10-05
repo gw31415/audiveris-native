@@ -477,3 +477,10 @@ median lengths differ; three original numeric BeamInter controls certify the
 boundary separately from the image comparisons. Full565 regression belongs
 to321abfc; the final comparator change is checked with affected targets, not
 reported as another whole-workspace run.
+
+The independent clean clone fetched9b14a4e, matched its Git tree, built the
+Linux CLI with offline locked Cargo, and repeated both inputs. Direct emitted
+XML pitches/durations/onsets/beam1/2 match original5.11 (10/11 events); both
+MusicXML4 XSD checks pass. This readback is distinct from the full565 run on
+321abfc and the five affected target checks after the bounds-width correction.
+See [validation summary](../evidence/musicxml-beam-subdivisions/SIXTEENTH-VALIDATION.json).
