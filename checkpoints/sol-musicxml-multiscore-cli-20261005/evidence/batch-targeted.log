@@ -1,0 +1,9 @@
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.87s
+     Running tests/musicxml_limited.rs (/workspace/onboarding/target/debug/deps/musicxml_limited-412e384ef71bb0e2)
+
+running 1 test
+test batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_refusal ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 44.10s
+

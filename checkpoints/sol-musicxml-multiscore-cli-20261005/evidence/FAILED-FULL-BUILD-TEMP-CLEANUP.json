@@ -1,0 +1,27 @@
+{
+  "only_failed_link_temporaries": [
+    {
+      "path": "/workspace/onboarding/target/debug/deps/note_mask_cli-d461f67dff56a8ed.tmpd982624",
+      "sha256": "6dc616b052012daea7625104908884d43fa24f415a10a87c9f19fae8edcc6e94",
+      "bytes": 70037112,
+      "allocated": 33050624,
+      "meaning": "failed Cargo linker temporary; compilation ended101 before tests"
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/beam_preparation-9a6eb4d82eb06468.tmpfb7ccc8",
+      "sha256": "282771481fc7795299c83c2c30438812f35ffbb2c6be97032214d11a555a0c3e",
+      "bytes": 93154248,
+      "allocated": 12615680,
+      "meaning": "failed Cargo linker temporary; compilation ended101 before tests"
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/stem_chunk_head_filter-8587e0786bf997a7.tmp444cf7c",
+      "sha256": "33451a8243e092abd77ee69be7022db6372160cff5e82239d3f2f52c56b78bec",
+      "bytes": 70911704,
+      "allocated": 19255296,
+      "meaning": "failed Cargo linker temporary; compilation ended101 before tests"
+    }
+  ],
+  "active_builds": false,
+  "originals_source_evidence_unchanged": true
+}

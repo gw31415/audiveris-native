@@ -1,0 +1,37 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "quarter-rest",
+      "native_events": 8,
+      "original_rhythm_matched": true,
+      "proxymusic_reimport_matched": true,
+      "XSD": "passed",
+      "fixed_reference_render_SHA256": "456a9c4ccb9b59aa281cf2b165d91afb78297ceadf7e88f8df9f05f4699bbe6d",
+      "MusicXML_SHA256": "1428117865942781c0b52e8a831aa846a8a0c6622921104910946c20d043695a",
+      "native_source_before_CLI_metadata_stage": "5790f40073495c9f88e4b6297109328c5eebf321"
+    },
+    {
+      "case": "half-two-measures",
+      "native_events": 4,
+      "original_rhythm_matched": true,
+      "proxymusic_reimport_matched": true,
+      "XSD": "passed",
+      "fixed_reference_render_SHA256": "238b397c363dcca2fce4c97a63c59d20dc0a44ef1ef5a600c11e24de9168414a",
+      "MusicXML_SHA256": "6bdd6e273ae73172a64a65341b6fa1639064441684ef0e54edf60f24bc0901e7",
+      "native_source_before_CLI_metadata_stage": "5790f40073495c9f88e4b6297109328c5eebf321"
+    },
+    {
+      "case": "quarter-half-break",
+      "native_events": 12,
+      "original_rhythm_matched": true,
+      "proxymusic_reimport_matched": true,
+      "XSD": "passed",
+      "fixed_reference_render_SHA256": "7f3f5e3ae87decb9b25fc16be732c429f89c26a2a3f292cac501ef8e10fd7aa3",
+      "MusicXML_SHA256": "e67a921e9c75ef48ee2a951ea266d76b420c5bee98e6447dec0bb1053fbcb9ab",
+      "native_source_before_CLI_metadata_stage": "5790f40073495c9f88e4b6297109328c5eebf321"
+    }
+  ],
+  "comparison_boundary": "Original XML-loaded HEADS onward, separate from original full transient image process",
+  "renderer": "fixed development layout; no general engraving parity claim"
+}
