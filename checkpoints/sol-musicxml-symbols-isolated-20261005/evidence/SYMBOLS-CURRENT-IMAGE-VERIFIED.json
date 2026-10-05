@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "native_CLI_actual_image_symbols": true,
+  "same_raw_HEADS_report_SHA256": "6375200040b1fa2601f7e53857a962c2ed16ee42cf941b92c9a66d2757ce6148",
+  "quarter_filter_PGM_SHA256": "77a406235606fa864d6fbf8bee58a2e967fce4ba4cb6a2eb3317c25b2796e4fe",
+  "original_glyphs_matched": 26,
+  "whole_time_shape": "TIME_FOUR_FOUR",
+  "whole_time_grade": 0.7079369105062577,
+  "time_recognized_not_defaulted": true,
+  "old_retained_SIG_inters_tombstones_unchanged": true,
+  "current_report_SHA256": "c173b26187413837b586df717c22624508739b0c69bbb21366301b3813052b3b",
+  "comparison": "XML-loaded original strong SYMBOLS boundary; not full original raster recognition/LINKS/rhythm",
+  "new_page_rest_validation_pending": true,
+  "full_current_workspace_not_rerun": true,
+  "source_commit": "0e7e5a36c1fdf584745a18b40e7c64fe62936b6d",
+  "current_exact_source_owner_test_and_CLI_passed": true
+}

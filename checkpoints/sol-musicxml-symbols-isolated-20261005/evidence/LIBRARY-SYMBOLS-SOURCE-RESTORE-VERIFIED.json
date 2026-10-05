@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "reference": "library-file:fde1_bGliZmlsZV96dWJCWUY2dE9iUW14R2ZlcDhsdDdR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+  "retrieved_sha256": "69d6e3d991a35b91de8b48cceaf851416ffb20dc0af61b6b30bdee640865b8ca",
+  "source_commit": "0e7e5a36c1fdf584745a18b40e7c64fe62936b6d",
+  "source_tree": "e0d1b7e688c22e67a6cd80b6cb67469fde2b1415",
+  "all_source_SHA256_verified": 6807,
+  "source_commit_preimage_verified": true,
+  "objects_restored": 8,
+  "changed_files_restored": 8,
+  "full_source_materialized": false,
+  "Git_main_not_yet_pushed": true,
+  "current_full_workspace_not_rerun": true
+}
