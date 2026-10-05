@@ -64,12 +64,39 @@
     "CLI_corrections": "proposed/unimplemented; original InterController public methods inspected",
     "next_specific_unconnected": "existing HEADER state -> actual measure pitch/alter/meter -> native MusicXML; example not yet selected/verified",
     "Library_attempted": false,
-    "GitHub_Actions_dispatch_rerun_performed": false
+    "GitHub_Actions_dispatch_rerun_performed": false,
+    "independent_fresh_Git_source_and_CLI_restore": {
+      "status": "passed",
+      "remote_main": "ced0d1920f876e3c2f77b8c97f5ec75f43a22585",
+      "archive_tree": "fe518e74806162e0ef39e2d9be201794a69c457e",
+      "all_fresh_archive_blob_SHA256_verified": 2163,
+      "source_commit": "6cce132a244656bc69b97f705c0022930c764901",
+      "source_tree": "92ec78ec1dcca0e3ec70c54c43b46d67da2c552a",
+      "all_fresh_restored_source_blob_SHA256_verified": 6854,
+      "independent_original_restore_reused": true,
+      "new_remote_fetch_and_delta_restore_verified": true,
+      "local_object_borrowing_or_alternates": false,
+      "source_worktree_materialization_not_performed": true,
+      "documentation_only_paths_verified": [
+        "README.md",
+        "docs/MUSICXML-LIMITED.md",
+        "docs/PORT-STATUS.json",
+        "docs/PORT-STATUS.md",
+        "docs/PORTING.md"
+      ],
+      "recognition_code_and_fixtures_unchanged": true,
+      "CLI_package_unchanged_SHA256_verified": true,
+      "CLI_execution_inherited_from_compound_restore": true,
+      "validated_code_source": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
+      "full_workspace_tests_passed_on_code_source": 549,
+      "Library_attempted": false
+    }
   },
   "evidence_file_sha256": {
     "evidence/HeadInter-public-api.txt": "f958ee757812c037880f19e4ceecdbcd596f02cfbd22ab1e2653e134ce17af20",
     "evidence/InterController-public-api.txt": "b95488782fdd5e79a0800ac7e5fec7a61fc26734f417574abd3ab3b84e0915e5",
-    "evidence/COMPOUND-FINAL-MAIN-VERIFIED.json": "4f166bf8d170235f44270bf62838585bc1eedbae5d9ce3e772d8ed66b743095d"
+    "evidence/COMPOUND-FINAL-MAIN-VERIFIED.json": "4f166bf8d170235f44270bf62838585bc1eedbae5d9ce3e772d8ed66b743095d",
+    "evidence/FRESH-GIT-SOURCE-DOCS-VERIFIED.json": "d58b043ab043d94d4bce7df64f0b696684d1b8968f7ef7b3c0541a489705e04d"
   },
   "heads_complete": false,
   "stems_complete": false,
