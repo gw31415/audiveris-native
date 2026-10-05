@@ -1,0 +1,587 @@
+{
+  "recorded_utc": "2026-10-05T05:48:58.752278+00:00",
+  "branch": "main",
+  "parent_checkpoint_commit": "d3896db9c5bbf15b6192cf7f398b0d4439f731da",
+  "parent_implementation_commit": "d6bff858bc8c9037fccaaed70f89d276b7248a4a",
+  "local_implementation_commit": "43d9d4fb0821c69a7f52e0474a5038c5aea47bcc",
+  "local_implementation_tree": "68a5e4ba2e94afef2d82342764601625d34876a6",
+  "tracked_files": 6773,
+  "changed_files_from_parent": [
+    "fixtures/official-stem-retry-profiles/README.md",
+    "fixtures/official-stem-retry-profiles/StemRetryProfileProbe.java",
+    "fixtures/official-stem-retry-profiles/controls-provenance.json",
+    "fixtures/official-stem-retry-profiles/controls-second-provenance.json",
+    "fixtures/official-stem-retry-profiles/controls.json",
+    "fixtures/official-stem-retry-profiles/linking-controls.json",
+    "src/bin/audiveris-stems.rs",
+    "src/lib.rs",
+    "src/stem_builder.rs",
+    "src/stem_checks.rs",
+    "src/stem_image_head_expansion.rs",
+    "src/stem_image_head_linking.rs",
+    "tests/stem_builder_create.rs",
+    "tests/stem_checks.rs",
+    "tests/stem_glyph_grade.rs",
+    "tests/stem_image_head_linking.rs",
+    "tests/stem_retry_profiles.rs"
+  ],
+  "file_sha256": {
+    "fixtures/official-stem-retry-profiles/README.md": "a04017643b7d3f4c0d7049fb00e2df269b0e7123ca91ae0306316114fc130900",
+    "fixtures/official-stem-retry-profiles/StemRetryProfileProbe.java": "e46fb55710c7a19bb6c73f3663ec3bb9eca6bc1f8df21250a69ac27879adc4be",
+    "fixtures/official-stem-retry-profiles/controls-provenance.json": "feab1e6c7225bf19253b7e91d74e275c49d816006187ea81b9c5bae2ac9bb1a7",
+    "fixtures/official-stem-retry-profiles/controls-second-provenance.json": "85a5530a9c4ab27bab1bceaaea0c92965d64e608cf8432cccf9e34efd2727cb0",
+    "fixtures/official-stem-retry-profiles/controls.json": "23bddeaa839597dd169531049be5217fa27e803f91be3d3d3625fd0b608158a1",
+    "fixtures/official-stem-retry-profiles/linking-controls.json": "9e648692d12a9bb82e43ce7e5bf042466d2526b910f53ca52c67a9d2888f23d3",
+    "src/bin/audiveris-stems.rs": "811d55a89e429d85f39a35752bb4714a2614669c7f6b10c409713d087caa94ec",
+    "src/lib.rs": "67a9c311f9d6d4a34dc4d27b0ad5f512863d2ad1dc8cc60f8a0155bf46938687",
+    "src/stem_builder.rs": "55a12548001d7fdfc02618f58e4892fc8c01f288aecb3c2ab0ccffb8d8425e56",
+    "src/stem_checks.rs": "838f69f54c8088c6a352f27d2bb3cd4de07cdf988e151c32e431f4b1e7319c3e",
+    "src/stem_image_head_expansion.rs": "faa0ee73369aef3d4f803f92cf588a78bef41f380c0b096fe607400dd11a92fc",
+    "src/stem_image_head_linking.rs": "b027a5ebfbafbdddef492e5ac5712ef460275ae1b58cdcfad1a432c52366f988",
+    "tests/stem_builder_create.rs": "fcf2378fe7c131e4f941bf7090dc2e3aca669762090246b2f61cf97829f1b21c",
+    "tests/stem_checks.rs": "2f04446f2c7bb8f2946b70d81ae95eb5c0fb00dd73a8426520082ee93f8bf524",
+    "tests/stem_glyph_grade.rs": "6534de210edf069cf50d24cdc8dd3c84711cabf37913292f420d4543825a8a82",
+    "tests/stem_image_head_linking.rs": "af547a4b13d987208f898fb9403500ad9a05a4cb6f1bb86f30d9988e153193ee",
+    "tests/stem_retry_profiles.rs": "841d5d88c027134fc5741697b36f86141dc0390ae86f6f39c23815a5439b870d"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-musicxml-head-sig-20261005/SOURCE-SHA256.json",
+    "sha256": "be1dfe693bfacee26249264b0ecc8e4940f33d796bb360f2ab8d81d9767ad880",
+    "files": 6773
+  },
+  "bundle": {
+    "path": "checkpoints/sol-musicxml-head-sig-20261005/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 26624,
+    "decoded_sha256": "25c2c78ae37a7efe549f51cc4aa4c3a205a5a02bddc38e9502f6f06cd47c7d47",
+    "base64_sha256": "dc154f2b4c4f267e3c035519f9870c99c84586cc7d8e04923b4df9ba7f2002f7",
+    "prerequisite": "d6bff858bc8c9037fccaaed70f89d276b7248a4a"
+  },
+  "restore_script_sha256": "766aad49d5bcd2e3d33c2685f35b7a348ccefa3151c002bdcb4b1d62474b2fad",
+  "evidence_file_sha256": {
+    "evidence/LIBRARY-LINKING-PRODUCTION-PENDING-RECEIPT.json": "27cba26fc92aa445513b9563011b2989f86aefffa9bcc4de17cc2958bf1e778b",
+    "evidence/LIBRARY-LINKING-PRODUCTION-PENDING-RESTORE-VERIFIED.json": "849c0b8416481fae3d04161bb03e43099732176fa3ee4e98757120b889789b97",
+    "evidence/PROTOTYPE-LINKING-VERIFIED.json": "d2e928f77122e3030ffb8817c7e749fbf48d519e9fdb969de43cbde4d2944c39",
+    "evidence/linking-production-clippy.log": "8b65198507448a9f835938868a4954fb967ca22bf470519736a13df177f9d178",
+    "evidence/linking-production-fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/linking-production-tests-final.log.gz": "3b742b09b2142ee9da61d7d583721bbb718e4b4c7900cf3bc4fda9324412b16f",
+    "evidence/linking-production526-exit.json": "aace564200c75346bb963080b197543d688c80daafdf05a1a19d95000b5634fb",
+    "evidence/linking-production526-full.log.gz": "38876630c222ad5d453dd8c6d373327ce7c61c4025c850a0f4ddc4c6d4b5a55c",
+    "evidence/original-scheduler-verified.json": "2cf8fe35c88452cc1d62bc4bf0d4848bb7954efd46366f413b426a72df284fa5"
+  },
+  "validation": {
+    "full_current_workspace_tests_passed": 526,
+    "failed": 0,
+    "ignored": 0,
+    "source_tree_tested": "68a5e4ba2e94afef2d82342764601625d34876a6",
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "preexisting_fixture_files_SHA256_unchanged": 2600,
+    "current_Laura_HEADS_and_inspection_STEMS_entire_SHA256_unchanged": true,
+    "HEADS_Laura_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "STEMS_Laura_sha256": "c891c61bbeb894e460e5f4c95ae7cfb64b40fca0cdaa19161082bfedb81c3bba",
+    "actual_head_only_linking_original_XML_loaded_comparison": {
+      "status": "passed",
+      "scope": "native automatic image head-only actual linkStems phases1/2 compared with original XML-loaded scheduler",
+      "heads": 43,
+      "registered_actual_cached_stems": 10,
+      "head_stem_relations": 25,
+      "head_shapes_bounds_abnormal_states_stem_physical_geometry_grades_and_relation_fields_match": true,
+      "HEADS_raw_grade_difference_from_XML_three_decimal_rounding": [
+        {
+          "bounds": [
+            996,
+            214,
+            13,
+            8
+          ],
+          "original_XML_grade": 0.338,
+          "native_preserved_raw_grade": 0.33846153846153854
+        },
+        {
+          "bounds": [
+            996,
+            215,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            877,
+            221,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.261,
+          "native_preserved_raw_grade": 0.26119096509240247
+        },
+        {
+          "bounds": [
+            1117,
+            221,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.261,
+          "native_preserved_raw_grade": 0.26119096509240247
+        },
+        {
+          "bounds": [
+            876,
+            226,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            1116,
+            226,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            277,
+            233,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.289,
+          "native_preserved_raw_grade": 0.28943089430894314
+        },
+        {
+          "bounds": [
+            757,
+            233,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.289,
+          "native_preserved_raw_grade": 0.28943089430894314
+        },
+        {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            756,
+            237,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            397,
+            243,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.261,
+          "native_preserved_raw_grade": 0.26119096509240247
+        },
+        {
+          "bounds": [
+            637,
+            243,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.261,
+          "native_preserved_raw_grade": 0.26119096509240247
+        },
+        {
+          "bounds": [
+            396,
+            248,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            636,
+            248,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            517,
+            255,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.289,
+          "native_preserved_raw_grade": 0.28943089430894314
+        },
+        {
+          "bounds": [
+            516,
+            259,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.506,
+          "native_preserved_raw_grade": 0.5059665871121718
+        },
+        {
+          "bounds": [
+            993,
+            216,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            171,
+            221,
+            12,
+            10
+          ],
+          "original_XML_grade": 0.323,
+          "native_preserved_raw_grade": 0.32296296296296295
+        },
+        {
+          "bounds": [
+            871,
+            220,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.277,
+          "native_preserved_raw_grade": 0.27677725118483415
+        },
+        {
+          "bounds": [
+            1111,
+            220,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.277,
+          "native_preserved_raw_grade": 0.27677725118483415
+        },
+        {
+          "bounds": [
+            167,
+            220,
+            10,
+            10
+          ],
+          "original_XML_grade": 0.197,
+          "native_preserved_raw_grade": 0.1971563981042654
+        },
+        {
+          "bounds": [
+            873,
+            227,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            1113,
+            227,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            168,
+            227,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.386,
+          "native_preserved_raw_grade": 0.38634146341463416
+        },
+        {
+          "bounds": [
+            174,
+            227,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.274,
+          "native_preserved_raw_grade": 0.27397260273972607
+        },
+        {
+          "bounds": [
+            174,
+            233,
+            12,
+            10
+          ],
+          "original_XML_grade": 0.432,
+          "native_preserved_raw_grade": 0.4318840579710145
+        },
+        {
+          "bounds": [
+            169,
+            233,
+            12,
+            10
+          ],
+          "original_XML_grade": 0.226,
+          "native_preserved_raw_grade": 0.2263498920086393
+        },
+        {
+          "bounds": [
+            271,
+            232,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.217,
+          "native_preserved_raw_grade": 0.21691973969631234
+        },
+        {
+          "bounds": [
+            751,
+            232,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.217,
+          "native_preserved_raw_grade": 0.21691973969631234
+        },
+        {
+          "bounds": [
+            273,
+            238,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            753,
+            238,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            171,
+            238,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.427,
+          "native_preserved_raw_grade": 0.4273972602739726
+        },
+        {
+          "bounds": [
+            171,
+            243,
+            12,
+            10
+          ],
+          "original_XML_grade": 0.323,
+          "native_preserved_raw_grade": 0.32296296296296295
+        },
+        {
+          "bounds": [
+            391,
+            242,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.277,
+          "native_preserved_raw_grade": 0.27677725118483415
+        },
+        {
+          "bounds": [
+            631,
+            242,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.277,
+          "native_preserved_raw_grade": 0.27677725118483415
+        },
+        {
+          "bounds": [
+            393,
+            249,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            633,
+            249,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        },
+        {
+          "bounds": [
+            168,
+            249,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.386,
+          "native_preserved_raw_grade": 0.38634146341463416
+        },
+        {
+          "bounds": [
+            174,
+            249,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.274,
+          "native_preserved_raw_grade": 0.27397260273972607
+        },
+        {
+          "bounds": [
+            175,
+            254,
+            12,
+            10
+          ],
+          "original_XML_grade": 0.409,
+          "native_preserved_raw_grade": 0.40888888888888886
+        },
+        {
+          "bounds": [
+            511,
+            254,
+            9,
+            10
+          ],
+          "original_XML_grade": 0.217,
+          "native_preserved_raw_grade": 0.21691973969631234
+        },
+        {
+          "bounds": [
+            170,
+            255,
+            12,
+            10
+          ],
+          "original_XML_grade": 0.202,
+          "native_preserved_raw_grade": 0.20215982721382295
+        },
+        {
+          "bounds": [
+            513,
+            260,
+            13,
+            10
+          ],
+          "original_XML_grade": 0.712,
+          "native_preserved_raw_grade": 0.7123287671232877
+        }
+      ],
+      "native_raw_HEADS_grades_preserved": true,
+      "production_integrated": true,
+      "cleaner_reduction_epilog_complete": false,
+      "native_MusicXML_export_complete": false
+    },
+    "Library_source_diff_retrieval_and_overlay_recovery": {
+      "status": "passed",
+      "Library_reference": "library-file:fde1_bGliZmlsZV9ZOXk5NWtVNHl2THFlWmtseDhWQmtR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+      "retrieved_sha256": "8660a347a87ef9b5b7a9365dd6c466def8c5cb291a2b686a856c82fd1db7332b",
+      "changed_source_files_restored": 17,
+      "all_source_SHA256_verified": 6773,
+      "source_commit_preimage_verified": true,
+      "source_tree_restored": "68a5e4ba2e94afef2d82342764601625d34876a6",
+      "full_source_materialized": false,
+      "unchanged_source_base_objects_reused": true,
+      "full_current526_pending": true,
+      "Git_main_pushed": false
+    }
+  },
+  "implemented": "Native --linked-head-stems derives image head items/parts, runs original beam-free HeadLinker phases1/2 and retries profiles0..3, creates canonical glyphs in actual Registry/cache and attaches to retained live SIG;43heads/10stems/25relations. No caller-selected endpoints, parts or original output used at runtime.",
+  "comparison_limits": "Original 5.11 XML-loaded observation, preserving native raw HEADS grade; only three-decimal XML projection matches original stored head grades.40 actual-image glyph checks and44 controlled gap/ink cases at0..3 match checks/grades. This is not full transient original image-pipeline equivalence.",
+  "original_only_following_pipeline_observation": {
+    "scope": "original only; Rust scheduler not implemented",
+    "status": "passed",
+    "independent_results_byte_identical": true,
+    "counts": {
+      "before": {
+        "heads": 43,
+        "stems": 0,
+        "head_stem_relations": 0
+      },
+      "linked": {
+        "heads": 43,
+        "stems": 10,
+        "head_stem_relations": 25
+      },
+      "finalized": {
+        "heads": 43,
+        "stems": 10,
+        "head_stem_relations": 25
+      },
+      "reduced": {
+        "heads": 8,
+        "stems": 8,
+        "head_stem_relations": 8
+      }
+    }
+  },
+  "native_image_to_MusicXML_complete": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "musicxml_complete": false,
+  "unverified": [
+    "head cleaner/finalizeStems/beam scheduler and epilog",
+    "SigReducer contextualization/consistency/overlap/competition",
+    "pitch/duration/chords/measure/rhythm/export integration",
+    "ordinary rests/single voice rhythmic coverage",
+    "nonzero skew",
+    "real scans",
+    "special/mixed staff",
+    "full24shape pages",
+    "32sources selected-glyph limit",
+    "raw transient HEADS grade and persistence-boundary tie/retry cases"
+  ],
+  "estimate_status": "40-120h includes Java translation and reused native parts, low confidence;18-60h was an unestimated reserve, no additional reduction established"
+}
