@@ -1,0 +1,5 @@
+New audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json retains native image owner through head/stem reduction, measures/chords, strong symbol filter and recognized4/4, applies bounded single-voice shape durations/onsets, updates actual musical SIG fields and writes its actual8note content to MusicXML. No original output or selected-note/serialized-Graph input.
+
+First quarter two-bar check only. Native eight pitches/durations/onsets/voice/dots/measure memberships match original XML-loaded MEASURES epilog/CHORDS/SYMBOLS lateChecks/LINKS/RHYTHMS and independently declared renderer truth. MusicXML4 XSD validates with local imported schemas. Original full recognition/parity and practical multi-fixture scope are not completed. Reimport/render and page rests/half-note/multiple measures/system breaks/independent scores remain pending.
+
+Whole HEADS/STEMS/MusicXML/epilog flagsfalse. Full540 belongs to prior source db96; targeted validation is recorded separately. Immutable old fixtures/reports remain. Standalone RESTORE.py restores the full saved chain and all source SHA256. Actions dispatch/rerun not performed.

@@ -1,0 +1,170 @@
+{
+  "branch": "main",
+  "parent_checkpoint_commit": "21ca11bfbc46674cce9f4b238ad0fd36779254ac",
+  "parent_implementation_commit": "0e7e5a36c1fdf584745a18b40e7c64fe62936b6d",
+  "local_implementation_commit": "5790f40073495c9f88e4b6297109328c5eebf321",
+  "local_implementation_tree": "0d445cc8baf3b0adc0d983c6e615be2d74daeebf",
+  "tracked_files": 6811,
+  "changed_files_from_parent": [
+    "docs/STEM-IMAGE-CONTINUATION.md",
+    "fixtures/official-image-music-measures/RHYTHM-PROVENANCE.json",
+    "fixtures/official-image-music-measures/quarter-rhythm-observed.json",
+    "src/bin/audiveris-musicxml.rs",
+    "src/head_musical_pitch.rs",
+    "src/lib.rs",
+    "src/music_xml.rs",
+    "tests/stem_head_foundations.rs"
+  ],
+  "file_sha256": {
+    "docs/STEM-IMAGE-CONTINUATION.md": "8c922f03eddeec9aa6fc6f6489e7cfac33e94b64e08954c5aecae2a3dad23804",
+    "fixtures/official-image-music-measures/RHYTHM-PROVENANCE.json": "4b17af33c7a6cbf5b7e8f20beab78d68c738f8da9dfc4e3fc38e89cbb6930184",
+    "fixtures/official-image-music-measures/quarter-rhythm-observed.json": "2a8ff3421d6030da29a4d476ab5a27aa4c2b54531b2bd50710dd02161613dda4",
+    "src/bin/audiveris-musicxml.rs": "871e7892266ae898faa5b84da9f15e1bc73931ea9fb9d5444646df29c80bfb36",
+    "src/head_musical_pitch.rs": "899e0692542b74ce1c565d48c3545e78e6f3b5f1a05c4b08928a785ea6b55c8d",
+    "src/lib.rs": "fdf37761c08718085eee330e92cf2bf81d8a8d450b2ad4d18e4343d8291fc4d7",
+    "src/music_xml.rs": "e0eb6579f324424b52308a6714ca41f05a51d084b4019fdac8cc986b74cd7c84",
+    "tests/stem_head_foundations.rs": "b2ece3a5dcf9a5c21edf801e1987792630a15cef8c835b966c6650f45115714c"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-musicxml-quarter-first-20261005/SOURCE-SHA256.json",
+    "sha256": "853742cb6c9ae943e4463be0f7a052981bcfb1ce0f41025587b489f68c307411",
+    "files": 6811
+  },
+  "bundle": {
+    "path": "checkpoints/sol-musicxml-quarter-first-20261005/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 15288,
+    "decoded_sha256": "2acf40de264f6b1de8a1636765e1ee3e4b4dc078cf882a62d8793d90215d1edd",
+    "base64_sha256": "c67f5ef2d8a9e8f7b9f93c333e0c07e23a41655ccadb2469b15171b6069d4894",
+    "prerequisite": "0e7e5a36c1fdf584745a18b40e7c64fe62936b6d"
+  },
+  "restore_script_sha256": "58e219c9fc476348743baa1d4cef55e762d9f379dc8148a5fedec2228c76e0cb",
+  "evidence_file_sha256": {
+    "evidence/LIBRARY-MUSICXML-SOURCE-RECEIPT.json": "a6ed793e9c70cfead9ab045feaa14a5ea871989dd0561c347f00fc533c5f58b8",
+    "evidence/MUSICXML-CURRENT-IMAGE-VERIFIED.json": "93147c5f0e9d4a6b3cd25d492b3447831a13a2009524622bd84cea0e15a407a6",
+    "evidence/native-quarter-first.musicxml": "6d11f4b046cebc6e1d2c701ad35635c3c02319d309d86ed254493baf13f1e888",
+    "evidence/musicxml-image-test.log": "124e62947db931cc92b40f8e9acf7a6677705e828212b55baa964cfec5029711",
+    "evidence/musicxml-fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/musicxml-clippy.log": "ea7146d10d331eb4d610569e538447e6d3fb697bbfb381fa6e80ffb185d0efb7",
+    "evidence/LIBRARY-MUSICXML-SOURCE-RESTORE-VERIFIED.json": "442709f6e002aef0abf273e2e8859b34ea77d5ffaa49d5c1c24ae7fe240898c5",
+    "evidence/musicxml-current-cli.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "validation": {
+    "previous_full540_source": "db96c389f1e06350393c964bfcdd39afb5b7698f",
+    "full_workspace_after_change_not_run": true,
+    "old_fixture_SHA256_preserved": 2632,
+    "Library_source_delta_restore": {
+      "status": "passed",
+      "reference": "library-file:fde1_bGliZmlsZV93SzdhTEREcllDTE1QZEZhbWQ5M1hR_FileDrive_860dacf66f308191a98d88753eed9f4d",
+      "retrieved_sha256": "f0febbb43e7c41372e3c7757fe618a01aca4dfe02cb722c3cd321a1afa25b2a5",
+      "source_commit": "5790f40073495c9f88e4b6297109328c5eebf321",
+      "source_tree": "0d445cc8baf3b0adc0d983c6e615be2d74daeebf",
+      "all_source_SHA256_verified": 6811,
+      "source_commit_preimage_verified": true,
+      "objects_restored": 17,
+      "changed_files_restored": 8,
+      "full_source_materialized": false,
+      "Git_main_not_yet_pushed": true,
+      "current_full_workspace_not_rerun": true
+    },
+    "Laura_runtime_not_rerun_current_source": true,
+    "historical_Laura_source": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+    "historical_Laura_heads": 352,
+    "historical_Laura_exclusions": 513,
+    "historical_HEADS_report_SHA256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+    "historical_STEMS_report_SHA256": "c891c61bbeb894e460e5f4c95ae7cfb64b40fca0cdaa19161082bfedb81c3bba",
+    "targeted_existing_actual_image_owner_test_extended_through_export": 1,
+    "fmt": "passed",
+    "all_targets_clippy": "passed",
+    "native_current_CLI_to_MusicXML": {
+      "status": "passed",
+      "native_image_CLI_to_MusicXML": true,
+      "input_sha256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+      "native_XML_SHA256": "6d11f4b046cebc6e1d2c701ad35635c3c02319d309d86ed254493baf13f1e888",
+      "native_report_SHA256": "4dc8cb87866a28bc44373217cf3b7507a58406ba8581d71ab54e1ccc0c959820",
+      "MusicXML4_XSD_valid": true,
+      "local_schema_imports_only_no_network_validation": true,
+      "original_post_RHYTHMS_note_pitch_duration_onset_voice_matches": 8,
+      "complete_measures": 2,
+      "original_XML_output_reused": false,
+      "independent_declared_renderer_melody": [
+        [
+          "B",
+          4
+        ],
+        [
+          "G",
+          4
+        ],
+        [
+          "E",
+          4
+        ],
+        [
+          "G",
+          4
+        ],
+        [
+          "B",
+          4
+        ],
+        [
+          "D",
+          5
+        ],
+        [
+          "F",
+          5
+        ],
+        [
+          "D",
+          5
+        ]
+      ],
+      "first_two_bar_check_not_practical_completion": true,
+      "reimport_render_pending": true,
+      "page_rests_halves_multiple_bars_line_breaks_independent_scores_pending": true,
+      "schema_sources": {
+        "source_jar": "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/proxymusic-4.0.3.jar",
+        "jar_sha256": "933fe64e7136b0d98a186b61fc139fc9e1ee98b64662b60c9cf9af37b5f8f107",
+        "entry": "META-INF/jaxb/xsd/musicxml.xsd",
+        "musicxml_xsd_sha256": "8d67c4ff44144ef32056a483690d8ca683b7b5f1bb1350d1c2760220f6b41cb1",
+        "local_resolved_imports": [
+          {
+            "url": "https://raw.githubusercontent.com/w3c/musicxml/v4.0/schema/xml.xsd",
+            "path": "xml.xsd",
+            "SHA256": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/w3c/musicxml/v4.0/schema/xlink.xsd",
+            "path": "xlink.xsd",
+            "SHA256": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92"
+          }
+        ]
+      },
+      "declared_renderer_source_SHA256": "fb37f1ec92d1df189d886b744aa5ac1efd8c8ff360d5487ceb468c1d2bab9a9c",
+      "declaration_basis": "Renderer pitch array [0,2,4,2,0,-2,-4,-2] under treble; explicit expected B4 G4 E4 G4/B4 D5 F5 D5 set before exporter comparison",
+      "source_commit": "5790f40073495c9f88e4b6297109328c5eebf321"
+    },
+    "MusicXML_4_XSD_valid": true,
+    "original_post_RHYTHMS_notes_matched": 8,
+    "complete_measures": 2,
+    "practical_limited_scope_validation_complete": false
+  },
+  "implemented": "New audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json retains native image owner through head/stem reduction, measures/chords, strong symbol filter and recognized4/4, applies bounded single-voice shape durations/onsets, updates actual musical SIG fields and writes its actual8note content to MusicXML. No original output or selected-note/serialized-Graph input.",
+  "comparison_limits": "First quarter two-bar check only. Native eight pitches/durations/onsets/voice/dots/measure memberships match original XML-loaded MEASURES epilog/CHORDS/SYMBOLS lateChecks/LINKS/RHYTHMS and independently declared renderer truth. MusicXML4 XSD validates with local imported schemas. Original full recognition/parity and practical multi-fixture scope are not completed. Reimport/render and page rests/half-note/multiple measures/system breaks/independent scores remain pending.",
+  "unverified": [
+    "rest/half-note/multiple-measure/system-break/independent-score/negative input/reimport-render validation",
+    "full slot/voice matching and underfilled pickup fixing",
+    "compound glyphs/weak optionals/frozen key-time header import/full lateChecks/time columns/symbol reduction",
+    "other scales/fonts/real scans/photos/PDF/nonzero skew/special staff/all24shapes/32sources",
+    "accidentals/flags/beams/dots/ties/tuplets/polyphony/multi-staff/transposition",
+    "full reduction/finalizeStems/cleaner/epilog"
+  ],
+  "heads_complete": false,
+  "stems_complete": false,
+  "musicxml_complete": false,
+  "epilog_complete": false,
+  "automatic_raster_pipeline_complete": false,
+  "GitHub_Actions_dispatch_rerun_performed": false
+}

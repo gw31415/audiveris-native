@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "native_image_CLI_to_MusicXML": true,
+  "input_sha256": "d9e3cf0c238c8d88f3ebef13dca83c8432cfc9ff5f0d5d2626e435072eb53d4f",
+  "native_XML_SHA256": "6d11f4b046cebc6e1d2c701ad35635c3c02319d309d86ed254493baf13f1e888",
+  "native_report_SHA256": "4dc8cb87866a28bc44373217cf3b7507a58406ba8581d71ab54e1ccc0c959820",
+  "MusicXML4_XSD_valid": true,
+  "local_schema_imports_only_no_network_validation": true,
+  "original_post_RHYTHMS_note_pitch_duration_onset_voice_matches": 8,
+  "complete_measures": 2,
+  "original_XML_output_reused": false,
+  "independent_declared_renderer_melody": [
+    [
+      "B",
+      4
+    ],
+    [
+      "G",
+      4
+    ],
+    [
+      "E",
+      4
+    ],
+    [
+      "G",
+      4
+    ],
+    [
+      "B",
+      4
+    ],
+    [
+      "D",
+      5
+    ],
+    [
+      "F",
+      5
+    ],
+    [
+      "D",
+      5
+    ]
+  ],
+  "first_two_bar_check_not_practical_completion": true,
+  "reimport_render_pending": true,
+  "page_rests_halves_multiple_bars_line_breaks_independent_scores_pending": true,
+  "schema_sources": {
+    "source_jar": "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/proxymusic-4.0.3.jar",
+    "jar_sha256": "933fe64e7136b0d98a186b61fc139fc9e1ee98b64662b60c9cf9af37b5f8f107",
+    "entry": "META-INF/jaxb/xsd/musicxml.xsd",
+    "musicxml_xsd_sha256": "8d67c4ff44144ef32056a483690d8ca683b7b5f1bb1350d1c2760220f6b41cb1",
+    "local_resolved_imports": [
+      {
+        "url": "https://raw.githubusercontent.com/w3c/musicxml/v4.0/schema/xml.xsd",
+        "path": "xml.xsd",
+        "SHA256": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/w3c/musicxml/v4.0/schema/xlink.xsd",
+        "path": "xlink.xsd",
+        "SHA256": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92"
+      }
+    ]
+  },
+  "declared_renderer_source_SHA256": "fb37f1ec92d1df189d886b744aa5ac1efd8c8ff360d5487ceb468c1d2bab9a9c",
+  "declaration_basis": "Renderer pitch array [0,2,4,2,0,-2,-4,-2] under treble; explicit expected B4 G4 E4 G4/B4 D5 F5 D5 set before exporter comparison",
+  "source_commit": "5790f40073495c9f88e4b6297109328c5eebf321"
+}
