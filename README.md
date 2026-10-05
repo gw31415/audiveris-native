@@ -1,3 +1,7 @@
+# 最新：C4加線付き1譜面のMusicXML接続
+
+[CLI手順・限定範囲](checkpoints/sol-musicxml-ledger-cluster-20261005/CLI-GUIDE.md) / [Linux実行物](checkpoints/sol-musicxml-ledger-cluster-20261005/audiveris-musicxml-linux-x86_64.tar.gz) / [MANIFEST](checkpoints/sol-musicxml-ledger-cluster-20261005/MANIFEST.json)。対象回帰7件・fmt・clippy成功。新ソースの全回帰は未実行。旧544全回帰とreleaseは下記の当時の版として保持。新たな原版成功入力1件8イベントをnative画像処理で確認し、中央四分休符の拒否を維持。Library再探索・再upload無し。
+
 # Audiveris native — 限定MusicXML CLI
 
 Linuxで譜面画像から認識した音高・音価・休符・小節をMusicXML 4.0へ出力する限定版です。実行時にJavaや原版の認識XMLは使いません。
