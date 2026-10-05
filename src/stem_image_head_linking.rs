@@ -32,65 +32,93 @@ struct Scheduler<'a> {
     stems: BTreeMap<usize, Arc<CachedStem>>,
     budget: usize,
 }
+// BeamLinker.linkSides then linkStumps. All vertical linkers of a side are
+// attempted, even after one succeeds. Failed sides suppress the other side
+// and intermediate stumps, not already-created stems or the later head phase.
+fn schedule_beam(
+    builders: &[Value],
+    mut attempt: impl FnMut(&Value) -> Result<Value, String>,
+) -> Result<Value, String> {
+    let mut observations = Vec::new();
+    for side in ["LEFT", "RIGHT"] {
+        let candidates = builders
+            .iter()
+            .filter(|b| b["side"] == side)
+            .collect::<Vec<_>>();
+        if candidates.is_empty() {
+            continue;
+        }
+        let mut linked = false;
+        for c in candidates {
+            let result = attempt(c)?;
+            linked |= result["linked"] == true;
+            observations.push(result);
+        }
+        if !linked {
+            return Ok(json!(observations));
+        }
+    }
+    for c in builders.iter().filter(|b| b["side"].is_null()) {
+        observations.push(attempt(c)?);
+    }
+    Ok(json!(observations))
+}
 impl Scheduler<'_> {
     fn beams(&mut self, builders: &[Value]) -> Result<Value, String> {
-        let mut observations = Vec::new();
-        // StemsRetriever: sides before intermediate stumps; inspected catalog
-        // preserves original side order. One-beam group has no siblings.
-        for c in builders {
-            let profile = c["profile"].as_u64().unwrap() as u8;
-            let e = crate::stem_image_beam_builders::expand(self.registry, c, &self.context)?;
-            if e.last < 0 || e.ids.is_empty() || e.relations.is_empty() {
-                observations.push(json!({"builder":c,"linked":false}));
-                continue;
-            }
-            let gs = e
-                .ids
-                .iter()
-                .map(|id| self.registry.get(*id).map(|g| g.glyph.clone()))
-                .collect::<Result<Vec<_>, _>>()?;
-            let p =
-                crate::stem_checks::Parameters::new(self.context.il, self.max_stem, 0., profile)?;
-            let Some(stem) = self
-                .cache
-                .create_selected(self.registry, &gs, self.raster, &p)?
-                .stem
-            else {
-                continue;
-            };
-            let state = stem.snapshot()?;
-            let dir = if c["vertical"] == "BOTTOM" { -1 } else { 1 };
-            let Some(rel) = crate::stem_image_head_expansion::beam_relation(
-                c,
-                line(&state["median"])?,
-                dir,
-                self.context.il,
-                self.context.thickness,
-            )?
-            else {
-                continue;
-            };
-            self.cache.register(self.registry, self.graph, &stem)?;
-            self.stems.insert(stem.glyph_id(), stem.clone());
-            let beam = Key {
-                system: self.system,
-                phase: Phase::Beam,
-                local: c["native_beam_id"].as_u64().unwrap() as usize,
-            };
-            let sk = Key {
-                system: self.system,
-                phase: Phase::Stem,
-                local: stem.glyph_id(),
-            };
-            self.graph
-                .relations(self.system, Phase::Beam, vec![(beam, sk, rel.clone())])?;
-            for r in &e.relations {
-                let i = self.corner(&r["linker"])?;
-                self.add_relations(i, &stem, std::slice::from_ref(r))?;
-            }
-            observations.push(json!({"builder":c,"linked":true,"last_index":e.last,"selected_glyph_ids":e.ids,"expanded_line":e.line,"stem":state,"head_relations":e.relations,"beam_relation":rel}));
+        schedule_beam(builders, |c| self.beam(c))
+    }
+    fn beam(&mut self, c: &Value) -> Result<Value, String> {
+        let profile = c["profile"].as_u64().unwrap() as u8;
+        let e = crate::stem_image_beam_builders::expand(self.registry, c, &self.context)?;
+        if e.last < 0 || e.ids.is_empty() || e.relations.is_empty() {
+            return Ok(json!({"builder":c,"linked":false}));
         }
-        Ok(json!(observations))
+        let gs = e
+            .ids
+            .iter()
+            .map(|id| self.registry.get(*id).map(|g| g.glyph.clone()))
+            .collect::<Result<Vec<_>, _>>()?;
+        let p = crate::stem_checks::Parameters::new(self.context.il, self.max_stem, 0., profile)?;
+        let Some(stem) = self
+            .cache
+            .create_selected(self.registry, &gs, self.raster, &p)?
+            .stem
+        else {
+            return Ok(json!({"builder":c,"linked":false}));
+        };
+        let state = stem.snapshot()?;
+        let dir = if c["vertical"] == "BOTTOM" { -1 } else { 1 };
+        let Some(rel) = crate::stem_image_head_expansion::beam_relation(
+            c,
+            line(&state["median"])?,
+            dir,
+            self.context.il,
+            self.context.thickness,
+        )?
+        else {
+            return Ok(json!({"builder":c,"linked":false}));
+        };
+        self.cache.register(self.registry, self.graph, &stem)?;
+        self.stems.insert(stem.glyph_id(), stem.clone());
+        let beam = Key {
+            system: self.system,
+            phase: Phase::Beam,
+            local: c["native_beam_id"].as_u64().unwrap() as usize,
+        };
+        let sk = Key {
+            system: self.system,
+            phase: Phase::Stem,
+            local: stem.glyph_id(),
+        };
+        self.graph
+            .relations(self.system, Phase::Beam, vec![(beam, sk, rel.clone())])?;
+        for r in &e.relations {
+            let i = self.corner(&r["linker"])?;
+            self.add_relations(i, &stem, std::slice::from_ref(r))?;
+        }
+        Ok(
+            json!({"builder":c,"linked":true,"last_index":e.last,"selected_glyph_ids":e.ids,"expanded_line":e.line,"stem":state,"head_relations":e.relations,"beam_relation":rel}),
+        )
     }
     fn slot(&self, i: usize) -> (usize, bool) {
         (
@@ -192,6 +220,40 @@ impl Scheduler<'_> {
         )?;
         for entry in relations {
             if entry["relation"].is_null() {
+                continue;
+            }
+            // HeadLinker.CLinker.link applies its checked BeamStem relations
+            // as well as HeadStem relations. Keep actual cached endpoints and
+            // never overwrite a prior beam-origin relation to the same stem.
+            if entry["linker"]["kind"] == "Beam" {
+                if entry["relation"]["kind"] != "BeamStemRelation" {
+                    return Err("invalid scheduled beam support".into());
+                }
+                let beam = Key {
+                    system: self.system,
+                    phase: Phase::Beam,
+                    local: entry["linker"]["native_beam_id"]
+                        .as_u64()
+                        .ok_or("missing scheduled beam origin")?
+                        as usize,
+                };
+                if let Some(bid) = self.graph.id(beam) {
+                    let sk = Key {
+                        system: self.system,
+                        phase: Phase::Stem,
+                        local: stem.glyph_id(),
+                    };
+                    let sid = self.graph.id(sk).ok_or("missing scheduled beam stem")?;
+                    if !arr(&self.graph.snapshot()["relations"])?.iter().any(|r| {
+                        r["kind"] == "BeamStemRelation" && r["source"] == bid && r["target"] == sid
+                    }) {
+                        self.graph.relations(
+                            self.system,
+                            Phase::Beam,
+                            vec![(beam, sk, entry["relation"].clone())],
+                        )?;
+                    }
+                }
                 continue;
             }
             if entry["linker"]["kind"] != "HeadCorner" {
@@ -528,4 +590,34 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
         );
     }
     Ok(owned)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn original_side_passes_precede_stumps_and_failed_side_stops_remaining_passes() {
+        // Original BeamLinker.linkSides loops both VLinkers before deciding a
+        // side failed; StemsRetriever omits linkStumps on that beam afterward.
+        let builders = vec![
+            json!({"side":"LEFT","vertical":"TOP","n":0}),
+            json!({"side":null,"n":1}),
+            json!({"side":"RIGHT","n":2}),
+            json!({"side":"LEFT","vertical":"BOTTOM","n":3}),
+            json!({"side":null,"n":4}),
+        ];
+        for (failed, expected) in [
+            (None, vec![0, 3, 2, 1, 4]),
+            (Some("LEFT"), vec![0, 3]),
+            (Some("RIGHT"), vec![0, 3, 2]),
+        ] {
+            let mut trace = Vec::new();
+            schedule_beam(&builders, |b| {
+                trace.push(b["n"].as_i64().unwrap());
+                Ok(json!({"linked":b["side"].as_str()!=failed || failed.is_none()}))
+            })
+            .unwrap();
+            assert_eq!(trace, expected);
+        }
+    }
 }

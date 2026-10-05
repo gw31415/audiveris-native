@@ -117,6 +117,22 @@ pub(crate) fn clean_head_supports(graph: &mut Graph) -> Result<Vec<usize>, Strin
 /// PageCleaner.visit(AbstractBeamInter)/processArea in the restored HEADS
 /// context. The certified Java2D AA-off normalized one-pixel contour branch
 /// is rectangular only. Wider strokes/sloping restored borders stay pending.
+fn rectangle_rows(b: [f64; 4], margin: f32) -> Result<Vec<[i64; 3]>, String> {
+    if !(1.0..1.5).contains(&margin)
+        || b.iter().any(|v| !v.is_finite() || v.abs() > 4_000_000.)
+        || b[0] >= b[2]
+        || b[1] >= b[3]
+    {
+        return Err("beam PageCleaner invalid/wider stroke rectangle pending".into());
+    }
+    // Java2D DMarlin NearestPixelQuarter for an AA-off normalized stroke:
+    // floor(coord + .25) + .25. This thin contour paints that integer pixel.
+    // In the certified pen-width branch it contains the rectangular fill too.
+    let pixel = |v: f64| (v + 0.25).floor() as i64;
+    Ok((pixel(b[1])..=pixel(b[3]))
+        .map(|y| [y, pixel(b[0]), pixel(b[2]) + 1])
+        .collect())
+}
 pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, String> {
     let restore = |v: &Value| -> Result<f64, String> {
         let x = v.as_f64().ok_or("beam eraser geometry required")?;
@@ -135,20 +151,10 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
     let margin = (interline as f64 * 0.1) as f32;
     let top = l[1] - h / 2.;
     let bottom = l[1] + h / 2.;
-    if n["kind"] != "BeamInter"
-        || l[1] != l[3]
-        || l[0] >= l[2]
-        || h <= 0.
-        || margin.round() != 1.
-        || [l[0], l[2], top, bottom]
-            .iter()
-            .any(|v| v.fract() != 0. || v.abs() > 4_000_000.)
-    {
-        return Err("beam PageCleaner sloping/fractional/wider stroke raster pending".into());
+    if n["kind"] != "BeamInter" || l[1] != l[3] || l[0] >= l[2] || h <= 0. {
+        return Err("beam PageCleaner sloping/wider stroke raster pending".into());
     }
-    Ok((top as i64..=bottom as i64)
-        .map(|y| [y, l[0] as i64, l[2] as i64 + 1])
-        .collect())
+    rectangle_rows([l[0], top, l[2], bottom], margin)
 }
 
 #[cfg(test)]
@@ -169,10 +175,31 @@ mod tests {
             json!(area_rows(&beam, 11).unwrap()),
             observed["systems"][0]["PageCleaner_beam_white_rows"]
         );
+        let controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-subdivisions/raster-controls.json"
+        ))
+        .unwrap();
+        for case in controls["cases"].as_array().unwrap() {
+            let bounds = serde_json::from_value(case["area_bounds"].clone()).unwrap();
+            assert_eq!(
+                json!(rectangle_rows(bounds, 1.1).unwrap()),
+                case["white_rows"]
+            );
+        }
+        let continuation: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-subdivisions/eighth-continuation.json"
+        ))
+        .unwrap();
+        beam["median"] = json!([288., 209., 470., 209.]);
+        beam["height"] = json!(6.1);
+        assert_eq!(
+            json!(area_rows(&beam, 11).unwrap()),
+            continuation["systems"][0]["PageCleaner_beam_white_rows"]
+        );
         beam["median"][3] = json!(210.);
         assert!(area_rows(&beam, 11).is_err());
         beam["median"][3] = beam["median"][1].clone();
-        beam["height"] = json!(5.);
+        beam["height"] = json!(0.);
         assert!(area_rows(&beam, 11).is_err());
         beam["height"] = json!(6.);
         assert!(area_rows(&beam, 22).is_err());

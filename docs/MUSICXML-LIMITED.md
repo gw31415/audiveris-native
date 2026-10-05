@@ -401,3 +401,22 @@ and their fixes are recorded separately; this is not an uninterrupted full-suite
 run. Cargo test-list coverage found no missing or extra tests; fmt and all-target
 clippy passed. An independently fetched clean clone built the Linux CLI and
 repeated the nine-event comparison/XSD check. [Validation](../evidence/musicxml-beam-eighth/VALIDATION.json).
+
+
+## Intermediate beam stumps and continue
+
+The same native Linux command now accepts
+`fixtures/official-image-musicxml-beam-subdivisions/beam-four-eighth-quarter.png`.
+Four B4 eighths, G4/E4 quarters and the second measure's four quarters match
+unmodified original5.11: ten events, pitches, exact onsets/durations, and
+beam1 `begin / continue / continue / end`. MusicXML4 XSD passes.
+
+`BeamLinker.linkSides/linkStumps` now schedules LEFT, RIGHT, then intermediate
+stumps, retaining the original failed-side stop and all vertical candidates.
+Head-origin checked BeamStem supports reach the actual owned SIG/cache.
+Horizontal fractional borders use Java2D's quarter-pixel normalization; eight
+declared numeric raster boundary controls and the original image beam's6.1px
+height are checked separately from full-image export. Slopes/wider strokes,
+sibling/multiple beams, hooks/alien limits and general cleaner remain pending.
+No image coordinates or oracle outputs are recognition inputs. Global completion
+flags remain false; original nonUI full-function parity remains the final goal.

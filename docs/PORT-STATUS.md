@@ -131,3 +131,14 @@ sibling/multiple-level/hook・alien closer limit・cross-staff/systemと所有�
 途中停止は検証要約へ別記し、単一無停止の全suiteとは区別。fmt/clippy、別cloneのLinux CLI
 ビルド・同一画像9イベント・MusicXML4 XSDも成功。
 [最小検証要約](../evidence/musicxml-beam-eighth/VALIDATION.json)。
+
+
+## 中間stumpとcontinue（2026-10-05）
+
+原版成功の別入力1画像で、4連八分の左右→中間stump順、実cache/SIGのCENTER支持、
+10イベントの音高・音価・onsetとbegin/continue/continue/endを画像CLIまで接続・比較。
+水平fractional eraserをJava2Dのquarter-pixel正規化から接続し、数値境界8条件を別検証。
+対象回帰とfmt/clippyを実施。全suiteはこの小段階で反復していません。
+次は兄弟beamのfilter/items/linkSiblings、共有stemと複数段beamの音価/export。
+[実行例・範囲](MUSICXML-LIMITED.md#intermediate-beam-stumps-and-continue)。
+全機能同等性は未完、完了フラグfalseを保持します。

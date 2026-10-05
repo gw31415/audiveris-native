@@ -1,0 +1,38 @@
+{
+  "base_main": "4a87a20d6bf10206180a6e8cd0c3e1081b3bfca8",
+  "stage": "intermediate stumps and continue",
+  "original_full_image": {
+    "events": 10,
+    "beam1": [
+      "begin",
+      "continue",
+      "continue",
+      "end"
+    ],
+    "native_semantics_match": true,
+    "MusicXML4_XSD": true
+  },
+  "dependency_comparison": "original HEADS StemsRetriever/process/finalizeBeams/reduction; separate from full image export; 8 declared raster controls",
+  "verification": {
+    "scheduler_unit": 1,
+    "raster_unit": 1,
+    "musicxml_limited_existing": 10,
+    "musicxml_limited_new": 1,
+    "stem_beam_builders": 2,
+    "stem_head_linking": 3,
+    "fmt": true,
+    "all_target_clippy_D_warnings": true,
+    "full_suite_repeated": false
+  },
+  "corrected_validation_issues": [
+    "new observation numeric integer/float representation and omitted stem field; original XML semantic values unchanged",
+    "test module moved after production items for clippy"
+  ],
+  "completion_flags": false,
+  "pending": [
+    "multiple standard beams and sibling limits/builders",
+    "hooks/alien/cross-system beams",
+    "full cleaner/reduction/epilog",
+    "skew/real scans/special staffs/full24/32sources"
+  ]
+}

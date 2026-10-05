@@ -1053,3 +1053,124 @@ fn actual_beam_origin_cache_sig_chords_supply_eighth_duration_and_begin_end_xml(
         assert_eq!(report[k], false);
     }
 }
+
+#[test]
+fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports() {
+    let image = GrayImage::decode(include_bytes!(
+        "../fixtures/official-image-musicxml-beam-subdivisions/beam-four-eighth-quarter.png"
+    ))
+    .unwrap();
+    let o: Value = serde_json::from_str(include_str!(
+        "../fixtures/official-image-musicxml-beam-subdivisions/eighth-observed.json"
+    ))
+    .unwrap();
+    let result = music_xml::recognize(&image).unwrap();
+    let report = &result.owner.owner.prepared.report;
+    let events = report["events"].as_array().unwrap();
+    assert_eq!(events.len(), 10);
+    for (e, c) in events.iter().zip(o["events"].as_array().unwrap()) {
+        for k in [
+            "measure_number",
+            "step",
+            "octave",
+            "duration_quarters",
+            "offset_quarters",
+            "type",
+            "voice",
+        ] {
+            assert_eq!(e[k], c[k], "{k}");
+        }
+        let beams = e["beams"].as_array().cloned().unwrap_or_default();
+        assert_eq!(beams, c["beams"].as_array().unwrap().clone());
+        assert!(e["flag_ids"].as_array().unwrap().is_empty());
+        if e["type"] == "eighth" {
+            assert_eq!(e["stem_direction"], c["stem"]);
+            assert_eq!(e["duration"], "1/8");
+            assert_eq!(e["beam_ids"].as_array().unwrap().len(), 1);
+        }
+    }
+    assert_eq!(events[1]["time_offset"], "1/8");
+    assert!(result.xml.contains("<divisions>2</divisions>"));
+    assert_eq!(
+        result
+            .xml
+            .matches("<beam number=\"1\">begin</beam>")
+            .count(),
+        1
+    );
+    assert_eq!(
+        result.xml.matches("<beam number=\"1\">end</beam>").count(),
+        1
+    );
+    assert_eq!(
+        result
+            .xml
+            .matches("<beam number=\"1\">continue</beam>")
+            .count(),
+        2
+    );
+    let sig = &report["shared_sig"];
+    let nodes = sig["inters"].as_array().unwrap();
+    let edges = sig["relations"].as_array().unwrap();
+    assert!(!edges.iter().any(|e| e["kind"] == "BeamHeadRelation"));
+    assert_eq!(
+        edges
+            .iter()
+            .filter(|e| e["kind"] == "BeamStemRelation")
+            .count(),
+        4
+    );
+    let beam = nodes.iter().find(|n| n["kind"] == "BeamInter").unwrap();
+    assert_eq!(
+        audiveris_native::beam_dispatch::glyph_json(
+            &result
+                .owner
+                .owner
+                .prepared
+                .registry
+                .get(beam["glyph_id"].as_u64().unwrap() as usize)
+                .unwrap()
+                .glyph
+        ),
+        beam["glyph"]
+    );
+    for e in events.iter().filter(|e| e["type"] == "eighth") {
+        let chord = nodes.iter().find(|c| c["id"] == e["chord_id"]).unwrap();
+        assert_eq!(chord["beam_ids"], e["beam_ids"]);
+        let bs = edges
+            .iter()
+            .find(|r| {
+                r["kind"] == "BeamStemRelation"
+                    && r["source"] == e["beam_ids"][0]
+                    && r["target"] == chord["stem_id"]
+            })
+            .unwrap();
+        assert_eq!(bs["grade"], 1.0);
+        assert_eq!(bs["source_ratio"], 5.0);
+        assert_eq!(
+            bs["target_ratio"],
+            if bs["beam_portion"] == "CENTER" {
+                4.0
+            } else {
+                11.0
+            }
+        );
+        let stem = nodes.iter().find(|s| s["id"] == bs["target"]).unwrap();
+        let gid = stem["origin"]["local"].as_u64().unwrap() as usize;
+        assert_eq!(
+            audiveris_native::beam_dispatch::glyph_json(
+                &result.owner.owner.prepared.registry.get(gid).unwrap().glyph
+            ),
+            stem["glyph"]
+        );
+    }
+    for k in [
+        "heads_complete",
+        "stems_complete",
+        "musicxml_complete",
+        "epilog_complete",
+        "automatic_raster_pipeline_complete",
+    ] {
+        assert_eq!(report[k], false);
+    }
+}
