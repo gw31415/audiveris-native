@@ -1,0 +1,114 @@
+{
+  "scope": "original actual image pipeline through PAGE/export; not Rust output",
+  "musicxml_version": "4.0.3",
+  "measures": [
+    {
+      "part": "P1",
+      "measure": {
+        "number": "1",
+        "width": "573"
+      },
+      "attributes": "<attributes>\n        <divisions>1</divisions>\n        <time>\n          <beats>4</beats>\n          <beat-type>4</beat-type>\n        </time>\n        <clef>\n          <sign>G</sign>\n          <line>2</line>\n        </clef>\n        <staff-details print-object=\"yes\" />\n      </attributes>\n      ",
+      "notes": [
+        {
+          "pitch": {
+            "step": "B",
+            "octave": "4"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        },
+        {
+          "pitch": {
+            "step": "G",
+            "octave": "4"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        },
+        {
+          "pitch": {
+            "step": "E",
+            "octave": "4"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        },
+        {
+          "pitch": {
+            "step": "G",
+            "octave": "4"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        }
+      ]
+    },
+    {
+      "part": "P1",
+      "measure": {
+        "number": "2",
+        "width": "444"
+      },
+      "attributes": null,
+      "notes": [
+        {
+          "pitch": {
+            "step": "B",
+            "octave": "4"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        },
+        {
+          "pitch": {
+            "step": "D",
+            "octave": "5"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        },
+        {
+          "pitch": {
+            "step": "F",
+            "octave": "5"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        },
+        {
+          "pitch": {
+            "step": "D",
+            "octave": "5"
+          },
+          "rest": false,
+          "duration": "1",
+          "type": "quarter",
+          "voice": "1",
+          "dot_count": 0
+        }
+      ]
+    }
+  ]
+}

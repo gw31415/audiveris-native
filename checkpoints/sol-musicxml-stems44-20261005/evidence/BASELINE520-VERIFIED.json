@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "passed": 520,
+  "failed": 0,
+  "ignored": 0,
+  "source_commit": "59d7a2cd1aa56bf335422150b48a21be3e4d8dd7",
+  "source_tree": "902cf84a85f4fa3abc5085ec7c9ffb7c2cba3d54",
+  "log_sha256": "d77fa40a2699df178cc040889f84bafe69f095f67c5e6e28b9d9133bd99710dd",
+  "scope": "full pre-STEMS44 production workspace"
+}
