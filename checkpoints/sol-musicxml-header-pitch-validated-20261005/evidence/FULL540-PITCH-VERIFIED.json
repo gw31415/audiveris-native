@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "source_commit": "db96c389f1e06350393c964bfcdd39afb5b7698f",
+  "source_tree": "f23bfc3562100f78be59cbf6b0ae121d401c5128",
+  "command": "cargo test --workspace",
+  "passed": 540,
+  "failed": 0,
+  "ignored": 0,
+  "completed_test_batches": 177,
+  "full_workspace_exit": 0,
+  "elapsed_seconds": 1500.538222,
+  "Cloud_local_validation": true,
+  "fmt": "passed",
+  "all_targets_clippy": "passed",
+  "full_test_log_sha256": "a6a2985a48c6466f7df981700e588acc689a42632e7fb1c79f2e13e4b991f24f",
+  "exit_record": {
+    "exit_code": 0,
+    "started_utc": "2026-10-05T08:15:26.996405+00:00",
+    "ended_utc": "2026-10-05T08:40:27.534627+00:00"
+  },
+  "preexisting_fixture_files_SHA256_unchanged": 2623,
+  "actual_native_quarter_head_stem_links": [
+    8,
+    8,
+    8
+  ],
+  "candidate_header_diatonic_pitch": [
+    "B4",
+    "G4",
+    "E4",
+    "G4",
+    "B4",
+    "D5",
+    "F5",
+    "D5"
+  ],
+  "native_Laura_entire_runtime_not_rerun": true,
+  "Laura_saved_heads": 352,
+  "Laura_saved_exclusions": 513,
+  "Laura_entire_runtime_evidence_source": "47c7d11ff93f0f175cf6bffeea0ec6f7e215b251",
+  "HEADS_Laura_report_sha256": "87aa76d6b8a91fc5260caa01fdb1484dca315eb45faeff038ef7e523f6fcebf9",
+  "STEMS_Laura_report_sha256": "c891c61bbeb894e460e5f4c95ae7cfb64b40fca0cdaa19161082bfedb81c3bba",
+  "native_MusicXML_complete": false,
+  "heads_complete": false,
+  "stems_complete": false,
+  "Actions_dispatch_rerun": false,
+  "Actions_hold_until": "2026-11-01T09:00:00+09:00"
+}

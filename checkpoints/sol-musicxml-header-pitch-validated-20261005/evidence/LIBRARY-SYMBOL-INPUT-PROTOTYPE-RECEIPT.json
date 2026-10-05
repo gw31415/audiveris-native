@@ -1,0 +1,13 @@
+{
+  "page_id": "page_fe0f36467a448191885de9c663caafd2",
+  "reference": "library-file:fde1_bGliZmlsZV9ZaFE1VkhIWF9tdTdzVmJSRS1oaG13_FileDrive_860dacf66f308191a98d88753eed9f4d",
+  "file_name": "LIBRARY-SYMBOL-INPUT-PROTOTYPE-b3e980b849284c508d785e0afbce7cc8.json",
+  "mime_type": "application/json",
+  "byte_size": 67878,
+  "sha256": "0e4e211d7daee65106f2d7c61db9ddc2551a36bee80f7982f12c7571c46ef178",
+  "file_access_confirmed": true,
+  "is_image": false,
+  "markdown": "[Audiveris native symbol input boundary prototype oracle recovery 20261005](library-file:fde1_bGliZmlsZV9ZaFE1VkhIWF9tdTdzVmJSRS1oaG13_FileDrive_860dacf66f308191a98d88753eed9f4d)",
+  "inserted": false,
+  "next_step": "Read the Page and use edit_page with its fresh guards to insert markdown."
+}

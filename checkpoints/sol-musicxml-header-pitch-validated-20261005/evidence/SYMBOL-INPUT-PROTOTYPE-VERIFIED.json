@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "source_native_image_inputs": "db96c389f1e06350393c964bfcdd39afb5b7698f",
+  "production_integrated": false,
+  "native_NO_STAFF_original_PGM_byte_match": "06d98aba288b1e6c4000648f1ad353eaba6bb11f8273319ab611f0f7b8c0323b",
+  "prototype_all26_glyph_bounds_orientation_runs_match_original": true,
+  "original_optional_glyphs": 0,
+  "strong_head_stem_only_observed_page": true,
+  "correct_original_step_order": "MEASURES -> head CHORDS -> SYMBOLS -> rest CHORDS -> LINKS -> RHYTHMS",
+  "prototype_unchecked_classifier_TIME_FOUR_FOUR_score": 0.8849211381328221,
+  "original_checked_InterFactory_TimeWholeInter_grade": 0.7079369105062577,
+  "native_CHECKED_InterFactory_SIG_music_steps_not_integrated": true,
+  "original_only_measures": 2,
+  "original_only_notes": 8,
+  "native_header_diatonic_candidates_match_original_measure_local_pitch_on_this_page": true,
+  "original_only_1_4_durations_do_not_establish_native_duration_recognition": true,
+  "prototype_missing": [
+    "weak optional glyphs and frozen/ensemble scheduling coverage",
+    "general stroked-area/barline/beam/ledger erasure",
+    "compound glyph clustering/CHECKED filtering/InterFactory",
+    "live header/measure/chord/music SIG ownership integration",
+    "rest/rhythm/export"
+  ],
+  "all_OMR_completion_flags": false,
+  "Actions_used": false,
+  "old_continuation_doc_dependency_list_is_not_the_full_original_step_order": true
+}
