@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "remote_main": "c4ab802ee179b90eceff3ba95f5da9529cb38c6d",
+  "archive_tree": "8db51f501656aef3d7a65eb5955dbdd55dfdff12",
+  "all_final_fresh_archive_blob_SHA256_verified": 2151,
+  "source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
+  "source_tree": "16f5d1918803d1891d3675a1adcfae8438f4d8b3",
+  "source_unchanged_since_full_independent_restore": true,
+  "source_blobs_SHA256_verified": 6852,
+  "fresh_package_execution_and_XML_byte_match_verified": true,
+  "Git_working_tree_clean": true,
+  "Library_search_or_upload_performed": false
+}

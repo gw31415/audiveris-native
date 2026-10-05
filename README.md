@@ -1,4 +1,8 @@
-# 最新：複合四分休符を画像CLIへ接続
+# 最新方針：原版の全認識・解析・補正・出力機能を段階的に移植
+
+UI表示だけを除外し、原版ロジックの省略予定はありません。限定CLIは小チェックポイントの作業/検証範囲です。[機能台帳・欠落・接続順・CLI補正方針](checkpoints/sol-function-parity-ledger-20261005/PORT-STATUS.md) / [機械可読台帳](checkpoints/sol-function-parity-ledger-20261005/PORT-STATUS.json) / [MANIFEST](checkpoints/sol-function-parity-ledger-20261005/MANIFEST.json)。実行物は下の複合休符版を同一原本のまま利用し、再複製/再ビルドはしていません。
+
+# 前工程：複合四分休符を画像CLIへ接続
 
 [Linux CLI手順/入力例](checkpoints/sol-musicxml-compound-sig-20261005/CLI-GUIDE.md) / [実行物](checkpoints/sol-musicxml-compound-sig-20261005/audiveris-musicxml-linux-x86_64.tar.gz) / [MANIFEST](checkpoints/sol-musicxml-compound-sig-20261005/MANIFEST.json)。変更後の全workspace回帰549件・fmt・全workspace/all-targets clippy成功。原版成功の画像8イベントに一致。画像ページ・saved XML段階観測・条件指定競合kernelを区別しています。最終目標はUI表示を除く原版機能同等性で、限定範囲は小checkpointの現在の検証境界です。全体完了false、Library再探索/再upload・GHA dispatch/rerun無し。
 

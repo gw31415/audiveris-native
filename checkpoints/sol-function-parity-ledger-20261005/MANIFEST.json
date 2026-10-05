@@ -1,0 +1,80 @@
+{
+  "branch": "main",
+  "parent_checkpoint_commit": "c4ab802ee179b90eceff3ba95f5da9529cb38c6d",
+  "parent_implementation_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
+  "local_implementation_commit": "6cce132a244656bc69b97f705c0022930c764901",
+  "local_implementation_tree": "92ec78ec1dcca0e3ec70c54c43b46d67da2c552a",
+  "tracked_files": 6854,
+  "changed_files_from_parent": [
+    "README.md",
+    "docs/MUSICXML-LIMITED.md",
+    "docs/PORT-STATUS.json",
+    "docs/PORT-STATUS.md",
+    "docs/PORTING.md"
+  ],
+  "file_sha256": {
+    "README.md": "85a16f3a87d0aac51f92732071ef6bfe2b42f0294dbd8c61422545329ac73e06",
+    "docs/MUSICXML-LIMITED.md": "4075267e9deaa15c7a1be397ffa0f828615dd84bd36525efec9eb5e1501a81f8",
+    "docs/PORT-STATUS.json": "2ac19a57cf54d59f7dc61429e7853954eb919c1a5e16cb9636e8b5e5588aaaff",
+    "docs/PORT-STATUS.md": "7b20b29ae1a6ce4ab14bdb12dfeb0a4eff178c7e65d2f423d3ab393b17c5cecd",
+    "docs/PORTING.md": "6abd0eecab31031a2c6188bed12f2b5fccbec9db9762c95cd7d092c5274de11a"
+  },
+  "all_source_sha256": {
+    "path": "checkpoints/sol-function-parity-ledger-20261005/SOURCE-SHA256.json",
+    "sha256": "18ea99b4a87b1379b182d43b534b7bd094b66fa34f32ddde2515ccb9a424232f",
+    "files": 6854
+  },
+  "bundle": {
+    "path": "checkpoints/sol-function-parity-ledger-20261005/source.bundle.b64",
+    "encoding": "base64",
+    "decoded_bytes": 11855,
+    "decoded_sha256": "f2ef87222a3031a4eebc1b3fd8a92c8d5695b0a9be7336004c7790f178504663",
+    "base64_sha256": "ccf4b23cd848211d4ab1dfbca0fa1dd7d70edd034bd2270ef55b7c2fe277bdbd",
+    "prerequisite": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9"
+  },
+  "restore_script_sha256": "1844563fae3ee1829ddf067cf75b28667b7dbd89c4bad5532b74265a8e00a864",
+  "linux_cli": {
+    "path": "checkpoints/sol-musicxml-compound-sig-20261005/audiveris-musicxml-linux-x86_64.tar.gz",
+    "bytes": 5192116,
+    "sha256": "56f45fba15af5c410433596cf9db7f50023277a3c0ff645e73174930028ebc50",
+    "executable_SHA256": "e290ea02eb19b54cb7ec64ee7c6eebd1db3b43f7ef3e7ba0a7f43f3208317d5d",
+    "profile": "unoptimized/debug0/incremental_off/stripped",
+    "same_Cloud_host_tested": true,
+    "different_distribution_not_verified": true,
+    "compiled_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
+    "referenced_unchanged_not_duplicated": true
+  },
+  "validation": {
+    "source_commit": "6cce132a244656bc69b97f705c0022930c764901",
+    "source_tree": "92ec78ec1dcca0e3ec70c54c43b46d67da2c552a",
+    "documentation_only": true,
+    "changed_paths": [
+      "README.md",
+      "docs/MUSICXML-LIMITED.md",
+      "docs/PORT-STATUS.json",
+      "docs/PORT-STATUS.md",
+      "docs/PORTING.md"
+    ],
+    "recognition_code_and_fixtures_unchanged": true,
+    "inherited_full_workspace_tests_passed": 549,
+    "inherited_validation_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
+    "full_workspace_not_repeated_for_documentation_only": true,
+    "final_goal": "original non-UI recognition/analysis/correction/persistence/MusicXML function parity",
+    "whole_original_function_audit_complete": false,
+    "CLI_corrections": "proposed/unimplemented; original InterController public methods inspected",
+    "next_specific_unconnected": "existing HEADER state -> actual measure pitch/alter/meter -> native MusicXML; example not yet selected/verified",
+    "Library_attempted": false,
+    "GitHub_Actions_dispatch_rerun_performed": false
+  },
+  "evidence_file_sha256": {
+    "evidence/HeadInter-public-api.txt": "f958ee757812c037880f19e4ceecdbcd596f02cfbd22ab1e2653e134ce17af20",
+    "evidence/InterController-public-api.txt": "b95488782fdd5e79a0800ac7e5fec7a61fc26734f417574abd3ab3b84e0915e5",
+    "evidence/COMPOUND-FINAL-MAIN-VERIFIED.json": "4f166bf8d170235f44270bf62838585bc1eedbae5d9ce3e772d8ed66b743095d"
+  },
+  "heads_complete": false,
+  "stems_complete": false,
+  "musicxml_complete": false,
+  "epilog_complete": false,
+  "automatic_raster_pipeline_complete": false,
+  "independent_incremental_restore_verifier_sha256": "8cf7f3b71e0b48b89edd7a0013b7c08aa5a267706c436a4afb1d7d4683fb8432"
+}
