@@ -121,5 +121,9 @@ fn physical_check_boundary_and_pixel_center_are_distinct() {
     );
     glyph.runs[0].length = 0;
     assert!(stem_checks::candidate_from_glyph(&glyph).is_err());
-    assert!(stem_checks::Parameters::new(11, 5, 0., 4).is_err());
+    assert_eq!(
+        stem_checks::Parameters::new(11, 5, 0., 4).unwrap().profile,
+        4
+    );
+    assert!(stem_checks::Parameters::new(11, 5, 0., 5).is_err());
 }
