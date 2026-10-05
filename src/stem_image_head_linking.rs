@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original HeadLinker.linkSides/CLinker.link on the native image owner.
-//! Bounded ordinary-head/single-beam continuation; full reduction/epilog pending.
+//! Bounded ordinary-head/sibling-beam continuation; full reduction/epilog pending.
 use crate::{
     GrayImage,
     beam_dispatch::Registry,
@@ -28,9 +28,22 @@ struct Scheduler<'a> {
     system: u64,
     linked: BTreeSet<(usize, bool)>,
     closed: BTreeSet<(usize, bool)>,
+    beam_linked: BTreeSet<(usize, usize)>,
     attachments: Vec<HeadStemAttachment>,
     stems: BTreeMap<usize, Arc<CachedStem>>,
     budget: usize,
+}
+fn beam_cross(a: [f64; 4], b: [f64; 4]) -> Result<(f64, f64), String> {
+    let den = (a[0] - a[2]) * (b[1] - b[3]) - (a[1] - a[3]) * (b[0] - b[2]);
+    if den == 0. {
+        return Err("parallel sibling beam/stem pending".into());
+    }
+    let u = a[0] * a[3] - a[1] * a[2];
+    let v = b[0] * b[3] - b[1] * b[2];
+    Ok((
+        (u * (b[0] - b[2]) - (a[0] - a[2]) * v) / den,
+        (u * (b[1] - b[3]) - (a[1] - a[3]) * v) / den,
+    ))
 }
 // BeamLinker.linkSides then linkStumps. All vertical linkers of a side are
 // attempted, even after one succeeds. Failed sides suppress the other side
@@ -40,34 +53,63 @@ fn schedule_beam(
     mut attempt: impl FnMut(&Value) -> Result<Value, String>,
 ) -> Result<Value, String> {
     let mut observations = Vec::new();
-    for side in ["LEFT", "RIGHT"] {
-        let candidates = builders
-            .iter()
-            .filter(|b| b["side"] == side)
-            .collect::<Vec<_>>();
-        if candidates.is_empty() {
-            continue;
-        }
-        let mut linked = false;
-        for c in candidates {
-            let result = attempt(c)?;
-            linked |= result["linked"] == true;
-            observations.push(result);
-        }
-        if !linked {
-            return Ok(json!(observations));
+    let mut ids = Vec::new();
+    for b in builders {
+        let id = b["native_beam_id"].as_u64().unwrap_or(0);
+        if !ids.contains(&id) {
+            ids.push(id);
         }
     }
-    for c in builders.iter().filter(|b| b["side"].is_null()) {
-        observations.push(attempt(c)?);
+    let mut successful = Vec::new();
+    // StemsRetriever completes linkSides for all beams before linkStumps.
+    for id in ids {
+        let mut ok = true;
+        for side in ["LEFT", "RIGHT"] {
+            let mut linked = false;
+            let candidates = builders
+                .iter()
+                .filter(|b| b["native_beam_id"].as_u64().unwrap_or(0) == id && b["side"] == side)
+                .collect::<Vec<_>>();
+            if candidates.is_empty() {
+                continue;
+            }
+            for c in candidates {
+                let result = attempt(c)?;
+                linked |= result["linked"] == true;
+                observations.push(result);
+            }
+            if !linked {
+                ok = false;
+                break;
+            }
+        }
+        if ok {
+            successful.push(id);
+        }
+    }
+    for id in successful {
+        for c in builders
+            .iter()
+            .filter(|b| b["native_beam_id"].as_u64().unwrap_or(0) == id && b["side"].is_null())
+        {
+            observations.push(attempt(c)?);
+        }
     }
     Ok(json!(observations))
 }
+
 impl Scheduler<'_> {
     fn beams(&mut self, builders: &[Value]) -> Result<Value, String> {
         schedule_beam(builders, |c| self.beam(c))
     }
     fn beam(&mut self, c: &Value) -> Result<Value, String> {
+        let identity = (
+            c["native_beam_id"].as_u64().unwrap() as usize,
+            c["native_linker_id"].as_u64().unwrap() as usize,
+        );
+        if self.beam_linked.contains(&identity) {
+            return Ok(json!({"builder":c,"linked":true,"already_linked_by_sibling":true}));
+        }
         let profile = c["profile"].as_u64().unwrap() as u8;
         let e = crate::stem_image_beam_builders::expand(self.registry, c, &self.context)?;
         if e.last < 0 || e.ids.is_empty() || e.relations.is_empty() {
@@ -112,6 +154,55 @@ impl Scheduler<'_> {
         };
         self.graph
             .relations(self.system, Phase::Beam, vec![(beam, sk, rel.clone())])?;
+        self.beam_linked.insert(identity);
+        // Original VLinker.linkSiblings reuses the actual created stem and base
+        // relation grade. Short siblings are admitted only on the head side.
+        let median = line(&state["median"])?;
+        let base = line(&c["beam_median"])?;
+        let y_dir = -dir;
+        for m in arr(&c["sibling_linkers"])? {
+            let bm = line(&m["beam_median"])?;
+            let (x, y) = beam_cross(median, bm)?;
+            let (_, base_y) = beam_cross(median, base)?;
+            if (bm[2] - bm[0]) / (base[2] - base[0]) <= 0.8 && (y - base_y) * f64::from(y_dir) < 0.
+            {
+                continue;
+            }
+            let target = Key {
+                system: self.system,
+                phase: Phase::Beam,
+                local: m["native_beam_id"].as_u64().unwrap() as usize,
+            };
+            let snapshot = self.graph.snapshot();
+            if !arr(&snapshot["relations"])?.iter().any(|r| {
+                r["kind"] == "BeamStemRelation"
+                    && r["source"] == self.graph.id(target).unwrap()
+                    && r["target"] == self.graph.id(sk).unwrap()
+            }) {
+                let margin = (self.context.il as f64 * 0.5).round_ties_even();
+                let portion = if x < bm[0] + margin {
+                    "LEFT"
+                } else if x > bm[2] - margin {
+                    "RIGHT"
+                } else {
+                    "CENTER"
+                };
+                let grade = rel["grade"].as_f64().unwrap();
+                let sibling_rel = json!({"kind":"BeamStemRelation","grade":grade,"beam_portion":portion,"source_ratio":1.+4.*grade,"target_ratio":1.+if portion=="CENTER" {3.*grade} else {10.*grade},"extension_point":[x,y-f64::from(y_dir)*m["beam_height"].as_f64().unwrap()/2.]});
+                self.graph
+                    .relations(self.system, Phase::Beam, vec![(target, sk, sibling_rel)])?;
+                if arr(&c["items"])?.iter().any(|i| {
+                    i["native_source"]["kind"] == "Beam"
+                        && i["native_source"]["native_beam_id"] == m["native_beam_id"]
+                        && i["native_source"]["native_linker_id"] == m["native_linker_id"]
+                }) {
+                    self.beam_linked.insert((
+                        target.local,
+                        m["native_linker_id"].as_u64().unwrap() as usize,
+                    ));
+                }
+            }
+        }
         for r in &e.relations {
             let i = self.corner(&r["linker"])?;
             self.add_relations(i, &stem, std::slice::from_ref(r))?;
@@ -561,6 +652,7 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
             system,
             linked: BTreeSet::new(),
             closed: BTreeSet::new(),
+            beam_linked: BTreeSet::new(),
             attachments: Vec::new(),
             stems: BTreeMap::new(),
             budget: 10000,
@@ -586,7 +678,7 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     if beam_builders.iter().any(|s| !s.is_empty()) {
         owned.prepared.report["limited_beam_finalizer"] = beam_finalizer;
         owned.prepared.report["comparison_scope"] = json!(
-            "Original HEADS beam-origin builder/expand/createStem, beam-first then head phases1/2 and single-beam Finalizer.boostBeamSides, actual cache/SIG support; full STEMS/reduction/epilog parity pending"
+            "Original HEADS beam-origin builder/expand/createStem, beam-first then head phases1/2 and ordinary sibling-beam Finalizer.boostBeamSides, actual cache/SIG support; full STEMS/reduction/epilog parity pending"
         );
     }
     Ok(owned)
@@ -615,6 +707,23 @@ mod tests {
             schedule_beam(&builders, |b| {
                 trace.push(b["n"].as_i64().unwrap());
                 Ok(json!({"linked":b["side"].as_str()!=failed || failed.is_none()}))
+            })
+            .unwrap();
+            assert_eq!(trace, expected);
+        }
+        let multi = vec![
+            json!({"native_beam_id":1,"side":"LEFT","n":0}),
+            json!({"native_beam_id":1,"side":null,"n":1}),
+            json!({"native_beam_id":1,"side":"RIGHT","n":2}),
+            json!({"native_beam_id":2,"side":"LEFT","n":3}),
+            json!({"native_beam_id":2,"side":null,"n":4}),
+            json!({"native_beam_id":2,"side":"RIGHT","n":5}),
+        ];
+        for (fail_first, expected) in [(false, vec![0, 2, 3, 5, 1, 4]), (true, vec![0, 3, 5, 4])] {
+            let mut trace = Vec::new();
+            schedule_beam(&multi, |b| {
+                trace.push(b["n"].as_u64().unwrap());
+                Ok(json!({"linked":!fail_first || b["n"]!=0}))
             })
             .unwrap();
             assert_eq!(trace, expected);

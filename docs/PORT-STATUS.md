@@ -142,3 +142,17 @@ sibling/multiple-level/hook・alien closer limit・cross-staff/systemと所有�
 次は兄弟beamのfilter/items/linkSiblings、共有stemと複数段beamの音価/export。
 [実行例・範囲](MUSICXML-LIMITED.md#intermediate-beam-stumps-and-continue)。
 全機能同等性は未完、完了フラグfalseを保持します。
+
+
+## 兄弟二段beamと十六分音価（2026-10-05）
+
+通常五線・ト音記号/C major4/4単声の別入力1件を原版と比較。兄弟beamのfull
+LinkerItem→共有stem/cache/SIG、全beamの左右接続→中間stump、linked状態、
+BeamBeam支持の係数3、chord tailからのbeam番号順、実接続数由来の1/16音価を
+画像CLIまで接続しました。11イベント・onset・beam1/2 begin/continue/endが一致しXSD成功。
+HEADS保存状態の8builder/items/lengthsと4共有stem grade/8関係支持の比較は、
+原版の同一画像RHYTHMS/export比較と別に記録。原版全SIG/全工程一致とはしません。
+
+次の未接続はalien closer limit/別group、hookと競合hook、cross-staff/system、
+複数旗/追加beam段、一般rhythm・補正・cleaner/epilog。台帳の最終scopeは省略なし。
+[実行手順・現在の限定](MUSICXML-LIMITED.md#two-sibling-beams--sixteenth-notes)。

@@ -1,0 +1,40 @@
+{
+  "base_main": "54aca80ad54c4a21365db0be379262aba8d052fd",
+  "stage": "ordinary sibling beams and sixteenth image MusicXML",
+  "original_full_image": {
+    "events": 11,
+    "beam1_and_beam2": [
+      "begin",
+      "continue",
+      "continue",
+      "end"
+    ],
+    "native_pitch_duration_onset_match": true,
+    "native_beamed_stem_direction_match": true,
+    "MusicXML4_XSD": true
+  },
+  "separate_HEADS_dependency_observations": {
+    "builders_items_lines_glyphs_lengths": 8,
+    "shared_stem_raw_grades": 4,
+    "BeamStem_supports": 8,
+    "whole_SIG_and_final_glyph_trimming_match": false
+  },
+  "verification": {
+    "sibling_context_unit_with_existing_original_7_controls": true,
+    "side_stump_scheduling_unit_including_multiple_beams_failure": true,
+    "both_new_image_integration": true,
+    "fmt": true,
+    "all_target_clippy_D_warnings": true,
+    "full_workspace": "pending final coherent run"
+  },
+  "unresolved_validation_failures": 0,
+  "completion_flags": false,
+  "pending": [
+    "hooks/competing hooks",
+    "alien closer limits/separate groups",
+    "cross-staff/system/aliases",
+    "more than two levels or other flags in image export",
+    "finer/tuplets/polyphonic rhythm and full cleaner/reduction/epilog",
+    "nonzero skew/real scans/special staffs/full24/32sources"
+  ]
+}

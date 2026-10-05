@@ -113,6 +113,7 @@ fn contextualize_head_stem_flags_impl(
                 "HeadStemRelation"
                     | "BeamStemRelation"
                     | "BeamHeadRelation"
+                    | "BeamBeamRelation"
                     | "Exclusion"
                     | "NoExclusion"
             )
@@ -131,6 +132,7 @@ fn contextualize_head_stem_flags_impl(
         let beam_target = match r["kind"].as_str() {
             Some("BeamStemRelation") => Some("StemInter"),
             Some("BeamHeadRelation") => Some("HeadInter"),
+            Some("BeamBeamRelation") => Some("BeamInter"),
             _ => None,
         };
         if let Some(target_kind) = beam_target {
@@ -155,19 +157,42 @@ fn contextualize_head_stem_flags_impl(
             }
         }
     }
+    // BeamBeamRelation extends Support with default grade1, source/target
+    // coefficient3. Adapt the raw existing group support without changing its
+    // saved metadata or accepting arbitrary relation kinds/endpoints.
+    let mut adapted = relations.to_vec();
+    for r in &mut adapted {
+        if r["kind"] == "BeamBeamRelation" {
+            let grade = match r.get("grade") {
+                None => 1.,
+                Some(v) => v.as_f64().ok_or("invalid_beam_beam_context_grade")?,
+            };
+            if !(0.0..=1.0).contains(&grade) {
+                return Err("invalid_beam_beam_context_grade".into());
+            }
+            r["source_ratio"] = json!(1. + 3. * grade);
+            r["target_ratio"] = r["source_ratio"].clone();
+        }
+    }
     apply_context(
         inters,
         &grades,
-        relations,
+        &adapted,
         if flags {
             &[
                 "HeadStemRelation",
                 "BeamStemRelation",
                 "BeamHeadRelation",
+                "BeamBeamRelation",
                 "FlagStemRelation",
             ]
         } else {
-            &["HeadStemRelation", "BeamStemRelation", "BeamHeadRelation"]
+            &[
+                "HeadStemRelation",
+                "BeamStemRelation",
+                "BeamHeadRelation",
+                "BeamBeamRelation",
+            ]
         },
         "unsupported_head_stem_context_partner_limit_16",
     )
@@ -316,6 +341,44 @@ mod head_stem_tests {
         }
         contextualize_head_stems(&mut actual, controls["relations"].as_array().unwrap()).unwrap();
         assert_eq!(actual.len(), 53);
+        let beam_controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-head-registration/epilog-controls.json"
+        ))
+        .unwrap();
+        for case in beam_controls["context"].as_array().unwrap() {
+            let mut nodes = case["beams"].as_array().unwrap().clone();
+            for n in &mut nodes {
+                n["id"] = n["local_id"].clone();
+                n["contextual_grade"] = Value::Null;
+            }
+            contextualize_head_stems(&mut nodes, case["relations"].as_array().unwrap()).unwrap();
+            for (n, original) in nodes.iter().zip(case["beams"].as_array().unwrap()) {
+                assert!(
+                    (n["contextual_grade"].as_f64().unwrap()
+                        - original["contextual_grade"].as_f64().unwrap())
+                    .abs()
+                        < 1e-14
+                );
+            }
+        }
+        let mut pair = vec![
+            json!({"id":1,"kind":"BeamInter","grade":0.5}),
+            json!({"id":2,"kind":"BeamInter","grade":0.4}),
+        ];
+        let invalid_grade = json!({"kind":"BeamBeamRelation","source":1,"target":2,"grade":1.1});
+        let before = pair.clone();
+        assert!(contextualize_head_stems(&mut pair, &[invalid_grade]).is_err());
+        assert_eq!(pair, before);
+        pair[1]["kind"] = json!("HeadInter");
+        let before = pair.clone();
+        assert!(
+            contextualize_head_stems(
+                &mut pair,
+                &[json!({"kind":"BeamBeamRelation","source":1,"target":2})]
+            )
+            .is_err()
+        );
+        assert_eq!(pair, before);
         let controlled: Value = serde_json::from_str(include_str!(
             "../fixtures/official-stem-head-context/focused-head-controls.json"
         ))

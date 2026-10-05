@@ -1055,19 +1055,37 @@ fn actual_beam_origin_cache_sig_chords_supply_eighth_duration_and_begin_end_xml(
 }
 
 #[test]
-fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports() {
-    let image = GrayImage::decode(include_bytes!(
-        "../fixtures/official-image-musicxml-beam-subdivisions/beam-four-eighth-quarter.png"
-    ))
-    .unwrap();
-    let o: Value = serde_json::from_str(include_str!(
-        "../fixtures/official-image-musicxml-beam-subdivisions/eighth-observed.json"
-    ))
-    .unwrap();
+fn intermediate_and_sibling_stumps_supply_original_fractional_beams_and_owned_supports() {
+    fn linking(v: &Value) -> Option<&Value> {
+        if v["schema"] == "audiveris-native.stem-image-head-linking.v1" {
+            return Some(v);
+        }
+        if let Some(o) = v.as_object() {
+            for x in o.values() {
+                if let Some(f) = linking(x) {
+                    return Some(f);
+                }
+            }
+        }
+        if let Some(a) = v.as_array() {
+            for x in a {
+                if let Some(f) = linking(x) {
+                    return Some(f);
+                }
+            }
+        }
+        None
+    }
+    for (image,observation,levels) in [
+      (include_bytes!("../fixtures/official-image-musicxml-beam-subdivisions/beam-four-eighth-quarter.png").as_slice(),include_str!("../fixtures/official-image-musicxml-beam-subdivisions/eighth-observed.json"),1),
+      (include_bytes!("../fixtures/official-image-musicxml-beam-subdivisions/beam-four-sixteenth-quarter.png").as_slice(),include_str!("../fixtures/official-image-musicxml-beam-subdivisions/sixteenth-observed.json"),2),
+    ] {
+    let image = GrayImage::decode(image).unwrap();
+    let o:Value=serde_json::from_str(observation).unwrap();
     let result = music_xml::recognize(&image).unwrap();
     let report = &result.owner.owner.prepared.report;
     let events = report["events"].as_array().unwrap();
-    assert_eq!(events.len(), 10);
+    assert_eq!(events.len(), 9+levels);
     for (e, c) in events.iter().zip(o["events"].as_array().unwrap()) {
         for k in [
             "measure_number",
@@ -1083,14 +1101,14 @@ fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports(
         let beams = e["beams"].as_array().cloned().unwrap_or_default();
         assert_eq!(beams, c["beams"].as_array().unwrap().clone());
         assert!(e["flag_ids"].as_array().unwrap().is_empty());
-        if e["type"] == "eighth" {
+        if !beams.is_empty() {
             assert_eq!(e["stem_direction"], c["stem"]);
-            assert_eq!(e["duration"], "1/8");
-            assert_eq!(e["beam_ids"].as_array().unwrap().len(), 1);
+            assert_eq!(e["duration"], if levels==1 {"1/8"} else {"1/16"});
+            assert_eq!(e["beam_ids"].as_array().unwrap().len(), levels);
         }
     }
-    assert_eq!(events[1]["time_offset"], "1/8");
-    assert!(result.xml.contains("<divisions>2</divisions>"));
+    assert_eq!(events[1]["time_offset"], if levels==1 {"1/8"} else {"1/16"});
+    assert!(result.xml.contains(if levels==1 {"<divisions>2</divisions>"} else {"<divisions>4</divisions>"}));
     assert_eq!(
         result
             .xml
@@ -1118,9 +1136,9 @@ fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports(
             .iter()
             .filter(|e| e["kind"] == "BeamStemRelation")
             .count(),
-        4
+        4*levels
     );
-    let beam = nodes.iter().find(|n| n["kind"] == "BeamInter").unwrap();
+    for beam in nodes.iter().filter(|n| n["kind"]=="BeamInter") {
     assert_eq!(
         audiveris_native::beam_dispatch::glyph_json(
             &result
@@ -1134,14 +1152,16 @@ fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports(
         ),
         beam["glyph"]
     );
-    for e in events.iter().filter(|e| e["type"] == "eighth") {
+    }
+    for e in events.iter().filter(|e| !e["beams"].is_null()) {
         let chord = nodes.iter().find(|c| c["id"] == e["chord_id"]).unwrap();
         assert_eq!(chord["beam_ids"], e["beam_ids"]);
+        for beam_id in e["beam_ids"].as_array().unwrap() {
         let bs = edges
             .iter()
             .find(|r| {
                 r["kind"] == "BeamStemRelation"
-                    && r["source"] == e["beam_ids"][0]
+                    && &r["source"] == beam_id
                     && r["target"] == chord["stem_id"]
             })
             .unwrap();
@@ -1163,6 +1183,25 @@ fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports(
             ),
             stem["glyph"]
         );
+        }
+    }
+    if levels==2 {
+        let expected:Value=serde_json::from_str(include_str!("../fixtures/official-image-musicxml-beam-subdivisions/sixteenth-builders.json")).unwrap();
+        let continuation:Value=serde_json::from_str(include_str!("../fixtures/official-image-musicxml-beam-subdivisions/sixteenth-continuation.json")).unwrap();
+        let stages=linking(report).unwrap();let builders=stages["systems"][0]["beam_origin_builders"].as_array().unwrap();
+        assert_eq!(builders.len(),8);
+        assert_eq!(builders.iter().filter(|b|b["already_linked_by_sibling"]==true).count(),4);
+        for n in builders {
+            let b=&n["builder"];
+            let oracle=expected["cases"].as_array().unwrap().iter().find(|c|c["beam_median"]==b["beam_median"] && c["horizontal"]==b["side"] && c["reference"]==b["reference"]).unwrap();
+            for k in ["theoretical_line","length_map"] {assert_eq!(b[k],oracle[k]);}
+            let ni=b["items"].as_array().unwrap();let oi=oracle["items"].as_array().unwrap();assert_eq!(ni.len(),oi.len());
+            for (a,b) in ni.iter().zip(oi) {for k in ["kind","contrib","line","glyph"] {assert_eq!(a[k],b[k],"{k}");}}
+            if n["already_linked_by_sibling"]==true {continue;}
+            assert_eq!(n["stem"]["glyph"],oracle["stem"]["glyph"]);
+            let raw=continuation["systems"][0]["after_finalize_beams"]["inters"].as_array().unwrap().iter().find(|s|s["kind"]=="StemInter" && s["bounds"]==n["stem"]["bounds"]).unwrap();
+            assert_eq!(n["stem"]["grade"],raw["grade"]);
+        }
     }
     for k in [
         "heads_complete",
@@ -1173,4 +1212,5 @@ fn intermediate_stumps_supply_original_continue_beams_and_owned_center_supports(
     ] {
         assert_eq!(report[k], false);
     }
+}
 }

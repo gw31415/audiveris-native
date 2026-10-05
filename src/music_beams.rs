@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original StemsRetriever.Finalizer beam-side support and SigReducer beam
-//! endpoint checks, on actual retained SIG objects. Bounded single-beam groups.
+//! endpoint checks, on actual retained SIG objects. Bounded ordinary sibling-beam groups.
 use crate::shared_sig::{Graph, Key, Phase};
 use serde_json::{Value, json};
 fn key(n: &Value) -> Result<Key, String> {
@@ -60,7 +60,7 @@ pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stems()?;
     Ok(
-        json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; linked unique-glyph single-beam groups have no cross-system orphan branch; full finalizer pending"}),
+        json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; linked unique-glyph ordinary groups have no cross-system orphan branch; full finalizer pending"}),
     )
 }
 /// SigReducer.checkBeamsHaveBothStems. Called after the current head/stem
@@ -96,7 +96,7 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stems()?;
     Ok(
-        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; hooks/siblings remain admission refusals"}),
+        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; hooks/alien groups remain admission refusals"}),
     )
 }
 /// BeamHeadCleaner.process removes temporary beam/head supports at LINKS.

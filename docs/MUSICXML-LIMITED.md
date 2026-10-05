@@ -382,13 +382,13 @@ the existing one-decimal XML-restored context. Raw beam bounds and final origina
 stem-glyph trimming are not whole BEAMS/STEMS/SIG equality. Reduced head bounds
 match; raw versus saved-three-decimal grades retain small differences.
 
-Current positive admission: one standard beam per system, one surrounding part,
+Historical4a87a20 admission (extended below): one standard beam per system, one surrounding part,
 no sibling/alien/cross-system shared-glyph beam, zero skew and uniform ordinary
 staff. The eraser currently certifies horizontal restored integer borders and
 Java2D's normalized one-pixel contour. Siblings/multiple beam levels/hooks,
 closer limits, cross-staff/system, sloping/fractional/wider eraser strokes,
 mirrored/void beamed heads and broader cleaner/reduction/rhythm remain pending.
-`continue` is implemented by ordered owned chord membership but has no whole-image
+At4a87a20, `continue` was implemented by ordered owned chord membership but had no whole-image
 comparison yet. The validated image has two side stumps and no intermediate
 stump; the original side-first/failed-side scheduling branch must be connected
 and compared before claiming intermediate-stump image support. Nonzero skew, real scans, other fonts/special staffs/full24
@@ -420,3 +420,52 @@ height are checked separately from full-image export. Slopes/wider strokes,
 sibling/multiple beams, hooks/alien limits and general cleaner remain pending.
 No image coordinates or oracle outputs are recognition inputs. Global completion
 flags remain false; original nonUI full-function parity remains the final goal.
+
+
+## Two sibling beams → sixteenth notes
+
+```sh
+CARGO_INCREMENTAL=0 CARGO_PROFILE_DEV_DEBUG=0 cargo build --locked --bin audiveris-musicxml -j1
+mkdir -p work/beam-subdivisions
+./target/debug/audiveris-musicxml --output-dir work/beam-subdivisions \
+  fixtures/official-image-musicxml-beam-subdivisions/beam-four-eighth-quarter.png \
+  fixtures/official-image-musicxml-beam-subdivisions/beam-four-sixteenth-quarter.png
+```
+
+With a custom `CARGO_TARGET_DIR`, use that directory's `debug/audiveris-musicxml`.
+Output names must be absent. Java is only an oracle/development dependency;
+the native Linux CLI loads images and its own classifier/template artifacts.
+
+The second input is ordinary Bravura44/interline11, treble/C-major4/4,
+single voice, two complete measures. Four B4 sixteenths with two positive
+beam levels, then G4/E4/G4 quarters; second measure B4/D5/F5/D5 quarters.
+Unmodified original5.11 exports all11 events. Native pitches, exact durations,
+onsets and both numbered beam sequences match; divisions4 and MusicXML4 XSD
+pass. This adds an input, not a fixture-specific recognition branch.
+
+Original dependencies: `VLinker.filterBeams/filterHeads` supplies sibling full
+LinkerItems and the last group border before heads; stable descending beam width,
+all `linkSides` before all `linkStumps`; `linkSiblings` applies the base relation
+grade to the same actual stem, with the shorter-beam head-side test and linked
+BLinker state; `BeamBeamRelation` default grade1/coefficient3 contributes to
+context with typed beam endpoints. `AbstractChordInter.getBeams` orders from
+tail toward head; connected beam count supplies binary duration, then exact
+sixteenth ticks and minimal1/2/4 MusicXML divisions preserve whole measures.
+The legacy `duration_eighths` report field is now0.5 for a sixteenth.
+
+Separate original HEADS inspection checks all8 sibling builders' items/lines/
+glyphs/length maps; actual process/finalizer observations check four shared
+stem grades and8 BeamStem support ratios. These are not full original/native
+SIG identity or final glyph-trimming equality. Saved prior reports retain
+their historical source identity.
+
+Current bounded positive image admission: one ordinary physical beam group per
+system, one surrounding part, zero skew, horizontally normalized thin eraser;
+up to two complete standard beam levels for export. General builder scheduling
+and membership do not depend on those images' coordinates. Hooks/competing
+hooks, alien closer limits/separate groups, cross-system glyph aliases,
+cross-staff parts, slopes/wider strokes, more levels/multiple flags, dotted/
+tuplet/polyphonic rhythm and full reduction/cleaner/epilog remain unconnected or
+unverified. Nonzero skew, real scans, other fonts/special staff/full24shape
+pages/32sources remain limitations. All original nonUI functions stay on the
+implementation ledger; no global completion flag is set.
