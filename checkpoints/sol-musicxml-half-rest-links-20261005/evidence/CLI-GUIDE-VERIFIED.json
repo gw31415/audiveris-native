@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "change_kind": "archive documentation and diagnostic evidence only",
+  "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+  "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+  "source_worktree_clean": true,
+  "source_and_binary_changed": false,
+  "guide_SHA256": "0cbf45bba569906f1678960269949f4ad4793204fbd809f5d4dc85ea78c423d0",
+  "package_SHA256": "94913eff21633791d9e961bcc978395f79afcef4f54bfd98f5e947ac3271eb20",
+  "binary_SHA256": "70938e9caf851b10b6cef4962bcb398a8ef9f3b5c14c9815d722b2d4275a82af",
+  "packaged_examples_and_expected_Flute_part_name_verified": 5,
+  "previous_full_regression": 544,
+  "previous_full_log_SHA256_verified": "46394a3239f77b73900591eb823f09229554d44a6a70789fb55531a7d1264e30",
+  "full_regression_rerun_this_stage": false,
+  "build_performed_this_stage": false,
+  "help_executed": true,
+  "help_half_rest_description_stale": true,
+  "guide_discloses_help_description_difference": true,
+  "known_accepted_positive_fixture_bug_found": false,
+  "known_layout_admission_limits": [
+    "central quarter-rest weak head optionals pending",
+    "half-rest position240 original weak rest removed at LINKS; native incomplete-measure refusal"
+  ],
+  "Library_current_result": "unknown, not verified failure or access denial",
+  "test_reduction_started": false
+}

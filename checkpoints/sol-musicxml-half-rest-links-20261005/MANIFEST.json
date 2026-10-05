@@ -98,7 +98,9 @@
     "evidence/half-rest-cache-focused.log": "d22d98e2713663272e78e0f84d8839b5b28c070626f6a4d71ba705e22ebc0122",
     "evidence/HALFREST-FULL-WORKSPACE-VERIFIED.json": "d94ac8a4a0dbd92b03c36f288c3d7c89cd4ed64fda1e2f86e6b6726d5f8c599b",
     "evidence/half-rest-y241-reimport.json": "ffa06cf7cbc306937ad20aa850aa011d60fe1b8edc7a15c2c6e71e6f434fe3aa",
-    "evidence/HALFREST-FINAL-GIT-PUSH-VERIFIED.json": "0c9fadb00989e2a966d88b59e96bcdc76b73fcbf2f0ab366cc95948e8a7df5b9"
+    "evidence/HALFREST-FINAL-GIT-PUSH-VERIFIED.json": "0c9fadb00989e2a966d88b59e96bcdc76b73fcbf2f0ab366cc95948e8a7df5b9",
+    "evidence/LIBRARY-HALFREST-READ-DIAGNOSIS.json": "53a5b0ea922c238775382511b5ecb989d9b28cdbb8c64d302f69904a85398378",
+    "evidence/CLI-GUIDE-VERIFIED.json": "c295db97190a6acd12a1dd8df2742a078af4e71a406a912488f0adb340866567"
   },
   "validation": {
     "previous_full542_source": "48e6177f4befa696523935e634accd11509a4975",
@@ -408,5 +410,17 @@
       "same_XML_as_packed_expected": true,
       "XSD": "passed"
     }
+  },
+  "documentation_finish": {
+    "kind": "documentation and read-only Library diagnosis; no implementation or binary changes",
+    "baseline_saved_main": "2ec4704f13817ca04a83eac41686a7abb0e2f1cb",
+    "guide_path": "checkpoints/sol-musicxml-half-rest-links-20261005/CLI-GUIDE.md",
+    "guide_SHA256": "0cbf45bba569906f1678960269949f4ad4793204fbd809f5d4dc85ea78c423d0",
+    "prior_full_regression": 544,
+    "full_regression_rerun": false,
+    "build_performed": false,
+    "scope_milestone": "verified bounded examples and documented admission limits; not arbitrary layout or whole Audiveris completion",
+    "Library_recovery_finished": false,
+    "test_reduction_started": false
   }
 }

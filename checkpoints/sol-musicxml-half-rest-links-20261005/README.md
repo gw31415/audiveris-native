@@ -1,3 +1,5 @@
+利用手順・入力例・既知の受理制約・未対応一覧は [CLI-GUIDE.md](CLI-GUIDE.md) を参照してください。実装ソースとLinux実行物はa2bf13c版を維持しています。Libraryの今回の保存は結果不明のまま、参照IDが未特定です。文書の整備完了とLibrary復旧完了は区別します。テスト削減は未着手です。
+
 Image CLI admits only zero-stump/seed beam candidates whose enlarged original lookup envelope cannot reach any head, removes orphan hooks/beams and empty groups, performs isolated rest/time weak LINKS purge and actual empty-rest-chord cleanup, checks canonical caches and existing one-stem/head cleaner plus bounded no-live-beam epilog.
 
 Original5.11 XML-loaded HEADS onward versus image-native continuation: two controlled half-rest positions, five events each; weak1px boundary removed at LINKS; positive beam scheduling refused. Separate from prior three synthetic scores24 events and original full transient recognition.
