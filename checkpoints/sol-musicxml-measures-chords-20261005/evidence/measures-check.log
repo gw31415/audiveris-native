@@ -1,0 +1,22 @@
+    Checking audiveris-template-match v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-match)
+    Checking audiveris-classifier v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-classifier)
+    Checking audiveris-area v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-area)
+    Checking audiveris-staff-removal v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-staff-removal)
+    Checking audiveris-glyph-features v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-glyph-features)
+    Checking audiveris-template-bank v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-bank)
+    Checking audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+warning: fields `measures` and `chords` are never read
+  --> src/music_measures.rs:14:16
+   |
+12 | pub struct OwnedMusic {
+   |            ---------- fields in this struct
+13 |     pub owner: OwnedItems,
+14 |     pub(crate) measures: Vec<Measure>,
+   |                ^^^^^^^^
+15 |     pub(crate) chords: Vec<Chord>,
+   |                ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `audiveris-native` (lib) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.99s

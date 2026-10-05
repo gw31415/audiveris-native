@@ -1,0 +1,15 @@
+   Compiling audiveris-template-match v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-match)
+   Compiling audiveris-classifier v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-classifier)
+   Compiling audiveris-staff-removal v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-staff-removal)
+   Compiling audiveris-glyph-features v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-glyph-features)
+   Compiling audiveris-template-bank v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-bank)
+   Compiling audiveris-area v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-area)
+   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.42s
+     Running tests/stem_head_foundations.rs (/workspace/onboarding/target/debug/deps/stem_head_foundations-8d8e891086fd497f)
+
+running 1 test
+test image_reduction_updates_actual_owner_and_removed_canonical_cache_states ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 7.60s
+
