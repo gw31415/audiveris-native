@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "remote_main": "74efea1ec3da97d7e29aa6f8e232660a928fedc9",
+  "archive_tree": "80c69a865bc59b498a404ebc6ea9179aac1aa854",
+  "all_fresh_archive_blob_SHA256_verified": 2120,
+  "source_commit": "275d851e50c2c543111adfb880d5733bcdb28117",
+  "source_tree": "b70d617bffd3f1ccbfafe08e6160005b6d8a709c",
+  "all_fresh_restored_source_blob_SHA256_verified": 6847,
+  "historical_delta_chain_verified": 105,
+  "restore_mode": "independent full source Git objects/index reconstruction; no duplicate source worktree",
+  "source_worktree_materialization_not_performed": true,
+  "local_object_borrowing_or_alternates": false,
+  "fresh_package_executable_SHA256": "cb8411698cfd8f89d6139906beaf9ca3aed718cce7d6a0555f825d08bff09959",
+  "fresh_package_CLI_image_exit_code": 0,
+  "fresh_package_expected_MusicXML_byte_match": true,
+  "native_events": 8,
+  "Library_attempted": false
+}

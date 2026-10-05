@@ -66,7 +66,8 @@
     "evidence/FINDINGS.json": "f7f7f9eaf684f365a83ead355a8b7de1068f94f09c0965f4bc962933e4e47a1d",
     "evidence/original-image-provenance.json": "8b4abaff63fafdd8e9a58e160996754f93bd9cf832c7b4345010b75ba7cc9682",
     "evidence/original-image-console.log.gz": "45e696145f003323d779af11b2a732429a4f371457e205f47d7443b7e7645f94",
-    "evidence/original-cluster-kernel.json": "91c5725029bc1cef41d12dea2e6090763d3951794731c7ede7e9ab6535e1699d"
+    "evidence/original-cluster-kernel.json": "91c5725029bc1cef41d12dea2e6090763d3951794731c7ede7e9ab6535e1699d",
+    "evidence/FRESH-GIT-SOURCE-CLI-VERIFIED.json": "452e3d4facd43528df9e36b6acc6c30adc1d01b1b5c59b3c5b39d1e0b78feaa6"
   },
   "linux_cli": {
     "path": "checkpoints/sol-musicxml-ledger-cluster-20261005/audiveris-musicxml-linux-x86_64.tar.gz",
@@ -105,7 +106,25 @@
     "native_image_CLI_exit_code": 0,
     "Library_current_stage_attempted": false,
     "previous_Library_outcome": "unconfirmed/no repeated search or upload",
-    "GitHub_Actions_dispatch_rerun_performed": false
+    "GitHub_Actions_dispatch_rerun_performed": false,
+    "independent_fresh_Git_source_and_CLI_restore": {
+      "status": "passed",
+      "remote_main": "74efea1ec3da97d7e29aa6f8e232660a928fedc9",
+      "archive_tree": "80c69a865bc59b498a404ebc6ea9179aac1aa854",
+      "all_fresh_archive_blob_SHA256_verified": 2120,
+      "source_commit": "275d851e50c2c543111adfb880d5733bcdb28117",
+      "source_tree": "b70d617bffd3f1ccbfafe08e6160005b6d8a709c",
+      "all_fresh_restored_source_blob_SHA256_verified": 6847,
+      "historical_delta_chain_verified": 105,
+      "restore_mode": "independent full source Git objects/index reconstruction; no duplicate source worktree",
+      "source_worktree_materialization_not_performed": true,
+      "local_object_borrowing_or_alternates": false,
+      "fresh_package_executable_SHA256": "cb8411698cfd8f89d6139906beaf9ca3aed718cce7d6a0555f825d08bff09959",
+      "fresh_package_CLI_image_exit_code": 0,
+      "fresh_package_expected_MusicXML_byte_match": true,
+      "native_events": 8,
+      "Library_attempted": false
+    }
   },
   "heads_complete": false,
   "stems_complete": false,
