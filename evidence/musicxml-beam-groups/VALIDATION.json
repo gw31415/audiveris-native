@@ -49,5 +49,18 @@
     "more beam levels/flags/dots/tuplets/general rhythm and full reduction/correction/cleaner/epilog",
     "real scans/other fonts/special staff/full24shape pages/32sources"
   ],
-  "independent_clone_readback": "to record after ordinary push; no prior clone claim for this source"
+  "independent_clone_readback": {
+    "source_commit": "023925d3d0c417d168419354b41a46579ee90ff1",
+    "repository_tree": "d5b04bd36273cb3d3ae3c637c169ba2baca48f90",
+    "source_tree": "268560e82fd0b426e5d9b4f57f91ed5622354780",
+    "crates_tree": "5838d35bd0a83e7f7397e2b6b7611ce580ac323a",
+    "matched_root_trees": true,
+    "working_tree_clean": true,
+    "Linux_offline_locked_Cargo_build": true,
+    "fmt": true,
+    "direct_emitted_XML_events_match_original": 10,
+    "native_and_original_XSD": true,
+    "native_requires_Java_runtime": false,
+    "global_completion_flags": false
+  }
 }
