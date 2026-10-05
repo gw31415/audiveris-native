@@ -40,7 +40,7 @@ public class BeamCloserLimitProbe extends BeamOriginDependencyProbe {
    }
    @SuppressWarnings("unchecked") Comparator<Object>byX=(Comparator<Object>)c("sig.inter.Inters").getField("byAbscissa").get(null);bs.sort(byX);set(r,"systemBeams",bs);
    Line2D result=(Line2D)call(v,"getCloserLimit");Object selection=null;
-   if(result!=null){Object opp=c("util.VerticalSide").getField(dir>0?"TOP":"BOTTOM").get(null);for(Object q:bs){Line2D edge=(Line2D)call(q,"getBorder",opp);if(edge.getP1().equals(result.getP1())&&edge.getP2().equals(result.getP2())){int i=0;for(Object d:data){if(Arrays.equals((int[])((Map<?,?>)d).get("bounds"),(int[])rect(call(q,"getBounds"))))break;i++;}selection=obj("id",((Map<?,?>)data.get(i)).get("id"),"border",line(result));break;}}}
+   if(result!=null){Object opp=c("util.VerticalSide").getField(dir>0?"TOP":"BOTTOM").get(null);for(Object q:bs){Line2D edge=(Line2D)call(q,"getBorder",opp);if(edge.getP1().equals(result.getP1())&&edge.getP2().equals(result.getP2())){int i=0;for(Object d:data){if(Arrays.equals((double[])((Map<?,?>)d).get("median"),(double[])line(call(q,"getMedian"))))break;i++;}selection=obj("id",((Map<?,?>)data.get(i)).get("id"),"border",line(result));break;}}}
    out.add(obj("name",name,"search",obj("group",1,"beam_bounds",new int[]{450,195,100,10},"system_bounds",new int[]{0,0,1280,420},"reference",new double[]{rx,ry},"theoretical_line",theo,"direction",dir,"left",left,"interline",11),"beams",data,"selected",selection));
   }
   new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj("scope","17 declared numeric original getCloserLimit controls in explicitly substituted geometry; separate from full-image comparison","native_outputs_used",false,"controls",out));System.exit(0);
