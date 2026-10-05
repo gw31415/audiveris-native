@@ -1,0 +1,21 @@
+{
+  "implemented": "Image CLI admits only zero-stump/seed beam candidates whose enlarged original lookup envelope cannot reach any head, removes orphan hooks/beams and empty groups, performs isolated rest/time weak LINKS purge and actual empty-rest-chord cleanup, checks canonical caches and existing one-stem/head cleaner plus bounded no-live-beam epilog.",
+  "comparison_limits": "Original5.11 XML-loaded HEADS onward versus image-native continuation: two controlled half-rest positions, five events each; weak1px boundary removed at LINKS; positive beam scheduling refused. Separate from prior three synthetic scores24 events and original full transient recognition.",
+  "unverified": [
+    "arbitrary real scans/other fonts/skew/special staff/full24 shapes",
+    "positive beam-origin scheduling/flags/dots/alterations/slurs/ties/polyphony/pickups/transposition",
+    "full HEADS/STEMS/LINKS/epilog and practical real-score admission"
+  ],
+  "validation": {
+    "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+    "focused_half_rest_positive2_and_weak_and_beamed_refusal": "passed before final report-only and enlarged-envelope changes; final source full regression pending",
+    "current_final_source_weak_rest_container_and_canonical_Arc_cache": "passed",
+    "prior_existing_musicxml_and_foundations_targeted4": "passed before final bounded finalizer additions; full final regression pending",
+    "fmt": "passed",
+    "clippy_all_targets_D_warnings_debug0": "passed",
+    "current_full_workspace_not_rerun": true,
+    "prior_full542_source": "48e6177f4befa696523935e634accd11509a4975",
+    "test_deletion_audit_deferred": true,
+    "capacity_policy": "only exact byte duplicate reproducible cache aliases consolidated; sources/images/Java/logs/restore proofs preserved"
+  }
+}

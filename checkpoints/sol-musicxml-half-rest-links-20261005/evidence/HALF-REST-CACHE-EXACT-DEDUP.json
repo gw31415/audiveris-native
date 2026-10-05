@@ -1,0 +1,2911 @@
+{
+  "status": "verified",
+  "bytes_reclaimed": 0,
+  "paths": [
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_classifier-79671bf0e2fbd354.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_classify-1e209b3bc8f36e72.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_classify-35fb02b8b16839a9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_glyph_features-56b57b4941bb6fd1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-84d5476979cf2daf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-b29c3eb0eb460f72.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-ca67abba4a94ed85.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_staff_removal-2a80568c96b77dfd.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_template_bank-197c5aa8bb2d90a4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_template_match-e0eaad27c9171045.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_candidates-74632ee8ea55e50a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_dispatch-97b94f225b620174.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_dispatch_neighbors-b590157441cc3cdc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_in_parallel-7b1b02d52298dba2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_beam-1f882b79838a64e7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_point-ef3c965a67a94fa3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_spot-ba53244acbb6edd7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_stem-3a99a414a1ecccfc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_geometry-9cc89822f210eb26.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_loop-3119f398dd234e8c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_prefix-d2eca574944ef5fa.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_groups-05960b355ef81a07.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_groups_images-6978b5ceb597e907.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_header_clips-7e23e8f05ad01d73.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_impacts-6bfcc62a45ac5f65.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_impacts_review-157274d830d4f5fb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_late_hooks-bfb9193c03f96a20.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_late_hooks_images-c88454cb51bb1e78.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_lifecycle-6ef0fb0ea7646d11.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_merge-bcea485bd2ca846b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_middle_area-ee023315bc92e0f5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_observer_oracle-0720fb6dcc011299.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_preparation-383b24cbe9495355.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_prolog_review-497c4a1c61fedc6c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_side_lookup-fd21fe0d83a18b5a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_spots-1f1d1becf375214b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_spots_oracle-1b4a8b1172083451.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_structure-d55131b4e97e1ad9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_structure_review-3b160b810fda440f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libblack_head_sizer-13c58e1c6df4040f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libboundaries-081bd2e93723c850.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclef_candidates-eee7e8cf91bffde4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclef_competition-04ec37e746440044.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclusters-138b29c4a3e50fcb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcore-0077dd24f498a1c5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcurved_filaments-3bc52baf3022718d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcurved_system_bounds-25c11052b7fe06e8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libfilaments-83250e999df410b8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgolden-002ca82b774454e9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgolden-06e3056466cc082d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgolden-b1e41163a1cddf71.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_ir-83463d30dd5325e8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_ledger_search-3c57150e466195f0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_search-fada8fc621135332.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_veto-fe50ed5145c2d40f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libheader_finalization-ebe4da8d0b90a103.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libheaders-7375262ab7dc6f31.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_clef-ebc5a09a224f98b8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_column-4793d7875955cb80.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_components-26759c706ac24db6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_fallback-6fcd40c396767816.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_peaks-308715b500b618a5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_preparation-ab25c1fcc9f23d84.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_slices-f095613283974032.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_state-4a96ec2b69acf188.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_beam_purge-be3b873c76ca4e87.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_candidates-ce86021ebdbb2d8e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_checks-e12710e09e2fe7e3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_post_analysis-0e304b3f252104cf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_reference_grid-ef93960dd5f48110.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_registration-24dff4ecc104203a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libline_completion-376ed795c7e02b45.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libline_root-759920980df770a0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libloader-5adece00d61b7e79.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_admission-a32568fc5a953f7b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_detection-443ea6e106e1d665.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_pipeline-e3ba4209b33b1e30.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_registration-0e61f040d50558b3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libnative_rest_mapping-452d2fe1c149d206.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libnote_mask_cli-ba89281f13ea4cd1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libofficial-14fdd3e5cc7d20b3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libofficial_grid-c4a903aac1face9f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/librest_neighbor_mapping-f0e5a47d6aaf3b82.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libreview_regressions-89809e5d888f2927.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libscale-d2b30bd9bbe185b9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsections-e4827a01c033320e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_glyphs-ab9baffe4c63bf58.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_peaks-a0451fa5b88dabc3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_raster-b865eae9f33f834f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libshared_sig-b63735e3eb22d2a7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libshort_staff_system_graph-f4b0a6a2730129e9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsig_context-1b6cc98b54dd014a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_checks-dd614aaabba7f5f6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_scale-55bf5379683fd25c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_seeds-657fa11eab8a17f4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsystem_area_ends-1cb97411caa33a59.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsystem_area_geometry-662f02d7646f7fed.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtemplate_page-904fe85a0c78f2ec.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_candidates-33b6cfe479e526b7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_column-226d27c082392a6b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_preparation-720afedde67b4577.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_registration-4a29a5e2f003253a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libvalidation-d8e9eb4ccd4e0e41.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libvertical_sticks-85057bc65e3d5f78.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_candidates-0ba204a59dc6ad35.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_default_bank-abf577c5eb914d84.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_checks-5d5f7b54a244e756.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_plan-e84cd43644cb6235.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_dispatch_neighbors-b7c32744a65dd995.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunk_registration-531f90260da94531.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_preparation-aa0257429ccd8d67.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_registry_owner-6e191732107929c5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclef_candidates-cbbd161b1080f2cc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_staff_removal-1cc234716bc4f24e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_prefix-5197fb0bbf6dd157.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_components-0cdaddeddb626fb9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libnative_rest_mapping-849a9b8102f7897f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_impacts-969db267da4af42f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_candidate_filter-7ead99b0a3850622.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_musicxml-055943251f54fcca.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_page_catalog-c41195e8dfedf9ea.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunk_head_filter-7017cb4907da0b4b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_peaks-eee9ca6a7f49d3ff.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_second_pass-560115c67f9b698f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclusters-7cd391c0fd557f36.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_parts-6d126edab8187439.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_cache-41f43b28f2d08fdf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_scale-e78190dc76623df1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_second_pass-497c07e477af42b7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_chunks-55066a6f8d629616.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_drum_coverage-c91c3bb6e0452fd1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_glyph_features-fdddab2d92a0cc03.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_registration-f772b1e524718553.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_beam_purge-e5fb80a9c5fd364b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_ir-830ddb9a7b1a279c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_filter-a2b22f4c407a3553.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_cache-fbad83438974c1fe.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_filter-69ee106551a81442.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_cache-0dd9b1f6215c6f17.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_cue_completion-2d60da2c0455a3ec.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_spots_oracle-f964ea8d5c048691.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcurved_filaments-9d1b575253860d02.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_registration-e52ebc35928bb102.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_lookup-de41b6a637808564.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libscale-82fd778e00ce4783.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_expansion-14cc97299401dc14.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_loop-4b1e436748095141.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_beam_purge-0a6152cf8ae64a2d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libreview_regressions-25e6eace3dfd86d5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_dispatch-74b795c4d17ceeb2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_foundation_purge-b5743f091aa16383.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shapes-32ed738bfa04d68f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_page_catalog-3fbe3466303c6365.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_staff_dependency-4b87af0b2f070726.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_lookup-dfded8b339e55552.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_sources-2b6b6e51c83cc9e2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_preparation-e9de34dc809930bf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_header_clips-47b7fb8426ffd372.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_range_catalog-9fc62d8edd163407.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_length_map-6acb990be9044cab.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_spot-4586521f0309b485.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_item_events-d6878711ae902e9a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_glyph_retrieval-0ab61ef671558617.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libboundaries-d4b15b121cb5a240.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_connection-c11d3065a5432a2e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/librest_neighbor_mapping-e426cf9260b6f16f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libheaders-a09267d8e896e6a9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunks-853afdf33a5a4898.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_registration-c31f4a1c96c778b2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shape_boundaries-749edbff8a804dd4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-3bf22b5de980d49c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_dispatch_neighbors-19bd98983101df4b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsystem_area_geometry-ad8b9bdd588ed3fa.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_glyph_grade-ce1207576adc8224.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_late_hooks-07fbcc9d2444d0d6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_fallback-5721e8404e054d35.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_staff_catalog-d6d138caf7b74474.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libshort_staff_system_graph-a7b2d660ae55df91.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_column-83589b6240a667a0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_coverage-a0a282cb3c5c5fe8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_alignment-f897d6c03edb7a8f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_retry_profiles-2c4dca04bffc2e11.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsig_context-eda98f5729047b7a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_coverage-cf780602889ac1e1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shape_seeds-2ba3b41fa6136f32.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_peaks-cceafe54ecca71b0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_44-39cbf4915a07128b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libvertical_sticks-d7a28313171d08cb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_reference_context-8ac55d95881fddf5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-634f1f414152852a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_lookup_area-b598d48045b6469b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclef_candidates-f1ed0f1fd140ea73.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_length_map-0c81273621e2ae36.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_dispatch-931eb67f159b8a95.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_side_lookup-45cdf67e6837c1f3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_candidates-44e0ff9e937044b8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libshared_sig-37b3983df779b5bf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_header_clips-ffb78ab08f35ae71.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcore-2c17669bd4703416.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_default_bank-1ccbf6ab68fcf88d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_connection-77771a7828fafd59.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_lookup-8f950594edf25629.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_area-77e3a3d91f2d335d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libloader-64fe750e8b3e1922.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_font_coverage-e07e8aac3fc32084.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_cue_completion-59e2d4740bf449ca.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_builder_create-ef72c2a5433bbaa1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_default_bank-c81af715ef5abecd.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_ledger_search-4e583774057e676e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_page_catalog-53f8ee9545c6cd79.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libvertical_sticks-7cb8e67509a46b64.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_detection-f2f7f67740b55a0f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_headers_rest-34b808157a5daae4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_lifecycle-4da961e181ffc0c3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libheader_finalization-cd9c46bc22f1ce72.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_glyph_grade-57077f9cd7b0a45b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_plan-3f68d6caf32d309f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_classifier-a4a32679f849a880.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunk_head_filter-05804d9b3f35864f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_ledger_search-e07d5f7dcd8f04b9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_registration-e5183380fef281ae.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_peaks-4a178c2ae2b91ee8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cache_head-7ffe9900ded838ca.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_column-c44a5683227c3c65.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_candidates-cdea5d80d4d6ab9c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_point-f7a3d2d684acfbce.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_veto-e40b5b6b669cfcb8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_seeds-20659d32d20e8ad5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclef_competition-a1bdfd85c5498eb6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_owned-62b143147edd9454.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_middle_area-5bbcf38af3a2e4fc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_point-be008c4c610930c4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_raster-1b13e4ca8d0fb83d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libofficial-a439b95c186119c9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cleaner-0489ce4db0df12a2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_merge-e9a5098c57d9f8a9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_impacts_review-b29f2f0fbbc98d9e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_classify-109a47c4ac8fbfc7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_builder_create-30528501934b04e7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_beam_generation-7a49ea8138fee339.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_spots_oracle-bcf3421eed7aa81c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cache_head-55844792278a719a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_preparation-d4e888d47cdeb715.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_lookup_cli-7d08ba62e8e9381f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_column-67115861b398bf4e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libdrum_coverage-df31a8b8f9c50903.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-66323e2e5b354bad.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_stump-e0d18cac405cbae2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_late_hooks_images-a6846f68392b69b8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_reference_context-c3e57be9f62fce77.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_clef-1a577b12cc4d7bed.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_stems-6ef8d45bcbbbe3c7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_stump-d1986647da252b14.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libblack_head_sizer-c3b45f6e0a796442.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunk_registration-0440bd42e024189b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_geometry-c24b86eab1889cc4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_alignment-12a02090f32f59e7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_in_parallel-f3f712d5b51c3f44.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shape_boundaries-439d0e22a11d8c36.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunks_cli-2c5b76a6dbd9861e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_prefix-c096cb8c13e82f42.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunks_cli-a03b0fba2cc15109.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_range_catalog-aefa836ffdee2285.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_veto-a035d6aa19cff8dd.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsig_context-cbcbb2ac82f31626.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_post_analysis-a1e66399ba764f99.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_prolog_review-23aaa22fc4ca4aeb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shapes-47d86b46359cde03.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libofficial_grid-747733c13e64c776.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_stems-ba65e49d1bf3d49e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_candidates-fd016a7252216c1e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_registration-7394bcc5b2feb16c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_glyph_retrieval-164343558474e19a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_stumps-d62f954b0e6f7360.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libnote_mask_cli-4c8ffb0d45e0725c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_page_catalog-9d890dc8737f52bf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_expansion-41323340ce3d48c4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_groups-e4496d158530a6aa.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_item_events-d7af669d45e3f830.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_registration-e650607a307f577f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libline_root-341060e13e671343.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_items-194add74cd4a49c6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_components-ea68ee61fca3efef.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_lookup_area-401e7f96204ab4c8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_support-a616eb17d52734f2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_merge-8fbb1e227774c853.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_sources-d0f2b97e91582950.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_column-310ab6f32596a204.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_spots-de3b21b23992e8cf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_loop-b3f4a4ce4eb9cb1c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-d70b2929a2420ac0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_fallback-3760bbad2833190c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_beam_targets-dc1bbf8d85b00d73.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_filter-fb26e225e2da9528.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcurved_system_bounds-19e5004088d25ef8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_staff_dependency-77b9fa6e7ace02f0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_search-2d00202c9591b917.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_beam_targets-123adf1dbb7b97eb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shapes-b384decf72f2945c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_structure-c3bee584f5058e07.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cache_sig-d5fc1577cdc69971.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_beam_lookup_area-c884d7727c75631a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_headers_rest-6b044f77b2529fcc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_seeds-2e765f0c689b82f3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_checks-5bd8bb680b3dd4f9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_foundations-1babff4d0f589cb3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_observer_oracle-fb972198b85bed7c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_structure-a2d18d1d3ffaa357.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_actual_pages-b4428c3b569eea8d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_registration-c1f7ca50741da90d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_page_catalog-0baccb105b9a4b84.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclusters-b433ac01d0a14c15.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libheaders-9ceb9cd0136360f0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libdrum_coverage-067dc6bb1847ca5f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_clef-79ae3c51593155f9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_beam_generation-0ec44d81fdea9ff0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcore-1419c5cc66a37d3a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_candidate_filter-8204107baef782e1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_candidate_filter-0dba1c1f28edd6e9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_spots-184ca1b1c198893a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtemplate_page-a491c17ac975c4bd.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_support-f50fb7d265116543.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcurved_filaments-1ffc540b048551a5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cache_sig-480055c7c3f5c058.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_in_parallel-68cfab2cda603bf0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_ir-49e3e397c993d139.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_actual_pages-32fdb9d390d8442d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_template_match-52a7ef69d1e18bb6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_groups_images-22c86cf89778c760.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_lifecycle-fb8f5759fc636131.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_registry_owner-a119661f7923a73b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_targets-89a92c63596a8466.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_reference_grid-6a1693288911f95a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_beam_lookup_area-f7a6b37a3ae110dc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_range_search-cf55010bd75921d3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libvalidation-efcc7c047ea3d049.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_range_search-a8956ccc0038ae8d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libline_root-3167e5121d6dbaad.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_checks-7218fb267fe28c5f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_foundation_purge-6708db6ec8412ff4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_observer_oracle-1f408af1096d6c8e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libshort_staff_system_graph-27e11e598017e8e1.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_scale-1a6fd5c742002009.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_reference_grid-2d7ebc0403168779.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_linking-6802821101a34de7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_clef-ec76ffdbd06dd0cc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_clef-c9cf1b8101e44840.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_impacts_review-539af906b9bcb9ae.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcoverage-dfa22454af395a2c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_clef-d47381471d41dcea.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_range_catalog-13fc8c15968e19cc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_glyphs-e67ff01d5e12892d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_state-782eddfa68d6a4b4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_musicxml-3b1cd32e63f04e8b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_beam_lookup_area-b5dcfb77f1f2b71e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cache_head-fff15940d2ac5361.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_structure_review-0067e2b74937608f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_stems-e0ad1e9b3cf8227c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_search-49186e8717ef2869.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_lookup_area-004701c5df63b2f8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_pipeline-f3a59f83f20af46c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_stumps-ff58bcfadad7b117.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cache_sig-6b34a39828fe2532.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_spot-604968382b50aaae.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_preparation-1330a1b34ec96007.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_stem-90a500d24a427804.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libnative_rest_mapping-61c2da1445e541a9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsections-7d3169b7be374b91.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_font_coverage-324d147f22a19130.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_staff_catalog-94c2edffbcf9b7bc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_lookup_cli-f19fb2298d1f0b31.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libfilaments-93e82751b4dc0f02.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_targets-8f776da9d8e99bf9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_structure_review-eb6abc35d014a1da.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_late_hooks-37a9142ceee7e100.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libnote_mask_cli-09f53868e6ea232b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cleaner-9e9037c804c53b73.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_groups_images-ba31c9b1e8854608.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_checks-8fc574f087a91e36.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_detection-1d26e726866b069a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_registration-4d4e61bf17b0e90c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shape_boundaries-92f488ca7d3ebab5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_relation-bc93e3d87845bac0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libclef_competition-c71e089b6cfa1094.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_template_bank-89d5bb436440591e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_stems-726a3aea04c9047b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_support-3e66c63ccc583165.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libline_completion-eb3211b1ecf47219.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_glyph_grade-931bee6cf99bb63c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_late_hooks_images-d9f1eaec53fd31b7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/librest_neighbor_mapping-e9bc424db8e37e25.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_stems-3a8d5c531ab3c96a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libofficial_grid-c68a9baba0c8d4de.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcue_headers_rest-e2a9df1c166ce3e7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_chunks-8d7c7e5db320e986.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_parts-9644163380a481fb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_seeds-4a3bcefab2275eee.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_font_coverage-76c2e1aa881dc937.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcoverage-2aab2849ab15d489.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_linkers-7722f926c886cb64.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libshared_sig-5f0e4c3019d5fb32.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extension_geometry-332570f6ac24fab9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_post_analysis-e06bf1ed3c7974bf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libblack_head_sizer-077b951173d63ad8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_owned-f06a1de9efe43e35.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_seeds-9ba1d8fb0316e313.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunk_registration-dbebe99f14013895.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_peaks-1996e1a212e7b61c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libreview_regressions-1e6db49a6000fe52.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_middle_area-bc9a10e44335dd42.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_cleaner-46bba129cf446b8c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_builder_create-6007c43d3f3bd766.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_raster-7a2116497ef18e95.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_lookup_cli-0d18f8467a561f01.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_impacts-27a5ea968ab4d08e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunks-c32d30c03b16c57e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_length_map-5a957c1fcbbb32e6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunks-8c7377cf2eca653d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libserif_glyphs-1d0571c700480eae.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgolden-24f9305963cddb24.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libfilaments-dc462b2fbc2023b4.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libledger_candidates-b2994519aba02090.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_items-6b70c943bb7fe5dc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmusicxml_limited-ef9cb88be91897f2.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_prolog_review-ef1536b0a00c50be.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libline_completion-0d28641a47615c62.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsections-0f49e2510dccd4ac.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_retry_profiles-341b1945b07910a0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_page_catalog-6dce485a10474d03.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_admission-68e6adb9053b9110.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_preparation-477b31ec9172cd66.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_registration-d23f52b133b337bc.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_glyph_retrieval-f911db26ce27f2ec.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libscale-4b7ec93f22fb0a8b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_head_linking-e62cd748e5a61e35.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_stems-40d60655f02cf366.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_state-c716ab3d0903d50e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_linkers-d5784209c986139c.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgolden-20820f2a6cb77c46.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_beam-c2c066b5c0d5a12b.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_groups-862584c6dab2dcc8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_beam-1e8e17b57d562148.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunks_cli-f32861f628df269f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_classify-beb0abfa1fc30a41.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_range_search-15e86d4838b64715.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_cue_completion-f36cd27352d6d6a7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_slices-d0ba3b4b2539e847.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_staff_catalog-68f68aaa864d25c6.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_preparation-ba05634e67aca7bd.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_drum_coverage-3f80c8f8d118cc75.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtemplate_page-6f2d6cf31a957391.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_neighborhood-187bbe8ed33dd8df.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsystem_area_ends-d29efce292104d41.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libtime_candidates-76448a8bbedcdb45.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shape_seeds-c954c15ebaf25394.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libcurved_system_bounds-ed5d85be0397e62d.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-85a847f0be1dd84a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgrid_second_pass-2e9c2d4b4c964338.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_relation-04920e8b51f6e013.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_relation-978f6ded71a90343.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libkey_slices-97271f8b9e315e32.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_side_lookup-3d112b0440994b9e.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_all_shape_seeds-896eba9363e3bcd3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libaudiveris_native-1ae1f8adb1b547e7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_parts_alignment-cb64903ecf53d9a0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libheader_finalization-dda63896a723a9c7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_drum_coverage-7d8ea99d864286eb.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_staff_dependency-7efb602443c439a8.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_seed_coverage-767fc9b5703cfec3.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libgolden-861670e36e0c1aa7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_pipeline-9c7a9f044a4e8aec.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_neighborhood-e77667b402c8f7cf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libbeam_extend_to_stem-2d9c471586a4ffa9.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsystem_area_geometry-cc9c79e4e109dde7.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_chunk_head_filter-dbc487deda21160f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_item_events-aa78ad314ea869d5.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_image_44-86f11b625505e3d0.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libsystem_area_ends-ed9ebdf6921543dd.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_connection-3bbe5bf8533887cf.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_actual_pages-34e3d50da966a482.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libhead_stem_stump-bc9bc500555bf93f.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_targets-082a60d5d0eea772.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libmultiple_rest_admission-cf2044af3df7734a.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/onboarding/target/debug/deps/libstem_head_foundations-7d457ca7d0f40947.rmeta",
+      "canonical": "/workspace/onboarding/target/debug/deps/libaudiveris_area-8e3d17acbafc5384.rmeta",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "source_logs_original_images_and_java_untouched": true
+}

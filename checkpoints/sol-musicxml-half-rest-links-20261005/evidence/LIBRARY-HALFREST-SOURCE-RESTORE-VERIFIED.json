@@ -1,0 +1,19 @@
+{
+  "status": "unconfirmed",
+  "source_commit": "a2bf13ca8da7afe0b9e41da491190558898f4b34",
+  "source_tree": "410d8bf30a826e17316cbaf4cc60a1cff656ea2e",
+  "upload_result": {
+    "error": {
+      "message": "The file upload may have completed. Inspect the Page's Files or Library before deciding what remains; do not upload again blindly.",
+      "code": "page_reference_upload_outcome_unknown",
+      "commit_status": "unknown",
+      "retryable": false
+    },
+    "error_code": "UNAVAILABLE"
+  },
+  "page_metadata_read_confirmed": true,
+  "Files_listing_tool_unavailable": true,
+  "blind_upload_retry_performed": false,
+  "restoration_verified": false,
+  "Git_checkpoint_fallback_required": true
+}
