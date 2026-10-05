@@ -135,3 +135,28 @@ to work. HEADER TimePair import, other clefs/meters, later SYMBOLS key, cancels,
 local accidentals/ties and general key changes remain pending; all original
 functions remain the final target. The wide-gap sharp image where original
 HEADER has no key is not counted as a successful HEADER comparison.
+
+
+Frozen HEADER TimePair continuation: one controlled variant moves the two time
+numbers into the original header first-space range (x165, without position
+search). Original 5.11 independently exports the same eight G-major notes and
+recognizes a frozen 4/4 TimePair at [166,221,19,45]. Native previously refused
+`music_frozen_time_header_import_pending`; it now registers the actual top/bottom
+number glyphs, Containment and TimeTopBottomRelation in the retained owner,
+erases those canonical glyphs, reads the pair numerator/denominator, and emits
+the same eight notes/F# and 4/4 attributes. No synthetic pair glyph or default
+meter is introduced. This is one controlled image variant, separate from the
+105 key kernels and first x185 G-major key image.
+
+```sh
+cargo build --locked --bin audiveris-musicxml
+./target/debug/audiveris-musicxml fixtures/official-image-musicxml-header-time/g-major-header-time-quarter.png header-time.musicxml header-time.json
+```
+
+Current selected-pair import is limited to frozen 4/4 with two TIME_FOUR members.
+Header TimeWhole/common/cut, other meters/clefs and mid-score changes remain
+unconnected. They remain on the final original-function parity target.
+The full552 regression/fmt/clippy belongs to migration source2395352 / main80340be;
+this following TimePair change uses targeted MusicXML/header checks and a fresh
+normal checkout. A new full554 regression is not claimed. All global completion
+flags remain false; test deletion remains deferred.

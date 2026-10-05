@@ -171,7 +171,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         let times = nodes
             .iter()
             .filter(|n| {
-                n["kind"] == "TimeWholeInter"
+                (n["kind"] == "TimeWholeInter" || n["kind"] == "TimePairInter")
                     && n["origin"]["system"] == measure.system
                     && n["staff_id"] == measure.staff
                     && n["bounds"][0]
@@ -186,7 +186,23 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             if t["bounds"][0].as_i64().unwrap() >= chords[0].bounds[0] {
                 return Err("musicxml_mid_measure_meter_pending".into());
             }
-            carried_meter = music_symbols::time(t["shape"].as_str().unwrap());
+            carried_meter = if t["kind"] == "TimePairInter" {
+                if t["frozen"] != true || t["origin"]["phase"] != "MUSIC_TIME" {
+                    return Err("musicxml_selected_header_time_required".into());
+                }
+                Some((
+                    t["numerator"]
+                        .as_u64()
+                        .and_then(|n| u32::try_from(n).ok())
+                        .ok_or("musicxml_time_numerator_required")?,
+                    t["denominator"]
+                        .as_u64()
+                        .and_then(|n| u32::try_from(n).ok())
+                        .ok_or("musicxml_time_denominator_required")?,
+                ))
+            } else {
+                music_symbols::time(t["shape"].as_str().unwrap())
+            };
         }
         let meter = carried_meter.ok_or("musicxml_recognized_meter_required_no_default")?;
         if meter != (4, 4) {
@@ -426,7 +442,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/4-4 single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line treble/C-major-or-frozen-header-key/4-4 single-voice quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/flags/beams/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     Ok(Export { owner: m, xml })

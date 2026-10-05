@@ -1,0 +1,537 @@
+{
+  "original_source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_SHA256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "image_scope": "unmodified original5.11 same input image through RHYTHMS/PAGE/export; original XML not fed to native",
+  "saved_state_scope": "final saved original OMR time identities/glyph pixels/three-decimal grades; separate from full image MusicXML",
+  "input_SHA256": "c8004e958c582be1e177c21d43c4804f5b8004057e3484384de8b377682cb961",
+  "original_MusicXML_SHA256": "bd310444dd3da933410d82adf98a07372fa27b557e848996d2f54cdbacf045a2",
+  "original_OMR_SHA256": "27726f0d43ff67cb12dbcdf4a8399ee5e356a6c92d6d8e282b260eaf4577ba40",
+  "original_header": {
+    "start": 82,
+    "stop": 184,
+    "key_fifths": 1,
+    "time": "4/4",
+    "frozen": true
+  },
+  "original_nodes": [
+    {
+      "kind": "TimeNumberInter",
+      "original_id": 24,
+      "shape": "TIME_FOUR",
+      "bounds": [
+        166,
+        221,
+        19,
+        22
+      ],
+      "frozen": true,
+      "grade": 0.775,
+      "contextual_grade": 0.935,
+      "side": "TOP",
+      "value": 4,
+      "glyph": {
+        "bounds": [
+          166,
+          222,
+          19,
+          20
+        ],
+        "orientation": "VERTICAL",
+        "runs": [
+          [
+            0,
+            13,
+            1
+          ],
+          [
+            1,
+            9,
+            6
+          ],
+          [
+            2,
+            9,
+            6
+          ],
+          [
+            3,
+            8,
+            7
+          ],
+          [
+            4,
+            6,
+            6
+          ],
+          [
+            4,
+            13,
+            2
+          ],
+          [
+            5,
+            4,
+            7
+          ],
+          [
+            5,
+            13,
+            2
+          ],
+          [
+            6,
+            1,
+            10
+          ],
+          [
+            6,
+            13,
+            2
+          ],
+          [
+            7,
+            0,
+            11
+          ],
+          [
+            7,
+            13,
+            2
+          ],
+          [
+            7,
+            19,
+            1
+          ],
+          [
+            8,
+            0,
+            7
+          ],
+          [
+            8,
+            13,
+            2
+          ],
+          [
+            8,
+            18,
+            2
+          ],
+          [
+            9,
+            0,
+            6
+          ],
+          [
+            9,
+            13,
+            2
+          ],
+          [
+            9,
+            18,
+            2
+          ],
+          [
+            10,
+            0,
+            5
+          ],
+          [
+            10,
+            12,
+            3
+          ],
+          [
+            10,
+            18,
+            2
+          ],
+          [
+            11,
+            0,
+            4
+          ],
+          [
+            11,
+            7,
+            13
+          ],
+          [
+            12,
+            0,
+            2
+          ],
+          [
+            12,
+            6,
+            14
+          ],
+          [
+            13,
+            0,
+            1
+          ],
+          [
+            13,
+            4,
+            16
+          ],
+          [
+            14,
+            3,
+            17
+          ],
+          [
+            15,
+            2,
+            18
+          ],
+          [
+            16,
+            1,
+            19
+          ],
+          [
+            17,
+            12,
+            3
+          ],
+          [
+            17,
+            18,
+            2
+          ],
+          [
+            18,
+            13,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "TimeNumberInter",
+      "original_id": 26,
+      "shape": "TIME_FOUR",
+      "bounds": [
+        166,
+        244,
+        19,
+        22
+      ],
+      "frozen": true,
+      "grade": 0.632,
+      "contextual_grade": 0.893,
+      "side": "BOTTOM",
+      "value": 4,
+      "glyph": {
+        "bounds": [
+          166,
+          245,
+          19,
+          20
+        ],
+        "orientation": "VERTICAL",
+        "runs": [
+          [
+            0,
+            12,
+            1
+          ],
+          [
+            1,
+            8,
+            6
+          ],
+          [
+            2,
+            8,
+            6
+          ],
+          [
+            3,
+            7,
+            7
+          ],
+          [
+            4,
+            5,
+            6
+          ],
+          [
+            4,
+            12,
+            2
+          ],
+          [
+            5,
+            3,
+            7
+          ],
+          [
+            5,
+            12,
+            2
+          ],
+          [
+            6,
+            0,
+            10
+          ],
+          [
+            6,
+            12,
+            2
+          ],
+          [
+            7,
+            0,
+            10
+          ],
+          [
+            7,
+            12,
+            2
+          ],
+          [
+            8,
+            0,
+            6
+          ],
+          [
+            8,
+            12,
+            2
+          ],
+          [
+            9,
+            0,
+            5
+          ],
+          [
+            9,
+            12,
+            2
+          ],
+          [
+            9,
+            18,
+            2
+          ],
+          [
+            10,
+            0,
+            4
+          ],
+          [
+            10,
+            11,
+            3
+          ],
+          [
+            10,
+            17,
+            3
+          ],
+          [
+            11,
+            0,
+            3
+          ],
+          [
+            11,
+            6,
+            14
+          ],
+          [
+            12,
+            0,
+            1
+          ],
+          [
+            12,
+            5,
+            15
+          ],
+          [
+            13,
+            3,
+            17
+          ],
+          [
+            14,
+            2,
+            18
+          ],
+          [
+            15,
+            1,
+            19
+          ],
+          [
+            16,
+            0,
+            20
+          ],
+          [
+            17,
+            11,
+            3
+          ],
+          [
+            17,
+            17,
+            3
+          ],
+          [
+            18,
+            12,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "kind": "TimePairInter",
+      "original_id": 27,
+      "shape": null,
+      "bounds": [
+        166,
+        221,
+        19,
+        45
+      ],
+      "frozen": true,
+      "grade": 0.914,
+      "contextual_grade": 0.914,
+      "numerator": 4,
+      "denominator": 4,
+      "value": "4/4",
+      "glyph": null
+    }
+  ],
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 5,
+      "alter": 1,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "duration_quarters": 1,
+      "voice": 1,
+      "type": "quarter",
+      "rest": false
+    }
+  ],
+  "original_provenance": {
+    "input_SHA256": "c8004e958c582be1e177c21d43c4804f5b8004057e3484384de8b377682cb961",
+    "renderer_SHA256": "751a3d418f7a86f953aab34446eec46b731f9f902b076be275fc76b811433df6",
+    "argv": [
+      "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Xmx512m",
+      "-XX:ActiveProcessorCount=2",
+      "-Djava.awt.headless=true",
+      "-Djava.io.tmpdir=/workspace/work/musicxml-header-time-meaning/original/tmp",
+      "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+      "-Djava.util.prefs.userRoot=/workspace/work/musicxml-header-time-meaning/original/prefs",
+      "-Duser.home=/workspace/work/musicxml-header-time-meaning/original/home",
+      "-cp",
+      "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+      "Audiveris",
+      "-batch",
+      "-constant",
+      "org.audiveris.omr.Main.persistBatchCliConstants=false",
+      "-constant",
+      "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+      "-step",
+      "RHYTHMS",
+      "-export",
+      "-output",
+      "/workspace/work/musicxml-header-time-meaning/original",
+      "--",
+      "/workspace/work/musicxml-header-time-meaning/input/g-major-header-time-quarter.png"
+    ],
+    "environment_overrides": {
+      "XDG_CONFIG_HOME": "/workspace/work/musicxml-header-time-meaning/original/config",
+      "XDG_DATA_HOME": "/workspace/work/musicxml-header-time-meaning/original/data",
+      "XDG_CACHE_HOME": "/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache"
+    },
+    "exit_code": 0,
+    "console_SHA256": "188d58a6625b0c10c91dade9e6dc69968685738547dc6cfbf416d202b58b89c5",
+    "scope": "one controlled header time variant, x165 follows original first-space constraint; no coordinate search/native recognition used for input",
+    "no_coordinate_sweep": true,
+    "existing_JNI_cache_reused": true
+  },
+  "variant_scope": "single controlled x165 header-time input; separate from first x185 G-major-key image; no coordinate search"
+}

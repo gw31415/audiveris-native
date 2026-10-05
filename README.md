@@ -109,3 +109,5 @@ python3 scripts/linux_oracle.py --probe key-fallback
 限定経路に、既存の四分休符画像へ1pxの分断を入れた1入力を追加比較しました。原版5.11通常画像処理の8イベントとnativeが一致し、2部品のcanonical glyph・RestInter・chord登録からMusicXMLまで接続しています。限定Rest/TimeWholeの重なり・SIG排他整理も原版の個別条件と比較しています。真正な付点、support/frozen/異種間の競合、3部品以上は未対応です。
 
 固定HEADER調号の実glyph/SIG→音高→MusicXMLをG major1画像で追加確認しました。F♯を含む8音が原版exportと一致。105調号kernelの一致と全ページ対応は別範囲です。[入力例・残タスク](docs/MUSICXML-LIMITED.md)。
+
+固定HEADER 4/4 TimePairも1制御入力で画像→数字glyph/所有SIG→小節拍数→MusicXMLへ接続しました。原版の同一画像8音/F♯と一致。一般拍子/音部記号/変更は未対応です。[入力と比較範囲](docs/MUSICXML-LIMITED.md)。

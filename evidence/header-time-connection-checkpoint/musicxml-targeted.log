@@ -1,0 +1,15 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-native)
+    Finished `test` profile [unoptimized] target(s) in 18.89s
+     Running tests/musicxml_limited.rs (/workspace/onboarding/target/debug/deps/musicxml_limited-c932902edba561ac)
+
+running 7 tests
+test image_frozen_header_key_reaches_owned_sig_note_alter_and_music_xml ... ok
+test image_frozen_header_time_pair_reaches_owned_sig_meter_and_music_xml ... ok
+test actual_images_preserve_rests_half_notes_measure_totals_and_refuse_missing_meter ... ok
+test interrupted_quarter_rest_compound_registers_owned_parts_and_matches_original ... ok
+test half_rest_orphan_beams_links_and_refusal_match_original_boundaries ... ok
+test ledger_quarter_image_retains_canonical_ledger_and_matches_original_export ... ok
+test batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_refusal ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 43.08s
+

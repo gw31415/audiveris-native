@@ -79,4 +79,7 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
 
 必要だった`SigReducer.checkLedgers/ledgerHasHeadOrLedger`を通常五線・system内1staffに限定して接続し、sharpの孤立加線を消します。元画像の原版export成功とは別に、保存STEMS XML再読込→原版reduceFoundationsの孤立加線削除を観測しました。物理glyph/cache/削除ID履歴は保持し、既存C4加線は残します。複数staffのshared-ledger補正は未接続です。
 
-次の具体的未接続は固定HEADERのTimePair/TimeWholeの所有SIGと小節拍数への伝播、他clefの音高/export接続です。SYMBOLSで初めて認識された調号、cancel/途中調号変更、一般臨時記号はその後に接続します。これらを最終機能から省略しません。HEADS/STEMS/MusicXML/epilog完了フラグはfalseです。
+固定HEADERの4/4 TimePairは次の1制御画像で所有SIG・数字glyph・拍数・exportを接続済みです。次の具体的未接続はTimeWhole/common/cut、他拍子、他clefの音高/export接続です。SYMBOLSで初めて認識された調号、cancel/途中調号変更、一般臨時記号はその後に接続します。これらを最終機能から省略しません。HEADS/STEMS/MusicXML/epilog完了フラグはfalseです。
+
+
+続けて、同じG-major譜面のTime数字を原版HEADER探索範囲へ置いた1制御画像で、固定4/4 TimePairのTOP/BOTTOM実glyph、Containment/TimeTopBottomRelation、小節拍数とMusicXMLを接続しました。原版独立画像exportの8音とnativeが一致。最後の数字glyphが不正な場合のGraph/registry不変も確認します。他拍子を4/4に置換して成功扱いにせず、その他のHEADER timeは明示的に未対応です。移行版552全回帰とこの追加変更の対象回帰はソース時点を分けて記録します。

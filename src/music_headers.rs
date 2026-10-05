@@ -121,6 +121,133 @@ pub(crate) fn import_key(
         "member_ids":retained.iter().map(|n| &n["id"]).collect::<Vec<_>>()}))
 }
 
+/// StaffHeader.freeze already selected the actual pair and froze its members.
+/// Import only the verified 4/4 pair. Other header time forms remain explicit.
+pub(crate) fn import_time(
+    graph: &mut Graph,
+    registry: &mut Registry,
+    header: &Value,
+    system: u64,
+    source_relations: &[Value],
+) -> Result<Value, String> {
+    let pair = &header["time"];
+    if pair.is_null() {
+        return Ok(Value::Null);
+    }
+    if pair["kind"] != "TimePairInter"
+        || pair["numerator"] != 4
+        || pair["denominator"] != 4
+        || pair["value"] != "4/4"
+        || pair["frozen"] != true
+        || !pair["glyph"].is_null()
+    {
+        return Err("music_other_or_unfrozen_header_time_import_pending".into());
+    }
+    let identity = |n: &Value| -> Result<usize, String> {
+        if n["frozen"] != true || n["removed"] == true {
+            return Err("music_frozen_header_time_required".into());
+        }
+        n["id"]
+            .as_u64()
+            .filter(|v| *v > 0)
+            .and_then(|v| usize::try_from(v).ok())
+            .ok_or("music_time_source_id_required".into())
+    };
+    let source_id = identity(pair)?;
+    let members = pair["members"]
+        .as_array()
+        .filter(|m| m.len() == 2)
+        .ok_or("music_time_pair_members_required")?;
+    let top = identity(&members[0])?;
+    let bottom = identity(&members[1])?;
+    if source_id == top || source_id == bottom || top == bottom {
+        return Err("music_time_duplicate_source_identity".into());
+    }
+    for (n, side) in members.iter().zip(["TOP", "BOTTOM"]) {
+        if n["kind"] != "TimeNumberInter"
+            || n["side"] != side
+            || n["value"] != 4
+            || n["shape"] != "TIME_FOUR"
+        {
+            return Err("music_selected_time_pair_number_required".into());
+        }
+        if source_relations
+            .iter()
+            .filter(|rel| {
+                rel["kind"] == "Containment"
+                    && rel["source"] == source_id
+                    && rel["target"] == n["id"]
+            })
+            .count()
+            != 1
+        {
+            return Err("music_time_containment_required".into());
+        }
+    }
+    let support = source_relations
+        .iter()
+        .filter(|rel| {
+            rel["kind"] == "TimeTopBottomRelation"
+                && rel["source"] == top
+                && rel["target"] == bottom
+        })
+        .collect::<Vec<_>>();
+    if support.len() != 1 {
+        return Err("music_time_selected_number_support_required".into());
+    }
+    let mut next = graph.clone();
+    let mut physical = registry.clone();
+    let key = Key {
+        system,
+        phase: Phase::MusicTime,
+        local: source_id,
+    };
+    let mut retained = Vec::new();
+    let mut relations = Vec::new();
+    for member in members {
+        let member_key = Key {
+            local: identity(member)?,
+            ..key
+        };
+        let mut data = member.clone();
+        data["source_header_id"] = data["id"].clone();
+        data["staff_id"] = header["staff_id"].clone();
+        data["glyph_id"] =
+            json!(physical.register(&beam_dispatch::glyph_from_json(&member["glyph"])?)?);
+        let id = next.vertex(member_key, data, false)?;
+        retained.push(
+            next.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == id)
+                .unwrap()
+                .clone(),
+        );
+        relations.push((key, member_key, json!({"kind":"Containment"})));
+    }
+    let mut data = pair.clone();
+    data["source_header_id"] = data["id"].clone();
+    data["staff_id"] = header["staff_id"].clone();
+    data["member_ids"] = json!(retained.iter().map(|n| &n["id"]).collect::<Vec<_>>());
+    data["members"] = json!(retained);
+    let id = next.vertex(key, data, false)?;
+    relations.push((
+        Key { local: top, ..key },
+        Key {
+            local: bottom,
+            ..key
+        },
+        support[0].clone(),
+    ));
+    next.relations(system, Phase::MusicTime, relations)?;
+    registry.commit_extension(physical)?;
+    *graph = next;
+    Ok(
+        json!({"id":id,"origin":key,"source_header_id":source_id,"staff_id":header["staff_id"],"numerator":4,"denominator":4,"member_ids":retained.iter().map(|n|&n["id"]).collect::<Vec<_>>()}),
+    )
+}
+
 /// Exact KeyInter.getAlterFor order. HeadInter first consults accidentals/ties;
 /// the current admitted image path rejects those unconnected symbol relations.
 pub(crate) fn key_alter(step: &str, fifths: Option<i64>) -> Result<i32, String> {
@@ -196,5 +323,59 @@ mod tests {
                 .unwrap()
                 .is_null()
         );
+    }
+}
+
+#[cfg(test)]
+mod time_import_tests {
+    use super::*;
+    #[test]
+    fn time_pair_late_member_error_preserves_graph_and_registry() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-header-time/observed.json"
+        ))
+        .unwrap();
+        let mut pair = oracle["original_nodes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "TimePairInter")
+            .unwrap()
+            .clone();
+        pair["id"] = pair["original_id"].clone();
+        let mut members = oracle["original_nodes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| n["kind"] == "TimeNumberInter")
+            .cloned()
+            .collect::<Vec<_>>();
+        members.sort_by_key(|n| if n["side"] == "TOP" { 0 } else { 1 });
+        for n in &mut members {
+            n["id"] = n["original_id"].clone();
+        }
+        let relations = vec![
+            json!({"kind":"Containment","source":pair["id"],"target":members[0]["id"]}),
+            json!({"kind":"Containment","source":pair["id"],"target":members[1]["id"]}),
+            json!({"kind":"TimeTopBottomRelation","source":members[0]["id"],"target":members[1]["id"]}),
+        ];
+        pair["members"] = json!(members);
+        let mut h = json!({"staff_id":1,"time":pair});
+        let mut graph = Graph::default();
+        let mut registry = Registry::default();
+        let before = graph.snapshot();
+        let physical = registry.snapshot();
+        h["time"]["members"][1]["glyph"]["runs"] = json!([[0, 0, 999]]);
+        assert!(import_time(&mut graph, &mut registry, &h, 1, &relations).is_err());
+        assert_eq!(before, graph.snapshot());
+        assert_eq!(physical, registry.snapshot());
+        h["time"] = Value::Null;
+        assert!(
+            import_time(&mut graph, &mut registry, &h, 1, &[])
+                .unwrap()
+                .is_null()
+        );
+        assert_eq!(before, graph.snapshot());
+        assert_eq!(physical, registry.snapshot());
     }
 }

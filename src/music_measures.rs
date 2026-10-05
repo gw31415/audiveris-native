@@ -76,6 +76,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     let mut bar_rows = Vec::new();
     let mut clef_rows = Vec::new();
     let mut key_rows = Vec::new();
+    let mut time_rows = Vec::new();
     for system in systems {
         let sid = system["id"].as_u64().ok_or("invalid_music_system")?;
         let parts = system["parts"].as_array().ok_or("missing_music_parts")?;
@@ -203,6 +204,16 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
             if !imported.is_null() {
                 key_rows.push(imported);
             }
+            let imported = crate::music_headers::import_time(
+                &mut graph,
+                &mut owner.prepared.registry,
+                header,
+                sid,
+                relations,
+            )?;
+            if !imported.is_null() {
+                time_rows.push(imported);
+            }
 
             let mut heads = nodes
                 .iter()
@@ -317,7 +328,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     }
     owner.graph = graph;
     let reduction = std::mem::take(&mut owner.prepared.report);
-    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native single-barline, single-staff parts, single-stem heads; canonical cache and actual SIG retained; no duration/meter assumptions","pending":["bar groups/repeats/multi-staff consistency/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native single-barline, single-staff parts, single-stem heads; canonical cache and actual SIG retained; no duration/meter assumptions","pending":["bar groups/repeats/multi-staff consistency/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     Ok(OwnedMusic {
         owner,
         measures,

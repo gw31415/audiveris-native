@@ -22,6 +22,7 @@ pub enum Phase {
     Chord,
     Symbol,
     MusicKey,
+    MusicTime,
 }
 
 #[cfg(test)]

@@ -26,6 +26,11 @@
       "status": "implemented",
       "unit": "frozen HEADER key -> owned SIG/glyph -> eight G-major notes/F# -> native MusicXML; bounded orphan ledger consistency",
       "limits": "one ordinary one-staff Bravura44 image; original full-image export distinct from saved STEMS reduction comparison; other clefs/meter and general key/accidentals pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "frozen 4/4 HEADER TimePair/number glyphs/owned SIG -> actual meter -> native MusicXML",
+      "limits": "one controlled G-major image variant; original full-image export distinct from saved time/glyph comparison; other header time forms/meters/clefs remain pending; last full regression belongs to pre-change migration version"
     }
   ],
   "function_groups": [
@@ -47,7 +52,7 @@
     {
       "original_function": "HEADERS / `HeadersBuilder`, clef/key/time関連クラス",
       "status": "partial",
-      "current_and_remaining": "固定HEADER調号の実SIG/glyphと音高/export伝播をG major1画像で原版と比較。G-clef/4/4のガードは残る。TimePair/他clef、途中変更、cancel/臨時記号等は未接続。"
+      "current_and_remaining": "固定HEADER調号の実SIG/glyphと音高/exportをG-major1画像で比較。続けて同譜面の1制御画像で固定4/4 TimePair/数字glyph/拍数を接続。G-clef/4/4ガードは残る。TimeWhole/common/cut、他拍子/clef、途中変更、cancel/臨時記号は未接続。"
     },
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",

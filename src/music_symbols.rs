@@ -76,7 +76,51 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
         }
         glyph_erase(&mut im, &h["clef"]["glyph"])?;
         if !h["time"].is_null() {
-            return Err("music_frozen_time_header_import_pending".into());
+            // PageCleaner visits the actual TimePair number glyphs; the pair
+            // has no synthetic physical glyph. The upstream report is provenance.
+            let snapshot = o.graph.snapshot();
+            let pair = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| {
+                    n["kind"] == "TimePairInter"
+                        && n["origin"]["system"] == h["system_id"]
+                        && n["staff_id"] == h["staff_id"]
+                        && n["source_header_id"] == h["time"]["id"]
+                })
+                .ok_or("music_owned_header_time_required")?;
+            if pair["frozen"] != true
+                || pair["origin"]["phase"] != "MUSIC_TIME"
+                || pair["numerator"] != h["time"]["numerator"]
+                || pair["denominator"] != h["time"]["denominator"]
+            {
+                return Err("music_stale_frozen_header_time".into());
+            }
+            for member in pair["members"]
+                .as_array()
+                .ok_or("music_time_pair_members_required")?
+            {
+                let actual = snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == member["id"])
+                    .ok_or("music_owned_time_number_required")?;
+                if actual != member || actual["frozen"] != true {
+                    return Err("music_stale_owned_time_number".into());
+                }
+                let gid = actual["glyph_id"]
+                    .as_u64()
+                    .and_then(|v| usize::try_from(v).ok())
+                    .ok_or("music_time_number_glyph_id_required")?;
+                if beam_dispatch::glyph_json(&o.prepared.registry.get(gid)?.glyph)
+                    != actual["glyph"]
+                {
+                    return Err("music_stale_time_number_glyph_registry".into());
+                }
+                glyph_erase(&mut im, &actual["glyph"])?;
+            }
         }
         if !h["key"].is_null() {
             // PageCleaner.visit(KeyInter) erases the actual member glyphs.
@@ -211,6 +255,11 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                 }
             }
             "HeadChordInter" | "StaffBarlineInter" | "ClefInter" => {}
+            "TimePairInter" | "TimeNumberInter" => {
+                if n["frozen"] != true || n["origin"]["phase"] != "MUSIC_TIME" {
+                    return Err("music_nonheader_pair_cleaner_pending".into());
+                }
+            }
             "KeyInter" | "KeyAlterInter" => {
                 if n["frozen"] != true || n["origin"]["phase"] != "MUSIC_KEY" {
                     return Err("music_nonheader_key_cleaner_pending".into());
