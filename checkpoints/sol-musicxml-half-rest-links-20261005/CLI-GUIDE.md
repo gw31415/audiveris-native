@@ -119,4 +119,3 @@ Gitの実装・Linux実行物の保全は確認済みです。Libraryの今回�
 対象は `Audiveris half-rest image CLI source delta a2bf13c`、61,701 bytes、SHA256 `00434e4092758baa9f289a9ad0bc6d2b0d2203b841a50f81162379ef05751b6a`。既存Libraryの正規Filesでこのファイルの参照IDが確認できれば、同一原本を再取得して照合できます。原本・receiptはGitにも保全済みです。
 
 Libraryの結果不明は未解消の引き継ぎ事項です。テスト削減は着手せず、次の明示指示を待ちます。Mac/GitHub Actions dispatch・rerun/新認証/課金/権限変更は行っていません。
-
