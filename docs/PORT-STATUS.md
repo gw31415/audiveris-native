@@ -379,3 +379,10 @@ mirror先のhead/chord/notesを競合対象から外し、ensembleのoverlapは�
 stem付きchordの境界形状、全ensemble/所有callback、特殊headのduration/size/chord、
 Part/lyricsのcleaner・LINKS epilogは未完。最終非UI機能の省略予定と全体完了宣言はなし。
 [検証](../evidence/musicxml-mirror-ensemble-overlap/VALIDATION.json)。
+
+実装source`00ee541`で全588（176binary＋doc-test7組、失敗/ignore0）を一度実行し、
+fmtとworkspace/all-target clippyも成功。独立fetch/buildのLinux CLIで20＋11イベント、
+原版音高/音価/連桁等・既存XML byte hash・MusicXML4 XSDを維持。root/src/crates tree一致。
+[全回帰](../evidence/musicxml-mirror-ensemble-overlap/FULL-VALIDATION.json)、
+[readback](../evidence/musicxml-mirror-ensemble-overlap/READBACK.json)。
+次の特殊head音価/サイズ整理は原版8条件・24形の観測のみ保存済みで、Rust未接続。

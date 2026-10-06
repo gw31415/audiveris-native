@@ -911,3 +911,9 @@ duration/size processing and full cleaner/epilog remain partial. All global
 completion flags remain false. Existing CLI inputs/commands above stay valid;
 no new page admission.
 [Validation](../evidence/musicxml-mirror-ensemble-overlap/VALIDATION.json).
+
+Source`00ee541` passed one complete workspace run:588 tests,0 failures/ignored,
+176 binaries and7 empty doc-test groups; fmt/all-target clippy passed. The fetched
+Linux CLI retains20+11 original-matching events, prior XML bytes and native/original
+MusicXML4 XSD. [Readback](../evidence/musicxml-mirror-ensemble-overlap/READBACK.json).
+Next size/duration fixtures contain original observations only; Rust not yet ported.

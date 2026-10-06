@@ -134,7 +134,7 @@
     {
       "status": "implemented",
       "unit": "actual typed Head mirror/HeadChord Containment and original member/Support overlap predicates",
-      "limits": "original7 declared SIG conditions, current3 native tests, actual image-owner/canonical cache grade preservation; full workspace running and fetched CLI pending. Not automatic raster mirror recognition or full ensemble/cleaner/epilog parity."
+      "limits": "original7 declared SIG conditions and actual image-owner/canonical cache grade preservation; full588/fmt/clippy and independent20+11 CLI/XSD passed at00ee541. Not automatic raster mirror recognition or full ensemble/cleaner/epilog parity."
     }
   ],
   "function_groups": [
@@ -244,7 +244,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "native3 affected tests and original7 typed mirror/ensemble SIG conditions passed; full workspace/fmt/clippy and independent CLI readback pending. evidence/musicxml-mirror-ensemble-overlap/VALIDATION.json; historical full583 remains at52943de.",
+  "latest_targeted_validation": "00ee541: original7 typed mirror/ensemble conditions,3 focused native checks, full workspace588+fmt/workspace-all-target-clippy; independent Linux build/20+11 events/XML bytes/XSD and trees confirmed. evidence/musicxml-mirror-ensemble-overlap/{VALIDATION,FULL-VALIDATION,READBACK}.json. Original6 special-head contact conditions at3f76b49 remain separate.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -292,12 +292,12 @@
     }
   ],
   "latest_full_validation": {
-    "source_commit": "52943ded9a13b5e31b46b54dce4e6090effed3af",
-    "passed": 583,
+    "source_commit": "00ee5416e291b663121d6544f16c250a9ca53f17",
+    "passed": 588,
     "failed": 0,
     "ignored": 0,
-    "execution": "interrupted full command resumed only uncompleted binaries, full inventory covered; doc tests passed",
-    "evidence": "evidence/musicxml-ordered-foundations/FULL-VALIDATION.json",
-    "independent_clone_Linux_CLI": "20 original-matching events and MusicXML4 XSD passed"
+    "execution": "one uninterrupted cargo test --offline --locked -j1 --workspace; all result blocks passed, doc tests passed with0 cases",
+    "evidence": "evidence/musicxml-mirror-ensemble-overlap/FULL-VALIDATION.json",
+    "independent_clone_Linux_CLI": "fetched Linux build/20+11 original-matching events, prior XML byte hashes and MusicXML4 XSD; root/src/crates equal at00ee541"
   }
 }

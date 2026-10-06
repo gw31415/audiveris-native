@@ -1,0 +1,22 @@
+{
+  "validated_source_commit": "00ee5416e291b663121d6544f16c250a9ca53f17",
+  "validated_repository_tree": "ce336cc18df6960fb900e866dabac8db92348f85",
+  "validated_src_tree": "faf00820821c45ca3ee4811a2b8e5f15f6742531",
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c",
+  "full_workspace_tests": {
+    "passed": 588,
+    "failed": 0,
+    "ignored": 0,
+    "all_test_binaries_covered": 176,
+    "doc_test_groups": 7,
+    "execution": "one uninterrupted cargo test --offline --locked -j1 --workspace; all result blocks passed, doc tests passed with0 cases"
+  },
+  "fmt": "passed",
+  "workspace_all_target_clippy": "passed -D warnings",
+  "raw_log_sha256": "b8afe2e81cf7a0477dfe0cdea14549ae3d0703380a53ae17ff62b1bb25f6fd83",
+  "raw_log_location": "/workspace/work/musicxml-mirror-ensemble-overlap/full.log, unique local original retained; no large duplicate log/archive",
+  "validation_scope": "original7 declared typed mirror/ensemble predicates, original6 special-head predicates and all existing native workspace regressions; not full original nonUI parity",
+  "previous_full583_source": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+  "all_global_completion_flags": false,
+  "independent_clone": "confirmed in READBACK.json;20+11 original-matching events and XSD/prior byte hashes preserved"
+}
