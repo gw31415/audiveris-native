@@ -223,10 +223,125 @@ pub(crate) fn beam_groups(
     Ok(json!(rows))
 }
 
+/// AbstractChord/RestChord.getBeams: stable tail-to-head order at the chord's
+/// center x. The first beam's actual incoming ensemble is getBeamGroup; do not
+/// choose a group by registration ID or by which group lists this chord first.
+fn chord_beams(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
+    let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+        .collect();
+    let chord = nodes.get(&id).ok_or("music_voice_live_chord_required")?;
+    let edges = snapshot["relations"].as_array().unwrap();
+    let mut beams = Vec::new();
+    let reference_y = match chord["kind"].as_str() {
+        Some("HeadChordInter") => {
+            let stems = edges
+                .iter()
+                .filter(|e| e["kind"] == "ChordStemRelation" && e["source"] == id)
+                .map(|e| e["target"].as_u64().unwrap() as usize)
+                .collect::<Vec<_>>();
+            if stems.len() > 1 {
+                return Err("music_voice_single_chord_stem_required".into());
+            }
+            if let Some(stem) = stems.first() {
+                beams.extend(
+                    edges
+                        .iter()
+                        .filter(|e| e["kind"] == "BeamStemRelation" && e["target"] == *stem)
+                        .map(|e| e["source"].as_u64().unwrap() as usize),
+                );
+            }
+            chord["head_location"][1].as_f64()
+        }
+        Some("RestChordInter") => {
+            let mut members = edges
+                .iter()
+                .filter(|e| e["kind"] == "Containment" && e["source"] == id)
+                .map(|e| e["target"].as_u64().unwrap() as usize)
+                .collect::<Vec<_>>();
+            // Original returns the empty cached list before asking for center
+            // when this live rest ensemble currently has no notes.
+            if members.is_empty() {
+                return Ok(beams);
+            }
+            // getMembers is stable bottom-up; RestChord uses its first note.
+            members.sort_by_key(|id| {
+                std::cmp::Reverse(
+                    nodes[id]["bounds"][1].as_i64().unwrap()
+                        + nodes[id]["bounds"][3].as_i64().unwrap() / 2,
+                )
+            });
+            if let Some(rest) = members.first() {
+                if nodes[rest]["kind"] != "RestInter" {
+                    return Err("music_group_typed_owned_rest_required".into());
+                }
+                beams.extend(
+                    edges
+                        .iter()
+                        .filter(|e| e["kind"] == "BeamRestRelation" && e["target"] == *rest)
+                        .map(|e| e["source"].as_u64().unwrap() as usize),
+                );
+            }
+            Some(
+                chord["bounds"][1]
+                    .as_i64()
+                    .ok_or("music_voice_chord_bounds_required")? as f64
+                    + (chord["bounds"][3]
+                        .as_i64()
+                        .ok_or("music_voice_chord_bounds_required")?
+                        / 2) as f64,
+            )
+        }
+        _ => return Err("music_voice_ordinary_chord_required".into()),
+    };
+    if let Some(y) = reference_y {
+        let x = chord["bounds"][0]
+            .as_i64()
+            .ok_or("music_voice_chord_bounds_required")? as f64
+            + (chord["bounds"][2]
+                .as_i64()
+                .ok_or("music_voice_chord_bounds_required")?
+                / 2) as f64;
+        let mut distances = std::collections::BTreeMap::new();
+        for id in &beams {
+            let beam = nodes.get(id).ok_or("music_group_live_beam_required")?;
+            if !matches!(beam["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
+                || beam["origin"]["system"] != chord["origin"]["system"]
+            {
+                return Err("music_group_typed_owned_beam_required".into());
+            }
+            let median: [f64; 4] = serde_json::from_value(beam["median"].clone())
+                .map_err(|_| "music_voice_beam_median_required")?;
+            if !median.iter().all(|n| n.is_finite()) || median[0] == median[2] {
+                return Err("music_voice_horizontal_beam_median_required".into());
+            }
+            let at_x =
+                median[1] + (x - median[0]) * (median[3] - median[1]) / (median[2] - median[0]);
+            distances.insert(*id, (y - at_x).abs());
+        }
+        beams.sort_by(|a, b| distances[b].total_cmp(&distances[a]));
+    }
+    Ok(beams)
+}
+fn chord_group(snapshot: &Value, id: usize) -> Result<Option<usize>, String> {
+    let beams = chord_beams(snapshot, id)?;
+    Ok(beams.first().and_then(|beam| {
+        snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "Containment" && e["target"] == *beam)
+            .map(|e| e["source"].as_u64().unwrap() as usize)
+    }))
+}
+
 /// AbstractChord.setVoice -> Voice.addChord -> BeamGroup.setVoice for the
 /// currently admitted ordinary, untied chord family. Identity is the retained
 /// Voice and its Measure, not a repeating numeric label. Unsupported tied or
-/// multiple-group ownership keeps an explicit guard rather than dropping it.
+/// special chord ownership keeps an explicit guard rather than dropping it.
 pub(crate) fn assign_chord_voice(
     graph: &mut crate::shared_sig::Graph,
     voices: &mut Vec<Voice>,
@@ -315,22 +430,14 @@ pub(crate) fn assign_chord_voice(
                     + nodes[id]["bounds"][2].as_i64().unwrap() / 2
             });
         }
-        let linked = groups
-            .as_array()
-            .unwrap()
-            .iter()
-            .filter(|g| {
-                g["chords"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .any(|c| c["id"] == id)
-            })
-            .collect::<Vec<_>>();
-        if linked.len() > 1 {
-            return Err("music_voice_multiple_group_order_pending".into());
-        }
-        if let Some(group) = linked.first() {
+        let selected = chord_group(&snapshot, id)?;
+        if let Some(group_id) = selected {
+            let group = groups
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|g| g["id"] == group_id)
+                .ok_or("music_voice_live_beam_group_required")?;
             // Same Measure object in original; native ownership is the exact
             // system/part/local measure tuple. Never copy Voice1 across it.
             for member in group["chords"].as_array().unwrap().iter().rev() {
@@ -566,6 +673,125 @@ mod group_tests {
             .unwrap();
             assert_eq!(graph.snapshot(), before);
             assert_eq!(voices[voice_index].chord_ids, before_members);
+        }
+        let order_controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-beam-group-voices/beam-order.json"
+        ))
+        .unwrap();
+        for control in order_controls["controls"].as_array().unwrap() {
+            let mut graph = original_graph.clone();
+            let mut voices = original_voices.clone();
+            let y = control["added_median_y"].as_f64().unwrap();
+            let added = Key {
+                system: 1,
+                phase: Phase::Beam,
+                local: next_local(Phase::Beam),
+            };
+            let group = Key {
+                system: 1,
+                phase: Phase::Group,
+                local: next_local(Phase::Group),
+            };
+            let added_id=graph.vertex(added,json!({"kind":"BeamInter","shape":"BEAM","grade":0.8,"bounds":[288,y as i64-2,32,4],"median":[288.,y,320.,y],"height":4.}),false).unwrap();
+            let group_id = graph
+                .vertex(group, json!({"kind":"BeamGroupInter"}), false)
+                .unwrap();
+            let stem_id = snapshot["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["kind"] == "ChordStemRelation" && e["source"] == first_id)
+                .unwrap()["target"]
+                .as_u64()
+                .unwrap() as usize;
+            let stem_key: Key = serde_json::from_value(
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == stem_id)
+                    .unwrap()["origin"]
+                    .clone(),
+            )
+            .unwrap();
+            graph
+                .relations(
+                    1,
+                    Phase::Group,
+                    vec![(group, added, json!({"kind":"Containment"}))],
+                )
+                .unwrap();
+            graph
+                .relations(
+                    1,
+                    Phase::Beam,
+                    vec![(
+                        added,
+                        stem_key,
+                        json!({"kind":"BeamStemRelation","beam_portion":"LEFT"}),
+                    )],
+                )
+                .unwrap();
+            // The getter-only earlier control used no rhythmic owner. Here the
+            // declared rest is registered in the Voice's actual first Measure.
+            let mut rest_data = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == rest_id)
+                .unwrap()
+                .clone();
+            rest_data["measure_index"] = json!(owner.measures[voices[voice_index].measure].index);
+            graph.vertex(chord, rest_data, false).unwrap();
+            let order = chord_beams(&graph.snapshot(), first_id).unwrap();
+            assert_eq!(
+                order.len(),
+                control["ordered_beams"].as_array().unwrap().len()
+            );
+            assert_eq!(
+                order[0] == added_id,
+                control["selected_added_group"].as_bool().unwrap()
+            );
+            assert_eq!(
+                chord_group(&graph.snapshot(), first_id).unwrap() == Some(group_id),
+                control["selected_added_group"].as_bool().unwrap()
+            );
+            let first_key: Key = serde_json::from_value(
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == first_id)
+                    .unwrap()["origin"]
+                    .clone(),
+            )
+            .unwrap();
+            let mut first_data = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == first_id)
+                .unwrap()
+                .clone();
+            first_data["voice"] = Value::Null;
+            graph.vertex(first_key, first_data, false).unwrap();
+            assign_chord_voice(
+                &mut graph,
+                &mut voices,
+                &owner.measures,
+                first_id,
+                voice_index,
+            )
+            .unwrap();
+            assert_eq!(
+                graph.snapshot()["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == rest_id)
+                    .unwrap()["voice"],
+                control["rest_voice"]
+            );
         }
         for (key, stem, state) in before_cache {
             let current = owner.owner.caches[&1]

@@ -1,0 +1,38 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "AbstractChord/RestChord.getBeams stable tail-to-head median order -> actual first beam ensemble getBeamGroup -> Voice propagation",
+  "original_dependencies": [
+    "AbstractChordInter.getBeams sorts descending distance from head location at integer chord center x",
+    "RestChordInter.getBeams follows first bottom-up RestInter BeamRest and sorts descending center-distance",
+    "AbstractChordInter.getBeamGroup takes first beam actual ensemble; one chord can appear in more than one group",
+    "existing AbstractChord.setVoice and BeamGroup.setVoice same-measure equality/ownership guards retained"
+  ],
+  "original_comparison": "two declared competing BeamInter/BeamGroup/BeamStem on original saved page after chord cache invalidation; added median190 chooses added group and leaves rest null,230 chooses existing group and rest gets Voice1",
+  "boundary": "declared competing groups, not automatic recognition/grouping; original existing saved median209 versus native raster median209.034.. differs, selected order/group and rest Voice are compared, not exact old median floating values",
+  "original_fixture": "fixtures/official-beam-group-voices/beam-order.json",
+  "limits": [
+    "actual same-measure standard HeadChord/RestChord/Beam/Hook getter and assignment family; original special/tied chord dependencies still guarded",
+    "full automatic competing group/special staff/tie/lyric/slot/cleaner/epilog parity pending"
+  ],
+  "previous_full_validation": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "original_log_sha256": "7642338a6a8839f4457c975f14299ea27f9d1bc3d8aba4f9df8cd4d1a48ccf19",
+  "all_global_completion_flags": false,
+  "targeted_validation": {
+    "tests_passed": 16,
+    "groups": {
+      "target-stable.log": 1,
+      "regression.log": 15
+    },
+    "fmt": "passed",
+    "workspace_all_target_clippy": "passed -D warnings",
+    "log_sha256": {
+      "target-stable.log": "cbe7274ff6672f13fa2f729741bc8063443bb430214e032c9e794ab91f639fee",
+      "regression.log": "3d0949b2022dc11587a66b213a5ae53caaa22e5782af78b27de7fab61bf70b52",
+      "fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy.log": "9a4c534d42b8b1ebee0a275e13257e3f50c952546f1cf9018b72637b3e6944ef"
+    }
+  }
+}

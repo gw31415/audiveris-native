@@ -675,3 +675,26 @@ explicit guards. No admission guard was removed.
 [Validation](../evidence/musicxml-beam-group-propagation/VALIDATION.json).
 Latest full595 remains earlier source95e191b; this unit uses targeted tests.
 All global completion flags remain false.
+
+### Actual first beam-group selection for Voice propagation
+
+Original `AbstractChordInter.getBeams` and `RestChordInter.getBeams` now choose
+the actual beam ensemble for the native Voice assignment path. Beam medians
+are evaluated at the integer chord center x and stably ordered from the tail
+toward the head (ordinary chord head location, or rest-chord center). The first
+beam's incoming Containment supplies its actual group, including a chord
+connected to more than one group; registration order does not pick the group.
+
+Two declared original competing-group controls, after original chord cache
+invalidation, compare selected group/order and same-measure rest Voice. The old
+saved original median is209; the native raster median is209.034.., so identical
+old median floats are not claimed. This is not full-image competing-group
+generation equality. Existing successful CLI commands above remain valid.
+Special chord/measure-rest/tie propagation, general rhythm/voice matching,
+lyrics and complete cleaner/epilog remain pending. The previous unit's
+multiple-group-order guard is replaced by this original selection algorithm;
+image admission guards remain. All global completion flags remain false.
+
+[Validation](../evidence/musicxml-chord-beam-order/VALIDATION.json).
+Latest full595 remains earlier source95e191b; current targeted results are
+recorded separately.

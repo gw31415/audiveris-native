@@ -1,0 +1,22 @@
+{
+  "scope" : "two declared extra competing beam-group conditions on existing original page, tail-to-head getBeams/getBeamGroup selection and same-measure rest propagation; not automatic competing group recognition",
+  "controls" : [ {
+    "added_median_y" : 190.0,
+    "selected_added_group" : true,
+    "ordered_beams" : [ {
+      "median" : [ 288.0, 190.0, 320.0, 190.0 ]
+    }, {
+      "median" : [ 288.0, 209.0, 470.0, 209.0 ]
+    } ],
+    "rest_voice" : null
+  }, {
+    "added_median_y" : 230.0,
+    "selected_added_group" : false,
+    "ordered_beams" : [ {
+      "median" : [ 288.0, 209.0, 470.0, 209.0 ]
+    }, {
+      "median" : [ 288.0, 230.0, 320.0, 230.0 ]
+    } ],
+    "rest_voice" : 1
+  } ]
+}
