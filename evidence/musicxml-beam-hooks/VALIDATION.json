@@ -50,5 +50,21 @@
     "other hook conditions/more than two beam levels/other flags/dots/tuplets/full rhythm",
     "full reduction/correction/cleaner/epilog and general engraving",
     "general sloping/wider eraser contours, nonzero skew/scans/other fonts/special staff/full24shapes/32sources"
-  ]
+  ],
+  "independent_clone_readback": {
+    "source_commit": "dd019c479fe6e6f07f51cebc2a1180781adf16a1",
+    "repository_tree": "48868c0da01f0a303a32150e636d0f769bd77779",
+    "source_tree": "186d831725568b0db04939457e0f317440562943",
+    "crates_tree": "5838d35bd0a83e7f7397e2b6b7611ce580ac323a",
+    "independent_clone_fetch_and_fast_forward": true,
+    "matched_root_trees": true,
+    "working_trees_clean": true,
+    "Linux_offline_locked_Cargo_build": true,
+    "fmt": true,
+    "direct_emitted_XML_events_match_original": 11,
+    "native_and_original_MusicXML4_XSD": true,
+    "explicit_stem_direction_scope": "four beamed notes only; complete engraving not claimed",
+    "native_requires_Java_runtime": false,
+    "global_completion_flags": false
+  }
 }
