@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original SigReducer.detectOverlaps on the actual ordinary foundation owner.
-//! General mirror/ensemble/text/slur and all-class contracts remain pending.
+//! Ordinary/special head size contacts; mirror/ensemble/text/slur remain pending.
 use crate::{
     beam_dispatch,
     shared_sig::{Graph, Key},
@@ -173,10 +173,9 @@ fn candidates(snapshot: &Value) -> Result<Vec<&Value>, String> {
             return Err("foundation_overlap_class_dependency_pending".into());
         }
         if n["kind"] == "HeadInter"
-            && !matches!(
-                n["shape"].as_str(),
-                Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
-            )
+            && !n["shape"]
+                .as_str()
+                .is_some_and(|s| crate::head_range_search::SUPPORTED_SHAPES.contains(&s))
         {
             return Err("foundation_overlap_special_head_dependency_pending".into());
         }
@@ -224,8 +223,11 @@ fn discover_graph(graph: &mut Graph, geometry: &BTreeMap<u64, Geometry>) -> Resu
                 ga.overlaps(gb)? && gb.overlaps(ga)?
             };
             // Original excludeOverlap exempts standard-size head/stem contacts.
-            let standard_head_stem = (a["kind"] == "HeadInter" && b["kind"] == "StemInter")
-                || (a["kind"] == "StemInter" && b["kind"] == "HeadInter");
+            let standard_head_stem = [(a, b), (b, a)].iter().any(|(head, stem)| {
+                head["kind"] == "HeadInter"
+                    && stem["kind"] == "StemInter"
+                    && !crate::head_registration::is_small_head(head["shape"].as_str().unwrap())
+            });
             if overlaps
                 && !standard_head_stem
                 && staged.insert_foundation_contact(
@@ -242,7 +244,8 @@ fn discover_graph(graph: &mut Graph, geometry: &BTreeMap<u64, Geometry>) -> Resu
     *graph = staged;
     Ok(
         json!({"inserted_exclusions":inserted,"ordinary_detectOverlaps_connected":true,
-        "scope":"ordinary actual glyph/core/line-area geometry, >=0.05 IOU, both directional overlaps, compatibility and support refusal before chord prolog; full-class/mirror/ensemble/header/frozen contracts pending","full_general_overlap_complete":false}),
+        "special_head_size_contacts_connected":true,
+        "scope":"actual glyph/core/line-area geometry, >=0.05 IOU, both directional overlaps, original small-head size exemption and support refusal before chord prolog; full-class/mirror/ensemble/header/frozen contracts pending","full_general_overlap_complete":false}),
     )
 }
 
@@ -336,7 +339,26 @@ mod tests {
             "../fixtures/official-foundation-overlap/controls.json"
         ))
         .unwrap();
-        for c in oracle["cases"].as_array().unwrap() {
+        let special: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-foundation-special-head-overlap/controls.json"
+        ))
+        .unwrap();
+        for c in oracle["cases"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .chain(special["cases"].as_array().unwrap())
+        {
+            if let Some(small) = c["shape_is_small_head"].as_bool() {
+                assert_eq!(
+                    crate::head_registration::is_small_head(
+                        c["nodes"][0]["shape"].as_str().unwrap()
+                    ),
+                    small,
+                    "{}",
+                    c["name"]
+                );
+            }
             let mut graph = Graph::default();
             let mut geometry = BTreeMap::new();
             let mut keys = BTreeMap::new();
@@ -499,8 +521,9 @@ mod tests {
             .find(|g| g["id"] == id)
             .unwrap()["runs"] = old_runs;
 
-        // Unsupported special heads must refuse the unit before any exclusion
-        // can be committed, rather than applying standard-head exemptions.
+        // Unknown head shapes still refuse before exclusions can be committed.
+        // Recognized small/stemless shapes use the original size branch above;
+        // downstream chord/recognition dependencies remain separately guarded.
         let head = snapshot["inters"]
             .as_array()
             .unwrap()
@@ -508,7 +531,7 @@ mod tests {
             .find(|n| n["kind"] == "HeadInter")
             .unwrap();
         let mut special = head.clone();
-        special["shape"] = json!("NOTEHEAD_BLACK_SMALL");
+        special["shape"] = json!("UNKNOWN_HEAD_SHAPE");
         owned
             .graph
             .vertex(key(head).unwrap(), special, false)

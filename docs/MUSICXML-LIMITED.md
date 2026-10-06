@@ -876,3 +876,16 @@ At source`e532ae2`, independent fetch/build produced20 and11 original-matching
 events; native and saved original MusicXML pass MusicXML4 XSD. Both XML byte
 hashes remain identical to the preceding successful checkpoint. Root/src/crates
 trees match. The receipt-only commit does not change tested source.
+
+## Original special-head contact predicates
+
+Foundation overlap now applies the original `Shape.isSmallHead` distinction to
+all recognized24 head shapes. It uses the same actual glyph/core geometry and
+Support refusal: small heads can exclude an intersecting stem; standard heads
+retain the original exemption. Six original declared SIG controls cover four
+small oval shapes, cross and breve, including one existing HeadStem Support.
+These are predicate comparisons, not successful special-head page MusicXML.
+No new image fixture or notation admission. Later size/duration/owner branches
+remain partial; all global completion flags stay false. Reuse the existing
+20/11-event CLI commands above with new output paths.
+[Validation](../evidence/musicxml-special-head-overlap/VALIDATION.json).

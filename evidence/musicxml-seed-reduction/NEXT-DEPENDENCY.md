@@ -94,3 +94,10 @@ head branches in generic overlap/chord processing. InterCleaner.purgeContainers
 requires Part/lyrics, not merely head-edge callbacks. LINKS slur/tie/lyrics and
 complete epilog remain pending. No nonUI omission or completion flag change.
 [Lifecycle validation](../musicxml-head-cleaner-lifecycle/VALIDATION.json).
+
+Special-head contact predicates now accept recognized24 shape metadata and
+apply original4-small-head exemption semantics with actual glyph/core geometry
+and support priority. Six original declared controls are distinct from full
+special-head image recognition/export. Next: original typed mirror/ensemble
+ownership exclusions and special-head chord size/duration dependencies.
+All final nonUI targets remain; downstream guards are not blanket-removed.

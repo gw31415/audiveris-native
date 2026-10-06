@@ -352,3 +352,12 @@ mirror/ensemble/特殊head、全support/Part/lyrics所有、完全cleaner/epilog
 Linux CLIで既存20イベント・11イベントの原版一致とMusicXML4 XSDを確認しました。
 XML byte hashも前成功版と同一。新しい画像対応や全SIG同等性の宣言ではありません。
 [独立取得照合](../evidence/musicxml-head-cleaner-lifecycle/READBACK.json)。
+
+## 特殊headのoverlapサイズ判定（今回）
+
+原版`Shape.isSmallHead`の4形分類を共有し、認識済み24形のoverlap判定に接続。
+small head/stemだけが接触免除から外れ、実画素/core判定と既存support優先は維持。
+原版6宣言SIG条件でsmall4形・標準cross/breve・support有無・contextual gradeを比較。
+これは特殊headページを画像からMusicXMLへ処理できたという結果ではありません。
+後続size/duration/chord/所有処理は未完・guard維持、既存画像CLI範囲は変更なし。
+[検証](../evidence/musicxml-special-head-overlap/VALIDATION.json)。

@@ -125,6 +125,11 @@
       "status": "implemented",
       "unit": "HeadStemsCleaner.check -> first typed SIG.getRelation -> removal of only validated actual edges -> HeadStemRelation.removed head/stem abnormal callbacks; no whole-STEM re-registration",
       "limits": "six successful original declared SIG conditions; manual/frozen and selected distinct-stem parallel edges compared, actual image owner/cache atomicity and old images retained. Original automatic parallel alias fails in one observed condition; native refusal remains. Full cleaner/epilog remains partial."
+    },
+    {
+      "status": "implemented",
+      "unit": "recognized24 shape metadata in actual foundation overlap; shared original4-small-head classification preserves standard-head/stem exemption, actual pixels/core and support precedence",
+      "limits": "declared actual physical heads/stem plus optional support on existing saved System/Staff; original detectOverlaps/contextualize, not raster recognition or full special-head export; original6 size/contact/support conditions; downstream special-head chord/page export remains guarded"
     }
   ],
   "function_groups": [
@@ -234,7 +239,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "e532ae2:33 affected tests, fmt/workspace-all-target-clippy; original6 successful declared cleaner lifecycle conditions and one original automatic parallel exception. Independent fetched clone built Linux CLI,20+11 original-matching events/XSD and prior XML byte hashes preserved. evidence/musicxml-head-cleaner-lifecycle/{VALIDATION,READBACK}.json; prior full583 stays at52943de.",
+  "latest_targeted_validation": "12 affected tests, original6 special-head overlap SIG conditions, fmt/workspace-all-target-clippy; separate independent CLI/readback receipt in evidence/musicxml-special-head-overlap. Last full583 remains at52943de.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -250,8 +255,8 @@
     {
       "original": "SigReducer.detectOverlaps for foundations",
       "status": "partial",
-      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog",
-      "remaining": "mirror/ensemble/header/all-class predicates, slur/fermata special geometry and text grade/ownership dependencies"
+      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog; recognized24 head shapes and original4-small-head size distinction",
+      "remaining": "mirror/ensemble/header/all-class predicates, slur/fermata geometry and text ownership/grade; special-head downstream size/duration/chord branches remain partial"
     },
     {
       "original": "SigReducer.analyzeChords prolog/late",

@@ -4,6 +4,13 @@ use crate::shared_sig::{Graph, Key, Phase};
 use audiveris_area::LinearArea;
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+/// Original Shape.isSmallHead / ShapeSet.HeadsOvalSmall, including stemless heads.
+pub(crate) fn is_small_head(shape: &str) -> bool {
+    matches!(
+        shape,
+        "NOTEHEAD_BLACK_SMALL" | "NOTEHEAD_VOID_SMALL" | "WHOLE_NOTE_SMALL" | "BREVE_SMALL"
+    )
+}
 fn bounds(v: &Value) -> Result<[i32; 4], String> {
     let b: [i32; 4] = serde_json::from_value(v["bounds"].clone())
         .map_err(|_| "invalid_registered_head_bounds")?;
