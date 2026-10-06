@@ -628,3 +628,28 @@ controlled ownership operations.
 [Validation](../evidence/musicxml-voice-chord-ownership/VALIDATION.json).
 
 Full native workspace validation at source95e191b:595 passed,0 failed/ignored,176 executables and7 empty doc-test groups. A transport disconnect interrupted the initial run after136 executables; only40 remaining executables were resumed from the unchanged Cargo inventory (the interrupted4-test binary was repeated). [Full validation](../evidence/musicxml-voice-chord-ownership/FULL-VALIDATION.json). This is separate from full593 at source238c535.
+
+### BeamGroup chord/Voice getters from the retained graph
+
+The native image report now adds `beam_group_voices`. Original
+`AbstractBeamInter.getChords` follows actual BeamStem/ChordStem relations and
+BeamRest -> RestInter -> RestChord Containment; `BeamGroupInter.getChords`
+deduplicates these lists and sorts by left abscissa, after each beam's center
+sort. The group's Voice is the first actual chord's stored owner, including
+measure identity (Voice1 can occur separately in multiple measures).
+
+The existing two-system input's two saved original RHYTHMS groups match. A
+separate declared original BeamRest control checks rest ensemble/order with an
+unassigned rest Voice; this does not claim automatic rest recognition/export.
+Canonical Stem/cache/glyph identities remain unchanged. General group/tied Voice
+propagation, slots, lyrics and complete cleaner/epilog remain pending.
+
+Try the existing Linux CLI and inspect the new report field:
+
+```sh
+audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-systems.png output.musicxml report.json
+```
+
+[Validation](../evidence/musicxml-beam-group-voice/VALIDATION.json).
+Latest full595 remains the earlier source95e191b; this unit uses targeted
+regressions. All global completion flags remain false.

@@ -1,0 +1,143 @@
+{
+  "scope": "original saved RHYTHMS BeamGroup.getChords/getVoice for existing same-image CLI input; read-only OMR load, distinct from end-to-end transient raster SIG equality",
+  "groups": [
+    {
+      "system_id": 1,
+      "bounds": [
+        288,
+        205,
+        182,
+        8
+      ],
+      "beams": [
+        {
+          "kind": "BeamInter",
+          "bounds": [
+            288,
+            205,
+            182,
+            8
+          ]
+        }
+      ],
+      "chords": [
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            275,
+            206,
+            14,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 1
+        },
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            332,
+            206,
+            17,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 1
+        },
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            392,
+            206,
+            17,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 1
+        },
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            452,
+            206,
+            17,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 1
+        }
+      ],
+      "voice": 1,
+      "voice_measure_number": 1
+    },
+    {
+      "system_id": 2,
+      "bounds": [
+        288,
+        525,
+        182,
+        8
+      ],
+      "beams": [
+        {
+          "kind": "BeamInter",
+          "bounds": [
+            288,
+            525,
+            182,
+            8
+          ]
+        }
+      ],
+      "chords": [
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            275,
+            526,
+            14,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 3
+        },
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            332,
+            526,
+            17,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 3
+        },
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            392,
+            526,
+            17,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 3
+        },
+        {
+          "kind": "HeadChordInter",
+          "bounds": [
+            452,
+            526,
+            17,
+            42
+          ],
+          "voice": 1,
+          "measure_number": 3
+        }
+      ],
+      "voice": 1,
+      "voice_measure_number": 3
+    }
+  ],
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "image": "../official-image-musicxml-cross-system/beam-two-systems.png"
+}

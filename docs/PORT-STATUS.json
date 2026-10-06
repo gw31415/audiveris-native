@@ -185,6 +185,11 @@
       "status": "implemented",
       "unit": "existing native image single-voice rhythm -> stored Voice/chord ownership -> SIG/event/MusicXML voice; original last/partial Voice-chord deletion",
       "limits": "two declared original Voice controls separate from existing image output; general matching/slots/beam-tie voice propagation/lyrics and post-rhythm correction CLI pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "BeamGroup.getChords/getFirstChord/getVoice via retained actual Beam/BeamStem/ChordStem/BeamRest/RestInter ensemble graph",
+      "limits": "two actual original saved groups and one declared extra BeamRest; automatic rest recognition, group/tie voice propagation, lyrics/full cleaner remain partial"
     }
   ],
   "function_groups": [
@@ -294,7 +299,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "95e191b: canonical post-chord stem callback, extensive HeadChord ownership and retained single-voice integration; full595 passed after transport interruption/resumption,fmt/clippy,independent Linux31 events/voice IDs/XML bytes/XSD/tree match. General voice/lyrics/full cleaner/epilog remain pending.",
+  "latest_targeted_validation": "BeamGroup actual chord/Voice getters: original two saved groups and declared BeamRest compared; targeted tests/fmt/clippy recorded in evidence/musicxml-beam-group-voice; latest full595 remains source95e191b, not this later change.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
