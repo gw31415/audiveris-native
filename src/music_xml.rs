@@ -805,7 +805,7 @@ pub fn recognize_named(image: &GrayImage, part_name: &str) -> Result<Export, Str
     }
     let owner = crate::stem_image_owned::prepare_items(image).map_err(|e| e.to_string())?;
     let owner = crate::music_links::remove_unreachable_beams(owner)?;
-    let owner = crate::stem_image_head_linking::continue_linking(owner)?;
+    let owner = crate::stem_image_head_linking::continue_process(owner)?;
     let owner = crate::stem_foundation_purge::continue_purge(owner)?;
     let owner = crate::stem_head_foundations::continue_reduction(owner)?;
     let owner = crate::music_links::finalize_stems(owner)?;

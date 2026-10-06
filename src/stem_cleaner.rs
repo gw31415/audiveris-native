@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Selected HeadStemsCleaner.check; no automatic selection or STEMS epilog.
+//! HeadStemsCleaner.check and bounded automatic checkHeadStems ensembles.
+//! Parts selection and complete STEMS/epilog remain separate dependencies.
 use crate::{
     head_stem_relation::{self, HeadSide, StemPortion},
     shared_sig::{Graph, HeadStemAttachment, Key, Phase},
@@ -203,4 +204,244 @@ pub fn clean_head(graph: &mut Graph, head: Key, ordered: &[Key]) -> Result<Value
     Ok(
         json!({"removed_relation_ids":removed,"selected_cleaner_complete":true,"automatic_parts_selection_complete":false,"stems_complete":false,"heads_complete":false,"epilog_complete":false,"shared_sig":graph.snapshot()}),
     )
+}
+
+/// Original StemsRetriever.checkHeadStems: null-focus partitions, not the
+/// focused-head contextual-grade hack. Uses live relation order/intrinsic grade.
+pub(crate) fn check_head_stems(graph: &mut Graph, head: Key) -> Result<Value, String> {
+    let snapshot = graph.snapshot();
+    let hid = graph.id(head).ok_or("automatic cleaner head required")?;
+    let nodes = snapshot["inters"]
+        .as_array()
+        .ok_or("automatic cleaner SIG required")?;
+    let h = nodes
+        .iter()
+        .find(|n| n["id"] == hid)
+        .ok_or("automatic cleaner live head required")?;
+    if head.phase != Phase::Head || h["kind"] != "HeadInter" {
+        return Err("automatic cleaner typed head required".into());
+    }
+    let edges = snapshot["relations"]
+        .as_array()
+        .ok_or("automatic cleaner edges required")?;
+    let mut stems = Vec::new();
+    for e in edges
+        .iter()
+        .filter(|e| e["kind"] == "HeadStemRelation" && e["source"] == hid)
+    {
+        let stem = nodes
+            .iter()
+            .find(|n| n["id"] == e["target"])
+            .ok_or("automatic cleaner live stem required")?;
+        let key: Key = serde_json::from_value(stem["origin"].clone())
+            .map_err(|_| "automatic cleaner stem origin required")?;
+        if key.phase != Phase::Stem
+            || key.system != head.system
+            || stems.iter().any(|(k, _, _)| *k == key)
+        {
+            return Err("automatic cleaner parallel or foreign stem pending".into());
+        }
+        let grade = stem["grade"]
+            .as_f64()
+            .filter(|v| (0.0..=1.).contains(v))
+            .ok_or("automatic cleaner intrinsic grade required")?;
+        stems.push((key, stem["id"].as_u64().unwrap(), grade));
+    }
+    if stems.len() > 16 {
+        return Err("automatic cleaner partition limit16".into());
+    }
+    stems.sort_by(|a, b| b.2.total_cmp(&a.2));
+    let mut conflicts = vec![Vec::new(); stems.len()];
+    for (i, (_, id, _)) in stems.iter().enumerate() {
+        for e in edges.iter().filter(|e| e["kind"] == "Exclusion") {
+            let other = if e["source"] == *id {
+                e["target"].as_u64()
+            } else if e["target"] == *id {
+                e["source"].as_u64()
+            } else {
+                None
+            };
+            if let Some(j) = stems.iter().position(|(_, id, _)| Some(*id) == other)
+                && j > i
+                && !conflicts[i].contains(&j)
+            {
+                conflicts[i].push(j);
+            }
+        }
+    }
+    let partitions = crate::sig_context::compatible_partitions(&conflicts);
+    let mut next = graph.clone();
+    let mut removed = Vec::new();
+    for ensemble in &partitions {
+        if ensemble.len() > 1 {
+            let keys = ensemble.iter().map(|i| stems[*i].0).collect::<Vec<_>>();
+            let check = clean_head(&mut next, head, &keys)?;
+            removed.extend(
+                check["removed_relation_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .cloned(),
+            );
+        }
+    }
+    *graph = next;
+    Ok(
+        json!({"head_id":hid,"partition_stem_ids":partitions.iter().map(|p|p.iter().map(|i|stems[*i].1).collect::<Vec<_>>()).collect::<Vec<_>>(),"removed_relation_ids":removed}),
+    )
+}
+
+/// System-head order is retained. Staging prevents a later refusal from
+/// publishing a partly cleaned system. Existing cached stem objects survive.
+pub(crate) fn check_system_heads(graph: &mut Graph, system: u64) -> Result<Value, String> {
+    let snap = graph.snapshot();
+    let mut next = graph.clone();
+    let mut checks = Vec::new();
+    let mut heads = snap["inters"]
+        .as_array()
+        .ok_or("automatic cleaner SIG required")?
+        .iter()
+        .filter(|n| {
+            n["kind"] == "HeadInter"
+                && n["origin"]["system"] == system
+                && n["shape"]
+                    .as_str()
+                    .is_some_and(|s| crate::head_seed_search::ALL_STEM_SHAPES.contains(&s))
+        })
+        .collect::<Vec<_>>();
+    for head in &heads {
+        head["bounds"][0]
+            .as_i64()
+            .ok_or("automatic cleaner head abscissa required")?;
+    }
+    // Original inspectStems sorts systemHeads stably by Inters.byAbscissa.
+    heads.sort_by_key(|n| n["bounds"][0].as_i64().unwrap());
+    for n in heads {
+        let key = serde_json::from_value(n["origin"].clone())
+            .map_err(|_| "automatic cleaner head origin required")?;
+        checks.push(check_head_stems(&mut next, key)?);
+    }
+    *graph = next;
+    Ok(
+        json!({"head_checks":checks,"scope":"original null-focus exclusion partitions and HeadStemsCleaner at end of system linking; complete STEMS/epilog still pending"}),
+    )
+}
+
+#[cfg(test)]
+mod automatic_tests {
+    use super::*;
+    #[test]
+    fn original_null_focus_partitions_preserve_excluded_alternatives_and_owned_stems() {
+        let c: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-epilog/head-partitions.json"
+        ))
+        .unwrap();
+        let mut graph = Graph::default();
+        graph.sync_heads(1,&[json!({"id":1,"kind":"HeadInter","shape":"NOTEHEAD_BLACK","bounds":c["head_bounds"],"grade":0.8,"abnormal":true,"removed":false})],&[],&[]).unwrap();
+        let head = Key {
+            system: 1,
+            phase: Phase::Head,
+            local: 1,
+        };
+        let mut records = Vec::new();
+        let mut attachments = Vec::new();
+        let mut keys = Vec::new();
+        for (i, s) in c["stems"].as_array().unwrap().iter().enumerate() {
+            let glyph = crate::beam_dispatch::glyph_from_json(&s["parts"][0]).unwrap();
+            records.push(
+                crate::stem_glyph::record(i + 1, &glyph, s["grade"].as_f64().unwrap()).unwrap(),
+            );
+            let mut relation = s["relation"].clone();
+            relation["kind"] = json!("HeadStemRelation");
+            relation["profile"] = json!(0);
+            // Original unset consistency defaults to 1, reflected by its source ratio5.
+            relation["consistency"] = json!(1.);
+            attachments.push(HeadStemAttachment {
+                local: i + 1,
+                head,
+                stem_local: i + 1,
+                relation,
+            });
+            keys.push(Key {
+                system: 1,
+                phase: Phase::Stem,
+                local: i + 1,
+            });
+        }
+        graph.sync_stems(1, &records, &attachments).unwrap();
+        let endpoints: Vec<usize> = c["exclusion"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|i| i.as_u64().unwrap() as usize)
+            .collect();
+        graph
+            .relations(
+                1,
+                Phase::Head,
+                vec![(
+                    keys[endpoints[0]],
+                    keys[endpoints[1]],
+                    json!({"kind":"Exclusion","cause":"OVERLAP"}),
+                )],
+            )
+            .unwrap();
+        let ids = keys
+            .iter()
+            .map(|k| graph.id(*k).unwrap())
+            .collect::<Vec<_>>();
+        let before = graph.snapshot();
+        let result = check_head_stems(&mut graph, head).unwrap();
+        let partitions = result["partition_stem_ids"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|p| {
+                p.as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|id| ids.iter().position(|i| json!(i) == *id).unwrap())
+                    .collect::<Vec<_>>()
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(json!(partitions), c["partitions"]);
+        let after = graph.snapshot();
+        let ns = after["inters"].as_array().unwrap();
+        let es = after["relations"].as_array().unwrap();
+        let kept = keys
+            .iter()
+            .enumerate()
+            .filter_map(|(i, k)| {
+                es.iter()
+                    .any(|e| {
+                        e["kind"] == "HeadStemRelation" && e["target"] == graph.id(*k).unwrap()
+                    })
+                    .then_some(i)
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(json!(kept), c["kept"]);
+        for (i, k) in keys.iter().enumerate() {
+            let id = graph.id(*k).unwrap();
+            let n = ns.iter().find(|n| n["id"] == id).unwrap();
+            let prior = before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == id)
+                .unwrap();
+            for field in ["glyph", "grade", "median", "bounds", "width", "origin"] {
+                assert_eq!(n[field], prior[field]);
+            }
+            assert_eq!(n["abnormal"], c["stem_abnormal"][i]);
+            assert_eq!(c["stem_removed"][i], false);
+        }
+        assert_eq!(
+            ns.iter().find(|n| n["kind"] == "HeadInter").unwrap()["abnormal"],
+            c["head_abnormal"]
+        );
+        assert!(after["tombstones"].as_array().unwrap().is_empty());
+        // A fresh pass must not resurrect the relation removed in an earlier ensemble.
+        check_head_stems(&mut graph, head).unwrap();
+        assert_eq!(graph.snapshot(), after);
+    }
 }

@@ -290,29 +290,12 @@ fn apply_context(
                 }
             }
         }
-        let mut sequences = vec![vec![0i8; partners.len()]];
-        for (i, concurrent) in conflicts.iter().enumerate() {
-            for k in 0..sequences.len() {
-                if sequences[k][i] != -1 {
-                    sequences[k][i] = 1;
-                    if !concurrent.is_empty() {
-                        let mut duplicate = sequences[k].clone();
-                        duplicate[i] = 0;
-                        sequences.push(duplicate);
-                        for &j in concurrent {
-                            sequences[k][j] = -1;
-                        }
-                    }
-                }
-            }
-        }
+        let partitions = compatible_partitions(&conflicts);
         let mut best = 0.0f64;
-        for sequence in sequences {
+        for partition in partitions {
             let mut sum = 0.0;
-            for (i, p) in partners.iter().enumerate() {
-                if sequence[i] == 1 {
-                    sum += contributions[p];
-                }
+            for i in partition {
+                sum += contributions[&partners[i]];
             }
             let grade = grades[&id];
             best = best.max(((1.0 + sum) * grade) / (1.0 + sum * grade));
@@ -324,6 +307,37 @@ fn apply_context(
         v["contextual_grade"] = json!(grade);
     }
     Ok(())
+}
+
+/// SIGraph.Sequence enumeration after caller supplies original-grade order
+/// and bounded explicit/focused-head conflicts. No maximal-clique shortcut.
+pub(crate) fn compatible_partitions(conflicts: &[Vec<usize>]) -> Vec<Vec<usize>> {
+    let mut sequences = vec![vec![0i8; conflicts.len()]];
+    for (i, concurrent) in conflicts.iter().enumerate() {
+        // Original only visits sequences present at the start of this column.
+        for k in 0..sequences.len() {
+            if sequences[k][i] != -1 {
+                sequences[k][i] = 1;
+                if !concurrent.is_empty() {
+                    let mut duplicate = sequences[k].clone();
+                    duplicate[i] = 0;
+                    sequences.push(duplicate);
+                    for &j in concurrent {
+                        sequences[k][j] = -1;
+                    }
+                }
+            }
+        }
+    }
+    sequences
+        .into_iter()
+        .map(|s| {
+            s.into_iter()
+                .enumerate()
+                .filter_map(|(i, v)| (v == 1).then_some(i))
+                .collect()
+        })
+        .collect()
 }
 
 #[cfg(test)]

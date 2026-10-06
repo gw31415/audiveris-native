@@ -167,9 +167,9 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     Ok(m)
 }
 
-/// StemsRetriever.checkHeadStems/HeadStemsCleaner and StemsStep.doEpilog
-/// on the admitted one-stem-per-head subset, plus owned single-beam endpoint
-/// checks. Shared-glyph cross-system beams remain admission refusals.
+/// Post-reduction single-voice admission/cache checks and beam endpoints.
+/// Original automatic checkHeadStems already runs after each system links,
+/// before Finalizer.boostBeamSides. General epilog/cross-system parity is pending.
 pub(crate) fn finalize_stems(mut o: OwnedItems) -> Result<OwnedItems, String> {
     o = crate::music_ledger_reduction::check(o)?;
     let beam_checks = crate::music_beams::check_ends(&mut o.graph)?;

@@ -594,3 +594,14 @@ Use new output filenames: the CLI refuses overwrites. With a configured Cargo
 Linux-native and needs no Java runtime. Full cleaner/epilog, cross-system glyph
 aliases and general engraving remain unfinished; no global completion flag is
 set. This is an additional testable unit toward all original nonUI functions.
+
+The MusicXML image route now executes the original automatic head-stem cleanup
+order before beam-side support: build intrinsic-grade/exclusion ensembles from
+its live SIG, then apply the existing cleaner. No selected parts/ensemble API
+is required from CLI users. The same input/command above remains usable. One
+three-stem/exclusion control is an original SIG comparison, distinct from the
+full-image alias page. The diagnostic linking CLI keeps its earlier pre-cleaner
+observation boundary so saved comparisons remain reproducible. Single-voice
+export still requires one retained stem per head; general polyphony, parallel
+relations, >16 cleaner partners, cross-system orphan finalization, wider/sloping
+erasure and full reduction/epilog remain unfinished, not planned omissions.

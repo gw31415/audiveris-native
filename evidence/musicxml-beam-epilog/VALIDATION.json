@@ -31,5 +31,21 @@
     "Laura_exclusions": 513
   },
   "completion_flags": false,
-  "pending": "see NEXT-DEPENDENCY.md"
+  "pending": "see NEXT-DEPENDENCY.md",
+  "independent_clone_readback": {
+    "source_commit": "ae6aeac6c56e53fdd668bf089d7111e148aba7a1",
+    "repository_tree": "b75e179706d977eb9fc94b0acac7d4330e416cdb",
+    "source_tree": "9a1170ff6265b4b2f2ae178fdf2563fd2db140e0",
+    "crates_tree": "5838d35bd0a83e7f7397e2b6b7611ce580ac323a",
+    "independent_clone_fetch_and_fast_forward": true,
+    "matched_root_trees": true,
+    "working_trees_clean": true,
+    "Linux_offline_locked_Cargo_build": true,
+    "fmt": true,
+    "direct_emitted_XML_events_match_original": 11,
+    "native_and_original_MusicXML4_XSD": true,
+    "explicit_stem_direction_scope": "four beamed notes only; complete engraving not claimed",
+    "native_requires_Java_runtime": false,
+    "global_completion_flags": false
+  }
 }

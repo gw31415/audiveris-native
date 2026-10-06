@@ -621,7 +621,19 @@ impl Scheduler<'_> {
 }
 /// Image-derived selections register actual cache objects and original head links.
 /// Beam side/intermediate builders precede head phases. Full STEMS remains pending.
-pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
+pub fn continue_linking(owned: OwnedItems) -> Result<OwnedItems, String> {
+    // Preserve the saved linkStems-stage oracle/debug boundary.
+    continue_linking_impl(owned, false)
+}
+/// Original process continuation for the image-to-MusicXML owner, including
+/// finalizeStems before the all-systems beam-side finalizer.
+pub(crate) fn continue_process(owned: OwnedItems) -> Result<OwnedItems, String> {
+    continue_linking_impl(owned, true)
+}
+fn continue_linking_impl(
+    mut owned: OwnedItems,
+    finalize_heads: bool,
+) -> Result<OwnedItems, String> {
     let report = owned.prepared.report.clone();
     if report["schema"] != "audiveris-native.stem-image-head-items.v1" {
         return Err("fresh actual image items owner required".into());
@@ -728,6 +740,11 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
         if !beam_builders[si].is_empty() {
             result["beam_origin_builders"] = beam_observations;
         }
+        drop(scheduler);
+        if finalize_heads {
+            result["automatic_head_stem_cleaner"] =
+                crate::stem_cleaner::check_system_heads(&mut owned.graph, system)?;
+        }
         systems.push(result);
     }
     let beam_finalizer = crate::music_beams::boost_sides(&mut owned.graph)?;
@@ -736,6 +753,12 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
         owned.prepared.report["limited_beam_finalizer"] = beam_finalizer;
         owned.prepared.report["comparison_scope"] = json!(
             "Original HEADS beam-origin builder/expand/createStem, beam-first then head phases1/2 and ordinary beam/hook Finalizer.boostBeamSides, actual cache/SIG support; full STEMS/reduction/epilog parity pending"
+        );
+    }
+    if finalize_heads {
+        owned.prepared.report["original_process_head_finalizer_connected"] = json!(true);
+        owned.prepared.report["comparison_scope"] = json!(
+            "Original system linkStems then finalizeStems/checkHeadStems null-focus exclusion ensembles, followed by bounded all-systems beam-side Finalizer/contextualization. General cross-system orphan/cleaner/reduction/epilog parity pending"
         );
     }
     Ok(owned)

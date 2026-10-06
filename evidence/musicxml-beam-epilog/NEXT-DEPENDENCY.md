@@ -26,14 +26,30 @@ bounds and group bounds. Native IDs are not JVM IDs. Three separate original
 owned-group deletion controls cover partial/last/extensive deletion. They are
 not alternative full-image exports or a general ensemble proof.
 
-Next connect original `StemsRetriever.finalizeStems/checkHeadStems` at the end
-of each system's linking: `SIGraph.getPartitions(null, allStems)` orders by
-intrinsic grade and partitions only explicit exclusions; then the existing
-`HeadStemsCleaner.check` acts on each compatible ensemble. This differs from
-the focused-head contextual-grade partition hack. The current image finalizer
-still admits only one stem per head. Follow with cross-system orphan beam
-finalization using actual SystemManager vertical neighbors, first/last staff
-lines, physical glyph equality and linked counterparts, before contextualizing.
+The next checkpoint connects original `StemsRetriever.finalizeStems/
+checkHeadStems` on the MusicXML image owner after each system's head linking,
+before all-systems beam-side finalization. The public diagnostic `continue_linking`
+retains its saved `linkStems` observation boundary. `SIGraph.getPartitions(null,
+allStems)` sorts stably by intrinsic grade and partitions explicit exclusions;
+then the existing `HeadStemsCleaner.check` acts on each compatible ensemble.
+Head order follows original `Inters.byAbscissa`. The sequence enumerator is
+shared with contextual grading, whose focused-head stem-conflict hack remains
+separate. No caller supplies a selected ensemble on the image route.
+
+One declared original actual-SIG control has three physical stems and an
+exclusion between alternatives: partitions `[1,0]`, `[0,2]` retain relations
+`[1,2]`, remove relation0, retain all stems and refresh abnormal flags. Native
+matches this control. It is not a full-image positive multi-stem cleanup claim.
+The existing selected cleaner/canonical-sharing controls remain separate.
+The image route verifies owned/cache identities through its post-reduction
+admission; single-voice export still requires one retained stem per head.
+The cleaner's bounded partition storage admits at most16 distinct stem partners;
+parallel/manual contexts and complete original epilog remain pending.
+
+Next implement cross-system orphan beam finalization using actual SystemManager
+vertical neighbors, first/last staff lines, physical glyph equality and linked
+counterparts, before contextualizing. General ensemble/shared/frozen callbacks
+and all original consistency/overlap/correction passes also remain partial.
 
 General groups/aliens/cross-staff, sloping/wider PageCleaner contours, other
 beam levels/flags/dots/tuplets/polyphony and broader rhythm/correction/export
