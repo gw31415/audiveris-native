@@ -1590,3 +1590,23 @@ serial onset. The three successful 36-event CLI examples remain unchanged; no
 new image acceptance is claimed. Sibling/previous-slot inference, general Voice
 export, full Rational/tuplets and shared stacks still need connection. Global
 completion flags remain false; full595 remains the old `95e191b` result.
+
+### Sibling time selection for a new Voice (2026-10-06)
+
+`createNewVoices` now creates the actual retained Voice before reading a chord's
+clock, as in Java. An unknown clock uses original `getOrderedSiblings`: EQUAL
+relations take precedence, ties preserve compound order, other siblings are
+ordered by horizontal distance, and unknown sibling clocks are skipped. The
+first known sibling clock propagates through the existing actual SIG time path.
+Two original saved-object controls compare farther EQUAL selection and skipping
+unknown EQUAL candidates, including ordered siblings, Voice members and times.
+The same native creation method is called by the image mapper; these positive
+multi-chord controls are not automatic polyphonic image/export success.
+
+Existing one-incoming image guards and the three 36-event CLI commands remain.
+An isolated unknown-time chord still refuses pending previous-slot merge; the
+single-Voice writer still refuses other Voice owners and unknown actual clocks.
+Current CLI examples do not exercise the positive sibling branch. General
+compound/candidate-slot identity, previous-slot merge, multiple-Voice export,
+exact Rational/tuplets and shared stacks remain dependencies. No global flag is
+true and full595 remains historical `95e191b`.

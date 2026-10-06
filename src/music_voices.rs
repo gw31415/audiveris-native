@@ -117,7 +117,7 @@ fn construct(
         measure_rest_chord,
     })
 }
-pub(crate) fn create_known_voice(
+pub(crate) fn create_voice(
     graph: &mut crate::shared_sig::Graph,
     voices: &mut Vec<Voice>,
     measures: &[Measure],
@@ -130,8 +130,8 @@ pub(crate) fn create_known_voice(
         .iter()
         .find(|n| n["id"] == seed.id)
         .ok_or("music_voice_live_seed_required")?;
-    if !node["voice"].is_null() || node["time_offset"].as_str().is_none() {
-        return Err("music_voice_unassigned_known_time_seed_required".into());
+    if !node["voice"].is_null() {
+        return Err("music_voice_unassigned_seed_required".into());
     }
     let voice = construct(seed.measure, &measures[seed.measure], &[seed], voices)?;
     let index = voices.len();

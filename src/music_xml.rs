@@ -569,6 +569,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     voices: &mut m.voices,
                     measures: &mut m.measures,
                     chords: &chords,
+                    narrow: &narrow,
                     measure_index: mi,
                     compounds: &compounds,
                     expected: expected_ticks,

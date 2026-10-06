@@ -310,6 +310,12 @@
       "unit": "nonimplicit inferSlotTimes/applyMapping unknown active clock: preserve null time and actual Voice ownership, propagate original measure abnormal state; known narrow time stops without apply",
       "limits": "two declared original method controls and image-derived owned Graph comparison; unknown-state MusicXML success not claimed, writer refuses unresolved clocks; new-Voice sibling/merge, tuplets and shared stacks remain pending",
       "evidence": "evidence/musicxml-mapping-unknown-clock/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "createNewVoices/getOrderedSiblings EQUAL-first stable ordering and first known sibling clock, actual Voice creation before time propagation",
+      "limits": "two original declared compound/SIG controls compared to image-derived native owned Graph; automatic multi-incoming image mapping/export still guarded; previous-slot merge/candidate object reference identity, tuplets and shared stacks remain partial",
+      "evidence": "evidence/musicxml-new-voice-siblings/VALIDATION.json"
     }
   ],
   "function_groups": [

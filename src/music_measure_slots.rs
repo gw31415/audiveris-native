@@ -69,6 +69,39 @@ pub(crate) struct Retrieval {
     relations: Vec<Relation>,
     pub slots: Vec<MeasureSlot>,
 }
+impl Retrieval {
+    pub(crate) fn ordered_siblings(
+        &self,
+        slot: &CompoundSlot,
+        rookie: usize,
+        centers: &BTreeMap<usize, i64>,
+    ) -> Result<Vec<usize>, String> {
+        let x = *centers
+            .get(&rookie)
+            .ok_or("music_sibling_owned_center_required")?;
+        let mut siblings = slot
+            .chord_ids
+            .iter()
+            .copied()
+            .filter(|id| *id != rookie)
+            .collect::<Vec<_>>();
+        if siblings.iter().any(|id| !centers.contains_key(id)) {
+            return Err("music_sibling_owned_center_required".into());
+        }
+        let equal = |id| {
+            self.relations
+                .iter()
+                .any(|r| r.a == rookie && r.b == id && r.rel == Some(Rel::Equal))
+        };
+        siblings.sort_by(|a, b| match (equal(*a), equal(*b)) {
+            (true, true) => Ordering::Equal,
+            (true, false) => Ordering::Less,
+            (false, true) => Ordering::Greater,
+            (false, false) => (centers[a] - x).abs().cmp(&(centers[b] - x).abs()),
+        });
+        Ok(siblings)
+    }
+}
 struct Matrix {
     edges: BTreeMap<(usize, usize), Rel>,
     outgoing: BTreeMap<usize, Vec<usize>>,
