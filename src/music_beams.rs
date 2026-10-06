@@ -114,9 +114,19 @@ fn boost_sides_impl(
         json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; standalone legacy boundary retains alias refusal, owned image epilog validates/purges aliases before system boosting; full STEMS pending"}),
     )
 }
-/// SigReducer.checkBeamsHaveBothStems. Called after the current head/stem
-/// consistency pass; removal uses actual identities and group containment.
+/// Combined original beam/hook control boundary. The image-owned adapter calls
+/// the checks separately and contextualizes/purges after each.
+#[cfg(test)]
 pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
+    let mut removed = check_hooks(graph)?;
+    removed.extend(check_beams(graph)?);
+    graph.contextualize_head_stems()?;
+    Ok(
+        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkHooksHaveStem and checkBeamsHaveBothStems; legacy combined diagnostic boundary, image reduction contextualizes/purges between checks"}),
+    )
+}
+
+pub(crate) fn check_beams(graph: &mut Graph) -> Result<Vec<Value>, String> {
     let snap = graph.snapshot();
     let nodes = snap["inters"].as_array().unwrap();
     let edges = snap["relations"].as_array().unwrap();
@@ -134,7 +144,15 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
             }
         }
     }
-    // SigReducer.checkHooksHaveStem: one actual non-CENTER stem is enough.
+    Ok(removed)
+}
+
+/// SigReducer.checkHooksHaveStem: one actual non-CENTER stem is enough.
+pub(crate) fn check_hooks(graph: &mut Graph) -> Result<Vec<Value>, String> {
+    let snap = graph.snapshot();
+    let nodes = snap["inters"].as_array().unwrap();
+    let edges = snap["relations"].as_array().unwrap();
+    let mut removed = Vec::new();
     for b in nodes.iter().filter(|n| n["kind"] == "BeamHookInter") {
         if !edges.iter().any(|e| {
             e["kind"] == "BeamStemRelation"
@@ -156,10 +174,7 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
             graph.remove_music_inter(key(g)?)?;
         }
     }
-    graph.contextualize_head_stems()?;
-    Ok(
-        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; SigReducer.checkHooksHaveStem; owned cross-system orphan purge precedes this endpoint check; full reduction pending"}),
-    )
+    Ok(removed)
 }
 /// BeamHeadCleaner.process removes temporary beam/head supports at LINKS.
 /// Owned BeamStem relationships remain the source of chord beam membership.

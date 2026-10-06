@@ -504,6 +504,7 @@ pub mod music_measures;
 mod music_symbol_reduction;
 pub mod music_symbols;
 pub mod music_xml;
+mod stem_foundation_consistency;
 pub mod stem_foundation_purge;
 mod stem_head_foundation_plan;
 pub mod stem_head_foundations;

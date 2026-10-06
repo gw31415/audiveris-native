@@ -1,0 +1,48 @@
+{
+  "baseline_main": "30fb8780377a68f3d510d9d1f517050a0c4beb26",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "original_observer": "scripts/java/FoundationOrderProbe.java",
+  "observer_sha256": "d07ab9a8dc4185d03400b16f4817e300bf1c0843892269b2d2a74457073aef09",
+  "original_observation_sha256": "89656f9af649aed781a903b5e77b30fead1f546f8246fedd3b6ee452bd904091",
+  "original_comparison": "one declared3-Inter cascade, individual six-check/purge trace independently agrees with actual AdapterForFoundations pass modifications2/1/0; original initial contextual grades match native checked stem/cache/SIG",
+  "native_comparison": "append declared cascade to actual reduced image owner, compare six-check order/modification/purged kind/end deletion/canonical cached removed/glyph retention; not claim image itself yields cascade",
+  "verification": {
+    "beam-epilog-target.log": {
+      "passed": 2,
+      "failed": 0
+    },
+    "order-target-fixed.log": {
+      "passed": 1,
+      "failed": 0
+    },
+    "affected-target.log": {
+      "passed": 26,
+      "failed": 0
+    },
+    "links-target.log": {
+      "passed": 1,
+      "failed": 0
+    },
+    "beam-boundary-target.log": {
+      "passed": 4,
+      "failed": 0
+    }
+  },
+  "fmt": "passed",
+  "workspace_all_target_clippy": "passed -D warnings",
+  "preserved": [
+    "Laura352 heads/513 exclusions",
+    "same11/20-event image outputs",
+    "existing key/clef/meter/rest/flag/beam MusicXML examples and diagnostic foundation contracts"
+  ],
+  "test_harness_fix": "initial assertion assumed kind/grade in tombstone; corrected to retained pre-deletion data for kinds and actual identity tombstones for removal; no admission guard removed",
+  "full_workspace": "last full580 at c270552; current changes targeted only, no latest full582 claim",
+  "remaining": [
+    "general overlap discovery and analyzeChords prolog/late",
+    "full support/frozen/implicit/merged-staff/all-shape predicates",
+    "LINKS symbols/lyrics/Part InterCleaner and complete epilog",
+    "nonzero skew/real scans/special staffs/full24shapes/general voices/parts/source limits/64 budgets"
+  ],
+  "completion_flags": false
+}

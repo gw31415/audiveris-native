@@ -1,6 +1,6 @@
 # 原Audiveris 5.11との機能同等性：移植台帳とCLI接続順
 
-更新日: 2026-10-06。対象原版は5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
+更新日: 2026-10-05（America/Los_Angeles）。対象原版は5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
 
 最終目標は、UIの表示・入力装置を除く、原版の譜面認識・解析・補正・保存・MusicXML出力機能の同等性です。原版機能を意図的に省略する予定はありません。通常五線・Bravura・ト音記号・単声などの現在の制限は、小チェックポイントで検証した範囲であり、最終スコープの縮小ではありません。GUI内にある処理も、譜面の意味・形状・関係・再計算に影響する部分は移植対象です。
 
@@ -26,7 +26,7 @@
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
 | STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを比較。実free-glyph所属を維持したepilog bar領域seed再整理も接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
-| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。全Inter support、互換性、frozen、各関係のconsistency、原版全reduction順序/弱候補callback/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
+| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。全Inter support、overlap/chord prolog/late、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
@@ -47,7 +47,9 @@
 
 ## 実用CLIへ広げる依存順
 
-現在は`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。G/F/Cの音高/exportは汎用接続し、bass/alto画像も比較しました。次の切断箇所は他clefの全画像条件、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
+現在の直近工程はordinary foundationsの6チェック順・各weak purge・後続exclusion/epoch反復です。次の依存は`SigReducer.analyzeChords`のprolog/late互換性・supportと一般overlapです。HEADER・短音価の下記段階は履歴として保持し、未接続は各機能表で示します。
+
+`key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。G/F/Cの音高/exportは汎用接続し、bass/alto画像も比較しました。次の切断箇所は他clefの全画像条件、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
 
 1. **今回のcompound rest/SIG checkpointを固定**。実装済み部分、画像全工程比較、保存XML段階比較、条件指定競合kernelを分けて保存する。
 2. **直近の未接続はHEADERの意味伝播**。既存clef/key/time部品を実measure/音高・臨時記号/拍子状態とexportへ繋ぐ。調号と固定TimePairの実画像比較は完了。固定COMMON_TIMEも追加接続。bass/altoの実音高/exportを接続。次はcut/他TimeWhole、他clef条件や短音価に必要なbeam/STEMS・臨時記号を依存順に接続する。調号/accidentalの原版依存が必要なら最小部分を合わせて接続する。
@@ -287,3 +289,21 @@ physical glyph保持・再登録拒否・所有情報欠落時の原子的拒否
 overlap/chord/frozen/lateChecksとlyrics/PartのInterCleaner依存は引き続き未完。
 全580回帰はsource`c270552`で確認済み、追加変更は対象検証を別記しています。
 [小さな原版/実所有検証記録](../evidence/musicxml-seed-reduction/WEAK-PURGE-VALIDATION.json)。
+
+## 原版foundation順序と各weak purge（今回）
+
+画像CLIのhead-only prefixと後付け安定化loopを置き換え、原版
+`AdapterForFoundations.checkConsistencies` のending-head→head→hook→beam→ledger→stemを
+個別に実行。各チェック直後にcontextualize/weak purgeを実SIG/cacheへ適用し、
+modificationがなくなるまで反復、その後にexclusion整理、weak削除/競合削除があれば
+次epochへ戻ります。診断CLIの過去のhead-only観測境界は保持しています。
+
+原版の宣言3Inter連鎖（リンク除去→弱head削除→headなしstem削除→次passのhook削除）は
+3pass・変更数2→1→0。各メソッドの観測と実Adapter呼出を別に実行し一致確認。
+nativeの実画像ownerへ宣言条件を追加した検証は、画像からこの条件が生じたという
+主張と区別します。新画像fixtureを増やさず、既存の2system4小節20イベント例を使います。
+
+接続済みの処理単位を原版工程全体の完成とは数えません。一般overlap、
+`analyzeChords`のprolog/late、全形support、merged staff/frozen/implicitと
+LINKS各記号、lyrics/PartのInterCleaner、完全epilogは未完。64回の各反復budgetも
+現ガードであり全同等性ではありません。[次の具体的依存](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md)。

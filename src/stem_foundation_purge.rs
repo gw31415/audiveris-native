@@ -5,6 +5,17 @@
 use crate::stem_image_owned::OwnedItems;
 use serde_json::json;
 
+/// Reusable original weak-purge boundary after native contextualization. Only
+/// retained owners can commit staged SIG removals and canonical cache callbacks.
+pub(crate) fn purge_owned(
+    owned: &mut OwnedItems,
+) -> Result<(Vec<usize>, Vec<serde_json::Value>), String> {
+    let (graph, removed) = owned.graph.prepare_weak_foundations()?;
+    let ids = removed.iter().map(|id| *id as u64).collect();
+    let stems = crate::stem_head_foundations::commit_reduction_graph(owned, graph, &ids)?;
+    Ok((removed, stems))
+}
+
 /// Consume the retained owner; no serialized Graph, IDs or selected grades input.
 pub fn continue_purge(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     if owned.prepared.report["schema"] != "audiveris-native.stem-image-head-linking.v1"
@@ -12,10 +23,7 @@ pub fn continue_purge(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     {
         return Err("actual_linked_image_SIG_owner_required".into());
     }
-    let (graph, removed) = owned.graph.prepare_weak_foundations()?;
-    let ids = removed.iter().map(|id| *id as u64).collect();
-    let removed_stems =
-        crate::stem_head_foundations::commit_reduction_graph(&mut owned, graph, &ids)?;
+    let (removed, removed_stems) = purge_owned(&mut owned)?;
     let linking = std::mem::take(&mut owned.prepared.report);
     owned.prepared.report = json!({
         "schema":"audiveris-native.stem-foundation-weak-purge.v1",

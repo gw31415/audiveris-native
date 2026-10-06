@@ -807,7 +807,7 @@ pub fn recognize_named(image: &GrayImage, part_name: &str) -> Result<Export, Str
     let owner = crate::music_links::prepare_beam_linking(owner)?;
     let owner = crate::stem_image_head_linking::continue_process(owner)?;
     let owner = crate::stem_foundation_purge::continue_purge(owner)?;
-    let owner = crate::stem_head_foundations::continue_reduction(owner)?;
+    let owner = crate::stem_foundation_consistency::continue_reduction(owner)?;
     let owner = crate::music_links::finalize_stems(owner)?;
     let m = crate::music_measures::continue_measures(owner)?;
     continue_export_named(crate::music_symbols::continue_symbols(m)?, part_name)

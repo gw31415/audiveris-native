@@ -372,7 +372,8 @@ fn direction(g: &Value, s: &Value) -> i32 {
     }
     0
 }
-fn check_heads(g: &mut Value, events: &mut Vec<Event>) {
+fn check_heads(g: &mut Value, events: &mut Vec<Event>) -> usize {
+    let mut modified = 0;
     let heads = g["inters"]
         .as_array()
         .unwrap()
@@ -391,6 +392,7 @@ fn check_heads(g: &mut Value, events: &mut Vec<Event>) {
             .collect::<Vec<_>>();
         if links.is_empty() {
             remove(g, id, events);
+            modified += 1;
             continue;
         }
         for e in links {
@@ -404,6 +406,7 @@ fn check_heads(g: &mut Value, events: &mut Vec<Event>) {
             let d = direction(g, &s);
             if d == 0 {
                 remove(g, s["id"].as_u64().unwrap(), events);
+                modified += 1;
                 continue;
             }
             if (e["head_side"] == "LEFT" && d > 0) || (e["head_side"] == "RIGHT" && d < 0) {
@@ -433,6 +436,7 @@ fn check_heads(g: &mut Value, events: &mut Vec<Event>) {
                 continue;
             }
             events.push(Event::RemoveRelation(e["id"].as_u64().unwrap()));
+            modified += 1;
             g["relations"]
                 .as_array_mut()
                 .unwrap()
@@ -443,6 +447,7 @@ fn check_heads(g: &mut Value, events: &mut Vec<Event>) {
             refresh(g);
         }
     }
+    modified
 }
 fn reduce(g: &mut Value, events: &mut Vec<Event>) {
     loop {
@@ -482,7 +487,12 @@ fn reduce(g: &mut Value, events: &mut Vec<Event>) {
             .filter(|r| {
                 matches!(
                     r["kind"].as_str(),
-                    Some("HeadStemRelation" | "BeamStemRelation" | "BeamHeadRelation")
+                    Some(
+                        "HeadStemRelation"
+                            | "BeamStemRelation"
+                            | "BeamHeadRelation"
+                            | "BeamBeamRelation"
+                    )
                 ) && (r["source"] == weak || r["target"] == weak)
             })
             .map(|r| {
@@ -512,6 +522,70 @@ fn reduce(g: &mut Value, events: &mut Vec<Event>) {
             }
         }
     }
+}
+
+/// Single original check boundary, without an early weak/exclusion reduction.
+pub(crate) fn prepare_ending_heads(input: &Value) -> Result<Plan, String> {
+    validate(input)?;
+    let p = plan(input);
+    let mut g = input.clone();
+    let mut events = Vec::new();
+    let mut stems = BTreeSet::new();
+    for id in p["removed_native_relation_ids"].as_array().unwrap() {
+        let edge = input["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|r| r["id"] == *id)
+            .unwrap();
+        stems.insert(edge["target"].as_u64().unwrap());
+        events.push(Event::RemoveRelation(id.as_u64().unwrap()));
+    }
+    g["relations"] = p["projected_relations"].clone();
+    for e in p["new_exclusion_endpoints"].as_array().unwrap() {
+        exclusion(
+            &mut g,
+            e["source"].as_u64().unwrap(),
+            e["target"].as_u64().unwrap(),
+            &mut events,
+        );
+    }
+    refresh(&mut g);
+    Ok(Plan {
+        events,
+        stages: json!({"modified":stems.len()}),
+        final_state: g,
+    })
+}
+
+pub(crate) fn prepare_heads(input: &Value) -> Result<Plan, String> {
+    validate(input)?;
+    let mut g = input.clone();
+    let mut events = Vec::new();
+    let modified = check_heads(&mut g, &mut events);
+    Ok(Plan {
+        events,
+        stages: json!({"modified":modified}),
+        final_state: g,
+    })
+}
+
+/// Existing supported exclusion algorithm at the original post-consistency
+/// boundary. Full overlap discovery/chord prolog/late checks remain pending.
+pub(crate) fn prepare_exclusions(input: &Value) -> Result<Plan, String> {
+    validate(input)?;
+    let mut g = input.clone();
+    let mut events = Vec::new();
+    reduce(&mut g, &mut events);
+    let modified = events
+        .iter()
+        .filter(|e| matches!(e, Event::RemoveVertex(_)))
+        .count();
+    Ok(Plan {
+        events,
+        stages: json!({"modified":modified}),
+        final_state: g,
+    })
 }
 
 fn count(g: &Value) -> Value {

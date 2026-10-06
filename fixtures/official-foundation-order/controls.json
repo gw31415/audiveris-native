@@ -1,0 +1,206 @@
+{
+  "initial": [
+    {
+      "kind": "HeadInter",
+      "removed": false,
+      "contextual_grade": 0.7272445268121358
+    },
+    {
+      "kind": "StemInter",
+      "removed": false,
+      "contextual_grade": 0.9749815157057711
+    },
+    {
+      "kind": "BeamHookInter",
+      "removed": false,
+      "contextual_grade": 0.941168598940002
+    }
+  ],
+  "final": [
+    {
+      "kind": "HeadInter",
+      "removed": true,
+      "contextual_grade": 0.4
+    },
+    {
+      "kind": "StemInter",
+      "removed": true,
+      "contextual_grade": 0.9642595985405944
+    },
+    {
+      "kind": "BeamHookInter",
+      "removed": true,
+      "contextual_grade": 0.8
+    }
+  ],
+  "head": {
+    "kind": "HeadInter",
+    "shape": "NOTEHEAD_BLACK",
+    "bounds": [
+      389,
+      66,
+      12,
+      8
+    ],
+    "grade": 0.4,
+    "pitch": 0.0,
+    "staff_id": 1
+  },
+  "hook": {
+    "kind": "BeamHookInter",
+    "shape": "BEAM_HOOK",
+    "bounds": [
+      390,
+      37,
+      20,
+      6
+    ],
+    "median": [
+      390.0,
+      40.0,
+      410.0,
+      40.0
+    ],
+    "grade": 0.8
+  },
+  "head_relation": {
+    "kind": "HeadStemRelation",
+    "head_side": "LEFT",
+    "extension_point": [
+      400.5,
+      70.0
+    ],
+    "grade": 1.0,
+    "source_ratio": 5.0,
+    "target_ratio": 11.0,
+    "invading": true
+  },
+  "beam_relation": {
+    "kind": "BeamStemRelation",
+    "beam_portion": "LEFT",
+    "extension_point": [
+      400.5,
+      40.0
+    ],
+    "grade": 1.0,
+    "source_ratio": 5.0,
+    "target_ratio": 11.0
+  },
+  "physical_stem_glyph_reference_retained": true,
+  "passes": [
+    {
+      "modified": 2,
+      "checks": [
+        {
+          "check": "checkStemEndingHeads",
+          "modified": 1,
+          "purged_kinds": [
+            "HeadInter"
+          ]
+        },
+        {
+          "check": "checkHeads",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkHooksHaveStem",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkBeamsHaveBothStems",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkLedgers",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkStems",
+          "modified": 1,
+          "purged_kinds": []
+        }
+      ]
+    },
+    {
+      "modified": 1,
+      "checks": [
+        {
+          "check": "checkStemEndingHeads",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkHeads",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkHooksHaveStem",
+          "modified": 1,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkBeamsHaveBothStems",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkLedgers",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkStems",
+          "modified": 0,
+          "purged_kinds": []
+        }
+      ]
+    },
+    {
+      "modified": 0,
+      "checks": [
+        {
+          "check": "checkStemEndingHeads",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkHeads",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkHooksHaveStem",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkBeamsHaveBothStems",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkLedgers",
+          "modified": 0,
+          "purged_kinds": []
+        },
+        {
+          "check": "checkStems",
+          "modified": 0,
+          "purged_kinds": []
+        }
+      ]
+    }
+  ],
+  "scope": "declared original three-inter six-check cascade; manual trace independently compared with actual AdapterForFoundations, not whole reduceFoundations or raster parity",
+  "original_creation_case": 72,
+  "actual_original_adapter_pass_modifications": [
+    2,
+    1,
+    0
+  ]
+}

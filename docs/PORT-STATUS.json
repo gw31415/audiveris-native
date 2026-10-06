@@ -15,72 +15,106 @@
     {
       "status": "implemented",
       "unit": "grayscale PNG/PGM, original adaptive binarization/runs/classifier kernels; bounded image admission",
-      "limits": "general input and all page-stage conditions remain partial"
+      "limits": "general input and all page-stage conditions remain partial",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "limited quarter/half notes/rests/C4 and one compound quarter-rest image -> native MusicXML",
-      "limits": "full notes/symbols/rhythm/score/export remain partial"
+      "limits": "full notes/symbols/rhythm/score/export remain partial",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "frozen HEADER key -> owned SIG/glyph -> eight G-major notes/F# -> native MusicXML; bounded orphan ledger consistency",
-      "limits": "one ordinary one-staff Bravura44 image; original full-image export distinct from saved STEMS reduction comparison; other clefs/meter and general key/accidentals pending"
+      "limits": "one ordinary one-staff Bravura44 image; original full-image export distinct from saved STEMS reduction comparison; other clefs/meter and general key/accidentals pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "frozen 4/4 HEADER TimePair/number glyphs/owned SIG -> actual meter -> native MusicXML",
-      "limits": "historical 4/4 image unit; next unit adds 3/4; TimeWhole/common/cut, other clefs, meter changes and fractional-quarter rhythms remain pending; last full regression belongs to pre-TimePair migration version"
+      "limits": "historical 4/4 image unit; next unit adds 3/4; TimeWhole/common/cut, other clefs, meter changes and fractional-quarter rhythms remain pending; last full regression belongs to pre-TimePair migration version",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "selected HEADER 3/4 TimePair -> physical glyph/owned SIG -> inherited measure duration/onsets -> six-note G-major image MusicXML",
-      "limits": "one original5.11 full-image comparison, separately saved OMR glyph/measure comparison; other integer-quarter meters generalized but not whole-image verified; fractional-quarter rhythms and meter changes pending"
+      "limits": "one original5.11 full-image comparison, separately saved OMR glyph/measure comparison; other integer-quarter meters generalized but not whole-image verified; fractional-quarter rhythms and meter changes pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "frozen HEADER COMMON_TIME -> physical glyph/owned SIG -> header-aware PageCleaner/reduction -> eight-note G-major image MusicXML with symbol=common",
-      "limits": "one original5.11 full-image comparison, separately saved OMR time glyph/grade; CUT and other TimeWhole mappings reused but whole-image comparisons pending; other clefs/time changes/general rhythms remain pending"
+      "limits": "one original5.11 full-image comparison, separately saved OMR time glyph/grade; CUT and other TimeWhole mappings reused but whole-image comparisons pending; other clefs/time changes/general rhythms remain pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "native frozen pitched HEADER clef -> measure-local diatonic pitch -> generic original MusicXML clef attributes; bass/alto eight-note image exports",
-      "limits": "two same-image original5.11 full exports; 12 buildClef and 180 preexisting pitch kernels distinct; small/octave/other C positions not image-verified; positive arpeggiato/mid-measure changes/unpitched mapping pending"
+      "limits": "two same-image original5.11 full exports; 12 buildClef and 180 preexisting pitch kernels distinct; small/octave/other C positions not image-verified; positive arpeggiato/mid-measure changes/unpitched mapping pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "ordinary classified flag glyph -> actual FlagStem SIG/cache identity -> original support and weak flag purge -> exact eighth note/offset -> MusicXML divisions2",
-      "limits": "one original successful same-image treble/C-major4/4 two-measure9-event input; no beams on this image; lookup/grade kernels distinct; single positive beam connected in the next unit; other flags/general rhythms pending"
+      "limits": "one original successful same-image treble/C-major4/4 two-measure9-event input; no beams on this image; lookup/grade kernels distinct; single positive beam connected in the next unit; other flags/general rhythms pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "image single-standard-beam-origin items/expand/profile4 cache/HeadStem+BeamStem/temporary BeamHead support -> retained reduction/cleaner -> owned chord eighth durations/onsets/MusicXML begin-end",
-      "limits": "one original successful same-image nine-event comparison; original HEADS kernels/reduction and Java2D eraser observations distinct; one beam per system/one part/horizontal restored eraser; sibling/hook/alien/shared-system/32sources/full parity pending"
+      "limits": "one original successful same-image nine-event comparison; original HEADS kernels/reduction and Java2D eraser observations distinct; one beam per system/one part/horizontal restored eraser; sibling/hook/alien/shared-system/32sources/full parity pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "original BeamLinker side-first/failure scheduling, intermediate stumps and checked head-origin BeamStem supports -> ten-event beam continue image MusicXML",
-      "limits": "one original full-image comparison; numeric raster controls and loaded HEADS dependencies separate; broader beam/cleaner parity pending"
+      "limits": "one original full-image comparison; numeric raster controls and loaded HEADS dependencies separate; broader beam/cleaner parity pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
-      "unit": "ordinary sibling beam full items, all sides before stumps, linkSiblings/canonical stem/SIG and BeamBeam support -> eleven-event two-level seventeenth image MusicXML",
-      "limits": "one physical standard group/system, one part, zero skew/horizontal thin eraser, up to two levels in export; hook/alien/aliases/cross-staff/more levels/other flags/full parity pending"
+      "unit": "ordinary sibling beam full items, all sides before stumps, linkSiblings/canonical stem/SIG and BeamBeam support -> eleven-event two-level sixteenth image MusicXML",
+      "limits": "one physical standard group/system, one part, zero skew/horizontal thin eraser, up to two levels in export; hook/alien/aliases/cross-staff/more levels/other flags/full parity pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "ordinary distinct-glyph beam groups with original zero-skew getCloserLimit -> actual builders/cache/SIG -> independent begin/end native image MusicXML",
-      "limits": "one ten-event two-nonintersecting-group full-image export; 17 declared numeric original limits and four HEADS-loaded builders compared separately; fractional contours admitted only when normalizing to certified thin rectangle; hooks/aliases/cross-staff/positive-alien full-image/general parity remain pending"
+      "limits": "one ten-event two-nonintersecting-group full-image export; 17 declared numeric original limits and four HEADS-loaded builders compared separately; fractional contours admitted only when normalizing to certified thin rectangle; hooks/aliases/cross-staff/positive-alien full-image/general parity remain pending",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "original owned beam ensemble member-removal/bounds/dying-group callbacks across live SIG purge/reducer; intrinsic0.35 beam-side Finalizer threshold; four same-glyph beam/hook competing alternatives on one 11-event image",
-      "limits": "MusicXML already matched at prior source; new fix is retained group state. Three declared ownership controls and two grade boundaries are separate from full-image comparison. Shared ownership branch not independently compared; cross-system orphan/full cleaner/epilog/whole SIG parity remain partial."
+      "limits": "MusicXML already matched at prior source; new fix is retained group state. Three declared ownership controls and two grade boundaries are separate from full-image comparison. Shared ownership branch not independently compared; cross-system orphan/full cleaner/epilog/whole SIG parity remain partial.",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
     },
     {
       "status": "implemented",
       "unit": "MusicXML image owner: original finalizeStems/checkHeadStems intrinsic-grade/null-focus explicit-exclusion ensembles -> existing HeadStemsCleaner, before beam-side Finalizer; original diagnostic linkStems boundary retained",
-      "limits": "one declared three-physical-stem/exclusion SIG control; positive multi-stem removal not claimed as full-image parity. Existing successful images retained. Cleaner max16 partners, manual/parallel/general epilog and cross-system orphan purge still partial; single-voice export keeps one-stem admission."
+      "limits": "one declared three-physical-stem/exclusion SIG control; positive multi-stem removal not claimed as full-image parity. Existing successful images retained. Cleaner max16 partners, manual/parallel/general epilog and cross-system orphan purge still partial; single-voice export keeps one-stem admission.",
+      "limits_apply_to": "historical comparison unit checkpoint; later current scope is in function_groups"
+    },
+    {
+      "status": "implemented",
+      "unit": "forward/backward ordinary hooks and same-glyph beam/hook competition -> canonical cache/SIG/group callbacks -> MusicXML",
+      "limits": "existing original11-event image; generic other hook/alias/cross-staff parity remains partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "two-system orphan Finalizer and exact Bravura47 propagation -> original20-event image MusicXML with one orphan removal",
+      "limits": "eight declared SIG controls are distinct from one automatic image example; small/alias/nonzero-skew/general epilog remain partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "fresh connected-bar epilog seed lists, ordinary source-grade direction/checkStems and owned initial weak-stem purge",
+      "limits": "saved Laura seed lists and declared consistency/weak/cache conditions are separate from image CLI results; angled/empty/reversed bar areas and full reduction pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary six Foundation consistency check order, per-check contextualize/owned weak purge, post-consistency exclusions and repeated epochs -> existing image CLI",
+      "limits": "one declared original3-Inter cascade with actual Adapter check, existing11/20-event image regressions; overlap/chord prolog/late and full reduction remain partial"
     }
   ],
   "function_groups": [
@@ -102,12 +136,12 @@
     {
       "original_function": "HEADERS / `HeadersBuilder`, clef/key/time関連クラス",
       "status": "partial",
-      "current_and_remaining": "固定HEADER調号、4/4・3/4 TimePairとCOMMON_TIME TimeWholeを実SIG/glyph・音高・小節期待長・exportへ接続し原版成功画像で比較。cut/他TimeWholeと他整数quarter拍子はmapping接続と全画像比較を区別。その他clefの全画像条件、途中変更、cancel/臨時記号は未完。 G/F/C汎用意味伝播を接続しBass/Alto各1原版成功画像を追加比較。small/8va/8vbはkernelのみ。"
+      "current_and_remaining": "音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。"
     },
     {
       "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",
       "status": "partial",
-      "current_and_remaining": "種/beam/ledgerの既存比較あり。単独standard beamの接続は下記の限定範囲。cue beam、一般加線音高・共有staffの全工程は未接続。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。 通常beamのside/intermediate/siblingと別group closer limitを接続済み。hook/alias/cross-staff/一般finalizer/cleanerは未完。"
+      "current_and_remaining": "種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。"
     },
     {
       "original_function": "HEADS / `HeadsBuilder`, template catalog",
@@ -117,12 +151,12 @@
     {
       "original_function": "STEMS / `StemBuilder`, `StemsStep`, head/beam linkers",
       "status": "partial",
-      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。一般beam群からの自動選択/接続、一般cleaner/epilog、32sources/items制約の除去・検証が残る。 単独standard beamの画像由来items/profile4/cache/SIGとbeam-side support、限定cleanerを接続済み。一般sibling/hook/alien/cross-system等は未完。 通常beamのside/intermediate/siblingと別group closer limitを接続済み。hook/alias/cross-staff/一般finalizer/cleanerは未完。"
+      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを比較。実free-glyph所属を維持したepilog bar領域seed再整理も接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。"
     },
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
       "status": "partial",
-      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、今回のRest/TimeWhole overlap/exclusionあり。全Interのsupport contextual grade、互換性、frozen、各関係のconsistency、反復reductionとcallbacks/epilogは未接続。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
+      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。全Inter support、overlap/chord prolog/late、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
     },
     {
       "original_function": "TEXTS / `TextsStep`, Tesseract, words/sentences",
@@ -142,12 +176,12 @@
     {
       "original_function": "SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory`",
       "status": "partial",
-      "current_and_remaining": "classifier・isolated/2部品rest/time・実加線へのdot距離検査あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 普通の1旗のglyph/lookup/FlagStem登録とweak purgeを接続。下向き/小型/複数旗・supportを伴う一般競合は未完。"
+      "current_and_remaining": "classifier・isolated/2部品rest/time・実加線へのdot距離検査と普通の1旗→stem接続あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。"
     },
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "完全4/4と3/4小節の単声四分/二分イベントをnativeで計算。一般slot/voice割当、一般beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 実FlagStemに基づく八分音価・eighth整数tickのonset/小節sum/divisionsを追加し、原版成功1画像で比較。正の単独beam由来の八分音価/分数onset/番号1 begin-endも同一画像9イベントで確認。一般beam群/複声部は未完。 通常2段beamの十六分音価/番号1・2 continueと、別通常groupの独立begin/endは画像比較済み。"
+      "current_and_remaining": "認識済み拍子に応じた完全小節の単声の二段beam十六分/beam・旗付き八分/四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、他beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -181,7 +215,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "original hook linkSides profile/competing-hook state and removal -> typed SIG/cache support/checkHooksHaveStem/contour -> PartwiseBuilder forward/backward hook; aliases/cross-staff/full reduction and all nonUI parity retained",
+  "next_image_integration": "SigReducer.analyzeChords prolog/late and general overlap/support/predicates, then LINKS consistency and real lyrics/Part cleaner dependencies; preserve original nonUI parity goal",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -190,5 +224,48 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/musicxml-beam-groups/VALIDATION.json; affected library/image/geometry/Laura tests plus fmt/clippy; previous full565 belongs to source321abfc, no new full-workspace claim"
+  "latest_targeted_validation": "evidence/musicxml-ordered-foundations/VALIDATION.json:34 affected tests/fmt/clippy passed, including Laura352/513 and prior MusicXML paths; last full580 remains c270552, no latest full582 claim",
+  "updated_timezone": "America/Los_Angeles",
+  "reduction_and_cleaner_units": [
+    {
+      "original": "AdapterForFoundations.checkConsistencies order/contextualizeAndPurge",
+      "status": "implemented",
+      "scope": "connected for retained ordinary head/beam/ledger support subset; declared cascade and existing CLI comparisons"
+    },
+    {
+      "original": "SigReducer.reduce epoch/consistency/exclusion ordering",
+      "status": "partial",
+      "remaining": "overlap discovery, chord prolog/late, general predicates/support and budgets"
+    },
+    {
+      "original": "SigReducer.detectOverlaps for foundations",
+      "status": "unimplemented",
+      "note": "Rest/TimeWhole symbol overlap subset exists separately; does not complete general foundations overlap"
+    },
+    {
+      "original": "SigReducer.analyzeChords prolog/late",
+      "status": "unimplemented",
+      "remaining": "intersected unlinked heads, duration/size incompatibility, HeadHead support, cue/percussion branches"
+    },
+    {
+      "original": "SIGraph.contextualize/reduceExclusions/deleteWeakInters",
+      "status": "partial",
+      "remaining": "complete support kinds, frozen/implicit/header predicates, ownership callbacks for all Inter classes"
+    },
+    {
+      "original": "HeadStemsCleaner and BeamHeadCleaner",
+      "status": "partial",
+      "remaining": "general manual/parallel/frozen/shape/owner branches; existing ordinary paths connected"
+    },
+    {
+      "original": "InterCleaner.purgeContainers / Part.purgeContainers",
+      "status": "unimplemented",
+      "note": "requires real lyrics/Part ownership; existing beam-group/empty-chord cleanup is a different callback"
+    },
+    {
+      "original": "LinksStep.doEpilog and staff ties",
+      "status": "unimplemented",
+      "remaining": "slur/tie/lyrics and other required recognition/link dependencies"
+    }
+  ]
 }

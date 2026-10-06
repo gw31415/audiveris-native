@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest processing stage: [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest processing stage: [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded monophonic duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -729,3 +729,23 @@ Full per-check contextualization/weak purge, general overlap/chord/frozen/late
 reduction, lyrics/container ownership and remaining cleaner/epilog are pending.
 Global completion flags remain false; all remaining nonUI functions remain
 implementation targets. [Validation](../evidence/musicxml-seed-reduction/WEAK-PURGE-VALIDATION.json).
+
+## Ordered foundation checks and per-check purge
+
+The image CLI now runs the original ending-head/head/hook/beam/ledger/stem
+consistency order, with contextualize/owned weak purge immediately after every
+check. Modification-driven consistency passes precede exclusion reduction;
+weak or exclusion removals start another epoch. The same registry, live SIG
+and cached stems remain owned throughout. The historical diagnostic
+`--head-foundations` boundary keeps its previous comparison semantics.
+
+A declared three-inter original cascade matches actual AdapterForFoundations
+and native retained-owner checks: three passes, modification counts2/1/0. This
+is distinct from automatic raster comparison. The existing two-system20-event
+input and command in [Owned weak-stem purge](#owned-weak-stem-purge) remain the
+small runnable example; no new font/scan/staff/notation admission is claimed.
+
+Full overlap discovery, chord prolog/late checks, all support and frozen/merged
+conditions, full LINKS/InterCleaner/epilog and nonUI feature parity are pending.
+Completion flags stay false. Latest full580 belongs to c270552; current affected
+checks are recorded separately without claiming a new full-workspace run.

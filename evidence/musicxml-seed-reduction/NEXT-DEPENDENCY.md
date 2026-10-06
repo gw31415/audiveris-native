@@ -8,18 +8,14 @@ head/beam/ledger checks repeated to structural stability before MusicXML admissi
 Original declared SIG controls and saved HEADS seed lists are separate from the
 retained same-image11/20-event MusicXML comparisons.
 
-1. General `SigReducer.reduce` ordering and every `contextualizeAndPurge` callback.
-   The initial owned weak purge now stages `deleteWeakInters` selection, locks
-   canonical cached stems and commits SIG/cache removal together. Raw Graph
-   removal still refuses a weak stem without ownership. Full per-check weak
-   purge and contextualization ordering have not yet been connected. The
-   existing head subset still has its own exclusion ordering, not complete
-   original adapter/prolog/epoch/late consistency equivalence. Original
-   `AdapterForFoundations.checkConsistencies` orders ending-head, head, hook,
-   beam, ledger and stem checks, with contextualize/weak purge after each;
-   late consistency then analyzes chord size and reduces exclusions. These
-   callbacks must be connected at their original boundaries, not appended as
-   one final purge or replaced by the current structural-stability loop.
+1. `SigReducer.reduce` overlap discovery, `analyzeChords` prolog/late and full
+   predicates/support remain pending. The ordinary six foundation check order
+   (ending-head/head/hook/beam/ledger/stem), contextualize/owned weak purge after
+   each check, modification-driven inner passes and post-consistency exclusion /
+   weak-or-exclusion driven epochs are now connected in the image CLI.
+   The old head-only prefix remains only at the diagnostic comparison boundary.
+   The original adapter sequence is verified separately from full reduceFoundations;
+   its `analyzeChords` prolog/late must be connected before complete reduction is claimed.
 2. `detectOverlaps`, `analyzeChords`, head/head support and duration/size
    exclusions, frozen/implicit/header predicates and full SIG contextualization.
    Cue/SmallBeam, percussion, stemless heads, shared ledgers and Flag/Tremolo
