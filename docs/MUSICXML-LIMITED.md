@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest image increment: [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -1839,3 +1839,31 @@ general rhythm/gap repair, tuplets/Merged/shared stacks/multi-member chords and
 all remaining nonUI functions remain partial. The prior36 events retain XML
 bytes and the earlier16-event parallel image remains matching. All global flags
 stay false. Full595 is the old `95e191b` result.
+
+## Parallel beamed eighth Voice from an actual image (2026-10-06)
+
+The same two-measure Bravura/ordinary-staff4/4 image succeeds in unmodified
+original5.11 and the native Linux CLI: upper Voice has four beamed eighths and
+two quarters in measure1; lower Voice has four quarters. Measure2 has parallel
+quarters. All18 notes, original begin/continue/continue/end, Voice-major backups,
+actual chord/slot/Voice ownership, onset/duration and duration checks agree.
+Native computes from pixels and its owned SIG; original saved-state getters and
+full original image/export are separate evidence, not runtime input.
+
+This connects existing AbstractChordInter.getDuration, setVoice/getBeamGroup and
+setAndPushTime/pushTimeViaGroup, MeasureRhythm compound/rookie mapping and
+PartwiseBuilder Voice traversal for positive parallel single-level beam heads.
+Other parallel flags/higher beam levels/rests/meters, multi-member head chords,
+shared/Merged stacks, general Rational/tuplets and remaining nonUI functions are
+still partial. Unknown/backwards/overlapping time and incomplete Voices continue
+to refuse. Previous67-event inputs are retained; completion flags remainfalse.
+
+```
+mkdir -p work/cli
+cargo run --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-parallel-voices/parallel-beam.png \
+  work/cli/parallel-beam.musicxml work/cli/parallel-beam.json
+```
+
+Output paths must be new. Java is needed only for the development oracle, not
+for this native CLI. See [validation](../evidence/musicxml-parallel-beam/VALIDATION.json).

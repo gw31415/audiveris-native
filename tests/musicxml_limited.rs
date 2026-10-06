@@ -20,6 +20,11 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
             "late-observed.json",
             "late-original-state.json",
         ),
+        (
+            "parallel-beam.png",
+            "beam-observed.json",
+            "beam-original-state.json",
+        ),
     ] {
         let original: Value =
             serde_json::from_slice(&fs::read(fixture.join(observed)).unwrap()).unwrap();
@@ -50,6 +55,10 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
             ] {
                 assert_eq!(event[field], reference[field], "{field}");
             }
+            assert_eq!(
+                event.get("beams").unwrap_or(&serde_json::json!([])),
+                reference.get("beams").unwrap_or(&serde_json::json!([]))
+            );
         }
         let live = report["shared_sig"]["inters"].as_array().unwrap();
         let bounds = |id: &Value| live.iter().find(|n| n["id"] == *id).unwrap()["bounds"].clone();
@@ -89,7 +98,10 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
         assert_eq!(
             exported
                 .xml
-                .matches("<backup><duration>4</duration></backup>")
+                .matches(&format!(
+                    "<backup><duration>{}</duration></backup>",
+                    original["divisions"].as_u64().unwrap() * 4
+                ))
                 .count(),
             2
         );
