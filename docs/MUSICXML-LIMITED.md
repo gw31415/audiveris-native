@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest processing stage: [fresh epilog seed lists](#fresh-epilog-seed-lists) and [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest processing stage: [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded monophonic duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -700,3 +700,32 @@ behavior separately from the existing image outputs. It does not add an accepted
 notation/font/staff/rhythm category. Initial weak-stem purge, full original
 reduction ordering/context, chord/frozen/late checks and lyrics InterCleaner
 remain pending. See [next dependencies](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md).
+
+## Owned weak-stem purge
+
+The initial image-owned `SIGraph.deleteWeakInters` continuation now includes
+weak stems. Selection is staged against the retained SIG; every affected
+canonical cached stem is resolved and locked before SIG/cache removal commits.
+The same cached object becomes removed, its physical glyph stays registered,
+and re-registration cannot resurrect it. Missing ownership refuses before any
+live mutation. This uses computed native contextual grades, without caller
+selection IDs/grades, serialized Graph imports or image-specific branches.
+
+The unmodified original deletes a declared stem at the existing original
+createStem grade0.3013532310210354 and retains exact0.5 and frozen stems.
+These three declared conditions and the actual-owner cache check are separate
+from image→MusicXML comparisons. The current same-image20-event example remains
+the input below; this stage does not claim a new image type or notation.
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-cross-system/beam-two-systems.png \
+  /tmp/beam-two-systems.musicxml /tmp/beam-two-systems.json
+```
+
+Output paths must not exist. Full580 regression belongs to source`c270552`;
+subsequent weak-cache integration has targeted validation recorded separately.
+Full per-check contextualization/weak purge, general overlap/chord/frozen/late
+reduction, lyrics/container ownership and remaining cleaner/epilog are pending.
+Global completion flags remain false; all remaining nonUI functions remain
+implementation targets. [Validation](../evidence/musicxml-seed-reduction/WEAK-PURGE-VALIDATION.json).

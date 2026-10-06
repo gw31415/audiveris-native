@@ -33,7 +33,6 @@ pub(crate) fn apply_plan(
     owned: &mut OwnedItems,
     plan: &stem_head_foundation_plan::Plan,
 ) -> Result<Vec<Value>, String> {
-    let initial = owned.graph.snapshot();
     let ids = plan
         .events
         .iter()
@@ -45,6 +44,19 @@ pub(crate) fn apply_plan(
             }
         })
         .collect::<BTreeSet<_>>();
+    let mut graph = owned.graph.clone();
+    graph.apply_head_foundation_plan(plan)?;
+    commit_reduction_graph(owned, graph, &ids)
+}
+
+/// Commit a graph staged by the private original consistency/weak-purge passes.
+/// Cached objects and live SIG change together; physical glyphs are retained.
+pub(crate) fn commit_reduction_graph(
+    owned: &mut OwnedItems,
+    graph: crate::shared_sig::Graph,
+    ids: &BTreeSet<u64>,
+) -> Result<Vec<Value>, String> {
+    let initial = owned.graph.snapshot();
     let mut removals = Vec::new();
     for n in initial["inters"]
         .as_array()
@@ -79,8 +91,6 @@ pub(crate) fn apply_plan(
     {
         return Err("inactive_foundation_removal_guard".into());
     }
-    let mut graph = owned.graph.clone();
-    graph.apply_head_foundation_plan(plan)?;
     for state in &mut guards {
         state["removed"] = json!(true);
     }

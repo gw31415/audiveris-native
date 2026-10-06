@@ -101,6 +101,40 @@ mod weak_foundation_tests {
                 .unwrap()
                 .is_empty()
         );
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-weak-stem-purge/controls.json"
+        ))
+        .unwrap();
+        for case in original["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            graph
+                .vertex(
+                    Key {
+                        system: 1,
+                        phase: Phase::Stem,
+                        local: 1,
+                    },
+                    json!({"kind":"StemInter","shape":"STEM",
+                    "contextual_grade":case["grade"],"frozen":case["frozen"]}),
+                    false,
+                )
+                .unwrap();
+            let before = graph.snapshot();
+            let (staged, removed) = graph.prepare_weak_foundations().unwrap();
+            assert_eq!(!removed.is_empty(), case["selected_for_removal"]);
+            assert_eq!(
+                !staged.snapshot()["tombstones"]
+                    .as_array()
+                    .unwrap()
+                    .is_empty(),
+                case["same_object_removed"]
+            );
+            assert_eq!(
+                !staged.snapshot()["inters"].as_array().unwrap().is_empty(),
+                case["still_in_SIG"]
+            );
+            assert_eq!(graph.snapshot(), before);
+        }
     }
     #[test]
     fn weak_stem_or_invalid_context_refuses_before_any_mutation() {
@@ -993,11 +1027,25 @@ impl Graph {
         Ok(())
     }
 
-    /// Original SIGraph.deleteWeakInters threshold and exceptions, on the live
-    /// store. This bounded continuation cannot remove a cached StemInter yet:
-    /// its retriever callback must be wired before that ownership can change.
-    /// Validate the entire pass before deleting any vertex or incident relation.
+    /// Raw Graph callers cannot commit a cached StemInter removal. The image
+    /// owner uses the staged pass below and updates the same cache objects.
+    #[cfg(test)]
     pub(crate) fn purge_weak_foundations(&mut self) -> Result<Vec<usize>, String> {
+        let (next, remove) = self.prepare_weak_foundations()?;
+        if remove
+            .iter()
+            .any(|id| self.vertices[*id - 1].data["kind"] == "StemInter")
+        {
+            return Err("weak_stem_requires_owned_cache_removal_callback".into());
+        }
+        *self = next;
+        Ok(remove)
+    }
+
+    /// Original SIGraph.deleteWeakInters selection/callbacks, staged without
+    /// mutating live identities. Only the retained owner can commit this graph
+    /// after resolving and locking every affected canonical cached stem.
+    pub(crate) fn prepare_weak_foundations(&self) -> Result<(Self, Vec<usize>), String> {
         let mut remove = Vec::new();
         for (i, v) in self.vertices.iter().enumerate().filter(|(_, v)| !v.removed) {
             if matches!(v.data["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
@@ -1026,9 +1074,6 @@ impl Graph {
                 .filter(|g| (0.0..=1.0).contains(g))
                 .ok_or("missing_validated_foundation_contextual_grade")?;
             if grade < 0.5 {
-                if v.data["kind"] == "StemInter" {
-                    return Err("weak_stem_requires_owned_cache_removal_callback".into());
-                }
                 remove.push(i + 1);
             }
         }
@@ -1060,8 +1105,7 @@ impl Graph {
                 v.data["abnormal"] = json!(!linked.contains(&(i + 1)));
             }
         }
-        *self = next;
-        Ok(remove)
+        Ok((next, remove))
     }
 
     // Apply an automatic plan to the private identity store, preserving all keys

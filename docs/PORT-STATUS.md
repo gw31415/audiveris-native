@@ -273,3 +273,17 @@ beam/glyph/接続の観測結果は不変。native sourceは変更していま�
 lyricsに必要なInterCleaner/Partの所属更新は未接続です。
 [原版条件の要約](../evidence/musicxml-seed-reduction/STEM-VALIDATION.json) /
 [次の具体的な接続箇所](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md)。
+
+## owned weak-stem initial purge（2026-10-06）
+
+原版`SIGraph.deleteWeakInters`の初回選択を実所有SIGでstageし、削除するstemの
+canonical cache objectを全て検証・lockした後、SIGと同じobjectのremovedを更新。
+physical glyph保持・再登録拒否・所有情報欠落時の原子的拒否まで接続しました。
+既存原版createStem grade約0.301、exact0.5、frozenの3宣言条件と比較。
+これは画像そのものから弱いstemが生じる全工程比較とは区別します。
+
+前節で未接続だった初回weak stem callbackはこの段階で接続済みです。
+一般reductionの全adapter順序・各チェック間のcontextualizeAndPurge、
+overlap/chord/frozen/lateChecksとlyrics/PartのInterCleaner依存は引き続き未完。
+全580回帰はsource`c270552`で確認済み、追加変更は対象検証を別記しています。
+[小さな原版/実所有検証記録](../evidence/musicxml-seed-reduction/WEAK-PURGE-VALIDATION.json)。
