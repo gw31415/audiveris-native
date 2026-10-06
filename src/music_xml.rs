@@ -391,6 +391,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .ok_or("musicxml_measure_local_clef_required")?;
         let initial_attributes = clef_attributes(initial_clef)?;
         let clef_id = initial_clef["id"].as_u64();
+        let voice = crate::music_voices::single(mi, measure, &chords, &m.voices)?;
+        let voice_id = voice.id;
         for chord in chords {
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());
@@ -641,13 +643,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .clone();
             c["duration"] = json!(rational(duration));
             c["time_offset"] = json!(rational(offset));
-            c["voice"] = json!(1);
+            c["voice"] = json!(voice_id);
             c["measure_number"] = json!(mi + 1);
             if !beams.is_empty() {
                 c["beam_ids"] = json!(beam_ids);
             }
             graph.vertex(chord.key, c, false)?;
-            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":1,"type":note_type,"dots":0,"effective_clef_id":cid});
+            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":note_type,"dots":0,"effective_clef_id":cid});
             if !beam_marks.is_empty() {
                 event["beams"] = json!(beam_marks);
             }
@@ -667,7 +669,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 quarters(expected_ticks)
             ));
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"voice":1,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        m.voices.push(voice);
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
@@ -765,8 +768,9 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             }
             writeln!(
                 &mut xml,
-                "<duration>{}</duration><voice>1</voice><type>{}</type>{}{}</note>",
+                "<duration>{}</duration><voice>{}</voice><type>{}</type>{}{}</note>",
                 (e["duration_quarters"].as_f64().unwrap() * divisions as f64) as u32,
+                e["voice"].as_u64().unwrap(),
                 e["type"].as_str().unwrap(),
                 e["stem_direction"]
                     .as_str()
@@ -792,7 +796,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"voices":crate::music_voices::projection(&m.voices,&m.measures),"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     if m.owner.prepared.report["events"]

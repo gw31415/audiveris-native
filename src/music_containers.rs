@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! AbstractNote.added/remove and AbstractChord.invalidateCache/remove ->
-//! Staff notes and Measure chord registration, before voices are assigned.
+//! Staff/Measure chord registration and retained Voice chord-removal callbacks.
 //! The retained SIG is authoritative; do not prune copied members by a caller's
 //! deletion list or keep stale chord geometry after partial member removal.
 use crate::{
@@ -18,6 +18,7 @@ pub(crate) fn refresh(
     graph: &Graph,
     measures: &[Measure],
     chords: &mut Vec<Chord>,
+    voices: &mut Vec<crate::music_voices::Voice>,
 ) -> Result<Refresh, String> {
     let snapshot = graph.snapshot();
     let nodes: BTreeMap<_, _> = snapshot["inters"]
@@ -190,11 +191,12 @@ pub(crate) fn refresh(
         "head_chord_ids":retained.iter().filter(|c|c.measure==i&&c.kind == ChordKind::Head).map(|c|c.id).collect::<Vec<_>>(),
         "rest_chord_ids":retained.iter().filter(|c|c.measure==i&&c.kind == ChordKind::Rest).map(|c|c.id).collect::<Vec<_>>()
     })).collect::<Vec<_>>();
+    crate::music_voices::remove_chords(voices, &removed_chords);
     *chords = retained;
     Ok(Refresh {
         removed_chords,
         projection: json!({"staff_notes":staff_notes,
-        "measure_chords":measure_chords,"scope":"actual pre-rhythm note/chord containers; voices/lyrics/full Part cleanup pending"}),
+        "measure_chords":measure_chords,"voices":crate::music_voices::projection(voices,measures),"scope":"actual note/chord containers and retained single-voice ownership; general voices/lyrics/full Part cleanup pending"}),
     })
 }
 
@@ -341,7 +343,7 @@ mod tests {
             );
         };
         compare(&graph, "before");
-        refresh(&graph, &measures, &mut chords).unwrap();
+        refresh(&graph, &measures, &mut chords, &mut Vec::new()).unwrap();
         let registry_before = registry.clone();
         let cache_before = stem.snapshot().unwrap();
         // A failing callback remains atomic across both Graph and canonical Arc.
@@ -361,7 +363,7 @@ mod tests {
         assert_eq!(stem.snapshot().unwrap(), cache_before);
         cache.remove(&mut graph, &stem).unwrap();
         compare(&graph, "after");
-        let refreshed = refresh(&graph, &measures, &mut chords).unwrap();
+        let refreshed = refresh(&graph, &measures, &mut chords, &mut Vec::new()).unwrap();
         assert!(refreshed.removed_chords.is_empty());
         assert_eq!(chords[0].kind, ChordKind::Head);
         assert_eq!(chords[0].stem, None);
@@ -407,6 +409,10 @@ mod head_chord_removal_tests {
     fn original_extensive_head_chord_deletion_keeps_shared_members_and_registered_stem() {
         let original: Value = serde_json::from_str(include_str!(
             "../fixtures/official-head-chord-removal/controls.json"
+        ))
+        .unwrap();
+        let original_voice: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-voice-chord-ownership/controls.json"
         ))
         .unwrap();
         for case in original["cases"].as_array().unwrap() {
@@ -509,6 +515,21 @@ mod head_chord_removal_tests {
                     bounds: [0; 4],
                 });
             }
+            let voice_case = original_voice["cases"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|c| c["name"] == case["name"])
+                .unwrap();
+            let mut voices = vec![
+                crate::music_voices::single(
+                    0,
+                    &measures[0],
+                    &chords.iter().collect::<Vec<_>>(),
+                    &[],
+                )
+                .unwrap(),
+            ];
             let chord_key = chords[0].key;
             let cid = chords[0].id;
             let cache_before = cached.snapshot().unwrap();
@@ -533,10 +554,12 @@ mod head_chord_removal_tests {
                     }
                     graph.remove_music_inter(chord_key).unwrap();
                 }
-                let containers = refresh(&graph, &measures, &mut chords).unwrap();
+                let containers = refresh(&graph, &measures, &mut chords, &mut voices).unwrap();
                 if stage == "after" {
                     assert_eq!(containers.removed_chords, vec![cid]);
                 }
+                let voice_rows=voices.iter().map(|v|json!({"id":v.id,"chords":v.chord_ids.iter().map(|id|labels[id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
+                assert_eq!(json!(voice_rows), voice_case[stage]);
                 let snapshot = graph.snapshot();
                 let expected = &case[stage];
                 let mut actual_live = Vec::new();

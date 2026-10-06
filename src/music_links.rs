@@ -62,7 +62,8 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let flags = crate::music_flags::contextualize(&mut graph)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
     let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
-    let containers = crate::music_containers::refresh(&graph, &m.measures, &mut m.chords)?;
+    let containers =
+        crate::music_containers::refresh(&graph, &m.measures, &mut m.chords, &mut m.voices)?;
     let empty_chords = containers.removed_chords;
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();

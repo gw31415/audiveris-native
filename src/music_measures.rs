@@ -13,6 +13,7 @@ pub struct OwnedMusic {
     pub owner: OwnedItems,
     pub(crate) measures: Vec<Measure>,
     pub(crate) chords: Vec<Chord>,
+    pub(crate) voices: Vec<crate::music_voices::Voice>,
 }
 impl OwnedMusic {
     /// Layout read from the live continuation, before meter or rhythm is set.
@@ -332,5 +333,6 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
         owner,
         measures,
         chords,
+        voices: Vec::new(),
     })
 }

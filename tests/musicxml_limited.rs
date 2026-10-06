@@ -48,6 +48,27 @@ fn actual_flag_connections_supply_eighth_duration_onsets_and_xml_divisions() {
     let sig = &report["shared_sig"];
     let nodes = sig["inters"].as_array().unwrap();
     let edges = sig["relations"].as_array().unwrap();
+    // Retained Voice owns actual live chords, rather than only a writer label.
+    let voices = report["voices"].as_array().unwrap();
+    assert_eq!(voices.len(), report["measures"].as_array().unwrap().len());
+    for voice in voices {
+        let owned = events
+            .iter()
+            .filter(|e| {
+                e["system_id"] == voice["system_id"] && e["measure_index"] == voice["measure_index"]
+            })
+            .map(|e| {
+                assert_eq!(e["voice"], voice["id"]);
+                e["chord_id"].clone()
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(serde_json::json!(owned), voice["chord_ids"]);
+        for id in voice["chord_ids"].as_array().unwrap() {
+            let chord = nodes.iter().find(|n| n["id"] == *id).unwrap();
+            assert_eq!(chord["voice"], voice["id"]);
+        }
+    }
+
     for c in o["original_flags"].as_array().unwrap() {
         let flag = nodes
             .iter()

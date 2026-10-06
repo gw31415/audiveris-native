@@ -1,0 +1,41 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "two original Measure.removeVoiceChord/Voice.removeChord observations on the same exclusive/shared HeadChord controls; actual stored Voice1; no automatic polyphonic rhythm or lyrics parity",
+  "graph_controls": "../official-head-chord-removal/controls.json",
+  "cases": [
+    {
+      "name": "exclusive-member",
+      "before": [
+        {
+          "id": 1,
+          "chords": [
+            "chord"
+          ]
+        }
+      ],
+      "after": [],
+      "repeat_is_idempotent": true
+    },
+    {
+      "name": "shared-member",
+      "before": [
+        {
+          "id": 1,
+          "chords": [
+            "chord",
+            "other"
+          ]
+        }
+      ],
+      "after": [
+        {
+          "id": 1,
+          "chords": [
+            "other"
+          ]
+        }
+      ],
+      "repeat_is_idempotent": true
+    }
+  ]
+}

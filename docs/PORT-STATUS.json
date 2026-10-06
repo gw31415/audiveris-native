@@ -180,6 +180,11 @@
       "status": "implemented",
       "unit": "actual extensive HeadChord removal -> exclusive Head deletion/shared Head retention -> HeadStem surviving-endpoint abnormal callback; canonical registered Stem/cache/glyph retained",
       "limits": "two declared original ownership/container controls, not automatic raster removal/voice/lyrics/full cleaner parity"
+    },
+    {
+      "status": "implemented",
+      "unit": "existing native image single-voice rhythm -> stored Voice/chord ownership -> SIG/event/MusicXML voice; original last/partial Voice-chord deletion",
+      "limits": "two declared original Voice controls separate from existing image output; general matching/slots/beam-tie voice propagation/lyrics and post-rhythm correction CLI pending"
     }
   ],
   "function_groups": [
@@ -221,7 +226,7 @@
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
       "status": "partial",
-      "current_and_remaining": "\u5171\u6709SIG\u3001\u4e00\u90e8head/stem cleaner\u3001\u5f31\u4f11\u7b26/\u7a7achord\u524a\u9664\u3001Rest/TimeWhole overlap/exclusion\u3042\u308a\u3002ordinary head/beam\u306e\u65b9\u5411\u30fbcheckStems\u30fbtail link/\u4fb5\u5165exclusion\u3068canonical cache\u524a\u9664\u3001\u65e2\u5b58foundation\u6574\u7406\u306e\u53cd\u5fa9\u3092\u63a5\u7d9a\u3002ordinary\u306e6\u30c1\u30a7\u30c3\u30af\u9806\u30fb\u5404\u30c1\u30a7\u30c3\u30af\u5f8ccontextualize/\u5b9f\u6240\u6709weak purge\u30fb\u5f8c\u7d9aexclusion/epoch\u53cd\u5fa9\u3082\u63a5\u7d9a\u3002ordinary black/void head\u306eanalyzeChords prolog/late\uff08\u540c\u97f3\u4fa1HeadHead support/\u7570\u97f3\u4fa1\u4e0d\u4e92\u63db/\u672a\u63a5\u7d9a\u4ea4\u5deehead exclusion\uff09\u3082\u63a5\u7d9a\u3002\u901a\u5e38head/stem/beam/hook/barline\u306e\u5b9f\u753b\u7d20\u30fbhead core\u30fb\u76f4\u7ddaArea overlap\u3092prolog\u524d\u306b\u63a5\u7d9a\u3057\u3001GRID barline\u306e\u65e2\u5b58runs\u3082\u89e3\u6c7a\u3002\u5168Inter support\u3001mirror/ensemble/header/\u7279\u6b8a\u5f62\u306a\u3069\u4e00\u822coverlap\u306e\u6b8b\u308a\u3001small/percussion/stemless\u306echord\u679d\u3001frozen\u3001LINKS\u5404\u95a2\u4fc2\u306econsistency/epilog\u306f\u672a\u5b8c\u3002\u539f\u7248\u306b`reduceSymbols`\u3068\u3044\u3046\u30e1\u30bd\u30c3\u30c9\u306f\u306a\u304f\u3001\u3053\u306e\u7d4c\u8def\u306f`reduceLinks`\u3002"
+      "current_and_remaining": "\u5171\u6709SIG\u3001\u4e00\u90e8head/stem cleaner\u3001\u5f31\u4f11\u7b26/\u7a7achord\u524a\u9664\u3001Rest/TimeWhole overlap/exclusion\u3042\u308a\u3002ordinary head/beam\u306e\u65b9\u5411\u30fbcheckStems\u30fbtail link/\u4fb5\u5165exclusion\u3068canonical cache\u524a\u9664\u3001\u65e2\u5b58foundation\u6574\u7406\u306e\u53cd\u5fa9\u3092\u63a5\u7d9a\u3002ordinary\u306e6\u30c1\u30a7\u30c3\u30af\u9806\u30fb\u5404\u30c1\u30a7\u30c3\u30af\u5f8ccontextualize/\u5b9f\u6240\u6709weak purge\u30fb\u5f8c\u7d9aexclusion/epoch\u53cd\u5fa9\u3082\u63a5\u7d9a\u3002ordinary black/void head\u306eanalyzeChords prolog/late\uff08\u540c\u97f3\u4fa1HeadHead support/\u7570\u97f3\u4fa1\u4e0d\u4e92\u63db/\u672a\u63a5\u7d9a\u4ea4\u5deehead exclusion\uff09\u3082\u63a5\u7d9a\u3002\u901a\u5e38head/stem/beam/hook/barline\u306e\u5b9f\u753b\u7d20\u30fbhead core\u30fb\u76f4\u7ddaArea overlap\u3092prolog\u524d\u306b\u63a5\u7d9a\u3057\u3001GRID barline\u306e\u65e2\u5b58runs\u3082\u89e3\u6c7a\u3002post-CHORDS\u306ecanonical cached stem\u524a\u9664callback\u3068HeadChord/RestChord\u578b\u3092\u5206\u96e2\u3002HeadChord extensive\u524a\u9664\u3067\u5c02\u6709Head\u524a\u9664/\u5171\u6709Head\u4fdd\u6301/\u6b8b\u5b58Stem\u7570\u5e38\u66f4\u65b0\u3068Staff/Measure/Voice\u6240\u6709\u3092\u540c\u671f\uff08\u5ba3\u8a00SIG\u6761\u4ef6\u306e\u6bd4\u8f03\u3001\u753b\u50cf\u3067\u306e\u5f53\u8a72\u524a\u9664\u751f\u6210\u3068\u306f\u5225\uff09\u3002\u5168Inter support\u3001mirror/ensemble/header/\u7279\u6b8a\u5f62\u306a\u3069\u4e00\u822coverlap\u306e\u6b8b\u308a\u3001small/percussion/stemless\u306echord\u679d\u3001frozen\u3001LINKS\u5404\u95a2\u4fc2\u306econsistency/epilog\u306f\u672a\u5b8c\u3002\u539f\u7248\u306b`reduceSymbols`\u3068\u3044\u3046\u30e1\u30bd\u30c3\u30c9\u306f\u306a\u304f\u3001\u3053\u306e\u7d4c\u8def\u306f`reduceLinks`\u3002"
     },
     {
       "original_function": "TEXTS / `TextsStep`, Tesseract, words/sentences",
@@ -246,7 +251,7 @@
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "\u8a8d\u8b58\u6e08\u307f\u62cd\u5b50\u306b\u5fdc\u3058\u305f\u5b8c\u5168\u5c0f\u7bc0\u306e\u5358\u58f0\u306e\u4e8c\u6bb5beam\u5341\u516d\u5206/beam\u30fb\u65d7\u4ed8\u304d\u516b\u5206/\u56db\u5206/\u4e8c\u5206\u30a4\u30d9\u30f3\u30c8\u3092native\u3067\u8a08\u7b97\uff08\u5168\u753b\u50cf\u6bd4\u8f03\u306f4/4\u30683/4\uff09\u3002\u4e00\u822cslot/voice\u5272\u5f53\u3001\u4ed6beam/flag\u97f3\u4fa1\u3001\u4ed8\u70b9/\u9023\u7b26\u3001tie\u3001pickup/\u4e0d\u8db3\u8d85\u904e\u5c0f\u7bc0\u3001\u8907\u58f0\u90e8/\u8907\u6bb5/\u9014\u4e2d\u62cd\u5b50\u5909\u66f4\u306e\u539f\u7248\u51e6\u7406\u306f\u672a\u63a5\u7d9a\u3002"
+      "current_and_remaining": "\u8a8d\u8b58\u6e08\u307f\u62cd\u5b50\u306b\u5fdc\u3058\u305f\u5b8c\u5168\u5c0f\u7bc0\u306e\u5358\u58f0\u306e\u4e8c\u6bb5beam\u5341\u516d\u5206/beam\u30fb\u65d7\u4ed8\u304d\u516b\u5206/\u56db\u5206/\u4e8c\u5206\u30a4\u30d9\u30f3\u30c8\u3092native\u3067\u8a08\u7b97\uff08\u5168\u753b\u50cf\u6bd4\u8f03\u306f4/4\u30683/4\uff09\u3002\u5b9fchord ID\u3092\u4fdd\u6301\u3059\u308b\u5358\u58f0Voice\u6240\u6709\u3068SIG/event/MusicXML\u3078\u306e\u756a\u53f7\u4f1d\u64ad\u3001\u539f\u7248\u306e\u6700\u7d42/\u90e8\u5206chord\u524a\u9664\u6642\u306eVoice\u66f4\u65b0\u3092\u63a5\u7d9a\u3002\u4e00\u822cslot/voice\u5272\u5f53\u3001\u4ed6beam/flag\u97f3\u4fa1\u3001\u4ed8\u70b9/\u9023\u7b26\u3001tie\u3001pickup/\u4e0d\u8db3\u8d85\u904e\u5c0f\u7bc0\u3001\u8907\u58f0\u90e8/\u8907\u6bb5/\u9014\u4e2d\u62cd\u5b50\u5909\u66f4\u306e\u539f\u7248\u51e6\u7406\u306f\u672a\u63a5\u7d9a\u3002"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -289,7 +294,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "actual exclusive/shared HeadChord removal ownership; evidence/musicxml-head-chord-removal. Prior full593 source238c535 remains distinct.",
+  "latest_targeted_validation": "retained native image Voice/chord ownership and original removal controls; evidence/musicxml-voice-chord-ownership. Prior full593 source238c535 distinct; grouped full validation pending.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

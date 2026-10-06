@@ -604,3 +604,25 @@ branch, Voice ownership, lyrics or complete cleaner/epilog. Existing image CLI
 examples remain available; no new image admission guard is lifted.
 
 [Validation](../evidence/musicxml-head-chord-removal/VALIDATION.json).
+
+### Retained single-voice chord ownership
+
+The admitted ordinary one-staff/single-voice image path now retains Voice objects
+with actual chord IDs, starting staff and owning measure. `Voice.addChord`
+deduplication/center ordering and original first-staff HIGH voice ID generation
+feed event/SIG voice fields and the MusicXML writer; the writer no longer supplies
+its own fixed voice label. CLI JSON adds `voices` for inspection.
+
+Original `Measure.removeVoiceChord`/`Voice.removeChord` is consumed by actual
+container refresh: last-chord removal deletes that voice, while another chord
+keeps the same voice. Two original stored-voice observations extend the existing
+head-chord ownership regression; no new image/condition matrix is added. This
+cleanup is a declared original/native retained-owner comparison. There is still
+no post-rhythm CLI correction endpoint; general polyphonic matching, slots,
+merged parts, beam/tie voice propagation, lyrics and complete epilog are pending.
+
+Existing command/input examples above continue to apply. No image admission
+guard is removed; existing image MusicXML comparison is distinct from these
+controlled ownership operations.
+
+[Validation](../evidence/musicxml-voice-chord-ownership/VALIDATION.json).
