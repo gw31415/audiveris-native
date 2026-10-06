@@ -1,0 +1,40 @@
+{
+  "validated_source_commit": "b33a71119c4743f0f50b345f0b1bea6218647935",
+  "ordinary_main_push": "confirmed with ls-remote and independent fetch",
+  "repository_and_independent_clone": {
+    "commit": "b33a71119c4743f0f50b345f0b1bea6218647935",
+    "root_tree": "a476fca20b0ad86eb5f845947e3da10e935ce9b9",
+    "src_tree": "ce3c065af9e050e09477b56820af5fce8f70301c",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone updated by fetch/fast-forward; no bundle/archive/all-hash duplication",
+  "Linux_Cargo_build": "passed offline/locked/j1, CARGO_INCREMENTAL=0 DEV_DEBUG=0 TEST_DEBUG=0",
+  "native_CLI": "Linux native recognition; no Java or original XML used by native CLI",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "a81b3f7398c44c6833cba65b32cf9c7f7b85d0712bf7e176803230a63e928574",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "completion_flags": false
+    }
+  ],
+  "comparison_boundary": "same image MusicXML event/pitch/duration/onset/voice/beam comparison and native/original XSD; original Voice/stack slot duration and declared maximum/unknown-time/no-slot/no-Voice controls are separate, not full original raster SIG equality",
+  "targeted_tests_passed": 16,
+  "full_workspace_run_this_stage": false,
+  "full_workspace_source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+  "full_workspace_tests_passed": 595,
+  "previous_full583_source": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+  "source_unchanged_for_receipt_commit": true,
+  "all_global_completion_flags": false,
+  "GHA_Mac_Releases_Library_retry": "none"
+}
