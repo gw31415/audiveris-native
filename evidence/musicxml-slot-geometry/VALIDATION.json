@@ -1,0 +1,31 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "Slot.computeXOffset and MeasureStack.getClosestSlot connected to real image-owned slots and read-only CLI selection",
+  "original_image_state_comparison": "existing two-system image20 slot positions and12 within-staff nearest queries; existing whole-rest image4 note slots and4 queries including empty rest stack; no new raster fixture",
+  "CLI": "--slot-at MEASURE X before positional or batch command; report slot_query contains real incoming chord IDs; single admitted staff determines reference, no recognition edit",
+  "limits": [
+    "shared multi-part/multi-staff stack interpolation and point-to-staff selection pending",
+    "general SlotsRetriever/ChordsMapper/MeasureRhythm voice matching pending",
+    "mean geometry translated but multi-incoming/polyphonic image parity unclaimed",
+    "automatic lyrics/slur/tie, general correction and complete cleaner/epilog pending"
+  ],
+  "targeted_tests_passed": 3,
+  "groups": {
+    "target.log": 1,
+    "rest-target.log": 1,
+    "batch-target.log": 1
+  },
+  "fmt": "passed",
+  "clippy": "workspace/all-targets -D warnings passed",
+  "full_run_this_unit": false,
+  "latest_full_validation": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "original_probe_boundary": "first outside-staff query raised original getStavesAround/getXOffset error; retried within actual staff after diagnosis, not evidence of native-only recognition defect",
+  "all_global_completion_flags": false,
+  "original_probe_log_sha256": {
+    "probe-corrected.log": "17a8643eb509952e3aa4c12edecd18a2067432ce62d157f7cca5bd55829c7128",
+    "probe-rest.log": "1b46a9e4eeb23fdc83f8e8ecbc6c58e6952ce35bda8bdab0c46fd465a640e3cf"
+  }
+}

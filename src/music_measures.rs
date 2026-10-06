@@ -16,6 +16,25 @@ pub struct OwnedMusic {
     pub(crate) voices: Vec<crate::music_voices::Voice>,
 }
 impl OwnedMusic {
+    /// Read-only original nearest-slot selection in the admitted one-staff,
+    /// zero-skew measure. Its staff fixes the reference for getXOffset(point,
+    /// staff); general point-to-staff selection/interpolation remains pending.
+    /// Measure number is the report's global one-based number, not a SIG ID.
+    pub fn closest_slot_at(&self, measure_number: usize, x: f64) -> Result<Value, String> {
+        if !x.is_finite() {
+            return Err("music_slot_finite_abscissa_required".into());
+        }
+        let measure = measure_number
+            .checked_sub(1)
+            .and_then(|i| self.measures.get(i))
+            .ok_or("music_slot_owned_measure_required")?;
+        let slot =
+            crate::music_voices::closest_slot(&measure.timing.slots, x - measure.left as f64);
+        Ok(
+            json!({"measure_number":measure_number,"system_id":measure.system,"part_id":measure.part,"staff_id":measure.staff,"x":x,
+            "slot":slot.map(|s|json!({"id":s.id,"x_offset":s.x_offset,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_chord_ids":s.incoming_ids}))}),
+        )
+    }
     /// Layout read from the live continuation, before meter or rhythm is set.
     pub fn layout(&self) -> Value {
         let row = |c: &Chord| json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":self.measures[c.measure].index,"member_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null});

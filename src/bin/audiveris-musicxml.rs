@@ -8,7 +8,7 @@ use std::{
     io::{Read, Write},
     path::{Path, PathBuf},
 };
-const USAGE: &str = "audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json\naudiveris-musicxml --output-dir EXISTING_DIR [--part-name NAME] IMAGE...";
+const USAGE: &str = "audiveris-musicxml [--slot-at MEASURE X] IMAGE OUTPUT.musicxml REPORT.json\naudiveris-musicxml [--slot-at MEASURE X] --output-dir EXISTING_DIR [--part-name NAME] IMAGE...";
 struct Job {
     image: PathBuf,
     xml: PathBuf,
@@ -121,11 +121,32 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args = std::env::args_os().skip(1).collect::<Vec<_>>();
     if args.len() == 1 && args[0] == "--help" {
         println!(
-            "{USAGE}\nClean opaque PNG/PGM, <=4M pixels, zero skew, ordinary five-line Bravura/interline11, native pitched header clef/C-major-or-header-key/recognized constant binary meter single voice, complete single-flag eighth and quarter/half notes and quarter/half rests; first-lower-ledger C4 only with retained concrete ledger; isolated/two-part quarter-half rest registration. Two/four-measure and system-break fixture validation; full HEADS/STEMS/OMR flags false. Ambiguous, incomplete or unsupported music refuses. Part name is metadata for a nontransposing part. Outputs must not exist. Batch preflights all paths; on recognition failure it stops, retaining earlier reported successful pairs."
+            "{USAGE}\nClean opaque PNG/PGM, <=4M pixels, zero skew, ordinary five-line Bravura/interline11, native pitched header clef/C-major-or-header-key/recognized constant binary meter single voice, connected flag/beam eighth and two-level sixteenth, quarter/half notes, quarter/half rests and default whole-measure rest; first-lower-ledger C4 only with retained concrete ledger; isolated/two-part quarter-half rest registration. Two/four-measure and system-break fixture validation; full HEADS/STEMS/OMR flags false. Ambiguous, incomplete or unsupported music refuses. Part name is metadata for a nontransposing part. slot-at is a read-only nearest-slot report query in the current single-staff measure; it does not edit recognition. Outputs must not exist. Batch preflights all paths; on recognition failure it stops, retaining earlier reported successful pairs."
         );
         return Ok(());
     }
-    let (jobs, name) = options(&args)?;
+    let (query, remaining) = if args.first().is_some_and(|a| a == "--slot-at") {
+        let measure = args
+            .get(1)
+            .and_then(|s| s.to_str())
+            .ok_or(USAGE)?
+            .parse::<usize>()?;
+        let x = args
+            .get(2)
+            .and_then(|s| s.to_str())
+            .ok_or(USAGE)?
+            .parse::<f64>()?;
+        if measure == 0 || !x.is_finite() {
+            return Err(
+                "slot-at requires a positive report measure number and finite image X coordinate"
+                    .into(),
+            );
+        }
+        (Some((measure, x)), &args[3..])
+    } else {
+        (None, args.as_slice())
+    };
+    let (jobs, name) = options(remaining)?;
     if name.trim().is_empty() || name.len() > 256 || name.chars().any(char::is_control) {
         return Err("part-name requires a nonempty single line up to256 UTF8 bytes".into());
     }
@@ -153,7 +174,11 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
                 return Err("input exceeds32 MB".into());
             }
             let image = GrayImage::decode(&bytes)?;
-            let result = music_xml::recognize_named(&image, &name)?;
+            let mut result = music_xml::recognize_named(&image, &name)?;
+            if let Some((measure, x)) = query {
+                let selected = result.owner.closest_slot_at(measure, x)?;
+                result.owner.owner.prepared.report["slot_query"] = selected;
+            }
             let mut data = serde_json::to_vec(&result.owner.owner.prepared.report)?;
             data.push(b'\n');
             write_pair(&j.xml, &j.report, result.xml.as_bytes(), &data)?;

@@ -788,3 +788,12 @@ Full595 remains earlier source95e191b; this unit uses targeted regressions.
 ## 全小節休符Voiceの画像縦断（2026-10-06）
 
 原版で正しく通る1画像（四分4音＋全小節休符）をnativeでも出力。認識済みWHOLE_RESTから専用Voice・slotなしstack音価・MusicXMLのmeasure休符/type省略へ接続。Chord/Voiceのintrinsic duration/end/terminationはnull、通常Chord列は空の原版契約を保持。原版同一画像の5イベント・bounds・Voice/stack状態と、別枠のprocessing-switch形分類8条件を比較。全595は95e191bの既存結果、全体完了false。 [試せる入力と実行例・未対応](MUSICXML-LIMITED.md#default-whole-measure-rest--musicxml-2026-10-06) / [検証](../evidence/musicxml-measure-rest/VALIDATION.json)。一般共有stack/slot-voice matching、lyrics、自動slur/tie、完全cleaner/epilog等は次の依存段階として残します。
+
+
+slot位置・最近傍参照（2026-10-06）：原版Slot.computeXOffsetの実chord中心平均、
+stack相対X、Math.rintを単staff/zero-skewの実所有slotへ接続。
+MeasureStack.getClosestSlotの同距離時先行slot保持/空slotを保存済み原版で比較。
+既存2system20slot、全小節休符の空slot、CLIのread-only --slot-atを確認。
+共有multi-staff補間/一般point-to-staff選択/SlotsRetriever・ChordsMapperによる
+一般voice matching/補正操作は未完。今回対象3件・fmt/clippy、全595は95e191b。
+[検証範囲](../evidence/musicxml-slot-geometry/VALIDATION.json)。

@@ -1,0 +1,40 @@
+{
+  "scope" : "original saved stack slot computeXOffset/getXOffset on actual image chord centers; zero-skew current one-part/one-staff geometry",
+  "measures" : [ {
+    "number" : 1,
+    "slots" : [ {
+      "id" : 1,
+      "time_offset" : "0",
+      "x_offset" : 201
+    }, {
+      "id" : 2,
+      "time_offset" : "1/4",
+      "x_offset" : 321
+    }, {
+      "id" : 3,
+      "time_offset" : "1/2",
+      "x_offset" : 441
+    }, {
+      "id" : 4,
+      "time_offset" : "3/4",
+      "x_offset" : 561
+    } ],
+    "queries" : [ {
+      "point" : [ 282.0, 243.0 ],
+      "slot_id" : 1
+    }, {
+      "point" : [ 342.0, 243.0 ],
+      "slot_id" : 1
+    }, {
+      "point" : [ 647.0, 243.0 ],
+      "slot_id" : 4
+    } ]
+  }, {
+    "number" : 2,
+    "slots" : [ ],
+    "queries" : [ {
+      "point" : [ 711.0, 243.0 ],
+      "slot_id" : null
+    } ]
+  } ]
+}

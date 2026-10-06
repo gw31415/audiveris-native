@@ -23,6 +23,7 @@ pub(crate) struct Voice {
 pub(crate) struct Slot {
     pub id: usize,
     pub time_offset: Option<u32>,
+    pub x_offset: i64,
     pub incoming_ids: Vec<usize>,
 }
 #[derive(Clone, Copy)]
@@ -137,7 +138,7 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
 
 /// StackRhythm.generateStackSlots -> Slot incoming order/back-reference ->
 /// Voice.putSlotInfo(BEGIN)/completeSlotTable. Current production admission has
-/// one Measure per stack; multi-part stack ownership/slot geometry are pending.
+/// one Measure per stack; multi-part stack ownership/inter-staff geometric interpolation remain pending.
 /// Build against live chords, then commit atomically with Voice/Measure state.
 pub(crate) fn generate_slots(
     graph: &mut crate::shared_sig::Graph,
@@ -187,11 +188,15 @@ pub(crate) fn generate_slots(
         for &id in &incoming {
             let b: [i64; 4] = serde_json::from_value(node(id)?["bounds"].clone())
                 .map_err(|_| "music_slot_chord_bounds_required")?;
-            ordered.push((id, b[1] + b[3] / 2));
+            ordered.push((id, b[1] + b[3] / 2, b[0] + b[2] / 2));
         }
-        ordered.sort_by_key(|(_, y)| *y);
+        ordered.sort_by_key(|(_, y, _)| *y);
+        // Slot.computeXOffset: original integer chord centers -> mean point ->
+        // stack offset -> Math.rint. One staff/zero skew makes y immaterial.
+        let mean_x = ordered.iter().map(|(_, _, x)| *x as f64).sum::<f64>() / ordered.len() as f64;
+        let x_offset = (mean_x - measure.left as f64).round_ties_even() as i64;
         incoming.clear();
-        incoming.extend(ordered.into_iter().map(|(id, _)| id));
+        incoming.extend(ordered.into_iter().map(|(id, _, _)| id));
         let slot_id = slots.len() + 1;
         for &id in &incoming {
             let mut data = node(id)?.clone();
@@ -204,6 +209,7 @@ pub(crate) fn generate_slots(
         slots.push(Slot {
             id: slot_id,
             time_offset: Some(*time),
+            x_offset,
             incoming_ids: incoming,
         });
     }
@@ -259,7 +265,22 @@ pub(crate) fn generate_slots(
     Ok(())
 }
 pub(crate) fn slots_projection(slots: &[Slot]) -> Value {
-    json!(slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_chord_ids":s.incoming_ids})).collect::<Vec<_>>())
+    json!(slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"x_offset":s.x_offset,"incoming_chord_ids":s.incoming_ids})).collect::<Vec<_>>())
+}
+
+/// MeasureStack.getClosestSlot: strict distance improvement preserves original
+/// time-ordered first slot on a tie; empty slots produce no selection.
+pub(crate) fn closest_slot(slots: &[Slot], x_offset: f64) -> Option<&Slot> {
+    let mut best = None;
+    let mut distance = f64::MAX;
+    for slot in slots {
+        let dx = (slot.x_offset as f64 - x_offset).abs();
+        if dx < distance {
+            distance = dx;
+            best = Some(slot);
+        }
+    }
+    best
 }
 
 /// Voice.getDuration uses BEGIN entries and their slot time, not the last
@@ -940,6 +961,31 @@ mod group_tests {
             comparable(owner.owner.prepared.report["beam_group_voices"].clone()),
             original["groups"]
         );
+        let geometry: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-slot-geometry/saved-page.json"
+        ))
+        .unwrap();
+        for (measure, original) in owner
+            .measures
+            .iter()
+            .zip(geometry["measures"].as_array().unwrap())
+        {
+            let slots = json!(measure.timing.slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"x_offset":s.x_offset})).collect::<Vec<_>>());
+            assert_eq!(slots, original["slots"]);
+            for query in original["queries"].as_array().unwrap() {
+                let result = owner
+                    .closest_slot_at(
+                        original["number"].as_u64().unwrap() as usize,
+                        query["point"][0].as_f64().unwrap(),
+                    )
+                    .unwrap();
+                assert_eq!(result["slot"]["id"], query["slot_id"]);
+            }
+        }
+        assert!(owner.closest_slot_at(0, 1.).is_err());
+        assert!(owner.closest_slot_at(5, 1.).is_err());
+        assert!(owner.closest_slot_at(1, f64::NAN).is_err());
+        assert!(closest_slot(&owner.measures[0].timing.slots, f64::MAX).is_none());
         // Original final stack-slot collection consumes already solved voices;
         // this is downstream of, and does not pretend to solve, polyphony.
         let slot_control: Value = serde_json::from_str(include_str!(

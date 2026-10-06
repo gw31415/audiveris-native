@@ -764,6 +764,7 @@ fn batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_re
     let names = ["quarter-rest", "half-two-measures", "quarter-half-break"];
     let images = names.map(|name| fixtures.join(format!("{name}.png")));
     let output = Command::new(env!("CARGO_BIN_EXE_audiveris-musicxml"))
+        .args(["--slot-at", "1", "311"])
         .args(["--output-dir"])
         .arg(&root)
         .args(["--part-name", "Flute & <lead>"])
@@ -833,6 +834,16 @@ fn batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_re
             // PartwiseBuilder.isNewClef compares meaning across distinct header IDs.
             assert_eq!(xml.matches("<clef>").count(), 1);
         }
+        assert_eq!(report["slot_query"]["measure_number"], 1);
+        assert_eq!(report["slot_query"]["x"], 311.);
+        let selected = &report["slot_query"]["slot"];
+        assert!(
+            report["measures"][0]["slots"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|slot| slot == selected)
+        );
         assert_eq!(report["part_name"], "Flute & <lead>");
         assert_eq!(report["musicxml_complete"], false);
         originals.push((name, xml, report_bytes));
@@ -854,6 +865,14 @@ fn batch_cli_exports_independent_scores_system_break_and_preserves_outputs_on_re
             bytes
         );
     }
+    let invalid_query = Command::new(env!("CARGO_BIN_EXE_audiveris-musicxml"))
+        .args(["--slot-at", "1", "NaN", "--output-dir"])
+        .arg(&root)
+        .arg(&images[0])
+        .output()
+        .unwrap();
+    assert!(!invalid_query.status.success());
+    assert!(String::from_utf8_lossy(&invalid_query.stderr).contains("finite image X coordinate"));
     let partial = root.join("partial");
     fs::create_dir(&partial).unwrap();
     let rejected = Command::new(env!("CARGO_BIN_EXE_audiveris-musicxml"))
@@ -1300,6 +1319,22 @@ fn image_whole_measure_rest_owns_separate_voice_and_exports_stack_duration_witho
             .contains("<rest measure=\"yes\"/><duration>4</duration><voice>1</voice></note>")
     );
     assert_eq!(export.xml.matches("<type>").count(), 4);
+    let geometry: Value = serde_json::from_str(include_str!(
+        "../fixtures/official-slot-geometry/measure-rest.json"
+    ))
+    .unwrap();
+    for measure in geometry["measures"].as_array().unwrap() {
+        for query in measure["queries"].as_array().unwrap() {
+            let selected = export
+                .owner
+                .closest_slot_at(
+                    measure["number"].as_u64().unwrap() as usize,
+                    query["point"][0].as_f64().unwrap(),
+                )
+                .unwrap();
+            assert_eq!(selected["slot"]["id"], query["slot_id"]);
+        }
+    }
     for key in [
         "heads_complete",
         "stems_complete",

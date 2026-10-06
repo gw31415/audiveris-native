@@ -1268,3 +1268,31 @@ original-failing central quarter-rest and half-rest boundary inputs retain
 refusal. All global completion flags stay false.
 [Validation](../evidence/musicxml-measure-rest/VALIDATION.json).
 Full595 is the earlier95e191b result, not a new full run.
+
+
+Slot geometry and read-only selection (2026-10-06): `Slot.computeXOffset` now
+uses integer centers of actual incoming chords, their mean, and original ties-to-even
+rounding of the stack-relative abscissa. Slot reports expose `x_offset` in pixels.
+`MeasureStack.getClosestSlot` preserves time order for equidistant candidates;
+a whole-measure-rest stack with no slots returns null. Original saved state for
+20 slots in the existing two-system image and within-staff point queries match.
+The separate whole-rest image covers the empty-stack boundary.
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  --slot-at 1 311 \
+  fixtures/official-image-musicxml-cross-system/beam-two-systems.png \
+  /tmp/slot-score.musicxml /tmp/slot-score.report.json
+```
+
+Output paths must not exist. The prefix also works before `--output-dir` and is
+applied to each independent score. `slot_query` contains the selected actual slot,
+its time and live incoming chord IDs; MusicXML and recognition remain unchanged.
+Measure number is the one-based global report number. X is an image pixel
+coordinate; the admitted single-staff measure explicitly fixes the reference
+staff (`getXOffset(point, staff)`). This is a CLI wrapper for the original selection
+logic, not an editing operation. General point-to-staff selection, multi-staff
+interpolation, shared stacks, geometric `SlotsRetriever`/`ChordsMapper` Voice
+assignment and correction persistence remain pending. No global completion flag
+is advanced. Original scalar/saved-state comparisons and current automated
+single-voice image admission are separate validation boundaries.
