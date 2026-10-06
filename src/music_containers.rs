@@ -4,7 +4,7 @@
 //! The retained SIG is authoritative; do not prune copied members by a caller's
 //! deletion list or keep stale chord geometry after partial member removal.
 use crate::{
-    music_measures::{Chord, Measure},
+    music_measures::{Chord, ChordKind, Measure},
     shared_sig::{Graph, Key, Phase},
 };
 use serde_json::{Value, json};
@@ -49,7 +49,7 @@ pub(crate) fn refresh(
             removed_chords.push(chord.id);
             continue;
         };
-        let (class, member_class, member_phase) = if chord.stem.is_some() {
+        let (class, member_class, member_phase) = if chord.kind == ChordKind::Head {
             ("HeadChordInter", "HeadInter", Phase::Head)
         } else {
             ("RestChordInter", "RestInter", Phase::Symbol)
@@ -68,22 +68,38 @@ pub(crate) fn refresh(
         {
             return Err("music_container_owned_measure_required".into());
         }
-        let stem_id = chord
-            .stem
-            .map(|key| graph.id(key).ok_or("music_container_stem_required"))
-            .transpose()?;
-        if n["stem_id"] != json!(stem_id) {
-            return Err("music_container_stem_identity_required".into());
-        }
-        let actual_stem = snapshot["relations"]
+        // The actual typed relation, not a stale copied optional key, is the
+        // original HeadChord.getStem authority after cache-owned removal.
+        let stem_edges = snapshot["relations"]
             .as_array()
             .unwrap()
             .iter()
-            .find(|e| e["kind"] == "ChordStemRelation" && e["source"] == chord.id)
-            .map(|e| e["target"].as_u64().unwrap() as usize);
-        if actual_stem != stem_id {
+            .filter(|e| e["kind"] == "ChordStemRelation" && e["source"] == chord.id)
+            .collect::<Vec<_>>();
+        if stem_edges.len() > 1 || (chord.kind == ChordKind::Rest && !stem_edges.is_empty()) {
             return Err("music_container_stem_relation_required".into());
         }
+        let actual_stem = stem_edges
+            .first()
+            .map(|e| e["target"].as_u64().unwrap() as usize);
+        if n["stem_id"] != json!(actual_stem) {
+            return Err("music_container_stem_identity_required".into());
+        }
+        let stem = actual_stem
+            .map(|id| {
+                let node = nodes.get(&id).ok_or("music_container_live_stem_required")?;
+                let key: Key = serde_json::from_value(node["origin"].clone())
+                    .map_err(|_| "music_container_stem_origin_required")?;
+                if node["kind"] != "StemInter"
+                    || key.phase != Phase::Stem
+                    || key.system != chord.key.system
+                    || graph.id(key) != Some(id)
+                {
+                    return Err("music_container_typed_stem_required");
+                }
+                Ok(key)
+            })
+            .transpose()?;
         let stem_node = actual_stem
             .map(|id| {
                 nodes
@@ -121,7 +137,7 @@ pub(crate) fn refresh(
             return Err("music_container_live_empty_chord_pending".into());
         }
         let member_refs = members.iter().collect::<Vec<_>>();
-        let geometry = if chord.stem.is_some() {
+        let geometry = if chord.kind == ChordKind::Head {
             crate::head_chord_geometry::calculate(&member_refs, stem_node)?
         } else {
             crate::head_chord_geometry::calculate_rest(&member_refs)?
@@ -140,9 +156,10 @@ pub(crate) fn refresh(
             .bounds
             .ok_or("music_container_chord_bounds_required")?;
         retained.push(Chord {
+            kind: chord.kind,
             key: chord.key,
             id: chord.id,
-            stem: chord.stem,
+            stem,
             members,
             measure: chord.measure,
             bounds,
@@ -170,8 +187,8 @@ pub(crate) fn refresh(
     }
     let measure_chords = measures.iter().enumerate().map(|(i,m)| json!({
         "system_id":m.system,"part_id":m.part,"staff_id":m.staff,"measure_index":m.index,
-        "head_chord_ids":retained.iter().filter(|c|c.measure==i&&c.stem.is_some()).map(|c|c.id).collect::<Vec<_>>(),
-        "rest_chord_ids":retained.iter().filter(|c|c.measure==i&&c.stem.is_none()).map(|c|c.id).collect::<Vec<_>>()
+        "head_chord_ids":retained.iter().filter(|c|c.measure==i&&c.kind == ChordKind::Head).map(|c|c.id).collect::<Vec<_>>(),
+        "rest_chord_ids":retained.iter().filter(|c|c.measure==i&&c.kind == ChordKind::Rest).map(|c|c.id).collect::<Vec<_>>()
     })).collect::<Vec<_>>();
     *chords = retained;
     Ok(Refresh {
@@ -179,4 +196,197 @@ pub(crate) fn refresh(
         projection: json!({"staff_notes":staff_notes,
         "measure_chords":measure_chords,"scope":"actual pre-rhythm note/chord containers; voices/lyrics/full Part cleanup pending"}),
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{
+        GrayImage,
+        beam_dispatch::{self, Registry},
+        stem_cache_sig::Retriever,
+        stem_checks,
+    };
+    use std::sync::Arc;
+
+    #[test]
+    fn original_post_chord_stem_removal_keeps_head_class_geometry_and_canonical_cache() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stem-chord-geometry/post-stem-removal.json"
+        ))
+        .unwrap();
+        // Actual image-backed glyph registry and retriever, not cache hydration.
+        // No HeadStem edge: the saved original control declares that boundary.
+        let glyph = beam_dispatch::glyph_from_json(&json!({
+            "bounds":oracle["stem_bounds"],"orientation":"VERTICAL",
+            "runs":[[0,0,58],[1,0,58]]
+        }))
+        .unwrap();
+        let mut image = GrayImage {
+            width: 400,
+            height: 400,
+            pixels: vec![255; 400 * 400],
+        };
+        for run in &glyph.runs {
+            for y in run.start..run.start + run.length {
+                image.pixels[(glyph.top as usize + y) * 400 + glyph.left as usize + run.position] =
+                    0;
+            }
+        }
+        let mut registry = Registry::default();
+        let mut cache = Retriever::new(1).unwrap();
+        let params = stem_checks::Parameters::new(11, 5, 0., 0).unwrap();
+        let stem = cache
+            .create_selected(&mut registry, std::slice::from_ref(&glyph), &image, &params)
+            .unwrap()
+            .stem
+            .unwrap();
+        let mut graph = Graph::default();
+        let stem_id = cache.register(&registry, &mut graph, &stem).unwrap();
+        let head = Key {
+            system: 1,
+            phase: Phase::Head,
+            local: 1,
+        };
+        let head_id = graph
+            .vertex(
+                head,
+                json!({"kind":"HeadInter","shape":"NOTEHEAD_BLACK",
+            "bounds":oracle["head_bounds"],"staff_id":1,"grade":0.6,"contextual_grade":0.75}),
+                false,
+            )
+            .unwrap();
+        let chord = Key {
+            system: 1,
+            phase: Phase::Chord,
+            local: 1,
+        };
+        let chord_id = graph
+            .vertex(
+                chord,
+                json!({"kind":"HeadChordInter","staff_id":1,
+            "part_id":1,"measure_index":0}),
+                false,
+            )
+            .unwrap();
+        let stem_key = Key {
+            system: 1,
+            phase: Phase::Stem,
+            local: stem.glyph_id(),
+        };
+        graph
+            .relations(
+                1,
+                Phase::Chord,
+                vec![
+                    (chord, head, json!({"kind":"Containment"})),
+                    (chord, stem_key, json!({"kind":"ChordStemRelation"})),
+                ],
+            )
+            .unwrap();
+        let measures = vec![Measure {
+            system: 1,
+            part: 1,
+            staff: 1,
+            index: 0,
+            left: 100,
+            right: 350,
+        }];
+        let mut chords = vec![Chord {
+            kind: ChordKind::Head,
+            key: chord,
+            id: chord_id,
+            stem: Some(stem_key),
+            members: vec![],
+            measure: 0,
+            bounds: [0; 4],
+        }];
+        let compare = |graph: &Graph, stage: &str| {
+            let snapshot = graph.snapshot();
+            let nodes = snapshot["inters"].as_array().unwrap();
+            let c = nodes.iter().find(|n| n["id"] == chord_id).unwrap();
+            let expected = &oracle[stage];
+            for (actual, original) in [
+                ("kind", "chord_kind"),
+                ("bounds", "bounds"),
+                ("grade", "grade"),
+                ("head_location", "head_location"),
+                ("tail_location", "tail_location"),
+            ] {
+                if matches!(actual, "head_location" | "tail_location") {
+                    let point: [f64; 2] = serde_json::from_value(c[actual].clone()).unwrap();
+                    let expected_point: [f64; 2] =
+                        serde_json::from_value(expected[original].clone()).unwrap();
+                    assert_eq!(point, expected_point, "{stage}:{actual}");
+                } else {
+                    assert_eq!(c[actual], expected[original], "{stage}:{actual}");
+                }
+            }
+            assert_eq!(c["member_ids"], json!([head_id]));
+            assert_eq!(
+                c["stem_id"],
+                if stage == "before" {
+                    json!(stem_id)
+                } else {
+                    Value::Null
+                }
+            );
+            assert_eq!(
+                nodes.len(),
+                expected["live_vertices"].as_u64().unwrap() as usize
+            );
+            assert_eq!(
+                snapshot["relations"].as_array().unwrap().len(),
+                expected["live_relations"].as_u64().unwrap() as usize
+            );
+        };
+        compare(&graph, "before");
+        refresh(&graph, &measures, &mut chords).unwrap();
+        let registry_before = registry.clone();
+        let cache_before = stem.snapshot().unwrap();
+        // A failing callback remains atomic across both Graph and canonical Arc.
+        let mut invalid = graph.clone();
+        let mut bad_head = invalid.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == head_id)
+            .unwrap()
+            .clone();
+        bad_head["contextual_grade"] = json!("invalid");
+        invalid.vertex(head, bad_head, false).unwrap();
+        let invalid_before = invalid.snapshot();
+        assert!(cache.remove(&mut invalid, &stem).is_err());
+        assert_eq!(invalid.snapshot(), invalid_before);
+        assert_eq!(stem.snapshot().unwrap(), cache_before);
+        cache.remove(&mut graph, &stem).unwrap();
+        compare(&graph, "after");
+        let refreshed = refresh(&graph, &measures, &mut chords).unwrap();
+        assert!(refreshed.removed_chords.is_empty());
+        assert_eq!(chords[0].kind, ChordKind::Head);
+        assert_eq!(chords[0].stem, None);
+        assert_eq!(json!(chords[0].bounds), oracle["after"]["bounds"]);
+        assert_eq!(
+            refreshed.projection["measure_chords"][0]["head_chord_ids"],
+            json!([chord_id])
+        );
+        assert_eq!(
+            refreshed.projection["measure_chords"][0]["rest_chord_ids"],
+            json!([])
+        );
+        let after = graph.snapshot();
+        cache.remove(&mut graph, &stem).unwrap();
+        assert_eq!(graph.snapshot(), after);
+        image.pixels.fill(255);
+        let cached = cache
+            .create_selected(&mut registry, &[glyph], &image, &params)
+            .unwrap();
+        assert!(cached.cache_hit);
+        let cached = cached.stem.unwrap();
+        assert!(Arc::ptr_eq(&stem, &cached));
+        assert_eq!(cached.snapshot().unwrap()["removed"], true);
+        assert_eq!(cached.snapshot().unwrap()["id"], stem_id);
+        // Physical registry unchanged: retain the original content registration.
+        assert_eq!(format!("{registry:?}"), format!("{registry_before:?}"));
+    }
 }

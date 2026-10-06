@@ -558,3 +558,30 @@ The next post-chord stem-removal observation is original-only preparation:
 remaining a HeadChord without a stem, with refreshed head-only bounds/locations.
 Native cached post-chord callback and class propagation are not implemented by
 this observation. [Dependency](../evidence/musicxml-beam-head-cleaner/NEXT-DEPENDENCY.md).
+
+### Cache-owned stem removal after CHORDS
+
+Original `ChordStemRelation.removed` now invalidates the surviving HeadChord
+inside the retained retriever's staged SIG transaction, before incident edges
+are pruned. HeadChord and RestChord class is carried separately from the optional
+stem. Pre-rhythm container refresh reads the actual typed ChordStem relation; a
+stemless HeadChord keeps its head membership, head-only bounds and note locations
+and stays in the measure's head-chord list.
+
+The saved original one-condition post-stem observation matches native before/after
+geometry, grades, members and live counts. Native uses an actual image-backed
+registry glyph and canonical cache Arc; callback failure is atomic, repeated
+removal is idempotent, and the physical registry is retained. This is a declared
+lifecycle comparison without HeadStem relations, not automatic raster parity
+of that branch. The original fixture's `native_connected:false` records its
+earlier preparation checkpoint. Ordinary image/whole-breve guards are retained.
+Voices, lyrics, complete Part cleanup and general epilog remain pending.
+
+Existing executable example (use fresh output names):
+
+```sh
+cargo build --offline --locked --bin audiveris-musicxml -j1
+audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-systems.png out.musicxml out.json
+```
+
+[Validation](../evidence/musicxml-post-chord-cache/VALIDATION.json).

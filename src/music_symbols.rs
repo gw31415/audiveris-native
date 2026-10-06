@@ -645,6 +645,7 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                     vec![(ck, key, json!({"kind":"Containment"}))],
                 )?;
                 new_chords.push(Chord {
+                    kind: crate::music_measures::ChordKind::Rest,
                     key: ck,
                     id: cid,
                     stem: None,
@@ -700,6 +701,7 @@ mod cluster_boundary {
             local: 1,
         };
         let chord = Chord {
+            kind: crate::music_measures::ChordKind::Head,
             key,
             id: 3,
             stem: Some(Key {

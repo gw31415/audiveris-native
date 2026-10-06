@@ -170,6 +170,11 @@
       "status": "implemented",
       "unit": "BeamHeadCleaner removes temporary BeamHead edges without implicit recontextualization, preserving original stored grades",
       "limits": "one actual original declared lifecycle/retained vertex metadata and image regressions; full post-LINKS raster SIG and cleaner/epilog remain partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "canonical cached stem removal after CHORDS -> actual ChordStem callback/geometry; independent HeadChord/RestChord type -> actual container refresh",
+      "limits": "one declared original lifecycle without HeadStem relation; no automatic raster post-chord removal/whole-breve/voice/lyrics/full epilog claim"
     }
   ],
   "function_groups": [
@@ -279,7 +284,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "238c535: BeamHeadCleaner original grade retention,17 targeted/fmt/workspace-all-target-clippy and full593 passed. Independent Linux31 events/XML/XSD/tree match; original one cleaner lifecycle and4 same rest-container controls are separate. Post-chord stem removal observation prepared only; native class/cache/voice propagation remains pending.",
+  "latest_targeted_validation": "post-CHORDS canonical cache callback and class propagation; validation in evidence/musicxml-post-chord-cache. Previous full593 belongs to238c535; current full not repeated.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

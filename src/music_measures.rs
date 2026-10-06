@@ -18,7 +18,7 @@ impl OwnedMusic {
     /// Layout read from the live continuation, before meter or rhythm is set.
     pub fn layout(&self) -> Value {
         let row = |c: &Chord| json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":self.measures[c.measure].index,"member_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null});
-        json!({"measures":self.measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":self.chords.iter().filter(|c|c.stem.is_some()).map(|c|{let mut v=row(c);v["head_ids"]=v["member_ids"].take();v}).collect::<Vec<_>>(),"rest_chords":self.chords.iter().filter(|c|c.stem.is_none()).map(row).collect::<Vec<_>>()})
+        json!({"measures":self.measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":self.chords.iter().filter(|c|c.kind == ChordKind::Head).map(|c|{let mut v=row(c);v["head_ids"]=v["member_ids"].take();v}).collect::<Vec<_>>(),"rest_chords":self.chords.iter().filter(|c|c.kind == ChordKind::Rest).map(row).collect::<Vec<_>>()})
     }
 }
 #[derive(Clone)]
@@ -30,7 +30,13 @@ pub(crate) struct Measure {
     pub left: i64,
     pub right: i64,
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum ChordKind {
+    Head,
+    Rest,
+}
 pub(crate) struct Chord {
+    pub kind: ChordKind,
     pub key: Key,
     pub id: usize,
     pub stem: Option<Key>,
@@ -304,6 +310,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                 }
                 graph.relations(sid, Phase::Chord, relations)?;
                 chords.push(Chord {
+                    kind: ChordKind::Head,
                     key,
                     id,
                     stem: Some(stem),

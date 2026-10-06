@@ -1,0 +1,37 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "actual cache-owned post-CHORDS stem removal and independent HeadChord/RestChord class propagation",
+  "original_dependencies": [
+    "ChordStemRelation.removed -> HeadChord.invalidateCache",
+    "HeadChord.getStem/getBounds and AbstractChord.getMembers/computeLocations",
+    "distinct HeadChordInter and RestChordInter classes"
+  ],
+  "comparison": "same saved declared original post-stem removal condition; registered native image-backed physical glyph and canonical Retriever Arc; before/after grade/member/bounds/locations/live vertex+relation counts match",
+  "original_fixture": "fixtures/official-stem-chord-geometry/post-stem-removal.json",
+  "original_fixture_native_connected_false_is_historical": true,
+  "scope_limits": [
+    "declared post-CHORDS lifecycle, not automatic image generation of this removal branch",
+    "no HeadStem relation in this original comparison",
+    "whole/breve image guards unchanged; voice/lyrics/full Part epilog pending"
+  ],
+  "native_transaction": "callback failure preserves Graph and canonical cache state; repeat removal idempotent; removed Arc/registry identity retained",
+  "all_global_completion_flags": false,
+  "previous_full_validation": {
+    "source": "238c535afacc5a0d8182ea70d67f96f81c3c34d4",
+    "passed": 593
+  },
+  "full_workspace_repeated_this_unit": false,
+  "validation": {
+    "library_tests_passed": 121,
+    "existing_cache_SIG_head_and_MusicXML_tests_passed": 15,
+    "unique_tests_passed": 136,
+    "fmt": "passed",
+    "workspace_all_target_clippy": "passed -D warnings",
+    "logs_sha256": {
+      "lib.log": "5f4e0fbcf055f0221b6a0f2470f2646fa8c4e614e57b32acde1ffd9c48059c68",
+      "regression.log": "2d49ba392dbda0bc64aa71a54694c488c861ee217c89abc2ddd59638a75f6908",
+      "fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy.log": "77d0b89046f11487d738e893edaed7795c43a9b6e6c954a335c7008310dabc36"
+    }
+  }
+}

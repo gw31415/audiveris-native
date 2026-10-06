@@ -139,7 +139,7 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                     let chords = m
                         .chords
                         .iter()
-                        .filter(|c| c.stem.is_some())
+                        .filter(|c| c.kind == crate::music_measures::ChordKind::Head)
                         .map(|c| c.bounds)
                         .collect::<Vec<_>>();
                     if arpeggiato_may_link(bounds, m.owner.interline, &chords) {

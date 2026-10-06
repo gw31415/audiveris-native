@@ -1105,6 +1105,22 @@ impl Graph {
             };
             next.vertex(key, data, stem["removed"] == true)?;
         }
+        // ChordStemRelation.removed invalidates each surviving HeadChord before
+        // incident edges are pruned. Stage all vertices first, so an unchanged
+        // stem is live even if it was registered after a removed stem.
+        let chord_edges = next
+            .edges
+            .iter()
+            .enumerate()
+            .filter_map(|(i, e)| {
+                (!e.removed
+                    && e.key.system == system
+                    && e.key.kind == "ChordStemRelation"
+                    && next.vertices[e.key.target - 1].removed)
+                    .then_some(i + 1)
+            })
+            .collect::<Vec<_>>();
+        next.remove_chord_identity_edges(&chord_edges)?;
         let mut relation_ids = BTreeSet::new();
         let mut relations = Vec::new();
         for attachment in attachments {
@@ -1945,6 +1961,7 @@ mod rest_chord_identity_tests {
                 .iter()
                 .filter(|n| n["kind"] == "RestChordInter")
                 .map(|n| crate::music_measures::Chord {
+                    kind: crate::music_measures::ChordKind::Rest,
                     key: serde_json::from_value(n["origin"].clone()).unwrap(),
                     id: n["id"].as_u64().unwrap() as usize,
                     stem: None,
