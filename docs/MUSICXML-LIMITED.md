@@ -1494,3 +1494,29 @@ pending. Invalid cyclic sequences explicitly refuse atomically rather than hang;
 no claim is made that the original accepts them. No image scope or global
 completion flag changed; full595 is still the old `95e191b` result. The original
 all-rest invalid-XSD page stays a separate negative boundary.
+
+### Retained transient narrow-slot clocks (2026-10-06)
+
+The current mapper now holds real, initially unknown narrow-slot clocks separately
+from chord clocks and final stack slots. They are owned by the current measure;
+compound views addressing the same narrow ID share that clock. Original
+`mapChords.readSlotTimes` sets a single known narrow time before purging beam/tie
+rookies. Original `checkSlotTime`'s single inferred-time branch sets an unknown
+narrow clock from the selected active end **before** `applyMapping` assigns the
+Voice and pushes chord time. An empty time set does not reset a retained clock.
+Conflicting or unsupported inference still refuses, without a guessed minimum.
+
+`purgeExtinctVoices` now reads the retained first-member slot clock, replacing
+the previous admitted one-chord proxy. `preliminary_measure_slots[].candidate_time_steps`
+shows narrow getter values before/after each mapper. Original same-image saved
+getters match24 compounds/six measures: starting beam chord times can already be
+known while narrow slot times are still null; after mapping, narrow values become
+0, 1/8, etc. The default whole-rest measure has no narrow-clock entries. The
+existing image CLI commands and output examples are unchanged.
+
+This is the existing one-incoming/non-implicit-tuplet path. General multi-time
+`analyzeTimes`, blacklisting/retries, new-Voice/sibling-time inference, full
+Rational/tuplets, shared stacks and actual candidate chord-slot reference/setter
+identity are not complete. No new image admission, no global true flag, no new
+whole-workspace claim; full595 remains `95e191b`. Previously saved method-control
+and XSD-negative evidence remain distinct from successful image MusicXML.

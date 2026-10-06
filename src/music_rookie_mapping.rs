@@ -204,6 +204,7 @@ pub(crate) struct Context<'a> {
     pub clef: &'a Value,
     pub interline: usize,
     pub lifetime: &'a crate::music_voice_lifetime::Lifetime,
+    pub slot_times: &'a mut crate::music_measure_slots::ClockState,
 }
 fn node(snapshot: &Value, id: usize) -> Result<&Value, String> {
     snapshot["inters"]
@@ -339,6 +340,11 @@ impl Context<'_> {
         if times.len() > 1 {
             return Err("music_mapping_implicit_tuplet_or_conflicting_slot_times_pending".into());
         }
+        if let Some(&known) = times.keys().next() {
+            // Original mapChords sets the actual narrow clock before purging
+            // already assigned beam/tie rookies. No clock is reset on empty input.
+            self.slot_times.set(slot.members[0].id, Some(known))?;
+        }
         let rookies = slot
             .chord_ids
             .iter()
@@ -434,8 +440,16 @@ impl Context<'_> {
                 let end = start
                     .checked_add(crate::music_time::parse_ticks(duration)?)
                     .ok_or("music_mapping_time_overflow")?;
-                if times.keys().next().is_some_and(|t| *t != end) {
+                let narrow = slot
+                    .narrow_slot(pair.rookie)
+                    .ok_or("music_mapping_owned_narrow_required")?;
+                if self.slot_times.get(narrow)?.is_some_and(|t| t != end) {
                     return Err("music_mapping_slot_retry_pending".into());
+                }
+                if self.slot_times.get(narrow)?.is_none() {
+                    // Original checkSlotTime's single inferred-time branch runs
+                    // before applyMapping, using the chosen active end.
+                    self.slot_times.set(narrow, Some(end))?;
                 }
                 let own = self
                     .voices

@@ -167,5 +167,14 @@ pub fn assert_original(report: &Value, page_index: usize) {
             extinction["pages"][page_index]["measures"]
                 [actual["measure_number"].as_u64().unwrap() as usize - 1]["extinction_steps"]
         );
+        let clocks: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-candidate-slot-time/observed.json"
+        ))
+        .unwrap();
+        assert_eq!(
+            actual["candidate_time_steps"],
+            clocks["pages"][page_index]["measures"]
+                [actual["measure_number"].as_u64().unwrap() as usize - 1]["steps"]
+        );
     }
 }

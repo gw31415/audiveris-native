@@ -558,8 +558,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         preliminary_slots[mi]["mapping_steps"] = json!([]);
         preliminary_slots[mi]["extinction_steps"] = json!([]);
         let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
+        let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds)?;
+        preliminary_slots[mi]["candidate_time_steps"] = json!([]);
         for chord in chords {
             if let Some(slot) = compounds.iter().find(|s| s.chord_ids.contains(&chord.id)) {
+                let before = slot_times.projection(slot)?;
                 let step = crate::music_rookie_mapping::Context {
                     graph: &mut graph,
                     voices: &mut m.voices,
@@ -570,14 +573,23 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     clef: initial_clef,
                     interline: m.owner.interline,
                     lifetime: &lifetime,
+                    slot_times: &mut slot_times,
                 }
                 .map_slot(slot)?;
                 preliminary_slots[mi]["mapping_steps"]
                     .as_array_mut()
                     .unwrap()
                     .push(step);
-                let extinction =
-                    lifetime.purge(&graph, &m.voices, &mut m.measures[mi], mi, &compounds, slot)?;
+                preliminary_slots[mi]["candidate_time_steps"].as_array_mut().unwrap().push(json!({"slot_id":slot.id,"before":before,"after":slot_times.projection(slot)?,"ok":true}));
+                let first_time = slot_times.first_time(slot)?;
+                let extinction = lifetime.purge(
+                    &graph,
+                    &m.voices,
+                    &mut m.measures[mi],
+                    mi,
+                    &compounds,
+                    (slot, first_time),
+                )?;
                 preliminary_slots[mi]["extinction_steps"]
                     .as_array_mut()
                     .unwrap()

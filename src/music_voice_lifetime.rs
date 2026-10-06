@@ -113,7 +113,7 @@ impl Lifetime {
         measure: &mut Measure,
         measure_index: usize,
         compounds: &[CompoundSlot],
-        slot: &CompoundSlot,
+        (slot, first_time): (&CompoundSlot, Option<u32>),
     ) -> Result<Value, String> {
         let snapshot = graph.snapshot();
         let nodes = snapshot["inters"].as_array().unwrap();
@@ -143,20 +143,8 @@ impl Lifetime {
                     .round_ties_even() as i64,
             )
         };
-        let first = slot
-            .members
-            .first()
-            .ok_or("music_voice_lifetime_first_member_required")?;
-        // Before general candidate-slot setters, the admitted one-chord narrow
-        // member has exactly that chord's known time. Do not infer multi-member
-        // clocks or replace original analyzeTimes with a guessed serial time.
-        if first.chord_ids.len() != 1 {
-            return Err("music_voice_lifetime_narrow_time_setter_pending".into());
-        }
-        let first_time = node(first.chord_ids[0])?["time_offset"]
-            .as_str()
-            .map(crate::music_time::parse_ticks)
-            .transpose()?;
+        // MeasureRhythm reads the retained first narrow object's own clock,
+        // supplied by the caller, not a reconstructed chord/event clock.
         let current_x = x_offset(slot)?;
         let mut chords = BTreeMap::new();
         for n in nodes.iter().filter(|n| {

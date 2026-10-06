@@ -349,6 +349,52 @@ impl CompoundSlot {
         serde_json::json!({"id":self.id,"narrow_slot_ids":self.members.iter().map(|s|s.id).collect::<Vec<_>>(),"chord_ids":self.chord_ids,"lookup":self.chord_ids.iter().map(|id|serde_json::json!({"chord_id":id,"narrow_slot_id":self.narrow_slot(*id)})).collect::<Vec<_>>()})
     }
 }
+/// Measure-scoped transient narrow-slot objects retain their own nullable clock.
+/// Compound members may alias the same original narrow object, so cloned member
+/// views address one clock by its stable narrow ID, not one clock per compound.
+/// These clocks differ from the later timed MeasureStack slots.
+pub(crate) struct ClockState {
+    members: BTreeMap<usize, (Vec<usize>, Option<u32>)>,
+}
+impl ClockState {
+    pub(crate) fn new(compounds: &[CompoundSlot]) -> Result<Self, String> {
+        let mut members: BTreeMap<usize, (Vec<usize>, Option<u32>)> = BTreeMap::new();
+        for narrow in compounds.iter().flat_map(|c| &c.members) {
+            if let Some((ids, _)) = members.get(&narrow.id) {
+                if ids != &narrow.chord_ids {
+                    return Err("music_candidate_narrow_identity_required".into());
+                }
+            } else {
+                members.insert(narrow.id, (narrow.chord_ids.clone(), None));
+            }
+        }
+        Ok(Self { members })
+    }
+    pub(crate) fn get(&self, id: usize) -> Result<Option<u32>, String> {
+        self.members
+            .get(&id)
+            .map(|m| m.1)
+            .ok_or_else(|| "music_candidate_owned_narrow_required".into())
+    }
+    pub(crate) fn set(&mut self, id: usize, time: Option<u32>) -> Result<(), String> {
+        self.members
+            .get_mut(&id)
+            .ok_or("music_candidate_owned_narrow_required")?
+            .1 = time;
+        Ok(())
+    }
+    pub(crate) fn first_time(&self, slot: &CompoundSlot) -> Result<Option<u32>, String> {
+        self.get(
+            slot.members
+                .first()
+                .ok_or("music_candidate_first_narrow_required")?
+                .id,
+        )
+    }
+    pub(crate) fn projection(&self, slot: &CompoundSlot) -> Result<Value, String> {
+        slot.members.iter().map(|s| self.get(s.id).map(|t| serde_json::json!({"id":s.id,"time_offset":t.map(crate::music_time::format_ticks)}))).collect::<Result<Vec<_>,_>>().map(|v|serde_json::json!(v))
+    }
+}
 fn compound(
     id: usize,
     members: &[MeasureSlot],

@@ -1,0 +1,293 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "two saved successful original image states; transient narrow slot getter before/after mapChords; not native general time conflict/retry/polyphony",
+  "pages" : [ {
+    "input" : "beam-two-systems.omr",
+    "measures" : [ {
+      "number" : 1,
+      "steps" : [ {
+        "slot_id" : 1,
+        "before" : [ {
+          "id" : 1,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 1,
+          "time_offset" : "0"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 2,
+        "before" : [ {
+          "id" : 2,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 2,
+          "time_offset" : "1/8"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 3,
+        "before" : [ {
+          "id" : 3,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 3,
+          "time_offset" : "1/4"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 4,
+        "before" : [ {
+          "id" : 4,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 4,
+          "time_offset" : "3/8"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 5,
+        "before" : [ {
+          "id" : 5,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 5,
+          "time_offset" : "1/2"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 6,
+        "before" : [ {
+          "id" : 6,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 6,
+          "time_offset" : "3/4"
+        } ],
+        "ok" : true
+      } ]
+    }, {
+      "number" : 2,
+      "steps" : [ {
+        "slot_id" : 1,
+        "before" : [ {
+          "id" : 1,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 1,
+          "time_offset" : "0"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 2,
+        "before" : [ {
+          "id" : 2,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 2,
+          "time_offset" : "1/4"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 3,
+        "before" : [ {
+          "id" : 3,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 3,
+          "time_offset" : "1/2"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 4,
+        "before" : [ {
+          "id" : 4,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 4,
+          "time_offset" : "3/4"
+        } ],
+        "ok" : true
+      } ]
+    }, {
+      "number" : 3,
+      "steps" : [ {
+        "slot_id" : 1,
+        "before" : [ {
+          "id" : 1,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 1,
+          "time_offset" : "0"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 2,
+        "before" : [ {
+          "id" : 2,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 2,
+          "time_offset" : "1/8"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 3,
+        "before" : [ {
+          "id" : 3,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 3,
+          "time_offset" : "1/4"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 4,
+        "before" : [ {
+          "id" : 4,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 4,
+          "time_offset" : "3/8"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 5,
+        "before" : [ {
+          "id" : 5,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 5,
+          "time_offset" : "1/2"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 6,
+        "before" : [ {
+          "id" : 6,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 6,
+          "time_offset" : "3/4"
+        } ],
+        "ok" : true
+      } ]
+    }, {
+      "number" : 4,
+      "steps" : [ {
+        "slot_id" : 1,
+        "before" : [ {
+          "id" : 1,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 1,
+          "time_offset" : "0"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 2,
+        "before" : [ {
+          "id" : 2,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 2,
+          "time_offset" : "1/4"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 3,
+        "before" : [ {
+          "id" : 3,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 3,
+          "time_offset" : "1/2"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 4,
+        "before" : [ {
+          "id" : 4,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 4,
+          "time_offset" : "3/4"
+        } ],
+        "ok" : true
+      } ]
+    } ]
+  }, {
+    "input" : "quarter-whole-rest.omr",
+    "measures" : [ {
+      "number" : 1,
+      "steps" : [ {
+        "slot_id" : 1,
+        "before" : [ {
+          "id" : 1,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 1,
+          "time_offset" : "0"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 2,
+        "before" : [ {
+          "id" : 2,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 2,
+          "time_offset" : "1/4"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 3,
+        "before" : [ {
+          "id" : 3,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 3,
+          "time_offset" : "1/2"
+        } ],
+        "ok" : true
+      }, {
+        "slot_id" : 4,
+        "before" : [ {
+          "id" : 4,
+          "time_offset" : null
+        } ],
+        "after" : [ {
+          "id" : 4,
+          "time_offset" : "3/4"
+        } ],
+        "ok" : true
+      } ]
+    }, {
+      "number" : 2,
+      "steps" : [ ]
+    } ]
+  } ]
+}

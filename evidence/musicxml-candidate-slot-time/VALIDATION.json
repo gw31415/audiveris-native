@@ -1,0 +1,37 @@
+{
+  "base_source": "02ce2fa7d8a64eb0856379f0b7e7639588282f09",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "retained transient narrow Slot getter/setter, mapChords known-time assignment before rookie purge, checkSlotTime single inferred time before applyMapping, extinction first-narrow-time getter",
+  "original_comparison": {
+    "successful_saved_same_images": 2,
+    "measures": 6,
+    "narrow_before_after_steps": 24,
+    "default_measure_rest_candidate_steps": 0,
+    "comparison": "direct actual original narrow getters before/after real SlotMapper; distinct from native final image MusicXML"
+  },
+  "integration": "owned measure-local narrow IDs share nullable clocks across compound views; current known chord times/selected active end set clocks before real mapping; extinction no longer reconstructs first narrow time from chord/event clock",
+  "targeted_unique_passed": 6,
+  "runs": {
+    "retained_mapping_original_kernel": 1,
+    "retained_lifetime_original_controls": 1,
+    "two_system_and_same_glyph_image_MusicXML": 2,
+    "measure_rest_empty_candidate_image": 1,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "new_Rust_test_functions": 0,
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "current one incoming/one Voice/implicitTuplets=false scope unchanged; general multi-time analyzeTimes/retry/new Voice/Merged/shared stacks pending",
+    "narrow mutable clock identity retained by stable current-measure IDs; candidate chord-slot reference/setter identity and general full Rational/tuplets remain partial",
+    "normal successful images have no extinct Voice; positive gap/Next exception remains seven declared original method controls from preceding unit",
+    "all-rest original XSD rejection is negative boundary, not successful parity",
+    "lyrics/automatic slur-tie/correction/full cleaner-epilog and nonUI full parity incomplete"
+  ],
+  "all_global_completion_flags": false
+}
