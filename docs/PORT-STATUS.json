@@ -298,6 +298,12 @@
       "unit": "nonimplicit inferSlotTimes/checkSlotTime/analyzeTimes: retain earliest inferred narrow time, blacklist later mapped choices and retry before Voice/time apply",
       "limits": "two declared original actual-object multi-Voice controls separate from 36-event one-incoming/one-Voice image regression; unknown active clocks/abnormal propagation, new Voice/time inference, full Rational/implicit tuplets and shared stacks remain pending",
       "evidence": "evidence/musicxml-mapping-time-analysis/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "createNewVoices known-chord-time branch: ordinary HIGH Voice ID allocation and live SIG ownership, without reassigning already-voiced chords",
+      "limits": "two original actual-object controls compared to an image-derived owned Graph; automatic polyphonic image/export not claimed; EQUAL/closest sibling time inference, previous-slot merge, other Voice kinds and general new-Voice export remain pending",
+      "evidence": "evidence/musicxml-new-voice-known-time/VALIDATION.json"
     }
   ],
   "function_groups": [

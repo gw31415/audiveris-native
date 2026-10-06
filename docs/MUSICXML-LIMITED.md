@@ -1556,3 +1556,20 @@ remain the usable scope; their MusicXML must remain unchanged. Implicit tuplets,
 unknown-clock abnormal propagation, general new Voices and shared stacks are
 still partial. All global completion flags remain false; full595 is the historical
 `95e191b` result, not a rerun of this source.
+
+### New Voice for an unmapped chord with a known time (2026-10-06)
+
+The live mapper now follows `SlotMapper.createNewVoices` for an unassigned chord
+whose own time is known: `Voice`/`Measure.generateVoiceId` selects the first unused
+HIGH ID, and the same retained constructor/`setVoice` path owns the actual chord
+in SIG. Already-voiced candidates create no additional Voice. The known chord
+time is preserved. Positive native ownership is checked on the image-derived
+Graph against two declared original-object controls, not only a serialized
+proposal. No new recognition input or polyphonic MusicXML success is claimed.
+
+Existing CLI commands and all three 36-event examples remain unchanged. The
+current single-Voice writer explicitly refuses a new Voice rather than overwriting
+its owner with the initial Voice ID. EQUAL/closest-sibling time inference,
+previous-slot merge, general Voice export, other Voice kinds, tuplets/shared stacks
+and complete correction/cleaner remain dependencies. All global flags stay false;
+full595 still refers to the historical `95e191b` run.

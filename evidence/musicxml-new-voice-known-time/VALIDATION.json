@@ -1,0 +1,36 @@
+{
+  "base_source": "83fd873ccc9cb612ef39c8c98c04767fd5ea0f3b",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "createNewVoices already-known chord-time branch with ordinary HIGH Voice allocation and actual SIG assignment",
+  "original_comparison": {
+    "declared_original_actual_object_controls": 2,
+    "native_control_owner": "same image -> retained Graph, reset rhythm before declared known-time controls",
+    "matching": "Voice IDs/kind/starting staff, actual owned chord members, rookie Voice/time and unchanged normal measure state",
+    "cases": "unmapped known-time rookie creates Voice2; already-voiced rookie creates no Voice",
+    "limits": "method controls separate from automatic image polyphony; current writer refuses a new owner"
+  },
+  "integration": "shared original Voice constructor for initial/new ordinary ownership; live mapper applies valid pairs then creates still-unassigned known-time Voices; actual seed bound to retained SIG, no selected-input API",
+  "targeted_unique_passed": 8,
+  "runs": {
+    "mapping_and_new_voice_original_controls": 3,
+    "original_beam_group_ownership_and_propagation": 1,
+    "two_system_and_same_glyph_image_MusicXML": 2,
+    "measure_rest_image": 1,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "unknown own time requires original EQUAL/closest siblings and previous-slot merge",
+    "other Voice kinds/Merged/shared stacks and general polyphonic MusicXML export pending",
+    "unknown active-clock abnormal propagation/full Rational/implicit tuplets pending",
+    "no new image/font/skew/scan admission; all-rest original XSD rejection remains negative",
+    "full nonUI parity/lyrics/slur-tie/correction/complete cleaner-epilog incomplete"
+  ],
+  "all_global_completion_flags": false
+}

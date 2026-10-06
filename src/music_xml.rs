@@ -561,13 +561,14 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
         let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds)?;
         preliminary_slots[mi]["candidate_time_steps"] = json!([]);
-        for chord in chords {
+        for &chord in &chords {
             if let Some(slot) = compounds.iter().find(|s| s.chord_ids.contains(&chord.id)) {
                 let before = slot_times.projection(slot)?;
                 let mut step = crate::music_rookie_mapping::Context {
                     graph: &mut graph,
                     voices: &mut m.voices,
                     measures: &m.measures,
+                    chords: &chords,
                     measure_index: mi,
                     compounds: &compounds,
                     expected: expected_ticks,
@@ -835,6 +836,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .find(|n| n["id"] == chord.id)
                 .ok_or("musicxml_actual_SIG_chord_required")?
                 .clone();
+            // A newly retained Voice must not be overwritten by the current
+            // single-Voice writer; general Voice export is a later dependency.
+            if c["voice"] != voice_id {
+                return Err("musicxml_general_new_voice_export_pending".into());
+            }
             c["duration"] = if measure_rest {
                 Value::Null
             } else {

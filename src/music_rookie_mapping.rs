@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original separated VoiceDistance, ChordsMapper and small InjectionSolver.
 //! Owned image adapter currently admits one incoming/one Voice and no implicit
-//! tuplets. Implicit-tuplet analysis, new-Voice inference
+//! tuplets. Implicit-tuplet analysis, unknown-time new-Voice inference
 //! and Merged remain pending.
 use crate::{
     music_measure_slots::CompoundSlot, music_measures::Measure, music_voices::Voice,
@@ -315,6 +315,7 @@ pub(crate) struct Context<'a> {
     pub graph: &'a mut Graph,
     pub voices: &'a mut Vec<Voice>,
     pub measures: &'a [Measure],
+    pub chords: &'a [&'a crate::music_measures::Chord],
     pub measure_index: usize,
     pub compounds: &'a [CompoundSlot],
     pub expected: u32,
@@ -541,9 +542,6 @@ impl Context<'_> {
         let mut result = Value::Null;
         let mut validation = Value::Null;
         if !rookies.is_empty() {
-            if actives.is_empty() {
-                return Err("music_mapping_new_voice_time_inference_pending".into());
-            }
             let active_ends = actives
                 .iter()
                 .map(|&id| {
@@ -596,40 +594,66 @@ impl Context<'_> {
                 expected: Some(self.expected),
             })?;
             validation = json!({"black":validated.black,"applied":validated.applied});
-            let map = validated
-                .mapping
-                .ok_or("music_mapping_new_voice_time_inference_pending")?;
-            if !validated.applied || map.pairs.len() != rookies.len() {
-                return Err("music_mapping_new_voice_time_inference_pending".into());
-            }
             for narrow in validated.narrow {
                 self.slot_times.set(narrow.id, narrow.time_offset)?;
             }
-            for pair in &map.pairs {
-                let end = active_ends[&pair.active].ok_or("music_mapping_active_time_required")?;
-                let own = self
-                    .voices
-                    .iter()
-                    .position(|v| {
-                        v.measure == self.measure_index && v.chord_ids.contains(&pair.active)
-                    })
-                    .ok_or("music_mapping_active_voice_required")?;
-                crate::music_voices::assign_chord_voice(
-                    self.graph,
-                    self.voices,
-                    self.measures,
-                    pair.rookie,
-                    own,
-                )?;
-                crate::music_chord_time::set_and_push(
-                    self.graph,
-                    self.voices,
-                    self.measures,
-                    pair.rookie,
-                    Some(end),
-                )?;
+            if let Some(map) = validated.mapping {
+                if validated.applied {
+                    for pair in &map.pairs {
+                        let end = active_ends[&pair.active]
+                            .ok_or("music_mapping_active_time_required")?;
+                        let own = self
+                            .voices
+                            .iter()
+                            .position(|v| {
+                                v.measure == self.measure_index
+                                    && v.chord_ids.contains(&pair.active)
+                            })
+                            .ok_or("music_mapping_active_voice_required")?;
+                        crate::music_voices::assign_chord_voice(
+                            self.graph,
+                            self.voices,
+                            self.measures,
+                            pair.rookie,
+                            own,
+                        )?;
+                        crate::music_chord_time::set_and_push(
+                            self.graph,
+                            self.voices,
+                            self.measures,
+                            pair.rookie,
+                            Some(end),
+                        )?;
+                    }
+                }
+                result = serde_json::to_value(map).unwrap();
             }
-            result = serde_json::to_value(map).unwrap();
+            let mut created = Vec::new();
+            for &id in &rookies {
+                let current = self.graph.snapshot();
+                let n = node(&current, id)?;
+                if !n["voice"].is_null() {
+                    continue;
+                }
+                if time(n)?.is_none() {
+                    return Err("music_mapping_new_voice_time_inference_pending".into());
+                }
+                let chord = self
+                    .chords
+                    .iter()
+                    .find(|c| c.id == id)
+                    .ok_or("music_mapping_owned_new_voice_chord_required")?;
+                crate::music_voices::create_known_voice(
+                    self.graph,
+                    self.voices,
+                    self.measures,
+                    chord,
+                )?;
+                created.push(id);
+            }
+            if !created.is_empty() {
+                validation["new_voice_chord_ids"] = json!(created);
+            }
         }
         let final_snapshot = self.graph.snapshot();
         let after = slot
@@ -731,6 +755,144 @@ mod tests {
             let narrow=result.narrow.iter().map(|n|json!({"id":n.id,"time_offset":n.time_offset.map(crate::music_time::format_ticks)})).collect::<Vec<_>>();
             assert_eq!(
                 json!({"mapping":result.mapping,"black":result.black,"remaining_rookies":remaining,"narrow":narrow}),
+                case["output"],
+                "{}",
+                case["name"]
+            );
+        }
+    }
+    #[test]
+    fn unmapped_known_chord_gets_an_owned_voice_without_reassigning_existing_members() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-new-voice-known-time/observed.json"
+        ))
+        .unwrap();
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-cross-system/beam-two-systems.png"
+        ))
+        .unwrap();
+        let mut export = crate::music_xml::recognize(&image).unwrap();
+        let owner = &mut export.owner;
+        let mi = 1;
+        for case in oracle["controls"].as_array().unwrap() {
+            for i in 0..owner.measures.len() {
+                crate::music_voices::reset_rhythm(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &mut owner.measures[i],
+                    &owner.chords,
+                    i,
+                )
+                .unwrap();
+            }
+            let mut chords = owner
+                .chords
+                .iter()
+                .filter(|c| c.measure == mi)
+                .collect::<Vec<_>>();
+            chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+            assert_eq!(
+                json!(chords.iter().map(|c| c.bounds).collect::<Vec<_>>()),
+                case["chord_bounds"]
+            );
+            let (narrow, wide) = crate::music_measure_slots::from_owned(
+                &owner.owner.graph,
+                &owner.measures[mi],
+                &chords,
+                owner.owner.interline,
+            )
+            .unwrap();
+            let centers = chords
+                .iter()
+                .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
+                .collect();
+            let compounds =
+                crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)
+                    .unwrap();
+            let seed =
+                crate::music_voices::single(mi, &owner.measures[mi], &[chords[0]], &owner.voices)
+                    .unwrap();
+            let own = owner.voices.len();
+            owner.voices.push(seed);
+            crate::music_voices::assign_chord_voice(
+                &mut owner.owner.graph,
+                &mut owner.voices,
+                &owner.measures,
+                chords[0].id,
+                own,
+            )
+            .unwrap();
+            crate::music_chord_time::set_and_push(
+                &mut owner.owner.graph,
+                &owner.voices,
+                &owner.measures,
+                chords[0].id,
+                Some(12),
+            )
+            .unwrap();
+            crate::music_chord_time::set_and_push(
+                &mut owner.owner.graph,
+                &owner.voices,
+                &owner.measures,
+                chords[2].id,
+                Some(4),
+            )
+            .unwrap();
+            if case["name"] == "already-voiced" {
+                crate::music_voices::assign_chord_voice(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &owner.measures,
+                    chords[2].id,
+                    own,
+                )
+                .unwrap();
+            }
+            let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
+            let snapshot = owner.owner.graph.snapshot();
+            let clef = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == "ClefInter" && n["origin"]["system"] == 1)
+                .unwrap();
+            let lifetime = crate::music_voice_lifetime::Lifetime::default();
+            let step = Context {
+                graph: &mut owner.owner.graph,
+                voices: &mut owner.voices,
+                measures: &owner.measures,
+                chords: &chords,
+                measure_index: mi,
+                compounds: &compounds,
+                expected: 16,
+                clef,
+                interline: owner.owner.interline,
+                lifetime: &lifetime,
+                slot_times: &mut slot_times,
+            }
+            .map_slot(&compounds[2])
+            .unwrap();
+            let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
+            for key in ["rookies", "actives"] {
+                assert_eq!(
+                    json!(
+                        step[key]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|id| ordinal(id.as_u64().unwrap() as usize))
+                            .collect::<Vec<_>>()
+                    ),
+                    case["input"][key]
+                );
+            }
+            let current = owner.owner.graph.snapshot();
+            let rookie = node(&current, chords[2].id).unwrap();
+            let voices = owner.voices.iter().filter(|v|v.measure==mi).map(|v|
+                json!({"id":v.id,"kind":"HIGH","starting_staff":v.starting_staff,"chord_ids":v.chord_ids.iter().map(|&id|ordinal(id)).collect::<Vec<_>>()})
+            ).collect::<Vec<_>>();
+            assert_eq!(
+                json!({"voices":voices,"rookie_voice":rookie["voice"],"rookie_time":rookie["time_offset"],"abnormal":owner.measures[mi].timing.abnormal}),
                 case["output"],
                 "{}",
                 case["name"]

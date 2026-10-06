@@ -54,7 +54,18 @@ pub(crate) fn single(
     chords: &[&Chord],
     existing: &[Voice],
 ) -> Result<Voice, String> {
-    if chords.is_empty() || existing.iter().any(|v| v.measure == measure_index) {
+    if existing.iter().any(|v| v.measure == measure_index) {
+        return Err("music_voice_first_assignment_required".into());
+    }
+    construct(measure_index, measure, chords, existing)
+}
+fn construct(
+    measure_index: usize,
+    measure: &Measure,
+    chords: &[&Chord],
+    existing: &[Voice],
+) -> Result<Voice, String> {
+    if chords.is_empty() {
         return Err("music_voice_first_assignment_required".into());
     }
     let mut members = Vec::new();
@@ -106,6 +117,33 @@ pub(crate) fn single(
         measure_rest_chord,
     })
 }
+pub(crate) fn create_known_voice(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measures: &[Measure],
+    seed: &Chord,
+) -> Result<usize, String> {
+    let snapshot = graph.snapshot();
+    let node = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == seed.id)
+        .ok_or("music_voice_live_seed_required")?;
+    if !node["voice"].is_null() || node["time_offset"].as_str().is_none() {
+        return Err("music_voice_unassigned_known_time_seed_required".into());
+    }
+    let voice = construct(seed.measure, &measures[seed.measure], &[seed], voices)?;
+    let index = voices.len();
+    let mut retained = voices.clone();
+    let mut staged = graph.clone();
+    retained.push(voice);
+    assign_chord_voice(&mut staged, &mut retained, measures, seed.id, index)?;
+    *graph = staged;
+    *voices = retained;
+    Ok(index)
+}
+
 /// Measure.removeVoiceChord -> Voice.removeChord. Remove an empty Voice only
 /// when this removal actually removed its chord, matching the original loop.
 pub(crate) fn remove_chords(voices: &mut Vec<Voice>, removed: &[usize]) {
