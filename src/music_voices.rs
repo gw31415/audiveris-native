@@ -338,10 +338,92 @@ fn chord_group(snapshot: &Value, id: usize) -> Result<Option<usize>, String> {
     }))
 }
 
+/// AbstractChord.getFollowingTiedChords follows typed SlurHead relations,
+/// already-classified tie state, LEFT/RIGHT heads and the actual right head's
+/// first ensemble; it does not classify slur geometry or export ties.
+fn following_tied_chords(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
+    let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+        .collect();
+    let chord = nodes.get(&id).ok_or("music_voice_live_chord_required")?;
+    let edges = snapshot["relations"].as_array().unwrap();
+    let mut members = edges
+        .iter()
+        .filter(|e| e["kind"] == "Containment" && e["source"] == id)
+        .map(|e| e["target"].as_u64().unwrap() as usize)
+        .collect::<Vec<_>>();
+    members.sort_by_key(|id| {
+        std::cmp::Reverse(
+            nodes[id]["bounds"][1].as_i64().unwrap() + nodes[id]["bounds"][3].as_i64().unwrap() / 2,
+        )
+    });
+    let mut following = Vec::new();
+    for note in members {
+        for relation in edges
+            .iter()
+            .filter(|e| e["kind"] == "SlurHeadRelation" && e["target"] == note)
+        {
+            if nodes[&note]["kind"] != "HeadInter" {
+                return Err("music_voice_typed_slur_head_required".into());
+            }
+            let slur_id = relation["source"].as_u64().unwrap() as usize;
+            let slur = nodes
+                .get(&slur_id)
+                .ok_or("music_voice_live_slur_required")?;
+            if slur["kind"] != "SlurInter" || slur["origin"]["system"] != chord["origin"]["system"]
+            {
+                return Err("music_voice_typed_owned_slur_required".into());
+            }
+            let head = |side: &str| {
+                edges
+                    .iter()
+                    .find(|e| {
+                        e["kind"] == "SlurHeadRelation"
+                            && e["source"] == slur_id
+                            && e["side"] == side
+                    })
+                    .map(|e| e["target"].as_u64().unwrap() as usize)
+            };
+            let left = head("LEFT");
+            let right = head("RIGHT");
+            if slur["is_tie"] != true || left != Some(note) {
+                continue;
+            }
+            let Some(right) = right else {
+                continue;
+            };
+            let right_note = nodes
+                .get(&right)
+                .ok_or("music_voice_live_slur_head_required")?;
+            if right_note["kind"] != "HeadInter"
+                || right_note["origin"]["system"] != chord["origin"]["system"]
+            {
+                return Err("music_voice_typed_slur_head_required".into());
+            }
+            let parent = edges
+                .iter()
+                .find(|e| e["kind"] == "Containment" && e["target"] == right)
+                .ok_or("music_voice_tied_head_ensemble_required")?;
+            let other = parent["source"].as_u64().unwrap() as usize;
+            if nodes[&other]["kind"] != "HeadChordInter" {
+                return Err("music_voice_ordinary_tied_chord_required".into());
+            }
+            following.push(other);
+        }
+    }
+    // Original retains multiple tied head references, then stably orders by
+    // left abscissa. Chord.setVoice's actual identity guard terminates repeats.
+    following.sort_by_key(|id| nodes[id]["bounds"][0].as_i64().unwrap());
+    Ok(following)
+}
+
 /// AbstractChord.setVoice -> Voice.addChord -> BeamGroup.setVoice for the
-/// currently admitted ordinary, untied chord family. Identity is the retained
-/// Voice and its Measure, not a repeating numeric label. Unsupported tied or
-/// special chord ownership keeps an explicit guard rather than dropping it.
+/// ordinary chord family, including already-classified following ties.
+/// Identity is the retained Voice and its Measure, not a repeating numeric
+/// label. Special chord ownership keeps its explicit pending guard.
 pub(crate) fn assign_chord_voice(
     graph: &mut crate::shared_sig::Graph,
     voices: &mut Vec<Voice>,
@@ -412,14 +494,6 @@ pub(crate) fn assign_chord_voice(
         {
             return Err("music_voice_measure_rest_special_chord_pending".into());
         }
-        if snapshot["relations"].as_array().unwrap().iter().any(|e| {
-            e["kind"] == "SlurHeadRelation"
-                && members
-                    .iter()
-                    .any(|id| e["source"] == *id || e["target"] == *id)
-        }) {
-            return Err("music_voice_following_tied_chords_pending".into());
-        }
         chord["voice"] = json!(voice.id);
         staged.vertex(key, chord, false)?;
         let owned = &mut retained[voice_index];
@@ -429,6 +503,13 @@ pub(crate) fn assign_chord_voice(
                 nodes[id]["bounds"][0].as_i64().unwrap()
                     + nodes[id]["bounds"][2].as_i64().unwrap() / 2
             });
+        }
+        // Stack the following ties first so the original group recursion is
+        // visited before them. Both propagate only within this exact Measure.
+        for other in following_tied_chords(&snapshot, id)?.into_iter().rev() {
+            if belongs(nodes[&other]) {
+                pending.push(other);
+            }
         }
         let selected = chord_group(&snapshot, id)?;
         if let Some(group_id) = selected {
@@ -791,6 +872,90 @@ mod group_tests {
                     .find(|n| n["id"] == rest_id)
                     .unwrap()["voice"],
                 control["rest_voice"]
+            );
+        }
+        let ties: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-voice-tie-dependency/controls.json"
+        ))
+        .unwrap();
+        for control in ties["controls"].as_array().unwrap() {
+            let mut graph = original_graph.clone();
+            let mut voices = original_voices.clone();
+            let find_chord = |bounds: &Value| {
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == *bounds)
+                    .unwrap()
+                    .clone()
+            };
+            let mut seed = find_chord(&control["seed_bounds"]);
+            let mut target = find_chord(&control["target_bounds"]);
+            let seed_id = seed["id"].as_u64().unwrap() as usize;
+            let target_id = target["id"].as_u64().unwrap() as usize;
+            let owned_voice = voices
+                .iter()
+                .position(|v| v.chord_ids.contains(&seed_id))
+                .unwrap();
+            let note_key = |id: usize| {
+                let note = snapshot["relations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|e| e["kind"] == "Containment" && e["source"] == id)
+                    .unwrap()["target"]
+                    .clone();
+                serde_json::from_value::<Key>(
+                    snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == note)
+                        .unwrap()["origin"]
+                        .clone(),
+                )
+                .unwrap()
+            };
+            let slur = Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: rest.local + 1,
+            };
+            graph.vertex(slur,json!({"kind":"SlurInter","shape":"SLUR_ABOVE","grade":0.8,"is_tie":control["is_tie"]}),false).unwrap();
+            let reverse = control["mode"] == "source-on-right";
+            graph.relations(1,Phase::Symbol,vec![
+                (slur,note_key(seed_id),json!({"kind":"SlurHeadRelation","side":if reverse{"RIGHT"}else{"LEFT"}})),
+                (slur,note_key(target_id),json!({"kind":"SlurHeadRelation","side":if reverse{"LEFT"}else{"RIGHT"}}))
+            ]).unwrap();
+            let found = following_tied_chords(&graph.snapshot(), seed_id).unwrap();
+            let rows = json!(found.iter().map(|id|{
+                let n=snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==*id).unwrap();
+                json!({"kind":n["kind"],"bounds":n["bounds"],"measure_number":n["measure_number"]})
+            }).collect::<Vec<_>>());
+            assert_eq!(rows, control["following"]);
+            let seed_key: Key = serde_json::from_value(seed["origin"].clone()).unwrap();
+            let target_key: Key = serde_json::from_value(target["origin"].clone()).unwrap();
+            seed["voice"] = Value::Null;
+            target["voice"] = Value::Null;
+            graph.vertex(seed_key, seed, false).unwrap();
+            graph.vertex(target_key, target, false).unwrap();
+            assign_chord_voice(
+                &mut graph,
+                &mut voices,
+                &owner.measures,
+                seed_id,
+                owned_voice,
+            )
+            .unwrap();
+            assert_eq!(
+                graph.snapshot()["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == target_id)
+                    .unwrap()["voice"],
+                control["target_voice"]
             );
         }
         for (key, stem, state) in before_cache {

@@ -698,3 +698,31 @@ image admission guards remain. All global completion flags remain false.
 [Validation](../evidence/musicxml-chord-beam-order/VALIDATION.json).
 Latest full595 remains earlier source95e191b; current targeted results are
 recorded separately.
+
+### Following classified tied chords and Voice ownership
+
+Original `AbstractChordInter.getFollowingTiedChords` now follows retained
+SlurHeadRelation LEFT/RIGHT heads, the SlurInter's already-classified `is_tie`,
+and the right head's actual first chord ensemble. It stably sorts by left
+abscissa without silently deduplicating shared head references. Ordinary Voice
+assignment visits beam-group recursion before following ties and propagates
+only within the same actual Measure; identity equality terminates repeats.
+This path is connected to the image CLI's existing Voice assignment.
+
+Four declared original classified-relation controls compare same/other measure,
+non-tie and source-on-right behavior. They are not automatic curve recognition,
+`SlurInter.checkStaffTie`, full tie rhythm or MusicXML tie export. Current
+successful image commands remain valid; image admission has not been expanded.
+Special SmallChord/measure-rest, general slots/voices and lyrics remain pending.
+
+The next true epilog dependency is pinned `LinksStep.doEpilog` ->
+`SlurInter.checkStaffTie`: actual SlurHead links, same Staff, step/octave and
+measure-accidental compatibility, measure-span bounds, head-core/tail lookup box,
+mirrors and competing chord/beam-group invasion checks. This needs real CURVES
+and full musical head/accidental context. `Part.purgeContainers` separately
+removes deleted real LyricLine containers; it needs TEXTS/lyrics/Part ownership.
+Neither is replaced by generic deletion or treated as complete here.
+
+[Validation](../evidence/musicxml-voice-tie-dependency/VALIDATION.json).
+Latest full595 is earlier source95e191b; this unit has targeted regressions.
+All global completion flags remain false.
