@@ -883,3 +883,10 @@ Live member order supplies both `events[].chord` and MusicXML indications;
 no Voice/timing is rewritten by that binder. Original saved group/shortening
 getters are distinct from full-image export.
 [Validation](../evidence/musicxml-chord-beam/VALIDATION.json).
+
+FLAG2 continuation connects original flag values, graded multi-source ordinary
+Stem direction and FlagStem registration to exact sixteenth durations. One
+original full-image15-note comparison is distinct from a read-only actual SIG
+lookup/direction control. Higher values, small/percussion/mixed head branches
+and general nonUI parity remain partial.
+[Validation](../evidence/musicxml-chord-flag2/VALIDATION.json).

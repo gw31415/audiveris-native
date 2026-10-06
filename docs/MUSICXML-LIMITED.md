@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest image increment: [multi-head eighth beams](#multi-head-eighth-beams-2026-10-06); earlier [same-stem multi-head chords](#same-stem-multi-head-chords-2026-10-06); earlier [parallel half-note Voice](#parallel-half-note-voice-from-an-actual-image-2026-10-06); earlier [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [two-flag sixteenth chords](#two-flag-sixteenth-chords-2026-10-06); earlier [multi-head eighth beams](#multi-head-eighth-beams-2026-10-06); earlier [same-stem multi-head chords](#same-stem-multi-head-chords-2026-10-06); earlier [parallel half-note Voice](#parallel-half-note-voice-from-an-actual-image-2026-10-06); earlier [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -1993,3 +1993,26 @@ are image-verified. Mixed mirrored void/black heads, shared/stemless/special
 heads, other chord-flag configurations, shared stacks and nonbinary tuplets
 still need their original dependencies and input comparisons. Global flags
 remain false; prior successful CLI inputs stay supported.
+
+## Two-flag sixteenth chords (2026-10-06)
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-chord-members/chord-flag2.png \
+  /tmp/chord-flag2.musicxml /tmp/chord-flag2.json
+```
+
+Four two-head FLAG2 chords, three quarter notes and four next-measure quarters
+produce15 native events. The flags are real classified glyphs with actual
+FlagStem ownership and value2, not two guessed flag relations. Original
+`HeadChordInter.getFlagsNumber` sums those values; each chord lasts1/16 and
+advances once. `<chord/>` marks the second head; divisions4 expresses exact
+durations. Original full-image pitch/type/Voice/onset/duration/stem/chord
+stream and native XML/XSD match. A separately read original owned SIG control
+checks multi-head Stem direction, first-valid flag lookup, grade and endpoint.
+
+FLAG1 success and erased-flag refusal remain tested. The positive image check
+here uses upward FLAG2; other multi-head flag combinations/positive downward
+FLAG2 images, higher flags, mixed flag+beam and mixed mirror/special members
+remain unverified or guarded. Other original nonUI features stay in the ledger.
+Global completion flags remain false.

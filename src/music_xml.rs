@@ -164,11 +164,17 @@ fn resolve_durations(
                         || (!flags.is_empty() && !beams.is_empty())
                         || flags.len() > 1
                         || beams.len() > 2
-                        || flags.first().is_some_and(|f| f["value"] != 1)
+                        || flags
+                            .first()
+                            .is_some_and(|f| !matches!(f["value"].as_u64(), Some(1 | 2)))
                     {
                         return Err("musicxml_flagged_void_rest_or_multiple_flags_pending".into());
                     }
-                    count = flags.len() + beams.len();
+                    count = flags
+                        .iter()
+                        .map(|f| f["value"].as_u64().unwrap() as usize)
+                        .sum::<usize>()
+                        + beams.len();
                     duration /= 1 << count;
                     note_type = if count == 1 { "eighth" } else { "16th" };
                 }
@@ -295,7 +301,13 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                 s if music_symbols::time(s).is_some()
                     || matches!(
                         s,
-                        "QUARTER_REST" | "HALF_REST" | "WHOLE_REST" | "FLAG_1" | "FLAG_1_DOWN"
+                        "QUARTER_REST"
+                            | "HALF_REST"
+                            | "WHOLE_REST"
+                            | "FLAG_1"
+                            | "FLAG_1_DOWN"
+                            | "FLAG_2"
+                            | "FLAG_2_DOWN"
                     ) =>
                 {
                     if t["created_inter_ids"]
@@ -304,7 +316,7 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                     {
                         return Err("musicxml_registered_symbol_identity_required".into());
                     }
-                    if matches!(s, "FLAG_1" | "FLAG_1_DOWN") {
+                    if crate::music_flags::value(s).is_some() {
                         let snapshot = m.owner.graph.snapshot();
                         let ids = t["created_inter_ids"].as_array().unwrap();
                         if !snapshot["inters"].as_array().unwrap().iter().any(|n| {

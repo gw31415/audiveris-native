@@ -22,6 +22,12 @@ fn chord_members_share_owned_voice_time_and_export_bottom_up_without_double_adva
             "beam-original-state.json",
             Some("beam-original-groups.json"),
         ),
+        (
+            "chord-flag2.png",
+            "flag2-observed.json",
+            "flag2-original-state.json",
+            None,
+        ),
     ] {
         let reference: Value =
             serde_json::from_slice(&fs::read(fixture.join(observed)).unwrap()).unwrap();
@@ -149,6 +155,34 @@ fn chord_members_share_owned_voice_time_and_export_bottom_up_without_double_adva
             assert_eq!(report[flag], false);
         }
         assert_eq!(report["original_XML_output_reused"], false);
+        if input == "chord-flag2.png" {
+            let shortening: Value = serde_json::from_slice(
+                &fs::read(fixture.join("flag2-original-shortening.json")).unwrap(),
+            )
+            .unwrap();
+            for c in shortening["chords"].as_array().unwrap() {
+                let chord = live
+                    .iter()
+                    .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == c["bounds"])
+                    .unwrap();
+                let event = events
+                    .iter()
+                    .find(|e| e["chord_id"] == chord["id"])
+                    .unwrap();
+                assert_eq!(chord["duration"], c["intrinsic"]);
+                let count = event["flag_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|id| node(id)["value"].as_u64().unwrap())
+                    .sum::<u64>();
+                assert_eq!(serde_json::json!(count), c["flags"]);
+                assert_eq!(
+                    serde_json::json!(event["beam_ids"].as_array().unwrap().len()),
+                    c["beams"]
+                );
+            }
+        }
         if let Some(original_groups) = original_groups {
             let reference: Value =
                 serde_json::from_slice(&fs::read(fixture.join(original_groups)).unwrap()).unwrap();

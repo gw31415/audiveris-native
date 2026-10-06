@@ -1,11 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! AbstractFlagInter.lookupLink/createValidAdded, ordinary single flags only.
+//! AbstractFlagInter.lookupLink/createValidAdded, ordinary one/two flags.
 //! Actual symbol glyphs and retained stem/head relations; no selected input IDs.
-use crate::{
-    head_stem_relation::{StemPortion, stem_portion},
-    shared_sig::{Graph, Key},
-};
+use crate::shared_sig::{Graph, Key};
 use serde_json::{Value, json};
+pub(crate) fn value(shape: &str) -> Option<usize> {
+    match shape {
+        "FLAG_1" | "FLAG_1_DOWN" => Some(1),
+        "FLAG_2" | "FLAG_2_DOWN" => Some(2),
+        _ => None,
+    }
+}
 fn rect(v: &Value) -> Result<[i64; 4], String> {
     serde_json::from_value(v.clone()).map_err(|_| "flag_native_bounds_required".into())
 }
@@ -51,8 +55,8 @@ pub(crate) fn lookup(
     snapshot: &Value,
 ) -> Result<Option<(Key, Value)>, String> {
     let up = match shape {
-        "FLAG_1" => true,
-        "FLAG_1_DOWN" => false,
+        "FLAG_1" | "FLAG_2" => true,
+        "FLAG_1_DOWN" | "FLAG_2_DOWN" => false,
         _ => return Err("flag_shape_outside_single_ordinary_scope".into()),
     };
     if b[2] <= 0 || b[3] <= 0 || il == 0 || max_stem == 0 {
@@ -83,9 +87,6 @@ pub(crate) fn lookup(
     let nodes = snapshot["inters"]
         .as_array()
         .ok_or("flag_owned_SIG_required")?;
-    let edges = snapshot["relations"]
-        .as_array()
-        .ok_or("flag_owned_relations_required")?;
     let mut stems = nodes
         .iter()
         .filter(|n| n["kind"] == "StemInter" && n["origin"]["system"] == system)
@@ -107,43 +108,9 @@ pub(crate) fn lookup(
         if (up && check_y >= midpoint) || (!up && check_y <= midpoint) {
             continue;
         }
-        // StemInter.computeDirection: in this admitted subset, a single actual
-        // HeadStem source decides polarity after extending the stem by its endpoint.
-        let hs = edges
-            .iter()
-            .filter(|e| e["kind"] == "HeadStemRelation" && e["target"] == stem["id"])
-            .collect::<Vec<_>>();
-        if hs.len() != 1 {
-            return Err("flag_multisource_stem_direction_pending".into());
-        }
-        let h = nodes
-            .iter()
-            .find(|n| n["id"] == hs[0]["source"])
-            .ok_or("flag_stem_head_required")?;
-        let point: [f64; 2] = serde_json::from_value(hs[0]["extension_point"].clone())
-            .map_err(|_| "flag_head_extension_required")?;
-        let mut ext = l;
-        if point[1] < ext[1] {
-            ext[0] = point[0];
-            ext[1] = point[1]
-        }
-        if point[1] > ext[3] {
-            ext[2] = point[0];
-            ext[3] = point[1]
-        }
-        let portion = stem_portion(
-            serde_json::from_value(h["bounds"].clone())
-                .map_err(|_| "flag_head_bounds_outside_i32")?,
-            ext,
-            point[1],
-        )?;
-        let direction = if portion == StemPortion::StemBottom && hs[0]["head_side"] == "RIGHT" {
-            -1
-        } else if portion == StemPortion::StemTop && hs[0]["head_side"] == "LEFT" {
-            1
-        } else {
-            0
-        };
+        let mut context = snapshot.clone();
+        context["interline"] = json!(il);
+        let direction = crate::stem_head_foundation_plan::direction(&context, stem);
         if (up && direction == 1) || (!up && direction == -1) {
             continue;
         }
@@ -194,7 +161,7 @@ pub(crate) fn contextualize(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stem_flags()?;
     Ok(
-        json!({"flags":flags.len(),"removed":removed,"scope":"single ordinary flags, actual HeadStem/FlagStem support/context and weak purge; full supported symbol conflict reduction pending"}),
+        json!({"flags":flags.len(),"removed":removed,"scope":"ordinary one/two flags, actual HeadStem/FlagStem support/context and weak purge; full supported symbol conflict reduction pending"}),
     )
 }
 
@@ -258,5 +225,34 @@ mod tests {
         );
         assert!(relation_grade(f64::NAN, 0.).is_err());
         assert!(relation_grade(0., -1.).is_err());
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-chord-members/flag2-original-control.json"
+        ))
+        .unwrap();
+        let c = &original["control"];
+        let mut snapshot = original["snapshot"].clone();
+        snapshot["interline"] = original["interline"].clone();
+        let nodes = snapshot["inters"].as_array().unwrap();
+        let stem = nodes.iter().find(|n| n["id"] == c["stem_id"]).unwrap();
+        assert_eq!(
+            json!(crate::stem_head_foundation_plan::direction(&snapshot, stem)),
+            c["stem_direction"]
+        );
+        assert_eq!(json!(value(c["shape"].as_str().unwrap())), c["value"]);
+        let (key, relation) = lookup(
+            c["shape"].as_str().unwrap(),
+            serde_json::from_value(c["bounds"].clone()).unwrap(),
+            original["interline"].as_u64().unwrap() as usize,
+            original["max_stem"].as_u64().unwrap() as usize,
+            original["system"].as_u64().unwrap(),
+            &snapshot,
+        )
+        .unwrap()
+        .unwrap();
+        assert_eq!(json!(key.local), c["stem_id"]);
+        for field in ["grade", "dx", "dy"] {
+            assert!((relation[field].as_f64().unwrap() - c[field].as_f64().unwrap()).abs() < 1e-12);
+        }
+        assert_eq!(relation["extension_point"], c["extension_point"]);
     }
 }

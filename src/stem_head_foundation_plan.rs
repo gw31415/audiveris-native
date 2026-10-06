@@ -169,6 +169,9 @@ pub(crate) struct Plan {
 fn extended(stem: &Value, links: &[Value]) -> [f64; 4] {
     let mut line: [f64; 4] = serde_json::from_value(stem["median"].clone()).unwrap();
     for e in links {
+        if e["extension_point"].is_null() {
+            continue;
+        }
         let p: [f64; 2] = serde_json::from_value(e["extension_point"].clone()).unwrap();
         if p[1] < line[1] {
             line[0] = p[0];
@@ -323,7 +326,7 @@ fn exclusion(g: &mut Value, a: u64, b: u64, events: &mut Vec<Event>) {
     let id = u64::MAX - edges.len() as u64;
     edges.push(json!({"id":id,"kind":"Exclusion","source":a,"target":b,"cause":"OVERLAP","planned_synthetic_id":true}));
 }
-fn direction(g: &Value, s: &Value) -> i32 {
+pub(crate) fn direction(g: &Value, s: &Value) -> i32 {
     let nodes = g["inters"].as_array().unwrap();
     let mut links = g["relations"]
         .as_array()
@@ -332,7 +335,12 @@ fn direction(g: &Value, s: &Value) -> i32 {
         .filter(|e| {
             matches!(
                 e["kind"].as_str(),
-                Some("HeadStemRelation" | "BeamStemRelation")
+                Some(
+                    "HeadStemRelation"
+                        | "BeamStemRelation"
+                        | "FlagStemRelation"
+                        | "TremoloStemRelation"
+                )
             ) && e["target"] == s["id"]
         })
         .cloned()
@@ -340,8 +348,10 @@ fn direction(g: &Value, s: &Value) -> i32 {
     let line = extended(s, &links);
     links.sort_by(|a, b| {
         let grade = |e: &Value| {
-            nodes.iter().find(|n| n["id"] == e["source"]).unwrap()["contextual_grade"]
+            let n = nodes.iter().find(|n| n["id"] == e["source"]).unwrap();
+            n["contextual_grade"]
                 .as_f64()
+                .or_else(|| n["grade"].as_f64())
                 .unwrap()
         };
         grade(b).total_cmp(&grade(a))
@@ -355,6 +365,25 @@ fn direction(g: &Value, s: &Value) -> i32 {
             } else {
                 1
             };
+        }
+        if e["kind"] == "FlagStemRelation" {
+            let f = nodes.iter().find(|n| n["id"] == e["source"]).unwrap();
+            let il = g["interline"].as_f64().unwrap();
+            let y = e["extension_point"][1].as_f64().unwrap();
+            if matches!(
+                f["shape"].as_str(),
+                Some("FLAG_1" | "FLAG_2" | "FLAG_3" | "FLAG_4" | "FLAG_5")
+            ) {
+                if y < line[1] + il {
+                    return -1;
+                }
+            } else if y > line[3] - il {
+                return 1;
+            }
+            continue;
+        }
+        if e["kind"] != "HeadStemRelation" {
+            continue;
         }
         let h = nodes.iter().find(|h| h["id"] == e["source"]).unwrap();
         let portion = stem_portion(

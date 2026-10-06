@@ -1,0 +1,411 @@
+{
+  "scope" : "read-only original saved multi-head flag owners; one actual flag lookup control, distinct from full image export",
+  "interline" : 11,
+  "max_stem" : 3,
+  "system" : 1,
+  "snapshot" : {
+    "inters" : [ {
+      "id" : 100,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 102,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 336, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 104,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 396, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 106,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 456, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 108,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 516, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 110,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 576, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 112,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 636, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 114,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 756, 215, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 120,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 876, 226, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 122,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 1116, 226, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 134,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 136,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 336, 237, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 138,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 396, 237, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 140,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 456, 237, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.898
+    }, {
+      "id" : 142,
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 996, 237, 13, 10 ],
+      "grade" : 0.506,
+      "contextual_grade" : 0.832
+    }, {
+      "id" : 338,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 528, 184, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 529.0, 184.0, 529.0, 217.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 338
+      }
+    }, {
+      "id" : 339,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 588, 184, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 589.0, 184.0, 589.0, 217.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 339
+      }
+    }, {
+      "id" : 340,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 648, 184, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 649.0, 184.0, 649.0, 217.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 340
+      }
+    }, {
+      "id" : 341,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 768, 184, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 769.0, 184.0, 769.0, 217.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 341
+      }
+    }, {
+      "id" : 342,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 888, 195, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 889.0, 195.0, 889.0, 228.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 342
+      }
+    }, {
+      "id" : 343,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 1128, 195, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 1129.0, 195.0, 1129.0, 228.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 343
+      }
+    }, {
+      "id" : 344,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 288, 173, 2, 66 ],
+      "grade" : 0.784,
+      "contextual_grade" : 0.979,
+      "median" : [ 289.0, 173.0, 289.0, 239.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 344
+      }
+    }, {
+      "id" : 345,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 348, 173, 2, 66 ],
+      "grade" : 0.784,
+      "contextual_grade" : 0.979,
+      "median" : [ 349.0, 173.0, 349.0, 239.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 345
+      }
+    }, {
+      "id" : 346,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 408, 173, 2, 66 ],
+      "grade" : 0.784,
+      "contextual_grade" : 0.979,
+      "median" : [ 409.0, 173.0, 409.0, 239.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 346
+      }
+    }, {
+      "id" : 347,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 468, 173, 2, 66 ],
+      "grade" : 0.784,
+      "contextual_grade" : 0.979,
+      "median" : [ 469.0, 173.0, 469.0, 239.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 347
+      }
+    }, {
+      "id" : 348,
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "bounds" : [ 1008, 206, 2, 33 ],
+      "grade" : 0.777,
+      "contextual_grade" : 0.955,
+      "median" : [ 1009.0, 206.0, 1009.0, 239.0 ],
+      "origin" : {
+        "system" : 1,
+        "phase" : "STEM",
+        "local" : 348
+      }
+    }, {
+      "id" : 430,
+      "kind" : "FlagInter",
+      "shape" : "FLAG_2",
+      "bounds" : [ 290, 175, 13, 40 ],
+      "grade" : 0.681,
+      "contextual_grade" : 0.859,
+      "value" : 2
+    }, {
+      "id" : 431,
+      "kind" : "FlagInter",
+      "shape" : "FLAG_2",
+      "bounds" : [ 350, 175, 13, 40 ],
+      "grade" : 0.681,
+      "contextual_grade" : 0.859,
+      "value" : 2
+    }, {
+      "id" : 432,
+      "kind" : "FlagInter",
+      "shape" : "FLAG_2",
+      "bounds" : [ 410, 175, 13, 40 ],
+      "grade" : 0.681,
+      "contextual_grade" : 0.859,
+      "value" : 2
+    }, {
+      "id" : 433,
+      "kind" : "FlagInter",
+      "shape" : "FLAG_2",
+      "bounds" : [ 470, 175, 13, 40 ],
+      "grade" : 0.681,
+      "contextual_grade" : 0.859,
+      "value" : 2
+    } ],
+    "relations" : [ {
+      "kind" : "HeadStemRelation",
+      "source" : 108,
+      "target" : 338,
+      "extension_point" : [ 528.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 110,
+      "target" : 339,
+      "extension_point" : [ 588.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 112,
+      "target" : 340,
+      "extension_point" : [ 648.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 114,
+      "target" : 341,
+      "extension_point" : [ 768.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 120,
+      "target" : 342,
+      "extension_point" : [ 888.5, 235.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 122,
+      "target" : 343,
+      "extension_point" : [ 1128.5, 235.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 134,
+      "target" : 344,
+      "extension_point" : [ 288.5, 246.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 100,
+      "target" : 344,
+      "extension_point" : [ 288.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 136,
+      "target" : 345,
+      "extension_point" : [ 348.5, 246.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 102,
+      "target" : 345,
+      "extension_point" : [ 348.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 138,
+      "target" : 346,
+      "extension_point" : [ 408.5, 246.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 104,
+      "target" : 346,
+      "extension_point" : [ 408.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 140,
+      "target" : 347,
+      "extension_point" : [ 468.5, 246.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 106,
+      "target" : 347,
+      "extension_point" : [ 468.5, 224.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "HeadStemRelation",
+      "source" : 142,
+      "target" : 348,
+      "extension_point" : [ 1008.5, 246.0 ],
+      "head_side" : "RIGHT"
+    }, {
+      "kind" : "FlagStemRelation",
+      "source" : 430,
+      "target" : 344,
+      "extension_point" : [ 289.0, 175.0 ]
+    }, {
+      "kind" : "FlagStemRelation",
+      "source" : 431,
+      "target" : 345,
+      "extension_point" : [ 349.0, 175.0 ]
+    }, {
+      "kind" : "FlagStemRelation",
+      "source" : 432,
+      "target" : 346,
+      "extension_point" : [ 409.0, 175.0 ]
+    }, {
+      "kind" : "FlagStemRelation",
+      "source" : 433,
+      "target" : 347,
+      "extension_point" : [ 469.0, 175.0 ]
+    } ]
+  },
+  "control" : {
+    "shape" : "FLAG_2",
+    "value" : 2,
+    "bounds" : [ 290, 175, 13, 40 ],
+    "stem_id" : 344,
+    "stem_direction" : -1,
+    "grade" : 0.7860966233075272,
+    "dx" : 0.09090909090909091,
+    "dy" : 0.0,
+    "extension_point" : [ 289.0, 175.0 ]
+  }
+}

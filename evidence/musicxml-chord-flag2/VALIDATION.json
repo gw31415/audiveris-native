@@ -1,0 +1,48 @@
+{
+  "base_source": "2519ad68d62cdd4794ae83f0e10ce98912cdfca6",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "FLAG2 factory/owned multi-head stem direction/value-based intrinsic shortening",
+  "native_before": {
+    "source": "6cc579d9ce9bf8578eadc54a066c0e1627191b79",
+    "refusal": "musicxml_unported_symbol_interpretation:FLAG_2"
+  },
+  "original_comparison": {
+    "unmodified_full_image_runs": 1,
+    "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+    "notes": 15,
+    "multi_head_flag2_chords": 4,
+    "matching": "member pitch/order/chord markers/Voice/onset/sixteenth duration/stem and MusicXML4 XSD",
+    "separate_saved_getters": "actual membership/slot/Voice/end clocks and intrinsic flag shortening; recomputed transient finalCheck, no declared clocks",
+    "separate_original_control": "one read-only saved original Flag2 lookup on actual multi-head/all-source SIG, Stem direction, first-valid partner, value2, dx/dy/grade/extension point; distinct from full-image recognition"
+  },
+  "original_dependencies": [
+    "AbstractFlagInter.getValue/getFlagValue/lookupLink",
+    "StemInter.computeExtendedLine/computeDirection and SIGraph source-best-grade order",
+    "HeadChordInter.getFlagsNumber (sum of values)",
+    "AbstractChordInter.getDurationSansDotOrTuplet",
+    "PartwiseBuilder.processNote and actual ensemble/Voice clock"
+  ],
+  "implementation": "Factory registers ordinary one/two-flag glyphs and canonical FlagStem, values1/2. Share original graded Stem direction for multiple Head/Beam/Flag connections, extended endpoints and FlagStem end portions; tremolo contributes extent but no direction. Intrinsic shortening sums actual flag values instead of relation count. Export admission still requires surviving typed glyph/FlagStem and uniform ordinary heads, then exact clocks; higher flags/mixed shapes/mixed beam+flag stay guarded. No input coordinate/filename branch, inferred flag or original XML reuse.",
+  "targeted_unique_passed": 7,
+  "tests": [
+    "original_lookup_gap_and_polarity_boundaries (prior original controls plus one multi-head actual original control)",
+    "stem_head_foundation_plan boundaries:3",
+    "chord_members_share_owned_voice_time_and_export_bottom_up_without_double_advance (3 actual images41 events)",
+    "actual_flag_connections_supply_eighth_duration_onsets_and_xml_divisions (FLAG1 success and erased-flag refusal)",
+    "original_352_heads_513_exclusions_staff_note_order_and_epilog"
+  ],
+  "new_test_function_count": 0,
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "all_global_completion_flags": false,
+  "limits": [
+    "positive downward FLAG2/other chord-flag images unverified; flags>2/multiple flag objects/mixed beam+flag remain guarded",
+    "small/percussion/special/mirror/shared/stemless heads and general stacks/tuplet/lyrics/slur/tie/cleaner/epilog/correction/export remain partial",
+    "all original nonUI functions retained in final plan; no scan/font/skew/special-staff/32sources admission change"
+  ]
+}

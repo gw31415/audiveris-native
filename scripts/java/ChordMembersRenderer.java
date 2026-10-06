@@ -14,15 +14,28 @@ public class ChordMembersRenderer {
         LimitedScoreRenderer.staff(page, g, 220, true);
         BufferedImage head = HeadActualPageRenderer.symbol("Bravura", "NOTEHEAD_BLACK", 51);
         boolean beamed = args.length > 1 && args[1].equals("beam");
+        boolean doubleFlag = args.length > 1 && args[1].equals("flag2");
+        int tail = doubleFlag ? 173 : 184;
         for (int i = 0; i < 4; i++) {
-            int x = 270 + (beamed ? 60 : 120) * i;
+            int x = 270 + (beamed || doubleFlag ? 60 : 120) * i;
             HeadActualPageRenderer.stamp(page, head, x, 220);
             HeadActualPageRenderer.stamp(page, head, x, 242);
-            g.fillRect(x + head.getWidth() - 2, 184, 2, 59);
+            g.fillRect(x + head.getWidth() - 2, tail, 2, 243 - tail);
         }
         if (beamed) {
             g.fillRect(288, 184, 182, 6);
             for (int x : new int[]{540, 630})
+                LimitedScoreRenderer.event(page, g, 220, x, -4, "NOTEHEAD_BLACK");
+        }
+        if (doubleFlag) {
+            Object family = HeadActualPageRenderer.cls("ui.symbol.MusicFamily").getField("Bravura").get(null);
+            Object font = HeadActualPageRenderer.call(HeadActualPageRenderer.cls("ui.symbol.MusicFont"), "getMusicFont", family, 51);
+            Object shape = HeadActualPageRenderer.cls("glyph.Shape").getField("FLAG_2").get(null);
+            java.awt.font.TextLayout flag = (java.awt.font.TextLayout) HeadActualPageRenderer.call(font, "layoutShapeByCode", shape);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            for (int x : new int[]{270, 330, 390, 450}) flag.draw(g, x + 18, tail);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+            for (int x : new int[]{510, 570, 630})
                 LimitedScoreRenderer.event(page, g, 220, x, -4, "NOTEHEAD_BLACK");
         }
         int[] pitches = {-4, -2, 0, -2};

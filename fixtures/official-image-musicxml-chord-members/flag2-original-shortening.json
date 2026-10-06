@@ -1,0 +1,82 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "read-only actual original recognized chords; intrinsic shortening getters, no duration/Voice/clock changes",
+  "chords" : [ {
+    "measure_number" : 1,
+    "bounds" : [ 276, 173, 13, 74 ],
+    "beams" : 0,
+    "flags" : 2,
+    "beams_or_flags" : 2,
+    "intrinsic" : "1/16"
+  }, {
+    "measure_number" : 1,
+    "bounds" : [ 336, 173, 13, 74 ],
+    "beams" : 0,
+    "flags" : 2,
+    "beams_or_flags" : 2,
+    "intrinsic" : "1/16"
+  }, {
+    "measure_number" : 1,
+    "bounds" : [ 396, 173, 13, 74 ],
+    "beams" : 0,
+    "flags" : 2,
+    "beams_or_flags" : 2,
+    "intrinsic" : "1/16"
+  }, {
+    "measure_number" : 1,
+    "bounds" : [ 456, 173, 13, 74 ],
+    "beams" : 0,
+    "flags" : 2,
+    "beams_or_flags" : 2,
+    "intrinsic" : "1/16"
+  }, {
+    "measure_number" : 1,
+    "bounds" : [ 516, 184, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  }, {
+    "measure_number" : 1,
+    "bounds" : [ 576, 184, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  }, {
+    "measure_number" : 1,
+    "bounds" : [ 636, 184, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  }, {
+    "measure_number" : 2,
+    "bounds" : [ 756, 184, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  }, {
+    "measure_number" : 2,
+    "bounds" : [ 876, 195, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  }, {
+    "measure_number" : 2,
+    "bounds" : [ 996, 206, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  }, {
+    "measure_number" : 2,
+    "bounds" : [ 1116, 195, 13, 41 ],
+    "beams" : 0,
+    "flags" : 0,
+    "beams_or_flags" : 0,
+    "intrinsic" : "1/4"
+  } ]
+}
