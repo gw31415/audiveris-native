@@ -61,5 +61,7 @@
   "new_image_fixture": false,
   "Laura": "352 heads /513 exclusions passed in actual original registration/epilog regression",
   "validated_src_tree": "c2271ed17f37807a5878d1391a37f17703b674a3",
-  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c",
+  "validated_source_commit": "853b19d532ae817d03cb47d22a963d6ce194709c",
+  "independent_clone_CLI": "normal push/remote/fetch and root/src/crates match; independent Linux build, same20+11 events/native-original XSD/prior exact XML bytes, READBACK.json"
 }

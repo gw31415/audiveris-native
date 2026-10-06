@@ -934,3 +934,8 @@ last full588 is source`00ee541`, before this change. The existing two-system ima
 and competing-hook CLI examples remain the image checks. Next: original
 stem-bound HeadChord bounds/leading-note/tail and actual ensemble ownership.
 [Validation](../evidence/musicxml-special-chord-consistency/VALIDATION.json).
+
+Source`853b19d`:10 targeted checks passed, including Laura352 heads/513 exclusions;
+independently fetched Linux build/20+11 image events/prior exact MusicXML bytes
+and native-original MusicXML4 XSD passed. Root/src/crates trees agree.
+[Readback](../evidence/musicxml-special-chord-consistency/READBACK.json).

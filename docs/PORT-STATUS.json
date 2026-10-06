@@ -249,7 +249,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Current special-chord source: original8 declared size/duration/beam conditions+24 Shape semantics, existing ordinary2 and focused foundation/context/overlap regression; last full588 belongs to00ee541, not this later source. evidence/musicxml-special-chord-consistency/VALIDATION.json. Independent CLI/tree readback recorded separately.",
+  "latest_targeted_validation": "853b19d: original8 declared chord size/duration/beam conditions+24 Shape semantics;10 targeted checks including Laura352/513, fmt/workspace-all-target-clippy and independent Linux20+11 CLI/XSD/prior XML bytes passed; fetched root/src/crates equal. Full588 remains earlier00ee541. evidence/musicxml-special-chord-consistency/{VALIDATION,READBACK}.json",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
