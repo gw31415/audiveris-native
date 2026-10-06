@@ -259,7 +259,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Chord identity final source: original6 ordered relation lifecycle observations,6 targeted tests/fmt/workspace-all-target-clippy passed; full workspace and independent CLI readback pending on this source, prior full588 belongs to00ee541. evidence/musicxml-chord-containment-lifecycle/VALIDATION.json",
+  "latest_targeted_validation": "322135d: original6 typed chord identity operations,6 targeted checks and full590/fmt/workspace-all-target-clippy passed; independently fetched Linux20+11 events/prior XML bytes/native-original XSD/root-src-crates equal. evidence/musicxml-chord-containment-lifecycle/{VALIDATION,FULL-VALIDATION,READBACK}.json. Next original RestInter5 conditions/prototype and RestChord4 controls are saved but production unimplemented.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -307,12 +307,12 @@
     }
   ],
   "latest_full_validation": {
-    "source_commit": "00ee5416e291b663121d6544f16c250a9ca53f17",
-    "passed": 588,
+    "source_commit": "322135df48daa05c98252bbf390074c7ce1e75b0",
+    "passed": 590,
     "failed": 0,
     "ignored": 0,
-    "execution": "one uninterrupted cargo test --offline --locked -j1 --workspace; all result blocks passed, doc tests passed with0 cases",
-    "evidence": "evidence/musicxml-mirror-ensemble-overlap/FULL-VALIDATION.json",
-    "independent_clone_Linux_CLI": "fetched Linux build/20+11 original-matching events, prior XML byte hashes and MusicXML4 XSD; root/src/crates equal at00ee541"
+    "execution": "one uninterrupted cargo test --workspace --offline --locked -j1 after intrinsic duration/geometry/callback units;176 test binaries and7 empty doc-test groups",
+    "evidence": "evidence/musicxml-chord-containment-lifecycle/FULL-VALIDATION.json",
+    "independent_clone_Linux_CLI": "fetched Linux build/20+11 original-matching events, prior XML byte hashes/native-original XSD/root-src-crates equal"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "validated_source_commit": "322135df48daa05c98252bbf390074c7ce1e75b0",
+  "validated_repository_tree": "e2ad6d53b96a011b199f80d3c76d2a0c58b8075d",
+  "validated_src_tree": "c9c8d7e36f357be19b27947c8dc050df4af824a3",
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c",
+  "full_workspace_tests": {
+    "passed": 590,
+    "failed": 0,
+    "ignored": 0,
+    "all_test_binaries_covered": 176,
+    "doc_test_groups": 7,
+    "execution": "one uninterrupted cargo test --workspace --offline --locked -j1; after chord duration/geometry/callback group, no minor-change full repeats"
+  },
+  "fmt": "passed",
+  "workspace_all_target_clippy": "passed -D warnings",
+  "raw_log_sha256": "558b63c1e3af2e83d92f0476c78afe2f60c7980fe9937789595e29d754b2530f",
+  "raw_log_location": "/workspace/work/musicxml-chord-containment-lifecycle/full.log, unique local original retained; no duplicate archive",
+  "previous_full588_source": "00ee5416e291b663121d6544f16c250a9ca53f17",
+  "validation_scope": "original6 typed chord identity operations, original4 stem-chord geometry, original8 chord-size/duration families+24 scalar semantics and all prior native regressions including Laura352/513; not full nonUI parity",
+  "all_global_completion_flags": false,
+  "independent_clone": "confirmed READBACK.json: fetched Linux build,20+11 original-matching events, prior exact XML hashes/native-original XSD and root/src/crates match at322135d"
+}

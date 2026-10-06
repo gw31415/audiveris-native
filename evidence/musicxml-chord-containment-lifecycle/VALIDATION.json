@@ -36,7 +36,7 @@
     }
   ],
   "fmt_and_workspace_all_target_clippy": "passed -D warnings",
-  "full_workspace_validation": "pending on this source; prior full588 at00ee541 remains distinct",
+  "full_workspace_validation": "590 passed/0 failed/0 ignored,176 binaries+7 empty doc-test groups; one uninterrupted full run after duration/geometry/callback units, FULL-VALIDATION.json",
   "remaining": [
     "cached head/stem extensive ensemble vertex removal, dying/other ensembles and true Part/stack ownership callbacks",
     "RestChord/other ensemble invalidation and complete InterCleaner/Part/lyrics purge",
@@ -47,5 +47,7 @@
   "global_completion_flags": false,
   "new_image_fixture": false,
   "validated_src_tree": "c9c8d7e36f357be19b27947c8dc050df4af824a3",
-  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c",
+  "validated_source_commit": "322135df48daa05c98252bbf390074c7ce1e75b0",
+  "independent_clone": "normal push/remote/fetch with root/src/crates equality; independent Linux build/20+11 matching events/prior XML bytes/native-original XSD, READBACK.json"
 }

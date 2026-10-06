@@ -133,3 +133,10 @@ edge cleanup use the same callback. Cached extensive/dying ensemble vertex
 removal and RestChord/other ensemble/Part/stack/lyrics callbacks remain pending.
 Next independent unit: original rest-chord member/last-member ownership lifecycle
 in existing LINKS weak/conflicting-symbol cleanup, retaining actual symbols.
+
+Next rest admission observations reveal a concrete remaining mismatch: original
+RestInter.createValid uses the actual stem-bound HeadChord envelope, not the old
+head-only guard. Five original controls and standalone Rust predicate agree;
+CLI correction is pending and should precede the recorded4 original RestChord
+partial/last/extensive/shared ownership controls. The prototype is not counted
+as a production feature or raster success.

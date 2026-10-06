@@ -980,3 +980,15 @@ Part/stack/lyrics and complete cleaner/epilog remain pending. The existing
 image CLI examples remain the image comparison boundary. Six target checks/fmt/
 clippy passed; full regression and fetched CLI evidence are recorded separately.
 [Validation](../evidence/musicxml-chord-containment-lifecycle/VALIDATION.json).
+
+Source`322135d` passed all590 tests (176 binaries+7 empty doc-test groups),0
+failures/ignored, plus fmt/workspace-all-target-clippy. Independently fetched
+Linux build/20+11 image events, prior XML byte hashes and native-original
+MusicXML4 XSD passed; root/src/crates trees agree. All full-stage flags remain false.
+[Full](../evidence/musicxml-chord-containment-lifecycle/FULL-VALIDATION.json),
+[readback](../evidence/musicxml-chord-containment-lifecycle/READBACK.json).
+
+Next original RestInter proximity5 conditions show the remaining head-only guard
+difference at stem tail. Its standalone Rust prototype agrees, but CLI connection
+is pending; the recorded4 RestChord ownership controls are original-only.
+[Prototype boundary](../evidence/musicxml-rest-chord-admission/PROTOTYPE.json).
