@@ -1,0 +1,12 @@
+{
+  "checkpoint": "c2705528f64817a90aeee31bcbb68ecb928b90fc",
+  "remote_main": "c2705528f64817a90aeee31bcbb68ecb928b90fc",
+  "independent_clone_HEAD": "c2705528f64817a90aeee31bcbb68ecb928b90fc",
+  "matching_trees": {
+    "root": "2544e66798274f788e3254c871df461e4008e339",
+    "src": "6581ec4cfa3e037d0402a20dc79d571c3807e951",
+    "crates": "15d0cb321ff54110bccb3215dc474e9631d5171b"
+  },
+  "prior_seed_checkpoint": "ac7de549de5891d20a85583a39bfd4b7c5a3784a",
+  "method": "normal non-force push; existing independent clone fetch and fast-forward; ordinary Git tree/SHA readback, no bundles or per-file hash replication"
+}

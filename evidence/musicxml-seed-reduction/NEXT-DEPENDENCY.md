@@ -23,8 +23,10 @@ retained same-image11/20-event MusicXML comparisons.
    current empty-chord and beam-group callbacks are not full InterCleaner.
    LINKS epilog also checks staff ties after clefs/alterations. Lyrics/slur
    recognition/ownership and export must be connected before claiming these.
-4. Angled connected-bar Area/ribbons, nonzero skew, scans/special staffs, all24
-   head shapes, source/item limits, voices/parts and the remaining nonUI ledger.
+4. Angled connected-bar Area/ribbons and empty/reversed bar gaps (current purge
+   accepts only vertical medians and a positive aligned gap), nonzero skew,
+   scans/special staffs, all24 head shapes, source/item limits, the64-pass
+   consistency budget, voices/parts and the remaining nonUI ledger.
 
 All are final implementation targets, not planned omissions. Global
 HEADS/STEMS/REDUCTION/LINKS/epilog/MusicXML parity remains incomplete.

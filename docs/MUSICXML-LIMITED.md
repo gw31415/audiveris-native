@@ -680,7 +680,8 @@ before Finalizer. The report's linking stage exposes
 Only retriever candidates are filtered; registry/group/SIG/cache ownership stays
 intact. This changes no accepted notation or input assumptions. Positive bar-area
 evidence is from the existing Laura saved HEADS state (98→97 and202→200),
-separate from the20-event image MusicXML regression. Angled ribbons, multi-staff
+separate from the20-event image MusicXML regression. Only vertical medians with
+a positive aligned gap are admitted. Angled/empty/reversed ribbons, multi-staff
 MusicXML and full reduction/cleaner remain pending final targets.
 
 ## Ordinary stem consistency and cached removal
@@ -689,7 +690,8 @@ The existing two-system and competing-hook commands also run ordinary
 `SigReducer.checkStems`: direction considers head and beam connection source
 grades; headless stems are removed from the actual SIG and the same canonical
 cache object; tail-side head links are cut with invading overlap exclusions.
-Retained foundation checks repeat after structural changes before export.
+Retained foundation checks repeat after structural changes before export, with
+an explicit64-pass resource budget.
 The report adds `limited_stem_finalizer.original_stem_consistency`.
 
 This is generic connection logic, with no input-specific branch. Five declared

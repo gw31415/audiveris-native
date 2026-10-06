@@ -1,0 +1,33 @@
+{
+  "source_commit": "c2705528f64817a90aeee31bcbb68ecb928b90fc",
+  "source_trees": {
+    "root": "2544e66798274f788e3254c871df461e4008e339",
+    "src": "6581ec4cfa3e037d0402a20dc79d571c3807e951",
+    "crates": "15d0cb321ff54110bccb3215dc474e9631d5171b"
+  },
+  "workspace_regression": {
+    "passed": 580,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 183,
+    "log_sha256": "f9f301ea92bc6277f225b061042e785b8f15cb62064442d42a68bc45c07700ae"
+  },
+  "fmt": "passed",
+  "clippy_workspace_all_targets": "passed -D warnings",
+  "independent_clone": {
+    "build": "Linux offline locked -j1 dev debug0 passed",
+    "fmt": "passed",
+    "musicxml_events_matching_original": 20,
+    "original_and_native_MusicXML4_XSD": "passed",
+    "native_cli_requires_Java": false,
+    "original_XML_reused_by_cli": false,
+    "native_xml_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb"
+  },
+  "comparison_boundaries": [
+    "seed lists: original saved HEADS-step book after original retriever processing; not a fresh whole-image STEMS rerun",
+    "five declared ordinary SIG checkStems cases; supplied contextual grades, not five automatic raster corrections",
+    "actual two-system4-measure20-event image recognition/export; existing original same-image events retained",
+    "580 regression includes existing Laura352heads/513exclusions and prior CLI examples; historical reports retain their source SHA"
+  ],
+  "global_parity_complete": false
+}
