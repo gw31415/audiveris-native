@@ -9,6 +9,22 @@ pub(crate) struct Geometry {
     pub head_location: Option<[i64; 2]>,
     pub tail_location: Option<[i64; 2]>,
 }
+impl Geometry {
+    /// HeadChordInter.getStemDir. A typed stem is required before consuming
+    /// cached head/tail locations; a stemless chord reports zero immediately.
+    pub(crate) fn stem_dir(&self, has_stem: bool) -> Result<i64, String> {
+        if !has_stem {
+            return Ok(0);
+        }
+        let head = self
+            .head_location
+            .ok_or("head_chord_head_location_required")?;
+        let tail = self
+            .tail_location
+            .ok_or("head_chord_tail_location_required")?;
+        Ok((tail[1] - head[1]).signum())
+    }
+}
 fn rectangle(n: &Value) -> Result<[i64; 4], String> {
     let b: [i64; 4] = serde_json::from_value(n["bounds"].clone())
         .map_err(|_| "head_chord_member_bounds_required")?;
@@ -220,6 +236,15 @@ mod tests {
                 serde_json::from_value(expected["tail_location"].clone()).unwrap();
             assert_eq!(geometry.head_location.map(|p| p.map(|v| v as f64)), head);
             assert_eq!(geometry.tail_location.map(|p| p.map(|v| v as f64)), tail);
+            let directions: Value = serde_json::from_str(include_str!(
+                "../fixtures/official-chord-stem-direction/controls.json"
+            ))
+            .unwrap();
+            if let Some(code) = directions["directions"][case["name"].as_str().unwrap()].as_i64() {
+                assert_eq!(geometry.stem_dir(true).unwrap(), code);
+            } else {
+                assert!(geometry.stem_dir(true).is_err());
+            }
             assert!(owner.mirror(cid).is_none());
             // A serialized bbox cannot substitute for the actual typed stem.
             let mut stale = snapshot.clone();
@@ -248,6 +273,14 @@ mod tests {
             assert_eq!(graph.snapshot(), snapshot);
         }
         let empty = calculate(&[], None).unwrap();
+        let directions: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-chord-stem-direction/controls.json"
+        ))
+        .unwrap();
+        assert_eq!(
+            empty.stem_dir(false).unwrap(),
+            directions["directions"]["stemless"].as_i64().unwrap()
+        );
         assert!(
             empty.bounds.is_none() && empty.leading_id.is_none() && empty.head_location.is_none()
         );

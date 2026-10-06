@@ -1027,6 +1027,31 @@ mod group_tests {
         assert!(owner.closest_slot_at(5, 1.).is_err());
         assert!(owner.closest_slot_at(1, f64::NAN).is_err());
         assert!(closest_slot(&owner.measures[0].timing.slots, f64::MAX).is_none());
+        let stem_directions: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-chord-stem-direction/saved-pages.json"
+        ))
+        .unwrap();
+        let reference = stem_directions["pages"][0]["chords"].as_array().unwrap();
+        let snapshot = owner.owner.graph.snapshot();
+        let events = owner.owner.prepared.report["events"].as_array().unwrap();
+        assert_eq!(events.len(), reference.len());
+        for reference in reference {
+            let event =
+                events
+                    .iter()
+                    .find(|e| {
+                        e["system_id"] == reference["system_id"]
+                            && e["measure_number"] == reference["measure_number"]
+                            && snapshot["inters"].as_array().unwrap().iter().any(|n| {
+                                n["id"] == e["chord_id"] && n["bounds"] == reference["bounds"]
+                            })
+                    })
+                    .unwrap();
+            assert_eq!(
+                event["chord_stem_direction"],
+                reference["stem_direction_code"]
+            );
+        }
         let reset_projection =
             |g: &crate::shared_sig::Graph,
              v: &[Voice],

@@ -1319,6 +1319,30 @@ fn image_whole_measure_rest_owns_separate_voice_and_exports_stack_duration_witho
             .contains("<rest measure=\"yes\"/><duration>4</duration><voice>1</voice></note>")
     );
     assert_eq!(export.xml.matches("<type>").count(), 4);
+    assert_eq!(export.xml.matches("<stem>up</stem>").count(), 4);
+    let stem_directions: Value = serde_json::from_str(include_str!(
+        "../fixtures/official-chord-stem-direction/saved-pages.json"
+    ))
+    .unwrap();
+    let reference = stem_directions["pages"][1]["chords"].as_array().unwrap();
+    assert_eq!(reference.len(), 4);
+    for reference in reference {
+        let event = events
+            .iter()
+            .find(|e| {
+                nodes
+                    .iter()
+                    .any(|n| n["id"] == e["chord_id"] && n["bounds"] == reference["bounds"])
+            })
+            .unwrap();
+        assert_eq!(
+            event["chord_stem_direction"],
+            reference["stem_direction_code"]
+        );
+        assert_eq!(event["stem_direction"], "up");
+    }
+    assert_eq!(events[4]["chord_stem_direction"], 0);
+    assert!(events[4]["stem_direction"].is_null());
     let geometry: Value = serde_json::from_str(include_str!(
         "../fixtures/official-slot-geometry/measure-rest.json"
     ))

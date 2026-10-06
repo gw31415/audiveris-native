@@ -1,0 +1,9 @@
+{
+  "scope" : "four declared original typed chord stem direction cases; independent from successful image comparison",
+  "directions" : {
+    "up" : -1,
+    "down" : 1,
+    "equal-distance-bottom-up-tie" : -1,
+    "stemless" : 0
+  }
+}

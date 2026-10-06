@@ -1,0 +1,130 @@
+{
+  "scope" : "actual original saved HeadChord.getStemDir, same successful images; not automatic general slot matching",
+  "pages" : [ {
+    "input" : "beam-two-systems.omr",
+    "chords" : [ {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 275, 206, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 332, 206, 17, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 392, 206, 17, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 452, 206, 17, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 545, 217, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 635, 217, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 2,
+      "bounds" : [ 755, 206, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 2,
+      "bounds" : [ 875, 195, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 2,
+      "bounds" : [ 995, 184, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 2,
+      "bounds" : [ 1115, 195, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 3,
+      "bounds" : [ 275, 526, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 3,
+      "bounds" : [ 332, 526, 17, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 3,
+      "bounds" : [ 392, 526, 17, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 3,
+      "bounds" : [ 452, 526, 17, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 3,
+      "bounds" : [ 545, 537, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 3,
+      "bounds" : [ 635, 537, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 4,
+      "bounds" : [ 755, 526, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 4,
+      "bounds" : [ 875, 515, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 4,
+      "bounds" : [ 995, 504, 14, 42 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 2,
+      "measure_number" : 4,
+      "bounds" : [ 1115, 515, 14, 42 ],
+      "stem_direction_code" : -1
+    } ]
+  }, {
+    "input" : "quarter-whole-rest.omr",
+    "chords" : [ {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 276, 206, 13, 41 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 396, 217, 13, 41 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 516, 228, 13, 41 ],
+      "stem_direction_code" : -1
+    }, {
+      "system_id" : 1,
+      "measure_number" : 1,
+      "bounds" : [ 636, 217, 13, 41 ],
+      "stem_direction_code" : -1
+    } ]
+  } ]
+}

@@ -806,3 +806,14 @@ Measure.resetRhythm/AbstractChordInter.resetTiming（2026-10-06）：
 宣言reset/repeatを比較。一般slot retrieval/matching・SmallChord・共有stack・
 補正再処理/persistenceは未完。対象2件・fmt/clippy、全595は95e191b。
 [検証範囲](../evidence/musicxml-rhythm-reset/VALIDATION.json)。
+
+
+getStemDirとMusicXML stem（2026-10-06）：原版SlotsRetriever隣接判定の前提
+となる実HeadChordのhead/tail座標差を接続し、PartwiseBuilderの通常四分/二分を
+含むstem出力にも伝播。現在one-head制限下の座標比較を使い、flag形による方向
+推定を置換。beamの実HeadStem identity guardは維持。原版保存済み24chord
+getter/独立4宣言条件、既存MusicXML16＋getter/Voice2対象検証、その後追加
+アサート2だけ再確認。全595は95e191b。通常音符stemの追加以外の既存XMLは
+再取得時に比較し、旧bytes/hashは元ソースの証跡として保持。一般slot/voice・
+複合特殊headのnote別engravingは未完。
+[検証範囲](../evidence/musicxml-chord-stem-direction/VALIDATION.json)。

@@ -442,19 +442,25 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             };
             // AbstractChordInter.getBeams orders from tail to head (greatest
             // distance from head first), independent of SIG insertion IDs.
-            let head_y = if let Some(stem) = chord.stem {
+            let (head_y, stem_direction, chord_stem_direction) = if let Some(stem) = chord.stem {
                 let stem_node = nodes
                     .iter()
                     .find(|n| n["id"] == graph.id(stem).unwrap())
                     .ok_or("musicxml_actual_chord_stem_required")?;
-                crate::head_chord_geometry::calculate(
+                let geometry = crate::head_chord_geometry::calculate(
                     &chord.members.iter().collect::<Vec<_>>(),
                     Some(stem_node),
-                )?
-                .head_location
-                .ok_or("musicxml_chord_head_location_required")?[1]
+                )?;
+                let head_y = geometry
+                    .head_location
+                    .ok_or("musicxml_chord_head_location_required")?[1];
+                // PartwiseBuilder emits a stem for every actual stemmed note.
+                // Current one-head admission makes head ordinate the note's
+                // integer center; negative tail-head is up, equality is down.
+                let dir = geometry.stem_dir(true)?;
+                (head_y, Some(if dir < 0 { "up" } else { "down" }), dir)
             } else {
-                chord.bounds[1] + chord.bounds[3] / 2
+                (chord.bounds[1] + chord.bounds[3] / 2, None, 0)
             };
             let chord_x = chord.bounds[0] + chord.bounds[2] / 2;
             let distance = |beam: &&Value| {
@@ -501,11 +507,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 note_type = if count == 1 { "eighth" } else { "16th" };
             }
             let flag_ids = flags.iter().map(|f| f["id"].clone()).collect::<Vec<_>>();
-            let flag_direction = flags
-                .first()
-                .map(|f| if f["shape"] == "FLAG_1" { "up" } else { "down" });
             let mut beam_marks = Vec::new();
-            let mut stem_direction = flag_direction;
             for (number, beam) in beams.iter().enumerate() {
                 let mut members = m
                     .chords
@@ -560,7 +562,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 };
                 beam_marks.push(json!({"number":number+1,"value":value}));
                 let stem_id = graph.id(chord.stem.unwrap()).unwrap();
-                let hs = edges
+                edges
                     .iter()
                     .find(|e| {
                         e["kind"] == "HeadStemRelation"
@@ -568,11 +570,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                             && e["target"] == stem_id
                     })
                     .ok_or("musicxml_beam_head_direction_required")?;
-                stem_direction = Some(if hs["head_side"] == "RIGHT" {
-                    "up"
-                } else {
-                    "down"
-                });
             }
             let beam_ids = beams.iter().map(|b| b["id"].clone()).collect::<Vec<_>>();
             let mut step = None;
@@ -674,7 +671,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 chord.id,
                 voice_index,
             )?;
-            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"measure_rest":measure_rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
+            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"measure_rest":measure_rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
             if !beam_marks.is_empty() {
                 event["beams"] = json!(beam_marks);
             }

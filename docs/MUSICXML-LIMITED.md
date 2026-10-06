@@ -1310,3 +1310,27 @@ correction recognition. The existing whole-rest and `--slot-at` examples
 remain the runnable CLI checks. General MeasureRhythm narrow/wide slot
 retrieval/matching, SmallChord, shared stacks and correction reprocessing
 entry/persistence are still pending; no admission guard was removed.
+
+
+Actual chord stem direction (2026-10-06): the original
+`HeadChordInter.getStemDir` now reads actual integer head/tail locations.
+It reports -1/up, +1/down, zero/no stem (or coincident locations). This is a
+prerequisite of `SlotsRetriever` adjacency; general narrow/wide slot and Voice
+matching is still pending. `PartwiseBuilder` stem semantics now apply to every
+currently admitted stemmed note, including quarter/half notes without beam/flag.
+The current one-head admission makes tail-versus-leading-head comparison equal
+to the original per-note comparison; equality exports down when a stem exists.
+Rest/stemless notes do not emit a stem. Actual geometry supplies direction,
+while the existing live beam HeadStem identity guard is retained.
+
+The prior whole-rest CLI example now emits four original-matching `<stem>up</stem>`
+tags followed by the stemless measure rest. `chord_stem_direction` exposes the
+original getter code in each event. Original saved real24-chord getters and
+four declared up/down/leading-distance/stemless controls are recorded separately
+from current image recognition. Existing MusicXML16 plus getter/Voice2 targeted
+tests passed; subsequent test-only getter assertions reran2 without export or
+geometry code changes. This is not a new full595 run. The new XML adds ordinary
+note stem metadata; old report hashes remain evidence for their original source.
+Full compound/mirror/special-head per-note engraving and stem default-y metadata
+remain partial, alongside general Voice matching/shared stacks/lyrics/automatic
+slur-tie/correction/full cleaner-epilog. All global completion flags remain false.

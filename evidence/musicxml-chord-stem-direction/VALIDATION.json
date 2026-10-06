@@ -1,0 +1,36 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "HeadChordInter.getStemDir from actual head/tail geometry, prerequisite to SlotsRetriever adjacency, plus PartwiseBuilder stem emission for every admitted stemmed note",
+  "original_comparison": "original saved successful two-system20 and whole-rest-page4 real head chord getters; separate declared up/down/equal-leading-distance/stemless4 controls; existing original full MusicXML stem fields compared in readback",
+  "integration": "derive actual one-head chord direction from existing typed geometry, not flag shape or HeadStem side; retains mandatory live beam HeadStem identity guard; report chord_stem_direction and actual stem up/down output for quarter/half as well as short notes",
+  "limits": [
+    "current one-head-per-chord admission only; original per-note stem handling for compound/mirror/special heads and stem default-y engraving remain partial",
+    "SlotsRetriever narrow/wide relationships and general ChordsMapper voice assignment pending",
+    "24 actual getter checks are saved-page observations; current native automated recognition stays within existing bounded image scope",
+    "full original engraving/metadata XML byte equality unclaimed; old native XML bytes change only by newly emitted unflagged/unbeamed stem metadata"
+  ],
+  "targeted_unique_tests_passed": 18,
+  "initial_groups": {
+    "geometry-target.log": 1,
+    "voice-target.log": 1,
+    "musicxml-target.log": 16
+  },
+  "following_test_only_oracle_assertion_checks": {
+    "voice-final.log": 1,
+    "rest-final.log": 1
+  },
+  "export_and_geometry_source_files_unchanged_after_initial_18": true,
+  "verification_boundary": "18 distinct existing targeted tests first pass; subsequent test-only saved-image getter assertions rerun2; no production export/geometry edit between passes. Not a whole-workspace run.",
+  "fmt": "passed",
+  "clippy": "workspace/all-targets -D warnings passed",
+  "full_run_this_unit": false,
+  "latest_full_validation": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "original_probe_log_sha256": {
+    "probe.log": "06e1f4b589442ceeae33e012e4199ca2240867a9199e03524bd0d4f9481713b3",
+    "controls.log": "98eeafafd82ae4caeed274e0d59fde7d81a34e22fd46ef70ac9552c5a6d0e897"
+  },
+  "all_global_completion_flags": false
+}
