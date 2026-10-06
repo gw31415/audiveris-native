@@ -769,7 +769,7 @@ fn continue_linking_impl(
     if finalize_heads {
         owned.prepared.report["original_process_head_finalizer_connected"] = json!(true);
         owned.prepared.report["comparison_scope"] = json!(
-            "Original system linkStems then finalizeStems/checkHeadStems null-focus exclusion ensembles, followed by owned ordered all-systems orphan/beam-side Finalizer and per-system contextualization. Full-image positive cross-system orphan and general cleaner/reduction/epilog parity pending"
+            "Original system linkStems then finalizeStems/checkHeadStems null-focus exclusion ensembles, followed by owned ordered all-systems orphan/beam-side Finalizer and per-system contextualization. General cross-system, cleaner/reduction/epilog parity pending"
         );
     }
     Ok(owned)

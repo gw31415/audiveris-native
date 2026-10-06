@@ -376,6 +376,12 @@ pub fn analyze(
     let automatic_catalog =
         if declared.is_none() && beam_prolog["head_scale"]["music_font"].is_null() {
             unmeasured_catalog(&grid_ir, sc.interline.main)
+        } else if declared.is_none() {
+            // Carry the measured original head font into the exact available
+            // catalog. Keep the certified legacy Bravura51 observation boundary.
+            crate::head_staff_catalog::TemplateCatalog::from_head_scale(&beam_prolog["head_scale"])
+                .ok()
+                .filter(|c| c.family != "Bravura" || c.stored_point_size != 51)
         } else {
             None
         };
@@ -654,7 +660,11 @@ pub fn analyze(
         let cue = grid_ir["staffs"]
             .as_array()
             .is_some_and(|staffs| staffs.iter().any(|s| s["small"] == true));
-        page_report["head_template_selection"] = if cue {
+        page_report["head_template_selection"] = if !beam_prolog["head_scale"]["music_font"]
+            .is_null()
+        {
+            serde_json::json!({"source":"original_measured_head_scale","family":catalog.family,"stored_point_size":catalog.stored_point_size,"original_music_font_scale_present":true,"scope":"exact bounded template catalog at the measured original head size; unsupported staff sizes still refuse; broad page parity unclaimed"})
+        } else if cue {
             serde_json::json!({"source":"original_unmeasured_default_cue","family":catalog.family,"stored_point_size":catalog.stored_point_size,"original_music_font_scale_present":false,"scope":"exact Bravura oval templates at staff28/sheet44 on the observed five-line 7/11 cue page; other sizes/families and full24 page propagation remain uncertified"})
         } else {
             serde_json::json!({"source":"original_unmeasured_default_ordinary","family":catalog.family,"stored_point_size":catalog.stored_point_size,"original_music_font_scale_present":false,"scope":"ordinary uniform five-line interline11, default Bravura44 oval templates when no font scale was measured; final selection, rhythm and MusicXML remain unfinished"})

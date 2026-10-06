@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Original empty-head removal or delegation to connected positive beam builders,
+//! Original beam scheduling preflight and owned links/cleaner continuation,
 //! plus the bounded retained-owner LINKS/cleaner continuation.
 use crate::{
     music_measures::OwnedMusic,
@@ -8,11 +8,10 @@ use crate::{
 };
 use serde_json::json;
 
-/// Original VLinker.link returns false when StemBuilder.getCLinkers is empty.
-/// A deliberately larger horizontal envelope than every original lookup area
-/// proves that condition without implementing positive beam-origin builders.
-/// Head bounds as well as all corner reference points must be outside it.
-pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, String> {
+/// Preflight the actual retained beam catalogs before original VLinker scheduling.
+/// Empty builders and cross-system orphan beams must survive until linkStems /
+/// Finalizer / SigReducer; the former horizontal-envelope shortcut is obsolete.
+pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, String> {
     let initial = o.graph.snapshot();
     let nodes = initial["inters"]
         .as_array()
@@ -20,13 +19,12 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
     if nodes.iter().any(|n| n["kind"] == "StemInter") {
         return Err("music_preexisting_stem_pending".into());
     }
+    if o.upstream_report["line_completion"]["global_slope"] != 0.0 {
+        return Err("music_beam_zero_skew_required".into());
+    }
     let generations =
         &o.prepared.report["head_chunks_plan"]["head_parts_plan"]["beam_generation_plan"];
-    let contexts = &generations["beam_target_plan"]["head_linker_plan"]["source_plan"]["stump_plan"]
-        ["seed_plan"]["head_plan"]["systems"];
-    let image = crate::GrayImage::from_pgm(&o.upstream_output_pixels)?;
-    let mut removals = Vec::new();
-    let mut evidence = Vec::new();
+    let mut scheduled = Vec::new();
     for n in nodes.iter().filter(|n| {
         matches!(
             n["kind"].as_str(),
@@ -44,91 +42,15 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
             .iter()
             .find(|s| s["system"] == key.system)
             .ok_or("music_beam_system_required")?;
-        let cat = sys["beam_catalog"]
+        sys["beam_catalog"]
             .as_array()
             .ok_or("music_beam_catalog_required")?
             .iter()
             .find(|b| b["beam"]["id"] == key.local)
             .ok_or("music_beam_catalog_identity_required")?;
-        // Positive standard beams now go through the actual VLinker builder,
-        // profile4 cache/SIG scheduler; hooks use the system link profile
-        // and their original one-side endpoint check.
-        let physical = ["stumps", "admitted_seeds"]
-            .iter()
-            .any(|field| cat[*field].as_array().is_some_and(|v| !v.is_empty()));
-        if physical {
-            evidence.push(json!({"native_beam_id":n["id"],"scheduled_positive_beam":true}));
-            continue;
-        }
-        let context = contexts
-            .as_array()
-            .ok_or("music_beam_context_required")?
-            .iter()
-            .find(|s| s["system"] == key.system)
-            .ok_or("music_beam_context_system_required")?;
-        let b: [f64; 4] = serde_json::from_value(n["median"].clone())
-            .map_err(|_| "music_beam_median_required")?;
-        if b[1] != b[3] || o.upstream_report["line_completion"]["global_slope"] != 0.0 {
-            return Err("music_beam_zero_skew_required".into());
-        }
-        // Original halfBeamLuDx=.3 interline and slopeMargin=.015.
-        // Endpoints lie inside the image. Ignoring closer beam limits and y
-        // filtering only enlarges this envelope, including boundary contacts.
-        let margin = 0.3 * o.interline as f64 + 0.015 * image.height as f64;
-        let mut left = b[0].min(b[2]);
-        let mut right = b[0].max(b[2]);
-        for linker in cat["final_blinkers"]
-            .as_array()
-            .ok_or("music_final_blinkers_required")?
-        {
-            let x = linker["reference"][0]
-                .as_f64()
-                .filter(|x| x.is_finite())
-                .ok_or("music_beam_linker_reference_required")?;
-            left = left.min(x);
-            right = right.max(x);
-        }
-        let left = left - margin;
-        let right = right + margin;
-        if nodes
-            .iter()
-            .filter(|h| h["kind"] == "HeadInter" && h["origin"]["system"] == key.system)
-            .any(|h| {
-                let x = h["bounds"][0].as_f64().unwrap_or(f64::NAN);
-                let w = h["bounds"][2].as_f64().unwrap_or(f64::NAN);
-                !x.is_finite() || !w.is_finite() || (x <= right && x + w >= left)
-            })
-            || context["image_context"]["corners"]
-                .as_array()
-                .ok_or("music_beam_corners_required")?
-                .iter()
-                .any(|c| {
-                    c["reference"][0]
-                        .as_f64()
-                        .is_none_or(|x| x >= left && x <= right)
-                })
-        {
-            evidence.push(json!({"native_beam_id":n["id"],"scheduled_positive_beam":true}));
-            continue;
-        }
-        if initial["relations"].as_array().unwrap().iter().any(|r| {
-            (r["source"] == n["id"] || r["target"] == n["id"])
-                && !matches!(
-                    r["kind"].as_str(),
-                    Some("Exclusion" | "Containment" | "BeamBeamRelation")
-                )
-        }) {
-            return Err("music_beam_existing_relation_pending".into());
-        }
-        removals.push(key);
-        evidence.push(json!({"id":n["id"],"origin":key,"bounds":n["bounds"],"horizontal_lookup_superset":[left,right],"reachable_heads":0,"original_check":if n["kind"]=="BeamHookInter"{"checkHooksHaveStem"}else{"checkBeamsHaveBothStems"}}));
+        scheduled.push(n["id"].clone());
     }
-    for key in removals {
-        // Original member removal updates partially retained ensembles and
-        // removes a dying group. No special all-or-none group admission.
-        o.graph.remove_music_inter(key)?;
-    }
-    o.prepared.report["unreachable_beam_reduction"] = json!({"scope":"zero skew/no stump or seed/no possibly reachable head; original empty VLinker and orphan checks only","removed":evidence,"positive_beam_origin_linking_complete":false});
+    o.prepared.report["owned_beam_linking"] = json!({"scheduled_beam_ids":scheduled,"scope":"original actual VLinker side/intermediate scheduling including empty builders; orphan removal deferred to ordered Finalizer and endpoint reduction","stems_complete":false});
     Ok(o)
 }
 
@@ -233,15 +155,17 @@ mod tests {
         ))
         .unwrap();
         let o = crate::stem_image_owned::prepare_items(&image).unwrap();
-        let o = remove_unreachable_beams(o).unwrap();
+        let before = o.graph.snapshot();
+        let o = prepare_beam_linking(o).unwrap();
+        assert_eq!(o.graph.snapshot(), before);
         assert_eq!(
-            o.prepared.report["unreachable_beam_reduction"]["removed"]
+            o.prepared.report["owned_beam_linking"]["scheduled_beam_ids"]
                 .as_array()
                 .unwrap()
                 .len(),
             2
         );
-        let o = crate::stem_image_head_linking::continue_linking(o).unwrap();
+        let o = crate::stem_image_head_linking::continue_process(o).unwrap();
         let o = crate::stem_foundation_purge::continue_purge(o).unwrap();
         let o =
             finalize_stems(crate::stem_head_foundations::continue_reduction(o).unwrap()).unwrap();

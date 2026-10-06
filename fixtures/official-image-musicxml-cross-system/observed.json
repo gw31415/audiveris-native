@@ -1,0 +1,305 @@
+{
+  "scope": "original5.11 successful full-image20-event export; original process/epilog also verifies one positive cross-system glyph-alias orphan removal separately",
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0.0,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "begin"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0.5,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 1.0,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 1.5,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "end"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 2.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 1,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 3.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 2,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 0.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 1.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 2.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 3.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 3,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0.0,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "begin"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 3,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 0.5,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 3,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 1.0,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 3,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 0.5,
+      "offset_quarters": 1.5,
+      "type": "eighth",
+      "voice": 1,
+      "beams": [
+        {
+          "number": 1,
+          "value": "end"
+        }
+      ],
+      "stem": "up"
+    },
+    {
+      "measure_number": 3,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 2.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 3,
+      "step": "G",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 3.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 4,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 0.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 4,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 1.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 4,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 2.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    },
+    {
+      "measure_number": 4,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "rest": false,
+      "duration_quarters": 1.0,
+      "offset_quarters": 3.0,
+      "type": "quarter",
+      "voice": 1,
+      "beams": [],
+      "stem": null
+    }
+  ]
+}

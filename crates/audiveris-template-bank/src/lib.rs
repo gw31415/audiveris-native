@@ -19,6 +19,7 @@ const MAX_TOTAL_POINTS: usize = 131_072;
 include!("builtin_identity.rs");
 include!("coverage_identity.rs");
 include!("cue_identity.rs");
+include!("calibrated_identity.rs");
 include!("drum_identity.rs");
 include!("all_heads_identity.rs");
 #[derive(Debug)]

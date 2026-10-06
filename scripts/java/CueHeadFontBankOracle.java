@@ -23,7 +23,9 @@ public class CueHeadFontBankOracle {
   fontc.getMethod("populateAllSymbols").invoke(null);Object family=Enum.valueOf((Class)mf,args[1]);
   var ctor=bc.getDeclaredConstructor(sc,mf,int.class);ctor.setAccessible(true);var build=bc.getDeclaredMethod("buildTemplate");build.setAccessible(true);
   StringJoiner assets=new StringJoiner(",","[","]");
-  for(int size:new int[]{28,44})for(String name:new String[]{"BREVE","WHOLE_NOTE","NOTEHEAD_VOID","NOTEHEAD_BLACK"}){
+  int[] sizes=args.length>3?Arrays.stream(args[3].split(",")).mapToInt(Integer::parseInt).toArray():new int[]{28,44};
+  if(sizes.length==0||sizes.length>8||Arrays.stream(sizes).anyMatch(n->n<1||n>512)||Arrays.stream(sizes).distinct().count()!=sizes.length)throw new IllegalArgumentException("bounded exact point sizes required");
+  for(int size:sizes)for(String name:new String[]{"BREVE","WHOLE_NOTE","NOTEHEAD_VOID","NOTEHEAD_BLACK"}){
    Object shape=Enum.valueOf((Class)sc,name),font=fontc.getMethod("getMusicFont",mf,int.class).invoke(null,family,size);
    Object symbol=symbolc.getConstructor(sc,mf).newInstance(shape,family);
    BufferedImage image=(BufferedImage)symbolc.getMethod("buildImage",fontc).invoke(symbol,font);
@@ -37,7 +39,7 @@ public class CueHeadFontBankOracle {
    for(Object p:(java.util.List<?>)get(template,"getKeyPoints"))points.add("["+p.getClass().getField("x").get(p)+","+p.getClass().getField("y").get(p)+","+p.getClass().getField("d").get(p)+"]");
    for(var entry:((Map<?,?>)get(template,"getOffsets")).entrySet()){Point2D p=(Point2D)entry.getValue();anchors.add("{\"name\":\""+entry.getKey()+"\",\"x\":"+p.getX()+",\"y\":"+p.getY()+"}");}
    StringJoiner scores=new StringJoiner(",","[","]");scores.add("{\"input\":\"official\",\"score\":"+score(template,image.getWidth(),image.getHeight(),binary)+"}");
-   if(args.length>2)for(boolean aa:new boolean[]{false,true}){byte[] nativePixels=Files.readAllBytes(Path.of(args[2]).resolve(name+"-"+size+"-aa"+aa+".raw"));if(nativePixels.length!=binary.length)throw new IllegalArgumentException("Native size mismatch");scores.add("{\"input\":\"aa"+aa+"\",\"score\":"+score(template,image.getWidth(),image.getHeight(),nativePixels)+"}");}
+   if(args.length>2&&!args[2].equals("-"))for(boolean aa:new boolean[]{false,true}){byte[] nativePixels=Files.readAllBytes(Path.of(args[2]).resolve(name+"-"+size+"-aa"+aa+".raw"));if(nativePixels.length!=binary.length)throw new IllegalArgumentException("Native size mismatch");scores.add("{\"input\":\"aa"+aa+"\",\"score\":"+score(template,image.getWidth(),image.getHeight(),nativePixels)+"}");}
    assets.add("{\"shape\":\""+name+"\",\"point_size\":"+size+",\"width\":"+image.getWidth()+",\"height\":"+image.getHeight()+",\"foreground\":"+foreground+",\"file\":\""+file+"\",\"layout_bounds\":"+rect(layout.getBounds())+",\"fat_bounds\":"+rect(fat)+",\"slim_bounds\":"+rect((Rectangle)get(template,"getSlimBounds"))+",\"points\":"+points+",\"anchors\":"+anchors+",\"scores\":"+scores+"}");
   }
   StringJoiner sizing=new StringJoiner(",","[","]");Object font=fontc.getMethod("getMusicFont",mf,int.class).invoke(null,family,44);

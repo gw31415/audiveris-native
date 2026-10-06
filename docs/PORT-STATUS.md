@@ -25,7 +25,7 @@
 | HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
-| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
+| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを追加比較。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
 | REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、今回のRest/TimeWhole overlap/exclusionあり。全Interのsupport contextual grade、互換性、frozen、各関係のconsistency、反復reductionとcallbacks/epilogは未接続。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
@@ -217,3 +217,21 @@ Bravura47ptで停止し、両者のhead幅14px/高さ12px/47pt算出は一致し
 次はその正確なテンプレート・伝播を接続。全epilog、実スキャン、特殊staff、
 非zero skew、全24形ページ等は未完、完了フラグfalse。
 [検証・次依存](../evidence/musicxml-cross-system/VALIDATION.json)。
+
+## 2-system連桁を47ptからMusicXMLまで接続（2026-10-06）
+
+原版・nativeで同じhead幅14px/高さ12px→Bravura47ptとなる入力について、
+原版TemplateFactoryから普通のoval4形を正確に収録。測定済みcatalogを
+HEADS→STEMS→exportへ伝播し、サイズ代用・画像座標分岐は行いません。
+以前の水平envelopeによる接続前候補削除を、移植済み実VLinkerの空/正候補の
+一般スケジューリング→全system接続→Finalizer→端点reductionの原版順へ置換。
+原版の同画像HEADS→process→epilogはbeam3件から2件となり、
+上段のstemなし同glyph候補1件を削除。nativeの実registry glyphも一致しました。
+原版のフル画像exportと20イベント/4小節の音高・音価・onset・voice・beam・
+連桁音符stem方向が一致し、双方MusicXML4 XSD成功。全SIG/描画属性一致ではありません。
+
+8条件の宣言SIG比較と、この画像からの正のorphan削除比較は別の証跡です。
+一般cleaner/epilog、非zero skew・実スキャン・特殊staff・24形全ページ等は未完。
+原版非UI全機能を省略しない最終目標・完了フラグfalseを維持。
+[実行例](MUSICXML-LIMITED.md#two-system-beams-with-measured-head-font-and-owned-epilog)・
+[検証](../evidence/musicxml-cross-system/IMAGE-VALIDATION.json)。

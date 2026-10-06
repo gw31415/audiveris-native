@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "native_outputs_used": false,
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "observer_source_sha256": {
+    "scripts/java/CueHeadFontBankOracle.java": "102121c0b46bc2a9ecd461423dfd499b583928c5c6602b778d38534913f0f203"
+  },
+  "compiler_executable_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "runtime_executable_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "font_sha256": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+  "model_sha256": "327194c47116a8ebf5771d04cea08a4e563ec93d2955e1efd990a54a9245f29e",
+  "compile_command": [
+    "/workspace/onboarding/linux-oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-d",
+    "/workspace/work/musicxml-cross-system/calibrated47/classes",
+    "/workspace/work/musicxml-cross-system/calibrated47/CueHeadFontBankOracle.java"
+  ],
+  "command": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/workspace/work/musicxml-cross-system/calibrated47/home",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-cross-system/calibrated47/tmp",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*:/workspace/work/musicxml-cross-system/calibrated47/classes",
+    "CueHeadFontBankOracle",
+    "/workspace/work/musicxml-cross-system/calibrated47/Bravura",
+    "Bravura",
+    "-",
+    "47"
+  ],
+  "original_files_sha256": {
+    "BREVE-47.raw": "6000314474cf74f02371f78539434ddd30f29275214d7b80b1298ab83bbe409d",
+    "NOTEHEAD_BLACK-47.raw": "9e32d3981abd6f7bb8a095d762db741d0e20bf654bdfec9dbcf106589d6f16fd",
+    "NOTEHEAD_VOID-47.raw": "672ea119b84d4e0912882ba5fb4d7db78f331092a9b569003777b9e9af74d778",
+    "WHOLE_NOTE-47.raw": "e89e83c17c64340294e82732b6bea1a0bac1d886a6e232be06b1d0369e8a64cf",
+    "assets.json": "efadf4643999be473f0eda2d5cf66041dde52486fb83a7cb192e0085a09493a8",
+    "calibration.json": "9da593ce8910e822e785d2be0d79649c06ae34e945753656cb6d8f023266fd6a"
+  },
+  "packaged_files_sha256": {
+    "calibrated_identity.rs": "3ec70d6899ee18bef5f9034caafc5780a0e776dbacc763a4cea49de84f7f5535",
+    "manifest.json": "ef7225b95e0bc9086cdca4eddd21fef87d21937cdb9cda9f3725f1b8d7b921c8",
+    "templates.json": "eee7a2ad74941ce10fcc001543eac0e1f271ae26aabc0f1e655a9672891fd48e"
+  },
+  "point_sizes": [
+    47
+  ],
+  "templates": 4
+}

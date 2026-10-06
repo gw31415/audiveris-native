@@ -190,7 +190,7 @@ pub(crate) fn finalize(
     }
     *graph = next;
     Ok(
-        json!({"removed_cross_system_orphan_beams":removed,"beam_side_supports":supports,"systems":reports,"scope":"original ordered all-systems StemsRetriever.Finalizer orphan purge/beam-side support and per-system StemsStep contextualization; no whole STEMS or positive full-image cross-system orphan parity claim","stems_complete":false,"epilog_complete":false}),
+        json!({"removed_cross_system_orphan_beams":removed,"beam_side_supports":supports,"systems":reports,"scope":"original ordered all-systems StemsRetriever.Finalizer orphan purge/beam-side support and per-system StemsStep contextualization; whole STEMS/epilog parity remains pending","stems_complete":false,"epilog_complete":false}),
     )
 }
 

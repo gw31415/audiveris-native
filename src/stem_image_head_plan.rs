@@ -71,7 +71,7 @@ pub(crate) fn image_catalog(page: &Value) -> Result<TemplateCatalog, String> {
         Some(catalog) => catalog,
         None => TemplateCatalog::from_head_scale(&page["beam_prolog"]["head_scale"])?,
     };
-    if catalog.family != "Bravura" || !matches!(catalog.stored_point_size, 44 | 51) {
+    if catalog.family != "Bravura" || !matches!(catalog.stored_point_size, 44 | 47 | 51) {
         return Err("unsupported image STEMS font/size context".into());
     }
     if page["beam_prolog"]["head_scale"]["music_font"]["name"]
@@ -83,7 +83,7 @@ pub(crate) fn image_catalog(page: &Value) -> Result<TemplateCatalog, String> {
     Ok(catalog)
 }
 
-/// Zero-skew, ordinary five-line, uniform-interline Bravura44/51 continuation.
+/// Zero-skew, ordinary five-line, uniform-interline Bravura44/47/51 continuation.
 /// Explicit XML restoration emulates the original oracle's loaded HEADS context.
 /// It leaves the supplied image report and its raw physical registry/SIG intact.
 pub fn analyze(image: &GrayImage, page: &Value) -> Result<Value, String> {

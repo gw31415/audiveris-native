@@ -1,0 +1,10 @@
+{
+  "source_commit": "68d96ff92e7e118f7a93e158881a1b074d599579",
+  "repository_tree": "974a084fee608f3bb9bb9fc15aee2c951a17921c",
+  "source_tree": "c180799756b02aacd775b4d8ad59391d87563011",
+  "crates_tree": "5838d35bd0a83e7f7397e2b6b7611ce580ac323a",
+  "independent_fetch_fast_forward": true,
+  "independent_Linux_offline_build": true,
+  "existing_same_glyph_image_events_match": 11,
+  "MusicXML4_XSD": true
+}

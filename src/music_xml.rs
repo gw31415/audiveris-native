@@ -247,9 +247,9 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     m = crate::music_links::continue_links(m)?;
     if m.owner.interline != 11
         || m.owner.catalog.family != "Bravura"
-        || m.owner.catalog.stored_point_size != 44
+        || !matches!(m.owner.catalog.stored_point_size, 44 | 47)
     {
-        return Err("musicxml_verified_Bravura44_interline11_scope_required".into());
+        return Err("musicxml_verified_Bravura44_or47_interline11_scope_required".into());
     }
     let grid = &m.owner.upstream_report["grid_ir"];
     if grid["pages"].as_array().is_none_or(|p| p.len() != 1)
@@ -779,7 +779,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     xml.push_str("</part></score-partwise>\n");
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and five positive beam images (side/intermediate/sibling/separate groups/secondary forward-backward hooks) verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/shared-glyph competition full-image input/general aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     if m.owner.prepared.report["events"]
@@ -789,7 +789,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         .any(|e| e["beam_ids"].as_array().is_some_and(|b| !b.is_empty()))
     {
         m.owner.prepared.report["beam_comparison_scope"] = json!(
-            "Three original full-image successful Bravura44/C-major4/4 two-measure inputs: side-only nine events, intermediate ten, sibling double-beam eleven; pitches/exact durations/onsets and beam begin/continue/end; builder/control/HEADS reduction comparisons are separate; full BEAMS/STEMS/SIG/cleaner/rhythm parity unclaimed"
+            "Original-successful ordinary beam images include side/intermediate/sibling/groups/hooks/competition and one measured Bravura47 two-system20-event input with one shared-glyph cross-system orphan removal; pitch/duration/onset/voice/beam and beamed stem-direction comparisons are separate from declared SIG conditions; full BEAMS/STEMS/SIG/cleaner/rhythm/engraving parity unclaimed"
         );
     }
     Ok(Export { owner: m, xml })
@@ -804,7 +804,7 @@ pub fn recognize_named(image: &GrayImage, part_name: &str) -> Result<Export, Str
         return Err("musicxml_input_exceeds_verified_four_million_pixels_scope".into());
     }
     let owner = crate::stem_image_owned::prepare_items(image).map_err(|e| e.to_string())?;
-    let owner = crate::music_links::remove_unreachable_beams(owner)?;
+    let owner = crate::music_links::prepare_beam_linking(owner)?;
     let owner = crate::stem_image_head_linking::continue_process(owner)?;
     let owner = crate::stem_foundation_purge::continue_purge(owner)?;
     let owner = crate::stem_head_foundations::continue_reduction(owner)?;

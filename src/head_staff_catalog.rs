@@ -16,7 +16,7 @@ impl TemplateCatalog {
     pub fn validate(&self) -> Result<(), String> {
         if !matches!(self.family.as_str(), "Bravura" | "Leland" | "FinaleJazz")
             || (!matches!(self.stored_point_size, 32 | 40 | 51 | 64)
-                && !(self.family == "Bravura" && self.stored_point_size == 44))
+                && !(self.family == "Bravura" && matches!(self.stored_point_size, 44 | 47)))
         {
             return Err("unsupported_head_template_catalog".into());
         }
@@ -54,6 +54,8 @@ impl TemplateCatalog {
         self.validate()?;
         if self.family == "Bravura" && self.stored_point_size == 44 {
             Bank::load_cue_default().map_err(|e| e.to_string())
+        } else if self.family == "Bravura" && self.stored_point_size == 47 {
+            Bank::load_calibrated_bravura(47).map_err(|e| e.to_string())
         } else {
             Bank::load_coverage(&self.family).map_err(|e| e.to_string())
         }
@@ -67,6 +69,8 @@ impl TemplateCatalog {
             .map_err(|e| e.to_string())?;
         let supported = if self.family == "Bravura" && self.stored_point_size == 44 {
             matches!(size, 28 | 44)
+        } else if self.family == "Bravura" && self.stored_point_size == 47 {
+            size == 47
         } else {
             matches!(size, 32 | 40 | 51 | 64)
         };

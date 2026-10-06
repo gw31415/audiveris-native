@@ -158,7 +158,7 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stems()?;
     Ok(
-        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; SigReducer.checkHooksHaveStem; cross-system aliases remain pending"}),
+        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; SigReducer.checkHooksHaveStem; owned cross-system orphan purge precedes this endpoint check; full reduction pending"}),
     )
 }
 /// BeamHeadCleaner.process removes temporary beam/head supports at LINKS.

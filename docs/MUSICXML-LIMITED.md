@@ -2,18 +2,20 @@
 
 # Native image → MusicXML
 
+Latest addition: [two-system beam input with measured47pt heads](#two-system-beams-with-measured-head-font-and-owned-epilog),20 original-matching events and one actual cross-system glyph-alias orphan deletion. Earlier sections below retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded monophonic duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
-Verified inputs so far are three independent clean opaque PNG pages with Bravura, interline11, zero skew, ordinary five-line staff, treble clef, no key signature, explicit 4/4, one voice, and two/four complete measures, including two systems. Black/void heads produce quarter/half notes; the separate rest page contains quarter rests. Durations, rests, pitches, offsets and voices match original 5.11 XML-loaded HEADS followed by native original MEASURES/CHORDS/SYMBOLS/LINKS/RHYTHMS. This oracle boundary is distinct from original end-to-end transient recognition.
+The first verification checkpoint used three independent clean opaque PNG pages with Bravura, interline11, zero skew, ordinary five-line staff, treble clef, no key signature, explicit 4/4, one voice, and two/four complete measures, including two systems. Black/void heads produce quarter/half notes; the separate rest page contains quarter rests. Durations, rests, pitches, offsets and voices match original 5.11 XML-loaded HEADS followed by native original MEASURES/CHORDS/SYMBOLS/LINKS/RHYTHMS. This oracle boundary is distinct from original end-to-end transient recognition.
 
 Native quarter, quarter-rest, half-note and four-measure outputs were also checked with MusicXML 4.0 XSD and original proxymusic reimport. A fixed development renderer reconstructed that first input exactly; it is not a general engraver. The CLI refuses missing recognized meter, incomplete/excess measures, ambiguous symbols and existing outputs. It does not guess omitted music.
 
-The batch entry is `audiveris-musicxml --output-dir EXISTING_DIR [--part-name NAME] IMAGE...`. It writes one MusicXML/report pair per input, with preflight collision/no-overwrite checks. A later recognition failure stops the batch and retains individually reported successful pairs; failed writes remove that pair. Part name is metadata for one nontransposing melodic part, not instrument inference or recognition control. Three independent synthetic scores, including four measures and a system break, are verified; arbitrary real-score admission remains unverified. A central quarter-rest configuration refuses weak head optionals instead of emitting an invented note. Half rests are additionally verified at two controlled positions, including a page with provably unreachable orphan beam candidates (details below). PDF, scans/photos, nonzero skew, other fonts/scales, special staffs, full24 shapes, accidentals, general beamed/flagged short notes, dots/ties/slurs/tuplets, polyphony, pickups, multi-staff or transposing instruments remain outside this bounded path. Complete cleaner/epilog and full reduction parity are pending. All global completion flags remain false.
+The batch entry is `audiveris-musicxml --output-dir EXISTING_DIR [--part-name NAME] IMAGE...`. It writes one MusicXML/report pair per input, with preflight collision/no-overwrite checks. A later recognition failure stops the batch and retains individually reported successful pairs; failed writes remove that pair. Part name is metadata for one nontransposing melodic part, not instrument inference or recognition control. Three independent synthetic scores, including four measures and a system break, are verified; arbitrary real-score admission remains unverified. A central quarter-rest configuration refuses weak head optionals instead of emitting an invented note. Half rests are additionally verified at two controlled positions, including a page with provably unreachable orphan beam candidates (details below). PDF, scans/photos, nonzero skew, other fonts/scales, special staffs, full24 shapes, accidentals, other beam/flag configurations, dots/ties/slurs/tuplets, polyphony, pickups, multi-staff or transposing instruments remain outside this bounded path. Complete cleaner/epilog and full reduction parity are pending. All global completion flags remain false.
 
 The accepted full542 regression belongs to source48e6177; changed-source validation is recorded by checkpoint. Existing test reduction audit is deferred until current implementation/verification/necessary fixes finish. No Actions dispatch/rerun is used.
 
 
-Half-rest continuation (2026-10-05): two controlled positions of the same clean
+Half-rest continuation (2026-10-05; historical early boundary): two controlled positions of the same clean
 Bravura score contain a half rest, two quarter notes and two half notes over two
 4/4 measures. Original5.11 XML-loaded HEADS onward retains both half rests after
 LINKS/RHYTHMS. Position241 produces beam/hook candidates whose eight original
@@ -606,13 +608,55 @@ export still requires one retained stem per head; general polyphony, parallel
 relations, >16 cleaner partners, cross-system orphan finalization, wider/sloping
 erasure and full reduction/epilog remain unfinished, not planned omissions.
 
-## Ordered owned beam epilog across systems
+## Ordered owned beam epilog across systems (intermediate68d96ff)
 
 The image path now runs original ordered cross-system orphan checks on actual
 GRID neighbors/staff curves and canonical physical glyph records, then per-system
 beam-side support/contextualization. Eight original declared SIG cases agree;
 this does not claim positive orphan removal on an automatic input image.
 Existing hook/group/competition CLI examples remain the runnable examples.
-A new original-successful two-system20-event input currently stops at the exact
-Bravura47pt template dependency; no original XML is substituted as native output.
+At that intermediate source, the new original-successful two-system20-event input
+stopped at the exact Bravura47pt template dependency. The next checkpoint below
+connects it and verifies one positive image removal; original XML is never
+substituted as native output.
 Full epilog and all original nonUI functions remain pending, not omitted.
+
+## Two-system beams with measured head font and owned epilog
+
+This checkpoint accepts one original-successful clean Bravura input with measured
+47pt heads (14x12px), interline11, zero skew, ordinary five-line treble/C-major4/4,
+one voice, four complete measures over two systems. Each system starts with four
+beamed eighths and two quarters, then four quarters. Native emits20 events matching
+original5.11 full-image RHYTHMS/PAGE/export on pitches, durations, onsets, voices,
+beam marks and beamed stem directions; both outputs pass MusicXML4 XSD.
+
+```sh
+CARGO_INCREMENTAL=0 CARGO_PROFILE_DEV_DEBUG=0 cargo build --locked --bin audiveris-musicxml -j1
+mkdir -p work/two-system-beams
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-cross-system/beam-two-systems.png \
+  work/two-system-beams/score.musicxml work/two-system-beams/report.json
+```
+
+Use the configured Cargo target directory where applicable. Output files must
+not already exist. Recognition/export needs no Java runtime and reads no original
+MusicXML. The new bank contains exact original47pt ordinary oval templates only,
+without font-size substitution/interpolation. Other measured sizes/shapes remain
+bounded by their available exact assets and downstream dependencies.
+
+All retained standard beams now follow actual original VLinker scheduling, even
+when no heads/parts can be reached. The early horizontal-envelope removal shortcut
+is retired. The same image's original HEADS-loaded process→ordered Finalizer
+changes3 beams to2 by removing the stemless upper-system alias of the lower beam;
+native removes the same physical glyph alias. Actual group removal/cache ownership
+and per-system contextualization remain connected. This proves one positive
+image case; the eight declared original SIG conditions are separate comparisons.
+
+Complete cleaner/epilog/SIG and general cross-staff/system behavior, SmallBeam,
+voices/parts, other rhythms/notation, nonzero skew, real scans, special staffs and
+full24-shape page parity remain unfinished. No original nonUI function is planned
+for omission. All global completion flags stay false. Earlier verification records
+retain their own source commits.
+
+[Validation](../evidence/musicxml-cross-system/IMAGE-VALIDATION.json) and
+[next dependencies](../evidence/musicxml-cross-system/NEXT-DEPENDENCY.md).
