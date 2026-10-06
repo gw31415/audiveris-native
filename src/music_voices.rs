@@ -21,7 +21,7 @@ pub(crate) struct Voice {
 #[derive(Clone)]
 pub(crate) struct Slot {
     pub id: usize,
-    pub time_offset: u32,
+    pub time_offset: Option<u32>,
     pub incoming_ids: Vec<usize>,
 }
 #[derive(Clone, Copy)]
@@ -35,6 +35,7 @@ pub(crate) struct MeasureTiming {
     pub excess: Option<u32>,
     pub abnormal: bool,
     pub slots: Vec<Slot>,
+    pub actual: Option<u32>,
 }
 /// Voice constructor -> Measure.generateVoiceId(HIGH), Voice.addChord. The
 /// caller has already admitted a single voice in this nonmerged one-staff part.
@@ -172,7 +173,7 @@ pub(crate) fn generate_slots(
         time_to_slot.insert(*time, slot_id);
         slots.push(Slot {
             id: slot_id,
-            time_offset: *time,
+            time_offset: Some(*time),
             incoming_ids: incoming,
         });
     }
@@ -209,7 +210,7 @@ pub(crate) fn generate_slots(
                 let end = crate::music_time::parse_ticks(offset)?
                     .checked_add(crate::music_time::parse_ticks(duration)?)
                     .ok_or("music_time_tick_overflow")?;
-                if end > slot.time_offset {
+                if end > slot.time_offset.ok_or("music_slot_time_required")? {
                     voice.slots.insert(
                         slot.id,
                         SlotVoice {
@@ -228,7 +229,81 @@ pub(crate) fn generate_slots(
     Ok(())
 }
 pub(crate) fn slots_projection(slots: &[Slot]) -> Value {
-    json!(slots.iter().map(|s|json!({"id":s.id,"time_offset":crate::music_time::format_ticks(s.time_offset),"incoming_chord_ids":s.incoming_ids})).collect::<Vec<_>>())
+    json!(slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_chord_ids":s.incoming_ids})).collect::<Vec<_>>())
+}
+
+/// Voice.getDuration uses BEGIN entries and their slot time, not the last
+/// horizontally sorted chord. Measure-rest voices stay outside this normal
+/// constructor/path. Nullable slot time propagates an unknown Voice duration.
+pub(crate) fn slot_duration(
+    graph: &crate::shared_sig::Graph,
+    voice: &Voice,
+    slots: &[Slot],
+) -> Result<Option<u32>, String> {
+    let snapshot = graph.snapshot();
+    let mut duration = 0;
+    for slot in slots {
+        if let Some(info) = voice.slots.get(&slot.id).filter(|s| !s.continuing) {
+            let Some(time) = slot.time_offset else {
+                return Ok(None);
+            };
+            let end = slot_chord_end(&snapshot, info.chord_id, time)?;
+            duration = duration.max(end);
+        }
+    }
+    Ok(Some(duration))
+}
+fn slot_chord_end(snapshot: &Value, id: usize, time: u32) -> Result<u32, String> {
+    let chord = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == id)
+        .ok_or("music_slot_live_chord_required")?;
+    let duration = chord["duration"]
+        .as_str()
+        .ok_or("music_slot_duration_required")?;
+    time.checked_add(crate::music_time::parse_ticks(duration)?)
+        .ok_or_else(|| "music_time_tick_overflow".into())
+}
+/// MeasureStack.getSlotsDuration: all incoming chords, missing slot clocks
+/// skipped. A CONTINUE entry does not introduce a second chord duration.
+pub(crate) fn stack_slots_duration(
+    graph: &crate::shared_sig::Graph,
+    slots: &[Slot],
+) -> Result<u32, String> {
+    let snapshot = graph.snapshot();
+    let mut duration = 0;
+    for slot in slots {
+        if let Some(time) = slot.time_offset {
+            for &id in &slot.incoming_ids {
+                duration = duration.max(slot_chord_end(&snapshot, id, time)?);
+            }
+        }
+    }
+    Ok(duration)
+}
+/// StackRhythm.readStackActualDuration. The current one-part/one-staff Measure
+/// owns one stack. Non-empty voice/no-slot fallback is not a whole-rest Voice
+/// implementation; that separate constructor/recognition still must be wired.
+pub(crate) fn read_stack_actual_duration(
+    graph: &crate::shared_sig::Graph,
+    voices: &[Voice],
+    measure: &mut Measure,
+    measure_index: usize,
+) -> Result<(), String> {
+    let actual = if !voices.iter().any(|v| v.measure == measure_index) {
+        Some(0)
+    } else {
+        let duration = stack_slots_duration(graph, &measure.timing.slots)?;
+        if duration != 0 {
+            Some(duration)
+        } else {
+            measure.timing.expected
+        }
+    };
+    measure.timing.actual = actual;
+    Ok(())
 }
 
 /// Original Voice.checkDuration for normal voices in the existing exact grid.
@@ -310,6 +385,10 @@ pub(crate) fn timed_projection(
     let mut result = projection(voices, measures);
     for (row, voice) in result.as_array_mut().unwrap().iter_mut().zip(voices) {
         row["end_time"] = json!(last_end_ticks(graph, voice)?.map(crate::music_time::format_ticks));
+        row["duration"] = json!(
+            slot_duration(graph, voice, &measures[voice.measure].timing.slots)?
+                .map(crate::music_time::format_ticks)
+        );
     }
     Ok(result)
 }
@@ -822,7 +901,7 @@ mod group_tests {
                     .clone()
             };
             json!({"abnormal":m.timing.abnormal,
-                "slots":m.timing.slots.iter().map(|s|json!({"id":s.id,"time_offset":crate::music_time::format_ticks(s.time_offset),"incoming_bounds":s.incoming_ids.iter().map(|&id|bounds(id)).collect::<Vec<_>>()})).collect::<Vec<_>>(),
+                "slots":m.timing.slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_bounds":s.incoming_ids.iter().map(|&id|bounds(id)).collect::<Vec<_>>()})).collect::<Vec<_>>(),
                 "voices":voices.iter().map(|v|json!({"id":v.id,"slots":m.timing.slots.iter().filter_map(|s|v.slots.get(&s.id).map(|info|json!({"slot_id":s.id,"status":if info.continuing {"CONTINUE"}else{"BEGIN"},"chord_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>()})
         };
         generate_slots(&mut slot_graph, &mut slot_voice, &mut slot_measure, 0).unwrap();
@@ -887,6 +966,90 @@ mod group_tests {
             before_slots
         );
         assert_eq!(slot_graph.snapshot(), before_graph);
+        let duration_controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-slot-duration/controls.json"
+        ))
+        .unwrap();
+        let mut duration_graph = owner.owner.graph.clone();
+        let mut duration_voices = vec![owner.voices[0].clone()];
+        let mut duration_measure = owner.measures[0].clone();
+        let duration_projection = |g: &crate::shared_sig::Graph, v: &[Voice], m: &Measure| {
+            json!({"voices":v.iter().map(|voice|json!({"id":voice.id,"duration":slot_duration(g,voice,&m.timing.slots).unwrap().map(crate::music_time::format_ticks).unwrap_or_else(||"null".into())})).collect::<Vec<_>>(),
+            "slots_duration":crate::music_time::format_ticks(stack_slots_duration(g,&m.timing.slots).unwrap()),
+            "actual_duration":m.timing.actual.map(crate::music_time::format_ticks).unwrap_or_else(||"null".into())})
+        };
+        read_stack_actual_duration(&duration_graph, &duration_voices, &mut duration_measure, 0)
+            .unwrap();
+        assert_eq!(
+            duration_projection(&duration_graph, &duration_voices, &duration_measure),
+            duration_controls["saved"]
+        );
+        let first_id = duration_voices[0].chord_ids[0];
+        let mut first_node = duration_graph.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == first_id)
+            .unwrap()
+            .clone();
+        let first_key: Key = serde_json::from_value(first_node["origin"].clone()).unwrap();
+        first_node["time_offset"] = json!("1");
+        duration_graph
+            .vertex(first_key, first_node.clone(), false)
+            .unwrap();
+        for v in &mut duration_voices {
+            v.slots.clear();
+        }
+        generate_slots(
+            &mut duration_graph,
+            &mut duration_voices,
+            &mut duration_measure,
+            0,
+        )
+        .unwrap();
+        read_stack_actual_duration(&duration_graph, &duration_voices, &mut duration_measure, 0)
+            .unwrap();
+        assert_eq!(
+            last_end_ticks(&duration_graph, &duration_voices[0]).unwrap(),
+            Some(16)
+        );
+        assert_eq!(
+            duration_projection(&duration_graph, &duration_voices, &duration_measure),
+            duration_controls["maximum"]
+        );
+        first_node["time_offset"] = json!("0");
+        duration_graph.vertex(first_key, first_node, false).unwrap();
+        for v in &mut duration_voices {
+            v.slots.clear();
+        }
+        generate_slots(
+            &mut duration_graph,
+            &mut duration_voices,
+            &mut duration_measure,
+            0,
+        )
+        .unwrap();
+        duration_measure.timing.slots[0].time_offset = None;
+        read_stack_actual_duration(&duration_graph, &duration_voices, &mut duration_measure, 0)
+            .unwrap();
+        assert_eq!(
+            duration_projection(&duration_graph, &duration_voices, &duration_measure),
+            duration_controls["missing_slot_time"]
+        );
+        duration_measure.timing.slots.clear();
+        read_stack_actual_duration(&duration_graph, &duration_voices, &mut duration_measure, 0)
+            .unwrap();
+        assert_eq!(
+            duration_projection(&duration_graph, &duration_voices, &duration_measure),
+            duration_controls["no_slots_with_voice"]
+        );
+        duration_voices.clear();
+        read_stack_actual_duration(&duration_graph, &duration_voices, &mut duration_measure, 0)
+            .unwrap();
+        assert_eq!(
+            duration_projection(&duration_graph, &duration_voices, &duration_measure),
+            duration_controls["no_voices"]
+        );
         let timed_page_graph = owner.owner.graph.clone();
         let snapshot = owner.owner.graph.snapshot();
         let before_cache = snapshot["inters"]

@@ -664,6 +664,12 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         // admission. General Rational/slots/measure-rest/pickup remain pending.
         crate::music_voices::generate_slots(&mut graph, &mut m.voices, &mut m.measures[mi], mi)?;
         m.measures[mi].timing.expected = Some(expected_ticks);
+        crate::music_voices::read_stack_actual_duration(
+            &graph,
+            &m.voices,
+            &mut m.measures[mi],
+            mi,
+        )?;
         crate::music_voices::check_duration(
             &graph,
             &mut m.voices[voice_index],
@@ -671,6 +677,9 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         )?;
         let voice_end = crate::music_voices::last_end_ticks(&graph, &m.voices[voice_index])?
             .ok_or("musicxml_owned_voice_timing_required")?;
+        if m.measures[mi].timing.actual != Some(offset) {
+            return Err("musicxml_owned_stack_timing_mismatch".into());
+        }
         if voice_end != offset {
             return Err("musicxml_owned_voice_timing_mismatch".into());
         }
@@ -683,7 +692,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 quarters(expected_ticks)
             ));
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"abnormal":m.measures[mi].timing.abnormal,"stack_excess":m.measures[mi].timing.excess.map(rational),"slots":crate::music_voices::slots_projection(&m.measures[mi].timing.slots),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":m.measures[mi].timing.actual.map(rational),"abnormal":m.measures[mi].timing.abnormal,"stack_excess":m.measures[mi].timing.excess.map(rational),"slots":crate::music_voices::slots_projection(&m.measures[mi].timing.slots),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());

@@ -1191,3 +1191,23 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
 
 [Original/targeted validation](../evidence/musicxml-stack-slots/VALIDATION.json).
 Full595 remains the result at source95e191b, not a new full run.
+
+
+## Slot-based Voice/stack duration (2026-10-06)
+
+`Voice.getDuration` reads the maximum end of its `BEGIN` slots; it is distinct
+from the last-chord `end_time`. `MeasureStack.getSlotsDuration` reads all actual
+slot incomings, skipping unknown slot times. `StackRhythm.readStackActualDuration`
+retains zero for no Voices, the slot duration when positive, otherwise the
+expected duration. These original computations now feed the admitted image
+CLI's retained stack timing and consistency check; `voices[].duration` is added,
+and `measures[].actual_duration` comes from this stored state. Existing example
+commands/output bytes stay valid.
+
+Five original saved/declaration states compare normal duration, a non-last
+chord's maximum, unknown slot time, Voice-without-slots and no Voices. The
+no-slot fallback does not implement measure-rest recognition/Voice construction.
+Shared multi-part stacks, general Rational/voice matching/whole-rest Voice,
+automatic slur/tie/lyrics and complete cleaner/epilog remain pending. All global
+completion flags remain false. [Validation](../evidence/musicxml-slot-duration/VALIDATION.json).
+Full595 remains at95e191b; this stage uses targeted tests.
