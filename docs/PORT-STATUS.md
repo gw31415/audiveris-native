@@ -817,3 +817,11 @@ getter/独立4宣言条件、既存MusicXML16＋getter/Voice2対象検証、そ�
 再取得時に比較し、旧bytes/hashは元ソースの証跡として保持。一般slot/voice・
 複合特殊headのnote別engravingは未完。
 [検証範囲](../evidence/musicxml-chord-stem-direction/VALIDATION.json)。
+
+
+全休符ページの境界（2026-10-06）：小さい1入力を原版full batchへ一度だけ
+通したが、原版MusicXML divisions=0でXSD拒否。native既存コードはhead0の
+2全小節休符・各4拍・XSD有効だが、原版MusicXML成功一致として数えない。
+この比較の再実行/座標探索/独自の原版音価捏造は行わない。
+[観測と原本](../evidence/musicxml-all-measure-rest/ORIGINAL-LIMIT.json)、
+[次の原版依存](../evidence/musicxml-all-measure-rest/NEXT-DEPENDENCY.md)。

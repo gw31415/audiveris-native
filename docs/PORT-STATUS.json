@@ -414,5 +414,15 @@
     "execution": "initial cargo test --workspace --offline --locked -j1 interrupted after136 completed executables/496 tests by exec-server transport disconnect; exact remaining40 executables resumed from same Cargo no-run JSON inventory; interrupted4-test executable repeated; all7 workspace doc-test groups then passed",
     "evidence": "evidence/musicxml-voice-chord-ownership/FULL-VALIDATION.json",
     "independent_clone_Linux_CLI": "READBACK.json: fetched Linux build,20+11 original-matching events,prior MusicXML bytes/native-original XSD,retained Voice/chord SIG IDs and root/src/crates equal"
-  }
+  },
+  "known_original_limitations": [
+    {
+      "case": "independent two-whole-rest/no-head page",
+      "original": "full batch export divisions0 -> MusicXML4 XSD rejects",
+      "native": "existing code emits2 rests/four beats each and valid XML, but not original export parity evidence",
+      "evidence": "evidence/musicxml-all-measure-rest/ORIGINAL-LIMIT.json",
+      "retries": "one original run; no coordinate search",
+      "next": "evidence/musicxml-all-measure-rest/NEXT-DEPENDENCY.md"
+    }
+  ]
 }

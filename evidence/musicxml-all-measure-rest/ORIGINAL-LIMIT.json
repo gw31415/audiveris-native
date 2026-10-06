@@ -1,0 +1,28 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "native_source": "7c54571a330d99c611d7e498d3fd8b95c189f0a1",
+  "case": "single independent two-measure Bravura/normal-staff/G-clef/C-major4/4 image with only whole-measure rests and no heads",
+  "comparison_status": "not a successful original MusicXML parity case",
+  "results": {
+    "original.musicxml": {
+      "XSD_valid": false,
+      "divisions": "0",
+      "errors": [
+        "Element 'divisions': [facet 'minExclusive'] The value '0' must be greater than '0'."
+      ],
+      "notes": 2
+    },
+    "native.musicxml": {
+      "XSD_valid": true,
+      "divisions": "1",
+      "errors": [],
+      "notes": 2
+    }
+  },
+  "original_limitation": "original5.11 full batch recognition exported divisions0, rejected by MusicXML4 XSD; one original run only, no coordinate search or attempt to invent original durations",
+  "native_observation": "unchanged existing native code recognizes2 whole-rest events of4 quarter beats each, no live heads and no slots, native XSD valid; not counted as original export equivalence",
+  "implementation_change": "none; do not imitate invalid original exporter divisions or label all-rest original parity complete",
+  "next_dependency": "original SlotsRetriever narrow/wide relationships -> MeasureRhythm.buildCompoundSlots/processStartingChords/SlotMapper -> ChordsMapper/VoiceDistance, then genuine shared stack ownership",
+  "original_log_sha256": "1a0393106885f39304153e3ac777560be14995f351d5c81c2900481562ab4991",
+  "all_global_completion_flags": false
+}

@@ -1334,3 +1334,16 @@ note stem metadata; old report hashes remain evidence for their original source.
 Full compound/mirror/special-head per-note engraving and stem default-y metadata
 remain partial, alongside general Voice matching/shared stacks/lyrics/automatic
 slur-tie/correction/full cleaner-epilog. All global completion flags remain false.
+
+
+All-rest original export boundary (2026-10-06): one two-measure input with only
+whole rests and no heads reaches original full batch export, but original5.11
+emits `<divisions>0</divisions>` and fails MusicXML4 XSD. No additional original
+run or position search was made. Existing native code already recognizes two
+whole rests (four quarter beats each) and emits valid XML with divisions1; this
+is a native observation, not a successful original MusicXML equality claim.
+The input and both outputs are retained at
+[evidence/musicxml-all-measure-rest](../evidence/musicxml-all-measure-rest/ORIGINAL-LIMIT.json).
+Full all-rest original export parity remains unconfirmed. Next connected work is
+[geometric narrow/wide slots and real Voice matching](../evidence/musicxml-all-measure-rest/NEXT-DEPENDENCY.md),
+not more invalid-original export retries.
