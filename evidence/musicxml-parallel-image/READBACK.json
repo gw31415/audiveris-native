@@ -1,0 +1,118 @@
+{
+  "validated_source_commit": "522f99b02ed3f61c06506342e0e0d87f499b28ac",
+  "ordinary_main_push": "ls-remote and independent fetch matching",
+  "trees": {
+    "commit": "522f99b02ed3f61c06506342e0e0d87f499b28ac",
+    "root_tree": "1014e97cb00f02e1d65f09caafde08f2fa907675",
+    "src_tree": "5e52c604b0fcae51c3978ec7570ee20502d06113",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone reused; offline/locked/j1 low-debug Linux build",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "6f8fdeb1cdc7fbf6dae022899b1940726a10e4bcb70c27a533583044cafc944b",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "previous_XML_sha256_at_73133e6": "6f8fdeb1cdc7fbf6dae022899b1940726a10e4bcb70c27a533583044cafc944b",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "e33b330245041e8ff95d286a00038b61f34fe0e7f808eee0a660e0b4c7fca24c",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "previous_XML_sha256_at_73133e6": "e33b330245041e8ff95d286a00038b61f34fe0e7f808eee0a660e0b4c7fca24c",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-measure-rest/quarter-whole-rest.png",
+      "events_original_matching": 5,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "10f31bf15800f5b7faaff64fe0e1e4159dc1065bc827dec71a8141c26d0e70f4",
+      "comparison": "pitch/rest/type/Voice/duration/onset and rest measure=yes/type omission; full XML engraving/metadata equality not claimed",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+      "events_original_matching": 16,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+      "full_original_image_export": "one original5.11 full recognition/export; normalized musical stream matching including two backups",
+      "saved_original_getters": "exact chord bounds/Voices/times/durations, slot tables and Voice members; original transient finalCheck recomputed after reload",
+      "engraving_equality_claimed": false,
+      "completion_flags": false
+    }
+  ],
+  "preliminary_measure_slots": [
+    {
+      "image": "beam-two-systems.omr",
+      "geometric_relations_original_matching": 168,
+      "narrow_and_wide_partitions": "original matching",
+      "compound_partition_and_lookup_original_matching": 20,
+      "starting_voice_time_original_matching": 4,
+      "rookie_active_mapping_original_matching": 20,
+      "voice_lifetime_original_matching": 20,
+      "transient_narrow_clocks_original_matching": 20
+    },
+    {
+      "image": "quarter-whole-rest.omr",
+      "geometric_relations_original_matching": 24,
+      "narrow_and_wide_partitions": "original matching",
+      "compound_partition_and_lookup_original_matching": 4,
+      "starting_voice_time_original_matching": 2,
+      "rookie_active_mapping_original_matching": 4,
+      "voice_lifetime_original_matching": 4,
+      "transient_narrow_clocks_original_matching": 4
+    }
+  ],
+  "retained_slot_queries": [
+    {
+      "original_fixture": "saved-page.json",
+      "same_image_slot_geometry": "matching",
+      "original_saved_nearest_queries": "matching",
+      "actual_Linux_CLI_read_only_query": "passed"
+    },
+    {
+      "original_fixture": "measure-rest.json",
+      "same_image_slot_geometry": "matching",
+      "original_saved_nearest_queries": "matching",
+      "actual_Linux_CLI_read_only_query": "passed"
+    }
+  ],
+  "targeted_unique_tests": 3,
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "comparison": "Three prior CLI inputs retain36 events/XML bytes/XSD. One new actual parallel quarter image adds16 full original-matching events and two backups. Declared original mapping/export controls and saved final getters (transient original finalCheck recomputed) are separate evidence; no general polyphonic/all nonUI completion.",
+  "known_time_validation_trace": [
+    {
+      "input_prefix": "clone-parallel-image-baseline",
+      "live_applied_validation_decisions": 10,
+      "normal_image_rejections_occurred": false
+    },
+    {
+      "input_prefix": "clone-parallel-image-baseline-hooks",
+      "live_applied_validation_decisions": 6,
+      "normal_image_rejections_occurred": false
+    },
+    {
+      "input_prefix": "clone-parallel-image",
+      "live_applied_validation_decisions": 3,
+      "normal_image_rejections_occurred": false
+    }
+  ],
+  "all_global_completion_flags": false,
+  "GHA_Mac_Releases_Library_retry": "none",
+  "new_parallel_admission": "ordinary one-member quarter heads/4/4, exact known complete Voice sequences; other parallel duration/rest/beam/meter/gap cases guarded",
+  "negative_admission": {
+    "input": "fixtures/official-image-musicxml-parallel-voices/parallel-shorter-lower.png",
+    "result": "audiveris-musicxml: /workspace/work/git-workspace-migration/fresh-clone/fixtures/official-image-musicxml-parallel-voices/parallel-shorter-lower.png: musicxml_incomplete_or_excess_measure:1:2:quarters=3:expected=4",
+    "no_outputs_written": true,
+    "original_failure_claimed": false
+  }
+}
