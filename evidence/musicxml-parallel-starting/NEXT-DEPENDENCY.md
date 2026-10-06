@@ -10,7 +10,11 @@ The next connection is per-chord event assembly from actual Graph Voice and
 clock, replacing the current serial offset/one-Voice event contract with a
 validated owned event contract. Never overwrite the mapper's Voice/time, invent
 an unknown onset, or drop a writer ownership guard. Apply original all-Voice
-checkDuration/finalCheck rather than a sum over parallel notes. The downstream
+checkDuration/finalCheck rather than a sum over parallel notes. Original
+MeasureRhythm.finalCheck first requires Voice/time on every standard chord;
+when expected duration is known it calls Measure.checkDuration for all Voices
+and requires the Measure abnormal flag to remain false. The current image
+adapter still checks one selected Voice and complete serial duration. The downstream
 Voice/BEGIN/backup/forward writer is already connected and compared on four
 original actual-object controls. Preserve existing mono output bytes.
 
