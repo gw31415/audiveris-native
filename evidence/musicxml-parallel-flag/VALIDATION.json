@@ -1,0 +1,53 @@
+{
+  "base_source": "7428c3ca6cbf3b0c30bdd53cf30e04bed6a80a7e",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "actual parallel flag eighth/quarter Voice integration",
+  "original_comparison": {
+    "unmodified_full_image_runs": 1,
+    "input": "fixtures/official-image-musicxml-parallel-voices/parallel-flag.png",
+    "full_image_notes": 17,
+    "beam_stream": [],
+    "matching": [
+      "pitch/Voice/duration/onset/stem/no-beam/backup musical stream",
+      "actual chord/slot/Voice ownership and clocks",
+      "all Voice duration checks",
+      "HeadChordInter actual flag/beam shortening getters and intrinsic duration"
+    ],
+    "separate_evidence": "original saved recognized owner getters and recomputed transient finalCheck; no declared clock/mapping edits",
+    "beam_levels": 0,
+    "actual_flag_getters": "two upper chord flags count1; all other ordinary chords count0; exact intrinsic shortening and owned relation-derived duration"
+  },
+  "original_dependencies": [
+    "HeadChordInter.getFlagsNumber/getBeamsOrFlagsNumber",
+    "AbstractChordInter.getDurationSansDotOrTuplet",
+    "AbstractChordInter.setVoice/getBeamGroup",
+    "AbstractChordInter.setAndPushTime/pushTimeViaGroup",
+    "MeasureRhythm/ChordsMapper compound actual active/rookie mapping",
+    "PartwiseBuilder Voice traversal/beam output"
+  ],
+  "integration": "Carry original actual beam/flag shortening beside resolved intrinsic duration/type and consume it in parallel admission. The same bounded typed actual duration feeds group/slot/Voice clocks and Voice-major export. Existing resolver refuses nonblack flagged/beam heads, mixed beam+flag, multiple flags or flag value!=1, above2beam levels. No guessed clocks or output reuse.",
+  "targeted_unique_passed": 4,
+  "runs": {
+    "extended_parallel_images_and_incomplete_lower_voice": 1,
+    "existing_single_flag_and_erased_flag_refusal": 1,
+    "owned_mapper_stack_writer_final_checks": 1,
+    "existing_quarter_rest_half_heads_missing_meter_refusal": 1
+  },
+  "new_test_function_count": 0,
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "parallel half-whole heads/mixed rests/higher flags/other meters/tuplets/pickup/multi-member chords remain guarded or unconnected",
+    "general Rational/Merged/shared stack/other Voice kinds/lyrics/slur/tie/full cleaner/correction remain partial",
+    "no font/nonzero skew/scan/special staff/full24/32sources admission change"
+  ],
+  "all_global_completion_flags": false,
+  "retained_previous_validation": "Laura352heads/513exclusions verified at2b0ab6d; no affected HEADS/STEMS logic change here",
+  "renderer": "ParallelFlagRenderer draws original Bravura FLAG_1 at actual stem tips; fixture-only coordinates not used by native recognition",
+  "tested_image_scope": "new full comparison: original Bravura, normal five-line/one staff/one part, treble/C major/4/4/zero skew; no scan/font/staff/meter acceptance expansion"
+}

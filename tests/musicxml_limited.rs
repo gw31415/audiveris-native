@@ -30,6 +30,11 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
             "sixteenth-observed.json",
             "sixteenth-original-state.json",
         ),
+        (
+            "parallel-flag.png",
+            "flag-observed.json",
+            "flag-original-state.json",
+        ),
     ] {
         let original: Value =
             serde_json::from_slice(&fs::read(fixture.join(observed)).unwrap()).unwrap();
@@ -39,6 +44,7 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
         let exported = music_xml::recognize(&image).unwrap();
         let report = &exported.owner.owner.prepared.report;
         let events = report["events"].as_array().unwrap();
+        let live = report["shared_sig"]["inters"].as_array().unwrap();
         assert_eq!(events.len(), original["events"].as_array().unwrap().len());
         for reference in original["events"].as_array().unwrap() {
             let event = events
@@ -64,8 +70,20 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
                 event.get("beams").unwrap_or(&serde_json::json!([])),
                 reference.get("beams").unwrap_or(&serde_json::json!([]))
             );
+            if let Some(count) = reference["flag_count"].as_u64() {
+                let actual = event["flag_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|id| {
+                        let flag = live.iter().find(|n| n["id"] == *id).unwrap();
+                        assert_eq!(flag["kind"], "FlagInter");
+                        flag["value"].as_u64().unwrap()
+                    })
+                    .sum::<u64>();
+                assert_eq!(actual, count);
+            }
         }
-        let live = report["shared_sig"]["inters"].as_array().unwrap();
         let bounds = |id: &Value| live.iter().find(|n| n["id"] == *id).unwrap()["bounds"].clone();
         let voices = report["voices"].as_array().unwrap();
         assert_eq!(voices.len(), 4);

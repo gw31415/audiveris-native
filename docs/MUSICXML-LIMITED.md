@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest image increment: [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -1890,3 +1890,34 @@ and tuplets still need their own dependencies and image comparisons. These are
 remaining work toward full nonUI parity, not planned omissions. Previous outputs
 and all incomplete/unknown/overlap guards remain; global completion staysfalse.
 See [validation](../evidence/musicxml-parallel-sixteenth/VALIDATION.json).
+
+## Parallel flagged eighth Voice from an actual image (2026-10-06)
+
+A third new original-successful image has two flagged upper eighths plus three
+quarters against four lower quarters, then parallel quarters in measure2.
+Native17 notes, exact durations/onsets/Voice/stem, backups and no beam tags match
+original5.11 MusicXML. Actual chord/slot/Voice membership and original
+HeadChordInter.getFlagsNumber/getBeamsOrFlagsNumber/intrinsic duration getters
+agree. This is full same-image recognition/export evidence plus separately
+identified saved-owner getter evidence; declared mapper controls remain separate.
+
+The adapter now retains the already resolved actual beam/flag count beside the
+intrinsic duration/type, so parallel admission consumes the same original
+getDurationSansDotOrTuplet calculation as clock propagation. Ordinary quarter,
+single-flag eighth and one/two-beam eighth/sixteenth heads in4/4 are admitted.
+No coordinates, fixture identity, new Voice guesses or original XML are used.
+The existing erased-flag refusal and incomplete lower-Voice refusal remain.
+
+```
+mkdir -p work/cli
+cargo run --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-parallel-voices/parallel-flag.png \
+  work/cli/parallel-flag.musicxml work/cli/parallel-flag.json
+```
+
+Only development oracle tools require Java. Use new output paths. Parallel
+half/whole-note heads, mixed rests, higher flags/beam levels, other parallel
+meters, multi-member chords, shared/Merged stacks, general Rational/tuplets,
+lyrics/slur/tie and full cleaner/correction/export remain partial or unconnected.
+These stay in the complete nonUI migration plan; all completion flags remainfalse.
+See [validation](../evidence/musicxml-parallel-flag/VALIDATION.json).
