@@ -293,6 +293,7 @@ mod tests {
             index: 0,
             left: 100,
             right: 350,
+            timing: Default::default(),
         }];
         let mut chords = vec![Chord {
             kind: ChordKind::Head,
@@ -471,6 +472,7 @@ mod head_chord_removal_tests {
                 index: 0,
                 left: 100,
                 right: 350,
+                timing: Default::default(),
             }];
             let mut chords = Vec::new();
             let mut labels = BTreeMap::from([(hid, "head"), (stem_id, "stem")]);

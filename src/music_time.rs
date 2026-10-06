@@ -40,3 +40,14 @@ pub(crate) fn parse_ticks(text: &str) -> Result<u32, String> {
     n.checked_mul(16 / d)
         .ok_or_else(|| "music_time_tick_overflow".into())
 }
+
+/// Difference of two u32 tick clocks is signed and has u32 magnitude.
+pub(crate) fn format_delta_ticks(delta: i64) -> String {
+    let value =
+        format_ticks(u32::try_from(delta.unsigned_abs()).expect("difference of u32 clocks"));
+    if delta < 0 {
+        format!("-{value}")
+    } else {
+        value
+    }
+}

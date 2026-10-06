@@ -12,6 +12,16 @@ pub(crate) struct Voice {
     pub measure: usize,
     pub starting_staff: u64,
     pub chord_ids: Vec<usize>,
+    pub termination: Option<i64>,
+    pub excess: Option<u32>,
+}
+/// The admitted one-part/one-staff measure has one stack; general shared
+/// multi-part stacks remain pending and must share this state when connected.
+#[derive(Clone, Default)]
+pub(crate) struct MeasureTiming {
+    pub expected: Option<u32>,
+    pub excess: Option<u32>,
+    pub abnormal: bool,
 }
 /// Voice constructor -> Measure.generateVoiceId(HIGH), Voice.addChord. The
 /// caller has already admitted a single voice in this nonmerged one-staff part.
@@ -49,6 +59,8 @@ pub(crate) fn single(
         measure: measure_index,
         starting_staff: measure.staff,
         chord_ids: members.iter().map(|c| c.id).collect(),
+        termination: None,
+        excess: None,
     })
 }
 /// Measure.removeVoiceChord -> Voice.removeChord. Remove an empty Voice only
@@ -75,10 +87,49 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
             .map(|v| {
                 let m = &measures[v.measure];
                 json!({"id":v.id,"kind":"HIGH","system_id":m.system,"part_id":m.part,
-            "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids})
+            "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids,"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks)})
             })
             .collect::<Vec<_>>()
     )
+}
+
+/// Original Voice.checkDuration for normal voices in the existing exact grid.
+/// Underflow sets termination only. Excess persists and updates stack maximum;
+/// absent timing marks abnormal without erasing previous termination/excess.
+pub(crate) fn check_duration(
+    graph: &crate::shared_sig::Graph,
+    voice: &mut Voice,
+    measure: &mut Measure,
+) -> Result<(), String> {
+    if voice.chord_ids.is_empty() {
+        return Ok(());
+    }
+    let end = match last_end_ticks(graph, voice) {
+        Ok(Some(end)) => end,
+        Ok(None) => {
+            measure.timing.abnormal = true;
+            return Ok(());
+        }
+        Err(error) => {
+            measure.timing.abnormal = true;
+            return Err(error);
+        }
+    };
+    let Some(expected) = measure.timing.expected else {
+        measure.timing.abnormal = true;
+        return Ok(());
+    };
+    let delta = i64::from(end) - i64::from(expected);
+    voice.termination = Some(delta);
+    if delta > 0 {
+        let excess = delta as u32;
+        voice.excess = Some(excess);
+        measure.timing.abnormal = true;
+        if measure.timing.excess.is_none_or(|old| excess > old) {
+            measure.timing.excess = Some(excess);
+        }
+    }
+    Ok(())
 }
 
 /// Voice.getLastChord -> actual AbstractChord.getEndTime. Nullable duration or
@@ -1047,6 +1098,61 @@ mod group_tests {
             timing_state(&owner.owner.graph, &owner.voices[timed_voice]),
             timing["after_last_removal"]
         );
+        let duration: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-voice-duration/controls.json"
+        ))
+        .unwrap();
+        let duration_state = |voice: &Voice, measure: &Measure| {
+            json!({
+            "termination":voice.termination.map(crate::music_time::format_delta_ticks),
+            "voice_excess":voice.excess.map(crate::music_time::format_ticks),
+            "measure_abnormal":measure.timing.abnormal,
+            "stack_excess":measure.timing.excess.map(crate::music_time::format_ticks),
+            "expected_duration":measure.timing.expected.map(crate::music_time::format_ticks)})
+        };
+        let mut shortened_voice = owner.voices[timed_voice].clone();
+        let mut shortened_measure = owner.measures[shortened_voice.measure].clone();
+        assert_eq!(
+            duration_state(&shortened_voice, &shortened_measure),
+            duration["complete"]
+        );
+        check_duration(
+            &owner.owner.graph,
+            &mut shortened_voice,
+            &mut shortened_measure,
+        )
+        .unwrap();
+        assert_eq!(
+            duration_state(&shortened_voice, &shortened_measure),
+            duration["shortened"]
+        );
+        let mut excess_graph = owner.owner.graph.clone();
+        let end_id = *shortened_voice.chord_ids.last().unwrap();
+        let mut end_node = excess_graph.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == end_id)
+            .unwrap()
+            .clone();
+        let end_key: Key = serde_json::from_value(end_node["origin"].clone()).unwrap();
+        end_node["time_offset"] = json!("1");
+        excess_graph
+            .vertex(end_key, end_node.clone(), false)
+            .unwrap();
+        check_duration(&excess_graph, &mut shortened_voice, &mut shortened_measure).unwrap();
+        assert_eq!(
+            duration_state(&shortened_voice, &shortened_measure),
+            duration["excess"]
+        );
+        end_node["time_offset"] = Value::Null;
+        excess_graph.vertex(end_key, end_node, false).unwrap();
+        check_duration(&excess_graph, &mut shortened_voice, &mut shortened_measure).unwrap();
+        assert_eq!(
+            duration_state(&shortened_voice, &shortened_measure),
+            duration["missing_offset"]
+        );
+
         let remaining = *owner.voices[timed_voice].chord_ids.last().unwrap();
         let mut data = owner.owner.graph.snapshot()["inters"]
             .as_array()

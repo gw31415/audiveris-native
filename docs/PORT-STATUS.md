@@ -747,3 +747,24 @@ false.
 
 [Validation](../evidence/musicxml-voice-end-time/VALIDATION.json).
 Latest full595 remains earlier source95e191b; this unit uses targeted regressions.
+
+### Normal Voice.checkDuration state in the image CLI
+
+Original normal-voice duration checks now update the retained Voice's
+`termination`/`excess` and the admitted one-part/one-staff measure's expected
+time, abnormal flag and stack-excess maximum. A short voice sets negative
+termination only; a long voice sets positive excess and abnormal. Missing
+offset marks abnormal without clearing prior termination/excess. Four
+sequential original saved-state controls match these histories.
+
+The CLI JSON exposes `voices[].termination`, `voices[].excess`,
+`measures[].abnormal` and `measures[].stack_excess` alongside the prior end_time.
+Existing image examples/commands are preserved; incomplete/excess measures
+continue to refuse export, rather than claiming automatic correction.
+Current exact1/16 ticks and the single-part-per-stack admission remain. General
+shared stacks/Rational/whole-measure-rest Voice/slots/voice matching/MeasureFixer
+and pickup, automatic curves/ties/lyrics/full cleaner/epilog are pending.
+All global completion flags remain false.
+
+[Validation](../evidence/musicxml-voice-duration/VALIDATION.json).
+Full595 remains earlier source95e191b; this unit uses targeted regressions.

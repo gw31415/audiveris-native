@@ -1,0 +1,37 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "Voice.checkDuration normal-voice termination/excess and one-part/one-staff measure-stack timing state -> actual image CLI; exact existing1/16 clock",
+  "original_comparison": "sequential actual original saved Voice states after complete, last-chord removal, declared excess offset, missing offset; negative termination alone for short, positive excess/abnormal and maximum stack excess for long, prior termination/excess retained when offset missing",
+  "integration": "actual stored Voice.termination/excess and Measure timing expected/excess/abnormal retained; native CLI report voices adds termination/excess, measures adds abnormal/stack_excess; strict incomplete/excess export refusal unchanged",
+  "boundary": "original saved timed-state declaration separate from automated correction; general multi-part shared stack not represented by this admitted one-part/one-staff owner",
+  "limits": [
+    "full Rational/tuplets/negative time and whole-measure-rest voice constructor/branch pending",
+    "general shared multi-part stack/slots/voice matching/MeasureFixer/pickup pending",
+    "unsupported timing outside exact native grid remains explicit error; no full original exception-path claim",
+    "automatic curves/ties/lyrics/full cleaner/epilog pending"
+  ],
+  "original_fixture": "fixtures/official-voice-duration/controls.json",
+  "original_log_sha256": "d564659004966c9d1555939fcca7c9719d850fdc69902c2a6913d92e421790f0",
+  "previous_full_validation": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "all_global_completion_flags": false,
+  "targeted_validation": {
+    "tests_passed": 24,
+    "groups": {
+      "target.log": 1,
+      "chords.log": 8,
+      "regression.log": 15
+    },
+    "fmt": "passed",
+    "workspace_all_target_clippy": "passed -D warnings",
+    "log_sha256": {
+      "target.log": "10aa586a489b048abd5c3a93e06fac07599c8b7d306300c976eab34125583714",
+      "chords.log": "1b7ff13a2d81eb9e7dcc093465a951ad9a2761f089ec263d8b7e434fd25928e9",
+      "regression.log": "3ed5ccd1a171be64dee82b79c031af8614a74a727f66bb0211b40378b39fd2a0",
+      "fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy.log": "7267542e94ad7379efa1f1b26249e5d7d9ff046dbd6439f60101e68b82d690de"
+    }
+  }
+}

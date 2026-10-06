@@ -1925,6 +1925,7 @@ mod rest_chord_identity_tests {
             index: 0,
             left: 200,
             right: 400,
+            timing: Default::default(),
         }];
         for case in oracle["cases"].as_array().unwrap() {
             let mut graph = Graph::default();

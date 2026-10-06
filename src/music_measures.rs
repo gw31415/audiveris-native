@@ -30,6 +30,7 @@ pub(crate) struct Measure {
     pub index: usize,
     pub left: i64,
     pub right: i64,
+    pub timing: crate::music_voices::MeasureTiming,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum ChordKind {
@@ -160,6 +161,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                         index,
                         left: previous,
                         right: x,
+                        timing: Default::default(),
                     });
                 }
                 previous = x;
@@ -177,6 +179,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     index: index + 1,
                     left: previous,
                     right,
+                    timing: Default::default(),
                 });
             }
             let header = owner.upstream_report["headers"]["staffs"]

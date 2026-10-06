@@ -260,7 +260,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     let mut carried_meter = None;
     let mut carried_time_symbol = None;
     let mut carried_key: Option<(Value, i64)> = None;
-    for (mi, measure) in m.measures.iter().enumerate() {
+    for mi in 0..m.measures.len() {
+        let measure = m.measures[mi].clone();
         let mut chords = m
             .chords
             .iter()
@@ -380,7 +381,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .ok_or("musicxml_measure_local_clef_required")?;
         let initial_attributes = clef_attributes(initial_clef)?;
         let clef_id = initial_clef["id"].as_u64();
-        let voice = crate::music_voices::single(mi, measure, &chords, &m.voices)?;
+        let voice = crate::music_voices::single(mi, &measure, &chords, &m.voices)?;
         let voice_id = voice.id;
         let voice_index = m.voices.len();
         m.voices.push(voice);
@@ -659,8 +660,14 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .ok_or("musicxml_voice_duration_overflow")?;
         }
         // Voice.checkDuration uses the last actual AbstractChord.getEndTime.
-        // General termination/excess state and pickup/underfilled correction
-        // remain pending; strict complete-measure admission is retained.
+        // Normal-voice termination/excess updates precede the retained strict
+        // admission. General Rational/slots/measure-rest/pickup remain pending.
+        m.measures[mi].timing.expected = Some(expected_ticks);
+        crate::music_voices::check_duration(
+            &graph,
+            &mut m.voices[voice_index],
+            &mut m.measures[mi],
+        )?;
         let voice_end = crate::music_voices::last_end_ticks(&graph, &m.voices[voice_index])?
             .ok_or("musicxml_owned_voice_timing_required")?;
         if voice_end != offset {
@@ -675,7 +682,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 quarters(expected_ticks)
             ));
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"abnormal":m.measures[mi].timing.abnormal,"stack_excess":m.measures[mi].timing.excess.map(rational),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
