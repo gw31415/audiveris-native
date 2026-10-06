@@ -5,6 +5,7 @@ use crate::{
     beam_dispatch,
     shared_sig::{Graph, Key},
     stem_image_owned::OwnedItems,
+    stem_overlap_ownership::Ownership,
 };
 use audiveris_area::LinearArea;
 use audiveris_staff_removal::{GlyphPixels, Orientation};
@@ -81,7 +82,7 @@ impl Geometry {
         } else {
             b
         };
-        let area = if n["kind"] == "HeadInter" {
+        let area = if matches!(n["kind"].as_str(), Some("HeadInter" | "HeadChordInter")) {
             None
         } else {
             let m: [f64; 4] = serde_json::from_value(n["median"].clone())
@@ -168,7 +169,14 @@ fn candidates(snapshot: &Value) -> Result<Vec<&Value>, String> {
         }
         if !matches!(
             n["kind"].as_str(),
-            Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "BarlineInter")
+            Some(
+                "HeadInter"
+                    | "HeadChordInter"
+                    | "StemInter"
+                    | "BeamInter"
+                    | "BeamHookInter"
+                    | "BarlineInter"
+            )
         ) {
             return Err("foundation_overlap_class_dependency_pending".into());
         }
@@ -179,7 +187,10 @@ fn candidates(snapshot: &Value) -> Result<Vec<&Value>, String> {
         {
             return Err("foundation_overlap_special_head_dependency_pending".into());
         }
-        if !n["mirror_id"].is_null() || !n["mirror"].is_null() || !n["member_ids"].is_null() {
+        if !n["mirror_id"].is_null()
+            || !n["mirror"].is_null()
+            || (!n["member_ids"].is_null() && n["kind"] != "HeadChordInter")
+        {
             return Err("foundation_overlap_mirror_ensemble_pending".into());
         }
         key(n)?;
@@ -189,16 +200,60 @@ fn candidates(snapshot: &Value) -> Result<Vec<&Value>, String> {
     nodes.sort_by(|a, b| a["bounds"][0].as_i64().cmp(&b["bounds"][0].as_i64()));
     Ok(nodes)
 }
+// AbstractInter.overlaps: an ensemble is tested through its actual members,
+// both directional predicates and noSupport. A box gap is not foreground.
+fn directional(
+    a: u64,
+    b: u64,
+    ownership: &Ownership<'_>,
+    geometry: &BTreeMap<u64, Geometry>,
+) -> Result<bool, String> {
+    let left = ownership.nodes[&a];
+    let right = ownership.nodes[&b];
+    if left["kind"] == "HeadInter" && right["kind"] == "HeadInter" {
+        return crate::head_registration::overlaps(left, right);
+    }
+    let ga = geometry
+        .get(&a)
+        .ok_or("foundation_overlap_geometry_required")?;
+    let gb = geometry
+        .get(&b)
+        .ok_or("foundation_overlap_geometry_required")?;
+    if ga.implicit || gb.implicit || !rect_intersects(ga.core, gb.core) {
+        return Ok(false);
+    }
+    if let Some(members) = ownership.members.get(&a) {
+        if members.contains(&b) {
+            return Ok(false);
+        }
+        for member in members {
+            if directional(*member, b, ownership, geometry)?
+                && directional(b, *member, ownership, geometry)?
+                && ownership.no_support(*member, b)?
+            {
+                return Ok(true);
+            }
+        }
+        return Ok(false);
+    }
+    ga.overlaps(gb)
+}
+
 fn discover_graph(graph: &mut Graph, geometry: &BTreeMap<u64, Geometry>) -> Result<Value, String> {
     let snapshot = graph.snapshot();
     let nodes = candidates(&snapshot)?;
+    let ownership = Ownership::new(&snapshot)?;
     let mut staged = graph.clone();
     let mut inserted = Vec::new();
     for (i, a) in nodes.iter().enumerate() {
+        let mirrors = ownership.mirror_entities(a["id"].as_u64().unwrap());
         for b in nodes.iter().skip(i + 1) {
             // Each original reducer runs on one system. Beam/BeamHook derives
             // AbstractBeamInter and is an accepted compatible overlap.
-            if a["origin"]["system"] != b["origin"]["system"] || (beam(a) && beam(b)) {
+            if a["origin"]["system"] != b["origin"]["system"]
+                || mirrors.contains(&b["id"].as_u64().unwrap())
+                || (beam(a) && beam(b))
+            {
                 continue;
             }
             let ga = geometry
@@ -215,13 +270,10 @@ fn discover_graph(graph: &mut Graph, geometry: &BTreeMap<u64, Geometry>) -> Resu
                 }
                 continue;
             }
-            let heads = a["kind"] == "HeadInter" && b["kind"] == "HeadInter";
-            let overlaps = if heads {
-                crate::head_registration::overlaps(a, b)?
-                    && crate::head_registration::overlaps(b, a)?
-            } else {
-                ga.overlaps(gb)? && gb.overlaps(ga)?
-            };
+            let aid = a["id"].as_u64().unwrap();
+            let bid = b["id"].as_u64().unwrap();
+            let overlaps = directional(aid, bid, &ownership, geometry)?
+                && directional(bid, aid, &ownership, geometry)?;
             // Original excludeOverlap exempts standard-size head/stem contacts.
             let standard_head_stem = [(a, b), (b, a)].iter().any(|(head, stem)| {
                 head["kind"] == "HeadInter"
@@ -245,7 +297,8 @@ fn discover_graph(graph: &mut Graph, geometry: &BTreeMap<u64, Geometry>) -> Resu
     Ok(
         json!({"inserted_exclusions":inserted,"ordinary_detectOverlaps_connected":true,
         "special_head_size_contacts_connected":true,
-        "scope":"actual glyph/core/line-area geometry, >=0.05 IOU, both directional overlaps, original small-head size exemption and support refusal before chord prolog; full-class/mirror/ensemble/header/frozen contracts pending","full_general_overlap_complete":false}),
+        "typed_head_mirror_and_stemless_chord_member_predicates_connected":true,
+        "scope":"actual glyph/core/line-area geometry, >=0.05 IOU, both directional overlaps, original small-head exemption, typed head mirrors/chord members and support refusal; stem-bound/other ensemble/header/full-class contracts pending","full_general_overlap_complete":false}),
     )
 }
 
@@ -472,6 +525,187 @@ mod tests {
     }
 
     #[test]
+    fn original_typed_mirrors_and_actual_chord_members_preserve_overlap_contracts() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-foundation-mirror-ensemble/controls.json"
+        ))
+        .unwrap();
+        for case in oracle["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let mut geometry = BTreeMap::new();
+            let mut keys = BTreeMap::new();
+            let mut labels = BTreeMap::new();
+            let mut ids = Vec::new();
+            for (i, n) in case["nodes"].as_array().unwrap().iter().enumerate() {
+                let k = Key {
+                    system: 1,
+                    phase: match n["kind"].as_str().unwrap() {
+                        "HeadInter" => Phase::Head,
+                        "HeadChordInter" => Phase::Chord,
+                        _ => Phase::Beam,
+                    },
+                    local: i + 1,
+                };
+                let mut data = n.clone();
+                for field in [
+                    "label",
+                    "core_bounds",
+                    "mirror_label",
+                    "chord_label",
+                    "member_labels",
+                ] {
+                    data.as_object_mut().unwrap().remove(field);
+                }
+                if n["kind"] == "HeadChordInter" {
+                    data["member_ids"] = json!(
+                        n["member_labels"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|label| graph.id(keys[label.as_str().unwrap()]).unwrap())
+                            .collect::<Vec<_>>()
+                    );
+                }
+                let id = graph.vertex(k, data, false).unwrap();
+                ids.push(id as u64);
+                let label = n["label"].as_str().unwrap().to_owned();
+                keys.insert(label.clone(), k);
+                labels.insert(id as u64, label);
+                let g = (!n["glyph"].is_null())
+                    .then(|| beam_dispatch::glyph_from_json(&n["glyph"]).unwrap());
+                let geo = Geometry::new(n, g.as_ref()).unwrap();
+                assert_eq!(
+                    json!(geo.core.map(|v| v as i32)),
+                    n["core_bounds"],
+                    "{}",
+                    case["name"]
+                );
+                geometry.insert(id as u64, geo);
+            }
+            for e in case["initial_relations"].as_array().unwrap() {
+                let mut data = e.clone();
+                data.as_object_mut().unwrap().remove("source");
+                data.as_object_mut().unwrap().remove("target");
+                graph
+                    .relations(
+                        1,
+                        Phase::Chord,
+                        vec![(
+                            keys[e["source"].as_str().unwrap()],
+                            keys[e["target"].as_str().unwrap()],
+                            data,
+                        )],
+                    )
+                    .unwrap();
+            }
+            let snapshot = graph.snapshot();
+            let owner = Ownership::new(&snapshot).unwrap();
+            for (i, a) in ids.iter().enumerate() {
+                let n = &case["nodes"][i];
+                assert_eq!(
+                    owner.mirror(*a).map(|id| labels[&id].clone()),
+                    n["mirror_label"].as_str().map(str::to_owned),
+                    "{}",
+                    case["name"]
+                );
+                if n["kind"] == "HeadInter" {
+                    assert_eq!(
+                        owner.head_chords.get(a).map(|id| labels[id].clone()),
+                        n["chord_label"].as_str().map(str::to_owned)
+                    );
+                }
+                for (j, b) in ids.iter().enumerate().filter(|(j, _)| *j != i) {
+                    assert_eq!(
+                        json!(directional(*a, *b, &owner, &geometry).unwrap()),
+                        case["directional_overlaps"][i][j],
+                        "{} {i} -> {j}",
+                        case["name"]
+                    );
+                }
+            }
+            discover_graph(&mut graph, &geometry).unwrap();
+            let snapshot = graph.snapshot();
+            let mut actual: Vec<_> = snapshot["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|e| e["kind"] == "Exclusion")
+                .map(|e| {
+                    let mut endpoints = [
+                        labels[&e["source"].as_u64().unwrap()].clone(),
+                        labels[&e["target"].as_u64().unwrap()].clone(),
+                    ];
+                    endpoints.sort();
+                    (endpoints, e["cause"].as_str().unwrap().to_owned())
+                })
+                .collect();
+            let mut expected: Vec<_> = case["exclusions"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|e| {
+                    let mut endpoints = [
+                        e["source"].as_str().unwrap().to_owned(),
+                        e["target"].as_str().unwrap().to_owned(),
+                    ];
+                    endpoints.sort();
+                    (endpoints, e["cause"].as_str().unwrap().to_owned())
+                })
+                .collect();
+            actual.sort();
+            expected.sort();
+            assert_eq!(actual, expected, "{}", case["name"]);
+            assert_eq!(
+                discover_graph(&mut graph, &geometry).unwrap()["inserted_exclusions"],
+                json!([])
+            );
+            assert_eq!(graph.snapshot(), snapshot);
+            if case["name"] == "head-mirror" {
+                graph.contextualize_head_stems().unwrap();
+                assert!(
+                    graph.snapshot()["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .all(|n| n["contextual_grade"] == n["grade"])
+                );
+            }
+            if let Some(chord) = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == "HeadChordInter")
+            {
+                let k = key(chord).unwrap();
+                let mut stale = chord.clone();
+                stale["member_ids"] = json!([9999]);
+                graph.vertex(k, stale, false).unwrap();
+                let before = graph.snapshot();
+                assert_eq!(
+                    discover_graph(&mut graph, &geometry).unwrap_err(),
+                    "stale_overlap_chord_containment"
+                );
+                assert_eq!(before, graph.snapshot());
+                graph.vertex(k, chord.clone(), false).unwrap();
+            }
+            // Stale caller metadata never substitutes for actual typed edges.
+            let a = keys["a"];
+            let mut stale = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == graph.id(a).unwrap())
+                .unwrap()
+                .clone();
+            stale["mirror_id"] = json!(9999);
+            graph.vertex(a, stale, false).unwrap();
+            let before = graph.snapshot();
+            assert!(discover_graph(&mut graph, &geometry).is_err());
+            assert_eq!(before, graph.snapshot());
+        }
+    }
+
+    #[test]
     fn owned_grid_pixels_cache_identity_and_invalid_late_input_are_atomic() {
         let image = GrayImage::decode(include_bytes!(
             "../fixtures/official-image-musicxml-cross-system/beam-two-systems.png"
@@ -554,6 +788,36 @@ mod tests {
                 .unwrap()
                 .is_empty()
         );
+        assert_eq!(registry, owned.prepared.registry.snapshot());
+        // A typed mirror is original Support with default coefficients zero:
+        // it does not boost grade or replace physical/cache identities.
+        owned.graph.contextualize_head_stems().unwrap();
+        let before_mirror = owned.graph.snapshot();
+        let other = before_mirror["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| {
+                n["kind"] == "HeadInter"
+                    && n["id"] != head["id"]
+                    && n["origin"]["system"] == head["origin"]["system"]
+            })
+            .unwrap();
+        owned
+            .graph
+            .relations(
+                key(head).unwrap().system,
+                Phase::Head,
+                vec![(
+                    key(head).unwrap(),
+                    key(other).unwrap(),
+                    json!({"kind":"MirrorRelation"}),
+                )],
+            )
+            .unwrap();
+        owned.graph.contextualize_head_stems().unwrap();
+        assert_eq!(owned.graph.snapshot()["inters"], before_mirror["inters"]);
+        discover(&mut owned).unwrap();
         assert_eq!(registry, owned.prepared.registry.snapshot());
         for (k, stem) in stems {
             let current = owned.caches[&k.system]

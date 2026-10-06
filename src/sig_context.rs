@@ -115,6 +115,7 @@ fn contextualize_head_stem_flags_impl(
                     | "BeamHeadRelation"
                     | "BeamBeamRelation"
                     | "HeadHeadRelation"
+                    | "MirrorRelation"
                     | "Exclusion"
                     | "NoExclusion"
             )
@@ -147,13 +148,14 @@ fn contextualize_head_stem_flags_impl(
                 }
             }
         }
-        if r["kind"] == "HeadHeadRelation"
-            && ["source", "target"].iter().any(|side| {
-                !inters
-                    .iter()
-                    .any(|n| n["id"] == r[*side] && n["kind"] == "HeadInter")
-            })
-        {
+        if matches!(
+            r["kind"].as_str(),
+            Some("HeadHeadRelation" | "MirrorRelation")
+        ) && ["source", "target"].iter().any(|side| {
+            !inters
+                .iter()
+                .any(|n| n["id"] == r[*side] && n["kind"] == "HeadInter")
+        }) {
             return Err("invalid_head_head_context_endpoint_kind".into());
         }
         if matches!(
@@ -168,14 +170,15 @@ fn contextualize_head_stem_flags_impl(
             }
         }
     }
-    // BeamBeam/HeadHead extend Support with default grade1, source/target
-    // coefficients3/0.75. Adapt raw metadata without changing its
+    // BeamBeam/HeadHead/Mirror extend Support with default grade1, source/target
+    // coefficients3/0.75/0. Mirror blocks exclusions but does not boost grade.
+    // Adapt raw metadata without changing its
     // saved metadata or accepting arbitrary relation kinds/endpoints.
     let mut adapted = relations.to_vec();
     for r in &mut adapted {
         if matches!(
             r["kind"].as_str(),
-            Some("BeamBeamRelation" | "HeadHeadRelation")
+            Some("BeamBeamRelation" | "HeadHeadRelation" | "MirrorRelation")
         ) {
             let grade = match r.get("grade") {
                 None => 1.,
@@ -186,6 +189,8 @@ fn contextualize_head_stem_flags_impl(
             }
             let coefficient = if r["kind"] == "HeadHeadRelation" {
                 0.75
+            } else if r["kind"] == "MirrorRelation" {
+                0.
             } else {
                 3.
             };
@@ -204,6 +209,7 @@ fn contextualize_head_stem_flags_impl(
                 "BeamHeadRelation",
                 "BeamBeamRelation",
                 "HeadHeadRelation",
+                "MirrorRelation",
                 "FlagStemRelation",
             ]
         } else {
@@ -213,6 +219,7 @@ fn contextualize_head_stem_flags_impl(
                 "BeamHeadRelation",
                 "BeamBeamRelation",
                 "HeadHeadRelation",
+                "MirrorRelation",
             ]
         },
         "unsupported_head_stem_context_partner_limit_16",

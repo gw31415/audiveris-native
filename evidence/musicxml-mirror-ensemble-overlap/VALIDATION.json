@@ -1,0 +1,45 @@
+{
+  "base_main": "0737052b7c31abc6a56115920f02bdf2b3cea75b",
+  "validated_src_tree": "faf00820821c45ca3ee4811a2b8e5f15f6742531",
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c",
+  "original": {
+    "version": "5.11.0",
+    "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "conditions": 7,
+    "observer": "scripts/java/FoundationMirrorEnsembleProbe.java",
+    "fixture": "fixtures/official-foundation-mirror-ensemble/controls.json",
+    "boundary": "declared physical heads/beams with actual MirrorRelation and HeadChord Containment on existing saved System/Staff; no new raster page or full recognition/link/epilog comparison"
+  },
+  "connected": [
+    "typed first Head mirror and first Containment owner; chord members in original stable bottom-up center order",
+    "mirror head/chord/notes exception before compatible/pixel/IOU scan",
+    "ensemble member both-directional overlap/noSupport, own-member refusal and gap geometry",
+    "Mirror Support protection of exclusions, default ratios1 (coefficients0) and unchanged intrinsic/contextual grade"
+  ],
+  "resolved_original_difference": "new mirrored-chords control showed original ensemble->mirrored head overlap false but native true; MirrorRelation extends Support. Added Mirror to member noSupport, canonical exclusion Support refusal and typed zero-coefficient contextual adaptation. Same original7 conditions now match.",
+  "targeted_tests": {
+    "native_fixed_log": "native-fixed.log",
+    "passed": 3,
+    "failed": 0,
+    "ignored": 0
+  },
+  "actual_image_owner": "declared typed mirror on existing image heads preserves grade, registry and canonical cached Arcs. This is not automatic raster mirror creation or whole-page SIG equality.",
+  "atomic_refusal": "stale mirror aliases and member_ids inconsistent with actual Containment refuse before committing exclusions; unknown external support guard preserved",
+  "full_workspace_validation": "running, not yet confirmed; source frozen; previous full583 remains at52943de",
+  "fmt_and_clippy": "final checks pending full run completion",
+  "independent_clone_CLI_readback": "pending after normal push and full verification, no full completion claimed",
+  "remaining": [
+    "stem-bound chord bounds and additional ensemble classes/removal ownership callbacks",
+    "automatic raster mirror creation and general chord/multivoice/parts",
+    "special-head size/duration/chord constraints and all24-shape pages",
+    "other-class/header/slur/fermata/text geometry, all support/cleaner/Part/lyrics/LINKS epilog",
+    "nonzero skew, scans/special staffs and remaining nonUI ledger"
+  ],
+  "global_completion_flags": false,
+  "new_image_or_admission_change": false,
+  "sha256": {
+    "scripts/java/FoundationMirrorEnsembleProbe.java": "c9ac254c60f3168214fd9d4e210b12d0670a8a542c15fbe83ca7e942b60da7de",
+    "fixtures/official-foundation-mirror-ensemble/controls.json": "8f9f53c232426a007c79a31670c928f256bd20580bb6b1e5a4d95c393caf1927"
+  }
+}

@@ -101,3 +101,13 @@ and support priority. Six original declared controls are distinct from full
 special-head image recognition/export. Next: original typed mirror/ensemble
 ownership exclusions and special-head chord size/duration dependencies.
 All final nonUI targets remain; downstream guards are not blanket-removed.
+
+Typed head mirror / stemless chord Containment predicates now compare seven
+original conditions, including mirrored chord ownership and member Support
+refusal. Mirror is Support with default coefficients0, not a non-Support edge.
+Legacy alias metadata never substitutes for actual relations. Positive declared
+mirror controls and actual image-owner identity checks are separate from raster
+mirror recognition. Stem-bound chord geometry and general ensemble lifecycle
+remain pending. Next original processing unit: special-head intrinsic duration
+buckets, small/standard head-size conflicts and head/beam-size consistency in
+analyzeChords, retaining first-edge/member order and canonical relation priority.

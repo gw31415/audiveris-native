@@ -130,6 +130,11 @@
       "status": "implemented",
       "unit": "recognized24 shape metadata in actual foundation overlap; shared original4-small-head classification preserves standard-head/stem exemption, actual pixels/core and support precedence",
       "limits": "declared actual physical heads/stem plus optional support on existing saved System/Staff; original detectOverlaps/contextualize, not raster recognition or full special-head export; original6 size/contact/support conditions; downstream special-head chord/page export remains guarded"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual typed Head mirror/HeadChord Containment and original member/Support overlap predicates",
+      "limits": "original7 declared SIG conditions, current3 native tests, actual image-owner/canonical cache grade preservation; full workspace running and fetched CLI pending. Not automatic raster mirror recognition or full ensemble/cleaner/epilog parity."
     }
   ],
   "function_groups": [
@@ -239,7 +244,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "3f76b49:12 affected tests, original6 special-head overlap SIG conditions, fmt/workspace-all-target-clippy; independently fetched Linux CLI20+11 events and prior XML bytes/XSD retained, root/src/crates equal. evidence/musicxml-special-head-overlap/{VALIDATION,READBACK}.json; last full583 remains at52943de.",
+  "latest_targeted_validation": "native3 affected tests and original7 typed mirror/ensemble SIG conditions passed; full workspace/fmt/clippy and independent CLI readback pending. evidence/musicxml-mirror-ensemble-overlap/VALIDATION.json; historical full583 remains at52943de.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -255,8 +260,8 @@
     {
       "original": "SigReducer.detectOverlaps for foundations",
       "status": "partial",
-      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog; recognized24 head shapes and original4-small-head size distinction",
-      "remaining": "mirror/ensemble/header/all-class predicates, slur/fermata geometry and text ownership/grade; special-head downstream size/duration/chord branches remain partial"
+      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog; recognized24 head shapes and original4-small-head size distinction; typed Head mirror and stemless HeadChord members/noSupport predicates",
+      "remaining": "stem-bound chord bounds, other ensembles/owning callbacks, header/all-class predicates, slur/fermata/text geometry and full special-head downstream branches"
     },
     {
       "original": "SigReducer.analyzeChords prolog/late",

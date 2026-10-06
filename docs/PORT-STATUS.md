@@ -365,3 +365,17 @@ small head/stemだけが接触免除から外れ、実画素/core判定と既存
 特殊head判定の実装source`3f76b49`で対象12・fmt/clippyと独立取得Linux CLIを確認。
 既存20＋11イベント／MusicXML4 XSD／XML byte hashを維持、root/src/crates tree一致。
 [readback](../evidence/musicxml-special-head-overlap/READBACK.json)。
+
+## typed mirrorとensemble実memberの競合判定（今回）
+
+原版の`getMirror/getChord`・Containment・bottom-up member順を実SIGから取得。
+mirror先のhead/chord/notesを競合対象から外し、ensembleのoverlapは実memberの
+両方向判定とnoSupportで判断します。box間の空白や自身のmemberは競合しません。
+原版7宣言条件を比較。MirrorRelationはSupport（係数0）であり、member間競合を
+抑止する一方gradeは増やさない点を追加比較で検出・修正しました。
+実画像ownerへ宣言したtyped mirrorでもregistry/cache identityとgradeを保持。
+自動mirror生成や全画像SIG一致の主張とは区別します。
+
+stem付きchordの境界形状、全ensemble/所有callback、特殊headのduration/size/chord、
+Part/lyricsのcleaner・LINKS epilogは未完。最終非UI機能の省略予定と全体完了宣言はなし。
+[検証](../evidence/musicxml-mirror-ensemble-overlap/VALIDATION.json)。

@@ -894,3 +894,20 @@ Source`3f76b49` passed12 affected tests and fmt/workspace-all-target clippy.
 Independent fetched Linux CLI preserves original20+11 events, prior XML byte
 hashes and native/original MusicXML4 XSD.
 [Readback](../evidence/musicxml-special-head-overlap/READBACK.json).
+
+## Typed mirror and ensemble ownership predicates
+
+Original mirror head/chord/note exemptions and stemless HeadChord member
+geometry now use actual typed MirrorRelation/Containment in the retained graph.
+Both directional member predicates and Support refusal replace ensemble box-only
+assumptions; a member gap is not foreground, and an ensemble excludes no own
+member. Mirror is original Support with zero default grade coefficients.
+Seven declared original SIG conditions are compared separately from actual
+image owner/cache identity checks and existing31-event image MusicXML regressions.
+No automatic raster mirror creation or full page-SIG parity is claimed.
+
+Stem-bound chord bounds, all ensemble classes/removal callbacks, special-head
+duration/size processing and full cleaner/epilog remain partial. All global
+completion flags remain false. Existing CLI inputs/commands above stay valid;
+no new page admission.
+[Validation](../evidence/musicxml-mirror-ensemble-overlap/VALIDATION.json).

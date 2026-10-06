@@ -1205,6 +1205,7 @@ impl Graph {
                             kind,
                             Some(
                                 "HeadInter"
+                                    | "HeadChordInter"
                                     | "StemInter"
                                     | "BeamInter"
                                     | "BeamHookInter"
@@ -1233,6 +1234,7 @@ impl Graph {
                             | "BeamStemRelation"
                             | "BeamHeadRelation"
                             | "BeamBeamRelation"
+                            | "MirrorRelation"
                     ))
             {
                 return Ok(false);
