@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest image increment: [same-stem multi-head chords](#same-stem-multi-head-chords-2026-10-06); earlier [parallel half-note Voice](#parallel-half-note-voice-from-an-actual-image-2026-10-06); earlier [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [multi-head eighth beams](#multi-head-eighth-beams-2026-10-06); earlier [same-stem multi-head chords](#same-stem-multi-head-chords-2026-10-06); earlier [parallel half-note Voice](#parallel-half-note-voice-from-an-actual-image-2026-10-06); earlier [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -1970,3 +1970,26 @@ full-image export, original saved ownership/getters, and native output/XSD are
 compared separately. Normal Bravura/interline11/zero-skew/treble/C-major/4/4
 input is validated; mixed mirrored/special heads and unverified chord beam/flag
 combinations remain pending. All global completion flags remain false.
+
+## Multi-head eighth beams (2026-10-06)
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-chord-members/chord-beam.png \
+  /tmp/chord-beam.musicxml /tmp/chord-beam.json
+```
+
+This two-measure input produces14 notes. Each of the four beamed two-head
+chords has one eighth-note duration, two member events at the same onset, and
+original begin/continue/continue/end beam marks on **both** members. The actual
+BeamGroup owns four chords, not eight note events; each ordinary Voice still
+ends at one complete4/4 measure. Original full-image export/XML/XSD agrees;
+reloaded original actual group/shortening/slot/member/Voice getters are separate
+checks. The report's `events[].chord` derives from live ensemble order, agreeing
+with `<chord/>`; it is not a recognition hint or ownership mutation.
+
+Ordinary uniform black-head quarter chords and single-level beam chord combinations
+are image-verified. Mixed mirrored void/black heads, shared/stemless/special
+heads, other chord-flag configurations, shared stacks and nonbinary tuplets
+still need their original dependencies and input comparisons. Global flags
+remain false; prior successful CLI inputs stay supported.

@@ -1,0 +1,228 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "unmodified original full-image MusicXML; chord sibling shares prior onset and does not advance XML cursor",
+  "events": [
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "0",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": [
+        {
+          "number": 1,
+          "value": "begin"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "0",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": true,
+      "beams": [
+        {
+          "number": 1,
+          "value": "begin"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/8",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/8",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": true,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/4",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/4",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": true,
+      "beams": [
+        {
+          "number": 1,
+          "value": "continue"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "3/8",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": [
+        {
+          "number": 1,
+          "value": "end"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "3/8",
+      "duration_quarters": 0.5,
+      "type": "eighth",
+      "stem_direction": "up",
+      "chord": true,
+      "beams": [
+        {
+          "number": 1,
+          "value": "end"
+        }
+      ]
+    },
+    {
+      "measure_number": 1,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/2",
+      "duration_quarters": 1,
+      "type": "quarter",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": []
+    },
+    {
+      "measure_number": 1,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "3/4",
+      "duration_quarters": 1,
+      "type": "quarter",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "0",
+      "duration_quarters": 1,
+      "type": "quarter",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/4",
+      "duration_quarters": 1,
+      "type": "quarter",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "1/2",
+      "duration_quarters": 1,
+      "type": "quarter",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": []
+    },
+    {
+      "measure_number": 2,
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "voice": 1,
+      "time_offset": "3/4",
+      "duration_quarters": 1,
+      "type": "quarter",
+      "stem_direction": "up",
+      "chord": false,
+      "beams": []
+    }
+  ]
+}

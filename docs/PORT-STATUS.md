@@ -876,3 +876,10 @@ member/Voice/slot/getter comparisons are separate from that image export.
 Mixed mirror/special heads, shared stacks, general tuplets/rests and full
 cleaner/epilog remain partial; no original nonUI feature is omitted.
 [Validation](../evidence/musicxml-chord-members/VALIDATION.json).
+
+Multi-head beam continuation: original14-note image validates four actual
+eighth-chord clock advances and per-head begin/continue/continue/end output.
+Live member order supplies both `events[].chord` and MusicXML indications;
+no Voice/timing is rewritten by that binder. Original saved group/shortening
+getters are distinct from full-image export.
+[Validation](../evidence/musicxml-chord-beam/VALIDATION.json).

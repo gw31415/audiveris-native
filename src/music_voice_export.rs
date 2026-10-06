@@ -65,6 +65,10 @@ pub(crate) fn bind_event(
     {
         return Err("musicxml_voice_owned_event_required".into());
     }
+    let index = chord_notes(nodes, chord)?
+        .iter()
+        .position(|n| n["id"] == event["note_id"])
+        .ok_or("musicxml_voice_owned_event_required")?;
     let onset = crate::music_time::parse_ticks(
         chord["time_offset"]
             .as_str()
@@ -88,6 +92,7 @@ pub(crate) fn bind_event(
         return Err("musicxml_exact_positive_division_required".into());
     }
     event["voice"] = json!(voice.id);
+    event["chord"] = json!(index != 0);
     event["time_offset"] = json!(crate::music_time::format_ticks(onset));
     event["offset_quarters"] = reported_units(onset, 4);
     event["duration"] = json!(crate::music_time::format_ticks(duration));
@@ -105,6 +110,31 @@ fn reported_units(ticks: u32, divisor: u32) -> Value {
         json!(ticks / divisor)
     } else {
         json!(f64::from(ticks) / f64::from(divisor))
+    }
+}
+
+fn chord_notes<'a>(nodes: &'a [Value], chord: &Value) -> Result<Vec<&'a Value>, String> {
+    let members = chord["member_ids"]
+        .as_array()
+        .ok_or("musicxml_voice_owned_event_required")?;
+    if members.is_empty() {
+        return Err("musicxml_voice_event_required".into());
+    }
+    let notes = members
+        .iter()
+        .map(|id| {
+            nodes
+                .iter()
+                .find(|n| n["id"] == *id)
+                .ok_or("musicxml_voice_owned_event_required")
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    if chord["kind"] == "HeadChordInter" {
+        crate::head_chord_geometry::ordered(&notes)
+    } else if chord["kind"] == "RestChordInter" && notes.len() == 1 {
+        Ok(notes)
+    } else {
+        Err("musicxml_voice_owned_event_required".into())
     }
 }
 
@@ -248,26 +278,7 @@ pub(crate) fn write_measure(
                     .iter()
                     .find(|n| n["id"] == id)
                     .ok_or("musicxml_voice_owned_event_required")?;
-                let members = chord["member_ids"]
-                    .as_array()
-                    .ok_or("musicxml_voice_owned_event_required")?;
-                if members.is_empty() {
-                    return Err("musicxml_voice_event_required".into());
-                }
-                let mut notes = members
-                    .iter()
-                    .map(|id| {
-                        nodes
-                            .iter()
-                            .find(|n| n["id"] == *id)
-                            .ok_or("musicxml_voice_owned_event_required")
-                    })
-                    .collect::<Result<Vec<_>, _>>()?;
-                if chord["kind"] == "HeadChordInter" {
-                    notes = crate::head_chord_geometry::ordered(&notes)?;
-                } else if chord["kind"] != "RestChordInter" || notes.len() != 1 {
-                    return Err("musicxml_voice_owned_event_required".into());
-                }
+                let notes = chord_notes(nodes, chord)?;
                 for (index, note) in notes.iter().enumerate() {
                     let matching = events
                         .iter()
