@@ -1,0 +1,101 @@
+{
+  "validated_source_commit": "a4e8eeb065e29f39e1c0f5daeadbe6a13b4328d5",
+  "ordinary_main_push": "ls-remote and independent fetch matching",
+  "trees": {
+    "commit": "a4e8eeb065e29f39e1c0f5daeadbe6a13b4328d5",
+    "root_tree": "a779ab9c9c99c81776ae42221864638a5b59979c",
+    "src_tree": "3e49021a331f52ec25f26790b8134c5fc95ac4a6",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone reused; offline/locked/j1 low-debug Linux build",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "6f8fdeb1cdc7fbf6dae022899b1940726a10e4bcb70c27a533583044cafc944b",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "previous_XML_sha256_at_73133e6": "6f8fdeb1cdc7fbf6dae022899b1940726a10e4bcb70c27a533583044cafc944b",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "e33b330245041e8ff95d286a00038b61f34fe0e7f808eee0a660e0b4c7fca24c",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "previous_XML_sha256_at_73133e6": "e33b330245041e8ff95d286a00038b61f34fe0e7f808eee0a660e0b4c7fca24c",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-measure-rest/quarter-whole-rest.png",
+      "events_original_matching": 5,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "10f31bf15800f5b7faaff64fe0e1e4159dc1065bc827dec71a8141c26d0e70f4",
+      "comparison": "pitch/rest/type/Voice/duration/onset and rest measure=yes/type omission; full XML engraving/metadata equality not claimed",
+      "completion_flags": false
+    }
+  ],
+  "preliminary_measure_slots": [
+    {
+      "image": "beam-two-systems.omr",
+      "geometric_relations_original_matching": 168,
+      "narrow_and_wide_partitions": "original matching",
+      "compound_partition_and_lookup_original_matching": 20,
+      "starting_voice_time_original_matching": 4,
+      "rookie_active_mapping_original_matching": 20,
+      "voice_lifetime_original_matching": 20,
+      "transient_narrow_clocks_original_matching": 20
+    },
+    {
+      "image": "quarter-whole-rest.omr",
+      "geometric_relations_original_matching": 24,
+      "narrow_and_wide_partitions": "original matching",
+      "compound_partition_and_lookup_original_matching": 4,
+      "starting_voice_time_original_matching": 2,
+      "rookie_active_mapping_original_matching": 4,
+      "voice_lifetime_original_matching": 4,
+      "transient_narrow_clocks_original_matching": 4
+    }
+  ],
+  "retained_slot_queries": [
+    {
+      "original_fixture": "saved-page.json",
+      "same_image_slot_geometry": "matching",
+      "original_saved_nearest_queries": "matching",
+      "actual_Linux_CLI_read_only_query": "passed"
+    },
+    {
+      "original_fixture": "measure-rest.json",
+      "same_image_slot_geometry": "matching",
+      "original_saved_nearest_queries": "matching",
+      "actual_Linux_CLI_read_only_query": "passed"
+    }
+  ],
+  "targeted_unique_tests": 8,
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "comparison": "current bounded image recognition -> 36 original-matching MusicXML events with unchanged bytes; original saved geometric getters/matrix on two same images; declared controls separate; separated ChordsMapper active-end assignment connected on current one-incoming/one-Voice scope; measure-local extinction/explicit Next exception and retained narrow-clock setters and known-time blacklist/reselect connected; nonimplicit multiple inferred-time retries connected; known-time new Voice ownership connected; unknown-active abnormal propagation connected; EQUAL-first known sibling time connected; retained candidate constructor references/cached positions connected; known-EQUAL previous-slot merge/removal/renumbering and shrink-aware candidate traversal connected; member-scoped grouped-clock initialization connected; multiple incoming owned separated mapping now compared in three full mapChords controls; automatic image admission and general Voice export/implicit tuplets/Merged unconnected",
+  "known_time_validation_trace": [
+    {
+      "input_prefix": "clone-compound-mapping-baseline",
+      "live_applied_validation_decisions": 10,
+      "normal_image_rejections_occurred": false
+    },
+    {
+      "input_prefix": "clone-compound-mapping-baseline-hooks",
+      "live_applied_validation_decisions": 6,
+      "normal_image_rejections_occurred": false
+    },
+    {
+      "input_prefix": "clone-compound-mapping",
+      "live_applied_validation_decisions": 3,
+      "normal_image_rejections_occurred": false
+    }
+  ],
+  "all_global_completion_flags": false,
+  "GHA_Mac_Releases_Library_retry": "none"
+}
