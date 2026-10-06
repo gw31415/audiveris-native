@@ -37,7 +37,7 @@
   "fmt": "passed",
   "workspace_all_target_clippy": "passed -D warnings",
   "preserved": "original11 ordinary-overlap controls, actual GRID pixels/canonical cache and late atomic refusal, original2 chord controls, Laura352/513 and existing20+11-event MusicXML tests",
-  "independent_clone_readback": "separate READBACK.json after normal push/fetch/build/CLI/XSD",
+  "independent_clone_readback": "confirmed in READBACK.json: normal main push/remote SHA, fetched root/src/crates tree equality, Linux build and prior20+11 events/XML bytes/XSD retained",
   "new_image_or_admission_change": false,
   "whole_special_head_image_pipeline_complete": false,
   "remaining": [
@@ -51,5 +51,6 @@
   "sha256": {
     "scripts/java/FoundationSpecialHeadOverlapProbe.java": "c729c0590c72ad8669ca390890bb95f7750164f20d0079360e07dfe805e87912",
     "fixtures/official-foundation-special-head-overlap/controls.json": "538d880ac33d2b93bc3b3fd91581eabf35faf0b33f1e78c2489553b083370454"
-  }
+  },
+  "validated_source_commit": "3f76b494a73677ac2517421a603e4f7bf6166b14"
 }

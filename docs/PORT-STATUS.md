@@ -361,3 +361,7 @@ small head/stemだけが接触免除から外れ、実画素/core判定と既存
 これは特殊headページを画像からMusicXMLへ処理できたという結果ではありません。
 後続size/duration/chord/所有処理は未完・guard維持、既存画像CLI範囲は変更なし。
 [検証](../evidence/musicxml-special-head-overlap/VALIDATION.json)。
+
+特殊head判定の実装source`3f76b49`で対象12・fmt/clippyと独立取得Linux CLIを確認。
+既存20＋11イベント／MusicXML4 XSD／XML byte hashを維持、root/src/crates tree一致。
+[readback](../evidence/musicxml-special-head-overlap/READBACK.json)。

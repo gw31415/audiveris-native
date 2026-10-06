@@ -889,3 +889,8 @@ No new image fixture or notation admission. Later size/duration/owner branches
 remain partial; all global completion flags stay false. Reuse the existing
 20/11-event CLI commands above with new output paths.
 [Validation](../evidence/musicxml-special-head-overlap/VALIDATION.json).
+
+Source`3f76b49` passed12 affected tests and fmt/workspace-all-target clippy.
+Independent fetched Linux CLI preserves original20+11 events, prior XML byte
+hashes and native/original MusicXML4 XSD.
+[Readback](../evidence/musicxml-special-head-overlap/READBACK.json).

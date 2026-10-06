@@ -1,0 +1,38 @@
+{
+  "validated_source_commit": "3f76b494a73677ac2517421a603e4f7bf6166b14",
+  "ordinary_main_push": "confirmed with ls-remote and independent fetch",
+  "repository_and_independent_clone": {
+    "commit": "3f76b494a73677ac2517421a603e4f7bf6166b14",
+    "root_tree": "77c0edeaa65c6e4ce9d64cd0a8ddda0c32127ba1",
+    "src_tree": "fcd87d7d8f4623e0cf0260485262e3d5e269f509",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone updated by fetch/fast-forward; no bundle/archive/all-hash duplication",
+  "Linux_Cargo_build": "passed offline/locked/j1, CARGO_INCREMENTAL=0 DEV_DEBUG=0 TEST_DEBUG=0",
+  "native_CLI": "Linux native recognition; no Java or original XML used by native CLI",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "a81b3f7398c44c6833cba65b32cf9c7f7b85d0712bf7e176803230a63e928574",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "completion_flags": false
+    }
+  ],
+  "comparison_boundary": "same image MusicXML event/pitch/duration/onset/voice/beam comparison and native/original XSD; declared6 special-head pixel/core/size/support conditions are separate, not full original raster SIG equality",
+  "targeted_tests_passed": 12,
+  "full_workspace_run_this_stage": false,
+  "previous_full583_source": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+  "source_unchanged_for_receipt_commit": true,
+  "all_global_completion_flags": false,
+  "GHA_Mac_Releases_Library_retry": "none"
+}

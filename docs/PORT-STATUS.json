@@ -239,7 +239,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "12 affected tests, original6 special-head overlap SIG conditions, fmt/workspace-all-target-clippy; separate independent CLI/readback receipt in evidence/musicxml-special-head-overlap. Last full583 remains at52943de.",
+  "latest_targeted_validation": "3f76b49:12 affected tests, original6 special-head overlap SIG conditions, fmt/workspace-all-target-clippy; independently fetched Linux CLI20+11 events and prior XML bytes/XSD retained, root/src/crates equal. evidence/musicxml-special-head-overlap/{VALIDATION,READBACK}.json; last full583 remains at52943de.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
