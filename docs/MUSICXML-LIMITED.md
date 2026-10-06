@@ -830,3 +830,16 @@ text ownership/grade adjustment and small/percussion/stemless/cue chord branches
 remain partial or unconnected. Full support, Part/lyrics cleaner, LINKS slur/tie
 epilog, nonzero skew/scans/special staffs and full24-shape pages remain final
 implementation targets. All global completion flags stay false.
+
+This unit passed37 affected tests, fmt and workspace/all-target clippy at source
+`ea8c756`. The independent fetched clone built the Linux CLI and emitted the
+original-matching20-event two-system page and11-event competing-hook page; both
+native and saved original outputs pass MusicXML4 XSD. The competing-hook image
+executes one new native overlap exclusion; the two-system page executes zero.
+That positive native image condition is distinct from the declared original11
+SIG-predicate/grade comparisons, not complete whole-image SIG equivalence.
+[Independent readback](../evidence/musicxml-foundation-overlap/READBACK.json).
+
+```sh
+./target/debug/audiveris-musicxml fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png /tmp/foundation-overlap-hooks.musicxml /tmp/foundation-overlap-hooks.json
+```

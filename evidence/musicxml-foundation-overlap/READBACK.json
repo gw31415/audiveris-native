@@ -1,0 +1,41 @@
+{
+  "validated_source_commit": "ea8c756598ad9213d98f3a9f46f726365b6efd93",
+  "ordinary_main_push": "confirmed with ls-remote and independent fetch",
+  "repository_and_independent_clone": {
+    "commit": "ea8c756598ad9213d98f3a9f46f726365b6efd93",
+    "root_tree": "f1374beab686416eab46b003f050d3d92baeaa1c",
+    "src_tree": "5dce69a948b7a9014da5fafa5670bc1b2b0a3512",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone refreshed by fetch/fast-forward; no archive/bundle/all-file hash duplicate",
+  "Linux_Cargo_build": "passed offline/locked, CARGO_INCREMENTAL=0, DEV_DEBUG=0, TEST_DEBUG=0",
+  "native_CLI": "no Java or original XML used by native recognition",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+      "completion_flags": false,
+      "resolved_existing_GRID_glyph_count": 6,
+      "new_ordinary_overlap_exclusions": 0
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "a81b3f7398c44c6833cba65b32cf9c7f7b85d0712bf7e176803230a63e928574",
+      "resolved_existing_GRID_glyph_count": 4,
+      "new_ordinary_overlap_exclusions": 1,
+      "comparison_scope": "same-image MusicXML and actual native positive overlap; not complete original raster-stage SIG equality",
+      "completion_flags": false
+    }
+  ],
+  "comparison_boundary": "native same-image events/beam/duration/pitch/voice/onset and MusicXML4 XSD; positive native exclusion1 is distinct from original11 declared SIG predicates/grade comparison; full raster-stage SIG/cleaner/epilog parity not claimed",
+  "existing_XML_bytes": "20-event output retains historical0881832... byte hash; new report metadata is separate",
+  "HEADS_STEMS_epilog_MusicXML_global_flags": false,
+  "full_workspace_run_this_stage": false,
+  "targeted_tests_passed": 37,
+  "source_unchanged_for_receipt_commit": true,
+  "GHA_Mac_Releases_Library_retry": "none"
+}
