@@ -626,3 +626,5 @@ guard is removed; existing image MusicXML comparison is distinct from these
 controlled ownership operations.
 
 [Validation](../evidence/musicxml-voice-chord-ownership/VALIDATION.json).
+
+Full native workspace validation at source95e191b:595 passed,0 failed/ignored,176 executables and7 empty doc-test groups. A transport disconnect interrupted the initial run after136 executables; only40 remaining executables were resumed from the unchanged Cargo inventory (the interrupted4-test binary was repeated). [Full validation](../evidence/musicxml-voice-chord-ownership/FULL-VALIDATION.json). This is separate from full593 at source238c535.

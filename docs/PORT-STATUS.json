@@ -294,7 +294,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "retained native image Voice/chord ownership and original removal controls; evidence/musicxml-voice-chord-ownership. Prior full593 source238c535 distinct; grouped full validation pending.",
+  "latest_targeted_validation": "95e191b: canonical post-chord stem callback, extensive HeadChord ownership and retained single-voice integration; full595 passed after transport interruption/resumption,fmt/clippy,independent Linux31 events/voice IDs/XML bytes/XSD/tree match. General voice/lyrics/full cleaner/epilog remain pending.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -342,12 +342,12 @@
     }
   ],
   "latest_full_validation": {
-    "source_commit": "238c535afacc5a0d8182ea70d67f96f81c3c34d4",
-    "passed": 593,
+    "source_commit": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595,
     "failed": 0,
     "ignored": 0,
-    "execution": "one uninterrupted cargo test --workspace --offline --locked -j1 after rest admission/ownership/containers and BeamHeadCleaner group;176 binaries+7 empty doc-test groups",
-    "evidence": "evidence/musicxml-beam-head-cleaner/FULL-VALIDATION.json",
-    "independent_clone_Linux_CLI": "fetched Linux build/20+11 original-matching events/prior XML byte hashes/native-original XSD/root-src-crates equal; live container projection IDs checked"
+    "execution": "initial cargo test --workspace --offline --locked -j1 interrupted after136 completed executables/496 tests by exec-server transport disconnect; exact remaining40 executables resumed from same Cargo no-run JSON inventory; interrupted4-test executable repeated; all7 workspace doc-test groups then passed",
+    "evidence": "evidence/musicxml-voice-chord-ownership/FULL-VALIDATION.json",
+    "independent_clone_Linux_CLI": "READBACK.json: fetched Linux build,20+11 original-matching events,prior MusicXML bytes/native-original XSD,retained Voice/chord SIG IDs and root/src/crates equal"
   }
 }
