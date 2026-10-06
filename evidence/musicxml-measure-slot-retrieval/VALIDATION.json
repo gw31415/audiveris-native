@@ -1,0 +1,45 @@
+{
+  "base_source": "73133e693351831fd3a1f5fb1ad8b5a3872ad1a3",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "SlotsRetriever ordered relationship graph, all-member-compatible narrow/wide preliminary MeasureSlots connected before image CLI single-voice clocks",
+  "original_comparison": {
+    "saved_images": 2,
+    "measures": 6,
+    "standard_chords": 24,
+    "ordered_pairs_per_mode": 96,
+    "declared_controls": [
+      "close-chain all-member compatibility",
+      "SeparateTime before close",
+      "SameTime intermediate extension",
+      "opposite-direction adjacency",
+      "StemAlignment equal"
+    ]
+  },
+  "integration": "actual typed member/stem/beam ownership; excludes default whole-measure rests; candidate order used by existing single-voice continuation; multiple-chord slots refuse pending ChordsMapper",
+  "targeted_unique_passed": 18,
+  "runs": {
+    "initial_original_kernel": 1,
+    "existing_image_MusicXML": 16,
+    "after_group_getter_correction_and_new_saved_matrix_assertions": 4,
+    "Laura_heads_exclusions": 1,
+    "following_style_only_kernel": 1
+  },
+  "verification_boundary": "18 distinct tests across passes, not 18 after every source edit. Group getter selection refined after initial16; affected geometric kernel/two-system/whole-rest/separate-group paths rechecked. Four clippy collapsible-if style fixes followed by kernel/fmt/clippy; independent CLI readback required before next implementation.",
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "ordinary no-dot zero-skew one-staff production geometry; general staff interpolation/cue/dot acquisition remains pending",
+    "mirror/root relationship branches implemented; automatic image acquisition/full conditions not claimed",
+    "compound slots/SlotMapper/ChordsMapper/VoiceDistance unconnected; sequential single-voice clocks remain",
+    "full Rational/shared stacks/lyrics/automatic slur-tie/correction/full cleaner-epilog pending",
+    "all-rest original XSD rejection remains negative boundary, not positive parity"
+  ],
+  "probe_corrections": "initial Java import ambiguity fixed; declared controls initially removed barlines and lost reference geometry, corrected to preserve originals; final fixture uses correct original geometry",
+  "original_probe_log_sha256": "af18ab2279655ee5bb01e942045b2344cdb5a1ab82f2bc3c85901a2c711d6162",
+  "all_global_completion_flags": false
+}

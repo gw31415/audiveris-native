@@ -1,0 +1,549 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//! SlotsRetriever relationship priority and preliminary narrow/wide MeasureSlots.
+//! These are geometric candidates before Voice/time assignment, not stack Slots.
+//! The image adapter uses actual chords/SIG in the existing zero-skew one-staff
+//! admission. General staff interpolation, dotted-note acquisition, cue chords
+//! and ChordsMapper remain separate dependencies, not planned omissions.
+use crate::{
+    music_measures::{Chord, ChordKind, Measure},
+    shared_sig::Graph,
+};
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+use std::{
+    cmp::Ordering,
+    collections::{BTreeMap, BTreeSet},
+};
+
+#[derive(Deserialize)]
+struct Fact {
+    id: usize,
+    bounds: [i64; 4],
+    dot_bounds: [i64; 4],
+    x: f64,
+    head: [f64; 2],
+    rest: bool,
+    stem: Option<usize>,
+    stem_dir: i64,
+    has_beams: bool,
+    pitches: Vec<i64>,
+    leading_pitch: i64,
+    time_offset: Option<u32>,
+}
+#[derive(Deserialize)]
+struct Explicit {
+    kind: String,
+    a: usize,
+    b: usize,
+}
+#[derive(Deserialize)]
+struct Input {
+    chords: Vec<Fact>,
+    explicit: Vec<Explicit>,
+    mirrors: Vec<[usize; 2]>,
+    aligned: Vec<[usize; 2]>,
+    groups: Vec<Vec<usize>>,
+    interline: usize,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "UPPERCASE")]
+enum Rel {
+    Before,
+    After,
+    Equal,
+    Close,
+}
+#[derive(Serialize)]
+struct Relation {
+    a: usize,
+    b: usize,
+    rel: Option<Rel>,
+}
+#[derive(Clone, Serialize)]
+pub(crate) struct MeasureSlot {
+    pub id: usize,
+    pub chord_ids: Vec<usize>,
+}
+#[derive(Serialize)]
+pub(crate) struct Retrieval {
+    relations: Vec<Relation>,
+    pub slots: Vec<MeasureSlot>,
+}
+struct Matrix {
+    edges: BTreeMap<(usize, usize), Rel>,
+    outgoing: BTreeMap<usize, Vec<usize>>,
+}
+impl Matrix {
+    fn new() -> Self {
+        Self {
+            edges: BTreeMap::new(),
+            outgoing: BTreeMap::new(),
+        }
+    }
+    fn get(&self, a: usize, b: usize) -> Option<Rel> {
+        self.edges.get(&(a, b)).copied()
+    }
+    fn set(&mut self, a: usize, b: usize, rel: Rel) {
+        if self.edges.insert((a, b), rel).is_none() {
+            self.outgoing.entry(a).or_default().push(b);
+        }
+    }
+    fn pair(&mut self, a: usize, b: usize, rel: Rel) {
+        self.set(a, b, rel);
+        self.set(b, a, if rel == Rel::Before { Rel::After } else { rel });
+    }
+    fn equals(&self, a: usize) -> Vec<usize> {
+        self.outgoing
+            .get(&a)
+            .into_iter()
+            .flatten()
+            .copied()
+            .filter(|b| self.get(a, *b) == Some(Rel::Equal))
+            .collect()
+    }
+    fn propagate(&mut self, pair: [usize; 2], chords: &[Fact]) {
+        for c in chords.iter().filter(|c| !pair.contains(&c.id)) {
+            for i in 0..2 {
+                let (one, two) = (pair[i], pair[(i + 1) % 2]);
+                if let Some(rel) = self.get(c.id, one)
+                    && self.get(c.id, two).is_none()
+                {
+                    self.set(c.id, two, rel);
+                }
+                if let Some(rel) = self.get(one, c.id)
+                    && self.get(two, c.id).is_none()
+                {
+                    self.set(two, c.id, rel);
+                }
+            }
+        }
+    }
+}
+fn gap(a: [i64; 4], b: [i64; 4]) -> i64 {
+    a[0].max(b[0]) - (a[0] + a[2]).min(b[0] + b[2])
+}
+fn overlap(a: [i64; 4], b: [i64; 4]) -> i64 {
+    (a[1] + a[3]).min(b[1] + b[3]) - a[1].max(b[1])
+}
+fn adjacent(a: &Fact, b: &Fact, adj_gap: i64, low: i64) -> bool {
+    if a.rest || b.rest {
+        return false;
+    }
+    let xgap = gap(a.dot_bounds, b.dot_bounds);
+    if xgap > adj_gap {
+        return false;
+    }
+    if a.stem.is_some() && b.stem.is_some() {
+        if a.stem == b.stem {
+            return true;
+        }
+        if a.stem_dir == b.stem_dir {
+            return false;
+        }
+        if xgap < 0 {
+            return true;
+        }
+        if a.has_beams && b.has_beams {
+            return false;
+        }
+        if a.pitches
+            .iter()
+            .any(|p| b.pitches.iter().any(|q| (p - q).abs() <= 2))
+        {
+            return true;
+        }
+    } else if (a.leading_pitch - b.leading_pitch).abs() <= 2 {
+        return true;
+    }
+    (a.head[0] - b.head[0]).abs() <= low as f64
+}
+fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
+    let ids: BTreeMap<_, _> = input.chords.iter().map(|f| (f.id, f)).collect();
+    if ids.len() != input.chords.len()
+        || input.interline == 0
+        || input.chords.iter().any(|f| !f.x.is_finite())
+    {
+        return Err("music_measure_slot_valid_owned_facts_required".into());
+    }
+    let get = |id| {
+        ids.get(&id)
+            .copied()
+            .ok_or("music_measure_slot_relation_chord_required")
+    };
+    let pixels = |v: f64| (v * input.interline as f64).round_ties_even() as i64;
+    let low = pixels(0.5);
+    let maxdx = if wide { pixels(1.1) } else { low };
+    let mut matrix = Matrix::new();
+    let mut standard = input.chords.iter().collect::<Vec<_>>();
+    standard.sort_by_key(|f| f.bounds[0] + f.bounds[2] / 2);
+    // Original inspection order is semantic: explicit separate, same, beam,
+    // mirrors, root alignment, same intermediates, adjacency, close, distant.
+    for e in input.explicit.iter().filter(|e| {
+        matches!(
+            e.kind.as_str(),
+            "SeparateTimeRelation" | "NextInVoiceRelation"
+        )
+    }) {
+        let (a, b) = (get(e.a)?, get(e.b)?);
+        if a.x < b.x {
+            matrix.pair(a.id, b.id, Rel::Before);
+        } else {
+            matrix.pair(b.id, a.id, Rel::Before);
+        }
+    }
+    for e in input
+        .explicit
+        .iter()
+        .filter(|e| e.kind == "SameTimeRelation")
+    {
+        get(e.a)?;
+        get(e.b)?;
+        matrix.pair(e.a, e.b, Rel::Equal);
+    }
+    for group in &input.groups {
+        for (i, &a) in group.iter().enumerate() {
+            get(a)?;
+            for &b in &group[i + 1..] {
+                get(b)?;
+                matrix.pair(a, b, Rel::Before);
+            }
+        }
+    }
+    for (phase, pairs) in [&input.mirrors, &input.aligned].into_iter().enumerate() {
+        for &pair in pairs {
+            get(pair[0])?;
+            get(pair[1])?;
+            if phase == 0 && matrix.get(pair[0], pair[1]).is_some() {
+                continue;
+            }
+            matrix.propagate(pair, &input.chords);
+            matrix.pair(pair[0], pair[1], Rel::Equal);
+        }
+    }
+    for e in input
+        .explicit
+        .iter()
+        .filter(|e| e.kind == "SameTimeRelation")
+    {
+        let a = standard.iter().position(|c| c.id == e.a).unwrap();
+        let b = standard.iter().position(|c| c.id == e.b).unwrap();
+        for i in a.min(b)..a.max(b) {
+            for j in i + 1..=a.max(b) {
+                let (a, b) = (standard[i].id, standard[j].id);
+                if matrix.get(a, b).is_none() {
+                    matrix.set(a, b, Rel::Equal);
+                }
+                if matrix.get(b, a).is_none() {
+                    matrix.set(b, a, Rel::Equal);
+                }
+            }
+        }
+    }
+    for (i, a) in standard.iter().enumerate() {
+        for b in &standard[i + 1..] {
+            if matrix.get(a.id, b.id).is_none()
+                && overlap(a.bounds, b.bounds) > pixels(0.25)
+                && adjacent(a, b, pixels(0.4), low)
+            {
+                matrix.pair(a.id, b.id, Rel::Equal);
+            }
+        }
+    }
+    for (i, a) in standard.iter().enumerate() {
+        for b in &standard[i + 1..] {
+            if matrix.get(a.id, b.id).is_none() && (a.x - b.x).abs() <= maxdx as f64 {
+                matrix.pair(a.id, b.id, Rel::Close);
+            }
+        }
+    }
+    let separate = |a, b| {
+        input.explicit.iter().any(|e| {
+            matches!(
+                e.kind.as_str(),
+                "SeparateTimeRelation" | "NextInVoiceRelation"
+            ) && ((e.a == a && e.b == b) || (e.a == b && e.b == a))
+        })
+    };
+    for (i, a) in standard.iter().enumerate() {
+        for b in &standard[i + 1..] {
+            if matrix.get(a.id, b.id).is_some() {
+                continue;
+            }
+            let mut compatible = false;
+            for equal in matrix.equals(b.id) {
+                if !separate(a.id, equal) && (a.x - get(equal)?.x).abs() <= maxdx as f64 {
+                    compatible = true;
+                    break;
+                }
+            }
+            if compatible {
+                matrix.pair(a.id, b.id, Rel::Close);
+            } else if a.x < b.x {
+                matrix.pair(a.id, b.id, Rel::Before);
+            } else {
+                matrix.pair(b.id, a.id, Rel::Before);
+            }
+        }
+    }
+    // Stable relation comparator retains standard collection order on unknown
+    // or EQUAL/CLOSE clocks. Before Voice assignment all offsets are null.
+    let mut candidates = input.chords.iter().collect::<Vec<_>>();
+    candidates.sort_by(|a, b| match matrix.get(a.id, b.id) {
+        Some(Rel::Before) => Ordering::Less,
+        Some(Rel::After) => Ordering::Greater,
+        _ => a
+            .time_offset
+            .zip(b.time_offset)
+            .map_or(Ordering::Equal, |(a, b)| a.cmp(&b)),
+    });
+    let mut slots: Vec<MeasureSlot> = Vec::new();
+    for c in candidates {
+        if slots.last().is_some_and(|s| {
+            s.chord_ids
+                .iter()
+                .all(|&id| matches!(matrix.get(id, c.id), Some(Rel::Equal | Rel::Close)))
+        }) {
+            slots.last_mut().unwrap().chord_ids.push(c.id);
+        } else {
+            slots.push(MeasureSlot {
+                id: slots.len() + 1,
+                chord_ids: vec![c.id],
+            });
+        }
+    }
+    let mut relations = Vec::new();
+    for a in &input.chords {
+        for b in &input.chords {
+            if a.id != b.id {
+                relations.push(Relation {
+                    a: a.id,
+                    b: b.id,
+                    rel: matrix.get(a.id, b.id),
+                });
+            }
+        }
+    }
+    Ok(Retrieval { relations, slots })
+}
+/// Prepare getters from live typed SIG, not serialized oracle facts. Current
+/// admission excludes genuine augmentation dots and only has ordinary chords.
+pub(crate) fn from_owned(
+    graph: &Graph,
+    measure: &Measure,
+    chords: &[&Chord],
+    interline: usize,
+) -> Result<(Retrieval, Retrieval), String> {
+    let snapshot = graph.snapshot();
+    let nodes: BTreeMap<_, _> = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+        .collect();
+    let edges = snapshot["relations"].as_array().unwrap();
+    let mut facts = Vec::new();
+    let mut stems = BTreeMap::new();
+    let mut notes = BTreeMap::new();
+    for &chord in chords {
+        if graph.id(chord.key) != Some(chord.id) || chord.key.system != measure.system {
+            return Err("music_measure_slot_actual_owner_required".into());
+        }
+        let rest = chord.kind == ChordKind::Rest;
+        if rest
+            && chord
+                .members
+                .first()
+                .and_then(|n| n["shape"].as_str())
+                .is_some_and(|s| crate::music_voices::is_measure_rest_shape(s, false))
+        {
+            continue;
+        }
+        let members = chord
+            .members
+            .iter()
+            .map(|n| {
+                nodes
+                    .get(&(n["id"].as_u64().unwrap() as usize))
+                    .copied()
+                    .ok_or("music_measure_slot_live_member_required")
+            })
+            .collect::<Result<Vec<_>, _>>()?;
+        let stem = chord
+            .stem
+            .map(|k| graph.id(k).ok_or("music_measure_slot_live_stem_required"))
+            .transpose()?;
+        let geometry = if rest {
+            crate::head_chord_geometry::calculate_rest(&members)?
+        } else {
+            crate::head_chord_geometry::calculate(&members, stem.map(|id| nodes[&id]))?
+        };
+        let bounds = geometry
+            .bounds
+            .ok_or("music_measure_slot_chord_bounds_required")?;
+        let pitch = |n: &Value| {
+            n["pitch"]
+                .as_f64()
+                .filter(|p| p.is_finite())
+                .map(|p| p.round_ties_even() as i64)
+                .ok_or("music_measure_slot_note_pitch_required")
+        };
+        let pitches = members
+            .iter()
+            .map(|n| pitch(n))
+            .collect::<Result<Vec<_>, _>>()?;
+        let leading = nodes[&(geometry
+            .leading_id
+            .ok_or("music_measure_slot_leading_note_required")?
+            as usize)];
+        let has_beams = !crate::music_voices::chord_beams(&snapshot, chord.id)?.is_empty();
+        facts.push(Fact {
+            id: chord.id,
+            bounds,
+            dot_bounds: bounds,
+            x: (bounds[0] + bounds[2] / 2 - measure.left) as f64,
+            head: geometry
+                .head_location
+                .ok_or("music_measure_slot_head_location_required")?
+                .map(|x| x as f64),
+            rest,
+            stem,
+            stem_dir: geometry.stem_dir(stem.is_some())?,
+            has_beams,
+            pitches,
+            leading_pitch: pitch(leading)?,
+            time_offset: nodes[&chord.id]["time_offset"]
+                .as_str()
+                .map(crate::music_time::parse_ticks)
+                .transpose()?,
+        });
+        stems.insert(chord.id, stem);
+        notes.insert(
+            chord.id,
+            members
+                .iter()
+                .map(|n| n["id"].as_u64().unwrap())
+                .collect::<Vec<_>>(),
+        );
+    }
+    let ids: BTreeSet<_> = facts.iter().map(|f| f.id).collect();
+    let explicit = edges
+        .iter()
+        .filter(|e| {
+            matches!(
+                e["kind"].as_str(),
+                Some("SameTimeRelation" | "SeparateTimeRelation" | "NextInVoiceRelation")
+            ) && ids.contains(&(e["source"].as_u64().unwrap() as usize))
+                && ids.contains(&(e["target"].as_u64().unwrap() as usize))
+        })
+        .map(|e| Explicit {
+            kind: e["kind"].as_str().unwrap().into(),
+            a: e["source"].as_u64().unwrap() as usize,
+            b: e["target"].as_u64().unwrap() as usize,
+        })
+        .collect();
+    let ownership = crate::stem_overlap_ownership::Ownership::new(&snapshot)?;
+    let mut mirrors = Vec::new();
+    let mut aligned = Vec::new();
+    for (i, a) in facts.iter().enumerate().filter(|(_, f)| !f.rest) {
+        for b in facts[i + 1..].iter().filter(|f| !f.rest) {
+            if notes[&a.id].iter().any(|n| {
+                ownership
+                    .mirrors
+                    .get(n)
+                    .is_some_and(|m| notes[&b.id].contains(m))
+            }) {
+                mirrors.push([a.id, b.id]);
+            }
+            if let (Some(sa), Some(sb)) = (stems[&a.id], stems[&b.id])
+                && edges.iter().any(|e| {
+                    e["kind"] == "StemAlignmentRelation"
+                        && ((e["source"] == sa && e["target"] == sb)
+                            || (e["source"] == sb && e["target"] == sa))
+                })
+            {
+                aligned.push([a.id, b.id]);
+            }
+        }
+    }
+    // BeamGroup.getChords already translates each typed beam's head/rest links,
+    // stable center -> left sorting and aliases. Voices have just been reset.
+    let groups = crate::music_voices::beam_groups(graph, &[], std::slice::from_ref(measure))?;
+    // Measure.getBeamGroups follows each standard chord's actual first beam
+    // ensemble, retaining first encounter order. Other groups in the same
+    // system must not override this measure's relationships.
+    let mut selected = Vec::new();
+    for fact in &facts {
+        if let Some(gid) = crate::music_voices::chord_group(&snapshot, fact.id)?
+            && !selected.contains(&gid)
+        {
+            selected.push(gid);
+        }
+    }
+    let groups = selected
+        .into_iter()
+        .map(|gid| {
+            let group = groups
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|g| g["id"] == gid)
+                .ok_or("music_measure_slot_selected_group_required")?;
+            Ok(group["chords"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|r| r["id"].as_u64().unwrap() as usize)
+                .filter(|id| ids.contains(id))
+                .collect())
+        })
+        .collect::<Result<Vec<_>, String>>()?;
+    let input = Input {
+        chords: facts,
+        explicit,
+        mirrors,
+        aligned,
+        groups,
+        interline,
+    };
+    Ok((retrieve(&input, false)?, retrieve(&input, true)?))
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn original_saved_and_declared_measure_slot_priority_and_all_member_compatibility() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-measure-slot-retrieval/observed.json"
+        ))
+        .unwrap();
+        let mut observations = Vec::new();
+        for p in original["pages"].as_array().unwrap() {
+            observations.extend(p["measures"].as_array().unwrap().iter());
+        }
+        observations.extend(
+            original["controls"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|c| &c["observation"]),
+        );
+        for row in observations {
+            let input: Input = serde_json::from_value(row.clone()).unwrap();
+            for (name, wide) in [("narrow", false), ("wide", true)] {
+                assert_eq!(
+                    serde_json::to_value(retrieve(&input, wide).unwrap()).unwrap(),
+                    row[name]
+                );
+            }
+        }
+        let empty = Input {
+            chords: vec![],
+            explicit: vec![],
+            mirrors: vec![],
+            aligned: vec![],
+            groups: vec![],
+            interline: 11,
+        };
+        assert!(retrieve(&empty, false).unwrap().slots.is_empty());
+    }
+}

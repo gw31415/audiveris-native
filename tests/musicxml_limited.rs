@@ -1,3 +1,5 @@
+#[path = "support/measure_slots.rs"]
+mod measure_slots;
 // SPDX-License-Identifier: AGPL-3.0-or-later
 use audiveris_native::{GrayImage, music_xml};
 use serde_json::Value;
@@ -1267,6 +1269,7 @@ fn image_whole_measure_rest_owns_separate_voice_and_exports_stack_duration_witho
         GrayImage::decode(&fs::read(fixture.join("quarter-whole-rest.png")).unwrap()).unwrap();
     let export = music_xml::recognize(&image).unwrap();
     let report = &export.owner.owner.prepared.report;
+    measure_slots::assert_original(report, 1);
     let events = report["events"].as_array().unwrap();
     assert_eq!(events.len(), 5);
     for (native, original) in events.iter().zip(original["events"].as_array().unwrap()) {

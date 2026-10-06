@@ -1,3 +1,5 @@
+#[path = "support/measure_slots.rs"]
+mod measure_slots;
 // SPDX-License-Identifier: AGPL-3.0-or-later
 use audiveris_native::{GrayImage, beam_dispatch, music_xml};
 use serde_json::{Value, json};
@@ -145,6 +147,7 @@ fn measured_head_catalog_and_ordered_two_system_epilog_reach_original_beam_music
     )
     .unwrap();
     let report = &result.owner.owner.prepared.report;
+    measure_slots::assert_original(report, 0);
     let original: Value = serde_json::from_str(include_str!(
         "../fixtures/official-image-musicxml-cross-system/observed.json"
     ))

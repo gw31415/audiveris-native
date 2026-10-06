@@ -641,7 +641,7 @@ pub(crate) fn beam_groups(
 /// AbstractChord/RestChord.getBeams: stable tail-to-head order at the chord's
 /// center x. The first beam's actual incoming ensemble is getBeamGroup; do not
 /// choose a group by registration ID or by which group lists this chord first.
-fn chord_beams(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
+pub(crate) fn chord_beams(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
     let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
         .as_array()
         .unwrap()

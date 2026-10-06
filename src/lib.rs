@@ -503,6 +503,7 @@ mod music_flags;
 mod music_headers;
 mod music_ledger_reduction;
 mod music_links;
+mod music_measure_slots;
 pub mod music_measures;
 mod music_symbol_reduction;
 pub mod music_symbols;

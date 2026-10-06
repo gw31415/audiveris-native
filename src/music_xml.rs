@@ -272,6 +272,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     let mut graph = m.owner.graph.clone();
     let mut events = Vec::new();
     let mut measures = Vec::new();
+    let mut preliminary_slots = Vec::new();
     let mut carried_meter = None;
     let mut carried_time_symbol = None;
     let mut carried_key: Option<(Value, i64)> = None;
@@ -282,7 +283,26 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .iter()
             .filter(|c| c.measure == mi)
             .collect::<Vec<_>>();
-        chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+        // Original geometric retrieval precedes rhythm clocks/Voice matching.
+        let (narrow, wide) = crate::music_measure_slots::from_owned(
+            &m.owner.graph,
+            &measure,
+            &chords,
+            m.owner.interline,
+        )?;
+        let ordered_ids = narrow
+            .slots
+            .iter()
+            .flat_map(|s| s.chord_ids.iter())
+            .copied()
+            .collect::<Vec<_>>();
+        // Until ChordsMapper is connected, actual multi-chord slots require
+        // parallel voice assignment; preserve refusal instead of serializing them.
+        if narrow.slots.iter().any(|s| s.chord_ids.len() != 1) {
+            return Err("musicxml_general_slot_voice_assignment_pending".into());
+        }
+        chords.sort_by_key(|c| ordered_ids.iter().position(|id| *id == c.id));
+        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"voice_assignment":"existing single-voice clock; general ChordsMapper pending"}));
         if chords.is_empty() {
             return Err(format!(
                 "musicxml_empty_measure:{}:{}",
@@ -885,6 +905,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
     m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":voice_projection,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half/default-whole-measure-rest complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report["preliminary_measure_slots"] = json!(preliminary_slots);
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     if m.owner.prepared.report["events"]

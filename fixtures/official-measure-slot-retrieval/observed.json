@@ -1,0 +1,1830 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "original reset+narrow/wide SlotsRetriever on saved successful image states; separate five declared method controls, not general voice matching or new image admission",
+  "pages" : [ {
+    "input" : "beam-two-systems.omr",
+    "measures" : [ {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 275, 206, 14, 42 ],
+        "dot_bounds" : [ 275, 206, 14, 42 ],
+        "x" : 201.0,
+        "head" : [ 289.0, 242.0 ],
+        "rest" : false,
+        "stem" : 328,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 332, 206, 17, 42 ],
+        "dot_bounds" : [ 332, 206, 17, 42 ],
+        "x" : 259.0,
+        "head" : [ 349.0, 242.0 ],
+        "rest" : false,
+        "stem" : 330,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 392, 206, 17, 42 ],
+        "dot_bounds" : [ 392, 206, 17, 42 ],
+        "x" : 319.0,
+        "head" : [ 409.0, 242.0 ],
+        "rest" : false,
+        "stem" : 331,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 3,
+        "bounds" : [ 452, 206, 17, 42 ],
+        "dot_bounds" : [ 452, 206, 17, 42 ],
+        "x" : 379.0,
+        "head" : [ 469.0, 242.0 ],
+        "rest" : false,
+        "stem" : 329,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 4,
+        "bounds" : [ 545, 217, 14, 42 ],
+        "dot_bounds" : [ 545, 217, 14, 42 ],
+        "x" : 471.0,
+        "head" : [ 559.0, 253.0 ],
+        "rest" : false,
+        "stem" : 336,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 2 ],
+        "leading_pitch" : 2,
+        "time_offset" : null
+      }, {
+        "id" : 5,
+        "bounds" : [ 635, 217, 14, 42 ],
+        "dot_bounds" : [ 635, 217, 14, 42 ],
+        "x" : 561.0,
+        "head" : [ 649.0, 253.0 ],
+        "rest" : false,
+        "stem" : 337,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 2 ],
+        "leading_pitch" : 2,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ [ 0, 1, 2, 3 ] ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 4,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 5,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 4,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        }, {
+          "id" : 5,
+          "chord_ids" : [ 4 ]
+        }, {
+          "id" : 6,
+          "chord_ids" : [ 5 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 4,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 5,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 4,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        }, {
+          "id" : 5,
+          "chord_ids" : [ 4 ]
+        }, {
+          "id" : 6,
+          "chord_ids" : [ 5 ]
+        } ]
+      }
+    }, {
+      "number" : 2,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 755, 206, 14, 42 ],
+        "dot_bounds" : [ 755, 206, 14, 42 ],
+        "x" : 51.0,
+        "head" : [ 769.0, 242.0 ],
+        "rest" : false,
+        "stem" : 335,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 875, 195, 14, 42 ],
+        "dot_bounds" : [ 875, 195, 14, 42 ],
+        "x" : 171.0,
+        "head" : [ 889.0, 231.0 ],
+        "rest" : false,
+        "stem" : 333,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ -2 ],
+        "leading_pitch" : -2,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 995, 184, 14, 42 ],
+        "dot_bounds" : [ 995, 184, 14, 42 ],
+        "x" : 291.0,
+        "head" : [ 1009.0, 220.0 ],
+        "rest" : false,
+        "stem" : 332,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ -4 ],
+        "leading_pitch" : -4,
+        "time_offset" : null
+      }, {
+        "id" : 3,
+        "bounds" : [ 1115, 195, 14, 42 ],
+        "dot_bounds" : [ 1115, 195, 14, 42 ],
+        "x" : 411.0,
+        "head" : [ 1129.0, 231.0 ],
+        "rest" : false,
+        "stem" : 334,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ -2 ],
+        "leading_pitch" : -2,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        } ]
+      }
+    }, {
+      "number" : 3,
+      "system" : 2,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 275, 526, 14, 42 ],
+        "dot_bounds" : [ 275, 526, 14, 42 ],
+        "x" : 201.0,
+        "head" : [ 289.0, 562.0 ],
+        "rest" : false,
+        "stem" : 383,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 332, 526, 17, 42 ],
+        "dot_bounds" : [ 332, 526, 17, 42 ],
+        "x" : 259.0,
+        "head" : [ 349.0, 562.0 ],
+        "rest" : false,
+        "stem" : 385,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 392, 526, 17, 42 ],
+        "dot_bounds" : [ 392, 526, 17, 42 ],
+        "x" : 319.0,
+        "head" : [ 409.0, 562.0 ],
+        "rest" : false,
+        "stem" : 386,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 3,
+        "bounds" : [ 452, 526, 17, 42 ],
+        "dot_bounds" : [ 452, 526, 17, 42 ],
+        "x" : 379.0,
+        "head" : [ 469.0, 562.0 ],
+        "rest" : false,
+        "stem" : 384,
+        "stem_dir" : -1,
+        "has_beams" : true,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 4,
+        "bounds" : [ 545, 537, 14, 42 ],
+        "dot_bounds" : [ 545, 537, 14, 42 ],
+        "x" : 471.0,
+        "head" : [ 559.0, 573.0 ],
+        "rest" : false,
+        "stem" : 391,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 2 ],
+        "leading_pitch" : 2,
+        "time_offset" : null
+      }, {
+        "id" : 5,
+        "bounds" : [ 635, 537, 14, 42 ],
+        "dot_bounds" : [ 635, 537, 14, 42 ],
+        "x" : 561.0,
+        "head" : [ 649.0, 573.0 ],
+        "rest" : false,
+        "stem" : 392,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 2 ],
+        "leading_pitch" : 2,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ [ 0, 1, 2, 3 ] ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 4,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 5,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 4,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        }, {
+          "id" : 5,
+          "chord_ids" : [ 4 ]
+        }, {
+          "id" : 6,
+          "chord_ids" : [ 5 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 4,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 4,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 4,
+          "b" : 5,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 5,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 2,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 3,
+          "rel" : "AFTER"
+        }, {
+          "a" : 5,
+          "b" : 4,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        }, {
+          "id" : 5,
+          "chord_ids" : [ 4 ]
+        }, {
+          "id" : 6,
+          "chord_ids" : [ 5 ]
+        } ]
+      }
+    }, {
+      "number" : 4,
+      "system" : 2,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 755, 526, 14, 42 ],
+        "dot_bounds" : [ 755, 526, 14, 42 ],
+        "x" : 51.0,
+        "head" : [ 769.0, 562.0 ],
+        "rest" : false,
+        "stem" : 390,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 875, 515, 14, 42 ],
+        "dot_bounds" : [ 875, 515, 14, 42 ],
+        "x" : 171.0,
+        "head" : [ 889.0, 551.0 ],
+        "rest" : false,
+        "stem" : 388,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ -2 ],
+        "leading_pitch" : -2,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 995, 504, 14, 42 ],
+        "dot_bounds" : [ 995, 504, 14, 42 ],
+        "x" : 291.0,
+        "head" : [ 1009.0, 540.0 ],
+        "rest" : false,
+        "stem" : 387,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ -4 ],
+        "leading_pitch" : -4,
+        "time_offset" : null
+      }, {
+        "id" : 3,
+        "bounds" : [ 1115, 515, 14, 42 ],
+        "dot_bounds" : [ 1115, 515, 14, 42 ],
+        "x" : 411.0,
+        "head" : [ 1129.0, 551.0 ],
+        "rest" : false,
+        "stem" : 389,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ -2 ],
+        "leading_pitch" : -2,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        } ]
+      }
+    } ]
+  }, {
+    "input" : "quarter-whole-rest.omr",
+    "measures" : [ {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 276, 206, 13, 41 ],
+        "dot_bounds" : [ 276, 206, 13, 41 ],
+        "x" : 201.0,
+        "head" : [ 289.0, 242.0 ],
+        "rest" : false,
+        "stem" : 160,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 396, 217, 13, 41 ],
+        "dot_bounds" : [ 396, 217, 13, 41 ],
+        "x" : 321.0,
+        "head" : [ 409.0, 253.0 ],
+        "rest" : false,
+        "stem" : 161,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 2 ],
+        "leading_pitch" : 2,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 516, 228, 13, 41 ],
+        "dot_bounds" : [ 516, 228, 13, 41 ],
+        "x" : 441.0,
+        "head" : [ 529.0, 264.0 ],
+        "rest" : false,
+        "stem" : 163,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 4 ],
+        "leading_pitch" : 4,
+        "time_offset" : null
+      }, {
+        "id" : 3,
+        "bounds" : [ 636, 217, 13, 41 ],
+        "dot_bounds" : [ 636, 217, 13, 41 ],
+        "x" : 561.0,
+        "head" : [ 649.0, 253.0 ],
+        "rest" : false,
+        "stem" : 162,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 2 ],
+        "leading_pitch" : 2,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 3,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 3,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 1,
+          "rel" : "AFTER"
+        }, {
+          "a" : 3,
+          "b" : 2,
+          "rel" : "AFTER"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1 ]
+        }, {
+          "id" : 3,
+          "chord_ids" : [ 2 ]
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ]
+        } ]
+      }
+    }, {
+      "number" : 2,
+      "system" : 1,
+      "chords" : [ ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ ],
+        "slots" : [ ]
+      },
+      "wide" : {
+        "relations" : [ ],
+        "slots" : [ ]
+      }
+    } ]
+  } ],
+  "controls" : [ {
+    "name" : "close-chain",
+    "observation" : {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 300, 190, 12, 8 ],
+        "dot_bounds" : [ 300, 190, 12, 8 ],
+        "x" : 225.0,
+        "head" : [ 306.0, 194.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 306, 210, 12, 8 ],
+        "dot_bounds" : [ 306, 210, 12, 8 ],
+        "x" : 231.0,
+        "head" : [ 312.0, 214.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 4 ],
+        "leading_pitch" : 4,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 312, 230, 12, 8 ],
+        "dot_bounds" : [ 312, 230, 12, 8 ],
+        "x" : 237.0,
+        "head" : [ 318.0, 234.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 8 ],
+        "leading_pitch" : 8,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "CLOSE"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 2 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "CLOSE"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1, 2 ]
+        } ]
+      }
+    }
+  }, {
+    "name" : "separate-close",
+    "observation" : {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 300, 190, 12, 8 ],
+        "dot_bounds" : [ 300, 190, 12, 8 ],
+        "x" : 225.0,
+        "head" : [ 306.0, 194.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 306, 210, 12, 8 ],
+        "dot_bounds" : [ 306, 210, 12, 8 ],
+        "x" : 231.0,
+        "head" : [ 312.0, 214.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 4 ],
+        "leading_pitch" : 4,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 312, 230, 12, 8 ],
+        "dot_bounds" : [ 312, 230, 12, 8 ],
+        "x" : 237.0,
+        "head" : [ 318.0, 234.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 8 ],
+        "leading_pitch" : 8,
+        "time_offset" : null
+      } ],
+      "explicit" : [ {
+        "kind" : "SeparateTimeRelation",
+        "a" : 0,
+        "b" : 1
+      } ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "CLOSE"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1, 2 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "BEFORE"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "AFTER"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "CLOSE"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "CLOSE"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0 ]
+        }, {
+          "id" : 2,
+          "chord_ids" : [ 1, 2 ]
+        } ]
+      }
+    }
+  }, {
+    "name" : "same-with-intermediate",
+    "observation" : {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 300, 190, 12, 8 ],
+        "dot_bounds" : [ 300, 190, 12, 8 ],
+        "x" : 225.0,
+        "head" : [ 306.0, 194.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 306, 210, 12, 8 ],
+        "dot_bounds" : [ 306, 210, 12, 8 ],
+        "x" : 231.0,
+        "head" : [ 312.0, 214.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 4 ],
+        "leading_pitch" : 4,
+        "time_offset" : null
+      }, {
+        "id" : 2,
+        "bounds" : [ 312, 230, 12, 8 ],
+        "dot_bounds" : [ 312, 230, 12, 8 ],
+        "x" : 237.0,
+        "head" : [ 318.0, 234.0 ],
+        "rest" : false,
+        "stem" : null,
+        "stem_dir" : 0,
+        "has_beams" : false,
+        "pitches" : [ 8 ],
+        "leading_pitch" : 8,
+        "time_offset" : null
+      } ],
+      "explicit" : [ {
+        "kind" : "SameTimeRelation",
+        "a" : 0,
+        "b" : 2
+      } ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "EQUAL"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1, 2 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 0,
+          "b" : 2,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 2,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 2,
+          "b" : 0,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 2,
+          "b" : 1,
+          "rel" : "EQUAL"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1, 2 ]
+        } ]
+      }
+    }
+  }, {
+    "name" : "adjacent-opposite",
+    "observation" : {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 300, 160, 12, 38 ],
+        "dot_bounds" : [ 300, 160, 12, 38 ],
+        "x" : 225.0,
+        "head" : [ 311.0, 194.0 ],
+        "rest" : false,
+        "stem" : 428,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 306, 190, 12, 43 ],
+        "dot_bounds" : [ 306, 190, 12, 43 ],
+        "x" : 231.0,
+        "head" : [ 317.0, 194.0 ],
+        "rest" : false,
+        "stem" : 431,
+        "stem_dir" : 1,
+        "has_beams" : false,
+        "pitches" : [ 4 ],
+        "leading_pitch" : 4,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "EQUAL"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "EQUAL"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1 ]
+        } ]
+      }
+    }
+  }, {
+    "name" : "aligned-stems",
+    "observation" : {
+      "number" : 1,
+      "system" : 1,
+      "chords" : [ {
+        "id" : 0,
+        "bounds" : [ 300, 160, 12, 38 ],
+        "dot_bounds" : [ 300, 160, 12, 38 ],
+        "x" : 225.0,
+        "head" : [ 311.0, 194.0 ],
+        "rest" : false,
+        "stem" : 428,
+        "stem_dir" : -1,
+        "has_beams" : false,
+        "pitches" : [ 0 ],
+        "leading_pitch" : 0,
+        "time_offset" : null
+      }, {
+        "id" : 1,
+        "bounds" : [ 306, 190, 12, 43 ],
+        "dot_bounds" : [ 306, 190, 12, 43 ],
+        "x" : 231.0,
+        "head" : [ 317.0, 194.0 ],
+        "rest" : false,
+        "stem" : 431,
+        "stem_dir" : 1,
+        "has_beams" : false,
+        "pitches" : [ 4 ],
+        "leading_pitch" : 4,
+        "time_offset" : null
+      } ],
+      "explicit" : [ ],
+      "mirrors" : [ ],
+      "aligned" : [ [ 0, 1 ] ],
+      "groups" : [ ],
+      "interline" : 11,
+      "narrow" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "EQUAL"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1 ]
+        } ]
+      },
+      "wide" : {
+        "relations" : [ {
+          "a" : 0,
+          "b" : 1,
+          "rel" : "EQUAL"
+        }, {
+          "a" : 1,
+          "b" : 0,
+          "rel" : "EQUAL"
+        } ],
+        "slots" : [ {
+          "id" : 1,
+          "chord_ids" : [ 0, 1 ]
+        } ]
+      }
+    }
+  } ]
+}

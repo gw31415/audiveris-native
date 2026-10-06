@@ -1347,3 +1347,41 @@ The input and both outputs are retained at
 Full all-rest original export parity remains unconfirmed. Next connected work is
 [geometric narrow/wide slots and real Voice matching](../evidence/musicxml-all-measure-rest/NEXT-DEPENDENCY.md),
 not more invalid-original export retries.
+
+### Preliminary narrow/wide MeasureSlots (2026-10-06)
+
+The image continuation now invokes original `SlotsRetriever` before assigning
+Voice/time. It uses the real owned chords, member/stem geometry and typed SIG:
+SeparateTime/NextInVoice, explicit SameTime, beam groups, mirrors, root-stem
+alignment, SameTime intermediate extension, adjacency, close and distant pairs,
+in that original order. Every candidate must be EQUAL or CLOSE to **all** current
+slot members. Narrow/wide thresholds retain original scale rounding. Default
+whole-measure rests are excluded; their dedicated Voice remains separate.
+
+`preliminary_measure_slots` in the existing JSON report contains narrow/wide
+candidate slots and oriented relationships using actual chord IDs. For example:
+
+```sh
+cargo build --offline --locked -j1 --bin audiveris-musicxml
+/path/to/target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-cross-system/beam-two-systems.png \
+  /tmp/measure-slots.musicxml /tmp/measure-slots.json
+```
+
+Use the existing low-debug build environment when working in the Cloud task.
+The current single-voice path now takes its candidate order from narrow slots;
+a slot with multiple incoming chords still refuses until real ChordsMapper
+assignment is connected. This does not enable polyphony or expand image admission.
+These candidates precede rhythm and differ from final timed stack `slots`.
+
+Saved original successful image states (24 standard chords across six measures,
+including an empty whole-rest candidate list) and five declared controls compare
+relationship priority and partitions. Saved-state/method controls are separate
+from same-image native recognition and successful original MusicXML comparison.
+The production adapter is currently ordinary chords, no genuine augmentation
+dots, zero skew and one staff; it uses existing live beam getters. Generic
+relationship branches do not prove automatic mirror/root/cue acquisition.
+Compound slots, SlotMapper/ChordsMapper/VoiceDistance, shared multi-part stacks,
+full Rational/tuplets, lyrics, automatic slur/tie and correction/cleaner/epilog
+remain pending. All global flags remain false; the full595 result belongs to
+`95e191b`, not this source. No nonUI logic is planned for omission.

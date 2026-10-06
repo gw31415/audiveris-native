@@ -825,3 +825,11 @@ getter/独立4宣言条件、既存MusicXML16＋getter/Voice2対象検証、そ�
 この比較の再実行/座標探索/独自の原版音価捏造は行わない。
 [観測と原本](../evidence/musicxml-all-measure-rest/ORIGINAL-LIMIT.json)、
 [次の原版依存](../evidence/musicxml-all-measure-rest/NEXT-DEPENDENCY.md)。
+
+原版SlotsRetrieverの前段slot取得（2026-10-06）：明示分離→同時刻→beam→
+mirror→root stem→中間同時刻→隣接→近接→遠隔の優先順と全メンバー互換条件を
+実所有画像chordへ接続。narrow/wide候補はJSONのpreliminary_measure_slotsで参照。
+保存ページ24 chord/6小節と宣言5条件の比較は、画像MusicXML回帰と区別します。
+複数chord slotの一般Voice割当、compound slots、共有stack、全Rationalなどは
+未完。既存画像受付範囲は拡大せず、全体フラグfalse/最終非UI省略なしを維持。
+[CLI例と境界](MUSICXML-LIMITED.md#preliminary-narrowwide-measureslots-2026-10-06)。
