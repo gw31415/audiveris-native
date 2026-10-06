@@ -1653,3 +1653,21 @@ still refuse in the bounded writer. General compound/multiple-Voice export,
 exact Rational/tuplets, Merged/shared stacks and the remaining nonUI functionality
 stay in the port ledger. All completion flags remain false; full595 belongs to
 old `95e191b`, not this stage.
+
+### Grouped chord clocks per narrow member (2026-10-06)
+
+The image mapper's initial known-clock read now follows original
+`MeasureRhythm.SlotMapper.mapChords/readSlotTimes` for each narrow member: one
+known value sets that member's clock, an empty read retains its prior clock, and
+multiple known values within one member report inconsistency without setting a
+clock. Different members may have different clocks. This nonimplicit pre-mapping
+phase has no mapping pair to blacklist. Three original `mapChords` controls
+with already-owned actual chords isolate this phase and compare the native
+owned Graph/narrow clock results. They do not exercise active matching/export.
+
+The bounded image mapper still rejects general multi-incoming compounds and
+grouped conflicts; it does not infer a success from the false consistency result.
+The three 36-event CLI examples and commands above remain unchanged. The next
+dependency is general compound incoming mapping and multiple-Voice traversal,
+then exact Rational/implicit tuplets and shared stacks. All global flags remain
+false, no original nonUI omission is planned, and full595 remains old `95e191b`.
