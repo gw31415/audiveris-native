@@ -225,6 +225,11 @@
       "unit": "Voice.getDuration / MeasureStack.getSlotsDuration / StackRhythm.readStackActualDuration -> actual image CLI stored timing",
       "status": "partial",
       "limits": "normal exact-grid Voice slots and current one-part/one-staff stack only; whole-rest Voice construction/shared multi-part stacks/Rational/general matching still pending"
+    },
+    {
+      "unit": "AbstractChordInter.setAndPushTime: NextInVoice -> actual beam group -> already-classified tie clocks, before image CLI final slots",
+      "status": "partial",
+      "limits": "current sequential single-voice seeding/exact-grid resolved durations; automatic relation acquisition/general matching/shared stacks/whole-rest-special branches/full exception handling pending; cycles refuse atomically"
     }
   ],
   "function_groups": [
@@ -334,7 +339,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Original slot-based Voice.getDuration/MeasureStack.getSlotsDuration/StackRhythm.readStackActualDuration connected to current image CLI; five saved/declaration controls. Full595 remains95e191b; evidence/musicxml-slot-duration.",
+  "latest_targeted_validation": "Original live chord setAndPushTime sequence/group/classified-tie propagation connected before image CLI stack slots; five original saved/declaration controls and targeted regressions in evidence/musicxml-chord-time. Full595 remains95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

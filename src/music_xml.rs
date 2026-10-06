@@ -662,6 +662,38 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         // Voice.checkDuration uses the last actual AbstractChord.getEndTime.
         // Normal-voice termination/excess updates precede the retained strict
         // admission. General Rational/slots/measure-rest/pickup remain pending.
+        // Consume original live relation-based clock propagation before final
+        // stack slots. Sequential single-voice seeding/admission still applies;
+        // this does not solve general voice matching or automatic ties.
+        for chord in m.chords.iter().filter(|c| c.measure == mi) {
+            let current = graph.snapshot();
+            let time = current["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == chord.id)
+                .and_then(|n| n["time_offset"].as_str())
+                .ok_or("musicxml_chord_clock_required")?;
+            crate::music_chord_time::set_and_push(
+                &mut graph,
+                &m.voices,
+                &m.measures,
+                chord.id,
+                Some(crate::music_time::parse_ticks(time)?),
+            )?;
+        }
+        let timed = graph.snapshot();
+        for event in events.iter().filter(|e| e["measure_number"] == mi + 1) {
+            let actual = timed["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == event["chord_id"])
+                .ok_or("musicxml_chord_clock_required")?;
+            if actual["time_offset"] != event["time_offset"] {
+                return Err("musicxml_propagated_chord_clock_mismatch".into());
+            }
+        }
         crate::music_voices::generate_slots(&mut graph, &mut m.voices, &mut m.measures[mi], mi)?;
         m.measures[mi].timing.expected = Some(expected_ticks);
         crate::music_voices::read_stack_actual_duration(

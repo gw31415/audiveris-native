@@ -638,7 +638,7 @@ fn chord_beams(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
     }
     Ok(beams)
 }
-fn chord_group(snapshot: &Value, id: usize) -> Result<Option<usize>, String> {
+pub(crate) fn chord_group(snapshot: &Value, id: usize) -> Result<Option<usize>, String> {
     let beams = chord_beams(snapshot, id)?;
     Ok(beams.first().and_then(|beam| {
         snapshot["relations"]
@@ -653,7 +653,7 @@ fn chord_group(snapshot: &Value, id: usize) -> Result<Option<usize>, String> {
 /// AbstractChord.getFollowingTiedChords follows typed SlurHead relations,
 /// already-classified tie state, LEFT/RIGHT heads and the actual right head's
 /// first ensemble; it does not classify slur geometry or export ties.
-fn following_tied_chords(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
+pub(crate) fn following_tied_chords(snapshot: &Value, id: usize) -> Result<Vec<usize>, String> {
     let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
         .as_array()
         .unwrap()
@@ -1050,6 +1050,137 @@ mod group_tests {
             duration_projection(&duration_graph, &duration_voices, &duration_measure),
             duration_controls["no_voices"]
         );
+        let time_controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-chord-time/controls.json"
+        ))
+        .unwrap();
+        let chord_ids = owner.voices[0].chord_ids.clone();
+        let other_id = owner.voices[1].chord_ids[0];
+        for control in time_controls["controls"].as_array().unwrap() {
+            let mode = control["mode"].as_str().unwrap();
+            let mut graph = owner.owner.graph.clone();
+            let mut nodes = graph.snapshot()["inters"].as_array().unwrap().clone();
+            for n in nodes
+                .iter_mut()
+                .filter(|n| chord_ids.iter().any(|&id| n["id"] == id))
+            {
+                n["time_offset"] = Value::Null;
+                let key: Key = serde_json::from_value(n["origin"].clone()).unwrap();
+                graph.vertex(key, n.clone(), false).unwrap();
+            }
+            let key = |id: usize| -> Key {
+                serde_json::from_value(
+                    nodes.iter().find(|n| n["id"] == id).unwrap()["origin"].clone(),
+                )
+                .unwrap()
+            };
+            let next = |g: &mut crate::shared_sig::Graph, a, b| {
+                g.relations(
+                    1,
+                    Phase::Chord,
+                    vec![(key(a), key(b), json!({"kind":"NextInVoiceRelation"}))],
+                )
+                .unwrap();
+            };
+            match mode {
+                "sequence" => {
+                    next(&mut graph, chord_ids[3], chord_ids[4]);
+                    next(&mut graph, chord_ids[4], chord_ids[5]);
+                }
+                "tie" => {
+                    let slur = Key {
+                        system: 1,
+                        phase: Phase::Symbol,
+                        local: nodes
+                            .iter()
+                            .filter(|n| {
+                                n["origin"]["system"] == 1
+                                    && n["origin"]["phase"]
+                                        == serde_json::to_value(Phase::Symbol).unwrap()
+                            })
+                            .filter_map(|n| n["origin"]["local"].as_u64())
+                            .max()
+                            .unwrap_or(0) as usize
+                            + 1,
+                    };
+                    graph.vertex(slur,json!({"kind":"SlurInter","shape":"SLUR_ABOVE","grade":0.8,"is_tie":true}),false).unwrap();
+                    let note = |id| -> Key {
+                        let target = graph.snapshot()["relations"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .find(|e| e["kind"] == "Containment" && e["source"] == id)
+                            .unwrap()["target"]
+                            .as_u64()
+                            .unwrap() as usize;
+                        key(target)
+                    };
+                    let left = note(chord_ids[3]);
+                    let right = note(chord_ids[4]);
+                    graph
+                        .relations(
+                            1,
+                            Phase::Symbol,
+                            vec![
+                                (slur, left, json!({"kind":"SlurHeadRelation","side":"LEFT"})),
+                                (
+                                    slur,
+                                    right,
+                                    json!({"kind":"SlurHeadRelation","side":"RIGHT"}),
+                                ),
+                            ],
+                        )
+                        .unwrap();
+                    next(&mut graph, chord_ids[4], chord_ids[5]);
+                }
+                "cross-measure" => next(&mut graph, chord_ids[3], other_id),
+                _ => {}
+            }
+            crate::music_chord_time::set_and_push(
+                &mut graph,
+                &owner.voices,
+                &owner.measures,
+                chord_ids[0],
+                if mode == "null" { None } else { Some(0) },
+            )
+            .unwrap();
+            let actual = graph.snapshot();
+            let n = |id| {
+                actual["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == id)
+                    .unwrap()
+            };
+            assert_eq!(
+                json!({"mode":mode,"chords":chord_ids.iter().map(|&id|json!({"bounds":n(id)["bounds"],"time_offset":n(id)["time_offset"]})).collect::<Vec<_>>(),"other_measure_offset":n(other_id)["time_offset"]}),
+                *control
+            );
+        }
+        let mut bad_clock = owner.owner.graph.clone();
+        let mut first = bad_clock.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == chord_ids[0])
+            .unwrap()
+            .clone();
+        let first_key: Key = serde_json::from_value(first["origin"].clone()).unwrap();
+        first["duration"] = json!("1/32");
+        bad_clock.vertex(first_key, first, false).unwrap();
+        let before = bad_clock.snapshot();
+        assert!(
+            crate::music_chord_time::set_and_push(
+                &mut bad_clock,
+                &owner.voices,
+                &owner.measures,
+                chord_ids[0],
+                Some(0)
+            )
+            .is_err()
+        );
+        assert_eq!(bad_clock.snapshot(), before);
         let timed_page_graph = owner.owner.graph.clone();
         let snapshot = owner.owner.graph.snapshot();
         let before_cache = snapshot["inters"]

@@ -778,3 +778,8 @@ Full595 remains earlier source95e191b; this unit uses targeted regressions.
 ## slot由来のVoice・stack duration（2026-10-06）
 
 原版 `Voice.getDuration / MeasureStack.getSlotsDuration / StackRhythm.readStackActualDuration` を保持済みslotと画像CLIへ接続。BEGIN終端の最大値・不明slot時刻・slotなし・Voiceなしを原版5状態と比較し、CLIのVoice durationと保持stack実durationへ反映。全小節休符Voiceの構築、一般共有stack・voice matching等は未完。詳細は [CLI手順](MUSICXML-LIMITED.md#slot-based-voicestack-duration-2026-10-06)、[検証](../evidence/musicxml-slot-duration/VALIDATION.json)。全595は95e191bの結果です。
+
+
+## 実Chordの時刻伝播（2026-10-06）
+
+原版 `setAndPushTime` の明示Voice順序→beam group→判定済みtieを、実SIG・正確な所有小節で接続。画像CLIのslot生成前に実行し、伝播後の時刻と既存イベント時計の整合を検査します。原版5条件を比較。一般slot/voice matching・共有multi-part stack・全小節休符Voice・自動slur/tie・lyrics等は未完で、完成フラグfalse。 [手順・境界](MUSICXML-LIMITED.md#live-chord-time-propagation-before-slots-2026-10-06) / [検証](../evidence/musicxml-chord-time/VALIDATION.json)。全595は95e191bの既存結果です。

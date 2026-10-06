@@ -1,0 +1,29 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "AbstractChordInter.setAndPushTime and sequence/group/classified tie clock propagation -> live image CLI before stack slots",
+  "comparison": "actual original saved beam group plus declared NextInVoice sequence, classified tie, cross-measure relation, null seed; native five controls match; unsupported finer clock refuses with graph unchanged",
+  "ordering": "sequence -> selected group -> classified tie; group last resumes sequence/tie without recursive group dispatch; per-related-chord depth-first order retained by action stack",
+  "integration": "current image admitted sequential single-voice clocks/durations feed original propagation; actual chord time must agree with event time before slots and export",
+  "limits": [
+    "resolved normal chords on exact1/16 grid, not full Rational/dynamic special-chord duration",
+    "automatic NextInVoice/SlurHead acquisition/checkStaffTie/tie XML and general voice matching/shared stacks remain pending",
+    "full original warning/caught-exception paths beyond typed resolved normal chords pending; cyclic/unbounded propagation explicitly refuses atomically",
+    "whole-rest Voice/lyrics/correction/full cleaner-epilog pending"
+  ],
+  "original_fixture": "fixtures/official-chord-time/controls.json",
+  "original_probe": "scripts/java/ChordTimeProbe.java",
+  "original_log_sha256": "9a7fcda29832cdd19c6eca3fc93a7dfdfe4a8f0e464858a8658a4b097361090d",
+  "targeted_tests_passed": 16,
+  "groups": {
+    "target.log": 1,
+    "regression.log": 15
+  },
+  "fmt": "passed",
+  "clippy": "workspace/all-targets -D warnings passed",
+  "full_run_this_unit": false,
+  "latest_full_validation": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "all_global_completion_flags": false
+}

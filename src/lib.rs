@@ -497,6 +497,7 @@ pub mod stem_image_head_expansion;
 mod head_chord_geometry;
 mod head_musical_pitch;
 mod music_beams;
+mod music_chord_time;
 mod music_containers;
 mod music_flags;
 mod music_headers;

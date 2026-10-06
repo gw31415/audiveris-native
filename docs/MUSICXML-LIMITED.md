@@ -1211,3 +1211,27 @@ Shared multi-part stacks, general Rational/voice matching/whole-rest Voice,
 automatic slur/tie/lyrics and complete cleaner/epilog remain pending. All global
 completion flags remain false. [Validation](../evidence/musicxml-slot-duration/VALIDATION.json).
 Full595 remains at95e191b; this stage uses targeted tests.
+
+
+## Live chord time propagation before slots (2026-10-06)
+
+Original `AbstractChordInter.setAndPushTime/pushTimeViaVoiceSequence/
+pushTimeViaGroup/pushTimeViaTie` now traverses actual `NextInVoiceRelation`,
+selected beam-group chords and already-classified `SlurHeadRelation` ties, in
+original sequence→group→tie order and within the exact owning Measure. The
+native image CLI consumes this before final stack slots; propagated chord
+clocks must agree with its admitted single-voice event clocks. Existing input
+examples/output bytes stay valid; no image coordinates or event list supply
+the result.
+
+Original comparison covers one saved group and separate declared sequence,
+classified tie, cross-measure and null-seed controls. Existing sequential
+single-voice seeding and resolved exact-grid duration still apply. This does
+not acquire automatic NextInVoice/SlurHead relations, classify/export ties,
+solve general slots/polyphony or implement whole-rest/special-chord branches.
+Full Rational and original warning/caught-exception paths beyond typed resolved
+normal chords remain pending. Cyclic/unbounded propagation explicitly refuses
+atomically with a budget, instead of claiming an original successful score.
+All global completion flags remain false.
+[Validation](../evidence/musicxml-chord-time/VALIDATION.json).
+Full595 remains at95e191b; this stage uses targeted tests.
