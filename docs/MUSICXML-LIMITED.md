@@ -1435,3 +1435,32 @@ continuation; original general SlotMapper/ChordsMapper/VoiceDistance, multi-Voic
 starting IDs/kinds, shared stacks, correction and complete epilog remain pending.
 Full595 remains tied to `95e191b`; current validation is targeted MusicXML, not a
 new whole-workspace result. All global completion flags remain false.
+
+### Original rookie-to-active Voice mapping (2026-10-06)
+
+Later unassigned chords now follow original `SlotMapper.readSlotTimes`,
+`purgeRookiesSet`, the admitted `retrieveActives` branch, separated
+`VoiceDistance`, `ChordsMapper.processNext/process` and `InjectionSolver`.
+Costs use real owned Voice/staff/member/stem and absolute diatonic pitch, not
+image identity or an event-counter choice. Explicit NextInVoice preassignment
+precedes black-list rejection; the exact small injection search retains original
+strict-improvement/tie order and the 60 no-link cost. A later rookie enters the
+chosen actual Voice and receives the active chord's end time through real
+`setAndPushTime`; the existing serial event clock is now a consistency check.
+
+`preliminary_measure_slots[].mapping_steps` exposes known times, unassigned
+rookies, eligible active chords, original costs/pairs and the resulting clocks.
+The unchanged examples above still run without Java. Two saved successful
+original pages provide 24 observed compound steps and 13 mappings. Three solver
+controls and two constraint-list controls are method comparisons, **not** image
+polyphony or automatic acquisition of new constraints.
+
+This connects only the existing one-incoming/single-Voice image path. Both
+comparison books use original `implicitTuplets=false`. Generic extinction,
+retry/blacklisting, new-Voice time inference, `VoiceDistance.Merged`, implicit
+shrinking, multi-note/cross-staff mapping and general polyphonic export are
+pending; unsupported cases refuse instead of inventing a time/Voice. Exhaustive
+search has an explicit visit budget and refuses exhaustion rather than returning
+a suboptimal result. No input admission or global completion flag changed.
+The original invalid-XSD all-rest page remains a separate negative boundary.
+Full595 continues to refer only to `95e191b`; current checks are targeted.

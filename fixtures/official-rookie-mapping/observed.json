@@ -1,0 +1,782 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "saved same-image original per-slot readSlotTimes/rookie/active/Separated distance/process mapping/apply; not general native polyphony or new image admission",
+  "pages" : [ {
+    "input" : "beam-two-systems.omr",
+    "measures" : [ {
+      "number" : 1,
+      "interline" : 11,
+      "implicit_tuplets" : false,
+      "chord_bounds" : [ [ 275, 206, 14, 42 ], [ 332, 206, 17, 42 ], [ 392, 206, 17, 42 ], [ 452, 206, 17, 42 ], [ 545, 217, 14, 42 ], [ 635, 217, 14, 42 ] ],
+      "steps" : [ {
+        "slot_id" : 1,
+        "known_times" : [ {
+          "time" : "0",
+          "chord_ids" : [ 0 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 0,
+          "time_offset" : "0",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 2,
+        "known_times" : [ {
+          "time" : "1/8",
+          "chord_ids" : [ 1 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 1,
+          "time_offset" : "1/8",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 3,
+        "known_times" : [ {
+          "time" : "1/4",
+          "chord_ids" : [ 2 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 2,
+          "time_offset" : "1/4",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 4,
+        "known_times" : [ {
+          "time" : "3/8",
+          "chord_ids" : [ 3 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ 3 ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 3,
+          "time_offset" : "3/8",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 5,
+        "known_times" : [ ],
+        "rookies" : [ 4 ],
+        "actives" : [ 3 ],
+        "costs" : [ {
+          "rookie" : 4,
+          "active" : 3,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 34,
+            "heads_center_y" : 242
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 253
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 4,
+            "active" : 3
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 4,
+          "time_offset" : "1/2",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 6,
+        "known_times" : [ ],
+        "rookies" : [ 5 ],
+        "actives" : [ 4 ],
+        "costs" : [ {
+          "rookie" : 5,
+          "active" : 4,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 253
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 253
+          },
+          "distance" : 8
+        } ],
+        "mapping" : {
+          "cost" : 8,
+          "pairs" : [ {
+            "rookie" : 5,
+            "active" : 4
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 5,
+          "time_offset" : "3/4",
+          "voice" : 1
+        } ]
+      } ]
+    }, {
+      "number" : 2,
+      "interline" : 11,
+      "implicit_tuplets" : false,
+      "chord_bounds" : [ [ 755, 206, 14, 42 ], [ 875, 195, 14, 42 ], [ 995, 184, 14, 42 ], [ 1115, 195, 14, 42 ] ],
+      "steps" : [ {
+        "slot_id" : 1,
+        "known_times" : [ {
+          "time" : "0",
+          "chord_ids" : [ 0 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ 0 ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 0,
+          "time_offset" : "0",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 2,
+        "known_times" : [ ],
+        "rookies" : [ 1 ],
+        "actives" : [ 0 ],
+        "costs" : [ {
+          "rookie" : 1,
+          "active" : 0,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 34,
+            "heads_center_y" : 242
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 36,
+            "heads_center_y" : 231
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 1,
+            "active" : 0
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 1,
+          "time_offset" : "1/4",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 3,
+        "known_times" : [ ],
+        "rookies" : [ 2 ],
+        "actives" : [ 1 ],
+        "costs" : [ {
+          "rookie" : 2,
+          "active" : 1,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 36,
+            "heads_center_y" : 231
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 38,
+            "heads_center_y" : 220
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 2,
+            "active" : 1
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 2,
+          "time_offset" : "1/2",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 4,
+        "known_times" : [ ],
+        "rookies" : [ 3 ],
+        "actives" : [ 2 ],
+        "costs" : [ {
+          "rookie" : 3,
+          "active" : 2,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 38,
+            "heads_center_y" : 220
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 36,
+            "heads_center_y" : 231
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 3,
+            "active" : 2
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 3,
+          "time_offset" : "3/4",
+          "voice" : 1
+        } ]
+      } ]
+    }, {
+      "number" : 3,
+      "interline" : 11,
+      "implicit_tuplets" : false,
+      "chord_bounds" : [ [ 275, 526, 14, 42 ], [ 332, 526, 17, 42 ], [ 392, 526, 17, 42 ], [ 452, 526, 17, 42 ], [ 545, 537, 14, 42 ], [ 635, 537, 14, 42 ] ],
+      "steps" : [ {
+        "slot_id" : 1,
+        "known_times" : [ {
+          "time" : "0",
+          "chord_ids" : [ 0 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 0,
+          "time_offset" : "0",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 2,
+        "known_times" : [ {
+          "time" : "1/8",
+          "chord_ids" : [ 1 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 1,
+          "time_offset" : "1/8",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 3,
+        "known_times" : [ {
+          "time" : "1/4",
+          "chord_ids" : [ 2 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 2,
+          "time_offset" : "1/4",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 4,
+        "known_times" : [ {
+          "time" : "3/8",
+          "chord_ids" : [ 3 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ 3 ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 3,
+          "time_offset" : "3/8",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 5,
+        "known_times" : [ ],
+        "rookies" : [ 4 ],
+        "actives" : [ 3 ],
+        "costs" : [ {
+          "rookie" : 4,
+          "active" : 3,
+          "left" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 2,
+            "absolute_pitch" : 34,
+            "heads_center_y" : 562
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 573
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 4,
+            "active" : 3
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 4,
+          "time_offset" : "1/2",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 6,
+        "known_times" : [ ],
+        "rookies" : [ 5 ],
+        "actives" : [ 4 ],
+        "costs" : [ {
+          "rookie" : 5,
+          "active" : 4,
+          "left" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 2,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 573
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 573
+          },
+          "distance" : 8
+        } ],
+        "mapping" : {
+          "cost" : 8,
+          "pairs" : [ {
+            "rookie" : 5,
+            "active" : 4
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 5,
+          "time_offset" : "3/4",
+          "voice" : 1
+        } ]
+      } ]
+    }, {
+      "number" : 4,
+      "interline" : 11,
+      "implicit_tuplets" : false,
+      "chord_bounds" : [ [ 755, 526, 14, 42 ], [ 875, 515, 14, 42 ], [ 995, 504, 14, 42 ], [ 1115, 515, 14, 42 ] ],
+      "steps" : [ {
+        "slot_id" : 1,
+        "known_times" : [ {
+          "time" : "0",
+          "chord_ids" : [ 0 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ 0 ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 0,
+          "time_offset" : "0",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 2,
+        "known_times" : [ ],
+        "rookies" : [ 1 ],
+        "actives" : [ 0 ],
+        "costs" : [ {
+          "rookie" : 1,
+          "active" : 0,
+          "left" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 2,
+            "absolute_pitch" : 34,
+            "heads_center_y" : 562
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 36,
+            "heads_center_y" : 551
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 1,
+            "active" : 0
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 1,
+          "time_offset" : "1/4",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 3,
+        "known_times" : [ ],
+        "rookies" : [ 2 ],
+        "actives" : [ 1 ],
+        "costs" : [ {
+          "rookie" : 2,
+          "active" : 1,
+          "left" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 2,
+            "absolute_pitch" : 36,
+            "heads_center_y" : 551
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 38,
+            "heads_center_y" : 540
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 2,
+            "active" : 1
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 2,
+          "time_offset" : "1/2",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 4,
+        "known_times" : [ ],
+        "rookies" : [ 3 ],
+        "actives" : [ 2 ],
+        "costs" : [ {
+          "rookie" : 3,
+          "active" : 2,
+          "left" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 2,
+            "absolute_pitch" : 38,
+            "heads_center_y" : 540
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 2,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 36,
+            "heads_center_y" : 551
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 3,
+            "active" : 2
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 3,
+          "time_offset" : "3/4",
+          "voice" : 1
+        } ]
+      } ]
+    } ]
+  }, {
+    "input" : "quarter-whole-rest.omr",
+    "measures" : [ {
+      "number" : 1,
+      "interline" : 11,
+      "implicit_tuplets" : false,
+      "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 217, 13, 41 ], [ 516, 228, 13, 41 ], [ 636, 217, 13, 41 ] ],
+      "steps" : [ {
+        "slot_id" : 1,
+        "known_times" : [ {
+          "time" : "0",
+          "chord_ids" : [ 0 ]
+        } ],
+        "rookies" : [ ],
+        "actives" : [ 0 ],
+        "costs" : [ ],
+        "mapping" : null,
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 0,
+          "time_offset" : "0",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 2,
+        "known_times" : [ ],
+        "rookies" : [ 1 ],
+        "actives" : [ 0 ],
+        "costs" : [ {
+          "rookie" : 1,
+          "active" : 0,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 34,
+            "heads_center_y" : 242
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 253
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 1,
+            "active" : 0
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 1,
+          "time_offset" : "1/4",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 3,
+        "known_times" : [ ],
+        "rookies" : [ 2 ],
+        "actives" : [ 1 ],
+        "costs" : [ {
+          "rookie" : 2,
+          "active" : 1,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 253
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 30,
+            "heads_center_y" : 264
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 2,
+            "active" : 1
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 2,
+          "time_offset" : "1/2",
+          "voice" : 1
+        } ]
+      }, {
+        "slot_id" : 4,
+        "known_times" : [ ],
+        "rookies" : [ 3 ],
+        "actives" : [ 2 ],
+        "costs" : [ {
+          "rookie" : 3,
+          "active" : 2,
+          "left" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : 1,
+            "starting_staff" : 1,
+            "absolute_pitch" : 30,
+            "heads_center_y" : 264
+          },
+          "right" : {
+            "head" : true,
+            "staff" : 1,
+            "part" : 1,
+            "stem_dir" : -1,
+            "voice" : null,
+            "starting_staff" : null,
+            "absolute_pitch" : 32,
+            "heads_center_y" : 253
+          },
+          "distance" : 10
+        } ],
+        "mapping" : {
+          "cost" : 10,
+          "pairs" : [ {
+            "rookie" : 3,
+            "active" : 2
+          } ]
+        },
+        "ok" : true,
+        "after" : [ {
+          "chord_id" : 3,
+          "time_offset" : "3/4",
+          "voice" : 1
+        } ]
+      } ]
+    }, {
+      "number" : 2,
+      "interline" : 11,
+      "implicit_tuplets" : false,
+      "chord_bounds" : [ [ 951, 231, 14, 7 ] ],
+      "steps" : [ ]
+    } ]
+  } ]
+}

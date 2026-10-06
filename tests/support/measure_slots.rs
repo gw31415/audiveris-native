@@ -113,5 +113,50 @@ pub fn assert_original(report: &Value, page_index: usize) {
             .sort_by_key(|c| c["id"].as_u64());
         assert_eq!(initial["voices"], expected_start["voices"]);
         assert_eq!(initial["chords"], expected_start["chords"]);
+        let mapper: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-rookie-mapping/observed.json"
+        ))
+        .unwrap();
+        let expected_steps = &mapper["pages"][page_index]["measures"]
+            [actual["measure_number"].as_u64().unwrap() as usize - 1]["steps"];
+        let mut steps = actual["mapping_steps"].clone();
+        for step in steps.as_array_mut().unwrap() {
+            for key in ["rookies", "actives"] {
+                step[key] = json!(
+                    step[key]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(&start_ordinal)
+                        .collect::<Vec<_>>()
+                );
+            }
+            for t in step["known_times"].as_array_mut().unwrap() {
+                t["chord_ids"] = json!(
+                    t["chord_ids"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(&start_ordinal)
+                        .collect::<Vec<_>>()
+                );
+            }
+            for cost in step["costs"].as_array_mut().unwrap() {
+                for key in ["rookie", "active"] {
+                    cost[key] = json!(start_ordinal(&cost[key]));
+                }
+            }
+            if !step["mapping"].is_null() {
+                for pair in step["mapping"]["pairs"].as_array_mut().unwrap() {
+                    for key in ["rookie", "active"] {
+                        pair[key] = json!(start_ordinal(&pair[key]));
+                    }
+                }
+            }
+            for chord in step["after"].as_array_mut().unwrap() {
+                chord["chord_id"] = json!(start_ordinal(&chord["chord_id"]));
+            }
+        }
+        assert_eq!(steps, *expected_steps);
     }
 }

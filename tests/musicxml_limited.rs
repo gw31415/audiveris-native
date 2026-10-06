@@ -135,7 +135,10 @@ fn actual_flag_connections_supply_eighth_duration_onsets_and_xml_divisions() {
         }
     }
     let error = music_xml::recognize(&no_flags).err().unwrap();
-    assert!(error.ends_with("quarters=5:expected=4"), "{error}");
+    // Original retrieveActives excludes a Voice already at expected duration
+    // when implicitTuplets=false. The extra chord now reaches unconnected
+    // new-Voice inference before the old final five-quarter total check.
+    assert_eq!(error, "music_mapping_new_voice_time_inference_pending");
 }
 
 #[test]

@@ -1,0 +1,39 @@
+{
+  "base_source": "2a2175994f4eb4461a5f0c24cec42e11d74613e4",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "SlotMapper readSlotTimes/purgeRookies/current active eligibility, separated VoiceDistance/ChordsMapper/InjectionSolver and applyMapping actual Voice/active-end push",
+  "original_comparison": {
+    "saved_successful_same_image_pages": 2,
+    "measures": 6,
+    "compound_steps": 24,
+    "rookie_mappings": 13,
+    "declared_method_controls": {
+      "InjectionSolver": 3,
+      "ChordsMapper_constraints": 2
+    },
+    "implicit_tuplets": false
+  },
+  "integration": "current one-incoming actual owned Graph/Voice chooses mapping before event clock; no oracle/runtime XML input, no nearest/greedy substitute",
+  "targeted_unique_passed": 17,
+  "runs": {
+    "new_mapping_kernel": 1,
+    "MusicXML_regressions_first_pass": "15 passed; one five-quarter negative assertion failed because earlier new-Voice-inference refusal replaces old final total reason",
+    "updated_negative_boundary": "one affected flag image success + erased-flag five-quarter refusal rechecked/passed; no production change after first pass"
+  },
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "one incoming/current one Voice/one note and implicitTuplets=false image admission unchanged",
+    "general extinction/retries/new Voice inference/Merged/full Rational/tuplets and transient narrow-slot clocks pending",
+    "declared mapping/solver controls are not image polyphony or automatic constraint acquisition",
+    "visit budget refuses oversized exhaustive search; no approximate mapping success",
+    "all-rest original invalid-XSD boundary separate; no new recognition/font/skew/scan scope",
+    "shared stacks/lyrics/automatic slur-tie/correction/full cleaner-epilog remain partial"
+  ],
+  "all_global_completion_flags": false
+}

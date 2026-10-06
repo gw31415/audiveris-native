@@ -395,7 +395,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             return Err("musicxml_general_slot_voice_assignment_pending".into());
         }
         chords.sort_by_key(|c| ordered_ids.iter().position(|id| *id == c.id));
-        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"compounds":compounds.iter().map(|c|c.projection()).collect::<Vec<_>>(),"voice_assignment":"existing single-voice clock; general ChordsMapper pending"}));
+        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"compounds":compounds.iter().map(|c|c.projection()).collect::<Vec<_>>(),"voice_assignment":"original separated ChordsMapper on owned one-incoming single-Voice path; general retries/new Voices/implicit tuplets pending"}));
         if chords.is_empty() {
             return Err(format!(
                 "musicxml_empty_measure:{}:{}",
@@ -555,7 +555,25 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         let start_snapshot = graph.snapshot();
         preliminary_slots[mi]["starting_chord_ids"] = json!(starting);
         preliminary_slots[mi]["starting_state"] = json!({"voices":[{"id":voice_id,"is_measure_rest":m.voices[voice_index].measure_rest_chord.is_some(),"chord_ids":m.voices[voice_index].chord_ids,"measure_rest_chord_id":m.voices[voice_index].measure_rest_chord}],"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});
+        preliminary_slots[mi]["mapping_steps"] = json!([]);
         for chord in chords {
+            if let Some(slot) = compounds.iter().find(|s| s.chord_ids.contains(&chord.id)) {
+                let step = crate::music_rookie_mapping::Context {
+                    graph: &mut graph,
+                    voices: &mut m.voices,
+                    measures: &m.measures,
+                    measure_index: mi,
+                    compounds: &compounds,
+                    expected: expected_ticks,
+                    clef: initial_clef,
+                    interline: m.owner.interline,
+                }
+                .map_slot(slot)?;
+                preliminary_slots[mi]["mapping_steps"]
+                    .as_array_mut()
+                    .unwrap()
+                    .push(step);
+            }
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());
             }
