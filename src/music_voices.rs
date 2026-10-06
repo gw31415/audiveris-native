@@ -136,6 +136,47 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
     )
 }
 
+/// Measure.resetRhythm -> AbstractChordInter.resetTiming before rhythm passes.
+/// Clear only this measure's Voices, abnormal flag, chord slot/voice/time.
+/// Original Measure reset does not reset chord duration or stack timing/slots.
+/// Commit after all real chord identities are checked; registry/cache/relations
+/// and other measures remain owned and unchanged.
+pub(crate) fn reset_rhythm(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measure: &mut Measure,
+    chords: &[Chord],
+    measure_index: usize,
+) -> Result<(), String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let mut staged = graph.clone();
+    for chord in chords.iter().filter(|c| c.measure == measure_index) {
+        if chord.key.system != measure.system || graph.id(chord.key) != Some(chord.id) {
+            return Err("music_rhythm_reset_owned_chord_required".into());
+        }
+        let mut node = nodes
+            .iter()
+            .find(|n| n["id"] == chord.id)
+            .ok_or("music_rhythm_reset_live_chord_required")?
+            .clone();
+        if !matches!(
+            node["kind"].as_str(),
+            Some("HeadChordInter" | "RestChordInter")
+        ) {
+            return Err("music_rhythm_reset_chord_kind_required".into());
+        }
+        for field in ["slot_id", "voice", "time_offset"] {
+            node[field] = Value::Null;
+        }
+        staged.vertex(chord.key, node, false)?;
+    }
+    *graph = staged;
+    voices.retain(|v| v.measure != measure_index);
+    measure.timing.abnormal = false;
+    Ok(())
+}
+
 /// StackRhythm.generateStackSlots -> Slot incoming order/back-reference ->
 /// Voice.putSlotInfo(BEGIN)/completeSlotTable. Current production admission has
 /// one Measure per stack; multi-part stack ownership/inter-staff geometric interpolation remain pending.
@@ -986,6 +1027,127 @@ mod group_tests {
         assert!(owner.closest_slot_at(5, 1.).is_err());
         assert!(owner.closest_slot_at(1, f64::NAN).is_err());
         assert!(closest_slot(&owner.measures[0].timing.slots, f64::MAX).is_none());
+        let reset_projection =
+            |g: &crate::shared_sig::Graph,
+             v: &[Voice],
+             measure: &Measure,
+             mi: usize,
+             chords: &[crate::music_measures::Chord]| {
+                let snapshot = g.snapshot();
+                let mut chords = chords
+                    .iter()
+                    .filter(|c| c.measure == mi)
+                    .collect::<Vec<_>>();
+                chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+                json!({"abnormal":measure.timing.abnormal,"voice_count":v.iter().filter(|v|v.measure==mi).count(),"stack_slot_count":measure.timing.slots.len(),"expected":measure.timing.expected.map(crate::music_time::format_ticks),"actual":measure.timing.actual.map(crate::music_time::format_ticks),
+                "chords":chords.into_iter().map(|c|{let n=snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"],"slot_id":n["slot_id"]})}).collect::<Vec<_>>()})
+            };
+        let reset_controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rhythm-reset/normal.json"
+        ))
+        .unwrap();
+        let mut reset_graph = owner.owner.graph.clone();
+        let mut reset_voices = owner.voices.clone();
+        let mut reset_measure = owner.measures[0].clone();
+        reset_measure.timing.abnormal = true;
+        assert_eq!(
+            reset_projection(
+                &reset_graph,
+                &reset_voices,
+                &reset_measure,
+                0,
+                &owner.chords
+            ),
+            reset_controls["before"]
+        );
+        let other_nodes = reset_graph.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| {
+                owner
+                    .chords
+                    .iter()
+                    .any(|c| c.measure != 0 && n["id"] == c.id)
+            })
+            .cloned()
+            .collect::<Vec<_>>();
+        let other_voices = projection(
+            &reset_voices
+                .iter()
+                .filter(|v| v.measure != 0)
+                .cloned()
+                .collect::<Vec<_>>(),
+            &owner.measures,
+        );
+        for stage in ["after", "repeated"] {
+            reset_rhythm(
+                &mut reset_graph,
+                &mut reset_voices,
+                &mut reset_measure,
+                &owner.chords,
+                0,
+            )
+            .unwrap();
+            assert_eq!(
+                reset_projection(
+                    &reset_graph,
+                    &reset_voices,
+                    &reset_measure,
+                    0,
+                    &owner.chords
+                ),
+                reset_controls[stage]
+            );
+            let snapshot = reset_graph.snapshot();
+            assert!(
+                other_nodes
+                    .iter()
+                    .all(|node| snapshot["inters"].as_array().unwrap().contains(node))
+            );
+            assert_eq!(projection(&reset_voices, &owner.measures), other_voices);
+        }
+        let whole = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-measure-rest/quarter-whole-rest.png"
+        ))
+        .unwrap();
+        let mut whole = crate::music_xml::recognize(&whole).unwrap();
+        let whole = &mut whole.owner;
+        let reset_controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rhythm-reset/measure-rest.json"
+        ))
+        .unwrap();
+        whole.measures[1].timing.abnormal = true;
+        assert_eq!(
+            reset_projection(
+                &whole.owner.graph,
+                &whole.voices,
+                &whole.measures[1],
+                1,
+                &whole.chords
+            ),
+            reset_controls["before"]
+        );
+        for stage in ["after", "repeated"] {
+            reset_rhythm(
+                &mut whole.owner.graph,
+                &mut whole.voices,
+                &mut whole.measures[1],
+                &whole.chords,
+                1,
+            )
+            .unwrap();
+            assert_eq!(
+                reset_projection(
+                    &whole.owner.graph,
+                    &whole.voices,
+                    &whole.measures[1],
+                    1,
+                    &whole.chords
+                ),
+                reset_controls[stage]
+            );
+        }
         // Original final stack-slot collection consumes already solved voices;
         // this is downstream of, and does not pretend to solve, polyphony.
         let slot_control: Value = serde_json::from_str(include_str!(

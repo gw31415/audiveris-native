@@ -1296,3 +1296,17 @@ interpolation, shared stacks, geometric `SlotsRetriever`/`ChordsMapper` Voice
 assignment and correction persistence remain pending. No global completion flag
 is advanced. Original scalar/saved-state comparisons and current automated
 single-voice image admission are separate validation boundaries.
+
+
+Rhythm reset ownership (2026-10-06): image rhythm now calls original
+`Measure.resetRhythm` / `AbstractChordInter.resetTiming` before each current
+measure pass. Only that measure's Voices, abnormal flag and real chord
+slot/voice/time references are reset. Intrinsic chord duration, stack
+slots/expected/actual timing, relations, other measures and physical registry
+remain intact, as in the original methods. Final stack collection replaces
+its slot list later in the original order. Reset/repeat on original saved
+normal6 chords and whole-measure-rest1 chord is separate from automatic
+correction recognition. The existing whole-rest and `--slot-at` examples
+remain the runnable CLI checks. General MeasureRhythm narrow/wide slot
+retrieval/matching, SmallChord, shared stacks and correction reprocessing
+entry/persistence are still pending; no admission guard was removed.

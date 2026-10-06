@@ -1,0 +1,135 @@
+{
+  "scope" : "original saved-image measure with declared abnormal flag, actual resetRhythm/resetTiming plus repeat; not automatic full correction",
+  "before" : {
+    "abnormal" : true,
+    "voice_count" : 1,
+    "stack_slot_count" : 6,
+    "expected" : "1",
+    "actual" : "1",
+    "chords" : [ {
+      "bounds" : [ 275, 206, 14, 42 ],
+      "duration" : "1/8",
+      "time_offset" : "0",
+      "voice" : 1,
+      "slot_id" : 1
+    }, {
+      "bounds" : [ 332, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : "1/8",
+      "voice" : 1,
+      "slot_id" : 2
+    }, {
+      "bounds" : [ 392, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : "1/4",
+      "voice" : 1,
+      "slot_id" : 3
+    }, {
+      "bounds" : [ 452, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : "3/8",
+      "voice" : 1,
+      "slot_id" : 4
+    }, {
+      "bounds" : [ 545, 217, 14, 42 ],
+      "duration" : "1/4",
+      "time_offset" : "1/2",
+      "voice" : 1,
+      "slot_id" : 5
+    }, {
+      "bounds" : [ 635, 217, 14, 42 ],
+      "duration" : "1/4",
+      "time_offset" : "3/4",
+      "voice" : 1,
+      "slot_id" : 6
+    } ]
+  },
+  "after" : {
+    "abnormal" : false,
+    "voice_count" : 0,
+    "stack_slot_count" : 6,
+    "expected" : "1",
+    "actual" : "1",
+    "chords" : [ {
+      "bounds" : [ 275, 206, 14, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 332, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 392, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 452, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 545, 217, 14, 42 ],
+      "duration" : "1/4",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 635, 217, 14, 42 ],
+      "duration" : "1/4",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    } ]
+  },
+  "repeated" : {
+    "abnormal" : false,
+    "voice_count" : 0,
+    "stack_slot_count" : 6,
+    "expected" : "1",
+    "actual" : "1",
+    "chords" : [ {
+      "bounds" : [ 275, 206, 14, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 332, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 392, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 452, 206, 17, 42 ],
+      "duration" : "1/8",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 545, 217, 14, 42 ],
+      "duration" : "1/4",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    }, {
+      "bounds" : [ 635, 217, 14, 42 ],
+      "duration" : "1/4",
+      "time_offset" : null,
+      "voice" : null,
+      "slot_id" : null
+    } ]
+  }
+}

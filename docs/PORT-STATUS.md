@@ -797,3 +797,12 @@ MeasureStack.getClosestSlotの同距離時先行slot保持/空slotを保存済�
 共有multi-staff補間/一般point-to-staff選択/SlotsRetriever・ChordsMapperによる
 一般voice matching/補正操作は未完。今回対象3件・fmt/clippy、全595は95e191b。
 [検証範囲](../evidence/musicxml-slot-geometry/VALIDATION.json)。
+
+
+Measure.resetRhythm/AbstractChordInter.resetTiming（2026-10-06）：
+画像CLIのrhythm前に対象小節のVoice・異常フラグ・実chordのslot/voice/timeを
+解除。原版が保持するintrinsic音価・stack slots/expected/actualは保持し、
+他小節・relations・registry/cacheを維持。保存済み原版normal6/rest1chordの
+宣言reset/repeatを比較。一般slot retrieval/matching・SmallChord・共有stack・
+補正再処理/persistenceは未完。対象2件・fmt/clippy、全595は95e191b。
+[検証範囲](../evidence/musicxml-rhythm-reset/VALIDATION.json)。
