@@ -1628,3 +1628,28 @@ polyphony. Existing CLI commands and three 36-event examples remain unchanged.
 Ordered-slot membership/removal/renumbering, general compound Voice mapping/export,
 exact Rational/tuplets and shared stacks still need connection. All global flags
 remain false and full595 still refers to old `95e191b`.
+
+### Previous-slot merge and mutable candidate traversal (2026-10-06)
+
+When a newly owned Voice has an isolated chord with no clock, native now follows
+`MeasureRhythm.SlotMapper.mergeWithPreviousSlot`: it joins the previous compound
+only if a previous EQUAL chord has a known clock. It propagates that actual time,
+removes the first equal compound from ordered candidates and renumbers later ones.
+Original `Slot.equals` uses the cached abscissa, not the numeric ID or identity;
+`List.remove/contains` retain that behavior even for distinct equal-position objects.
+The removed object remains addressable; the rookie's constructor reference and
+cached abscissa do not move to the previous slot. Narrow member lists stay separate.
+The image mapper now walks this mutable order before writing events, skipping
+extinction on removed slots and continuing at the same index after removal.
+
+Four original saved-object controls compare ordered membership/IDs, retained
+references/positions, actual Voice members and clocks. The positive comparison
+calls original `createNewVoices`; two negatives and an equal-position boundary
+compare `mergeWithPreviousSlot` with
+an already declared new Voice. This is not new automatic polyphonic image/export
+admission. Existing CLI examples remain the three 36-event inputs, with their
+commands above; no new image or switch is required. Unknown nonmatching clocks
+still refuse in the bounded writer. General compound/multiple-Voice export,
+exact Rational/tuplets, Merged/shared stacks and the remaining nonUI functionality
+stay in the port ledger. All completion flags remain false; full595 belongs to
+old `95e191b`, not this stage.

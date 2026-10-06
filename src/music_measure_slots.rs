@@ -70,6 +70,11 @@ pub(crate) struct Retrieval {
     pub slots: Vec<MeasureSlot>,
 }
 impl Retrieval {
+    pub(crate) fn equal(&self, a: usize, b: usize) -> bool {
+        self.relations
+            .iter()
+            .any(|r| r.a == a && r.b == b && r.rel == Some(Rel::Equal))
+    }
     pub(crate) fn ordered_siblings(
         &self,
         slot: &CompoundSlot,
@@ -88,11 +93,7 @@ impl Retrieval {
         if siblings.iter().any(|id| !centers.contains_key(id)) {
             return Err("music_sibling_owned_center_required".into());
         }
-        let equal = |id| {
-            self.relations
-                .iter()
-                .any(|r| r.a == rookie && r.b == id && r.rel == Some(Rel::Equal))
-        };
+        let equal = |id| self.equal(rookie, id);
         siblings.sort_by(|a, b| match (equal(*a), equal(*b)) {
             (true, true) => Ordering::Equal,
             (true, false) => Ordering::Less,
@@ -366,6 +367,7 @@ fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
 /// Slot.CompoundSlot retains its actual narrow members. Its chord list is
 /// concatenated and stably sorted by center ordinate; aliases are not silently
 /// removed. getNarrowSlot takes the first containing member, as in Java.
+#[derive(Clone)]
 pub(crate) struct CompoundSlot {
     // Merge can renumber slots; references keep the constructor identity.
     pub key: usize,
@@ -382,6 +384,88 @@ impl CompoundSlot {
     }
     pub(crate) fn projection(&self) -> Value {
         serde_json::json!({"id":self.id,"narrow_slot_ids":self.members.iter().map(|s|s.id).collect::<Vec<_>>(),"chord_ids":self.chord_ids,"lookup":self.chord_ids.iter().map(|id|serde_json::json!({"chord_id":id,"narrow_slot_id":self.narrow_slot(*id)})).collect::<Vec<_>>()})
+    }
+}
+/// Ordered removal must retain objects still referenced by a chord.
+pub(crate) struct CandidateOrder {
+    objects: BTreeMap<usize, CompoundSlot>,
+    order: Vec<usize>,
+    offsets: BTreeMap<usize, i64>,
+}
+impl CandidateOrder {
+    pub(crate) fn new(
+        slots: &[CompoundSlot],
+        references: &CandidateReferences,
+    ) -> Result<Self, String> {
+        let objects = slots
+            .iter()
+            .map(|s| (s.key, s.clone()))
+            .collect::<BTreeMap<_, _>>();
+        if objects.len() != slots.len() {
+            return Err("music_candidate_unique_slot_identity_required".into());
+        }
+        Ok(Self {
+            objects,
+            order: slots.iter().map(|s| s.key).collect(),
+            offsets: slots
+                .iter()
+                .map(|s| references.x_offset(s.key).map(|x| (s.key, x)))
+                .collect::<Result<_, _>>()?,
+        })
+    }
+    pub(crate) fn get(&self, key: usize) -> Result<&CompoundSlot, String> {
+        self.objects
+            .get(&key)
+            .ok_or_else(|| "music_candidate_retained_slot_required".into())
+    }
+    pub(crate) fn previous(&self, key: usize) -> Result<Option<&CompoundSlot>, String> {
+        self.get(key)?
+            .id
+            .checked_sub(2)
+            .map(|i| {
+                self.order
+                    .get(i)
+                    .ok_or_else(|| "music_candidate_previous_slot_index_required".to_owned())
+                    .and_then(|k| self.get(*k))
+            })
+            .transpose()
+    }
+    pub(crate) fn merge_previous(&mut self, key: usize, rookie: usize) -> Result<(), String> {
+        let id = self.get(key)?.id;
+        let previous = self
+            .previous(key)?
+            .ok_or("music_candidate_previous_slot_index_required")?
+            .key;
+        if id > self.order.len() {
+            return Err("music_candidate_ordered_slot_index_required".into());
+        }
+        let removal = self
+            .order
+            .iter()
+            .position(|k| self.offsets[k] == self.offsets[&key])
+            .ok_or("music_candidate_ordered_slot_required")?;
+        self.objects
+            .get_mut(&previous)
+            .unwrap()
+            .chord_ids
+            .push(rookie);
+        for k in &self.order[id..] {
+            self.objects.get_mut(k).unwrap().id -= 1;
+        }
+        // Java List.remove uses Slot.equals (cached abscissa), not identity.
+        self.order.remove(removal);
+        Ok(())
+    }
+    pub(crate) fn at(&self, index: usize) -> Option<&CompoundSlot> {
+        self.order.get(index).map(|k| &self.objects[k])
+    }
+    pub(crate) fn contains(&self, key: usize) -> bool {
+        self.order
+            .iter()
+            .any(|k| self.offsets[k] == self.offsets[&key])
+    }
+    pub(crate) fn ordered(&self) -> impl Iterator<Item = &CompoundSlot> {
+        self.order.iter().map(|k| &self.objects[k])
     }
 }
 // Original caches the constructor position; member mutations must not move it.

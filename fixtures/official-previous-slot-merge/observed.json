@@ -1,0 +1,305 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "four declared original previous-slot merge controls on saved chord/SIG objects; not automatic image polyphony",
+  "controls" : [ {
+    "name" : "known-equal",
+    "comparison" : "createNewVoices calls mergeWithPreviousSlot",
+    "input" : {
+      "relation" : "=",
+      "previous_time" : "1/4",
+      "current_key" : 1,
+      "rookie" : 1,
+      "constructors" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ],
+        "narrow_chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ],
+        "narrow_chord_ids" : [ 1 ]
+      }, {
+        "id" : 3,
+        "chord_ids" : [ 2 ],
+        "narrow_chord_ids" : [ 2 ]
+      }, {
+        "id" : 4,
+        "chord_ids" : [ 3 ],
+        "narrow_chord_ids" : [ 3 ]
+      } ]
+    },
+    "output" : {
+      "merged" : true,
+      "ordered" : [ {
+        "object_key" : 0,
+        "id" : 1,
+        "chord_ids" : [ 0, 1 ]
+      }, {
+        "object_key" : 2,
+        "id" : 2,
+        "chord_ids" : [ 2 ]
+      }, {
+        "object_key" : 3,
+        "id" : 3,
+        "chord_ids" : [ 3 ]
+      } ],
+      "references" : [ {
+        "chord" : 0,
+        "object_key" : 0,
+        "id" : 1,
+        "x_offset" : 51
+      }, {
+        "chord" : 1,
+        "object_key" : 1,
+        "id" : 2,
+        "x_offset" : 171
+      }, {
+        "chord" : 2,
+        "object_key" : 2,
+        "id" : 2,
+        "x_offset" : 291
+      }, {
+        "chord" : 3,
+        "object_key" : 3,
+        "id" : 3,
+        "x_offset" : 411
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      } ],
+      "rookie_time" : "1/4",
+      "rookie_voice" : 2,
+      "previous_narrow_chord_ids" : [ 0 ]
+    }
+  }, {
+    "name" : "unknown-equal",
+    "comparison" : "mergeWithPreviousSlot only; newly owned Voice declared",
+    "input" : {
+      "relation" : "=",
+      "previous_time" : null,
+      "current_key" : 1,
+      "rookie" : 1,
+      "constructors" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ],
+        "narrow_chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ],
+        "narrow_chord_ids" : [ 1 ]
+      }, {
+        "id" : 3,
+        "chord_ids" : [ 2 ],
+        "narrow_chord_ids" : [ 2 ]
+      }, {
+        "id" : 4,
+        "chord_ids" : [ 3 ],
+        "narrow_chord_ids" : [ 3 ]
+      } ]
+    },
+    "output" : {
+      "merged" : false,
+      "ordered" : [ {
+        "object_key" : 0,
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "object_key" : 1,
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      }, {
+        "object_key" : 2,
+        "id" : 3,
+        "chord_ids" : [ 2 ]
+      }, {
+        "object_key" : 3,
+        "id" : 4,
+        "chord_ids" : [ 3 ]
+      } ],
+      "references" : [ {
+        "chord" : 0,
+        "object_key" : 0,
+        "id" : 1,
+        "x_offset" : 51
+      }, {
+        "chord" : 1,
+        "object_key" : 1,
+        "id" : 2,
+        "x_offset" : 171
+      }, {
+        "chord" : 2,
+        "object_key" : 2,
+        "id" : 3,
+        "x_offset" : 291
+      }, {
+        "chord" : 3,
+        "object_key" : 3,
+        "id" : 4,
+        "x_offset" : 411
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      } ],
+      "rookie_time" : null,
+      "rookie_voice" : 2,
+      "previous_narrow_chord_ids" : [ 0 ]
+    }
+  }, {
+    "name" : "known-not-equal",
+    "comparison" : "mergeWithPreviousSlot only; newly owned Voice declared",
+    "input" : {
+      "relation" : "B",
+      "previous_time" : "1/4",
+      "current_key" : 1,
+      "rookie" : 1,
+      "constructors" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ],
+        "narrow_chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ],
+        "narrow_chord_ids" : [ 1 ]
+      }, {
+        "id" : 3,
+        "chord_ids" : [ 2 ],
+        "narrow_chord_ids" : [ 2 ]
+      }, {
+        "id" : 4,
+        "chord_ids" : [ 3 ],
+        "narrow_chord_ids" : [ 3 ]
+      } ]
+    },
+    "output" : {
+      "merged" : false,
+      "ordered" : [ {
+        "object_key" : 0,
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "object_key" : 1,
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      }, {
+        "object_key" : 2,
+        "id" : 3,
+        "chord_ids" : [ 2 ]
+      }, {
+        "object_key" : 3,
+        "id" : 4,
+        "chord_ids" : [ 3 ]
+      } ],
+      "references" : [ {
+        "chord" : 0,
+        "object_key" : 0,
+        "id" : 1,
+        "x_offset" : 51
+      }, {
+        "chord" : 1,
+        "object_key" : 1,
+        "id" : 2,
+        "x_offset" : 171
+      }, {
+        "chord" : 2,
+        "object_key" : 2,
+        "id" : 3,
+        "x_offset" : 291
+      }, {
+        "chord" : 3,
+        "object_key" : 3,
+        "id" : 4,
+        "x_offset" : 411
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      } ],
+      "rookie_time" : null,
+      "rookie_voice" : 2,
+      "previous_narrow_chord_ids" : [ 0 ]
+    }
+  }, {
+    "name" : "equal-position-removes-first-equal-object",
+    "comparison" : "mergeWithPreviousSlot only; newly owned Voice declared",
+    "input" : {
+      "relation" : "=",
+      "previous_time" : "1/4",
+      "current_key" : 1,
+      "rookie" : 1,
+      "constructors" : [ {
+        "id" : 1,
+        "chord_ids" : [ 2, 0 ],
+        "narrow_chord_ids" : [ 2, 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ],
+        "narrow_chord_ids" : [ 1 ]
+      }, {
+        "id" : 3,
+        "chord_ids" : [ 2 ],
+        "narrow_chord_ids" : [ 2 ]
+      }, {
+        "id" : 4,
+        "chord_ids" : [ 3 ],
+        "narrow_chord_ids" : [ 3 ]
+      } ]
+    },
+    "output" : {
+      "merged" : true,
+      "ordered" : [ {
+        "object_key" : 1,
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      }, {
+        "object_key" : 2,
+        "id" : 2,
+        "chord_ids" : [ 2 ]
+      }, {
+        "object_key" : 3,
+        "id" : 3,
+        "chord_ids" : [ 3 ]
+      } ],
+      "references" : [ {
+        "chord" : 0,
+        "object_key" : 0,
+        "id" : 1,
+        "x_offset" : 171
+      }, {
+        "chord" : 1,
+        "object_key" : 1,
+        "id" : 2,
+        "x_offset" : 171
+      }, {
+        "chord" : 2,
+        "object_key" : 2,
+        "id" : 2,
+        "x_offset" : 291
+      }, {
+        "chord" : 3,
+        "object_key" : 3,
+        "id" : 3,
+        "x_offset" : 411
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      } ],
+      "rookie_time" : "1/4",
+      "rookie_voice" : 2,
+      "previous_narrow_chord_ids" : [ 2, 0 ]
+    }
+  } ]
+}

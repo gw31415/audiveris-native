@@ -565,49 +565,57 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             &compounds,
         )?;
         let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds)?;
+        let mut order = crate::music_measure_slots::CandidateOrder::new(&compounds, &candidates)?;
         preliminary_slots[mi]["candidate_time_steps"] = json!([]);
-        for &chord in &chords {
-            if let Some(slot) = compounds.iter().find(|s| s.chord_ids.contains(&chord.id)) {
-                let before = slot_times.projection(slot)?;
-                let mut step = crate::music_rookie_mapping::Context {
-                    graph: &mut graph,
-                    voices: &mut m.voices,
-                    measures: &mut m.measures,
-                    chords: &chords,
-                    narrow: &narrow,
-                    measure_index: mi,
-                    candidates: &candidates,
-                    expected: expected_ticks,
-                    clef: initial_clef,
-                    interline: m.owner.interline,
-                    lifetime: &lifetime,
-                    slot_times: &mut slot_times,
-                }
-                .map_slot(slot)?;
-                let validation = step.as_object_mut().unwrap().remove("validation").unwrap();
-                preliminary_slots[mi]["mapping_validation_steps"]
-                    .as_array_mut()
-                    .unwrap()
-                    .push(json!({"slot_id":slot.id,"validation":validation}));
-                preliminary_slots[mi]["mapping_steps"]
-                    .as_array_mut()
-                    .unwrap()
-                    .push(step);
-                preliminary_slots[mi]["candidate_time_steps"].as_array_mut().unwrap().push(json!({"slot_id":slot.id,"before":before,"after":slot_times.projection(slot)?,"ok":true}));
-                let first_time = slot_times.first_time(slot)?;
+        let mut candidate_index = 0;
+        while let Some(slot) = order.at(candidate_index).cloned() {
+            let before = slot_times.projection(&slot)?;
+            let mut step = crate::music_rookie_mapping::Context {
+                graph: &mut graph,
+                voices: &mut m.voices,
+                measures: &mut m.measures,
+                chords: &chords,
+                narrow: &narrow,
+                measure_index: mi,
+                candidates: &candidates,
+                order: &mut order,
+                expected: expected_ticks,
+                clef: initial_clef,
+                interline: m.owner.interline,
+                lifetime: &lifetime,
+                slot_times: &mut slot_times,
+            }
+            .map_slot(&slot)?;
+            let validation = step.as_object_mut().unwrap().remove("validation").unwrap();
+            preliminary_slots[mi]["mapping_validation_steps"]
+                .as_array_mut()
+                .unwrap()
+                .push(json!({"slot_id":slot.id,"validation":validation}));
+            preliminary_slots[mi]["mapping_steps"]
+                .as_array_mut()
+                .unwrap()
+                .push(step);
+            preliminary_slots[mi]["candidate_time_steps"].as_array_mut().unwrap().push(json!({"slot_id":slot.id,"before":before,"after":slot_times.projection(&slot)?,"ok":true}));
+            if order.contains(slot.key) {
+                let first_time = slot_times.first_time(&slot)?;
                 let extinction = lifetime.purge(
                     &graph,
                     &m.voices,
                     &mut m.measures[mi],
                     mi,
                     &candidates,
-                    (slot, first_time),
+                    (&slot, first_time),
                 )?;
                 preliminary_slots[mi]["extinction_steps"]
                     .as_array_mut()
                     .unwrap()
                     .push(extinction);
+                candidate_index += 1;
             }
+        }
+        preliminary_slots[mi]["candidate_order_after"] =
+            json!(order.ordered().map(|s| s.projection()).collect::<Vec<_>>());
+        for &chord in &chords {
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());
             }

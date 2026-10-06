@@ -1,0 +1,45 @@
+{
+  "base_source": "874049060bb0a021a94f9a53a93ce33c5f6a05a5",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "original known-EQUAL previous-slot merge on actual new Voice/Graph, retained ordered candidate ownership and original cached-position equality",
+  "original_comparison": {
+    "declared_actual_original_controls": 4,
+    "positive_createNewVoices": 1,
+    "mergeWithPreviousSlot_only": 3,
+    "matching": "merge decision, actual rookie Voice/time and Voice members, ordered members/IDs, retained references/cache, unchanged narrow membership; distinct equal-position objects compare original List.remove first-match equality",
+    "native_control_owner": "actual image-derived Graph and controlled compound/SIG objects",
+    "limits": "method controls, not automatic image polyphony or full MeasureRhythm.process comparison"
+  },
+  "integration": "actual image mapper uses mutable ordered candidates before serialization; removal retains constructor objects/cache, later IDs renumber, original List.contains uses cached abscissa, removed slots skip extinction and traversal retains index. One-incoming and one-Voice export admission remain.",
+  "targeted_unique_passed": 13,
+  "runs": {
+    "mapping_owned_sibling_and_previous_merge_controls": 5,
+    "slot_partition_getters_and_relationships": 3,
+    "voice_lifetime_boundaries": 1,
+    "two_system_and_same_glyph_image_MusicXML": 2,
+    "measure_rest_image": 1,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "final_source_checks": "after cached-equality addition all mapper five tests and flag/erasure regression rerun; slot and lifetime logic unchanged; final independent three CLI regressions recorded separately",
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "development_corrections": [
+    "incorrect integration target name fixed; no test failure there",
+    "unused getter static warning fixed by using the retained getter; no warning suppression",
+    "equal-position probe uses IdentityHashMap keys rather than List.indexOf equality; initial key observation replaced before commit",
+    "Rust error type corrected; final compilation and static checks passed"
+  ],
+  "limits": [
+    "per-member grouped clock reading and general compound incoming mapping pending",
+    "general retained multiple-Voice MusicXML traversal/export guarded",
+    "exact Rational/implicit tuplets, Merged/shared stacks, lyrics and complete cleaner-epilog incomplete",
+    "current coordinate cache is zero-skew one-staff only; no broadened image/font/skew/scan/staff/all24shapes/32sources admission",
+    "original all-rest XSD rejection remains negative"
+  ],
+  "all_global_completion_flags": false
+}
