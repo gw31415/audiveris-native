@@ -1,0 +1,35 @@
+{
+  "scope" : "original PageCleaner BasicStroke 1.1/AA-off fill+draw on five actual restored beam/hook areas; separate from full-image recognition parity",
+  "native_outputs_used" : false,
+  "cases" : [ {
+    "scope" : "actual HEADS-restored beam or hook",
+    "kind" : "BeamInter",
+    "median" : [ 288.0, 198.0, 470.0, 198.0 ],
+    "height" : 6.1,
+    "white_rows" : [ [ 195, 288, 471 ], [ 196, 288, 471 ], [ 197, 288, 471 ], [ 198, 288, 471 ], [ 199, 288, 471 ], [ 200, 288, 471 ], [ 201, 288, 471 ] ]
+  }, {
+    "scope" : "actual HEADS-restored beam or hook",
+    "kind" : "BeamHookInter",
+    "median" : [ 288.0, 209.0, 302.0, 209.0 ],
+    "height" : 6.1,
+    "white_rows" : [ [ 206, 288, 303 ], [ 207, 288, 303 ], [ 208, 288, 303 ], [ 209, 288, 303 ], [ 210, 288, 303 ], [ 211, 288, 303 ], [ 212, 288, 303 ] ]
+  }, {
+    "scope" : "actual HEADS-restored beam or hook",
+    "kind" : "BeamHookInter",
+    "median" : [ 336.0, 209.0, 350.0, 209.0 ],
+    "height" : 6.1,
+    "white_rows" : [ [ 206, 336, 351 ], [ 207, 336, 351 ], [ 208, 336, 351 ], [ 209, 336, 351 ], [ 210, 336, 351 ], [ 211, 336, 351 ], [ 212, 336, 351 ] ]
+  }, {
+    "scope" : "actual HEADS-restored beam or hook",
+    "kind" : "BeamHookInter",
+    "median" : [ 408.0, 209.0, 422.0, 209.0 ],
+    "height" : 6.1,
+    "white_rows" : [ [ 206, 408, 423 ], [ 207, 408, 423 ], [ 208, 408, 423 ], [ 209, 408, 423 ], [ 210, 408, 423 ], [ 211, 408, 423 ], [ 212, 408, 423 ] ]
+  }, {
+    "scope" : "actual HEADS-restored beam or hook",
+    "kind" : "BeamHookInter",
+    "median" : [ 456.0, 209.0, 470.0, 209.0 ],
+    "height" : 6.1,
+    "white_rows" : [ [ 206, 456, 471 ], [ 207, 456, 471 ], [ 208, 456, 471 ], [ 209, 456, 471 ], [ 210, 456, 471 ], [ 211, 456, 471 ], [ 212, 456, 471 ] ]
+  } ]
+}

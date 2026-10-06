@@ -98,8 +98,8 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
             systems.push(Vec::new());
             continue;
         }
-        if live.iter().any(|b| b["kind"] != "BeamInter") {
-            return Err("beam builder hooks pending".into());
+        if live.iter().any(|b| b["kind"] == "SmallBeamInter") {
+            return Err("beam builder small beams pending".into());
         }
         let mut active = live
             .iter()
@@ -110,12 +110,26 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                     .ok_or("beam builder actual beam required")
             })
             .collect::<Result<Vec<_>, _>>()?;
-        // Aliases require original removal/callback handling, independently
-        // of the now-connected ordinary alien-group lookup limits.
+        // Admit only an actual same-glyph BeamInter/BeamHookInter exclusion.
+        // Other aliases still require their original removal/callback handling.
         if active.iter().enumerate().any(|(i, c)| {
-            active[..i]
-                .iter()
-                .any(|a| a["beam"]["glyph_id"] == c["beam"]["glyph_id"])
+            active[..i].iter().any(|a| {
+                let owners = [a, c].map(|cat| {
+                    live.iter()
+                        .find(|n| n["origin"]["local"] == cat["beam"]["id"])
+                        .unwrap()
+                });
+                if owners[0]["glyph_id"] != owners[1]["glyph_id"] {
+                    return false;
+                }
+                !owners.iter().any(|beam| {
+                    crate::music_beams::competing_hook(&graph, beam).is_some_and(|hook| {
+                        owners
+                            .iter()
+                            .any(|n| n["kind"] == "BeamHookInter" && n["origin"]["local"] == hook)
+                    })
+                })
+            })
         }) {
             return Err("beam builder shared-glyph aliases pending".into());
         }
@@ -139,7 +153,7 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                     grade: n["grade"]
                         .as_f64()
                         .ok_or("beam limit intrinsic grade required")?,
-                    hook: false, // The typed live-kind admission above still refuses hooks.
+                    hook: n["kind"] == "BeamHookInter",
                 })
             })
             .collect::<Result<Vec<_>, String>>()?;
@@ -502,7 +516,27 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                         profile,
                         &BTreeMap::new(),
                     )?;
-                    cases.push(json!({"native_beam_id":cat["beam"]["id"],"native_linker_id":bli+1,"sibling_linkers":sibling_linkers,"closer_beam_id":closer.map(|(id,_)|id),"closer_limit":lookup.limit,"side":b["side"],"vertical":side,"profile":profile,"beam_median":cat["beam"]["median"],"beam_height":cat["beam"]["height"],"reference":b["reference"],"polygon":geo.polygon,"theoretical_line":geo.theoretical_line,"items":items,"gap_map":gap_map,"length_map":lengths}));
+                    let actual = live
+                        .iter()
+                        .find(|n| n["origin"]["local"] == cat["beam"]["id"])
+                        .unwrap();
+                    let competing = crate::music_beams::competing_hook(&graph, actual);
+                    let link_profile = if !b["side"].is_null()
+                        && (actual["kind"] == "BeamHookInter" || competing.is_some())
+                    {
+                        0
+                    } else {
+                        profile
+                    };
+                    let empty_sides = arr(&cat["final_blinkers"])?
+                        .iter()
+                        .filter(|l| {
+                            !l["side"].is_null()
+                                && l["directions"].as_array().is_some_and(Vec::is_empty)
+                        })
+                        .map(|l| l["side"].clone())
+                        .collect::<Vec<_>>();
+                    cases.push(json!({"empty_side_blinkers":empty_sides,"hook":actual["kind"] == "BeamHookInter","competing_hook_id":competing,"native_beam_id":cat["beam"]["id"],"native_linker_id":bli+1,"sibling_linkers":sibling_linkers,"closer_beam_id":closer.map(|(id,_)|id),"closer_limit":lookup.limit,"side":b["side"],"vertical":side,"profile":link_profile,"inspect_profile":profile,"beam_median":cat["beam"]["median"],"beam_height":cat["beam"]["height"],"reference":b["reference"],"polygon":geo.polygon,"theoretical_line":geo.theoretical_line,"items":items,"gap_map":gap_map,"length_map":lengths}));
                 }
             }
         }

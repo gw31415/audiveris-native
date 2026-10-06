@@ -46,11 +46,15 @@ fn beam_cross(a: [f64; 4], b: [f64; 4]) -> Result<(f64, f64), String> {
     ))
 }
 // BeamLinker.linkSides then linkStumps. All vertical linkers of a side are
-// attempted, even after one succeeds. Failed sides suppress the other side
-// and intermediate stumps, not already-created stems or the later head phase.
+// attempted, even after one succeeds. Ordinary failed sides suppress later
+// sides/stumps; hooks try both sides and need only one. Created stems survive.
+enum BeamAction<'a> {
+    Link(&'a Value),
+    DiscardHook(u64),
+}
 fn schedule_beam(
     builders: &[Value],
-    mut attempt: impl FnMut(&Value) -> Result<Value, String>,
+    mut attempt: impl FnMut(BeamAction<'_>) -> Result<Value, String>,
 ) -> Result<Value, String> {
     let mut observations = Vec::new();
     let mut ids = Vec::new();
@@ -61,8 +65,18 @@ fn schedule_beam(
         }
     }
     let mut successful = Vec::new();
+    let mut removed = BTreeSet::new();
     // StemsRetriever completes linkSides for all beams before linkStumps.
     for id in ids {
+        if removed.contains(&id) {
+            continue;
+        }
+        let metadata = builders
+            .iter()
+            .find(|b| b["native_beam_id"].as_u64().unwrap_or(0) == id)
+            .unwrap();
+        let hook = metadata["hook"] == true;
+        let mut linked_sides = 0;
         let mut ok = true;
         for side in ["LEFT", "RIGHT"] {
             let mut linked = false;
@@ -71,17 +85,37 @@ fn schedule_beam(
                 .filter(|b| b["native_beam_id"].as_u64().unwrap_or(0) == id && b["side"] == side)
                 .collect::<Vec<_>>();
             if candidates.is_empty() {
+                // A registered side BLinker with no VLinkers returns true;
+                // an absent side BLinker contributes no linked side.
+                if metadata["empty_side_blinkers"]
+                    .as_array()
+                    .is_some_and(|s| s.iter().any(|v| v == side))
+                {
+                    linked_sides += 1;
+                }
                 continue;
             }
             for c in candidates {
-                let result = attempt(c)?;
+                let result = attempt(BeamAction::Link(c))?;
                 linked |= result["linked"] == true;
                 observations.push(result);
             }
-            if !linked {
+            if linked {
+                linked_sides += 1;
+            } else if !hook {
                 ok = false;
                 break;
             }
+        }
+        if hook && linked_sides == 0 {
+            ok = false;
+        }
+        if !hook
+            && linked_sides == 2
+            && let Some(opposite) = metadata["competing_hook_id"].as_u64()
+        {
+            observations.push(attempt(BeamAction::DiscardHook(opposite))?);
+            removed.insert(opposite);
         }
         if ok {
             successful.push(id);
@@ -92,7 +126,7 @@ fn schedule_beam(
             .iter()
             .filter(|b| b["native_beam_id"].as_u64().unwrap_or(0) == id && b["side"].is_null())
         {
-            observations.push(attempt(c)?);
+            observations.push(attempt(BeamAction::Link(c))?);
         }
     }
     Ok(json!(observations))
@@ -100,13 +134,32 @@ fn schedule_beam(
 
 impl Scheduler<'_> {
     fn beams(&mut self, builders: &[Value]) -> Result<Value, String> {
-        schedule_beam(builders, |c| self.beam(c))
+        schedule_beam(builders, |action| match action {
+            BeamAction::Link(c) => self.beam(c),
+            BeamAction::DiscardHook(local) => {
+                self.graph.remove_music_inter(Key {
+                    system: self.system,
+                    phase: Phase::Beam,
+                    local: local as usize,
+                })?;
+                Ok(
+                    json!({"removed_competing_hook_id":local,"original_check":"BeamLinker.linkSides"}),
+                )
+            }
+        })
     }
     fn beam(&mut self, c: &Value) -> Result<Value, String> {
         let identity = (
             c["native_beam_id"].as_u64().unwrap() as usize,
             c["native_linker_id"].as_u64().unwrap() as usize,
         );
+        if !arr(&self.graph.snapshot()["inters"])?.iter().any(|n| {
+            n["origin"]["system"] == self.system
+                && matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
+                && n["origin"]["local"] == identity.0
+        }) {
+            return Ok(json!({"builder":c,"linked":false,"removed_competing_hook":true}));
+        }
         if self.beam_linked.contains(&identity) {
             return Ok(json!({"builder":c,"linked":true,"already_linked_by_sibling":true}));
         }
@@ -174,6 +227,12 @@ impl Scheduler<'_> {
                 local: m["native_beam_id"].as_u64().unwrap() as usize,
             };
             let snapshot = self.graph.snapshot();
+            if !arr(&snapshot["inters"])?
+                .iter()
+                .any(|n| n["id"] == self.graph.id(target).unwrap())
+            {
+                continue;
+            }
             if !arr(&snapshot["relations"])?.iter().any(|r| {
                 r["kind"] == "BeamStemRelation"
                     && r["source"] == self.graph.id(target).unwrap()
@@ -569,12 +628,10 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     }
     let parts = &report["head_chunks_plan"]["head_parts_plan"];
     let graph = owned.graph.snapshot();
-    if arr(&graph["inters"])?.iter().any(|v| {
-        matches!(
-            v["kind"].as_str(),
-            Some("SmallBeamInter" | "BeamHookInter" | "StemInter")
-        )
-    }) {
+    if arr(&graph["inters"])?
+        .iter()
+        .any(|v| matches!(v["kind"].as_str(), Some("SmallBeamInter" | "StemInter")))
+    {
         return Err("unsupported head-only scheduler beam or existing stem".into());
     }
     let beam_builders = crate::stem_image_beam_builders::prepare(&mut owned)?;
@@ -678,7 +735,7 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
     if beam_builders.iter().any(|s| !s.is_empty()) {
         owned.prepared.report["limited_beam_finalizer"] = beam_finalizer;
         owned.prepared.report["comparison_scope"] = json!(
-            "Original HEADS beam-origin builder/expand/createStem, beam-first then head phases1/2 and ordinary sibling-beam Finalizer.boostBeamSides, actual cache/SIG support; full STEMS/reduction/epilog parity pending"
+            "Original HEADS beam-origin builder/expand/createStem, beam-first then head phases1/2 and ordinary beam/hook Finalizer.boostBeamSides, actual cache/SIG support; full STEMS/reduction/epilog parity pending"
         );
     }
     Ok(owned)
@@ -687,6 +744,80 @@ pub fn continue_linking(mut owned: OwnedItems) -> Result<OwnedItems, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_exclusion_glyph_identity_and_both_side_hook_removal() {
+        let controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-hooks/competition.json"
+        ))
+        .unwrap();
+        for c in controls["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let beam = Key {
+                system: 1,
+                phase: Phase::Beam,
+                local: 1,
+            };
+            let hook = Key { local: 2, ..beam };
+            let bid = graph
+                .vertex(
+                    beam,
+                    json!({"kind":"BeamInter","shape":"BEAM","glyph_id":50,"grade":0.8}),
+                    false,
+                )
+                .unwrap();
+            let name = c["name"].as_str().unwrap();
+            let hid=graph.vertex(hook,json!({"kind":"BeamHookInter","shape":"BEAM_HOOK","glyph_id":if name.starts_with("different"){51}else{50},"grade":0.8}),false).unwrap();
+            if name != "same-glyph-without-exclusion" {
+                graph
+                    .relations(
+                        1,
+                        Phase::Beam,
+                        vec![(beam, hook, json!({"kind":"Exclusion"}))],
+                    )
+                    .unwrap();
+            }
+            let snapshot = graph.snapshot();
+            let owner = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == bid)
+                .unwrap();
+            let opposite = crate::music_beams::competing_hook(&snapshot, owner);
+            assert_eq!(opposite.is_some(), c["competing_hook"].as_bool().unwrap());
+            let builders = vec![
+                json!({"native_beam_id":1,"side":"LEFT","competing_hook_id":opposite}),
+                json!({"native_beam_id":1,"side":"RIGHT","competing_hook_id":opposite}),
+                json!({"native_beam_id":1,"side":null}),
+            ];
+            let mut stumps = false;
+            schedule_beam(&builders, |action| match action {
+                BeamAction::Link(b) => {
+                    if b["side"].is_null() {
+                        stumps = true;
+                    }
+                    Ok(json!({"linked":b["side"]!="RIGHT"||!name.ends_with("left-only")}))
+                }
+                BeamAction::DiscardHook(local) => {
+                    assert_eq!(local, 2);
+                    graph.remove_music_inter(hook)?;
+                    Ok(json!({"removed_competing_hook_id":local}))
+                }
+            })
+            .unwrap();
+            assert_eq!(stumps, c["linkSides"].as_bool().unwrap());
+            assert_eq!(
+                !graph.snapshot()["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|n| n["id"] == hid),
+                c["hook_removed"].as_bool().unwrap()
+            );
+            assert_eq!(graph.id(beam), Some(bid));
+            assert_eq!(graph.id(hook), Some(hid));
+        }
+    }
     #[test]
     fn original_side_passes_precede_stumps_and_failed_side_stops_remaining_passes() {
         // Original BeamLinker.linkSides loops both VLinkers before deciding a
@@ -704,7 +835,10 @@ mod tests {
             (Some("RIGHT"), vec![0, 3, 2]),
         ] {
             let mut trace = Vec::new();
-            schedule_beam(&builders, |b| {
+            schedule_beam(&builders, |action| {
+                let BeamAction::Link(b) = action else {
+                    panic!("unexpected competing hook")
+                };
                 trace.push(b["n"].as_i64().unwrap());
                 Ok(json!({"linked":b["side"].as_str()!=failed || failed.is_none()}))
             })
@@ -721,7 +855,10 @@ mod tests {
         ];
         for (fail_first, expected) in [(false, vec![0, 2, 3, 5, 1, 4]), (true, vec![0, 3, 5, 4])] {
             let mut trace = Vec::new();
-            schedule_beam(&multi, |b| {
+            schedule_beam(&multi, |action| {
+                let BeamAction::Link(b) = action else {
+                    panic!("unexpected competing hook")
+                };
                 trace.push(b["n"].as_u64().unwrap());
                 Ok(json!({"linked":!fail_first || b["n"]!=0}))
             })

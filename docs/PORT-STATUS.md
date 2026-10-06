@@ -23,9 +23,9 @@
 | BINARY/SCALE / adaptive filter, `ScaleBuilder` | 部分 | 原版式・histogram/peak・多数kernelあり。一般画像の全設定/分解能/失敗状態と下流伝播を広げる必要がある。 |
 | GRID / `GridBuilder`, `Staff`, `SystemInfo`, parts | 部分 | sections/filament/通常staff/system/parts・cue第二パスの比較あり。非zero skew、特殊staff、実スキャンの全工程一致は未検証。 |
 | HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
-| STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beamのpositive画像経路を接続。hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
+| STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
-| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
+| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
 | REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、今回のRest/TimeWhole overlap/exclusionあり。全Interのsupport contextual grade、互換性、frozen、各関係のconsistency、反復reductionとcallbacks/epilogは未接続。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
@@ -181,3 +181,24 @@ PageCleanerの薄いAA-off contourでは、端点正規化で同じ矩形にな�
 cross-staff/system、alias、一般rhythm・補正・cleaner/epilog等も未完。
 UI以外全機能同等性の最終目標を維持し、HEADS/STEMS等の完了フラグはfalse。
 [CLI例・範囲](MUSICXML-LIMITED.md#separate-ordinary-beam-groups--musicxml)。
+
+
+## 前後hookからMusicXMLへの接続（2026-10-05 America/Los_Angeles）
+
+1件の独立合成入力で、原版5.11成功の11イベント（十六分4音＋四分7音）を
+画像CLIで比較。実beam/hookのbuilder→profile0 hook／profile4通常side／
+profile1中間stump→実cache/SIG→hook片側stem検査→PageCleaner→ChordStem→
+音価・beam方向・MusicXMLまで接続しました。入力ごとの座標分岐はありません。
+原版`BeamLinker.linkSides`、`AbstractBeamInter.getCompetingHook`、
+`SigReducer.checkHooksHaveStem`、`PartwiseBuilder.processBeam`が対応依存です。
+
+Exclusion＋同一実glyphの競合は、通常beamの両端接続時だけhookを削除する
+原版4条件を別のSIG条件比較で確認。stemなし/CENTER/LEFT/RIGHTのhook保持・削除
+4条件、実5領域の原Java2D消去範囲も別に比較しています。今回の画像のglyphは
+全て別であり、同一glyph競合の画像全工程一致はまだ主張しません。
+
+次は一般beam groupの所有/競合、追加beam段数・flag、付点/連符の既存factory・
+lateChecks・Rational/rhythm依存を、原版成功画像で試せる単位に接続します。
+最終目標は原版非UI全機能の同等性で、一般cleaner/epilog、跨staff/system、
+非zero skew・実スキャン・別font・特殊staff等も未完として保持します。
+[CLI入力例・手順](MUSICXML-LIMITED.md#forwardbackward-secondary-beam-hooks)。

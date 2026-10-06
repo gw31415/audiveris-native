@@ -153,7 +153,7 @@ fn contextualize(g: &mut Value) {
         .filter(|n| {
             matches!(
                 n["kind"].as_str(),
-                Some("HeadInter" | "StemInter" | "BeamInter")
+                Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter")
             )
         })
         .cloned()
@@ -384,7 +384,7 @@ fn reduce(g: &mut Value, events: &mut Vec<Event>) {
         for node in g["inters"].as_array_mut().unwrap() {
             if matches!(
                 node["kind"].as_str(),
-                Some("HeadInter" | "StemInter" | "BeamInter")
+                Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter")
             ) && !partners.contains(&node["id"].as_u64().unwrap())
             {
                 node["contextual_grade"] = before["inters"]
@@ -424,7 +424,7 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
         }
         if !matches!(
             n["kind"].as_str(),
-            Some("HeadInter" | "StemInter" | "BeamInter" | "BarlineInter")
+            Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "BarlineInter")
         ) {
             return Err("unsupported_head_foundation_kind".into());
         }
@@ -466,7 +466,7 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
         .filter(|n| {
             matches!(
                 n["kind"].as_str(),
-                Some("HeadInter" | "StemInter" | "BeamInter")
+                Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter")
             )
         })
         .cloned()

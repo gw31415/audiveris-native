@@ -67,6 +67,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     | "StemInter"
                     | "LedgerInter"
                     | "BeamInter"
+                    | "BeamHookInter"
                     | "BeamGroupInter"
             )
         )

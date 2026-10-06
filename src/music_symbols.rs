@@ -261,7 +261,7 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                     }
                 }
             }
-            "BeamInter" => {
+            "BeamInter" | "BeamHookInter" => {
                 if n["contextual_grade"].as_f64().is_none_or(|g| g < 0.7) {
                     return Err("music_filter_weak_beam_optionals_pending".into());
                 }

@@ -1,10 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original StemsRetriever.Finalizer beam-side support and SigReducer beam
-//! endpoint checks, on actual retained SIG objects. Bounded ordinary sibling-beam groups.
+//! endpoint checks, on actual retained SIG objects. Bounded ordinary beam/hook groups.
 use crate::shared_sig::{Graph, Key, Phase};
 use serde_json::{Value, json};
 fn key(n: &Value) -> Result<Key, String> {
     serde_json::from_value(n["origin"].clone()).map_err(|_| "owned beam origin required".into())
+}
+/// AbstractBeamInter.getCompetingHook: an Exclusion neighbor with the same
+/// actual physical glyph, not merely overlapping geometry or equal bounds.
+pub(crate) fn competing_hook(snapshot: &Value, beam: &Value) -> Option<usize> {
+    if beam["kind"] != "BeamInter" || !beam["glyph_id"].is_u64() {
+        return None;
+    }
+    for edge in snapshot["relations"].as_array()? {
+        if edge["kind"] != "Exclusion" {
+            continue;
+        }
+        let other = if edge["source"] == beam["id"] {
+            &edge["target"]
+        } else if edge["target"] == beam["id"] {
+            &edge["source"]
+        } else {
+            continue;
+        };
+        if let Some(hook) = snapshot["inters"].as_array()?.iter().find(|n| {
+            n["id"] == *other
+                && n["kind"] == "BeamHookInter"
+                && n["shape"] == "BEAM_HOOK"
+                && n["glyph_id"] == beam["glyph_id"]
+                && n["origin"]["system"] == beam["origin"]["system"]
+        }) {
+            return hook["origin"]["local"].as_u64().map(|v| v as usize);
+        }
+    }
+    None
 }
 pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
     graph.contextualize_head_stems()?;
@@ -12,11 +41,17 @@ pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
     let nodes = snap["inters"].as_array().unwrap();
     let edges = snap["relations"].as_array().unwrap();
     let mut added = Vec::new();
-    for b in nodes.iter().filter(|n| n["kind"] == "BeamInter") {
+    for b in nodes
+        .iter()
+        .filter(|n| matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
+    {
         // Original cross-system orphan purge has no work only when this beam
         // has actual stems and no counterpart sharing its physical glyph.
         if nodes.iter().any(|n| {
-            n["kind"] == "BeamInter" && n["id"] != b["id"] && n["glyph_id"] == b["glyph_id"]
+            matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
+                && n["id"] != b["id"]
+                && n["glyph_id"] == b["glyph_id"]
+                && n["origin"]["system"] != b["origin"]["system"]
         }) {
             return Err("cross system beam finalizer pending".into());
         }
@@ -60,7 +95,7 @@ pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stems()?;
     Ok(
-        json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; linked unique-glyph ordinary groups have no cross-system orphan branch; full finalizer pending"}),
+        json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; linked ordinary/hook groups without cross-system glyph aliases have no cross-system orphan branch; full finalizer pending"}),
     )
 }
 /// SigReducer.checkBeamsHaveBothStems. Called after the current head/stem
@@ -83,6 +118,17 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
             }
         }
     }
+    // SigReducer.checkHooksHaveStem: one actual non-CENTER stem is enough.
+    for b in nodes.iter().filter(|n| n["kind"] == "BeamHookInter") {
+        if !edges.iter().any(|e| {
+            e["kind"] == "BeamStemRelation"
+                && e["source"] == b["id"]
+                && e["beam_portion"] != "CENTER"
+        }) {
+            graph.remove_music_inter(key(b)?)?;
+            removed.push(b["id"].clone());
+        }
+    }
     // AbstractEnsemble/Containment removal leaves an empty ensemble removable.
     for g in nodes.iter().filter(|n| n["kind"] == "BeamGroupInter") {
         if !graph.snapshot()["relations"]
@@ -96,7 +142,7 @@ pub(crate) fn check_ends(graph: &mut Graph) -> Result<Value, String> {
     }
     graph.contextualize_head_stems()?;
     Ok(
-        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; hooks/shared-glyph aliases remain admission refusals"}),
+        json!({"removed_beam_ids":removed,"scope":"SigReducer.checkBeamsHaveBothStems; SigReducer.checkHooksHaveStem; cross-system aliases remain pending"}),
     )
 }
 /// BeamHeadCleaner.process removes temporary beam/head supports at LINKS.
@@ -157,7 +203,7 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
     // thin AA-off contour. A slightly sloping physical area can normalize to
     // exactly the same rectangle; the contour also contains its fill. Admit
     // only that branch, not a bounding-box erasure of arbitrary sloping ink.
-    if n["kind"] != "BeamInter"
+    if !matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
         || l[0] >= l[2]
         || h <= 0.
         || pixel(top) != pixel(l[3] - h / 2.)
@@ -171,6 +217,63 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_hook_area_and_one_side_reduction_retain_registered_endpoints() {
+        let areas: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-hooks/areas.json"
+        ))
+        .unwrap();
+        for c in areas["cases"].as_array().unwrap() {
+            let n = json!({"kind":c["kind"],"median":c["median"],"height":c["height"]});
+            assert_eq!(json!(area_rows(&n, 11).unwrap()), c["white_rows"]);
+        }
+        let controls: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-hooks/competition.json"
+        ))
+        .unwrap();
+        for c in controls["hook_endpoint_controls"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let beam = Key {
+                system: 1,
+                phase: Phase::Beam,
+                local: 1,
+            };
+            let stem = Key {
+                system: 1,
+                phase: Phase::Stem,
+                local: 1,
+            };
+            let bid = graph
+                .vertex(
+                    beam,
+                    json!({"kind":"BeamHookInter","shape":"BEAM_HOOK","grade":0.8}),
+                    false,
+                )
+                .unwrap();
+            let sid = graph
+                .vertex(stem, json!({"kind":"StemInter","grade":0.8}), false)
+                .unwrap();
+            if c["portion"] != "NONE" {
+                let portion = &c["portion"];
+                let target = if portion == "CENTER" { 4. } else { 11. };
+                graph.relations(1,Phase::Beam,vec![(beam,stem,json!({"kind":"BeamStemRelation","beam_portion":portion,"grade":1.,"source_ratio":5.,"target_ratio":target}))]).unwrap();
+            }
+            check_ends(&mut graph).unwrap();
+            let snap = graph.snapshot();
+            let nodes = snap["inters"].as_array().unwrap();
+            assert_eq!(
+                !nodes.iter().any(|n| n["id"] == bid),
+                c["hook_removed"].as_bool().unwrap()
+            );
+            assert!(nodes.iter().any(|n| n["id"] == sid));
+            assert!(
+                check_ends(&mut graph).unwrap()["removed_beam_ids"]
+                    .as_array()
+                    .unwrap()
+                    .is_empty()
+            );
+        }
+    }
     #[test]
     fn original_page_cleaner_beam_area_contour_and_uncertified_branches() {
         let builder: Value = serde_json::from_str(include_str!(
@@ -284,7 +387,7 @@ mod tests {
                     .as_array()
                     .unwrap()
                     .iter()
-                    .filter(|n| n["kind"] == "BeamInter")
+                    .filter(|n| matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
                     .count(),
                 usize::from(portions.len() == 2)
             );

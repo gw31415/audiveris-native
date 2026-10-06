@@ -523,3 +523,45 @@ This stage uses meaningful affected regressions and fmt/clippy. The previous
 full565 result belongs to source321abfc; no new full-workspace result is claimed.
 [Verification summary](../evidence/musicxml-beam-groups/VALIDATION.json) and
 [next dependencies](../evidence/musicxml-beam-groups/NEXT-DEPENDENCY.md).
+
+
+## Forward/backward secondary beam hooks
+
+The native image CLI now connects typed BeamHookInter builders and actual
+cache/SIG/chord membership to sixteenth durations and forward/backward hook
+marks. One original5.11-successful image has four sixteenths with a primary
+begin/continue/continue/end beam and alternating secondary hooks, followed by
+three quarters and a second measure of four quarters (11 events).
+
+```sh
+CARGO_INCREMENTAL=0 CARGO_PROFILE_DEV_DEBUG=0 cargo build --locked --bin audiveris-musicxml -j1
+mkdir -p work/beam-hooks
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-beam-hooks/beam-four-hooks.png \
+  work/beam-hooks/score.musicxml work/beam-hooks/report.json
+```
+
+Use the configured Cargo target directory if your build sets CARGO_TARGET_DIR.
+This Linux recognition/export CLI needs no Java runtime. The Java renderer and
+observers are development-only original comparison tools.
+
+`BeamLinker.linkSides` is connected with system link profile0 for hooks and
+competing ordinary beams, maximum inspection profile4 for sides, and profile1
+for intermediate stumps. Hooks try both sides and need only one linked side.
+An excluded same-glyph hook is removed only when the ordinary beam links both
+sides; failures do not discard already-created stems. Typed contextual supports,
+`checkHooksHaveStem`, the certified thin rectangular PageCleaner contour and
+BeamHeadCleaner operate on actual SIG objects. PartwiseBuilder's hook mark uses
+the integer beam center relative to the actual stem center. Ordinary full beams
+retain their two-chord/end checks; complete-measure rhythm guards remain.
+
+The 11-event full-image comparison, the restored HEADS builder/SIG/raster
+observations, and four declared competing-hook plus four endpoint controls are
+separate evidence scopes. The full image has distinct glyphs, not a competing
+beam/hook glyph. No full-SIG or general engraving parity is claimed. General
+aliases, cross-staff/system/multiple-part groups, more than two beam levels,
+other hook configurations, wider/general sloping eraser strokes, full reduction/
+cleaner/epilog, nonzero skew/scans/other fonts/special staff remain pending.
+All global completion flags remain false. See
+[evidence](../evidence/musicxml-beam-hooks/VALIDATION.json) and
+[next dependencies](../evidence/musicxml-beam-hooks/NEXT-DEPENDENCY.md).

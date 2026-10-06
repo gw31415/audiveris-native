@@ -1,0 +1,2008 @@
+{
+  "native_outputs_used" : false,
+  "scope" : "original HEADS inspectStems, beam-origin expand/createStem; distinct from full-image RHYTHMS/export",
+  "cases" : [ {
+    "system" : 1,
+    "beam_id" : 59,
+    "kind" : "BeamInter",
+    "profile" : 4,
+    "beam_median" : [ 288.0, 198.0, 470.0, 198.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 289.0, 198.0 ],
+    "area_path" : [ [ 0, 285.7, 204.3 ], [ 1, 282.385, 419.0 ], [ 1, 295.615, 419.0 ], [ 1, 292.3, 204.3 ], [ 4 ] ],
+    "theoretical_line" : [ 289.0, 198.0, 289.0, 419.0 ],
+    "expanded_line" : [ 288.5, 198.0, 288.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 289.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 289.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 277, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 276, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 285.5, 240.0, 285.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 285.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 273, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 50,
+      "1" : 50,
+      "2" : 50,
+      "3" : 50,
+      "4" : 50
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 288, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 277, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 288.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 276, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 288.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.781466839993811,
+      "impacts" : {
+        "grade" : 0.781466839993811,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : -1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 288, 195, 2, 49 ],
+      "median" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 59,
+    "kind" : "BeamInter",
+    "profile" : 1,
+    "beam_median" : [ 288.0, 198.0, 470.0, 198.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : null,
+    "vertical" : "BOTTOM",
+    "reference" : [ 349.0, 198.0 ],
+    "area_path" : [ [ 0, 345.7, 204.3 ], [ 1, 342.385, 419.0 ], [ 1, 355.615, 419.0 ], [ 1, 352.3, 204.3 ], [ 4 ] ],
+    "theoretical_line" : [ 349.0, 198.0, 349.0, 419.0 ],
+    "expanded_line" : [ 348.5, 198.0, 348.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 349.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 349.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 337, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 336, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 345.5, 240.0, 345.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 345.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 333, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 50,
+      "1" : 50,
+      "2" : 50,
+      "3" : 50,
+      "4" : 50
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 348, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 337, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 348.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 336, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 348.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.7842898975292762,
+      "impacts" : {
+        "grade" : 0.7842898975292762,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 348, 195, 2, 49 ],
+      "median" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 59,
+    "kind" : "BeamInter",
+    "profile" : 1,
+    "beam_median" : [ 288.0, 198.0, 470.0, 198.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : null,
+    "vertical" : "BOTTOM",
+    "reference" : [ 409.0, 198.0 ],
+    "area_path" : [ [ 0, 405.7, 204.3 ], [ 1, 402.385, 419.0 ], [ 1, 415.615, 419.0 ], [ 1, 412.3, 204.3 ], [ 4 ] ],
+    "theoretical_line" : [ 409.0, 198.0, 409.0, 419.0 ],
+    "expanded_line" : [ 408.5, 198.0, 408.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 409.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 409.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 397, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 396, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 405.5, 240.0, 405.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 405.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 393, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 50,
+      "1" : 50,
+      "2" : 50,
+      "3" : 50,
+      "4" : 50
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 408, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 397, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 408.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 396, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 408.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.7842898975292762,
+      "impacts" : {
+        "grade" : 0.7842898975292762,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 408, 195, 2, 49 ],
+      "median" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 59,
+    "kind" : "BeamInter",
+    "profile" : 4,
+    "beam_median" : [ 288.0, 198.0, 470.0, 198.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 469.0, 198.0 ],
+    "area_path" : [ [ 0, 465.7, 204.3 ], [ 1, 462.385, 419.0 ], [ 1, 475.615, 419.0 ], [ 1, 472.3, 204.3 ], [ 4 ] ],
+    "theoretical_line" : [ 469.0, 198.0, 469.0, 419.0 ],
+    "expanded_line" : [ 468.5, 198.0, 468.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 469.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 469.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 457, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 46,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 456, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 465.5, 240.0, 465.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 465.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 453, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 50,
+      "1" : 50,
+      "2" : 50,
+      "3" : 50,
+      "4" : 50
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 468, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 457, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 468.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 456, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 468.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.781466839993811,
+      "impacts" : {
+        "grade" : 0.781466839993811,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : -1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 468, 195, 2, 49 ],
+      "median" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 61,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 288.0, 209.0, 302.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 289.0, 209.0 ],
+    "area_path" : [ [ 0, 285.7, 215.3000000000003 ], [ 1, 282.55, 419.0 ], [ 1, 295.45, 419.0 ], [ 1, 292.3, 215.3000000000003 ], [ 4 ] ],
+    "theoretical_line" : [ 289.0, 209.0, 289.0, 419.0 ],
+    "expanded_line" : [ 288.5, 209.0, 288.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 289.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 289.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 277, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 276, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 285.5, 240.0, 285.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 285.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 273, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 39,
+      "1" : 39,
+      "2" : 39,
+      "3" : 39,
+      "4" : 39
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 288, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 277, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 288.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 288.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 288, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 276, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 288.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.781466839993811,
+      "impacts" : {
+        "grade" : 0.781466839993811,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : -1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 288, 195, 2, 49 ],
+      "median" : [ 289.0, 195.0, 289.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 288, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 61,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 288.0, 209.0, 302.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "TOP",
+    "reference" : [ 301.0, 209.0 ],
+    "area_path" : [ [ 0, 294.565, 0.0 ], [ 1, 297.7, 202.6999999999997 ], [ 1, 304.3, 202.6999999999997 ], [ 1, 307.435, 0.0 ], [ 4 ] ],
+    "theoretical_line" : [ 301.0, 209.0, 301.0, -0.0 ],
+    "expanded_line" : [ 301.0, 209.0, 301.0, -0.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 301.0, 209.0, 301.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 301.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "GapItem",
+      "contrib" : 8,
+      "line" : [ 301.0, 201.05, 301.0, 209.0 ],
+      "glyph" : null
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 301.0, 194.95, 301.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 301.0, 198.0 ],
+        "stump" : null
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 15,
+      "4" : 15
+    },
+    "last_index" : -1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 61,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 288.0, 209.0, 302.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 301.0, 209.0 ],
+    "area_path" : [ [ 0, 297.7, 215.3000000000003 ], [ 1, 294.55, 419.0 ], [ 1, 307.45, 419.0 ], [ 1, 304.3, 215.3000000000003 ], [ 4 ] ],
+    "theoretical_line" : [ 301.0, 209.0, 301.0, 419.0 ],
+    "expanded_line" : [ 301.0, 209.0, 301.0, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 301.0, 209.0, 301.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 301.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 301.0, 194.95, 301.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 301.0, 198.0 ],
+        "stump" : null
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 0,
+      "4" : 0
+    },
+    "last_index" : 1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 63,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 336.0, 209.0, 350.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 349.0, 209.0 ],
+    "area_path" : [ [ 0, 345.7, 215.2999999999998 ], [ 1, 342.55, 419.0 ], [ 1, 355.45, 419.0 ], [ 1, 352.3, 215.2999999999998 ], [ 4 ] ],
+    "theoretical_line" : [ 349.0, 209.0, 349.0, 419.0 ],
+    "expanded_line" : [ 348.5, 209.0, 348.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 349.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 349.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 337, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 336, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 345.5, 240.0, 345.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 345.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 333, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 39,
+      "1" : 39,
+      "2" : 39,
+      "3" : 39,
+      "4" : 39
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 348, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 337, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 348.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 348.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 348, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 336, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 348.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.7842898975292762,
+      "impacts" : {
+        "grade" : 0.7842898975292762,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 348, 195, 2, 49 ],
+      "median" : [ 349.0, 195.0, 349.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 348, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 63,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 336.0, 209.0, 350.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "TOP",
+    "reference" : [ 337.0, 209.0 ],
+    "area_path" : [ [ 0, 330.565, 0.0 ], [ 1, 333.7, 202.7000000000002 ], [ 1, 340.3, 202.7000000000002 ], [ 1, 343.435, 0.0 ], [ 4 ] ],
+    "theoretical_line" : [ 337.0, 209.0, 337.0, -0.0 ],
+    "expanded_line" : [ 337.0, 209.0, 337.0, -0.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 337.0, 209.0, 337.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 337.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "GapItem",
+      "contrib" : 8,
+      "line" : [ 337.0, 201.05, 337.0, 209.0 ],
+      "glyph" : null
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 337.0, 194.95, 337.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 337.0, 198.0 ],
+        "stump" : null
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 15,
+      "4" : 15
+    },
+    "last_index" : -1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 63,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 336.0, 209.0, 350.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 337.0, 209.0 ],
+    "area_path" : [ [ 0, 333.7, 215.2999999999998 ], [ 1, 330.55, 419.0 ], [ 1, 343.45, 419.0 ], [ 1, 340.3, 215.2999999999998 ], [ 4 ] ],
+    "theoretical_line" : [ 337.0, 209.0, 337.0, 419.0 ],
+    "expanded_line" : [ 337.0, 209.0, 337.0, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 337.0, 209.0, 337.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 337.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 337.0, 194.95, 337.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 337.0, 198.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "GapItem",
+      "contrib" : 33,
+      "line" : [ 337.0, 209.0, 336.0, 242.0 ],
+      "glyph" : null
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 336.0, 242.0, 336.0, 242.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 336.0, 242.0 ],
+        "stump" : null,
+        "head_bounds" : [ 336, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "LEFT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 0,
+      "4" : 38
+    },
+    "last_index" : -1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 65,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 408.0, 209.0, 422.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 409.0, 209.0 ],
+    "area_path" : [ [ 0, 405.7, 215.2999999999998 ], [ 1, 402.55, 419.0 ], [ 1, 415.45, 419.0 ], [ 1, 412.3, 215.2999999999998 ], [ 4 ] ],
+    "theoretical_line" : [ 409.0, 209.0, 409.0, 419.0 ],
+    "expanded_line" : [ 408.5, 209.0, 408.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 409.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 409.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 397, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 396, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 405.5, 240.0, 405.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 405.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 393, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 39,
+      "1" : 39,
+      "2" : 39,
+      "3" : 39,
+      "4" : 39
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 408, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 397, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 408.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 408.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 408, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 396, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 408.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.7842898975292762,
+      "impacts" : {
+        "grade" : 0.7842898975292762,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 408, 195, 2, 49 ],
+      "median" : [ 409.0, 195.0, 409.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 408, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 65,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 408.0, 209.0, 422.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "TOP",
+    "reference" : [ 421.0, 209.0 ],
+    "area_path" : [ [ 0, 414.565, 0.0 ], [ 1, 417.7, 202.7000000000002 ], [ 1, 424.3, 202.7000000000002 ], [ 1, 427.435, 0.0 ], [ 4 ] ],
+    "theoretical_line" : [ 421.0, 209.0, 421.0, -0.0 ],
+    "expanded_line" : [ 421.0, 209.0, 421.0, -0.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 421.0, 209.0, 421.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 421.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "GapItem",
+      "contrib" : 8,
+      "line" : [ 421.0, 201.05, 421.0, 209.0 ],
+      "glyph" : null
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 421.0, 194.95, 421.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 421.0, 198.0 ],
+        "stump" : null
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 15,
+      "4" : 15
+    },
+    "last_index" : -1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 65,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 408.0, 209.0, 422.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 421.0, 209.0 ],
+    "area_path" : [ [ 0, 417.7, 215.2999999999998 ], [ 1, 414.55, 419.0 ], [ 1, 427.45, 419.0 ], [ 1, 424.3, 215.2999999999998 ], [ 4 ] ],
+    "theoretical_line" : [ 421.0, 209.0, 421.0, 419.0 ],
+    "expanded_line" : [ 421.0, 209.0, 421.0, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 421.0, 209.0, 421.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 421.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 421.0, 194.95, 421.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 421.0, 198.0 ],
+        "stump" : null
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 0,
+      "4" : 0
+    },
+    "last_index" : 1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 67,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 456.0, 209.0, 470.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "RIGHT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 469.0, 209.0 ],
+    "area_path" : [ [ 0, 465.7, 215.2999999999998 ], [ 1, 462.55, 419.0 ], [ 1, 475.45, 419.0 ], [ 1, 472.3, 215.2999999999998 ], [ 4 ] ],
+    "theoretical_line" : [ 469.0, 209.0, 469.0, 419.0 ],
+    "expanded_line" : [ 468.5, 209.0, 468.5, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 469.0, 209.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 49,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 469.0, 198.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        }
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 457, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 35,
+      "line" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      },
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 456, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 465.5, 240.0, 465.5, 240.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 465.5, 240.0 ],
+        "stump" : null,
+        "head_bounds" : [ 453, 238, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 39,
+      "1" : 39,
+      "2" : 39,
+      "3" : 39,
+      "4" : 39
+    },
+    "last_index" : 4,
+    "selected_glyphs" : [ {
+      "bounds" : [ 468, 195, 2, 49 ],
+      "orientation" : "VERTICAL",
+      "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+    } ],
+    "head_relations" : [ {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.0, 235.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 457, 233, 13, 10 ],
+        "shape" : "NOTEHEAD_VOID",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 0.7860966233075272,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 468.5, 242.0 ]
+    }, {
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 468.5, 239.0 ],
+        "stump" : {
+          "bounds" : [ 468, 195, 2, 49 ],
+          "orientation" : "VERTICAL",
+          "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+        },
+        "head_bounds" : [ 456, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "RIGHT",
+        "vertical" : "TOP"
+      },
+      "grade" : 1.0,
+      "head_side" : "RIGHT",
+      "extension_point" : [ 468.5, 246.0 ]
+    } ],
+    "stem" : {
+      "grade" : 0.781466839993811,
+      "impacts" : {
+        "grade" : 0.781466839993811,
+        "checks" : [ {
+          "name" : "Slope",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Straight",
+          "weight" : 1.0,
+          "impact" : 0.7727272727272727
+        }, {
+          "name" : "Length",
+          "weight" : 2.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Clean",
+          "weight" : -1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Black",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "BlackRatio",
+          "weight" : 1.0,
+          "impact" : 1.0
+        }, {
+          "name" : "Gap",
+          "weight" : 5.0,
+          "impact" : 1.0
+        } ]
+      },
+      "bounds" : [ 468, 195, 2, 49 ],
+      "median" : [ 469.0, 195.0, 469.0, 244.0 ],
+      "glyph" : {
+        "bounds" : [ 468, 195, 2, 49 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 49 ], [ 1, 0, 49 ] ]
+      }
+    }
+  }, {
+    "system" : 1,
+    "beam_id" : 67,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 456.0, 209.0, 470.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "TOP",
+    "reference" : [ 457.0, 209.0 ],
+    "area_path" : [ [ 0, 450.565, 0.0 ], [ 1, 453.7, 202.7000000000002 ], [ 1, 460.3, 202.7000000000002 ], [ 1, 463.435, 0.0 ], [ 4 ] ],
+    "theoretical_line" : [ 457.0, 209.0, 457.0, -0.0 ],
+    "expanded_line" : [ 457.0, 209.0, 457.0, -0.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 457.0, 209.0, 457.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 457.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "GapItem",
+      "contrib" : 8,
+      "line" : [ 457.0, 201.05, 457.0, 209.0 ],
+      "glyph" : null
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 457.0, 194.95, 457.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 457.0, 198.0 ],
+        "stump" : null
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 15,
+      "4" : 15
+    },
+    "last_index" : -1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  }, {
+    "system" : 1,
+    "beam_id" : 67,
+    "kind" : "BeamHookInter",
+    "profile" : 0,
+    "beam_median" : [ 456.0, 209.0, 470.0, 209.0 ],
+    "beam_height" : 6.1,
+    "horizontal" : "LEFT",
+    "vertical" : "BOTTOM",
+    "reference" : [ 457.0, 209.0 ],
+    "area_path" : [ [ 0, 453.7, 215.2999999999998 ], [ 1, 450.55, 419.0 ], [ 1, 463.45, 419.0 ], [ 1, 460.3, 215.2999999999998 ], [ 4 ] ],
+    "theoretical_line" : [ 457.0, 209.0, 457.0, 419.0 ],
+    "expanded_line" : [ 457.0, 209.0, 457.0, 419.0 ],
+    "items" : [ {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 457.0, 209.0, 457.0, 209.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "VLinker",
+        "reference" : [ 457.0, 209.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "LinkerItem",
+      "contrib" : 0,
+      "line" : [ 457.0, 194.95, 457.0, 201.05 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "BLinker",
+        "reference" : [ 457.0, 198.0 ],
+        "stump" : null
+      }
+    }, {
+      "kind" : "GapItem",
+      "contrib" : 33,
+      "line" : [ 457.0, 209.0, 456.0, 242.0 ],
+      "glyph" : null
+    }, {
+      "kind" : "HalfLinkerItem",
+      "contrib" : 0,
+      "line" : [ 456.0, 242.0, 456.0, 242.0 ],
+      "glyph" : null,
+      "linker" : {
+        "kind" : "CLinker",
+        "reference" : [ 456.0, 242.0 ],
+        "stump" : null,
+        "head_bounds" : [ 456, 237, 13, 10 ],
+        "shape" : "NOTEHEAD_BLACK",
+        "side" : "LEFT",
+        "vertical" : "TOP"
+      }
+    } ],
+    "length_map" : {
+      "0" : 0,
+      "1" : 0,
+      "2" : 0,
+      "3" : 0,
+      "4" : 38
+    },
+    "last_index" : -1,
+    "selected_glyphs" : [ ],
+    "head_relations" : [ ],
+    "stem" : null
+  } ],
+  "white_raster_create_controls" : [ ]
+}

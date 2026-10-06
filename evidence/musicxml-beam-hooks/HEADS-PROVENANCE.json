@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-beam-hooks/original-heads/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-beam-hooks/original-heads/prefs",
+    "-Duser.home=/workspace/work/musicxml-beam-hooks/original-heads/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "HEADS",
+    "-output",
+    "/workspace/work/musicxml-beam-hooks/original-heads",
+    "--",
+    "/workspace/work/musicxml-beam-hooks/input/beam-four-hooks.png"
+  ],
+  "exit_code": 0,
+  "input_sha256": "fd2c6f62122617645b5e4c495b4628bdea3fb841cda34d7f34616c1527152002",
+  "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "one independent four-sixteenth two-level beam input, no coordinate sweep, unmodified original5.11 HEADS input for separate dependency observation"
+}

@@ -89,7 +89,7 @@ fn contextualize_head_stem_flags_impl(
     for v in inters.iter() {
         if !matches!(
             v["kind"].as_str(),
-            Some("HeadInter" | "StemInter" | "BeamInter")
+            Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter")
         ) && !(flags && v["kind"] == "FlagInter")
         {
             return Err("unsupported_head_stem_context_inter".into());
@@ -137,10 +137,11 @@ fn contextualize_head_stem_flags_impl(
         };
         if let Some(target_kind) = beam_target {
             for (side, kind) in [("source", "BeamInter"), ("target", target_kind)] {
-                if !inters
-                    .iter()
-                    .any(|n| n["id"] == r[side] && n["kind"] == kind)
-                {
+                if !inters.iter().any(|n| {
+                    n["id"] == r[side]
+                        && (n["kind"] == kind
+                            || (kind == "BeamInter" && n["kind"] == "BeamHookInter"))
+                }) {
                     return Err("invalid_head_stem_context_beam_endpoint_kind".into());
                 }
             }

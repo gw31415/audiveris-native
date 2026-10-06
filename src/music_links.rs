@@ -51,15 +51,12 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
             .find(|b| b["beam"]["id"] == key.local)
             .ok_or("music_beam_catalog_identity_required")?;
         // Positive standard beams now go through the actual VLinker builder,
-        // profile4 cache/SIG scheduler and endpoint checks. Hooks still require
-        // their corresponding sibling and lookup rules.
+        // profile4 cache/SIG scheduler; hooks use the system link profile
+        // and their original one-side endpoint check.
         let physical = ["stumps", "admitted_seeds"]
             .iter()
             .any(|field| cat[*field].as_array().is_some_and(|v| !v.is_empty()));
         if physical {
-            if n["kind"] != "BeamInter" {
-                return Err("music_beam_hook_builder_pending".into());
-            }
             evidence.push(json!({"native_beam_id":n["id"],"scheduled_positive_beam":true}));
             continue;
         }
@@ -111,9 +108,6 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
                         .is_none_or(|x| x >= left && x <= right)
                 })
         {
-            if n["kind"] != "BeamInter" {
-                return Err("music_beam_hook_builder_pending".into());
-            }
             evidence.push(json!({"native_beam_id":n["id"],"scheduled_positive_beam":true}));
             continue;
         }
@@ -250,8 +244,11 @@ pub(crate) fn finalize_stems(mut o: OwnedItems) -> Result<OwnedItems, String> {
     }
     o.graph.contextualize_head_stems()?;
     o.prepared.report["shared_sig"] = o.graph.snapshot();
-    o.prepared.report["limited_stem_finalizer"] = json!({"head_checks":checked,"canonical_stem_cache_checked":true,"no_live_beam_finalizer":!nodes.iter().any(|n|n["kind"]=="BeamInter"),"contextualize_after_epilog":true,"full_STEMS_epilog_complete":false});
-    if nodes.iter().any(|n| n["kind"] == "BeamInter") {
+    o.prepared.report["limited_stem_finalizer"] = json!({"head_checks":checked,"canonical_stem_cache_checked":true,"no_live_beam_finalizer":!nodes.iter().any(|n|matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))),"contextualize_after_epilog":true,"full_STEMS_epilog_complete":false});
+    if nodes
+        .iter()
+        .any(|n| matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
+    {
         o.prepared.report["limited_stem_finalizer"]["beam_checks"] = beam_checks;
     }
     Ok(o)

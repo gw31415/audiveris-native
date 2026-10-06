@@ -854,7 +854,7 @@ impl Graph {
             .filter(|v| {
                 !v.removed
                     && (matches!(v.key.phase, Phase::Head | Phase::Stem)
-                        || v.data["kind"] == "BeamInter")
+                        || matches!(v.data["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
             })
             .map(|v| v.data.clone())
             .collect::<Vec<_>>();
@@ -895,7 +895,9 @@ impl Graph {
                 !v.removed
                     && matches!(
                         v.data["kind"].as_str(),
-                        Some("HeadInter" | "StemInter" | "BeamInter" | "FlagInter")
+                        Some(
+                            "HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "FlagInter"
+                        )
                     )
             })
             .map(|v| v.data.clone())
@@ -937,7 +939,7 @@ impl Graph {
     pub(crate) fn purge_weak_foundations(&mut self) -> Result<Vec<usize>, String> {
         let mut remove = Vec::new();
         for (i, v) in self.vertices.iter().enumerate().filter(|(_, v)| !v.removed) {
-            if v.data["kind"] == "BeamInter"
+            if matches!(v.data["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
                 && (v.key.phase != Phase::Beam
                     || !v.data["grade"]
                         .as_f64()
@@ -954,7 +956,7 @@ impl Graph {
             }
             if !matches!(
                 v.data["kind"].as_str(),
-                Some("HeadInter" | "StemInter" | "BeamInter" | "BarlineInter")
+                Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "BarlineInter")
             ) {
                 return Err("unsupported_weak_foundation_kind".into());
             }
@@ -1016,7 +1018,13 @@ impl Graph {
                     if v.removed
                         || !matches!(
                             v.data["kind"].as_str(),
-                            Some("HeadInter" | "StemInter" | "BeamInter" | "BeamGroupInter")
+                            Some(
+                                "HeadInter"
+                                    | "StemInter"
+                                    | "BeamInter"
+                                    | "BeamHookInter"
+                                    | "BeamGroupInter"
+                            )
                         )
                     {
                         return Err("unsupported_foundation_vertex_removal".into());
@@ -1090,7 +1098,7 @@ impl Graph {
                 expected["contextual_grade"] = n["contextual_grade"].clone();
                 expected["abnormal"] = n["abnormal"].clone();
             }
-            if v.data["kind"] == "BeamInter" {
+            if matches!(v.data["kind"].as_str(), Some("BeamInter" | "BeamHookInter")) {
                 expected["contextual_grade"] = n["contextual_grade"].clone();
             }
             if expected != *n {
