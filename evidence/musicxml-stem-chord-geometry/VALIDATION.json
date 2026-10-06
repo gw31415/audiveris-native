@@ -52,5 +52,7 @@
   "global_completion_flags": false,
   "fmt_and_workspace_all_target_clippy": "passed; unused prior integer helper removed, corrected clippy log preserved",
   "validated_src_tree": "9b37cb76e3c9378630a6c1ec849b34b830c8315b",
-  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c",
+  "validated_source_commit": "593425be5f82533fd90d7d5e0b51cd8b90969d92",
+  "independent_clone_CLI": "normal main push/remote/readback/root-src-crates equal; independent Linux build, same20+11 events/native-original XSD/prior XML byte hashes, READBACK.json"
 }

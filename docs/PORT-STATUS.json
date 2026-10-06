@@ -254,7 +254,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Stem-chord geometry final source: original4 declared bounds/locations/member-order conditions;17 focused geometry/overlap/actual owner/MusicXML tests. Last full588 belongs to00ee541. Independent CLI/tree readback recorded separately. evidence/musicxml-stem-chord-geometry/VALIDATION.json",
+  "latest_targeted_validation": "593425b: original4 declared stem-chord geometry conditions and17 targeted checks incl existing MusicXML regressions, fmt/workspace-all-target-clippy passed; independently fetched Linux20+11 events/prior XML byte hashes/native-original XSD/root-src-crates equal. Full588 remains00ee541. evidence/musicxml-stem-chord-geometry/{VALIDATION,READBACK}.json",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

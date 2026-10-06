@@ -426,3 +426,8 @@ addition-removal / Part-lyrics callbacks and full cleaner/epilog remain pending.
 No full stage flag is enabled. Existing two-system/competing-hook CLI examples
 remain usable;17 focused checks include the11-test MusicXML regression file.
 [Validation](../evidence/musicxml-stem-chord-geometry/VALIDATION.json).
+
+Source`593425b`:17 target regressions/fmt/clippy and independently fetched Linux
+20+11 original-matching image events/prior XML bytes/MusicXML4 XSD passed.
+Fetched root/src/crates trees agree; full588 remains earlier00ee541.
+[Readback](../evidence/musicxml-stem-chord-geometry/READBACK.json).
