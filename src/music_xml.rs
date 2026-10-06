@@ -556,6 +556,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         preliminary_slots[mi]["starting_chord_ids"] = json!(starting);
         preliminary_slots[mi]["starting_state"] = json!({"voices":[{"id":voice_id,"is_measure_rest":m.voices[voice_index].measure_rest_chord.is_some(),"chord_ids":m.voices[voice_index].chord_ids,"measure_rest_chord_id":m.voices[voice_index].measure_rest_chord}],"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});
         preliminary_slots[mi]["mapping_steps"] = json!([]);
+        preliminary_slots[mi]["mapping_validation_steps"] = json!([]);
         preliminary_slots[mi]["extinction_steps"] = json!([]);
         let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
         let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds)?;
@@ -563,7 +564,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         for chord in chords {
             if let Some(slot) = compounds.iter().find(|s| s.chord_ids.contains(&chord.id)) {
                 let before = slot_times.projection(slot)?;
-                let step = crate::music_rookie_mapping::Context {
+                let mut step = crate::music_rookie_mapping::Context {
                     graph: &mut graph,
                     voices: &mut m.voices,
                     measures: &m.measures,
@@ -576,6 +577,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     slot_times: &mut slot_times,
                 }
                 .map_slot(slot)?;
+                let validation = step.as_object_mut().unwrap().remove("validation").unwrap();
+                preliminary_slots[mi]["mapping_validation_steps"]
+                    .as_array_mut()
+                    .unwrap()
+                    .push(json!({"slot_id":slot.id,"validation":validation}));
                 preliminary_slots[mi]["mapping_steps"]
                     .as_array_mut()
                     .unwrap()

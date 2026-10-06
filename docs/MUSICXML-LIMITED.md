@@ -1520,3 +1520,21 @@ Rational/tuplets, shared stacks and actual candidate chord-slot reference/setter
 identity are not complete. No new image admission, no global true flag, no new
 whole-workspace claim; full595 remains `95e191b`. Previously saved method-control
 and XSD-negative evidence remain distinct from successful image MusicXML.
+
+### Known-time mapping retries (2026-10-06)
+
+The live mapper now follows nonimplicit `mapRookies` rejection/reselection before
+assigning a real Voice/time. With a known narrow time, an incompatible active end
+is blacklisted and another injection is solved; a known-slot chord ending beyond
+expected duration is rejected unless explicit NextInVoice pins it. A repeatedly
+forced contradictory Next pair stops without applying its mapping. Exhausted
+choices remain unassigned; the CLI still refuses pending new-Voice inference.
+`preliminary_measure_slots[].mapping_validation_steps` exposes the resulting
+black list and whether a proposal was applied; existing CLI commands are unchanged.
+
+Five original saved-object controls compare changed selection, exhaustion,
+late ending, explicit late-end exception and forced time conflict. These are not
+image polyphony or successful overfull MusicXML. Normal image admission remains
+one incoming/one Voice/nonimplicit binary rhythm. Multiple inferred times,
+`analyzeTimes`, new Voices, full Rational/tuplets and shared stacks are still
+pending, with all global flags false. Full595 remains the old `95e191b` result.

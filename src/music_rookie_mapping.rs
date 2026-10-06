@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original separated VoiceDistance, ChordsMapper and small InjectionSolver.
 //! Owned image adapter currently admits one incoming/one Voice and no implicit
-//! tuplets. General retries/new-Voice inference/Merged remain pending.
+//! tuplets. General multi-time/implicit-tuplet analysis, new-Voice inference
+//! and Merged remain pending.
 use crate::{
     music_measure_slots::CompoundSlot, music_measures::Measure, music_voices::Voice,
     shared_sig::Graph,
@@ -74,6 +75,113 @@ struct Pair {
 struct Mapping {
     cost: i32,
     pairs: Vec<Pair>,
+}
+struct NarrowTime {
+    id: usize,
+    chord_ids: Vec<usize>,
+    time_offset: Option<u32>,
+}
+struct ValidationInput {
+    rookies: Vec<usize>,
+    actives: Vec<usize>,
+    distances: BTreeMap<(usize, usize), i32>,
+    black: Vec<Pair>,
+    next: Vec<Pair>,
+    narrow: Vec<NarrowTime>,
+    active_ends: BTreeMap<usize, Option<u32>>,
+    rookie_durations: BTreeMap<usize, u32>,
+    expected: Option<u32>,
+}
+struct ValidatedMapping {
+    mapping: Option<Mapping>,
+    black: Vec<Pair>,
+    narrow: Vec<NarrowTime>,
+    applied: bool,
+}
+fn decision(input: ValidationInput, mapping: Option<Mapping>, applied: bool) -> ValidatedMapping {
+    ValidatedMapping {
+        mapping,
+        black: input.black,
+        narrow: input.narrow,
+        applied,
+    }
+}
+fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, String> {
+    if input.actives.is_empty() {
+        return Ok(decision(input, None, false));
+    }
+    'retry: loop {
+        let map = mapping(
+            &input.rookies,
+            &input.actives,
+            &input.distances,
+            &input.black,
+            &input.next,
+        )?;
+        if map.pairs.is_empty() {
+            return Ok(decision(input, Some(map), false));
+        }
+        for narrow in &input.narrow {
+            let Some(slot_time) = narrow.time_offset else {
+                continue;
+            };
+            for pair in map
+                .pairs
+                .iter()
+                .filter(|p| narrow.chord_ids.contains(&p.rookie))
+            {
+                let Some(end) = input.active_ends.get(&pair.active).copied().flatten() else {
+                    return Ok(decision(input, Some(map), false));
+                };
+                let duration = *input
+                    .rookie_durations
+                    .get(&pair.rookie)
+                    .ok_or("music_mapping_rookie_duration_required")?;
+                let chord_end = end
+                    .checked_add(duration)
+                    .ok_or("music_mapping_time_overflow")?;
+                if input.expected.is_some_and(|expected| chord_end > expected)
+                    && !input.next.contains(pair)
+                    && !input.black.contains(pair)
+                {
+                    input.black.push(*pair);
+                    continue 'retry;
+                }
+                if end != slot_time {
+                    // processNext may keep an explicit pair even after blacklisting.
+                    // Original breaks this loop; a repeated forced pair must not hang.
+                    if input.black.contains(pair) {
+                        return Ok(decision(input, Some(map), false));
+                    }
+                    input.black.push(*pair);
+                    continue 'retry;
+                }
+            }
+        }
+        for narrow in &mut input.narrow {
+            if narrow.time_offset.is_none() {
+                let mut inferred = BTreeMap::<u32, Vec<usize>>::new();
+                for pair in map
+                    .pairs
+                    .iter()
+                    .filter(|p| narrow.chord_ids.contains(&p.rookie))
+                {
+                    let end = input
+                        .active_ends
+                        .get(&pair.active)
+                        .copied()
+                        .flatten()
+                        .ok_or("music_mapping_unknown_active_time_analysis_pending")?;
+                    inferred.entry(end).or_default().push(pair.rookie);
+                }
+                if inferred.len() > 1 {
+                    return Err("music_mapping_multi_time_analysis_pending".into());
+                }
+                narrow.time_offset = inferred.keys().next().copied();
+            }
+        }
+        return Ok(decision(input, Some(map), true));
+    }
 }
 // Strict improvement and ascending range enumeration preserve original ties.
 // Original itself documents brute force for small collections. The production
@@ -341,8 +449,7 @@ impl Context<'_> {
             return Err("music_mapping_implicit_tuplet_or_conflicting_slot_times_pending".into());
         }
         if let Some(&known) = times.keys().next() {
-            // Original mapChords sets the actual narrow clock before purging
-            // already assigned beam/tie rookies. No clock is reset on empty input.
+            // Empty observations must not erase a retained narrow clock.
             self.slot_times.set(slot.members[0].id, Some(known))?;
         }
         let rookies = slot
@@ -423,34 +530,74 @@ impl Context<'_> {
             }
         }
         let mut result = Value::Null;
+        let mut validation = Value::Null;
         if !rookies.is_empty() {
             if actives.is_empty() {
                 return Err("music_mapping_new_voice_time_inference_pending".into());
             }
-            let map = mapping(&rookies, &actives, &distances, &black, &next)?;
-            if map.pairs.len() != rookies.len() {
+            let active_ends = actives
+                .iter()
+                .map(|&id| {
+                    let n = node(&snapshot, id)?;
+                    let end = match (time(n)?, n["duration"].as_str()) {
+                        (Some(start), Some(duration)) => Some(
+                            start
+                                .checked_add(crate::music_time::parse_ticks(duration)?)
+                                .ok_or("music_mapping_time_overflow")?,
+                        ),
+                        _ => None,
+                    };
+                    Ok((id, end))
+                })
+                .collect::<Result<BTreeMap<_, _>, String>>()?;
+            let rookie_durations = rookies
+                .iter()
+                .map(|&id| {
+                    let n = node(&snapshot, id)?;
+                    Ok((
+                        id,
+                        crate::music_time::parse_ticks(
+                            n["duration"]
+                                .as_str()
+                                .ok_or("music_mapping_rookie_duration_required")?,
+                        )?,
+                    ))
+                })
+                .collect::<Result<BTreeMap<_, _>, String>>()?;
+            let narrow = slot
+                .members
+                .iter()
+                .map(|s| {
+                    self.slot_times.get(s.id).map(|t| NarrowTime {
+                        id: s.id,
+                        chord_ids: s.chord_ids.clone(),
+                        time_offset: t,
+                    })
+                })
+                .collect::<Result<Vec<_>, _>>()?;
+            let validated = validated_mapping(ValidationInput {
+                rookies: rookies.clone(),
+                actives: actives.clone(),
+                distances,
+                black,
+                next,
+                narrow,
+                active_ends: active_ends.clone(),
+                rookie_durations,
+                expected: Some(self.expected),
+            })?;
+            validation = json!({"black":validated.black,"applied":validated.applied});
+            let map = validated
+                .mapping
+                .ok_or("music_mapping_new_voice_time_inference_pending")?;
+            if !validated.applied || map.pairs.len() != rookies.len() {
                 return Err("music_mapping_new_voice_time_inference_pending".into());
             }
+            for narrow in validated.narrow {
+                self.slot_times.set(narrow.id, narrow.time_offset)?;
+            }
             for pair in &map.pairs {
-                let active = node(&snapshot, pair.active)?;
-                let start = time(active)?.ok_or("music_mapping_active_time_required")?;
-                let duration = active["duration"]
-                    .as_str()
-                    .ok_or("music_mapping_active_duration_required")?;
-                let end = start
-                    .checked_add(crate::music_time::parse_ticks(duration)?)
-                    .ok_or("music_mapping_time_overflow")?;
-                let narrow = slot
-                    .narrow_slot(pair.rookie)
-                    .ok_or("music_mapping_owned_narrow_required")?;
-                if self.slot_times.get(narrow)?.is_some_and(|t| t != end) {
-                    return Err("music_mapping_slot_retry_pending".into());
-                }
-                if self.slot_times.get(narrow)?.is_none() {
-                    // Original checkSlotTime's single inferred-time branch runs
-                    // before applyMapping, using the chosen active end.
-                    self.slot_times.set(narrow, Some(end))?;
-                }
+                let end = active_ends[&pair.active].ok_or("music_mapping_active_time_required")?;
                 let own = self
                     .voices
                     .iter()
@@ -485,13 +632,99 @@ impl Context<'_> {
             })
             .collect::<Vec<_>>();
         Ok(
-            json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_ticks(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":actives,"costs":costs,"mapping":result,"ok":true,"after":after}),
+            json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_ticks(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":actives,"costs":costs,"mapping":result,"ok":true,"after":after,"validation":validation}),
         )
     }
 }
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn observed_input(input: &Value) -> ValidationInput {
+        let ticks = |v: &Value| {
+            v.as_str()
+                .map(crate::music_time::parse_ticks)
+                .transpose()
+                .unwrap()
+        };
+        ValidationInput {
+            rookies: serde_json::from_value(input["rookies"].clone()).unwrap(),
+            actives: serde_json::from_value(input["actives"].clone()).unwrap(),
+            distances: input["costs"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|c| {
+                    (
+                        (
+                            c["rookie"].as_u64().unwrap() as usize,
+                            c["active"].as_u64().unwrap() as usize,
+                        ),
+                        c["distance"].as_i64().unwrap() as i32,
+                    )
+                })
+                .collect(),
+            black: serde_json::from_value(input["black"].clone()).unwrap(),
+            next: serde_json::from_value(input["next"].clone()).unwrap(),
+            narrow: input["narrow"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|s| NarrowTime {
+                    id: s["id"].as_u64().unwrap() as usize,
+                    chord_ids: serde_json::from_value(s["chord_ids"].clone()).unwrap(),
+                    time_offset: ticks(&s["time_offset"]),
+                })
+                .collect(),
+            active_ends: input["active_ends"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|n| (n["id"].as_u64().unwrap() as usize, ticks(&n["end"])))
+                .collect(),
+            rookie_durations: input["rookie_durations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|n| {
+                    (
+                        n["id"].as_u64().unwrap() as usize,
+                        ticks(&n["duration"]).unwrap(),
+                    )
+                })
+                .collect(),
+            expected: ticks(&input["expected"]),
+        }
+    }
+    #[test]
+    fn original_fixed_slot_rejections_reselect_or_leave_rookies_unassigned() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-mapping-retry/observed.json"
+        ))
+        .unwrap();
+        for case in original["controls"].as_array().unwrap() {
+            let input = observed_input(&case["input"]);
+            let rookies = input.rookies.clone();
+            let result = validated_mapping(input).unwrap();
+            let remaining = rookies
+                .iter()
+                .copied()
+                .filter(|r| {
+                    !result.applied
+                        || !result
+                            .mapping
+                            .as_ref()
+                            .is_some_and(|m| m.pairs.iter().any(|p| p.rookie == *r))
+                })
+                .collect::<Vec<_>>();
+            let narrow=result.narrow.iter().map(|n|json!({"id":n.id,"time_offset":n.time_offset.map(crate::music_time::format_ticks)})).collect::<Vec<_>>();
+            assert_eq!(
+                json!({"mapping":result.mapping,"black":result.black,"remaining_rookies":remaining,"narrow":narrow}),
+                case["output"],
+                "{}",
+                case["name"]
+            );
+        }
+    }
     #[test]
     fn original_saved_distance_and_mapping_costs() {
         let controls: Value = serde_json::from_str(include_str!(
