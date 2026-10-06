@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-chord-members/original-full/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-chord-members/original-full/prefs",
+    "-Duser.home=/workspace/work/musicxml-chord-members/original-full/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "RHYTHMS",
+    "-export",
+    "-output",
+    "/workspace/work/musicxml-chord-members/original-full",
+    "--",
+    "/workspace/work/musicxml-chord-members/chord-members.png"
+  ],
+  "exit_code": 0,
+  "input_sha256": "ebef204408e2d91fa6f29b066c901f6de674f6349553e41e7ac465c48743fc78",
+  "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "one two-measure same-stem two-head quarter-chord input, no coordinate sweep, unmodified original5.11 full-image export"
+}

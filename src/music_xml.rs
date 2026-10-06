@@ -98,17 +98,37 @@ fn resolve_durations(
     let mut resolved = std::collections::BTreeMap::new();
     let mut staged = graph.clone();
     for chord in chords {
-        if chord.members.len() != 1 {
-            return Err("musicxml_polyphonic_head_chord_pending".into());
-        }
+        let first = chord
+            .members
+            .first()
+            .ok_or("musicxml_chord_member_required")?;
         let note = nodes
             .iter()
-            .find(|n| n["id"] == chord.members[0]["id"])
+            .find(|n| n["id"] == first["id"])
             .ok_or("musicxml_duration_live_note_required")?;
         let shape = note["shape"]
             .as_str()
             .ok_or("musicxml_note_shape_required")?;
         let rest = note["kind"] == "RestInter";
+        let mut member_ids = std::collections::BTreeSet::new();
+        for member in &chord.members {
+            let live = nodes
+                .iter()
+                .find(|n| n["id"] == member["id"])
+                .ok_or("musicxml_duration_live_note_required")?;
+            let id = live["id"]
+                .as_u64()
+                .ok_or("musicxml_chord_member_required")?;
+            if !member_ids.insert(id)
+                || live["kind"] != note["kind"]
+                || live["shape"] != note["shape"]
+                || (rest && chord.members.len() != 1)
+            {
+                // Mirrored mixed shapes need the original per-note type/filled
+                // notehead branch; their duration cannot admit ordinary export.
+                return Err("musicxml_mixed_or_special_chord_members_pending".into());
+            }
+        }
         let whole = rest && crate::music_voices::is_measure_rest_shape(shape, false);
         let result = if whole {
             ChordDuration {
@@ -398,11 +418,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         {
             return Err("musicxml_inconsistent_compound_partition_pending".into());
         }
-        // Multi-incoming slots use the owned mapper, but multi-member head
-        // chords still need original ensemble/chord-note export dependencies.
-        if chords.iter().any(|c| c.members.len() != 1) {
-            return Err("musicxml_general_slot_voice_assignment_pending".into());
-        }
         chords.sort_by_key(|c| ordered_ids.iter().position(|id| *id == c.id));
         preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"compounds":compounds.iter().map(|c|c.projection()).collect::<Vec<_>>(),"voice_assignment":"original separated ChordsMapper on owned ordinary Voice/compound path; general Rational/implicit tuplets/Merged/shared stacks pending"}));
         if chords.is_empty() {
@@ -649,9 +664,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         preliminary_slots[mi]["candidate_order_after"] =
             json!(order.ordered().map(|s| s.projection()).collect::<Vec<_>>());
         for &chord in &chords {
-            if chord.members.len() != 1 {
-                return Err("musicxml_polyphonic_head_chord_pending".into());
-            }
             let current_chords = graph.snapshot();
             let mut c = current_chords["inters"]
                 .as_array()
@@ -684,10 +696,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 return Err("musicxml_parallel_or_overlapping_chords_pending".into());
             }
             previous_right.insert(event_voice, chord.bounds[0] + chord.bounds[2] - 1);
-            let note = &chord.members[0];
-            let shape = note["shape"]
-                .as_str()
-                .ok_or("musicxml_note_shape_required")?;
             let measure_rest = owned_voice.measure_rest_chord == Some(chord.id);
             let ChordDuration {
                 intrinsic,
@@ -695,7 +703,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 ..
             } = durations[&chord.id];
             let duration = intrinsic.unwrap_or(expected_ticks);
-            let rest = note["kind"] == "RestInter";
             // AbstractChordInter.getBeams: actual beam→stem and chord→stem
             // relations supply membership; x positions only order members.
             let mut beams = if let Some(stem) = chord.stem {
@@ -718,7 +725,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             };
             // AbstractChordInter.getBeams orders from tail to head (greatest
             // distance from head first), independent of SIG insertion IDs.
-            let (head_y, stem_direction, chord_stem_direction) = if let Some(stem) = chord.stem {
+            let (head_y, tail_y, chord_stem_direction) = if let Some(stem) = chord.stem {
                 let stem_node = nodes
                     .iter()
                     .find(|n| n["id"] == graph.id(stem).unwrap())
@@ -730,11 +737,10 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 let head_y = geometry
                     .head_location
                     .ok_or("musicxml_chord_head_location_required")?[1];
-                // PartwiseBuilder emits a stem for every actual stemmed note.
-                // Current one-head admission makes head ordinate the note's
-                // integer center; negative tail-head is up, equality is down.
-                let dir = geometry.stem_dir(true)?;
-                (head_y, Some(if dir < 0 { "up" } else { "down" }), dir)
+                let tail_y = geometry
+                    .tail_location
+                    .ok_or("musicxml_chord_tail_location_required")?[1];
+                (head_y, Some(tail_y), geometry.stem_dir(true)?)
             } else {
                 (chord.bounds[1] + chord.bounds[3] / 2, None, 0)
             };
@@ -824,89 +830,18 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 };
                 beam_marks.push(json!({"number":number+1,"value":value}));
                 let stem_id = graph.id(chord.stem.unwrap()).unwrap();
-                edges
-                    .iter()
-                    .find(|e| {
-                        e["kind"] == "HeadStemRelation"
-                            && e["source"] == note["id"]
-                            && e["target"] == stem_id
-                    })
-                    .ok_or("musicxml_beam_head_direction_required")?;
+                for note in &chord.members {
+                    edges
+                        .iter()
+                        .find(|e| {
+                            e["kind"] == "HeadStemRelation"
+                                && e["source"] == note["id"]
+                                && e["target"] == stem_id
+                        })
+                        .ok_or("musicxml_beam_head_direction_required")?;
+                }
             }
             let beam_ids = beams.iter().map(|b| b["id"].clone()).collect::<Vec<_>>();
-            let mut step = None;
-            let mut octave = None;
-            let mut cid = None;
-            if !rest {
-                let x = chord.bounds[0] + chord.bounds[2] / 2;
-                // AbstractNoteInter resolves Measure.getClefBefore. Current
-                // admitted scope contains only imported native header clefs.
-                let clef = nodes
-                    .iter()
-                    .filter(|n| {
-                        n["kind"] == "ClefInter"
-                            && n["origin"]["system"] == measure.system
-                            && n["staff_id"] == measure.staff
-                            && n["bounds"][0].as_i64().is_some_and(|a| a < x)
-                    })
-                    .max_by_key(|n| n["bounds"][0].as_i64())
-                    .ok_or("musicxml_measure_local_clef_required")?;
-                // A measure-start header change can be exported in attributes.
-                // A mid-measure change needs ordered clef events, still pending.
-                if clef_attributes(clef)? != initial_attributes {
-                    return Err("musicxml_mid_measure_clef_change_pending".into());
-                }
-                let pitch = note["pitch"]
-                    .as_f64()
-                    .ok_or("musicxml_native_note_pitch_required")?;
-                if pitch.abs() > 4. {
-                    // The existing Java ClefInter arithmetic covers ledger pitches.
-                    // Admit only the first lower ledger C4 checked on an independent
-                    // original-successful image, retaining its actual native ledger.
-                    let hx = note["bounds"][0].as_f64().unwrap_or(f64::NAN)
-                        + note["bounds"][2].as_f64().unwrap_or(f64::NAN) / 2.;
-                    let concrete = clef["shape"] == "G_CLEF"
-                        && clef["pitch"] == 2.
-                        && pitch == 6.
-                        && nodes.iter().any(|n| {
-                            n["kind"] == "LedgerInter"
-                                && n["staff_id"] == measure.staff
-                                && n["index"] == 1
-                                && n["bounds"][0].as_f64().is_some_and(|x| {
-                                    x <= hx && hx < x + n["bounds"][2].as_f64().unwrap_or(0.)
-                                })
-                        });
-                    if !concrete {
-                        return Err("musicxml_ledger_pitch_scope_pending".into());
-                    }
-                }
-                let (s, o) = crate::head_musical_pitch::diatonic(
-                    clef["shape"].as_str().unwrap(),
-                    clef["pitch"].as_f64().unwrap(),
-                    pitch,
-                )
-                .map_err(str::to_owned)?;
-                step = Some(s);
-                octave = Some(o);
-                cid = clef["id"].as_u64();
-            }
-            let key: Key = serde_json::from_value(note["origin"].clone())
-                .map_err(|_| "musicxml_native_note_origin_required")?;
-            let mut data = note.clone();
-            data["step"] = json!(step);
-            data["octave"] = json!(octave);
-            let alter = if rest {
-                None
-            } else {
-                Some(crate::music_headers::key_alter(step.unwrap(), fifths)?)
-            };
-            data["alter"] = json!(alter);
-            data["effective_key_id"] = json!(key_id);
-            data["effective_key_fifths"] = json!(fifths);
-            data["chord_id"] = json!(chord.id);
-            data["measure_number"] = json!(mi + 1);
-            data["effective_clef_id"] = json!(cid);
-            graph.vertex(key, data, false)?;
             let intrinsic_duration = intrinsic.map(rational);
             if c["duration"] != json!(intrinsic_duration) {
                 return Err("musicxml_chord_intrinsic_duration_mismatch".into());
@@ -916,11 +851,98 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 c["beam_ids"] = json!(beam_ids);
             }
             graph.vertex(chord.key, c, false)?;
-            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
-            if !beam_marks.is_empty() {
-                event["beams"] = json!(beam_marks);
+            // AbstractChord.getNotes uses reverse center ordinate, already
+            // retained by CHORDS. Each member owns its pitch; clocks belong to
+            // the ensemble and advance once after every member is emitted.
+            for note in &chord.members {
+                let shape = note["shape"]
+                    .as_str()
+                    .ok_or("musicxml_note_shape_required")?;
+                let rest = note["kind"] == "RestInter";
+                let stem_direction = tail_y.map(|tail| {
+                    let center_y = note["bounds"][1].as_i64().unwrap()
+                        + note["bounds"][3].as_i64().unwrap() / 2;
+                    if tail < center_y { "up" } else { "down" }
+                });
+                let mut step = None;
+                let mut octave = None;
+                let mut cid = None;
+                if !rest {
+                    let x = chord.bounds[0] + chord.bounds[2] / 2;
+                    // AbstractNoteInter resolves Measure.getClefBefore. Current
+                    // admitted scope contains only imported native header clefs.
+                    let clef = nodes
+                        .iter()
+                        .filter(|n| {
+                            n["kind"] == "ClefInter"
+                                && n["origin"]["system"] == measure.system
+                                && n["staff_id"] == measure.staff
+                                && n["bounds"][0].as_i64().is_some_and(|a| a < x)
+                        })
+                        .max_by_key(|n| n["bounds"][0].as_i64())
+                        .ok_or("musicxml_measure_local_clef_required")?;
+                    // A measure-start header change can be exported in attributes.
+                    // A mid-measure change needs ordered clef events, still pending.
+                    if clef_attributes(clef)? != initial_attributes {
+                        return Err("musicxml_mid_measure_clef_change_pending".into());
+                    }
+                    let pitch = note["pitch"]
+                        .as_f64()
+                        .ok_or("musicxml_native_note_pitch_required")?;
+                    if pitch.abs() > 4. {
+                        // The existing Java ClefInter arithmetic covers ledger pitches.
+                        // Admit only the first lower ledger C4 checked on an independent
+                        // original-successful image, retaining its actual native ledger.
+                        let hx = note["bounds"][0].as_f64().unwrap_or(f64::NAN)
+                            + note["bounds"][2].as_f64().unwrap_or(f64::NAN) / 2.;
+                        let concrete = clef["shape"] == "G_CLEF"
+                            && clef["pitch"] == 2.
+                            && pitch == 6.
+                            && nodes.iter().any(|n| {
+                                n["kind"] == "LedgerInter"
+                                    && n["staff_id"] == measure.staff
+                                    && n["index"] == 1
+                                    && n["bounds"][0].as_f64().is_some_and(|x| {
+                                        x <= hx && hx < x + n["bounds"][2].as_f64().unwrap_or(0.)
+                                    })
+                            });
+                        if !concrete {
+                            return Err("musicxml_ledger_pitch_scope_pending".into());
+                        }
+                    }
+                    let (s, o) = crate::head_musical_pitch::diatonic(
+                        clef["shape"].as_str().unwrap(),
+                        clef["pitch"].as_f64().unwrap(),
+                        pitch,
+                    )
+                    .map_err(str::to_owned)?;
+                    step = Some(s);
+                    octave = Some(o);
+                    cid = clef["id"].as_u64();
+                }
+                let key: Key = serde_json::from_value(note["origin"].clone())
+                    .map_err(|_| "musicxml_native_note_origin_required")?;
+                let mut data = note.clone();
+                data["step"] = json!(step);
+                data["octave"] = json!(octave);
+                let alter = if rest {
+                    None
+                } else {
+                    Some(crate::music_headers::key_alter(step.unwrap(), fifths)?)
+                };
+                data["alter"] = json!(alter);
+                data["effective_key_id"] = json!(key_id);
+                data["effective_key_fifths"] = json!(fifths);
+                data["chord_id"] = json!(chord.id);
+                data["measure_number"] = json!(mi + 1);
+                data["effective_clef_id"] = json!(cid);
+                graph.vertex(key, data, false)?;
+                let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
+                if !beam_marks.is_empty() {
+                    event["beams"] = json!(beam_marks);
+                }
+                events.push(event);
             }
-            events.push(event);
             offsets.insert(
                 event_voice,
                 offset
@@ -1089,6 +1111,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .filter(|e| e["measure_number"] == number)
             .collect::<Vec<_>>();
         crate::music_voice_export::write_measure(
+            &graph,
             &mut xml,
             &sequences[mi],
             &measure_events,

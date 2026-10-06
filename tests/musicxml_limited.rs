@@ -6,6 +6,130 @@ use serde_json::Value;
 use std::{fs, process::Command};
 
 #[test]
+fn chord_members_share_owned_voice_time_and_export_bottom_up_without_double_advance() {
+    let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures/official-image-musicxml-chord-members");
+    let reference: Value =
+        serde_json::from_slice(&fs::read(fixture.join("observed.json")).unwrap()).unwrap();
+    let state: Value =
+        serde_json::from_slice(&fs::read(fixture.join("original-state.json")).unwrap()).unwrap();
+    let image = GrayImage::decode(&fs::read(fixture.join("chord-members.png")).unwrap()).unwrap();
+    let export = music_xml::recognize(&image).unwrap();
+    let report = &export.owner.owner.prepared.report;
+    let events = report["events"].as_array().unwrap();
+    let live = report["shared_sig"]["inters"].as_array().unwrap();
+    let node = |id: &Value| live.iter().find(|n| n["id"] == *id).unwrap();
+    assert_eq!(events.len(), reference["events"].as_array().unwrap().len());
+    for (actual, expected) in events.iter().zip(reference["events"].as_array().unwrap()) {
+        for key in [
+            "measure_number",
+            "step",
+            "octave",
+            "alter",
+            "voice",
+            "time_offset",
+            "duration_quarters",
+            "type",
+            "stem_direction",
+        ] {
+            assert_eq!(actual[key], expected[key], "{key}");
+        }
+        let chord = node(&actual["chord_id"]);
+        assert_eq!(chord["voice"], actual["voice"]);
+        assert_eq!(chord["time_offset"], actual["time_offset"]);
+        assert!(
+            chord["member_ids"]
+                .as_array()
+                .unwrap()
+                .contains(&actual["note_id"])
+        );
+    }
+    for (mi, expected) in state["measures"].as_array().unwrap().iter().enumerate() {
+        let measure = &report["measures"][mi];
+        assert_eq!(measure["actual_duration"], expected["actual"]);
+        assert_eq!(measure["expected_duration"], expected["expected"]);
+        assert_eq!(
+            measure["slots"].as_array().unwrap().len(),
+            expected["chords"].as_array().unwrap().len()
+        );
+        let voice = report["voices"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|v| v["measure_index"] == mi + 1)
+            .unwrap();
+        assert_eq!(voice["end_time"], expected["actual"]);
+        assert_eq!(voice["termination"], expected["voices"][0]["termination"]);
+        assert_eq!(voice["excess"], expected["voices"][0]["excess"]);
+        assert_eq!(
+            voice["chord_ids"].as_array().unwrap().len(),
+            expected["chords"].as_array().unwrap().len()
+        );
+        for original in expected["chords"].as_array().unwrap() {
+            let chord = live
+                .iter()
+                .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == original["bounds"])
+                .unwrap();
+            assert_eq!(chord["duration"], original["duration"]);
+            let members = chord["member_ids"].as_array().unwrap();
+            assert_eq!(members.len(), original["notes"].as_array().unwrap().len());
+            for (id, note) in members.iter().zip(original["notes"].as_array().unwrap()) {
+                assert_eq!(node(id)["bounds"], note["bounds"]);
+                assert_eq!(node(id)["step"], note["step"]);
+                assert_eq!(node(id)["octave"], note["octave"]);
+                assert_eq!(note["actual_chord_owner"], true);
+            }
+        }
+        for mapping in report["preliminary_measure_slots"][mi]["mapping_steps"]
+            .as_array()
+            .unwrap()
+        {
+            for cost in mapping["costs"].as_array().unwrap() {
+                for (side, id) in [("left", &cost["active"]), ("right", &cost["rookie"])] {
+                    let original = expected["chords"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|c| c["bounds"] == node(id)["bounds"])
+                        .unwrap();
+                    assert_eq!(
+                        cost[side]["absolute_pitch"],
+                        original["highest_note_absolute_pitch"]
+                    );
+                    let b = original["heads_bounds"].as_array().unwrap();
+                    assert_eq!(
+                        cost[side]["heads_center_y"],
+                        b[1].as_i64().unwrap() + b[3].as_i64().unwrap() / 2
+                    );
+                }
+            }
+        }
+    }
+    assert_eq!(
+        export.xml.matches("<chord/>").count(),
+        reference["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["chord"] == true)
+            .count()
+    );
+    assert_eq!(export.xml.matches("<note>").count(), events.len());
+    assert!(!export.xml.contains("<backup>"));
+    assert!(!export.xml.contains("<forward>"));
+    for flag in [
+        "heads_complete",
+        "stems_complete",
+        "epilog_complete",
+        "musicxml_complete",
+        "automatic_raster_pipeline_complete",
+    ] {
+        assert_eq!(report[flag], false);
+    }
+    assert_eq!(report["original_XML_output_reused"], false);
+}
+
+#[test]
 fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration() {
     let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("fixtures/official-image-musicxml-parallel-voices");

@@ -1,0 +1,253 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "saved recognition state after unmodified original full image/export; original finalCheck recomputes nonpersisted termination after reload; no declared mapping/clock changes",
+  "measures" : [ {
+    "chords" : [ {
+      "notes" : [ {
+        "bounds" : [ 276, 237, 13, 10 ],
+        "step" : "B",
+        "octave" : 4,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      }, {
+        "bounds" : [ 276, 215, 13, 10 ],
+        "step" : "F",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 276, 215, 13, 10 ],
+      "highest_note_absolute_pitch" : 38,
+      "heads_bounds" : [ 276, 215, 13, 32 ],
+      "bounds" : [ 276, 184, 13, 63 ],
+      "voice" : 1,
+      "time_offset" : "0",
+      "duration" : "1/4"
+    }, {
+      "notes" : [ {
+        "bounds" : [ 396, 237, 13, 10 ],
+        "step" : "B",
+        "octave" : 4,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      }, {
+        "bounds" : [ 396, 215, 13, 10 ],
+        "step" : "F",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 396, 215, 13, 10 ],
+      "highest_note_absolute_pitch" : 38,
+      "heads_bounds" : [ 396, 215, 13, 32 ],
+      "bounds" : [ 396, 184, 13, 63 ],
+      "voice" : 1,
+      "time_offset" : "1/4",
+      "duration" : "1/4"
+    }, {
+      "notes" : [ {
+        "bounds" : [ 516, 237, 13, 10 ],
+        "step" : "B",
+        "octave" : 4,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      }, {
+        "bounds" : [ 516, 215, 13, 10 ],
+        "step" : "F",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 516, 215, 13, 10 ],
+      "highest_note_absolute_pitch" : 38,
+      "heads_bounds" : [ 516, 215, 13, 32 ],
+      "bounds" : [ 516, 184, 13, 63 ],
+      "voice" : 1,
+      "time_offset" : "1/2",
+      "duration" : "1/4"
+    }, {
+      "notes" : [ {
+        "bounds" : [ 636, 237, 13, 10 ],
+        "step" : "B",
+        "octave" : 4,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      }, {
+        "bounds" : [ 636, 215, 13, 10 ],
+        "step" : "F",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 636, 215, 13, 10 ],
+      "highest_note_absolute_pitch" : 38,
+      "heads_bounds" : [ 636, 215, 13, 32 ],
+      "bounds" : [ 636, 184, 13, 63 ],
+      "voice" : 1,
+      "time_offset" : "3/4",
+      "duration" : "1/4"
+    } ],
+    "voices" : [ {
+      "id" : 1,
+      "chord_bounds" : [ [ 276, 184, 13, 63 ], [ 396, 184, 13, 63 ], [ 516, 184, 13, 63 ], [ 636, 184, 13, 63 ] ],
+      "termination" : "0",
+      "excess" : null
+    } ],
+    "final_check_ok" : true,
+    "stack" : {
+      "slots" : [ {
+        "id" : 1,
+        "time_offset" : "0",
+        "incoming_bounds" : [ [ 276, 184, 13, 63 ] ]
+      }, {
+        "id" : 2,
+        "time_offset" : "1/4",
+        "incoming_bounds" : [ [ 396, 184, 13, 63 ] ]
+      }, {
+        "id" : 3,
+        "time_offset" : "1/2",
+        "incoming_bounds" : [ [ 516, 184, 13, 63 ] ]
+      }, {
+        "id" : 4,
+        "time_offset" : "3/4",
+        "incoming_bounds" : [ [ 636, 184, 13, 63 ] ]
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 276, 184, 13, 63 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 396, 184, 13, 63 ]
+        }, {
+          "slot_id" : 3,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 516, 184, 13, 63 ]
+        }, {
+          "slot_id" : 4,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 636, 184, 13, 63 ]
+        } ]
+      } ],
+      "abnormal" : false
+    },
+    "expected" : "1",
+    "actual" : "1",
+    "stack_excess" : null
+  }, {
+    "chords" : [ {
+      "notes" : [ {
+        "bounds" : [ 756, 215, 13, 10 ],
+        "step" : "F",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 756, 215, 13, 10 ],
+      "highest_note_absolute_pitch" : 38,
+      "heads_bounds" : [ 756, 215, 13, 10 ],
+      "bounds" : [ 756, 184, 13, 41 ],
+      "voice" : 1,
+      "time_offset" : "0",
+      "duration" : "1/4"
+    }, {
+      "notes" : [ {
+        "bounds" : [ 876, 226, 13, 10 ],
+        "step" : "D",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 876, 226, 13, 10 ],
+      "highest_note_absolute_pitch" : 36,
+      "heads_bounds" : [ 876, 226, 13, 10 ],
+      "bounds" : [ 876, 195, 13, 41 ],
+      "voice" : 1,
+      "time_offset" : "1/4",
+      "duration" : "1/4"
+    }, {
+      "notes" : [ {
+        "bounds" : [ 996, 237, 13, 10 ],
+        "step" : "B",
+        "octave" : 4,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 996, 237, 13, 10 ],
+      "highest_note_absolute_pitch" : 34,
+      "heads_bounds" : [ 996, 237, 13, 10 ],
+      "bounds" : [ 996, 206, 13, 41 ],
+      "voice" : 1,
+      "time_offset" : "1/2",
+      "duration" : "1/4"
+    }, {
+      "notes" : [ {
+        "bounds" : [ 1116, 226, 13, 10 ],
+        "step" : "D",
+        "octave" : 5,
+        "shape" : "NOTEHEAD_BLACK",
+        "actual_chord_owner" : true
+      } ],
+      "highest_note_bounds" : [ 1116, 226, 13, 10 ],
+      "highest_note_absolute_pitch" : 36,
+      "heads_bounds" : [ 1116, 226, 13, 10 ],
+      "bounds" : [ 1116, 195, 13, 41 ],
+      "voice" : 1,
+      "time_offset" : "3/4",
+      "duration" : "1/4"
+    } ],
+    "voices" : [ {
+      "id" : 1,
+      "chord_bounds" : [ [ 756, 184, 13, 41 ], [ 876, 195, 13, 41 ], [ 996, 206, 13, 41 ], [ 1116, 195, 13, 41 ] ],
+      "termination" : "0",
+      "excess" : null
+    } ],
+    "final_check_ok" : true,
+    "stack" : {
+      "slots" : [ {
+        "id" : 1,
+        "time_offset" : "0",
+        "incoming_bounds" : [ [ 756, 184, 13, 41 ] ]
+      }, {
+        "id" : 2,
+        "time_offset" : "1/4",
+        "incoming_bounds" : [ [ 876, 195, 13, 41 ] ]
+      }, {
+        "id" : 3,
+        "time_offset" : "1/2",
+        "incoming_bounds" : [ [ 996, 206, 13, 41 ] ]
+      }, {
+        "id" : 4,
+        "time_offset" : "3/4",
+        "incoming_bounds" : [ [ 1116, 195, 13, 41 ] ]
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 756, 184, 13, 41 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 876, 195, 13, 41 ]
+        }, {
+          "slot_id" : 3,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 996, 206, 13, 41 ]
+        }, {
+          "slot_id" : 4,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 1116, 195, 13, 41 ]
+        } ]
+      } ],
+      "abnormal" : false
+    },
+    "expected" : "1",
+    "actual" : "1",
+    "stack_excess" : null
+  } ]
+}

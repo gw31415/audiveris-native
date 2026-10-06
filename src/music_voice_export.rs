@@ -221,11 +221,16 @@ fn units(ticks: u32, divisions: u32) -> Result<u32, String> {
     Ok(scaled / 4)
 }
 pub(crate) fn write_measure(
+    graph: &Graph,
     xml: &mut String,
     steps: &[Step],
     events: &[&Value],
     divisions: u32,
 ) -> Result<(), String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"]
+        .as_array()
+        .ok_or("music_voice_SIG_required")?;
     let mut emitted = BTreeSet::new();
     for step in steps {
         let duration = units(step.duration(), divisions)?;
@@ -239,58 +244,94 @@ pub(crate) fn write_measure(
             )
             .unwrap(),
             Step::Chord { id, voice, .. } => {
-                let e = events
+                let chord = nodes
                     .iter()
-                    .find(|e| e["chord_id"] == id)
-                    .ok_or("musicxml_voice_event_required")?;
-                if e["voice"] != voice || !emitted.insert(id) {
-                    return Err("musicxml_voice_unique_owned_event_required".into());
+                    .find(|n| n["id"] == id)
+                    .ok_or("musicxml_voice_owned_event_required")?;
+                let members = chord["member_ids"]
+                    .as_array()
+                    .ok_or("musicxml_voice_owned_event_required")?;
+                if members.is_empty() {
+                    return Err("musicxml_voice_event_required".into());
                 }
-                xml.push_str("<note>");
-                if e["rest"] == true {
-                    xml.push_str(if e["measure_rest"] == true {
-                        r#"<rest measure="yes"/>"#
-                    } else {
-                        "<rest/>"
-                    });
-                } else {
-                    write!(
-                        xml,
-                        "<pitch><step>{}</step>{}<octave>{}</octave></pitch>",
-                        e["step"].as_str().unwrap(),
-                        if e["alter"] == 0 {
-                            String::new()
+                let mut notes = members
+                    .iter()
+                    .map(|id| {
+                        nodes
+                            .iter()
+                            .find(|n| n["id"] == *id)
+                            .ok_or("musicxml_voice_owned_event_required")
+                    })
+                    .collect::<Result<Vec<_>, _>>()?;
+                if chord["kind"] == "HeadChordInter" {
+                    notes = crate::head_chord_geometry::ordered(&notes)?;
+                } else if chord["kind"] != "RestChordInter" || notes.len() != 1 {
+                    return Err("musicxml_voice_owned_event_required".into());
+                }
+                for (index, note) in notes.iter().enumerate() {
+                    let matching = events
+                        .iter()
+                        .filter(|e| e["chord_id"] == id && e["note_id"] == note["id"])
+                        .collect::<Vec<_>>();
+                    if matching.len() != 1 {
+                        return Err("musicxml_voice_unique_owned_event_required".into());
+                    }
+                    let e = matching[0];
+                    let note_id = note["id"]
+                        .as_u64()
+                        .ok_or("musicxml_voice_owned_event_required")?;
+                    if chord["voice"] != voice || e["voice"] != voice || !emitted.insert(note_id) {
+                        return Err("musicxml_voice_unique_owned_event_required".into());
+                    }
+                    xml.push_str("<note>");
+                    if index != 0 {
+                        xml.push_str("<chord/>");
+                    }
+                    if e["rest"] == true {
+                        xml.push_str(if e["measure_rest"] == true {
+                            r#"<rest measure="yes"/>"#
                         } else {
-                            format!("<alter>{}</alter>", e["alter"])
-                        },
-                        e["octave"]
+                            "<rest/>"
+                        });
+                    } else {
+                        write!(
+                            xml,
+                            "<pitch><step>{}</step>{}<octave>{}</octave></pitch>",
+                            e["step"].as_str().unwrap(),
+                            if e["alter"] == 0 {
+                                String::new()
+                            } else {
+                                format!("<alter>{}</alter>", e["alter"])
+                            },
+                            e["octave"]
+                        )
+                        .unwrap();
+                    }
+                    writeln!(
+                        xml,
+                        "<duration>{duration}</duration><voice>{voice}</voice>{}{}{}</note>",
+                        e["type"]
+                            .as_str()
+                            .map(|t| format!("<type>{t}</type>"))
+                            .unwrap_or_default(),
+                        e["stem_direction"]
+                            .as_str()
+                            .map(|d| format!("<stem>{d}</stem>"))
+                            .unwrap_or_default(),
+                        e["beams"]
+                            .as_array()
+                            .map(|beams| beams
+                                .iter()
+                                .map(|b| format!(
+                                    "<beam number=\"{}\">{}</beam>",
+                                    b["number"],
+                                    b["value"].as_str().unwrap()
+                                ))
+                                .collect::<String>())
+                            .unwrap_or_default()
                     )
                     .unwrap();
                 }
-                writeln!(
-                    xml,
-                    "<duration>{duration}</duration><voice>{voice}</voice>{}{}{}</note>",
-                    e["type"]
-                        .as_str()
-                        .map(|t| format!("<type>{t}</type>"))
-                        .unwrap_or_default(),
-                    e["stem_direction"]
-                        .as_str()
-                        .map(|d| format!("<stem>{d}</stem>"))
-                        .unwrap_or_default(),
-                    e["beams"]
-                        .as_array()
-                        .map(|beams| beams
-                            .iter()
-                            .map(|b| format!(
-                                "<beam number=\"{}\">{}</beam>",
-                                b["number"],
-                                b["value"].as_str().unwrap()
-                            ))
-                            .collect::<String>())
-                        .unwrap_or_default()
-                )
-                .unwrap();
             }
         }
     }

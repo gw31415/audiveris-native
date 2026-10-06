@@ -863,3 +863,16 @@ getNarrowSlotを画像CLI候補列へ接続。保存済み6小節と宣言4境�
 Rational・複数head chord・lyrics/slur/tie・完全cleaner/補正/export等は未完です。
 非zero skew・別font・実スキャン・特殊staff等の未検証も保持。非UI全機能を省略しない
 目標と完了フラグfalseを維持し、全595件は旧95e191bの結果として扱います。
+
+## Same-stem multi-head note/export continuation (2026-10-06)
+
+Original `AbstractChordInter.getHighestNote/getMembers`, `HeadChordInter.getHeadsBounds`,
+`VoiceDistance.Separated` and `PartwiseBuilder.processChord/processNote` now feed
+the actual image-owned ordinary multi-head path. All heads retain their
+Containment owner, Voice/onset/duration. Notes export bottom-up; only subsequent
+notes get `<chord/>`, and the ensemble advances the Voice once. One original
+full-image two-measure comparison contains12 notes/eight chords; saved recognized
+member/Voice/slot/getter comparisons are separate from that image export.
+Mixed mirror/special heads, shared stacks, general tuplets/rests and full
+cleaner/epilog remain partial; no original nonUI feature is omitted.
+[Validation](../evidence/musicxml-chord-members/VALIDATION.json).

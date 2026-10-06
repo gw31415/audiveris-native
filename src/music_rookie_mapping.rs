@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original separated VoiceDistance, ChordsMapper and small InjectionSolver.
-//! Owned image adapter currently admits one incoming/one Voice and no implicit
+//! Owned image adapter retains actual compounds/Voices and no implicit
 //! tuplets. Implicit-tuplet analysis, unknown-time new-Voice inference
 //! and Merged remain pending.
 use crate::{
@@ -427,11 +427,26 @@ impl Context<'_> {
             .filter(|e| e["kind"] == "Containment" && e["source"] == id)
             .map(|e| node(snapshot, e["target"].as_u64().unwrap() as usize))
             .collect::<Result<Vec<_>, _>>()?;
-        if members.len() != 1 {
-            return Err("music_mapping_multi_note_chord_pending".into());
-        }
-        let member = members[0];
-        let note_bounds = bounds(member)?;
+        let member = if head {
+            crate::head_chord_geometry::ordered(&members)?
+                .last()
+                .copied()
+                .ok_or("music_mapping_chord_note_required")?
+        } else {
+            if members.len() != 1 {
+                return Err("music_mapping_ordinary_rest_required".into());
+            }
+            members[0]
+        };
+        // VoiceDistance.Separated uses the highest note's absolute pitch for
+        // head pairs, and the union of heads (excluding the stem) against rests.
+        let note_bounds = if head {
+            crate::head_chord_geometry::calculate(&members, None)?
+                .bounds
+                .ok_or("music_mapping_chord_note_required")?
+        } else {
+            bounds(member)?
+        };
         let stem = n["stem_id"]
             .as_u64()
             .map(|id| node(snapshot, id as usize))
@@ -1191,6 +1206,7 @@ mod tests {
             let divisions = crate::music_voice_export::divisions(&sequences);
             let mut xml = String::new();
             crate::music_voice_export::write_measure(
+                context.graph,
                 &mut xml,
                 &sequences[0],
                 &events.iter().collect::<Vec<_>>(),
@@ -1207,6 +1223,21 @@ mod tests {
                 }
             }).collect::<String>();
             assert_eq!(xml, expected, "{}", case["name"]);
+            if case["name"] == "separate-member-times" {
+                let mut duplicate = events.iter().collect::<Vec<_>>();
+                duplicate.push(&events[0]);
+                assert_eq!(
+                    crate::music_voice_export::write_measure(
+                        context.graph,
+                        &mut String::new(),
+                        &sequences[0],
+                        &duplicate,
+                        divisions,
+                    )
+                    .unwrap_err(),
+                    "musicxml_voice_unique_owned_event_required"
+                );
+            }
             if case["name"] == "separate-member-times" {
                 let final_oracle: Value = serde_json::from_str(include_str!(
                     "../fixtures/official-measure-final-check/observed.json"
