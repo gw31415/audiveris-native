@@ -279,7 +279,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "BeamHeadCleaner original stored-grade retention: one declared actual SIG lifecycle, meaningful beam/link/image tests; final evidence/musicxml-beam-head-cleaner/VALIDATION.json. Last full590 at322135d remains historical until a new full run completes.",
+  "latest_targeted_validation": "238c535: BeamHeadCleaner original grade retention,17 targeted/fmt/workspace-all-target-clippy and full593 passed. Independent Linux31 events/XML/XSD/tree match; original one cleaner lifecycle and4 same rest-container controls are separate. Post-chord stem removal observation prepared only; native class/cache/voice propagation remains pending.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -327,12 +327,12 @@
     }
   ],
   "latest_full_validation": {
-    "source_commit": "322135df48daa05c98252bbf390074c7ce1e75b0",
-    "passed": 590,
+    "source_commit": "238c535afacc5a0d8182ea70d67f96f81c3c34d4",
+    "passed": 593,
     "failed": 0,
     "ignored": 0,
-    "execution": "one uninterrupted cargo test --workspace --offline --locked -j1 after intrinsic duration/geometry/callback units;176 test binaries and7 empty doc-test groups",
-    "evidence": "evidence/musicxml-chord-containment-lifecycle/FULL-VALIDATION.json",
-    "independent_clone_Linux_CLI": "fetched Linux build/20+11 original-matching events, prior XML byte hashes/native-original XSD/root-src-crates equal"
+    "execution": "one uninterrupted cargo test --workspace --offline --locked -j1 after rest admission/ownership/containers and BeamHeadCleaner group;176 binaries+7 empty doc-test groups",
+    "evidence": "evidence/musicxml-beam-head-cleaner/FULL-VALIDATION.json",
+    "independent_clone_Linux_CLI": "fetched Linux build/20+11 original-matching events/prior XML byte hashes/native-original XSD/root-src-crates equal; live container projection IDs checked"
   }
 }

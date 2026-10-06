@@ -22,3 +22,19 @@ not planned omissions. No global completion flag changes.
 
 Existing image CLI inputs retain MusicXML event/beam/XSD regressions; declared
 SIG controls remain separate from automatic raster generation of those branches.
+
+## Concrete retained-owner boundary for the next chord lifecycle unit
+
+`Retriever.remove` currently calls `Graph.sync_stems`; post-CHORDS callers need
+actual incident `ChordStemRelation.removed` invalidation before pruning, as well
+as the same cached stem lock/identity. `prepare_weak_foundations` presently refuses
+HeadChord/RestChord and is a pre-CHORDS foundation pass, not general LINKS purge.
+Do not treat this as already connected after RHYTHM.
+
+`OwnedMusic::Chord` and some consumers currently infer RestChord from absence of
+a stem. Original has separate HeadChordInter/RestChordInter classes: a stemless
+HeadChord remains a head chord. The next connected unit must preserve that actual
+class and optional stem independently, then apply original ChordsBuilder
+stemless/duration/measure dispatch as dependencies permit. Current whole/breve
+image and cached post-chord deletion guards must stay until this propagation is
+verified. Existing four declared rest controls do not establish that branch.

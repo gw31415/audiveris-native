@@ -1075,3 +1075,17 @@ SIG lifecycle reproduces the old mismatch and verifies the fix/idempotence;
 existing image MusicXML regressions are checked separately. This is not complete
 post-LINKS raster SIG equality or full cleaner/epilog parity.
 [Validation](../evidence/musicxml-beam-head-cleaner/VALIDATION.json).
+
+Source`238c535` passed the complete593-test workspace run (176 binaries+7 empty
+doc-test groups), failed0/ignored0, after the rest admission/ownership/containers
+and cleaner group. Source was fixed during execution. Independent clone built
+the native Linux CLI;20+11 events still match original/prior XML bytes and XSD.
+Original full590 at`322135d` remains an earlier source-specific record.
+[Full validation](../evidence/musicxml-beam-head-cleaner/FULL-VALIDATION.json),
+[readback](../evidence/musicxml-beam-head-cleaner/READBACK.json).
+
+The next post-chord stem-removal observation is original-only preparation:
+`fixtures/official-stem-chord-geometry/post-stem-removal.json` shows a HeadChord
+remaining a HeadChord without a stem, with refreshed head-only bounds/locations.
+Native cached post-chord callback and class propagation are not implemented by
+this observation. [Dependency](../evidence/musicxml-beam-head-cleaner/NEXT-DEPENDENCY.md).
