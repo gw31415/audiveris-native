@@ -1,0 +1,41 @@
+{
+  "base_source": "e2aaf81101e603cca1738a17c300ecf739b618ed",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "PartwiseBuilder chord-owned Voice/onset/duration binding in actual image event assembly",
+  "original_comparison": {
+    "new_original_run": false,
+    "reused": "fixtures/official-compound-voice-export/observed.json and official-compound-mapping/observed.json",
+    "actual_original_controls": 4,
+    "matching": [
+      "retained actual Voice IDs and exact offsets",
+      "chord getter durations in actual original export stream",
+      "normalized note/backup/forward stream and XML body",
+      "Graph is unchanged by event binding; no reassignment or serial clock overwrite"
+    ],
+    "scope": "declared original saved-object mapping/slot/PartwiseBuilder controls, not automatic image polyphony"
+  },
+  "integration": "public image path creates recognized pitch/beam/header metadata, then binds timing/Voice from actual Graph after stack duration. Original mapper ownership/time are not rewritten. Existing serial image clock/one-Voice/compound/starting/complete admission checks remain.",
+  "targeted_unique_passed": 2,
+  "runs": {
+    "owned_mapper_stack_writer_binding_and_all_voice_checks": 1,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "additional_negative_assertions": [
+    "nonmember note refuses without changing event",
+    "missing actual onset refuses without changing event"
+  ],
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "actual polyphonic image event acceptance awaits same-image original full recognition/export and upstream geometry/mapping dependencies",
+    "one-member ordinary chords/nonmerged one-part one-staff HIGH scope; general Rational/tuplets/Merged/shared stacks/grace/lyrics remain partial",
+    "computed measure-rest stack duration required; original unresolved-stack fallback ONE remains unconnected and guarded",
+    "no global completion flags or font/skew/scan/staff/all24/32sources admission changed"
+  ],
+  "all_global_completion_flags": false
+}

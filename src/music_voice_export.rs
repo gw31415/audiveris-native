@@ -2,7 +2,7 @@
 //! PartwiseBuilder.processMeasure's Voice/BEGIN traversal on retained owners.
 //! The existing one-staff image admission remains separate from this traversal.
 use crate::{music_measures::Measure, music_voices::Voice, shared_sig::Graph};
-use serde_json::Value;
+use serde_json::{Value, json};
 use std::{collections::BTreeSet, fmt::Write};
 
 pub(crate) enum Step {
@@ -26,6 +26,88 @@ impl Step {
         }
     }
 }
+/// PartwiseBuilder reads Voice and duration from the actual chord; its slot
+/// traversal reads that chord's onset. Event geometry/pitch/notation are already
+/// recognized, so binding timing must not change mapper ownership or its clock.
+pub(crate) fn bind_event(
+    graph: &Graph,
+    voices: &[Voice],
+    measure: &Measure,
+    measure_index: usize,
+    event: &mut Value,
+) -> Result<(), String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let chord = nodes
+        .iter()
+        .find(|n| n["id"] == event["chord_id"])
+        .ok_or("musicxml_voice_live_chord_required")?;
+    let id = chord["id"]
+        .as_u64()
+        .ok_or("musicxml_voice_live_chord_required")? as usize;
+    let voice = voices
+        .iter()
+        .find(|v| v.measure == measure_index && chord["voice"] == v.id)
+        .ok_or("musicxml_voice_owned_chord_required")?;
+    let measure_rest = voice.measure_rest_chord == Some(id);
+    if (!measure_rest && !voice.chord_ids.contains(&id))
+        || chord["origin"]["system"] != measure.system
+        || chord["part_id"] != measure.part
+        || chord["measure_index"] != measure.index
+        || chord["staff_id"] != measure.staff
+        || !matches!(
+            chord["kind"].as_str(),
+            Some("HeadChordInter" | "RestChordInter")
+        )
+        || !chord["member_ids"]
+            .as_array()
+            .is_some_and(|ids| ids.contains(&event["note_id"]))
+    {
+        return Err("musicxml_voice_owned_event_required".into());
+    }
+    let onset = crate::music_time::parse_ticks(
+        chord["time_offset"]
+            .as_str()
+            .ok_or("musicxml_unknown_voice_clock_pending")?,
+    )?;
+    let duration = if measure_rest {
+        // The current owned writer requires computed stack duration. Original
+        // fallback ONE for an unresolved measure-rest stack is not admitted.
+        measure
+            .timing
+            .actual
+            .ok_or("musicxml_measure_rest_actual_duration_required")?
+    } else {
+        crate::music_time::parse_ticks(
+            chord["duration"]
+                .as_str()
+                .ok_or("musicxml_voice_chord_duration_required")?,
+        )?
+    };
+    if duration == 0 {
+        return Err("musicxml_exact_positive_division_required".into());
+    }
+    event["voice"] = json!(voice.id);
+    event["time_offset"] = json!(crate::music_time::format_ticks(onset));
+    event["offset_quarters"] = reported_units(onset, 4);
+    event["duration"] = json!(crate::music_time::format_ticks(duration));
+    event["duration_quarters"] = reported_units(duration, 4);
+    event["duration_eighths"] = reported_units(duration, 2);
+    event["measure_rest"] = json!(measure_rest);
+    event["measure_number"] = json!(measure_index + 1);
+    event["measure_index"] = json!(measure.index);
+    event["system_id"] = json!(measure.system);
+    event["staff_id"] = json!(measure.staff);
+    Ok(())
+}
+fn reported_units(ticks: u32, divisor: u32) -> Value {
+    if ticks.is_multiple_of(divisor) {
+        json!(ticks / divisor)
+    } else {
+        json!(f64::from(ticks) / f64::from(divisor))
+    }
+}
+
 pub(crate) fn sequence(
     graph: &Graph,
     voices: &[Voice],

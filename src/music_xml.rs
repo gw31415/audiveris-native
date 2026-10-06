@@ -19,13 +19,6 @@ fn quarters(ticks: u32) -> Value {
         json!(ticks as f64 / 4.)
     }
 }
-fn eighths(ticks: u32) -> Value {
-    if ticks.is_multiple_of(2) {
-        json!(ticks / 2)
-    } else {
-        json!(ticks as f64 / 2.)
-    }
-}
 // PartwiseBuilder.buildClef / areEqual: semantic identity, not header Inter id.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 struct ClefAttributes {
@@ -845,8 +838,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .find(|n| n["id"] == chord.id)
                 .ok_or("musicxml_actual_SIG_chord_required")?
                 .clone();
-            // A newly retained Voice must not be overwritten by the current
-            // single-Voice writer; general Voice export is a later dependency.
+            // Retain bounded image admission until a same-image original
+            // multi-Voice recognition/export comparison validates this path.
             if c["voice"] != voice_id {
                 return Err("musicxml_general_new_voice_export_pending".into());
             }
@@ -855,31 +848,22 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             if c["time_offset"].is_null() {
                 return Err("musicxml_unknown_voice_clock_pending".into());
             }
-            c["duration"] = if measure_rest {
-                Value::Null
-            } else {
-                json!(rational(duration))
-            };
+            let intrinsic_duration = intrinsic.map(rational);
+            if c["duration"] != json!(intrinsic_duration) {
+                return Err("musicxml_chord_intrinsic_duration_mismatch".into());
+            }
             if c["time_offset"]
                 .as_str()
                 .is_some_and(|t| t != rational(offset))
             {
                 return Err("musicxml_starting_propagated_chord_clock_mismatch".into());
             }
-            c["time_offset"] = json!(rational(offset));
             c["measure_number"] = json!(mi + 1);
             if !beams.is_empty() {
                 c["beam_ids"] = json!(beam_ids);
             }
             graph.vertex(chord.key, c, false)?;
-            crate::music_voices::assign_chord_voice(
-                &mut graph,
-                &mut m.voices,
-                &m.measures,
-                chord.id,
-                voice_index,
-            )?;
-            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"measure_rest":measure_rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
+            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
             if !beam_marks.is_empty() {
                 event["beams"] = json!(beam_marks);
             }
@@ -913,7 +897,10 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             )?;
         }
         let timed = graph.snapshot();
-        for event in events.iter().filter(|e| e["measure_number"] == mi + 1) {
+        for event in events
+            .iter()
+            .filter(|e| chords.iter().any(|c| e["chord_id"] == c.id))
+        {
             let actual = timed["inters"]
                 .as_array()
                 .unwrap()
@@ -932,6 +919,12 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             &mut m.measures[mi],
             mi,
         )?;
+        for event in events
+            .iter_mut()
+            .filter(|e| chords.iter().any(|c| e["chord_id"] == c.id))
+        {
+            crate::music_voice_export::bind_event(&graph, &m.voices, &m.measures[mi], mi, event)?;
+        }
         if !crate::music_voices::final_check(
             &graph,
             &mut m.voices,

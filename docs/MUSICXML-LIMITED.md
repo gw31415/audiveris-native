@@ -1760,3 +1760,22 @@ for the owned mapping/writer/final-check comparison. Next bind event metadata to
 actual Graph Voice/onset/duration before a same-image parallel-Voice validation.
 All remaining nonUI features are still in the ledger, without planned omissions;
 global flags remain false and full595 refers only to historical `95e191b`.
+
+### Actual chord timing and Voice event binding (2026-10-06)
+
+Image-generated pitch/header/beam metadata now receives Voice, onset and duration
+from its actual retained SIG chord after final slots/stack duration, following
+`PartwiseBuilder.processMeasure/processNote`. Event assembly no longer reassigns
+Voice or overwrites a mapper clock. Normal duration is the actual chord getter;
+measure-rest duration is the computed stack duration. Nonmember events and
+unknown clocks refuse without changing the event.
+
+The same binder now feeds the existing four original saved-object compound
+mapping/Voice writer comparisons, including a new Voice and a fractional forward.
+Run the owned comparison command above. Existing three image CLI examples are
+retained; their 36 events/previous XML bytes/XSD are checked on independent Git
+retrieval. No new automatic polyphonic image is claimed: compound/starting/
+one-member/one-Voice/serial-clock/complete-measure image guards remain until
+a same-input original full recognition/export verifies their dependencies.
+General Rational/tuplets/Merged/shared stacks and the rest of the nonUI ledger
+remain partial. Full595 is historical `95e191b`, not a new run.

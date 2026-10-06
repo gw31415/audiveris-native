@@ -1117,12 +1117,59 @@ mod tests {
                 .filter(|e| chords.iter().any(|c| e["chord_id"] == c.id))
                 .map(|e| {
                     let mut e = e.clone();
-                    let n = node(&snapshot, e["chord_id"].as_u64().unwrap() as usize).unwrap();
-                    e["voice"] = n["voice"].clone();
-                    e["time_offset"] = n["time_offset"].clone();
+                    crate::music_voice_export::bind_event(
+                        context.graph,
+                        context.voices,
+                        &context.measures[mi],
+                        mi,
+                        &mut e,
+                    )
+                    .unwrap();
+                    let original = case["chord_states"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|s| s["id"] == ordinal(e["chord_id"].as_u64().unwrap() as usize))
+                        .unwrap();
+                    assert_eq!(e["voice"], original["voice"]);
+                    assert_eq!(e["time_offset"], original["time_offset"]);
+                    assert_eq!(
+                        e["offset_quarters"].as_f64().unwrap(),
+                        crate::music_time::parse_ticks(original["time_offset"].as_str().unwrap())
+                            .unwrap() as f64
+                            / 4.
+                    );
+                    let note = export["export_stream"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|s| {
+                            s["kind"] == "chord"
+                                && s["voice"] == e["voice"]
+                                && s["step"] == e["step"]
+                                && s["octave"] == e["octave"]
+                        })
+                        .unwrap();
+                    assert_eq!(e["duration"], note["duration"]);
                     e
                 })
                 .collect::<Vec<_>>();
+            assert_eq!(context.graph.snapshot(), snapshot);
+            let mut invalid_event = events[0].clone();
+            invalid_event["note_id"] = Value::Null;
+            let before = invalid_event.clone();
+            assert_eq!(
+                crate::music_voice_export::bind_event(
+                    context.graph,
+                    context.voices,
+                    &context.measures[mi],
+                    mi,
+                    &mut invalid_event
+                )
+                .unwrap_err(),
+                "musicxml_voice_owned_event_required"
+            );
+            assert_eq!(invalid_event, before);
             let sequences = vec![
                 crate::music_voice_export::sequence(
                     context.graph,
@@ -1200,6 +1247,22 @@ mod tests {
                     expected.as_object_mut().unwrap().remove("name");
                     expected.as_object_mut().unwrap().remove("mutation");
                     assert_eq!(actual, expected, "{}", observation["name"]);
+                    if observation["name"] == "missing-nonlast-clock" {
+                        let mut event = events[0].clone();
+                        let before = event.clone();
+                        assert_eq!(
+                            crate::music_voice_export::bind_event(
+                                context.graph,
+                                context.voices,
+                                &context.measures[mi],
+                                mi,
+                                &mut event
+                            )
+                            .unwrap_err(),
+                            "musicxml_unknown_voice_clock_pending"
+                        );
+                        assert_eq!(event, before);
+                    }
                 }
             }
         }
