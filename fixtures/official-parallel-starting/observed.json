@@ -1,0 +1,64 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "actual saved four quarter chords, declared first compound containing two starting chords; original processStartingChords; not new image polyphony or valid export of duplicate old ownership",
+  "controls" : [ {
+    "name" : "parallel-unowned-start",
+    "input_starting" : [ 0, 1 ],
+    "starting_order" : [ 1, 0 ],
+    "voices" : [ {
+      "id" : 1,
+      "chord_ids" : [ 1 ]
+    }, {
+      "id" : 2,
+      "chord_ids" : [ 0 ]
+    } ],
+    "chord_states" : [ {
+      "id" : 0,
+      "voice" : 2,
+      "time_offset" : "0"
+    }, {
+      "id" : 1,
+      "voice" : 1,
+      "time_offset" : "0"
+    }, {
+      "id" : 2,
+      "voice" : null,
+      "time_offset" : null
+    }, {
+      "id" : 3,
+      "voice" : null,
+      "time_offset" : null
+    } ]
+  }, {
+    "name" : "already-owned-start",
+    "input_starting" : [ 0, 1 ],
+    "starting_order" : [ 1, 0 ],
+    "voices" : [ {
+      "id" : 1,
+      "chord_ids" : [ 0 ]
+    }, {
+      "id" : 2,
+      "chord_ids" : [ 1 ]
+    }, {
+      "id" : 3,
+      "chord_ids" : [ 0 ]
+    } ],
+    "chord_states" : [ {
+      "id" : 0,
+      "voice" : 3,
+      "time_offset" : "0"
+    }, {
+      "id" : 1,
+      "voice" : 2,
+      "time_offset" : "0"
+    }, {
+      "id" : 2,
+      "voice" : null,
+      "time_offset" : null
+    }, {
+      "id" : 3,
+      "voice" : null,
+      "time_offset" : null
+    } ]
+  } ]
+}

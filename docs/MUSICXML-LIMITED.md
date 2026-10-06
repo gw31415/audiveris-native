@@ -1719,3 +1719,26 @@ compound image admission and serial event guards remain until those dependencies
 and a same-image original comparison agree. Exact Rational/tuplets, Merged/shared
 stacks, lyrics and remaining nonUI features stay partial. All flags stay false;
 full595 remains historical `95e191b`.
+
+### Selected starting-chord constructor loop (2026-10-06)
+
+The image CLI now calls the owned original `processStartingChords` constructor
+loop after selecting measure rests/first compound and applying its one-start
+admission. The loop sorts actual bounds by center ordinate, creates a retained
+Voice for every selected seed and calls `setAndPushTime(0)`. Original starting
+construction is unconditional; it is different from later rookie purging.
+Two original actual-object controls compare parallel starts and an already-owned
+start. The latter retains an old member record in the original raw state; native
+keeps that state for parity but refuses its inconsistent export ownership.
+Rookie new-Voice creation still refuses an already assigned seed.
+
+Run the new controlled comparison with
+`cargo test --offline --locked --lib starting_voice_constructors_preserve_original_parallel_order_and_reassignment`
+(or omit `--offline` before dependencies are available). Existing image commands
+and the three 36-event outputs remain the public CLI examples. These raw controls
+do not add a polyphonic page or validate multiple starts with beam/tie propagation.
+Next connect event assembly to actual mapped Voice/onset/duration and all-Voice
+duration checks, then a same-image original parallel-Voice result before opening
+image admission. General Rational/tuplets/Merged/shared stacks/lyrics/full cleaner
+and the remaining nonUI ledger stay partial. All flags remain false; full595
+still refers to historical `95e191b`.

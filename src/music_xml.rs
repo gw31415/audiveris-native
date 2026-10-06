@@ -534,24 +534,19 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .iter()
             .find(|c| c.id == starting[0])
             .ok_or("musicxml_starting_owned_chord_required")?;
-        let voice = crate::music_voices::single(mi, &measure, &[seed], &m.voices)?;
-        let voice_id = voice.id;
-        let voice_index = m.voices.len();
-        m.voices.push(voice);
-        crate::music_voices::assign_chord_voice(
+        crate::music_voices::process_starting_chords(
             &mut graph,
             &mut m.voices,
             &m.measures,
-            seed.id,
-            voice_index,
+            mi,
+            &[seed],
         )?;
-        crate::music_chord_time::set_and_push(
-            &mut graph,
-            &m.voices,
-            &m.measures,
-            seed.id,
-            Some(0),
-        )?;
+        let voice_index = m
+            .voices
+            .iter()
+            .position(|v| v.measure == mi)
+            .ok_or("musicxml_starting_actual_voice_required")?;
+        let voice_id = m.voices[voice_index].id;
         let start_snapshot = graph.snapshot();
         preliminary_slots[mi]["starting_chord_ids"] = json!(starting);
         preliminary_slots[mi]["starting_state"] = json!({"voices":[{"id":voice_id,"is_measure_rest":m.voices[voice_index].measure_rest_chord.is_some(),"chord_ids":m.voices[voice_index].chord_ids,"measure_rest_chord_id":m.voices[voice_index].measure_rest_chord}],"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});

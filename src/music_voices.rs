@@ -133,7 +133,19 @@ pub(crate) fn create_voice(
     if !node["voice"].is_null() {
         return Err("music_voice_unassigned_seed_required".into());
     }
-    let voice = construct(seed.measure, &measures[seed.measure], &[seed], voices)?;
+    construct_owned_voice(graph, voices, measures, seed)
+}
+fn construct_owned_voice(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measures: &[Measure],
+    seed: &Chord,
+) -> Result<usize, String> {
+    let voice = if voices.iter().any(|v| v.measure == seed.measure) {
+        construct(seed.measure, &measures[seed.measure], &[seed], voices)?
+    } else {
+        single(seed.measure, &measures[seed.measure], &[seed], voices)?
+    };
     let index = voices.len();
     let mut retained = voices.clone();
     let mut staged = graph.clone();
@@ -142,6 +154,52 @@ pub(crate) fn create_voice(
     *graph = staged;
     *voices = retained;
     Ok(index)
+}
+
+/// Original processStartingChords constructs every selected Voice, even when
+/// an earlier constructor already assigned the seed through a relation. Rookie
+/// purging and its unassigned-seed requirement are a different processing phase.
+pub(crate) fn process_starting_chords(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measures: &[Measure],
+    measure_index: usize,
+    selected: &[&Chord],
+) -> Result<Vec<usize>, String> {
+    let measure = measures
+        .get(measure_index)
+        .ok_or("music_voice_measure_required")?;
+    let snapshot = graph.snapshot();
+    let mut ordered = Vec::new();
+    for &chord in selected {
+        let n = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == chord.id)
+            .ok_or("music_voice_live_seed_required")?;
+        if chord.measure != measure_index
+            || graph.id(chord.key) != Some(chord.id)
+            || n["origin"]["system"] != measure.system
+            || n["part_id"] != measure.part
+            || n["measure_index"] != measure.index
+        {
+            return Err("music_voice_owned_starting_chord_required".into());
+        }
+        let b: [i64; 4] = serde_json::from_value(n["bounds"].clone())
+            .map_err(|_| "music_voice_starting_bounds_required")?;
+        ordered.push((chord, b[1] + b[3] / 2));
+    }
+    ordered.sort_by_key(|(_, y)| *y);
+    let mut staged = graph.clone();
+    let mut retained = voices.clone();
+    for &(chord, _) in &ordered {
+        construct_owned_voice(&mut staged, &mut retained, measures, chord)?;
+        crate::music_chord_time::set_and_push(&mut staged, &retained, measures, chord.id, Some(0))?;
+    }
+    *graph = staged;
+    *voices = retained;
+    Ok(ordered.iter().map(|(chord, _)| chord.id).collect())
 }
 
 /// Measure.removeVoiceChord -> Voice.removeChord. Remove an empty Voice only

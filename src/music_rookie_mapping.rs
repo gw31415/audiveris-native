@@ -793,6 +793,104 @@ impl Context<'_> {
 mod tests {
     use super::*;
     #[test]
+    fn starting_voice_constructors_preserve_original_parallel_order_and_reassignment() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-parallel-starting/observed.json"
+        ))
+        .unwrap();
+        let mut owner = image_owner();
+        let mi = 1;
+        for case in oracle["controls"].as_array().unwrap() {
+            reset_owner(&mut owner);
+            let mut chords = owner
+                .chords
+                .iter()
+                .filter(|c| c.measure == mi)
+                .collect::<Vec<_>>();
+            chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+            let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
+            if case["name"] == "already-owned-start" {
+                crate::music_voices::create_voice(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &owner.measures,
+                    chords[0],
+                )
+                .unwrap();
+                crate::music_chord_time::set_and_push(
+                    &mut owner.owner.graph,
+                    &owner.voices,
+                    &owner.measures,
+                    chords[0].id,
+                    Some(4),
+                )
+                .unwrap();
+                assert_eq!(
+                    crate::music_voices::create_voice(
+                        &mut owner.owner.graph,
+                        &mut owner.voices,
+                        &owner.measures,
+                        chords[0]
+                    )
+                    .unwrap_err(),
+                    "music_voice_unassigned_seed_required"
+                );
+            }
+            let selected = case["input_starting"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|i| chords[i.as_u64().unwrap() as usize])
+                .collect::<Vec<_>>();
+            let starting = crate::music_voices::process_starting_chords(
+                &mut owner.owner.graph,
+                &mut owner.voices,
+                &owner.measures,
+                mi,
+                &selected,
+            )
+            .unwrap();
+            assert_eq!(
+                json!(starting.iter().map(|&id| ordinal(id)).collect::<Vec<_>>()),
+                case["starting_order"]
+            );
+            let snapshot = owner.owner.graph.snapshot();
+            let states = chords
+                .iter()
+                .enumerate()
+                .map(|(i, c)| {
+                    let n = node(&snapshot, c.id).unwrap();
+                    json!({"id":i,"voice":n["voice"],"time_offset":n["time_offset"]})
+                })
+                .collect::<Vec<_>>();
+            let voices = owner.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"chord_ids":v.chord_ids.iter().map(|&id| ordinal(id)).collect::<Vec<_>>()})).collect::<Vec<_>>();
+            assert_eq!(json!(states), case["chord_states"], "{}", case["name"]);
+            assert_eq!(json!(voices), case["voices"], "{}", case["name"]);
+            if case["name"] == "already-owned-start" {
+                crate::music_voices::generate_slots(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &mut owner.measures[mi],
+                    mi,
+                )
+                .unwrap();
+                // Original raw constructor state retains old membership; it is
+                // not evidence for a valid automatically recognized score.
+                assert_eq!(
+                    crate::music_voice_export::sequence(
+                        &owner.owner.graph,
+                        &owner.voices,
+                        &owner.measures[mi],
+                        mi
+                    )
+                    .err()
+                    .unwrap(),
+                    "musicxml_voice_owned_chord_required"
+                );
+            }
+        }
+    }
+    #[test]
     fn multiple_rookies_retain_original_assignment_retry_and_voice_ownership() {
         let oracle: Value = serde_json::from_str(include_str!(
             "../fixtures/official-compound-mapping/observed.json"
