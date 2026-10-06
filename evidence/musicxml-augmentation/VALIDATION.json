@@ -1,0 +1,43 @@
+{
+  "baseline_source": "04c347a1a3f3f4d81cc708d8139d7bc625ceebd4",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_full_image": "one ordinary two-measure dotted-quarter/eighth input,8 events; musical content including dot counts, owned times, native/original MusicXML4 XSD",
+  "separate_original_controls": "read-only recognized dot owners/duration/slot/Voice getters; exact relation regrading from original centers; declared CAESURA classifier score with original factory/support contextualization (not full image recognition)",
+  "implementation": "actual classified glyph registry -> DotFactory concrete-line check, abscissa-ordered late note head lookup and typed AugmentationDot/AugmentationRelation; one-way dot support weak purge; AbstractChord countDots/rint; dotted intrinsic duration before slots/Voice; actual dot bounds in ChordsRetriever; per-note Partwise dot export. Real CAESURA factory, preceding-chord support and weak purge permits discarded alternatives only; surviving pause stays refused. No image coordinates/filenames in production selection.",
+  "pending": [
+    "double-dot lateChecks",
+    "shared/mirrored dot heads",
+    "positive rest/pause/repeat/staccato and supported cross-kind overlap",
+    "finer-than-sixteenth rational rhythms",
+    "special heads/shared stacks/tuplets/lyrics/slur/tie/full cleaner/epilog",
+    "broader skew/font/scan/staff/page parity"
+  ],
+  "tests_status": "four unique targets passed; new augmentation target repeated after equivalent rfind cleanup",
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "completion_flags": false,
+  "original_dependencies": [
+    "DotFactory.instantDotChecks/checkDistanceToConcreteLine/lateNoteAugmentationCheck",
+    "AugmentationDotInter.lookupHeadLink/sharedHeadLinks ordinary unshared branch",
+    "AugmentationRelation gap/support coefficients",
+    "AbstractNoteInter.getFirstAugmentationDot/getDotCount",
+    "AbstractChordInter.countDots/getDurationSansTuplet/getBoundsWithDots",
+    "ChordsRetriever.compare proximity with actual boundsWithDots",
+    "AbstractPauseInter.createValidAdded/lookupLink, ChordPauseRelation support",
+    "PartwiseBuilder.processNote dots from actual chord"
+  ],
+  "limits_on_grade_comparison": "original saved grades have three-decimal projection; actual source geometry regrading is exact, declared pause contextualization tolerates the retained intrinsic-grade projection. Full glyph/SIG grading parity unclaimed.",
+  "targeted_tests": [
+    "actual_augmentation_owns_head_duration_voice_and_xml_dot_without_inventing_missing_time (positive8 music events and erased-dot refusal)",
+    "actual_flag_connections_supply_eighth_duration_onsets_and_xml_divisions (FLAG1 success and erased-flag refusal)",
+    "music_rookie_mapping::tests::multiple_rookies_retain_original_assignment_retry_and_voice_ownership (prior declared actual owner/clock export controls)",
+    "original_352_heads_513_exclusions_staff_note_order_and_epilog"
+  ],
+  "targeted_unique_passed": 4,
+  "new_test_function_count": 1,
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed",
+  "full_workspace": "not rerun;595 remains historical95e191b"
+}

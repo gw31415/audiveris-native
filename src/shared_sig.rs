@@ -1369,6 +1369,19 @@ impl Graph {
             ) {
                 continue;
             }
+            // Augmentation supports the dot only (target coefficient zero).
+            // Its separate contextualization cannot change the note/Stem grades.
+            if e.key.kind == "AugmentationRelation" && e.data["target_ratio"] == 1.0 {
+                if self.vertices[e.key.source - 1].data["kind"] != "AugmentationDotInter"
+                    || !matches!(
+                        self.vertices[e.key.target - 1].data["kind"].as_str(),
+                        Some("HeadInter" | "RestInter")
+                    )
+                {
+                    return Err("music_dot_typed_support_required".into());
+                }
+                continue;
+            }
             let source = ids.contains(&e.key.source);
             let target = ids.contains(&e.key.target);
             if source != target {

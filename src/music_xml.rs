@@ -83,11 +83,12 @@ struct ChordDuration {
     intrinsic: Option<u32>,
     note_type: &'static str,
     beams_or_flags: usize,
+    dots: usize,
 }
 
 // Resolve the admitted original AbstractChord.getDuration before starting
 // Voice/group time propagation. All existing shape/flag/beam guards remain;
-// general dotted/tuplet/special-head duration is a separate dependency.
+// general tuplet/special-head duration is a separate dependency.
 fn resolve_durations(
     graph: &mut crate::shared_sig::Graph,
     chords: &[&crate::music_measures::Chord],
@@ -135,6 +136,7 @@ fn resolve_durations(
                 intrinsic: None,
                 note_type: "whole",
                 beams_or_flags: 0,
+                dots: 0,
             }
         } else {
             let (base, mut note_type) = note_duration(shape)?;
@@ -179,10 +181,22 @@ fn resolve_durations(
                     note_type = if count == 1 { "eighth" } else { "16th" };
                 }
             }
+            let live_chord = nodes
+                .iter()
+                .find(|n| n["id"] == chord.id)
+                .ok_or("musicxml_duration_live_chord_required")?;
+            let dots = live_chord["dots_number"].as_u64().unwrap_or(0) as usize;
+            match dots {
+                0 => {}
+                1 if duration.is_multiple_of(2) => duration = duration / 2 * 3,
+                1 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
+                _ => return Err("musicxml_double_dotted_duration_pending".into()),
+            }
             ChordDuration {
                 intrinsic: Some(duration),
                 note_type,
                 beams_or_flags: count,
+                dots,
             }
         };
         let mut node = nodes
@@ -260,42 +274,28 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                         .min_by(|a, b| a.0.total_cmp(&b.0))
                         .ok_or("musicxml_dot_staff_required")?
                         .1;
-                    let pitch =
-                        2. * (y - music_symbols::flat_staff_y(s, 2)?) / m.owner.interline as f64;
-                    let nearest = 2. * (pitch / 2.).round_ties_even();
-                    // DotFactory.checkDistanceToConcreteLine plus
-                    // Staff.getConcreteLedgerNearby. Use concrete owned ledgers,
-                    // not hypothetical lines outside the ordinary five-line staff.
-                    let distance = if pitch.abs() <= 5. {
-                        (pitch - nearest).abs() / 2.
-                    } else {
-                        let index = (nearest as i64 - nearest.signum() as i64 * 4) / 2;
-                        let x = b[0] as f64 + b[2] as f64 / 2.;
-                        let il = m.owner.interline as f64;
-                        m.owner.graph.snapshot()["inters"]
-                            .as_array()
-                            .unwrap()
-                            .iter()
-                            .filter(|n| {
-                                n["kind"] == "LedgerInter"
-                                    && n["staff_id"] == s["id"]
-                                    && n["index"] == index
-                            })
-                            .filter_map(|n| {
-                                let r: [f64; 4] =
-                                    serde_json::from_value(n["bounds"].clone()).ok()?;
-                                (r[0] < x + il
-                                    && x - il < r[0] + r[2]
-                                    && r[1] < y + il
-                                    && y - il < r[1] + r[3])
-                                    .then_some((y - (r[1] + r[3] / 2.)).abs() / il)
-                            })
-                            .min_by(f64::total_cmp)
-                            .unwrap_or(f64::INFINITY)
-                    };
-                    // A possible real dot still refuses until actual late checks.
-                    if distance >= 0.3 {
+                    let snapshot = m.owner.graph.snapshot();
+                    if crate::music_dots::distant_from_line(b, s, m.owner.interline, &snapshot)?
+                        && !snapshot["inters"].as_array().unwrap().iter().any(|n| {
+                            n["kind"] == "AugmentationDotInter"
+                                && n["glyph_id"] == t["glyph_id"]
+                                && snapshot["relations"].as_array().unwrap().iter().any(|r| {
+                                    r["kind"] == "AugmentationRelation" && r["source"] == n["id"]
+                                })
+                        })
+                    {
                         return Err("musicxml_possible_dot_lateChecks_pending".into());
+                    }
+                }
+                "CAESURA" | "BREATH_MARK" => {
+                    // The original factory creates a real pause and LINKS
+                    // contextualizes/purges it; a surviving pause needs notation.
+                    let removed=m.owner.prepared.report["limited_links"]["pause_weak_purge"]["removed_weak_pauses"].as_array().ok_or("musicxml_pause_purge_required")?;
+                    if !removed
+                        .iter()
+                        .any(|n| n["glyph_id"] == t["glyph_id"] && n["shape"] == shape)
+                    {
+                        return Err("musicxml_positive_pause_notation_pending".into());
                     }
                 }
                 s if music_symbols::time(s).is_some()
@@ -712,6 +712,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             let ChordDuration {
                 intrinsic,
                 note_type,
+                dots,
                 ..
             } = durations[&chord.id];
             let duration = intrinsic.unwrap_or(expected_ticks);
@@ -949,7 +950,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 data["measure_number"] = json!(mi + 1);
                 data["effective_clef_id"] = json!(cid);
                 graph.vertex(key, data, false)?;
-                let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
+                let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":dots,"effective_clef_id":cid});
                 if !beam_marks.is_empty() {
                     event["beams"] = json!(beam_marks);
                 }

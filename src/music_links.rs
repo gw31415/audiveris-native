@@ -60,11 +60,13 @@ pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, Stri
 pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
     let flags = crate::music_flags::contextualize(&mut graph)?;
+    let pauses = crate::music_pauses::contextualize_and_purge(&mut graph, &m.chords)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
     let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
     let containers =
         crate::music_containers::refresh(&graph, &m.measures, &mut m.chords, &mut m.voices)?;
     let empty_chords = containers.removed_chords;
+    let dot_counting = crate::music_dots::contextualize_and_count(&mut graph, &m.chords)?;
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
     m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"unsupported-support-free Rest/TimeWhole physical overlaps, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
@@ -73,6 +75,8 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             json!(removed_beam_head_supports);
     }
     m.owner.prepared.report["limited_links"]["containers"] = containers.projection;
+    m.owner.prepared.report["limited_links"]["dot_counting"] = dot_counting;
+    m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
     Ok(m)
 }
 

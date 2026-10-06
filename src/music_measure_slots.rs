@@ -621,7 +621,7 @@ pub(crate) fn build_compounds(
     Ok(result)
 }
 /// Prepare getters from live typed SIG, not serialized oracle facts. Current
-/// admission excludes genuine augmentation dots and only has ordinary chords.
+/// includes actual augmentation-dot bounds in the original proximity test.
 pub(crate) fn from_owned(
     graph: &Graph,
     measure: &Measure,
@@ -694,7 +694,7 @@ pub(crate) fn from_owned(
         facts.push(Fact {
             id: chord.id,
             bounds,
-            dot_bounds: bounds,
+            dot_bounds: crate::music_dots::bounds_with_dots(&snapshot, chord, bounds)?,
             x: (bounds[0] + bounds[2] / 2 - measure.left) as f64,
             head: geometry
                 .head_location

@@ -93,6 +93,11 @@ pub(crate) fn bind_event(
     }
     event["voice"] = json!(voice.id);
     event["chord"] = json!(index != 0);
+    event["dots"] = json!(if measure_rest {
+        0
+    } else {
+        chord["dots_number"].as_u64().unwrap_or(0)
+    });
     event["time_offset"] = json!(crate::music_time::format_ticks(onset));
     event["offset_quarters"] = reported_units(onset, 4);
     event["duration"] = json!(crate::music_time::format_ticks(duration));
@@ -294,6 +299,10 @@ pub(crate) fn write_measure(
                     if chord["voice"] != voice || e["voice"] != voice || !emitted.insert(note_id) {
                         return Err("musicxml_voice_unique_owned_event_required".into());
                     }
+                    let dots = chord["dots_number"].as_u64().unwrap_or(0);
+                    if dots > 2 || e["dots"] != dots {
+                        return Err("musicxml_voice_owned_dot_count_required".into());
+                    }
                     xml.push_str("<note>");
                     if index != 0 {
                         xml.push_str("<chord/>");
@@ -320,11 +329,12 @@ pub(crate) fn write_measure(
                     }
                     writeln!(
                         xml,
-                        "<duration>{duration}</duration><voice>{voice}</voice>{}{}{}</note>",
+                        "<duration>{duration}</duration><voice>{voice}</voice>{}{}{}{}</note>",
                         e["type"]
                             .as_str()
                             .map(|t| format!("<type>{t}</type>"))
                             .unwrap_or_default(),
+                        "<dot/>".repeat(dots as usize),
                         e["stem_direction"]
                             .as_str()
                             .map(|d| format!("<stem>{d}</stem>"))

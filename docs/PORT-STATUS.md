@@ -890,3 +890,15 @@ original full-image15-note comparison is distinct from a read-only actual SIG
 lookup/direction control. Higher values, small/percussion/mixed head branches
 and general nonUI parity remain partial.
 [Validation](../evidence/musicxml-chord-flag2/VALIDATION.json).
+
+## True first-dot continuation (2026-10-06)
+
+`DotFactory` late note lookup, owned augmentation, chord dot counting and
+dotted intrinsic duration now feed ordinary native Voice/Partwise output.
+One original-successful eight-event image matches musical contents including
+dots; saved getters and declared competing CAESURA weak-purge control are
+separate evidence. Double dots and shared/rest/repeat/staccato dot branches,
+positive pause notation, tuplets/shared stacks/special heads/lyrics/slur/tie
+and full cleaner/epilog remain partial, not omitted.
+[CLI example](MUSICXML-LIMITED.md#true-first-augmentation-dot-2026-10-06),
+[validation](../evidence/musicxml-augmentation/VALIDATION.json).

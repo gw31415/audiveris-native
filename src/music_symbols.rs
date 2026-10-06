@@ -556,6 +556,21 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let b = [g.left as i64, g.top as i64, g.width as i64, g.height as i64];
             let rest = shape.ends_with("_REST");
             let meter = time(shape);
+            if matches!(shape, "CAESURA" | "BREATH_MARK") {
+                if let Some((chord, relation)) =
+                    crate::music_pauses::lookup(b, sid, staff, il, &m.measures, &m.chords)?
+                {
+                    let key = Key {
+                        system: sid,
+                        phase: Phase::Symbol,
+                        local: gid * 2 + created.len(),
+                    };
+                    graph.vertex(key,json!({"kind":if shape=="CAESURA"{"CaesuraInter"}else{"BreathMarkInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"abnormal":false}),false)?;
+                    graph.relations(sid, Phase::Symbol, vec![(chord, key, relation)])?;
+                    created.push(key);
+                }
+                continue;
+            }
             if let Some(flag_value) = crate::music_flags::value(shape) {
                 let max = m.owner.upstream_report["stem_seeds"]["stem_scaling"]["stem_scale"]["max"]
                     .as_u64()
@@ -674,8 +689,18 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         .commit_symbol_extension(registry)?;
     m.owner.graph = graph;
     m.chords.extend(new_chords);
+    let dot_late_checks = crate::music_dots::late_checks(
+        &mut m.owner.graph,
+        &m.owner.prepared.registry,
+        &trials,
+        staffs,
+        &m.measures,
+        &m.chords,
+        il,
+    )?;
     let previous = std::mem::take(&mut m.owner.prepared.report);
     m.owner.prepared.report = json!({"schema":"audiveris-native.music-symbols-isolated.v1","measures_head_chords":previous,"symbol_filter_PGM_SHA256":format!("{:x}",Sha256::digest(im.pgm())),"symbol_glyphs":glyphs.iter().map(beam_dispatch::glyph_json).collect::<Vec<_>>(),"classifier_trials":trials,"symbol_cluster_scope":"isolated-and-two-parts","symbols":accepted,"shared_sig":m.owner.graph.snapshot(),"scope":"strong heads/stems/ledgers, flat uniform staff and axis-aligned barline erasure; isolated/two-part classification with bounded unsupported-support-free Rest/TimeWhole SIG exclusions; actual Graph/registry/cache retained","pending":["clusters above two parts/other physical symbols and supported/frozen conflict reduction/fine small-chord glyphs/weak optionals","factory.lateChecks/symbol epilog/flags/dots/accidentals/LINKS/rhythm/export","general stroked areas/full symbol reduction/cleaner/epilog","nonzero skew/real scans/special staff/full24shapes/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report["dot_late_checks"] = dot_late_checks;
     Ok(m)
 }
 

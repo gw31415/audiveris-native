@@ -2016,3 +2016,26 @@ here uses upward FLAG2; other multi-head flag combinations/positive downward
 FLAG2 images, higher flags, mixed flag+beam and mixed mirror/special members
 remain unverified or guarded. Other original nonUI features stay in the ledger.
 Global completion flags remain false.
+
+## True first augmentation dot (2026-10-06)
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-augmentation/augmentation.png \
+  /tmp/augmentation.musicxml /tmp/augmentation.json
+```
+
+The first measure contains an actually recognized dotted B4 quarter (3/8),
+a flagged D5 eighth and two quarters; the second contains four quarters.
+The eight events match the unmodified original full-image MusicXML. The dot
+retains its registered glyph and actual head relation; chord duration is
+resolved before Voice clocks. A same-glyph CAESURA alternative is registered,
+contextualized and purged by the original weak threshold. A surviving pause
+still refuses. Separate saved original owner/getter and declared pause
+controls are distinguished from full-image recognition.
+
+Only ordinary unshared first-dot augmentation joins this checkpoint. Double
+dots, shared/mirrored dot selection, positive rest/pause/repeat/staccato,
+unsupported supported conflicts and durations finer than sixteenths retain
+explicit guards. All other pending original nonUI features remain in the
+ledger. Global completion flags remain false.
