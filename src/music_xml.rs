@@ -932,11 +932,15 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             &mut m.measures[mi],
             mi,
         )?;
-        crate::music_voices::check_duration(
+        if !crate::music_voices::final_check(
             &graph,
-            &mut m.voices[voice_index],
+            &mut m.voices,
             &mut m.measures[mi],
-        )?;
+            &m.chords,
+            mi,
+        )? {
+            return Err("musicxml_original_measure_final_check_failed".into());
+        }
         let voice_end = crate::music_voices::last_end_ticks(&graph, &m.voices[voice_index])?;
         if m.measures[mi].timing.actual != Some(offset) {
             return Err("musicxml_owned_stack_timing_mismatch".into());

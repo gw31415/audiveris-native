@@ -498,6 +498,46 @@ pub(crate) fn read_stack_actual_duration(
     Ok(())
 }
 
+/// MeasureRhythm.finalCheck -> Measure.checkDuration on the actual measure owner.
+/// A missing nonlast clock still permits all Voice duration updates. Unknown
+/// expected duration skips both the duration loop and its abnormal-state gate.
+pub(crate) fn final_check(
+    graph: &crate::shared_sig::Graph,
+    voices: &mut [Voice],
+    measure: &mut Measure,
+    chords: &[Chord],
+    measure_index: usize,
+) -> Result<bool, String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let mut ok = true;
+    for chord in chords.iter().filter(|c| c.measure == measure_index) {
+        let actual = nodes
+            .iter()
+            .find(|n| n["id"] == chord.id)
+            .ok_or("music_voice_final_live_chord_required")?;
+        match actual["kind"].as_str() {
+            Some("SmallChordInter") => continue,
+            Some("HeadChordInter" | "RestChordInter") => {}
+            _ => return Err("music_voice_ordinary_chord_required".into()),
+        }
+        ok &= !actual["voice"].is_null() && !actual["time_offset"].is_null();
+    }
+    if measure.timing.expected.is_some() {
+        let mut first_error = None;
+        for voice in voices.iter_mut().filter(|v| v.measure == measure_index) {
+            if let Err(error) = check_duration(graph, voice, measure) {
+                first_error.get_or_insert(error);
+            }
+        }
+        if let Some(error) = first_error {
+            return Err(error);
+        }
+        ok &= !measure.timing.abnormal;
+    }
+    Ok(ok)
+}
+
 /// Original Voice.checkDuration for normal voices in the existing exact grid.
 /// Underflow sets termination only. Excess persists and updates stack maximum;
 /// absent timing marks abnormal without erasing previous termination/excess.

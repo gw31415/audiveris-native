@@ -1742,3 +1742,21 @@ duration checks, then a same-image original parallel-Voice result before opening
 image admission. General Rational/tuplets/Merged/shared stacks/lyrics/full cleaner
 and the remaining nonUI ledger stay partial. All flags remain false; full595
 still refers to historical `95e191b`.
+
+### All-Voice measure final check (2026-10-06)
+
+The image CLI now runs original `MeasureRhythm.finalCheck` after final stack
+slots, checking actual standard chord Voice/time and calling `checkDuration`
+for every retained Voice when expected duration is known. Five sequential
+original saved-object observations compare both terminations, later-only excess,
+persistent excess, a missing nonlast clock and unknown expected duration.
+Underflow alone is accepted by this original phase; the current complete-measure
+image guard remains separately enforced. These controls do not add an automatic
+polyphonic image. The existing three CLI examples/36 events remain the image
+comparison scope and retain their XML bytes.
+
+Run `cargo test --offline --locked --lib multiple_rookies_retain_original_assignment_retry_and_voice_ownership`
+for the owned mapping/writer/final-check comparison. Next bind event metadata to
+actual Graph Voice/onset/duration before a same-image parallel-Voice validation.
+All remaining nonUI features are still in the ledger, without planned omissions;
+global flags remain false and full595 refers only to historical `95e191b`.

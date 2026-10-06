@@ -1160,6 +1160,48 @@ mod tests {
                 }
             }).collect::<String>();
             assert_eq!(xml, expected, "{}", case["name"]);
+            if case["name"] == "separate-member-times" {
+                let final_oracle: Value = serde_json::from_str(include_str!(
+                    "../fixtures/official-measure-final-check/observed.json"
+                ))
+                .unwrap();
+                assert_eq!(final_oracle["mapping"], *case);
+                for observation in final_oracle["observations"].as_array().unwrap() {
+                    let mutation = &observation["mutation"];
+                    if let Some(id) = mutation["chord"].as_u64() {
+                        let chord = chords[id as usize];
+                        let snapshot = context.graph.snapshot();
+                        let mut actual = node(&snapshot, chord.id).unwrap().clone();
+                        actual["time_offset"] = mutation["time"].clone();
+                        context.graph.vertex(chord.key, actual, false).unwrap();
+                    }
+                    if let Some(expected) = mutation.get("expected") {
+                        context.measures[mi].timing.expected = expected
+                            .as_str()
+                            .map(crate::music_time::parse_ticks)
+                            .transpose()
+                            .unwrap();
+                    }
+                    if let Some(abnormal) = mutation["abnormal"].as_bool() {
+                        context.measures[mi].timing.abnormal = abnormal;
+                    }
+                    let ok = crate::music_voices::final_check(
+                        context.graph,
+                        context.voices,
+                        &mut context.measures[mi],
+                        &owner.chords,
+                        mi,
+                    )
+                    .unwrap();
+                    let voices = context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks)})).collect::<Vec<_>>();
+                    let timing = &context.measures[mi].timing;
+                    let actual = json!({"ok":ok,"voices":voices,"expected":timing.expected.map(crate::music_time::format_ticks),"abnormal":timing.abnormal,"stack_excess":timing.excess.map(crate::music_time::format_ticks)});
+                    let mut expected = observation.clone();
+                    expected.as_object_mut().unwrap().remove("name");
+                    expected.as_object_mut().unwrap().remove("mutation");
+                    assert_eq!(actual, expected, "{}", observation["name"]);
+                }
+            }
         }
     }
     fn image_owner() -> crate::music_measures::OwnedMusic {
