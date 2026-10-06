@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original AdapterForFoundations check order on the actual image owner.
-//! Ordinary chord prolog/late is connected; general overlap/full SIG are pending.
+//! Ordinary overlap/chord prolog/late is connected; full SIG contracts are pending.
 use crate::{stem_head_foundation_plan as plan, stem_image_owned::OwnedItems};
 use serde_json::{Value, json};
 
@@ -31,6 +31,8 @@ pub(crate) fn continue_reduction(mut owned: OwnedItems) -> Result<OwnedItems, St
         return Err("actual_weak_purged_image_owner_required".into());
     }
     let weak_purge = std::mem::take(&mut owned.prepared.report);
+    // Original detectOverlaps precedes contextualization and adapter prolog.
+    let overlap = crate::stem_foundation_overlap::discover(&mut owned)?;
     owned.graph.contextualize_head_stems()?;
     // Original adapter.prolog happens before the epoch's first weak purge.
     let chord_prolog = crate::stem_chord_consistency::analyze(&mut owned.graph)?;
@@ -172,9 +174,10 @@ pub(crate) fn continue_reduction(mut owned: OwnedItems) -> Result<OwnedItems, St
         "corner_count":weak_purge["corner_count"],"weak_purge":weak_purge,
         "shared_sig":owned.graph.snapshot(),"removed_cached_stems":removed_cached_stems,
         "orphan_ledger_consistency":ledger_checks,
-        "ordered_foundation_consistency":{"epochs":epochs,"removed_beam_ids":removed_beams,"chord_prolog":chord_prolog,
+        "ordered_foundation_consistency":{"epochs":epochs,"removed_beam_ids":removed_beams,"chord_prolog":chord_prolog,"overlap_discovery":overlap,
             "check_order_and_per_check_purge_connected":true,
             "original_general_overlap_discovery_connected":false,
+            "ordinary_overlap_discovery_connected":true,
             "ordinary_analyzeChords_prolog_late_connected":true,
             "scope":"original six AdapterForFoundations checks/contextualizeAndPurge and post-consistency exclusion/epoch order, retained ordinary head/beam/ledger support subset; full reduceFoundations pending"},
         "actual_live_Graph_and_cache_updated":true,
@@ -287,10 +290,11 @@ mod tests {
             .graph
             .vertex(hk, oracle["head"].clone(), false)
             .unwrap();
-        let bid = owned
-            .graph
-            .vertex(bk, oracle["hook"].clone(), false)
-            .unwrap();
+        // The original cascade probe constructs this glyphless hook at height
+        // 6. Its historical snapshot omitted height, which overlap now needs.
+        let mut hook = oracle["hook"].clone();
+        hook["height"] = json!(6.);
+        let bid = owned.graph.vertex(bk, hook, false).unwrap();
         let mut hr = oracle["head_relation"].clone();
         hr["local_relation_id"] = json!(1_000_000);
         owned

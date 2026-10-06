@@ -968,6 +968,16 @@ impl Graph {
             let source = ids.contains(&e.key.source);
             let target = ids.contains(&e.key.target);
             if source != target {
+                // Original computeContextualGrade obtains Support relations;
+                // an exclusion to a retained GRID barline contributes nothing.
+                // Keep that edge in the live SIG for reduceExclusions, while
+                // still rejecting unsupported external supports/other classes.
+                let external = if source { e.key.target } else { e.key.source };
+                if e.key.kind == "Exclusion"
+                    && self.vertices[external - 1].data["kind"] == "BarlineInter"
+                {
+                    continue;
+                }
                 return Err("unsupported_head_stem_context_external_relation".into());
             }
             if source {
@@ -1130,9 +1140,18 @@ impl Graph {
             }
             "Exclusion" => {
                 matches!(cause, Some("OVERLAP" | "INCOMPATIBLE"))
-                    && ((ak == Some("HeadInter") && matches!(bk, Some("HeadInter" | "StemInter")))
-                        || (bk == Some("HeadInter")
-                            && matches!(ak, Some("HeadInter" | "StemInter"))))
+                    && [ak, bk].iter().all(|kind| {
+                        matches!(
+                            kind,
+                            Some(
+                                "HeadInter"
+                                    | "StemInter"
+                                    | "BeamInter"
+                                    | "BeamHookInter"
+                                    | "BarlineInter"
+                            )
+                        )
+                    })
             }
             _ => false,
         };
@@ -1153,6 +1172,7 @@ impl Graph {
                             | "HeadHeadRelation"
                             | "BeamStemRelation"
                             | "BeamHeadRelation"
+                            | "BeamBeamRelation"
                     ))
             {
                 return Ok(false);

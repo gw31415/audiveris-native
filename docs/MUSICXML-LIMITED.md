@@ -785,3 +785,48 @@ cargo build --bin audiveris-musicxml
 The output paths must not already exist. This validates the retained two-system
 example and generic ordinary foundation/chord processing, not general chord
 export or full nonUI parity. No new image fixture or admission guard removal.
+
+
+## Ordinary foundation overlap before chord prolog
+
+`SigReducer.detectOverlaps` now runs on the retained foundation owner before
+contextualization and chord prolog for ordinary black/void heads, stems, beams,
+hooks and barlines. It keeps x order, the inclusive0.05 bounds IOU prefilter,
+both directional `overlaps`, compatible beams, standard-head/stem exemption
+and canonical exclusion/support refusal. Typed exclusions to retained GRID
+barlines stay in the live SIG for reduction, contributing no Support to the
+head/stem contextual grade; unsupported external supports still refuse.
+Bounds alone never replace the actual
+physical test. Head core uses original floor/ceil shrink; intersecting glyphs
+use their foreground runs, including both horizontal/vertical orientation.
+Glyphless straight Inter ribbons use the existing OpenJDK linear Area engine
+with the original intersection classifier and strict boundary contact semantics.
+GRID barlines resolve their existing GRID registry runs rather than copying them
+into the HEADS/BEAMS registry or assuming their glyph is absent.
+
+Eleven original declared SIG branch conditions are a kernel comparison, separate
+from the retained actual image owner/cache/registry and existing MusicXML image
+regressions. The CLI input and command remain:
+
+```sh
+cargo build --locked --bin audiveris-musicxml
+./target/debug/audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-systems.png /tmp/foundation-overlap.musicxml /tmp/foundation-overlap.json
+```
+
+Output paths must not exist. No new image fixture, notation/font/scan admission
+or caller-selected geometry API is added. The new affected checks and independent
+clone CLI/XSD receipt are recorded in
+[VALIDATION.json](../evidence/musicxml-foundation-overlap/VALIDATION.json).
+Historical full583 belongs to source52943de; it is not a full-workspace run of
+this changed source. Existing Laura352/513 and older report/source hashes remain
+historical evidence unchanged.
+
+The weaker-branch removal callback for a GRID barline still refuses pending its
+full ownership lifecycle; this stage compares barline overlap discovery, not
+all possible barline-removal outcomes.
+
+General mirror/ensemble/header/all-class overlap, slur/fermata special geometry,
+text ownership/grade adjustment and small/percussion/stemless/cue chord branches
+remain partial or unconnected. Full support, Part/lyrics cleaner, LINKS slur/tie
+epilog, nonzero skew/scans/special staffs and full24-shape pages remain final
+implementation targets. All global completion flags stay false.

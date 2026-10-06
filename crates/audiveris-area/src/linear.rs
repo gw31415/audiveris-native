@@ -335,6 +335,7 @@ fn obstructs(a: f64, b: f64, phase: usize) -> bool {
 enum Op {
     Winding,
     Subtract,
+    Intersect,
 }
 struct Classifier {
     op: Op,
@@ -351,9 +352,13 @@ impl Classifier {
                 self.result = self.count != 0;
                 if self.count == 0 { -1 } else { tag }
             }
-            Op::Subtract => {
+            Op::Subtract | Op::Intersect => {
                 self.inside[e.tag] = !self.inside[e.tag];
-                let result = self.inside[0] && !self.inside[1];
+                let result = self.inside[0]
+                    && match self.op {
+                        Op::Intersect => self.inside[1],
+                        _ => !self.inside[1],
+                    };
                 if result == self.result {
                     0
                 } else {
@@ -576,6 +581,17 @@ impl LinearArea {
             .chain(other.lines.iter().map(|l| Edge::new(*l, 1)))
             .collect();
         calculate(edges, Op::Subtract)
+    }
+    /// Original AreaUtil.intersection: Area.intersect then !Area.isEmpty.
+    /// OpenJDK AreaOp.IntersectOp uses the same edges, with insideLeft && insideRight.
+    pub fn intersects_area(&self, other: &Self) -> Result<bool, String> {
+        let edges = self
+            .lines
+            .iter()
+            .map(|l| Edge::new(*l, 0))
+            .chain(other.lines.iter().map(|l| Edge::new(*l, 1)))
+            .collect();
+        Ok(!calculate(edges, Op::Intersect)?.lines.is_empty())
     }
     pub fn contains(&self, [x, y]: Point) -> Result<bool, String> {
         if !x.is_finite() || !y.is_finite() {

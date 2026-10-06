@@ -28,7 +28,7 @@
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
 | STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを比較。実free-glyph所属を維持したepilog bar領域seed再整理も接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
-| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。全Inter support、一般overlap、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
+| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。通常head/stem/beam/hook/barlineの実画素・head core・直線Area overlapをprolog前に接続し、GRID barlineの既存runsも解決。全Inter support、mirror/ensemble/header/特殊形など一般overlapの残り、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
@@ -49,7 +49,7 @@
 
 ## 実用CLIへ広げる依存順
 
-現在の直近工程はordinary foundationsの6チェック順・各weak purge・後続exclusion/epoch反復と通常headの`analyzeChords` prolog/lateです。次の依存は一般overlap・残る形/size互換性とLINKSです。HEADER・短音価の下記段階は履歴として保持し、未接続は各機能表で示します。
+現在の直近工程はordinary foundationsの6チェック順・各weak purge・後続exclusion/epoch反復と通常headの`analyzeChords` prolog/lateです。通常foundationの実画素/core/直線Area overlapをprolog前へ接続しました。次の依存はmirror/ensemble/header/特殊形を含む一般overlapの残り・形/size互換性とLINKSです。HEADER・短音価の下記段階は履歴として保持し、未接続は各機能表で示します。
 
 `key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。G/F/Cの音高/exportは汎用接続し、bass/alto画像も比較しました。次の切断箇所は他clefの全画像条件、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
 

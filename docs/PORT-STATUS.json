@@ -115,6 +115,11 @@
       "status": "implemented",
       "unit": "ordinary six Foundation consistency check order, per-check contextualize/owned weak purge, post-consistency exclusions and repeated epochs -> existing image CLI",
       "limits": "one declared original3-Inter cascade with actual Adapter check, existing11/20-event image regressions; overlap/chord prolog/late and full reduction remain partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary foundation detectOverlaps before contextualization/chord prolog, actual physical runs including retained GRID barline registry, head core and straight line Area intersection",
+      "limits": "11 original declared SIG branch conditions; retained image owner/cache/registry and existing MusicXML regressions; full mirror/ensemble/header/all-class overlap and cleaner/epilog pending"
     }
   ],
   "function_groups": [
@@ -156,7 +161,7 @@
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
       "status": "partial",
-      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。全Inter support、一般overlap、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
+      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。通常head/stem/beam/hook/barlineの実画素・head core・直線Area overlapをprolog前に接続し、GRID barlineの既存runsも解決。全Inter support、mirror/ensemble/header/特殊形など一般overlapの残り、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
     },
     {
       "original_function": "TEXTS / `TextsStep`, Tesseract, words/sentences",
@@ -215,7 +220,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "general foundation overlap/implicit/header predicates and broader chord shapes/size, then LINKS consistency/true augmentation/slur/lyrics and Part cleaner; no original nonUI omissions",
+  "next_image_integration": "remaining mirror/ensemble/header/special-shape foundation overlap and chord shape/size branches, then LINKS consistency/true augmentation/slur/lyrics and Part cleaner; no original nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -224,7 +229,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/musicxml-ordered-foundations/CHORD-VALIDATION.json:25 affected tests + cascade1, fmt/clippy; two original declared chord controls",
+  "latest_targeted_validation": "evidence/musicxml-foundation-overlap/VALIDATION.json: ordinary actual glyph/core/line-area discovery before prolog; original declared SIG cases and image/CLI validation are separate",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -235,12 +240,13 @@
     {
       "original": "SigReducer.reduce epoch/consistency/exclusion ordering",
       "status": "partial",
-      "remaining": "general overlap discovery, full chord shape/size branches, general predicates/support and budgets"
+      "remaining": "remaining general overlap mirror/ensemble/header/special classes, full chord shape/size branches, general predicates/support and budgets"
     },
     {
       "original": "SigReducer.detectOverlaps for foundations",
-      "status": "unimplemented",
-      "note": "Rest/TimeWhole symbol overlap subset exists separately; does not complete general foundations overlap"
+      "status": "partial",
+      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog",
+      "remaining": "mirror/ensemble/header/all-class predicates, slur/fermata special geometry and text grade/ownership dependencies"
     },
     {
       "original": "SigReducer.analyzeChords prolog/late",
@@ -251,7 +257,7 @@
     {
       "original": "SIGraph.contextualize/reduceExclusions/deleteWeakInters",
       "status": "partial",
-      "remaining": "complete support kinds, frozen/implicit/header predicates, ownership callbacks for all Inter classes"
+      "remaining": "complete support kinds, frozen/implicit/header predicates, ownership callbacks for all Inter classes including GRID barline weaker-branch removal"
     },
     {
       "original": "HeadStemsCleaner and BeamHeadCleaner",
