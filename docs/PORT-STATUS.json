@@ -150,6 +150,16 @@
       "status": "implemented",
       "unit": "actual typed HeadChord Containment/ChordStem added/removed invalidation, member best-grade mean and integer geometry, retaining existing contextual grade",
       "limits": "six ordered original relation lifecycle observations; real image MusicMeasures addition and uncached music cleanup callback connected; cached extensive/dying/other ensemble and Part/lyrics cleanup remain partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "RestInter.createValid admission uses actual HeadChord envelope including tail and strict center2D dx",
+      "limits": "five declared original boundary conditions and existing image regressions; not new raster classification or notation admission"
+    },
+    {
+      "status": "implemented",
+      "unit": "RestChord typed Containment invalidation and uncached partial/dying/extensive/shared ownership removal",
+      "limits": "four actual original SIG ownership controls, real Symbols/Links member cleanup; Part/measure/stack/staff/lyrics callbacks and cached head/stem extensive ownership remain partial"
     }
   ],
   "function_groups": [
@@ -201,7 +211,7 @@
     {
       "original_function": "MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller`",
       "status": "partial",
-      "current_and_remaining": "\u5358staff/\u5358stem\u306e\u5c0f\u7bc0\u30fbchord\u5f62\u6210\u3042\u308a\u3002\u8907\u6bb5part\u3001\u548c\u97f3\u3001stemless whole/breve\u3001cross-staff\u3001\u8907\u6570stem\u3001repeat/double bar\u7b49\u306e\u4e00\u822c\u5f62\u6210/\u88dc\u6b63\u304c\u6b8b\u308b\u3002 \u539f\u7248stem-tail\u3092\u542b\u3080chord\u9818\u57df/leading-note/head-tail\u3068typed Containment/ChordStem\u306e\u5e73\u5747best-grade/\u4f4d\u7f6einvalidate\u3092\u5b9f\u6240\u6709SIG\u3078\u63a5\u7d9a\u3002\u5168member\u9802\u70b9\u524a\u9664\u3001Part/stack/lyrics\u6240\u6709callback\u3068\u4ed6ensemble\u306f\u672a\u5b8c\u3002"
+      "current_and_remaining": "\u5358staff/\u5358stem\u306e\u5c0f\u7bc0\u30fbchord\u5f62\u6210\u3042\u308a\u3002\u8907\u6bb5part\u3001\u548c\u97f3\u3001stemless whole/breve\u3001cross-staff\u3001\u8907\u6570stem\u3001repeat/double bar\u7b49\u306e\u4e00\u822c\u5f62\u6210/\u88dc\u6b63\u304c\u6b8b\u308b\u3002 \u539f\u7248stem-tail\u3092\u542b\u3080chord\u9818\u57df/leading-note/head-tail\u3068typed Containment/ChordStem\u306e\u5e73\u5747best-grade/\u4f4d\u7f6einvalidate\u3092\u5b9f\u6240\u6709SIG\u3078\u63a5\u7d9a\u3002\u5168member\u9802\u70b9\u524a\u9664\u3001Part/stack/lyrics\u6240\u6709callback\u3068\u4ed6ensemble\u306f\u672a\u5b8c\u3002 RestChord Containment best-grade/geometry and uncached partial/dying/extensive/shared-member deletion connected; full container lifecycle pending."
     },
     {
       "original_function": "CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders",
@@ -259,7 +269,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "RestInter admission: actual chord envelope with strict dx and half-open intersection; original5 controls and targeted14/fmt/all-target-clippy passed. Last full590 at322135d is separate. RestChord vertex ownership remains next.",
+  "latest_targeted_validation": "RestChord: original4 ownership cases match; targeted18 includes chord/beam callbacks, actual weak-rest removal and11 image MusicXML cases; fmt/all-target-clippy passed. Last full590 source322135d remains distinct.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

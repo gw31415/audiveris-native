@@ -348,6 +348,62 @@ impl Graph {
                 }
             }
         }
+        let kind = self.vertices[id - 1].data["kind"].as_str();
+        if kind == Some("RestInter") {
+            // AbstractInter.remove(true): delete only an incoming ensemble
+            // whose current actual member list has exactly one entry. This is
+            // ensemble.remove(false), so no recursive extensive cascade.
+            for e in self
+                .edges
+                .iter()
+                .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.target == id)
+            {
+                self.validate_chord_identity(e.key.source, id, "Containment")?;
+                let parent = &self.vertices[e.key.source - 1];
+                if parent.removed {
+                    return Err("chord_identity_removed_parent".into());
+                }
+                if self
+                    .edges
+                    .iter()
+                    .filter(|r| {
+                        !r.removed && r.key.kind == "Containment" && r.key.source == e.key.source
+                    })
+                    .count()
+                    == 1
+                {
+                    if parent.data["frozen"] == true {
+                        return Err("music_removal_frozen_inter".into());
+                    }
+                    removed.push(e.key.source as u64);
+                }
+            }
+        } else if kind == Some("RestChordInter") {
+            // ensemble.remove(true) calls member.remove(false) only for
+            // unshared members; a different ensemble keeps its same vertex.
+            for e in self
+                .edges
+                .iter()
+                .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == id)
+            {
+                self.validate_chord_identity(id, e.key.target, "Containment")?;
+                let member = &self.vertices[e.key.target - 1];
+                if member.removed {
+                    return Err("chord_identity_removed_member".into());
+                }
+                if !self.edges.iter().any(|r| {
+                    !r.removed
+                        && r.key.kind == "Containment"
+                        && r.key.target == e.key.target
+                        && r.key.source != id
+                }) {
+                    if member.data["frozen"] == true {
+                        return Err("music_removal_frozen_inter".into());
+                    }
+                    removed.push(e.key.target as u64);
+                }
+            }
+        }
         for id in &removed {
             next.vertices[*id as usize - 1].removed = true;
         }
@@ -357,7 +413,10 @@ impl Graph {
             .filter(|e| {
                 !e.removed
                     && matches!(e.key.kind.as_str(), "Containment" | "ChordStemRelation")
-                    && next.vertices[e.key.source - 1].data["kind"] == "HeadChordInter"
+                    && matches!(
+                        next.vertices[e.key.source - 1].data["kind"].as_str(),
+                        Some("HeadChordInter" | "RestChordInter")
+                    )
                     && (next.vertices[e.key.source - 1].removed
                         || next.vertices[e.key.target - 1].removed)
             })
@@ -454,9 +513,12 @@ impl Graph {
             matches!(
                 r["kind"].as_str(),
                 Some("Containment" | "ChordStemRelation")
-            ) && self
-                .id(*a)
-                .is_some_and(|id| self.vertices[id - 1].data["kind"] == "HeadChordInter")
+            ) && self.id(*a).is_some_and(|id| {
+                matches!(
+                    self.vertices[id - 1].data["kind"].as_str(),
+                    Some("HeadChordInter" | "RestChordInter")
+                )
+            })
         });
         if chords {
             // Original identity callbacks operate on the actual registered
@@ -488,8 +550,10 @@ impl Graph {
                 .filter(|s| !s.is_empty())
                 .ok_or("invalid_shared_sig_relation_kind")?
                 .to_owned();
-            let chord_identity = self.vertices[source - 1].data["kind"] == "HeadChordInter"
-                && matches!(kind.as_str(), "Containment" | "ChordStemRelation");
+            let chord_identity = matches!(
+                self.vertices[source - 1].data["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            ) && matches!(kind.as_str(), "Containment" | "ChordStemRelation");
             if chord_identity {
                 self.validate_chord_identity(source, target, &kind)?;
             }
@@ -541,7 +605,7 @@ impl Graph {
                 removed: false,
             };
         }
-        self.invalidate_head_chords(&affected_chords)?;
+        self.invalidate_note_chords(&affected_chords)?;
         Ok(())
     }
 
@@ -553,13 +617,13 @@ impl Graph {
     ) -> Result<(), String> {
         let a = &self.vertices[source - 1];
         let b = &self.vertices[target - 1];
-        let (phase, class) = if kind == "Containment" {
-            (Phase::Head, "HeadInter")
-        } else {
-            (Phase::Stem, "StemInter")
+        let (phase, class) = match (a.data["kind"].as_str(), kind) {
+            (Some("HeadChordInter"), "Containment") => (Phase::Head, "HeadInter"),
+            (Some("HeadChordInter"), "ChordStemRelation") => (Phase::Stem, "StemInter"),
+            (Some("RestChordInter"), "Containment") => (Phase::Symbol, "RestInter"),
+            _ => return Err("typed_owned_chord_identity_required".into()),
         };
         if a.key.phase != Phase::Chord
-            || a.data["kind"] != "HeadChordInter"
             || b.key.phase != phase
             || b.data["kind"] != class
             || a.key.system != b.key.system
@@ -572,7 +636,7 @@ impl Graph {
     /// Containment / ChordStemRelation added/removed -> AbstractChord.invalidateCache.
     /// Original setGrade changes intrinsic mean only, leaving an existing ctx
     /// grade intact. No cache object or physical glyph is replaced.
-    fn invalidate_head_chords(&mut self, ids: &BTreeSet<usize>) -> Result<(), String> {
+    fn invalidate_note_chords(&mut self, ids: &BTreeSet<usize>) -> Result<(), String> {
         for id in ids
             .iter()
             .copied()
@@ -598,8 +662,17 @@ impl Graph {
                     }
                 }
             }
-            let heads = crate::head_chord_geometry::ordered(&heads)?;
-            let geometry = crate::head_chord_geometry::calculate(&heads, stem)?;
+            let geometry = if self.vertices[id - 1].data["kind"] == "RestChordInter" {
+                crate::head_chord_geometry::calculate_rest(&heads)?
+            } else {
+                crate::head_chord_geometry::calculate(&heads, stem)?
+            };
+            // AbstractChord.getMembers is stable bottom-up for both note kinds.
+            heads.sort_by_key(|h| {
+                std::cmp::Reverse(
+                    h["bounds"][1].as_i64().unwrap() + h["bounds"][3].as_i64().unwrap() / 2,
+                )
+            });
             let mut sum = 0.;
             for head in &heads {
                 let grade = if head["contextual_grade"].is_null() {
@@ -653,7 +726,7 @@ impl Graph {
         for id in remove {
             next.edges[id - 1].removed = true;
         }
-        next.invalidate_head_chords(&affected)?;
+        next.invalidate_note_chords(&affected)?;
         *self = next;
         Ok(())
     }
@@ -1721,6 +1794,167 @@ mod chord_identity_tests {
             .unwrap();
         assert_eq!(n["grade"], 0.6);
         assert_eq!(n["contextual_grade"], 0.95);
+    }
+}
+
+#[cfg(test)]
+mod rest_chord_identity_tests {
+    use super::*;
+    fn observed(graph: &Graph, labels: &BTreeMap<usize, String>) -> Value {
+        let snapshot = graph.snapshot();
+        let live = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|n| {
+                let id = n["id"].as_u64().unwrap() as usize;
+                let mut data = json!({"label":labels[&id],"kind":n["kind"],
+                "bounds":n["bounds"],"grade":n["grade"],"contextual_grade":n["contextual_grade"]});
+                if n["kind"] == "RestInter" {
+                    data["shape"] = n["shape"].clone();
+                    data["glyph"] = n["glyph"].clone();
+                } else {
+                    data["member_labels"] = json!(
+                        n["member_ids"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|id| labels[&(id.as_u64().unwrap() as usize)].clone())
+                            .collect::<Vec<_>>()
+                    );
+                    for field in ["head_location", "tail_location"] {
+                        let point: Option<[i64; 2]> =
+                            serde_json::from_value(n[field].clone()).unwrap();
+                        data[field] = json!(point.map(|p| p.map(|v| v as f64)));
+                    }
+                }
+                data
+            })
+            .collect::<Vec<_>>();
+        let removed = snapshot["tombstones"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|n| labels[&(n["id"].as_u64().unwrap() as usize)].clone())
+            .collect::<Vec<_>>();
+        let relations = snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|e| {
+                json!({
+            "kind":e["kind"],"source":labels[&(e["source"].as_u64().unwrap() as usize)],
+            "target":labels[&(e["target"].as_u64().unwrap() as usize)]})
+            })
+            .collect::<Vec<_>>();
+        json!({"live":live,"removed":removed,"relations":relations})
+    }
+    #[test]
+    fn original_rest_chord_partial_dying_extensive_and_shared_member_lifecycle() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rest-chord-lifecycle/controls.json"
+        ))
+        .unwrap();
+        for case in oracle["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let mut keys = BTreeMap::new();
+            let mut labels = BTreeMap::new();
+            for (i, n) in case["initial"]["live"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .enumerate()
+            {
+                let key = Key {
+                    system: 1,
+                    phase: if n["kind"] == "RestInter" {
+                        Phase::Symbol
+                    } else {
+                        Phase::Chord
+                    },
+                    local: i + 1,
+                };
+                let mut data = n.clone();
+                for field in ["label", "member_labels", "head_location", "tail_location"] {
+                    data.as_object_mut().unwrap().remove(field);
+                }
+                if n["kind"] == "RestChordInter" {
+                    data.as_object_mut().unwrap().remove("bounds");
+                    data.as_object_mut().unwrap().remove("grade");
+                }
+                let id = graph.vertex(key, data, false).unwrap();
+                keys.insert(n["label"].as_str().unwrap().to_owned(), key);
+                labels.insert(id, n["label"].as_str().unwrap().to_owned());
+            }
+            graph
+                .relations(
+                    1,
+                    Phase::Chord,
+                    case["initial"]["relations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(|e| {
+                            (
+                                keys[e["source"].as_str().unwrap()],
+                                keys[e["target"].as_str().unwrap()],
+                                json!({"kind":e["kind"]}),
+                            )
+                        })
+                        .collect(),
+                )
+                .unwrap();
+            assert_eq!(
+                observed(&graph, &labels),
+                case["initial"],
+                "{}:initial",
+                case["name"]
+            );
+            let target = match case["name"].as_str().unwrap() {
+                "partial-member" | "last-member" => keys["rest0"],
+                "extensive-chord" | "shared-member" => keys["chord"],
+                _ => panic!("unknown original operation"),
+            };
+            let before = graph.snapshot();
+            // A later invalid rest->stem identity never commits earlier valid members.
+            assert!(
+                graph
+                    .relations(
+                        1,
+                        Phase::Chord,
+                        vec![
+                            (keys["chord"], keys["rest0"], json!({"kind":"Containment"})),
+                            (
+                                keys["chord"],
+                                keys["rest0"],
+                                json!({"kind":"ChordStemRelation"})
+                            )
+                        ]
+                    )
+                    .is_err()
+            );
+            assert_eq!(graph.snapshot(), before);
+            // Refuse frozen ownership loss atomically, retaining existing guard.
+            let mut frozen = graph.clone();
+            let frozen_id = frozen.id(target).unwrap();
+            frozen.vertices[frozen_id - 1].data["frozen"] = json!(true);
+            let frozen_before = frozen.snapshot();
+            assert!(frozen.remove_music_inter(target).is_err());
+            assert_eq!(frozen.snapshot(), frozen_before);
+            graph.remove_music_inter(target).unwrap();
+            assert_eq!(
+                observed(&graph, &labels),
+                case["after"],
+                "{}:after",
+                case["name"]
+            );
+            let after = graph.snapshot();
+            graph.remove_music_inter(target).unwrap();
+            assert_eq!(graph.snapshot(), after);
+            for (label, key) in &keys {
+                assert_eq!(labels[&graph.id(*key).unwrap()], *label);
+            }
+        }
     }
 }
 

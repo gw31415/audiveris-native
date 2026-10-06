@@ -21,9 +21,12 @@ fn center(b: [i64; 4]) -> [i64; 2] {
     [b[0] + b[2] / 2, b[1] + b[3] / 2]
 }
 pub(crate) fn ordered<'a>(heads: &[&'a Value]) -> Result<Vec<&'a Value>, String> {
+    ordered_notes(heads, "HeadInter")
+}
+fn ordered_notes<'a>(heads: &[&'a Value], kind: &str) -> Result<Vec<&'a Value>, String> {
     for h in heads {
         rectangle(h)?;
-        if h["kind"] != "HeadInter" || h["id"].as_u64().is_none_or(|id| id == 0) {
+        if h["kind"] != kind || h["id"].as_u64().is_none_or(|id| id == 0) {
             return Err("head_chord_actual_head_required".into());
         }
     }
@@ -31,9 +34,9 @@ pub(crate) fn ordered<'a>(heads: &[&'a Value]) -> Result<Vec<&'a Value>, String>
     sorted.sort_by_key(|h| std::cmp::Reverse(center(rectangle(h).unwrap())[1]));
     Ok(sorted)
 }
-pub(crate) fn heads_bounds(heads: &[&Value]) -> Result<Option<[i64; 4]>, String> {
+fn notes_bounds(heads: &[&Value], kind: &str) -> Result<Option<[i64; 4]>, String> {
     let mut union: Option<[i64; 4]> = None;
-    for h in ordered(heads)? {
+    for h in ordered_notes(heads, kind)? {
         let b = rectangle(h)?;
         union = Some(if let Some(a) = union {
             let x = a[0].min(b[0]);
@@ -51,8 +54,15 @@ pub(crate) fn heads_bounds(heads: &[&Value]) -> Result<Option<[i64; 4]>, String>
     Ok(union)
 }
 pub(crate) fn calculate(heads: &[&Value], stem: Option<&Value>) -> Result<Geometry, String> {
-    let notes = ordered(heads)?;
-    let mut bounds = heads_bounds(&notes)?;
+    calculate_notes(heads, stem, "HeadInter")
+}
+/// RestChordInter inherits the stemless AbstractChord geometry.
+pub(crate) fn calculate_rest(rests: &[&Value]) -> Result<Geometry, String> {
+    calculate_notes(rests, None, "RestInter")
+}
+fn calculate_notes(heads: &[&Value], stem: Option<&Value>, kind: &str) -> Result<Geometry, String> {
+    let notes = ordered_notes(heads, kind)?;
+    let mut bounds = notes_bounds(&notes, kind)?;
     let stem_box = stem
         .map(|s| {
             if s["kind"] != "StemInter" {
