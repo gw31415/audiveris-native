@@ -11,3 +11,9 @@ ownership is connected to Symbols/Links. The one native regression checks these
 four original cases and retained glyph/ID state. Same-image MusicXML regressions
 are separate from these declared original vertex operations. Full Part/stack/lyrics
 and cached head/stem extensive ownership remain separately pending.
+
+`containers.json` records the same four operations observed through actual
+Staff.notes and Measure.getRestChords. Its `native_container_projection_connected`
+false is the historical observation-save state at ee8b24a, not current status.
+Current implementation/evidence: evidence/musicxml-note-containers/VALIDATION.json.
+No duplicate raster inputs or additional coordinate searches.

@@ -160,6 +160,11 @@
       "status": "implemented",
       "unit": "RestChord typed Containment invalidation and uncached partial/dying/extensive/shared ownership removal",
       "limits": "four actual original SIG ownership controls, real Symbols/Links member cleanup; Part/measure/stack/staff/lyrics callbacks and cached head/stem extensive ownership remain partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "LINKS refreshes pre-rhythm retained measure chord members/geometry from actual Containment and projects live staff notes after removals",
+      "limits": "same four original rest lifecycle container observations and actual weak-rest/image MusicXML regression; voice/lyrics/full Part cleanup and cached extensive head/stem removal remain pending"
     }
   ],
   "function_groups": [
@@ -211,7 +216,7 @@
     {
       "original_function": "MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller`",
       "status": "partial",
-      "current_and_remaining": "\u5358staff/\u5358stem\u306e\u5c0f\u7bc0\u30fbchord\u5f62\u6210\u3042\u308a\u3002\u8907\u6bb5part\u3001\u548c\u97f3\u3001stemless whole/breve\u3001cross-staff\u3001\u8907\u6570stem\u3001repeat/double bar\u7b49\u306e\u4e00\u822c\u5f62\u6210/\u88dc\u6b63\u304c\u6b8b\u308b\u3002 \u539f\u7248stem-tail\u3092\u542b\u3080chord\u9818\u57df/leading-note/head-tail\u3068typed Containment/ChordStem\u306e\u5e73\u5747best-grade/\u4f4d\u7f6einvalidate\u3092\u5b9f\u6240\u6709SIG\u3078\u63a5\u7d9a\u3002\u5168member\u9802\u70b9\u524a\u9664\u3001Part/stack/lyrics\u6240\u6709callback\u3068\u4ed6ensemble\u306f\u672a\u5b8c\u3002 RestChord Containment best-grade/geometry and uncached partial/dying/extensive/shared-member deletion connected; full container lifecycle pending."
+      "current_and_remaining": "\u5358staff/\u5358stem\u306e\u5c0f\u7bc0\u30fbchord\u5f62\u6210\u3042\u308a\u3002\u8907\u6bb5part\u3001\u548c\u97f3\u3001stemless whole/breve\u3001cross-staff\u3001\u8907\u6570stem\u3001repeat/double bar\u7b49\u306e\u4e00\u822c\u5f62\u6210/\u88dc\u6b63\u304c\u6b8b\u308b\u3002 \u539f\u7248stem-tail\u3092\u542b\u3080chord\u9818\u57df/leading-note/head-tail\u3068typed Containment/ChordStem\u306e\u5e73\u5747best-grade/\u4f4d\u7f6einvalidate\u3092\u5b9f\u6240\u6709SIG\u3078\u63a5\u7d9a\u3002\u5168member\u9802\u70b9\u524a\u9664\u3001Part/stack/lyrics\u6240\u6709callback\u3068\u4ed6ensemble\u306f\u672a\u5b8c\u3002 RestChord Containment best-grade/geometry and uncached partial/dying/extensive/shared-member deletion connected; full container lifecycle pending. Actual pre-rhythm chord copies now refresh from retained SIG after member deletion; staff note membership projected from live SIG. Voice/lyrics/general Part lifecycle remain partial."
     },
     {
       "original_function": "CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders",
@@ -269,7 +274,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "RestChord: original4 ownership cases match; targeted18 includes chord/beam callbacks, actual weak-rest removal and11 image MusicXML cases; fmt/all-target-clippy passed. Last full590 source322135d remains distinct.",
+  "latest_targeted_validation": "Pre-rhythm containers: original4 Staff/Measure registration conditions, actual image weak-rest canonical cache retention and11 MusicXML tests; targeted13/fmt/all-target-clippy final results in evidence/musicxml-note-containers/VALIDATION.json. Last full590 at322135d remains separate.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

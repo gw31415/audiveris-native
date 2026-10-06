@@ -62,23 +62,8 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let flags = crate::music_flags::contextualize(&mut graph)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
     let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
-    let removed = reduction["removed_weak_symbol_ids"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .chain(reduction["removed_conflict_symbol_ids"].as_array().unwrap())
-        .map(|n| n.as_u64().unwrap())
-        .collect::<Vec<_>>();
-    let mut empty_chords = Vec::new();
-    for c in &mut m.chords {
-        c.members
-            .retain(|n| !removed.contains(&n["id"].as_u64().unwrap()));
-        if c.members.is_empty() {
-            graph.remove_music_inter(c.key)?;
-            empty_chords.push(c.id);
-        }
-    }
-    m.chords.retain(|c| !c.members.is_empty());
+    let containers = crate::music_containers::refresh(&graph, &m.measures, &mut m.chords)?;
+    let empty_chords = containers.removed_chords;
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
     m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"unsupported-support-free Rest/TimeWhole physical overlaps, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
@@ -86,6 +71,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         m.owner.prepared.report["limited_links"]["BeamHeadCleaner_removed_relation_ids"] =
             json!(removed_beam_head_supports);
     }
+    m.owner.prepared.report["limited_links"]["containers"] = containers.projection;
     Ok(m)
 }
 
@@ -206,6 +192,29 @@ mod tests {
         );
         let after = m.owner.graph.snapshot();
         let removed = links["removed_weak_symbol_ids"][0].clone();
+        let containers = &links["containers"];
+        assert!(
+            containers["staff_notes"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|s| !s["note_ids"].as_array().unwrap().contains(&removed))
+        );
+        assert!(
+            containers["measure_chords"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|s| s["rest_chord_ids"].as_array().unwrap().is_empty())
+        );
+        for c in &m.chords {
+            assert!(
+                c.members
+                    .iter()
+                    .all(|n| after["inters"].as_array().unwrap().contains(n))
+            );
+        }
+
         assert!(
             after["tombstones"]
                 .as_array()

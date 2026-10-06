@@ -1849,12 +1849,36 @@ mod rest_chord_identity_tests {
             .collect::<Vec<_>>();
         json!({"live":live,"removed":removed,"relations":relations})
     }
+    fn container_labels(projection: &Value, labels: &BTreeMap<usize, String>) -> Value {
+        let names = |ids: &Value| {
+            ids.as_array()
+                .unwrap()
+                .iter()
+                .map(|id| labels[&(id.as_u64().unwrap() as usize)].clone())
+                .collect::<Vec<_>>()
+        };
+        json!({"staff_note_labels":names(&projection["staff_notes"][0]["note_ids"]),
+            "measure_registration":projection["measure_chords"].as_array().unwrap().iter()
+                .map(|m| json!({"rest_chord_labels":names(&m["rest_chord_ids"])})).collect::<Vec<_>>()})
+    }
     #[test]
     fn original_rest_chord_partial_dying_extensive_and_shared_member_lifecycle() {
         let oracle: Value = serde_json::from_str(include_str!(
             "../fixtures/official-rest-chord-lifecycle/controls.json"
         ))
         .unwrap();
+        let containers: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rest-chord-lifecycle/containers.json"
+        ))
+        .unwrap();
+        let measures = vec![crate::music_measures::Measure {
+            system: 1,
+            part: 1,
+            staff: 1,
+            index: 0,
+            left: 200,
+            right: 400,
+        }];
         for case in oracle["cases"].as_array().unwrap() {
             let mut graph = Graph::default();
             let mut keys = BTreeMap::new();
@@ -1875,6 +1899,11 @@ mod rest_chord_identity_tests {
                     local: i + 1,
                 };
                 let mut data = n.clone();
+                data["staff_id"] = json!(1);
+                if n["kind"] == "RestChordInter" {
+                    data["part_id"] = json!(1);
+                    data["measure_index"] = json!(0);
+                }
                 for field in ["label", "member_labels", "head_location", "tail_location"] {
                     data.as_object_mut().unwrap().remove(field);
                 }
@@ -1910,6 +1939,48 @@ mod rest_chord_identity_tests {
                 "{}:initial",
                 case["name"]
             );
+            let mut owned = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|n| n["kind"] == "RestChordInter")
+                .map(|n| crate::music_measures::Chord {
+                    key: serde_json::from_value(n["origin"].clone()).unwrap(),
+                    id: n["id"].as_u64().unwrap() as usize,
+                    stem: None,
+                    members: Vec::new(),
+                    measure: 0,
+                    bounds: [0, 0, 0, 0],
+                })
+                .collect::<Vec<_>>();
+            let expected_containers = containers["cases"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|c| c["name"] == case["name"])
+                .unwrap();
+            let initial_refresh =
+                crate::music_containers::refresh(&graph, &measures, &mut owned).unwrap();
+            assert_eq!(
+                container_labels(&initial_refresh.projection, &labels),
+                expected_containers["initial"]
+            );
+            assert!(initial_refresh.removed_chords.is_empty());
+            if owned.len() > 1 {
+                // Reject a bad later owner without replacing earlier members.
+                owned.last_mut().unwrap().id += 100;
+                let describe = |cs: &[crate::music_measures::Chord]| {
+                    json!(
+                        cs.iter()
+                            .map(|c| json!([c.id, c.bounds, c.members]))
+                            .collect::<Vec<_>>()
+                    )
+                };
+                let before_refresh = describe(&owned);
+                assert!(crate::music_containers::refresh(&graph, &measures, &mut owned).is_err());
+                assert_eq!(describe(&owned), before_refresh);
+                owned.last_mut().unwrap().id -= 100;
+            }
             let target = match case["name"].as_str().unwrap() {
                 "partial-member" | "last-member" => keys["rest0"],
                 "extensive-chord" | "shared-member" => keys["chord"],
@@ -1948,6 +2019,29 @@ mod rest_chord_identity_tests {
                 "{}:after",
                 case["name"]
             );
+            let refresh = crate::music_containers::refresh(&graph, &measures, &mut owned).unwrap();
+            assert_eq!(
+                container_labels(&refresh.projection, &labels),
+                expected_containers["after"]
+            );
+            for c in &owned {
+                let node = &graph.vertices[c.id - 1].data;
+                assert_eq!(json!(c.bounds), node["bounds"]);
+                assert_eq!(
+                    json!(
+                        c.members
+                            .iter()
+                            .map(|n| n["id"].clone())
+                            .collect::<Vec<_>>()
+                    ),
+                    node["member_ids"]
+                );
+                assert!(
+                    c.members
+                        .iter()
+                        .all(|n| graph.vertices[n["id"].as_u64().unwrap() as usize - 1].data == *n)
+                );
+            }
             let after = graph.snapshot();
             graph.remove_music_inter(target).unwrap();
             assert_eq!(graph.snapshot(), after);
