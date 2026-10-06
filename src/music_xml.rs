@@ -645,7 +645,17 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .find(|v| v.measure == mi && c["voice"] == v.id)
                 .ok_or("musicxml_general_new_voice_export_pending")?;
             let event_voice = owned_voice.id;
-            let offset = offsets.get(&event_voice).copied().unwrap_or(0);
+            let cursor = offsets.get(&event_voice).copied().unwrap_or(0);
+            let offset = crate::music_time::parse_ticks(
+                c["time_offset"]
+                    .as_str()
+                    .ok_or("musicxml_unknown_voice_clock_pending")?,
+            )?;
+            // PartwiseBuilder advances to a known onset with a forward. A
+            // backwards/overlapping Voice clock still requires rhythm repair.
+            if offset < cursor {
+                return Err("musicxml_starting_propagated_chord_clock_mismatch".into());
+            }
             if previous_right
                 .get(&event_voice)
                 .is_some_and(|&x| chord.bounds[0] <= x)
@@ -872,20 +882,9 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             data["measure_number"] = json!(mi + 1);
             data["effective_clef_id"] = json!(cid);
             graph.vertex(key, data, false)?;
-            // The original mapper can retain an abnormal Voice with no clock.
-            // The admitted complete Voice must not manufacture a clock.
-            if c["time_offset"].is_null() {
-                return Err("musicxml_unknown_voice_clock_pending".into());
-            }
             let intrinsic_duration = intrinsic.map(rational);
             if c["duration"] != json!(intrinsic_duration) {
                 return Err("musicxml_chord_intrinsic_duration_mismatch".into());
-            }
-            if c["time_offset"]
-                .as_str()
-                .is_some_and(|t| t != rational(offset))
-            {
-                return Err("musicxml_starting_propagated_chord_clock_mismatch".into());
             }
             c["measure_number"] = json!(mi + 1);
             if !beams.is_empty() {

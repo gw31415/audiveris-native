@@ -10,11 +10,13 @@ public class ParallelQuarterRenderer {
   BufferedImage head=HeadActualPageRenderer.symbol("Bravura","NOTEHEAD_BLACK",51);
   int[] upper={-4,-2,0,-2};
   int lowerNotes=args.length>1?Integer.parseInt(args[1]):8;
+  int lowerStart=args.length>2?Integer.parseInt(args[2]):0;
   if(lowerNotes<0||lowerNotes>8)throw new IllegalArgumentException("lower note count 0..8 required");
+  if(lowerStart<0||lowerStart>8)throw new IllegalArgumentException("lower start index 0..8 required");
   for(int i=0;i<8;i++) {
    int x=270+120*i;
    LimitedScoreRenderer.event(p,g,220,x,upper[i%4],"NOTEHEAD_BLACK");
-   if(i<lowerNotes) {
+   if(i>=lowerStart&&i<lowerNotes) {
     HeadActualPageRenderer.stamp(p,head,x,264);
     g.fillRect(x+4,264,2,37);
    }

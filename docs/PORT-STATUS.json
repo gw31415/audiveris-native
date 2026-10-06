@@ -422,7 +422,7 @@
       "preliminary_measure_slots": "Actual separated compound/member mapping, constructor/clock/retry/reference/merge/extinction dependencies connect to one original-successful two-Voice quarter image. Ordinary one-member parallel quarters in4/4 are admitted using per-Voice known-clock/nonoverlap/complete checks. Other parallel note/rest/beam families, general Rational/implicit tuplets/Merged/shared stacks remain pending.",
       "starting_voice_loop": "Original unconditional stable ordinate-sorted constructor/time0 connects to multiple actual ordinary starts; raw reassignment controls retained separately. Positive same-image two quarter Voices agree. Mixed measure-rest starts and other parallel families remain guarded.",
       "all_voice_final_check": "Original standard-chord Voice/time and all-Voice duration loop connected; five sequential object controls and actual two-Voice quarter image agree. Complete/nonoverlap admission is per Voice, not aggregate parallel-note duration.",
-      "owned_event_binding": "Actual mapped Voice/onset/duration binds image metadata and Voice-major writer; original16-event parallel quarter image agrees. Gaps/other parallel families and full score export remain partial."
+      "owned_event_binding": "Actual mapped Voice/onset/duration feeds image events and Voice-major writer. Two full original parallel-quarter images (16 and15 notes, latter with known first forward1/4) match. Actual cursor >= prior end; unknown/backwards/overlap/incomplete ends remain refused. Broader parallel/rhythm families partial."
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -433,7 +433,7 @@
       "original_function": "MusicXML / `PartwiseBuilder`, original proxymusic",
       "status": "partial",
       "current_and_remaining": "native MusicXML4 writer\u3001\u9650\u5b9a\u30a4\u30d9\u30f3\u30c8\u30fbsystem break\u30fbpart\u540d\u3001schema/reimport\u6bd4\u8f03\u3042\u308a\u3002\u4e00\u822cnotation/direction/lyric/instrument/layout/score\u5c5e\u6027\u3068.mxl\u5727\u7e2e\u3001\u591a\u30da\u30fc\u30b8export\u306e\u539f\u7248\u5bfe\u5fdc\u304c\u6b8b\u308b\u3002\u539f\u7248XML\u306e\u6d41\u7528\u306f\u8a8d\u8b58\u5b8c\u6210\u306b\u6570\u3048\u306a\u3044\u3002",
-      "owned_voice_traversal": "Owned BEGIN/backup/forward writer and Graph timing binder are connected on current images. Four declared original controls and one actual original full16-event quarter polyphonic image agree. Broader parallel families/score export remain partial."
+      "owned_voice_traversal": "Owned BEGIN/backup/forward traversal and Graph binder are connected on current images. Four declared original controls and two original full parallel-quarter images (16+15 notes and real first forward) agree. Broader parallel/score export remains partial."
     },
     {
       "original_function": "\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u4fdd\u5b58\u30fb\u518d\u958b / `Book`, `Sheet`, stage invalidation",
@@ -466,7 +466,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Actual parallel image unit: one unmodified original full image run, native16 events/two Voices/two measures and chord/slot/Voice state agree. Targeted results/guards in evidence/musicxml-parallel-image/VALIDATION.json; independent retrieval and retained36-event byte/XSD checks in READBACK. Full595 remains historical95e191b.",
+  "latest_targeted_validation": "Known late Voice unit: one new original full image/export, native15 notes and Voice2 forward1/4; existing parallel test extended, no added test function. Results in evidence/musicxml-late-voice/VALIDATION.json and independent Git67-event/XSD verification in READBACK. Full595 remains historical95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

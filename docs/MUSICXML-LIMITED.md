@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest image increment: [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -1816,3 +1816,26 @@ and tuplet families, multi-member chords, other Voice kinds/Merged/shared stacks
 and remaining nonUI features need their dependencies/comparisons. The existing
 three36-event examples retain their XML bytes. No final completion flags are
 raised; full595 still belongs only to historical `95e191b`.
+
+### Known late Voice forward from an actual image (2026-10-06)
+
+A second small parallel-quarter input omits the first lower quarter at rendering
+time. Unmodified original5.11 full image/export succeeds with15 notes and a
+quarter-duration `forward` for Voice2 in measure1. Native creates that Voice
+through the existing mapper, consumes its known1/4 onset and emits the matching
+forward. No rest or clock is invented. Each Voice cursor now advances to a known
+onset as in `PartwiseBuilder`; backwards clocks, horizontal overlap, unknown
+clocks and incomplete Voice ends still refuse.
+
+Use the same command as above with `parallel-late-voice.png` as input and distinct
+output names. The existing parallel test now covers both positive images and
+the incomplete-lower-Voice boundary; no new test function was added. The raw
+original saved-state comparison still explicitly recomputes transient finalCheck
+after reload, distinct from the original full image/XML evidence.
+
+Parallel family remains ordinary one-member quarter heads in4/4. Only these two
+parallel images are verified; beam/flag/rest/other-duration parallel families,
+general rhythm/gap repair, tuplets/Merged/shared stacks/multi-member chords and
+all remaining nonUI functions remain partial. The prior36 events retain XML
+bytes and the earlier16-event parallel image remains matching. All global flags
+stay false. Full595 is the old `95e191b` result.

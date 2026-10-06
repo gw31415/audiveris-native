@@ -1,0 +1,47 @@
+{
+  "base_source": "03ad14cd47823aed6e68f28091234f9e2dfa557c",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "actual image new Voice known onset -> PartwiseBuilder forward",
+  "original_comparison": {
+    "unmodified_full_image_runs": 1,
+    "input": "fixtures/official-image-musicxml-parallel-voices/parallel-late-voice.png",
+    "renderer": "ParallelQuarterRenderer output 8 1; omit first lower quarter in existing layout",
+    "full_image_notes": 15,
+    "forwards": [
+      {
+        "measure": 1,
+        "voice": 2,
+        "duration": "1/4"
+      }
+    ],
+    "matching": [
+      "actual new Voice and known1/4 start",
+      "pitch/stem/Voice/duration/onset and note/backup/forward stream",
+      "actual chord/slot/Voice members, clocks and duration finalCheck"
+    ],
+    "separate_evidence": "original saved recognized owner finalCheck recomputes nonpersisted termination after reload; no declared mapping/clock edits"
+  },
+  "integration": "per-Voice cursor admits actual known onset >= prior end, as original PartwiseBuilder insertsForward and advances cursor. No clock/Voice overwrite or invented rest; backwards clocks/horizontal overlap/unknown timing/incomplete end remain refused.",
+  "parallel_admission": "existing normal one-member quarter heads in4/4; positive initial forward now verified, broader parallel note/rest/beam/meter families remain guarded",
+  "targeted_unique_passed": 3,
+  "runs": {
+    "existing_parallel_test_extended_with_actual_late_voice_image": 1,
+    "owned_compound_mapper_stack_writer_and_final_checks": 1,
+    "flag_and_erased_flag_refusal": 1
+  },
+  "new_test_function_count": 0,
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "only one positive first-gap image compared; general visual gap/rhythm repair not proved",
+    "other parallel durations/beam/flag/mixed rests/tuplet/pickup/multi-member chords guarded or unconnected",
+    "general Rational/Merged/shared stack/other Voice kinds/lyrics/slur/tie/full cleaner/correction remain partial",
+    "no font/nonzero skew/scan/special staff/full24/32sources support change"
+  ],
+  "all_global_completion_flags": false
+}
