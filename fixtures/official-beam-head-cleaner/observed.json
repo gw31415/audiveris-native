@@ -1,0 +1,28 @@
+{
+  "scope" : "one actual original BeamHeadCleaner lifecycle; explicit declared SIG, not full-image post-LINKS SIG parity",
+  "head_intrinsic" : 0.4,
+  "beam_intrinsic" : 0.8,
+  "relation_grade" : 0.7,
+  "on_beam_side" : true,
+  "before" : {
+    "head_grade" : 0.4,
+    "head_contextual_grade" : 0.5098039215686275,
+    "beam_grade" : 0.8,
+    "beam_contextual_grade" : 0.8,
+    "head_removed" : false,
+    "beam_removed" : false,
+    "live_vertices" : 2,
+    "live_relations" : 1
+  },
+  "after" : {
+    "head_grade" : 0.4,
+    "head_contextual_grade" : 0.5098039215686275,
+    "beam_grade" : 0.8,
+    "beam_contextual_grade" : 0.8,
+    "head_removed" : false,
+    "beam_removed" : false,
+    "live_vertices" : 2,
+    "live_relations" : 0
+  },
+  "repeat_is_idempotent" : true
+}

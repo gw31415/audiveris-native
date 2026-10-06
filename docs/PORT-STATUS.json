@@ -165,6 +165,11 @@
       "status": "implemented",
       "unit": "LINKS refreshes pre-rhythm retained measure chord members/geometry from actual Containment and projects live staff notes after removals",
       "limits": "same four original rest lifecycle container observations and actual weak-rest/image MusicXML regression; voice/lyrics/full Part cleanup and cached extensive head/stem removal remain pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "BeamHeadCleaner removes temporary BeamHead edges without implicit recontextualization, preserving original stored grades",
+      "limits": "one actual original declared lifecycle/retained vertex metadata and image regressions; full post-LINKS raster SIG and cleaner/epilog remain partial"
     }
   ],
   "function_groups": [
@@ -274,7 +279,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Pre-rhythm containers: original4 Staff/Measure registration conditions, actual image weak-rest canonical cache retention and11 MusicXML tests; targeted13/fmt/all-target-clippy final results in evidence/musicxml-note-containers/VALIDATION.json. Last full590 at322135d remains separate.",
+  "latest_targeted_validation": "BeamHeadCleaner original stored-grade retention: one declared actual SIG lifecycle, meaningful beam/link/image tests; final evidence/musicxml-beam-head-cleaner/VALIDATION.json. Last full590 at322135d remains historical until a new full run completes.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

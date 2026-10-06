@@ -188,7 +188,8 @@ pub(crate) fn clean_head_supports(graph: &mut Graph) -> Result<Vec<usize>, Strin
         .map(|r| r["id"].as_u64().unwrap() as usize)
         .collect::<Vec<_>>();
     graph.remove_beam_head_supports(&ids)?;
-    graph.contextualize_head_stem_flags()?;
+    // Original BeamHeadCleaner.process removes edges only. It does not
+    // contextualize/purge again; preserve grades until a later explicit pass.
     Ok(ids)
 }
 /// PageCleaner.visit(AbstractBeamInter)/processArea in the restored HEADS
@@ -248,6 +249,78 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_beam_head_cleaner_retains_context_until_explicit_recontextualization() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-beam-head-cleaner/observed.json"
+        ))
+        .unwrap();
+        let mut graph = Graph::default();
+        let head = Key {
+            system: 1,
+            phase: Phase::Head,
+            local: 1,
+        };
+        let beam = Key {
+            system: 1,
+            phase: Phase::Beam,
+            local: 1,
+        };
+        let hid = graph
+            .vertex(
+                head,
+                json!({"kind":"HeadInter","shape":"NOTEHEAD_BLACK",
+            "grade":oracle["head_intrinsic"],"bounds":[300,250,12,8],"glyph_id":11}),
+                false,
+            )
+            .unwrap();
+        let bid = graph
+            .vertex(
+                beam,
+                json!({"kind":"BeamInter","shape":"BEAM",
+            "grade":oracle["beam_intrinsic"],"bounds":[290,208,60,4],"glyph_id":12}),
+                false,
+            )
+            .unwrap();
+        graph
+            .relations(
+                1,
+                Phase::Beam,
+                vec![(
+                    beam,
+                    head,
+                    json!({"kind":"BeamHeadRelation",
+            "grade":oracle["relation_grade"],"on_beam_side":true,
+            "source_ratio":1.,"target_ratio":1.+oracle["relation_grade"].as_f64().unwrap()}),
+                )],
+            )
+            .unwrap();
+        graph.contextualize_head_stems().unwrap();
+        let observe = |g: &Graph| {
+            let snapshot = g.snapshot();
+            let nodes = snapshot["inters"].as_array().unwrap();
+            let h = nodes.iter().find(|n| n["id"] == hid).unwrap();
+            let b = nodes.iter().find(|n| n["id"] == bid).unwrap();
+            json!({"head_grade":h["grade"],"head_contextual_grade":h["contextual_grade"],
+                "beam_grade":b["grade"],"beam_contextual_grade":b["contextual_grade"],
+                "head_removed":false,"beam_removed":false,"live_vertices":nodes.len(),
+                "live_relations":snapshot["relations"].as_array().unwrap().len()})
+        };
+        assert_eq!(observe(&graph), oracle["before"]);
+        let before = graph.snapshot();
+        assert_eq!(clean_head_supports(&mut graph).unwrap().len(), 1);
+        assert_eq!(observe(&graph), oracle["after"]);
+        assert_eq!(graph.snapshot()["inters"], before["inters"]);
+        let after = graph.snapshot();
+        assert!(clean_head_supports(&mut graph).unwrap().is_empty());
+        assert_eq!(graph.snapshot(), after);
+        // A later explicitly ordered contextualization remains available.
+        graph.contextualize_head_stems().unwrap();
+        assert_eq!(
+            observe(&graph)["head_contextual_grade"],
+            oracle["head_intrinsic"]
+        );
+    }
     #[test]
     fn original_beam_side_support_uses_intrinsic_good_grade() {
         let oracle: Value = serde_json::from_str(include_str!(

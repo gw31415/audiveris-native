@@ -507,7 +507,8 @@ After LINKS reduction, native uses actual live `Containment`/`ChordStemRelation`
 and tombstones to refresh its retained measure chord list, member metadata and
 geometry. This follows `AbstractChordInter.invalidateCache/remove` and
 `Measure.addInter/removeInter`; partial deletion no longer leaves copied bounds
-or removed chord members. The report at `limited_links.containers` also projects
+or removed chord members. The stage report at `limited_links.containers` (CLI JSON:
+`symbols.limited_links.containers`) also projects
 original `AbstractNoteInter.added/remove` staff membership from the live SIG in
 registration order. It is a derived projection, not an independent Rust Staff
 object or complete editing implementation. Stale identity/geometry is refused
@@ -531,3 +532,15 @@ Use unused output paths with the existing Linux CLI, for example:
 The complete `InterCleaner.purgeContainers` is separately pending: pinned Java
 `Part.purgeContainers` specifically purges removed lyric lines, not these chord
 collections. Lyrics recognition/ownership must be connected before claiming it.
+
+### BeamHeadCleaner retains original contextual grades
+
+Original `org.audiveris.omr.sig.BeamHeadCleaner.process` only removes temporary
+BeamHead relations. Native's additional contextualization incorrectly changed
+head grades after this ordered LINKS stage. The actual cleaner now removes only
+validated edges, keeping vertices, intrinsic/contextual grades and identities.
+A later explicitly ordered contextualization still works. One original declared
+SIG lifecycle reproduces the old mismatch and verifies the fix/idempotence;
+existing image MusicXML regressions are checked separately. This is not complete
+post-LINKS raster SIG equality or full cleaner/epilog parity.
+[Validation](../evidence/musicxml-beam-head-cleaner/VALIDATION.json).
