@@ -1,0 +1,29 @@
+{
+  "source_checkpoint": "71d1957a093de2c0d311b88cae1ec1ad2c1bf5e1",
+  "remote_main": "71d1957a093de2c0d311b88cae1ec1ad2c1bf5e1",
+  "independent_clone_HEAD": "71d1957a093de2c0d311b88cae1ec1ad2c1bf5e1",
+  "matching_trees": {
+    "root": "1d5cd07626f15acd2cf01502a1f88558a4be87b2",
+    "src": "3188010156f6520f58d73d01ecfc40d559bfa582",
+    "crates": "15d0cb321ff54110bccb3215dc474e9631d5171b"
+  },
+  "build": "independent clone Linux offline locked -j1 debug0 passed",
+  "fmt": "passed",
+  "image_fixture": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+  "original_event_comparison": {
+    "systems": 2,
+    "measures": 4,
+    "events": 20,
+    "pitch_type_voice_rest_duration_onset_beams_and_beamed_stem_direction": "all match"
+  },
+  "MusicXML4_XSD": "passed",
+  "native_xml_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+  "original_XML_or_Java_used_by_native_cli": false,
+  "latest_full_regression": {
+    "source": "c2705528f64817a90aeee31bcbb68ecb928b90fc",
+    "passed": 580
+  },
+  "subsequent_change": "11 targeted tests/fmt/clippy and independent clone build/CLI; latest full581 not run",
+  "global_completion_flags": false,
+  "method": "normal main push and independent clone fetch/fast-forward; ordinary Git SHA and root/src/crates tree readback; no backup bundles or per-file hash copies"
+}
