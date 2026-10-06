@@ -67,5 +67,51 @@ pub fn assert_original(report: &Value, page_index: usize) {
             [actual["measure_number"].as_u64().unwrap() as usize - 1]["cases"][0]["compounds"];
         let compounds=actual["compounds"].as_array().unwrap().iter().map(|c|json!({"id":c["id"],"narrow_slot_ids":c["narrow_slot_ids"],"chord_ids":c["chord_ids"].as_array().unwrap().iter().map(&ordinal).collect::<Vec<_>>(),"lookup":c["lookup"].as_array().unwrap().iter().map(|l|json!({"chord_id":ordinal(&l["chord_id"]),"narrow_slot_id":l["narrow_slot_id"]})).collect::<Vec<_>>()})).collect::<Vec<_>>();
         assert_eq!(json!(compounds), *expected_compounds);
+        let starting: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-starting-voices/observed.json"
+        ))
+        .unwrap();
+        let expected_start = &starting["pages"][page_index]["measures"]
+            [actual["measure_number"].as_u64().unwrap() as usize - 1];
+        let start_ordinal = |id: &Value| {
+            let live = report["shared_sig"]["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == *id)
+                .unwrap();
+            let matches = expected_start["chords"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|f| f["bounds"] == live["bounds"])
+                .collect::<Vec<_>>();
+            assert_eq!(matches.len(), 1);
+            matches[0]["id"].as_u64().unwrap()
+        };
+        let mut initial = actual["starting_state"].clone();
+        for voice in initial["voices"].as_array_mut().unwrap() {
+            voice["chord_ids"] = json!(
+                voice["chord_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(&start_ordinal)
+                    .collect::<Vec<_>>()
+            );
+            if !voice["measure_rest_chord_id"].is_null() {
+                voice["measure_rest_chord_id"] =
+                    json!(start_ordinal(&voice["measure_rest_chord_id"]));
+            }
+        }
+        for chord in initial["chords"].as_array_mut().unwrap() {
+            chord["id"] = json!(start_ordinal(&chord["id"]));
+        }
+        initial["chords"]
+            .as_array_mut()
+            .unwrap()
+            .sort_by_key(|c| c["id"].as_u64());
+        assert_eq!(initial["voices"], expected_start["voices"]);
+        assert_eq!(initial["chords"], expected_start["chords"]);
     }
 }

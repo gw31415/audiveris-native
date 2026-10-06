@@ -85,6 +85,83 @@ fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
         )),
     }
 }
+// Resolve the admitted original AbstractChord.getDuration before starting
+// Voice/group time propagation. All existing shape/flag/beam guards remain;
+// general dotted/tuplet/special-head duration is a separate dependency.
+fn resolve_durations(
+    graph: &mut crate::shared_sig::Graph,
+    chords: &[&crate::music_measures::Chord],
+) -> Result<std::collections::BTreeMap<usize, (Option<u32>, &'static str)>, String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let edges = snapshot["relations"].as_array().unwrap();
+    let mut resolved = std::collections::BTreeMap::new();
+    let mut staged = graph.clone();
+    for chord in chords {
+        if chord.members.len() != 1 {
+            return Err("musicxml_polyphonic_head_chord_pending".into());
+        }
+        let note = nodes
+            .iter()
+            .find(|n| n["id"] == chord.members[0]["id"])
+            .ok_or("musicxml_duration_live_note_required")?;
+        let shape = note["shape"]
+            .as_str()
+            .ok_or("musicxml_note_shape_required")?;
+        let rest = note["kind"] == "RestInter";
+        let whole = rest && crate::music_voices::is_measure_rest_shape(shape, false);
+        let result = if whole {
+            (None, "whole")
+        } else {
+            let (base, mut note_type) = note_duration(shape)?;
+            let mut duration = base * 4;
+            if !rest {
+                let beams = crate::music_voices::chord_beams(&snapshot, chord.id)?;
+                let stem = chord
+                    .stem
+                    .map(|key| graph.id(key).ok_or("musicxml_actual_chord_stem_required"))
+                    .transpose()?;
+                let flags = nodes
+                    .iter()
+                    .filter(|n| {
+                        n["kind"] == "FlagInter"
+                            && stem.is_some_and(|id| {
+                                edges.iter().any(|e| {
+                                    e["kind"] == "FlagStemRelation"
+                                        && e["source"] == n["id"]
+                                        && e["target"] == id
+                                })
+                            })
+                    })
+                    .collect::<Vec<_>>();
+                if !flags.is_empty() || !beams.is_empty() {
+                    if shape != "NOTEHEAD_BLACK"
+                        || (!flags.is_empty() && !beams.is_empty())
+                        || flags.len() > 1
+                        || beams.len() > 2
+                        || flags.first().is_some_and(|f| f["value"] != 1)
+                    {
+                        return Err("musicxml_flagged_void_rest_or_multiple_flags_pending".into());
+                    }
+                    let count = flags.len() + beams.len();
+                    duration /= 1 << count;
+                    note_type = if count == 1 { "eighth" } else { "16th" };
+                }
+            }
+            (Some(duration), note_type)
+        };
+        let mut node = nodes
+            .iter()
+            .find(|n| n["id"] == chord.id)
+            .ok_or("musicxml_duration_live_chord_required")?
+            .clone();
+        node["duration"] = json!(result.0.map(rational));
+        staged.vertex(chord.key, node, false)?;
+        resolved.insert(chord.id, result);
+    }
+    *graph = staged;
+    Ok(resolved)
+}
 // ArpeggiatoInter.lookupLink builds a right-side half-open AWT rectangle.
 // The existing automatic path uses system profile1 (xGapMax_p1=2.5).
 // This only proves an empty chord search; positive arpeggiation stays pending.
@@ -432,10 +509,52 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .ok_or("musicxml_measure_local_clef_required")?;
         let initial_attributes = clef_attributes(initial_clef)?;
         let clef_id = initial_clef["id"].as_u64();
-        let voice = crate::music_voices::single(mi, &measure, &chords, &m.voices)?;
+        let durations = resolve_durations(&mut graph, &chords)?;
+        // MeasureRhythm.processStartingChords selects measure rests plus the
+        // first compound's chords, in stable center-ordinate order.
+        let mut starting = chords
+            .iter()
+            .filter(|c| {
+                c.kind == crate::music_measures::ChordKind::Rest
+                    && c.members
+                        .first()
+                        .and_then(|n| n["shape"].as_str())
+                        .is_some_and(|s| crate::music_voices::is_measure_rest_shape(s, false))
+            })
+            .map(|c| c.id)
+            .collect::<Vec<_>>();
+        if let Some(first) = compounds.first() {
+            starting.extend(&first.chord_ids);
+        }
+        starting.sort_by_key(|id| centers[id]);
+        if starting.len() != 1 {
+            return Err("musicxml_starting_parallel_voice_mapping_pending".into());
+        }
+        let seed = *chords
+            .iter()
+            .find(|c| c.id == starting[0])
+            .ok_or("musicxml_starting_owned_chord_required")?;
+        let voice = crate::music_voices::single(mi, &measure, &[seed], &m.voices)?;
         let voice_id = voice.id;
         let voice_index = m.voices.len();
         m.voices.push(voice);
+        crate::music_voices::assign_chord_voice(
+            &mut graph,
+            &mut m.voices,
+            &m.measures,
+            seed.id,
+            voice_index,
+        )?;
+        crate::music_chord_time::set_and_push(
+            &mut graph,
+            &m.voices,
+            &m.measures,
+            seed.id,
+            Some(0),
+        )?;
+        let start_snapshot = graph.snapshot();
+        preliminary_slots[mi]["starting_chord_ids"] = json!(starting);
+        preliminary_slots[mi]["starting_state"] = json!({"voices":[{"id":voice_id,"is_measure_rest":m.voices[voice_index].measure_rest_chord.is_some(),"chord_ids":m.voices[voice_index].chord_ids,"measure_rest_chord_id":m.voices[voice_index].measure_rest_chord}],"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});
         for chord in chords {
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());
@@ -449,12 +568,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .as_str()
                 .ok_or("musicxml_note_shape_required")?;
             let measure_rest = m.voices[voice_index].measure_rest_chord == Some(chord.id);
-            let (mut duration, mut note_type) = if measure_rest {
-                (expected_ticks, "whole")
-            } else {
-                let (base, note_type) = note_duration(shape)?;
-                (base * 4, note_type)
-            };
+            let (intrinsic, note_type) = durations[&chord.id];
+            let duration = intrinsic.unwrap_or(expected_ticks);
             let rest = note["kind"] == "RestInter";
             // AbstractChordInter.getBeams: actual beam→stem and chord→stem
             // relations supply membership; x positions only order members.
@@ -526,22 +641,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             } else {
                 Vec::new()
             };
-            if !flags.is_empty() || !beams.is_empty() {
-                if rest
-                    || shape != "NOTEHEAD_BLACK"
-                    || (!flags.is_empty() && !beams.is_empty())
-                    || flags.len() > 1
-                    || beams.len() > 2
-                    || flags.first().is_some_and(|f| f["value"] != 1)
-                {
-                    return Err("musicxml_flagged_void_rest_or_multiple_flags_pending".into());
-                }
-                // AbstractChordInter.getDurationSansDotOrTuplet divides by2
-                // for each actual beam/flag, not by recognizing the note's x.
-                let count = flags.len() + beams.len();
-                duration /= 1 << count;
-                note_type = if count == 1 { "eighth" } else { "16th" };
-            }
+            // Shape/count validation and intrinsic duration were resolved
+            // before the original starting Voice/time propagation above.
             let flag_ids = flags.iter().map(|f| f["id"].clone()).collect::<Vec<_>>();
             let mut beam_marks = Vec::new();
             for (number, beam) in beams.iter().enumerate() {
@@ -694,6 +795,12 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             } else {
                 json!(rational(duration))
             };
+            if c["time_offset"]
+                .as_str()
+                .is_some_and(|t| t != rational(offset))
+            {
+                return Err("musicxml_starting_propagated_chord_clock_mismatch".into());
+            }
             c["time_offset"] = json!(rational(offset));
             c["measure_number"] = json!(mi + 1);
             if !beams.is_empty() {

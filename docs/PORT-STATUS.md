@@ -839,3 +839,9 @@ getNarrowSlotを画像CLI候補列へ接続。保存済み6小節と宣言4境�
 原版cursorの重なり挙動は宣言条件として保持し、成功画像とは扱いません。
 一般Voice matching/候補slot setter時間同一性/共有stackは未完。
 [CLI参照と未完](MUSICXML-LIMITED.md#compound-slot-membership-2026-10-06)。
+
+先頭Voice/ZERO伝播（2026-10-06）：実リンク由来intrinsic音価を先に解決し、
+全chordの先行Voice登録をやめ、first compound/全小節休符の先頭chordから
+原版setVoice→beam/tie→setAndPushTime(0)へ接続。保存成功2ページ6小節の
+途中Voice/時刻/音価を比較し、後続の一般rookie/active matchingとは区別。
+[試し方・現在の境界](MUSICXML-LIMITED.md#starting-voice-and-original-zero-time-propagation-2026-10-06)。

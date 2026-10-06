@@ -1407,3 +1407,31 @@ transient candidate-slot setter identity/timing and iterative mapping remain
 partial; final timed stack slot ownership is retained. Next is actual starting
 Voice construction and zero-time propagation before rookie matching. Full595
 remains the old `95e191b` result and all global flags remain false.
+
+### Starting Voice and original zero-time propagation (2026-10-06)
+
+The image path resolves current admitted intrinsic chord durations from actual
+shape/flag/beam links **before** starting rhythm. It then follows original
+`MeasureRhythm.processStartingChords`: default measure rests plus the first
+compound's chords in center-ordinate order -> starting Voice -> real setVoice
+beam/tie propagation -> `setAndPushTime(0)`. The current one-voice admission
+requires one starting chord. Subsequent chords enter the Voice through actual
+assignment; the Voice no longer prepopulates every chord in the measure.
+
+`preliminary_measure_slots[].starting_state` records this real intermediate
+state. On the existing two-system beam example, the first four eighth chords
+have Voice1 and offsets 0,1/8,1/4,3/8; the following two quarter chords initially
+have no Voice/time. The dedicated whole-rest Voice has no ordinary chord list,
+unknown intrinsic duration and starting time0. Both intermediate states match
+unmodified original getters from the same saved successful inputs. The existing
+CLI commands/images and successful MusicXML remain valid.
+
+Previously propagated times are checked against the admitted event clock,
+not overwritten silently. Current normal duration support/guards remain bounded
+(no genuine dots/tuplets/special mirrored durations, at most two ordinary beams
+or one flag); this reorganizes existing recognition logic rather than expanding
+image admission. Later rookie/active mapping still uses the bounded single-voice
+continuation; original general SlotMapper/ChordsMapper/VoiceDistance, multi-Voice
+starting IDs/kinds, shared stacks, correction and complete epilog remain pending.
+Full595 remains tied to `95e191b`; current validation is targeted MusicXML, not a
+new whole-workspace result. All global completion flags remain false.
