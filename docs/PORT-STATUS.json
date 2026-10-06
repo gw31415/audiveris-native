@@ -304,6 +304,12 @@
       "unit": "createNewVoices known-chord-time branch: ordinary HIGH Voice ID allocation and live SIG ownership, without reassigning already-voiced chords",
       "limits": "two original actual-object controls compared to an image-derived owned Graph; automatic polyphonic image/export not claimed; EQUAL/closest sibling time inference, previous-slot merge, other Voice kinds and general new-Voice export remain pending",
       "evidence": "evidence/musicxml-new-voice-known-time/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "nonimplicit inferSlotTimes/applyMapping unknown active clock: preserve null time and actual Voice ownership, propagate original measure abnormal state; known narrow time stops without apply",
+      "limits": "two declared original method controls and image-derived owned Graph comparison; unknown-state MusicXML success not claimed, writer refuses unresolved clocks; new-Voice sibling/merge, tuplets and shared stacks remain pending",
+      "evidence": "evidence/musicxml-mapping-unknown-clock/VALIDATION.json"
     }
   ],
   "function_groups": [

@@ -567,7 +567,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 let mut step = crate::music_rookie_mapping::Context {
                     graph: &mut graph,
                     voices: &mut m.voices,
-                    measures: &m.measures,
+                    measures: &mut m.measures,
                     chords: &chords,
                     measure_index: mi,
                     compounds: &compounds,
@@ -840,6 +840,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             // single-Voice writer; general Voice export is a later dependency.
             if c["voice"] != voice_id {
                 return Err("musicxml_general_new_voice_export_pending".into());
+            }
+            // The original mapper can retain an abnormal Voice with no clock.
+            // Serial export must not manufacture a time for that state.
+            if c["time_offset"].is_null() {
+                return Err("musicxml_unknown_voice_clock_pending".into());
             }
             c["duration"] = if measure_rest {
                 Value::Null

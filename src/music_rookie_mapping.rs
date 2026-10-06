@@ -91,12 +91,14 @@ struct ValidationInput {
     active_ends: BTreeMap<usize, Option<u32>>,
     rookie_durations: BTreeMap<usize, u32>,
     expected: Option<u32>,
+    abnormal: bool,
 }
 struct ValidatedMapping {
     mapping: Option<Mapping>,
     black: Vec<Pair>,
     narrow: Vec<NarrowTime>,
     applied: bool,
+    abnormal: bool,
 }
 fn decision(input: ValidationInput, mapping: Option<Mapping>, applied: bool) -> ValidatedMapping {
     ValidatedMapping {
@@ -104,6 +106,7 @@ fn decision(input: ValidationInput, mapping: Option<Mapping>, applied: bool) -> 
         black: input.black,
         narrow: input.narrow,
         applied,
+        abnormal: input.abnormal,
     }
 }
 fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, String> {
@@ -166,12 +169,10 @@ fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, Str
                     let Some(pair) = map.pairs.iter().find(|p| p.rookie == *rookie) else {
                         continue;
                     };
-                    let end = input
-                        .active_ends
-                        .get(&pair.active)
-                        .copied()
-                        .flatten()
-                        .ok_or("music_mapping_unknown_active_time_analysis_pending")?;
+                    let Some(end) = input.active_ends.get(&pair.active).copied().flatten() else {
+                        input.abnormal = true;
+                        continue;
+                    };
                     inferred.entry(end).or_default().push(pair.rookie);
                 }
                 narrow.time_offset = inferred.keys().next().copied();
@@ -314,7 +315,7 @@ fn mapping(
 pub(crate) struct Context<'a> {
     pub graph: &'a mut Graph,
     pub voices: &'a mut Vec<Voice>,
-    pub measures: &'a [Measure],
+    pub measures: &'a mut [Measure],
     pub chords: &'a [&'a crate::music_measures::Chord],
     pub measure_index: usize,
     pub compounds: &'a [CompoundSlot],
@@ -592,7 +593,9 @@ impl Context<'_> {
                 active_ends: active_ends.clone(),
                 rookie_durations,
                 expected: Some(self.expected),
+                abnormal: self.measures[self.measure_index].timing.abnormal,
             })?;
+            self.measures[self.measure_index].timing.abnormal |= validated.abnormal;
             validation = json!({"black":validated.black,"applied":validated.applied});
             for narrow in validated.narrow {
                 self.slot_times.set(narrow.id, narrow.time_offset)?;
@@ -600,8 +603,7 @@ impl Context<'_> {
             if let Some(map) = validated.mapping {
                 if validated.applied {
                     for pair in &map.pairs {
-                        let end = active_ends[&pair.active]
-                            .ok_or("music_mapping_active_time_required")?;
+                        let end = active_ends[&pair.active];
                         let own = self
                             .voices
                             .iter()
@@ -617,13 +619,15 @@ impl Context<'_> {
                             pair.rookie,
                             own,
                         )?;
-                        crate::music_chord_time::set_and_push(
-                            self.graph,
-                            self.voices,
-                            self.measures,
-                            pair.rookie,
-                            Some(end),
-                        )?;
+                        if let Some(end) = end {
+                            crate::music_chord_time::set_and_push(
+                                self.graph,
+                                self.voices,
+                                self.measures,
+                                pair.rookie,
+                                Some(end),
+                            )?;
+                        }
                     }
                 }
                 result = serde_json::to_value(map).unwrap();
@@ -726,6 +730,7 @@ mod tests {
                 })
                 .collect(),
             expected: ticks(&input["expected"]),
+            abnormal: false,
         }
     }
     #[test]
@@ -733,6 +738,7 @@ mod tests {
         let originals = [
             include_str!("../fixtures/official-mapping-retry/observed.json"),
             include_str!("../fixtures/official-mapping-time-analysis/observed.json"),
+            include_str!("../fixtures/official-mapping-unknown-clock/observed.json"),
         ];
         for case in originals.iter().flat_map(|s| {
             let original: Value = serde_json::from_str(s).unwrap();
@@ -753,20 +759,19 @@ mod tests {
                 })
                 .collect::<Vec<_>>();
             let narrow=result.narrow.iter().map(|n|json!({"id":n.id,"time_offset":n.time_offset.map(crate::music_time::format_ticks)})).collect::<Vec<_>>();
-            assert_eq!(
-                json!({"mapping":result.mapping,"black":result.black,"remaining_rookies":remaining,"narrow":narrow}),
-                case["output"],
-                "{}",
-                case["name"]
-            );
+            let mut output = json!({"mapping":result.mapping,"black":result.black,"remaining_rookies":remaining,"narrow":narrow});
+            if case["output"].get("measure_abnormal").is_some() {
+                output["measure_abnormal"] = json!(result.abnormal);
+            }
+            assert_eq!(output, case["output"], "{}", case["name"]);
         }
     }
     #[test]
-    fn unmapped_known_chord_gets_an_owned_voice_without_reassigning_existing_members() {
-        let oracle: Value = serde_json::from_str(include_str!(
-            "../fixtures/official-new-voice-known-time/observed.json"
-        ))
-        .unwrap();
+    fn owned_mapping_preserves_original_voice_members_and_unknown_times() {
+        let originals = [
+            include_str!("../fixtures/official-new-voice-known-time/observed.json"),
+            include_str!("../fixtures/official-mapping-unknown-clock/observed.json"),
+        ];
         let image = crate::GrayImage::decode(include_bytes!(
             "../fixtures/official-image-musicxml-cross-system/beam-two-systems.png"
         ))
@@ -774,7 +779,11 @@ mod tests {
         let mut export = crate::music_xml::recognize(&image).unwrap();
         let owner = &mut export.owner;
         let mi = 1;
-        for case in oracle["controls"].as_array().unwrap() {
+        for case in originals.iter().flat_map(|s| {
+            let oracle: Value = serde_json::from_str(s).unwrap();
+            oracle["controls"].as_array().unwrap().clone()
+        }) {
+            let unknown_active = case.get("original_owner_state").is_some();
             for i in 0..owner.measures.len() {
                 crate::music_voices::reset_rhythm(
                     &mut owner.owner.graph,
@@ -791,10 +800,12 @@ mod tests {
                 .filter(|c| c.measure == mi)
                 .collect::<Vec<_>>();
             chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
-            assert_eq!(
-                json!(chords.iter().map(|c| c.bounds).collect::<Vec<_>>()),
-                case["chord_bounds"]
-            );
+            if !unknown_active {
+                assert_eq!(
+                    json!(chords.iter().map(|c| c.bounds).collect::<Vec<_>>()),
+                    case["chord_bounds"]
+                );
+            }
             let (narrow, wide) = crate::music_measure_slots::from_owned(
                 &owner.owner.graph,
                 &owner.measures[mi],
@@ -827,7 +838,7 @@ mod tests {
                 &owner.voices,
                 &owner.measures,
                 chords[0].id,
-                Some(12),
+                if unknown_active { None } else { Some(12) },
             )
             .unwrap();
             crate::music_chord_time::set_and_push(
@@ -835,7 +846,7 @@ mod tests {
                 &owner.voices,
                 &owner.measures,
                 chords[2].id,
-                Some(4),
+                if unknown_active { None } else { Some(4) },
             )
             .unwrap();
             if case["name"] == "already-voiced" {
@@ -849,6 +860,14 @@ mod tests {
                 .unwrap();
             }
             let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
+            if unknown_active {
+                let time = case["input"]["narrow"][0]["time_offset"]
+                    .as_str()
+                    .map(crate::music_time::parse_ticks)
+                    .transpose()
+                    .unwrap();
+                slot_times.set(compounds[2].members[0].id, time).unwrap();
+            }
             let snapshot = owner.owner.graph.snapshot();
             let clef = snapshot["inters"]
                 .as_array()
@@ -860,7 +879,7 @@ mod tests {
             let step = Context {
                 graph: &mut owner.owner.graph,
                 voices: &mut owner.voices,
-                measures: &owner.measures,
+                measures: &mut owner.measures,
                 chords: &chords,
                 measure_index: mi,
                 compounds: &compounds,
@@ -870,22 +889,30 @@ mod tests {
                 lifetime: &lifetime,
                 slot_times: &mut slot_times,
             }
-            .map_slot(&compounds[2])
-            .unwrap();
-            let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
-            for key in ["rookies", "actives"] {
+            .map_slot(&compounds[2]);
+            if case["name"] == "known-narrow-unknown-active" {
                 assert_eq!(
-                    json!(
-                        step[key]
-                            .as_array()
-                            .unwrap()
-                            .iter()
-                            .map(|id| ordinal(id.as_u64().unwrap() as usize))
-                            .collect::<Vec<_>>()
-                    ),
-                    case["input"][key]
+                    step.unwrap_err(),
+                    "music_mapping_new_voice_time_inference_pending"
                 );
+            } else {
+                let step = step.unwrap();
+                let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
+                for key in ["rookies", "actives"] {
+                    assert_eq!(
+                        json!(
+                            step[key]
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .map(|id| ordinal(id.as_u64().unwrap() as usize))
+                                .collect::<Vec<_>>()
+                        ),
+                        case["input"][key]
+                    );
+                }
             }
+            let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
             let current = owner.owner.graph.snapshot();
             let rookie = node(&current, chords[2].id).unwrap();
             let voices = owner.voices.iter().filter(|v|v.measure==mi).map(|v|
@@ -893,7 +920,11 @@ mod tests {
             ).collect::<Vec<_>>();
             assert_eq!(
                 json!({"voices":voices,"rookie_voice":rookie["voice"],"rookie_time":rookie["time_offset"],"abnormal":owner.measures[mi].timing.abnormal}),
-                case["output"],
+                case[if unknown_active {
+                    "original_owner_state"
+                } else {
+                    "output"
+                }],
                 "{}",
                 case["name"]
             );

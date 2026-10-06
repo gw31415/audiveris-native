@@ -1573,3 +1573,20 @@ its owner with the initial Voice ID. EQUAL/closest-sibling time inference,
 previous-slot merge, general Voice export, other Voice kinds, tuplets/shared stacks
 and complete correction/cleaner remain dependencies. All global flags stay false;
 full595 still refers to the historical `95e191b` run.
+
+### Unknown active clock and abnormal state (2026-10-06)
+
+Original `inferSlotTimes/applyMapping` can assign an existing Voice while leaving
+a chord time unknown and marking its measure abnormal. The native mapper now
+preserves that state instead of discarding the original behavior. If the narrow
+time is already known, an unknown active end stops before applying the mapping;
+remaining unknown-time new-Voice inference stays explicitly pending.
+
+Two original method controls compare both branches, including Voice membership,
+null clocks, unassigned rookies and abnormal state on an image-derived native
+Graph. These are negative/partial timing states, not successful MusicXML pages.
+The writer refuses an unresolved actual chord clock rather than synthesizing a
+serial onset. The three successful 36-event CLI examples remain unchanged; no
+new image acceptance is claimed. Sibling/previous-slot inference, general Voice
+export, full Rational/tuplets and shared stacks still need connection. Global
+completion flags remain false; full595 remains the old `95e191b` result.
