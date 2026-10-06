@@ -1,0 +1,263 @@
+{
+  "scope": "two declared original ordinary analyzeChords/HeadHead/INCOMPATIBLE/intersected-unlinked-head conditions; not raster or whole reduction parity",
+  "cases": [
+    {
+      "name": "same-duration",
+      "nodes": [
+        {
+          "label": "head0",
+          "kind": "HeadInter",
+          "shape": "NOTEHEAD_BLACK",
+          "bounds": [
+            389,
+            66,
+            12,
+            8
+          ],
+          "grade": 0.4,
+          "pitch": 0.0,
+          "staff_id": 1
+        },
+        {
+          "label": "head1",
+          "kind": "HeadInter",
+          "shape": "NOTEHEAD_BLACK",
+          "bounds": [
+            389,
+            52,
+            12,
+            8
+          ],
+          "grade": 0.8,
+          "pitch": 0.0,
+          "staff_id": 1
+        },
+        {
+          "label": "head2",
+          "kind": "HeadInter",
+          "shape": "NOTEHEAD_BLACK",
+          "bounds": [
+            400,
+            52,
+            12,
+            8
+          ],
+          "grade": 0.6,
+          "pitch": 0.0,
+          "staff_id": 1
+        },
+        {
+          "label": "stem",
+          "kind": "StemInter",
+          "shape": "STEM",
+          "bounds": [
+            400,
+            40,
+            1,
+            31
+          ],
+          "median": [
+            400.5,
+            40.0,
+            400.5,
+            71.0
+          ],
+          "grade": 0.749857837377707
+        }
+      ],
+      "head_connections": [
+        {
+          "kind": "HeadStemRelation",
+          "source": "head0",
+          "target": "stem",
+          "head_side": "RIGHT",
+          "extension_point": [
+            400.5,
+            70.0
+          ],
+          "grade": 1.0,
+          "source_ratio": 5.0,
+          "target_ratio": 11.0,
+          "invading": true
+        },
+        {
+          "kind": "HeadStemRelation",
+          "source": "head1",
+          "target": "stem",
+          "head_side": "RIGHT",
+          "extension_point": [
+            400.5,
+            56.0
+          ],
+          "grade": 1.0,
+          "source_ratio": 5.0,
+          "target_ratio": 11.0,
+          "invading": true
+        }
+      ],
+      "new_relations": [
+        {
+          "kind": "Exclusion",
+          "source": "head2",
+          "target": "stem",
+          "cause": "OVERLAP"
+        },
+        {
+          "kind": "HeadHeadRelation",
+          "source": "head0",
+          "target": "head1",
+          "grade": 1.0,
+          "source_ratio": 1.75,
+          "target_ratio": 1.75
+        }
+      ],
+      "contextual": [
+        {
+          "label": "head0",
+          "contextual_grade": 0.7540754352255642
+        },
+        {
+          "label": "head1",
+          "contextual_grade": 0.9450480772664299
+        },
+        {
+          "label": "head2",
+          "contextual_grade": 0.6
+        },
+        {
+          "label": "stem",
+          "contextual_grade": 0.9749815157057711
+        }
+      ],
+      "repeat_is_idempotent": true
+    },
+    {
+      "name": "different-duration",
+      "nodes": [
+        {
+          "label": "head0",
+          "kind": "HeadInter",
+          "shape": "NOTEHEAD_BLACK",
+          "bounds": [
+            389,
+            66,
+            12,
+            8
+          ],
+          "grade": 0.4,
+          "pitch": 0.0,
+          "staff_id": 1
+        },
+        {
+          "label": "head1",
+          "kind": "HeadInter",
+          "shape": "NOTEHEAD_VOID",
+          "bounds": [
+            389,
+            52,
+            12,
+            8
+          ],
+          "grade": 0.8,
+          "pitch": 0.0,
+          "staff_id": 1
+        },
+        {
+          "label": "head2",
+          "kind": "HeadInter",
+          "shape": "NOTEHEAD_BLACK",
+          "bounds": [
+            400,
+            52,
+            12,
+            8
+          ],
+          "grade": 0.6,
+          "pitch": 0.0,
+          "staff_id": 1
+        },
+        {
+          "label": "stem",
+          "kind": "StemInter",
+          "shape": "STEM",
+          "bounds": [
+            400,
+            40,
+            1,
+            31
+          ],
+          "median": [
+            400.5,
+            40.0,
+            400.5,
+            71.0
+          ],
+          "grade": 0.749857837377707
+        }
+      ],
+      "head_connections": [
+        {
+          "kind": "HeadStemRelation",
+          "source": "head0",
+          "target": "stem",
+          "head_side": "RIGHT",
+          "extension_point": [
+            400.5,
+            70.0
+          ],
+          "grade": 1.0,
+          "source_ratio": 5.0,
+          "target_ratio": 11.0,
+          "invading": true
+        },
+        {
+          "kind": "HeadStemRelation",
+          "source": "head1",
+          "target": "stem",
+          "head_side": "RIGHT",
+          "extension_point": [
+            400.5,
+            56.0
+          ],
+          "grade": 1.0,
+          "source_ratio": 5.0,
+          "target_ratio": 11.0,
+          "invading": true
+        }
+      ],
+      "new_relations": [
+        {
+          "kind": "Exclusion",
+          "source": "head2",
+          "target": "stem",
+          "cause": "OVERLAP"
+        },
+        {
+          "kind": "Exclusion",
+          "source": "head0",
+          "target": "head1",
+          "cause": "INCOMPATIBLE"
+        }
+      ],
+      "contextual": [
+        {
+          "label": "head0",
+          "contextual_grade": 0.7272445268121358
+        },
+        {
+          "label": "head1",
+          "contextual_grade": 0.941168598940002
+        },
+        {
+          "label": "head2",
+          "contextual_grade": 0.6
+        },
+        {
+          "label": "stem",
+          "contextual_grade": 0.9642595985405944
+        }
+      ],
+      "repeat_is_idempotent": true
+    }
+  ]
+}

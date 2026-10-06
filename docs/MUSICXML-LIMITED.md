@@ -749,3 +749,20 @@ Full overlap discovery, chord prolog/late checks, all support and frozen/merged
 conditions, full LINKS/InterCleaner/epilog and nonUI feature parity are pending.
 Completion flags stay false. Latest full580 belongs to c270552; current affected
 checks are recorded separately without claiming a new full-workspace run.
+
+## Ordinary chord compatibility before weak purge
+
+The image-owned foundation adapter now runs ordinary `analyzeChords` prolog
+before its first weak purge and repeats it at the original late boundary,
+followed by exclusion reduction/contextualize/purge. Good intrinsic stems add
+same-duration HeadHead support, incompatible black/void-head duration exclusions
+and exclusions for intersected unlinked heads (median intersection plus
+inclusive0.02 box IOU). Contact insertion retains canonical native IDs and
+refuses replacing support with exclusion or the reverse.
+
+Two declared original SIG conditions compare created relationships and every
+contextual grade; repeated analysis adds no duplicate relationship. This is
+distinct from full-image chord recognition/export. Existing CLI commands and
+inputs stay available; no general chord/polyphony/font/scan admission is claimed.
+Small/percussion/stemless/cue size branches, general overlap discovery, full
+LINKS/lyrics/Part cleaner and epilog remain implementation targets.

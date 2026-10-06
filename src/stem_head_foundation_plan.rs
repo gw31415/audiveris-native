@@ -492,6 +492,7 @@ fn reduce(g: &mut Value, events: &mut Vec<Event>) {
                             | "BeamStemRelation"
                             | "BeamHeadRelation"
                             | "BeamBeamRelation"
+                            | "HeadHeadRelation"
                     )
                 ) && (r["source"] == weak || r["target"] == weak)
             })
@@ -592,7 +593,7 @@ fn count(g: &Value) -> Value {
     let nodes = g["inters"].as_array().unwrap();
     json!({"heads":nodes.iter().filter(|n|n["kind"]=="HeadInter").count(),"stems":nodes.iter().filter(|n|n["kind"]=="StemInter").count(),"head_stem_relations":g["relations"].as_array().unwrap().iter().filter(|r|r["kind"]=="HeadStemRelation").count()})
 }
-fn validate(input: &Value) -> Result<(), String> {
+pub(crate) fn validate(input: &Value) -> Result<(), String> {
     let nodes = input["inters"]
         .as_array()
         .ok_or("missing_native_foundation_nodes")?;

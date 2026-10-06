@@ -173,7 +173,6 @@ mod tests {
             2
         );
         let o = crate::stem_image_head_linking::continue_process(o).unwrap();
-        let o = crate::stem_foundation_purge::continue_purge(o).unwrap();
         let o = finalize_stems(crate::stem_foundation_consistency::continue_reduction(o).unwrap())
             .unwrap();
         let m = crate::music_measures::continue_measures(o).unwrap();

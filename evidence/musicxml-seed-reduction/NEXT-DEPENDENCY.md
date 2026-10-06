@@ -8,16 +8,19 @@ head/beam/ledger checks repeated to structural stability before MusicXML admissi
 Original declared SIG controls and saved HEADS seed lists are separate from the
 retained same-image11/20-event MusicXML comparisons.
 
-1. `SigReducer.reduce` overlap discovery, `analyzeChords` prolog/late and full
-   predicates/support remain pending. The ordinary six foundation check order
+1. `SigReducer.reduce` overlap discovery and full predicates/support remain pending.
+   Ordinary black/void `analyzeChords` prolog/late is now connected with
+   HeadHead support, incompatible durations and intersected unlinked heads. The ordinary six foundation check order
    (ending-head/head/hook/beam/ledger/stem), contextualize/owned weak purge after
    each check, modification-driven inner passes and post-consistency exclusion /
    weak-or-exclusion driven epochs are now connected in the image CLI.
    The old head-only prefix remains only at the diagnostic comparison boundary.
    The original adapter sequence is verified separately from full reduceFoundations;
-   its `analyzeChords` prolog/late must be connected before complete reduction is claimed.
-2. `detectOverlaps`, `analyzeChords`, head/head support and duration/size
-   exclusions, frozen/implicit/header predicates and full SIG contextualization.
+   broader chord shapes/size predicates still prevent a complete reduction claim.
+2. `detectOverlaps`, remaining `analyzeChords` shape/size exclusions,
+   frozen/implicit/header predicates and full SIG contextualization. Ordinary
+   head/head support and black/void duration exclusions are connected; small,
+   percussion and stemless/cue contracts remain pending.
    Cue/SmallBeam, percussion, stemless heads, shared ledgers and Flag/Tremolo
    contributions to general StemInter.computeDirection need their dependencies.
 3. `AdapterForLinks` consistency checks for alters, time signatures, articulations,

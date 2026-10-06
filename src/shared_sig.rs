@@ -1108,6 +1108,65 @@ impl Graph {
         Ok((next, remove))
     }
 
+    /// Original canonical-ID insertSupport/insertExclusion for the recognized
+    /// ordinary chord subset. Existing support/exclusion prevents its opposite.
+    pub(crate) fn insert_foundation_contact(
+        &mut self,
+        a: Key,
+        b: Key,
+        kind: &str,
+        cause: Option<&str>,
+    ) -> Result<bool, String> {
+        let ai = self.endpoint(a)?;
+        let bi = self.endpoint(b)?;
+        if a.system != b.system || ai == bi {
+            return Err("invalid_foundation_contact_endpoints".into());
+        }
+        let ak = self.vertices[ai - 1].data["kind"].as_str();
+        let bk = self.vertices[bi - 1].data["kind"].as_str();
+        let valid = match kind {
+            "HeadHeadRelation" => {
+                ak == Some("HeadInter") && bk == Some("HeadInter") && cause.is_none()
+            }
+            "Exclusion" => {
+                matches!(cause, Some("OVERLAP" | "INCOMPATIBLE"))
+                    && ((ak == Some("HeadInter") && matches!(bk, Some("HeadInter" | "StemInter")))
+                        || (bk == Some("HeadInter")
+                            && matches!(ak, Some("HeadInter" | "StemInter"))))
+            }
+            _ => false,
+        };
+        if !valid {
+            return Err("unsupported_foundation_contact_kind".into());
+        }
+        for edge in self.edges.iter().filter(|e| {
+            !e.removed
+                && ((e.key.source == ai && e.key.target == bi)
+                    || (e.key.source == bi && e.key.target == ai))
+        }) {
+            if edge.key.kind == kind
+                || edge.key.kind == "Exclusion"
+                || (kind == "Exclusion"
+                    && matches!(
+                        edge.key.kind.as_str(),
+                        "HeadStemRelation"
+                            | "HeadHeadRelation"
+                            | "BeamStemRelation"
+                            | "BeamHeadRelation"
+                    ))
+            {
+                return Ok(false);
+            }
+        }
+        let (source, target) = if ai < bi { (a, b) } else { (b, a) };
+        let mut record = json!({"kind":kind});
+        if let Some(c) = cause {
+            record["cause"] = json!(c);
+        }
+        self.relations(a.system, Phase::Head, vec![(source, target, record)])?;
+        Ok(true)
+    }
+
     // Apply an automatic plan to the private identity store, preserving all keys
     // and tombstones. The owner locks canonical cache states before this call.
     pub(crate) fn apply_head_foundation_plan(

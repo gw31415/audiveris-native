@@ -114,6 +114,7 @@ fn contextualize_head_stem_flags_impl(
                     | "BeamStemRelation"
                     | "BeamHeadRelation"
                     | "BeamBeamRelation"
+                    | "HeadHeadRelation"
                     | "Exclusion"
                     | "NoExclusion"
             )
@@ -146,6 +147,15 @@ fn contextualize_head_stem_flags_impl(
                 }
             }
         }
+        if r["kind"] == "HeadHeadRelation"
+            && ["source", "target"].iter().any(|side| {
+                !inters
+                    .iter()
+                    .any(|n| n["id"] == r[*side] && n["kind"] == "HeadInter")
+            })
+        {
+            return Err("invalid_head_head_context_endpoint_kind".into());
+        }
         if matches!(
             r["kind"].as_str(),
             Some("HeadStemRelation" | "BeamStemRelation" | "BeamHeadRelation")
@@ -158,12 +168,15 @@ fn contextualize_head_stem_flags_impl(
             }
         }
     }
-    // BeamBeamRelation extends Support with default grade1, source/target
-    // coefficient3. Adapt the raw existing group support without changing its
+    // BeamBeam/HeadHead extend Support with default grade1, source/target
+    // coefficients3/0.75. Adapt raw metadata without changing its
     // saved metadata or accepting arbitrary relation kinds/endpoints.
     let mut adapted = relations.to_vec();
     for r in &mut adapted {
-        if r["kind"] == "BeamBeamRelation" {
+        if matches!(
+            r["kind"].as_str(),
+            Some("BeamBeamRelation" | "HeadHeadRelation")
+        ) {
             let grade = match r.get("grade") {
                 None => 1.,
                 Some(v) => v.as_f64().ok_or("invalid_beam_beam_context_grade")?,
@@ -171,7 +184,12 @@ fn contextualize_head_stem_flags_impl(
             if !(0.0..=1.0).contains(&grade) {
                 return Err("invalid_beam_beam_context_grade".into());
             }
-            r["source_ratio"] = json!(1. + 3. * grade);
+            let coefficient = if r["kind"] == "HeadHeadRelation" {
+                0.75
+            } else {
+                3.
+            };
+            r["source_ratio"] = json!(1. + coefficient * grade);
             r["target_ratio"] = r["source_ratio"].clone();
         }
     }
@@ -185,6 +203,7 @@ fn contextualize_head_stem_flags_impl(
                 "BeamStemRelation",
                 "BeamHeadRelation",
                 "BeamBeamRelation",
+                "HeadHeadRelation",
                 "FlagStemRelation",
             ]
         } else {
@@ -193,6 +212,7 @@ fn contextualize_head_stem_flags_impl(
                 "BeamStemRelation",
                 "BeamHeadRelation",
                 "BeamBeamRelation",
+                "HeadHeadRelation",
             ]
         },
         "unsupported_head_stem_context_partner_limit_16",
@@ -383,6 +403,14 @@ mod head_stem_tests {
         let invalid_grade = json!({"kind":"BeamBeamRelation","source":1,"target":2,"grade":1.1});
         let before = pair.clone();
         assert!(contextualize_head_stems(&mut pair, &[invalid_grade]).is_err());
+        assert_eq!(pair, before);
+        assert!(
+            contextualize_head_stems(
+                &mut pair,
+                &[json!({"kind":"HeadHeadRelation","source":1,"target":2})]
+            )
+            .is_err()
+        );
         assert_eq!(pair, before);
         pair[1]["kind"] = json!("HeadInter");
         let before = pair.clone();

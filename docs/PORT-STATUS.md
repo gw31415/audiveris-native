@@ -26,7 +26,7 @@
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
 | STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを比較。実free-glyph所属を維持したepilog bar領域seed再整理も接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
-| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。全Inter support、overlap/chord prolog/late、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
+| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。全Inter support、一般overlap、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
@@ -47,7 +47,7 @@
 
 ## 実用CLIへ広げる依存順
 
-現在の直近工程はordinary foundationsの6チェック順・各weak purge・後続exclusion/epoch反復です。次の依存は`SigReducer.analyzeChords`のprolog/late互換性・supportと一般overlapです。HEADER・短音価の下記段階は履歴として保持し、未接続は各機能表で示します。
+現在の直近工程はordinary foundationsの6チェック順・各weak purge・後続exclusion/epoch反復と通常headの`analyzeChords` prolog/lateです。次の依存は一般overlap・残る形/size互換性とLINKSです。HEADER・短音価の下記段階は履歴として保持し、未接続は各機能表で示します。
 
 `key_state.rs`/`time_column.rs`の固定KeyInter/TimePairを`music_headers.rs`で実SIG/実glyphへ接続し、`music_symbols.rs`のPageCleanerへ伝播しています。`music_xml.rs`のalter=0・拍子4/4固定は撤去し、調号と選択済み拍子に由来する音高・小節期待長を使います。原版成功のG-major/F♯、固定4/4、固定3/4の画像を比較済みです。G/F/Cの音高/exportは汎用接続し、bass/alto画像も比較しました。次の切断箇所は他clefの全画像条件、cut/その他TimeWholeの全画像比較、臨時記号・途中調号/拍子変更、分数quarter単位のリズムです。原版`HeadInter.getAccidental/getMeasureAccidental/getAlteration`、`PageRhythm.populateTimeSignatures`、`PartwiseBuilder.processTimes/processKeys/processNote`の依存を順に接続します。
 
@@ -307,3 +307,22 @@ nativeの実画像ownerへ宣言条件を追加した検証は、画像からこ
 `analyzeChords`のprolog/late、全形support、merged staff/frozen/implicitと
 LINKS各記号、lyrics/PartのInterCleaner、完全epilogは未完。64回の各反復budgetも
 現ガードであり全同等性ではありません。[次の具体的依存](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md)。
+
+## ordinary chord互換性とsupportのprolog/late（今回）
+
+原版`SigReducer.analyzeChords`の通常black/void head部分を接続。intrinsic gradeが
+good（>=0.35）のstemをgrade順に処理し、medianが交差してbox IOU>=0.02の
+未接続headへOVERLAP、同stemの異音価headへINCOMPATIBLE、同音価head同士へ
+HeadHeadRelationを登録します。原版のduration bucket/edge/member順、canonical ID、
+既存support/exclusionを相互に上書きしない規則を保持します。
+
+HeadHeadRelationの原版係数0.75/default grade1をSIG contextualizationに接続。
+画像CLIは最初のweak purge前にprologを実行し、lateにはanalyzeChords→exclusion整理→
+contextualize/purgeを配置。古い診断CLIの観測境界は維持。単一入力の記号位置で
+分岐せず実SIGの接続とgeometry/shapeに基づきます。
+
+原版2宣言SIG条件（同音価/異音価、いずれも未接続の交差headを含む）の
+新関係・全contextual grade・二重登録しない結果がnativeと一致しました。
+これは同じ実画像から和音を全自動認識・exportできたという主張ではありません。
+small/percussion/stemless/cueのsize/duration枝、一般overlapと全cleaner/epilogは
+依然未完です。全非UI機能は最終目標に保持します。

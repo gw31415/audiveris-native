@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original AdapterForFoundations check order on the actual image owner.
-//! Overlap discovery, chord prolog/late checks and full SIG parity are pending.
+//! Ordinary chord prolog/late is connected; general overlap/full SIG are pending.
 use crate::{stem_head_foundation_plan as plan, stem_image_owned::OwnedItems};
 use serde_json::{Value, json};
 
@@ -20,12 +20,20 @@ fn contextualize_and_purge(owned: &mut OwnedItems) -> Result<(Vec<usize>, Vec<Va
 
 /// Consume native ownership, without caller-selected candidates or graph import.
 pub(crate) fn continue_reduction(mut owned: OwnedItems) -> Result<OwnedItems, String> {
-    if owned.prepared.report["schema"] != "audiveris-native.stem-foundation-weak-purge.v1"
-        || owned.prepared.report["shared_sig"] != owned.graph.snapshot()
+    if !matches!(
+        owned.prepared.report["schema"].as_str(),
+        Some(
+            "audiveris-native.stem-foundation-weak-purge.v1"
+                | "audiveris-native.stem-image-head-linking.v1"
+        )
+    ) || owned.prepared.report["shared_sig"] != owned.graph.snapshot()
     {
         return Err("actual_weak_purged_image_owner_required".into());
     }
     let weak_purge = std::mem::take(&mut owned.prepared.report);
+    owned.graph.contextualize_head_stems()?;
+    // Original adapter.prolog happens before the epoch's first weak purge.
+    let chord_prolog = crate::stem_chord_consistency::analyze(&mut owned.graph)?;
     let mut epochs = Vec::new();
     let mut removed_cached_stems = Vec::new();
     let mut removed_beams = Vec::new();
@@ -124,9 +132,31 @@ pub(crate) fn continue_reduction(mut owned: OwnedItems) -> Result<OwnedItems, St
             .collect::<Vec<_>>();
         let (_, stems) = apply(&mut owned, p)?;
         removed_cached_stems.extend(stems);
-        let changed = !deleted.is_empty() || !reduced.is_empty();
+        // Original late consistency: analyzeChords, reduceExclusions, then
+        // contextualizeAndPurge. Its modification return is zero; deletions
+        // determine the next epoch rather than a separate structural loop.
+        let chord_late = crate::stem_chord_consistency::analyze(&mut owned.graph)?;
+        let late_plan = plan::prepare_exclusions(&owned.graph.snapshot())?;
+        let late_reduced = late_plan
+            .events
+            .iter()
+            .filter_map(|e| {
+                if let plan::Event::RemoveVertex(id) = e {
+                    Some(*id)
+                } else {
+                    None
+                }
+            })
+            .collect::<Vec<_>>();
+        let (_, stems) = apply(&mut owned, late_plan)?;
+        removed_cached_stems.extend(stems);
+        let (late_purge, stems) = contextualize_and_purge(&mut owned)?;
+        removed_cached_stems.extend(stems);
+        deleted.extend(late_purge.iter().copied());
+        let changed = !deleted.is_empty() || !reduced.is_empty() || !late_reduced.is_empty();
         epochs.push(json!({"epoch":epoch+1,"initial_purge":initial_purge,
-            "passes":passes,"deleted_weak_vertex_ids":deleted,"reduced_vertex_ids":reduced}));
+            "passes":passes,"deleted_weak_vertex_ids":deleted,"reduced_vertex_ids":reduced,
+            "chord_late":chord_late,"late_reduced_vertex_ids":late_reduced,"late_purge":late_purge}));
         if !changed {
             finished = true;
             break;
@@ -142,14 +172,27 @@ pub(crate) fn continue_reduction(mut owned: OwnedItems) -> Result<OwnedItems, St
         "corner_count":weak_purge["corner_count"],"weak_purge":weak_purge,
         "shared_sig":owned.graph.snapshot(),"removed_cached_stems":removed_cached_stems,
         "orphan_ledger_consistency":ledger_checks,
-        "ordered_foundation_consistency":{"epochs":epochs,"removed_beam_ids":removed_beams,
+        "ordered_foundation_consistency":{"epochs":epochs,"removed_beam_ids":removed_beams,"chord_prolog":chord_prolog,
             "check_order_and_per_check_purge_connected":true,
-            "original_overlap_discovery_and_chord_prolog_late_connected":false,
+            "original_general_overlap_discovery_connected":false,
+            "ordinary_analyzeChords_prolog_late_connected":true,
             "scope":"original six AdapterForFoundations checks/contextualizeAndPurge and post-consistency exclusion/epoch order, retained ordinary head/beam/ledger support subset; full reduceFoundations pending"},
         "actual_live_Graph_and_cache_updated":true,
         "heads_complete":false,"stems_complete":false,"musicxml_complete":false,
         "epilog_complete":false,"automatic_raster_pipeline_complete":false
     });
+    if owned.prepared.report["weak_purge"]["schema"]
+        == "audiveris-native.stem-image-head-linking.v1"
+    {
+        let linked = owned
+            .prepared
+            .report
+            .as_object_mut()
+            .unwrap()
+            .remove("weak_purge")
+            .unwrap();
+        owned.prepared.report["linked_head_stems"] = linked;
+    }
     owned.prepared.report["header_diatonic_pitch"] = crate::head_musical_pitch::header_candidates(
         &owned.graph.snapshot(),
         &owned.upstream_report,

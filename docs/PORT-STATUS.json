@@ -156,7 +156,7 @@
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
       "status": "partial",
-      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。全Inter support、overlap/chord prolog/late、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
+      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。全Inter support、一般overlap、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
     },
     {
       "original_function": "TEXTS / `TextsStep`, Tesseract, words/sentences",
@@ -215,7 +215,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "SigReducer.analyzeChords prolog/late and general overlap/support/predicates, then LINKS consistency and real lyrics/Part cleaner dependencies; preserve original nonUI parity goal",
+  "next_image_integration": "general foundation overlap/implicit/header predicates and broader chord shapes/size, then LINKS consistency/true augmentation/slur/lyrics and Part cleaner; no original nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -224,7 +224,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/musicxml-ordered-foundations/VALIDATION.json:34 affected tests/fmt/clippy passed, including Laura352/513 and prior MusicXML paths; last full580 remains c270552, no latest full582 claim",
+  "latest_targeted_validation": "evidence/musicxml-ordered-foundations/CHORD-VALIDATION.json:25 affected tests + prior cascade1 passed, fmt/clippy; two original declared ordinary chord controls. Last full580 remains c270552 until separate full receipt.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -235,7 +235,7 @@
     {
       "original": "SigReducer.reduce epoch/consistency/exclusion ordering",
       "status": "partial",
-      "remaining": "overlap discovery, chord prolog/late, general predicates/support and budgets"
+      "remaining": "general overlap discovery, full chord shape/size branches, general predicates/support and budgets"
     },
     {
       "original": "SigReducer.detectOverlaps for foundations",
@@ -244,8 +244,9 @@
     },
     {
       "original": "SigReducer.analyzeChords prolog/late",
-      "status": "unimplemented",
-      "remaining": "intersected unlinked heads, duration/size incompatibility, HeadHead support, cue/percussion branches"
+      "status": "partial",
+      "remaining": "small/percussion/stemless/cue/size/general chord branches",
+      "connected": "ordinary black/void duration incompatibility/HeadHead support and median+inclusive IOU unlinked-head overlap; prolog before first weak purge and original late order"
     },
     {
       "original": "SIGraph.contextualize/reduceExclusions/deleteWeakInters",
