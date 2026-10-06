@@ -393,6 +393,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         let clef_id = initial_clef["id"].as_u64();
         let voice = crate::music_voices::single(mi, measure, &chords, &m.voices)?;
         let voice_id = voice.id;
+        let voice_index = m.voices.len();
+        m.voices.push(voice);
         for chord in chords {
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());
@@ -636,19 +638,28 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             data["measure_number"] = json!(mi + 1);
             data["effective_clef_id"] = json!(cid);
             graph.vertex(key, data, false)?;
-            let mut c = nodes
+            let current_chords = graph.snapshot();
+            let mut c = current_chords["inters"]
+                .as_array()
+                .unwrap()
                 .iter()
                 .find(|n| n["id"] == chord.id)
                 .ok_or("musicxml_actual_SIG_chord_required")?
                 .clone();
             c["duration"] = json!(rational(duration));
             c["time_offset"] = json!(rational(offset));
-            c["voice"] = json!(voice_id);
             c["measure_number"] = json!(mi + 1);
             if !beams.is_empty() {
                 c["beam_ids"] = json!(beam_ids);
             }
             graph.vertex(chord.key, c, false)?;
+            crate::music_voices::assign_chord_voice(
+                &mut graph,
+                &mut m.voices,
+                &m.measures,
+                chord.id,
+                voice_index,
+            )?;
             let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":note_type,"dots":0,"effective_clef_id":cid});
             if !beam_marks.is_empty() {
                 event["beams"] = json!(beam_marks);
@@ -669,7 +680,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 quarters(expected_ticks)
             ));
         }
-        m.voices.push(voice);
         measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":rational(offset),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {

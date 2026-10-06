@@ -190,6 +190,11 @@
       "status": "implemented",
       "unit": "BeamGroup.getChords/getFirstChord/getVoice via retained actual Beam/BeamStem/ChordStem/BeamRest/RestInter ensemble graph",
       "limits": "two actual original saved groups and one declared extra BeamRest; automatic rest recognition, group/tie voice propagation, lyrics/full cleaner remain partial"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual ordinary chord Voice assignment -> BeamGroup same-Measure propagation -> retained Voice.addChord; called from native image export instead of direct voice field assignment",
+      "limits": "two original declared same/other-measure controls and image regressions; following ties, SmallChord/measure-rest/multiple-group tail order/general voice matching and lyrics remain pending"
     }
   ],
   "function_groups": [
@@ -299,7 +304,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "BeamGroup actual chord/Voice getters: original two saved groups and declared BeamRest compared; targeted tests/fmt/clippy recorded in evidence/musicxml-beam-group-voice; latest full595 remains source95e191b, not this later change.",
+  "latest_targeted_validation": "Actual chord -> BeamGroup same-measure Voice assignment wired into Linux image export; original declared BeamRest membership/order/boundary compared; targeted validation in evidence/musicxml-beam-group-propagation. Latest full595 remains earlier95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

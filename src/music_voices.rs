@@ -223,6 +223,129 @@ pub(crate) fn beam_groups(
     Ok(json!(rows))
 }
 
+/// AbstractChord.setVoice -> Voice.addChord -> BeamGroup.setVoice for the
+/// currently admitted ordinary, untied chord family. Identity is the retained
+/// Voice and its Measure, not a repeating numeric label. Unsupported tied or
+/// multiple-group ownership keeps an explicit guard rather than dropping it.
+pub(crate) fn assign_chord_voice(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measures: &[Measure],
+    chord_id: usize,
+    voice_index: usize,
+) -> Result<(), String> {
+    let voice = voices
+        .get(voice_index)
+        .ok_or("music_voice_owner_required")?;
+    let measure = measures
+        .get(voice.measure)
+        .ok_or("music_voice_measure_required")?;
+    let belongs = |n: &Value| {
+        n["origin"]["system"] == measure.system
+            && n["part_id"] == measure.part
+            && n["measure_index"] == measure.index
+    };
+    let snapshot = graph.snapshot();
+    let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+        .collect();
+    if !nodes.get(&chord_id).is_some_and(|n| belongs(n)) {
+        return Err("music_voice_owned_measure_chord_required".into());
+    }
+    let groups = beam_groups(graph, voices, measures)?;
+    let mut staged = graph.clone();
+    let mut retained = voices.clone();
+    let mut pending = vec![chord_id];
+    while let Some(id) = pending.pop() {
+        let original = nodes.get(&id).ok_or("music_voice_live_chord_required")?;
+        if !matches!(
+            original["kind"].as_str(),
+            Some("HeadChordInter" | "RestChordInter")
+        ) {
+            return Err("music_voice_ordinary_chord_required".into());
+        }
+        let key: crate::shared_sig::Key = serde_json::from_value(original["origin"].clone())
+            .map_err(|_| "music_voice_chord_origin_required")?;
+        let current = staged.snapshot();
+        let mut chord = current["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == id)
+            .ok_or("music_voice_live_chord_required")?
+            .clone();
+        if chord["voice"] == voice.id {
+            continue;
+        }
+        let members = snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "Containment" && e["source"] == id)
+            .map(|e| e["target"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        if members.is_empty()
+            || members.iter().any(|member| {
+                nodes.get(member).is_none_or(|n| {
+                    n["kind"] == "RestInter"
+                        && !matches!(n["shape"].as_str(), Some("QUARTER_REST" | "HALF_REST"))
+                })
+            })
+        {
+            return Err("music_voice_measure_rest_special_chord_pending".into());
+        }
+        if snapshot["relations"].as_array().unwrap().iter().any(|e| {
+            e["kind"] == "SlurHeadRelation"
+                && members
+                    .iter()
+                    .any(|id| e["source"] == *id || e["target"] == *id)
+        }) {
+            return Err("music_voice_following_tied_chords_pending".into());
+        }
+        chord["voice"] = json!(voice.id);
+        staged.vertex(key, chord, false)?;
+        let owned = &mut retained[voice_index];
+        if !owned.chord_ids.contains(&id) {
+            owned.chord_ids.push(id);
+            owned.chord_ids.sort_by_key(|id| {
+                nodes[id]["bounds"][0].as_i64().unwrap()
+                    + nodes[id]["bounds"][2].as_i64().unwrap() / 2
+            });
+        }
+        let linked = groups
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|g| {
+                g["chords"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|c| c["id"] == id)
+            })
+            .collect::<Vec<_>>();
+        if linked.len() > 1 {
+            return Err("music_voice_multiple_group_order_pending".into());
+        }
+        if let Some(group) = linked.first() {
+            // Same Measure object in original; native ownership is the exact
+            // system/part/local measure tuple. Never copy Voice1 across it.
+            for member in group["chords"].as_array().unwrap().iter().rev() {
+                let other = member["id"].as_u64().unwrap() as usize;
+                if belongs(nodes[&other]) {
+                    pending.push(other);
+                }
+            }
+        }
+    }
+    *graph = staged;
+    *voices = retained;
+    Ok(())
+}
+
 #[cfg(test)]
 mod group_tests {
     use super::*;
@@ -333,6 +456,117 @@ mod group_tests {
             .unwrap();
         let rows = beam_groups(&owner.owner.graph, &owner.voices, &owner.measures).unwrap();
         assert_eq!(comparable(rows), rest_control["groups"]);
+        let propagation: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-beam-group-voices/propagation.json"
+        ))
+        .unwrap();
+        let original_graph = owner.owner.graph.clone();
+        let original_voices = owner.voices.clone();
+        let first_id = original["groups"][0]["chords"][0]["bounds"].clone();
+        let first_id = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == first_id)
+            .unwrap()["id"]
+            .as_u64()
+            .unwrap() as usize;
+        let rest_id = original_graph.id(chord).unwrap();
+        let voice_index = original_voices
+            .iter()
+            .position(|v| v.chord_ids.contains(&first_id))
+            .unwrap();
+        let voice_rows = |g: &crate::shared_sig::Graph, v: &Voice| {
+            let snapshot = g.snapshot();
+            json!(
+                v.chord_ids
+                    .iter()
+                    .map(|id| {
+                        let n = snapshot["inters"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .find(|n| n["id"] == *id)
+                            .unwrap();
+                        json!({"kind":n["kind"],"bounds":n["bounds"]})
+                    })
+                    .collect::<Vec<_>>()
+            )
+        };
+        for control in propagation["controls"].as_array().unwrap() {
+            let mut graph = original_graph.clone();
+            let mut voices = original_voices.clone();
+            let mut rest_data = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == rest_id)
+                .unwrap()
+                .clone();
+            rest_data["measure_index"] = json!(
+                owner.measures[control["rest_measure_number"].as_u64().unwrap() as usize - 1].index
+            );
+            rest_data["measure_number"] = control["rest_measure_number"].clone();
+            graph.vertex(chord, rest_data, false).unwrap();
+            assert_eq!(
+                voice_rows(&graph, &voices[voice_index]),
+                control["voice_chords_before"]
+            );
+            // Direct BeamGroup.setVoice is equivalent here to its first-chord
+            // seed assignment: deliberately unassign that stored field only.
+            let first_key: Key = serde_json::from_value(
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == first_id)
+                    .unwrap()["origin"]
+                    .clone(),
+            )
+            .unwrap();
+            let mut first_data = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == first_id)
+                .unwrap()
+                .clone();
+            first_data["voice"] = Value::Null;
+            graph.vertex(first_key, first_data, false).unwrap();
+            assign_chord_voice(
+                &mut graph,
+                &mut voices,
+                &owner.measures,
+                first_id,
+                voice_index,
+            )
+            .unwrap();
+            assert_eq!(
+                voice_rows(&graph, &voices[voice_index]),
+                control["voice_chords_after"]
+            );
+            assert_eq!(
+                graph.snapshot()["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == rest_id)
+                    .unwrap()["voice"],
+                control["rest_voice"]
+            );
+            let before = graph.snapshot();
+            let before_members = voices[voice_index].chord_ids.clone();
+            assign_chord_voice(
+                &mut graph,
+                &mut voices,
+                &owner.measures,
+                first_id,
+                voice_index,
+            )
+            .unwrap();
+            assert_eq!(graph.snapshot(), before);
+            assert_eq!(voices[voice_index].chord_ids, before_members);
+        }
         for (key, stem, state) in before_cache {
             let current = owner.owner.caches[&1]
                 .registered_stem(&owner.owner.graph, key.local)

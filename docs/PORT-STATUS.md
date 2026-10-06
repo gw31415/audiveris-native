@@ -653,3 +653,25 @@ audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-system
 [Validation](../evidence/musicxml-beam-group-voice/VALIDATION.json).
 Latest full595 remains the earlier source95e191b; this unit uses targeted
 regressions. All global completion flags remain false.
+
+### Chord -> BeamGroup same-measure Voice propagation
+
+The image export now assigns actual chord Voices through original
+`AbstractChordInter.setVoice` / `BeamGroupInter.setVoice` behavior in the admitted
+ordinary untied chord family, replacing a direct copied field assignment.
+A newly assigned chord extends its retained owner to related beamed chords and
+interleaved rests in the same actual Measure; Voice IDs repeat across measures
+and do not authorize cross-measure propagation. Ownership additions deduplicate
+and stably sort by center abscissa. Reassignment to the same owner is a no-op.
+
+Two declared original BeamRest controls (same/other measure on an existing page)
+match the added rest's Voice and complete stored chord order. They do not claim
+automatic BeamRest recognition, duration or export. Existing successful Linux
+CLI inputs/commands above remain valid and now execute this propagation path.
+SmallChord/measure-rest/tied branches, multiple-group tail priority, general
+slots/voice matching, lyrics and complete cleaner/epilog are still pending with
+explicit guards. No admission guard was removed.
+
+[Validation](../evidence/musicxml-beam-group-propagation/VALIDATION.json).
+Latest full595 remains earlier source95e191b; this unit uses targeted tests.
+All global completion flags remain false.
