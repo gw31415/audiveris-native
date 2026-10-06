@@ -390,3 +390,239 @@ mod tests {
         assert_eq!(format!("{registry:?}"), format!("{registry_before:?}"));
     }
 }
+
+#[cfg(test)]
+mod head_chord_removal_tests {
+    use super::*;
+    use crate::{
+        GrayImage,
+        beam_dispatch::{self, Registry},
+        shared_sig::HeadStemAttachment,
+        stem_cache_sig::Retriever,
+        stem_checks,
+    };
+    use std::sync::Arc;
+
+    #[test]
+    fn original_extensive_head_chord_deletion_keeps_shared_members_and_registered_stem() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-head-chord-removal/controls.json"
+        ))
+        .unwrap();
+        for case in original["cases"].as_array().unwrap() {
+            let shared = case["name"] == "shared-member";
+            let glyph = beam_dispatch::glyph_from_json(&json!({"bounds":[312,200,2,58],
+                "orientation":"VERTICAL","runs":[[0,0,58],[1,0,58]]}))
+            .unwrap();
+            let mut image = GrayImage {
+                width: 400,
+                height: 400,
+                pixels: vec![255; 400 * 400],
+            };
+            for r in &glyph.runs {
+                for y in r.start..r.start + r.length {
+                    image.pixels
+                        [(glyph.top as usize + y) * 400 + glyph.left as usize + r.position] = 0;
+                }
+            }
+            let mut registry = Registry::default();
+            let mut cache = Retriever::new(1).unwrap();
+            let params = stem_checks::Parameters::new(11, 5, 0., 0).unwrap();
+            let cached = cache
+                .create_selected(&mut registry, std::slice::from_ref(&glyph), &image, &params)
+                .unwrap()
+                .stem
+                .unwrap();
+            let mut graph = Graph::default();
+            let stem_id = cache.register(&registry, &mut graph, &cached).unwrap();
+            let head = Key {
+                system: 1,
+                phase: Phase::Head,
+                local: 1,
+            };
+            let hid=graph.vertex(head,json!({"kind":"HeadInter","shape":"NOTEHEAD_BLACK",
+                "bounds":[300,250,12,8],"grade":0.6,"contextual_grade":0.75,"staff_id":1,"manual":false}),false).unwrap();
+            let mut record = graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == stem_id)
+                .unwrap()
+                .clone();
+            record["id"] = json!(cached.glyph_id());
+            let stem_key = Key {
+                system: 1,
+                phase: Phase::Stem,
+                local: cached.glyph_id(),
+            };
+            graph.sync_stems(1,&[record],&[HeadStemAttachment{local:1,head,stem_local:cached.glyph_id(),
+                relation:json!({"kind":"HeadStemRelation","profile":0,"head_side":"RIGHT","extension_point":[313.,254.],
+                    "dx":0.,"dy":0.,"grade":1.,"consistency":1.,"source_ratio":5.,"target_ratio":11.,"invading":true,"manual":false})}]).unwrap();
+            let measures = vec![Measure {
+                system: 1,
+                part: 1,
+                staff: 1,
+                index: 0,
+                left: 100,
+                right: 350,
+            }];
+            let mut chords = Vec::new();
+            let mut labels = BTreeMap::from([(hid, "head"), (stem_id, "stem")]);
+            for (i, label) in if shared {
+                vec!["chord", "other"]
+            } else {
+                vec!["chord"]
+            }
+            .into_iter()
+            .enumerate()
+            {
+                let key = Key {
+                    system: 1,
+                    phase: Phase::Chord,
+                    local: i + 1,
+                };
+                let id = graph
+                    .vertex(
+                        key,
+                        json!({"kind":"HeadChordInter","staff_id":1,"part_id":1,"measure_index":0}),
+                        false,
+                    )
+                    .unwrap();
+                graph
+                    .relations(
+                        1,
+                        Phase::Chord,
+                        vec![
+                            (key, head, json!({"kind":"Containment"})),
+                            (key, stem_key, json!({"kind":"ChordStemRelation"})),
+                        ],
+                    )
+                    .unwrap();
+                labels.insert(id, label);
+                chords.push(Chord {
+                    kind: ChordKind::Head,
+                    key,
+                    id,
+                    stem: Some(stem_key),
+                    members: vec![],
+                    measure: 0,
+                    bounds: [0; 4],
+                });
+            }
+            let chord_key = chords[0].key;
+            let cid = chords[0].id;
+            let cache_before = cached.snapshot().unwrap();
+            let registry_before = format!("{registry:?}");
+            for stage in ["before", "after"] {
+                if stage == "after" {
+                    // Existing frozen guard must reject the whole transaction.
+                    let mut frozen = graph.clone();
+                    let mut n = frozen.snapshot()["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == hid)
+                        .unwrap()
+                        .clone();
+                    n["frozen"] = json!(true);
+                    frozen.vertex(head, n, false).unwrap();
+                    let before = frozen.snapshot();
+                    if !shared {
+                        assert!(frozen.remove_music_inter(chord_key).is_err());
+                        assert_eq!(frozen.snapshot(), before);
+                    }
+                    graph.remove_music_inter(chord_key).unwrap();
+                }
+                let containers = refresh(&graph, &measures, &mut chords).unwrap();
+                if stage == "after" {
+                    assert_eq!(containers.removed_chords, vec![cid]);
+                }
+                let snapshot = graph.snapshot();
+                let expected = &case[stage];
+                let mut actual_live = Vec::new();
+                for expected_node in expected["live"].as_array().unwrap() {
+                    let label = expected_node["label"].as_str().unwrap();
+                    let n = snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| labels[&(n["id"].as_u64().unwrap() as usize)] == label)
+                        .unwrap();
+                    let mut row = json!({"label":label,"kind":n["kind"],"bounds":n["bounds"],"grade":n["grade"]});
+                    if n["kind"] == "HeadChordInter" {
+                        row["members"] = json!(
+                            n["member_ids"]
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .map(|id| labels[&(id.as_u64().unwrap() as usize)])
+                                .collect::<Vec<_>>()
+                        );
+                        row["stem"] = json!(labels[&(n["stem_id"].as_u64().unwrap() as usize)]);
+                    } else {
+                        row["abnormal"] = n["abnormal"].clone();
+                    }
+                    // Original uses a declared intrinsic0.8 stem, not the native
+                    // image-builder's independently assessed grade. Preserve it.
+                    if label == "stem" {
+                        assert_eq!(n["grade"], cache_before["grade"]);
+                        row["grade"] = expected_node["grade"].clone();
+                    }
+                    actual_live.push(row);
+                }
+                assert_eq!(json!(actual_live), expected["live"]);
+                assert_eq!(
+                    actual_live.len(),
+                    snapshot["inters"].as_array().unwrap().len()
+                );
+                let actual_removed = snapshot["tombstones"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|n| labels[&(n["id"].as_u64().unwrap() as usize)])
+                    .collect::<BTreeSet<_>>();
+                let expected_removed = expected["removed"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|n| n.as_str().unwrap())
+                    .collect::<BTreeSet<_>>();
+                assert_eq!(actual_removed, expected_removed);
+                let rels=snapshot["relations"].as_array().unwrap().iter().map(|e|json!({"kind":e["kind"],
+                    "source":labels[&(e["source"].as_u64().unwrap() as usize)],"target":labels[&(e["target"].as_u64().unwrap() as usize)]})).collect::<Vec<_>>();
+                assert_eq!(json!(rels), expected["relations"]);
+                let notes = containers.projection["staff_notes"][0]["note_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|id| labels[&(id.as_u64().unwrap() as usize)])
+                    .collect::<Vec<_>>();
+                let registered = containers.projection["measure_chords"][0]["head_chord_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|id| labels[&(id.as_u64().unwrap() as usize)])
+                    .collect::<Vec<_>>();
+                assert_eq!(json!(notes), expected["staff_notes"]);
+                assert_eq!(json!(registered), expected["measure_head_chords"]);
+            }
+            let after = graph.snapshot();
+            graph.remove_music_inter(chord_key).unwrap();
+            assert_eq!(graph.snapshot(), after);
+            assert_eq!(cached.snapshot().unwrap(), cache_before);
+            assert_eq!(format!("{registry:?}"), registry_before);
+            image.pixels.fill(255);
+            let same = cache
+                .create_selected(&mut registry, &[glyph], &image, &params)
+                .unwrap()
+                .stem
+                .unwrap();
+            assert!(Arc::ptr_eq(&cached, &same));
+            assert_eq!(
+                cache.register(&registry, &mut graph, &cached).unwrap(),
+                stem_id
+            );
+            assert_eq!(graph.snapshot(), after);
+        }
+    }
+}

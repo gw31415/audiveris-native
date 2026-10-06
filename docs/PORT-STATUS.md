@@ -585,3 +585,22 @@ audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-system
 ```
 
 [Validation](../evidence/musicxml-post-chord-cache/VALIDATION.json).
+
+### Extensive HeadChord removal preserves cached stems
+
+Original `AbstractInter.remove(true)` now removes an actual HeadChord's
+unshared Head members through the existing staged music-removal path. Members
+contained by another live chord remain. A stem is linked by ChordStemRelation,
+not Containment, so it stays registered in the same retriever/cache/physical
+registry. Removed HeadStem relations update only surviving endpoints' abnormal
+state, matching the original callback. Frozen-member refusal remains atomic.
+
+Two declared original controls compare exclusive and shared Head membership,
+remaining SIG relations/geometry/grades and pre-rhythm staff/measure container
+projection. Native's stem grade is independently assessed from an actual image
+glyph and preserved; the original control's declared intrinsic0.8 is not claimed
+as builder parity. This does not certify raster generation of this deletion
+branch, Voice ownership, lyrics or complete cleaner/epilog. Existing image CLI
+examples remain available; no new image admission guard is lifted.
+
+[Validation](../evidence/musicxml-head-chord-removal/VALIDATION.json).

@@ -1,0 +1,35 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_dependencies": [
+    "AbstractChordInter.remove -> Measure.removeInter",
+    "AbstractInter.remove(true) -> unshared member.remove(false)",
+    "HeadStemRelation.removed -> surviving Stem.checkAbnormal"
+  ],
+  "comparison": "two actual original extensive HeadChord removal controls: exclusive member deleted/shared member retained; actual SIG identities, geometry, intrinsic head/chord grades, relations, Staff note and Measure head-chord projection match",
+  "original_fixture": "fixtures/official-head-chord-removal/controls.json",
+  "native_cache": "actual image-backed physical glyph/canonical Retriever; same live stem Arc and registration retained; builder-assessed stem grade preserved separately from original declared0.8 grade",
+  "atomicity": "exclusive frozen member refuses without Graph mutation; canonical cache/registry retained; repeat removal idempotent",
+  "limits": [
+    "declared original SIG/container ownership, not raster generation of the deletion branch",
+    "Staff/Measure registration is projected from actual native SIG; no full independent Staff/Part/Voice object parity",
+    "Voice/lyrics/full InterCleaner and LINKS tie epilog pending"
+  ],
+  "original_log_sha256": "985988e5162cc5a0ace8791860449f4c9d889ff4b4c9f6856bb5fca878c7ddc9",
+  "all_global_completion_flags": false,
+  "full_workspace_repeated_this_unit": false,
+  "previous_full_validation": {
+    "source": "238c535afacc5a0d8182ea70d67f96f81c3c34d4",
+    "passed": 593
+  },
+  "targeted_validation": {
+    "tests_passed": 14,
+    "fmt": "passed",
+    "workspace_all_target_clippy": "passed -D warnings",
+    "log_sha256": {
+      "chords.log": "e9dc3adef26bc28b6f910dc10778c0a5481790435756e3a6b19132e1e7d7c57a",
+      "regression.log": "2950407c4c7d8f26701526e6a1a6395402d1102197454153da06e14a23b4bbf5",
+      "fmt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clippy.log": "9b1c4ceff2a8302e56b96bd2e6983a7b15a93f2e2f3cfd6c6e1da3c137aea146"
+    }
+  }
+}

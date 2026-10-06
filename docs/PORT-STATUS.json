@@ -175,6 +175,11 @@
       "status": "implemented",
       "unit": "canonical cached stem removal after CHORDS -> actual ChordStem callback/geometry; independent HeadChord/RestChord type -> actual container refresh",
       "limits": "one declared original lifecycle without HeadStem relation; no automatic raster post-chord removal/whole-breve/voice/lyrics/full epilog claim"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual extensive HeadChord removal -> exclusive Head deletion/shared Head retention -> HeadStem surviving-endpoint abnormal callback; canonical registered Stem/cache/glyph retained",
+      "limits": "two declared original ownership/container controls, not automatic raster removal/voice/lyrics/full cleaner parity"
     }
   ],
   "function_groups": [
@@ -284,7 +289,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "post-CHORDS canonical cache callback and class propagation; validation in evidence/musicxml-post-chord-cache. Previous full593 belongs to238c535; current full not repeated.",
+  "latest_targeted_validation": "actual exclusive/shared HeadChord removal ownership; evidence/musicxml-head-chord-removal. Prior full593 source238c535 remains distinct.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

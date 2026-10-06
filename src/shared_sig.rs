@@ -378,7 +378,7 @@ impl Graph {
                     removed.push(e.key.source as u64);
                 }
             }
-        } else if kind == Some("RestChordInter") {
+        } else if matches!(kind, Some("HeadChordInter" | "RestChordInter")) {
             // ensemble.remove(true) calls member.remove(false) only for
             // unshared members; a different ensemble keeps its same vertex.
             for e in self
@@ -404,6 +404,32 @@ impl Graph {
                 }
             }
         }
+        // AbstractInter extensive child removal is nonextensive: a retained
+        // cached stem is not a Containment member and must stay registered.
+        // HeadStemRelation.removed checks only surviving endpoints; collect
+        // their actual IDs before pruning, then refresh abnormal after removal.
+        let mut affected_head_stem = BTreeSet::new();
+        for e in self.edges.iter().filter(|e| {
+            !e.removed
+                && e.key.kind == "HeadStemRelation"
+                && (removed.contains(&(e.key.source as u64))
+                    || removed.contains(&(e.key.target as u64)))
+        }) {
+            let head = &self.vertices[e.key.source - 1];
+            let stem = &self.vertices[e.key.target - 1];
+            if head.removed
+                || stem.removed
+                || head.key.phase != Phase::Head
+                || stem.key.phase != Phase::Stem
+                || head.data["kind"] != "HeadInter"
+                || stem.data["kind"] != "StemInter"
+                || head.key.system != stem.key.system
+            {
+                return Err("music_removal_typed_head_stem_required".into());
+            }
+            affected_head_stem.insert(e.key.source);
+            affected_head_stem.insert(e.key.target);
+        }
         for id in &removed {
             next.vertices[*id as usize - 1].removed = true;
         }
@@ -424,6 +450,7 @@ impl Graph {
             .collect::<Vec<_>>();
         next.remove_chord_identity_edges(&chord_edges)?;
         next.prune();
+        next.refresh_head_stem_abnormal(&affected_head_stem);
         next.refresh_beam_groups(&removed)?;
         *self = next;
         Ok(())
@@ -484,24 +511,28 @@ impl Graph {
         for id in unique {
             self.edges[id - 1].removed = true;
         }
+        self.refresh_head_stem_abnormal(&affected);
+        Ok(())
+    }
+    fn refresh_head_stem_abnormal(&mut self, affected: &BTreeSet<usize>) {
         let linked = self
             .edges
             .iter()
             .filter(|e| !e.removed && e.key.kind == "HeadStemRelation")
             .flat_map(|e| [e.key.source, e.key.target])
             .collect::<BTreeSet<_>>();
-        for id in affected {
+        for id in affected.iter().copied() {
             let v = &mut self.vertices[id - 1];
-            if v.data["kind"] == "StemInter"
-                || (v.data["kind"] == "HeadInter"
-                    && v.data["shape"]
-                        .as_str()
-                        .is_some_and(|s| crate::head_seed_search::ALL_STEM_SHAPES.contains(&s)))
+            if !v.removed
+                && (v.data["kind"] == "StemInter"
+                    || (v.data["kind"] == "HeadInter"
+                        && v.data["shape"].as_str().is_some_and(|s| {
+                            crate::head_seed_search::ALL_STEM_SHAPES.contains(&s)
+                        })))
             {
                 v.data["abnormal"] = json!(!linked.contains(&id));
             }
         }
-        Ok(())
     }
     pub(crate) fn relations(
         &mut self,
