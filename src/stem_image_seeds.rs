@@ -49,8 +49,7 @@ fn distance(line: [f64; 4], p: [f64; 2]) -> f64 {
 // Original retrieveNoStemAreas: connected bar medians plus each gap ribbon.
 // Axis-aligned ribbons are exact rectangles. Other geometry is refused, rather
 // than approximated by its bounds during the original Area intersection.
-fn no_stem_areas(page: &Value, system: &Value) -> Result<Vec<[f64; 4]>, String> {
-    let graph = &page["head_registration"]["shared_sig"];
+fn no_stem_areas(graph: &Value, system: &Value) -> Result<Vec<[f64; 4]>, String> {
     let vertices = array(&graph["inters"], 100_000, "SIG vertices")?;
     let mut by_id = BTreeMap::new();
     for v in vertices {
@@ -109,6 +108,56 @@ fn purged(bounds: [f64; 4], areas: &[[f64; 4]], limit: f64) -> bool {
         let height = (bounds[1] + bounds[3]).min(a[1] + a[3]) - bounds[1].max(a[1]);
         (width * height) / ((bounds[2] * bounds[3]).min(a[2] * a[3])) > limit
     })
+}
+/// StemsRetriever.finalizeBeams constructs a fresh retriever and obtains a fresh
+/// VERTICAL_SEED list from the system's free glyphs. Purging affects this local
+/// list only: canonical glyphs, groups, cached stems and SIG nodes remain owned.
+pub(crate) fn repurge_system_seeds(
+    graph: &Value,
+    registry: &Registry,
+    free: &beam_dispatch::SystemSpots,
+) -> Result<Value, String> {
+    let mut areas = no_stem_areas(graph, &json!(free.system_id))?;
+    areas.sort_by(|a, b| a[0].total_cmp(&b[0]));
+    if free.glyph_ids.len() > 100_000 {
+        return Err("unsupported epilog free glyph count".into());
+    }
+    let mut seen = BTreeSet::new();
+    let mut seeds = Vec::new();
+    for &id in &free.glyph_ids {
+        let entry = registry.get(id)?;
+        if !seen.insert(id) {
+            return Err("duplicate epilog free glyph".into());
+        }
+        if entry.groups.contains(&Group::VerticalSeed) {
+            seeds.push((id, &entry.glyph));
+        }
+    }
+    if areas
+        .len()
+        .checked_mul(seeds.len())
+        .is_none_or(|n| n > 20_000_000)
+    {
+        return Err("unsupported epilog seed area work budget".into());
+    }
+    let mut removed = Vec::new();
+    let mut surviving = Vec::new();
+    for (id, glyph) in &seeds {
+        let bounds = [
+            f64::from(glyph.left),
+            f64::from(glyph.top),
+            glyph.width as f64,
+            glyph.height as f64,
+        ];
+        if purged(bounds, &areas, 0.25) {
+            removed.push(*id);
+        } else {
+            surviving.push(*id);
+        }
+    }
+    Ok(
+        json!({"system":free.system_id,"no_stem_areas":areas,"grouped_seed_ids":seeds.iter().map(|s|s.0).collect::<Vec<_>>(),"purged_seed_ids":removed,"surviving_seed_ids":surviving,"scope":"fresh retriever-local VERTICAL_SEED list; canonical registry/free groups/SIG/cache retained"}),
+    )
 }
 #[allow(clippy::too_many_arguments)]
 fn decision(
@@ -189,7 +238,7 @@ pub fn analyze(image: &GrayImage, page: &Value) -> Result<Value, String> {
         if s["system_id"] != context["system"] {
             return Err("invalid image seed system order".into());
         }
-        let areas = no_stem_areas(page, &context["system"])?;
+        let areas = no_stem_areas(&page["head_registration"]["shared_sig"], &context["system"])?;
         let mut purged_ids = Vec::new();
         let mut seeds = Vec::new();
         let mut ids = BTreeSet::new();
@@ -294,6 +343,94 @@ pub fn analyze(image: &GrayImage, page: &Value) -> Result<Value, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn fresh_epilog_seed_list_matches_original_laura_and_preserves_physical_groups() {
+        let output = std::process::Command::new("python3").args(["-c", "import gzip,sys;sys.stdout.buffer.write(gzip.decompress(open(sys.argv[1],'rb').read()))", concat!(env!("CARGO_MANIFEST_DIR"), "/fixtures/official-stem-head-reference-context/native-laura-report.json.gz")]).output().unwrap();
+        assert!(output.status.success());
+        let page: Value = serde_json::from_slice(&output.stdout).unwrap();
+        let mut registry = Registry::default();
+        for r in page["head_registration"]["live_glyph_retrieval"]["registry"]
+            .as_array()
+            .unwrap()
+        {
+            let id = registry
+                .register(&beam_dispatch::glyph_from_json(&r["glyph"]).unwrap())
+                .unwrap();
+            assert_eq!(json!(id), r["id"]);
+            for group in r["groups"].as_array().unwrap() {
+                registry
+                    .add_group(
+                        id,
+                        match group.as_str().unwrap() {
+                            "VERTICAL_SEED" => Group::VerticalSeed,
+                            "BEAM_SPOT" => Group::BeamSpot,
+                            "BLACK_HEAD_SPOT" => Group::BlackHeadSpot,
+                            "BLACK_STACK_SPOT" => Group::BlackStackSpot,
+                            _ => panic!("unexpected upstream glyph group"),
+                        },
+                    )
+                    .unwrap();
+            }
+        }
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stem-image-seeds/controls.json"
+        ))
+        .unwrap();
+        let graph = &page["head_registration"]["shared_sig"];
+        let before = registry.snapshot();
+        let mut removed = 0;
+        let canonical = |rows: &[Value]| {
+            rows.iter()
+                .map(|r| serde_json::to_string(r).unwrap())
+                .collect::<BTreeSet<_>>()
+        };
+        for (free, original) in page["beam_prolog"]["free_glyphs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(oracle["systems"].as_array().unwrap())
+        {
+            let free = beam_dispatch::SystemSpots {
+                system_id: free["system_id"].as_u64().unwrap(),
+                glyph_ids: serde_json::from_value(free["glyph_ids"].clone()).unwrap(),
+            };
+            let result = repurge_system_seeds(graph, &registry, &free).unwrap();
+            let mut areas: Vec<[f64; 4]> =
+                serde_json::from_value(original["no_stem_areas"].clone()).unwrap();
+            areas.sort_by(|a, b| a[0].total_cmp(&b[0]));
+            assert_eq!(result["no_stem_areas"], json!(areas));
+            let surviving = result["surviving_seed_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|id| {
+                    beam_dispatch::glyph_json(
+                        &registry.get(id.as_u64().unwrap() as usize).unwrap().glyph,
+                    )
+                })
+                .collect::<Vec<_>>();
+            assert_eq!(
+                canonical(&surviving),
+                canonical(original["surviving_seeds"].as_array().unwrap())
+            );
+            removed += result["purged_seed_ids"].as_array().unwrap().len();
+            for id in result["purged_seed_ids"].as_array().unwrap() {
+                assert!(free.glyph_ids.contains(&(id.as_u64().unwrap() as usize)));
+                assert!(
+                    registry
+                        .get(id.as_u64().unwrap() as usize)
+                        .unwrap()
+                        .groups
+                        .contains(&Group::VerticalSeed)
+                );
+            }
+            let mut stale = free;
+            stale.glyph_ids.push(registry.len() + 1);
+            assert!(repurge_system_seeds(graph, &registry, &stale).is_err());
+        }
+        assert_eq!(removed, 3);
+        assert_eq!(registry.snapshot(), before);
+    }
     #[test]
     fn original_seed_rounding_and_strict_bar_overlap_boundaries() {
         let o: Value = serde_json::from_str(include_str!(

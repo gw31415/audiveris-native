@@ -125,9 +125,23 @@ pub(crate) fn finalize(
     width: usize,
     height: usize,
     interline: usize,
+    free_glyphs: &[beam_dispatch::SystemSpots],
 ) -> Result<Value, String> {
     let systems = geometry(grid, width, height, interline)?;
     let before = graph.snapshot();
+    if free_glyphs.len() != systems.len()
+        || free_glyphs
+            .iter()
+            .zip(&systems)
+            .any(|(f, s)| f.system_id != s.id)
+    {
+        return Err("beam finalizer owned free glyph systems required".into());
+    }
+    // Validate all retriever seed lists before committing any SIG changes.
+    let seed_lists = free_glyphs
+        .iter()
+        .map(|f| crate::stem_image_seeds::repurge_system_seeds(&before, registry, f))
+        .collect::<Result<Vec<_>, _>>()?;
     for b in before["inters"]
         .as_array()
         .unwrap()
@@ -143,7 +157,7 @@ pub(crate) fn finalize(
     let mut removed = Vec::new();
     let mut supports = Vec::new();
     let mut reports = Vec::new();
-    for sys in systems {
+    for (sys, seeds) in systems.into_iter().zip(seed_lists) {
         let snapshot = next.snapshot();
         let mut system_removed = Vec::new();
         let beams = snapshot["inters"]
@@ -186,11 +200,11 @@ pub(crate) fn finalize(
                 .iter()
                 .cloned(),
         );
-        reports.push(json!({"system":sys.id,"removed_cross_system_orphan_beams":system_removed,"contextualized_after_finalizer":true}));
+        reports.push(json!({"system":sys.id,"vertical_seed_repurge":seeds,"removed_cross_system_orphan_beams":system_removed,"contextualized_after_finalizer":true}));
     }
     *graph = next;
     Ok(
-        json!({"removed_cross_system_orphan_beams":removed,"beam_side_supports":supports,"systems":reports,"scope":"original ordered all-systems StemsRetriever.Finalizer orphan purge/beam-side support and per-system StemsStep contextualization; whole STEMS/epilog parity remains pending","stems_complete":false,"epilog_complete":false}),
+        json!({"removed_cross_system_orphan_beams":removed,"beam_side_supports":supports,"systems":reports,"scope":"original ordered all-systems finalizeBeams fresh bar-area seed repurge, Finalizer orphan/beam-side support and per-system StemsStep contextualization; whole STEMS/epilog parity remains pending","stems_complete":false,"epilog_complete":false}),
     )
 }
 
@@ -276,6 +290,13 @@ mod tests {
                 c["same_physical_glyph"].as_bool().unwrap()
             );
             let before = graph.snapshot();
+            let free = geo
+                .iter()
+                .map(|s| beam_dispatch::SystemSpots {
+                    system_id: s.id,
+                    glyph_ids: Vec::new(),
+                })
+                .collect::<Vec<_>>();
             assert!(
                 finalize(
                     &mut graph,
@@ -283,13 +304,22 @@ mod tests {
                     grid,
                     input.width,
                     input.height,
-                    11
+                    11,
+                    &free
                 )
                 .is_err()
             );
             assert_eq!(graph.snapshot(), before);
-            let report =
-                finalize(&mut graph, &registry, grid, input.width, input.height, 11).unwrap();
+            let report = finalize(
+                &mut graph,
+                &registry,
+                grid,
+                input.width,
+                input.height,
+                11,
+                &free,
+            )
+            .unwrap();
             let live = graph.snapshot();
             for (i, field) in [(0, "current_removed"), (1, "other_removed")] {
                 let id = graph.id(beam_keys[i]).unwrap();

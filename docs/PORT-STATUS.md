@@ -1,6 +1,6 @@
 # 原Audiveris 5.11との機能同等性：移植台帳とCLI接続順
 
-更新日: 2026-10-05。対象原版は5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
+更新日: 2026-10-06。対象原版は5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
 
 最終目標は、UIの表示・入力装置を除く、原版の譜面認識・解析・補正・保存・MusicXML出力機能の同等性です。原版機能を意図的に省略する予定はありません。通常五線・Bravura・ト音記号・単声などの現在の制限は、小チェックポイントで検証した範囲であり、最終スコープの縮小ではありません。GUI内にある処理も、譜面の意味・形状・関係・再計算に影響する部分は移植対象です。
 
@@ -240,3 +240,18 @@ HEADS→STEMS→exportへ伝播し、サイズ代用・画像座標分岐は行�
 単一全workspace 577件成功、失敗/ignored0、fmt・all-target clippy成功。
 原版観測adapterはStemsStep同様にepilogでsystemごと新retrieverを生成して再確認し、
 beam/glyph/接続の観測結果は不変。native sourceは変更していません。
+
+## STEMS epilogのvertical-bar seed再整理（2026-10-06）
+
+原版 `StemsRetriever.finalizeBeams` のfreshなsystem seed取得と
+`purgeNoStemSeeds` を画像CLIへ接続。systemのfree glyph所属をHEADSから
+実所有状態で引き継ぎ、live SIGのBarConnectionから上・下・間の領域を再取得します。
+重なり比は原版どおりmin面積を分母とし、strict >0.25です。
+候補リストだけを除外し、canonical glyph/group/SIG/cacheは削除しません。
+
+既存Lauraの原版保存HEADSを新たに観測し、上段98→97・下段202→200、
+27領域と既存原版survivor全件の一致、system所属の保持を確認しました。
+保存状態の比較であり、Laura全STEMSや複段MusicXMLの完成ではありません。
+既存2system4小節20イベントの画像→MusicXML回帰を保持。
+斜めbar領域、一般SIG reduction/cleaner、SmallBeam・複声部などは継続対象です。
+[小さな検証要約](../evidence/musicxml-seed-reduction/SEED-VALIDATION.json)。

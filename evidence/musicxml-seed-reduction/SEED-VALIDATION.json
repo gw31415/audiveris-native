@@ -1,0 +1,37 @@
+{
+  "baseline_main": "b69acbd83e87a3eb73d60fa0c23cbd3a50a364f7",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer": "scripts/java/StemEpilogSeedsProbe.java",
+  "observer_sha256": "e8c789b526a2e1b44dd8d78e47e78f4303b0886ba7d0e3b4fb514c98c2662cfd",
+  "saved_original_heads_sha256": "ad0a945003d787689a4c9d0fd032e3e5b6c8c909ac00c393dd552b605fa68df7",
+  "original_observation_sha256": "3ab05e61d4e532753b23cce9ef06d1c2e32d43e4ae68cd6661e699f1bc8ddbed",
+  "systems": [
+    {
+      "system": 1,
+      "areas": 12,
+      "grouped_before": 98,
+      "surviving": 97,
+      "purged": 1,
+      "existing_original_survivors_exact": true,
+      "system_group_membership_retained": true
+    },
+    {
+      "system": 2,
+      "areas": 15,
+      "grouped_before": 202,
+      "surviving": 200,
+      "purged": 2,
+      "existing_original_survivors_exact": true,
+      "system_group_membership_retained": true
+    }
+  ],
+  "scope": "fresh unmodified original finalizeBeams local seed lists on existing Laura saved HEADS; native owned registry/free-glyph continuation and existing original survivor catalogs; not whole raster STEMS",
+  "native_targets": [
+    "fresh seed list and existing strict overlap/rounding tests",
+    "owned cross-system Finalizer conditions",
+    "same-image two-system20-event MusicXML regression"
+  ],
+  "full_regression": "not repeated for this small stage; last577 passed at c6f03c54010f352cb9181d4bffd16d76c3d54e9b",
+  "global_completion_flags": false
+}

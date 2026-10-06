@@ -9,6 +9,7 @@ pub struct OwnedPage {
     pub output_pixels: Vec<u8>,
     pub graph: crate::shared_sig::Graph,
     pub registry: Option<crate::beam_dispatch::Registry>,
+    pub(crate) free_glyphs: Vec<crate::beam_dispatch::SystemSpots>,
     pub success: bool,
 }
 // MusicFont.getHeadPointSize falls back to four times staff interline when
@@ -673,11 +674,16 @@ pub fn analyze(
     let success = declared.is_none()
         || head_registration["head_registration_complete"] == true
             && head_registration["staff_dependency_complete"] == true;
+    let (registry, free_glyphs) = match beam_context {
+        Some(p) => (Some(p.registry), p.systems),
+        None => (None, Vec::new()),
+    };
     Ok(OwnedPage {
         report: page_report,
         output_pixels,
         graph: common_graph,
-        registry: beam_context.map(|p| p.registry),
+        registry,
+        free_glyphs,
         success,
     })
 }

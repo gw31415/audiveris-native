@@ -670,3 +670,15 @@ Independent existing clone fetched/fast-forwarded to `a5976c0`,
 matched root/src/crates trees, built the Linux CLI offline/locked, and reproduced
 20 original-matching events plus one actual orphan removal; both XMLs pass XSD.
 [Readback receipt](../evidence/musicxml-cross-system/FINAL-READBACK.json).
+
+## Fresh epilog seed lists
+
+The two-system CLI command above now also retrieves each system's retained
+VERTICAL_SEED free-glyph list and repeats the original connected-bar-area purge
+before Finalizer. The report's linking stage exposes
+`limited_beam_finalizer.systems[].vertical_seed_repurge`.
+Only retriever candidates are filtered; registry/group/SIG/cache ownership stays
+intact. This changes no accepted notation or input assumptions. Positive bar-area
+evidence is from the existing Laura saved HEADS state (98→97 and202→200),
+separate from the20-event image MusicXML regression. Angled ribbons, multi-staff
+MusicXML and full reduction/cleaner remain pending final targets.

@@ -15,6 +15,7 @@ pub struct OwnedItems {
     pub upstream_output_pixels: Vec<u8>,
     pub graph: Graph,
     pub caches: BTreeMap<u64, Retriever>,
+    pub(crate) free_glyphs: Vec<crate::beam_dispatch::SystemSpots>,
     pub prepared: Prepared,
 }
 /// No Java, oracle, caller-defined items/endpoints or serialized Graph import.
@@ -74,6 +75,7 @@ pub fn continue_items(
         upstream_output_pixels: upstream.output_pixels,
         graph: upstream.graph,
         caches,
+        free_glyphs: upstream.free_glyphs,
         prepared,
     })
 }
