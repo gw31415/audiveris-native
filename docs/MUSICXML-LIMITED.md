@@ -2,9 +2,9 @@
 
 # Native image → MusicXML
 
-Latest processing stage: [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
-`audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded monophonic duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
+`audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
 The first verification checkpoint used three independent clean opaque PNG pages with Bravura, interline11, zero skew, ordinary five-line staff, treble clef, no key signature, explicit 4/4, one voice, and two/four complete measures, including two systems. Black/void heads produce quarter/half notes; the separate rest page contains quarter rests. Durations, rests, pitches, offsets and voices match original 5.11 XML-loaded HEADS followed by native original MEASURES/CHORDS/SYMBOLS/LINKS/RHYTHMS. This oracle boundary is distinct from original end-to-end transient recognition.
 
@@ -1779,3 +1779,40 @@ one-member/one-Voice/serial-clock/complete-measure image guards remain until
 a same-input original full recognition/export verifies their dependencies.
 General Rational/tuplets/Merged/shared stacks and the rest of the nonUI ledger
 remain partial. Full595 is historical `95e191b`, not a new run.
+
+### Parallel quarter Voices from an actual image (2026-10-06)
+
+The existing original Bravura/staff renderer supplies one independent two-measure
+4/4 image with distinct upper/lower quarter-note heads and stems. Unmodified
+Audiveris5.11 full image recognition/export succeeds. Native Linux CLI now uses
+actual compound mapping and ordinate-ordered starting Voice constructors, reads
+Voice/onset/duration from its actual Graph and writes16 matching notes, with
+a four-quarter backup between Voices in each measure. Native/original XSD,
+musical event order and actual chord/slot/Voice geometry/timing agree; original
+engraving/whole XML byte equality is not claimed. Original nonpersisted Voice
+termination is recomputed by finalCheck after loading the recognized saved state.
+
+Try this example with no Java runtime:
+
+```sh
+mkdir -p work/cli
+cargo run --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png \
+  work/cli/parallel-quarters.musicxml work/cli/parallel-quarters.json
+```
+
+The image admission cursor and horizontal overlap check are per actual Voice;
+the final check visits all retained Voices. Each Voice must still be complete
+and have exact known clocks. Omitting the final lower Voice quarter in the renderer
+keeps the upper Voice complete but must refuse the incomplete lower Voice; this
+is a native admission check, not a claim that the modified image fails in Java.
+Run `cargo test --offline --locked --test musicxml_limited actual_parallel_voices_preserve_original_events_and_check_each_voice_duration`
+(or omit `--offline` if dependencies are not cached).
+
+Parallel admission currently covers ordinary one-member quarter head chords in
+4/4 on the existing normal one-staff/nonmerged Bravura44/47 path. Only this one
+parallel image is verified. Other parallel durations, beam/flag/rest/gap/pickup
+and tuplet families, multi-member chords, other Voice kinds/Merged/shared stacks
+and remaining nonUI features need their dependencies/comparisons. The existing
+three36-event examples retain their XML bytes. No final completion flags are
+raised; full595 still belongs only to historical `95e191b`.

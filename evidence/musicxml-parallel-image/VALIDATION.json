@@ -1,0 +1,45 @@
+{
+  "base_source": "51060c2a1afbfe3d4635eac150c10dffb074ff54",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "actual image compound/starting ownership -> per-Voice complete timing -> native MusicXML",
+  "original_comparison": {
+    "unmodified_original_full_image_runs": 1,
+    "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+    "input_origin": "existing original Bravura/staff renderer, one two-measure/two-Voice quarter image; no sweep",
+    "full_image_events": 16,
+    "matching": [
+      "pitch/alter/type/stem",
+      "Voice/onset/duration and backup order",
+      "actual ordinary chord bounds/Voice/times/durations",
+      "actual incoming slot order and bounds",
+      "actual Voice member bounds and final durations"
+    ],
+    "transient_final_check": "original finalCheck recomputed on saved recognized owner after reload to recover nonpersisted termination; no declared mapping/clock changes",
+    "not_claimed": "exact original engraving/layout/whole XML bytes or general arbitrary polyphonic image parity"
+  },
+  "integration": "multiple ordinary starts/compound members use existing original owned mapper/constructors; actual Voice-specific admission cursors and geometry checks replace serial aggregate checks. Every Voice must still form a complete nonoverlapping sequence and pass actual finalCheck.",
+  "parallel_admission": "normal one-member head chords with intrinsic quarters in4/4; other parallel durations/rests/beams/meters remain explicitly guarded",
+  "targeted_unique_passed": 3,
+  "runs": {
+    "new_same_image_parallel_positive_and_shorter_second_voice_refusal": 1,
+    "prior_owned_compound_constructor_mapper_clock_stack_writer_final_checks": 1,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "new_negative_image": "renderer lower-note count7: last lower quarter omitted, upper Voice complete; native rejects lower Voice3/4 vs expected1. Negative original full recognition/export not run or claimed.",
+  "test_fixture_correction": "Discarded pixel-erasure probes refused earlier at FERMATA_BELOW/cluster-parts guards, so they are not all-Voice duration evidence. Renderer omission isolates the incomplete lower Voice without changing production symbol guards.",
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "only one positive ordinary parallel quarter image compared; no parallel beam/flag/rest/gap/pickup/tuplet/multi-member head chord admission",
+    "general Rational/Merged/shared multi-part/multi-staff stacks and other Voice kinds pending",
+    "original automatic HeadStem parallel-alias failure remains separate and refused; distinct physical head/stem ownership in this input does not exercise that failure",
+    "lyrics/slur/tie/correction/full cleaner/epilog and other nonUI stages partial; no planned omissions",
+    "no new font/nonzero skew/scan/special staff/all24/32sources support"
+  ],
+  "all_global_completion_flags": false
+}

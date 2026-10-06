@@ -1,0 +1,209 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "unmodified original full image recognition/export, sixteen quarter events/two complete Voices/two4/4 measures; musical stream comparison, not engraving equality",
+  "events": [
+    {
+      "measure_number": 1,
+      "voice": 1,
+      "time_offset": "0",
+      "duration": "1/4",
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 1,
+      "time_offset": "1/4",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 1,
+      "time_offset": "1/2",
+      "duration": "1/4",
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 1,
+      "time_offset": "3/4",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 2,
+      "time_offset": "0",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 2,
+      "time_offset": "1/4",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 2,
+      "time_offset": "1/2",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 1,
+      "voice": 2,
+      "time_offset": "3/4",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 1,
+      "time_offset": "0",
+      "duration": "1/4",
+      "step": "F",
+      "octave": 5,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 1,
+      "time_offset": "1/4",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 1,
+      "time_offset": "1/2",
+      "duration": "1/4",
+      "step": "B",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 1,
+      "time_offset": "3/4",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "up",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 2,
+      "time_offset": "0",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 2,
+      "time_offset": "1/4",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 2,
+      "time_offset": "1/2",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    },
+    {
+      "measure_number": 2,
+      "voice": 2,
+      "time_offset": "3/4",
+      "duration": "1/4",
+      "step": "E",
+      "octave": 4,
+      "alter": 0,
+      "type": "quarter",
+      "stem_direction": "down",
+      "rest": false
+    }
+  ],
+  "measures": [
+    {
+      "number": 1,
+      "normalized_body": "<note><pitch><step>F</step><octave>5</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<note><pitch><step>D</step><octave>5</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<note><pitch><step>B</step><octave>4</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<note><pitch><step>D</step><octave>5</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<backup><duration>4</duration></backup>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n"
+    },
+    {
+      "number": 2,
+      "normalized_body": "<note><pitch><step>F</step><octave>5</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<note><pitch><step>D</step><octave>5</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<note><pitch><step>B</step><octave>4</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<note><pitch><step>D</step><octave>5</octave></pitch><duration>1</duration><voice>1</voice><type>quarter</type><stem>up</stem></note>\n<backup><duration>4</duration></backup>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n<note><pitch><step>E</step><octave>4</octave></pitch><duration>1</duration><voice>2</voice><type>quarter</type><stem>down</stem></note>\n"
+    }
+  ],
+  "divisions": 1
+}

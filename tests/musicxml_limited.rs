@@ -6,6 +6,106 @@ use serde_json::Value;
 use std::{fs, process::Command};
 
 #[test]
+fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration() {
+    let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures/official-image-musicxml-parallel-voices");
+    let original: Value =
+        serde_json::from_slice(&fs::read(fixture.join("observed.json")).unwrap()).unwrap();
+    let state: Value =
+        serde_json::from_slice(&fs::read(fixture.join("original-state.json")).unwrap()).unwrap();
+    let image =
+        GrayImage::decode(&fs::read(fixture.join("parallel-quarters.png")).unwrap()).unwrap();
+    let exported = music_xml::recognize(&image).unwrap();
+    let report = &exported.owner.owner.prepared.report;
+    let events = report["events"].as_array().unwrap();
+    assert_eq!(events.len(), original["events"].as_array().unwrap().len());
+    for reference in original["events"].as_array().unwrap() {
+        let event = events
+            .iter()
+            .find(|e| {
+                e["measure_number"] == reference["measure_number"]
+                    && e["voice"] == reference["voice"]
+                    && e["time_offset"] == reference["time_offset"]
+            })
+            .unwrap();
+        for field in [
+            "step",
+            "octave",
+            "alter",
+            "duration",
+            "type",
+            "stem_direction",
+            "rest",
+        ] {
+            assert_eq!(event[field], reference[field], "{field}");
+        }
+    }
+    let live = report["shared_sig"]["inters"].as_array().unwrap();
+    let bounds = |id: &Value| live.iter().find(|n| n["id"] == *id).unwrap()["bounds"].clone();
+    let voices = report["voices"].as_array().unwrap();
+    assert_eq!(voices.len(), 4);
+    for (i, reference) in state["measures"].as_array().unwrap().iter().enumerate() {
+        assert_eq!(reference["final_check_ok"], true);
+        let measure = &report["measures"][i];
+        for (actual, expected) in [
+            ("expected_duration", "expected"),
+            ("actual_duration", "actual"),
+            ("stack_excess", "stack_excess"),
+        ] {
+            assert_eq!(measure[actual], reference[expected]);
+        }
+        assert_eq!(measure["abnormal"], reference["stack"]["abnormal"]);
+        for chord in reference["chords"].as_array().unwrap() {
+            let actual = live
+                .iter()
+                .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == chord["bounds"])
+                .unwrap();
+            for key in ["voice", "time_offset", "duration"] {
+                assert_eq!(actual[key], chord[key], "{key}");
+            }
+        }
+        let actual_voices = voices.iter().filter(|v| v["measure_index"] == i + 1).map(|v| serde_json::json!({"id":v["id"],"chord_bounds":v["chord_ids"].as_array().unwrap().iter().map(&bounds).collect::<Vec<_>>(),"termination":v["termination"],"excess":v["excess"]})).collect::<Vec<_>>();
+        assert_eq!(serde_json::json!(actual_voices), reference["voices"]);
+        let slots = measure["slots"].as_array().unwrap().iter().map(|s| serde_json::json!({"id":s["id"],"time_offset":s["time_offset"],"incoming_bounds":s["incoming_chord_ids"].as_array().unwrap().iter().map(&bounds).collect::<Vec<_>>()})).collect::<Vec<_>>();
+        assert_eq!(serde_json::json!(slots), reference["stack"]["slots"]);
+        assert!(
+            exported
+                .xml
+                .contains(original["measures"][i]["normalized_body"].as_str().unwrap())
+        );
+    }
+    assert_eq!(exported.xml.matches("<note>").count(), events.len());
+    assert_eq!(
+        exported
+            .xml
+            .matches("<backup><duration>4</duration></backup>")
+            .count(),
+        2
+    );
+    for field in [
+        "heads_complete",
+        "stems_complete",
+        "musicxml_complete",
+        "epilog_complete",
+        "automatic_raster_pipeline_complete",
+    ] {
+        assert_eq!(report[field], false);
+    }
+    assert_eq!(report["original_XML_output_reused"], false);
+
+    // The renderer omits the last lower Voice note, leaving the upper Voice
+    // complete. Checking only maximum stack duration would incorrectly pass.
+    let shortened =
+        GrayImage::decode(&fs::read(fixture.join("parallel-shorter-lower.png")).unwrap()).unwrap();
+    let error = music_xml::recognize(&shortened).err().unwrap();
+    assert!(
+        error.starts_with("musicxml_incomplete_or_excess_measure:"),
+        "{error}"
+    );
+    assert!(error.contains("quarters=3:expected=4"), "{error}");
+}
+
+#[test]
 fn actual_flag_connections_supply_eighth_duration_onsets_and_xml_divisions() {
     let f = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("fixtures/official-image-musicxml-flags");
