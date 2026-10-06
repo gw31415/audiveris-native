@@ -1,16 +1,19 @@
-# Original next-unit observations (Rust not implemented at this receipt)
+# Original intrinsic head duration and head/beam size families
 
 Original5.11.0 source `9e1e55cd2746037d059345881c53e6a6754bffbd`.
-`scripts/java/FoundationSpecialChordProbe.java` loads the existing saved
-System/Staff, clears SIG and declares physical stems/heads/beams. It calls
-unmodified analyzeChords/contextualize with original default
-allowSmallHeadOnStandardBeam=false. Eight declared conditions plus24 scalar
-Shape duration/size/enum-order observations are saved. No new page fixture.
+`scripts/java/FoundationSpecialChordProbe.java` loads the existing saved System/Staff,
+clears SIG and declares physical stems/heads/beams. Unmodified analyzeChords and
+contextualize supply eight conditions and24 Shape duration/size/ordinal observations.
+Original default allowSmallHeadOnStandardBeam=false is observed and retained.
 
-Original success does not imply native success. Pending Rust dependencies:
-actual duration buckets (different shapes with the same duration support each
-other), small/standard head exclusion before duration support, beam size
-exclusion and head/beam size compatibility, typed SmallBeam context and owning
-contacts. Full production consistency, small-beam builders and special-head
-MusicXML/whole-page validation remain separately guarded. These are final
-implementation targets, not planned omissions or caller-selected API additions.
+Native `stem_chord_consistency` now compares the same conditions/actual edges,
+contextual grades and idempotence. Different shapes with equal intrinsic duration
+support each other; size conflicts precede duration supports. Typed BeamStem
+membership supplies beam/head size incompatibilities. Old ordinary prolog/late
+and unlinked-head median/inclusive0.02 IOU comparisons are retained in the same test.
+
+These declared SIG comparisons do not admit all special heads/small beams into
+whole-page recognition/export. Production cleaner/checks, small-beam builder,
+frozen/unknown classes and context work limits remain guarded. Nondefault original
+beam policy, complete cleaner/epilog and all24-shape pages remain implementation
+targets. No new page fixture or caller-selected recognition API is introduced.

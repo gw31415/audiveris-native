@@ -386,3 +386,20 @@ fmtとworkspace/all-target clippyも成功。独立fetch/buildのLinux CLIで20�
 [全回帰](../evidence/musicxml-mirror-ensemble-overlap/FULL-VALIDATION.json)、
 [readback](../evidence/musicxml-mirror-ensemble-overlap/READBACK.json)。
 次の特殊head音価/サイズ整理は原版8条件・24形の観測のみ保存済みで、Rust未接続。
+
+## Intrinsic head duration / beam-size consistency
+
+Original `SigReducer.analyzeChords` now groups heads by intrinsic duration,
+not shape name. Size exclusions precede same-duration support; actual BeamStem
+edges supply standard/small beam mutual and head-size exclusions. Eight original
+declared SIG conditions and24 Shape duration/size/order observations agree.
+Existing ordinary prolog/late, atomic unknown/frozen refusal and production
+special-head/small-beam builder guards remain. The observed original default
+allowSmallHeadOnStandardBeam=false is supported; its nondefault setting remains.
+
+This expands a generic original processing unit, not special-head raster-page
+admission or full MusicXML/cleaner parity. Targeted regressions/fmt/clippy are used;
+last full588 is source`00ee541`, before this change. The existing two-system image
+and competing-hook CLI examples remain the image checks. Next: original
+stem-bound HeadChord bounds/leading-note/tail and actual ensemble ownership.
+[Validation](../evidence/musicxml-special-chord-consistency/VALIDATION.json).

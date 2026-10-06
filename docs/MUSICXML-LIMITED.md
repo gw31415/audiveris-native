@@ -917,3 +917,20 @@ Source`00ee541` passed one complete workspace run:588 tests,0 failures/ignored,
 Linux CLI retains20+11 original-matching events, prior XML bytes and native/original
 MusicXML4 XSD. [Readback](../evidence/musicxml-mirror-ensemble-overlap/READBACK.json).
 Next size/duration fixtures contain original observations only; Rust not yet ported.
+
+## Intrinsic head duration / beam-size consistency
+
+Original `SigReducer.analyzeChords` now groups heads by intrinsic duration,
+not shape name. Size exclusions precede same-duration support; actual BeamStem
+edges supply standard/small beam mutual and head-size exclusions. Eight original
+declared SIG conditions and24 Shape duration/size/order observations agree.
+Existing ordinary prolog/late, atomic unknown/frozen refusal and production
+special-head/small-beam builder guards remain. The observed original default
+allowSmallHeadOnStandardBeam=false is supported; its nondefault setting remains.
+
+This expands a generic original processing unit, not special-head raster-page
+admission or full MusicXML/cleaner parity. Targeted regressions/fmt/clippy are used;
+last full588 is source`00ee541`, before this change. The existing two-system image
+and competing-hook CLI examples remain the image checks. Next: original
+stem-bound HeadChord bounds/leading-note/tail and actual ensemble ownership.
+[Validation](../evidence/musicxml-special-chord-consistency/VALIDATION.json).

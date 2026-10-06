@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! SigReducer.analyzeChords for retained ordinary black/void heads and stems.
-//! Small/percussion/stemless size contracts require their pending dependencies.
+//! SigReducer.analyzeChords intrinsic head duration and head/beam size families.
+//! Production special-head checks/builders and nondefault beam policy are pending.
 use crate::shared_sig::{Graph, Key};
 use serde_json::{Value, json};
 
@@ -79,7 +79,7 @@ fn intersects_head(stem: &Value, head: &Value) -> Result<bool, String> {
 /// Adds native support/exclusions to the retained SIG; no selected-grade API.
 pub(crate) fn analyze(graph: &mut Graph) -> Result<Value, String> {
     let input = graph.snapshot();
-    crate::stem_head_foundation_plan::validate(&input)?;
+    crate::stem_head_foundation_plan::validate_chord_inputs(&input)?;
     let nodes = input["inters"].as_array().unwrap();
     let edges = input["relations"].as_array().unwrap();
     let mut stems = nodes
@@ -134,7 +134,8 @@ pub(crate) fn analyze(graph: &mut Graph) -> Result<Value, String> {
             }
         }
         // Original duration buckets preserve first HeadStem edge/member order.
-        let mut duration_groups: Vec<(&str, Vec<&Value>)> = Vec::new();
+        let mut duration_groups: Vec<(u32, Vec<&Value>)> = Vec::new();
+        let mut shape_groups = std::collections::BTreeMap::<usize, Vec<&Value>>::new();
         for relation in edges
             .iter()
             .filter(|e| e["kind"] == "HeadStemRelation" && e["target"] == stem["id"])
@@ -144,14 +145,30 @@ pub(crate) fn analyze(graph: &mut Graph) -> Result<Value, String> {
                 .find(|n| n["id"] == relation["source"])
                 .unwrap();
             let shape = head["shape"].as_str().unwrap();
-            if let Some((_, members)) = duration_groups.iter_mut().find(|(s, _)| *s == shape) {
+            let ordinal = crate::head_range_search::SUPPORTED_SHAPES
+                .iter()
+                .position(|s| *s == shape)
+                .unwrap();
+            let shape_members = shape_groups.entry(ordinal).or_default();
+            if !shape_members.iter().any(|n| n["id"] == head["id"]) {
+                shape_members.push(head);
+            }
+            let duration = crate::head_registration::intrinsic_duration_quarters(shape).unwrap();
+            if let Some((_, members)) = duration_groups.iter_mut().find(|(d, _)| *d == duration) {
                 if !members.iter().any(|n| n["id"] == head["id"]) {
                     members.push(head);
                 }
             } else {
-                duration_groups.push((shape, vec![head]));
+                duration_groups.push((duration, vec![head]));
             }
         }
+        // EnumMap Shape order for sizes, LinkedHashSet edge order within shape.
+        // Size conflicts must precede same-duration support insertion.
+        let (small, standard): (Vec<_>, Vec<_>) =
+            shape_groups.values().flatten().copied().partition(|h| {
+                crate::head_registration::is_small_head(h["shape"].as_str().unwrap())
+            });
+        exclude(&mut staged, &small, &standard, &mut added)?;
         for (i, (_, members)) in duration_groups.iter().enumerate() {
             for (_, others) in duration_groups.iter().skip(i + 1) {
                 for a in members {
@@ -180,11 +197,67 @@ pub(crate) fn analyze(graph: &mut Graph) -> Result<Value, String> {
                 }
             }
         }
+        // Original Size enum order is STANDARD then SMALL. Only the concrete
+        // SmallBeamInter branch is small; hooks retain their standard size.
+        let mut beams = [Vec::<&Value>::new(), Vec::<&Value>::new()];
+        for relation in edges
+            .iter()
+            .filter(|e| e["kind"] == "BeamStemRelation" && e["target"] == stem["id"])
+        {
+            let beam = nodes
+                .iter()
+                .find(|n| n["id"] == relation["source"])
+                .unwrap();
+            let size = usize::from(beam["kind"] == "SmallBeamInter");
+            if !beams[size].iter().any(|n| n["id"] == beam["id"]) {
+                beams[size].push(beam);
+            }
+        }
+        exclude(&mut staged, &beams[0], &beams[1], &mut added)?;
+        // Original default allowSmallHeadOnStandardBeam=false. Its configurable
+        // nondefault policy is not silently treated as implemented.
+        for shape in [
+            "NOTEHEAD_BLACK_SMALL",
+            "NOTEHEAD_VOID_SMALL",
+            "WHOLE_NOTE_SMALL",
+            "BREVE_SMALL",
+        ] {
+            if let Some(members) = shape_groups.values().find(|m| m[0]["shape"] == shape) {
+                exclude(&mut staged, &beams[0], members, &mut added)?;
+            }
+        }
+        for members in shape_groups
+            .values()
+            .filter(|m| !crate::head_registration::is_small_head(m[0]["shape"].as_str().unwrap()))
+        {
+            exclude(&mut staged, &beams[1], members, &mut added)?;
+        }
     }
     *graph = staged;
     Ok(
-        json!({"added_relations":added,"scope":"original good-intrinsic-stem threshold/median and inclusive IOU, unlinked-head overlap, ordinary head duration incompatibility/HeadHead support; small/percussion/stemless size branches pending","full_analyzeChords_complete":false}),
+        json!({"added_relations":added,"scope":"original good-intrinsic-stem threshold/median and inclusive IOU, unlinked-head overlap,24 head intrinsic durations/size conflicts, same-duration HeadHead support, standard/small beam and head compatibility; original default small-on-standard-beam policy only; production special-head checks/builders pending","full_analyzeChords_complete":false}),
     )
+}
+
+fn exclude(
+    graph: &mut Graph,
+    a: &[&Value],
+    b: &[&Value],
+    added: &mut Vec<Value>,
+) -> Result<(), String> {
+    for left in a {
+        for right in b {
+            if graph.insert_foundation_contact(
+                key(left)?,
+                key(right)?,
+                "Exclusion",
+                Some("INCOMPATIBLE"),
+            )? {
+                added.push(json!({"kind":"Exclusion","cause":"INCOMPATIBLE","endpoints":[left["id"],right["id"]]}));
+            }
+        }
+    }
+    Ok(())
 }
 
 #[cfg(test)]
@@ -193,12 +266,50 @@ mod tests {
     use crate::shared_sig::Phase;
     use std::collections::BTreeMap;
     #[test]
-    fn original_ordinary_chord_support_duration_conflict_and_unlinked_intersection() {
+    fn original_chord_duration_size_support_and_unlinked_intersection() {
         let oracle: Value = serde_json::from_str(include_str!(
             "../fixtures/official-foundation-chords/controls.json"
         ))
         .unwrap();
-        for case in oracle["cases"].as_array().unwrap() {
+        let special: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-foundation-special-chords/controls.json"
+        ))
+        .unwrap();
+        for (i, semantic) in special["shape_semantics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .enumerate()
+        {
+            let shape = semantic["shape"].as_str().unwrap();
+            assert_eq!(crate::head_range_search::SUPPORTED_SHAPES[i], shape);
+            assert_eq!(semantic["ordinal"].as_u64().unwrap(), 158 + i as u64);
+            assert_eq!(
+                crate::head_registration::is_small_head(shape),
+                semantic["small"].as_bool().unwrap()
+            );
+            let expected = match semantic["duration"].as_str().unwrap() {
+                "2" => 8,
+                "1" => 4,
+                "1/2" => 2,
+                "1/4" => 1,
+                _ => panic!("unknown original duration"),
+            };
+            assert_eq!(
+                crate::head_registration::intrinsic_duration_quarters(shape),
+                Some(expected)
+            );
+        }
+        assert_eq!(
+            crate::head_registration::intrinsic_duration_quarters("UNKNOWN"),
+            None
+        );
+        for case in oracle["cases"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .chain(special["cases"].as_array().unwrap())
+        {
             let mut graph = Graph::default();
             let mut keys = BTreeMap::new();
             let mut labels = BTreeMap::new();
@@ -206,10 +317,10 @@ mod tests {
                 let label = n["label"].as_str().unwrap().to_owned();
                 let k = Key {
                     system: 1,
-                    phase: if n["kind"] == "StemInter" {
-                        Phase::Stem
-                    } else {
-                        Phase::Head
+                    phase: match n["kind"].as_str().unwrap() {
+                        "StemInter" => Phase::Stem,
+                        "BeamInter" | "SmallBeamInter" => Phase::Beam,
+                        _ => Phase::Head,
                     },
                     local: i + 1,
                 };
@@ -266,7 +377,7 @@ mod tests {
                     r.as_object_mut().unwrap().remove(field);
                 }
             }
-            assert_eq!(json!(actual), expected_relations);
+            assert_eq!(json!(actual), expected_relations, "{}", case["name"]);
             graph.contextualize_head_stems().unwrap();
             let after = graph.snapshot();
             for expected in case["contextual"].as_array().unwrap() {
@@ -293,24 +404,60 @@ mod tests {
             );
             assert_eq!(graph.snapshot(), after);
             // Existing original contact prevents inserting its opposite kind.
+            let contact = snapshot["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|r| matches!(r["kind"].as_str(), Some("Exclusion" | "HeadHeadRelation")))
+                .unwrap();
+            let exclusion = contact["kind"] == "HeadHeadRelation"
+                || ["source", "target"].iter().any(|side| {
+                    let label = &labels[&(contact[*side].as_u64().unwrap() as usize)];
+                    case["nodes"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|n| n["label"] == *label && n["kind"] != "HeadInter")
+                });
             assert!(
                 !graph
                     .insert_foundation_contact(
-                        keys["head0"],
-                        keys["head1"],
-                        if case["name"] == "same-duration" {
+                        keys[&labels[&(contact["source"].as_u64().unwrap() as usize)]],
+                        keys[&labels[&(contact["target"].as_u64().unwrap() as usize)]],
+                        if exclusion {
                             "Exclusion"
                         } else {
                             "HeadHeadRelation"
                         },
-                        if case["name"] == "same-duration" {
+                        if exclusion {
                             Some("INCOMPATIBLE")
                         } else {
                             None
-                        }
+                        },
                     )
                     .unwrap()
             );
+            // This unit does not remove the production cleaner/checks guard.
+            if case["nodes"].as_array().unwrap().iter().any(|n| {
+                n["kind"] == "SmallBeamInter"
+                    || (n["kind"] == "HeadInter"
+                        && !matches!(
+                            n["shape"].as_str(),
+                            Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
+                        ))
+            }) {
+                assert!(crate::stem_head_foundation_plan::validate(&after).is_err());
+            }
+            let mut invalid = after.clone();
+            let head = invalid["inters"]
+                .as_array_mut()
+                .unwrap()
+                .iter_mut()
+                .find(|n| n["kind"] == "HeadInter")
+                .unwrap();
+            head["shape"] = json!("UNKNOWN");
+            assert!(crate::stem_head_foundation_plan::validate_chord_inputs(&invalid).is_err());
+            assert_eq!(graph.snapshot(), after);
         }
         // Inclusive original IOU threshold and actual median intersection.
         let stem = json!({"median":[1.5,-400.,1.5,10.],"bounds":[1.,-400.,1.,410.]});

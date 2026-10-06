@@ -11,6 +11,37 @@ pub(crate) fn is_small_head(shape: &str) -> bool {
         "NOTEHEAD_BLACK_SMALL" | "NOTEHEAD_VOID_SMALL" | "WHOLE_NOTE_SMALL" | "BREVE_SMALL"
     )
 }
+/// Shape.getNoteDuration in quarter-note units, not a glyph's final rhythmic
+/// duration (beams, flags, dots and tuplets are applied later).
+pub(crate) fn intrinsic_duration_quarters(shape: &str) -> Option<u32> {
+    match shape {
+        "BREVE"
+        | "BREVE_SMALL"
+        | "BREVE_CROSS"
+        | "BREVE_DIAMOND"
+        | "BREVE_TRIANGLE_DOWN"
+        | "BREVE_CIRCLE_X" => Some(8),
+        "WHOLE_NOTE"
+        | "WHOLE_NOTE_SMALL"
+        | "WHOLE_NOTE_CROSS"
+        | "WHOLE_NOTE_DIAMOND"
+        | "WHOLE_NOTE_TRIANGLE_DOWN"
+        | "WHOLE_NOTE_CIRCLE_X" => Some(4),
+        "NOTEHEAD_VOID"
+        | "NOTEHEAD_VOID_SMALL"
+        | "NOTEHEAD_CROSS_VOID"
+        | "NOTEHEAD_DIAMOND_VOID"
+        | "NOTEHEAD_TRIANGLE_DOWN_VOID"
+        | "NOTEHEAD_CIRCLE_X_VOID" => Some(2),
+        "NOTEHEAD_BLACK"
+        | "NOTEHEAD_BLACK_SMALL"
+        | "NOTEHEAD_CROSS"
+        | "NOTEHEAD_DIAMOND_FILLED"
+        | "NOTEHEAD_TRIANGLE_DOWN_FILLED"
+        | "NOTEHEAD_CIRCLE_X" => Some(1),
+        _ => None,
+    }
+}
 fn bounds(v: &Value) -> Result<[i32; 4], String> {
     let b: [i32; 4] = serde_json::from_value(v["bounds"].clone())
         .map_err(|_| "invalid_registered_head_bounds")?;

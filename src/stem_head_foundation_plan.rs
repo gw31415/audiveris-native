@@ -594,6 +594,14 @@ fn count(g: &Value) -> Value {
     json!({"heads":nodes.iter().filter(|n|n["kind"]=="HeadInter").count(),"stems":nodes.iter().filter(|n|n["kind"]=="StemInter").count(),"head_stem_relations":g["relations"].as_array().unwrap().iter().filter(|r|r["kind"]=="HeadStemRelation").count()})
 }
 pub(crate) fn validate(input: &Value) -> Result<(), String> {
+    validate_role(input, false)
+}
+/// analyzeChords has original intrinsic shape/size semantics for all retained
+/// heads. This does not admit them into the still ordinary-only cleaner/checks.
+pub(crate) fn validate_chord_inputs(input: &Value) -> Result<(), String> {
+    validate_role(input, true)
+}
+fn validate_role(input: &Value, chords: bool) -> Result<(), String> {
     let nodes = input["inters"]
         .as_array()
         .ok_or("missing_native_foundation_nodes")?;
@@ -615,7 +623,8 @@ pub(crate) fn validate(input: &Value) -> Result<(), String> {
         if !matches!(
             n["kind"].as_str(),
             Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "BarlineInter")
-        ) {
+        ) && !(chords && n["kind"] == "SmallBeamInter")
+        {
             return Err("unsupported_head_foundation_kind".into());
         }
         if matches!(n["kind"].as_str(), Some("HeadInter" | "StemInter"))
@@ -624,12 +633,14 @@ pub(crate) fn validate(input: &Value) -> Result<(), String> {
             return Err("unsupported_frozen_foundation".into());
         }
         if n["kind"] == "HeadInter" {
-            if !matches!(
-                n["shape"].as_str(),
-                Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
-            ) || n["frozen"] == true
-                || n["is_frozen"] == true
-            {
+            let supported_shape = n["shape"].as_str().is_some_and(|shape| {
+                if chords {
+                    crate::head_registration::intrinsic_duration_quarters(shape).is_some()
+                } else {
+                    matches!(shape, "NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
+                }
+            });
+            if !supported_shape || n["frozen"] == true || n["is_frozen"] == true {
                 return Err("unsupported_head_foundation_shape_or_frozen".into());
             }
             if !n["pitch"]
@@ -657,7 +668,7 @@ pub(crate) fn validate(input: &Value) -> Result<(), String> {
             matches!(
                 n["kind"].as_str(),
                 Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter")
-            )
+            ) || (chords && n["kind"] == "SmallBeamInter")
         })
         .cloned()
         .collect::<Vec<_>>();

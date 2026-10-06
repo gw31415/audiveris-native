@@ -1,0 +1,65 @@
+{
+  "base_main": "4a82774162d29b8e0887196557aa2ce0abf092b7",
+  "original": {
+    "version": "5.11.0",
+    "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "conditions": 8,
+    "shape_scalar_semantics": 24,
+    "observer": "scripts/java/FoundationSpecialChordProbe.java",
+    "fixture": "fixtures/official-foundation-special-chords/controls.json",
+    "boundary": "declared actual heads/stem/BeamStem relations on existing saved System/Staff; unmodified analyzeChords and contextualize, not raster special-head/small-beam page equality",
+    "allowSmallHeadOnStandardBeam": false
+  },
+  "connected": [
+    "original intrinsic duration buckets independent of head shape; same-duration support / different-duration incompatibility",
+    "Shape enum/member order and small/standard head conflict before duration support",
+    "actual typed standard/small BeamStem members, beam-size mutual exclusion and head/beam-size exclusions in original order",
+    "SmallBeamInter original typed Support endpoint/context and canonical contact insertion"
+  ],
+  "targeted_tests": [
+    {
+      "log": "targeted-chords.log",
+      "passed": 1,
+      "sha256": "aa40e4ac7646dc3c96d28fb1af21e1137eb1c493ea97a211f15d75057c1c46ab"
+    },
+    {
+      "log": "targeted-foundations.log",
+      "passed": 3,
+      "sha256": "5a187d24e687cc81608a47e66dd4357e55531ca4526143f38b4c059551e2a9c2"
+    },
+    {
+      "log": "targeted-context.log",
+      "passed": 2,
+      "sha256": "330826e0ec390775993e69d6d97fa182d1c22296b9a1e9ee9ad34f208323e04a"
+    },
+    {
+      "log": "targeted-overlap.log",
+      "passed": 3,
+      "sha256": "bd798c26cff101d7d784be7d2b1a783b7a097a0256363959cd0332cb5c78632b"
+    },
+    {
+      "log": "targeted-laura.log",
+      "passed": 1,
+      "sha256": "6ab95f88b0486f0011255f3566d8275de67fd011132a7d6f1642faddc1e6ab6e"
+    }
+  ],
+  "full_workspace_this_unit": false,
+  "last_full_workspace": {
+    "source": "00ee5416e291b663121d6544f16c250a9ca53f17",
+    "passed": 588,
+    "evidence": "evidence/musicxml-mirror-ensemble-overlap/FULL-VALIDATION.json"
+  },
+  "fmt_and_clippy": "passed fmt and workspace/all-target clippy -D warnings",
+  "remaining": [
+    "nondefault small-on-standard-beam policy and production special-head consistency/checks",
+    "small-beam image builders and special/stemless/cue whole-page MusicXML propagation",
+    "stem-bound chord geometry and complete ensemble/Part/lyrics callbacks",
+    "complete general overlap/cleaner/LINKS epilog and full nonUI ledger"
+  ],
+  "production_guards": "ordinary-only cleaner/checks, SmallBeam image-builder refusal, frozen/unknown head, original canonical Support/Exclusion priority and16-partner context bound retained",
+  "global_completion_flags": false,
+  "new_image_fixture": false,
+  "Laura": "352 heads /513 exclusions passed in actual original registration/epilog regression",
+  "validated_src_tree": "c2271ed17f37807a5878d1391a37f17703b674a3",
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+}

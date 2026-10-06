@@ -111,3 +111,11 @@ mirror recognition. Stem-bound chord geometry and general ensemble lifecycle
 remain pending. Next original processing unit: special-head intrinsic duration
 buckets, small/standard head-size conflicts and head/beam-size consistency in
 analyzeChords, retaining first-edge/member order and canonical relation priority.
+
+Original24 intrinsic head durations / small-standard head and beam size families
+now agree in8 declared controls plus24 scalar observations. Production special
+head cleaner/checks, small-beam image builder and nondefault original beam policy
+are still guarded. Next independent owner dependency is actual stem-bound
+HeadChord getBounds/getLeadingNote/computeLocations with typed ChordStemRelation;
+then general ensemble callbacks and complete cleaner/Part/lyrics/LINKS epilog.
+No full nonUI completion or automatic special-page recognition is claimed.

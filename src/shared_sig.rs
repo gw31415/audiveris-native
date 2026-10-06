@@ -1009,7 +1009,10 @@ impl Graph {
                 !v.removed
                     && system.is_none_or(|id| v.key.system == id)
                     && (matches!(v.key.phase, Phase::Head | Phase::Stem)
-                        || matches!(v.data["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
+                        || matches!(
+                            v.data["kind"].as_str(),
+                            Some("BeamInter" | "BeamHookInter" | "SmallBeamInter")
+                        ))
             })
             .map(|v| v.data.clone())
             .collect::<Vec<_>>();
@@ -1061,7 +1064,12 @@ impl Graph {
                     && matches!(
                         v.data["kind"].as_str(),
                         Some(
-                            "HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "FlagInter"
+                            "HeadInter"
+                                | "StemInter"
+                                | "BeamInter"
+                                | "BeamHookInter"
+                                | "SmallBeamInter"
+                                | "FlagInter"
                         )
                     )
             })
@@ -1209,6 +1217,7 @@ impl Graph {
                                     | "StemInter"
                                     | "BeamInter"
                                     | "BeamHookInter"
+                                    | "SmallBeamInter"
                                     | "BarlineInter"
                             )
                         )
