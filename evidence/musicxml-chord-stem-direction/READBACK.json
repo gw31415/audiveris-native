@@ -1,0 +1,93 @@
+{
+  "validated_source_commit": "9175cbdcc9a2b799b91bc48929269fd8c6ffca81",
+  "ordinary_main_push": "confirmed with ls-remote and independent fetch",
+  "repository_and_independent_clone": {
+    "commit": "9175cbdcc9a2b799b91bc48929269fd8c6ffca81",
+    "root_tree": "38940a6badc2534514a351419d562838da121d72",
+    "src_tree": "4a27f99e5dcbb1d62a6a14b238a8aa7a54077646",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone updated by fetch/fast-forward; no bundle/archive/all-hash duplication",
+  "Linux_Cargo_build": "passed offline/locked/j1, CARGO_INCREMENTAL=0 DEV_DEBUG=0 TEST_DEBUG=0",
+  "native_CLI": "Linux native recognition; no Java or original XML used by native CLI",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "6f8fdeb1cdc7fbf6dae022899b1940726a10e4bcb70c27a533583044cafc944b",
+      "same_XML_bytes_as_prior_checkpoint": false,
+      "new_original_matching_unbeamed_stem_notes": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "all_XML_other_than_added_stem_metadata_unchanged": true,
+      "previous_XML_sha256_at_74b9dbe": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "e33b330245041e8ff95d286a00038b61f34fe0e7f808eee0a660e0b4c7fca24c",
+      "same_XML_bytes_as_prior_checkpoint": false,
+      "new_original_matching_unbeamed_stem_notes": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "all_XML_other_than_added_stem_metadata_unchanged": true,
+      "previous_XML_sha256_at_74b9dbe": "a81b3f7398c44c6833cba65b32cf9c7f7b85d0712bf7e176803230a63e928574",
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-measure-rest/quarter-whole-rest.png",
+      "events_original_matching": 5,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "10f31bf15800f5b7faaff64fe0e1e4159dc1065bc827dec71a8141c26d0e70f4",
+      "new_whole_rest_default_Voice_state_and_bounds": "original matching",
+      "comparison": "pitch/rest/type/Voice/duration/onset and rest measure=yes/type omission; full XML engraving/metadata equality not claimed",
+      "completion_flags": false
+    }
+  ],
+  "retained_slot_geometry_queries": [
+    {
+      "original_fixture": "saved-page.json",
+      "same_image_slot_geometry": "matching",
+      "original_saved_nearest_queries": "matching",
+      "actual_Linux_CLI_read_only_query": "passed"
+    },
+    {
+      "original_fixture": "measure-rest.json",
+      "same_image_slot_geometry": "matching",
+      "original_saved_nearest_queries": "matching",
+      "actual_Linux_CLI_read_only_query": "passed"
+    }
+  ],
+  "stem_direction": "actual original HeadChord getter24/declared4 controls, plus all36 note/rest MusicXML stem directions and unchanged non-stem XML against prior checkpoint",
+  "comparison_boundary": "same image MusicXML event/pitch/duration/onset/voice/beam comparison and native/original XSD; new default whole-rest raster Voice/stack and measure-rest XML comparison and real20 slot geometry /within-staff nearest query and empty rest stack selection; prior declared time/slot controls remain separate, not full original raster SIG equality",
+  "targeted_unique_tests_passed": 18,
+  "following_test_only_oracle_assertions_passed": 2,
+  "full_workspace_run_this_stage": false,
+  "full_workspace_source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+  "full_workspace_tests_passed": 595,
+  "previous_full583_source": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+  "source_unchanged_for_receipt_commit": true,
+  "all_global_completion_flags": false,
+  "GHA_Mac_Releases_Library_retry": "none",
+  "verification_script_correction": "fixed unmatched parenthesis in readback helper; rechecked existing CLI outputs without rebuild or recognition retry"
+}
