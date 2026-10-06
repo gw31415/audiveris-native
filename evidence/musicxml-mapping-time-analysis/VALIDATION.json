@@ -1,0 +1,36 @@
+{
+  "base_source": "4845e6624ffe9c7b27b6116346d355f0f65d406d",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "nonimplicit inferSlotTimes/checkSlotTime/analyzeTimes earliest narrow time, later-pair blacklist/reselection before apply",
+  "original_comparison": {
+    "declared_actual_original_chord_Voice_controls": 2,
+    "matching": "proposal/cost, ordered black list, retained narrow time, remaining rookies",
+    "cases": "equal active ends; conflicting ends retry twice and leave unmatched rookie unassigned",
+    "limits": "actual original objects with two declared Voices; native automatic image polyphony and multi-Voice apply not claimed"
+  },
+  "integration": "same owned live mapping validator, narrow chord order retained during inference; no implicit tuplets or image guard change",
+  "targeted_unique_passed": 6,
+  "runs": {
+    "mapping_original_controls_and_existing_solver": 2,
+    "two_system_and_same_glyph_image_MusicXML": 2,
+    "measure_rest_image": 1,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "verification_note": "final narrow-member iteration order checked by mapping targets; existing image targets have one narrow chord and final independent CLI readback verifies unchanged XML",
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "unknown active-clock abnormal propagation pending",
+    "new Voice/time inference, EQUAL siblings/previous-slot merge and Merged/shared stacks pending",
+    "binary 1/16 tick codec, full Rational/implicit tuplets pending",
+    "normal one-incoming/one-Voice images have no positive inferred-time conflict; method controls separate",
+    "no new image/font/skew/scan admission; all-rest original XSD rejection remains negative",
+    "full nonUI parity/lyrics/automatic slur-tie/correction/complete cleaner-epilog unfinished"
+  ],
+  "all_global_completion_flags": false
+}

@@ -16,6 +16,32 @@ public class MappingRetryProbe extends RookieMappingProbe {
         return mapping == null ? null : obj("cost", field(mapping, "cost"),
                 "pairs", pairs(field(mapping, "pairs"), chords));
     }
+    static Object mapperInput(Object mapper, Object rhythm, Object measure, List<Object> chords, Object current) throws Exception {
+        if ((Boolean) field(rhythm, "implicitTuplets")) throw new IllegalStateException("nonimplicit comparison required");
+        List<?> rookies = (List<?>) field(mapper, "rookies");
+        List<?> actives = (List<?>) invoke(mapper, "retrieveActives");
+        List<Object> costs = new ArrayList<>(), activeEnds = new ArrayList<>(), durations = new ArrayList<>(), narrow = new ArrayList<>();
+        for (Object a : actives) activeEnds.add(obj("id", chords.indexOf(a), "end", fraction(call(a, "getEndTime"))));
+        for (Object r : rookies) {
+            durations.add(obj("id", chords.indexOf(r), "duration", fraction(call(r, "getDuration"))));
+            for (Object a : actives) costs.add(obj("rookie", chords.indexOf(r), "active", chords.indexOf(a),
+                    "distance", call(field(rhythm, "voiceDistance"), "getDistance", a, r, (Object) null)));
+        }
+        for (Object member : (List<?>) call(current, "getMembers")) narrow.add(obj("id", call(member, "getId"),
+                "chord_ids", ids((Collection<?>) call(member, "getChords"), chords), "time_offset", fraction(call(member, "getTimeOffset"))));
+        return obj("rookies", ids(rookies, chords), "actives", ids(actives, chords), "costs", costs,
+                "black", pairs(field(mapper, "blackList"), chords), "next", pairs(field(mapper, "nextList"), chords),
+                "narrow", narrow, "active_ends", activeEnds, "rookie_durations", durations,
+                "expected", fraction(call(call(measure, "getStack"), "getExpectedDuration")));
+    }
+    static Object mapperOutput(Object mapper, Object current, List<Object> chords) throws Exception {
+        List<Object> narrow = new ArrayList<>();
+        for (Object member : (List<?>) call(current, "getMembers")) narrow.add(obj("id", call(member, "getId"),
+                "time_offset", fraction(call(member, "getTimeOffset"))));
+        return obj("mapping", mappingState(field(mapper, "mapping"), chords),
+                "black", pairs(field(mapper, "blackList"), chords),
+                "remaining_rookies", ids((Collection<?>) field(mapper, "rookies"), chords), "narrow", narrow);
+    }
     static Object inspectControl(Object measure, String name) throws Exception {
         call(measure, "resetRhythm");
         Object sys = call(call(measure, "getStack"), "getSystem");
@@ -51,26 +77,9 @@ public class MappingRetryProbe extends RookieMappingProbe {
         ctor.setAccessible(true);
         Object mapper = ctor.newInstance(rhythm, current);
         invoke(mapper, "purgeRookiesSet");
-        List<?> rookies = (List<?>) field(mapper, "rookies");
-        List<?> actives = (List<?>) invoke(mapper, "retrieveActives");
-        List<Object> costs = new ArrayList<>(), activeEnds = new ArrayList<>(), durations = new ArrayList<>();
-        for (Object a : actives) activeEnds.add(obj("id", chords.indexOf(a), "end", fraction(call(a, "getEndTime"))));
-        for (Object r : rookies) {
-            durations.add(obj("id", chords.indexOf(r), "duration", fraction(call(r, "getDuration"))));
-            for (Object a : actives) costs.add(obj("rookie", chords.indexOf(r), "active", chords.indexOf(a),
-                    "distance", call(field(rhythm, "voiceDistance"), "getDistance", a, r, (Object) null)));
-        }
-        Object input = obj("rookies", ids(rookies, chords), "actives", ids(actives, chords), "costs", costs,
-                "black", pairs(field(mapper, "blackList"), chords), "next", pairs(field(mapper, "nextList"), chords),
-                "narrow", List.of(obj("id", call(member, "getId"), "chord_ids", ids((Collection<?>) call(member, "getChords"), chords),
-                        "time_offset", fraction(call(member, "getTimeOffset")))),
-                "active_ends", activeEnds, "rookie_durations", durations,
-                "expected", fraction(call(call(measure, "getStack"), "getExpectedDuration")));
+        Object input = mapperInput(mapper, rhythm, measure, chords, current);
         invoke(mapper, "mapRookies");
-        Object output = obj("mapping", mappingState(field(mapper, "mapping"), chords),
-                "black", pairs(field(mapper, "blackList"), chords),
-                "remaining_rookies", ids((Collection<?>) field(mapper, "rookies"), chords),
-                "narrow", List.of(obj("id", call(member, "getId"), "time_offset", fraction(call(member, "getTimeOffset")))));
+        Object output = mapperOutput(mapper, current, chords);
         Object voice = call(chords.get(2), "getVoice");
         Object finalChord = obj("voice", voice == null ? null : call(voice, "getId"),
                 "time_offset", fraction(call(chords.get(2), "getTimeOffset")));

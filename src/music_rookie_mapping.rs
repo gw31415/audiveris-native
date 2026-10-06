@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original separated VoiceDistance, ChordsMapper and small InjectionSolver.
 //! Owned image adapter currently admits one incoming/one Voice and no implicit
-//! tuplets. General multi-time/implicit-tuplet analysis, new-Voice inference
+//! tuplets. Implicit-tuplet analysis, new-Voice inference
 //! and Merged remain pending.
 use crate::{
     music_measure_slots::CompoundSlot, music_measures::Measure, music_voices::Voice,
@@ -158,14 +158,14 @@ fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, Str
                 }
             }
         }
+        let mut retry_inferred = false;
         for narrow in &mut input.narrow {
             if narrow.time_offset.is_none() {
                 let mut inferred = BTreeMap::<u32, Vec<usize>>::new();
-                for pair in map
-                    .pairs
-                    .iter()
-                    .filter(|p| narrow.chord_ids.contains(&p.rookie))
-                {
+                for rookie in &narrow.chord_ids {
+                    let Some(pair) = map.pairs.iter().find(|p| p.rookie == *rookie) else {
+                        continue;
+                    };
                     let end = input
                         .active_ends
                         .get(&pair.active)
@@ -174,11 +174,20 @@ fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, Str
                         .ok_or("music_mapping_unknown_active_time_analysis_pending")?;
                     inferred.entry(end).or_default().push(pair.rookie);
                 }
-                if inferred.len() > 1 {
-                    return Err("music_mapping_multi_time_analysis_pending".into());
-                }
                 narrow.time_offset = inferred.keys().next().copied();
+                for rookies in inferred.values().skip(1) {
+                    for rookie in rookies {
+                        let pair = *map.pairs.iter().find(|p| p.rookie == *rookie).unwrap();
+                        if !input.black.contains(&pair) {
+                            input.black.push(pair);
+                        }
+                        retry_inferred = true;
+                    }
+                }
             }
+        }
+        if retry_inferred {
+            continue 'retry;
         }
         return Ok(decision(input, Some(map), true));
     }
@@ -696,12 +705,15 @@ mod tests {
         }
     }
     #[test]
-    fn original_fixed_slot_rejections_reselect_or_leave_rookies_unassigned() {
-        let original: Value = serde_json::from_str(include_str!(
-            "../fixtures/official-mapping-retry/observed.json"
-        ))
-        .unwrap();
-        for case in original["controls"].as_array().unwrap() {
+    fn original_slot_times_reselect_compatible_voices_or_leave_rookies_unassigned() {
+        let originals = [
+            include_str!("../fixtures/official-mapping-retry/observed.json"),
+            include_str!("../fixtures/official-mapping-time-analysis/observed.json"),
+        ];
+        for case in originals.iter().flat_map(|s| {
+            let original: Value = serde_json::from_str(s).unwrap();
+            original["controls"].as_array().unwrap().clone()
+        }) {
             let input = observed_input(&case["input"]);
             let rookies = input.rookies.clone();
             let result = validated_mapping(input).unwrap();

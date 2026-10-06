@@ -292,6 +292,12 @@
       "unit": "nonimplicit mapRookies known-narrow-time/end validation with blacklist-and-reselect, explicit Next late-end exception and forced conflicting-pair stop, connected before actual Voice/time apply",
       "limits": "five original actual-object method controls separate from normal image MusicXML; general multiple inferred time/analyzeTimes, new Voice/time inference, tuplets/Merged/shared stacks remain pending; image one-incoming/one-Voice admission unchanged",
       "evidence": "evidence/musicxml-mapping-retry/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "nonimplicit inferSlotTimes/checkSlotTime/analyzeTimes: retain earliest inferred narrow time, blacklist later mapped choices and retry before Voice/time apply",
+      "limits": "two declared original actual-object multi-Voice controls separate from 36-event one-incoming/one-Voice image regression; unknown active clocks/abnormal propagation, new Voice/time inference, full Rational/implicit tuplets and shared stacks remain pending",
+      "evidence": "evidence/musicxml-mapping-time-analysis/VALIDATION.json"
     }
   ],
   "function_groups": [

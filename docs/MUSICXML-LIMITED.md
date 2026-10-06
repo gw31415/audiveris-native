@@ -1538,3 +1538,21 @@ image polyphony or successful overfull MusicXML. Normal image admission remains
 one incoming/one Voice/nonimplicit binary rhythm. Multiple inferred times,
 `analyzeTimes`, new Voices, full Rational/tuplets and shared stacks are still
 pending, with all global flags false. Full595 remains the old `95e191b` result.
+
+### Conflicting inferred narrow times (2026-10-06)
+
+Nonimplicit `MeasureRhythm.inferSlotTimes/checkSlotTime/analyzeTimes` now shares
+the live proposal validation path. When mapped candidates infer different times
+for one previously unknown narrow member, the earliest time is retained, later
+choices are blacklisted, and selection retries before Voice/time assignment.
+It does not force a conflicting chord into a Voice. Exhausted rookies stay
+unassigned; pending new-Voice inference still causes the current CLI to refuse.
+
+Two controls built with original saved chord/Voice objects compare equal inferred
+ends and conflicting ends, including proposal cost, blacklist order, remaining
+rookies and retained slot clock. These are method controls, not automatic image
+polyphony. Existing CLI commands and the three 36-event image examples above
+remain the usable scope; their MusicXML must remain unchanged. Implicit tuplets,
+unknown-clock abnormal propagation, general new Voices and shared stacks are
+still partial. All global completion flags remain false; full595 is the historical
+`95e191b` result, not a rerun of this source.
