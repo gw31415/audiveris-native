@@ -224,7 +224,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "evidence/musicxml-ordered-foundations/CHORD-VALIDATION.json:25 affected tests + prior cascade1 passed, fmt/clippy; two original declared ordinary chord controls. Last full580 remains c270552 until separate full receipt.",
+  "latest_targeted_validation": "evidence/musicxml-ordered-foundations/CHORD-VALIDATION.json:25 affected tests + cascade1, fmt/clippy; two original declared chord controls",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -268,5 +268,14 @@
       "status": "unimplemented",
       "remaining": "slur/tie/lyrics and other required recognition/link dependencies"
     }
-  ]
+  ],
+  "latest_full_validation": {
+    "source_commit": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+    "passed": 583,
+    "failed": 0,
+    "ignored": 0,
+    "execution": "interrupted full command resumed only uncompleted binaries, full inventory covered; doc tests passed",
+    "evidence": "evidence/musicxml-ordered-foundations/FULL-VALIDATION.json",
+    "independent_clone_Linux_CLI": "20 original-matching events and MusicXML4 XSD passed"
+  }
 }

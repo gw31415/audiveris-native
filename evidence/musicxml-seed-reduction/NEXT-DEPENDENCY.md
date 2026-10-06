@@ -36,3 +36,27 @@ retained same-image11/20-event MusicXML comparisons.
 
 All are final implementation targets, not planned omissions. Global
 HEADS/STEMS/REDUCTION/LINKS/epilog/MusicXML parity remains incomplete.
+
+## Next original processing unit: general overlap discovery
+
+Original `SigReducer.reduce` calls `detectOverlaps` before frozen resolution,
+contextualization and adapter prolog. Its general exclusions cannot be replaced
+by bounding-box overlap or the chord-specific unlinked-head rule implemented
+here. Original9e1e55c `sig/SigReducer.java`1348–1479 and
+`sig/inter/AbstractInter.java`1139–1211 establish these dependencies:
+
+- Filter disabled BeamGroup/Ledger/Sentence/Wedge classes, recognized header
+  inters, removed and implicit nodes; preserve x order and early exit.
+- Preserve head/chord mirror entities and members, accepted beam/slur/stem
+  class combinations, and both directional `overlaps` results.
+- Use actual core bounds, ensemble ownership/support, physical glyph pixel
+  intersections or Inter area geometry, including slur/fermata special cases.
+- Keep original standard-size head/stem special exemption, existing support
+  refusal and canonical exclusion insertion; text/symbol grade adjustments
+  require the still pending text ownership.
+
+This is unimplemented general discovery, not an observed new image success.
+The next safe integration must connect actual retained geometry/ownership for
+an explicit supported subset and compare original same-input behavior. Frozen,
+mirror/ensemble and broader symbol branches remain final implementation targets
+until their upstream contracts are available; no blanket guard removal.

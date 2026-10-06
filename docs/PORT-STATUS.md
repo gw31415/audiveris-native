@@ -15,6 +15,8 @@
 
 全回帰の件数・ソースSHAは段階ごとの検証要約で示します。通常workspace移行前のMANIFESTとLaura352heads/513exclusionsなどの報告は当時のソースSHAを保ち、新ソースで再実行した証拠に読み替えません。
 
+直近の全回帰はsource `52943de`で583成功・0失敗・ignored 0。途中中断後は未完対象のみ再開し、176実行物を全照合。doc tests、対象fmt/clippy、別clone Linux build・20イベント・MusicXML4 XSDも通過。[検証記録](../evidence/musicxml-ordered-foundations/FULL-VALIDATION.json)。この後の説明だけのcommitは同じsrc/crates treeです。
+
 ## 機能別の現在位置と欠落
 
 | 原版機能・具体的依存 | 状態 | nativeの現在位置 / 残り |
@@ -303,8 +305,9 @@ modificationがなくなるまで反復、その後にexclusion整理、weak削�
 nativeの実画像ownerへ宣言条件を追加した検証は、画像からこの条件が生じたという
 主張と区別します。新画像fixtureを増やさず、既存の2system4小節20イベント例を使います。
 
-接続済みの処理単位を原版工程全体の完成とは数えません。一般overlap、
-`analyzeChords`のprolog/late、全形support、merged staff/frozen/implicitと
+この順序接続checkpoint時点では、接続済みの処理単位を原版工程全体の完成とは数えていません。
+当時未接続の`analyzeChords` prolog/lateは次節で通常head部分を接続。一般overlap、
+全形support、merged staff/frozen/implicitと
 LINKS各記号、lyrics/PartのInterCleaner、完全epilogは未完。64回の各反復budgetも
 現ガードであり全同等性ではありません。[次の具体的依存](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md)。
 

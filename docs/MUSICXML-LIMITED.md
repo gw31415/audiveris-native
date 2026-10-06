@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest processing stage: [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest processing stage: [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded monophonic duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -723,10 +723,11 @@ cargo run --offline --locked --bin audiveris-musicxml -- \
   /tmp/beam-two-systems.musicxml /tmp/beam-two-systems.json
 ```
 
-Output paths must not exist. Full580 regression belongs to source`c270552`;
-subsequent weak-cache integration has targeted validation recorded separately.
-Full per-check contextualization/weak purge, general overlap/chord/frozen/late
-reduction, lyrics/container ownership and remaining cleaner/epilog are pending.
+Output paths must not exist. Historical full580 regression belongs to
+source`c270552`. At the weak-cache checkpoint, per-check purge and chord
+prolog/late were pending; their ordinary subset is connected in the sections
+below. General overlap/broader chord/frozen reduction, lyrics/container
+ownership and remaining cleaner/epilog are still pending.
 Global completion flags remain false; all remaining nonUI functions remain
 implementation targets. [Validation](../evidence/musicxml-seed-reduction/WEAK-PURGE-VALIDATION.json).
 
@@ -745,8 +746,10 @@ is distinct from automatic raster comparison. The existing two-system20-event
 input and command in [Owned weak-stem purge](#owned-weak-stem-purge) remain the
 small runnable example; no new font/scan/staff/notation admission is claimed.
 
-Full overlap discovery, chord prolog/late checks, all support and frozen/merged
-conditions, full LINKS/InterCleaner/epilog and nonUI feature parity are pending.
+At this order-only checkpoint, chord prolog/late was pending; its ordinary head
+subset is now connected below. Full overlap discovery, broader chord branches,
+all support and frozen/merged conditions, full LINKS/InterCleaner/epilog and
+nonUI feature parity remain pending.
 Completion flags stay false. Latest full580 belongs to c270552; current affected
 checks are recorded separately without claiming a new full-workspace run.
 
@@ -766,3 +769,19 @@ distinct from full-image chord recognition/export. Existing CLI commands and
 inputs stay available; no general chord/polyphony/font/scan admission is claimed.
 Small/percussion/stemless/cue size branches, general overlap discovery, full
 LINKS/lyrics/Part cleaner and epilog remain implementation targets.
+
+Current source validation: `52943de`, all583 workspace tests passed (interrupted
+execution resumed only uncompleted binaries;176 binaries covered), doc tests,
+fmt/clippy and independent-clone Linux CLI build. The reused
+`fixtures/official-image-musicxml-cross-system/beam-two-systems.png` yields20
+original-matching events and XSD-valid MusicXML; its native XML bytes remain
+unchanged. [Compact receipt](../evidence/musicxml-ordered-foundations/FULL-VALIDATION.json).
+
+```sh
+cargo build --bin audiveris-musicxml
+./target/debug/audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-systems.png /tmp/ordered-foundations.musicxml /tmp/ordered-foundations.json
+```
+
+The output paths must not already exist. This validates the retained two-system
+example and generic ordinary foundation/chord processing, not general chord
+export or full nonUI parity. No new image fixture or admission guard removal.

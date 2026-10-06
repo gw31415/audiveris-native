@@ -1,0 +1,71 @@
+{
+  "validated_source_commit": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+  "validated_repository_tree": "b1706bc4e2a8b219cf59d1bfe10413d307597d7b",
+  "validated_src_tree": "3393880ce3a6809296fd4253716c8967161155b6",
+  "validated_crates_tree": "15d0cb321ff54110bccb3215dc474e9631d5171b",
+  "full_workspace_tests": {
+    "passed": 583,
+    "failed": 0,
+    "ignored": 0,
+    "all_test_binaries_covered": 176,
+    "execution": "initial cargo test interrupted; completed23 binaries retained, resumed5 completed, remaining148 completed via same frozen build; inventory equality and per-binary exit codes checked; no completed binary repeated",
+    "initial_interruption_cause": "unconfirmed; no original/native assertion failure observed",
+    "doc_tests": "passed,0 tests",
+    "by_execution_log": [
+      {
+        "log": "full-regression.log",
+        "passed": 164,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "log": "full-regression-resumed.log",
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "log": "full-regression-resumed-2.log",
+        "passed": 406,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "log": "doc-regression.log",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "fmt": "passed at same source",
+  "workspace_all_target_clippy": "passed -D warnings at same source",
+  "independent_clone": {
+    "commit": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+    "matching_root_src_crates_trees": [
+      "b1706bc4e2a8b219cf59d1bfe10413d307597d7b",
+      "3393880ce3a6809296fd4253716c8967161155b6",
+      "15d0cb321ff54110bccb3215dc474e9631d5171b"
+    ],
+    "Linux_Cargo_build": "passed",
+    "events_original_matching": 20,
+    "native_and_original_MusicXML4_XSD": "passed",
+    "MusicXML_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+    "completion_flags": false
+  },
+  "original_comparison_boundaries": [
+    "three-declared-Inter cascade/checks/purges vs actual AdapterForFoundations; native actual image owner/cache retains identity",
+    "two declared ordinary chord SIG cases, relationship/contextual grade/idempotence vs original analyzeChords",
+    "existing same-image11/20 events maintained; independent clone20-event output/XSD; not general automatic chord recognition or full reduction parity"
+  ],
+  "preserved": "Laura352 heads/513 exclusions and existing fixtures/reports; historical observations retain their own source SHAs",
+  "raw_log_sha256": {
+    "full-regression.log": "adb4fb03988816da0d3ec05e28fcf24bc93b55713631b3f23c30f9e83e80d702",
+    "full-regression-resumed.log": "0e623945bc621ebc7f1b791944ea9b587bffc3e2eeab4b8c323aff278d2c16b4",
+    "full-regression-resumed-2.log": "a2167ea79681064d0620ecc4de2f5d0eb5b369ce0da276c2029b95b002bff618",
+    "doc-regression.log": "d1aa5b245287e64aafc9c364cb2bdefa80c6d6250b96ed3ef9ebde9ca1646acd"
+  },
+  "remaining_dependency": "evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md",
+  "all_nonUI_original_logic_retained_as_final_targets": true,
+  "completion_flags": false
+}
