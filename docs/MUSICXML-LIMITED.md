@@ -962,3 +962,21 @@ Source`593425b`:17 target regressions/fmt/clippy and independently fetched Linux
 20+11 original-matching image events/prior XML bytes/MusicXML4 XSD passed.
 Fetched root/src/crates trees agree; full588 remains earlier00ee541.
 [Readback](../evidence/musicxml-stem-chord-geometry/READBACK.json).
+
+## Actual HeadChord identity callbacks
+
+Typed Containment/ChordStem additions/removals now invalidate the registered
+HeadChord member order, original bounds/leading note/head-tail locations and
+mean member best grade. Original setGrade leaves a computed contextual grade
+intact. Six ordered original relation operations agree; malformed later edges
+refuse atomically and repeated deletion retains original idempotence. Vertices,
+physical glyphs and cached stem identities are preserved. Real MusicMeasures
+construction invokes additions; uncached music vertex cleanup uses identity
+removal callbacks. No public selected-member/grade recognition API is added.
+
+Relation deletion leaves an empty chord with null bounds/grade, as original.
+Cached extensive head/stem deletion, dying containers, RestChord/other ensembles,
+Part/stack/lyrics and complete cleaner/epilog remain pending. The existing
+image CLI examples remain the image comparison boundary. Six target checks/fmt/
+clippy passed; full regression and fetched CLI evidence are recorded separately.
+[Validation](../evidence/musicxml-chord-containment-lifecycle/VALIDATION.json).

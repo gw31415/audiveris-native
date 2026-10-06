@@ -145,6 +145,11 @@
       "status": "implemented",
       "unit": "HeadChord integer head union+stem tail / leading-note locations shared by actual MusicMeasures and typed overlap ownership",
       "limits": "original4 declared controls,17 targeted checks incl existing MusicXML file; empty-member original location exception preserved as no native location, complete ensemble callbacks remain pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual typed HeadChord Containment/ChordStem added/removed invalidation, member best-grade mean and integer geometry, retaining existing contextual grade",
+      "limits": "six ordered original relation lifecycle observations; real image MusicMeasures addition and uncached music cleanup callback connected; cached extensive/dying/other ensemble and Part/lyrics cleanup remain partial"
     }
   ],
   "function_groups": [
@@ -196,7 +201,7 @@
     {
       "original_function": "MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller`",
       "status": "partial",
-      "current_and_remaining": "単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。"
+      "current_and_remaining": "単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 原版stem-tailを含むchord領域/leading-note/head-tailとtyped Containment/ChordStemの平均best-grade/位置invalidateを実所有SIGへ接続。全member頂点削除、Part/stack/lyrics所有callbackと他ensembleは未完。"
     },
     {
       "original_function": "CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders",
@@ -254,7 +259,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "593425b: original4 declared stem-chord geometry conditions and17 targeted checks incl existing MusicXML regressions, fmt/workspace-all-target-clippy passed; independently fetched Linux20+11 events/prior XML byte hashes/native-original XSD/root-src-crates equal. Full588 remains00ee541. evidence/musicxml-stem-chord-geometry/{VALIDATION,READBACK}.json",
+  "latest_targeted_validation": "Chord identity final source: original6 ordered relation lifecycle observations,6 targeted tests/fmt/workspace-all-target-clippy passed; full workspace and independent CLI readback pending on this source, prior full588 belongs to00ee541. evidence/musicxml-chord-containment-lifecycle/VALIDATION.json",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

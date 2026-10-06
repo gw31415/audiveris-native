@@ -1,0 +1,51 @@
+{
+  "base_main": "5ed1ab8018f1c39ee651995e557d35dd2fa528e7",
+  "original": {
+    "version": "5.11.0",
+    "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "observer": "scripts/java/ChordContainmentLifecycleProbe.java",
+    "fixture": "fixtures/official-chord-containment-lifecycle/controls.json",
+    "boundary": "one actual chord lifecycle with six ordered Containment/ChordStem operations; real registered vertices/relations, no vertex deletion, raster creation, Part/lyrics or full cleanup"
+  },
+  "connected": [
+    "typed Containment/ChordStem additions now invalidate actual native HeadChord geometry/member order/leading note/head-tail locations and mean member best grade",
+    "original intrinsic setGrade retains already computed contextual grade; context fallback to intrinsic when missing",
+    "typed identity edge deletion updates actual surviving chord while retaining vertices/glyph/cache identity; incident identity edges during uncached music vertex cleanup use same callback",
+    "atomic malformed typed addition/deletion refusal and original repeat deletion idempotence"
+  ],
+  "targeted_tests": [
+    {
+      "log": "targeted-lifecycle.log",
+      "passed": 1,
+      "sha256": "dfe700b602db621f6ad2435bfd0892e9761c034dfe74213c9fe791914f1c9105"
+    },
+    {
+      "log": "targeted-geometry.log",
+      "passed": 1,
+      "sha256": "d13f5dc9869439c7bdafde23315935ee7817d231fd0f47e85d17ac4f58098b23"
+    },
+    {
+      "log": "targeted-overlap.log",
+      "passed": 3,
+      "sha256": "2c647bd3bc4f67090bfe6dc8551ea4eaa1b7dca6c27e1ae21852fc0eef75345e"
+    },
+    {
+      "log": "targeted-beam-cleanup.log",
+      "passed": 1,
+      "sha256": "7c63c175339d207954e3800bfb0ab55528485a06442a7795dd7db41295293aa6"
+    }
+  ],
+  "fmt_and_workspace_all_target_clippy": "passed -D warnings",
+  "full_workspace_validation": "pending on this source; prior full588 at00ee541 remains distinct",
+  "remaining": [
+    "cached head/stem extensive ensemble vertex removal, dying/other ensembles and true Part/stack ownership callbacks",
+    "RestChord/other ensemble invalidation and complete InterCleaner/Part/lyrics purge",
+    "automatic mirrors/shared heads/special-head and small-beam full-page recognition",
+    "complete general overlap/all support/cleaner/LINKS epilog and full nonUI ledger"
+  ],
+  "observer_correction": "Initial observer passed null getBounds into its own rect serializer after last member removal; fixed null serialization. This was an observer bug, not an original algorithm rejection. Both local logs retained, no generated new raster.",
+  "global_completion_flags": false,
+  "new_image_fixture": false,
+  "validated_src_tree": "c9c8d7e36f357be19b27947c8dc050df4af824a3",
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+}

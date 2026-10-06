@@ -125,3 +125,11 @@ integer semantics in both live MusicMeasures and typed overlap ownership. Four
 declared original conditions are separate from raster recognition. Complete
 Containment/ChordStem invalidation (including member mean contextual grade),
 ownership removal and additional ensembles remain the next cleaner dependencies.
+
+Actual typed HeadChord identity added/removed invalidation now compares6 ordered
+original relation operations, including mean member best grade and preserved
+computed context. MusicMeasures additions and uncached music vertex incident
+edge cleanup use the same callback. Cached extensive/dying ensemble vertex
+removal and RestChord/other ensemble/Part/stack/lyrics callbacks remain pending.
+Next independent unit: original rest-chord member/last-member ownership lifecycle
+in existing LINKS weak/conflicting-symbol cleanup, retaining actual symbols.

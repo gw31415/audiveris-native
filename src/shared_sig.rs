@@ -351,6 +351,19 @@ impl Graph {
         for id in &removed {
             next.vertices[*id as usize - 1].removed = true;
         }
+        let chord_edges = next
+            .edges
+            .iter()
+            .filter(|e| {
+                !e.removed
+                    && matches!(e.key.kind.as_str(), "Containment" | "ChordStemRelation")
+                    && next.vertices[e.key.source - 1].data["kind"] == "HeadChordInter"
+                    && (next.vertices[e.key.source - 1].removed
+                        || next.vertices[e.key.target - 1].removed)
+            })
+            .map(|e| e.data["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        next.remove_chord_identity_edges(&chord_edges)?;
         next.prune();
         next.refresh_beam_groups(&removed)?;
         *self = next;
@@ -437,7 +450,33 @@ impl Graph {
         phase: Phase,
         relations: Vec<(Key, Key, Value)>,
     ) -> Result<(), String> {
+        let chords = relations.iter().any(|(a, _, r)| {
+            matches!(
+                r["kind"].as_str(),
+                Some("Containment" | "ChordStemRelation")
+            ) && self
+                .id(*a)
+                .is_some_and(|id| self.vertices[id - 1].data["kind"] == "HeadChordInter")
+        });
+        if chords {
+            // Original identity callbacks operate on the actual registered
+            // chord. Validate/update a stage before changing the retained SIG.
+            let mut next = self.clone();
+            next.relations_impl(system, phase, relations)?;
+            *self = next;
+            Ok(())
+        } else {
+            self.relations_impl(system, phase, relations)
+        }
+    }
+    fn relations_impl(
+        &mut self,
+        system: u64,
+        phase: Phase,
+        relations: Vec<(Key, Key, Value)>,
+    ) -> Result<(), String> {
         let mut counts = BTreeMap::new();
+        let mut affected_chords = BTreeSet::new();
         for (a, b, mut data) in relations {
             if a.system != system || b.system != system || !data.is_object() {
                 return Err("invalid_shared_sig_relation".into());
@@ -449,6 +488,11 @@ impl Graph {
                 .filter(|s| !s.is_empty())
                 .ok_or("invalid_shared_sig_relation_kind")?
                 .to_owned();
+            let chord_identity = self.vertices[source - 1].data["kind"] == "HeadChordInter"
+                && matches!(kind.as_str(), "Containment" | "ChordStemRelation");
+            if chord_identity {
+                self.validate_chord_identity(source, target, &kind)?;
+            }
             let count = counts
                 .entry((source, target, kind.clone()))
                 .or_insert(0usize);
@@ -488,12 +532,129 @@ impl Graph {
             data["source"] = json!(source);
             data["target"] = json!(target);
             data["system_id"] = json!(system);
+            if chord_identity && (self.edges[id - 1].removed || self.edges[id - 1].data.is_null()) {
+                affected_chords.insert(source);
+            }
             self.edges[id - 1] = Edge {
                 key,
                 data,
                 removed: false,
             };
         }
+        self.invalidate_head_chords(&affected_chords)?;
+        Ok(())
+    }
+
+    fn validate_chord_identity(
+        &self,
+        source: usize,
+        target: usize,
+        kind: &str,
+    ) -> Result<(), String> {
+        let a = &self.vertices[source - 1];
+        let b = &self.vertices[target - 1];
+        let (phase, class) = if kind == "Containment" {
+            (Phase::Head, "HeadInter")
+        } else {
+            (Phase::Stem, "StemInter")
+        };
+        if a.key.phase != Phase::Chord
+            || a.data["kind"] != "HeadChordInter"
+            || b.key.phase != phase
+            || b.data["kind"] != class
+            || a.key.system != b.key.system
+            || source == target
+        {
+            return Err("typed_owned_chord_identity_required".into());
+        }
+        Ok(())
+    }
+    /// Containment / ChordStemRelation added/removed -> AbstractChord.invalidateCache.
+    /// Original setGrade changes intrinsic mean only, leaving an existing ctx
+    /// grade intact. No cache object or physical glyph is replaced.
+    fn invalidate_head_chords(&mut self, ids: &BTreeSet<usize>) -> Result<(), String> {
+        for id in ids
+            .iter()
+            .copied()
+            .filter(|id| !self.vertices[*id - 1].removed)
+            .collect::<Vec<_>>()
+        {
+            let mut heads = Vec::new();
+            let mut stem = None;
+            for e in self
+                .edges
+                .iter()
+                .filter(|e| !e.removed && e.key.source == id)
+            {
+                if matches!(e.key.kind.as_str(), "Containment" | "ChordStemRelation") {
+                    self.validate_chord_identity(id, e.key.target, &e.key.kind)?;
+                    if self.vertices[e.key.target - 1].removed {
+                        return Err("chord_identity_removed_member".into());
+                    }
+                    if e.key.kind == "Containment" {
+                        heads.push(&self.vertices[e.key.target - 1].data);
+                    } else if stem.is_none() {
+                        stem = Some(&self.vertices[e.key.target - 1].data);
+                    }
+                }
+            }
+            let heads = crate::head_chord_geometry::ordered(&heads)?;
+            let geometry = crate::head_chord_geometry::calculate(&heads, stem)?;
+            let mut sum = 0.;
+            for head in &heads {
+                let grade = if head["contextual_grade"].is_null() {
+                    &head["grade"]
+                } else {
+                    &head["contextual_grade"]
+                };
+                sum += grade
+                    .as_f64()
+                    .filter(|g| (0.0..=1.0).contains(g))
+                    .ok_or("chord_member_best_grade_required")?;
+            }
+            let members = heads.iter().map(|h| h["id"].clone()).collect::<Vec<_>>();
+            let mean = (!heads.is_empty()).then(|| sum / heads.len() as f64);
+            let stem_id = stem.map(|s| s["id"].clone()).unwrap_or(Value::Null);
+            let data = &mut self.vertices[id - 1].data;
+            data["grade"] = json!(mean);
+            data["member_ids"] = json!(members);
+            data["stem_id"] = stem_id;
+            data["bounds"] = json!(geometry.bounds);
+            data["leading_note_id"] = json!(geometry.leading_id);
+            data["head_location"] = json!(geometry.head_location);
+            data["tail_location"] = json!(geometry.tail_location);
+        }
+        Ok(())
+    }
+    /// Remove actual typed identity edges, not caller-supplied member metadata.
+    /// Used by vertex cleanup; cached head/stem vertex removal is still owned by
+    /// its dedicated lifecycle. Direct relation deletion preserves the vertices.
+    pub(crate) fn remove_chord_identity_edges(&mut self, ids: &[usize]) -> Result<(), String> {
+        if ids.is_empty() {
+            return Ok(());
+        }
+        let mut affected = BTreeSet::new();
+        let mut remove = BTreeSet::new();
+        for id in ids {
+            let e = self
+                .edges
+                .get(id.checked_sub(1).ok_or("invalid_chord_identity_edge")?)
+                .ok_or("missing_chord_identity_edge")?;
+            if !matches!(e.key.kind.as_str(), "Containment" | "ChordStemRelation") {
+                return Err("typed_owned_chord_identity_required".into());
+            }
+            self.validate_chord_identity(e.key.source, e.key.target, &e.key.kind)?;
+            if !e.removed {
+                affected.insert(e.key.source);
+                remove.insert(*id);
+            }
+        }
+        let mut next = self.clone();
+        for id in remove {
+            next.edges[id - 1].removed = true;
+        }
+        next.invalidate_head_chords(&affected)?;
+        *self = next;
         Ok(())
     }
     fn refresh_beam_groups(&mut self, removed: &[u64]) -> Result<(), String> {
@@ -1403,6 +1564,163 @@ impl Graph {
 
     pub fn snapshot(&self) -> Value {
         json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false})
+    }
+}
+
+#[cfg(test)]
+mod chord_identity_tests {
+    use super::*;
+    #[test]
+    fn original_member_and_stem_identity_callbacks_keep_mean_grade_geometry_and_vertices() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-chord-containment-lifecycle/controls.json"
+        ))
+        .unwrap();
+        let mut graph = Graph::default();
+        let mut keys = BTreeMap::new();
+        for (i, n) in oracle["nodes"].as_array().unwrap().iter().enumerate() {
+            let key = Key {
+                system: 1,
+                phase: if n["kind"] == "HeadInter" {
+                    Phase::Head
+                } else {
+                    Phase::Stem
+                },
+                local: i + 1,
+            };
+            graph.vertex(key, n.clone(), false).unwrap();
+            keys.insert(n["label"].as_str().unwrap(), key);
+        }
+        let chord = Key {
+            system: 1,
+            phase: Phase::Chord,
+            local: 1,
+        };
+        let cid = graph
+            .vertex(chord, json!({"kind":"HeadChordInter","grade":0.8}), false)
+            .unwrap();
+        for expected in oracle["states"].as_array().unwrap() {
+            let (kind, target, remove) = match expected["operation"].as_str().unwrap() {
+                "add-first-member" => ("Containment", keys["head0"], false),
+                "add-second-member" => ("Containment", keys["head1"], false),
+                "add-stem" => ("ChordStemRelation", keys["stem"], false),
+                "remove-second-member" => ("Containment", keys["head1"], true),
+                "remove-stem" => ("ChordStemRelation", keys["stem"], true),
+                "remove-last-member" => ("Containment", keys["head0"], true),
+                _ => panic!("unknown original operation"),
+            };
+            if remove {
+                let edge = graph.snapshot()["relations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|r| {
+                        r["kind"] == kind
+                            && r["source"] == cid
+                            && r["target"] == graph.id(target).unwrap()
+                    })
+                    .unwrap()["id"]
+                    .as_u64()
+                    .unwrap() as usize;
+                graph.remove_chord_identity_edges(&[edge]).unwrap();
+                let after = graph.snapshot();
+                graph.remove_chord_identity_edges(&[edge]).unwrap();
+                assert_eq!(graph.snapshot(), after);
+            } else {
+                graph
+                    .relations(1, Phase::Chord, vec![(chord, target, json!({"kind":kind}))])
+                    .unwrap();
+            }
+            let snapshot = graph.snapshot();
+            let n = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == cid)
+                .unwrap();
+            let state = &expected["state"];
+            for field in ["grade", "contextual_grade", "bounds"] {
+                assert_eq!(n[field], state[field], "{}:{field}", expected["operation"]);
+            }
+            let member_labels = n["member_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|id| {
+                    keys.iter()
+                        .find(|(_, k)| graph.id(**k) == Some(id.as_u64().unwrap() as usize))
+                        .unwrap()
+                        .0
+                })
+                .collect::<Vec<_>>();
+            assert_eq!(json!(member_labels), state["members"]);
+            assert_eq!(
+                n["leading_note_id"],
+                state["leading"]
+                    .as_str()
+                    .map(|l| json!(graph.id(keys[l]).unwrap()))
+                    .unwrap_or(Value::Null)
+            );
+            for field in ["head_location", "tail_location"] {
+                let actual: Option<[i64; 2]> = serde_json::from_value(n[field].clone()).unwrap();
+                let expected: Option<[f64; 2]> =
+                    serde_json::from_value(state[field].clone()).unwrap();
+                assert_eq!(actual.map(|p| p.map(|x| x as f64)), expected);
+            }
+            for original in oracle["nodes"].as_array().unwrap() {
+                let id = graph.id(keys[original["label"].as_str().unwrap()]).unwrap();
+                let actual = snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == id)
+                    .unwrap();
+                for field in ["bounds", "grade", "contextual_grade", "glyph"] {
+                    assert_eq!(actual[field], original[field]);
+                }
+            }
+        }
+        // A malformed later identity does not commit earlier valid edges.
+        let before = graph.snapshot();
+        assert!(
+            graph
+                .relations(
+                    1,
+                    Phase::Chord,
+                    vec![
+                        (chord, keys["head0"], json!({"kind":"Containment"})),
+                        (chord, keys["stem"], json!({"kind":"Containment"}))
+                    ]
+                )
+                .is_err()
+        );
+        assert_eq!(graph.snapshot(), before);
+        // setGrade preserves an already computed contextual grade.
+        let mut n = before["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == cid)
+            .unwrap()
+            .clone();
+        n["contextual_grade"] = json!(0.95);
+        graph.vertex(chord, n, false).unwrap();
+        graph
+            .relations(
+                1,
+                Phase::Chord,
+                vec![(chord, keys["head0"], json!({"kind":"Containment"}))],
+            )
+            .unwrap();
+        let snapshot = graph.snapshot();
+        let n = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == cid)
+            .unwrap();
+        assert_eq!(n["grade"], 0.6);
+        assert_eq!(n["contextual_grade"], 0.95);
     }
 }
 
