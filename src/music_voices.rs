@@ -81,6 +81,50 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
     )
 }
 
+/// Voice.getLastChord -> actual AbstractChord.getEndTime. Nullable duration or
+/// offset is not guessed. Exact ticks remain the existing admitted 1/16 grid;
+/// general Rational/tuplets and full Voice termination/excess remain pending.
+pub(crate) fn last_end_ticks(
+    graph: &crate::shared_sig::Graph,
+    voice: &Voice,
+) -> Result<Option<u32>, String> {
+    let Some(id) = voice.chord_ids.last() else {
+        return Ok(None);
+    };
+    let snapshot = graph.snapshot();
+    let last = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == *id)
+        .ok_or("music_voice_last_live_chord_required")?;
+    if !matches!(
+        last["kind"].as_str(),
+        Some("HeadChordInter" | "RestChordInter")
+    ) {
+        return Err("music_voice_ordinary_chord_required".into());
+    }
+    let (Some(duration), Some(offset)) = (last["duration"].as_str(), last["time_offset"].as_str())
+    else {
+        return Ok(None);
+    };
+    crate::music_time::parse_ticks(offset)?
+        .checked_add(crate::music_time::parse_ticks(duration)?)
+        .map(Some)
+        .ok_or_else(|| "music_time_tick_overflow".into())
+}
+pub(crate) fn timed_projection(
+    voices: &[Voice],
+    measures: &[Measure],
+    graph: &crate::shared_sig::Graph,
+) -> Result<Value, String> {
+    let mut result = projection(voices, measures);
+    for (row, voice) in result.as_array_mut().unwrap().iter_mut().zip(voices) {
+        row["end_time"] = json!(last_end_ticks(graph, voice)?.map(crate::music_time::format_ticks));
+    }
+    Ok(result)
+}
+
 // BeamGroupInter.getChords/getFirstChord/getVoice, from actual retained SIG.
 // The caller is the native owner after voice assignment, never a serialized
 // selected-chord API. General setVoice/group-rest/tie propagation is separate.
@@ -568,6 +612,7 @@ mod group_tests {
             comparable(owner.owner.prepared.report["beam_group_voices"].clone()),
             original["groups"]
         );
+        let timed_page_graph = owner.owner.graph.clone();
         let snapshot = owner.owner.graph.snapshot();
         let before_cache = snapshot["inters"]
             .as_array()
@@ -958,6 +1003,65 @@ mod group_tests {
                 control["target_voice"]
             );
         }
+        let timing: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-voice-end-time/controls.json"
+        ))
+        .unwrap();
+        owner.owner.graph = timed_page_graph;
+        let timed_voice = owner.voices.iter().position(|v| v.measure == 0).unwrap();
+        let timing_state = |graph: &crate::shared_sig::Graph, voice: &Voice| {
+            let snapshot = graph.snapshot();
+            let last = voice.chord_ids.last().unwrap();
+            let n = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == *last)
+                .unwrap();
+            json!({"chord_count":voice.chord_ids.len(),"last_bounds":n["bounds"],"last_duration":n["duration"],"last_offset":n["time_offset"].as_str().unwrap_or("null"),"end_time":last_end_ticks(graph,voice).unwrap().map(crate::music_time::format_ticks)})
+        };
+        assert_eq!(
+            timing_state(&owner.owner.graph, &owner.voices[timed_voice]),
+            timing["before"]
+        );
+        let last_id = *owner.voices[timed_voice].chord_ids.last().unwrap();
+        let last_key: Key = serde_json::from_value(
+            snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == last_id)
+                .unwrap()["origin"]
+                .clone(),
+        )
+        .unwrap();
+        owner.owner.graph.remove_music_inter(last_key).unwrap();
+        crate::music_containers::refresh(
+            &owner.owner.graph,
+            &owner.measures,
+            &mut owner.chords,
+            &mut owner.voices,
+        )
+        .unwrap();
+        assert_eq!(
+            timing_state(&owner.owner.graph, &owner.voices[timed_voice]),
+            timing["after_last_removal"]
+        );
+        let remaining = *owner.voices[timed_voice].chord_ids.last().unwrap();
+        let mut data = owner.owner.graph.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == remaining)
+            .unwrap()
+            .clone();
+        let key: Key = serde_json::from_value(data["origin"].clone()).unwrap();
+        data["time_offset"] = Value::Null;
+        owner.owner.graph.vertex(key, data, false).unwrap();
+        assert_eq!(
+            timing_state(&owner.owner.graph, &owner.voices[timed_voice]),
+            timing["missing_offset"]
+        );
         for (key, stem, state) in before_cache {
             let current = owner.owner.caches[&1]
                 .registered_stem(&owner.owner.graph, key.local)

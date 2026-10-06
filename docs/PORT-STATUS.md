@@ -726,3 +726,24 @@ Neither is replaced by generic deletion or treated as complete here.
 [Validation](../evidence/musicxml-voice-tie-dependency/VALIDATION.json).
 Latest full595 is earlier source95e191b; this unit has targeted regressions.
 All global completion flags remain false.
+
+### Voice's actual last-chord clock -> complete-measure consistency
+
+The image CLI now verifies its accumulated measure time against the retained
+Voice's actual last chord, and adds `voices[].end_time` to its JSON report.
+Original `Voice.getLastChord` / `AbstractChordInter.getEndTime` gives null when
+duration/offset is unknown and otherwise adds the resolved duration to offset.
+An original timed-page observation changes1 ->3/4 after last-chord deletion,
+then null after the remaining last chord offset is cleared; native actual
+Graph/container/Voice callbacks match. This is not underfilled-measure export.
+
+The existing exact 1/16 whole-note tick formatter is shared with the owner clock;
+unsupported rational grids and overflow remain guarded. This is not full
+Rational/tuplets/negative-time or full `Voice.checkDuration` termination/excess/
+measure-stack state. General slots, MeasureFixer/pickup, automatic ties/lyrics
+and complete cleaner/epilog remain pending. Existing CLI examples and strict
+admission/refusal contracts are preserved; all global completion flags remain
+false.
+
+[Validation](../evidence/musicxml-voice-end-time/VALIDATION.json).
+Latest full595 remains earlier source95e191b; this unit uses targeted regressions.

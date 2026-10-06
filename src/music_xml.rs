@@ -11,18 +11,7 @@ pub struct Export {
     pub owner: OwnedMusic,
     pub xml: String,
 }
-// Exact sixteenth-of-whole ticks; floats are only outward report quarter values.
-fn rational(ticks: u32) -> String {
-    let mut gcd = 16;
-    while !ticks.is_multiple_of(gcd) {
-        gcd /= 2;
-    }
-    if gcd == 16 {
-        format!("{}", ticks / 16)
-    } else {
-        format!("{}/{}", ticks / gcd, 16 / gcd)
-    }
-}
+use crate::music_time::format_ticks as rational;
 fn quarters(ticks: u32) -> Value {
     if ticks.is_multiple_of(4) {
         json!(ticks / 4)
@@ -669,8 +658,14 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .checked_add(duration)
                 .ok_or("musicxml_voice_duration_overflow")?;
         }
-        // Voice.getEndTime/checkDuration + strict complete-measure admission.
-        // Pickup/underfilled measures require MeasureFixer and refuse here.
+        // Voice.checkDuration uses the last actual AbstractChord.getEndTime.
+        // General termination/excess state and pickup/underfilled correction
+        // remain pending; strict complete-measure admission is retained.
+        let voice_end = crate::music_voices::last_end_ticks(&graph, &m.voices[voice_index])?
+            .ok_or("musicxml_owned_voice_timing_required")?;
+        if voice_end != offset {
+            return Err("musicxml_owned_voice_timing_mismatch".into());
+        }
         if offset != expected_ticks {
             return Err(format!(
                 "musicxml_incomplete_or_excess_measure:{}:{}:quarters={}:expected={}",
@@ -805,9 +800,10 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     }
     xml.push_str("</part></score-partwise>\n");
     let beam_group_voices = crate::music_voices::beam_groups(&graph, &m.voices, &m.measures)?;
+    let voice_projection = crate::music_voices::timed_projection(&m.voices, &m.measures, &graph)?;
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":crate::music_voices::projection(&m.voices,&m.measures),"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":voice_projection,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     if m.owner.prepared.report["events"]

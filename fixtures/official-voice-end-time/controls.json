@@ -1,0 +1,24 @@
+{
+  "scope" : "existing timed original Voice -> last AbstractChord.getEndTime before/after last chord removal and explicitly missing offset; not automatic underfilled measure export or complete Voice.checkDuration",
+  "before" : {
+    "chord_count" : 6,
+    "last_bounds" : [ 635, 217, 14, 42 ],
+    "last_duration" : "1/4",
+    "last_offset" : "3/4",
+    "end_time" : "1"
+  },
+  "after_last_removal" : {
+    "chord_count" : 5,
+    "last_bounds" : [ 545, 217, 14, 42 ],
+    "last_duration" : "1/4",
+    "last_offset" : "1/2",
+    "end_time" : "3/4"
+  },
+  "missing_offset" : {
+    "chord_count" : 5,
+    "last_bounds" : [ 545, 217, 14, 42 ],
+    "last_duration" : "1/4",
+    "last_offset" : "null",
+    "end_time" : null
+  }
+}

@@ -205,6 +205,11 @@
       "status": "implemented",
       "unit": "AbstractChord.getFollowingTiedChords from retained SlurHead sides/classified tie/right-head ensemble -> actual same-measure Voice propagation",
       "limits": "four declared already-classified tie controls; not automatic CURVES/tie classification or tie MusicXML. Lyrics/full cleaner/epilog/general rhythm remain pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "retained Voice.getLastChord -> actual resolved chord duration/timeOffset -> nullable AbstractChord.getEndTime; native image complete-measure consistency and Voice end_time report",
+      "limits": "timed original saved Voice/deletion/missing-offset control and native binary image path; general Rational/Voice termination-excess/slots/pickup/lyrics/full cleaner remain partial"
     }
   ],
   "function_groups": [
@@ -314,7 +319,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Original classified SlurHead following-chord traversal and same-measure Voice propagation connected; four declared conditions plus beam/rest/flag image regressions, fmt/clippy recorded in evidence/musicxml-voice-tie-dependency. Latest full595 remains95e191b, not this later source.",
+  "latest_targeted_validation": "Actual stored Voice last-chord end time connected to native complete-measure guard and end_time report; original1/3/4/null ownership observations, targeted images/fmt/clippy in evidence/musicxml-voice-end-time. Latest full595 remains earlier95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

@@ -505,6 +505,7 @@ mod music_links;
 pub mod music_measures;
 mod music_symbol_reduction;
 pub mod music_symbols;
+mod music_time;
 mod music_voices;
 pub mod music_xml;
 mod stem_chord_consistency;
