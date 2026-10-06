@@ -1235,3 +1235,36 @@ atomically with a budget, instead of claiming an original successful score.
 All global completion flags remain false.
 [Validation](../evidence/musicxml-chord-time/VALIDATION.json).
 Full595 remains at95e191b; this stage uses targeted tests.
+
+
+## Default whole-measure rest → MusicXML (2026-10-06)
+
+One new independent Bravura44/interline11/zero-skew ordinary G-clef/C-major/4/4
+single-voice image contains four quarters then one whole-measure rest. Original
+5.11 exports all five events. Native previously recognized `WHOLE_REST` and
+refused its unported meaning; it now connects `SystemInfo.isMeasureRestShape`,
+`Voice.createMeasureRestVoice`, the no-slot stack duration and original
+`PartwiseBuilder` rest export branch. The actual rest chord is kept separately
+from normal Voice chords, with null intrinsic duration/end/termination and no
+slots. MusicXML uses stack duration, `<rest measure="yes"/>` and omits note type.
+Pitch/rest/type/Voice/duration/onset, actual rest bounds and stored Voice/stack
+state are compared with the same original image; all XML engraving/layout
+metadata parity is not claimed. Native does not read the original XML.
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-measure-rest/quarter-whole-rest.png \
+  quarter-whole-rest.musicxml quarter-whole-rest.report.json
+```
+
+Output paths must not exist. The default is `partialWholeRests=false`.
+Original shape classification under both switch values is a separate8-condition
+kernel comparison, not two full image runs. Exposing processing switches,
+`partialWholeRests=true` image processing, LONG/BREVE rest images, mixed
+measure-rest/normal polyphony, all-rest/no-head pages, generic shared stacks/
+slot-voice matching, lyrics/automatic slur-tie, correction and full cleaner/
+epilog remain pending. Earlier limited successful examples remain supported;
+original-failing central quarter-rest and half-rest boundary inputs retain
+refusal. All global completion flags stay false.
+[Validation](../evidence/musicxml-measure-rest/VALIDATION.json).
+Full595 is the earlier95e191b result, not a new full run.

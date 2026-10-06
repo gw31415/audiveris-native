@@ -783,3 +783,8 @@ Full595 remains earlier source95e191b; this unit uses targeted regressions.
 ## 実Chordの時刻伝播（2026-10-06）
 
 原版 `setAndPushTime` の明示Voice順序→beam group→判定済みtieを、実SIG・正確な所有小節で接続。画像CLIのslot生成前に実行し、伝播後の時刻と既存イベント時計の整合を検査します。原版5条件を比較。一般slot/voice matching・共有multi-part stack・全小節休符Voice・自動slur/tie・lyrics等は未完で、完成フラグfalse。 [手順・境界](MUSICXML-LIMITED.md#live-chord-time-propagation-before-slots-2026-10-06) / [検証](../evidence/musicxml-chord-time/VALIDATION.json)。全595は95e191bの既存結果です。
+
+
+## 全小節休符Voiceの画像縦断（2026-10-06）
+
+原版で正しく通る1画像（四分4音＋全小節休符）をnativeでも出力。認識済みWHOLE_RESTから専用Voice・slotなしstack音価・MusicXMLのmeasure休符/type省略へ接続。Chord/Voiceのintrinsic duration/end/terminationはnull、通常Chord列は空の原版契約を保持。原版同一画像の5イベント・bounds・Voice/stack状態と、別枠のprocessing-switch形分類8条件を比較。全595は95e191bの既存結果、全体完了false。 [試せる入力と実行例・未対応](MUSICXML-LIMITED.md#default-whole-measure-rest--musicxml-2026-10-06) / [検証](../evidence/musicxml-measure-rest/VALIDATION.json)。一般共有stack/slot-voice matching、lyrics、自動slur/tie、完全cleaner/epilog等は次の依存段階として残します。

@@ -1235,3 +1235,79 @@ fn intermediate_and_sibling_stumps_supply_original_fractional_beams_and_owned_su
     }
 }
 }
+
+#[test]
+fn image_whole_measure_rest_owns_separate_voice_and_exports_stack_duration_without_type() {
+    let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("fixtures/official-image-musicxml-measure-rest");
+    let original: Value =
+        serde_json::from_slice(&fs::read(fixture.join("observed.json")).unwrap()).unwrap();
+    let voices: Value =
+        serde_json::from_slice(&fs::read(fixture.join("original-voices.json")).unwrap()).unwrap();
+    let image =
+        GrayImage::decode(&fs::read(fixture.join("quarter-whole-rest.png")).unwrap()).unwrap();
+    let export = music_xml::recognize(&image).unwrap();
+    let report = &export.owner.owner.prepared.report;
+    let events = report["events"].as_array().unwrap();
+    assert_eq!(events.len(), 5);
+    for (native, original) in events.iter().zip(original["events"].as_array().unwrap()) {
+        for field in [
+            "measure_number",
+            "step",
+            "octave",
+            "alter",
+            "rest",
+            "measure_rest",
+            "type",
+            "voice",
+            "duration_quarters",
+            "offset_quarters",
+        ] {
+            assert_eq!(native[field], original[field], "{field}");
+        }
+    }
+    let nodes = report["shared_sig"]["inters"].as_array().unwrap();
+    for (measure, original) in report["measures"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .zip(voices["measures"].as_array().unwrap())
+    {
+        let voice = report["voices"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|v| v["measure_index"] == measure["index"])
+            .unwrap();
+        let whole = nodes
+            .iter()
+            .find(|n| n["id"] == voice["measure_rest_chord_id"]);
+        let actual = serde_json::json!({"number":measure["number"],"slot_count":measure["slots"].as_array().unwrap().len(),
+            "voices":[{"id":voice["id"],"is_measure_rest":voice["is_measure_rest"],"chord_count":voice["chord_ids"].as_array().unwrap().len(),"measure_rest_bounds":whole.map(|c|c["bounds"].clone()),"chord_duration":whole.map(|c|c["duration"].clone()),"duration":voice["duration"],"end_time":voice["end_time"],"termination":voice["termination"]}],
+            "expected_duration":measure["expected_duration"],"actual_duration":measure["actual_duration"],"abnormal":measure["abnormal"]});
+        assert_eq!(actual, *original);
+        if let Some(chord) = whole {
+            assert_eq!(chord["kind"], "RestChordInter");
+            assert_eq!(chord["voice"], voice["id"]);
+            assert_eq!(chord["time_offset"], "0");
+            assert_eq!(chord["duration"], Value::Null);
+            assert_eq!(voice["slots"], serde_json::json!([]));
+        }
+    }
+    assert!(
+        export
+            .xml
+            .contains("<rest measure=\"yes\"/><duration>4</duration><voice>1</voice></note>")
+    );
+    assert_eq!(export.xml.matches("<type>").count(), 4);
+    for key in [
+        "heads_complete",
+        "stems_complete",
+        "epilog_complete",
+        "musicxml_complete",
+        "automatic_raster_pipeline_complete",
+    ] {
+        assert_eq!(report[key], false);
+    }
+    assert_eq!(report["original_XML_output_reused"], false);
+}

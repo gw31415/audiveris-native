@@ -187,7 +187,10 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                     }
                 }
                 s if music_symbols::time(s).is_some()
-                    || matches!(s, "QUARTER_REST" | "HALF_REST" | "FLAG_1" | "FLAG_1_DOWN") =>
+                    || matches!(
+                        s,
+                        "QUARTER_REST" | "HALF_REST" | "WHOLE_REST" | "FLAG_1" | "FLAG_1_DOWN"
+                    ) =>
                 {
                     if t["created_inter_ids"]
                         .as_array()
@@ -397,8 +400,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             let shape = note["shape"]
                 .as_str()
                 .ok_or("musicxml_note_shape_required")?;
-            let (base, mut note_type) = note_duration(shape)?;
-            let mut duration = base * 4;
+            let measure_rest = m.voices[voice_index].measure_rest_chord == Some(chord.id);
+            let (mut duration, mut note_type) = if measure_rest {
+                (expected_ticks, "whole")
+            } else {
+                let (base, note_type) = note_duration(shape)?;
+                (base * 4, note_type)
+            };
             let rest = note["kind"] == "RestInter";
             // AbstractChordInter.getBeams: actual beam→stem and chord→stem
             // relations supply membership; x positions only order members.
@@ -636,7 +644,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 .find(|n| n["id"] == chord.id)
                 .ok_or("musicxml_actual_SIG_chord_required")?
                 .clone();
-            c["duration"] = json!(rational(duration));
+            c["duration"] = if measure_rest {
+                Value::Null
+            } else {
+                json!(rational(duration))
+            };
             c["time_offset"] = json!(rational(offset));
             c["measure_number"] = json!(mi + 1);
             if !beams.is_empty() {
@@ -650,7 +662,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 chord.id,
                 voice_index,
             )?;
-            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":note_type,"dots":0,"effective_clef_id":cid});
+            let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"system_id":measure.system,"staff_id":measure.staff,"measure_number":mi+1,"measure_index":measure.index,"bounds":note["bounds"],"shape":shape,"rest":rest,"measure_rest":measure_rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"duration":rational(duration),"duration_quarters":quarters(duration),"duration_eighths":eighths(duration),"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"time_offset":rational(offset),"offset_quarters":quarters(offset),"voice":voice_id,"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":0,"effective_clef_id":cid});
             if !beam_marks.is_empty() {
                 event["beams"] = json!(beam_marks);
             }
@@ -661,7 +673,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         }
         // Voice.checkDuration uses the last actual AbstractChord.getEndTime.
         // Normal-voice termination/excess updates precede the retained strict
-        // admission. General Rational/slots/measure-rest/pickup remain pending.
+        // admission. Default whole-rest Voice uses unknown intrinsic duration;
+        // general Rational/geometric slots/other special rests/pickup remain pending.
         // Consume original live relation-based clock propagation before final
         // stack slots. Sequential single-voice seeding/admission still applies;
         // this does not solve general voice matching or automatic ties.
@@ -707,12 +720,15 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             &mut m.voices[voice_index],
             &mut m.measures[mi],
         )?;
-        let voice_end = crate::music_voices::last_end_ticks(&graph, &m.voices[voice_index])?
-            .ok_or("musicxml_owned_voice_timing_required")?;
+        let voice_end = crate::music_voices::last_end_ticks(&graph, &m.voices[voice_index])?;
         if m.measures[mi].timing.actual != Some(offset) {
             return Err("musicxml_owned_stack_timing_mismatch".into());
         }
-        if voice_end != offset {
+        if if m.voices[voice_index].measure_rest_chord.is_some() {
+            voice_end.is_some()
+        } else {
+            voice_end != Some(offset)
+        } {
             return Err("musicxml_owned_voice_timing_mismatch".into());
         }
         if offset != expected_ticks {
@@ -805,7 +821,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         for e in events.iter().filter(|e| e["measure_number"] == number) {
             xml.push_str("<note>");
             if e["rest"] == true {
-                xml.push_str("<rest/>");
+                xml.push_str(if e["measure_rest"] == true {
+                    r#"<rest measure="yes"/>"#
+                } else {
+                    "<rest/>"
+                });
             } else {
                 write!(
                     &mut xml,
@@ -822,10 +842,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             }
             writeln!(
                 &mut xml,
-                "<duration>{}</duration><voice>{}</voice><type>{}</type>{}{}</note>",
+                "<duration>{}</duration><voice>{}</voice>{}{}{}</note>",
                 (e["duration_quarters"].as_f64().unwrap() * divisions as f64) as u32,
                 e["voice"].as_u64().unwrap(),
-                e["type"].as_str().unwrap(),
+                e["type"]
+                    .as_str()
+                    .map(|t| format!("<type>{t}</type>"))
+                    .unwrap_or_default(),
                 e["stem_direction"]
                     .as_str()
                     .map(|d| format!("<stem>{d}</stem>"))
@@ -852,7 +875,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     let voice_projection = crate::music_voices::timed_projection(&m.voices, &m.measures, &graph)?;
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":voice_projection,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":voice_projection,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter single-voice sixteenth-eighth-quarter-half/default-whole-measure-rest complete-measure path; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/polyphony/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);
     if m.owner.prepared.report["events"]

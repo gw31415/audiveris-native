@@ -230,6 +230,11 @@
       "unit": "AbstractChordInter.setAndPushTime: NextInVoice -> actual beam group -> already-classified tie clocks, before image CLI final slots",
       "status": "partial",
       "limits": "current sequential single-voice seeding/exact-grid resolved durations; automatic relation acquisition/general matching/shared stacks/whole-rest-special branches/full exception handling pending; cycles refuse atomically"
+    },
+    {
+      "unit": "SystemInfo.isMeasureRestShape / Voice.createMeasureRestVoice / no-slot StackRhythm / PartwiseBuilder measure-rest duration and type branch -> actual image CLI",
+      "status": "partial",
+      "limits": "one default WHOLE_REST image; processing-switch CLI/partial whole-rest images/LONG-BREVE/mixed voices/all-rest pages/shared stacks/general matching/lyrics/ties/full cleaner pending"
     }
   ],
   "function_groups": [
@@ -339,7 +344,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Original live chord setAndPushTime sequence/group/classified-tie propagation connected before image CLI stack slots; five original saved/declaration controls and targeted regressions in evidence/musicxml-chord-time. Full595 remains95e191b.",
+  "latest_targeted_validation": "Default WHOLE_REST recognized image -> dedicated measure-rest Voice/no slots/null intrinsic timing -> stack-duration MusicXML rest measure=yes/type omitted; five same-image original events/state plus separate8 shape-switch kernel conditions. Full595 remains95e191b. evidence/musicxml-measure-rest.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

@@ -15,6 +15,7 @@ pub(crate) struct Voice {
     pub termination: Option<i64>,
     pub excess: Option<u32>,
     pub slots: BTreeMap<usize, SlotVoice>,
+    pub measure_rest_chord: Option<usize>,
 }
 /// The admitted one-part/one-staff measure has one stack; general shared
 /// multi-part stacks remain pending and must share this state when connected.
@@ -37,7 +38,14 @@ pub(crate) struct MeasureTiming {
     pub slots: Vec<Slot>,
     pub actual: Option<u32>,
 }
-/// Voice constructor -> Measure.generateVoiceId(HIGH), Voice.addChord. The
+/// SystemInfo.isMeasureRestShape. Current image CLI uses original default
+/// partialWholeRests=false; exposing that processing switch and LONG/BREVE
+/// raster support remains a separate dependency.
+pub(crate) fn is_measure_rest_shape(shape: &str, partial_whole_rests: bool) -> bool {
+    matches!(shape, "LONG_REST" | "BREVE_REST") || (shape == "WHOLE_REST" && !partial_whole_rests)
+}
+/// Voice constructor/createMeasureRestVoice -> generateVoiceId(HIGH), setVoice.
+/// Measure-rest Voice keeps its separate rest chord, not a normal chord list. The
 /// caller has already admitted a single voice in this nonmerged one-staff part.
 pub(crate) fn single(
     measure_index: usize,
@@ -68,14 +76,33 @@ pub(crate) fn single(
                 .any(|v| v.measure == measure_index && v.id == *id)
         })
         .unwrap();
+    let measure_rests = members
+        .iter()
+        .filter(|c| {
+            c.kind == crate::music_measures::ChordKind::Rest
+                && c.members
+                    .first()
+                    .and_then(|n| n["shape"].as_str())
+                    .is_some_and(|s| is_measure_rest_shape(s, false))
+        })
+        .collect::<Vec<_>>();
+    if !measure_rests.is_empty() && members.len() != 1 {
+        return Err("music_voice_measure_rest_parallel_voices_pending".into());
+    }
+    let measure_rest_chord = measure_rests.first().map(|c| c.id);
     Ok(Voice {
         id,
         measure: measure_index,
         starting_staff: measure.staff,
-        chord_ids: members.iter().map(|c| c.id).collect(),
+        chord_ids: if measure_rest_chord.is_some() {
+            Vec::new()
+        } else {
+            members.iter().map(|c| c.id).collect()
+        },
         termination: None,
         excess: None,
         slots: BTreeMap::new(),
+        measure_rest_chord,
     })
 }
 /// Measure.removeVoiceChord -> Voice.removeChord. Remove an empty Voice only
@@ -102,7 +129,7 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
             .map(|v| {
                 let m = &measures[v.measure];
                 json!({"id":v.id,"kind":"HIGH","system_id":m.system,"part_id":m.part,
-            "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids,"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks),"slots":v.slots.iter().map(|(id,s)|json!({"slot_id":id,"chord_id":s.chord_id,"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()})
+            "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids,"measure_rest_chord_id":v.measure_rest_chord,"is_measure_rest":v.measure_rest_chord.is_some(),"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks),"slots":v.slots.iter().map(|(id,s)|json!({"slot_id":id,"chord_id":s.chord_id,"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()})
             })
             .collect::<Vec<_>>()
     )
@@ -129,7 +156,10 @@ pub(crate) fn generate_slots(
     let mut times: BTreeMap<u32, Vec<usize>> = BTreeMap::new();
     let mut staged_measure = measure.clone();
     let mut staged_voices = voices.to_vec();
-    for voice in staged_voices.iter().filter(|v| v.measure == measure_index) {
+    for voice in staged_voices
+        .iter()
+        .filter(|v| v.measure == measure_index && v.measure_rest_chord.is_none())
+    {
         for &id in &voice.chord_ids {
             let ch = node(id)?;
             if !matches!(
@@ -179,7 +209,7 @@ pub(crate) fn generate_slots(
     }
     for voice in staged_voices
         .iter_mut()
-        .filter(|v| v.measure == measure_index)
+        .filter(|v| v.measure == measure_index && v.measure_rest_chord.is_none())
     {
         // Original putSlotInfo overwrites by slot ID; do not silently clear
         // previous entries. Rhythm reset/voice construction owns that reset.
@@ -233,13 +263,16 @@ pub(crate) fn slots_projection(slots: &[Slot]) -> Value {
 }
 
 /// Voice.getDuration uses BEGIN entries and their slot time, not the last
-/// horizontally sorted chord. Measure-rest voices stay outside this normal
-/// constructor/path. Nullable slot time propagates an unknown Voice duration.
+/// horizontally sorted chord. Measure-rest Voice duration is unknown. Nullable
+/// slot time propagates an unknown normal Voice duration.
 pub(crate) fn slot_duration(
     graph: &crate::shared_sig::Graph,
     voice: &Voice,
     slots: &[Slot],
 ) -> Result<Option<u32>, String> {
+    if voice.measure_rest_chord.is_some() {
+        return Ok(None);
+    }
     let snapshot = graph.snapshot();
     let mut duration = 0;
     for slot in slots {
@@ -284,8 +317,9 @@ pub(crate) fn stack_slots_duration(
     Ok(duration)
 }
 /// StackRhythm.readStackActualDuration. The current one-part/one-staff Measure
-/// owns one stack. Non-empty voice/no-slot fallback is not a whole-rest Voice
-/// implementation; that separate constructor/recognition still must be wired.
+/// owns one stack. A whole-measure-rest Voice has no slots, so its actual
+/// stack duration follows the expected duration. Other no-slot Voices use
+/// the same original fallback. General multi-part stack ownership is pending.
 pub(crate) fn read_stack_actual_duration(
     graph: &crate::shared_sig::Graph,
     voices: &[Voice],
@@ -314,6 +348,10 @@ pub(crate) fn check_duration(
     voice: &mut Voice,
     measure: &mut Measure,
 ) -> Result<(), String> {
+    if voice.measure_rest_chord.is_some() {
+        voice.termination = None;
+        return Ok(());
+    }
     if voice.chord_ids.is_empty() {
         return Ok(());
     }
@@ -352,6 +390,9 @@ pub(crate) fn last_end_ticks(
     graph: &crate::shared_sig::Graph,
     voice: &Voice,
 ) -> Result<Option<u32>, String> {
+    if voice.measure_rest_chord.is_some() {
+        return Ok(None);
+    }
     let Some(id) = voice.chord_ids.last() else {
         return Ok(None);
     };
@@ -801,6 +842,10 @@ pub(crate) fn assign_chord_voice(
                 nodes.get(member).is_none_or(|n| {
                     n["kind"] == "RestInter"
                         && !matches!(n["shape"].as_str(), Some("QUARTER_REST" | "HALF_REST"))
+                        && !(voice.measure_rest_chord == Some(id)
+                            && n["shape"]
+                                .as_str()
+                                .is_some_and(|s| is_measure_rest_shape(s, false)))
                 })
             })
         {
@@ -809,7 +854,7 @@ pub(crate) fn assign_chord_voice(
         chord["voice"] = json!(voice.id);
         staged.vertex(key, chord, false)?;
         let owned = &mut retained[voice_index];
-        if !owned.chord_ids.contains(&id) {
+        if owned.measure_rest_chord != Some(id) && !owned.chord_ids.contains(&id) {
             owned.chord_ids.push(id);
             owned.chord_ids.sort_by_key(|id| {
                 nodes[id]["bounds"][0].as_i64().unwrap()
@@ -862,6 +907,21 @@ mod group_tests {
     }
     #[test]
     fn original_saved_group_getters_and_declared_beam_rest_follow_actual_ensemble() {
+        let rests: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-measure-rest/original-voices.json"
+        ))
+        .unwrap();
+        for state in rests["measure_rest_shapes"].as_array().unwrap() {
+            for shape in state["shapes"].as_array().unwrap() {
+                assert_eq!(
+                    is_measure_rest_shape(
+                        shape["shape"].as_str().unwrap(),
+                        state["partialWholeRests"].as_bool().unwrap()
+                    ),
+                    shape["measure_rest"].as_bool().unwrap()
+                );
+            }
+        }
         let original: Value = serde_json::from_str(include_str!(
             "../fixtures/official-beam-group-voices/saved-page.json"
         ))
