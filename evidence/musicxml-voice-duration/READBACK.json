@@ -1,0 +1,41 @@
+{
+  "validated_source_commit": "8a58c23ad6df8c53e80f324887ccba84eb832115",
+  "ordinary_main_push": "confirmed with ls-remote and independent fetch",
+  "repository_and_independent_clone": {
+    "commit": "8a58c23ad6df8c53e80f324887ccba84eb832115",
+    "root_tree": "bef24bd1e7f0e8318188a4cad3af4d23e8c4cdca",
+    "src_tree": "848cf8b72799abd53eecaf6097528cb9eb437d5c",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_clone": "existing separate clone updated by fetch/fast-forward; no bundle/archive/all-hash duplication",
+  "Linux_Cargo_build": "passed offline/locked/j1, CARGO_INCREMENTAL=0 DEV_DEBUG=0 TEST_DEBUG=0",
+  "native_CLI": "Linux native recognition; no Java or original XML used by native CLI",
+  "CLI_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-cross-system/beam-two-systems.png",
+      "events_original_matching": 20,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "0881832b190351a8129056a81e4749b45d812de14f1c2f5f60a9cf3156255deb",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "completion_flags": false
+    },
+    {
+      "input": "fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png",
+      "events_original_matching": 11,
+      "native_and_original_MusicXML4_XSD": "passed",
+      "MusicXML_sha256": "a81b3f7398c44c6833cba65b32cf9c7f7b85d0712bf7e176803230a63e928574",
+      "same_XML_bytes_as_prior_checkpoint": true,
+      "completion_flags": false
+    }
+  ],
+  "comparison_boundary": "same image MusicXML event/pitch/duration/onset/voice/beam comparison and native/original XSD; original sequential normal-voice duration termination/excess/abnormal controls are separate, not full original raster SIG equality",
+  "targeted_tests_passed": 24,
+  "full_workspace_run_this_stage": false,
+  "full_workspace_source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+  "full_workspace_tests_passed": 595,
+  "previous_full583_source": "52943ded9a13b5e31b46b54dce4e6090effed3af",
+  "source_unchanged_for_receipt_commit": true,
+  "all_global_completion_flags": false,
+  "GHA_Mac_Releases_Library_retry": "none",
+  "retained_normal_voice_duration": "each actual owner end_time matches last-chord offset+duration and event total; all successful voices termination0/excessnull, measures abnormalfalse/stack_excessnull"
+}
