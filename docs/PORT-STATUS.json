@@ -215,6 +215,11 @@
       "status": "implemented",
       "unit": "Voice.checkDuration normal-voice termination/excess and one-part/one-staff measure-stack timing state -> actual image CLI; exact existing1/16 clock",
       "limits": "four sequential original normal-voice duration states; general shared stacks/Rational/measure-rest/slots/correction/lyrics/epilog pending"
+    },
+    {
+      "unit": "StackRhythm.generateStackSlots -> retained actual normal chord slot back-reference -> Voice BEGIN/CONTINUE table in image CLI",
+      "status": "partial",
+      "limits": "admitted one-part/one-staff clock collection only; shared multi-part stacks/geometric slots/voice matching/whole-rest Voice pending; declared second-voice control is not automatic polyphony"
     }
   ],
   "function_groups": [
@@ -324,7 +329,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Original normal Voice.checkDuration termination/excess/abnormal updates retained in actual owner and Linux image CLI; sequential original state controls and targeted validation in evidence/musicxml-voice-duration. Full595 remains earlier95e191b.",
+  "latest_targeted_validation": "Original StackRhythm.generateStackSlots/Voice.completeSlotTable connected to actual image timed chords; saved original page and declared second-voice continuation/equal-end/missing-offset controls. Full595 remains source95e191b; see evidence/musicxml-stack-slots.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

@@ -768,3 +768,8 @@ All global completion flags remain false.
 
 [Validation](../evidence/musicxml-voice-duration/VALIDATION.json).
 Full595 remains earlier source95e191b; this unit uses targeted regressions.
+
+
+## 保持済みstack slotへの接続（2026-10-06）
+
+原版 `StackRhythm.generateStackSlots → Voice.completeSlotTable` を画像CLIの解決済みChord時刻へ接続。実Chord IDのslot/BEGIN/CONTINUE表を保持します。保存原版ページと、別Voiceの宣言時刻による継続・終端同時刻・欠落を比較。一般共有stack・幾何slot/voice matching・全小節休符Voice等は未完で、複声部の画像自動処理の完成ではありません。手順と境界は [MUSICXML-LIMITED.md](MUSICXML-LIMITED.md#solved-chord-clocks--retained-stack-slots-2026-10-06)、証跡は [VALIDATION](../evidence/musicxml-stack-slots/VALIDATION.json)。全595は95e191bでの既存結果です。

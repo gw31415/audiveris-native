@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Retained Voice chord ownership in the admitted ordinary single-staff rhythm
 //! path. VoiceKind HIGH is justified by the existing first-staff-only guard;
-//! general voice matching/merged parts/slots/tie propagation remain pending.
+//! general voice matching/merged parts and automatic tie recognition remain pending.
 use crate::music_measures::{Chord, Measure};
 use serde_json::{Value, json};
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 
 #[derive(Clone)]
 pub(crate) struct Voice {
@@ -14,14 +14,27 @@ pub(crate) struct Voice {
     pub chord_ids: Vec<usize>,
     pub termination: Option<i64>,
     pub excess: Option<u32>,
+    pub slots: BTreeMap<usize, SlotVoice>,
 }
 /// The admitted one-part/one-staff measure has one stack; general shared
 /// multi-part stacks remain pending and must share this state when connected.
+#[derive(Clone)]
+pub(crate) struct Slot {
+    pub id: usize,
+    pub time_offset: u32,
+    pub incoming_ids: Vec<usize>,
+}
+#[derive(Clone, Copy)]
+pub(crate) struct SlotVoice {
+    pub chord_id: usize,
+    pub continuing: bool,
+}
 #[derive(Clone, Default)]
 pub(crate) struct MeasureTiming {
     pub expected: Option<u32>,
     pub excess: Option<u32>,
     pub abnormal: bool,
+    pub slots: Vec<Slot>,
 }
 /// Voice constructor -> Measure.generateVoiceId(HIGH), Voice.addChord. The
 /// caller has already admitted a single voice in this nonmerged one-staff part.
@@ -61,6 +74,7 @@ pub(crate) fn single(
         chord_ids: members.iter().map(|c| c.id).collect(),
         termination: None,
         excess: None,
+        slots: BTreeMap::new(),
     })
 }
 /// Measure.removeVoiceChord -> Voice.removeChord. Remove an empty Voice only
@@ -87,10 +101,134 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
             .map(|v| {
                 let m = &measures[v.measure];
                 json!({"id":v.id,"kind":"HIGH","system_id":m.system,"part_id":m.part,
-            "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids,"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks)})
+            "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids,"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks),"slots":v.slots.iter().map(|(id,s)|json!({"slot_id":id,"chord_id":s.chord_id,"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()})
             })
             .collect::<Vec<_>>()
     )
+}
+
+/// StackRhythm.generateStackSlots -> Slot incoming order/back-reference ->
+/// Voice.putSlotInfo(BEGIN)/completeSlotTable. Current production admission has
+/// one Measure per stack; multi-part stack ownership/slot geometry are pending.
+/// Build against live chords, then commit atomically with Voice/Measure state.
+pub(crate) fn generate_slots(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut [Voice],
+    measure: &mut Measure,
+    measure_index: usize,
+) -> Result<(), String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let node = |id: usize| {
+        nodes
+            .iter()
+            .find(|n| n["id"] == id)
+            .ok_or_else(|| "music_slot_live_chord_required".to_string())
+    };
+    let mut times: BTreeMap<u32, Vec<usize>> = BTreeMap::new();
+    let mut staged_measure = measure.clone();
+    let mut staged_voices = voices.to_vec();
+    for voice in staged_voices.iter().filter(|v| v.measure == measure_index) {
+        for &id in &voice.chord_ids {
+            let ch = node(id)?;
+            if !matches!(
+                ch["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            ) {
+                return Err("music_slot_ordinary_chord_required".into());
+            }
+            if let Some(time) = ch["time_offset"].as_str() {
+                times
+                    .entry(crate::music_time::parse_ticks(time)?)
+                    .or_default()
+                    .push(id);
+            } else {
+                staged_measure.timing.abnormal = true;
+            }
+        }
+    }
+    let mut staged_graph = graph.clone();
+    let mut slots = Vec::new();
+    let mut time_to_slot = BTreeMap::new();
+    for (time, incoming) in &times {
+        let mut incoming = incoming.clone();
+        let mut ordered = Vec::new();
+        for &id in &incoming {
+            let b: [i64; 4] = serde_json::from_value(node(id)?["bounds"].clone())
+                .map_err(|_| "music_slot_chord_bounds_required")?;
+            ordered.push((id, b[1] + b[3] / 2));
+        }
+        ordered.sort_by_key(|(_, y)| *y);
+        incoming.clear();
+        incoming.extend(ordered.into_iter().map(|(id, _)| id));
+        let slot_id = slots.len() + 1;
+        for &id in &incoming {
+            let mut data = node(id)?.clone();
+            let key = serde_json::from_value(data["origin"].clone())
+                .map_err(|_| "music_slot_actual_origin_required")?;
+            data["slot_id"] = json!(slot_id);
+            staged_graph.vertex(key, data, false)?;
+        }
+        time_to_slot.insert(*time, slot_id);
+        slots.push(Slot {
+            id: slot_id,
+            time_offset: *time,
+            incoming_ids: incoming,
+        });
+    }
+    for voice in staged_voices
+        .iter_mut()
+        .filter(|v| v.measure == measure_index)
+    {
+        // Original putSlotInfo overwrites by slot ID; do not silently clear
+        // previous entries. Rhythm reset/voice construction owns that reset.
+        for &id in &voice.chord_ids {
+            if let Some(time) = node(id)?["time_offset"].as_str() {
+                let slot = time_to_slot[&crate::music_time::parse_ticks(time)?];
+                voice.slots.insert(
+                    slot,
+                    SlotVoice {
+                        chord_id: id,
+                        continuing: false,
+                    },
+                );
+            }
+        }
+        let mut previous = None;
+        for slot in &slots {
+            if let Some(info) = voice.slots.get(&slot.id) {
+                previous = Some(info.chord_id);
+            } else if let Some(id) = previous {
+                let ch = node(id)?;
+                let duration = ch["duration"]
+                    .as_str()
+                    .ok_or("music_slot_duration_required")?;
+                let offset = ch["time_offset"]
+                    .as_str()
+                    .ok_or("music_slot_offset_required")?;
+                let end = crate::music_time::parse_ticks(offset)?
+                    .checked_add(crate::music_time::parse_ticks(duration)?)
+                    .ok_or("music_time_tick_overflow")?;
+                if end > slot.time_offset {
+                    voice.slots.insert(
+                        slot.id,
+                        SlotVoice {
+                            chord_id: id,
+                            continuing: true,
+                        },
+                    );
+                }
+            }
+        }
+    }
+    staged_measure.timing.slots = slots;
+    *graph = staged_graph;
+    voices.clone_from_slice(&staged_voices);
+    *measure = staged_measure;
+    Ok(())
+}
+pub(crate) fn slots_projection(slots: &[Slot]) -> Value {
+    json!(slots.iter().map(|s|json!({"id":s.id,"time_offset":crate::music_time::format_ticks(s.time_offset),"incoming_chord_ids":s.incoming_ids})).collect::<Vec<_>>())
 }
 
 /// Original Voice.checkDuration for normal voices in the existing exact grid.
@@ -663,6 +801,92 @@ mod group_tests {
             comparable(owner.owner.prepared.report["beam_group_voices"].clone()),
             original["groups"]
         );
+        // Original final stack-slot collection consumes already solved voices;
+        // this is downstream of, and does not pretend to solve, polyphony.
+        let slot_control: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-slots/controls.json"
+        ))
+        .unwrap();
+        let mut slot_graph = owner.owner.graph.clone();
+        let mut slot_voice = vec![owner.voices[0].clone()];
+        let mut slot_measure = owner.measures[0].clone();
+        let slot_state = |g: &crate::shared_sig::Graph, voices: &[Voice], m: &Measure| {
+            let snap = g.snapshot();
+            let bounds = |id: usize| {
+                snap["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == id)
+                    .unwrap()["bounds"]
+                    .clone()
+            };
+            json!({"abnormal":m.timing.abnormal,
+                "slots":m.timing.slots.iter().map(|s|json!({"id":s.id,"time_offset":crate::music_time::format_ticks(s.time_offset),"incoming_bounds":s.incoming_ids.iter().map(|&id|bounds(id)).collect::<Vec<_>>()})).collect::<Vec<_>>(),
+                "voices":voices.iter().map(|v|json!({"id":v.id,"slots":m.timing.slots.iter().filter_map(|s|v.slots.get(&s.id).map(|info|json!({"slot_id":s.id,"status":if info.continuing {"CONTINUE"}else{"BEGIN"},"chord_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>()})
+        };
+        generate_slots(&mut slot_graph, &mut slot_voice, &mut slot_measure, 0).unwrap();
+        assert_eq!(
+            slot_state(&slot_graph, &slot_voice, &slot_measure),
+            slot_control["saved"]
+        );
+        for slot in &slot_measure.timing.slots {
+            for id in &slot.incoming_ids {
+                assert_eq!(
+                    slot_graph.snapshot()["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == *id)
+                        .unwrap()["slot_id"],
+                    slot.id
+                );
+            }
+        }
+        let last_id = slot_voice[0].chord_ids.pop().unwrap();
+        let mut second = slot_voice[0].clone();
+        second.id = 2;
+        second.chord_ids = vec![last_id];
+        second.slots.clear();
+        slot_voice.push(second);
+        let mut last_node = slot_graph.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == last_id)
+            .unwrap()
+            .clone();
+        let last_key: Key = serde_json::from_value(last_node["origin"].clone()).unwrap();
+        for (name, offset) in [
+            ("continued", json!("9/16")),
+            ("boundary", json!("3/4")),
+            ("missing", Value::Null),
+        ] {
+            last_node["time_offset"] = offset;
+            last_node["voice"] = json!(2);
+            slot_graph
+                .vertex(last_key, last_node.clone(), false)
+                .unwrap();
+            for v in &mut slot_voice {
+                v.slots.clear();
+            }
+            generate_slots(&mut slot_graph, &mut slot_voice, &mut slot_measure, 0).unwrap();
+            assert_eq!(
+                slot_state(&slot_graph, &slot_voice, &slot_measure),
+                slot_control[name]
+            );
+        }
+        // Unsupported finer clocks retain every staged owner/graph field.
+        last_node["time_offset"] = json!("1/32");
+        slot_graph.vertex(last_key, last_node, false).unwrap();
+        let before_slots = slot_state(&slot_graph, &slot_voice, &slot_measure);
+        let before_graph = slot_graph.snapshot();
+        assert!(generate_slots(&mut slot_graph, &mut slot_voice, &mut slot_measure, 0).is_err());
+        assert_eq!(
+            slot_state(&slot_graph, &slot_voice, &slot_measure),
+            before_slots
+        );
+        assert_eq!(slot_graph.snapshot(), before_graph);
         let timed_page_graph = owner.owner.graph.clone();
         let snapshot = owner.owner.graph.snapshot();
         let before_cache = snapshot["inters"]

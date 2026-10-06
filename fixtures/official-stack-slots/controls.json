@@ -1,0 +1,232 @@
+{
+  "scope" : "saved original normal stack slots plus declared second-voice offset 9/16 (CONTINUE),3/4 (equal-end free),null (abnormal); not automatic polyphony matching",
+  "saved" : {
+    "slots" : [ {
+      "id" : 1,
+      "time_offset" : "0",
+      "incoming_bounds" : [ [ 275, 206, 14, 42 ] ]
+    }, {
+      "id" : 2,
+      "time_offset" : "1/8",
+      "incoming_bounds" : [ [ 332, 206, 17, 42 ] ]
+    }, {
+      "id" : 3,
+      "time_offset" : "1/4",
+      "incoming_bounds" : [ [ 392, 206, 17, 42 ] ]
+    }, {
+      "id" : 4,
+      "time_offset" : "3/8",
+      "incoming_bounds" : [ [ 452, 206, 17, 42 ] ]
+    }, {
+      "id" : 5,
+      "time_offset" : "1/2",
+      "incoming_bounds" : [ [ 545, 217, 14, 42 ] ]
+    }, {
+      "id" : 6,
+      "time_offset" : "3/4",
+      "incoming_bounds" : [ [ 635, 217, 14, 42 ] ]
+    } ],
+    "voices" : [ {
+      "id" : 1,
+      "slots" : [ {
+        "slot_id" : 1,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 275, 206, 14, 42 ]
+      }, {
+        "slot_id" : 2,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 332, 206, 17, 42 ]
+      }, {
+        "slot_id" : 3,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 392, 206, 17, 42 ]
+      }, {
+        "slot_id" : 4,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 452, 206, 17, 42 ]
+      }, {
+        "slot_id" : 5,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 545, 217, 14, 42 ]
+      }, {
+        "slot_id" : 6,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 635, 217, 14, 42 ]
+      } ]
+    } ],
+    "abnormal" : false
+  },
+  "continued" : {
+    "slots" : [ {
+      "id" : 1,
+      "time_offset" : "0",
+      "incoming_bounds" : [ [ 275, 206, 14, 42 ] ]
+    }, {
+      "id" : 2,
+      "time_offset" : "1/8",
+      "incoming_bounds" : [ [ 332, 206, 17, 42 ] ]
+    }, {
+      "id" : 3,
+      "time_offset" : "1/4",
+      "incoming_bounds" : [ [ 392, 206, 17, 42 ] ]
+    }, {
+      "id" : 4,
+      "time_offset" : "3/8",
+      "incoming_bounds" : [ [ 452, 206, 17, 42 ] ]
+    }, {
+      "id" : 5,
+      "time_offset" : "1/2",
+      "incoming_bounds" : [ [ 545, 217, 14, 42 ] ]
+    }, {
+      "id" : 6,
+      "time_offset" : "9/16",
+      "incoming_bounds" : [ [ 635, 217, 14, 42 ] ]
+    } ],
+    "voices" : [ {
+      "id" : 1,
+      "slots" : [ {
+        "slot_id" : 1,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 275, 206, 14, 42 ]
+      }, {
+        "slot_id" : 2,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 332, 206, 17, 42 ]
+      }, {
+        "slot_id" : 3,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 392, 206, 17, 42 ]
+      }, {
+        "slot_id" : 4,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 452, 206, 17, 42 ]
+      }, {
+        "slot_id" : 5,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 545, 217, 14, 42 ]
+      }, {
+        "slot_id" : 6,
+        "status" : "CONTINUE",
+        "chord_bounds" : [ 545, 217, 14, 42 ]
+      } ]
+    }, {
+      "id" : 2,
+      "slots" : [ {
+        "slot_id" : 6,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 635, 217, 14, 42 ]
+      } ]
+    } ],
+    "abnormal" : false
+  },
+  "boundary" : {
+    "slots" : [ {
+      "id" : 1,
+      "time_offset" : "0",
+      "incoming_bounds" : [ [ 275, 206, 14, 42 ] ]
+    }, {
+      "id" : 2,
+      "time_offset" : "1/8",
+      "incoming_bounds" : [ [ 332, 206, 17, 42 ] ]
+    }, {
+      "id" : 3,
+      "time_offset" : "1/4",
+      "incoming_bounds" : [ [ 392, 206, 17, 42 ] ]
+    }, {
+      "id" : 4,
+      "time_offset" : "3/8",
+      "incoming_bounds" : [ [ 452, 206, 17, 42 ] ]
+    }, {
+      "id" : 5,
+      "time_offset" : "1/2",
+      "incoming_bounds" : [ [ 545, 217, 14, 42 ] ]
+    }, {
+      "id" : 6,
+      "time_offset" : "3/4",
+      "incoming_bounds" : [ [ 635, 217, 14, 42 ] ]
+    } ],
+    "voices" : [ {
+      "id" : 1,
+      "slots" : [ {
+        "slot_id" : 1,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 275, 206, 14, 42 ]
+      }, {
+        "slot_id" : 2,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 332, 206, 17, 42 ]
+      }, {
+        "slot_id" : 3,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 392, 206, 17, 42 ]
+      }, {
+        "slot_id" : 4,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 452, 206, 17, 42 ]
+      }, {
+        "slot_id" : 5,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 545, 217, 14, 42 ]
+      } ]
+    }, {
+      "id" : 2,
+      "slots" : [ {
+        "slot_id" : 6,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 635, 217, 14, 42 ]
+      } ]
+    } ],
+    "abnormal" : false
+  },
+  "missing" : {
+    "slots" : [ {
+      "id" : 1,
+      "time_offset" : "0",
+      "incoming_bounds" : [ [ 275, 206, 14, 42 ] ]
+    }, {
+      "id" : 2,
+      "time_offset" : "1/8",
+      "incoming_bounds" : [ [ 332, 206, 17, 42 ] ]
+    }, {
+      "id" : 3,
+      "time_offset" : "1/4",
+      "incoming_bounds" : [ [ 392, 206, 17, 42 ] ]
+    }, {
+      "id" : 4,
+      "time_offset" : "3/8",
+      "incoming_bounds" : [ [ 452, 206, 17, 42 ] ]
+    }, {
+      "id" : 5,
+      "time_offset" : "1/2",
+      "incoming_bounds" : [ [ 545, 217, 14, 42 ] ]
+    } ],
+    "voices" : [ {
+      "id" : 1,
+      "slots" : [ {
+        "slot_id" : 1,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 275, 206, 14, 42 ]
+      }, {
+        "slot_id" : 2,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 332, 206, 17, 42 ]
+      }, {
+        "slot_id" : 3,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 392, 206, 17, 42 ]
+      }, {
+        "slot_id" : 4,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 452, 206, 17, 42 ]
+      }, {
+        "slot_id" : 5,
+        "status" : "BEGIN",
+        "chord_bounds" : [ 545, 217, 14, 42 ]
+      } ]
+    }, {
+      "id" : 2,
+      "slots" : [ ]
+    } ],
+    "abnormal" : true
+  }
+}

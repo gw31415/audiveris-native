@@ -1159,3 +1159,35 @@ controlled ownership operations.
 [Validation](../evidence/musicxml-voice-chord-ownership/VALIDATION.json).
 
 Full native workspace validation at source95e191b:595 passed,0 failed/ignored,176 executables and7 empty doc-test groups. A transport disconnect interrupted the initial run after136 executables; only40 remaining executables were resumed from the unchanged Cargo inventory (the interrupted4-test binary was repeated). [Full validation](../evidence/musicxml-voice-chord-ownership/FULL-VALIDATION.json). This is separate from full593 at source238c535.
+
+
+## Solved chord clocks → retained stack slots (2026-10-06)
+
+`StackRhythm.generateStackSlots` now gathers actual normal-Voice chords by their
+resolved time, sorts slot incomings by center ordinate, assigns the real chord's
+slot back-reference and writes `BEGIN`/`CONTINUE` entries using original
+`Voice.completeSlotTable`. A chord ending exactly at the next slot is no longer
+active there; missing chord offset marks the measure abnormal. The image CLI
+calls this after timing its admitted single voice. JSON exposes
+`measures[].slots` (actual incoming chord IDs) and `voices[].slots` (actual
+chord ID/status); MusicXML examples and output bytes remain unchanged.
+
+The existing original saved page is compared with the native image path. A
+second declared Voice on the same original page checks continuation/equal-end/
+missing-offset behavior separately: it does **not** establish automatic
+polyphony matching. The existing one-part/one-staff admission still maps one
+Measure to one stack. General shared multi-part stacks, geometric slots/
+SlotsRetriever/ChordsMapper, whole-measure-rest Voice, Rational/tuplets,
+lyrics/automatic ties/correction and complete epilog remain pending. All global
+completion flags stay false. No extra image fixture or image-specific branch.
+
+Run the existing example with new output paths:
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-cross-system/beam-two-systems.png \
+  stack-slots.musicxml stack-slots.report.json
+```
+
+[Original/targeted validation](../evidence/musicxml-stack-slots/VALIDATION.json).
+Full595 remains the result at source95e191b, not a new full run.
