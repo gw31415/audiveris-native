@@ -93,8 +93,71 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
 /// Original automatic checkHeadStems already runs after each system links,
 /// before Finalizer.boostBeamSides. General epilog/cross-system parity is pending.
 pub(crate) fn finalize_stems(mut o: OwnedItems) -> Result<OwnedItems, String> {
-    o = crate::music_ledger_reduction::check(o)?;
-    let beam_checks = crate::music_beams::check_ends(&mut o.graph)?;
+    let mut passes = Vec::new();
+    let mut removed_stems = Vec::new();
+    let mut removed_beams = Vec::new();
+    let mut removed_ledgers = Vec::new();
+    let mut stable = false;
+    // Original consistency checks repeat after modifications. A cut tail link
+    // must return through head checks before admission, not leave an unlinked
+    // head to fail merely because the old continuation was a single pass.
+    // This bounded existing-foundations subset still lacks general overlap,
+    // chord/frozen/late checks and complete per-check weak/context callbacks.
+    for round in 0..64 {
+        let before = o.graph.snapshot();
+        let mut head_checks = serde_json::Value::Null;
+        if round > 0 {
+            let plan = crate::stem_head_foundation_plan::prepare(&before)?;
+            removed_stems.extend(crate::stem_head_foundations::apply_plan(&mut o, &plan)?);
+            head_checks = plan.stages;
+        }
+        let beam_checks = crate::music_beams::check_ends(&mut o.graph)?;
+        removed_beams.extend(
+            beam_checks["removed_beam_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .cloned(),
+        );
+        o = crate::music_ledger_reduction::check(o)?;
+        removed_ledgers.extend(
+            o.prepared.report["orphan_ledger_consistency"]["removed"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .cloned(),
+        );
+        o.graph.contextualize_head_stems()?;
+        let stem_checks =
+            crate::stem_head_foundation_plan::prepare_stem_checks(&o.graph.snapshot())?;
+        removed_stems.extend(crate::stem_head_foundations::apply_plan(
+            &mut o,
+            &stem_checks,
+        )?);
+        passes.push(
+            json!({"iteration":round+1,"head_checks":head_checks,"stem_checks":stem_checks.stages}),
+        );
+        let after = o.graph.snapshot();
+        let ids = |v: &serde_json::Value, field: &str| {
+            v[field]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|n| n["id"].clone())
+                .collect::<Vec<_>>()
+        };
+        if ids(&before, "inters") == ids(&after, "inters")
+            && ids(&before, "relations") == ids(&after, "relations")
+        {
+            stable = true;
+            break;
+        }
+    }
+    if !stable {
+        return Err("music_foundation_consistency_iteration_budget".into());
+    }
+    o.prepared.report["orphan_ledger_consistency"]["removed"] = json!(removed_ledgers);
+    let beam_checks = json!({"removed_beam_ids":removed_beams,"scope":"retained ordinary beam/hook endpoints across bounded foundation consistency iterations; full reduction pending"});
     let snap = o.graph.snapshot();
     let nodes = snap["inters"]
         .as_array()
@@ -136,6 +199,7 @@ pub(crate) fn finalize_stems(mut o: OwnedItems) -> Result<OwnedItems, String> {
     o.graph.contextualize_head_stems()?;
     o.prepared.report["shared_sig"] = o.graph.snapshot();
     o.prepared.report["limited_stem_finalizer"] = json!({"head_checks":checked,"canonical_stem_cache_checked":true,"no_live_beam_finalizer":!nodes.iter().any(|n|matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))),"contextualize_after_epilog":true,"full_STEMS_epilog_complete":false});
+    o.prepared.report["limited_stem_finalizer"]["original_stem_consistency"] = json!({"passes":passes,"removed_cached_stems":removed_stems,"scope":"SigReducer.checkStems/StemInter.computeDirection ordinary head/beam subset, canonical cache removal and tail-link/exclusion callbacks; existing foundation checks repeat to structural stability; general overlap/chord/frozen/late reduction remains pending"});
     if nodes
         .iter()
         .any(|n| matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))

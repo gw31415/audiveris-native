@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest addition: [two-system beam input with measured47pt heads](#two-system-beams-with-measured-head-font-and-owned-epilog),20 original-matching events and one actual cross-system glyph-alias orphan deletion. Earlier sections below retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest processing stage: [fresh epilog seed lists](#fresh-epilog-seed-lists) and [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded monophonic duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -682,3 +682,19 @@ intact. This changes no accepted notation or input assumptions. Positive bar-are
 evidence is from the existing Laura saved HEADS state (98→97 and202→200),
 separate from the20-event image MusicXML regression. Angled ribbons, multi-staff
 MusicXML and full reduction/cleaner remain pending final targets.
+
+## Ordinary stem consistency and cached removal
+
+The existing two-system and competing-hook commands also run ordinary
+`SigReducer.checkStems`: direction considers head and beam connection source
+grades; headless stems are removed from the actual SIG and the same canonical
+cache object; tail-side head links are cut with invading overlap exclusions.
+Retained foundation checks repeat after structural changes before export.
+The report adds `limited_stem_finalizer.original_stem_consistency`.
+
+This is generic connection logic, with no input-specific branch. Five declared
+original SIG controls and an owned-cache head-loss condition validate internal
+behavior separately from the existing image outputs. It does not add an accepted
+notation/font/staff/rhythm category. Initial weak-stem purge, full original
+reduction ordering/context, chord/frozen/late checks and lyrics InterCleaner
+remain pending. See [next dependencies](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md).

@@ -1,0 +1,78 @@
+{
+  "baseline_main": "ac7de549de5891d20a85583a39bfd4b7c5a3784a",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer": "scripts/java/StemConsistencyProbe.java",
+  "observer_sha256": "41e350be29191e78c2d0629c2815455a631cca372973b13b4a2a5cf5f39ebd48",
+  "original_saved_page_sha256": "eab4c27ed5fbe64e73a3df31f1261439e40101cce6afe6c751820d239cc865c2",
+  "cases": [
+    {
+      "name": "no-heads",
+      "direction": 0,
+      "modified": 1,
+      "removed": true,
+      "kept_head_links": [],
+      "head_stem_exclusions": []
+    },
+    {
+      "name": "top-strongest",
+      "direction": 1,
+      "modified": 1,
+      "removed": false,
+      "kept_head_links": [
+        true,
+        false
+      ],
+      "head_stem_exclusions": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "bottom-strongest",
+      "direction": -1,
+      "modified": 1,
+      "removed": false,
+      "kept_head_links": [
+        false,
+        true
+      ],
+      "head_stem_exclusions": [
+        true,
+        false
+      ]
+    },
+    {
+      "name": "beam-strongest",
+      "direction": 1,
+      "modified": 1,
+      "removed": false,
+      "kept_head_links": [
+        true,
+        false
+      ],
+      "head_stem_exclusions": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "unknown-direction",
+      "direction": 0,
+      "modified": 0,
+      "removed": false,
+      "kept_head_links": [
+        true
+      ],
+      "head_stem_exclusions": [
+        false
+      ]
+    }
+  ],
+  "comparison_scope": "five declared original live-SIG checkStems/computeDirection cases with supplied contextual grades; original same-page image outputs are separate regressions, not five new automatic raster corrections",
+  "native_owned_cache": "declared head-loss on actual image-owned SIG/cache; canonical cached object marked removed, actual SIG tombstone, physical registry retained, stale graph plan refused atomically",
+  "pipeline": "ordinary head/beam source grade ordering, checkStems after beam endpoints and ledgers; retained foundation checks repeat after structural changes; no image-specific branch or guard-only admission",
+  "verification": "targeted controls/cache and original8-head foundation/11-event competition/20-event two-system regressions passed; final workspace run pending",
+  "complete_REDUCTION": false,
+  "completion_flags": false
+}

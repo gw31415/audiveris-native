@@ -12,6 +12,111 @@ use std::collections::BTreeSet;
 mod boundaries {
     use super::*;
     #[test]
+    fn original_stem_checks_prune_tail_heads_by_all_connection_source_grades() {
+        use crate::shared_sig::{Graph, Key, Phase};
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stem-consistency/controls.json"
+        ))
+        .unwrap();
+        for case in oracle["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let sk = Key {
+                system: 1,
+                phase: Phase::Stem,
+                local: 1,
+            };
+            let mut data = case["stem"].clone();
+            data["abnormal"] = json!(case["heads"].as_array().unwrap().is_empty());
+            let sid = graph.vertex(sk, data, false).unwrap();
+            let mut head_ids = Vec::new();
+            let mut head_edges = Vec::new();
+            for (i, (head, rel)) in case["heads"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .zip(case["head_relations"].as_array().unwrap())
+                .enumerate()
+            {
+                let hk = Key {
+                    system: 1,
+                    phase: Phase::Head,
+                    local: i + 1,
+                };
+                let mut data = head.clone();
+                data["abnormal"] = json!(false);
+                head_ids.push(graph.vertex(hk, data, false).unwrap());
+                let mut relation = rel.clone();
+                relation["local_relation_id"] = json!(i + 1);
+                graph
+                    .relations(1, Phase::Stem, vec![(hk, sk, relation)])
+                    .unwrap();
+                head_edges.push(
+                    graph.snapshot()["relations"]
+                        .as_array()
+                        .unwrap()
+                        .last()
+                        .unwrap()["id"]
+                        .as_u64()
+                        .unwrap() as usize,
+                );
+            }
+            if !case["beam"].is_null() {
+                let bk = Key {
+                    system: 1,
+                    phase: Phase::Beam,
+                    local: 1,
+                };
+                graph.vertex(bk, case["beam"].clone(), false).unwrap();
+                graph
+                    .relations(
+                        1,
+                        Phase::Beam,
+                        vec![(bk, sk, case["beam_relation"].clone())],
+                    )
+                    .unwrap();
+            }
+            let before = graph.snapshot();
+            assert_eq!(
+                json!(direction(&before, &before["inters"][0])),
+                case["direction"],
+                "{}",
+                case["name"]
+            );
+            let plan = prepare_stem_checks(&before).unwrap();
+            assert_eq!(plan.stages["modified_stems"], case["modified"]);
+            graph.apply_head_foundation_plan(&plan).unwrap();
+            let after = graph.snapshot();
+            assert_eq!(
+                !after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|n| n["id"] == sid),
+                case["stem_removed"].as_bool().unwrap()
+            );
+            for (i, (&hid, &eid)) in head_ids.iter().zip(&head_edges).enumerate() {
+                assert_eq!(
+                    after["relations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|r| r["id"] == eid),
+                    case["retained_head_relations"][i].as_bool().unwrap()
+                );
+                assert_eq!(
+                    after["relations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|r| r["kind"] == "Exclusion"
+                            && ((r["source"] == hid && r["target"] == sid)
+                                || (r["target"] == hid && r["source"] == sid))),
+                    case["head_stem_exclusions"][i].as_bool().unwrap()
+                );
+            }
+        }
+    }
+    #[test]
     fn empty_and_unsupported_scope_do_not_mutate_input() {
         let empty = json!({"inters":[],"relations":[]});
         let result = prepare(&empty).unwrap();
@@ -37,13 +142,16 @@ mod boundaries {
         }
     }
     #[test]
-    fn remaining_orphan_stem_consistency_is_an_explicit_refusal() {
-        let input = json!({"inters":[{"id":1,"kind":"StemInter","grade":0.8,"contextual_grade":0.8,"median":[1.,0.,1.,10.]}],"relations":[]});
+    fn orphan_stem_is_retained_until_original_stem_consistency_stage() {
+        let input = json!({"inters":[{"id":1,"kind":"StemInter","grade":0.8,"contextual_grade":0.8,"abnormal":true,"median":[1.,0.,1.,10.]}],"relations":[]});
         let before = input.clone();
-        assert_eq!(
-            prepare(&input).err().unwrap(),
-            "orphan_stem_requires_remaining_original_consistency_checks"
-        );
+        assert_eq!(prepare(&input).unwrap().final_state, before);
+        let checked = prepare_stem_checks(&input).unwrap();
+        assert!(checked.final_state["inters"].as_array().unwrap().is_empty());
+        assert!(matches!(
+            checked.events.as_slice(),
+            [Event::RemoveVertex(1)]
+        ));
         assert_eq!(input, before);
     }
 }
@@ -221,19 +329,15 @@ fn direction(g: &Value, s: &Value) -> i32 {
         .as_array()
         .unwrap()
         .iter()
-        .filter(|e| e["kind"] == "HeadStemRelation" && e["target"] == s["id"])
+        .filter(|e| {
+            matches!(
+                e["kind"].as_str(),
+                Some("HeadStemRelation" | "BeamStemRelation")
+            ) && e["target"] == s["id"]
+        })
         .cloned()
         .collect::<Vec<_>>();
-    let mut extensions = links.clone();
-    extensions.extend(
-        g["relations"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .filter(|e| e["kind"] == "BeamStemRelation" && e["target"] == s["id"])
-            .cloned(),
-    );
-    let line = extended(s, &extensions);
+    let line = extended(s, &links);
     links.sort_by(|a, b| {
         let grade = |e: &Value| {
             nodes.iter().find(|n| n["id"] == e["source"]).unwrap()["contextual_grade"]
@@ -243,6 +347,15 @@ fn direction(g: &Value, s: &Value) -> i32 {
         grade(b).total_cmp(&grade(a))
     });
     for e in links {
+        // StemInter.computeDirection sorts every stem connection by the
+        // source's best grade. A stronger beam can decide ahead of a head.
+        if e["kind"] == "BeamStemRelation" {
+            return if e["extension_point"][1].as_f64().unwrap() < (line[1] + line[3]) / 2. {
+                -1
+            } else {
+                1
+            };
+        }
         let h = nodes.iter().find(|h| h["id"] == e["source"]).unwrap();
         let portion = stem_portion(
             serde_json::from_value(h["bounds"].clone()).unwrap(),
@@ -405,7 +518,7 @@ fn count(g: &Value) -> Value {
     let nodes = g["inters"].as_array().unwrap();
     json!({"heads":nodes.iter().filter(|n|n["kind"]=="HeadInter").count(),"stems":nodes.iter().filter(|n|n["kind"]=="StemInter").count(),"head_stem_relations":g["relations"].as_array().unwrap().iter().filter(|r|r["kind"]=="HeadStemRelation").count()})
 }
-pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
+fn validate(input: &Value) -> Result<(), String> {
     let nodes = input["inters"]
         .as_array()
         .ok_or("missing_native_foundation_nodes")?;
@@ -486,8 +599,12 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
         .cloned()
         .collect::<Vec<_>>();
     context::contextualize_head_stems(&mut verify, &verify_edges)?;
-    let mut events = Vec::new();
     crate::beam_groups::validate_owned_groups(input)?;
+    Ok(())
+}
+pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
+    validate(input)?;
+    let mut events = Vec::new();
     let mut g = input.clone();
     let p = plan(&g);
     for id in p["removed_native_relation_ids"].as_array().unwrap() {
@@ -511,24 +628,103 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
     purge(&mut g, &mut events);
     let head_purge = count(&g);
     reduce(&mut g, &mut events);
-    let linked = g["relations"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .filter(|e| e["kind"] == "HeadStemRelation")
-        .map(|e| e["target"].as_u64().unwrap())
-        .collect::<BTreeSet<_>>();
-    if g["inters"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .any(|n| n["kind"] == "StemInter" && !linked.contains(&n["id"].as_u64().unwrap()))
-    {
-        return Err("orphan_stem_requires_remaining_original_consistency_checks".into());
-    }
     Ok(Plan {
         events,
         stages: json!({"ending":ending,"ending_purge":ending_purge,"heads":heads,"heads_purge":head_purge,"reduced":count(&g)}),
+        final_state: g,
+    })
+}
+
+/// SigReducer.checkStems after beam endpoints/ledgers: delete stems without
+/// heads, then stemHasSingleHeadEnd removes tail-side links and inserts an
+/// overlap exclusion for invading links. This is not the full reduction loop.
+pub(crate) fn prepare_stem_checks(input: &Value) -> Result<Plan, String> {
+    validate(input)?;
+    let mut g = input.clone();
+    let mut events = Vec::new();
+    let mut modified = 0;
+    let stems = g["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|n| n["kind"] == "StemInter")
+        .cloned()
+        .collect::<Vec<_>>();
+    for stem in stems {
+        let links = g["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| r["kind"] == "HeadStemRelation" && r["target"] == stem["id"])
+            .cloned()
+            .collect::<Vec<_>>();
+        if links.is_empty() {
+            remove(&mut g, stem["id"].as_u64().unwrap(), &mut events);
+            modified += 1;
+            continue;
+        }
+        let dir = direction(&g, &stem);
+        if dir == 0 {
+            continue;
+        }
+        let connections = g["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|r| {
+                matches!(
+                    r["kind"].as_str(),
+                    Some("HeadStemRelation" | "BeamStemRelation")
+                ) && r["target"] == stem["id"]
+            })
+            .cloned()
+            .collect::<Vec<_>>();
+        let line = extended(&stem, &connections);
+        let forbidden = if dir > 0 {
+            StemPortion::StemBottom
+        } else {
+            StemPortion::StemTop
+        };
+        let mut pruned = false;
+        for rel in links {
+            let head = g["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|h| h["id"] == rel["source"])
+                .unwrap();
+            let portion = stem_portion(
+                serde_json::from_value(head["bounds"].clone()).unwrap(),
+                line,
+                rel["extension_point"][1].as_f64().unwrap(),
+            )
+            .unwrap();
+            if portion != forbidden {
+                continue;
+            }
+            events.push(Event::RemoveRelation(rel["id"].as_u64().unwrap()));
+            g["relations"]
+                .as_array_mut()
+                .unwrap()
+                .retain(|r| r["id"] != rel["id"]);
+            if rel["invading"] == true {
+                exclusion(
+                    &mut g,
+                    rel["source"].as_u64().unwrap(),
+                    stem["id"].as_u64().unwrap(),
+                    &mut events,
+                );
+            }
+            pruned = true;
+        }
+        if pruned {
+            modified += 1;
+            refresh(&mut g);
+        }
+    }
+    Ok(Plan {
+        events,
+        stages: json!({"modified_stems":modified,"remaining":count(&g)}),
         final_state: g,
     })
 }

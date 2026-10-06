@@ -1,0 +1,251 @@
+{
+  "native_outputs_used" : false,
+  "scope" : "five declared original ordinary live-SIG checkStems/computeDirection conditions on saved page; no automatic raster outcome claim",
+  "cases" : [ {
+    "name" : "no-heads",
+    "stem" : {
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "glyph" : {
+        "bounds" : [ 200, 150, 2, 61 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 61 ], [ 1, 0, 61 ] ]
+      },
+      "bounds" : [ 200, 150, 2, 61 ],
+      "median" : [ 201.0, 150.0, 201.0, 211.0 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8
+    },
+    "heads" : [ ],
+    "head_relations" : [ ],
+    "beam" : null,
+    "beam_relation" : null,
+    "direction" : 0,
+    "modified" : 1,
+    "stem_removed" : true,
+    "retained_head_relations" : [ ],
+    "head_stem_exclusions" : [ ]
+  }, {
+    "name" : "top-strongest",
+    "stem" : {
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "glyph" : {
+        "bounds" : [ 200, 150, 2, 61 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 61 ], [ 1, 0, 61 ] ]
+      },
+      "bounds" : [ 200, 150, 2, 61 ],
+      "median" : [ 201.0, 150.0, 201.0, 211.0 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8
+    },
+    "heads" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 188, 146, 12, 8 ],
+      "grade" : 0.9,
+      "contextual_grade" : 0.9,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    }, {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 200, 206, 12, 8 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    } ],
+    "head_relations" : [ {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 150.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "LEFT",
+      "invading" : true
+    }, {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 210.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "RIGHT",
+      "invading" : true
+    } ],
+    "beam" : null,
+    "beam_relation" : null,
+    "direction" : 1,
+    "modified" : 1,
+    "stem_removed" : false,
+    "retained_head_relations" : [ true, false ],
+    "head_stem_exclusions" : [ false, true ]
+  }, {
+    "name" : "bottom-strongest",
+    "stem" : {
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "glyph" : {
+        "bounds" : [ 200, 150, 2, 61 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 61 ], [ 1, 0, 61 ] ]
+      },
+      "bounds" : [ 200, 150, 2, 61 ],
+      "median" : [ 201.0, 150.0, 201.0, 211.0 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8
+    },
+    "heads" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 188, 146, 12, 8 ],
+      "grade" : 0.7,
+      "contextual_grade" : 0.7,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    }, {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 200, 206, 12, 8 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    } ],
+    "head_relations" : [ {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 150.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "LEFT",
+      "invading" : true
+    }, {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 210.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "RIGHT",
+      "invading" : true
+    } ],
+    "beam" : null,
+    "beam_relation" : null,
+    "direction" : -1,
+    "modified" : 1,
+    "stem_removed" : false,
+    "retained_head_relations" : [ false, true ],
+    "head_stem_exclusions" : [ true, false ]
+  }, {
+    "name" : "beam-strongest",
+    "stem" : {
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "glyph" : {
+        "bounds" : [ 200, 150, 2, 61 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 61 ], [ 1, 0, 61 ] ]
+      },
+      "bounds" : [ 200, 150, 2, 61 ],
+      "median" : [ 201.0, 150.0, 201.0, 211.0 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8
+    },
+    "heads" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 188, 146, 12, 8 ],
+      "grade" : 0.7,
+      "contextual_grade" : 0.7,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    }, {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 200, 206, 12, 8 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    } ],
+    "head_relations" : [ {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 150.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "LEFT",
+      "invading" : true
+    }, {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 210.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "RIGHT",
+      "invading" : true
+    } ],
+    "beam" : {
+      "kind" : "BeamInter",
+      "shape" : "BEAM",
+      "bounds" : [ 190, 207, 40, 6 ],
+      "median" : [ 190.0, 210.0, 230.0, 210.0 ],
+      "grade" : 0.99,
+      "contextual_grade" : 0.99
+    },
+    "beam_relation" : {
+      "kind" : "BeamStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 210.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "beam_portion" : "LEFT"
+    },
+    "direction" : 1,
+    "modified" : 1,
+    "stem_removed" : false,
+    "retained_head_relations" : [ true, false ],
+    "head_stem_exclusions" : [ false, true ]
+  }, {
+    "name" : "unknown-direction",
+    "stem" : {
+      "kind" : "StemInter",
+      "shape" : "STEM",
+      "glyph" : {
+        "bounds" : [ 200, 150, 2, 61 ],
+        "orientation" : "VERTICAL",
+        "runs" : [ [ 0, 0, 61 ], [ 1, 0, 61 ] ]
+      },
+      "bounds" : [ 200, 150, 2, 61 ],
+      "median" : [ 201.0, 150.0, 201.0, 211.0 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8
+    },
+    "heads" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 200, 176, 12, 8 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8,
+      "pitch" : 0.0,
+      "staff_id" : 1
+    } ],
+    "head_relations" : [ {
+      "kind" : "HeadStemRelation",
+      "grade" : 0.0,
+      "extension_point" : [ 200.5, 180.0 ],
+      "source_ratio" : 1.0,
+      "target_ratio" : 1.0,
+      "head_side" : "RIGHT",
+      "invading" : true
+    } ],
+    "beam" : null,
+    "beam_relation" : null,
+    "direction" : 0,
+    "modified" : 0,
+    "stem_removed" : false,
+    "retained_head_relations" : [ true ],
+    "head_stem_exclusions" : [ false ]
+  } ]
+}

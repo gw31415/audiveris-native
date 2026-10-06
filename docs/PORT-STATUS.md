@@ -13,7 +13,7 @@
 - 限定画像CLIで四分/二分音符と休符、第一下加線C4、複数小節・改行を認識し、nativeの結果からMusicXMLを生成。旧成功入力を保持しています。
 - 今回の2部品四分休符の部品/union登録、RestInter・chord・LINKSへの接続。Rest/TimeWholeの非support・非frozen部分について原版の実画素overlapとexclusion選択を移植。
 
-全回帰の件数・ソースSHA・Linux実行物は各MANIFESTが正本です。過去のLaura352heads/513exclusionsなどの報告は当時のソースSHAを保ち、新ソースで再実行した証拠に読み替えません。
+全回帰の件数・ソースSHAは段階ごとの検証要約で示します。通常workspace移行前のMANIFESTとLaura352heads/513exclusionsなどの報告は当時のソースSHAを保ち、新ソースで再実行した証拠に読み替えません。
 
 ## 機能別の現在位置と欠落
 
@@ -25,8 +25,8 @@
 | HEADERS / `HeadersBuilder`, clef/key/time関連クラス | 部分 | 音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。 |
 | STEM_SEEDS/BEAMS/LEDGERS / 各Builder | 部分 | 種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。 |
 | HEADS / `HeadsBuilder`, template catalog | 部分 | 24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。 |
-| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを追加比較。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
-| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、今回のRest/TimeWhole overlap/exclusionあり。全Interのsupport contextual grade、互換性、frozen、各関係のconsistency、反復reductionとcallbacks/epilogは未接続。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
+| STEMS / `StemBuilder`, `StemsStep`, head/beam linkers | 部分 | head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを比較。実free-glyph所属を維持したepilog bar領域seed再整理も接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。 |
+| REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner` | 部分 | 共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。全Inter support、互換性、frozen、各関係のconsistency、原版全reduction順序/弱候補callback/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。 |
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
@@ -255,3 +255,21 @@ beam/glyph/接続の観測結果は不変。native sourceは変更していま�
 既存2system4小節20イベントの画像→MusicXML回帰を保持。
 斜めbar領域、一般SIG reduction/cleaner、SmallBeam・複声部などは継続対象です。
 [小さな検証要約](../evidence/musicxml-seed-reduction/SEED-VALIDATION.json)。
+
+## ordinary STEMS consistencyとcache削除（2026-10-06）
+
+`StemInter.computeDirection` のhead/beam全connectionをsource contextual grade順に
+参照する部分と、`SigReducer.checkStems` のheadなしstem削除・tail側head link除去・
+侵入時exclusionを接続。SIG削除と同じcanonical cached objectのremoved状態を
+同時に更新し、physical glyphは保持します。構造変更後は既存head/beam/ledger
+チェックへ戻り、単発の整理だけで未接続headを残さないようにしています。
+
+原版5つの宣言SIG条件（headなし/上下優先/beam優先/方向不明）とnativeを比較。
+実画像所有cache上の宣言head-loss/原子的な失敗検証は、画像そのものの誤認修正とは
+別です。既存の8-head foundation、11イベント競合例と2system20イベントは
+対象回帰で保持。新記号や新入力条件の対応完成は宣言しません。
+
+一般reduction全順序・weak stemの初回purge callback・chord互換性・frozen/lateChecks、
+lyricsに必要なInterCleaner/Partの所属更新は未接続です。
+[原版条件の要約](../evidence/musicxml-seed-reduction/STEM-VALIDATION.json) /
+[次の具体的な接続箇所](../evidence/musicxml-seed-reduction/NEXT-DEPENDENCY.md)。
