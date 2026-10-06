@@ -203,6 +203,7 @@ pub(crate) struct Context<'a> {
     pub expected: u32,
     pub clef: &'a Value,
     pub interline: usize,
+    pub lifetime: &'a crate::music_voice_lifetime::Lifetime,
 }
 fn node(snapshot: &Value, id: usize) -> Result<&Value, String> {
     snapshot["inters"]
@@ -344,6 +345,28 @@ impl Context<'_> {
             .copied()
             .filter(|&id| node(&snapshot, id).unwrap()["voice"].is_null())
             .collect::<Vec<_>>();
+        let pairs = |kind: &str| {
+            rookies
+                .iter()
+                .flat_map(|&r| {
+                    edges
+                        .iter()
+                        .filter(move |e| {
+                            e["kind"] == kind && (e["source"] == r || e["target"] == r)
+                        })
+                        .map(move |e| Pair {
+                            rookie: r,
+                            active: if e["source"] == r {
+                                e["target"].as_u64().unwrap() as usize
+                            } else {
+                                e["source"].as_u64().unwrap() as usize
+                            },
+                        })
+                })
+                .collect::<Vec<_>>()
+        };
+        let next = pairs("NextInVoiceRelation");
+        let black = pairs("SeparateVoiceRelation");
         let current_x = self.slot_x(&snapshot, slot)?;
         let mut actives = Vec::new();
         for voice in self
@@ -370,30 +393,15 @@ impl Context<'_> {
             if self.slot_x(&snapshot, previous)? > current_x {
                 continue;
             }
-            actives.push(last);
+            if self.lifetime.allows_active(
+                voice.id,
+                last,
+                &rookies,
+                next.iter().map(|p| (p.rookie, p.active)),
+            ) {
+                actives.push(last);
+            }
         }
-        let pairs = |kind: &str| {
-            rookies
-                .iter()
-                .flat_map(|&r| {
-                    edges
-                        .iter()
-                        .filter(move |e| {
-                            e["kind"] == kind && (e["source"] == r || e["target"] == r)
-                        })
-                        .map(move |e| Pair {
-                            rookie: r,
-                            active: if e["source"] == r {
-                                e["target"].as_u64().unwrap() as usize
-                            } else {
-                                e["source"].as_u64().unwrap() as usize
-                            },
-                        })
-                })
-                .collect::<Vec<_>>()
-        };
-        let next = pairs("NextInVoiceRelation");
-        let black = pairs("SeparateVoiceRelation");
         let mut distances = BTreeMap::new();
         let mut costs = Vec::new();
         for &r in &rookies {

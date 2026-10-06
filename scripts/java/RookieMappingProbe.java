@@ -12,11 +12,12 @@ public class RookieMappingProbe extends FoundationOverlapProbe {
   boolean head=ch.getClass().getSimpleName().equals("HeadChordInter");Object voice=call(ch,"getVoice");Object heads=head?call(ch,"getHeadsBounds"):call(ch,"getBounds");java.awt.Rectangle box=(java.awt.Rectangle)heads;
   return obj("head",head,"staff",call(call(ch,"getTopStaff"),"getId"),"part",call(call(ch,"getPart"),"getId"),"stem_dir",call(ch,"getStemDir"),"voice",voice==null?null:call(voice,"getId"),"starting_staff",voice==null?null:call(call(voice,"getStartingStaff"),"getId"),"absolute_pitch",head?call(call(ch,"getHighestNote"),"getAbsolutePitch"):null,"heads_center_y",box.y+box.height/2);
  }
- static Object inspect(Object measure)throws Exception {
+ static Object inspect(Object measure)throws Exception {return inspect(measure,false);}
+ static Object inspect(Object measure,boolean extinction)throws Exception {
   call(measure,"resetRhythm");Object sys=call(call(measure,"getStack"),"getSystem"),scale=call(call(sys,"getSheet"),"getScale"),sig=call(sys,"getSig");
   List<Object> all=new ArrayList<>((Collection<?>)call(measure,"getStandardChords"));Object rhythm=make("sheet.rhythm.MeasureRhythm",measure),retriever=make("sheet.rhythm.SlotsRetriever",measure,false);put(rhythm,"narrowSlotsRetriever",retriever);
   List<?> narrow=(List<?>)call(retriever,"buildSlots"),wide=(List<?>)call(make("sheet.rhythm.SlotsRetriever",measure,true),"buildSlots"),compounds=(List<?>)invoke(rhythm,"buildCompoundSlots",narrow,wide);((List)field(rhythm,"slots")).addAll(compounds);invoke(rhythm,"processStartingChords");
-  List<Object> steps=new ArrayList<>();Class<?> mapperClass=c("sheet.rhythm.MeasureRhythm$SlotMapper");Constructor<?> ctor=mapperClass.getDeclaredConstructor(c("sheet.rhythm.MeasureRhythm"),c("sheet.rhythm.Slot$CompoundSlot"));ctor.setAccessible(true);
+  List<Object> steps=new ArrayList<>(),lifetime=new ArrayList<>();Class<?> mapperClass=c("sheet.rhythm.MeasureRhythm$SlotMapper");Constructor<?> ctor=mapperClass.getDeclaredConstructor(c("sheet.rhythm.MeasureRhythm"),c("sheet.rhythm.Slot$CompoundSlot"));ctor.setAccessible(true);
   for(Object slot:compounds) {
    Object mapper=ctor.newInstance(rhythm,slot);List<Object> times=new ArrayList<>();
    for(Object member:(List<?>)call(slot,"getMembers")){Map<?,?> t=(Map<?,?>)invoke(mapper,"readSlotTimes",member);for(var e:t.entrySet())times.add(obj("time",fraction(e.getKey()),"chord_ids",ids((Collection<?>)e.getValue(),all)));}
@@ -27,10 +28,11 @@ public class RookieMappingProbe extends FoundationOverlapProbe {
    }
    List<Object> rookieIds=ids(rookies,all),activeIds=ids(actives,all);
    boolean ok=(Boolean)invoke(mapper,"mapChords");invoke(rhythm,"purgeExtinctVoices",slot);
+   if(extinction){List<Integer> extinct=new ArrayList<>();for(Object v:(Collection<?>)field(rhythm,"extinctVoices"))extinct.add((Integer)call(v,"getId"));Collections.sort(extinct);lifetime.add(obj("slot_id",call(slot,"getId"),"current_x",call(slot,"getXOffset"),"first_time",fraction(call(((List<?>)call(slot,"getMembers")).get(0),"getTimeOffset")),"extinct_voices",extinct,"measure_abnormal",call(measure,"isAbnormal")));}
    List<Object> after=new ArrayList<>();for(Object ch:(List<?>)call(slot,"getChords")){Object v=call(ch,"getVoice");after.add(obj("chord_id",all.indexOf(ch),"time_offset",fraction(call(ch,"getTimeOffset")),"voice",v==null?null:call(v,"getId")));}
    steps.add(obj("slot_id",call(slot,"getId"),"known_times",times,"rookies",rookieIds,"actives",activeIds,"costs",costs,"mapping",mapping,"ok",ok,"after",after));
   }
-  return obj("number",call(call(measure,"getStack"),"getIdValue"),"interline",call(scale,"getInterline"),"implicit_tuplets",field(rhythm,"implicitTuplets"),"chord_bounds",all.stream().map(ch->{try{return rect(call(ch,"getBounds"));}catch(Exception e){throw new RuntimeException(e);}}).toList(),"steps",steps);
+  Map result=obj("number",call(call(measure,"getStack"),"getIdValue"),"interline",call(scale,"getInterline"),"implicit_tuplets",field(rhythm,"implicitTuplets"),"chord_bounds",all.stream().map(ch->{try{return rect(call(ch,"getBounds"));}catch(Exception e){throw new RuntimeException(e);}}).toList(),"steps",steps);if(extinction)result.put("extinction_steps",lifetime);return result;
  }
  public static void main(String[] args)throws Exception {
   c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);List<Object> pages=new ArrayList<>();

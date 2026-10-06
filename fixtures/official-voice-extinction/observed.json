@@ -1,0 +1,616 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "two saved successful same-image original progressions; declared seven lifetime/NextInVoice controls on actual chord objects are not native image polyphony",
+  "pages": [
+    {
+      "input": "beam-two-systems.omr",
+      "measures": [
+        {
+          "number": 1,
+          "extinction_steps": [
+            {
+              "slot_id": 1,
+              "current_x": 201,
+              "first_time": "0",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 2,
+              "current_x": 259,
+              "first_time": "1/8",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 3,
+              "current_x": 319,
+              "first_time": "1/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 4,
+              "current_x": 379,
+              "first_time": "3/8",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 5,
+              "current_x": 471,
+              "first_time": "1/2",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 6,
+              "current_x": 561,
+              "first_time": "3/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "extinction_steps": [
+            {
+              "slot_id": 1,
+              "current_x": 51,
+              "first_time": "0",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 2,
+              "current_x": 171,
+              "first_time": "1/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 3,
+              "current_x": 291,
+              "first_time": "1/2",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 4,
+              "current_x": 411,
+              "first_time": "3/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "extinction_steps": [
+            {
+              "slot_id": 1,
+              "current_x": 201,
+              "first_time": "0",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 2,
+              "current_x": 259,
+              "first_time": "1/8",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 3,
+              "current_x": 319,
+              "first_time": "1/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 4,
+              "current_x": 379,
+              "first_time": "3/8",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 5,
+              "current_x": 471,
+              "first_time": "1/2",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 6,
+              "current_x": 561,
+              "first_time": "3/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "extinction_steps": [
+            {
+              "slot_id": 1,
+              "current_x": 51,
+              "first_time": "0",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 2,
+              "current_x": 171,
+              "first_time": "1/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 3,
+              "current_x": 291,
+              "first_time": "1/2",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 4,
+              "current_x": 411,
+              "first_time": "3/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": "quarter-whole-rest.omr",
+      "measures": [
+        {
+          "number": 1,
+          "extinction_steps": [
+            {
+              "slot_id": 1,
+              "current_x": 201,
+              "first_time": "0",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 2,
+              "current_x": 321,
+              "first_time": "1/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 3,
+              "current_x": 441,
+              "first_time": "1/2",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            },
+            {
+              "slot_id": 4,
+              "current_x": 561,
+              "first_time": "3/4",
+              "extinct_voices": [],
+              "measure_abnormal": false
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "extinction_steps": []
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "name": "gap-expired",
+      "first_time": "1/2",
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": "0",
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": null
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": null
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [],
+      "extinct_after": [
+        1
+      ],
+      "measure_abnormal": false,
+      "rookies": [
+        2
+      ],
+      "next": [],
+      "actives": []
+    },
+    {
+      "name": "equal-end-boundary",
+      "first_time": "1/4",
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": "0",
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": null
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": null
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [],
+      "extinct_after": [],
+      "measure_abnormal": false,
+      "rookies": [
+        2
+      ],
+      "next": [],
+      "actives": [
+        0
+      ]
+    },
+    {
+      "name": "next-chain-to-later",
+      "first_time": "1/2",
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": "0",
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": 1
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": 3
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [],
+      "extinct_after": [],
+      "measure_abnormal": false,
+      "rookies": [
+        2
+      ],
+      "next": [],
+      "actives": [
+        0
+      ]
+    },
+    {
+      "name": "next-only-before-current",
+      "first_time": "1/2",
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": "0",
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": 1
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": null
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [],
+      "extinct_after": [
+        1
+      ],
+      "measure_abnormal": false,
+      "rookies": [
+        2
+      ],
+      "next": [],
+      "actives": []
+    },
+    {
+      "name": "already-extinct-direct-rookie",
+      "first_time": "1/2",
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": "0",
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": 2
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": null
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [
+        1
+      ],
+      "extinct_after": [
+        1
+      ],
+      "measure_abnormal": false,
+      "rookies": [
+        2
+      ],
+      "next": [
+        {
+          "rookie": 2,
+          "active": 0
+        }
+      ],
+      "actives": [
+        0
+      ]
+    },
+    {
+      "name": "unknown-last-clock",
+      "first_time": "1/2",
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": null
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": null
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [],
+      "extinct_after": [],
+      "measure_abnormal": true,
+      "rookies": [
+        2
+      ],
+      "next": [],
+      "actives": [
+        0
+      ]
+    },
+    {
+      "name": "unknown-first-clock",
+      "first_time": null,
+      "current_x": 291,
+      "chords": [
+        {
+          "id": 0,
+          "same_measure": true,
+          "time_offset": "0",
+          "duration": "1/4",
+          "slot_x": 51,
+          "next": null
+        },
+        {
+          "id": 1,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 171,
+          "next": null
+        },
+        {
+          "id": 2,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 291,
+          "next": null
+        },
+        {
+          "id": 3,
+          "same_measure": true,
+          "time_offset": null,
+          "duration": "1/4",
+          "slot_x": 411,
+          "next": null
+        }
+      ],
+      "voices": [
+        {
+          "id": 1,
+          "measure_rest": false,
+          "last_chord": 0
+        }
+      ],
+      "extinct_before": [],
+      "extinct_after": [],
+      "measure_abnormal": false,
+      "rookies": [
+        2
+      ],
+      "next": [],
+      "actives": [
+        0
+      ]
+    }
+  ]
+}

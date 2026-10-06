@@ -1464,3 +1464,33 @@ search has an explicit visit budget and refuses exhaustion rather than returning
 a suboptimal result. No input admission or global completion flag changed.
 The original invalid-XSD all-rest page remains a separate negative boundary.
 Full595 continues to refer only to `95e191b`; current checks are targeted.
+
+### Measure-local Voice extinction and explicit sequence exception (2026-10-06)
+
+After each admitted compound is mapped, the image path now follows original
+`MeasureRhythm.purgeExtinctVoices`: unknown first-member time makes no decision;
+unknown last-chord time marks the real measure abnormal; a normal Voice whose
+last end is strictly earlier than this slot expires unless its same-measure
+NextInVoice sequence reaches the current or a later candidate slot. Comparison
+uses actual candidate abscissae, not numeric slot IDs. Default whole-rest Voices
+are skipped. Extinct identity is held per real measure and used by the next
+`SlotMapper.retrieveActives`: only an explicit NextInVoice pair to a current
+unassigned rookie keeps an extinct last chord eligible.
+
+The existing CLI command and image examples are unchanged.
+`preliminary_measure_slots[].extinction_steps` records current position,
+first-member time, extinct Voice IDs and actual abnormal status. The two saved
+successful original pages match at all24 normal compounds; **these images have
+no extinction**, so they do not demonstrate automatic multi-Voice gaps.
+Seven declared original-object controls separately check a gap, equal-end
+boundary, a sequence through an earlier chord to a later one, a sequence ending
+before the current slot, the pre-extinct explicit-rookie exception, and unknown
+last/first clocks. The controls do not enable polyphonic image/export admission.
+
+For the currently guarded one-chord narrow member, its known clock equals that
+actual chord's clock. General narrow-slot setter identity/retry, multiple
+members/Voices, implicit tuplets, `Merged`, shared stacks and correction remain
+pending. Invalid cyclic sequences explicitly refuse atomically rather than hang;
+no claim is made that the original accepts them. No image scope or global
+completion flag changed; full595 is still the old `95e191b` result. The original
+all-rest invalid-XSD page stays a separate negative boundary.

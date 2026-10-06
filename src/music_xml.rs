@@ -556,6 +556,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         preliminary_slots[mi]["starting_chord_ids"] = json!(starting);
         preliminary_slots[mi]["starting_state"] = json!({"voices":[{"id":voice_id,"is_measure_rest":m.voices[voice_index].measure_rest_chord.is_some(),"chord_ids":m.voices[voice_index].chord_ids,"measure_rest_chord_id":m.voices[voice_index].measure_rest_chord}],"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});
         preliminary_slots[mi]["mapping_steps"] = json!([]);
+        preliminary_slots[mi]["extinction_steps"] = json!([]);
+        let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
         for chord in chords {
             if let Some(slot) = compounds.iter().find(|s| s.chord_ids.contains(&chord.id)) {
                 let step = crate::music_rookie_mapping::Context {
@@ -567,12 +569,19 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     expected: expected_ticks,
                     clef: initial_clef,
                     interline: m.owner.interline,
+                    lifetime: &lifetime,
                 }
                 .map_slot(slot)?;
                 preliminary_slots[mi]["mapping_steps"]
                     .as_array_mut()
                     .unwrap()
                     .push(step);
+                let extinction =
+                    lifetime.purge(&graph, &m.voices, &mut m.measures[mi], mi, &compounds, slot)?;
+                preliminary_slots[mi]["extinction_steps"]
+                    .as_array_mut()
+                    .unwrap()
+                    .push(extinction);
             }
             if chord.members.len() != 1 {
                 return Err("musicxml_polyphonic_head_chord_pending".into());

@@ -509,6 +509,7 @@ mod music_rookie_mapping;
 mod music_symbol_reduction;
 pub mod music_symbols;
 mod music_time;
+mod music_voice_lifetime;
 mod music_voices;
 pub mod music_xml;
 mod stem_chord_consistency;
