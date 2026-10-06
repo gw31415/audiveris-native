@@ -1,7 +1,7 @@
 {
   "baseline_original": "Audiveris 5.11.0",
   "baseline_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
-  "updated": "2026-10-05",
+  "updated": "2026-10-06",
   "final_goal": "original recognition/analysis/correction/persistence/MusicXML function parity, excluding UI presentation only",
   "planned_original_logic_omissions": [],
   "whole_original_function_audit_complete": false,
@@ -156,97 +156,97 @@
     {
       "original_function": "LOAD / `ImageLoading`, `Book`, `Sheet`",
       "status": "partial",
-      "current_and_remaining": "grayscale PNG/PGM単画像・複数独立画像CLIあり。RGB/alpha/JPEG/TIFF/PDF・複数ページbook・原版画像変換/ページ選択は未接続。4M画素等は現ガードで、最終的な省略ではない。"
+      "current_and_remaining": "grayscale PNG/PGM\u5358\u753b\u50cf\u30fb\u8907\u6570\u72ec\u7acb\u753b\u50cfCLI\u3042\u308a\u3002RGB/alpha/JPEG/TIFF/PDF\u30fb\u8907\u6570\u30da\u30fc\u30b8book\u30fb\u539f\u7248\u753b\u50cf\u5909\u63db/\u30da\u30fc\u30b8\u9078\u629e\u306f\u672a\u63a5\u7d9a\u30024M\u753b\u7d20\u7b49\u306f\u73fe\u30ac\u30fc\u30c9\u3067\u3001\u6700\u7d42\u7684\u306a\u7701\u7565\u3067\u306f\u306a\u3044\u3002"
     },
     {
       "original_function": "BINARY/SCALE / adaptive filter, `ScaleBuilder`",
       "status": "partial",
-      "current_and_remaining": "原版式・histogram/peak・多数kernelあり。一般画像の全設定/分解能/失敗状態と下流伝播を広げる必要がある。"
+      "current_and_remaining": "\u539f\u7248\u5f0f\u30fbhistogram/peak\u30fb\u591a\u6570kernel\u3042\u308a\u3002\u4e00\u822c\u753b\u50cf\u306e\u5168\u8a2d\u5b9a/\u5206\u89e3\u80fd/\u5931\u6557\u72b6\u614b\u3068\u4e0b\u6d41\u4f1d\u64ad\u3092\u5e83\u3052\u308b\u5fc5\u8981\u304c\u3042\u308b\u3002"
     },
     {
       "original_function": "GRID / `GridBuilder`, `Staff`, `SystemInfo`, parts",
       "status": "partial",
-      "current_and_remaining": "sections/filament/通常staff/system/parts・cue第二パスの比較あり。非zero skew、特殊staff、実スキャンの全工程一致は未検証。"
+      "current_and_remaining": "sections/filament/\u901a\u5e38staff/system/parts\u30fbcue\u7b2c\u4e8c\u30d1\u30b9\u306e\u6bd4\u8f03\u3042\u308a\u3002\u975ezero skew\u3001\u7279\u6b8astaff\u3001\u5b9f\u30b9\u30ad\u30e3\u30f3\u306e\u5168\u5de5\u7a0b\u4e00\u81f4\u306f\u672a\u691c\u8a3c\u3002"
     },
     {
-      "original_function": "HEADERS / `HeadersBuilder`, clef/key/time関連クラス",
+      "original_function": "HEADERS / `HeadersBuilder`, clef/key/time\u95a2\u9023\u30af\u30e9\u30b9",
       "status": "partial",
-      "current_and_remaining": "音部記号・調号・拍子の探索/状態に既存部品と原版比較あり。画像→MusicXMLはG/F/Cの汎用意味変換を接続し、ヘ音/ハ音記号の原版成功画像各1件を追加比較。small/8va/8vbはkernel比較のみ。固定TimePairの4/4と3/4を接続済み。固定HEADER調号を実SIG/実glyphへ接続し、G major1画像のF♯を原版と一致確認済み。途中変更、他clef、一般調号と臨時記号、他拍子の意味伝播を接続する。"
+      "current_and_remaining": "\u97f3\u90e8\u8a18\u53f7\u30fb\u8abf\u53f7\u30fb\u62cd\u5b50\u306e\u63a2\u7d22/\u72b6\u614b\u306b\u65e2\u5b58\u90e8\u54c1\u3068\u539f\u7248\u6bd4\u8f03\u3042\u308a\u3002\u753b\u50cf\u2192MusicXML\u306fG/F/C\u306e\u6c4e\u7528\u610f\u5473\u5909\u63db\u3092\u63a5\u7d9a\u3057\u3001\u30d8\u97f3/\u30cf\u97f3\u8a18\u53f7\u306e\u539f\u7248\u6210\u529f\u753b\u50cf\u54041\u4ef6\u3092\u8ffd\u52a0\u6bd4\u8f03\u3002small/8va/8vb\u306fkernel\u6bd4\u8f03\u306e\u307f\u3002\u56fa\u5b9aTimePair\u306e4/4\u30683/4\u3092\u63a5\u7d9a\u6e08\u307f\u3002\u56fa\u5b9aHEADER\u8abf\u53f7\u3092\u5b9fSIG/\u5b9fglyph\u3078\u63a5\u7d9a\u3057\u3001G major1\u753b\u50cf\u306eF\u266f\u3092\u539f\u7248\u3068\u4e00\u81f4\u78ba\u8a8d\u6e08\u307f\u3002\u9014\u4e2d\u5909\u66f4\u3001\u4ed6clef\u3001\u4e00\u822c\u8abf\u53f7\u3068\u81e8\u6642\u8a18\u53f7\u3001\u4ed6\u62cd\u5b50\u306e\u610f\u5473\u4f1d\u64ad\u3092\u63a5\u7d9a\u3059\u308b\u3002"
     },
     {
-      "original_function": "STEM_SEEDS/BEAMS/LEDGERS / 各Builder",
+      "original_function": "STEM_SEEDS/BEAMS/LEDGERS / \u5404Builder",
       "status": "partial",
-      "current_and_remaining": "種/beam/ledgerの既存比較あり。単独beamと中間stump/二段sibling beam/前後hookのpositive画像経路を接続。一般hook/alien/cue/cross-staff beam、一般加線音高・共有staff全工程は未完。"
+      "current_and_remaining": "\u7a2e/beam/ledger\u306e\u65e2\u5b58\u6bd4\u8f03\u3042\u308a\u3002\u5358\u72ecbeam\u3068\u4e2d\u9593stump/\u4e8c\u6bb5sibling beam/\u524d\u5f8chook\u306epositive\u753b\u50cf\u7d4c\u8def\u3092\u63a5\u7d9a\u3002\u4e00\u822chook/alien/cue/cross-staff beam\u3001\u4e00\u822c\u52a0\u7dda\u97f3\u9ad8\u30fb\u5171\u6709staff\u5168\u5de5\u7a0b\u306f\u672a\u5b8c\u3002"
     },
     {
       "original_function": "HEADS / `HeadsBuilder`, template catalog",
       "status": "partial",
-      "current_and_remaining": "24形catalog等のkernel、Laura/制御比較あり。24形全ページ伝播・別font/サイズ・特殊staff・実画像の全面比較は未完。"
+      "current_and_remaining": "24\u5f62catalog\u7b49\u306ekernel\u3001Laura/\u5236\u5fa1\u6bd4\u8f03\u3042\u308a\u300224\u5f62\u5168\u30da\u30fc\u30b8\u4f1d\u64ad\u30fb\u5225font/\u30b5\u30a4\u30ba\u30fb\u7279\u6b8astaff\u30fb\u5b9f\u753b\u50cf\u306e\u5168\u9762\u6bd4\u8f03\u306f\u672a\u5b8c\u3002"
     },
     {
       "original_function": "STEMS / `StemBuilder`, `StemsStep`, head/beam linkers",
       "status": "partial",
-      "current_and_remaining": "head由来画像stumps/chunks/items/glyph/cache/live SIGの接続あり。単独/兄弟beamからのitems/expand/profile4・中間profile1 glyph/cache/SIGとbeam-side supportを接続。前後hookのprofile0・実SIG/cleaner/exportを接続。8条件のsystem横断orphan判定と2-system画像の正の1削除・20イベントを比較。実free-glyph所属を維持したepilog bar領域seed再整理も接続。一般hook/alien/cross-system/cleaner/epilog、32sources/items制約の除去・検証が残る。"
+      "current_and_remaining": "head\u7531\u6765\u753b\u50cfstumps/chunks/items/glyph/cache/live SIG\u306e\u63a5\u7d9a\u3042\u308a\u3002\u5358\u72ec/\u5144\u5f1fbeam\u304b\u3089\u306eitems/expand/profile4\u30fb\u4e2d\u9593profile1 glyph/cache/SIG\u3068beam-side support\u3092\u63a5\u7d9a\u3002\u524d\u5f8chook\u306eprofile0\u30fb\u5b9fSIG/cleaner/export\u3092\u63a5\u7d9a\u30028\u6761\u4ef6\u306esystem\u6a2a\u65adorphan\u5224\u5b9a\u30682-system\u753b\u50cf\u306e\u6b63\u306e1\u524a\u9664\u30fb20\u30a4\u30d9\u30f3\u30c8\u3092\u6bd4\u8f03\u3002\u5b9ffree-glyph\u6240\u5c5e\u3092\u7dad\u6301\u3057\u305fepilog bar\u9818\u57dfseed\u518d\u6574\u7406\u3082\u63a5\u7d9a\u3002\u4e00\u822chook/alien/cross-system/cleaner/epilog\u300132sources/items\u5236\u7d04\u306e\u9664\u53bb\u30fb\u691c\u8a3c\u304c\u6b8b\u308b\u3002"
     },
     {
       "original_function": "REDUCTION/LINKS / `SigReducer`, `SIGraph`, `SymbolsLinker`, `InterCleaner`",
       "status": "partial",
-      "current_and_remaining": "共有SIG、一部head/stem cleaner、弱休符/空chord削除、Rest/TimeWhole overlap/exclusionあり。ordinary head/beamの方向・checkStems・tail link/侵入exclusionとcanonical cache削除、既存foundation整理の反復を接続。ordinaryの6チェック順・各チェック後contextualize/実所有weak purge・後続exclusion/epoch反復も接続。ordinary black/void headのanalyzeChords prolog/late（同音価HeadHead support/異音価不互換/未接続交差head exclusion）も接続。通常head/stem/beam/hook/barlineの実画素・head core・直線Area overlapをprolog前に接続し、GRID barlineの既存runsも解決。全Inter support、mirror/ensemble/header/特殊形など一般overlapの残り、small/percussion/stemlessのchord枝、frozen、LINKS各関係のconsistency/epilogは未完。原版に`reduceSymbols`というメソッドはなく、この経路は`reduceLinks`。"
+      "current_and_remaining": "\u5171\u6709SIG\u3001\u4e00\u90e8head/stem cleaner\u3001\u5f31\u4f11\u7b26/\u7a7achord\u524a\u9664\u3001Rest/TimeWhole overlap/exclusion\u3042\u308a\u3002ordinary head/beam\u306e\u65b9\u5411\u30fbcheckStems\u30fbtail link/\u4fb5\u5165exclusion\u3068canonical cache\u524a\u9664\u3001\u65e2\u5b58foundation\u6574\u7406\u306e\u53cd\u5fa9\u3092\u63a5\u7d9a\u3002ordinary\u306e6\u30c1\u30a7\u30c3\u30af\u9806\u30fb\u5404\u30c1\u30a7\u30c3\u30af\u5f8ccontextualize/\u5b9f\u6240\u6709weak purge\u30fb\u5f8c\u7d9aexclusion/epoch\u53cd\u5fa9\u3082\u63a5\u7d9a\u3002ordinary black/void head\u306eanalyzeChords prolog/late\uff08\u540c\u97f3\u4fa1HeadHead support/\u7570\u97f3\u4fa1\u4e0d\u4e92\u63db/\u672a\u63a5\u7d9a\u4ea4\u5deehead exclusion\uff09\u3082\u63a5\u7d9a\u3002\u901a\u5e38head/stem/beam/hook/barline\u306e\u5b9f\u753b\u7d20\u30fbhead core\u30fb\u76f4\u7ddaArea overlap\u3092prolog\u524d\u306b\u63a5\u7d9a\u3057\u3001GRID barline\u306e\u65e2\u5b58runs\u3082\u89e3\u6c7a\u3002\u5168Inter support\u3001mirror/ensemble/header/\u7279\u6b8a\u5f62\u306a\u3069\u4e00\u822coverlap\u306e\u6b8b\u308a\u3001small/percussion/stemless\u306echord\u679d\u3001frozen\u3001LINKS\u5404\u95a2\u4fc2\u306econsistency/epilog\u306f\u672a\u5b8c\u3002\u539f\u7248\u306b`reduceSymbols`\u3068\u3044\u3046\u30e1\u30bd\u30c3\u30c9\u306f\u306a\u304f\u3001\u3053\u306e\u7d4c\u8def\u306f`reduceLinks`\u3002"
     },
     {
       "original_function": "TEXTS / `TextsStep`, Tesseract, words/sentences",
       "status": "unimplemented",
-      "current_and_remaining": "歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。"
+      "current_and_remaining": "\u6b4c\u8a5e\u30fb\u984c\u540d/\u4f5c\u66f2\u8005\u30fbtempo/\u30e1\u30c8\u30ed\u30ce\u30fc\u30e0\u30fb\u6587\u5b57role\u8a8d\u8b58\u3001staff/part\u3068\u306e\u95a2\u9023\u4ed8\u3051\u30fbOCR\u4fee\u6b63\u3002\u539f\u7248\u306e\u30ed\u30fc\u30ab\u30ebOCR\u4f9d\u5b58\u306b\u6cbf\u3046\u3002\u5916\u90e8AI\u8a2d\u8a08\u306b\u7f6e\u63db\u3057\u306a\u3044\u3002"
     },
     {
       "original_function": "MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller`",
       "status": "partial",
-      "current_and_remaining": "単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 原版stem-tailを含むchord領域/leading-note/head-tailとtyped Containment/ChordStemの平均best-grade/位置invalidateを実所有SIGへ接続。全member頂点削除、Part/stack/lyrics所有callbackと他ensembleは未完。"
+      "current_and_remaining": "\u5358staff/\u5358stem\u306e\u5c0f\u7bc0\u30fbchord\u5f62\u6210\u3042\u308a\u3002\u8907\u6bb5part\u3001\u548c\u97f3\u3001stemless whole/breve\u3001cross-staff\u3001\u8907\u6570stem\u3001repeat/double bar\u7b49\u306e\u4e00\u822c\u5f62\u6210/\u88dc\u6b63\u304c\u6b8b\u308b\u3002 \u539f\u7248stem-tail\u3092\u542b\u3080chord\u9818\u57df/leading-note/head-tail\u3068typed Containment/ChordStem\u306e\u5e73\u5747best-grade/\u4f4d\u7f6einvalidate\u3092\u5b9f\u6240\u6709SIG\u3078\u63a5\u7d9a\u3002\u5168member\u9802\u70b9\u524a\u9664\u3001Part/stack/lyrics\u6240\u6709callback\u3068\u4ed6ensemble\u306f\u672a\u5b8c\u3002"
     },
     {
       "original_function": "CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders",
       "status": "unimplemented",
-      "current_and_remaining": "音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。"
+      "current_and_remaining": "\u97f3\u697d\u4e0a\u306eslur/tie/wedge/ending/rehearsal\u8a8d\u8b58\u30fb\u63a5\u7d9a\u3002native\u306e`curves.rs`\u306fGRID\u66f2\u7dda\u88dc\u9593\u3067\u3042\u308a\u3001\u3053\u306e\u5de5\u7a0b\u306e\u79fb\u690d\u8a3c\u62e0\u3067\u306f\u306a\u3044\u3002"
     },
     {
       "original_function": "SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory`",
       "status": "partial",
-      "current_and_remaining": "classifier・isolated/2部品rest/time・実加線へのdot距離検査と普通の1旗→stem接続あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。"
+      "current_and_remaining": "classifier\u30fbisolated/2\u90e8\u54c1rest/time\u30fb\u5b9f\u52a0\u7dda\u3078\u306edot\u8ddd\u96e2\u691c\u67fb\u3068\u666e\u901a\u306e1\u65d7\u2192stem\u63a5\u7d9a\u3042\u308a\u3002\u539f\u72487\u90e8\u54c1\u4e0a\u9650\u306ecluster\u3001\u5168\u5f62\u306efactory/shape checks\u3001\u771f\u6b63augmentation/staccato/repeat dot\u3001flag/accidental/articulation/dynamics/ornament/\u6570\u5b57\u7b49\u306e\u751f\u6210\u3068lateChecks\u304c\u6b8b\u308b\u3002149\u5206\u985e\u51fa\u529b\u3092\u5168\u8a18\u53f7\u306e\u610f\u5473\u63a5\u7d9a\u6e08\u307f\u3068\u6271\u308f\u306a\u3044\u3002"
     },
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
       "status": "partial",
-      "current_and_remaining": "認識済み拍子に応じた完全小節の単声の二段beam十六分/beam・旗付き八分/四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、他beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。"
+      "current_and_remaining": "\u8a8d\u8b58\u6e08\u307f\u62cd\u5b50\u306b\u5fdc\u3058\u305f\u5b8c\u5168\u5c0f\u7bc0\u306e\u5358\u58f0\u306e\u4e8c\u6bb5beam\u5341\u516d\u5206/beam\u30fb\u65d7\u4ed8\u304d\u516b\u5206/\u56db\u5206/\u4e8c\u5206\u30a4\u30d9\u30f3\u30c8\u3092native\u3067\u8a08\u7b97\uff08\u5168\u753b\u50cf\u6bd4\u8f03\u306f4/4\u30683/4\uff09\u3002\u4e00\u822cslot/voice\u5272\u5f53\u3001\u4ed6beam/flag\u97f3\u4fa1\u3001\u4ed8\u70b9/\u9023\u7b26\u3001tie\u3001pickup/\u4e0d\u8db3\u8d85\u904e\u5c0f\u7bc0\u3001\u8907\u58f0\u90e8/\u8907\u6bb5/\u9014\u4e2d\u62cd\u5b50\u5909\u66f4\u306e\u539f\u7248\u51e6\u7406\u306f\u672a\u63a5\u7d9a\u3002"
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
       "status": "partial",
-      "current_and_remaining": "単ページ改行・小節番号あり。複数ページ継続、part同定/結合、楽器/移調、跨systemの声部/slur/tie、repeat構造等の一般score統合が残る。"
+      "current_and_remaining": "\u5358\u30da\u30fc\u30b8\u6539\u884c\u30fb\u5c0f\u7bc0\u756a\u53f7\u3042\u308a\u3002\u8907\u6570\u30da\u30fc\u30b8\u7d99\u7d9a\u3001part\u540c\u5b9a/\u7d50\u5408\u3001\u697d\u5668/\u79fb\u8abf\u3001\u8de8system\u306e\u58f0\u90e8/slur/tie\u3001repeat\u69cb\u9020\u7b49\u306e\u4e00\u822cscore\u7d71\u5408\u304c\u6b8b\u308b\u3002"
     },
     {
       "original_function": "MusicXML / `PartwiseBuilder`, original proxymusic",
       "status": "partial",
-      "current_and_remaining": "native MusicXML4 writer、限定イベント・system break・part名、schema/reimport比較あり。一般notation/direction/lyric/instrument/layout/score属性と.mxl圧縮、多ページexportの原版対応が残る。原版XMLの流用は認識完成に数えない。"
+      "current_and_remaining": "native MusicXML4 writer\u3001\u9650\u5b9a\u30a4\u30d9\u30f3\u30c8\u30fbsystem break\u30fbpart\u540d\u3001schema/reimport\u6bd4\u8f03\u3042\u308a\u3002\u4e00\u822cnotation/direction/lyric/instrument/layout/score\u5c5e\u6027\u3068.mxl\u5727\u7e2e\u3001\u591a\u30da\u30fc\u30b8export\u306e\u539f\u7248\u5bfe\u5fdc\u304c\u6b8b\u308b\u3002\u539f\u7248XML\u306e\u6d41\u7528\u306f\u8a8d\u8b58\u5b8c\u6210\u306b\u6570\u3048\u306a\u3044\u3002"
     },
     {
-      "original_function": "プロジェクト保存・再開 / `Book`, `Sheet`, stage invalidation",
+      "original_function": "\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u4fdd\u5b58\u30fb\u518d\u958b / `Book`, `Sheet`, stage invalidation",
       "status": "partial",
-      "current_and_remaining": "stage reportsとGit完全復元あり。native認識projectの永続化・読込・編集後の必要工程再実行、原版.omrとの対応/互換性は未対応。Gitソース保存とは別機能。"
+      "current_and_remaining": "stage reports\u3068Git\u5b8c\u5168\u5fa9\u5143\u3042\u308a\u3002native\u8a8d\u8b58project\u306e\u6c38\u7d9a\u5316\u30fb\u8aad\u8fbc\u30fb\u7de8\u96c6\u5f8c\u306e\u5fc5\u8981\u5de5\u7a0b\u518d\u5b9f\u884c\u3001\u539f\u7248.omr\u3068\u306e\u5bfe\u5fdc/\u4e92\u63db\u6027\u306f\u672a\u5bfe\u5fdc\u3002Git\u30bd\u30fc\u30b9\u4fdd\u5b58\u3068\u306f\u5225\u6a5f\u80fd\u3002"
     },
     {
-      "original_function": "補正 / `InterController`, tasks/history, editors",
+      "original_function": "\u88dc\u6b63 / `InterController`, tasks/history, editors",
       "status": "unimplemented",
-      "current_and_remaining": "下記CLI案の対象。GUIクラス内に存在することを理由に認識・補正ロジックを除外しない。"
+      "current_and_remaining": "\u4e0b\u8a18CLI\u6848\u306e\u5bfe\u8c61\u3002GUI\u30af\u30e9\u30b9\u5185\u306b\u5b58\u5728\u3059\u308b\u3053\u3068\u3092\u7406\u7531\u306b\u8a8d\u8b58\u30fb\u88dc\u6b63\u30ed\u30b8\u30c3\u30af\u3092\u9664\u5916\u3057\u306a\u3044\u3002"
     },
     {
-      "original_function": "パラメータ/処理選択 / CLI/constants, sheet/book settings",
+      "original_function": "\u30d1\u30e9\u30e1\u30fc\u30bf/\u51e6\u7406\u9078\u629e / CLI/constants, sheet/book settings",
       "status": "partial",
-      "current_and_remaining": "既存段階CLI/一部設定あり。原版の認識parameter、stage/page選択、再処理、出力設定への到達可能性を機能単位で移植する。"
+      "current_and_remaining": "\u65e2\u5b58\u6bb5\u968eCLI/\u4e00\u90e8\u8a2d\u5b9a\u3042\u308a\u3002\u539f\u7248\u306e\u8a8d\u8b58parameter\u3001stage/page\u9078\u629e\u3001\u518d\u51e6\u7406\u3001\u51fa\u529b\u8a2d\u5b9a\u3078\u306e\u5230\u9054\u53ef\u80fd\u6027\u3092\u6a5f\u80fd\u5358\u4f4d\u3067\u79fb\u690d\u3059\u308b\u3002"
     },
     {
-      "original_function": "ウィンドウ/キャンバス/パネル/メニュー/マウス・zoom描画",
+      "original_function": "\u30a6\u30a3\u30f3\u30c9\u30a6/\u30ad\u30e3\u30f3\u30d0\u30b9/\u30d1\u30cd\u30eb/\u30e1\u30cb\u30e5\u30fc/\u30de\u30a6\u30b9\u30fbzoom\u63cf\u753b",
       "status": "gui_only_excluded",
-      "current_and_remaining": "表示と入力UIだけを対象外とする。選択後の変更・validation・再計算は対象内。"
+      "current_and_remaining": "\u8868\u793a\u3068\u5165\u529bUI\u3060\u3051\u3092\u5bfe\u8c61\u5916\u3068\u3059\u308b\u3002\u9078\u629e\u5f8c\u306e\u5909\u66f4\u30fbvalidation\u30fb\u518d\u8a08\u7b97\u306f\u5bfe\u8c61\u5185\u3002"
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
@@ -259,7 +259,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "322135d: original6 typed chord identity operations,6 targeted checks and full590/fmt/workspace-all-target-clippy passed; independently fetched Linux20+11 events/prior XML bytes/native-original XSD/root-src-crates equal. evidence/musicxml-chord-containment-lifecycle/{VALIDATION,FULL-VALIDATION,READBACK}.json. Next original RestInter5 conditions/prototype and RestChord4 controls are saved but production unimplemented.",
+  "latest_targeted_validation": "RestInter admission: actual chord envelope with strict dx and half-open intersection; original5 controls and targeted14/fmt/all-target-clippy passed. Last full590 at322135d is separate. RestChord vertex ownership remains next.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

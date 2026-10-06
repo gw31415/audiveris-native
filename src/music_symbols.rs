@@ -11,6 +11,17 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 const MODEL: &[u8] = include_bytes!("../crates/audiveris-classifier/models/audiveris-5.11.0.json");
+// RestInter.createValid: grow the rest glyph horizontally, intersect the
+// actual HeadChord (including its stem tail), then compare center2D strictly.
+fn rest_too_close_to_chord(b: [i64; 4], d: i64, c: &Chord) -> bool {
+    let h = c.bounds;
+    b[0] - d < h[0] + h[2]
+        && h[0] < b[0] + b[2] + d
+        && b[1] < h[1] + h[3]
+        && h[1] < b[1] + b[3]
+        && ((h[0] as f64 + h[2] as f64 / 2.) - (b[0] as f64 + b[2] as f64 / 2.)).abs() < d as f64
+}
+
 fn white(im: &mut GrayImage, x: i64, y: i64) {
     if x >= 0 && y >= 0 && (x as usize) < im.width && (y as usize) < im.height {
         im.pixels[y as usize * im.width + x as usize] = 255;
@@ -586,32 +597,14 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                     continue;
                 };
                 let d = (il as f64 * 0.5).round_ties_even() as i64;
-                // This admission checks actual note proximity, not the
-                // stem-inclusive head-chord envelope. Keep the existing guard.
-                let note_boxes = m
-                    .chords
+                if m.chords
                     .iter()
-                    .filter(|c| c.measure == mi)
-                    .map(|c| {
-                        if c.stem.is_some() {
-                            crate::head_chord_geometry::heads_bounds(
-                                &c.members.iter().collect::<Vec<_>>(),
-                            )?
-                            .ok_or_else(|| "music_symbol_chord_heads_required".to_owned())
-                        } else {
-                            Ok(c.bounds)
-                        }
+                    .filter(|c| {
+                        c.measure == mi
+                            && c.members.first().is_some_and(|n| n["kind"] == "HeadInter")
                     })
-                    .collect::<Result<Vec<_>, String>>()?;
-                if note_boxes.iter().any(|h| {
-                    b[0] - d < h[0] + h[2]
-                        && h[0] < b[0] + b[2] + d
-                        && b[1] < h[1] + h[3]
-                        && h[1] < b[1] + b[3]
-                        && ((h[0] as f64 + h[2] as f64 / 2.) - (b[0] as f64 + b[2] as f64 / 2.))
-                            .abs()
-                            < d as f64
-                }) {
+                    .any(|c| rest_too_close_to_chord(b, d, c))
+                {
                     continue;
                 }
             }
@@ -688,6 +681,48 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
 #[cfg(test)]
 mod cluster_boundary {
     use super::*;
+    #[test]
+    fn original_rest_admission_uses_chord_tail_and_strict_dx_boundaries() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rest-chord-admission/controls.json"
+        ))
+        .unwrap();
+        let head = json!({"id":1,"kind":"HeadInter","bounds":original["head_bounds"]});
+        let stem = json!({"id":2,"kind":"StemInter","bounds":original["stem_bounds"]});
+        let bounds = crate::head_chord_geometry::calculate(&[&head], Some(&stem))
+            .unwrap()
+            .bounds
+            .unwrap();
+        assert_eq!(json!(bounds), original["chord_bounds"]);
+        let key = Key {
+            system: 1,
+            phase: Phase::Chord,
+            local: 1,
+        };
+        let chord = Chord {
+            key,
+            id: 3,
+            stem: Some(Key {
+                system: 1,
+                phase: Phase::Stem,
+                local: 1,
+            }),
+            members: vec![head],
+            measure: 0,
+            bounds,
+        };
+        let d = (0.5 * original["interline"].as_f64().unwrap()).round_ties_even() as i64;
+        assert_eq!(json!(d), original["minimum_dx"]);
+        for case in original["cases"].as_array().unwrap() {
+            let b = serde_json::from_value(case["rest_bounds"].clone()).unwrap();
+            assert_eq!(
+                !rest_too_close_to_chord(b, d, &chord),
+                case["accepted"].as_bool().unwrap(),
+                "{}",
+                case["name"]
+            );
+        }
+    }
     #[test]
     fn original_two_part_cluster_order_and_larger_cluster_refusal() {
         let fixture: Value = serde_json::from_str(include_str!(

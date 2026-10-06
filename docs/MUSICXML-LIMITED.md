@@ -992,3 +992,16 @@ Next original RestInter proximity5 conditions show the remaining head-only guard
 difference at stem tail. Its standalone Rust prototype agrees, but CLI connection
 is pending; the recorded4 RestChord ownership controls are original-only.
 [Prototype boundary](../evidence/musicxml-rest-chord-admission/PROTOTYPE.json).
+
+### Rest admission follows the actual chord envelope
+
+`RestInter.createValid` now uses the actual chord bounds, including the stem tail,
+rather than the old head-only union. Its half-open intersection and strict
+center2D minimum-dx boundary are retained. The original five declared admission
+conditions agree; the new native test first reproduced the tail mismatch before
+the fix. This is connected to image rest admission, not a new classifier or
+notation expansion. Targeted14 tests/fmt/all-target clippy pass; the last full590
+run belongs to source`322135d`, before this change. Existing image MusicXML
+regressions pass. RestChord vertex ownership, other ensembles and complete
+cleaner/epilog remain pending.
+[Validation](../evidence/musicxml-rest-chord-admission/VALIDATION.json).
