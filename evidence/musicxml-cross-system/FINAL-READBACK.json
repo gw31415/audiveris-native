@@ -1,0 +1,23 @@
+{
+  "source_commit": "a5976c0644c16e550dcbd215c19c535d07e620ee",
+  "repository_tree": "96f68e41dfe2854d40840af5913717824f7a5c20",
+  "source_tree": "048f9f41bc7309d85638aea50c7058c2100410e1",
+  "crates_tree": "15d0cb321ff54110bccb3215dc474e9631d5171b",
+  "full_workspace_native_source_commit": "c6f03c54010f352cb9181d4bffd16d76c3d54e9b",
+  "independent_existing_clone_fetch_fast_forward": true,
+  "matched_root_src_crates_trees": true,
+  "working_trees_clean": true,
+  "independent_Linux_offline_locked_Cargo_build": true,
+  "fmt": true,
+  "workspace_all_target_clippy_D_warnings": true,
+  "full_workspace_passed": 577,
+  "full_workspace_failed": 0,
+  "full_workspace_ignored": 0,
+  "actual_image_events_match_original": 20,
+  "actual_systems": 2,
+  "actual_measures": 4,
+  "actual_cross_system_orphan_removal": 1,
+  "original_native_MusicXML4_XSD": true,
+  "whole_SIG_and_engraving_parity": false,
+  "global_completion_flags": false
+}

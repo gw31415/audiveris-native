@@ -665,3 +665,8 @@ Validation checkpoint: one whole-workspace run passed577 tests with zero
 failures/ignored, fmt and workspace/all-target clippy passed at native source
 `c6f03c5`. The original observer follows fresh-retriever-per-system StemsStep
 epilog order and produces unchanged beam/glyph observations.
+
+Independent existing clone fetched/fast-forwarded to `a5976c0`,
+matched root/src/crates trees, built the Linux CLI offline/locked, and reproduced
+20 original-matching events plus one actual orphan removal; both XMLs pass XSD.
+[Readback receipt](../evidence/musicxml-cross-system/FINAL-READBACK.json).
