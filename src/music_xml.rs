@@ -504,7 +504,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         let clef_id = initial_clef["id"].as_u64();
         let durations = resolve_durations(&mut graph, &chords)?;
         // Parallel admission follows the verified original owned duration and
-        // group propagation path. Flags, higher beam levels and other meters
+        // group propagation path. Flags, levels above two and other meters
         // need their own acquisition/Voice comparisons before joining it.
         let snapshot = graph.snapshot();
         if compounds.iter().any(|s| s.chord_ids.len() > 1)
@@ -512,9 +512,12 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 || chords.iter().any(|c| {
                     c.kind != crate::music_measures::ChordKind::Head
                         || !(durations[&c.id].0 == Some(4)
-                            || (durations[&c.id].0 == Some(2)
-                                && crate::music_voices::chord_beams(&snapshot, c.id)
-                                    .is_ok_and(|beams| beams.len() == 1)))
+                            || crate::music_voices::chord_beams(&snapshot, c.id).is_ok_and(
+                                |beams| {
+                                    matches!(beams.len(), 1 | 2)
+                                        && durations[&c.id].0 == Some(4 >> beams.len())
+                                },
+                            ))
                 }))
         {
             return Err("musicxml_parallel_quarter_voice_scope_pending".into());

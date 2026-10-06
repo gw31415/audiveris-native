@@ -25,6 +25,11 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
             "beam-observed.json",
             "beam-original-state.json",
         ),
+        (
+            "parallel-sixteenth.png",
+            "sixteenth-observed.json",
+            "sixteenth-original-state.json",
+        ),
     ] {
         let original: Value =
             serde_json::from_slice(&fs::read(fixture.join(observed)).unwrap()).unwrap();
