@@ -527,7 +527,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                 || chords.iter().any(|c| {
                     let d = durations[&c.id];
                     c.kind != crate::music_measures::ChordKind::Head
-                        || !(d.beams_or_flags <= 2 && d.intrinsic == Some(4 >> d.beams_or_flags))
+                        || !match d.beams_or_flags {
+                            0 => matches!(d.intrinsic, Some(4 | 8)),
+                            1 | 2 => d.intrinsic == Some(4 >> d.beams_or_flags),
+                            _ => false,
+                        }
                 }))
         {
             return Err("musicxml_parallel_quarter_voice_scope_pending".into());

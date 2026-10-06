@@ -845,3 +845,21 @@ getNarrowSlotを画像CLI候補列へ接続。保存済み6小節と宣言4境�
 原版setVoice→beam/tie→setAndPushTime(0)へ接続。保存成功2ページ6小節の
 途中Voice/時刻/音価を比較し、後続の一般rookie/active matchingとは区別。
 [試し方・現在の境界](MUSICXML-LIMITED.md#starting-voice-and-original-zero-time-propagation-2026-10-06)。
+
+
+## 並行Voiceの音価接続（2026-10-06）
+
+原版5.11が同一画像から正常exportした通常Bravura・五線・ト音記号・C major・
+4/4・単part/staffの二声部で、既存四分/遅延Voiceに、八分連桁18音・二段十六分19音・
+旗付き八分17音・二分14音を接続しました。原版のshape音価とbeam+flag短縮、
+実group/Voice/slot所有・時刻、全Voice音価検査からnative MusicXMLへ伝播します。
+9入力135イベント、以前の67イベントのXMLバイトを維持。宣言条件のmapper比較、
+保存状態getter比較、同一入力の原版全画像認識/exportは区別します。
+[CLI例と境界](MUSICXML-LIMITED.md#parallel-half-note-voice-from-an-actual-image-2026-10-06)、
+[今回の対象検証](../evidence/musicxml-parallel-half/VALIDATION.json)。
+
+これは処理途中の通常Voice接続で、同一glyphの自動parallel stem aliasの既知拒否を
+外したものではありません。mixed rests・他並行拍子・共有/Merged stack・一般連符/
+Rational・複数head chord・lyrics/slur/tie・完全cleaner/補正/export等は未完です。
+非zero skew・別font・実スキャン・特殊staff等の未検証も保持。非UI全機能を省略しない
+目標と完了フラグfalseを維持し、全595件は旧95e191bの結果として扱います。

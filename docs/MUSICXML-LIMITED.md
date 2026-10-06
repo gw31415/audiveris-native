@@ -2,7 +2,7 @@
 
 # Native image → MusicXML
 
-Latest image increment: [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
+Latest image increment: [parallel half-note Voice](#parallel-half-note-voice-from-an-actual-image-2026-10-06); earlier [parallel flagged eighth Voice](#parallel-flagged-eighth-voice-from-an-actual-image-2026-10-06); earlier [parallel two-level sixteenth Voice](#parallel-two-level-sixteenth-voice-from-an-actual-image-2026-10-06); earlier [parallel beamed eighth Voice](#parallel-beamed-eighth-voice-from-an-actual-image-2026-10-06); earlier [known late Voice forward](#known-late-voice-forward-from-an-actual-image-2026-10-06); earlier  [parallel quarter Voices](#parallel-quarter-voices-from-an-actual-image-2026-10-06). Older processing stages:  [ordinary chord prolog/late](#ordinary-chord-compatibility-before-weak-purge), [ordered foundation checks/purge](#ordered-foundation-checks-and-per-check-purge), [fresh epilog seed lists](#fresh-epilog-seed-lists), [ordinary stem consistency/cache removal](#ordinary-stem-consistency-and-cached-removal) and [owned weak-stem purge](#owned-weak-stem-purge). The [two-system measured47pt input](#two-system-beams-with-measured-head-font-and-owned-epilog) retains20 original-matching events and one cross-system glyph-alias orphan deletion. Earlier sections retain their checkpoint-specific comparison boundaries. The full migration remains incomplete.
 
 `audiveris-musicxml IMAGE OUTPUT.musicxml REPORT.json` connects the actual image-owned HEADS/STEMS candidates and caches, reduced SIG, native staff-barlines/chords, isolated SymbolsFilter/classifier and bounded ordinary-Voice duration/onset calculation to a native MusicXML 4.0 writer. It does not read original recognition XML or use a Java runtime.
 
@@ -1921,3 +1921,33 @@ meters, multi-member chords, shared/Merged stacks, general Rational/tuplets,
 lyrics/slur/tie and full cleaner/correction/export remain partial or unconnected.
 These stay in the complete nonUI migration plan; all completion flags remainfalse.
 See [validation](../evidence/musicxml-parallel-flag/VALIDATION.json).
+
+## Parallel half-note Voice from an actual image (2026-10-06)
+
+An original-successful two-measure image has two upper void-head half notes
+against four lower quarters, then parallel quarters in measure2. Native14 notes
+match original5.11 pitch/Voice/duration/onset/stem/backups and XSD. Original
+actual chord/slot/Voice ownership, standard-chord intrinsic duration getters,
+stack duration and all-Voice finalCheck agree. Group shortening is zero for
+these plain half heads; their original shape-based half duration now joins the
+same active-end/compound mapping and owned event binding used by other heads.
+No fixture identity, coordinate or clock guess is used in native code.
+
+```
+mkdir -p work/cli
+cargo run --locked --bin audiveris-musicxml -- \
+  fixtures/official-image-musicxml-parallel-voices/parallel-half.png \
+  work/cli/parallel-half.musicxml work/cli/parallel-half.json
+```
+
+Nine retained CLI inputs now cover135 original-matching musical events. The four
+new parallel images add68 notes: single-level eighth18, two-level sixteenth19,
+single-flag eighth17 and half14; earlier67 XML bytes remain unchanged. This is
+bounded clean synthetic Bravura/ordinary-staff/treble/C-major/4/4 comparison,
+with two ordinary Voices. Original declared mapper controls and saved recognized
+owner getters are identified separately from full same-image original exports.
+General shared/Merged stacks, mixed rests, other parallel meters, multi-member
+chords, whole/stemless/special heads, higher flags/beam levels, general Rational/
+tuplets, lyrics/slur/tie and full cleaner/correction/export remain partial. No
+original nonUI feature is planned for omission; all completion flags remainfalse.
+See [validation](../evidence/musicxml-parallel-half/VALIDATION.json).

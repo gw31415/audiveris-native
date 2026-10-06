@@ -35,6 +35,11 @@ fn actual_parallel_voices_preserve_original_events_and_check_each_voice_duration
             "flag-observed.json",
             "flag-original-state.json",
         ),
+        (
+            "parallel-half.png",
+            "half-observed.json",
+            "half-original-state.json",
+        ),
     ] {
         let original: Value =
             serde_json::from_slice(&fs::read(fixture.join(observed)).unwrap()).unwrap();
