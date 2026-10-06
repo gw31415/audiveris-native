@@ -143,6 +143,8 @@ fn remove(g: &mut Value, id: u64, events: &mut Vec<Event>) {
         .as_array_mut()
         .unwrap()
         .retain(|e| e["source"] != id && e["target"] != id);
+    // Mirror the actual retained Graph's original ensemble callback.
+    crate::beam_groups::remove_owned_members(g, &[id]).expect("validated owned beam group removal");
     refresh(g);
 }
 fn contextualize(g: &mut Value) {
@@ -485,6 +487,7 @@ pub(crate) fn prepare(input: &Value) -> Result<Plan, String> {
         .collect::<Vec<_>>();
     context::contextualize_head_stems(&mut verify, &verify_edges)?;
     let mut events = Vec::new();
+    crate::beam_groups::validate_owned_groups(input)?;
     let mut g = input.clone();
     let p = plan(&g);
     for id in p["removed_native_relation_ids"].as_array().unwrap() {

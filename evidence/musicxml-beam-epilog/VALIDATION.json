@@ -1,0 +1,35 @@
+{
+  "base_main": "3ab0c4d4ebb725ee8fa3f08e6a13139da001a100",
+  "source_tree": "9a1170ff6265b4b2f2ae178fdf2563fd2db140e0",
+  "stage": "owned beam-group lifecycle and intrinsic-good-beam finalizer",
+  "full_image": {
+    "same_glyph_alias_pairs_at_HEADS": 4,
+    "original_native_events": 11,
+    "direct_CLI_pitch_duration_onset_voice_beams_agree": true,
+    "both_XML4_XSD_valid": true,
+    "new_fix": "four removed beam alternatives no longer remain in retained group members",
+    "MusicXML_already_matched_before_change": true,
+    "live_member_kinds_bounds_and_group_bounds_match_original": true,
+    "whole_SIG_and_engraving_parity": false
+  },
+  "separate_controls": {
+    "original_actual_owned_group_deletions": 3,
+    "original_intrinsic_grade_boundaries": 2,
+    "native_grade_control_scope": "one side/head subset, not original five-support count"
+  },
+  "verification": {
+    "library_initial_passed": 101,
+    "library_initial_failed": 1,
+    "failed_callback_target_repaired_and_passed": true,
+    "affected_integration_passed": 14,
+    "fmt": true,
+    "workspace_all_target_clippy_D_warnings": true,
+    "new_full_workspace_run": false,
+    "previous_full_workspace_source": "321abfc0ee6b26f7fe51199fab3bd1d6d6a34396",
+    "previous_full_workspace_tests": 565,
+    "Laura_heads": 352,
+    "Laura_exclusions": 513
+  },
+  "completion_flags": false,
+  "pending": "see NEXT-DEPENDENCY.md"
+}

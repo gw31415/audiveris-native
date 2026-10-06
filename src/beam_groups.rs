@@ -217,24 +217,155 @@ pub fn remove_members(
         if group.members.is_empty() {
             continue;
         }
-        let mut l = i32::MAX;
-        let mut t = i32::MAX;
-        let mut r = i64::MIN;
-        let mut d = i64::MIN;
-        for id in &group.members {
-            let b = *bounds.get(id).ok_or("unknown_group_cleanup_member")?;
-            l = l.min(b[0]);
-            t = t.min(b[1]);
-            r = r.max(i64::from(b[0]) + i64::from(b[2]));
-            d = d.max(i64::from(b[1]) + i64::from(b[3]));
-        }
-        group.bounds = [
-            l,
-            t,
-            i32::try_from(r - i64::from(l)).map_err(|_| "group_cleanup_bounds")?,
-            i32::try_from(d - i64::from(t)).map_err(|_| "group_cleanup_bounds")?,
-        ];
+        group.bounds = union_bounds(group.members.iter().map(|id| {
+            bounds
+                .get(id)
+                .copied()
+                .ok_or("unknown_group_cleanup_member")
+        }))?;
     }
     result.groups.retain(|g| !g.members.is_empty());
     Ok(result)
+}
+
+fn union_bounds(
+    bounds: impl Iterator<Item = Result<[i32; 4], &'static str>>,
+) -> Result<[i32; 4], String> {
+    let mut l = i32::MAX;
+    let mut t = i32::MAX;
+    let mut r = i64::MIN;
+    let mut d = i64::MIN;
+    for b in bounds {
+        let b = b?;
+        if b[2] <= 0 || b[3] <= 0 {
+            return Err("group_cleanup_bounds".into());
+        }
+        l = l.min(b[0]);
+        t = t.min(b[1]);
+        r = r.max(i64::from(b[0]) + i64::from(b[2]));
+        d = d.max(i64::from(b[1]) + i64::from(b[3]));
+    }
+    Ok([
+        l,
+        t,
+        i32::try_from(r - i64::from(l)).map_err(|_| "group_cleanup_bounds")?,
+        i32::try_from(d - i64::from(t)).map_err(|_| "group_cleanup_bounds")?,
+    ])
+}
+fn owned_members(
+    g: &serde_json::Value,
+    group: &serde_json::Value,
+    removed: &[u64],
+) -> Result<Vec<(u64, [i32; 4])>, String> {
+    let nodes = g["inters"]
+        .as_array()
+        .ok_or("owned beam group nodes required")?;
+    let edges = g["relations"]
+        .as_array()
+        .ok_or("owned beam group edges required")?;
+    let id = group["id"].as_u64().ok_or("owned beam group ID required")?;
+    let members = group["members"]
+        .as_array()
+        .ok_or("owned beam group members required")?;
+    let mut seen = std::collections::BTreeSet::new();
+    let mut kept = Vec::new();
+    for m in members {
+        let bid = m.as_u64().ok_or("owned beam group member ID required")?;
+        if !seen.insert(bid) {
+            return Err("duplicate owned beam group member".into());
+        }
+        if removed.contains(&bid) {
+            continue;
+        }
+        let beam = nodes
+            .iter()
+            .find(|n| n["id"] == bid)
+            .ok_or("owned beam group live member required")?;
+        if !matches!(
+            beam["kind"].as_str(),
+            Some("BeamInter" | "BeamHookInter" | "SmallBeamInter")
+        ) || !edges
+            .iter()
+            .any(|e| e["kind"] == "Containment" && e["source"] == id && e["target"] == bid)
+        {
+            return Err("owned beam group typed containment required".into());
+        }
+        let bounds = serde_json::from_value(beam["bounds"].clone())
+            .map_err(|_| "owned beam member bounds required")?;
+        kept.push((bid, bounds));
+    }
+    Ok(kept)
+}
+/// Validate ownership/geometry before modeled reducer callbacks start.
+pub(crate) fn validate_owned_groups(g: &serde_json::Value) -> Result<(), String> {
+    for group in g["inters"]
+        .as_array()
+        .ok_or("owned beam group nodes required")?
+        .iter()
+        .filter(|n| n["kind"] == "BeamGroupInter")
+    {
+        let kept = owned_members(g, group, &[])?;
+        if !kept.is_empty() {
+            union_bounds(kept.iter().map(|(_, b)| Ok(*b)))?;
+        }
+    }
+    Ok(())
+}
+/// Original Containment.removed -> BeamGroupInter.invalidateCache/getBounds,
+/// and AbstractInter.remove's dying-ensemble callback, on an owned SIG snapshot.
+/// Existing identities/order are retained; this never regroups survivors.
+pub(crate) fn remove_owned_members(
+    g: &mut serde_json::Value,
+    removed: &[u64],
+) -> Result<Vec<u64>, String> {
+    use serde_json::json;
+    let nodes = g["inters"]
+        .as_array()
+        .ok_or("owned beam group nodes required")?;
+    let mut updates = Vec::new();
+    let mut dying = Vec::new();
+    for group in nodes.iter().filter(|n| n["kind"] == "BeamGroupInter") {
+        let members = group["members"]
+            .as_array()
+            .ok_or("owned beam group members required")?;
+        if !members
+            .iter()
+            .any(|id| id.as_u64().is_some_and(|id| removed.contains(&id)))
+        {
+            continue;
+        }
+        let id = group["id"].as_u64().ok_or("owned beam group ID required")?;
+        let kept = owned_members(g, group, removed)?;
+        if kept.is_empty() {
+            dying.push(id);
+            continue;
+        }
+        let bounds = union_bounds(kept.iter().map(|(_, b)| Ok(*b)))?;
+        let mut next = group.clone();
+        next["members"] = json!(kept.iter().map(|(id, _)| *id).collect::<Vec<_>>());
+        next["bounds"] = json!(bounds);
+        updates.push(next);
+    }
+    for next in updates {
+        let id = next["id"].clone();
+        *g["inters"]
+            .as_array_mut()
+            .unwrap()
+            .iter_mut()
+            .find(|n| n["id"] == id)
+            .unwrap() = next;
+    }
+    g["inters"]
+        .as_array_mut()
+        .unwrap()
+        .retain(|n| !dying.iter().any(|id| n["id"] == *id));
+    g["relations"]
+        .as_array_mut()
+        .ok_or("owned beam group edges required")?
+        .retain(|e| {
+            !dying
+                .iter()
+                .any(|id| e["source"] == *id || e["target"] == *id)
+        });
+    Ok(dying)
 }

@@ -123,40 +123,9 @@ pub(crate) fn remove_unreachable_beams(mut o: OwnedItems) -> Result<OwnedItems, 
         removals.push(key);
         evidence.push(json!({"id":n["id"],"origin":key,"bounds":n["bounds"],"horizontal_lookup_superset":[left,right],"reachable_heads":0,"original_check":if n["kind"]=="BeamHookInter"{"checkHooksHaveStem"}else{"checkBeamsHaveBothStems"}}));
     }
-    let removed_ids = removals
-        .iter()
-        .map(|k| o.graph.id(*k).unwrap())
-        .collect::<Vec<_>>();
-    let mut groups = Vec::new();
-    for n in nodes.iter().filter(|n| n["kind"] == "BeamGroupInter") {
-        if n["members"]
-            .as_array()
-            .ok_or("music_beam_group_members_required")?
-            .iter()
-            .any(|id| {
-                id.as_u64()
-                    .is_none_or(|id| !removed_ids.contains(&(id as usize)))
-            })
-        {
-            if n["members"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .any(|id| removed_ids.contains(&(id.as_u64().unwrap() as usize)))
-            {
-                return Err("music_mixed_removed_beam_group_pending".into());
-            }
-            continue;
-        }
-        groups.push(
-            serde_json::from_value::<Key>(n["origin"].clone())
-                .map_err(|_| "music_beam_group_origin_required")?,
-        );
-    }
     for key in removals {
-        o.graph.remove_music_inter(key)?;
-    }
-    for key in groups {
+        // Original member removal updates partially retained ensembles and
+        // removes a dying group. No special all-or-none group admission.
         o.graph.remove_music_inter(key)?;
     }
     o.prepared.report["unreachable_beam_reduction"] = json!({"scope":"zero skew/no stump or seed/no possibly reachable head; original empty VLinker and orphan checks only","removed":evidence,"positive_beam_origin_linking_complete":false});

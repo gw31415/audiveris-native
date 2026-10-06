@@ -272,7 +272,12 @@ impl Graph {
         ) {
             return Err("music_removal_requires_uncached_ledger_beam_symbol_or_chord".into());
         }
-        let id = self.endpoint(key)?;
+        let id = self.id(key).ok_or("missing_shared_sig_endpoint")?;
+        // Original Inter.remove is idempotent; a dying ensemble may already
+        // have been removed by the last member's callback.
+        if self.vertices[id - 1].removed {
+            return Ok(());
+        }
         if key.phase == Phase::Group && self.vertices[id - 1].data["kind"] != "BeamGroupInter" {
             return Err("music_removal_only_beam_group_supported".into());
         }
@@ -282,12 +287,39 @@ impl Graph {
         if self.vertices[id - 1].data["frozen"] == true {
             return Err("music_removal_frozen_inter".into());
         }
-        self.vertices[id - 1].removed = true;
-        for e in &mut self.edges {
-            if e.key.source == id || e.key.target == id {
-                e.removed = true;
+        let mut next = self.clone();
+        let mut removed = vec![id as u64];
+        if key.phase == Phase::Group {
+            // Extensive ensemble deletion removes only members not owned by
+            // another live ensemble. Physical glyphs/cache objects are retained.
+            for edge in self
+                .edges
+                .iter()
+                .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == id)
+            {
+                let member = &self.vertices[edge.key.target - 1];
+                if member.key.phase != Phase::Beam {
+                    return Err("beam ensemble member phase required".into());
+                }
+                if !self.edges.iter().any(|e| {
+                    !e.removed
+                        && e.key.kind == "Containment"
+                        && e.key.target == edge.key.target
+                        && e.key.source != id
+                }) {
+                    if member.data["frozen"] == true {
+                        return Err("music_removal_frozen_inter".into());
+                    }
+                    removed.push(edge.key.target as u64);
+                }
             }
         }
+        for id in &removed {
+            next.vertices[*id as usize - 1].removed = true;
+        }
+        next.prune();
+        next.refresh_beam_groups(&removed)?;
+        *self = next;
         Ok(())
     }
     pub(crate) fn remove_beam_head_supports(&mut self, ids: &[usize]) -> Result<(), String> {
@@ -368,6 +400,28 @@ impl Graph {
                 removed: false,
             };
         }
+        Ok(())
+    }
+    fn refresh_beam_groups(&mut self, removed: &[u64]) -> Result<(), String> {
+        let mut snap = self.snapshot();
+        let dying = crate::beam_groups::remove_owned_members(&mut snap, removed)?;
+        for v in self
+            .vertices
+            .iter_mut()
+            .filter(|v| !v.removed && v.data["kind"] == "BeamGroupInter")
+        {
+            if dying.iter().any(|id| v.data["id"] == *id) {
+                v.removed = true;
+            } else if let Some(n) = snap["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == v.data["id"])
+            {
+                v.data = n.clone();
+            }
+        }
+        self.prune();
         Ok(())
     }
     fn prune(&mut self) {
@@ -971,18 +1025,20 @@ impl Graph {
                 remove.push(i + 1);
             }
         }
+        let mut next = self.clone();
         for id in &remove {
-            self.vertices[*id - 1].removed = true;
+            next.vertices[*id - 1].removed = true;
         }
-        self.prune();
+        next.prune();
+        next.refresh_beam_groups(&remove.iter().map(|id| *id as u64).collect::<Vec<_>>())?;
         // Original HeadStemRelation.removed callbacks refresh each live endpoint.
-        let linked = self
+        let linked = next
             .edges
             .iter()
             .filter(|e| !e.removed && e.key.kind == "HeadStemRelation")
             .flat_map(|e| [e.key.source, e.key.target])
             .collect::<BTreeSet<_>>();
-        for (i, v) in self
+        for (i, v) in next
             .vertices
             .iter_mut()
             .enumerate()
@@ -997,6 +1053,7 @@ impl Graph {
                 v.data["abnormal"] = json!(!linked.contains(&(i + 1)));
             }
         }
+        *self = next;
         Ok(remove)
     }
 
@@ -1031,6 +1088,7 @@ impl Graph {
                     }
                     v.removed = true;
                     next.prune();
+                    next.refresh_beam_groups(&[id])?;
                 }
                 Event::RemoveRelation(id) => {
                     let e = next
@@ -1144,5 +1202,74 @@ impl Graph {
 
     pub fn snapshot(&self) -> Value {
         json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false})
+    }
+}
+
+#[cfg(test)]
+mod beam_ensemble_tests {
+    use super::*;
+    #[test]
+    fn original_owned_group_partial_last_and_extensive_removal() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-epilog/groups-epilog.json"
+        ))
+        .unwrap();
+        for c in oracle["cleanup_controls"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let mut beams = Vec::new();
+            let initial = &c["before"][0];
+            for (i, b) in initial["members"].as_array().unwrap().iter().enumerate() {
+                let key = Key {
+                    system: 1,
+                    phase: Phase::Beam,
+                    local: i + 1,
+                };
+                graph.vertex(key, b.clone(), false).unwrap();
+                beams.push(key);
+            }
+            let group = Key {
+                system: 1,
+                phase: Phase::Group,
+                local: 1,
+            };
+            graph.vertex(group,json!({"kind":"BeamGroupInter","bounds":initial["bounds"],"members":beams.iter().map(|k|graph.id(*k).unwrap()).collect::<Vec<_>>()}),false).unwrap();
+            graph
+                .relations(
+                    1,
+                    Phase::Group,
+                    beams
+                        .iter()
+                        .map(|k| (group, *k, json!({"kind":"Containment"})))
+                        .collect(),
+                )
+                .unwrap();
+            match c["mode"].as_str().unwrap() {
+                "partial" => graph.remove_music_inter(beams[0]).unwrap(),
+                "last-member" => {
+                    for key in &beams {
+                        graph.remove_music_inter(*key).unwrap();
+                    }
+                }
+                "extensive" => graph.remove_music_inter(group).unwrap(),
+                _ => panic!("unexpected oracle control"),
+            }
+            let snap = graph.snapshot();
+            let ns = snap["inters"].as_array().unwrap();
+            let actual: Vec<Value>= ns.iter().filter(|n|n["kind"]=="BeamGroupInter").map(|g|json!({"bounds":g["bounds"],"members":g["members"].as_array().unwrap().iter().map(|id| {let n=ns.iter().find(|n|n["id"]==*id).unwrap(); json!({"kind":n["kind"],"bounds":n["bounds"],"glyph_id":n["glyph_id"]})}).collect::<Vec<_>>()})).collect();
+            assert_eq!(json!(actual), c["after"], "{}", c["mode"]);
+            assert_eq!(
+                json!(
+                    beams
+                        .iter()
+                        .map(|k| graph.vertices[graph.id(*k).unwrap() - 1].removed)
+                        .collect::<Vec<_>>()
+                ),
+                c["members_removed"]
+            );
+            if actual.is_empty() {
+                graph.remove_music_inter(group).unwrap();
+                assert_eq!(snap, graph.snapshot());
+            }
+        }
     }
 }

@@ -565,3 +565,32 @@ cleaner/epilog, nonzero skew/scans/other fonts/special staff remain pending.
 All global completion flags remain false. See
 [evidence](../evidence/musicxml-beam-hooks/VALIDATION.json) and
 [next dependencies](../evidence/musicxml-beam-hooks/NEXT-DEPENDENCY.md).
+
+## Same-glyph beam/hook competition and retained groups
+
+A second hook page exercises four physical glyphs that original HEADS admits
+as both an ordinary beam and a hook. It preserves the same 11 musical events
+as the original: four B4 sixteenths with primary begin/continue/continue/end
+and secondary forward/backward hooks, then the existing quarter notes.
+Recognition and MusicXML already matched before this checkpoint. This change
+corrects retained group ownership after competition/reduction: deleted beam
+alternatives disappear from `members`, bounds are recomputed, and dying groups
+are removed through the original ensemble callbacks. No input-specific branch
+is used. Original full-image export, separate loaded-HEADS group observations,
+and declared deletion/grade controls are distinguished in
+[the dependency record](../evidence/musicxml-beam-epilog/NEXT-DEPENDENCY.md).
+
+```sh
+cargo build --offline --locked --bin audiveris-musicxml
+mkdir -p work/beam-epilog-output
+target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png \
+  work/beam-epilog-output/score.musicxml \
+  work/beam-epilog-output/report.json
+```
+
+Use new output filenames: the CLI refuses overwrites. With a configured Cargo
+`target-dir`, use that directory instead of `target/debug`. The executable is
+Linux-native and needs no Java runtime. Full cleaner/epilog, cross-system glyph
+aliases and general engraving remain unfinished; no global completion flag is
+set. This is an additional testable unit toward all original nonUI functions.

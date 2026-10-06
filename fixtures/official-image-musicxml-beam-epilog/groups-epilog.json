@@ -1,0 +1,250 @@
+{
+  "native_outputs_used" : false,
+  "scope" : "actual original HEADS -> STEMS/finalize/reduce/BeamHeadCleaner group state; three declared ownership controls; two intrinsic-grade boundaries, independent of full-image export",
+  "after_link_stems" : [ {
+    "bounds" : [ 288, 194, 182, 18 ],
+    "members" : [ {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 194, 182, 8 ],
+      "glyph_id" : 60
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 288, 206, 22, 6 ],
+      "glyph_id" : 62
+    }, {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 206, 22, 6 ],
+      "glyph_id" : 62
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 328, 206, 22, 6 ],
+      "glyph_id" : 65
+    }, {
+      "kind" : "BeamInter",
+      "bounds" : [ 328, 206, 22, 6 ],
+      "glyph_id" : 65
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 408, 206, 22, 6 ],
+      "glyph_id" : 68
+    }, {
+      "kind" : "BeamInter",
+      "bounds" : [ 408, 206, 22, 6 ],
+      "glyph_id" : 68
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 448, 206, 22, 6 ],
+      "glyph_id" : 71
+    }, {
+      "kind" : "BeamInter",
+      "bounds" : [ 448, 206, 22, 6 ],
+      "glyph_id" : 71
+    } ]
+  } ],
+  "after_reduction_cleaner" : [ {
+    "bounds" : [ 288, 194, 182, 18 ],
+    "members" : [ {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 194, 182, 8 ],
+      "glyph_id" : 60
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 288, 206, 22, 6 ],
+      "glyph_id" : 62
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 328, 206, 22, 6 ],
+      "glyph_id" : 65
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 408, 206, 22, 6 ],
+      "glyph_id" : 68
+    }, {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 448, 206, 22, 6 ],
+      "glyph_id" : 71
+    } ]
+  } ],
+  "cleanup_controls" : [ {
+    "mode" : "partial",
+    "before" : [ {
+      "bounds" : [ 288, 194, 182, 18 ],
+      "members" : [ {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 194, 182, 8 ],
+        "glyph_id" : 60
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      } ]
+    } ],
+    "after" : [ {
+      "bounds" : [ 288, 206, 182, 6 ],
+      "members" : [ {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      } ]
+    } ],
+    "group_removed" : false,
+    "members_removed" : [ true, false, false, false, false, false, false, false, false ]
+  }, {
+    "mode" : "last-member",
+    "before" : [ {
+      "bounds" : [ 288, 194, 182, 18 ],
+      "members" : [ {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 194, 182, 8 ],
+        "glyph_id" : 60
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      } ]
+    } ],
+    "after" : [ ],
+    "group_removed" : true,
+    "members_removed" : [ true, true, true, true, true, true, true, true, true ]
+  }, {
+    "mode" : "extensive",
+    "before" : [ {
+      "bounds" : [ 288, 194, 182, 18 ],
+      "members" : [ {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 194, 182, 8 ],
+        "glyph_id" : 60
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 288, 206, 22, 6 ],
+        "glyph_id" : 62
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 328, 206, 22, 6 ],
+        "glyph_id" : 65
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 408, 206, 22, 6 ],
+        "glyph_id" : 68
+      }, {
+        "kind" : "BeamHookInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      }, {
+        "kind" : "BeamInter",
+        "bounds" : [ 448, 206, 22, 6 ],
+        "glyph_id" : 71
+      } ]
+    } ],
+    "after" : [ ],
+    "group_removed" : true,
+    "members_removed" : [ true, true, true, true, true, true, true, true, true ]
+  } ],
+  "grade_controls" : [ {
+    "grade" : 0.34999999899999995,
+    "declared_contextual_grade" : 0.99,
+    "is_good" : false,
+    "side_supports" : 0
+  }, {
+    "grade" : 0.35,
+    "declared_contextual_grade" : 0.1,
+    "is_good" : true,
+    "side_supports" : 5
+  } ]
+}

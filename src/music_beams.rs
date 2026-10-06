@@ -55,12 +55,9 @@ pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
         }) {
             return Err("cross system beam finalizer pending".into());
         }
-        if b["contextual_grade"]
-            .as_f64()
-            .or(b["grade"].as_f64())
-            .unwrap()
-            < 0.4
-        {
+        // AbstractBeamInter.isGood overrides the general contextual-grade
+        // check: Finalizer uses intrinsic Grades.goodBeamGrade (0.35).
+        if b["grade"].as_f64().ok_or("beam intrinsic grade required")? < 0.35 {
             continue;
         }
         for bs in edges.iter().filter(|e| {
@@ -217,6 +214,56 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_beam_side_support_uses_intrinsic_good_grade() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-beam-epilog/groups-epilog.json"
+        ))
+        .unwrap();
+        for c in oracle["grade_controls"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let beam = Key {
+                system: 1,
+                phase: Phase::Beam,
+                local: 1,
+            };
+            let stem = Key {
+                system: 1,
+                phase: Phase::Stem,
+                local: 1,
+            };
+            let head = Key {
+                system: 1,
+                phase: Phase::Head,
+                local: 1,
+            };
+            graph.vertex(beam,json!({"kind":"BeamInter","glyph_id":1,"grade":c["grade"],"contextual_grade":c["declared_contextual_grade"]}),false).unwrap();
+            graph
+                .vertex(stem, json!({"kind":"StemInter","grade":0.8}), false)
+                .unwrap();
+            graph
+                .vertex(
+                    head,
+                    json!({"kind":"HeadInter","shape":"NOTEHEAD_BLACK","grade":0.8}),
+                    false,
+                )
+                .unwrap();
+            graph.relations(1,Phase::Beam,vec![(beam,stem,json!({"kind":"BeamStemRelation","beam_portion":"LEFT","grade":1.,"source_ratio":5.,"target_ratio":5.}))]).unwrap();
+            graph.relations(1,Phase::Stem,vec![(head,stem,json!({"kind":"HeadStemRelation","local_relation_id":1,"grade":1.,"source_ratio":5.,"target_ratio":11.}))]).unwrap();
+            // One side/head subset: original image controls have five supports.
+            let result = boost_sides(&mut graph).unwrap();
+            assert_eq!(
+                result["beam_side_supports"].as_array().unwrap().len(),
+                usize::from(c["is_good"].as_bool().unwrap())
+            );
+            assert!(
+                graph.snapshot()["inters"][0]["contextual_grade"]
+                    .as_f64()
+                    .unwrap()
+                    > 0.4
+            );
+        }
+    }
     #[test]
     fn original_hook_area_and_one_side_reduction_retain_registered_endpoints() {
         let areas: Value = serde_json::from_str(include_str!(
