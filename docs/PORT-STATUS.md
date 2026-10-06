@@ -235,3 +235,8 @@ HEADS→STEMS→exportへ伝播し、サイズ代用・画像座標分岐は行�
 原版非UI全機能を省略しない最終目標・完了フラグfalseを維持。
 [実行例](MUSICXML-LIMITED.md#two-system-beams-with-measured-head-font-and-owned-epilog)・
 [検証](../evidence/musicxml-cross-system/IMAGE-VALIDATION.json)。
+
+検証区切り: native source `c6f03c5` / src tree `048f9f41bc7309d85638aea50c7058c2100410e1`で
+単一全workspace 577件成功、失敗/ignored0、fmt・all-target clippy成功。
+原版観測adapterはStemsStep同様にepilogでsystemごと新retrieverを生成して再確認し、
+beam/glyph/接続の観測結果は不変。native sourceは変更していません。

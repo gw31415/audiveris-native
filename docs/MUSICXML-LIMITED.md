@@ -660,3 +660,8 @@ retain their own source commits.
 
 [Validation](../evidence/musicxml-cross-system/IMAGE-VALIDATION.json) and
 [next dependencies](../evidence/musicxml-cross-system/NEXT-DEPENDENCY.md).
+
+Validation checkpoint: one whole-workspace run passed577 tests with zero
+failures/ignored, fmt and workspace/all-target clippy passed at native source
+`c6f03c5`. The original observer follows fresh-retriever-per-system StemsStep
+epilog order and produces unchanged beam/glyph observations.
