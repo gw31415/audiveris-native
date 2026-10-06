@@ -556,6 +556,39 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let b = [g.left as i64, g.top as i64, g.width as i64, g.height as i64];
             let rest = shape.ends_with("_REST");
             let meter = time(shape);
+            if shape == "FLAT" {
+                if m.owner.catalog.family != "Bravura" {
+                    return Err("music_alter_font_area_pitch_offset_pending".into());
+                }
+                crate::music_alters::require_empty_links(shape, b, sid, il, &graph.snapshot())?;
+                let inputs = crate::key_preparation::staff_inputs(
+                    &m.owner.upstream_report["grid_ir"],
+                    &m.owner.upstream_report["clef_registration"],
+                    il,
+                )?;
+                let input = inputs
+                    .iter()
+                    .find(|s| s.staff_id == staff)
+                    .ok_or("music_alter_staff_required")?;
+                let mut data = crate::key_components::make_alter(
+                    g,
+                    e["score"].as_f64().unwrap(),
+                    crate::key_slices::Shape::Flat,
+                    input,
+                )?;
+                data["kind"] = json!("AlterInter");
+                data["staff_id"] = json!(staff);
+                data["glyph_id"] = json!(gid);
+                data["abnormal"] = json!(true);
+                let key = Key {
+                    system: sid,
+                    phase: Phase::Symbol,
+                    local: gid * 2 + created.len(),
+                };
+                graph.vertex(key, data, false)?;
+                created.push(key);
+                continue;
+            }
             if matches!(shape, "CAESURA" | "BREATH_MARK") {
                 if let Some((chord, relation)) =
                     crate::music_pauses::lookup(b, sid, staff, il, &m.measures, &m.chords)?

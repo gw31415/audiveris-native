@@ -810,7 +810,7 @@ pub fn pitch_window_rect(
         .round_ties_even() as i64;
     Ok([old[0], y, old[2], height as i64])
 }
-fn make_alter(
+pub(crate) fn make_alter(
     g: &GlyphPixels,
     score: f64,
     shape: Shape,

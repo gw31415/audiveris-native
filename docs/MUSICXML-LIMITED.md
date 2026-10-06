@@ -2039,3 +2039,26 @@ dots, shared/mirrored dot selection, positive rest/pause/repeat/staccato,
 unsupported supported conflicts and durations finer than sixteenths retain
 explicit guards. All other pending original nonUI features remain in the
 ledger. Global completion flags remain false.
+
+## Double augmentation dots (2026-10-06)
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-augmentation/double-augmentation.png \
+  /tmp/double-augmentation.musicxml /tmp/double-augmentation.json
+```
+
+This eight-event input has a double-dotted B4 quarter (7/16), a FLAG2 D5
+sixteenth (1/16) and ordinary quarters. Real second-dot→first-dot→head ownership
+supplies the chord's dot count and 7/4 intrinsic multiplier. Voice advances
+once, and Partwise writes two `<dot/>` elements. Original full-image musical
+content is separate from saved original dot/clock/getter and declared weak
+CAESURA/empty unlinked FLAT controls. Glyphs classified as weak unlinked flats
+are registered and purged by the original threshold; positive or surviving
+accidentals still refuse until their head/pitch/notation path is connected.
+
+Ordinary unshared first/double dots are enabled only with exactly representable
+sixteenth-tick durations. Shared/mirrored/rest/repeat/staccato dots, competing
+first/second same-glyph interpretations, tuplets and full cleanup remain
+partial. Erasing the real second dot refuses the incomplete measure; no
+missing duration is invented. Global completion flags remain false.

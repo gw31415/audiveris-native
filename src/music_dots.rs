@@ -11,10 +11,24 @@ fn rect(n: &Value) -> Result<[i64; 4], String> {
     serde_json::from_value(n["bounds"].clone()).map_err(|_| "music_dot_bounds_required".into())
 }
 fn center(b: [i64; 4]) -> [i64; 2] {
-    [
-        (b[0] as f64 + b[2] as f64 / 2.).round_ties_even() as i64,
-        (b[1] as f64 + b[3] as f64 / 2.).round_ties_even() as i64,
-    ]
+    [b[0] + b[2] / 2, b[1] + b[3] / 2]
+}
+// GradeImpacts zeroes the product even for a zero-weight exhausted impact.
+pub(crate) fn gap_grade(
+    dx: f64,
+    dy: f64,
+    x_max: f64,
+    y_max: f64,
+    x_weight: f64,
+    y_weight: f64,
+) -> f64 {
+    let x = (1. - dx / x_max).clamp(0., 1.);
+    let y = (1. - dy / y_max).clamp(0., 1.);
+    if x == 0. || y == 0. {
+        0.
+    } else {
+        (x.powf(x_weight) * y.powf(y_weight)).powf(1. / (x_weight + y_weight))
+    }
 }
 fn intersects(a: [i64; 4], b: [i64; 4]) -> bool {
     a[0] < b[0] + b[2] && b[0] < a[0] + a[2] && a[1] < b[1] + b[3] && b[1] < a[1] + a[3]
@@ -80,8 +94,8 @@ fn note_count(snapshot: &Value, note: &Value) -> usize {
 }
 
 fn relation(dx: f64, dy: f64) -> Option<Value> {
-    // AugmentationRelation: x impact has weight zero, even past xOutGapMax.
-    let grade = 1. - dy / 1.2;
+    // AugmentationRelation uses the original zero/one impact weights.
+    let grade = gap_grade(dx, dy, 2., 1.2, 0., 1.);
     (grade >= 0.1).then(|| json!({"kind":"AugmentationRelation","grade":grade,"dx":dx,"dy":dy,"source_ratio":1.+3.*grade,"target_ratio":1.,"profile":1}))
 }
 fn head_link(
@@ -119,7 +133,7 @@ fn head_link(
             if cy < lu[1] || cy >= lu[1] + lu[3] || first_dot(snapshot, head).is_some() {
                 continue;
             }
-            let mut dx = p[0] - (hb[0] + hb[2]);
+            let mut dx = p[0] - (hb[0] + hb[2] - 1);
             if dx < min_dx {
                 continue;
             }
@@ -175,6 +189,48 @@ fn head_link(
     Ok(links.into_iter().nth(best).map(|(_, k, r)| (k, r)))
 }
 
+fn second_dot<'a>(snapshot: &'a Value, first: &Value) -> Option<&'a Value> {
+    let edge = snapshot["relations"].as_array()?.iter().find(|e| {
+        e["kind"] == "DoubleDotRelation" && e["target"] == first["id"] && e["source"] != first["id"]
+    })?;
+    snapshot["inters"]
+        .as_array()?
+        .iter()
+        .find(|n| n["id"] == edge["source"] && n["kind"] == "AugmentationDotInter")
+}
+fn double_link(b: [i64; 4], il: usize, firsts: &[&Value]) -> Result<Option<(Key, Value)>, String> {
+    let p = center(b);
+    let max_dx = (1.25 * il as f64).round_ties_even() as i64;
+    let max_dy = (0.25 * il as f64).round_ties_even() as i64;
+    let lu = [p[0] - max_dx, p[1] - max_dy, max_dx, 2 * max_dy];
+    let min_dx = (0.1 * il as f64).round_ties_even() as i64;
+    let mut best: Option<(Key, Value)> = None;
+    for first in firsts {
+        let d = rect(first)?;
+        if center(d) == p || !intersects(d, lu) {
+            continue;
+        }
+        let dx = p[0] - (d[0] + d[2] - 1);
+        let dy = (p[1] - center(d)[1]).abs();
+        if dx < min_dx {
+            continue;
+        }
+        let dx = dx as f64 / il as f64;
+        let dy = dy as f64 / il as f64;
+        let grade = gap_grade(dx, dy, 2., 0.4, 1., 3.);
+        if grade >= 0.1
+            && best
+                .as_ref()
+                .is_none_or(|(_, r)| grade > r["grade"].as_f64().unwrap())
+        {
+            best = Some((
+                key(first)?,
+                json!({"kind":"DoubleDotRelation","grade":grade,"dx":dx,"dy":dy,"source_ratio":1.+5.*grade,"target_ratio":1.,"profile":1}),
+            ));
+        }
+    }
+    Ok(best)
+}
 pub(crate) fn late_checks(
     graph: &mut Graph,
     registry: &crate::beam_dispatch::Registry,
@@ -197,7 +253,8 @@ pub(crate) fn late_checks(
         .collect::<Vec<_>>();
     candidates.sort_by_key(|(t, _)| t["bounds"][0].as_i64());
     let mut created = Vec::new();
-    for (trial, evaluation) in candidates {
+    let mut eligible = std::collections::BTreeSet::new();
+    for &(trial, evaluation) in &candidates {
         let b = rect(trial)?;
         let p = center(b);
         let staff = staffs
@@ -212,6 +269,11 @@ pub(crate) fn late_checks(
         if !distant_from_line(b, staff, il, &snapshot)? {
             continue;
         }
+        eligible.insert(
+            trial["glyph_id"]
+                .as_u64()
+                .ok_or("music_dot_registered_glyph_required")?,
+        );
         let system = staff["system_id"]
             .as_u64()
             .ok_or("music_dot_system_required")?;
@@ -268,7 +330,7 @@ pub(crate) fn late_checks(
             .filter(|c| c.kind == ChordKind::Rest && intersects(c.bounds, lu))
         {
             let rb = rect(&c.members[0])?;
-            let dx = p[0] - (rb[0] + rb[2]);
+            let dx = p[0] - (rb[0] + rb[2] - 1);
             let dy = ((p[1] - center(rb)[1]).abs() as f64 - 0.45 * rb[3] as f64).max(0.);
             if dx >= (0.1 * il as f64).round_ties_even() as i64
                 && relation(dx as f64 / il as f64, dy / il as f64).is_some()
@@ -305,33 +367,97 @@ pub(crate) fn late_checks(
             created.push(id);
         }
     }
-    // A possible second dot must not be silently treated as a single dot.
+    // Phase2 searches only the firsts collected at the end of phase1.
     let snapshot = staged.snapshot();
-    for trial in trials.iter().filter(|t| {
-        t["evaluations"]
-            .as_array()
-            .is_some_and(|es| es.iter().any(|e| e["shape"] == "DOT_set"))
-    }) {
+    let mut firsts = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|n| n["kind"] == "AugmentationDotInter")
+        .collect::<Vec<_>>();
+    firsts.sort_by_key(|n| n["bounds"][0].as_i64());
+    let mut seconds = Vec::new();
+    for (trial, evaluation) in candidates {
+        let gid = trial["glyph_id"]
+            .as_u64()
+            .ok_or("music_dot_registered_glyph_required")?;
+        if !eligible.contains(&gid) {
+            continue;
+        }
         let b = rect(trial)?;
         let p = center(b);
-        for dot in
-            snapshot["inters"].as_array().unwrap().iter().filter(|n| {
-                n["kind"] == "AugmentationDotInter" && n["glyph_id"] != trial["glyph_id"]
+        let staff = staffs
+            .iter()
+            .map(|s| Ok(((p[1] as f64 - flat_staff_y(s, 2)?).abs(), s)))
+            .collect::<Result<Vec<_>, String>>()?
+            .into_iter()
+            .min_by(|a, b| a.0.total_cmp(&b.0))
+            .ok_or("music_dot_staff_required")?
+            .1;
+        let system = staff["system_id"]
+            .as_u64()
+            .ok_or("music_dot_system_required")?;
+        let Some(mi) = measures.iter().position(|m| {
+            m.system == system
+                && Some(m.staff) == staff["id"].as_u64()
+                && m.left < p[0]
+                && p[0] <= m.right
+        }) else {
+            continue;
+        };
+        let same_stack = firsts
+            .iter()
+            .filter_map(|n| {
+                let k = key(n).ok()?;
+                let c = center(rect(n).ok()?);
+                (k.system == system && measures[mi].left < c[0] && c[0] <= measures[mi].right)
+                    .then_some(*n)
             })
-        {
-            let d = rect(dot)?;
-            let dx = p[0] - (d[0] + d[2]);
-            let dy = (p[1] - center(d)[1]).abs();
-            if dx >= (0.1 * il as f64).round_ties_even() as i64
-                && dx <= (1.25 * il as f64).round_ties_even() as i64
-                && dy <= (0.25 * il as f64).round_ties_even() as i64
-            {
-                return Err("music_dot_double_augmentation_pending".into());
+            .collect::<Vec<_>>();
+        if let Some((first, rel)) = double_link(b, il, &same_stack)? {
+            if firsts.iter().any(|n| n["glyph_id"] == gid) {
+                return Err("music_dot_first_second_glyph_competition_pending".into());
             }
+            let current = staged.snapshot();
+            let first_id = staged.id(first).ok_or("music_dot_owned_first_required")?;
+            if current["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|e| e["kind"] == "DoubleDotRelation" && e["target"] == first_id)
+            {
+                return Err("music_dot_competing_seconds_pending".into());
+            }
+            let local = current["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter_map(|n| key(n).ok())
+                .filter(|k| k.system == system && k.phase == Phase::Symbol)
+                .map(|k| k.local)
+                .max()
+                .unwrap_or(0)
+                + 1;
+            let dk = Key {
+                system,
+                phase: Phase::Symbol,
+                local,
+            };
+            let glyph = crate::beam_dispatch::glyph_json(&registry.get(gid as usize)?.glyph);
+            let grade = 0.8
+                * evaluation["score"]
+                    .as_f64()
+                    .ok_or("music_dot_classifier_grade_required")?;
+            // Original phase2 inherits part/Voice through DoubleDot, not staff.
+            let id=staged.vertex(dk,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"grade":grade,"abnormal":false}),false)?;
+            staged.relations(system, Phase::Symbol, vec![(dk, first, rel)])?;
+            seconds.push(id);
         }
     }
     *graph = staged;
-    Ok(json!({"created_first_dot_ids":created,"full_dot_factory_complete":false}))
+    Ok(
+        json!({"created_first_dot_ids":created,"created_second_dot_ids":seconds,"full_dot_factory_complete":false}),
+    )
 }
 
 pub(crate) fn contextualize_and_count(
@@ -347,7 +473,12 @@ pub(crate) fn contextualize_and_count(
             .as_array()
             .unwrap()
             .iter()
-            .filter(|e| e["kind"] == "AugmentationRelation" && e["source"] == dot["id"])
+            .filter(|e| {
+                matches!(
+                    e["kind"].as_str(),
+                    Some("AugmentationRelation" | "DoubleDotRelation")
+                ) && e["source"] == dot["id"]
+            })
             .collect::<Vec<_>>();
         if rels.len() != 1 {
             return Err("music_dot_shared_or_competing_support_pending".into());
@@ -358,7 +489,12 @@ pub(crate) fn contextualize_and_count(
             .find(|n| n["id"] == rel["target"])
             .ok_or("music_dot_live_note_required")?;
         let grade = dot["grade"].as_f64().ok_or("music_dot_grade_required")?;
-        let sum = 3.
+        let coefficient = if rel["kind"] == "DoubleDotRelation" {
+            5.
+        } else {
+            3.
+        };
+        let sum = coefficient
             * rel["grade"]
                 .as_f64()
                 .ok_or("music_dot_relation_grade_required")?
@@ -410,7 +546,7 @@ pub(crate) fn contextualize_and_count(
     }
     *graph = staged;
     Ok(
-        json!({"removed_weak_or_inconsistent_dot_ids":removed,"scope":"ordinary unshared first-dot supports and AbstractChord.countDots; repeat/staccato/rest/double-dot/mirror competition pending"}),
+        json!({"removed_weak_or_inconsistent_dot_ids":removed,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/rest/mirror and competing dot interpretations pending"}),
     )
 }
 pub(crate) fn bounds_with_dots(
@@ -419,17 +555,38 @@ pub(crate) fn bounds_with_dots(
     mut b: [i64; 4],
 ) -> Result<[i64; 4], String> {
     for note in &chord.members {
-        if let Some(dot) = first_dot(snapshot, note) {
-            let d = rect(dot)?;
-            let x = b[0].min(d[0]);
-            let y = b[1].min(d[1]);
-            b = [
-                x,
-                y,
-                (b[0] + b[2]).max(d[0] + d[2]) - x,
-                (b[1] + b[3]).max(d[1] + d[3]) - y,
-            ];
+        if let Some(first) = first_dot(snapshot, note) {
+            for dot in std::iter::once(first).chain(second_dot(snapshot, first)) {
+                let d = rect(dot)?;
+                let x = b[0].min(d[0]);
+                let y = b[1].min(d[1]);
+                b = [
+                    x,
+                    y,
+                    (b[0] + b[2]).max(d[0] + d[2]) - x,
+                    (b[1] + b[3]).max(d[1] + d[3]) - y,
+                ];
+            }
         }
     }
     Ok(b)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn exhausted_zero_weight_x_impact_preserves_original_relation_rejection() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-augmentation/gap-controls.json"
+        ))
+        .unwrap();
+        for c in original["cases"].as_array().unwrap() {
+            let actual = relation(c["dx"].as_f64().unwrap(), c["dy"].as_f64().unwrap());
+            assert_eq!(actual.is_some(), c["accepted"].as_bool().unwrap());
+            if let Some(r) = actual {
+                assert_eq!(r["grade"], c["grade"]);
+            }
+        }
+    }
 }

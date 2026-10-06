@@ -902,3 +902,11 @@ positive pause notation, tuplets/shared stacks/special heads/lyrics/slur/tie
 and full cleaner/epilog remain partial, not omitted.
 [CLI example](MUSICXML-LIMITED.md#true-first-augmentation-dot-2026-10-06),
 [validation](../evidence/musicxml-augmentation/VALIDATION.json).
+
+Double-dot continuation connects original phase2 glyph/DoubleDot ownership,
+second support and exact7/4 intrinsic duration to native Voice/MusicXML.
+Original integer point and geometric-impact grading are shared with the
+pause path. One eight-event original full image is distinct from actual saved
+getters and declared weak pause/unlinked flat/zero-weight gap controls.
+First/second same-glyph alternatives, positive accidental semantics and full
+cleaner/epilog remain pending. [Validation](../evidence/musicxml-double-augmentation/VALIDATION.json).

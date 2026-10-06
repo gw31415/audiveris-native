@@ -9,108 +9,205 @@ use std::{fs, process::Command};
 fn actual_augmentation_owns_head_duration_voice_and_xml_dot_without_inventing_missing_time() {
     let fixture = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("fixtures/official-image-musicxml-augmentation");
-    let reference: Value =
-        serde_json::from_slice(&fs::read(fixture.join("observed.json")).unwrap()).unwrap();
-    let state: Value =
-        serde_json::from_slice(&fs::read(fixture.join("original-dots.json")).unwrap()).unwrap();
-    let image = GrayImage::decode(&fs::read(fixture.join("augmentation.png")).unwrap()).unwrap();
-    let export = music_xml::recognize(&image).unwrap();
-    let report = &export.owner.owner.prepared.report;
-    let live = report["shared_sig"]["inters"].as_array().unwrap();
-    let edges = report["shared_sig"]["relations"].as_array().unwrap();
-    assert_eq!(report["events"].as_array().unwrap().len(), 8);
-    for (actual, expected) in report["events"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .zip(reference["events"].as_array().unwrap())
-    {
-        for k in [
-            "measure_number",
-            "step",
-            "octave",
-            "alter",
-            "voice",
-            "time_offset",
-            "duration_quarters",
-            "type",
-            "stem_direction",
-            "chord",
-            "dots",
-        ] {
-            assert_eq!(actual[k], expected[k], "{k}");
-        }
-        let chord = live.iter().find(|c| c["id"] == actual["chord_id"]).unwrap();
-        assert_eq!(chord["voice"], actual["voice"]);
-        assert_eq!(chord["time_offset"], actual["time_offset"]);
-    }
-    for chord in state["chords"].as_array().unwrap() {
-        let actual = live
-            .iter()
-            .find(|c| c["kind"] == "HeadChordInter" && c["bounds"] == chord["bounds"])
-            .unwrap();
-        assert_eq!(actual["duration"], chord["intrinsic_with_dots"]);
-        assert_eq!(
-            actual["dots_number"].as_u64().unwrap_or(0),
-            chord["dots_number"].as_u64().unwrap()
-        );
-    }
-    let original = &state["dots"][0];
-    let dot = live
-        .iter()
-        .find(|n| n["kind"] == "AugmentationDotInter")
-        .unwrap();
-    assert_eq!(dot["bounds"], original["bounds"]);
-    assert!(dot["glyph_id"].as_u64().is_some());
-    let relation = edges
-        .iter()
-        .find(|e| e["kind"] == "AugmentationRelation" && e["source"] == dot["id"])
-        .unwrap();
-    let head = live.iter().find(|n| n["id"] == relation["target"]).unwrap();
-    assert_eq!(head["bounds"], original["lookup_head_bounds"]);
-    for field in ["dx", "dy", "grade"] {
-        assert!(
-            (relation[field].as_f64().unwrap() - original["links"][1][field].as_f64().unwrap())
-                .abs()
-                < 1e-12,
-            "{field}"
-        );
-    }
-    let purge = &report["symbols"]["limited_links"]["pause_weak_purge"]["removed_weak_pauses"][0];
-    let control = &state["declared_pause_controls"][0];
-    assert_eq!(purge["bounds"], control["bounds"]);
-    assert_eq!(purge["partner_bounds"], control["partner_bounds"]);
-    assert!(control["weak"].as_bool().unwrap());
-    assert!(
-        (purge["contextual_grade"].as_f64().unwrap()
-            - control["contextual_grade"].as_f64().unwrap())
-        .abs()
-            < 0.001
-    );
-    assert_eq!(export.xml.matches("<dot/>").count(), 1);
-    assert!(
-        report["voices"]
+    for (input, observed, dot_state) in [
+        ("augmentation.png", "observed.json", "original-dots.json"),
+        (
+            "double-augmentation.png",
+            "double-observed.json",
+            "double-original-dots.json",
+        ),
+    ] {
+        let reference: Value =
+            serde_json::from_slice(&fs::read(fixture.join(observed)).unwrap()).unwrap();
+        let state: Value =
+            serde_json::from_slice(&fs::read(fixture.join(dot_state)).unwrap()).unwrap();
+        let image = GrayImage::decode(&fs::read(fixture.join(input)).unwrap()).unwrap();
+        let export = music_xml::recognize(&image).unwrap();
+        let report = &export.owner.owner.prepared.report;
+        let live = report["shared_sig"]["inters"].as_array().unwrap();
+        let edges = report["shared_sig"]["relations"].as_array().unwrap();
+        assert_eq!(report["events"].as_array().unwrap().len(), 8);
+        for (actual, expected) in report["events"]
             .as_array()
             .unwrap()
             .iter()
-            .all(|v| v["end_time"] == "1" && v["termination"] == "0")
-    );
-    let mut erased = GrayImage {
-        width: image.width,
-        height: image.height,
-        pixels: image.pixels.clone(),
-    };
-    let b: [usize; 4] = serde_json::from_value(original["bounds"].clone()).unwrap();
-    for y in b[1]..b[1] + b[3] {
-        for x in b[0]..b[0] + b[2] {
-            erased.pixels[y * erased.width + x] = 255;
+            .zip(reference["events"].as_array().unwrap())
+        {
+            for k in [
+                "measure_number",
+                "step",
+                "octave",
+                "alter",
+                "voice",
+                "time_offset",
+                "duration_quarters",
+                "type",
+                "stem_direction",
+                "chord",
+                "dots",
+            ] {
+                assert_eq!(actual[k], expected[k], "{k}");
+            }
+            let chord = live.iter().find(|c| c["id"] == actual["chord_id"]).unwrap();
+            assert_eq!(chord["voice"], actual["voice"]);
+            assert_eq!(chord["time_offset"], actual["time_offset"]);
         }
+        for chord in state["chords"].as_array().unwrap() {
+            let actual = live
+                .iter()
+                .find(|c| c["kind"] == "HeadChordInter" && c["bounds"] == chord["bounds"])
+                .unwrap();
+            assert_eq!(actual["duration"], chord["intrinsic_with_dots"]);
+            assert_eq!(
+                actual["dots_number"].as_u64().unwrap_or(0),
+                chord["dots_number"].as_u64().unwrap()
+            );
+        }
+        let original = &state["dots"][0];
+        let dot = live
+            .iter()
+            .find(|n| n["kind"] == "AugmentationDotInter")
+            .unwrap();
+        assert_eq!(dot["bounds"], original["bounds"]);
+        assert!(dot["glyph_id"].as_u64().is_some());
+        let relation = edges
+            .iter()
+            .find(|e| e["kind"] == "AugmentationRelation" && e["source"] == dot["id"])
+            .unwrap();
+        let head = live.iter().find(|n| n["id"] == relation["target"]).unwrap();
+        assert_eq!(head["bounds"], original["lookup_head_bounds"]);
+        for field in ["dx", "dy", "grade"] {
+            assert!(
+                (relation[field].as_f64().unwrap()
+                    - original["links"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|r| r["kind"] == "original_geometry_recomputed_relation")
+                        .unwrap()[field]
+                        .as_f64()
+                        .unwrap())
+                .abs()
+                    < 1e-12,
+                "{field}"
+            );
+        }
+        let purge =
+            &report["symbols"]["limited_links"]["pause_weak_purge"]["removed_weak_pauses"][0];
+        let control = &state["declared_pause_controls"][0];
+        assert_eq!(purge["bounds"], control["bounds"]);
+        assert_eq!(purge["partner_bounds"], control["partner_bounds"]);
+        assert!(control["weak"].as_bool().unwrap());
+        assert!(
+            (purge["contextual_grade"].as_f64().unwrap()
+                - control["contextual_grade"].as_f64().unwrap())
+            .abs()
+                < 0.001
+        );
+        for original_dot in state["dots"].as_array().unwrap() {
+            let dot = live
+                .iter()
+                .find(|n| {
+                    n["kind"] == "AugmentationDotInter" && n["bounds"] == original_dot["bounds"]
+                })
+                .unwrap();
+            assert!(
+                (dot["contextual_grade"].as_f64().unwrap()
+                    - original_dot["best_grade"].as_f64().unwrap())
+                .abs()
+                    < 0.001
+            );
+            if let Some(control) = original_dot["links"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|r| r["kind"] == "original_double_geometry_recomputed_relation")
+            {
+                let rel = edges
+                    .iter()
+                    .find(|r| r["kind"] == "DoubleDotRelation")
+                    .unwrap();
+                for k in ["dx", "dy", "grade"] {
+                    assert!(
+                        (rel[k].as_f64().unwrap() - control[k].as_f64().unwrap()).abs() < 1e-12
+                    );
+                }
+                let second = live.iter().find(|n| n["id"] == rel["source"]).unwrap();
+                let first = live.iter().find(|n| n["id"] == rel["target"]).unwrap();
+                assert_ne!(second["id"], first["id"]);
+                assert!(
+                    edges
+                        .iter()
+                        .any(|e| e["kind"] == "AugmentationRelation" && e["source"] == first["id"])
+                );
+            }
+        }
+        for original in state["declared_pause_controls"].as_array().unwrap() {
+            let native =
+                report["symbols"]["limited_links"]["pause_weak_purge"]["removed_weak_pauses"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["bounds"] == original["bounds"])
+                    .unwrap();
+            assert!(
+                (native["relation_grade"].as_f64().unwrap()
+                    - original["relation_grade"].as_f64().unwrap())
+                .abs()
+                    < 1e-12
+            );
+            assert!(
+                (native["dx"].as_f64().unwrap() - original["dx"].as_f64().unwrap()).abs() < 1e-12
+            );
+        }
+        if let Some(original) = state["declared_flat_controls"]
+            .as_array()
+            .and_then(|c| c.first())
+        {
+            let native = &report["symbols"]["limited_links"]["alter_weak_purge"]["removed_weak_unlinked_alters"]
+                [0];
+            assert_eq!(native["bounds"], original["bounds"]);
+            assert_eq!(native["grade"], original["grade"]);
+            assert_eq!(native["contextual_grade"], original["contextual_grade"]);
+            assert_eq!(original["linked_head_count"], 0);
+            assert_eq!(original["weak"], true);
+        }
+        assert_eq!(
+            export.xml.matches("<dot/>").count(),
+            reference["events"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|e| e["dots"].as_u64().unwrap() as usize)
+                .sum::<usize>()
+        );
+        assert!(
+            report["voices"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|v| v["end_time"] == "1" && v["termination"] == "0")
+        );
+        let mut erased = GrayImage {
+            width: image.width,
+            height: image.height,
+            pixels: image.pixels.clone(),
+        };
+        let b: [usize; 4] = serde_json::from_value(
+            state["dots"].as_array().unwrap().last().unwrap()["bounds"].clone(),
+        )
+        .unwrap();
+        for y in b[1]..b[1] + b[3] {
+            for x in b[0]..b[0] + b[2] {
+                erased.pixels[y * erased.width + x] = 255;
+            }
+        }
+        let err = music_xml::recognize(&erased).err().unwrap();
+        assert!(
+            err.contains("incomplete") || err.contains("termination"),
+            "{err}"
+        );
     }
-    let err = music_xml::recognize(&erased).err().unwrap();
-    assert!(
-        err.contains("incomplete") || err.contains("termination"),
-        "{err}"
-    );
 }
 
 #[test]

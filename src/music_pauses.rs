@@ -14,28 +14,28 @@ pub(crate) fn lookup(
     measures: &[Measure],
     chords: &[Chord],
 ) -> Result<Option<(Key, Value)>, String> {
-    let x = (b[0] as f64 + b[2] as f64 / 2.).round_ties_even() as i64;
+    let x = b[0] + b[2] / 2;
     let Some(mi) = measures
         .iter()
         .position(|m| m.system == system && m.staff == staff && m.left < x && x <= m.right)
     else {
         return Ok(None);
     };
-    let max = b[0] + b[2];
+    let max = b[0] + b[2] - 1;
     let mut heads = chords
         .iter()
         .filter(|c| c.kind == ChordKind::Head && c.measure == mi)
         .collect::<Vec<_>>();
     heads.sort_by_key(|c| c.bounds[0]);
     let Some(chord) = heads.into_iter().rfind(|c| {
-        let cx = (c.bounds[0] as f64 + c.bounds[2] as f64 / 2.).round_ties_even() as i64;
+        let cx = c.bounds[0] + c.bounds[2] / 2;
         cx >= measures[mi].left && cx <= max
     }) else {
         return Ok(None);
     };
-    let cx = (chord.bounds[0] as f64 + chord.bounds[2] as f64 / 2.).round_ties_even() as i64;
+    let cx = chord.bounds[0] + chord.bounds[2] / 2;
     let dx = (max - cx) as f64 / il as f64;
-    let grade = (2. * (1. - dx / 100.) + 1.) / 3.;
+    let grade = crate::music_dots::gap_grade(dx, 0., 100., 4., 2., 1.);
     Ok((grade>=0.1).then(||(chord.key,json!({"kind":"ChordPauseRelation","grade":grade,"dx":dx,"dy":0.,"source_ratio":1.,"target_ratio":1.+3.*grade,"profile":1}))))
 }
 pub(crate) fn contextualize_and_purge(
@@ -96,7 +96,7 @@ pub(crate) fn contextualize_and_purge(
             .map_err(|_| "music_pause_origin_required")?;
         if contextual < 0.5 && pause["frozen"] != true {
             staged.remove_music_inter(key)?;
-            removed.push(json!({"id":pause["id"],"shape":pause["shape"],"glyph_id":pause["glyph_id"],"bounds":pause["bounds"],"grade":grade,"contextual_grade":contextual,"partner_bounds":chord.bounds}));
+            removed.push(json!({"id":pause["id"],"shape":pause["shape"],"glyph_id":pause["glyph_id"],"bounds":pause["bounds"],"grade":grade,"relation_grade":r["grade"],"dx":r["dx"],"contextual_grade":contextual,"partner_bounds":chord.bounds}));
         } else {
             let mut n = pause.clone();
             n["contextual_grade"] = json!(contextual);

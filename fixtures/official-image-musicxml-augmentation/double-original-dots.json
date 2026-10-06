@@ -1,0 +1,175 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "saved recognized dot ownership/duration getters and exact original geometry regrading; separate declared CAESURA classifier score uses original factory/context on temporary original Inter; no declared clocks/music changes",
+  "chords" : [ {
+    "bounds" : [ 276, 206, 13, 41 ],
+    "bounds_with_dots" : [ 276, 206, 46, 41 ],
+    "dots_number" : 2,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "7/16",
+    "notes" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "dot_count" : 2,
+      "first_dot_bounds" : [ 303, 235, 5, 4 ]
+    } ]
+  }, {
+    "bounds" : [ 396, 195, 13, 41 ],
+    "bounds_with_dots" : [ 396, 195, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/16",
+    "intrinsic_with_dots" : "1/16",
+    "notes" : [ {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 516, 184, 13, 41 ],
+    "bounds_with_dots" : [ 516, 184, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 636, 195, 13, 41 ],
+    "bounds_with_dots" : [ 636, 195, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 636, 226, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 756, 184, 13, 41 ],
+    "bounds_with_dots" : [ 756, 184, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 756, 215, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 876, 195, 13, 41 ],
+    "bounds_with_dots" : [ 876, 195, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 876, 226, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 996, 206, 13, 41 ],
+    "bounds_with_dots" : [ 996, 206, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 996, 237, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 1116, 195, 13, 41 ],
+    "bounds_with_dots" : [ 1116, 195, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 1116, 226, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  } ],
+  "dots" : [ {
+    "bounds" : [ 303, 235, 5, 4 ],
+    "grade" : 0.767,
+    "best_grade" : 0.864,
+    "profile" : 0,
+    "system_profile" : 1,
+    "links" : [ {
+      "kind" : "original_double_geometry_recomputed_relation",
+      "grade" : 0.8210967436686387,
+      "dx" : 1.0909090909090908,
+      "dy" : 0.0
+    }, {
+      "kind" : "DoubleDotRelation",
+      "source_bounds" : [ 317, 235, 5, 4 ],
+      "target_bounds" : [ 303, 235, 5, 4 ],
+      "grade" : 0.821,
+      "dx" : 1.091,
+      "dy" : 0.0
+    }, {
+      "kind" : "AugmentationRelation",
+      "source_bounds" : [ 303, 235, 5, 4 ],
+      "target_bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.621,
+      "dx" : 1.545,
+      "dy" : 0.455
+    }, {
+      "kind" : "original_geometry_recomputed_relation",
+      "grade" : 0.6212121212121212,
+      "dx" : 1.5454545454545454,
+      "dy" : 0.45454545454545453
+    } ],
+    "lookup_head_bounds" : [ 276, 237, 13, 10 ]
+  }, {
+    "bounds" : [ 317, 235, 5, 4 ],
+    "grade" : 0.767,
+    "best_grade" : 0.932,
+    "profile" : 0,
+    "system_profile" : 1,
+    "links" : [ {
+      "kind" : "original_double_geometry_recomputed_relation",
+      "grade" : 0.8210967436686387,
+      "dx" : 1.0909090909090908,
+      "dy" : 0.0
+    }, {
+      "kind" : "DoubleDotRelation",
+      "source_bounds" : [ 317, 235, 5, 4 ],
+      "target_bounds" : [ 303, 235, 5, 4 ],
+      "grade" : 0.821,
+      "dx" : 1.091,
+      "dy" : 0.0
+    } ],
+    "lookup_head_bounds" : null
+  } ],
+  "declared_pause_controls" : [ {
+    "declared_classifier_score" : 0.18859216955421593,
+    "bounds" : [ 303, 235, 5, 4 ],
+    "partner_bounds" : [ 276, 206, 13, 41 ],
+    "partner_grade" : 0.77,
+    "relation_grade" : 0.9847905052233751,
+    "dx" : 2.272727272727273,
+    "grade" : 0.15087373564337275,
+    "contextual_grade" : 0.3678415907758604,
+    "weak" : true
+  }, {
+    "declared_classifier_score" : 0.18859216955421593,
+    "bounds" : [ 317, 235, 5, 4 ],
+    "partner_bounds" : [ 276, 206, 13, 41 ],
+    "partner_grade" : 0.77,
+    "relation_grade" : 0.9762217194688629,
+    "dx" : 3.5454545454545454,
+    "grade" : 0.15087373564337275,
+    "contextual_grade" : 0.36643297964631644,
+    "weak" : true
+  } ],
+  "declared_flat_controls" : [ {
+    "declared_classifier_score" : 0.1880466944006071,
+    "bounds" : [ 411, 199, 12, 38 ],
+    "grade" : 0.15043735552048568,
+    "contextual_grade" : 0.15043735552048568,
+    "linked_head_count" : 0,
+    "weak" : true
+  } ]
+}

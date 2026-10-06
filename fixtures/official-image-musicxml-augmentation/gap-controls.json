@@ -1,0 +1,15 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "declared original AugmentationRelation zero-weight x-impact exhaustion; distinct from full image recognition",
+  "cases" : [ {
+    "dx" : 1.9999999999999998,
+    "dy" : 0.0,
+    "grade" : 1.0,
+    "accepted" : true
+  }, {
+    "dx" : 2.0,
+    "dy" : 0.0,
+    "grade" : 0.0,
+    "accepted" : false
+  } ]
+}

@@ -373,6 +373,12 @@
       "unit": "ordinary unshared real first augmentation dot -> owned note/chord count and exact dotted intrinsic duration -> Voice/Partwise MusicXML; original same-glyph weak CAESURA factory/support purge",
       "limits": "one original full-image8-event input; owner/getter/exact relation and declared pause controls separate; double/rest/shared/repeat/staccato/pause/general conflict and fine rational branches pending",
       "evidence": "evidence/musicxml-augmentation/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary unshared actual double-dot glyph/SIG ownership -> original7/4 intrinsic duration -> Voice and Partwise; exact integer gap geometry/geometric impact grading and actual empty-lookup weak FLAT factory/purge",
+      "limits": "one original full-image8-event input; saved ownership/getters and declared controls separate; same-glyph first/second competition/shared/rest/positive accidentals and full nonUI parity remain partial",
+      "evidence": "evidence/musicxml-double-augmentation/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -434,7 +440,7 @@
     {
       "original_function": "SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory`",
       "status": "partial",
-      "current_and_remaining": "classifier\u30fbisolated/2\u90e8\u54c1rest/time\u30fb\u5b9f\u52a0\u7dda\u3078\u306edot\u8ddd\u96e2\u691c\u67fb\u3068\u666e\u901a\u306e1\u65d7\u2192stem\u63a5\u7d9a\u3042\u308a\u3002\u539f\u72487\u90e8\u54c1\u4e0a\u9650\u306ecluster\u3001\u5168\u5f62\u306efactory/shape checks\u3001ordinary unshared first augmentation dot\u306e\u753b\u50cf\u2192\u97f3\u4fa1/Voice/XML\u63a5\u7d9a\u6e08\u307f\u3002double/shared/rest/repeat/staccato dot\u3001flag/accidental/articulation/dynamics/ornament/\u6570\u5b57\u7b49\u306e\u751f\u6210\u3068lateChecks\u304c\u6b8b\u308b\u3002149\u5206\u985e\u51fa\u529b\u3092\u5168\u8a18\u53f7\u306e\u610f\u5473\u63a5\u7d9a\u6e08\u307f\u3068\u6271\u308f\u306a\u3044\u3002"
+      "current_and_remaining": "classifier\u30fbisolated/2\u90e8\u54c1rest/time\u30fb\u5b9f\u52a0\u7dda\u3078\u306edot\u8ddd\u96e2\u691c\u67fb\u3068\u666e\u901a\u306e1\u65d7\u2192stem\u63a5\u7d9a\u3042\u308a\u3002\u539f\u72487\u90e8\u54c1\u4e0a\u9650\u306ecluster\u3001\u5168\u5f62\u306efactory/shape checks\u3001ordinary unshared first/double augmentation dot\u306e\u753b\u50cf\u2192\u97f3\u4fa1/Voice/XML\u63a5\u7d9a\u6e08\u307f\u3002shared/rest/repeat/staccato dot\u3001flag/accidental/articulation/dynamics/ornament/\u6570\u5b57\u7b49\u306e\u751f\u6210\u3068lateChecks\u304c\u6b8b\u308b\u3002149\u5206\u985e\u51fa\u529b\u3092\u5168\u8a18\u53f7\u306e\u610f\u5473\u63a5\u7d9a\u6e08\u307f\u3068\u6271\u308f\u306a\u3044\u3002"
     },
     {
       "original_function": "RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices`",
@@ -478,7 +484,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "evidence/musicxml-augmentation/NEXT-DEPENDENCY.md; no original nonUI omissions",
+  "next_image_integration": "evidence/musicxml-double-augmentation/NEXT-DEPENDENCY.md; no original nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,

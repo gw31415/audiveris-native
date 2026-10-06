@@ -190,7 +190,9 @@ fn resolve_durations(
                 0 => {}
                 1 if duration.is_multiple_of(2) => duration = duration / 2 * 3,
                 1 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
-                _ => return Err("musicxml_double_dotted_duration_pending".into()),
+                2 if duration.is_multiple_of(4) => duration = duration / 4 * 7,
+                2 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
+                _ => return Err("musicxml_invalid_dot_count".into()),
             }
             ChordDuration {
                 intrinsic: Some(duration),
@@ -280,7 +282,10 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                             n["kind"] == "AugmentationDotInter"
                                 && n["glyph_id"] == t["glyph_id"]
                                 && snapshot["relations"].as_array().unwrap().iter().any(|r| {
-                                    r["kind"] == "AugmentationRelation" && r["source"] == n["id"]
+                                    matches!(
+                                        r["kind"].as_str(),
+                                        Some("AugmentationRelation" | "DoubleDotRelation")
+                                    ) && r["source"] == n["id"]
                                 })
                         })
                     {
@@ -296,6 +301,15 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                         .any(|n| n["glyph_id"] == t["glyph_id"] && n["shape"] == shape)
                     {
                         return Err("musicxml_positive_pause_notation_pending".into());
+                    }
+                }
+                "FLAT" => {
+                    let removed=m.owner.prepared.report["limited_links"]["alter_weak_purge"]["removed_weak_unlinked_alters"].as_array().ok_or("musicxml_alter_purge_required")?;
+                    if !removed
+                        .iter()
+                        .any(|n| n["glyph_id"] == t["glyph_id"] && n["shape"] == shape)
+                    {
+                        return Err("musicxml_positive_accidental_notation_pending".into());
                     }
                 }
                 s if music_symbols::time(s).is_some()
@@ -1138,7 +1152,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     let voice_projection = crate::music_voices::timed_projection(&m.voices, &m.measures, &graph)?;
     m.owner.graph = graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":voice_projection,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter ordinary single-Voice sixteenth-eighth-quarter-half/default-whole-measure-rest complete-measure path plus complete parallel quarter/half/one-flag eighth/one-two-level beam Voices in4/4 and actual same-stem uniform multi-head quarter/eighth-beam chords; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image and one independent two-Voice/two-measure16-quarter image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/dots/ties/tuplets/general polyphony including gaps/other meters/mixed rests/mixed mirror or special-head chords/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-limited.v1","symbols":previous,"measures":measures,"events":events,"beam_group_voices":beam_group_voices,"voices":voice_projection,"shared_sig":m.owner.graph.snapshot(),"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"scope":"first limited clean Bravura44/47/interline11 zero-skew ordinary five-line pitched-native-header-clef/C-major-or-frozen-header-key/recognized constant binary meter ordinary single-Voice sixteenth-eighth-quarter-half/default-whole-measure-rest complete-measure path plus complete parallel quarter/half/one-flag eighth/one-two-level beam Voices in4/4 and actual same-stem uniform multi-head quarter/eighth-beam/FLAG2-sixteenth chords and ordinary unshared first/double augmentation dots; independent two/four-measure quarter-rest and half-note pages with system break, plus two controlled half-rest positions and one independent first-lower-ledger C4 page and one controlled split-quarter-rest input and one independent frozen-header G-major/F# page and one controlled frozen-header 4/4 TimePair variant and one 3/4 six-note G-major input and one fixed COMMON_TIME eight-note G-major input and two bass/alto-clef C-major eight-note inputs verified; one ordinary up-flag eighth/quarter and side/intermediate/sibling/separate-group/hook/same-glyph-competition images and one Bravura47 two-system beam image and one independent two-Voice/two-measure16-quarter image verified; arbitrary real-score admission remains unverified","pending":["broader real-score admission and general MusicXML engraving","other time/clef image comparisons, mid-measure clef changes and unpitched percussion, meter changes and finer/tuplet rhythms/full lateChecks/time columns/clusters above two parts/supported-frozen-cross-kind symbol conflicts/weak optionals","accidentals/other flags/unverified hook configurations/general shared-glyph aliases/cross-staff alien scenarios/more than two levels/shared-rest-repeat-staccato dots/ties/tuplets/general polyphony including gaps/other meters/mixed rests/mixed mirror or special-head chords/pickup/multi-staff","full reduction/cleaner/epilog and original parity","nonzero skew/real scans/special staff/full24shapes/32sources"],"limited_scope_practical_validation_complete":false,"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["preliminary_measure_slots"] = json!(preliminary_slots);
     m.owner.prepared.report["part_name"] = json!(part_name);
     m.owner.prepared.report["part_name_is_user_metadata_not_instrument_recognition"] = json!(true);

@@ -1,0 +1,30 @@
+{
+  "baseline_source": "25338c5b37a40a423313d2a104d0eca4b6917e36",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_full_image": "one original-successful two-measure8-event double-dotted quarter(7/16), FLAG2 sixteenth(1/16), ordinary quarters; no coordinate sweep",
+  "separate_original_controls": "saved first/second dot relationships, bounds-with-dots and actual intrinsic duration getters; exact relation regrading; declared original CAESURA factory support and empty/unlinked FLAT lookup/context controls; two original exhausted-zero-weight AugmentationRelation boundary observations",
+  "implementation": "DotFactory phase2 uses phase1 firsts, actual same-stack lookup geometry/first-best grade, registered second glyph and DoubleDotRelation to its first; one-way second support/weak purge and actual chord count supply original7/4 intrinsic multiplier before Voice clocks; second bounds feed slots and both dots export per note. Original integer center/inclusive centerRight and weighted geometric GradeImpacts also resolve precise pause grading. Unlinked weak FLAT is a real registered AlterInter using existing original pitch kernel, empty original head lookup and original weak purge; surviving/positive accidentals remain refused.",
+  "pending": [
+    "first/second alternatives for same physical glyph and competing second dots",
+    "shared/mirrored or positive rest/repeat/staccato augmentation",
+    "positive pause/accidental-head semantics and supported symbol competition",
+    "fine/nonbinary rational rhythms/shared stack/tuplets",
+    "special heads/lyrics/slur/tie/full cleaner/epilog",
+    "broader scan/font/skew/staff/page parity"
+  ],
+  "tests_status": "four unique affected targets passed; fmt and all-targets clippy passed; no full-suite repetition",
+  "completion_flags": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "targets_passed": [
+    "musicxml_limited::actual_augmentation_owns_head_duration_voice_and_xml_dot_without_inventing_missing_time (single/double actual images, missing-dot refusal)",
+    "music_dots::tests::exhausted_zero_weight_x_impact_preserves_original_relation_rejection (original boundary controls)",
+    "music_rookie_mapping::tests::multiple_rookies_retain_original_assignment_retry_and_voice_ownership (original owner/assignment/export)",
+    "head_registration::original_352_heads_513_exclusions_staff_note_order_and_epilog (Laura)"
+  ],
+  "new_test_functions": 1,
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed"
+}

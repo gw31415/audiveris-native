@@ -7,7 +7,7 @@ public class AugmentationStateProbe extends RookieMappingProbe {
   c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);
   Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0]));
   Object sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");
-  List<Object> rows=new ArrayList<>(),dots=new ArrayList<>(),pauseControls=new ArrayList<>();
+  List<Object> rows=new ArrayList<>(),dots=new ArrayList<>(),pauseControls=new ArrayList<>(),flatControls=new ArrayList<>();
   for(Object system:(List<?>)call(sheet,"getSystems")) {
    Object sig=call(system,"getSig");
    List<Object> heads=new ArrayList<>(),rests=new ArrayList<>();
@@ -22,13 +22,19 @@ public class AugmentationStateProbe extends RookieMappingProbe {
     rows.add(obj("bounds",rect(call(chord,"getBounds")),"bounds_with_dots",rect(call(chord,"getBoundsWithDots")),"dots_number",call(chord,"getDotsNumber"),"intrinsic_without_dots",fraction(call(chord,"getDurationSansDotOrTuplet")),"intrinsic_with_dots",fraction(call(chord,"getDurationSansTuplet")),"notes",notes));
    }
    heads.sort(Comparator.comparingInt(h->{try{return ((java.awt.Rectangle)call(h,"getBounds")).x;}catch(Exception e){throw new RuntimeException(e);}}));
-   for(Object dot:(Collection<?>)call(sig,"vertexSet")) {
+   for(Object dot:new ArrayList<>((Collection<?>)call(sig,"vertexSet"))) {
     if(!dot.getClass().getSimpleName().equals("AugmentationDotInter"))continue;
     List<Object> links=new ArrayList<>();
     for(Object rel:(Collection<?>)call(sig,"edgesOf",dot)) {
      String kind=rel.getClass().getSimpleName();
      if(!kind.equals("AugmentationRelation")&&!kind.equals("DoubleDotRelation"))continue;
      Object source=call(sig,"getEdgeSource",rel),target=call(sig,"getEdgeTarget",rel);
+     if(kind.equals("DoubleDotRelation")) {
+      java.awt.Point dp=(java.awt.Point)call(source,"getCenter"),rp=(java.awt.Point)call(target,"getCenterRight");
+      Object precise=make("sig.relation.DoubleDotRelation");double il=((Number)call(call(sheet,"getScale"),"getInterline")).doubleValue();
+      call(precise,"setOutGaps",(dp.x-rp.x)/il,Math.abs(dp.y-rp.y)/il,call(system,"getProfile"));
+      links.add(obj("kind","original_double_geometry_recomputed_relation","grade",call(precise,"getGrade"),"dx",call(precise,"getDx"),"dy",call(precise,"getDy")));
+     }
      links.add(obj("kind",kind,"source_bounds",rect(call(source,"getBounds")),"target_bounds",rect(call(target,"getBounds")),"grade",call(rel,"getGrade"),"dx",call(rel,"getDx"),"dy",call(rel,"getDy")));
     }
     Object headLink=call(dot,"lookupHeadLink",heads,system,call(system,"getProfile"));
@@ -41,7 +47,7 @@ public class AugmentationStateProbe extends RookieMappingProbe {
      links.add(obj("kind","original_geometry_recomputed_relation","grade",call(precise,"getGrade"),"dx",call(precise,"getDx"),"dy",call(precise,"getDy")));
     }
     double declaredScore=0.18859216955421593;
-    Object pause=c("sig.inter.AbstractPauseInter").getMethod("createValidAdded",c("glyph.Glyph"),c("glyph.Shape"),Double.class,c("sheet.Staff"),List.class).invoke(null,call(dot,"getGlyph"),c("glyph.Shape").getField("CAESURA").get(null),0.8*declaredScore,call(dot,"getStaff"),heads);
+    Object pause=c("sig.inter.AbstractPauseInter").getMethod("createValidAdded",c("glyph.Glyph"),c("glyph.Shape"),Double.class,c("sheet.Staff"),List.class).invoke(null,call(dot,"getGlyph"),c("glyph.Shape").getField("CAESURA").get(null),0.8*declaredScore,call(system,"getClosestStaff",call(call(dot,"getGlyph"),"getCenter2D")),heads);
     if(pause!=null){
      Object rel=((Collection<?>)call(sig,"edgesOf",pause)).iterator().next();
      Object ch=call(sig,"getEdgeSource",rel);
@@ -51,7 +57,20 @@ public class AugmentationStateProbe extends RookieMappingProbe {
     }
     dots.add(obj("bounds",rect(call(dot,"getBounds")),"grade",call(dot,"getGrade"),"best_grade",call(dot,"getBestGrade"),"profile",call(dot,"getProfile"),"system_profile",call(system,"getProfile"),"links",links,"lookup_head_bounds",partner==null?null:rect(call(partner,"getBounds"))));
    }
+   List<Object> systemHeads=new ArrayList<>();
+   for(Object n:new ArrayList<>((Collection<?>)call(sig,"vertexSet")))if(n.getClass().getSimpleName().equals("HeadInter"))systemHeads.add(n);
+   systemHeads.sort(Comparator.comparingInt(n->{try{return ((java.awt.Rectangle)call(n,"getBounds")).x;}catch(Exception ex){throw new RuntimeException(ex);}}));
+   for(Object flag:new ArrayList<>((Collection<?>)call(sig,"vertexSet"))) {
+    if(!flag.getClass().getSimpleName().equals("FlagInter") || !String.valueOf(call(flag,"getShape")).equals("FLAG_2"))continue;
+    double score=0.1880466944006071;
+    Object staff=call(system,"getClosestStaff",call(call(flag,"getGlyph"),"getCenter2D"));
+    Object alter=c("sig.inter.AlterInter").getMethod("create",c("glyph.Glyph"),c("glyph.Shape"),Double.class,c("sheet.Staff")).invoke(null,call(flag,"getGlyph"),c("glyph.Shape").getField("FLAT").get(null),0.8*score,staff);
+    call(sig,"addVertex",alter);call(alter,"setLinks",systemHeads);
+    Object context=call(sig,"computeContextualGrade",alter);
+    flatControls.add(obj("declared_classifier_score",score,"bounds",rect(call(alter,"getBounds")),"grade",call(alter,"getGrade"),"contextual_grade",context,"linked_head_count",((Collection<?>)call(sig,"edgesOf",alter)).size(),"weak",((Number)context).doubleValue()<0.5));
+    call(alter,"remove");
+   }
   }
-  new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj("original_source","9e1e55cd2746037d059345881c53e6a6754bffbd","scope","saved recognized dot ownership/duration getters and exact original geometry regrading; separate declared CAESURA classifier score uses original factory/context on temporary original Inter; no declared clocks/music changes","chords",rows,"dots",dots,"declared_pause_controls",pauseControls));System.exit(0);
+  new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj("original_source","9e1e55cd2746037d059345881c53e6a6754bffbd","scope","saved recognized dot ownership/duration getters and exact original geometry regrading; separate declared CAESURA classifier score uses original factory/context on temporary original Inter; no declared clocks/music changes","chords",rows,"dots",dots,"declared_pause_controls",pauseControls,"declared_flat_controls",flatControls));System.exit(0);
  }
 }

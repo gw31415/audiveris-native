@@ -59,6 +59,7 @@ pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, Stri
 /// is not a support relation. Weak rest removal also empties its rest chord.
 pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
+    let alters = crate::music_alters::purge_unlinked(&mut graph)?;
     let flags = crate::music_flags::contextualize(&mut graph)?;
     let pauses = crate::music_pauses::contextualize_and_purge(&mut graph, &m.chords)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
@@ -77,6 +78,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     m.owner.prepared.report["limited_links"]["containers"] = containers.projection;
     m.owner.prepared.report["limited_links"]["dot_counting"] = dot_counting;
     m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
+    m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
     Ok(m)
 }
 
