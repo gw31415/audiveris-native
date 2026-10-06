@@ -63,7 +63,7 @@
     "evidence": "evidence/musicxml-ordered-foundations/FULL-VALIDATION.json",
     "new_full_run_claimed": false
   },
-  "independent_clone_readback": "pending separate READBACK.json after normal push/fetch/Linux build/20+11 event CLI/XSD checks",
+  "independent_clone_readback": "confirmed in READBACK.json: normal push/remote SHA, separate fetch/fast-forward/root-src-crates tree equality, Linux build, existing20+11 original-matching events and both native/original MusicXML4 XSD",
   "remaining": [
     "automatic parallel alias and16-partner bound; selected duplicate keys still refuse",
     "mirror/ensemble/header/all-class overlap and special-head shape/size branches",
@@ -77,5 +77,6 @@
   "sha256": {
     "scripts/java/HeadCleanerLifecycleProbe.java": "5e3f86cce38e0c55868817984fc550b0c1d2c2df7c591fafd0537f9a6c796f9a",
     "fixtures/official-head-cleaner-lifecycle/controls.json": "efbc9d76ad10c8ea50902ea577949fbd5804cc565aac5ca14fe789773c989eff"
-  }
+  },
+  "validated_source_commit": "e532ae2121da43e1b9c5fa8e3ca8c21289cf3919"
 }

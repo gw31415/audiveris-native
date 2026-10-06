@@ -234,7 +234,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "33 affected tests, fmt/workspace-all-target-clippy; original6 successful declared cleaner lifecycle conditions and one original automatic parallel exception. Independent fetched clone CLI/XSD recorded separately in evidence/musicxml-head-cleaner-lifecycle/READBACK.json; prior full583 stays at52943de.",
+  "latest_targeted_validation": "e532ae2:33 affected tests, fmt/workspace-all-target-clippy; original6 successful declared cleaner lifecycle conditions and one original automatic parallel exception. Independent fetched clone built Linux CLI,20+11 original-matching events/XSD and prior XML byte hashes preserved. evidence/musicxml-head-cleaner-lifecycle/{VALIDATION,READBACK}.json; prior full583 stays at52943de.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

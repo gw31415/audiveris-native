@@ -347,3 +347,8 @@ fmt/workspace-all-target clippy成功。全583は過去source52943deのまま。
 [検証](../evidence/musicxml-head-cleaner-lifecycle/VALIDATION.json)。
 mirror/ensemble/特殊head、全support/Part/lyrics所有、完全cleaner/epilogは引き続き
 未完であり、原版非UI機能の省略予定はありません。
+
+この単位の実装sourceは`e532ae2`。独立fetch後のroot/src/crates treeが一致し、
+Linux CLIで既存20イベント・11イベントの原版一致とMusicXML4 XSDを確認しました。
+XML byte hashも前成功版と同一。新しい画像対応や全SIG同等性の宣言ではありません。
+[独立取得照合](../evidence/musicxml-head-cleaner-lifecycle/READBACK.json)。

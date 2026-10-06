@@ -871,3 +871,8 @@ cargo build --locked --bin audiveris-musicxml
 
 Independent fetched-clone20/11-event output and MusicXML4 XSD checks are recorded
 separately in [READBACK.json](../evidence/musicxml-head-cleaner-lifecycle/READBACK.json).
+
+At source`e532ae2`, independent fetch/build produced20 and11 original-matching
+events; native and saved original MusicXML pass MusicXML4 XSD. Both XML byte
+hashes remain identical to the preceding successful checkpoint. Root/src/crates
+trees match. The receipt-only commit does not change tested source.
