@@ -56,5 +56,22 @@
     "cross-system orphan Finalizer, shared/frozen/general ensemble callbacks and original full consistency/reduction/cleaner/epilog",
     "positive multi-stem cleanup on a full image; parallel/manual/more than16 cleaner partners; export still one retained stem/head on current single-voice path",
     "general groups/positive aliens/sloping or wider erasure/32sources/skew/real scans/other fonts/special staff/full24shapes/polyphony/general score and export, no planned original nonUI omission"
-  ]
+  ],
+  "independent_clone_readback": {
+    "source_commit": "4e37f2ec6bdf2aa412f1ded018d81a82de8712ec",
+    "repository_tree": "db5a119e79dbc787afddc931b951567f5b7f9865",
+    "source_tree": "d01f0b527b7513599f978d74798e058f4a5886c8",
+    "crates_tree": "5838d35bd0a83e7f7397e2b6b7611ce580ac323a",
+    "independent_clone_fetch_and_fast_forward": true,
+    "matched_root_trees": true,
+    "working_trees_clean": true,
+    "Linux_offline_locked_Cargo_build": true,
+    "fmt": true,
+    "direct_emitted_XML_events_match_original": 11,
+    "native_and_original_MusicXML4_XSD": true,
+    "explicit_stem_direction_scope": "four beamed notes only; complete engraving not claimed",
+    "native_requires_Java_runtime": false,
+    "global_completion_flags": false,
+    "retained_group_members_bounds_match_original": true
+  }
 }
