@@ -348,6 +348,7 @@ pub mod stem_scale;
 pub mod stem_checks;
 
 pub mod stem_attachment;
+mod stem_beam_finalizer;
 pub mod stem_builder;
 pub mod stem_cache_sig;
 pub mod stem_cleaner;

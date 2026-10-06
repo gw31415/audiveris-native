@@ -902,11 +902,18 @@ impl Graph {
     // Bounded native head/stem support computation after image linking. Prior
     // GRID/ledger nodes are retained; no reduction or completion flag is implied.
     pub(crate) fn contextualize_head_stems(&mut self) -> Result<(), String> {
+        self.contextualize_head_stems_in(None)
+    }
+    pub(crate) fn contextualize_system_head_stems(&mut self, system: u64) -> Result<(), String> {
+        self.contextualize_head_stems_in(Some(system))
+    }
+    fn contextualize_head_stems_in(&mut self, system: Option<u64>) -> Result<(), String> {
         let mut nodes = self
             .vertices
             .iter()
             .filter(|v| {
                 !v.removed
+                    && system.is_none_or(|id| v.key.system == id)
                     && (matches!(v.key.phase, Phase::Head | Phase::Stem)
                         || matches!(v.data["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
             })

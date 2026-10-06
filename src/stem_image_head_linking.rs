@@ -747,7 +747,18 @@ fn continue_linking_impl(
         }
         systems.push(result);
     }
-    let beam_finalizer = crate::music_beams::boost_sides(&mut owned.graph)?;
+    let beam_finalizer = if finalize_heads {
+        crate::stem_beam_finalizer::finalize(
+            &mut owned.graph,
+            &owned.prepared.registry,
+            &owned.upstream_report["grid_ir"],
+            raster.width,
+            raster.height,
+            owned.interline,
+        )?
+    } else {
+        crate::music_beams::boost_sides(&mut owned.graph)?
+    };
     owned.prepared.report = json!({"schema":"audiveris-native.stem-image-head-linking.v1","corner_count":report["corner_count"],"head_items_plan":report,"systems":systems,"shared_sig":owned.graph.snapshot(),"comparison_scope":"Original XML-loaded beam-free linkStems head phases1/2 plus SIGraph contextual grades; cleaner/reduction/epilog pending","heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     if beam_builders.iter().any(|s| !s.is_empty()) {
         owned.prepared.report["limited_beam_finalizer"] = beam_finalizer;
@@ -758,7 +769,7 @@ fn continue_linking_impl(
     if finalize_heads {
         owned.prepared.report["original_process_head_finalizer_connected"] = json!(true);
         owned.prepared.report["comparison_scope"] = json!(
-            "Original system linkStems then finalizeStems/checkHeadStems null-focus exclusion ensembles, followed by bounded all-systems beam-side Finalizer/contextualization. General cross-system orphan/cleaner/reduction/epilog parity pending"
+            "Original system linkStems then finalizeStems/checkHeadStems null-focus exclusion ensembles, followed by owned ordered all-systems orphan/beam-side Finalizer and per-system contextualization. Full-image positive cross-system orphan and general cleaner/reduction/epilog parity pending"
         );
     }
     Ok(owned)

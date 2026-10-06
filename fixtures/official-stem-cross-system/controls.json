@@ -1,0 +1,499 @@
+{
+  "native_outputs_used" : false,
+  "scope" : "eight declared original two-system physical glyph/SIG Finalizer conditions on saved successful page; no full-image positive cross-system orphan claim",
+  "cases" : [ {
+    "name" : "below-linked",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 763, 515, 4, 39 ],
+          "median" : [ 764.9, 515.0, 765.3, 554.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 764, 515, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : true,
+    "current_removed" : true,
+    "other_removed" : false
+  }, {
+    "name" : "above-linked",
+    "current_system" : 2,
+    "other_system" : 1,
+    "vertical_neighbors" : [ 1 ],
+    "top_y_at_center" : 541.0,
+    "bottom_y_at_center" : 585.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 498, 62, 6 ],
+      "median" : [ 288.0, 501.0, 350.0, 501.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 501.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 498, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 498, 62, 6 ],
+      "median" : [ 288.0, 501.0, 350.0, 501.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 501.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 498, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 1003, 195, 4, 39 ],
+          "median" : [ 1004.9, 195.0, 1005.3, 234.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 1004, 195, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : true,
+    "current_removed" : true,
+    "other_removed" : false
+  }, {
+    "name" : "both-orphan",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : true,
+    "current_removed" : false,
+    "other_removed" : false
+  }, {
+    "name" : "different-glyph",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 1, 61 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 763, 515, 4, 39 ],
+          "median" : [ 764.9, 515.0, 765.3, 554.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 764, 515, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : false,
+    "current_removed" : false,
+    "other_removed" : false
+  }, {
+    "name" : "hook-counterpart",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamHookInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 763, 515, 4, 39 ],
+          "median" : [ 764.9, 515.0, 765.3, 554.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 764, 515, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : true,
+    "current_removed" : false,
+    "other_removed" : false
+  }, {
+    "name" : "staff-boundary",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 262, 62, 6 ],
+      "median" : [ 288.0, 265.0, 350.0, 265.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 265.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 262, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 262, 62, 6 ],
+      "median" : [ 288.0, 265.0, 350.0, 265.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 265.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 262, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 763, 515, 4, 39 ],
+          "median" : [ 764.9, 515.0, 765.3, 554.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 764, 515, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : true,
+    "current_removed" : false,
+    "other_removed" : false
+  }, {
+    "name" : "first-orphan-match",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : false,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ ]
+    },
+    "extra" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 763, 515, 4, 39 ],
+          "median" : [ 764.9, 515.0, 765.3, 554.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 764, 515, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "same_physical_glyph" : true,
+    "current_removed" : false,
+    "other_removed" : false
+  }, {
+    "name" : "current-linked",
+    "current_system" : 1,
+    "other_system" : 2,
+    "vertical_neighbors" : [ 2 ],
+    "top_y_at_center" : 221.0,
+    "bottom_y_at_center" : 265.0,
+    "current" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 1003, 195, 4, 39 ],
+          "median" : [ 1004.9, 195.0, 1005.3, 234.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 1004, 195, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "other" : {
+      "kind" : "BeamInter",
+      "bounds" : [ 288, 302, 62, 6 ],
+      "median" : [ 288.0, 305.0, 350.0, 305.0 ],
+      "height" : 6.0,
+      "center" : [ 319.0, 305.0 ],
+      "grade" : 0.2,
+      "has_stem" : true,
+      "glyph" : {
+        "bounds" : [ 288, 302, 62, 6 ],
+        "orientation" : "HORIZONTAL",
+        "runs" : [ [ 0, 0, 62 ], [ 1, 0, 62 ], [ 2, 0, 62 ], [ 3, 0, 62 ], [ 4, 0, 62 ], [ 5, 0, 62 ] ]
+      },
+      "stem_links" : [ {
+        "stem" : {
+          "kind" : "StemInter",
+          "bounds" : [ 763, 515, 4, 39 ],
+          "median" : [ 764.9, 515.0, 765.3, 554.0 ],
+          "grade" : 0.769,
+          "glyph" : {
+            "bounds" : [ 764, 515, 3, 39 ],
+            "orientation" : "VERTICAL",
+            "runs" : [ [ 0, 0, 39 ], [ 1, 0, 38 ], [ 2, 32, 6 ] ]
+          }
+        },
+        "relation" : {
+          "kind" : "BeamStemRelation",
+          "beam_portion" : "CENTER",
+          "grade" : 1.0,
+          "source_ratio" : 5.0,
+          "target_ratio" : 4.0
+        }
+      } ]
+    },
+    "extra" : null,
+    "same_physical_glyph" : true,
+    "current_removed" : false,
+    "other_removed" : false
+  } ]
+}

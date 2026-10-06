@@ -202,3 +202,18 @@ lateChecks・Rational/rhythm依存を、原版成功画像で試せる単位に�
 最終目標は原版非UI全機能の同等性で、一般cleaner/epilog、跨staff/system、
 非zero skew・実スキャン・別font・特殊staff等も未完として保持します。
 [CLI入力例・手順](MUSICXML-LIMITED.md#forwardbackward-secondary-beam-hooks)。
+
+## 所有glyphに基づくsystem横断Finalizer（2026-10-06）
+
+原版`StemsRetriever.Finalizer`の隣接system順・整数bounds中心・staff外側の厳密判定・
+同一の物理glyph・最初のBeamInter一致を、実所有GRID/registry/SIGへ接続。
+原版が返す最初の相手がorphanなら後続のlinked相手へ飛ばしません。
+削除後は既存group callbackとcache同一性を保ち、StemsStep順にsystemごと支持を再計算。
+保存HEADSページに宣言した原版SIG8条件が一致しました。正の削除はこの条件比較であり、
+画像全自動での正のcross-system orphan一致を意味しません。
+
+追加した2-system連桁画像は原版20イベント/4小節に成功。nativeはHEADS未収録の
+Bravura47ptで停止し、両者のhead幅14px/高さ12px/47pt算出は一致しています。
+次はその正確なテンプレート・伝播を接続。全epilog、実スキャン、特殊staff、
+非zero skew、全24形ページ等は未完、完了フラグfalse。
+[検証・次依存](../evidence/musicxml-cross-system/VALIDATION.json)。

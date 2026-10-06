@@ -605,3 +605,14 @@ observation boundary so saved comparisons remain reproducible. Single-voice
 export still requires one retained stem per head; general polyphony, parallel
 relations, >16 cleaner partners, cross-system orphan finalization, wider/sloping
 erasure and full reduction/epilog remain unfinished, not planned omissions.
+
+## Ordered owned beam epilog across systems
+
+The image path now runs original ordered cross-system orphan checks on actual
+GRID neighbors/staff curves and canonical physical glyph records, then per-system
+beam-side support/contextualization. Eight original declared SIG cases agree;
+this does not claim positive orphan removal on an automatic input image.
+Existing hook/group/competition CLI examples remain the runnable examples.
+A new original-successful two-system20-event input currently stops at the exact
+Bravura47pt template dependency; no original XML is substituted as native output.
+Full epilog and all original nonUI functions remain pending, not omitted.

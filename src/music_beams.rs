@@ -36,23 +36,39 @@ pub(crate) fn competing_hook(snapshot: &Value, beam: &Value) -> Option<usize> {
     None
 }
 pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
-    graph.contextualize_head_stems()?;
+    boost_sides_impl(graph, None, true)
+}
+pub(crate) fn boost_system_sides(graph: &mut Graph, system: u64) -> Result<Value, String> {
+    boost_sides_impl(graph, Some(system), false)
+}
+fn boost_sides_impl(
+    graph: &mut Graph,
+    system: Option<u64>,
+    reject_aliases: bool,
+) -> Result<Value, String> {
+    let contextualize = |graph: &mut Graph| match system {
+        Some(id) => graph.contextualize_system_head_stems(id),
+        None => graph.contextualize_head_stems(),
+    };
+    contextualize(graph)?;
     let snap = graph.snapshot();
     let nodes = snap["inters"].as_array().unwrap();
     let edges = snap["relations"].as_array().unwrap();
     let mut added = Vec::new();
-    for b in nodes
-        .iter()
-        .filter(|n| matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter")))
-    {
+    for b in nodes.iter().filter(|n| {
+        matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
+            && system.is_none_or(|id| n["origin"]["system"] == id)
+    }) {
         // Original cross-system orphan purge has no work only when this beam
         // has actual stems and no counterpart sharing its physical glyph.
-        if nodes.iter().any(|n| {
-            matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
-                && n["id"] != b["id"]
-                && n["glyph_id"] == b["glyph_id"]
-                && n["origin"]["system"] != b["origin"]["system"]
-        }) {
+        if reject_aliases
+            && nodes.iter().any(|n| {
+                matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
+                    && n["id"] != b["id"]
+                    && n["glyph_id"] == b["glyph_id"]
+                    && n["origin"]["system"] != b["origin"]["system"]
+            })
+        {
             return Err("cross system beam finalizer pending".into());
         }
         // AbstractBeamInter.isGood overrides the general contextual-grade
@@ -73,11 +89,14 @@ pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
                     .iter()
                     .find(|n| n["id"] == hs["source"])
                     .ok_or("beam finalizer head required")?;
-                if !matches!(
-                    h["shape"].as_str(),
-                    Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
-                ) {
+                let shape = h["shape"]
+                    .as_str()
+                    .ok_or("beam finalizer head shape required")?;
+                if !crate::head_seed_search::ALL_STEM_SHAPES.contains(&shape) {
                     return Err("beam finalizer other shapes pending".into());
+                }
+                if matches!(shape, "NOTEHEAD_BLACK_SMALL" | "NOTEHEAD_VOID_SMALL") {
+                    continue; // Original Shape.isSmallHead.
                 }
                 let grade = 0.5 * (bs["grade"].as_f64().unwrap() + hs["grade"].as_f64().unwrap());
                 let rel = json!({"kind":"BeamHeadRelation","grade":grade,"on_beam_side":true,"source_ratio":1.,"target_ratio":1.+grade});
@@ -90,9 +109,9 @@ pub(crate) fn boost_sides(graph: &mut Graph) -> Result<Value, String> {
             }
         }
     }
-    graph.contextualize_head_stems()?;
+    contextualize(graph)?;
     Ok(
-        json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; linked ordinary/hook groups without cross-system glyph aliases have no cross-system orphan branch; full finalizer pending"}),
+        json!({"beam_side_supports":added,"scope":"StemsRetriever.Finalizer.boostBeamSides; standalone legacy boundary retains alias refusal, owned image epilog validates/purges aliases before system boosting; full STEMS pending"}),
     )
 }
 /// SigReducer.checkBeamsHaveBothStems. Called after the current head/stem
