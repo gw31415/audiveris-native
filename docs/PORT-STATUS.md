@@ -833,3 +833,9 @@ mirror→root stem→中間同時刻→隣接→近接→遠隔の優先順と�
 複数chord slotの一般Voice割当、compound slots、共有stack、全Rationalなどは
 未完。既存画像受付範囲は拡大せず、全体フラグfalse/最終非UI省略なしを維持。
 [CLI例と境界](MUSICXML-LIMITED.md#preliminary-narrowwide-measureslots-2026-10-06)。
+
+compound slots（2026-10-06）：原版narrow/wide交差区分、縦位置順、
+getNarrowSlotを画像CLI候補列へ接続。保存済み6小節と宣言4境界を比較。
+原版cursorの重なり挙動は宣言条件として保持し、成功画像とは扱いません。
+一般Voice matching/候補slot setter時間同一性/共有stackは未完。
+[CLI参照と未完](MUSICXML-LIMITED.md#compound-slot-membership-2026-10-06)。

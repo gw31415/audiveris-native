@@ -59,7 +59,7 @@ struct Relation {
     b: usize,
     rel: Option<Rel>,
 }
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub(crate) struct MeasureSlot {
     pub id: usize,
     pub chord_ids: Vec<usize>,
@@ -311,6 +311,11 @@ fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
             });
         }
     }
+    // Slot/MeasureSlot constructor sorts incoming chord centers by ordinate.
+    for slot in &mut slots {
+        slot.chord_ids
+            .sort_by_key(|id| ids[id].bounds[1] + ids[id].bounds[3] / 2);
+    }
     let mut relations = Vec::new();
     for a in &input.chords {
         for b in &input.chords {
@@ -324,6 +329,71 @@ fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
         }
     }
     Ok(Retrieval { relations, slots })
+}
+/// Slot.CompoundSlot retains its actual narrow members. Its chord list is
+/// concatenated and stably sorted by center ordinate; aliases are not silently
+/// removed. getNarrowSlot takes the first containing member, as in Java.
+pub(crate) struct CompoundSlot {
+    pub id: usize,
+    pub members: Vec<MeasureSlot>,
+    pub chord_ids: Vec<usize>,
+}
+impl CompoundSlot {
+    pub(crate) fn narrow_slot(&self, chord: usize) -> Option<usize> {
+        self.members
+            .iter()
+            .find(|s| s.chord_ids.contains(&chord))
+            .map(|s| s.id)
+    }
+    pub(crate) fn projection(&self) -> Value {
+        serde_json::json!({"id":self.id,"narrow_slot_ids":self.members.iter().map(|s|s.id).collect::<Vec<_>>(),"chord_ids":self.chord_ids,"lookup":self.chord_ids.iter().map(|id|serde_json::json!({"chord_id":id,"narrow_slot_id":self.narrow_slot(*id)})).collect::<Vec<_>>()})
+    }
+}
+fn compound(
+    id: usize,
+    members: &[MeasureSlot],
+    centers: &BTreeMap<usize, i64>,
+) -> Result<CompoundSlot, String> {
+    let mut chord_ids = members
+        .iter()
+        .flat_map(|s| s.chord_ids.iter())
+        .copied()
+        .collect::<Vec<_>>();
+    if chord_ids.iter().any(|id| !centers.contains_key(id)) {
+        return Err("music_compound_slot_owned_chord_required".into());
+    }
+    chord_ids.sort_by_key(|id| centers[id]);
+    Ok(CompoundSlot {
+        id,
+        members: members.to_vec(),
+        chord_ids,
+    })
+}
+/// MeasureRhythm.buildCompoundSlots. Retain the original last-range cursor
+/// behavior even for declared overlapping wide lists; do not invent a repair.
+pub(crate) fn build_compounds(
+    narrow: &[MeasureSlot],
+    wide: &[MeasureSlot],
+    centers: &BTreeMap<usize, i64>,
+) -> Result<Vec<CompoundSlot>, String> {
+    let mut result = Vec::new();
+    let mut start = 0;
+    for wide in wide {
+        let mut next = false;
+        for (i, slot) in narrow.iter().enumerate().skip(start) {
+            let intersection = slot.chord_ids.iter().any(|id| wide.chord_ids.contains(id));
+            if !intersection && i > start {
+                result.push(compound(result.len() + 1, &narrow[start..i], centers)?);
+                start = i;
+                next = true;
+                break;
+            }
+        }
+        if !next {
+            result.push(compound(result.len() + 1, &narrow[start..], centers)?);
+        }
+    }
+    Ok(result)
 }
 /// Prepare getters from live typed SIG, not serialized oracle facts. Current
 /// admission excludes genuine augmentation dots and only has ordinary chords.
@@ -510,6 +580,45 @@ pub(crate) fn from_owned(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_compound_partition_ordinate_lookup_cursor_and_empty() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-compound-slots/observed.json"
+        ))
+        .unwrap();
+        for page in oracle["pages"].as_array().unwrap() {
+            for measure in page["measures"].as_array().unwrap() {
+                let centers = measure["chord_bounds"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .enumerate()
+                    .map(|(id, b)| (id, b[1].as_i64().unwrap() + b[3].as_i64().unwrap() / 2))
+                    .collect();
+                for case in measure["cases"].as_array().unwrap() {
+                    let narrow: Vec<MeasureSlot> =
+                        serde_json::from_value(case["narrow"].clone()).unwrap();
+                    let wide: Vec<MeasureSlot> =
+                        serde_json::from_value(case["wide"].clone()).unwrap();
+                    let compounds = build_compounds(&narrow, &wide, &centers).unwrap();
+                    assert_eq!(
+                        serde_json::json!(
+                            compounds
+                                .iter()
+                                .map(CompoundSlot::projection)
+                                .collect::<Vec<_>>()
+                        ),
+                        case["compounds"],
+                        "{}",
+                        case["name"]
+                    );
+                    for c in compounds {
+                        assert!(c.narrow_slot(usize::MAX).is_none());
+                    }
+                }
+            }
+        }
+    }
     #[test]
     fn original_saved_and_declared_measure_slot_priority_and_all_member_compatibility() {
         let original: Value = serde_json::from_str(include_str!(

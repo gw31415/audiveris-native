@@ -290,19 +290,35 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             &chords,
             m.owner.interline,
         )?;
-        let ordered_ids = narrow
-            .slots
+        let centers = chords
             .iter()
+            .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
+            .collect();
+        let compounds =
+            crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)?;
+        let ordered_ids = compounds
+            .iter()
+            .flat_map(|c| c.members.iter())
             .flat_map(|s| s.chord_ids.iter())
             .copied()
             .collect::<Vec<_>>();
+        if ordered_ids
+            != narrow
+                .slots
+                .iter()
+                .flat_map(|s| s.chord_ids.iter())
+                .copied()
+                .collect::<Vec<_>>()
+        {
+            return Err("musicxml_inconsistent_compound_partition_pending".into());
+        }
         // Until ChordsMapper is connected, actual multi-chord slots require
         // parallel voice assignment; preserve refusal instead of serializing them.
-        if narrow.slots.iter().any(|s| s.chord_ids.len() != 1) {
+        if compounds.iter().any(|s| s.chord_ids.len() != 1) {
             return Err("musicxml_general_slot_voice_assignment_pending".into());
         }
         chords.sort_by_key(|c| ordered_ids.iter().position(|id| *id == c.id));
-        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"voice_assignment":"existing single-voice clock; general ChordsMapper pending"}));
+        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"compounds":compounds.iter().map(|c|c.projection()).collect::<Vec<_>>(),"voice_assignment":"existing single-voice clock; general ChordsMapper pending"}));
         if chords.is_empty() {
             return Err(format!(
                 "musicxml_empty_measure:{}:{}",

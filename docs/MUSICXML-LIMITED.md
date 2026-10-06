@@ -1385,3 +1385,25 @@ Compound slots, SlotMapper/ChordsMapper/VoiceDistance, shared multi-part stacks,
 full Rational/tuplets, lyrics, automatic slur/tie and correction/cleaner/epilog
 remain pending. All global flags remain false; the full595 result belongs to
 `95e191b`, not this source. No nonUI logic is planned for omission.
+
+### Compound slot membership (2026-10-06)
+
+The continuation now connects `MeasureRhythm.buildCompoundSlots` and
+`Slot.CompoundSlot.chordsOf/getNarrowSlot`: narrow/wide chord-set intersections
+partition narrow members, chord centers determine stable ordinate order, and
+lookup takes the first containing narrow member. The original final-range cursor
+behavior is preserved, including the independently declared overlapping-wide
+control; that control is not a successful image/Voice assignment claim.
+`preliminary_measure_slots[].compounds` exposes actual chord/narrow-slot identities
+and lookup. The CLI example above is unchanged.
+
+The current single-voice continuation now takes its candidate sequence from these
+compound members. Multiple chords in a compound still require general
+`SlotMapper/ChordsMapper/VoiceDistance`; they refuse instead of being serialized
+as the same voice. No input image scope was enlarged. Normal saved pages, an empty
+measure-rest candidate list, two narrow members, ordinate order/lookup, the
+original overlapping cursor and empty input are checked separately. Original
+transient candidate-slot setter identity/timing and iterative mapping remain
+partial; final timed stack slot ownership is retained. Next is actual starting
+Voice construction and zero-time propagation before rookie matching. Full595
+remains the old `95e191b` result and all global flags remain false.

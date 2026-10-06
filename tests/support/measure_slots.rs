@@ -59,5 +59,13 @@ pub fn assert_original(report: &Value, page_index: usize) {
             original.sort();
             assert_eq!(relations, original);
         }
+        let compound_oracle: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-compound-slots/observed.json"
+        ))
+        .unwrap();
+        let expected_compounds = &compound_oracle["pages"][page_index]["measures"]
+            [actual["measure_number"].as_u64().unwrap() as usize - 1]["cases"][0]["compounds"];
+        let compounds=actual["compounds"].as_array().unwrap().iter().map(|c|json!({"id":c["id"],"narrow_slot_ids":c["narrow_slot_ids"],"chord_ids":c["chord_ids"].as_array().unwrap().iter().map(&ordinal).collect::<Vec<_>>(),"lookup":c["lookup"].as_array().unwrap().iter().map(|l|json!({"chord_id":ordinal(&l["chord_id"]),"narrow_slot_id":l["narrow_slot_id"]})).collect::<Vec<_>>()})).collect::<Vec<_>>();
+        assert_eq!(json!(compounds), *expected_compounds);
     }
 }
