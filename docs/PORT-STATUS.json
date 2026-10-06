@@ -120,6 +120,11 @@
       "status": "implemented",
       "unit": "ordinary foundation detectOverlaps before contextualization/chord prolog, actual physical runs including retained GRID barline registry, head core and straight line Area intersection",
       "limits": "11 original declared SIG branch conditions; retained image owner/cache/registry and existing MusicXML regressions; full mirror/ensemble/header/all-class overlap and cleaner/epilog pending"
+    },
+    {
+      "status": "implemented",
+      "unit": "HeadStemsCleaner.check -> first typed SIG.getRelation -> removal of only validated actual edges -> HeadStemRelation.removed head/stem abnormal callbacks; no whole-STEM re-registration",
+      "limits": "six successful original declared SIG conditions; manual/frozen and selected distinct-stem parallel edges compared, actual image owner/cache atomicity and old images retained. Original automatic parallel alias fails in one observed condition; native refusal remains. Full cleaner/epilog remains partial."
     }
   ],
   "function_groups": [
@@ -220,7 +225,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "remaining mirror/ensemble/header/special-shape foundation overlap and chord shape/size branches, then LINKS consistency/true augmentation/slur/lyrics and Part cleaner; no original nonUI omissions",
+  "next_image_integration": "remaining mirror/ensemble/header/special-shape foundation overlap and chord shape/size branches, general cleaner ownership and LINKS consistency/true augmentation/slur/lyrics/Part epilog; automatic parallel guard retained following original failure; no original nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -229,7 +234,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "ea8c756:37 affected tests, fmt/workspace-all-target-clippy, original11 declared SIG conditions; independent clone Linux CLI20+11 original-matching events/XSD. evidence/musicxml-foundation-overlap/VALIDATION.json and READBACK.json; previous full583 remains at52943de",
+  "latest_targeted_validation": "33 affected tests, fmt/workspace-all-target-clippy; original6 successful declared cleaner lifecycle conditions and one original automatic parallel exception. Independent fetched clone CLI/XSD recorded separately in evidence/musicxml-head-cleaner-lifecycle/READBACK.json; prior full583 stays at52943de.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -262,7 +267,8 @@
     {
       "original": "HeadStemsCleaner and BeamHeadCleaner",
       "status": "partial",
-      "remaining": "general manual/parallel/frozen/shape/owner branches; existing ordinary paths connected"
+      "remaining": "automatic parallel alias (original observed failure; native refusal), selected duplicate-key/16-partner guards, remaining shape/owner branches and full BeamHeadCleaner/epilog",
+      "connected": "HeadStemsCleaner first typed selected edge and precise live edge removal/endpoint abnormal callbacks; manual/frozen metadata preserved, selected distinct-stem parallel order and repeat behavior compared; actual canonical image owner/cache unchanged"
     },
     {
       "original": "InterCleaner.purgeContainers / Part.purgeContainers",

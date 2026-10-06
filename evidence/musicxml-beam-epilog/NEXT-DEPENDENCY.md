@@ -55,3 +55,15 @@ General groups/aliens/cross-staff, sloping/wider PageCleaner contours, other
 beam levels/flags/dots/tuplets/polyphony and broader rhythm/correction/export
 remain tracked. No original nonUI function is planned for omission. All global
 completion flags remain false.
+
+## Later head-cleaner lifecycle checkpoint
+
+The earlier manual/parallel limitation above is historical: selected distinct
+stem parallel first-edge behavior and manual/frozen head/edge cleanup now match
+six original controls, with precise owned edge removal/endpoint abnormal
+callbacks. Automatic parallel remains guarded following one observed original
+deleted-edge-alias exception; the other automatic parallel input is unobserved.
+The16-partner bound and full cleaner/epilog remain partial. Cross-system orphan
+and ordinary foundation checks progressed in their later existing receipts;
+this does not complete general ensemble/mirror/Part/lyrics/epilog ownership.
+[Current unit](../musicxml-head-cleaner-lifecycle/VALIDATION.json).

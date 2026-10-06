@@ -3,7 +3,7 @@
 //! Parts selection and complete STEMS/epilog remain separate dependencies.
 use crate::{
     head_stem_relation::{self, HeadSide, StemPortion},
-    shared_sig::{Graph, HeadStemAttachment, Key, Phase},
+    shared_sig::{Graph, Key, Phase},
 };
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
@@ -94,9 +94,9 @@ pub fn select_removals(bounds: [i32; 4], ordered: &[Link]) -> Result<Vec<usize>,
     }
     Ok(removed)
 }
-/// Selected nonmanual live head/stem keys; unrelated edges and vertices are
-/// retained transactionally. Missing relations are skipped as in the original.
-/// Parallel relations to one supplied stem need a separate ordering oracle.
+/// Selected distinct live head/stem keys. Original SIGraph.getRelation selects
+/// the first typed parallel edge, irrespective of manual/frozen metadata.
+/// Missing relations are skipped; unrelated edges/vertices remain retained.
 pub fn clean_head(graph: &mut Graph, head: Key, ordered: &[Key]) -> Result<Value, String> {
     if head.system == 0 || head.phase != Phase::Head || ordered.len() > 100_000 {
         return Err("invalid_stem_cleaner_head".into());
@@ -111,7 +111,7 @@ pub fn clean_head(graph: &mut Graph, head: Key, ordered: &[Key]) -> Result<Value
         .collect::<BTreeMap<_, _>>();
     let hid = graph.id(head).ok_or("missing_stem_cleaner_head")?;
     let h = by_id.get(&hid).ok_or("removed_stem_cleaner_head")?;
-    if h["kind"] != "HeadInter" || h["manual"] == true || h["is_manual"] == true {
+    if h["kind"] != "HeadInter" {
         return Err("unsupported_stem_cleaner_head".into());
     }
     let bounds: [i32; 4] = serde_json::from_value(h["bounds"].clone())
@@ -127,20 +127,13 @@ pub fn clean_head(graph: &mut Graph, head: Key, ordered: &[Key]) -> Result<Value
         }
         let id = graph.id(*k).ok_or("missing_stem_cleaner_stem")?;
         let s = by_id.get(&id).ok_or("removed_stem_cleaner_stem")?;
-        if s["kind"] != "StemInter" || s["manual"] == true || s["is_manual"] == true {
+        if s["kind"] != "StemInter" {
             return Err("unsupported_stem_cleaner_stem".into());
         }
-        let matches = edges
+        let selected = edges
             .iter()
-            .filter(|e| e["kind"] == "HeadStemRelation" && e["source"] == hid && e["target"] == id)
-            .collect::<Vec<_>>();
-        if matches.len() > 1 {
-            return Err("unsupported_parallel_stem_cleaner_relations".into());
-        }
-        let Some(e) = matches.first() else { continue };
-        if e["manual"] == true || e["is_manual"] == true {
-            return Err("unsupported_manual_stem_cleaner_relation".into());
-        }
+            .find(|e| e["kind"] == "HeadStemRelation" && e["source"] == hid && e["target"] == id);
+        let Some(e) = selected else { continue };
         links.push(Link {
             relation_id: e["id"].as_u64().ok_or("invalid_stem_cleaner_relation_id")? as usize,
             median: serde_json::from_value(s["median"].clone())
@@ -160,47 +153,7 @@ pub fn clean_head(graph: &mut Graph, head: Key, ordered: &[Key]) -> Result<Value
             json!({"removed_relation_ids":removed,"selected_cleaner_complete":true,"automatic_parts_selection_complete":false,"stems_complete":false,"heads_complete":false,"epilog_complete":false,"shared_sig":snapshot}),
         );
     }
-    let removed_ids = removed.iter().copied().collect::<BTreeSet<_>>();
-    let mut records = Vec::new();
-    for v in vs {
-        let key: Key = serde_json::from_value(v["origin"].clone())
-            .map_err(|_| "invalid_stem_cleaner_origin")?;
-        if key.system == head.system && key.phase == Phase::Stem {
-            let mut r = v.clone();
-            r["id"] = json!(key.local);
-            records.push(r)
-        }
-    }
-    let mut attachments = Vec::new();
-    for e in edges {
-        if e["kind"] != "HeadStemRelation"
-            || e["system_id"] != head.system
-            || removed_ids.contains(&(e["id"].as_u64().unwrap() as usize))
-        {
-            continue;
-        }
-        let source = by_id
-            .get(&(e["source"].as_u64().unwrap() as usize))
-            .ok_or("missing_stem_cleaner_endpoint")?;
-        let target = by_id
-            .get(&(e["target"].as_u64().unwrap() as usize))
-            .ok_or("missing_stem_cleaner_endpoint")?;
-        let source: Key = serde_json::from_value(source["origin"].clone())
-            .map_err(|_| "invalid_stem_cleaner_origin")?;
-        let target: Key = serde_json::from_value(target["origin"].clone())
-            .map_err(|_| "invalid_stem_cleaner_origin")?;
-        attachments.push(HeadStemAttachment {
-            local: e["local_relation_id"]
-                .as_u64()
-                .ok_or("invalid_stem_cleaner_relation_id")? as usize,
-            head: source,
-            stem_local: target.local,
-            relation: e.clone(),
-        });
-    }
-    let mut next = graph.clone();
-    next.sync_stems(head.system, &records, &attachments)?;
-    *graph = next;
+    graph.remove_head_stem_edges(head, &removed)?;
     Ok(
         json!({"removed_relation_ids":removed,"selected_cleaner_complete":true,"automatic_parts_selection_complete":false,"stems_complete":false,"heads_complete":false,"epilog_complete":false,"shared_sig":graph.snapshot()}),
     )
@@ -330,6 +283,7 @@ pub(crate) fn check_system_heads(graph: &mut Graph, system: u64) -> Result<Value
 #[cfg(test)]
 mod automatic_tests {
     use super::*;
+    use crate::shared_sig::HeadStemAttachment;
     #[test]
     fn original_null_focus_partitions_preserve_excluded_alternatives_and_owned_stems() {
         let c: Value = serde_json::from_str(include_str!(
@@ -443,5 +397,248 @@ mod automatic_tests {
         // A fresh pass must not resurrect the relation removed in an earlier ensemble.
         check_head_stems(&mut graph, head).unwrap();
         assert_eq!(graph.snapshot(), after);
+    }
+}
+
+#[cfg(test)]
+mod lifecycle_tests {
+    use super::*;
+    use std::sync::Arc;
+
+    fn state(graph: &Graph, head: Key, stems: &[Key], edges: &[usize]) -> Value {
+        let snapshot = graph.snapshot();
+        let nodes = snapshot["inters"].as_array().unwrap();
+        let node = |key| {
+            nodes
+                .iter()
+                .find(|n| n["id"] == graph.id(key).unwrap())
+                .unwrap()
+        };
+        json!({"kept_relation_indexes":edges.iter().enumerate().filter_map(|(i,id)|
+            snapshot["relations"].as_array().unwrap().iter().any(|e|e["id"]==*id).then_some(i)).collect::<Vec<_>>(),
+            "head_abnormal":node(head)["abnormal"],"head_removed":node(head)["removed"],
+            "stem_abnormal":stems.iter().map(|k|node(*k)["abnormal"].clone()).collect::<Vec<_>>(),
+            "stem_removed":stems.iter().map(|k|node(*k)["removed"].clone()).collect::<Vec<_>>()})
+    }
+
+    #[test]
+    fn original_manual_frozen_first_parallel_edge_and_repeated_cleaner_lifecycle() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-head-cleaner-lifecycle/controls.json"
+        ))
+        .unwrap();
+        for c in oracle["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let head = Key {
+                system: 1,
+                phase: Phase::Head,
+                local: 1,
+            };
+            let mut h = c["head"].clone();
+            h["abnormal"] = c["before"]["head_abnormal"].clone();
+            h["removed"] = c["before"]["head_removed"].clone();
+            graph.vertex(head, h, false).unwrap();
+            let mut stems = Vec::new();
+            for (i, s) in c["stems"].as_array().unwrap().iter().enumerate() {
+                let key = Key {
+                    system: 1,
+                    phase: Phase::Stem,
+                    local: i + 1,
+                };
+                let mut data = s.clone();
+                data["abnormal"] = c["before"]["stem_abnormal"][i].clone();
+                data["removed"] = c["before"]["stem_removed"][i].clone();
+                graph.vertex(key, data, false).unwrap();
+                stems.push(key);
+            }
+            for (i, r) in c["connections"].as_array().unwrap().iter().enumerate() {
+                let mut data = r.clone();
+                data["local_relation_id"] = json!(i + 1);
+                graph
+                    .relations(
+                        1,
+                        Phase::Stem,
+                        vec![(
+                            head,
+                            stems[r["stem_index"].as_u64().unwrap() as usize],
+                            data,
+                        )],
+                    )
+                    .unwrap();
+            }
+            let before = graph.snapshot();
+            let edges = before["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|e| e["id"].as_u64().unwrap() as usize)
+                .collect::<Vec<_>>();
+            assert_eq!(state(&graph, head, &stems, &edges), c["before"]);
+            if c["name"].as_str().unwrap().starts_with("parallel") {
+                // The high-ratio automatic alias case threw in original;
+                // other automatic parallel cases have not been validated.
+                assert!(check_head_stems(&mut graph, head).is_err());
+                assert_eq!(before, graph.snapshot());
+            }
+            for boundary in ["after_first", "after_second"] {
+                if c["mode"] == "automatic" {
+                    let result = check_head_stems(&mut graph, head).unwrap();
+                    if boundary == "after_first" {
+                        let partitions = result["partition_stem_ids"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|p| {
+                                p.as_array()
+                                    .unwrap()
+                                    .iter()
+                                    .map(|id| {
+                                        stems
+                                            .iter()
+                                            .position(|k| {
+                                                graph.id(*k) == Some(id.as_u64().unwrap() as usize)
+                                            })
+                                            .unwrap()
+                                    })
+                                    .collect::<Vec<_>>()
+                            })
+                            .collect::<Vec<_>>();
+                        assert_eq!(json!(partitions), c["automatic_partition_stem_indexes"]);
+                    }
+                } else {
+                    clean_head(&mut graph, head, &stems).unwrap();
+                }
+                assert_eq!(
+                    state(&graph, head, &stems, &edges),
+                    c[boundary],
+                    "{} {} {}",
+                    c["name"],
+                    c["mode"],
+                    boundary
+                );
+                let after = graph.snapshot();
+                for (a, b) in before["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .zip(after["inters"].as_array().unwrap())
+                {
+                    let mut expected = a.clone();
+                    expected["abnormal"] = b["abnormal"].clone();
+                    assert_eq!(expected, *b); // physical data, flags and IDs are unchanged.
+                }
+            }
+            assert_eq!(c["all_physical_glyphs_retained"], true);
+        }
+    }
+
+    #[test]
+    fn actual_cached_owner_edge_cleanup_preserves_registry_other_heads_and_late_refusal() {
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-cross-system/beam-two-systems.png"
+        ))
+        .unwrap();
+        let mut owner = crate::stem_image_head_linking::continue_process(
+            crate::stem_image_owned::prepare_items(&image).unwrap(),
+        )
+        .unwrap();
+        let initial = owner.graph.snapshot();
+        let head = initial["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "HeadInter")
+            .unwrap();
+        let hk: Key = serde_json::from_value(head["origin"].clone()).unwrap();
+        let original = initial["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "HeadStemRelation" && e["source"] == head["id"])
+            .unwrap();
+        let first = initial["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == original["target"])
+            .unwrap();
+        let mut selected = vec![serde_json::from_value(first["origin"].clone()).unwrap()];
+        for n in initial["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| {
+                n["kind"] == "StemInter"
+                    && n["origin"]["system"] == hk.system
+                    && n["id"] != first["id"]
+            })
+            .take(2)
+        {
+            selected.push(serde_json::from_value(n["origin"].clone()).unwrap());
+        }
+        assert_eq!(selected.len(), 3);
+        // Declared extra relations on already computed actual image stems.
+        // No new glyphs, patched intrinsic grades or full-image oracle claim.
+        let mut marked = head.clone();
+        marked["manual"] = json!(true);
+        marked["frozen"] = json!(true);
+        owner.graph.vertex(hk, marked, false).unwrap();
+        for (i, k) in selected.iter().enumerate().skip(1) {
+            let mut r = original.clone();
+            r["local_relation_id"] = json!(1_000_000 + i);
+            r["manual"] = json!(true);
+            owner
+                .graph
+                .relations(hk.system, Phase::Stem, vec![(hk, *k, r)])
+                .unwrap();
+        }
+        let registry = owner.prepared.registry.snapshot();
+        let arcs = selected
+            .iter()
+            .map(|k| {
+                let stem = owner.caches[&k.system]
+                    .registered_stem(&owner.graph, k.local)
+                    .unwrap();
+                let state = stem.snapshot().unwrap();
+                (*k, stem, state)
+            })
+            .collect::<Vec<_>>();
+        let before = owner.graph.snapshot();
+        assert!(
+            owner
+                .graph
+                .remove_head_stem_edges(
+                    hk,
+                    &[original["id"].as_u64().unwrap() as usize, usize::MAX]
+                )
+                .is_err()
+        );
+        assert_eq!(before, owner.graph.snapshot());
+        let result = clean_head(&mut owner.graph, hk, &selected).unwrap();
+        assert_eq!(result["removed_relation_ids"].as_array().unwrap().len(), 2);
+        let after = owner.graph.snapshot();
+        assert_eq!(before["inters"], after["inters"]);
+        let removed = result["removed_relation_ids"].as_array().unwrap();
+        assert_eq!(
+            before["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|e| !removed.contains(&e["id"]))
+                .collect::<Vec<_>>(),
+            after["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .collect::<Vec<_>>()
+        );
+        assert_eq!(registry, owner.prepared.registry.snapshot());
+        for (k, stem, state) in arcs {
+            let current = owner.caches[&k.system]
+                .registered_stem(&owner.graph, k.local)
+                .unwrap();
+            assert!(Arc::ptr_eq(&stem, &current));
+            assert_eq!(state, current.snapshot().unwrap());
+        }
     }
 }

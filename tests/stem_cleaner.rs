@@ -30,8 +30,7 @@ fn original_eight_hundred_cleaner_checks_match_ordered_ties_canonical_sharing_an
     );
 }
 #[test]
-fn cleaner_refuses_duplicate_nonfinite_stale_and_parallel_context_and_keeps_empty_graph_unchanged()
-{
+fn cleaner_refuses_duplicate_nonfinite_stale_inputs_and_preserves_single_stem_parallel_edges() {
     let l = Link {
         relation_id: 1,
         median: [40., 50., 40., 90.],
@@ -90,7 +89,10 @@ fn cleaner_refuses_duplicate_nonfinite_stale_and_parallel_context_and_keeps_empt
         .sync_stems(1, std::slice::from_ref(&record), &parallel)
         .unwrap();
     let prior = graph.snapshot();
-    assert!(stem_cleaner::clean_head(&mut graph, head, &[missing]).is_err());
+    assert_eq!(
+        stem_cleaner::clean_head(&mut graph, head, &[missing]).unwrap()["removed_relation_ids"],
+        json!([])
+    );
     assert_eq!(graph.snapshot(), prior);
     graph.sync_stems(1, &[record], &parallel[..1]).unwrap();
     let prior = graph.snapshot();

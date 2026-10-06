@@ -331,3 +331,19 @@ contextualize/purgeを配置。古い診断CLIの観測境界は維持。単一�
 これは同じ実画像から和音を全自動認識・exportできたという主張ではありません。
 small/percussion/stemless/cueのsize/duration枝、一般overlapと全cleaner/epilogは
 依然未完です。全非UI機能は最終目標に保持します。
+
+## HeadStemsCleanerの実所有接続削除（今回）
+
+原版の最初のtyped relation取得と`HeadStemRelation.removed`を接続。
+STEM全体の再同期をやめ、選択した実edgeだけを削除して両endpointのabnormalを
+再計算します。manual/frozenの属性、他head/beamの接続、physical registryと
+canonical cache objectは維持。元版6宣言SIG条件で選択順と2回の処理結果を比較し、
+実画像ownerへ宣言追加した接続でもcache保持・途中不正入力の原子的拒否を確認しました。
+この宣言条件の検証を画像全工程の正の複数stem認識とは区別しています。
+
+原版自動parallel条件1件は削除済みedge参照で停止しました。再試行せず、nativeの
+自動parallel拒否を維持。他方の自動parallel条件は未観測です。対象33テストと
+fmt/workspace-all-target clippy成功。全583は過去source52943deのまま。
+[検証](../evidence/musicxml-head-cleaner-lifecycle/VALIDATION.json)。
+mirror/ensemble/特殊head、全support/Part/lyrics所有、完全cleaner/epilogは引き続き
+未完であり、原版非UI機能の省略予定はありません。

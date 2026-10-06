@@ -78,3 +78,19 @@ original revision; the frozen analysis in AdapterForLinks is a separate pending
 unit, not an invented foundation callback. Full InterCleaner requires actual
 Part/lyrics ownership; LINKS epilog requires recognized slur/tie dependencies.
 All remain final implementation targets; no blanket guard removal.
+
+## Connected cleaner lifecycle, still partial
+
+`HeadStemsCleaner.check -> SIGraph.removeEdge -> HeadStemRelation.removed`
+is now connected without whole-STEM re-registration. Six original declared
+controls compare first typed selected parallel edges, manual/frozen cleanup,
+small canonical sharing and repeated callback outcomes. Actual image owner/cache
+preservation is tested separately from full-image positive multi-stem recognition.
+Original automatic parallel high-ratio input throws on a deleted-edge alias;
+native automatic refusal remains. Low-ratio automatic is not observed.
+
+Next dependencies still include actual mirror/ensemble ownership and special
+head branches in generic overlap/chord processing. InterCleaner.purgeContainers
+requires Part/lyrics, not merely head-edge callbacks. LINKS slur/tie/lyrics and
+complete epilog remain pending. No nonUI omission or completion flag change.
+[Lifecycle validation](../musicxml-head-cleaner-lifecycle/VALIDATION.json).

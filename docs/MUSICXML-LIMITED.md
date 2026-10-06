@@ -843,3 +843,31 @@ SIG-predicate/grade comparisons, not complete whole-image SIG equivalence.
 ```sh
 ./target/debug/audiveris-musicxml fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png /tmp/foundation-overlap-hooks.musicxml /tmp/foundation-overlap-hooks.json
 ```
+
+## Cleaner edge lifecycle on the retained image owner
+
+The existing image CLI now applies original HeadStemsCleaner removals directly
+to actual typed edges. First typed parallel-edge selection, manual/frozen edge
+cleanup and head/stem abnormal callbacks are compared in six declared original
+SIG controls. All vertices, unrelated edges, physical registry and canonical
+cache objects remain retained. A declared alternative-edge test on the actual
+image owner checks atomic refusal and cache identities; it does not claim an
+automatically recognized positive multi-stem image. No notation admission change.
+
+Original automatic high-ratio parallel input throws on a deleted-edge alias;
+the native automatic parallel guard remains. Low-ratio automatic is unobserved.
+Full cleaner/Part/lyrics/epilog and mirror/ensemble/special-head branches remain
+pending. Global completion flags remain false. This source passed33 affected
+tests, fmt and workspace/all-target clippy. Historical full583 is at52943de.
+[Validation](../evidence/musicxml-head-cleaner-lifecycle/VALIDATION.json).
+
+Reuse the existing CLI inputs with fresh output paths:
+
+```sh
+cargo build --locked --bin audiveris-musicxml
+./target/debug/audiveris-musicxml fixtures/official-image-musicxml-cross-system/beam-two-systems.png /tmp/head-cleaner.musicxml /tmp/head-cleaner.json
+./target/debug/audiveris-musicxml fixtures/official-image-musicxml-beam-epilog/beam-competing-hooks.png /tmp/head-cleaner-hooks.musicxml /tmp/head-cleaner-hooks.json
+```
+
+Independent fetched-clone20/11-event output and MusicXML4 XSD checks are recorded
+separately in [READBACK.json](../evidence/musicxml-head-cleaner-lifecycle/READBACK.json).

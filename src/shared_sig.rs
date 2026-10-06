@@ -371,6 +371,66 @@ impl Graph {
         }
         Ok(())
     }
+
+    /// HeadStemsCleaner -> SIGraph.removeEdge -> HeadStemRelation.removed.
+    /// Delete only validated actual edges; preserve vertices, other relations,
+    /// cache/registry identities and intrinsic/manual/frozen metadata.
+    pub(crate) fn remove_head_stem_edges(
+        &mut self,
+        head: Key,
+        ids: &[usize],
+    ) -> Result<(), String> {
+        let hid = self.endpoint(head)?;
+        if head.phase != Phase::Head || self.vertices[hid - 1].data["kind"] != "HeadInter" {
+            return Err("cleaner_typed_owned_head_required".into());
+        }
+        let mut affected = BTreeSet::new();
+        let mut unique = BTreeSet::new();
+        for id in ids {
+            let e = self
+                .edges
+                .get(id.checked_sub(1).ok_or("invalid_cleaner_edge_id")?)
+                .ok_or("missing_cleaner_edge")?;
+            let stem = &self.vertices[e.key.target - 1];
+            if e.removed
+                || e.key.kind != "HeadStemRelation"
+                || e.key.source != hid
+                || e.key.system != head.system
+                || stem.removed
+                || stem.key.system != head.system
+                || stem.key.phase != Phase::Stem
+                || stem.data["kind"] != "StemInter"
+            {
+                return Err("cleaner_typed_live_head_stem_edge_required".into());
+            }
+            unique.insert(*id);
+            affected.insert(e.key.source);
+            affected.insert(e.key.target);
+        }
+        // All fallible ownership checks precede mutation. Original callbacks
+        // update abnormal only on the endpoints of removed live relations.
+        for id in unique {
+            self.edges[id - 1].removed = true;
+        }
+        let linked = self
+            .edges
+            .iter()
+            .filter(|e| !e.removed && e.key.kind == "HeadStemRelation")
+            .flat_map(|e| [e.key.source, e.key.target])
+            .collect::<BTreeSet<_>>();
+        for id in affected {
+            let v = &mut self.vertices[id - 1];
+            if v.data["kind"] == "StemInter"
+                || (v.data["kind"] == "HeadInter"
+                    && v.data["shape"]
+                        .as_str()
+                        .is_some_and(|s| crate::head_seed_search::ALL_STEM_SHAPES.contains(&s)))
+            {
+                v.data["abnormal"] = json!(!linked.contains(&id));
+            }
+        }
+        Ok(())
+    }
     pub(crate) fn relations(
         &mut self,
         system: u64,
