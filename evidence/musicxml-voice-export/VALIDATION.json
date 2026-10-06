@@ -1,0 +1,74 @@
+{
+  "base_source": "840ac6bd938c09e258f6c7368b8fa59ad1230684",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "owned StackRhythm slots -> original PartwiseBuilder Voice/BEGIN traversal, backup/forward and exact binary MusicXML writer",
+  "original_comparison": {
+    "declared_controls": 4,
+    "original_methods": [
+      "MeasureRhythm.SlotMapper.mapChords",
+      "StackRhythm.generateStackSlots/readStackActualDuration",
+      "Voice.completeSlotTable",
+      "PartwiseBuilder.build/processMeasure/insertBackup/insertForward"
+    ],
+    "matching": [
+      "solved actual Voice/chord membership and times",
+      "final stack incoming ordinate order and BEGIN/CONTINUE tables",
+      "Voice-major note pitch/type/stem/duration stream",
+      "backup/forward order and normalized exact durations",
+      "normalized MusicXML body byte equality in native test"
+    ],
+    "positive_continue_and_fractional_gap": "fourth control uses two actual prior Voices with 1/8 offset; CONTINUE skipped; forward1/8 uses divisions2 despite quarter note durations",
+    "limits": "declared saved-original object controls with image-derived native owners; no new whole-image polyphonic admission or full engraving equality"
+  },
+  "writer_integration": "actual public Linux image CLI now traverses retained Voice/stack slots and calls the same note/backup/forward writer; image starting/multi-incoming/event adapter guards retained",
+  "targeted_unique_passed": 3,
+  "runs": {
+    "compound_mapping_stack_and_export_ownership": 1,
+    "flag_image_and_erased_flag_refusal": 1,
+    "frozen_header_key_note_alter_MusicXML": 1
+  },
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "control_XSD": [
+    {
+      "control": "agreeing-times",
+      "divisions": 1,
+      "original_normalized_body_exact_native_test_equality": true,
+      "wrapped_body_MusicXML4_XSD": "passed",
+      "comparison": "original PartwiseBuilder note/backup/forward getter stream; normalized exact durations; native Rust test asserts byte-equal normalized body, not full original engraving metadata or fresh image polyphony"
+    },
+    {
+      "control": "conflicting-times",
+      "divisions": 1,
+      "original_normalized_body_exact_native_test_equality": true,
+      "wrapped_body_MusicXML4_XSD": "passed",
+      "comparison": "original PartwiseBuilder note/backup/forward getter stream; normalized exact durations; native Rust test asserts byte-equal normalized body, not full original engraving metadata or fresh image polyphony"
+    },
+    {
+      "control": "separate-member-times",
+      "divisions": 1,
+      "original_normalized_body_exact_native_test_equality": true,
+      "wrapped_body_MusicXML4_XSD": "passed",
+      "comparison": "original PartwiseBuilder note/backup/forward getter stream; normalized exact durations; native Rust test asserts byte-equal normalized body, not full original engraving metadata or fresh image polyphony"
+    },
+    {
+      "control": "overlapping-continuation",
+      "divisions": 2,
+      "original_normalized_body_exact_native_test_equality": true,
+      "wrapped_body_MusicXML4_XSD": "passed",
+      "comparison": "original PartwiseBuilder note/backup/forward getter stream; normalized exact durations; native Rust test asserts byte-equal normalized body, not full original engraving metadata or fresh image polyphony"
+    }
+  ],
+  "limits": [
+    "automatic multiple-starting-chord/compound image admission and multi-Voice event construction pending",
+    "general Rational/tuplets/Merged/shared stacks and whole-rest mixed Voices pending",
+    "classified tie/lyrics/complete cleaner/epilog and remaining nonUI functionality partial",
+    "no broadened font/skew/real-scan/special-staff/all24/32sources image admission; original all-rest XSD failure remains negative"
+  ],
+  "all_global_completion_flags": false
+}

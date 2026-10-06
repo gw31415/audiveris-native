@@ -798,9 +798,26 @@ mod tests {
             "../fixtures/official-compound-mapping/observed.json"
         ))
         .unwrap();
+        let export_oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-compound-voice-export/observed.json"
+        ))
+        .unwrap();
         let mut owner = image_owner();
+        let source_events = owner.owner.prepared.report["events"]
+            .as_array()
+            .unwrap()
+            .clone();
         let mi = 1;
-        for case in oracle["controls"].as_array().unwrap() {
+        let mut controls = oracle["controls"].as_array().unwrap().clone();
+        controls.extend(
+            export_oracle["controls"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter_map(|c| c.get("mapping"))
+                .cloned(),
+        );
+        for case in &controls {
             reset_owner(&mut owner);
             let mut chords = owner
                 .chords
@@ -972,6 +989,79 @@ mod tests {
                     })
                 );
             }
+            let export = export_oracle["controls"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["name"] == case["name"])
+                .unwrap();
+            crate::music_voices::generate_slots(
+                context.graph,
+                context.voices,
+                &mut context.measures[mi],
+                mi,
+            )
+            .unwrap();
+            crate::music_voices::read_stack_actual_duration(
+                context.graph,
+                context.voices,
+                &mut context.measures[mi],
+                mi,
+            )
+            .unwrap();
+            let snapshot = context.graph.snapshot();
+            let bounds = |id| node(&snapshot, id).unwrap()["bounds"].clone();
+            let slots = &context.measures[mi].timing.slots;
+            let stack = json!({"slots":slots.iter().map(|s| json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_bounds":s.incoming_ids.iter().map(|&id| bounds(id)).collect::<Vec<_>>()})).collect::<Vec<_>>(),"voices":context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"slots":slots.iter().filter_map(|s| v.slots.get(&s.id).map(|info| json!({"slot_id":s.id,"status":if info.continuing {"CONTINUE"} else {"BEGIN"},"chord_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>(),"abnormal":context.measures[mi].timing.abnormal});
+            assert_eq!(stack, export["stack"], "{}", case["name"]);
+            let events = source_events
+                .iter()
+                .filter(|e| chords.iter().any(|c| e["chord_id"] == c.id))
+                .map(|e| {
+                    let mut e = e.clone();
+                    let n = node(&snapshot, e["chord_id"].as_u64().unwrap() as usize).unwrap();
+                    e["voice"] = n["voice"].clone();
+                    e["time_offset"] = n["time_offset"].clone();
+                    e
+                })
+                .collect::<Vec<_>>();
+            let sequences = vec![
+                crate::music_voice_export::sequence(
+                    context.graph,
+                    context.voices,
+                    &context.measures[mi],
+                    mi,
+                )
+                .unwrap(),
+            ];
+            let stream = sequences[0].iter().map(|s| match *s {
+                crate::music_voice_export::Step::Chord { id, voice, duration } => {
+                    let e = events.iter().find(|e| e["chord_id"] == id).unwrap();
+                    json!({"kind":"chord","voice":voice,"step":e["step"],"octave":e["octave"],"type":e["type"],"stem":e["stem_direction"],"duration":crate::music_time::format_ticks(duration)})
+                },
+                crate::music_voice_export::Step::Backup(duration) => json!({"kind":"backup","duration":crate::music_time::format_ticks(duration)}),
+                crate::music_voice_export::Step::Forward { voice, duration } => json!({"kind":"forward","voice":voice,"duration":crate::music_time::format_ticks(duration)}),
+            }).collect::<Vec<_>>();
+            assert_eq!(json!(stream), export["export_stream"], "{}", case["name"]);
+            let divisions = crate::music_voice_export::divisions(&sequences);
+            let mut xml = String::new();
+            crate::music_voice_export::write_measure(
+                &mut xml,
+                &sequences[0],
+                &events.iter().collect::<Vec<_>>(),
+                divisions,
+            )
+            .unwrap();
+            let expected = export["export_stream"].as_array().unwrap().iter().map(|s| {
+                let duration = crate::music_time::parse_ticks(s["duration"].as_str().unwrap()).unwrap() * divisions / 4;
+                match s["kind"].as_str().unwrap() {
+                    "backup" => format!("<backup><duration>{duration}</duration></backup>\n"),
+                    "forward" => format!("<forward><duration>{duration}</duration><voice>{}</voice></forward>\n", s["voice"]),
+                    "chord" => format!("<note><pitch><step>{}</step><octave>{}</octave></pitch><duration>{duration}</duration><voice>{}</voice><type>{}</type>{}</note>\n", s["step"].as_str().unwrap(), s["octave"], s["voice"], s["type"].as_str().unwrap(), s["stem"].as_str().map(|stem| format!("<stem>{stem}</stem>")).unwrap_or_default()),
+                    _ => unreachable!(),
+                }
+            }).collect::<String>();
+            assert_eq!(xml, expected, "{}", case["name"]);
         }
     }
     fn image_owner() -> crate::music_measures::OwnedMusic {

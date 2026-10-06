@@ -967,24 +967,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
     }
-    // PartwiseBuilder uses a positive division value for exact durations.
-    // Page.computeDurationDivisor uses exact rational denominators; binary
-    // eighths/sixteenths need2/4, preserving1 for quarter/half-only pages.
-    let divisions = if events.iter().any(|e| {
-        e["duration_quarters"]
-            .as_f64()
-            .is_some_and(|d| (d * 2.).fract() != 0.)
-    }) {
-        4
-    } else if events.iter().any(|e| {
-        e["duration_quarters"]
-            .as_f64()
-            .is_some_and(|d| d.fract() != 0.)
-    }) {
-        2
-    } else {
-        1
-    };
+    let sequences = m
+        .measures
+        .iter()
+        .enumerate()
+        .map(|(mi, measure)| crate::music_voice_export::sequence(&graph, &m.voices, measure, mi))
+        .collect::<Result<Vec<_>, _>>()?;
+    let divisions = crate::music_voice_export::divisions(&sequences);
     let escaped_name = part_name
         .replace('&', "&amp;")
         .replace('<', "&lt;")
@@ -997,7 +986,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     let mut previous_system = None;
     let mut written_key = None;
     let mut written_clef = None;
-    for measure in &measures {
+    for (mi, measure) in measures.iter().enumerate() {
         let number = measure["number"].as_u64().unwrap();
         writeln!(&mut xml, "<measure number=\"{number}\">").unwrap();
         if previous_system.is_some_and(|s| s != measure["system_id"]) {
@@ -1040,55 +1029,16 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             }
             xml.push_str("</attributes>\n");
         }
-        for e in events.iter().filter(|e| e["measure_number"] == number) {
-            xml.push_str("<note>");
-            if e["rest"] == true {
-                xml.push_str(if e["measure_rest"] == true {
-                    r#"<rest measure="yes"/>"#
-                } else {
-                    "<rest/>"
-                });
-            } else {
-                write!(
-                    &mut xml,
-                    "<pitch><step>{}</step>{}<octave>{}</octave></pitch>",
-                    e["step"].as_str().unwrap(),
-                    if e["alter"] == 0 {
-                        String::new()
-                    } else {
-                        format!("<alter>{}</alter>", e["alter"])
-                    },
-                    e["octave"]
-                )
-                .unwrap();
-            }
-            writeln!(
-                &mut xml,
-                "<duration>{}</duration><voice>{}</voice>{}{}{}</note>",
-                (e["duration_quarters"].as_f64().unwrap() * divisions as f64) as u32,
-                e["voice"].as_u64().unwrap(),
-                e["type"]
-                    .as_str()
-                    .map(|t| format!("<type>{t}</type>"))
-                    .unwrap_or_default(),
-                e["stem_direction"]
-                    .as_str()
-                    .map(|d| format!("<stem>{d}</stem>"))
-                    .unwrap_or_default(),
-                e["beams"]
-                    .as_array()
-                    .map(|beams| beams
-                        .iter()
-                        .map(|b| format!(
-                            "<beam number=\"{}\">{}</beam>",
-                            b["number"],
-                            b["value"].as_str().unwrap()
-                        ))
-                        .collect::<String>())
-                    .unwrap_or_default()
-            )
-            .unwrap();
-        }
+        let measure_events = events
+            .iter()
+            .filter(|e| e["measure_number"] == number)
+            .collect::<Vec<_>>();
+        crate::music_voice_export::write_measure(
+            &mut xml,
+            &sequences[mi],
+            &measure_events,
+            divisions,
+        )?;
         xml.push_str("</measure>\n");
         previous_system = Some(measure["system_id"].clone());
     }

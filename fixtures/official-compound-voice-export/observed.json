@@ -1,0 +1,440 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "same declared full compound mapping controls -> actual StackRhythm slots/Voice tables -> actual PartwiseBuilder.build score measure2 stream; not image polyphony admission",
+  "controls" : [ {
+    "name" : "agreeing-times",
+    "stack" : {
+      "slots" : [ {
+        "id" : 1,
+        "time_offset" : "0",
+        "incoming_bounds" : [ [ 875, 195, 14, 42 ], [ 755, 206, 14, 42 ] ]
+      }, {
+        "id" : 2,
+        "time_offset" : "1/4",
+        "incoming_bounds" : [ [ 995, 184, 14, 42 ], [ 1115, 195, 14, 42 ] ]
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 755, 206, 14, 42 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 995, 184, 14, 42 ]
+        } ]
+      }, {
+        "id" : 2,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 875, 195, 14, 42 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 1115, 195, 14, 42 ]
+        } ]
+      } ],
+      "abnormal" : false
+    },
+    "export_stream" : [ {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "B",
+      "octave" : 4,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "F",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "backup",
+      "duration" : "1/2"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    } ]
+  }, {
+    "name" : "conflicting-times",
+    "stack" : {
+      "slots" : [ {
+        "id" : 1,
+        "time_offset" : "0",
+        "incoming_bounds" : [ [ 755, 206, 14, 42 ] ]
+      }, {
+        "id" : 2,
+        "time_offset" : "1/4",
+        "incoming_bounds" : [ [ 995, 184, 14, 42 ], [ 1115, 195, 14, 42 ], [ 875, 195, 14, 42 ] ]
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 755, 206, 14, 42 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 1115, 195, 14, 42 ]
+        } ]
+      }, {
+        "id" : 2,
+        "slots" : [ {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 875, 195, 14, 42 ]
+        } ]
+      }, {
+        "id" : 3,
+        "slots" : [ {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 995, 184, 14, 42 ]
+        } ]
+      } ],
+      "abnormal" : false
+    },
+    "export_stream" : [ {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "B",
+      "octave" : 4,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "backup",
+      "duration" : "1/2"
+    }, {
+      "kind" : "forward",
+      "voice" : 2,
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "backup",
+      "duration" : "1/2"
+    }, {
+      "kind" : "forward",
+      "voice" : 3,
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 3,
+      "step" : "F",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    } ]
+  }, {
+    "name" : "separate-member-times",
+    "stack" : {
+      "slots" : [ {
+        "id" : 1,
+        "time_offset" : "0",
+        "incoming_bounds" : [ [ 755, 206, 14, 42 ] ]
+      }, {
+        "id" : 2,
+        "time_offset" : "1/4",
+        "incoming_bounds" : [ [ 995, 184, 14, 42 ], [ 875, 195, 14, 42 ] ]
+      }, {
+        "id" : 3,
+        "time_offset" : "1/2",
+        "incoming_bounds" : [ [ 1115, 195, 14, 42 ] ]
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 755, 206, 14, 42 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 995, 184, 14, 42 ]
+        } ]
+      }, {
+        "id" : 2,
+        "slots" : [ {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 875, 195, 14, 42 ]
+        }, {
+          "slot_id" : 3,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 1115, 195, 14, 42 ]
+        } ]
+      } ],
+      "abnormal" : false
+    },
+    "export_stream" : [ {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "B",
+      "octave" : 4,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "F",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "backup",
+      "duration" : "1/2"
+    }, {
+      "kind" : "forward",
+      "voice" : 2,
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    } ]
+  }, {
+    "name" : "overlapping-continuation",
+    "stack" : {
+      "slots" : [ {
+        "id" : 1,
+        "time_offset" : "0",
+        "incoming_bounds" : [ [ 755, 206, 14, 42 ] ]
+      }, {
+        "id" : 2,
+        "time_offset" : "1/8",
+        "incoming_bounds" : [ [ 875, 195, 14, 42 ] ]
+      }, {
+        "id" : 3,
+        "time_offset" : "1/4",
+        "incoming_bounds" : [ [ 995, 184, 14, 42 ] ]
+      }, {
+        "id" : 4,
+        "time_offset" : "3/8",
+        "incoming_bounds" : [ [ 1115, 195, 14, 42 ] ]
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "slots" : [ {
+          "slot_id" : 1,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 755, 206, 14, 42 ]
+        }, {
+          "slot_id" : 2,
+          "status" : "CONTINUE",
+          "chord_bounds" : [ 755, 206, 14, 42 ]
+        }, {
+          "slot_id" : 3,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 995, 184, 14, 42 ]
+        }, {
+          "slot_id" : 4,
+          "status" : "CONTINUE",
+          "chord_bounds" : [ 995, 184, 14, 42 ]
+        } ]
+      }, {
+        "id" : 2,
+        "slots" : [ {
+          "slot_id" : 2,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 875, 195, 14, 42 ]
+        }, {
+          "slot_id" : 3,
+          "status" : "CONTINUE",
+          "chord_bounds" : [ 875, 195, 14, 42 ]
+        }, {
+          "slot_id" : 4,
+          "status" : "BEGIN",
+          "chord_bounds" : [ 1115, 195, 14, 42 ]
+        } ]
+      } ],
+      "abnormal" : false
+    },
+    "export_stream" : [ {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "B",
+      "octave" : 4,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 1,
+      "step" : "F",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "backup",
+      "duration" : "1/2"
+    }, {
+      "kind" : "forward",
+      "voice" : 2,
+      "duration" : "1/8"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    }, {
+      "kind" : "chord",
+      "voice" : 2,
+      "step" : "D",
+      "octave" : 5,
+      "type" : "quarter",
+      "stem" : "up",
+      "duration" : "1/4"
+    } ],
+    "mapping" : {
+      "name" : "overlapping-continuation",
+      "input" : {
+        "rookies" : [ 2, 3 ],
+        "actives" : [ 0, 1 ],
+        "costs" : [ {
+          "rookie" : 2,
+          "active" : 0,
+          "distance" : 12
+        }, {
+          "rookie" : 2,
+          "active" : 1,
+          "distance" : 10
+        }, {
+          "rookie" : 3,
+          "active" : 0,
+          "distance" : 10
+        }, {
+          "rookie" : 3,
+          "active" : 1,
+          "distance" : 8
+        } ],
+        "black" : [ ],
+        "next" : [ ],
+        "narrow" : [ {
+          "id" : 3,
+          "chord_ids" : [ 2 ],
+          "time_offset" : null
+        }, {
+          "id" : 4,
+          "chord_ids" : [ 3 ],
+          "time_offset" : null
+        } ],
+        "active_ends" : [ {
+          "id" : 0,
+          "end" : "1/4"
+        }, {
+          "id" : 1,
+          "end" : "3/8"
+        } ],
+        "rookie_durations" : [ {
+          "id" : 2,
+          "duration" : "1/4"
+        }, {
+          "id" : 3,
+          "duration" : "1/4"
+        } ],
+        "expected" : "1"
+      },
+      "output" : {
+        "mapping" : {
+          "cost" : 20,
+          "pairs" : [ {
+            "rookie" : 2,
+            "active" : 0
+          }, {
+            "rookie" : 3,
+            "active" : 1
+          } ]
+        },
+        "black" : [ ],
+        "remaining_rookies" : [ ],
+        "narrow" : [ {
+          "id" : 3,
+          "time_offset" : "1/4"
+        }, {
+          "id" : 4,
+          "time_offset" : "3/8"
+        } ]
+      },
+      "ok" : true,
+      "abnormal" : false,
+      "chord_states" : [ {
+        "id" : 0,
+        "voice" : 1,
+        "time_offset" : "0"
+      }, {
+        "id" : 1,
+        "voice" : 2,
+        "time_offset" : "1/8"
+      }, {
+        "id" : 2,
+        "voice" : 1,
+        "time_offset" : "1/4"
+      }, {
+        "id" : 3,
+        "voice" : 2,
+        "time_offset" : "3/8"
+      } ],
+      "voices" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0, 2 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1, 3 ]
+      } ]
+    }
+  } ]
+}

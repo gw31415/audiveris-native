@@ -1690,3 +1690,32 @@ is solved Voice stack-slot traversal and original backup/forward handling. Known
 grouped conflicts, exact Rational/implicit tuplets, Merged/shared stacks and the
 remaining nonUI functionality stay incomplete. No original logic omission is
 planned. Global flags remain false; full595 belongs to old `95e191b`.
+
+### Owned Voice/stack traversal in the MusicXML writer (2026-10-06)
+
+The public Linux CLI writer now follows `PartwiseBuilder.processMeasure` over
+retained Voices and final stack slots, emitting notes only at BEGIN entries.
+At a Voice boundary it backs up the actual preceding cursor; before a later
+chord it inserts a forward with that Voice number. Movement durations join note
+durations in selecting exact binary divisions, so a 1/8 gap between quarter
+notes is preserved. Measure-rest Voice uses its dedicated chord and actual stack
+duration. Chord and event ownership are checked before export; unresolved clocks
+and duplicate/missing events refuse.
+
+Four original saved-object controls reach actual `PartwiseBuilder.build`: the
+three compound cases plus an overlapping 1/8-offset case with positive CONTINUE
+entries. Native compares final slot tables, exact note/backup/forward order,
+normalized durations and normalized XML body bytes. Wrapped normalized bodies
+also pass MusicXML4 XSD. This does not claim full original engraving equality or
+a new automatically recognized polyphonic page. Existing three 36-event CLI
+examples and commands above remain the image scope.
+
+To run the owned control comparison after cloning, use
+`cargo test --offline --locked --lib multiple_rookies_retain_original_assignment_retry_and_voice_ownership`
+(or omit `--offline` when dependencies are not yet available). The next image
+dependency is original multi-starting-chord ownership, followed by actual
+multi-Voice event/onset construction and all-Voice duration checks. Starting,
+compound image admission and serial event guards remain until those dependencies
+and a same-image original comparison agree. Exact Rational/tuplets, Merged/shared
+stacks, lyrics and remaining nonUI features stay partial. All flags stay false;
+full595 remains historical `95e191b`.

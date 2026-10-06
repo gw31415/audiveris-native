@@ -340,6 +340,12 @@
       "unit": "separated multi-rookie compound SlotMapper.mapChords applied to actual Graph/Voices with per-narrow clocks, retry/blacklist and leftover new Voice",
       "limits": "three declared original saved-object controls; image-derived native owners and actual candidate references; not automatic image polyphony or multi-Voice MusicXML; grouped pre-mapping conflicts and implicit tuplets/shrink remain pending",
       "evidence": "evidence/musicxml-compound-mapping/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "original Voice-major PartwiseBuilder BEGIN traversal with backup/forward and exact binary movement/note duration divisions in actual image writer",
+      "limits": "four declared saved-object controls -> actual original PartwiseBuilder; positive CONTINUE/1/8 gap; automatic image starting/compound and multi-Voice event construction remain guarded; full score/engraving/tuplets/shared stacks pending",
+      "evidence": "evidence/musicxml-voice-export/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -417,7 +423,8 @@
     {
       "original_function": "MusicXML / `PartwiseBuilder`, original proxymusic",
       "status": "partial",
-      "current_and_remaining": "native MusicXML4 writer\u3001\u9650\u5b9a\u30a4\u30d9\u30f3\u30c8\u30fbsystem break\u30fbpart\u540d\u3001schema/reimport\u6bd4\u8f03\u3042\u308a\u3002\u4e00\u822cnotation/direction/lyric/instrument/layout/score\u5c5e\u6027\u3068.mxl\u5727\u7e2e\u3001\u591a\u30da\u30fc\u30b8export\u306e\u539f\u7248\u5bfe\u5fdc\u304c\u6b8b\u308b\u3002\u539f\u7248XML\u306e\u6d41\u7528\u306f\u8a8d\u8b58\u5b8c\u6210\u306b\u6570\u3048\u306a\u3044\u3002"
+      "current_and_remaining": "native MusicXML4 writer\u3001\u9650\u5b9a\u30a4\u30d9\u30f3\u30c8\u30fbsystem break\u30fbpart\u540d\u3001schema/reimport\u6bd4\u8f03\u3042\u308a\u3002\u4e00\u822cnotation/direction/lyric/instrument/layout/score\u5c5e\u6027\u3068.mxl\u5727\u7e2e\u3001\u591a\u30da\u30fc\u30b8export\u306e\u539f\u7248\u5bfe\u5fdc\u304c\u6b8b\u308b\u3002\u539f\u7248XML\u306e\u6d41\u7528\u306f\u8a8d\u8b58\u5b8c\u6210\u306b\u6570\u3048\u306a\u3044\u3002",
+      "owned_voice_traversal": "Public writer now consumes actual owned Voice/final BEGIN slot order, backs up actual cursor on Voice boundaries and inserts exact positive forwards. Four original actual-object PartwiseBuilder streams match; positive CONTINUE and fractional gap covered. Image multi-Voice event construction/admission and broader score export remain pending."
     },
     {
       "original_function": "\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u4fdd\u5b58\u30fb\u518d\u958b / `Book`, `Sheet`, stage invalidation",
@@ -450,7 +457,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Compound SlotMapper actual ownership: three original declared mapChords controls, new observable ownership test plus six prior mapper tests and flag/erasure regression (eight unique); fmt/clippy. Independent Git retrieval/three 36-event CLI verification is recorded separately in the stage READBACK receipt. Full595 remains historical 95e191b, not a current full run.",
+  "latest_targeted_validation": "Owned compound -> final stack/Voice tables -> original PartwiseBuilder stream: four controls including CONTINUE/1/8 gap, three targeted tests (owned control/flag+erasure/header-key alter), fmt/clippy. Independent Git retrieval/three 36-event CLI verification is recorded separately in stage READBACK. Full595 remains historical95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

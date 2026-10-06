@@ -14,7 +14,7 @@ public class CompoundMappingProbe extends MappingRetryProbe {
         List<?> narrow = (List<?>) call(retriever, "buildSlots");
         List<?> wide = (List<?>) call(make("sheet.rhythm.SlotsRetriever", measure, true), "buildSlots");
         List<?> previous = (List<?>) invoke(rhythm, "buildCompoundSlots", narrow, wide);
-        boolean separate = name.equals("separate-member-times");
+        boolean separate = name.equals("separate-member-times") || name.equals("overlapping-continuation");
         List<Object> members = separate
                 ? List.of(make("sheet.rhythm.Slot$MeasureSlot", 3, measure, List.of(chords.get(2))),
                           make("sheet.rhythm.Slot$MeasureSlot", 4, measure, List.of(chords.get(3))))
@@ -26,7 +26,8 @@ public class CompoundMappingProbe extends MappingRetryProbe {
             call(measure, "addVoice", voice);
         }
         call(chords.get(0), "setTimeOffset", make("math.Rational", 0, 1));
-        call(chords.get(1), "setTimeOffset", make("math.Rational", name.equals("agreeing-times") ? 0 : 1, 4));
+        call(chords.get(1), "setTimeOffset", make("math.Rational", name.equals("agreeing-times") ? 0 : 1,
+                name.equals("overlapping-continuation") ? 8 : 4));
         var ctor = c("sheet.rhythm.MeasureRhythm$SlotMapper").getDeclaredConstructor(
                 c("sheet.rhythm.MeasureRhythm"), c("sheet.rhythm.Slot$CompoundSlot"));
         ctor.setAccessible(true);
