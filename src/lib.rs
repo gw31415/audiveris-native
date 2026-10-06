@@ -494,6 +494,7 @@ pub mod stem_image_owned;
 
 pub mod stem_image_head_expansion;
 
+mod head_chord_geometry;
 mod head_musical_pitch;
 mod music_beams;
 mod music_flags;

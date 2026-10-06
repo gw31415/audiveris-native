@@ -119,3 +119,9 @@ are still guarded. Next independent owner dependency is actual stem-bound
 HeadChord getBounds/getLeadingNote/computeLocations with typed ChordStemRelation;
 then general ensemble callbacks and complete cleaner/Part/lyrics/LINKS epilog.
 No full nonUI completion or automatic special-page recognition is claimed.
+
+Stem-bound HeadChord bounds/leading note/head-tail positions now use the original
+integer semantics in both live MusicMeasures and typed overlap ownership. Four
+declared original conditions are separate from raster recognition. Complete
+Containment/ChordStem invalidation (including member mean contextual grade),
+ownership removal and additional ensembles remain the next cleaner dependencies.

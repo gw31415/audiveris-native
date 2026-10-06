@@ -38,9 +38,6 @@ pub(crate) struct Chord {
     pub measure: usize,
     pub bounds: [i64; 4],
 }
-fn integer(v: &Value) -> Result<i64, String> {
-    v.as_i64().ok_or_else(|| "invalid_music_geometry".into())
-}
 fn center(n: &Value) -> Result<(i64, i64), String> {
     let b: [i64; 4] =
         serde_json::from_value(n["bounds"].clone()).map_err(|_| "music_bounds_required")?;
@@ -266,36 +263,19 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
             }
             for stem in stem_order {
                 let members = by_stem.remove(&stem).unwrap();
-                let x0 = members
+                let member_refs: Vec<_> = members.iter().collect();
+                let stem_node = nodes
                     .iter()
-                    .map(|h| integer(&h["bounds"][0]))
-                    .collect::<Result<Vec<_>, _>>()?
+                    .find(|n| n["id"] == graph.id(stem).unwrap())
+                    .ok_or("missing_music_chord_stem")?;
+                let geometry =
+                    crate::head_chord_geometry::calculate(&member_refs, Some(stem_node))?;
+                let bounds = geometry.bounds.ok_or("music_chord_bounds_required")?;
+                let members: Vec<_> = crate::head_chord_geometry::ordered(&member_refs)?
                     .into_iter()
-                    .min()
-                    .unwrap();
-                let y0 = members
-                    .iter()
-                    .map(|h| integer(&h["bounds"][1]))
-                    .collect::<Result<Vec<_>, _>>()?
-                    .into_iter()
-                    .min()
-                    .unwrap();
-                let x1 = members
-                    .iter()
-                    .map(|h| Ok(integer(&h["bounds"][0])? + integer(&h["bounds"][2])?))
-                    .collect::<Result<Vec<i64>, String>>()?
-                    .into_iter()
-                    .max()
-                    .unwrap();
-                let y1 = members
-                    .iter()
-                    .map(|h| Ok(integer(&h["bounds"][1])? + integer(&h["bounds"][3])?))
-                    .collect::<Result<Vec<i64>, String>>()?
-                    .into_iter()
-                    .max()
-                    .unwrap();
-                let bounds = [x0, y0, x1 - x0, y1 - y0];
-                let cx = x0 + (x1 - x0) / 2;
+                    .cloned()
+                    .collect();
+                let cx = bounds[0] + bounds[2] / 2;
                 let measure = measures
                     .iter()
                     .position(|m| {
@@ -315,7 +295,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                         .count()
                         + 1,
                 };
-                let id = graph.vertex(key,json!({"kind":"HeadChordInter","bounds":bounds,"staff_id":staff_id,"part_id":pid,"measure_index":measures[measure].index,"stem_id":graph.id(stem),"member_ids":members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null}),false)?;
+                let id = graph.vertex(key,json!({"kind":"HeadChordInter","bounds":bounds,"staff_id":staff_id,"part_id":pid,"measure_index":measures[measure].index,"stem_id":graph.id(stem),"member_ids":members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"leading_note_id":geometry.leading_id,"head_location":geometry.head_location,"tail_location":geometry.tail_location,"duration":null,"voice":null}),false)?;
                 let mut relations = vec![(key, stem, json!({"kind":"ChordStemRelation"}))];
                 for head in &members {
                     let hkey: Key = serde_json::from_value(head["origin"].clone())
@@ -334,9 +314,13 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
             }
         }
     }
+    // Verify the same actual Containment/ChordStem geometry used by generic
+    // overlap before committing the CHORDS continuation to its retained owner.
+    let snapshot = graph.snapshot();
+    crate::stem_overlap_ownership::Ownership::new(&snapshot)?;
     owner.graph = graph;
     let reduction = std::mem::take(&mut owner.prepared.report);
-    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native single-barline, single-staff parts, single-stem heads; canonical cache and actual SIG retained; no duration/meter assumptions","pending":["bar groups/repeats/multi-staff consistency/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native single-barline, single-staff parts, single-stem heads; canonical cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["bar groups/repeats/multi-staff consistency/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     Ok(OwnedMusic {
         owner,
         measures,

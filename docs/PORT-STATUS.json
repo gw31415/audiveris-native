@@ -140,6 +140,11 @@
       "status": "implemented",
       "unit": "original24 intrinsic head duration / size families and actual standard-small beam-size analyzeChords contacts",
       "limits": "original8 declared conditions+24 scalar semantics; production special-head checks/builders/export and nondefault beam policy remain separately guarded; old ordinary2 cases retained"
+    },
+    {
+      "status": "implemented",
+      "unit": "HeadChord integer head union+stem tail / leading-note locations shared by actual MusicMeasures and typed overlap ownership",
+      "limits": "original4 declared controls,17 targeted checks incl existing MusicXML file; empty-member original location exception preserved as no native location, complete ensemble callbacks remain pending"
     }
   ],
   "function_groups": [
@@ -249,7 +254,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "853b19d: original8 declared chord size/duration/beam conditions+24 Shape semantics;10 targeted checks including Laura352/513, fmt/workspace-all-target-clippy and independent Linux20+11 CLI/XSD/prior XML bytes passed; fetched root/src/crates equal. Full588 remains earlier00ee541. evidence/musicxml-special-chord-consistency/{VALIDATION,READBACK}.json",
+  "latest_targeted_validation": "Stem-chord geometry final source: original4 declared bounds/locations/member-order conditions;17 focused geometry/overlap/actual owner/MusicXML tests. Last full588 belongs to00ee541. Independent CLI/tree readback recorded separately. evidence/musicxml-stem-chord-geometry/VALIDATION.json",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {
@@ -265,8 +270,8 @@
     {
       "original": "SigReducer.detectOverlaps for foundations",
       "status": "partial",
-      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog; recognized24 head shapes and original4-small-head size distinction; typed Head mirror and stemless HeadChord members/noSupport predicates",
-      "remaining": "stem-bound chord bounds, other ensembles/owning callbacks, header/all-class predicates, slur/fermata/text geometry and full special-head downstream branches"
+      "connected": "ordinary retained Head/Stem/Beam/Hook/Barline actual runs/core/straight-line Area; inclusive0.05 IOU, both directional overlaps, Beam compatibility, standard-head/stem exemption and existing support refusal before original prolog; recognized24 head shapes and original4-small-head size distinction; typed Head mirror and stemless HeadChord members/noSupport predicates; stem-bound HeadChord typed Containment/ChordStem head-union/tail bounds shared with actual MusicMeasures",
+      "remaining": "ensemble mean-grade/owning addition/removal callbacks and other ensembles, header/all-class predicates, slur/fermata/text geometry and full special-head downstream branches"
     },
     {
       "original": "SigReducer.analyzeChords prolog/late",

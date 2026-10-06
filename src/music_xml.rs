@@ -428,7 +428,20 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             };
             // AbstractChordInter.getBeams orders from tail to head (greatest
             // distance from head first), independent of SIG insertion IDs.
-            let head_y = chord.bounds[1] + chord.bounds[3] / 2;
+            let head_y = if let Some(stem) = chord.stem {
+                let stem_node = nodes
+                    .iter()
+                    .find(|n| n["id"] == graph.id(stem).unwrap())
+                    .ok_or("musicxml_actual_chord_stem_required")?;
+                crate::head_chord_geometry::calculate(
+                    &chord.members.iter().collect::<Vec<_>>(),
+                    Some(stem_node),
+                )?
+                .head_location
+                .ok_or("musicxml_chord_head_location_required")?[1]
+            } else {
+                chord.bounds[1] + chord.bounds[3] / 2
+            };
             let chord_x = chord.bounds[0] + chord.bounds[2] / 2;
             let distance = |beam: &&Value| {
                 let b = &beam["median"];

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original typed Head.getMirror/getChord, chord members and SIG.noSupport.
-//! Stem-bound chord geometry and other ensemble classes remain separate units.
+//! Stem-bound chord geometry is shared with the live MEASURES/CHORDS owner.
+//! Other ensemble classes and complete removal callbacks remain separate units.
 use crate::shared_sig::{Key, Phase};
 use serde_json::Value;
 use std::collections::{BTreeMap, BTreeSet};
@@ -33,6 +34,7 @@ impl<'a> Ownership<'a> {
         let mut members: BTreeMap<u64, Vec<u64>> = BTreeMap::new();
         let mut head_chords = BTreeMap::new();
         let mut mirrors = BTreeMap::new();
+        let mut stems = BTreeMap::new();
         for e in edges {
             if !matches!(
                 e["kind"].as_str(),
@@ -64,7 +66,15 @@ impl<'a> Ownership<'a> {
                 mirrors.entry(target).or_insert(source);
             } else if a["kind"] == "HeadChordInter" {
                 if e["kind"] == "ChordStemRelation" {
-                    return Err("overlap_stem_bound_chord_geometry_pending".into());
+                    if b["kind"] != "StemInter"
+                        || ak.phase != Phase::Chord
+                        || bk.phase != Phase::Stem
+                    {
+                        return Err("overlap_chord_stem_types_required".into());
+                    }
+                    // HeadChord.getStem uses its first typed ChordStem edge.
+                    stems.entry(source).or_insert(target);
+                    continue;
                 }
                 if b["kind"] != "HeadInter" || ak.phase != Phase::Chord || bk.phase != Phase::Head {
                     return Err("overlap_chord_head_containment_required".into());
@@ -79,9 +89,7 @@ impl<'a> Ownership<'a> {
         }
         for n in rows.iter().filter(|n| n["kind"] == "HeadChordInter") {
             let id = n["id"].as_u64().unwrap();
-            let ms = members
-                .get_mut(&id)
-                .ok_or("overlap_chord_members_required")?;
+            let ms = members.entry(id).or_default();
             if !n["member_ids"].is_null() {
                 let declared: BTreeSet<_> = n["member_ids"]
                     .as_array()
@@ -93,38 +101,21 @@ impl<'a> Ownership<'a> {
                     return Err("stale_overlap_chord_containment".into());
                 }
             }
-            let mut union: Option<[i64; 4]> = None;
-            for m in ms.iter() {
-                let b: [i64; 4] = serde_json::from_value(nodes[m]["bounds"].clone())
-                    .map_err(|_| "overlap_chord_member_bounds_required")?;
-                if b[2] <= 0 || b[3] <= 0 || b.iter().any(|v| v.unsigned_abs() > 4_000_000) {
-                    return Err("invalid_overlap_chord_member_bounds".into());
-                }
-                union = Some(if let Some(a) = union {
-                    let x = a[0].min(b[0]);
-                    let y = a[1].min(b[1]);
-                    [
-                        x,
-                        y,
-                        (a[0] + a[2]).max(b[0] + b[2]) - x,
-                        (a[1] + a[3]).max(b[1] + b[3]) - y,
-                    ]
-                } else {
-                    b
-                });
+            let heads: Vec<_> = ms.iter().map(|m| nodes[m]).collect();
+            let stem = stems.get(&id).map(|s| nodes[s]);
+            if !n["stem_id"].is_null() && n["stem_id"].as_u64() != stems.get(&id).copied() {
+                return Err("stale_overlap_chord_stem".into());
             }
+            let geometry = crate::head_chord_geometry::calculate(&heads, stem)?;
             let actual: [i64; 4] = serde_json::from_value(n["bounds"].clone())
                 .map_err(|_| "overlap_chord_bounds_required")?;
-            if Some(actual) != union {
+            if Some(actual) != geometry.bounds {
                 return Err("stale_overlap_chord_bounds".into());
             }
-            // AbstractChordInter.getMembers: stable bottom-up center order.
-            ms.sort_by_key(|m| {
-                std::cmp::Reverse(
-                    nodes[m]["bounds"][1].as_i64().unwrap()
-                        + nodes[m]["bounds"][3].as_i64().unwrap() / 2,
-                )
-            });
+            *ms = crate::head_chord_geometry::ordered(&heads)?
+                .iter()
+                .map(|h| h["id"].as_u64().unwrap())
+                .collect();
         }
         Ok(Self {
             nodes,

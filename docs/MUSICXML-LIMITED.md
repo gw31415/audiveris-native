@@ -939,3 +939,21 @@ Source`853b19d`:10 targeted checks passed, including Laura352 heads/513 exclusio
 independently fetched Linux build/20+11 image events/prior exact MusicXML bytes
 and native-original MusicXML4 XSD passed. Root/src/crates trees agree.
 [Readback](../evidence/musicxml-special-chord-consistency/READBACK.json).
+
+## Stem-bound HeadChord geometry / live owner
+
+Original `HeadChordInter.getBounds/getLeadingNote/computeLocations` now supplies
+actual MEASURES/CHORDS and generic overlap ownership. Member bounds are united
+and only the stem tail point is added; standard integer center, bottom-up members
+and strict distance-tie order are retained. Four declared original controls match.
+The former native chord envelope held heads alone. Beam ordering now uses the
+original head location rather than the enlarged chord-box center; near-head rest
+admission continues to check actual heads. Real Containment/ChordStem and canonical
+cache identities are retained and validated before committing the continuation.
+
+Empty-member original location getters throw; native does not invent a note
+location. Stem-only bounds are compared separately. Complete ensemble grade /
+addition-removal / Part-lyrics callbacks and full cleaner/epilog remain pending.
+No full stage flag is enabled. Existing two-system/competing-hook CLI examples
+remain usable;17 focused checks include the11-test MusicXML regression file.
+[Validation](../evidence/musicxml-stem-chord-geometry/VALIDATION.json).

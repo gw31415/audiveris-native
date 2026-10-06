@@ -586,8 +586,24 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                     continue;
                 };
                 let d = (il as f64 * 0.5).round_ties_even() as i64;
-                if m.chords.iter().filter(|c| c.measure == mi).any(|c| {
-                    let h = c.bounds;
+                // This admission checks actual note proximity, not the
+                // stem-inclusive head-chord envelope. Keep the existing guard.
+                let note_boxes = m
+                    .chords
+                    .iter()
+                    .filter(|c| c.measure == mi)
+                    .map(|c| {
+                        if c.stem.is_some() {
+                            crate::head_chord_geometry::heads_bounds(
+                                &c.members.iter().collect::<Vec<_>>(),
+                            )?
+                            .ok_or_else(|| "music_symbol_chord_heads_required".to_owned())
+                        } else {
+                            Ok(c.bounds)
+                        }
+                    })
+                    .collect::<Result<Vec<_>, String>>()?;
+                if note_boxes.iter().any(|h| {
                     b[0] - d < h[0] + h[2]
                         && h[0] < b[0] + b[2] + d
                         && b[1] < h[1] + h[3]

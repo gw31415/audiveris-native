@@ -1,0 +1,56 @@
+{
+  "base_main": "38f52bf81583dafa511c9aac0d530347041aac44",
+  "original": {
+    "version": "5.11.0",
+    "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "conditions": 4,
+    "observer": "scripts/java/FoundationStemChordProbe.java",
+    "fixture": "fixtures/official-stem-chord-geometry/controls.json",
+    "boundary": "declared actual HeadChord/Containment/ChordStem and physical heads/stem on existing saved System/Staff; getMembers/getLeadingNote/getBounds/computeLocations, not raster chord recognition or all ensemble callbacks"
+  },
+  "connected": [
+    "shared original integer head-member union + stem tail point bounds in real MEASURES/CHORDS and generic overlap ownership",
+    "stable bottom-up order, maximum distance from stem center, first bottom-up tie and up/down tail coordinates",
+    "actual typed first ChordStem and Containment; serialized stem_id and bounds cannot replace actual edges",
+    "MusicXML beam-order distance uses original head location rather than newly enlarged chord-envelope center; near-head rest admission preserves actual head geometry"
+  ],
+  "original_limit": "Empty-member stem chord has stem bounds and no leading note. Original public location getter throws NullPointerException (observed once); observer subsequently avoids that known failing getter, native keeps missing locations instead of fabricating a note. No image input exception is converted into recognition success.",
+  "targeted_tests": [
+    {
+      "log": "targeted-geometry-fixed.log",
+      "passed": 1,
+      "sha256": "84dd652af261aa94675f0921b24062b217abd8933565a67468d10e17ee60919c"
+    },
+    {
+      "log": "targeted-overlap.log",
+      "passed": 3,
+      "sha256": "5e17ec33ee5ad8ac8eebb36c9b110b3aa6f599470e96ee7fdf639615150484ea"
+    },
+    {
+      "log": "targeted-owned-measures-fixed.log",
+      "passed": 2,
+      "sha256": "f526d3a13fc91890c39b52192fd3ca2d4752955e104b2d60ff80581effc12b96"
+    },
+    {
+      "log": "targeted-musicxml.log",
+      "passed": 11,
+      "sha256": "601e12c4628b5a351b91d5239b0bc9ba16083b253922cbae246699fec181ff1e"
+    }
+  ],
+  "full_workspace_this_unit": false,
+  "last_full_workspace": {
+    "source": "00ee5416e291b663121d6544f16c250a9ca53f17",
+    "passed": 588
+  },
+  "remaining": [
+    "Chord/ensemble mean-contextual-grade invalidation and addition/removal callbacks",
+    "other ensembles, general overlap/header/slur/fermata/text and all-class support",
+    "automatic mirror/shared stem/chord and special-head/small-beam whole pages",
+    "complete InterCleaner/Part/lyrics/LINKS epilog and remaining full nonUI ledger"
+  ],
+  "new_image_fixture": false,
+  "global_completion_flags": false,
+  "fmt_and_workspace_all_target_clippy": "passed; unused prior integer helper removed, corrected clippy log preserved",
+  "validated_src_tree": "9b37cb76e3c9378630a6c1ec849b34b830c8315b",
+  "validated_crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+}
