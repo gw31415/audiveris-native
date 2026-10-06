@@ -1,0 +1,73 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "two declared original Slot constructor/reference/cache controls on saved actual chords; list mutation is not full mergeWithPreviousSlot/image polyphony",
+  "controls" : [ {
+    "name" : "membership-add-and-removal-retain-reference-and-cache",
+    "input" : {
+      "chord_bounds" : [ [ 755, 206, 14, 42 ], [ 875, 195, 14, 42 ], [ 995, 184, 14, 42 ], [ 1115, 195, 14, 42 ] ],
+      "left" : 711.0,
+      "constructors" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      } ],
+      "append_to_first" : 1,
+      "remove_ordered" : 1
+    },
+    "output" : {
+      "ordered_keys" : [ 0 ],
+      "first_x_offset" : 51,
+      "references" : [ {
+        "chord" : 0,
+        "object_key" : 0,
+        "x_offset" : 51,
+        "compare_to_first" : 0
+      }, {
+        "chord" : 1,
+        "object_key" : 1,
+        "x_offset" : 171,
+        "compare_to_first" : 1
+      } ]
+    }
+  }, {
+    "name" : "later-constructor-rebinds-shared-chord",
+    "input" : {
+      "chord_bounds" : [ [ 755, 206, 14, 42 ], [ 875, 195, 14, 42 ], [ 995, 184, 14, 42 ], [ 1115, 195, 14, 42 ] ],
+      "left" : 711.0,
+      "constructors" : [ {
+        "id" : 1,
+        "chord_ids" : [ 0 ]
+      }, {
+        "id" : 2,
+        "chord_ids" : [ 1 ]
+      }, {
+        "id" : 3,
+        "chord_ids" : [ 0, 2 ]
+      } ],
+      "append_to_first" : null,
+      "remove_ordered" : null
+    },
+    "output" : {
+      "ordered_keys" : [ 0, 1, 2 ],
+      "first_x_offset" : 51,
+      "references" : [ {
+        "chord" : 0,
+        "object_key" : 2,
+        "x_offset" : 171,
+        "compare_to_first" : 1
+      }, {
+        "chord" : 1,
+        "object_key" : 1,
+        "x_offset" : 171,
+        "compare_to_first" : 1
+      }, {
+        "chord" : 2,
+        "object_key" : 2,
+        "x_offset" : 171,
+        "compare_to_first" : 1
+      } ]
+    }
+  } ]
+}

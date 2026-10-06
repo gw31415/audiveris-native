@@ -112,40 +112,15 @@ impl Lifetime {
         voices: &[Voice],
         measure: &mut Measure,
         measure_index: usize,
-        compounds: &[CompoundSlot],
+        candidates: &crate::music_measure_slots::CandidateReferences,
         (slot, first_time): (&CompoundSlot, Option<u32>),
     ) -> Result<Value, String> {
         let snapshot = graph.snapshot();
         let nodes = snapshot["inters"].as_array().unwrap();
         let edges = snapshot["relations"].as_array().unwrap();
-        let node = |id: usize| {
-            nodes
-                .iter()
-                .find(|n| n["id"] == id)
-                .ok_or("music_voice_lifetime_live_chord_required")
-        };
-        let x_offset = |s: &CompoundSlot| -> Result<i64, String> {
-            if s.chord_ids.is_empty() {
-                return Err("music_voice_lifetime_empty_slot_refused".into());
-            }
-            let centers = s
-                .chord_ids
-                .iter()
-                .map(|&id| {
-                    let n = node(id)?;
-                    let b: [i64; 4] = serde_json::from_value(n["bounds"].clone())
-                        .map_err(|_| "music_voice_lifetime_bounds_required")?;
-                    Ok(b[0] + b[2] / 2)
-                })
-                .collect::<Result<Vec<i64>, String>>()?;
-            Ok(
-                (centers.iter().sum::<i64>() as f64 / centers.len() as f64 - measure.left as f64)
-                    .round_ties_even() as i64,
-            )
-        };
         // MeasureRhythm reads the retained first narrow object's own clock,
         // supplied by the caller, not a reconstructed chord/event clock.
-        let current_x = x_offset(slot)?;
+        let current_x = candidates.x_offset(slot.key)?;
         let mut chords = BTreeMap::new();
         for n in nodes.iter().filter(|n| {
             matches!(
@@ -160,11 +135,9 @@ impl Lifetime {
                 && n["part_id"] == measure.part
                 && n["measure_index"] == measure.index;
             let slot_x = if same_measure {
-                compounds
-                    .iter()
-                    .rev()
-                    .find(|s| s.chord_ids.contains(&id))
-                    .map(&x_offset)
+                candidates
+                    .reference(id)
+                    .map(|key| candidates.x_offset(key))
                     .transpose()?
             } else {
                 None

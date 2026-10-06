@@ -1610,3 +1610,21 @@ Current CLI examples do not exercise the positive sibling branch. General
 compound/candidate-slot identity, previous-slot merge, multiple-Voice export,
 exact Rational/tuplets and shared stacks remain dependencies. No global flag is
 true and full595 remains historical `95e191b`.
+
+### Retained candidate-slot references and positions (2026-10-06)
+
+The native mapper and Voice extinction now share transient chord-to-slot bindings
+and constructor-cached positions. A later constructor rebinds a shared chord;
+changing an earlier slot's member list does not recompute its position or rebind
+that chord. Removing a slot from an ordered view does not erase its retained
+reference. Stable constructor keys are separate from mutable slot numbers and
+from narrow clocks/final timed stack-slot IDs. The position adapter remains the
+existing zero-skew one-staff translation.
+
+Two original actual-object constructor/list-mutation controls compare bindings,
+cached positions and `Slot.compareTo` results on an image-derived native Graph.
+These are getter/reference controls, not full `mergeWithPreviousSlot` or image
+polyphony. Existing CLI commands and three 36-event examples remain unchanged.
+Ordered-slot membership/removal/renumbering, general compound Voice mapping/export,
+exact Rational/tuplets and shared stacks still need connection. All global flags
+remain false and full595 still refers to old `95e191b`.

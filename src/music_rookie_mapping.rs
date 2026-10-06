@@ -319,7 +319,7 @@ pub(crate) struct Context<'a> {
     pub chords: &'a [&'a crate::music_measures::Chord],
     pub narrow: &'a crate::music_measure_slots::Retrieval,
     pub measure_index: usize,
-    pub compounds: &'a [CompoundSlot],
+    pub candidates: &'a crate::music_measure_slots::CandidateReferences,
     pub expected: u32,
     pub clef: &'a Value,
     pub interline: usize,
@@ -432,19 +432,6 @@ impl Context<'_> {
             heads_center_y: note_bounds[1] + note_bounds[3] / 2,
         })
     }
-    fn slot_x(&self, snapshot: &Value, slot: &CompoundSlot) -> Result<i64, String> {
-        let xs = slot
-            .chord_ids
-            .iter()
-            .map(|&id| bounds(node(snapshot, id)?).map(|b| b[0] + b[2] / 2))
-            .collect::<Result<Vec<_>, _>>()?;
-        if xs.is_empty() {
-            return Err("music_mapping_compound_center_required".into());
-        }
-        Ok((xs.iter().sum::<i64>() as f64 / xs.len() as f64
-            - self.measures[self.measure_index].left as f64)
-            .round_ties_even() as i64)
-    }
     fn create_new_voices(
         &mut self,
         slot: &CompoundSlot,
@@ -556,7 +543,7 @@ impl Context<'_> {
         };
         let next = pairs("NextInVoiceRelation");
         let black = pairs("SeparateVoiceRelation");
-        let current_x = self.slot_x(&snapshot, slot)?;
+        let current_x = self.candidates.x_offset(slot.key)?;
         let mut actives = Vec::new();
         for voice in self
             .voices
@@ -574,12 +561,10 @@ impl Context<'_> {
                 continue;
             }
             let previous = self
-                .compounds
-                .iter()
-                .rev()
-                .find(|s| s.chord_ids.contains(&last))
+                .candidates
+                .reference(last)
                 .ok_or("music_mapping_actual_candidate_slot_required")?;
-            if self.slot_x(&snapshot, previous)? > current_x {
+            if self.candidates.x_offset(previous)? > current_x {
                 continue;
             }
             if self.lifetime.allows_active(
@@ -904,6 +889,12 @@ mod tests {
                 )
                 .unwrap();
             }
+            let candidates = crate::music_measure_slots::CandidateReferences::new(
+                &owner.owner.graph,
+                &owner.measures[mi],
+                &compounds,
+            )
+            .unwrap();
             let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
             if unknown_active {
                 let time = case["input"]["narrow"][0]["time_offset"]
@@ -928,7 +919,7 @@ mod tests {
                 chords: &chords,
                 narrow: &narrow,
                 measure_index: mi,
-                compounds: &compounds,
+                candidates: &candidates,
                 expected: 16,
                 clef,
                 interline: owner.owner.interline,
@@ -1061,6 +1052,7 @@ mod tests {
                 serde_json::from_value(case["input"]["slot_chord_ids"].clone()).unwrap();
             let ids = ordinals.iter().map(|&i| chords[i].id).collect::<Vec<_>>();
             let declared = CompoundSlot {
+                key: 0,
                 id: 3,
                 members: vec![crate::music_measure_slots::MeasureSlot {
                     id: 3,
@@ -1069,6 +1061,12 @@ mod tests {
                 chord_ids: ids,
             };
             let compounds = [declared];
+            let candidates = crate::music_measure_slots::CandidateReferences::new(
+                &owner.owner.graph,
+                &owner.measures[mi],
+                &compounds,
+            )
+            .unwrap();
             let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
             let actual = owner.owner.graph.snapshot();
             let clef = actual["inters"]
@@ -1092,7 +1090,7 @@ mod tests {
                 chords: &chords,
                 narrow: &narrow,
                 measure_index: mi,
-                compounds: &compounds,
+                candidates: &candidates,
                 expected: 16,
                 clef,
                 interline: owner.owner.interline,

@@ -316,6 +316,12 @@
       "unit": "createNewVoices/getOrderedSiblings EQUAL-first stable ordering and first known sibling clock, actual Voice creation before time propagation",
       "limits": "two original declared compound/SIG controls compared to image-derived native owned Graph; automatic multi-incoming image mapping/export still guarded; previous-slot merge/candidate object reference identity, tuplets and shared stacks remain partial",
       "evidence": "evidence/musicxml-new-voice-siblings/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "Slot constructor last-binding and cached abscissa getter shared by owned active filtering and Voice extinction; retained stable constructor keys separate from slot numbers",
+      "limits": "two declared original reference/cache mutation controls, not full merge; current zero-skew one-staff coordinates; mutable ordered-slot removal/ID propagation, general compound mapping/export, tuplets and shared stacks remain pending",
+      "evidence": "evidence/musicxml-candidate-slot-reference/VALIDATION.json"
     }
   ],
   "function_groups": [

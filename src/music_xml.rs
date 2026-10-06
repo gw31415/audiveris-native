@@ -559,6 +559,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         preliminary_slots[mi]["mapping_validation_steps"] = json!([]);
         preliminary_slots[mi]["extinction_steps"] = json!([]);
         let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
+        let candidates = crate::music_measure_slots::CandidateReferences::new(
+            &graph,
+            &m.measures[mi],
+            &compounds,
+        )?;
         let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds)?;
         preliminary_slots[mi]["candidate_time_steps"] = json!([]);
         for &chord in &chords {
@@ -571,7 +576,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     chords: &chords,
                     narrow: &narrow,
                     measure_index: mi,
-                    compounds: &compounds,
+                    candidates: &candidates,
                     expected: expected_ticks,
                     clef: initial_clef,
                     interline: m.owner.interline,
@@ -595,7 +600,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
                     &m.voices,
                     &mut m.measures[mi],
                     mi,
-                    &compounds,
+                    &candidates,
                     (slot, first_time),
                 )?;
                 preliminary_slots[mi]["extinction_steps"]

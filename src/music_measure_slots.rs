@@ -367,6 +367,8 @@ fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
 /// concatenated and stably sorted by center ordinate; aliases are not silently
 /// removed. getNarrowSlot takes the first containing member, as in Java.
 pub(crate) struct CompoundSlot {
+    // Merge can renumber slots; references keep the constructor identity.
+    pub key: usize,
     pub id: usize,
     pub members: Vec<MeasureSlot>,
     pub chord_ids: Vec<usize>,
@@ -380,6 +382,65 @@ impl CompoundSlot {
     }
     pub(crate) fn projection(&self) -> Value {
         serde_json::json!({"id":self.id,"narrow_slot_ids":self.members.iter().map(|s|s.id).collect::<Vec<_>>(),"chord_ids":self.chord_ids,"lookup":self.chord_ids.iter().map(|id|serde_json::json!({"chord_id":id,"narrow_slot_id":self.narrow_slot(*id)})).collect::<Vec<_>>()})
+    }
+}
+// Original caches the constructor position; member mutations must not move it.
+pub(crate) struct CandidateReferences {
+    bindings: BTreeMap<usize, usize>,
+    offsets: BTreeMap<usize, i64>,
+}
+impl CandidateReferences {
+    pub(crate) fn new(
+        graph: &Graph,
+        measure: &Measure,
+        compounds: &[CompoundSlot],
+    ) -> Result<Self, String> {
+        let snapshot = graph.snapshot();
+        let nodes = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+            .collect::<BTreeMap<_, _>>();
+        let mut bindings = BTreeMap::new();
+        let mut offsets = BTreeMap::new();
+        for slot in compounds {
+            if slot.chord_ids.is_empty() || offsets.contains_key(&slot.key) {
+                return Err("music_candidate_unique_nonempty_slot_required".into());
+            }
+            let mut sum = 0_i64;
+            for &id in &slot.chord_ids {
+                let n = nodes
+                    .get(&id)
+                    .ok_or("music_candidate_live_chord_required")?;
+                if !matches!(
+                    n["kind"].as_str(),
+                    Some("HeadChordInter" | "RestChordInter")
+                ) || n["origin"]["system"] != measure.system
+                    || n["part_id"] != measure.part
+                    || n["measure_index"] != measure.index
+                {
+                    return Err("music_candidate_owned_measure_chord_required".into());
+                }
+                let b: [i64; 4] = serde_json::from_value(n["bounds"].clone())
+                    .map_err(|_| "music_candidate_bounds_required")?;
+                sum += b[0] + b[2] / 2;
+                bindings.insert(id, slot.key);
+            }
+            let x = (sum as f64 / slot.chord_ids.len() as f64 - measure.left as f64)
+                .round_ties_even() as i64;
+            offsets.insert(slot.key, x);
+        }
+        Ok(Self { bindings, offsets })
+    }
+    pub(crate) fn reference(&self, chord: usize) -> Option<usize> {
+        self.bindings.get(&chord).copied()
+    }
+    pub(crate) fn x_offset(&self, key: usize) -> Result<i64, String> {
+        self.offsets
+            .get(&key)
+            .copied()
+            .ok_or_else(|| "music_candidate_retained_slot_required".into())
     }
 }
 /// Measure-scoped transient narrow-slot objects retain their own nullable clock.
@@ -443,6 +504,7 @@ fn compound(
     }
     chord_ids.sort_by_key(|id| centers[id]);
     Ok(CompoundSlot {
+        key: id - 1,
         id,
         members: members.to_vec(),
         chord_ids,
@@ -659,6 +721,73 @@ pub(crate) fn from_owned(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use serde_json::json;
+    #[test]
+    fn constructor_bindings_and_cached_positions_survive_membership_changes() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-candidate-slot-reference/observed.json"
+        ))
+        .unwrap();
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-cross-system/beam-two-systems.png"
+        ))
+        .unwrap();
+        let owner = crate::music_xml::recognize(&image).unwrap().owner;
+        let mi = 1;
+        let mut chords = owner
+            .chords
+            .iter()
+            .filter(|c| c.measure == mi)
+            .collect::<Vec<_>>();
+        chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+        for case in oracle["controls"].as_array().unwrap() {
+            assert_eq!(
+                json!(chords.iter().map(|c| c.bounds).collect::<Vec<_>>()),
+                case["input"]["chord_bounds"]
+            );
+            assert_eq!(
+                owner.measures[mi].left as f64,
+                case["input"]["left"].as_f64().unwrap()
+            );
+            let centers = chords
+                .iter()
+                .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
+                .collect();
+            let mut objects = Vec::new();
+            for constructor in case["input"]["constructors"].as_array().unwrap() {
+                let ordinals: Vec<usize> =
+                    serde_json::from_value(constructor["chord_ids"].clone()).unwrap();
+                let member = MeasureSlot {
+                    id: constructor["id"].as_u64().unwrap() as usize,
+                    chord_ids: ordinals.iter().map(|&i| chords[i].id).collect(),
+                };
+                objects.push(compound(member.id, &[member], &centers).unwrap());
+            }
+            let references =
+                CandidateReferences::new(&owner.owner.graph, &owner.measures[mi], &objects)
+                    .unwrap();
+            let mut ordered = objects.iter().map(|s| s.key).collect::<Vec<_>>();
+            if let Some(i) = case["input"]["append_to_first"].as_u64() {
+                objects[0].chord_ids.push(chords[i as usize].id);
+            }
+            if let Some(key) = case["input"]["remove_ordered"].as_u64() {
+                ordered.retain(|&k| k != key as usize);
+            }
+            let first = references.x_offset(objects[0].key).unwrap();
+            let rows = case["output"]["references"].as_array().unwrap().iter().map(|row| {
+                let i = row["chord"].as_u64().unwrap() as usize;
+                let key = references.reference(chords[i].id).unwrap();
+                let x = references.x_offset(key).unwrap();
+                json!({"chord":i,"object_key":key,"x_offset":x,"compare_to_first":(x-first).signum()})
+            }).collect::<Vec<_>>();
+            assert_eq!(
+                json!({"ordered_keys":ordered,"first_x_offset":first,"references":rows}),
+                case["output"],
+                "{}",
+                case["name"]
+            );
+        }
+    }
     #[test]
     fn original_compound_partition_ordinate_lookup_cursor_and_empty() {
         let oracle: Value = serde_json::from_str(include_str!(
