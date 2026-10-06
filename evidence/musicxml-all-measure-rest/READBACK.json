@@ -1,0 +1,15 @@
+{
+  "ordinary_main_push_and_independent_fetch": "passed",
+  "refs": {
+    "commit": "6e44755bfd233e6c31473103552da375186b4914",
+    "root_tree": "6f1a6e5ff135e053a68e3d8efc599758667822e7",
+    "src_tree": "4a27f99e5dcbb1d62a6a14b238a8aa7a54077646",
+    "crates_tree": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "new_input_originals_and_diagnostic_byte_readback": "matching",
+  "source_Cargo_crates_unchanged_since_7c54571": true,
+  "native_latest_implementation_test_and_CLI_source": "9175cbdcc9a2b799b91bc48929269fd8c6ffca81",
+  "MusicXML_original_invalid_divisions0_native_existing_valid": "confirmed",
+  "comparison_status": "negative original exporter boundary; not successful original end-to-end MusicXML parity",
+  "no_rebuild_or_recognition_repeat": true
+}
