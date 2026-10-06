@@ -1,0 +1,44 @@
+{
+  "base_source": "e089678ebcef311810fe384293758cc905b4e836",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "unit": "full separated compound SlotMapper.mapChords applied to actual owned Graph/Voices",
+  "original_comparison": {
+    "declared_controls": 3,
+    "original_method": "MeasureRhythm.SlotMapper.mapChords",
+    "conditions": [
+      "two rookies/two prior Voices with agreeing ends",
+      "same narrow member conflicting ends/blacklist reselect/leftover new Voice",
+      "separate narrow members with different inferred times"
+    ],
+    "matching": [
+      "actual measured distances and stable injection ties",
+      "mapping cost/pairs and ordered blacklist",
+      "member-specific clocks",
+      "actual chord Voice/time and Voice member lists",
+      "consistency/abnormal state"
+    ],
+    "native_owner": "recognized existing two-system image Graph; declared compound members; original saved objects are not fresh image polyphony",
+    "retained_candidate_references": "checked after actual assignment",
+    "invalid_member_coverage": "rejects before Graph mutation"
+  },
+  "targeted_unique_passed": 8,
+  "runs": {
+    "new_compound_actual_ownership_test": 1,
+    "prior_mapping_ownership_retry_sibling_merge_clock_tests": 6,
+    "flag_image_and_erased_flag_refusal": 1
+  },
+  "fmt": "passed",
+  "clippy_workspace_all_targets_D_warnings": "passed",
+  "full_workspace_run_this_stage": false,
+  "latest_full_workspace": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "limits": [
+    "image starting-parallel/multi-incoming admission and multi-Voice event/export guards retained",
+    "known grouped-clock conflicts refuse; implicit-tuplet analysis/shrink pending",
+    "exact Rational/tuplets/Merged/shared stacks/lyrics/full cleaner remain partial",
+    "no image/font/skew/scan/staff/all24/32sources admission expansion; all-rest original XSD failure remains negative"
+  ],
+  "all_global_completion_flags": false
+}

@@ -1671,3 +1671,22 @@ The three 36-event CLI examples and commands above remain unchanged. The next
 dependency is general compound incoming mapping and multiple-Voice traversal,
 then exact Rational/implicit tuplets and shared stacks. All global flags remain
 false, no original nonUI omission is planned, and full595 remains old `95e191b`.
+
+### Multiple rookie assignment on owned Voices (2026-10-06)
+
+The existing actual Graph mapper now consumes a whole compound's incoming
+ordinary chords, rather than one rookie: original separated distance/injection
+order, member-specific clock checks, blacklist/retry, accepted Voice/time
+assignment and leftover new Voice creation share the same ownership path. Three
+original saved-object `SlotMapper.mapChords` controls compare agreeing ends,
+conflicting ends in one member, and distinct ends in separate members. Native
+checks the retained candidate, actual measure/chord ownership and member coverage.
+
+These controls reuse the existing two-system image's recognized Graph but declare
+the compound members; they are not a new polyphonic image example. Current CLI
+commands and three 36-event outputs stay unchanged. Image starting-parallel and
+multi-incoming admission and multiple-Voice export still refuse; the next step
+is solved Voice stack-slot traversal and original backup/forward handling. Known
+grouped conflicts, exact Rational/implicit tuplets, Merged/shared stacks and the
+remaining nonUI functionality stay incomplete. No original logic omission is
+planned. Global flags remain false; full595 belongs to old `95e191b`.

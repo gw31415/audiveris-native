@@ -194,8 +194,8 @@ fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, Str
     }
 }
 // Strict improvement and ascending range enumeration preserve original ties.
-// Original itself documents brute force for small collections. The production
-// adapter is one incoming; larger unsupported searches refuse by an explicit
+// Original itself documents brute force for small collections. Larger searches
+// refuse by an explicit
 // visit budget, never return a suboptimal mapping as a successful result.
 fn injection(costs: &[Vec<i32>]) -> Result<(i32, Vec<usize>), String> {
     if costs.is_empty() {
@@ -549,10 +549,53 @@ impl Context<'_> {
         Ok(step)
     }
     fn map_rookies(&mut self, slot: &CompoundSlot) -> Result<(Value, Vec<usize>), String> {
-        if slot.chord_ids.len() != 1 || slot.members.len() != 1 {
-            return Err("music_mapping_general_compound_retry_pending".into());
+        let retained = self.order.get(slot.key)?;
+        let incoming = slot
+            .chord_ids
+            .iter()
+            .copied()
+            .collect::<std::collections::BTreeSet<_>>();
+        let members = slot
+            .members
+            .iter()
+            .flat_map(|s| &s.chord_ids)
+            .copied()
+            .collect::<Vec<_>>();
+        if slot.id != retained.id
+            || slot.chord_ids != retained.chord_ids
+            || incoming.is_empty()
+            || incoming.len() != slot.chord_ids.len()
+            || members.len() != incoming.len()
+            || members
+                .iter()
+                .copied()
+                .collect::<std::collections::BTreeSet<_>>()
+                != incoming
+            || slot.members.iter().any(|s| s.chord_ids.is_empty())
+        {
+            return Err("music_mapping_owned_compound_members_required".into());
+        }
+        for &id in &slot.chord_ids {
+            let chord = self
+                .chords
+                .iter()
+                .find(|c| c.id == id)
+                .ok_or("music_mapping_owned_measure_chord_required")?;
+            if chord.measure != self.measure_index || self.graph.id(chord.key) != Some(id) {
+                return Err("music_mapping_owned_measure_chord_required".into());
+            }
+            self.slot_times.get(
+                slot.members
+                    .iter()
+                    .find(|s| s.chord_ids.contains(&id))
+                    .unwrap()
+                    .id,
+            )?;
         }
         let snapshot = self.graph.snapshot();
+        for &id in &slot.chord_ids {
+            self.fact(&snapshot, id)?;
+        }
         let edges = snapshot["relations"].as_array().unwrap();
         let mut times: BTreeMap<u32, Vec<usize>> = BTreeMap::new();
         for &id in &slot.chord_ids {
@@ -749,6 +792,188 @@ impl Context<'_> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn multiple_rookies_retain_original_assignment_retry_and_voice_ownership() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-compound-mapping/observed.json"
+        ))
+        .unwrap();
+        let mut owner = image_owner();
+        let mi = 1;
+        for case in oracle["controls"].as_array().unwrap() {
+            reset_owner(&mut owner);
+            let mut chords = owner
+                .chords
+                .iter()
+                .filter(|c| c.measure == mi)
+                .collect::<Vec<_>>();
+            chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+            let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
+            let (narrow, wide) = crate::music_measure_slots::from_owned(
+                &owner.owner.graph,
+                &owner.measures[mi],
+                &chords,
+                owner.owner.interline,
+            )
+            .unwrap();
+            let centers = chords
+                .iter()
+                .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
+                .collect();
+            let mut compounds =
+                crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)
+                    .unwrap();
+            compounds.truncate(2);
+            let members = case["input"]["narrow"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|m| crate::music_measure_slots::MeasureSlot {
+                    id: m["id"].as_u64().unwrap() as usize,
+                    chord_ids: m["chord_ids"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(|id| chords[id.as_u64().unwrap() as usize].id)
+                        .collect(),
+                })
+                .collect::<Vec<_>>();
+            let mut ids = members
+                .iter()
+                .flat_map(|m| &m.chord_ids)
+                .copied()
+                .collect::<Vec<_>>();
+            ids.sort_by_key(|id| centers[id]);
+            compounds.push(CompoundSlot {
+                key: 3,
+                id: 3,
+                members,
+                chord_ids: ids,
+            });
+            for (i, active) in case["input"]["active_ends"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .enumerate()
+            {
+                assert_eq!(active["id"], i);
+                crate::music_voices::create_voice(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &owner.measures,
+                    chords[i],
+                )
+                .unwrap();
+                let end = crate::music_time::parse_ticks(active["end"].as_str().unwrap()).unwrap();
+                crate::music_chord_time::set_and_push(
+                    &mut owner.owner.graph,
+                    &owner.voices,
+                    &owner.measures,
+                    chords[i].id,
+                    Some(end - 4),
+                )
+                .unwrap();
+            }
+            let candidates = crate::music_measure_slots::CandidateReferences::new(
+                &owner.owner.graph,
+                &owner.measures[mi],
+                &compounds,
+            )
+            .unwrap();
+            let mut order =
+                crate::music_measure_slots::CandidateOrder::new(&compounds, &candidates).unwrap();
+            let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
+            let snapshot = owner.owner.graph.snapshot();
+            let clef = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == "ClefInter" && n["origin"]["system"] == 1)
+                .unwrap();
+            let lifetime = crate::music_voice_lifetime::Lifetime::default();
+            let mut context = Context {
+                graph: &mut owner.owner.graph,
+                voices: &mut owner.voices,
+                measures: &mut owner.measures,
+                chords: &chords,
+                narrow: &narrow,
+                measure_index: mi,
+                candidates: &candidates,
+                order: &mut order,
+                expected: 16,
+                clef,
+                interline: owner.owner.interline,
+                lifetime: &lifetime,
+                slot_times: &mut slot_times,
+            };
+            let mut invalid = compounds[2].clone();
+            invalid.members[0].chord_ids.push(chords[0].id);
+            assert_eq!(
+                context.map_slot(&invalid).unwrap_err(),
+                "music_mapping_owned_compound_members_required"
+            );
+            assert_eq!(context.graph.snapshot(), snapshot);
+            let step = context.map_slot(&compounds[2]).unwrap();
+            for key in ["rookies", "actives"] {
+                assert_eq!(
+                    json!(
+                        step[key]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .map(|id| ordinal(id.as_u64().unwrap() as usize))
+                            .collect::<Vec<_>>()
+                    ),
+                    case["input"][key]
+                );
+            }
+            let costs = step["costs"].as_array().unwrap().iter().map(|c| json!({"rookie":ordinal(c["rookie"].as_u64().unwrap() as usize),"active":ordinal(c["active"].as_u64().unwrap() as usize),"distance":c["distance"]})).collect::<Vec<_>>();
+            assert_eq!(json!(costs), case["input"]["costs"]);
+            let translate_pairs = |v: &Value| {
+                v.as_array().unwrap().iter().map(|p| json!({"rookie":ordinal(p["rookie"].as_u64().unwrap() as usize),"active":ordinal(p["active"].as_u64().unwrap() as usize)})).collect::<Vec<_>>()
+            };
+            let actual = context.graph.snapshot();
+            let states = chords
+                .iter()
+                .enumerate()
+                .map(|(i, c)| {
+                    let n = node(&actual, c.id).unwrap();
+                    json!({"id":i,"voice":n["voice"],"time_offset":n["time_offset"]})
+                })
+                .collect::<Vec<_>>();
+            let remaining = chords[2..]
+                .iter()
+                .filter(|c| {
+                    !step["mapping"]["pairs"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|p| p["rookie"] == c.id)
+                })
+                .map(|c| ordinal(c.id))
+                .collect::<Vec<_>>();
+            let output = json!({"mapping":{"cost":step["mapping"]["cost"],"pairs":translate_pairs(&step["mapping"]["pairs"])},"black":translate_pairs(&step["validation"]["black"]),"remaining_rookies":remaining,"narrow":context.slot_times.projection(&compounds[2]).unwrap()});
+            assert_eq!(output, case["output"], "{}", case["name"]);
+            assert_eq!(json!(states), case["chord_states"], "{}", case["name"]);
+            assert_eq!(step["ok"], case["ok"]);
+            assert_eq!(
+                json!(context.measures[mi].timing.abnormal),
+                case["abnormal"]
+            );
+            let voices = context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"chord_ids":v.chord_ids.iter().map(|&id| ordinal(id)).collect::<Vec<_>>()})).collect::<Vec<_>>();
+            assert_eq!(json!(voices), case["voices"]);
+            for (i, c) in chords.iter().enumerate() {
+                assert_eq!(
+                    context.candidates.reference(c.id),
+                    Some(if i < 2 {
+                        compounds[i].key
+                    } else {
+                        compounds[2].key
+                    })
+                );
+            }
+        }
+    }
     fn image_owner() -> crate::music_measures::OwnedMusic {
         let image = crate::GrayImage::decode(include_bytes!(
             "../fixtures/official-image-musicxml-cross-system/beam-two-systems.png"
