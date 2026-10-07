@@ -1766,6 +1766,41 @@ mod tests {
                 assert_eq!(node[field], old[field]);
             }
         }
+        let failures: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-reprocess/voice-null-predecessors.json"
+        ))
+        .unwrap();
+        let snapshot = m.owner.graph.snapshot();
+        let mut predecessor = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| {
+                n["kind"] == "HeadChordInter"
+                    && n["bounds"] == failures["controls"][1]["source_bounds"]
+            })
+            .unwrap()
+            .clone();
+        predecessor["voice"] = Value::Null;
+        let key = serde_json::from_value(predecessor["origin"].clone()).unwrap();
+        m.owner.graph.vertex(key, predecessor, false).unwrap();
+        let before_failure = m.owner.graph.snapshot();
+        let before_voices = crate::music_voices::projection(&m.voices, &m.measures);
+        assert_eq!(
+            crate::music_voices::refine_ordinary_system(
+                &mut m.owner.graph,
+                &mut m.voices,
+                &m.measures,
+                1
+            )
+            .unwrap_err(),
+            failures["controls"][1]["native_error"].as_str().unwrap()
+        );
+        assert_eq!(m.owner.graph.snapshot(), before_failure);
+        assert_eq!(
+            crate::music_voices::projection(&m.voices, &m.measures),
+            before_voices
+        );
     }
     #[test]
     fn original_null_chord_voice_stays_null_during_refinement_and_id_collision() {
@@ -1949,6 +1984,40 @@ mod tests {
                 assert_eq!(node[field], old[field]);
             }
         }
+        let failures: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-reprocess/voice-null-predecessors.json"
+        ))
+        .unwrap();
+        edit(m, source_key, "voice", Value::Null);
+        m.owner
+            .graph
+            .relations(
+                1,
+                Phase::Symbol,
+                vec![(
+                    source_key,
+                    target_key,
+                    json!({"kind":"NextInVoiceRelation"}),
+                )],
+            )
+            .unwrap();
+        let before_failure = m.owner.graph.snapshot();
+        let before_voices = crate::music_voices::projection(&m.voices, &m.measures);
+        assert_eq!(
+            crate::music_voices::refine_ordinary_system(
+                &mut m.owner.graph,
+                &mut m.voices,
+                &m.measures,
+                1
+            )
+            .unwrap_err(),
+            failures["controls"][0]["native_error"].as_str().unwrap()
+        );
+        assert_eq!(m.owner.graph.snapshot(), before_failure);
+        assert_eq!(
+            crate::music_voices::projection(&m.voices, &m.measures),
+            before_voices
+        );
     }
     #[test]
     fn original_voice_refinement_purges_actual_empty_owner_and_renames_rhythm_created_high() {

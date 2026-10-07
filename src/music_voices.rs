@@ -317,27 +317,7 @@ pub(crate) fn refine_ordinary_system(
             if let Some(&prev) = previous.get(&measure.part) {
                 let live = staged.snapshot();
                 let tied = staged.incoming_tied_voice_id(first_id, |other| {
-                    let chord = live["inters"]
-                        .as_array()
-                        .unwrap()
-                        .iter()
-                        .find(|n| n["id"] == other)
-                        .ok_or("music_refine_live_tied_chord_required")?;
-                    // A null Chord Voice is valid after partial original rhythm.
-                    if chord["voice"].is_null() {
-                        return Ok(None);
-                    }
-                    let source = retained
-                        .iter()
-                        .find(|v| {
-                            v.chord_ids.contains(&other)
-                                && chord["voice"] == v.id
-                                && chord["part_id"] == measures[v.measure].part
-                                && chord["measure_index"] == measures[v.measure].index
-                                && chord["origin"]["system"] == measures[v.measure].system
-                        })
-                        .ok_or("music_refine_tied_owned_voice_required")?;
-                    Ok(Some(source.id))
+                    chord_voice_id(&live, &retained, measures, other)
                 })?;
                 if let Some(wanted) = tied {
                     swap_voice_id(&mut staged, &mut retained, index, wanted)?;
@@ -363,13 +343,9 @@ pub(crate) fn refine_ordinary_system(
                             .filter(|&position| position > 0)
                     {
                         let other = chords[position - 1]["id"].as_u64().unwrap() as usize;
-                        let source = retained
-                            .iter()
-                            .find(|v| {
-                                v.chord_ids.contains(&other) || v.measure_rest_chord == Some(other)
-                            })
-                            .ok_or("music_refine_beam_predecessor_owned_voice_required")?;
-                        let wanted = source.id;
+                        let wanted =
+                            chord_voice_id(&staged.snapshot(), &retained, measures, other)?
+                                .ok_or("music_refine_beam_predecessor_owned_voice_required")?;
                         swap_voice_id(&mut staged, &mut retained, index, wanted)?;
                     }
                 }
@@ -383,15 +359,8 @@ pub(crate) fn refine_ordinary_system(
                     {
                         continue;
                     }
-                    let source = retained
-                        .iter()
-                        .find(|v| {
-                            v.measure == prev
-                                && (v.chord_ids.contains(&other)
-                                    || v.measure_rest_chord == Some(other))
-                        })
+                    let wanted = chord_voice_id(&staged.snapshot(), &retained, measures, other)?
                         .ok_or("music_refine_previous_owned_voice_required")?;
-                    let wanted = source.id;
                     swap_voice_id(&mut staged, &mut retained, index, wanted)?;
                     break;
                 }
@@ -409,6 +378,36 @@ pub(crate) fn refine_ordinary_system(
     *graph = staged;
     *voices = retained;
     Ok(())
+}
+
+fn chord_voice_id(
+    snapshot: &Value,
+    voices: &[Voice],
+    measures: &[Measure],
+    id: usize,
+) -> Result<Option<usize>, String> {
+    let chord = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == id)
+        .ok_or("music_refine_live_chord_voice_required")?;
+    if chord["voice"].is_null() {
+        return Ok(None);
+    }
+    let voice = voices
+        .iter()
+        .find(|v| {
+            (v.chord_ids.contains(&id) || v.measure_rest_chord == Some(id))
+                && chord["voice"] == v.id
+                && measures.get(v.measure).is_some_and(|m| {
+                    chord["part_id"] == m.part
+                        && chord["measure_index"] == m.index
+                        && chord["origin"]["system"] == m.system
+                })
+        })
+        .ok_or("music_refine_actual_chord_voice_required")?;
+    Ok(Some(voice.id))
 }
 
 /// Measure.swapVoiceId changes the selected Voice first, then transfers its old

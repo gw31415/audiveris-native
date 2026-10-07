@@ -1,0 +1,25 @@
+{
+  "baseline_source": "07d1122ec431922c957053744e8f679075bce5b2",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual already-observed owned parallel-quarter/beam books; a Chord remains in Voice.chords while actual Chord.getVoice is null; original refineSystem BeamGroup predecessor and NextInVoice both throw NullPointerException before later preferred ID",
+  "implemented": "resolve current actual Chord Voice after preceding swaps using actual Voice/Chord/Part/Measure identity, not membership or repeated numeric ID alone. Tie skips null; BeamGroup/NextInVoice require nonnull reference and fail transactionally. No clock/cache/owner reconstruction.",
+  "original_exception_vs_native": "original exception is failure evidence only, not image/export success; native returns explicit owned-Voice error and publishes no staged mutation, rather than Java exception/partial mutation",
+  "target_tests": {
+    "passed": 3,
+    "tests": [
+      "original_voice_tie_beam_next_preference_keep_owned_clocks_and_export_binding",
+      "original_null_chord_voice_stays_null_during_refinement_and_id_collision",
+      "original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation"
+    ],
+    "checks": "original positive ordered swaps remain; null beam/Next guard and Graph/Voice rollback; tie null fallback; timed support guard and bounded actual reprocessing"
+  },
+  "format": "passed",
+  "clippy": "passed --all-targets -D warnings",
+  "not_claimed": [
+    "automatic CURVES/cross-bar beam/NextInVoice discovery/tie export",
+    "first-Chord-null/general Voice kinds/shared stacks/multi-staff",
+    "timed support correction/PageStep/full cleaner/epilog"
+  ],
+  "full_suite": "not rerun; historical595 at95e191b",
+  "completion_flags": false
+}

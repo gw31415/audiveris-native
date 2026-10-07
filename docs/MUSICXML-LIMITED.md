@@ -2298,3 +2298,8 @@ Retained Voice ID changes preserve null Chord Voice references left by partial
 rhythm instead of rebuilding ownership. Controlled fallback tie priority matches
 original; this adds no null-reference image acceptance or new correction option.
 The existing automatic examples and bounds-only `--edit-dot` command are retained.
+
+BeamGroup/NextInVoice refinement requires a current actual Chord Voice reference.
+It rejects a null reference even if retained membership still contains the Chord;
+original throws in those controls. Native rollback prevents partially refined
+output. This preserves admitted examples and adds no new automatic image scope.

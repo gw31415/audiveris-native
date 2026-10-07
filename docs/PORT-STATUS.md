@@ -1152,3 +1152,11 @@ source and try the next live relation. Actual membership/clocks/slots/cache are
 unchanged; this control does not admit a new null-reference image/export.
 Evidence: `evidence/musicxml-voice-null-reference/VALIDATION.json`. Next BeamGroup/
 NextInVoice nullable predecessor boundaries and general owner/controller remain.
+
+Current Chord.getVoice is now resolved on actual retained Part/Measure owners
+after prior refinement swaps. Tie skips null, but original BeamGroup/NextInVoice
+dereference null and fail; native returns an explicit guarded error with staging
+rollback. Two original exceptions are failure evidence, not MusicXML success.
+Existing positive ordered swaps/manual-dot reprocessing are retained. Evidence:
+`evidence/musicxml-voice-reference-guards/VALIDATION.json`. First-Chord-null/general
+Voice kinds and timed callback duration lifecycle remain separate dependencies.
