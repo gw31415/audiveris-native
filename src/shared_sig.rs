@@ -1307,7 +1307,7 @@ impl Graph {
                 .collect::<Vec<_>>()
         );
         self.dot_callback_trace.push(json!({"event":event,"id":id,"stage":stage,"depth":self.dot_callback_depth,"state":state}));
-        if event != "publish" {
+        if event.starts_with("edge") {
             self.dot_callback_trace.last_mut().unwrap()["kind"] =
                 json!(self.edges[id - 1].key.kind);
         }
