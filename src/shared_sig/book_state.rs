@@ -169,6 +169,7 @@ mod tests {
         let mut extra = old.clone();
         extra["local_relation_id"] = json!(1_000_001);
         extra["grade"] = json!(0.7);
+        let extra_replay = extra.clone();
         g.relations(
             hk.system,
             Phase::Stem,
@@ -248,5 +249,59 @@ mod tests {
         b.set_dirty(false);
         g.refresh_head_stem_abnormal(&[hid, ids[0], ids[1]]);
         compare(&g.snapshot(), &original["same_value_after_clean"]);
+        let added: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-head-stem-added/observed.json"
+        ))
+        .unwrap();
+        compare(&g.snapshot(), &added["before_readd"]);
+        g.enable_dot_callback_trace();
+        let sk: Key = serde_json::from_value(stems[1]["origin"].clone()).unwrap();
+        g.relations(
+            hk.system,
+            Phase::Stem,
+            vec![
+                (
+                    hk,
+                    serde_json::from_value(stems[0]["origin"].clone()).unwrap(),
+                    old.clone(),
+                ),
+                (hk, sk, extra_replay.clone()),
+            ],
+        )
+        .unwrap();
+        assert_eq!(
+            g.dot_callback_trace().len(),
+            added["added_callbacks"].as_array().unwrap().len()
+        );
+        for (a, b) in g
+            .dot_callback_trace()
+            .iter()
+            .zip(added["added_callbacks"].as_array().unwrap())
+        {
+            assert_eq!(a["event"], b["event"]);
+            assert_eq!(a["stage"], b["stage"]);
+            compare(&a["state"], &b["state"]);
+        }
+        compare(&g.snapshot(), &added["readded_extra"]);
+        let b = g.editing_book.as_mut().unwrap();
+        b.set_stub_modified(false);
+        b.set_modified(false);
+        b.set_dirty(false);
+        g.enable_dot_callback_trace();
+        g.relations(hk.system, Phase::Stem, vec![(hk, sk, extra_replay.clone())])
+            .unwrap();
+        assert!(g.dot_callback_trace().is_empty());
+        assert_eq!(added["duplicate_add_return"], false);
+        compare(&g.snapshot(), &added["duplicate_after_clean"]);
+        let before = g.snapshot();
+        let mut manual = extra_replay;
+        manual["local_relation_id"] = json!(1_000_002);
+        manual["manual"] = json!(true);
+        assert_eq!(
+            g.relations(hk.system, Phase::Stem, vec![(hk, sk, manual)])
+                .unwrap_err(),
+            "retained_manual_head_stem_owner_update_pending"
+        );
+        assert_eq!(g.snapshot(), before);
     }
 }

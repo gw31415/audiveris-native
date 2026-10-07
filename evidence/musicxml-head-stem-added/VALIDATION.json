@@ -1,0 +1,19 @@
+{
+  "baseline_source": "942b9fae2b84bce3e5cfc8c1b579aa0e926e8970",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "retained automatic HeadStemRelation added callback on actual bound editing owners; Head then Stem abnormal, per-edge intermediate state and dirty propagation",
+  "same_object_duplicate": "no original added callback, native preserves registered identity and no callback/dirty change",
+  "manual_boundary": "retained manual HeadStem additions are transactionally refused until actual ChordStem mutation and retained rhythm/cache ownership are connected; status never promoted",
+  "pre_recognition_boundary": "existing pre-retained head/stem batch assembly contract is unchanged; binding starts after recognition/rhythm",
+  "geometry_boundary": "corresponding owners via recognized Head ownership, original saved stems33 versus native38; not glyph parity",
+  "original_manual_observation": "real nested ChordStem removed then added callbacks precede outer HeadStem completion; actual chord stem changes while abnormal and dirty can stay false; not native manual success",
+  "target_tests": {
+    "extended_saved_owner_added_removed_and_duplicate_control": 1,
+    "existing_mixed_correction": 1,
+    "status": "passed2"
+  },
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed",
+  "completion_flags": false,
+  "full_suite": "not rerun; historical595@95e191b"
+}

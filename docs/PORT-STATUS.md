@@ -1212,3 +1212,11 @@ alternate support compares callback boundaries without claiming automatic image
 recognition or stem glyph geometry parity. Added/manual HeadChord mutation,
 generic vertex lifecycle and complete dirty coverage remain partial. Evidence:
 `evidence/musicxml-head-stem-dirty/VALIDATION.json`.
+
+Retained automatic HeadStem re-add now compares per-edge abnormal/dirty callbacks
+and same-object duplicate behavior. This does not change the pre-recognition
+batch contract or admit manual HeadStem editing. Original manual controls expose
+nested ChordStem removal (temporarily null stem) then addition/cache invalidation,
+while dirty can stay false. Actual retained Chord/cache/rhythm integration is the
+next dependency, guarded until compared. Evidence:
+`evidence/musicxml-head-stem-added/VALIDATION.json` and `NEXT-DEPENDENCY.md`.

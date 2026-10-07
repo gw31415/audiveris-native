@@ -1,0 +1,534 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "head_bounds": [
+    276,
+    237,
+    13,
+    10
+  ],
+  "manual_before": {
+    "chord_stem_bounds": [
+      288,
+      206,
+      2,
+      33
+    ],
+    "head_abnormal": false,
+    "stems": [
+      {
+        "linked_head_bounds": [
+          [
+            276,
+            237,
+            13,
+            10
+          ]
+        ],
+        "bounds": [
+          288,
+          206,
+          2,
+          33
+        ],
+        "abnormal": false,
+        "registered": true,
+        "same_sheet": true
+      },
+      {
+        "linked_head_bounds": [
+          [
+            396,
+            226,
+            13,
+            10
+          ],
+          [
+            276,
+            237,
+            13,
+            10
+          ]
+        ],
+        "bounds": [
+          407,
+          195,
+          4,
+          33
+        ],
+        "abnormal": false,
+        "registered": true,
+        "same_sheet": true
+      }
+    ],
+    "sheet_modified": false,
+    "book_modified": false,
+    "book_modified_field": false,
+    "book_dirty": false,
+    "same_measure": true,
+    "voice": 1,
+    "time_offset": "0"
+  },
+  "manual_after": {
+    "chord_stem_bounds": [
+      407,
+      195,
+      4,
+      33
+    ],
+    "head_abnormal": false,
+    "stems": [
+      {
+        "linked_head_bounds": [
+          [
+            276,
+            237,
+            13,
+            10
+          ]
+        ],
+        "bounds": [
+          288,
+          206,
+          2,
+          33
+        ],
+        "abnormal": false,
+        "registered": true,
+        "same_sheet": true
+      },
+      {
+        "linked_head_bounds": [
+          [
+            396,
+            226,
+            13,
+            10
+          ],
+          [
+            276,
+            237,
+            13,
+            10
+          ]
+        ],
+        "bounds": [
+          407,
+          195,
+          4,
+          33
+        ],
+        "abnormal": false,
+        "registered": true,
+        "same_sheet": true
+      }
+    ],
+    "sheet_modified": false,
+    "book_modified": false,
+    "book_modified_field": false,
+    "book_dirty": false,
+    "same_measure": true,
+    "voice": 1,
+    "time_offset": "0"
+  },
+  "manual_callbacks": [
+    {
+      "event": "edgeAdded",
+      "kind": "HeadStemRelation",
+      "relation": "extra",
+      "stage": "enter",
+      "state": {
+        "chord_stem_bounds": [
+          288,
+          206,
+          2,
+          33
+        ],
+        "head_abnormal": false,
+        "stems": [
+          {
+            "linked_head_bounds": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              288,
+              206,
+              2,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          },
+          {
+            "linked_head_bounds": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              407,
+              195,
+              4,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          }
+        ],
+        "sheet_modified": false,
+        "book_modified": false,
+        "book_modified_field": false,
+        "book_dirty": false,
+        "same_measure": true,
+        "voice": 1,
+        "time_offset": "0"
+      }
+    },
+    {
+      "event": "edgeRemoved",
+      "kind": "ChordStemRelation",
+      "relation": "extra",
+      "stage": "enter",
+      "state": {
+        "chord_stem_bounds": null,
+        "head_abnormal": false,
+        "stems": [
+          {
+            "linked_head_bounds": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              288,
+              206,
+              2,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          },
+          {
+            "linked_head_bounds": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              407,
+              195,
+              4,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          }
+        ],
+        "sheet_modified": false,
+        "book_modified": false,
+        "book_modified_field": false,
+        "book_dirty": false,
+        "same_measure": true,
+        "voice": 1,
+        "time_offset": "0"
+      }
+    },
+    {
+      "event": "edgeRemoved",
+      "kind": "ChordStemRelation",
+      "relation": "extra",
+      "stage": "leave",
+      "state": {
+        "chord_stem_bounds": null,
+        "head_abnormal": false,
+        "stems": [
+          {
+            "linked_head_bounds": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              288,
+              206,
+              2,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          },
+          {
+            "linked_head_bounds": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              407,
+              195,
+              4,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          }
+        ],
+        "sheet_modified": false,
+        "book_modified": false,
+        "book_modified_field": false,
+        "book_dirty": false,
+        "same_measure": true,
+        "voice": 1,
+        "time_offset": "0"
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "ChordStemRelation",
+      "relation": "extra",
+      "stage": "enter",
+      "state": {
+        "chord_stem_bounds": [
+          407,
+          195,
+          4,
+          33
+        ],
+        "head_abnormal": false,
+        "stems": [
+          {
+            "linked_head_bounds": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              288,
+              206,
+              2,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          },
+          {
+            "linked_head_bounds": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              407,
+              195,
+              4,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          }
+        ],
+        "sheet_modified": false,
+        "book_modified": false,
+        "book_modified_field": false,
+        "book_dirty": false,
+        "same_measure": true,
+        "voice": 1,
+        "time_offset": "0"
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "ChordStemRelation",
+      "relation": "extra",
+      "stage": "leave",
+      "state": {
+        "chord_stem_bounds": [
+          407,
+          195,
+          4,
+          33
+        ],
+        "head_abnormal": false,
+        "stems": [
+          {
+            "linked_head_bounds": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              288,
+              206,
+              2,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          },
+          {
+            "linked_head_bounds": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              407,
+              195,
+              4,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          }
+        ],
+        "sheet_modified": false,
+        "book_modified": false,
+        "book_modified_field": false,
+        "book_dirty": false,
+        "same_measure": true,
+        "voice": 1,
+        "time_offset": "0"
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "HeadStemRelation",
+      "relation": "extra",
+      "stage": "leave",
+      "state": {
+        "chord_stem_bounds": [
+          407,
+          195,
+          4,
+          33
+        ],
+        "head_abnormal": false,
+        "stems": [
+          {
+            "linked_head_bounds": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              288,
+              206,
+              2,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          },
+          {
+            "linked_head_bounds": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "bounds": [
+              407,
+              195,
+              4,
+              33
+            ],
+            "abnormal": false,
+            "registered": true,
+            "same_sheet": true
+          }
+        ],
+        "sheet_modified": false,
+        "book_modified": false,
+        "book_modified_field": false,
+        "book_dirty": false,
+        "same_measure": true,
+        "voice": 1,
+        "time_offset": "0"
+      }
+    }
+  ],
+  "scope": "original-only saved owner manual HeadStem added branch; not native implementation/admission or image export success"
+}

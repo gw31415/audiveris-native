@@ -773,7 +773,11 @@ impl Graph {
                 Some("AugmentationRelation" | "DoubleDotRelation")
             )
         });
-        if chords || dots {
+        let retained_stems = self.editing_book.is_some()
+            && relations
+                .iter()
+                .any(|(_, _, r)| r["kind"] == "HeadStemRelation");
+        if chords || dots || retained_stems {
             // Original identity callbacks operate on the actual registered
             // chord. Validate/update a stage before changing the retained SIG.
             let mut next = self.clone();
@@ -904,6 +908,34 @@ impl Graph {
                 data,
                 removed: false,
             };
+            if added
+                && self.editing_book.is_some()
+                && self.edges[id - 1].key.kind == "HeadStemRelation"
+            {
+                let head = &self.vertices[source - 1];
+                let stem = &self.vertices[target - 1];
+                if head.key.phase != Phase::Head
+                    || head.data["kind"] != "HeadInter"
+                    || stem.key.phase != Phase::Stem
+                    || stem.data["kind"] != "StemInter"
+                {
+                    return Err("retained_head_stem_typed_endpoints_required".into());
+                }
+                // Manual added() can replace the real ChordStem owner before
+                // abnormal checks. Its retained rhythm/cache lifecycle is not yet
+                // connected; do not substitute the automatic callback tail.
+                if [&self.edges[id - 1].data, &head.data, &stem.data]
+                    .iter()
+                    .any(|v| v["manual"] == true || v["is_manual"] == true)
+                {
+                    return Err("retained_manual_head_stem_owner_update_pending".into());
+                }
+                #[cfg(test)]
+                self.dot_callback_event("edgeAdded", id, "enter");
+                self.refresh_head_stem_abnormal(&[source, target]);
+                #[cfg(test)]
+                self.dot_callback_event("edgeAdded", id, "leave");
+            }
             if added && dot_support {
                 #[cfg(test)]
                 self.dot_callback_event("edgeAdded", id, "enter");

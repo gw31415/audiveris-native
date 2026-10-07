@@ -2402,3 +2402,10 @@ Book flags. Writing MusicXML does not imply score reduction or project storage.
 Tracking begins after initial recognition/rhythm on the current single-image
 owner; imported project flags, all dirty sources, multi-sheet/repository state
 and store/load remain partial. No new image or correction scope is admitted.
+
+Dirty tracking also covers the retained cleaner Head/Stem abnormal callbacks and
+automatic relation re-add. Original same-object duplicate does not invoke an
+added callback. These are owned controls; CLI image admission is unchanged.
+Manual HeadStem changes need actual ChordStem/cache integration and are guarded,
+not approximated by the automatic callback. Original manual ownership can change
+without an abnormal or dirty change; controller DO remains a separate cause.
