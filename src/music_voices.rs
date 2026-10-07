@@ -288,7 +288,7 @@ pub(crate) fn refine_ordinary_system(
             if node["origin"]["system"] != measure.system
                 || node["part_id"] != measure.part
                 || node["measure_index"] != measure.index
-                || node["voice"] != v.id
+                || (!node["voice"].is_null() && node["voice"] != v.id)
                 || v.starting_staff != measure.staff
             {
                 return Err("music_refine_owned_HIGH_voice_required".into());

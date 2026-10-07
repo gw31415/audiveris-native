@@ -1,0 +1,33 @@
+{
+  "scope": "original owned HIGH Voice retains its first Chord while Chord.voice is null; declared partial rhythm, not export/image success",
+  "target_bounds": [
+    756,
+    184,
+    13,
+    41
+  ],
+  "first_null_tied_id": 2,
+  "after_first_null": [
+    {
+      "id": 2,
+      "first_chord_bounds": [
+        756,
+        184,
+        13,
+        41
+      ]
+    },
+    {
+      "id": 1,
+      "first_chord_bounds": [
+        754,
+        259,
+        13,
+        41
+      ]
+    }
+  ],
+  "first_chord_voice_after_refinement": null,
+  "actual_voice_first_is_target": true,
+  "first_head_voice_after_refinement": null
+}

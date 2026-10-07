@@ -1,0 +1,25 @@
+{
+  "baseline_source": "3c03f7557de6001981a6090e962351a046b2c927",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual timed HIGH Voice retains first Chord while Chord.justAssignVoice(null); preferred ID cleared, getTiedId returns2 and refineSystem produces2/1 while first Chord and Head getVoice remain null",
+  "implemented": "first Chord is obtained from actual retained Voice membership; nullable Chord.voice does not invalidate that getter. Original system/Part/Measure/staff/slot ownership guards remain; a conflicting nonnull reference is rejected. HIGH rename/collision never assigns null references.",
+  "export_boundary": "native event binding still rejects musicxml_voice_owned_chord_required without changing the event; successful refine control is not successful recognition/export of null-reference input",
+  "target_tests": {
+    "passed": 3,
+    "tests": [
+      "original_null_chord_voice_stays_null_during_refinement_and_id_collision",
+      "original_voice_tie_beam_next_preference_keep_owned_clocks_and_export_binding",
+      "original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation"
+    ]
+  },
+  "format": "passed",
+  "clippy": "passed --all-targets -D warnings",
+  "not_claimed": [
+    "automatic null-reference image or correction admission",
+    "automatic tie/Next/cross-bar beam recognition and tie export",
+    "general Voice kinds/Part/shared stack/multi-staff/refinePage/refineScore",
+    "timed support edits/PageStep/history/full cleaner/epilog"
+  ],
+  "full_suite": "not rerun; historical595 at95e191b",
+  "completion_flags": false
+}

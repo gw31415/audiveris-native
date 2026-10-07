@@ -1160,3 +1160,12 @@ rollback. Two original exceptions are failure evidence, not MusicXML success.
 Existing positive ordered swaps/manual-dot reprocessing are retained. Evidence:
 `evidence/musicxml-voice-reference-guards/VALIDATION.json`. First-Chord-null/general
 Voice kinds and timed callback duration lifecycle remain separate dependencies.
+
+Retained timed HIGH Voice.getFirstChord also remains valid when its Chord Voice
+reference is null. Original incoming tie gives2/1, preserving the null first
+Chord/Head reference; native matches actual membership without assigning it.
+Event binding continues to reject null, so this is owner-control success only,
+not automatic image/export acceptance. Existing Part/Measure/staff/slot and
+conflicting-reference guards remain. Evidence:
+`evidence/musicxml-voice-first-null/VALIDATION.json`. Timed support callback/live
+duration refresh and general Voice/shared/controller remain next dependencies.

@@ -511,6 +511,12 @@
       "unit": "current owned Chord.getVoice resolution after prior swaps; tie-null skip vs BeamGroup/Next null error",
       "limits": "original failure controls, not image success; first-Chord-null/general Voice/shared/controller remain partial",
       "evidence": "evidence/musicxml-voice-reference-guards/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "original retained timed HIGH first-Chord-null membership and tie refinement, with export guard retained",
+      "limits": "declared owner control; not null-reference image/export success; general kinds/shared/controller partial",
+      "evidence": "evidence/musicxml-voice-first-null/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -583,7 +589,7 @@
       "all_voice_final_check": "Original standard-chord Voice/time and all-Voice duration checks connect five sequential object controls and actual parallel quarter/half/flag/beam images. Complete/nonoverlap admission is per Voice; a shorter lower Voice refuses despite a complete upper one.",
       "owned_event_binding": "Mapped actual Voice/onset/intrinsic duration feeds image events and Voice-major writer. Two parallel quarter images plus four new duration images agree on full original exports and actual chord/slot/Voice getters; positive known first forward is retained. Unknown/backwards/overlap/incomplete ends remain refused. General ensemble/rhythm/shared stacks remain partial. Same-stem uniform multi-head chords now retain actual Containment and share one onset/duration/Voice; Separated distance reads highest-note pitch and heads-only union center. Original actual image and saved-owner getters checked separately. Live member order now also supplies events[].chord; uniform two-head eighth chords share one intrinsic duration/group clock. One full original image14 notes agrees; actual saved group/shortening getters distinct. FLAG2 actual glyph registration and flag-value sum now shorten ordinary uniform heads to1/16; source-grade ordered multi-connection Stem direction is shared with foundation, no selected-image IDs. One15-note full original upward-flag chord image and one separate actual SIG lookup control agree.",
       "owned_correction_reprocess": "Cached expected -> Stack-only reset -> actual Measure/Voice/Chord rhythm -> finalCheck before stack slots/actual -> bounded HIGH purge/sort/rename. Same selected owner feeds native export; retained other measures preserve rhythm. No populateFRATs in this entry. Original retained HIGH linked Voice ordering connected; automatic discovery/implicit tuplet/shared stack/general repair remain pending.",
-      "owned_voice_refinement": "HIGH purge/sort/rename -> first nonnull incoming classified tied Voice -> first BeamGroup containing actual previous Measure / immediate group predecessor -> exact previous-Measure NextInVoice -> preferred-ID collision swap. Actual owned Chords bind events. Declared owner control, no automatic link discovery; general kinds/shared stacks/CURVES/tie export remain partial. Voice ID projection never assigns null Chord references. Current reference/Part/Measure ownership checked after preceding swaps; original null beam/Next failure preserved as native transactional guard. First-Chord-null and general Voice kinds remain pending."
+      "owned_voice_refinement": "HIGH purge/sort/rename -> first nonnull incoming classified tied Voice -> first BeamGroup containing actual previous Measure / immediate group predecessor -> exact previous-Measure NextInVoice -> preferred-ID collision swap. Actual owned Chords bind events. Declared owner control, no automatic link discovery; general kinds/shared stacks/CURVES/tie export remain partial. Voice ID projection never assigns null Chord references. Current reference/Part/Measure ownership checked after preceding swaps; original null beam/Next failure preserved as native transactional guard. Timed HIGH first-Chord-null membership/refinement now controlled without assigning null; event binding remains guarded. General Voice kinds/shared/controller remain partial."
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -618,7 +624,7 @@
     }
   ],
   "correction_CLI_design_status": "partial: raw same-stack ordinary-dot bounds-only --edit-dot and library do/undo/reprocess; support edits, general controller/history/PageStep pending",
-  "next_image_integration": "evidence/musicxml-voice-reference-guards/NEXT-DEPENDENCY.md; no nonUI omissions",
+  "next_image_integration": "evidence/musicxml-voice-first-null/NEXT-DEPENDENCY.md; no nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -627,7 +633,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Actual current Chord Voice/Part/Measure resolution after prior ID swaps; tie null skip vs original BeamGroup/NextInVoice null exceptions, native transactional rejection. Current3 targets; evidence/musicxml-voice-reference-guards; full595 historical95e191b.",
+  "latest_targeted_validation": "Original timed HIGH first-Chord-null membership/refinement ->2/1 without assigning Chord/Head Voice; native event guard retained. Current3 targets; evidence/musicxml-voice-first-null; full595 historical95e191b.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {

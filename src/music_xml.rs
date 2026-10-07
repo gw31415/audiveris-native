@@ -1984,6 +1984,60 @@ mod tests {
                 assert_eq!(node[field], old[field]);
             }
         }
+        let first_null: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-reprocess/voice-first-chord-null.json"
+        ))
+        .unwrap();
+        edit(m, target_key, "voice", Value::Null);
+        edit(m, target_key, "preferred_voice_id", Value::Null);
+        assert_eq!(json!(tied(m)), first_null["first_null_tied_id"]);
+        refine(m);
+        assert_eq!(projection(m), first_null["after_first_null"]);
+        let first_snapshot = m.owner.graph.snapshot();
+        assert_eq!(
+            first_snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == target)
+                .unwrap()["voice"],
+            first_null["first_chord_voice_after_refinement"]
+        );
+        assert!(
+            m.voices
+                .iter()
+                .any(|v| v.measure == 1 && v.chord_ids.first() == Some(&target))
+        );
+        let mut event = m.owner.prepared.report["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["chord_id"] == target)
+            .unwrap()
+            .clone();
+        let unbound = event.clone();
+        assert_eq!(
+            crate::music_voice_export::bind_event(
+                &m.owner.graph,
+                &m.voices,
+                &m.measures[1],
+                1,
+                &mut event
+            )
+            .unwrap_err(),
+            "musicxml_voice_owned_chord_required"
+        );
+        assert_eq!(event, unbound);
+        let actual_voice = m
+            .voices
+            .iter()
+            .find(|v| v.chord_ids.contains(&target))
+            .unwrap()
+            .id;
+        edit(m, target_key, "voice", json!(actual_voice));
+        edit(m, target_key, "preferred_voice_id", json!(1));
+        refine(m);
+        assert_eq!(projection(m), original["after_preferred_swap"]);
         let failures: Value = serde_json::from_str(include_str!(
             "../fixtures/official-stack-reprocess/voice-null-predecessors.json"
         ))

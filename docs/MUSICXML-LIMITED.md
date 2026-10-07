@@ -2303,3 +2303,8 @@ BeamGroup/NextInVoice refinement requires a current actual Chord Voice reference
 It rejects a null reference even if retained membership still contains the Chord;
 original throws in those controls. Native rollback prevents partially refined
 output. This preserves admitted examples and adds no new automatic image scope.
+
+Original timed first-Chord-null Voice refinement is now controlled as a separate
+owner lifecycle. It does not grant MusicXML event ownership: event binding still
+rejects null, and automatic image/`--edit-dot` admission remains unchanged.
+Timed support edits are still guarded; do not clear clocks ahead of callbacks.
