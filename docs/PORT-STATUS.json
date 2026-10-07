@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Current exact getter unit: owned manual callback1, cold/warm cache1, timed dot callbacks1, mixed owned task/rollback1; fmt/all-target clippy passed. Independent saved a9108bf: owned manual callback1, Linux CLI5images47+parallel16+mixed8, prior XML bytes/XSD/tree equality. Exact-getter final source readback pending until corresponding evidence READBACK is saved. Full595 historical95e191b; no full rerun.",
+  "latest_targeted_validation": "Source175ab0d: owned manual callback1, cold/warm cache1, timed dot callbacks1, mixed task/rollback1; fmt/all-target clippy passed. Independent same-source target1/Linux build and focused double8+parallel16+mixed8 prior XML bytes/XSD/root/src/crates passed. Earlier a9108bf saved5images47+parallel16+mixed8. Full595 historical95e191b; no full rerun.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
