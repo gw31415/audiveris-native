@@ -1,0 +1,31 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual saved ordinary relation identities: same LinkTask repeat/no-op publication, missing UnlinkTask exception, declared grade setters retain same relation object; not automatic correction discovery",
+  "target_chord_bounds": [
+    516,
+    184,
+    13,
+    41
+  ],
+  "repeat_link_do": {
+    "callback_events": 0,
+    "same_relation_registered": true,
+    "same_task_relation": true,
+    "live_grade": 0.81,
+    "old_manual": false,
+    "new_manual": true,
+    "publication_count": 1
+  },
+  "repeat_unlink_do": {
+    "original_exception": "IllegalArgumentException:no such edge in graph: 0.31~Augmentation",
+    "callback_events": 0,
+    "publication_count": 0
+  },
+  "undo": {
+    "old_manual": false,
+    "new_manual": true,
+    "old_grade": 0.31,
+    "new_grade": 0.81,
+    "actual_duration": "13/16"
+  }
+}

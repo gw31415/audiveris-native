@@ -2361,3 +2361,10 @@ of a new image or automatic correction target discovery. Original saved-owner
 controls, original real RhythmsStep processing and native XML/XSD checks are
 separate. Same-stack single black HeadChord guard, special/shared/cross-stack and
 full controller/PageStep limitations remain; nonUI parity is still incomplete.
+
+Retained relation-task replay now preserves actual object identity and edited
+relation grade/status: adding the same already live object emits no callback but
+still publishes source. Removing an absent object is an original exception;
+native refuses before impact/publication rather than silently accepting it.
+The same CLI example is retained. Grade setter and task-replay checks are owned
+controls; they do not add automatic correction discovery or general setter CLI.

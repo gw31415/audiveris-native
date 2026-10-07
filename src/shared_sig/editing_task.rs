@@ -71,8 +71,22 @@ impl EditingLink {
         search_link: bool,
     ) -> Result<bool, String> {
         let (source, target) = self.endpoints(graph, inter)?;
-        if graph.vertices[source - 1].removed || graph.vertices[target - 1].removed {
+        if search_link && (graph.vertices[source - 1].removed || graph.vertices[target - 1].removed)
+        {
             return Ok(false);
+        }
+        if !search_link {
+            graph.endpoint(inter)?;
+            graph.endpoint(self.partner)?;
+            if let Some(id) = self.edge {
+                let retained = &graph.edges[id - 1];
+                // Raw addEdge on the same live object does not re-register it;
+                // task references share any edits made to the retained relation.
+                if !retained.removed {
+                    return Ok(false);
+                }
+                self.relation = retained.data.clone();
+            }
         }
         let kind = self.relation["kind"]
             .as_str()
@@ -304,6 +318,10 @@ impl RelationTask {
             #[cfg(test)]
             graph.dot_callback_event("publish", id, "delivered");
         } else {
+            let id = self.link.edge.ok_or("editing_live_relation_required")?;
+            if graph.edges[id - 1].removed {
+                return Err("editing_live_relation_required".into());
+            }
             self.link.remove(graph, self.source)?;
         }
         Ok(())
@@ -522,5 +540,109 @@ impl EditingSequence {
         *graph = next;
         *self = sequence;
         Ok(notification)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn actual_relation_task_replay_publishes_without_callback_and_missing_remove_refuses() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-relation-tasks/replay.json"
+        ))
+        .unwrap();
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let mut export = crate::music_xml::recognize(&image).unwrap();
+        let state = export.owner.owner.graph.snapshot();
+        let edge = state["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "AugmentationRelation")
+            .unwrap();
+        let dot = edge["source"].as_u64().unwrap() as usize;
+        let target = state["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == oracle["target_chord_bounds"])
+            .unwrap()["member_ids"][0]
+            .as_u64()
+            .unwrap() as usize;
+        let mut sequence = export.dot_relation_transfer(dot, target, true).unwrap();
+        export
+            .apply_editing_sequence(&mut sequence, EditingOperation::Do)
+            .unwrap();
+        let xml = export.xml.clone();
+        let mut repeated = EditingSequence::from_tasks(vec![sequence.tasks[1].clone()]);
+        export.owner.owner.graph.enable_dot_callback_trace();
+        export
+            .apply_editing_sequence(&mut repeated, EditingOperation::Do)
+            .unwrap();
+        assert_eq!(export.xml, xml);
+        let graph = &export.owner.owner.graph;
+        assert_eq!(graph.dot_callback_trace().len(), 1);
+        assert_eq!(graph.dot_callback_trace()[0]["event"], "publish");
+        assert_eq!(oracle["repeat_link_do"]["callback_events"], 0);
+        assert_eq!(oracle["repeat_link_do"]["publication_count"], 1);
+        assert_eq!(oracle["repeat_link_do"]["same_relation_registered"], true);
+        assert_eq!(oracle["repeat_link_do"]["same_task_relation"], true);
+        let before = graph.snapshot();
+        let mut missing = EditingSequence::from_tasks(vec![sequence.tasks[0].clone()]);
+        assert_eq!(
+            export
+                .apply_editing_sequence(&mut missing, EditingOperation::Do)
+                .unwrap_err(),
+            "editing_live_relation_required"
+        );
+        assert!(
+            oracle["repeat_unlink_do"]["original_exception"]
+                .as_str()
+                .unwrap()
+                .starts_with("IllegalArgumentException:no such edge in graph:")
+        );
+        assert_eq!(export.owner.owner.graph.snapshot(), before);
+        assert_eq!(export.xml, xml);
+        // Declared relation setter control on actual retained objects, not a
+        // report/provenance change or a new image correction admission.
+        let mut graph = export.owner.owner.graph.clone();
+        let old = edge["id"].as_u64().unwrap() as usize;
+        let new = match &sequence.tasks[1] {
+            EditingTask::Relation(t) => t.link.edge.unwrap(),
+            _ => unreachable!(),
+        };
+        graph.edges[old - 1].data["grade"] = json!(0.31);
+        graph.edges[new - 1].data["grade"] = json!(0.81);
+        repeated
+            .perform(&mut graph, EditingOperation::Do, "PAGE")
+            .unwrap();
+        assert_eq!(
+            graph.edges[new - 1].data["grade"],
+            oracle["repeat_link_do"]["live_grade"]
+        );
+        sequence
+            .perform(&mut graph, EditingOperation::Undo, "PAGE")
+            .unwrap();
+        assert_eq!(
+            graph.edges[old - 1].data["grade"],
+            oracle["undo"]["old_grade"]
+        );
+        assert_ne!(graph.edges[old - 1].data["manual"], true);
+        let source = graph.vertices[graph.edges[old - 1].key.target - 1].key;
+        let owner = graph
+            .live_edges()
+            .into_iter()
+            .find(|e| e.key.kind == "Containment" && graph.vertices[e.key.target - 1].key == source)
+            .unwrap()
+            .key
+            .source;
+        assert_eq!(
+            graph.chord_duration(graph.vertices[owner - 1].key).unwrap(),
+            Some("1/4".into())
+        );
     }
 }

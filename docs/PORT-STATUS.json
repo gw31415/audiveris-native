@@ -533,6 +533,12 @@
       "unit": "actual owned UnlinkTask/LinkTask do/undo/publication and original-order endpoint stack impact -> retained stack reprocess/event binding/native MusicXML",
       "limits": "actual saved ordinary single-head same-stack UnlinkTask + LinkTask, preserved relation/manual identity, original UITaskList do/undo/redo and real RhythmsStep.impact; declared correction, not automatic target discovery; original automatic13/16 is refused/rolled back by native, not promoted. Other relation kinds, mixed task controls/full controller remain partial.",
       "evidence": "evidence/musicxml-relation-tasks/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual relation identity replay/no-op publication; missing raw removal refusal; retained relation grade/status read on re-add",
+      "limits": "owned declared LinkTask/UnlinkTask controls, not general relation setter CLI or automatic discovery; mixed task/controller, special/shared owners and complete cleaner remain partial",
+      "evidence": "evidence/musicxml-relation-tasks/REPLAY-VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -649,7 +655,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Source6d65e59: new actual relation task2 + existing timed/bounds3 targets, fmt/clippy passed; independent5images47 + parallel16 + bounds/editor-support/relation-support CLI8 each original/nativeXML/XSD, prior bytes maintained. Automatic13/16 and cross-stack refused; no current full run (historical595@95e191b).",
+  "latest_targeted_validation": "Relation lifecycle boundary1 + required2 relation targets passed; fmt/clippy all-targets passed. Previous6d65e59 independent5images47+parallel16+explicit edits8 each; current replay readback pending, full595 historical95e191b.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {

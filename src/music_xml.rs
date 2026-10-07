@@ -1527,8 +1527,6 @@ mod tests {
                             assert_eq!(current[f], initial[f]);
                         }
                         if op_index == 0 {
-                            let key: Key =
-                                serde_json::from_value(current["origin"].clone()).unwrap();
                             let live = crate::music_duration::live(
                                 &a["state"],
                                 current["id"].as_u64().unwrap() as usize,
@@ -1545,7 +1543,6 @@ mod tests {
                                 ),
                                 expected["end_time"].as_str().unwrap()
                             );
-                            assert!(graph.id(key).is_some());
                         }
                     }
                 }

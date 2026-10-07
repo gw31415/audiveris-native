@@ -1,0 +1,20 @@
+{
+  "baseline_source": "3a746f89b8035610218cc8162f51d05ee6294eff",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "same actual retained relation objects on declared ordinary support owners; not general relation editing or automatic correction discovery",
+  "original_observations": {
+    "same_LinkTask_repeat_do": "no edge-added callback, same live relation and task reference, source publication once, real RhythmsStep.impact; music unchanged",
+    "missing_UnlinkTask_repeat_do": "IllegalArgumentException:no such edge in graph; no callback/publication",
+    "declared_grade_setters": "live grade0.81 survives LinkTask replay; removed relation grade0.31 survives UnlinkTask undo; manual statuses not promoted, automatic undo remains13/16"
+  },
+  "native_changes": "raw task live-identity add is a no-op but still publishes; removed identity re-add reads actual retained relation data; missing raw removal refuses before publication/impact. Search Link.applyTo dedup stays distinct",
+  "target_tests": {
+    "new_boundary": 1,
+    "required_relation_tests": 2,
+    "status": "passed1 new +2 required relation targets"
+  },
+  "format": "passed",
+  "clippy": "passed all-targets -D warnings",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}
