@@ -475,6 +475,12 @@
       "unit": "actual retained ordinary current-center stack targets for editing RHYTHMS notifications",
       "limits": "saved cross-stack raw-task control with old Measure membership retained; no actual StackRhythm/voice/PageStep execution or automatic correction/general CLI editing/multi-staff/full cleaner",
       "evidence": "evidence/musicxml-editing-stack/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "owned stack-only reset and expected-duration ordering in native image rhythm",
+      "limits": "original complete reprocessStack and separate stages observed; only native reset/order connected, edited owner entry/system voice refinement/general processing remain partial",
+      "evidence": "evidence/musicxml-stack-reprocess/VALIDATION.json"
     }
   ],
   "function_groups": [

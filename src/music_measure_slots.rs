@@ -761,8 +761,8 @@ pub(crate) fn from_owned(
         }
     }
     // BeamGroup.getChords already translates each typed beam's head/rest links,
-    // stable center -> left sorting and aliases. Voices have just been reset.
-    let groups = crate::music_voices::beam_groups(graph, &[], std::slice::from_ref(measure))?;
+    // stable center -> left sorting and aliases, without querying group Voice.
+    let groups = crate::music_voices::beam_group_chords(graph)?;
     // Measure.getBeamGroups follows each standard chord's actual first beam
     // ensemble, retaining first encounter order. Other groups in the same
     // system must not override this measure's relationships.

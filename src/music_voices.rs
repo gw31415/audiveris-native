@@ -232,6 +232,16 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
     )
 }
 
+/// StackRhythm.process sets expected duration before Measure processing.
+/// Stack reset does not clear retained Measure Voices or Chord timing.
+pub(crate) fn reset_stack_rhythm(measure: &mut Measure, expected: Option<u32>) {
+    measure.timing.expected = expected;
+    measure.timing.abnormal = false;
+    measure.timing.excess = None;
+    measure.timing.slots.clear();
+    measure.timing.actual = None;
+}
+
 /// Measure.resetRhythm -> AbstractChordInter.resetTiming before rhythm passes.
 /// Clear only this measure's Voices, abnormal flag, chord slot/voice/time.
 /// Original Measure reset does not reset chord duration or stack timing/slots.
@@ -641,6 +651,50 @@ pub(crate) fn beam_groups(
     measures: &[Measure],
 ) -> Result<Value, String> {
     let snapshot = graph.snapshot();
+    let nodes: BTreeMap<_, _> = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+        .collect();
+    let mut rows = beam_group_chords(graph)?;
+    for row in rows.as_array_mut().unwrap() {
+        let system = row["system_id"].as_u64().unwrap();
+        let owner = row["chords"]
+            .as_array()
+            .unwrap()
+            .first()
+            .map(|c| c["id"].as_u64().unwrap() as usize)
+            .as_ref()
+            .map(|id| -> Result<Option<&Voice>, String> {
+                let chord = nodes[id];
+                if chord["voice"].is_null() {
+                    return Ok(None);
+                }
+                let voice = voices
+                    .iter()
+                    .find(|v| {
+                        v.chord_ids.contains(id)
+                            && chord["voice"] == v.id
+                            && measures[v.measure].system == system
+                            && chord["part_id"] == measures[v.measure].part
+                            && chord["measure_index"] == measures[v.measure].index
+                    })
+                    .ok_or("music_group_retained_voice_owner_required")?;
+                Ok(Some(voice))
+            })
+            .transpose()?
+            .flatten();
+        row["voice"] = json!(owner.map(|v| v.id));
+        row["voice_measure_number"] = json!(owner.map(|v| v.measure + 1));
+    }
+    Ok(rows)
+}
+
+/// BeamGroup.getChords does not read getVoice. Slot geometry may be retrieved
+/// while other measures still have their retained Voices and clocks.
+pub(crate) fn beam_group_chords(graph: &crate::shared_sig::Graph) -> Result<Value, String> {
+    let snapshot = graph.snapshot();
     let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
         .as_array()
         .unwrap()
@@ -745,31 +799,10 @@ pub(crate) fn beam_groups(
         // Original getChords uses byAbscissa (left bounds), not the Voice's
         // center comparator. LinkedHashSet preserves ties and removes aliases.
         chord_ids.sort_by_key(|id| nodes[id]["bounds"][0].as_i64().unwrap());
-        let owner = chord_ids
-            .first()
-            .map(|id| -> Result<Option<&Voice>, String> {
-                let chord = nodes[id];
-                if chord["voice"].is_null() {
-                    return Ok(None);
-                }
-                let voice = voices
-                    .iter()
-                    .find(|v| {
-                        v.chord_ids.contains(id)
-                            && chord["voice"] == v.id
-                            && measures[v.measure].system == system
-                            && chord["part_id"] == measures[v.measure].part
-                            && chord["measure_index"] == measures[v.measure].index
-                    })
-                    .ok_or("music_group_retained_voice_owner_required")?;
-                Ok(Some(voice))
-            })
-            .transpose()?
-            .flatten();
         rows.push(json!({"id":gid,"system_id":system,"bounds":group["bounds"],
             "beams":beams.iter().map(|n|json!({"id":n["id"],"kind":n["kind"],"bounds":n["bounds"]})).collect::<Vec<_>>(),
-            "chords":chord_ids.iter().map(|id| {let n=nodes[id];json!({"id":id,"kind":n["kind"],"bounds":n["bounds"],"voice":n["voice"],"measure_number":n["measure_number"]})}).collect::<Vec<_>>(),
-            "voice":owner.map(|v|v.id),"voice_measure_number":owner.map(|v|v.measure+1)}));
+            "chords":chord_ids.iter().map(|id| {let n=nodes[id];json!({"id":id,"kind":n["kind"],"bounds":n["bounds"],"voice":n["voice"],"measure_number":n["measure_number"]})}).collect::<Vec<_>>()
+            }));
     }
     Ok(json!(rows))
 }

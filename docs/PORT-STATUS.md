@@ -1103,3 +1103,13 @@ Publication control is queue-flushed original InterService delivery versus nativ
 post-callback publication request records. This does not prove GUI delivery or
 async ordering relative to controller epilog. Actual impact execution remains
 pending separately from task/owner controls.
+
+Stack rhythm initialization now follows original StackRhythm.process ordering:
+expectedDuration is installed before stack-only reset (actual/excess/slots), then
+Measure reset and slot retrieval run on the owned live Graph. Stack reset preserves
+old Voices, Chord timing/cache and membership. An actual saved original bounds-only
+PageRhythm.reprocessStack succeeds; separate original-method stages equal its final
+state. Native corrected-owner entry and system-wide Voice refinement remain pending;
+this checkpoint integrates the reset/order into the existing image export only.
+Evidence: `evidence/musicxml-stack-reprocess/VALIDATION.json`. Full595 remains
+historical95e191b; no new full rerun or broader image admission.

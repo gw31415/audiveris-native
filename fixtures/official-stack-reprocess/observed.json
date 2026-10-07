@@ -1,0 +1,721 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "actual saved owners with explicit warm Part getters and bounds-only EditingTask; real PageRhythm.reprocessStack, separately replayed original StackRhythm/MeasureRhythm methods for intermediate states; no populateFRATs or full image correction claim",
+  "before" : {
+    "rhythm" : {
+      "abnormal" : false,
+      "voice_count" : 1,
+      "stack_slot_count" : 4,
+      "expected" : "1",
+      "actual" : "1",
+      "chords" : [ {
+        "bounds" : [ 276, 206, 13, 41 ],
+        "duration" : "7/16",
+        "time_offset" : "0",
+        "voice" : 1,
+        "slot_id" : 1
+      }, {
+        "bounds" : [ 396, 195, 13, 41 ],
+        "duration" : "1/16",
+        "time_offset" : "7/16",
+        "voice" : 1,
+        "slot_id" : 2
+      }, {
+        "bounds" : [ 516, 184, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/2",
+        "voice" : 1,
+        "slot_id" : 3
+      }, {
+        "bounds" : [ 636, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "3/4",
+        "voice" : 1,
+        "slot_id" : 4
+      } ]
+    },
+    "voices" : [ {
+      "id" : 1,
+      "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+      "termination" : null,
+      "excess" : null
+    } ],
+    "ownership" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "stack_excess" : null,
+    "stack_abnormal" : false,
+    "other_measure" : {
+      "abnormal" : false,
+      "voice_count" : 1,
+      "stack_slot_count" : 4,
+      "expected" : "1",
+      "actual" : "1",
+      "chords" : [ {
+        "bounds" : [ 756, 184, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "0",
+        "voice" : 1,
+        "slot_id" : 1
+      }, {
+        "bounds" : [ 876, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/4",
+        "voice" : 1,
+        "slot_id" : 2
+      }, {
+        "bounds" : [ 996, 206, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/2",
+        "voice" : 1,
+        "slot_id" : 3
+      }, {
+        "bounds" : [ 1116, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "3/4",
+        "voice" : 1,
+        "slot_id" : 4
+      } ]
+    },
+    "original_glyph_registered" : true
+  },
+  "after_edit" : {
+    "rhythm" : {
+      "abnormal" : false,
+      "voice_count" : 1,
+      "stack_slot_count" : 4,
+      "expected" : "1",
+      "actual" : "1",
+      "chords" : [ {
+        "bounds" : [ 276, 206, 13, 41 ],
+        "duration" : "7/16",
+        "time_offset" : "0",
+        "voice" : 1,
+        "slot_id" : 1
+      }, {
+        "bounds" : [ 396, 195, 13, 41 ],
+        "duration" : "1/16",
+        "time_offset" : "7/16",
+        "voice" : 1,
+        "slot_id" : 2
+      }, {
+        "bounds" : [ 516, 184, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/2",
+        "voice" : 1,
+        "slot_id" : 3
+      }, {
+        "bounds" : [ 636, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "3/4",
+        "voice" : 1,
+        "slot_id" : 4
+      } ]
+    },
+    "voices" : [ {
+      "id" : 1,
+      "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+      "termination" : null,
+      "excess" : null
+    } ],
+    "ownership" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "stack_excess" : null,
+    "stack_abnormal" : false,
+    "other_measure" : {
+      "abnormal" : false,
+      "voice_count" : 1,
+      "stack_slot_count" : 4,
+      "expected" : "1",
+      "actual" : "1",
+      "chords" : [ {
+        "bounds" : [ 756, 184, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "0",
+        "voice" : 1,
+        "slot_id" : 1
+      }, {
+        "bounds" : [ 876, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/4",
+        "voice" : 1,
+        "slot_id" : 2
+      }, {
+        "bounds" : [ 996, 206, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/2",
+        "voice" : 1,
+        "slot_id" : 3
+      }, {
+        "bounds" : [ 1116, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "3/4",
+        "voice" : 1,
+        "slot_id" : 4
+      } ]
+    },
+    "original_glyph_registered" : true
+  },
+  "after_actual_reprocessStack" : {
+    "rhythm" : {
+      "abnormal" : false,
+      "voice_count" : 1,
+      "stack_slot_count" : 4,
+      "expected" : "1",
+      "actual" : "1",
+      "chords" : [ {
+        "bounds" : [ 276, 206, 13, 41 ],
+        "duration" : "7/16",
+        "time_offset" : "0",
+        "voice" : 1,
+        "slot_id" : 1
+      }, {
+        "bounds" : [ 396, 195, 13, 41 ],
+        "duration" : "1/16",
+        "time_offset" : "7/16",
+        "voice" : 1,
+        "slot_id" : 2
+      }, {
+        "bounds" : [ 516, 184, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/2",
+        "voice" : 1,
+        "slot_id" : 3
+      }, {
+        "bounds" : [ 636, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "3/4",
+        "voice" : 1,
+        "slot_id" : 4
+      } ]
+    },
+    "voices" : [ {
+      "id" : 1,
+      "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+      "termination" : "0",
+      "excess" : null
+    } ],
+    "ownership" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "stack_excess" : null,
+    "stack_abnormal" : false,
+    "other_measure" : {
+      "abnormal" : false,
+      "voice_count" : 1,
+      "stack_slot_count" : 4,
+      "expected" : "1",
+      "actual" : "1",
+      "chords" : [ {
+        "bounds" : [ 756, 184, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "0",
+        "voice" : 1,
+        "slot_id" : 1
+      }, {
+        "bounds" : [ 876, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/4",
+        "voice" : 1,
+        "slot_id" : 2
+      }, {
+        "bounds" : [ 996, 206, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "1/2",
+        "voice" : 1,
+        "slot_id" : 3
+      }, {
+        "bounds" : [ 1116, 195, 13, 41 ],
+        "duration" : "1/4",
+        "time_offset" : "3/4",
+        "voice" : 1,
+        "slot_id" : 4
+      } ]
+    },
+    "original_glyph_registered" : true
+  },
+  "retained_expected_duration" : "1",
+  "stages" : [ {
+    "stage" : "stack_reset",
+    "state" : {
+      "rhythm" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 0,
+        "expected" : "1",
+        "actual" : null,
+        "chords" : [ {
+          "bounds" : [ 276, 206, 13, 41 ],
+          "duration" : "7/16",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 396, 195, 13, 41 ],
+          "duration" : "1/16",
+          "time_offset" : "7/16",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 516, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 636, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "voices" : [ {
+        "id" : 1,
+        "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+        "termination" : null,
+        "excess" : null
+      } ],
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "stack_excess" : null,
+      "stack_abnormal" : false,
+      "other_measure" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 756, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 876, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/4",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 996, 206, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 1116, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "original_glyph_registered" : true
+    }
+  }, {
+    "stage" : "measure_process",
+    "ok" : true,
+    "state" : {
+      "rhythm" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 0,
+        "expected" : "1",
+        "actual" : null,
+        "chords" : [ {
+          "bounds" : [ 276, 206, 13, 41 ],
+          "duration" : "7/16",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 396, 195, 13, 41 ],
+          "duration" : "1/16",
+          "time_offset" : "7/16",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 516, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 636, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "voices" : [ {
+        "id" : 1,
+        "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+        "termination" : "0",
+        "excess" : null
+      } ],
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "stack_excess" : null,
+      "stack_abnormal" : false,
+      "other_measure" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 756, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 876, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/4",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 996, 206, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 1116, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "original_glyph_registered" : true
+    }
+  }, {
+    "stage" : "generate_stack_slots",
+    "state" : {
+      "rhythm" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : null,
+        "chords" : [ {
+          "bounds" : [ 276, 206, 13, 41 ],
+          "duration" : "7/16",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 396, 195, 13, 41 ],
+          "duration" : "1/16",
+          "time_offset" : "7/16",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 516, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 636, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "voices" : [ {
+        "id" : 1,
+        "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+        "termination" : "0",
+        "excess" : null
+      } ],
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "stack_excess" : null,
+      "stack_abnormal" : false,
+      "other_measure" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 756, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 876, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/4",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 996, 206, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 1116, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "original_glyph_registered" : true
+    }
+  }, {
+    "stage" : "read_actual_duration",
+    "state" : {
+      "rhythm" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 276, 206, 13, 41 ],
+          "duration" : "7/16",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 396, 195, 13, 41 ],
+          "duration" : "1/16",
+          "time_offset" : "7/16",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 516, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 636, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "voices" : [ {
+        "id" : 1,
+        "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+        "termination" : "0",
+        "excess" : null
+      } ],
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "stack_excess" : null,
+      "stack_abnormal" : false,
+      "other_measure" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 756, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 876, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/4",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 996, 206, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 1116, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "original_glyph_registered" : true
+    }
+  }, {
+    "stage" : "refine_system",
+    "state" : {
+      "rhythm" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 276, 206, 13, 41 ],
+          "duration" : "7/16",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 396, 195, 13, 41 ],
+          "duration" : "1/16",
+          "time_offset" : "7/16",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 516, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 636, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "voices" : [ {
+        "id" : 1,
+        "chord_bounds" : [ [ 276, 206, 13, 41 ], [ 396, 195, 13, 41 ], [ 516, 184, 13, 41 ], [ 636, 195, 13, 41 ] ],
+        "termination" : "0",
+        "excess" : null
+      } ],
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "stack_excess" : null,
+      "stack_abnormal" : false,
+      "other_measure" : {
+        "abnormal" : false,
+        "voice_count" : 1,
+        "stack_slot_count" : 4,
+        "expected" : "1",
+        "actual" : "1",
+        "chords" : [ {
+          "bounds" : [ 756, 184, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "0",
+          "voice" : 1,
+          "slot_id" : 1
+        }, {
+          "bounds" : [ 876, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/4",
+          "voice" : 1,
+          "slot_id" : 2
+        }, {
+          "bounds" : [ 996, 206, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "1/2",
+          "voice" : 1,
+          "slot_id" : 3
+        }, {
+          "bounds" : [ 1116, 195, 13, 41 ],
+          "duration" : "1/4",
+          "time_offset" : "3/4",
+          "voice" : 1,
+          "slot_id" : 4
+        } ]
+      },
+      "original_glyph_registered" : true
+    }
+  } ]
+}

@@ -399,18 +399,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     }
     admit_symbols(&m)?;
     m.owner.graph.populate_dot_measures()?;
-    // MeasureRhythm.process starts each admitted measure pass with the original
-    // ownership/timing reset. General slot matching and correction reprocessing
-    // entry remain pending; do not substitute clearing the entire SIG/cache.
-    for mi in 0..m.measures.len() {
-        crate::music_voices::reset_rhythm(
-            &mut m.owner.graph,
-            &mut m.voices,
-            &mut m.measures[mi],
-            &m.chords,
-            mi,
-        )?;
-    }
     let initial = m.owner.graph.snapshot();
     let nodes = initial["inters"].as_array().unwrap();
     let edges = initial["relations"].as_array().unwrap();
@@ -428,37 +416,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .iter()
             .filter(|c| c.measure == mi)
             .collect::<Vec<_>>();
-        // Original geometric retrieval precedes rhythm clocks/Voice matching.
-        let (narrow, wide) = crate::music_measure_slots::from_owned(
-            &m.owner.graph,
-            &measure,
-            &chords,
-            m.owner.interline,
-        )?;
-        let centers = chords
-            .iter()
-            .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
-            .collect();
-        let compounds =
-            crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)?;
-        let ordered_ids = compounds
-            .iter()
-            .flat_map(|c| c.members.iter())
-            .flat_map(|s| s.chord_ids.iter())
-            .copied()
-            .collect::<Vec<_>>();
-        if ordered_ids
-            != narrow
-                .slots
-                .iter()
-                .flat_map(|s| s.chord_ids.iter())
-                .copied()
-                .collect::<Vec<_>>()
-        {
-            return Err("musicxml_inconsistent_compound_partition_pending".into());
-        }
-        chords.sort_by_key(|c| ordered_ids.iter().position(|id| *id == c.id));
-        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"compounds":compounds.iter().map(|c|c.projection()).collect::<Vec<_>>(),"voice_assignment":"original separated ChordsMapper on owned ordinary Voice/compound path; general Rational/implicit tuplets/Merged/shared stacks pending"}));
+        chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
         if chords.is_empty() {
             return Err(format!(
                 "musicxml_empty_measure:{}:{}",
@@ -523,6 +481,41 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             return Err("musicxml_measure_duration_finer_than_sixteenth_pending".into());
         }
         let expected_ticks = whole_ticks / meter.1;
+        crate::music_voices::reset_stack_rhythm(&mut m.measures[mi], Some(expected_ticks));
+        crate::music_voices::reset_rhythm(
+            &mut graph,
+            &mut m.voices,
+            &mut m.measures[mi],
+            &m.chords,
+            mi,
+        )?;
+        // Original geometric retrieval precedes rhythm clocks/Voice matching.
+        let (narrow, wide) =
+            crate::music_measure_slots::from_owned(&graph, &measure, &chords, m.owner.interline)?;
+        let centers = chords
+            .iter()
+            .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
+            .collect();
+        let compounds =
+            crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)?;
+        let ordered_ids = compounds
+            .iter()
+            .flat_map(|c| c.members.iter())
+            .flat_map(|s| s.chord_ids.iter())
+            .copied()
+            .collect::<Vec<_>>();
+        if ordered_ids
+            != narrow
+                .slots
+                .iter()
+                .flat_map(|s| s.chord_ids.iter())
+                .copied()
+                .collect::<Vec<_>>()
+        {
+            return Err("musicxml_inconsistent_compound_partition_pending".into());
+        }
+        chords.sort_by_key(|c| ordered_ids.iter().position(|id| *id == c.id));
+        preliminary_slots.push(json!({"measure_number":mi+1,"narrow":narrow,"wide":wide,"compounds":compounds.iter().map(|c|c.projection()).collect::<Vec<_>>(),"voice_assignment":"original separated ChordsMapper on owned ordinary Voice/compound path; general Rational/implicit tuplets/Merged/shared stacks pending"}));
         // PartwiseBuilder.processKeys updates current.keys only on an actual
         // key event. Its absent-key case preserves the previous part/staff key.
         let keys = nodes
@@ -1030,7 +1023,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             }
         }
         crate::music_voices::generate_slots(&mut graph, &mut m.voices, &mut m.measures[mi], mi)?;
-        m.measures[mi].timing.expected = Some(expected_ticks);
         crate::music_voices::read_stack_actual_duration(
             &graph,
             &m.voices,
@@ -1202,6 +1194,48 @@ pub fn recognize_named(image: &GrayImage, part_name: &str) -> Result<Export, Str
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_stack_reset_preserves_owned_voices_and_expected_duration_before_measure_reset() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-reprocess/observed.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let mut export = recognize(&image).unwrap();
+        let owner = &mut export.owner;
+        let expected = owner.measures[0].timing.expected;
+        let before = owner.owner.graph.snapshot();
+        let voices = crate::music_voices::projection(&owner.voices, &owner.measures);
+        crate::music_voices::reset_stack_rhythm(&mut owner.measures[0], expected);
+        let snapshot = owner.owner.graph.snapshot();
+        assert_eq!(snapshot, before);
+        assert_eq!(
+            crate::music_voices::projection(&owner.voices, &owner.measures),
+            voices
+        );
+        let measure = &owner.measures[0];
+        let mut chords: Vec<_> = owner.chords.iter().filter(|c| c.measure == 0).collect();
+        chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
+        let actual = json!({"abnormal":measure.timing.abnormal,"voice_count":owner.voices.iter().filter(|v|v.measure==0).count(),"stack_slot_count":measure.timing.slots.len(),"expected":measure.timing.expected.map(rational),"actual":measure.timing.actual.map(rational),"chords":chords.iter().map(|c|{let n=snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"],"slot_id":n["slot_id"]})}).collect::<Vec<_>>()});
+        assert_eq!(actual, original["stages"][0]["state"]["rhythm"]);
+        assert_eq!(
+            measure.timing.excess.map(rational),
+            original["stages"][0]["state"]["stack_excess"]
+                .as_str()
+                .map(str::to_owned)
+        );
+        assert_eq!(
+            json!(owner.measures[1].timing.slots.len()),
+            original["stages"][0]["state"]["other_measure"]["stack_slot_count"]
+        );
+        assert_eq!(
+            original["after_actual_reprocessStack"],
+            original["stages"].as_array().unwrap().last().unwrap()["state"]
+        );
+    }
     #[test]
     fn original_clef_export_and_arpeggiato_empty_search_boundaries() {
         let o: Value = serde_json::from_str(include_str!(

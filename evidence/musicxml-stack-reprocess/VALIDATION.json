@@ -1,0 +1,21 @@
+{
+  "baseline_source": "e85eba5b15f9be8f4bdb6844c7c729a69e44357e",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "real saved ordinary dot owners with warm Part getters, bounds-only EditingTask and actual PageRhythm.reprocessStack; separate original method replay matches complete call",
+  "implemented": "native image path sets expectedDuration and resets actual/excess/slots before per-measure rhythm reset; actual Voice/Chord/cache remain unchanged at stack-only reset boundary; no ownership reconstruction",
+  "observed": "original stack reset preserves expected and old Voice/Chord clocks; Measure process rebuilds Voice/Chord state, stack slots/actual follow, then system voice refinement; real complete and replay final states equal; physical glyph/cache/Measure retained",
+  "not_claimed": "native corrected export/reprocess entry, complete StackRhythm/MeasureRhythm or Voices.refineSystem parity, timed support edits/general correction CLI/multi-staff/cleaner",
+  "target_tests": {
+    "passed": 2,
+    "tests": [
+      "original_stack_reset_preserves_owned_voices_and_expected_duration_before_measure_reset",
+      "original_saved_group_getters_and_declared_beam_rest_follow_actual_ensemble"
+    ],
+    "full_suite": false
+  },
+  "format": "passed",
+  "clippy": "passed --all-targets -D warnings",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false,
+  "corrected_regression": "slot geometry now calls original BeamGroup.getChords without demanding Voice ownership from unrelated measures; full getVoice retains exact Voice/Measure guard"
+}
