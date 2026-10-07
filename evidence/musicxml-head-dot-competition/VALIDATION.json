@@ -1,0 +1,15 @@
+{
+  "baseline_source": "c68fe3c358e5f016d164af50e1272e82f8f4f12d",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "6 declared competing dot/grade/pitch controls on actual saved ordinary single HeadChords; original checkAugmentedHeads/callback, not full-image success",
+  "implemented": "owned HeadChord order then top-down members; stable dot ordinate extremes; all augmented Head integer pitches with Math.rint-equivalent ties-even; upper/lower/no choice independent of grade; original relation order and owned removal callbacks; before Rest/DoubleDot checks",
+  "target_tests": {
+    "new_head_selection": 1,
+    "existing_rest_double_competition": 1
+  },
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "limits": "multiple-head/shared dot image creation/admission, multi-member callbacks, Part cache/Measure augmentation collection, full LINK/cleaner and post-rhythm editing remain partial",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false
+}

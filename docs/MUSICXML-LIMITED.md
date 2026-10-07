@@ -2136,3 +2136,12 @@ caches change whether the removed second dot remains in its Measure collection;
 that cached ownership is observed, not yet matched by native. Competing-head
 selection, multi-member callbacks and complete cleaner/epilog remain pending.
 Evidence: `evidence/musicxml-dot-chain-detach/VALIDATION.json`.
+
+Head support competition now preserves original owned-chord/top-down member
+order, stable upper/lower-dot preference and integer-pitch parity of every
+supported head (including ties-even rounding). Six declared original controls
+verify it independently from image recognition; stronger relation grade is not
+the head criterion. Existing CLI examples remain, while multiple/shared support
+creation/admission, multi-member callbacks, direct vertex-removal ownership and
+complete LINK/cleaner/epilog remain partial. Evidence:
+`evidence/musicxml-head-dot-competition/VALIDATION.json`.

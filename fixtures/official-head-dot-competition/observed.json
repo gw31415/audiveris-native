@@ -1,0 +1,269 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "declared temporary competing dots/grades/pitches on actual saved ordinary single HeadChords; original checkAugmentedHeads and removed callbacks; not image success",
+  "cases" : [ {
+    "name" : "upper_beats_grade",
+    "heads" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "pitch" : 0.0,
+      "integer_pitch" : 0
+    }, {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "pitch" : -1.0,
+      "integer_pitch" : -1
+    }, {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    } ],
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 239, 5, 4 ], [ 309, 231, 5, 4 ] ],
+    "grades" : [ 0.9, 0.1 ],
+    "additional_supports" : [ ],
+    "before" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1
+    },
+    "modifications" : 1,
+    "after" : {
+      "dots" : [ {
+        "abnormal" : true,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ false, true ],
+      "chord_dots" : 1
+    },
+    "repeat_modifications" : 0
+  }, {
+    "name" : "upper_taken_by_other_odd_head",
+    "heads" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "pitch" : 0.0,
+      "integer_pitch" : 0
+    }, {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "pitch" : -1.0,
+      "integer_pitch" : -1
+    }, {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    } ],
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 239, 5, 4 ], [ 309, 231, 5, 4 ] ],
+    "grades" : [ 0.9, 0.1 ],
+    "additional_supports" : [ [ 1, 1 ] ],
+    "before" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, true, true ],
+      "chord_dots" : 1
+    },
+    "modifications" : 1,
+    "after" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, false, true ],
+      "chord_dots" : 1
+    },
+    "repeat_modifications" : 0
+  }, {
+    "name" : "both_extremes_taken_middle_ignored",
+    "heads" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "pitch" : 0.0,
+      "integer_pitch" : 0
+    }, {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "pitch" : -1.0,
+      "integer_pitch" : -1
+    }, {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    } ],
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 231, 5, 4 ], [ 309, 235, 5, 4 ], [ 315, 239, 5, 4 ] ],
+    "grades" : [ 0.1, 0.9, 0.8 ],
+    "additional_supports" : [ [ 0, 1 ], [ 2, 2 ] ],
+    "before" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, true, true, true, true ],
+      "chord_dots" : 1
+    },
+    "modifications" : 3,
+    "after" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : true,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ false, false, false, true, true ],
+      "chord_dots" : 0
+    },
+    "repeat_modifications" : 0
+  }, {
+    "name" : "equal_ordinate_insertion_order",
+    "heads" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "pitch" : 0.0,
+      "integer_pitch" : 0
+    }, {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "pitch" : -1.0,
+      "integer_pitch" : -1
+    }, {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    } ],
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 239, 5, 4 ], [ 309, 239, 5, 4 ] ],
+    "grades" : [ 0.9, 0.1 ],
+    "additional_supports" : [ ],
+    "before" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1
+    },
+    "modifications" : 1,
+    "after" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : true,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, false ],
+      "chord_dots" : 1
+    },
+    "repeat_modifications" : 0
+  }, {
+    "name" : "negative_half_pitch_rounds_even",
+    "heads" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "pitch" : 0.0,
+      "integer_pitch" : 0
+    }, {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "pitch" : -1.5,
+      "integer_pitch" : -2
+    }, {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    } ],
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 239, 5, 4 ], [ 309, 231, 5, 4 ] ],
+    "grades" : [ 0.9, 0.1 ],
+    "additional_supports" : [ [ 1, 1 ] ],
+    "before" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, true, true ],
+      "chord_dots" : 1
+    },
+    "modifications" : 1,
+    "after" : {
+      "dots" : [ {
+        "abnormal" : true,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ false, true, true ],
+      "chord_dots" : 1
+    },
+    "repeat_modifications" : 0
+  }, {
+    "name" : "odd_current_head_takes_both",
+    "heads" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    }, {
+      "bounds" : [ 396, 226, 13, 10 ],
+      "pitch" : -1.0,
+      "integer_pitch" : -1
+    }, {
+      "bounds" : [ 516, 215, 13, 10 ],
+      "pitch" : 1.0,
+      "integer_pitch" : 1
+    } ],
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 239, 5, 4 ], [ 309, 231, 5, 4 ] ],
+    "grades" : [ 0.9, 0.1 ],
+    "additional_supports" : [ ],
+    "before" : {
+      "dots" : [ {
+        "abnormal" : false,
+        "removed" : false
+      }, {
+        "abnormal" : false,
+        "removed" : false
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1
+    },
+    "modifications" : 2,
+    "after" : {
+      "dots" : [ {
+        "abnormal" : true,
+        "removed" : false
+      }, {
+        "abnormal" : true,
+        "removed" : false
+      } ],
+      "edges_live" : [ false, false ],
+      "chord_dots" : 0
+    },
+    "repeat_modifications" : 0
+  } ]
+}

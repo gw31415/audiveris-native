@@ -403,6 +403,12 @@
       "unit": "actual single ordinary HeadChord augmentation-edge detachment callback and first/second dot target cleanup with physical glyph retention",
       "limits": "actual saved double-dot mutation, not new full-image success; original lazy Part cache/Measure collection ownership, multi-member/special heads and post-rhythm reset remain unconnected",
       "evidence": "evidence/musicxml-dot-chain-detach/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "owned HeadChord/top-down head augmentation support competition using stable upper/lower-dot and all supported integer-pitch parity before Rest/DoubleDot checks",
+      "limits": "six declared original controls on ordinary single HeadChords; multiple/shared image admission, multi-member callback and full LINK sequence remain partial",
+      "evidence": "evidence/musicxml-head-dot-competition/VALIDATION.json"
     }
   ],
   "function_groups": [
