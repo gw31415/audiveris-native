@@ -1,0 +1,54 @@
+{
+  "validated_source_commit": "a55b20e9cf8b84619cebe7fc6297470309cd1ef3",
+  "normal_main_push": "remote SHA confirmed and independent existing clone fetched",
+  "trees": {
+    "root": "202df59b762d3b574d65e15ea82d1d610d4724cd",
+    "src": "69ef98491d0ffd8df71c437207ac72574fb9f5f5",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "mixed_CLI": {
+    "command": "--link-dot-support72 6 manual --edit-dot72 3 0",
+    "events": 8,
+    "original_music": "actual saved owners/mixedUITaskList/realCtrlTaskRHYTHMS/PartwiseBuilder, declared correction not automatic target discovery",
+    "XML_music_stream": "matched original",
+    "XSD": "passed",
+    "MusicXML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+    "cache_membership": "unchanged",
+    "publications": 2,
+    "processed_stacks": 1,
+    "controller_PageStep_complete": false
+  },
+  "existing_CLI_modes": [
+    {
+      "mode": "bounds",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "mode": "editor-support",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "mode": "relation-support",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    }
+  ],
+  "unedited_double": {
+    "events": 8,
+    "XSD": "passed",
+    "prior_XML_bytes": "identical"
+  },
+  "negative_boundaries": [
+    "automatic13/16 refusal",
+    "different dot refusal",
+    "different editor task family refusal"
+  ],
+  "prior_checks": "6d65e59:5images47+parallel16;050f7ae:relation replay/identity control and limitedCLI; not current full repeats",
+  "full_suite": "historical595@95e191b; not rerun",
+  "completion_flags": false
+}

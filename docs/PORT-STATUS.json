@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Mixed owned sequence target1 and fmt/clippy passed; current mixed CLI independent readback pending. Prior050f7ae replay1+relation2 and limited CLI readback; full595 historical95e191b.",
+  "latest_targeted_validation": "Sourcea55b20e: mixed owned sequence1, fmt/clippy, independent mixed correction8 and plain/bounds/editor/relation CLI8 each with original/XML/XSD/prior bytes; automatic13/16/different-dot/different-task-family refusals. Earlier050f7ae:replay1+relation2;6d65e59:related5,5images47+parallel16. Full595 historical95e191b; no full rerun.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
