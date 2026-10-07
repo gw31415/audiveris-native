@@ -8,6 +8,9 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
+#[cfg(test)]
+mod lifecycle_tests;
+
 #[derive(Clone)]
 pub(crate) struct Voice {
     // Staging copies keep this owner identity; musical numbers and list entries
@@ -293,7 +296,14 @@ pub(crate) fn refine_ordinary_system(
             v.measure_rest_chord
                 .or_else(|| v.chord_ids.first().copied())
         };
-        retained.retain(|v| v.measure != mi || first(v).is_some());
+        let mut index = 0;
+        while index < retained.len() {
+            if retained[index].measure == mi && first(&retained[index]).is_none() {
+                staged.retain_voice_owner(retained.remove(index));
+            } else {
+                index += 1;
+            }
+        }
         let positions: Vec<_> = retained
             .iter()
             .enumerate()

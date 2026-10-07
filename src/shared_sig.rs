@@ -13,6 +13,7 @@ pub(crate) mod chord_tasks;
 mod dot_ownership;
 mod editing_task;
 mod manual_chord_stem;
+mod voice_owners;
 pub use chord_tasks::{ChordAdditionTask, ChordRemovalTask};
 pub use dot_ownership::NoteOwnerEdit;
 pub use editing_task::{

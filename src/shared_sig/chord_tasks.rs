@@ -244,22 +244,7 @@ impl ChordRemovalTask {
                 // Measure.removeInter removes an empty Voice from its list;
                 // removed Chords still refer to that actual Voice and slots.
                 let voice = owner.voices.remove(voice_index);
-                let key = graph.retained_voices.len();
-                let measure = &owner.measures[voice.measure];
-                for vertex in &mut graph.vertices {
-                    if vertex.key.phase == super::Phase::Chord
-                        && vertex.key.system == measure.system
-                        && vertex.data["part_id"] == measure.part
-                        && vertex.data["measure_index"] == measure.index
-                        && vertex.voice_owner.as_ref().is_some_and(|identity| {
-                            std::sync::Arc::ptr_eq(identity, &voice.identity)
-                        })
-                        && vertex.retained_voice.is_none()
-                    {
-                        vertex.retained_voice = Some(key);
-                    }
-                }
-                graph.retained_voices.push(voice);
+                graph.retain_voice_owner(voice);
                 // Original removeVoiceChord stops after the first Voice becomes
                 // empty; subsequent overlapping lists remain for the next task.
                 break;
@@ -368,10 +353,11 @@ impl super::Graph {
         Ok(())
     }
     #[cfg(test)]
-    pub(super) fn retained_voice_observations(&self) -> Value {
+    pub(crate) fn retained_voice_observations(&self) -> Value {
         serde_json::json!(self.retained_voices.iter().enumerate().map(|(key,v)|serde_json::json!({
             "key":key,"id":v.id,"measure":v.measure,"chord_ids":v.chord_ids,
             "termination":v.termination.map(crate::music_time::format_delta),
+            "excess":v.excess.map(crate::music_time::format_fraction),
             "slots":v.slots.iter().map(|(id,s)|serde_json::json!({"id":id,"chord_id":s.chord_id,"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()
         })).collect::<Vec<_>>())
     }

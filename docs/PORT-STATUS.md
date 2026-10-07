@@ -1472,3 +1472,18 @@ Part/Measure/Voice callback/reprocessing integration, mirrors/controller/PAGE/
 persistence and source Stem extent parity are pending; global/public CLI guards
 stay false/guarded. See `evidence/musicxml-headstem-prelink-voice-stop/TRY.md` and
 `NEXT-DEPENDENCY.md`.
+
+
+A common actual Voice owner now retains the object dropped by refineSystem's
+purge and by empty-Chord removal. Two independent original controls compare
+sixteen states: real checkDuration yields-5/8 or+1/2/excess1/2, resetChords leaves
+old slot/Chord references intact, purge removes only live-list membership,
+re-add/re-purge reuses the same owner, and new Voice1 has distinct empty slots.
+Native old-object loss was reproduced before the fix. Later-Measure refinement
+failure keeps actual Graph/Voices/Chords/expected/slot/manual state and identities;
+repair/retry succeeds. Source-derived genuine Measure/stack reset evidence is
+already saved but native reset/history, normal container retirement and cached
+beam/tie/NextInVoice Voice getter integration remain next units. No full original
+SIG equality or automatic Stem extent parity is claimed; public/global guards
+stay false/guarded. See `evidence/musicxml-voice-refine-retirement/TRY.md` and
+`NEXT-DEPENDENCY.md`.
