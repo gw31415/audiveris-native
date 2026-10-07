@@ -1,0 +1,646 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "declared shared temporary dots and explicit member transfer on actual saved half-rest/HeadChord owners; original SigListener wrapped in-place, unchanged order and delegates; captured event identity before reuse; raw callbacks, not image recognition/export success",
+  "cases" : [ {
+    "rest_edge_first" : false,
+    "remaining_manual" : false,
+    "notes" : [ {
+      "kind" : "HeadInter",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "shape" : "NOTEHEAD_BLACK"
+    }, {
+      "kind" : "HeadInter",
+      "bounds" : [ 753, 226, 13, 10 ],
+      "shape" : "NOTEHEAD_VOID"
+    }, {
+      "kind" : "RestInter",
+      "bounds" : [ 511, 235, 14, 9 ],
+      "shape" : "HALF_REST"
+    } ],
+    "owner_bounds" : [ [ 276, 206, 490, 41 ], [ 511, 235, 14, 9 ] ],
+    "member_order" : [ 0, 1 ],
+    "dot_bounds" : [ [ 301, 232, 5, 4 ], [ 778, 221, 5, 4 ] ],
+    "edge_targets" : [ 0, 2, 1 ],
+    "before" : {
+      "note_dot_counts" : [ 1, 1, 1 ],
+      "chord_dot_counts" : [ 1, 1 ],
+      "dots" : [ {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      }, {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ true, true, true ]
+    },
+    "trace" : [ {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 1 ],
+        "chord_dot_counts" : [ 1, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge2",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 1 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, false ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge2",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 1 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot1",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 1 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot1",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 1 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, false ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 1 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, false ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge1",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge1",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    } ],
+    "after" : {
+      "note_dot_counts" : [ 0, 0, 0 ],
+      "chord_dot_counts" : [ 0, 0 ],
+      "dots" : [ {
+        "removed" : true,
+        "registered" : false,
+        "abnormal" : false
+      }, {
+        "removed" : true,
+        "registered" : false,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ false, false, false ]
+    }
+  }, {
+    "rest_edge_first" : true,
+    "remaining_manual" : false,
+    "notes" : [ {
+      "kind" : "HeadInter",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "shape" : "NOTEHEAD_BLACK"
+    }, {
+      "kind" : "HeadInter",
+      "bounds" : [ 753, 226, 13, 10 ],
+      "shape" : "NOTEHEAD_VOID"
+    }, {
+      "kind" : "RestInter",
+      "bounds" : [ 511, 235, 14, 9 ],
+      "shape" : "HALF_REST"
+    } ],
+    "owner_bounds" : [ [ 276, 206, 490, 41 ], [ 511, 235, 14, 9 ] ],
+    "member_order" : [ 0, 1 ],
+    "dot_bounds" : [ [ 301, 232, 5, 4 ], [ 778, 221, 5, 4 ] ],
+    "edge_targets" : [ 2, 0, 1 ],
+    "before" : {
+      "note_dot_counts" : [ 1, 1, 1 ],
+      "chord_dot_counts" : [ 1, 1 ],
+      "dots" : [ {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      }, {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ true, true, true ]
+    },
+    "trace" : [ {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 1, 1, 0 ],
+        "chord_dot_counts" : [ 1, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 1, 1, 0 ],
+        "chord_dot_counts" : [ 1, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge1",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 0 ],
+        "chord_dot_counts" : [ 1, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge2",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge2",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot1",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot1",
+      "depth" : 1,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge1",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 0, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        }, {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, false ]
+      }
+    } ],
+    "after" : {
+      "note_dot_counts" : [ 0, 0, 0 ],
+      "chord_dot_counts" : [ 0, 0 ],
+      "dots" : [ {
+        "removed" : true,
+        "registered" : false,
+        "abnormal" : false
+      }, {
+        "removed" : true,
+        "registered" : false,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ false, false, false ]
+    }
+  }, {
+    "rest_edge_first" : false,
+    "remaining_manual" : true,
+    "notes" : [ {
+      "kind" : "HeadInter",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "shape" : "NOTEHEAD_BLACK"
+    }, {
+      "kind" : "HeadInter",
+      "bounds" : [ 753, 226, 13, 10 ],
+      "shape" : "NOTEHEAD_VOID"
+    }, {
+      "kind" : "RestInter",
+      "bounds" : [ 511, 235, 14, 9 ],
+      "shape" : "HALF_REST"
+    } ],
+    "owner_bounds" : [ [ 276, 206, 490, 41 ], [ 511, 235, 14, 9 ] ],
+    "member_order" : [ 0, 1 ],
+    "dot_bounds" : [ [ 301, 232, 5, 4 ], [ 778, 221, 5, 4 ] ],
+    "edge_targets" : [ 0, 2, 1 ],
+    "before" : {
+      "note_dot_counts" : [ 1, 1, 1 ],
+      "chord_dot_counts" : [ 1, 1 ],
+      "dots" : [ {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      }, {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ true, true, true ]
+    },
+    "trace" : [ {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 1 ],
+        "chord_dot_counts" : [ 1, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 1 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge1",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 0 ],
+        "chord_dot_counts" : [ 0, 1 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, true ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge1",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, true ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, true ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 0,
+      "state" : {
+        "note_dot_counts" : [ 0, 1, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, false, true ]
+      }
+    } ],
+    "after" : {
+      "note_dot_counts" : [ 0, 1, 0 ],
+      "chord_dot_counts" : [ 0, 0 ],
+      "dots" : [ {
+        "removed" : true,
+        "registered" : false,
+        "abnormal" : false
+      }, {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ false, false, true ]
+    }
+  } ]
+}

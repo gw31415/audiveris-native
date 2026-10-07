@@ -415,6 +415,12 @@
       "unit": "ordinary actual augmentation edge/vertex owner callback, multi-head ties-even mean and reentrant inconsistent automatic dot deletion with manual retention",
       "limits": "actual first-dot chain loss and declared two-member controls; Part cache/Measure collection, shared intermediate callback order, closure receipts and full LINK/cleaner remain partial; image admission unchanged",
       "evidence": "evidence/musicxml-dot-vertex-lifecycle/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary dot removal preserves SIG registration through per-relation callbacks, original incoming/outgoing and bottom-up member order with observed mixed-owner reentry states",
+      "limits": "three declared mixed HeadChord/RestChord controls plus actual double-dot chain; shared image admission, Part/Measure cache and complete LINK closure remain partial",
+      "evidence": "evidence/musicxml-dot-callback-order/VALIDATION.json"
     }
   ],
   "function_groups": [

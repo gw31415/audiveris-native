@@ -992,3 +992,12 @@ success. Existing CLI examples/admission guards remain. Part getter/Measure
 cached ownership, shared mixed-owner intermediate ordering, discarded-candidate
 closure receipts, post-rhythm edits and complete cleaner/epilog remain partial.
 Evidence: `evidence/musicxml-dot-vertex-lifecycle/VALIDATION.json`.
+
+Original mixed-owner dot callback order now matches observed intermediate states:
+a deleting dot remains SIG-registered until its copied incoming/outgoing edges
+have invoked synchronous callbacks; nested automatic deletion occurs before
+later owner callbacks. Head-first/rest-first/manual controls and one actual
+double-dot chain compare all callback entry/return states. These controls do not
+admit shared-support images. Part/Measure caches and LINK candidate closure for
+all nested deletions remain partial. Evidence:
+`evidence/musicxml-dot-callback-order/VALIDATION.json`.

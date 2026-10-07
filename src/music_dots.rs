@@ -1244,6 +1244,177 @@ mod tests {
         }
         assert!(crate::music_xml::continue_export(m).is_err());
     }
+    fn normalized_dot_callback_trace(
+        graph: &Graph,
+        notes: &[usize],
+        owners: &[usize],
+        dots: &[usize],
+        edges: &[usize],
+    ) -> Vec<Value> {
+        graph.dot_callback_trace().iter().map(|event| {
+            let snap=&event["state"];
+            let node=|id|snap["inters"].as_array().unwrap().iter().find(|n|n["id"]==id).unwrap();
+            let state=json!({
+                "note_dot_counts":notes.iter().map(|id|note_count(snap,node(*id))).collect::<Vec<_>>(),
+                "chord_dot_counts":owners.iter().map(|id|node(*id)["dots_number"].clone()).collect::<Vec<_>>(),
+                "dots":dots.iter().map(|id|{let n=node(*id);json!({"removed":n["lifecycle_removed"],"registered":n["registered"],"abnormal":n["abnormal"]})}).collect::<Vec<_>>(),
+                "edges_live":edges.iter().map(|id|snap["relations"].as_array().unwrap().iter().any(|r|r["id"]==*id)).collect::<Vec<_>>()
+            });
+            let (prefix,ids)=if event["event"]=="edgeRemoved" {("edge",edges)}else{("dot",dots)};
+            let index=ids.iter().position(|id|event["id"]==*id).unwrap();
+            json!({"event":event["event"],"stage":event["stage"],"depth":event["depth"],"entity":format!("{prefix}{index}"),"state":state})
+        }).collect()
+    }
+    #[test]
+    fn original_callbacks_preserve_mixed_owner_intermediate_state_and_reentry_order() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-callback-order/observed.json"
+        ))
+        .unwrap();
+        for c in original["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let mut notes = Vec::new();
+            let mut note_ids = Vec::new();
+            let mut owners = Vec::new();
+            let mut owner_ids = Vec::new();
+            let mut dots = Vec::new();
+            let mut dot_ids = Vec::new();
+            for (i, n) in c["notes"].as_array().unwrap().iter().enumerate() {
+                let k = Key {
+                    system: 1,
+                    phase: if n["kind"] == "RestInter" {
+                        Phase::Symbol
+                    } else {
+                        Phase::Head
+                    },
+                    local: i + 1,
+                };
+                let id=graph.vertex(k,json!({"kind":n["kind"],"shape":n["shape"],"bounds":n["bounds"],"grade":0.8,"staff_id":1}),false).unwrap();
+                notes.push(k);
+                note_ids.push(id);
+            }
+            for (i, b) in c["owner_bounds"].as_array().unwrap().iter().enumerate() {
+                let k = Key {
+                    system: 1,
+                    phase: Phase::Chord,
+                    local: i + 1,
+                };
+                let id=graph.vertex(k,json!({"kind":if i==0 {"HeadChordInter"}else{"RestChordInter"},"bounds":b,"part_id":1,"staff_id":1,"measure_index":1,"duration":null,"voice":null,"dots_number":c["before"]["chord_dot_counts"][i]}),false).unwrap();
+                owners.push(k);
+                owner_ids.push(id);
+            }
+            for (i, n) in notes.iter().enumerate() {
+                graph
+                    .relations(
+                        1,
+                        Phase::Chord,
+                        vec![(
+                            owners[usize::from(i == 2)],
+                            *n,
+                            json!({"kind":"Containment"}),
+                        )],
+                    )
+                    .unwrap();
+            }
+            for (i, b) in c["dot_bounds"].as_array().unwrap().iter().enumerate() {
+                let k = Key {
+                    system: 1,
+                    phase: Phase::Symbol,
+                    local: i + 4,
+                };
+                dot_ids.push(graph.vertex(k,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"grade":0.8,"staff_id":1,"glyph_id":i+1,"manual":i==1 && c["remaining_manual"]==true,"abnormal":true}),false).unwrap());
+                dots.push(k);
+            }
+            let rels = c["edge_targets"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .enumerate()
+                .map(|(i, n)| {
+                    (
+                        dots[usize::from(i == 2)],
+                        notes[n.as_u64().unwrap() as usize],
+                        json!({"kind":"AugmentationRelation","grade":0.7}),
+                    )
+                })
+                .collect();
+            graph.relations(1, Phase::Symbol, rels).unwrap();
+            let edge_ids = graph.snapshot()["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|e| e["kind"] == "AugmentationRelation")
+                .map(|e| e["id"].as_u64().unwrap() as usize)
+                .collect::<Vec<_>>();
+            graph.enable_dot_callback_trace();
+            graph.remove_music_inter(dots[0]).unwrap();
+            assert_eq!(
+                json!(normalized_dot_callback_trace(
+                    &graph, &note_ids, &owner_ids, &dot_ids, &edge_ids
+                )),
+                c["trace"],
+                "rest first={},manual={}",
+                c["rest_edge_first"],
+                c["remaining_manual"]
+            );
+        }
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-callback-order/actual-chain.json"
+        ))
+        .unwrap();
+        let mut m = double_dot_symbolic_music();
+        contextualize_and_count(&mut m.owner.graph, &m.chords).unwrap();
+        let snap = m.owner.graph.snapshot();
+        let by_bounds = |kind, b: &Value| {
+            snap["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == kind && &n["bounds"] == b)
+                .unwrap()
+        };
+        let head = by_bounds("HeadInter", &original["notes"][0]["bounds"]);
+        let chord = by_bounds("HeadChordInter", &original["owner_bounds"][0]);
+        let dots = original["dot_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|b| by_bounds("AugmentationDotInter", b))
+            .collect::<Vec<_>>();
+        let ids = dots
+            .iter()
+            .map(|d| d["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        let edges = [
+            ("AugmentationRelation", ids[0]),
+            ("DoubleDotRelation", ids[1]),
+        ]
+        .map(|(kind, source)| {
+            snap["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["kind"] == kind && e["source"] == source)
+                .unwrap()["id"]
+                .as_u64()
+                .unwrap() as usize
+        });
+        m.owner.graph.enable_dot_callback_trace();
+        m.owner
+            .graph
+            .remove_music_inter(key(dots[0]).unwrap())
+            .unwrap();
+        assert_eq!(
+            json!(normalized_dot_callback_trace(
+                &m.owner.graph,
+                &[head["id"].as_u64().unwrap() as usize],
+                &[chord["id"].as_u64().unwrap() as usize],
+                &ids,
+                &edges
+            )),
+            original["trace"]
+        );
+    }
     #[test]
     fn dot_vertex_callback_recounts_chain_and_cascades_only_automatic_chord_dots() {
         let f: Value = serde_json::from_str(include_str!(

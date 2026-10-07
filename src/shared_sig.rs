@@ -324,6 +324,7 @@ struct Vertex {
     key: Key,
     data: Value,
     removed: bool,
+    removing: bool,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct EdgeKey {
@@ -346,6 +347,12 @@ pub struct Graph {
     keys: BTreeMap<Key, usize>,
     edges: Vec<Edge>,
     edge_keys: BTreeMap<EdgeKey, usize>,
+    #[cfg(test)]
+    trace_dot_callbacks: bool,
+    #[cfg(test)]
+    dot_callback_depth: usize,
+    #[cfg(test)]
+    dot_callback_trace: Vec<Value>,
 }
 impl Graph {
     fn require_pre_heads(&self, system: u64) -> Result<(), String> {
@@ -380,6 +387,7 @@ impl Graph {
                 key,
                 data: Value::Null,
                 removed,
+                removing: false,
             });
             id
         };
@@ -396,7 +404,12 @@ impl Graph {
         {
             data["contextual_grade"] = old.data["contextual_grade"].clone();
         }
-        self.vertices[id - 1] = Vertex { key, data, removed };
+        self.vertices[id - 1] = Vertex {
+            key,
+            data,
+            removed,
+            removing: old.removing,
+        };
         Ok(id)
     }
     fn endpoint(&self, key: Key) -> Result<usize, String> {
@@ -475,7 +488,13 @@ impl Graph {
         let id = self.id(key).ok_or("missing_shared_sig_endpoint")?;
         // Original Inter.remove is idempotent; a dying ensemble may already
         // have been removed by the last member's callback.
-        if self.vertices[id - 1].removed {
+        if self.vertices[id - 1].removed || self.vertices[id - 1].removing {
+            return Ok(());
+        }
+        if self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
+            let mut next = self.clone();
+            next.remove_dot_vertex(id)?;
+            *self = next;
             return Ok(());
         }
         if key.phase == Phase::Group && self.vertices[id - 1].data["kind"] != "BeamGroupInter" {
@@ -596,36 +615,6 @@ impl Graph {
             affected_head_stem.insert(e.key.source);
             affected_head_stem.insert(e.key.target);
         }
-        if removed.iter().any(|id| {
-            self.vertices[*id as usize - 1].data["kind"] == "AugmentationDotInter"
-                && self
-                    .edges
-                    .iter()
-                    .filter(|e| {
-                        !e.removed
-                            && e.key.source == *id as usize
-                            && matches!(
-                                e.key.kind.as_str(),
-                                "AugmentationRelation" | "DoubleDotRelation"
-                            )
-                    })
-                    .count()
-                    > 1
-        }) {
-            return Err("music_dot_shared_vertex_callback_pending".into());
-        }
-        let augmentation_notes = self
-            .edges
-            .iter()
-            .filter(|e| {
-                !e.removed
-                    && e.key.kind == "AugmentationRelation"
-                    && removed.contains(&(e.key.source as u64))
-                    && self.vertices[e.key.source - 1].data["kind"] == "AugmentationDotInter"
-                    && !removed.contains(&(e.key.target as u64))
-            })
-            .map(|e| e.key.target)
-            .collect::<BTreeSet<_>>();
         for id in &removed {
             next.vertices[*id as usize - 1].removed = true;
         }
@@ -646,9 +635,6 @@ impl Graph {
             .collect::<Vec<_>>();
         next.remove_chord_identity_edges(&chord_edges)?;
         next.prune();
-        for note in augmentation_notes {
-            next.recount_augmentation_note(note)?;
-        }
         next.refresh_head_stem_abnormal(&affected_head_stem);
         next.refresh_beam_groups(&removed)?;
         *self = next;
@@ -991,12 +977,106 @@ impl Graph {
         }
         let mut next = self.clone();
         next.edges[id - 1].removed = true;
+        #[cfg(test)]
+        next.dot_callback_event("edgeRemoved", id, "enter");
         next.refresh_augmentation_abnormal(&BTreeSet::from([edge.key.source]));
-        if edge.key.kind == "AugmentationRelation" && !target.removed {
+        if edge.key.kind == "AugmentationRelation" && !target.removed && !target.removing {
             next.recount_augmentation_note(edge.key.target)?;
         }
+        #[cfg(test)]
+        next.dot_callback_event("edgeRemoved", id, "leave");
         *self = next;
         Ok(())
+    }
+    fn remove_dot_vertex(&mut self, id: usize) -> Result<(), String> {
+        if self.vertices[id - 1].data["frozen"] == true {
+            return Err("music_removal_frozen_inter".into());
+        }
+        // JGraphT edgesOf copies incoming edges before outgoing edges. The
+        // removed Inter stays registered while those callbacks can reenter.
+        let mut incident = Vec::new();
+        for incoming in [true, false] {
+            for (i, e) in self.edges.iter().enumerate().filter(|(_, e)| {
+                !e.removed
+                    && if incoming {
+                        e.key.target == id
+                    } else {
+                        e.key.source == id
+                    }
+            }) {
+                if !matches!(
+                    e.key.kind.as_str(),
+                    "AugmentationRelation" | "DoubleDotRelation" | "Exclusion"
+                ) {
+                    return Err("music_dot_typed_vertex_removal_required".into());
+                }
+                if !incident.contains(&(i + 1)) {
+                    incident.push(i + 1);
+                }
+            }
+        }
+        let outgoing = incident
+            .iter()
+            .map(|i| &self.edges[i - 1])
+            .filter(|e| e.key.source == id && e.key.kind != "Exclusion")
+            .collect::<Vec<_>>();
+        if outgoing.len() > 1 && outgoing.iter().any(|e| e.key.kind == "DoubleDotRelation") {
+            return Err("music_dot_shared_vertex_callback_pending".into());
+        }
+        self.vertices[id - 1].removing = true;
+        for edge in incident {
+            if self.edges[edge - 1].removed {
+                continue;
+            }
+            if self.edges[edge - 1].key.kind == "Exclusion" {
+                self.edges[edge - 1].removed = true;
+            } else {
+                self.remove_augmentation_edge(edge)?;
+            }
+        }
+        self.vertices[id - 1].removing = false;
+        self.vertices[id - 1].removed = true;
+        #[cfg(test)]
+        {
+            self.dot_callback_event("vertexRemoved", id, "enter");
+            self.dot_callback_event("vertexRemoved", id, "leave");
+        }
+        Ok(())
+    }
+    #[cfg(test)]
+    pub(crate) fn enable_dot_callback_trace(&mut self) {
+        self.trace_dot_callbacks = true;
+        self.dot_callback_trace.clear();
+        self.dot_callback_depth = 0;
+    }
+    #[cfg(test)]
+    pub(crate) fn dot_callback_trace(&self) -> &[Value] {
+        &self.dot_callback_trace
+    }
+    #[cfg(test)]
+    fn dot_callback_event(&mut self, event: &str, id: usize, stage: &str) {
+        if !self.trace_dot_callbacks {
+            return;
+        }
+        if stage == "leave" {
+            self.dot_callback_depth -= 1;
+        }
+        let mut state = self.snapshot();
+        state["inters"] = json!(
+            self.vertices
+                .iter()
+                .map(|v| {
+                    let mut data = v.data.clone();
+                    data["lifecycle_removed"] = json!(v.removed || v.removing);
+                    data["registered"] = json!(!v.removed);
+                    data
+                })
+                .collect::<Vec<_>>()
+        );
+        self.dot_callback_trace.push(json!({"event":event,"id":id,"stage":stage,"depth":self.dot_callback_depth,"state":state}));
+        if stage == "enter" {
+            self.dot_callback_depth += 1;
+        }
     }
     fn recount_augmentation_note(&mut self, target: usize) -> Result<(), String> {
         if self.vertices[target - 1].removed {
@@ -1019,7 +1099,7 @@ impl Graph {
         }
         let owner = owners[0];
         let chord = &self.vertices[owner - 1];
-        let members = self
+        let mut members = self
             .edges
             .iter()
             .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == owner)
@@ -1036,6 +1116,17 @@ impl Graph {
         if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
             return Err("music_dot_rhythm_reset_required".into());
         }
+        let ordinate = |id: &usize| -> Result<i64, String> {
+            let b = &self.vertices[id - 1].data["bounds"];
+            Ok(b[1].as_i64().ok_or("music_dot_bounds_required")?
+                + b[3].as_i64().ok_or("music_dot_bounds_required")? / 2)
+        };
+        let mut ordered = members
+            .iter()
+            .map(|id| Ok((ordinate(id)?, *id)))
+            .collect::<Result<Vec<_>, String>>()?;
+        ordered.sort_by_key(|(y, _)| std::cmp::Reverse(*y));
+        members = ordered.into_iter().map(|(_, id)| id).collect();
         let snapshot = self.snapshot();
         let mut counts = Vec::new();
         for id in &members {
@@ -1143,7 +1234,7 @@ impl Graph {
             .collect::<BTreeSet<_>>();
         for &id in affected {
             let v = &mut self.vertices[id - 1];
-            if !v.removed && v.data["kind"] == "AugmentationDotInter" {
+            if !v.removed && !v.removing && v.data["kind"] == "AugmentationDotInter" {
                 v.data["abnormal"] = json!(!linked.contains(&id));
             }
         }
