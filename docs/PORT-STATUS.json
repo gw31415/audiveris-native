@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Source4a61d73: actual Rational Chord propagation with original manual7/64/NextInVoice clocks1, owned group/slot/Voice/tie boundaries1, manual refusal/rollback/return8notes1; fmt/all-target clippy passed. Independent same-source fetch/build, double8+parallel16+mixed8 prior XML bytes/XSD and quarter refusal; root/src/crates matched. Slot/Voice fine grid/public correction remains pending. Full595 historical95e191b; no full rerun.",
+  "latest_targeted_validation": "Sourcec357b75: Rational actual Slots/Voice/termination/export, original manual7/64 reprocess versus declared native Voice plan. Working targets13, then only clippy form/test array edits; fmt/all-target clippy passed. Independent final source targets2/build,5images47+parallel16 and mixed8 byte/XSD, declared fine-owner8note/divisions16/backup36 XML/XSD, quarter refusal, root/src/crates matched. Full595 historical95e191b; no full rerun.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {

@@ -1,0 +1,69 @@
+{
+  "validated_source_commit": "c357b753fb4970317c8aeb69df259398b4be324c",
+  "trees": {
+    "root": "6570d5943dd79c78de24430e439c500c9e20ec83",
+    "src": "7ebc85a9c3ee43af0672d783e6cd32ee5a23b418",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_fetch_build": "passed, same approved HTTPS path and existing clone",
+  "automatic_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+      "events": 15,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+      "events": 12,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+      "events": 4,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+      "events": 16,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    }
+  ],
+  "automatic_events": 63,
+  "mixed_declared_correction": {
+    "events": 8,
+    "prior_XML_bytes": "identical",
+    "XSD": "passed",
+    "dirty_publication_and_impact": "same as d26ab97",
+    "cache_binding": "actual retained HeadChord caches present, initial geometry/beams warmed by owned getters"
+  },
+  "original_scope": "original real manual7/64 PageRhythm/Voice/Partwise compared to native actual owner/slots/Voice/writer with declared Voice plan; exact timing/termination/divisions16/8notes; automatic mapper/transient clocks and public manual admission remain pending",
+  "undotted_quarter_rest_boundary": "unchanged refusal, no outputs; original prior undotted failure not rerun",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false,
+  "declared_fine_owner_control": {
+    "events": 8,
+    "XSD": "passed",
+    "artifact": "identical to committed native control",
+    "divisions": 16,
+    "backup": 36,
+    "ending_forward": false,
+    "scope": "declared Voice plan and real owned algorithms; not automatic/CLI admission"
+  },
+  "independent_target_tests": "actual Rational owner8note control1 and retained manual refusal/rollback/return1 passed"
+}
