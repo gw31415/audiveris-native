@@ -19,7 +19,7 @@
   },
   "format": "passed",
   "clippy": "passed --all-targets -D warnings",
-  "readback": "pending",
+  "readback": "independent84890b8 existing5images47 + previously admitted parallel16 original music/XML/XSD/byte equality, explicit dot CLI8 XML/XSD/byte equality, original quarter-rest rejection retained",
   "full_suite": "not rerun; historical595 at95e191b",
   "completion_flags": false
 }
