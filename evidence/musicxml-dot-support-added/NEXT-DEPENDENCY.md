@@ -10,8 +10,12 @@ its source, independently of chord counting.
 
 Next: connect original correction-task ownership transitions around these
 setters/relations, rather than relocate or rebuild Measure collections inside
-simple setters. Inspect original unlink/relink/Part assignment order and rhythm
-cache invalidation using actual saved owners before exposing edit commands.
+simple setters. Pinned 5.11 EditingTask bytecode read (not a mutation-success comparison)
+shows performDo: editor.finalDoit -> apply new links (discard failed entries)
+-> remove old links -> InterIndex.publish. Undo: editor.undo -> restore old links
+-> remove new links -> publish. Do not assume unlink-before-link. Follow original
+InterEditor.finalDoit, Link.applyTo/removeFrom and controller impact/rhythm-cache
+invalidation with actual saved owners before exposing edit commands.
 Current raw setters do not implement complete correction commands. Multi-staff /
 cross-Part/shared stacks, all FRAT classes, general Measure split/merge/delete,
 shared-support image admission and complete cleaner/epilog remain partial.
