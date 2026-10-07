@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Uncached ordinary AbstractChord.getDuration on live SIG members.
-//! Exact sixteenth grid, supported ordinary shapes and two beam/flag levels;
+//! Exact ordinary fractions, with a separate sixteenth-grid export adapter;
 //! special/mirrored heads and tuplets remain separate dependencies.
+use crate::music_time::Fraction;
 use serde_json::Value;
 fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
     match shape {
@@ -19,8 +20,30 @@ pub(crate) struct ChordDuration {
     pub(crate) beams_or_flags: usize,
     pub(crate) dots: usize,
 }
+pub(crate) struct ExactChordDuration {
+    pub(crate) intrinsic: Option<Fraction>,
+    note_type: &'static str,
+    beams_or_flags: usize,
+    dots: usize,
+}
 
 pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String> {
+    let exact = live_exact(snapshot, id)?;
+    Ok(ChordDuration {
+        intrinsic: exact
+            .intrinsic
+            .map(|d| {
+                d.ticks()
+                    .map_err(|_| "musicxml_dotted_duration_finer_than_sixteenth_pending".to_owned())
+            })
+            .transpose()?,
+        note_type: exact.note_type,
+        beams_or_flags: exact.beams_or_flags,
+        dots: exact.dots,
+    })
+}
+
+pub(crate) fn live_exact(snapshot: &Value, id: usize) -> Result<ExactChordDuration, String> {
     let nodes = snapshot["inters"]
         .as_array()
         .ok_or("missing_music_inters")?;
@@ -83,7 +106,7 @@ pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String>
     }
     let whole = rest && crate::music_voices::is_measure_rest_shape(shape, false);
     let result = if whole {
-        ChordDuration {
+        ExactChordDuration {
             intrinsic: None,
             note_type: "whole",
             beams_or_flags: 0,
@@ -91,7 +114,6 @@ pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String>
         }
     } else {
         let (base, mut note_type) = note_duration(shape)?;
-        let mut duration = base * 4;
         let mut count = 0;
         if !rest {
             let beams = crate::music_voices::chord_beams(snapshot, id)?;
@@ -135,7 +157,6 @@ pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String>
                     .map(|f| f["value"].as_u64().unwrap() as usize)
                     .sum::<usize>()
                     + beams.len();
-                duration /= 1 << count;
                 note_type = if count == 1 { "eighth" } else { "16th" };
             }
         }
@@ -144,15 +165,14 @@ pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String>
             .find(|n| n["id"] == id)
             .ok_or("musicxml_duration_live_chord_required")?;
         let dots = live_chord["dots_number"].as_u64().unwrap_or(0) as usize;
+        let mut duration = Fraction::new(base, 4 << count)?;
         match dots {
             0 => {}
-            1 if duration.is_multiple_of(2) => duration = duration / 2 * 3,
-            1 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
-            2 if duration.is_multiple_of(4) => duration = duration / 4 * 7,
-            2 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
+            1 => duration = duration.times(Fraction::new(3, 2)?)?,
+            2 => duration = duration.times(Fraction::new(7, 4)?)?,
             _ => return Err("musicxml_invalid_dot_count".into()),
         }
-        ChordDuration {
+        ExactChordDuration {
             intrinsic: Some(duration),
             note_type,
             beams_or_flags: count,

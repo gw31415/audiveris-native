@@ -223,6 +223,9 @@ mod tests {
                 .find(|n| n["id"] == cid)
                 .unwrap();
             let observation = &frame["chord_observation"];
+            for field in ["duration", "end_time"] {
+                assert_eq!(observation[field], oracle["state"][field], "{field}");
+            }
             for field in ["cache_before_getters", "cache_after_getters"] {
                 assert_eq!(
                     numeric(&observation[field]),
@@ -344,8 +347,12 @@ mod tests {
                 .registered_stem(graph, sk.local)
                 .unwrap()
         ));
+        assert_eq!(graph.chord_duration(ck).unwrap(), Some("7/64".into()));
+        assert_eq!(graph.chord_end_time(ck).unwrap(), Some("7/64".into()));
         assert_eq!(
-            graph.chord_duration(ck).unwrap_err(),
+            crate::music_duration::live(&graph.snapshot(), cid.as_u64().unwrap() as usize)
+                .err()
+                .unwrap(),
             "musicxml_dotted_duration_finer_than_sixteenth_pending"
         );
         // This correction is not yet an admitted export transaction: retained

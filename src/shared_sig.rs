@@ -1213,25 +1213,24 @@ impl Graph {
         let id = self
             .id(key)
             .ok_or("musicxml_duration_live_chord_required")?;
-        Ok(crate::music_duration::live(&self.snapshot(), id)?
+        Ok(crate::music_duration::live_exact(&self.snapshot(), id)?
             .intrinsic
-            .map(crate::music_time::format_ticks))
+            .map(|d| d.to_string()))
     }
     /// Original getEndTime uses the current duration and retained timeOffset.
     pub fn chord_end_time(&self, key: Key) -> Result<Option<String>, String> {
         let id = self
             .id(key)
             .ok_or("musicxml_duration_live_chord_required")?;
-        let Some(duration) = crate::music_duration::live(&self.snapshot(), id)?.intrinsic else {
+        let Some(duration) = crate::music_duration::live_exact(&self.snapshot(), id)?.intrinsic
+        else {
             return Ok(None);
         };
         let Some(offset) = self.vertices[id - 1].data["time_offset"].as_str() else {
             return Ok(None);
         };
-        let end = crate::music_time::parse_ticks(offset)?
-            .checked_add(duration)
-            .ok_or("music_time_tick_overflow")?;
-        Ok(Some(crate::music_time::format_ticks(end)))
+        let end = crate::music_time::Fraction::parse(offset)?.plus(duration)?;
+        Ok(Some(end.to_string()))
     }
     pub(crate) fn count_owned_augmentation(&mut self, chord: Key) -> Result<(), String> {
         let id = self.endpoint(chord)?;

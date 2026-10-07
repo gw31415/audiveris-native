@@ -2429,3 +2429,9 @@ MusicXML CLI option: publication, selected-stack reprocess and transactional
 export validation remain guarded. Existing CLI examples and input scope stay
 unchanged. An original7/64/underfilled parallel-Voice correction is tracked as
 a remaining dependency rather than silently rounded or completed.
+
+The retained ordinary `Graph.chord_duration` / `chord_end_time` getters now
+read exact fractions such as7/64. Getter success is separate from MusicXML
+admission: current rhythmic clocks/export continue to reject finer-than-
+sixteenth durations. Manual HeadStem correction remains a lower-level owned
+control, with no new CLI switch or automatic image reception enabled.

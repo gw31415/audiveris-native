@@ -1,0 +1,18 @@
+{
+  "baseline_source": "055d623e5a3d18865d2b30bb813c64fe389af72a",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "ordinary uncached duration/endTime exact nonnegative fractions; retained callbacks, not general Rational rhythm or new image/CLI admission",
+  "original_methods": [
+    "AbstractChordInter.getDurationSansTuplet dot factors3/2 and7/4",
+    "AbstractChordInter.getEndTime retained timeOffset.plus(current duration)",
+    "Rational constructor reduction, times, plus, toString"
+  ],
+  "control": "same saved actual manual HeadStem control; six enter/leave observations now compare duration/endTime7/16 and7/64, clocks/owners remain intact",
+  "rhythm_admission": "existing live sixteenth-tick adapter and explicit EditingTask grid check still refuse7/64 with musicxml_dotted_duration_finer_than_sixteenth_pending; public export provenance/manual guard stays",
+  "numeric_scope": "reduced nonnegative u32 fractions with checked overflow; signed/general Rational and tuplets remain pending",
+  "target_tests": "4 passed: owned manual callback, owned cold/warm cache, existing timed dot callbacks, existing mixed task/rollback",
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}

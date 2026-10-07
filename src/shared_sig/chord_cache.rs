@@ -171,8 +171,10 @@ impl Graph {
             .unwrap()
             .snapshot();
         self.retained_chord_beams(key)?;
+        let duration = self.chord_duration(key)?;
+        let end_time = self.chord_end_time(key)?;
         Ok(
-            json!({"cache_before_getters":before,"getters":{"bounds":read.bounds,"head_location":read.head,"tail_location":read.tail,"stem_origin":read.stem},"cache_after_getters":after}),
+            json!({"cache_before_getters":before,"getters":{"bounds":read.bounds,"head_location":read.head,"tail_location":read.tail,"stem_origin":read.stem},"cache_after_getters":after,"duration":duration,"end_time":end_time}),
         )
     }
 }
@@ -320,8 +322,12 @@ mod tests {
             initial["augmentation_dot_ownership"]
         );
         assert_eq!(g.editing_book_state().unwrap()["sheet_modified"], false);
+        assert_eq!(g.chord_duration(ck).unwrap(), Some("7/64".into()));
+        assert_eq!(g.chord_end_time(ck).unwrap(), Some("7/64".into()));
         assert_eq!(
-            g.chord_duration(ck).unwrap_err(),
+            crate::music_duration::live(&g.snapshot(), cid)
+                .err()
+                .unwrap(),
             "musicxml_dotted_duration_finer_than_sixteenth_pending"
         );
         assert_eq!(oracle["after"]["duration"], "7/64");

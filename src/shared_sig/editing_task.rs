@@ -460,7 +460,8 @@ impl EditingSequence {
                 {
                     return Err("music_reprocess_timed_support_edit_pending".into());
                 }
-                graph.chord_duration(chord.key)?;
+                // Exact getters do not imply admission to the rhythm grid.
+                crate::music_duration::live(&graph.snapshot(), owners[0])?;
             }
         }
         Ok(())

@@ -1243,3 +1243,14 @@ New ChordStem is not promoted to manual. Generic manual and export provenance
 guards remain; this is not a new automatic image/CLI admission. Exact7/64 and
 underfilled Voice reprocess/export are next dependencies, not original failure.
 Evidence: `evidence/musicxml-manual-chord-owner/VALIDATION.json`.
+
+### Exact ordinary duration/endTime getters
+
+Ordinary retained getters now follow original reduced Rational dot factors and
+timeOffset addition, including7/64 at all six manual nested callback boundaries.
+This uses current live relations, not stored duration metadata. The separate
+sixteenth-grid adapter and EditingTask admission still refuse that fine duration;
+Rational clocks/Voice processing/underfilled export and manual CLI transactions
+remain pending. This does not expand automatic image acceptance or complete
+signed/general Rational parity. Evidence:
+`evidence/musicxml-manual-chord-duration/VALIDATION.json`.

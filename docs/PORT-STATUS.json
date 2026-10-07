@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Sourcea55b20e: mixed owned sequence1, fmt/clippy, independent mixed correction8 and plain/bounds/editor/relation CLI8 each with original/XML/XSD/prior bytes; automatic13/16/different-dot/different-task-family refusals. Earlier050f7ae:replay1+relation2;6d65e59:related5,5images47+parallel16. Full595 historical95e191b; no full rerun.",
+  "latest_targeted_validation": "Current exact getter unit: owned manual callback1, cold/warm cache1, timed dot callbacks1, mixed owned task/rollback1; fmt/all-target clippy passed. Independent saved a9108bf: owned manual callback1, Linux CLI5images47+parallel16+mixed8, prior XML bytes/XSD/tree equality. Exact-getter final source readback pending until corresponding evidence READBACK is saved. Full595 historical95e191b; no full rerun.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
@@ -734,5 +734,12 @@
       "retries": "one completed same-image comparison; no coordinate search",
       "next": "positive original rest recognition and observation of the failing foundation vertex/owner; affected kind unconfirmed"
     }
-  ]
+  ],
+  "retained_manual_chord_correction": {
+    "status": "partial",
+    "connected": "actual HeadStem added -> nested old ChordStem removed/new added cache callbacks -> Head/Stem abnormal; same retained OwnedMusic Chord and canonical Stem Arc, clocks/owners kept; exact uncached ordinary duration/endTime7/64",
+    "guard": "generic manual and export provenance guard remain; sixteenth-grid adapter still rejects7/64; no new automatic image or CLI admission",
+    "remaining": "Rational selected-stack clocks/slots/Voice process and Chord-inclusive rollback; underfilled voice export divisions; task publication/undo, missing anchors/general ownership, full cleaner/epilog/project state",
+    "evidence": "evidence/musicxml-manual-chord-duration/VALIDATION.json; same original saved-owner control in official-manual-chord-cache"
+  }
 }
