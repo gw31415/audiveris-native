@@ -31,9 +31,10 @@ places it. Redo can reuse Part/Measure references cached during its first run.
 Native now compares eighteen task executions and forty-two listener records
 for this branch, with real typed editing HeadChord placement at each task
 boundary. General Part/Measure/Voice integration, ordinary reprocessing and
-canonical mirror sharing remain guarded. Callback Graph/getter state and task
-boundary typed ownership are distinct observations; full owner membership
-inside every callback is not certified.
+canonical mirror sharing remain guarded. The following callback-owner checkpoint also observes the new typed editing
+HeadChord members/stem/bounds, cached Measure and membership inside all forty-two
+listener records. General old-Chord/Part/Voice callback membership and ordinary
+reprocessing remain pending.
 
 Reproduce with a saved original double-augmentation book:
 

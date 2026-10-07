@@ -555,6 +555,11 @@
       "status": "implemented",
       "unit": "saved-owner raw new-target HeadStem preLink AdditionTask with actual typed editing HeadChord nullable geometry, lazy Measure placement and retained-reference redo",
       "limits": "eighteen task boundaries/forty-two original Graph/getter callback records; explicit saved numeric controls and Part/Staff-warmed target-removal setup. Typed ownership checked at task boundaries, not every callback. General Part/Measure/Voice reprocess integration, canonical mirrors, automatic Stem extent, controller/epilog/history/PAGE/persistence remain pending; CLI guard retained."
+    },
+    {
+      "status": "implemented",
+      "unit": "actual new editing HeadChord ownership inside preLink SIG callbacks",
+      "limits": "typed member/stem/bounds, cached Measure reference and membership compared at all forty-two original listener records and eighteen task boundaries using the existing saved controls; normal Chord/Part/Voice callback ownership, ordinary reprocessing/mirrors/controller/epilog/history/PAGE/persistence and automatic extent parity remain pending; CLI guarded."
     }
   ],
   "function_groups": [

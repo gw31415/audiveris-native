@@ -1396,3 +1396,14 @@ only the target Chord; existing-target observations are unchanged. Public CLI
 admission and global completion flags remain guarded/false. Automatic source
 Stem extent still differs by five pixels; this is not full-image correction parity.
 See `evidence/musicxml-headstem-prelink-new/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+A further small unit moves the actual editing HeadChord registry into the retained
+Graph, so SIG callbacks own live member/stem views and lazy placement. New-Chord
+typed members/stem/bounds, cached Measure reference and actual Measure membership
+now agree inside all forty-two original listener records, including unplaced
+initial addition, Containment entry/return and retained-reference redo registration.
+Graph clone rollback now restores that same registry; no report rebuild or
+callback-before clock reset is used. General normal Chord/Part/Voice callback
+membership and ordinary reprocessing remain pending; CLI guards stay in place.
+See `evidence/musicxml-headstem-prelink-callbacks/TRY.md` and `NEXT-DEPENDENCY.md`.

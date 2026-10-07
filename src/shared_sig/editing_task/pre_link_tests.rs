@@ -107,6 +107,44 @@ fn compare_graph(
         assert_eq!(node["voice"], row["voice_id"]);
         assert_eq!(node["slot_id"], row["slot_id"]);
         assert_eq!(node["time_offset"], row["time_offset"]);
+        if row["label"] == "new_chord" {
+            let owner = snapshot["editing_chord_owners"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|c| c["id"] == id)
+                .unwrap();
+            assert_eq!(
+                json!(
+                    owner["member_ids"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(named)
+                        .collect::<Vec<_>>()
+                ),
+                row["members"]
+            );
+            assert_eq!(
+                json!(
+                    owner["stem_id"]
+                        .as_u64()
+                        .and_then(|id| labels.get(&(id as usize)))
+                ),
+                row["stem"]
+            );
+            assert_eq!(owner["bounds"], row["bounds"]);
+            assert_eq!(json!(owner["measure"] == 0), row["same_measure"]);
+            assert_eq!(
+                json!(owner["in_measure"] == true),
+                json!(
+                    expected["measure_chords"]
+                        .as_array()
+                        .unwrap()
+                        .contains(&row["label"])
+                )
+            );
+        }
     }
     for row in expected["relations"].as_array().unwrap() {
         let fact = facts
@@ -153,6 +191,7 @@ fn graph_state(
     labels: &BTreeMap<usize, String>,
 ) -> (Value, BTreeMap<usize, Value>) {
     let mut state = graph.snapshot();
+    state["editing_chord_owners"] = graph.editing_chord_observations();
     state["inters"] = json!(
         graph
             .vertices
@@ -199,6 +238,8 @@ fn compare_owner(
                 .map(|c| name(&c.id))
                 .chain(
                     owner
+                        .owner
+                        .graph
                         .editing_chords
                         .iter()
                         .filter(|c| c.in_measure && c.measure == Some(0))
@@ -253,7 +294,7 @@ fn compare_owner(
         );
         assert_eq!(json!(chord.bounds), row["bounds"]);
     }
-    for chord in &owner.editing_chords {
+    for chord in &owner.owner.graph.editing_chords {
         let row = expected["chords"]
             .as_array()
             .unwrap()
@@ -532,7 +573,7 @@ fn compare_failed_prelink(new_target: bool) {
     );
     assert_eq!(export.owner.owner.graph.snapshot(), graph);
     assert_eq!(export.owner.layout(), layout);
-    assert!(export.owner.editing_chords.is_empty());
+    assert!(export.owner.owner.graph.editing_chords.is_empty());
     assert_eq!(export.owner.chords.as_ptr(), chords_address);
     assert_eq!(export.owner.measures[0].timing.expected, expected);
     assert_eq!(export.owner.voices.iter().map(|v|json!({"id":v.id,"members":v.chord_ids,"slots":v.slots.iter().map(|(id,s)|json!([id,s.chord_id,s.continuing])).collect::<Vec<_>>(),"termination":v.termination.map(|d|d.to_string())})).collect::<Vec<_>>(),voices);
@@ -544,16 +585,16 @@ fn compare_failed_prelink(new_target: bool) {
         .perform_owned(&mut export.owner, EditingOperation::Do, "RHYTHMS")
         .unwrap();
     if new_target {
-        assert_eq!(export.owner.editing_chords.len(), 1);
-        let key = export.owner.editing_chords[0].key;
+        assert_eq!(export.owner.owner.graph.editing_chords.len(), 1);
+        let key = export.owner.owner.graph.editing_chords[0].key;
         sequence
             .perform_owned(&mut export.owner, EditingOperation::Undo, "RHYTHMS")
             .unwrap();
         sequence
             .perform_owned(&mut export.owner, EditingOperation::Redo, "RHYTHMS")
             .unwrap();
-        assert_eq!(export.owner.editing_chords.len(), 1);
-        assert_eq!(export.owner.editing_chords[0].key, key);
+        assert_eq!(export.owner.owner.graph.editing_chords.len(), 1);
+        assert_eq!(export.owner.owner.graph.editing_chords[0].key, key);
         assert_eq!(export.owner.measures[0].timing.expected, expected);
     }
 }

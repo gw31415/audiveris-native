@@ -53,20 +53,22 @@ impl ChordAdditionTask {
         owner: &mut OwnedMusic,
         op: EditingOperation,
     ) -> Result<(), String> {
+        let graph = &mut owner.owner.graph;
         if matches!(op, EditingOperation::Undo) {
-            let chord = owner
+            let index = graph
                 .editing_chords
-                .iter_mut()
-                .find(|c| c.key == self.key)
+                .iter()
+                .position(|c| c.key == self.key)
                 .ok_or("editing_added_chord_required")?;
-            let graph = &mut owner.owner.graph;
             let id = graph.endpoint(self.key)?;
             // This raw task closure reverses Containment and ChordStem first.
             // Extensive child deletion requires a separately compared closure.
-            if !chord.members.is_empty() || !graph.incident_edges(id).is_empty() {
+            if !graph.editing_chords[index].members.is_empty()
+                || !graph.incident_edges(id).is_empty()
+            {
                 return Err("editing_empty_added_chord_required".into());
             }
-            chord.in_measure = false;
+            graph.editing_chords[index].in_measure = false;
             graph.vertices[id - 1].removed = true;
             #[cfg(test)]
             graph.dot_callback_event("vertexRemoved", id, "enter");
@@ -74,12 +76,11 @@ impl ChordAdditionTask {
             graph.dot_callback_event("vertexRemoved", id, "leave");
             return Ok(());
         }
-        let graph = &mut owner.owner.graph;
         let first = graph.id(self.key).is_none();
         let id = if first {
             let id = graph.vertex(self.key, serde_json::json!({"kind":"HeadChordInter", "grade":null, "bounds":self.initial_bounds}), false)?;
             graph.vertices[id - 1].chord_cache = Some(super::chord_cache::ChordCache::default());
-            owner.editing_chords.push(EditingHeadChord {
+            graph.editing_chords.push(EditingHeadChord {
                 key: self.key,
                 id,
                 stem: None,
@@ -104,12 +105,18 @@ impl ChordAdditionTask {
             .as_mut()
             .unwrap()
             .set_bounds(self.initial_bounds);
+        graph
+            .editing_chords
+            .iter_mut()
+            .find(|c| c.key == self.key)
+            .unwrap()
+            .bounds = Some(self.initial_bounds);
         #[cfg(test)]
         graph.dot_callback_event("vertexAdded", id, "enter");
         #[cfg(test)]
         graph.dot_callback_event("vertexAdded", id, "leave");
         graph.vertices[id - 1].removing = false;
-        let chord = owner
+        let chord = graph
             .editing_chords
             .iter_mut()
             .find(|c| c.key == self.key)
@@ -262,32 +269,12 @@ impl OwnedMusic {
             )
         });
         let read = graph.retained_chord_getters(key)?;
-        if let Some(chord) = self.editing_chords.iter_mut().find(|c| c.key == key) {
+        if let Some(chord) = graph.editing_chords.iter_mut().find(|c| c.key == key) {
             if chord.id != id {
                 return Err("editing_chord_identity_changed".into());
             }
-            if chord.measure.is_none()
-                && let Some(head) = members.first()
-            {
-                let bounds: [i64; 4] = serde_json::from_value(head["bounds"].clone())
-                    .map_err(|_| "editing_head_bounds_required")?;
-                let x = bounds[0] + bounds[2] / 2;
-                chord.measure = Some(
-                    self.measures
-                        .iter()
-                        .position(|m| {
-                            m.system == key.system
-                                && graph.vertices[id - 1].data["part_id"] == m.part
-                                && head["staff_id"] == m.staff
-                                && x >= m.left
-                                && x <= m.right
-                        })
-                        .ok_or("editing_actual_head_measure_required")?,
-                );
-                chord.in_measure = true;
-                let measure = &self.measures[chord.measure.unwrap()];
-                graph.vertices[id - 1].data["measure_index"] = serde_json::json!(measure.index);
-            }
+            // Placement belongs to the relation callback. This post-task read
+            // verifies/synchronizes geometry without manufacturing membership.
             chord.members = members;
             chord.stem = read.stem;
             chord.bounds = read.bounds;
@@ -303,6 +290,70 @@ impl OwnedMusic {
         if let Some(bounds) = read.bounds {
             chord.bounds = bounds;
         }
+        Ok(())
+    }
+}
+
+impl super::Graph {
+    #[cfg(test)]
+    pub(super) fn editing_chord_observations(&self) -> Value {
+        serde_json::json!(self.editing_chords.iter().map(|c| serde_json::json!({
+            "id":c.id,"member_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),
+            "stem_id":c.stem.and_then(|key|self.id(key)),"bounds":c.bounds,
+            "measure":c.measure,"in_measure":c.in_measure
+        })).collect::<Vec<_>>())
+    }
+    pub(super) fn refresh_editing_chord_links(&mut self, id: usize) {
+        let Some(index) = self.editing_chords.iter().position(|c| c.id == id) else {
+            return;
+        };
+        let mut members = Vec::new();
+        let mut stem = None;
+        for eid in self.incident_edges(id) {
+            let edge = &self.edges[eid - 1];
+            if edge.key.source != id {
+                continue;
+            }
+            if edge.key.kind == "Containment" {
+                members.push(self.vertices[edge.key.target - 1].data.clone());
+            }
+            if edge.key.kind == "ChordStemRelation" && stem.is_none() {
+                stem = Some(self.vertices[edge.key.target - 1].key);
+            }
+        }
+        members.sort_by_key(|h| {
+            std::cmp::Reverse(
+                h["bounds"][1].as_i64().unwrap() + h["bounds"][3].as_i64().unwrap() / 2,
+            )
+        });
+        self.editing_chords[index].members = members;
+        self.editing_chords[index].stem = stem;
+    }
+    pub(super) fn invalidate_editing_chord(&mut self, id: usize) -> Result<(), String> {
+        let Some(index) = self.editing_chords.iter().position(|c| c.id == id) else {
+            return Ok(());
+        };
+        self.refresh_editing_chord_links(id);
+        let bounds = serde_json::from_value(self.vertices[id - 1].data["bounds"].clone())
+            .map_err(|_| "editing_nullable_chord_bounds_required")?;
+        if self.editing_chords[index].measure.is_none()
+            && !self.editing_chords[index].members.is_empty()
+        {
+            let (measure, ordinal) = self
+                .dot_ownership
+                .as_ref()
+                .and_then(|owner| {
+                    owner.measure_for_chord(
+                        self.vertices[id - 1].key.system,
+                        &self.vertices[id - 1].data,
+                    )
+                })
+                .ok_or("editing_actual_head_measure_required")?;
+            self.editing_chords[index].measure = Some(measure);
+            self.editing_chords[index].in_measure = true;
+            self.vertices[id - 1].data["measure_index"] = serde_json::json!(ordinal);
+        }
+        self.editing_chords[index].bounds = bounds;
         Ok(())
     }
 }

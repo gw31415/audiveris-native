@@ -14,3 +14,6 @@ are declared numeric controls, not image recognition parity. Preserve exact7/64,
 expectedDuration, short Voice termination/divisions, all nonUI scope and false
 completion flags. Do not normalize13/16 or add ending padding. No original task,
 original environment or unpushed ce785c9 evidence was altered or regenerated.
+
+The new editing HeadChord callback ownership unit is now compared in
+`../musicxml-headstem-prelink-callbacks/`. Follow its newer NEXT-DEPENDENCY.

@@ -504,18 +504,23 @@ impl RelationTask {
         let Some(binding) = self.owned_chord.as_ref() else {
             return self.perform(&mut owner.owner.graph, operation);
         };
-        let current =
-            if let Some(chord) = owner.editing_chords.iter().find(|c| c.key == binding.chord) {
-                let head = owner.owner.graph.endpoint(self.source)?;
-                if !chord.in_measure || !chord.members.iter().any(|h| h["id"] == head) {
-                    return Err("manual_head_stem_retained_owner_changed".into());
-                }
-                chord.key
-            } else {
-                owner
-                    .manual_head_stem_owner(self.source, self.link.partner)?
-                    .1
-            };
+        let current = if let Some(chord) = owner
+            .owner
+            .graph
+            .editing_chords
+            .iter()
+            .find(|c| c.key == binding.chord)
+        {
+            let head = owner.owner.graph.endpoint(self.source)?;
+            if !chord.in_measure || !chord.members.iter().any(|h| h["id"] == head) {
+                return Err("manual_head_stem_retained_owner_changed".into());
+            }
+            chord.key
+        } else {
+            owner
+                .manual_head_stem_owner(self.source, self.link.partner)?
+                .1
+        };
         let canonical = owner
             .owner
             .caches
@@ -546,7 +551,13 @@ impl RelationTask {
                         .ok_or("shared_sig_relation_order_budget")?;
                     self.link.relation["local_relation_id"] = json!(ordinal);
                 }
-                if owner.editing_chords.iter().any(|c| c.key == current) {
+                if owner
+                    .owner
+                    .graph
+                    .editing_chords
+                    .iter()
+                    .any(|c| c.key == current)
+                {
                     owner.owner.graph.add_owned_manual_head_stem(
                         current,
                         self.source,
@@ -947,7 +958,6 @@ impl EditingSequence {
         let chords = owner.chords.clone();
         let measures = owner.measures.clone();
         let voices = owner.voices.clone();
-        let editing_chords = owner.editing_chords.clone();
         let mut sequence = self.clone();
         let result = (|| {
             let tasks: Box<dyn Iterator<Item = &mut EditingTask> + '_> =
@@ -971,7 +981,6 @@ impl EditingSequence {
                 owner.chords.clone_from(&chords);
                 owner.measures.clone_from(&measures);
                 owner.voices.clone_from(&voices);
-                owner.editing_chords.clone_from(&editing_chords);
                 Err(error)
             }
         }

@@ -358,6 +358,7 @@ struct Edge {
 }
 #[derive(Clone, Default, Debug)]
 pub struct Graph {
+    pub(crate) editing_chords: Vec<chord_tasks::EditingHeadChord>,
     vertices: Vec<Vertex>,
     keys: BTreeMap<Key, usize>,
     edges: Vec<Edge>,
@@ -950,6 +951,7 @@ impl Graph {
                 removed: false,
             };
             if chord_identity && added && self.vertices[source - 1].chord_cache.is_some() {
+                self.refresh_editing_chord_links(source);
                 #[cfg(test)]
                 self.dot_callback_event("edgeAdded", id, "enter");
                 self.invalidate_note_chords(&BTreeSet::from([source]))?;
@@ -1092,6 +1094,7 @@ impl Graph {
             data["head_location"] = json!(geometry.head_location);
             data["tail_location"] = json!(geometry.tail_location);
             self.read_chord_placement(self.vertices[id - 1].key)?;
+            self.invalidate_editing_chord(id)?;
         }
         Ok(())
     }
@@ -1123,6 +1126,7 @@ impl Graph {
             let source = next.edges[id - 1].key.source;
             next.edges[id - 1].removed = true;
             if next.vertices[source - 1].chord_cache.is_some() {
+                next.refresh_editing_chord_links(source);
                 #[cfg(test)]
                 next.dot_callback_event("edgeRemoved", id, "enter");
                 next.invalidate_note_chords(&BTreeSet::from([source]))?;
@@ -1302,6 +1306,7 @@ impl Graph {
             self.read_chord_placement(chord).unwrap();
         }
         let mut state = self.snapshot();
+        state["editing_chord_owners"] = self.editing_chord_observations();
         state["inters"] = json!(
             self.vertices
                 .iter()

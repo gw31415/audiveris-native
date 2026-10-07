@@ -20,6 +20,21 @@ pub(super) struct Ownership {
     staff_parts: BTreeMap<(u64, u64), u64>,
 }
 impl Ownership {
+    pub(super) fn measure_for_chord(&self, system: u64, chord: &Value) -> Option<(usize, usize)> {
+        let bounds: [i64; 4] = serde_json::from_value(chord["bounds"].clone()).ok()?;
+        let x = bounds[0] + bounds[2] / 2;
+        self.measures
+            .iter()
+            .enumerate()
+            .find(|(_, m)| {
+                m.system == system
+                    && chord["part_id"] == m.part
+                    && chord["staff_id"] == m.staff
+                    && m.left < x
+                    && x <= m.right
+            })
+            .map(|(i, m)| (i, m.index))
+    }
     pub(super) fn contains_chord(&self, system: u64, chord: &Value) -> bool {
         self.measures.iter().any(|m| {
             m.system == system
