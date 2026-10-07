@@ -1,0 +1,24 @@
+{
+  "validated_source_commit": "5f1c4c3c411441e49ceebd1590e2060ec5b9bf48",
+  "trees": {
+    "root": "750b2443917cea1c9ba266b833a509c474c63180",
+    "src": "191960b938a78580b26f7453da69bd8162aa03ef",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_fetch_build": "passed, same approved HTTPS path and existing clone",
+  "automatic_inputs": [],
+  "automatic_events": 0,
+  "mixed_declared_correction": {
+    "events": 8,
+    "prior_XML_bytes": "identical",
+    "XSD": "passed",
+    "dirty_publication_and_impact": "same as d26ab97",
+    "cache_binding": "actual retained HeadChord caches present, initial geometry/beams warmed by owned getters"
+  },
+  "original_scope": "saved actual HeadChord cold/warm getters and nested identity callbacks; explicit native owned manual callback sequence compared; generic/export manual admission guarded, exact getter7/64 matched; rhythmic/export grid still refuses7/64",
+  "undotted_quarter_rest_boundary": "unchanged refusal, no outputs; original prior undotted failure not rerun",
+  "independent_target_test": "actual selected manual owner reprocess/refusal/rollback1 passed",
+  "earlier_saved_regression": "5images47+parallel16+mixed8 at a9108bf; double8+parallel16+mixed8 at175ab0d; current changed rollback path mixed8",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}
