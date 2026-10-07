@@ -21,7 +21,7 @@
   },
   "format": "passed",
   "clippy": "passed --all-targets -D warnings",
-  "image_readback": "pending independent fetch",
+  "image_readback": "independent fetched 1b75156: existing5images47events original music/XML/XSD/byte equality + same double-dot image raw correction CLI8events/XSD/unchanged XML + quarter-rest refusal",
   "full_suite": "not rerun; historical595 at95e191b",
   "completion_flags": false
 }
