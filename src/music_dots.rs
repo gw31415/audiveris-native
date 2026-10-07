@@ -1257,7 +1257,7 @@ mod tests {
                 "dots":dots.iter().map(|id|{let n=node(*id);json!({"removed":n["lifecycle_removed"],"registered":n["registered"],"abnormal":n["abnormal"]})}).collect::<Vec<_>>(),
                 "edges_live":edges.iter().map(|id|snap["relations"].as_array().unwrap().iter().any(|r|r["id"]==*id)).collect::<Vec<_>>()
             });
-            let (prefix,ids)=if event["event"]=="edgeRemoved" {("edge",edges)}else{("dot",dots)};
+            let (prefix,ids)=if event["event"].as_str().unwrap().starts_with("edge") {("edge",edges)}else{("dot",dots)};
             let index=ids.iter().position(|id|event["id"]==*id).unwrap();
             json!({"event":event["event"],"stage":event["stage"],"depth":event["depth"],"entity":format!("{prefix}{index}"),"state":state})
         }).collect()
@@ -1994,6 +1994,114 @@ mod tests {
             assert_eq!(actual.is_some(), c["accepted"].as_bool().unwrap());
             if let Some(r) = actual {
                 assert_eq!(r["grade"], c["grade"]);
+            }
+        }
+    }
+    #[test]
+    fn original_manual_added_support_counts_actual_owner_and_can_reenter_deletion() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-support-added/observed.json"
+        ))
+        .unwrap();
+        for c in original["cases"].as_array().unwrap().iter().rev() {
+            let mut graph = Graph::default();
+            let m = &c["measure"];
+            graph
+                .bind_dot_measures(&[Measure {
+                    system: 1,
+                    part: m["part_id"].as_u64().unwrap(),
+                    staff: m["staff_id"].as_u64().unwrap(),
+                    index: 1,
+                    left: m["left"].as_i64().unwrap(),
+                    right: m["right"].as_i64().unwrap(),
+                    timing: Default::default(),
+                }])
+                .unwrap();
+            let ck = Key {
+                system: 1,
+                phase: Phase::Chord,
+                local: 1,
+            };
+            let cid=graph.vertex(ck,json!({"kind":"HeadChordInter","bounds":c["owner_bounds"],"part_id":1,"staff_id":1,"duration":null,"voice":null,"dots_number":0}),false).unwrap();
+            let mut notes = Vec::new();
+            let mut note_ids = Vec::new();
+            for (i, h) in c["notes"].as_array().unwrap().iter().enumerate() {
+                let k = Key {
+                    system: 1,
+                    phase: Phase::Head,
+                    local: i + 1,
+                };
+                let mut n = h.clone();
+                n["staff_id"] = json!(1);
+                note_ids.push(graph.vertex(k, n, false).unwrap());
+                notes.push(k);
+                graph
+                    .relations(
+                        1,
+                        Phase::Chord,
+                        vec![(ck, k, json!({"kind":"Containment"}))],
+                    )
+                    .unwrap();
+            }
+            let dk = Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 1,
+            };
+            let did=graph.vertex(dk,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":c["dot_bounds"],"grade":0.8,"staff_id":1,"glyph_id":1,"manual":c["mode"]=="manual_dot"}),false).unwrap();
+            graph.enable_dot_callback_trace();
+            graph.relations(1,Phase::Symbol,vec![(dk,notes[0],json!({"kind":"AugmentationRelation","grade":0.7,"manual":c["mode"]=="manual_relation"}))]).unwrap();
+            let edge_ids = vec![graph.dot_callback_trace()[0]["id"].as_u64().unwrap() as usize];
+            let after = graph.snapshot();
+            let live = after["inters"].as_array().unwrap();
+            let expected = &c["after"]["owners"];
+            assert_eq!(
+                live.iter().any(|n| n["id"] == did),
+                expected["dots"][0]["registered"] == true,
+                "{}",
+                c["mode"]
+            );
+            assert_eq!(
+                live.iter().find(|n| n["id"] == cid).unwrap()["dots_number"],
+                expected["chord_dot_counts"][0]
+            );
+            let mut trace =
+                normalized_dot_callback_trace(&graph, &note_ids, &[cid], &[did], &edge_ids);
+            for (entry, raw) in trace.iter_mut().zip(graph.dot_callback_trace()) {
+                let snap = &raw["state"];
+                let n = snap["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == did)
+                    .unwrap();
+                let owner = &snap["augmentation_dot_ownership"];
+                let part = owner["part_cache"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|v| v["id"] == did)
+                    .unwrap();
+                let member = owner["measures"].as_array().unwrap().iter().any(|m| {
+                    m["augmentation_dot_ids"]
+                        .as_array()
+                        .unwrap()
+                        .contains(&json!(did))
+                });
+                entry["state"] = json!({"owners":entry["state"],
+                    "ownership":[{"cached_part_id":part["part_id"],"staff_id":n["staff_id"],"measure_member":member,"registered":n["registered"],"removed":n["lifecycle_removed"]}],
+                    "dot_fields":[{"bounds":n["bounds"],"grade":n["grade"],"contextual_grade":n["contextual_grade"],"manual":n["manual"]}]});
+            }
+            assert_eq!(json!(trace), c["trace"], "{}", c["mode"]);
+            let receipts = reduce_consistencies(&mut graph, &[]).unwrap();
+            let gone = receipts["counting"]["discarded_inconsistent_dots"]
+                .as_array()
+                .unwrap();
+            assert_eq!(gone.len(), usize::from(c["mode"] == "manual_relation"));
+            if let Some(g) = gone.first() {
+                assert_eq!(g["member_dot_counts"], json!([1, 0]));
+                assert_eq!(g["rounded_chord_count"], 0);
+                assert_eq!(g["id"], did);
             }
         }
     }

@@ -1,0 +1,511 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "declared actual two-member HeadChord owner on saved half-rest page; automatic/manual dot/manual relation added callbacks and nested deletion, not image success",
+  "cases" : [ {
+    "mode" : "automatic",
+    "notes" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506
+    } ],
+    "owner_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ 301, 232, 5, 4 ],
+    "measure" : {
+      "left" : 81,
+      "right" : 711,
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "before" : {
+      "owners" : {
+        "note_dot_counts" : [ 0 ],
+        "chord_dot_counts" : [ 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : true
+        } ],
+        "edges_live" : [ false ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 301, 232, 5, 4 ],
+        "grade" : 0.8,
+        "contextual_grade" : null,
+        "manual" : false
+      } ]
+    },
+    "after" : {
+      "owners" : {
+        "note_dot_counts" : [ 1 ],
+        "chord_dot_counts" : [ 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 301, 232, 5, 4 ],
+        "grade" : 0.8,
+        "contextual_grade" : null,
+        "manual" : false
+      } ]
+    },
+    "trace" : [ {
+      "event" : "edgeAdded",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 1 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : false,
+            "registered" : true,
+            "abnormal" : true
+          } ],
+          "edges_live" : [ true ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : true,
+          "registered" : true,
+          "removed" : false
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    }, {
+      "event" : "edgeAdded",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 1 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : false,
+            "registered" : true,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ true ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : true,
+          "registered" : true,
+          "removed" : false
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    } ]
+  }, {
+    "mode" : "manual_dot",
+    "notes" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506
+    } ],
+    "owner_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ 301, 232, 5, 4 ],
+    "measure" : {
+      "left" : 81,
+      "right" : 711,
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "before" : {
+      "owners" : {
+        "note_dot_counts" : [ 0 ],
+        "chord_dot_counts" : [ 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : true
+        } ],
+        "edges_live" : [ false ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 301, 232, 5, 4 ],
+        "grade" : 0.8,
+        "contextual_grade" : null,
+        "manual" : true
+      } ]
+    },
+    "after" : {
+      "owners" : {
+        "note_dot_counts" : [ 1 ],
+        "chord_dot_counts" : [ 1 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 301, 232, 5, 4 ],
+        "grade" : 0.8,
+        "contextual_grade" : null,
+        "manual" : true
+      } ]
+    },
+    "trace" : [ {
+      "event" : "edgeAdded",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 1 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : false,
+            "registered" : true,
+            "abnormal" : true
+          } ],
+          "edges_live" : [ true ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : true,
+          "registered" : true,
+          "removed" : false
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : true
+        } ]
+      }
+    }, {
+      "event" : "edgeAdded",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 1 ],
+          "chord_dot_counts" : [ 1 ],
+          "dots" : [ {
+            "removed" : false,
+            "registered" : true,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ true ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : true,
+          "registered" : true,
+          "removed" : false
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : true
+        } ]
+      }
+    } ]
+  }, {
+    "mode" : "manual_relation",
+    "notes" : [ {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506
+    }, {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_VOID",
+      "bounds" : [ 753, 226, 13, 10 ],
+      "grade" : 0.539
+    } ],
+    "owner_bounds" : [ 276, 206, 490, 41 ],
+    "dot_bounds" : [ 301, 232, 5, 4 ],
+    "measure" : {
+      "left" : 81,
+      "right" : 711,
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "before" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 0 ],
+        "chord_dot_counts" : [ 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : true
+        } ],
+        "edges_live" : [ false ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 301, 232, 5, 4 ],
+        "grade" : 0.8,
+        "contextual_grade" : null,
+        "manual" : false
+      } ]
+    },
+    "after" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 0 ],
+        "chord_dot_counts" : [ 0 ],
+        "dots" : [ {
+          "removed" : true,
+          "registered" : false,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 301, 232, 5, 4 ],
+        "grade" : 0.8,
+        "contextual_grade" : null,
+        "manual" : false
+      } ]
+    },
+    "trace" : [ {
+      "event" : "edgeAdded",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 1, 0 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : false,
+            "registered" : true,
+            "abnormal" : true
+          } ],
+          "edges_live" : [ true ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : true,
+          "registered" : true,
+          "removed" : false
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 1,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 0, 0 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : true,
+            "registered" : true,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ false ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : false,
+          "registered" : true,
+          "removed" : true
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 1,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 0, 0 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : true,
+            "registered" : true,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ false ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : false,
+          "registered" : true,
+          "removed" : true
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 1,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 0, 0 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : true,
+            "registered" : false,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ false ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : false,
+          "registered" : false,
+          "removed" : true
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 1,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 0, 0 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : true,
+            "registered" : false,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ false ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : false,
+          "registered" : false,
+          "removed" : true
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    }, {
+      "event" : "edgeAdded",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "state" : {
+        "owners" : {
+          "note_dot_counts" : [ 0, 0 ],
+          "chord_dot_counts" : [ 0 ],
+          "dots" : [ {
+            "removed" : true,
+            "registered" : false,
+            "abnormal" : false
+          } ],
+          "edges_live" : [ false ]
+        },
+        "ownership" : [ {
+          "cached_part_id" : 1,
+          "staff_id" : 1,
+          "measure_member" : false,
+          "registered" : false,
+          "removed" : true
+        } ],
+        "dot_fields" : [ {
+          "bounds" : [ 301, 232, 5, 4 ],
+          "grade" : 0.8,
+          "contextual_grade" : null,
+          "manual" : false
+        } ]
+      }
+    } ]
+  } ]
+}

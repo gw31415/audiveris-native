@@ -451,6 +451,12 @@
       "unit": "retained support live insertion order separate from stable IDs; Part selection and removal callback traversal",
       "limits": "actual saved-owner declared shared-support control, not image acceptance; manual support-added callback/general relation/edit/multi-staff/full cleaner remain partial",
       "evidence": "evidence/musicxml-dot-support-readd/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary Augmentation/DoubleDot per-added-support callback, manual owner counting and reentrant automatic deletion",
+      "limits": "three declared original saved-owner branches and all callback states; general correction task/multi-staff/shared-image/full cleaner remain partial",
+      "evidence": "evidence/musicxml-dot-support-added/VALIDATION.json"
     }
   ],
   "function_groups": [

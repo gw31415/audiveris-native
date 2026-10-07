@@ -754,7 +754,13 @@ impl Graph {
                 )
             })
         });
-        if chords {
+        let dots = relations.iter().any(|(_, _, r)| {
+            matches!(
+                r["kind"].as_str(),
+                Some("AugmentationRelation" | "DoubleDotRelation")
+            )
+        });
+        if chords || dots {
             // Original identity callbacks operate on the actual registered
             // chord. Validate/update a stage before changing the retained SIG.
             let mut next = self.clone();
@@ -773,7 +779,6 @@ impl Graph {
     ) -> Result<(), String> {
         let mut counts = BTreeMap::new();
         let mut affected_chords = BTreeSet::new();
-        let mut affected_dots = BTreeSet::new();
         for (a, b, mut data) in relations {
             if a.system != system || b.system != system || !data.is_object() {
                 return Err("invalid_shared_sig_relation".into());
@@ -785,8 +790,25 @@ impl Graph {
                 .filter(|s| !s.is_empty())
                 .ok_or("invalid_shared_sig_relation_kind")?
                 .to_owned();
-            if matches!(kind.as_str(), "AugmentationRelation" | "DoubleDotRelation") {
-                affected_dots.insert(source);
+            let dot_support = matches!(kind.as_str(), "AugmentationRelation" | "DoubleDotRelation");
+            if dot_support {
+                let a = &self.vertices[source - 1];
+                let b = &self.vertices[target - 1];
+                if a.key.phase != Phase::Symbol
+                    || a.data["kind"] != "AugmentationDotInter"
+                    || !matches!(
+                        (kind.as_str(), b.key.phase, b.data["kind"].as_str()),
+                        ("AugmentationRelation", Phase::Head, Some("HeadInter"))
+                            | ("AugmentationRelation", Phase::Symbol, Some("RestInter"))
+                            | (
+                                "DoubleDotRelation",
+                                Phase::Symbol,
+                                Some("AugmentationDotInter")
+                            )
+                    )
+                {
+                    return Err("music_dot_typed_support_required".into());
+                }
             }
             let chord_identity = matches!(
                 self.vertices[source - 1].data["kind"].as_str(),
@@ -835,10 +857,13 @@ impl Graph {
             data["source"] = json!(source);
             data["target"] = json!(target);
             data["system_id"] = json!(system);
-            if chord_identity && (self.edges[id - 1].removed || self.edges[id - 1].data.is_null()) {
+            let added = self.edges[id - 1].removed || self.edges[id - 1].data.is_null();
+            let manual_count = key.kind == "AugmentationRelation"
+                && (data["manual"] == true || self.vertices[source - 1].data["manual"] == true);
+            if chord_identity && added {
                 affected_chords.insert(source);
             }
-            let live_order = if self.edges[id - 1].removed || self.edges[id - 1].data.is_null() {
+            let live_order = if added {
                 self.edge_clock = self
                     .edge_clock
                     .checked_add(1)
@@ -853,9 +878,20 @@ impl Graph {
                 data,
                 removed: false,
             };
+            if added && dot_support {
+                #[cfg(test)]
+                self.dot_callback_event("edgeAdded", id, "enter");
+                self.refresh_augmentation_abnormal(&BTreeSet::from([source]));
+                // SigListener completes this callback before the next relation;
+                // a manual relation can synchronously delete its automatic dot.
+                if manual_count {
+                    self.recount_augmentation_note(target)?;
+                }
+                #[cfg(test)]
+                self.dot_callback_event("edgeAdded", id, "leave");
+            }
         }
         self.invalidate_note_chords(&affected_chords)?;
-        self.refresh_augmentation_abnormal(&affected_dots);
         Ok(())
     }
 

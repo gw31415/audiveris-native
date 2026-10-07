@@ -1053,3 +1053,15 @@ Existing image CLI admission is unchanged; this is not a shared-support image
 success. Manual support-added callbacks, general edit tasks, multi-staff and
 complete cleaner/epilog remain partial. Evidence:
 `evidence/musicxml-dot-support-readd/VALIDATION.json`.
+
+Ordinary newly-added Augmentation/DoubleDot support now completes its original
+synchronous callback before another relation is inserted. Augmentation checks
+source abnormal then recounts its actual chord if dot or relation is manual;
+DoubleDot checks its source only. Three original declared controls distinguish
+automatic cache retention, manual-dot count1 and manual-relation nested automatic
+dot deletion. Callback entry/return compares Part/Measure, grade/context/bounds,
+manual state and owner counts; actual nested deletion reaches LINK receipts once.
+This is not automatic shared-support image recognition or a complete correction
+command. Existing five-image CLI examples and quarter-rest refusal remain;
+Part/Measure editing tasks, multi-staff and full cleaner/epilog remain partial.
+Evidence: `evidence/musicxml-dot-support-added/VALIDATION.json`.

@@ -974,7 +974,8 @@ mod tests {
         graph.remove_music_inter(dots[0]).unwrap();
         stages.push(json!({"action":"remove dot","state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}));
         assert_eq!(json!(stages), observed["steps"]);
-        let trace=graph.dot_callback_trace().iter().map(|e| {
+        // The original re-add observer watches removal callbacks only.
+        let trace=graph.dot_callback_trace().iter().filter(|e|e["event"]=="edgeRemoved" || e["event"]=="vertexRemoved").map(|e| {
             let (prefix,keys)=if e["event"]=="edgeRemoved" {("edge",edges.as_slice())}else{("dot",ids.as_slice())};let i=keys.iter().position(|id|e["id"]==*id).unwrap();
             json!({"event":e["event"],"stage":e["stage"],"entity":format!("{prefix}{i}"),"depth":e["depth"],"state":support_state(&e["state"],&note_ids,&chord_ids,&ids,&edges)})
         }).collect::<Vec<_>>();
