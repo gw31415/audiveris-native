@@ -1,0 +1,33 @@
+{
+  "validated_source_commit": "050f7aea5ce84fdc72de2c3a40c2a6b1004133cb",
+  "normal_main_push": "confirmed remote SHA and independent existing clone fetch",
+  "trees": {
+    "root": "9523708df6908e65d44a17e7133be9a168362fb9",
+    "src": "27839f225b80ab7906c4bda20d8d9f04d783028e",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "current_scope": "retained identity replay unit1 + required2 relation targets; unedited double8 and explicit relation correction8 CLI/XSD/previous bytes; no repeated full image set",
+  "explicit_relation_transfer_CLI": {
+    "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+    "option": "--link-dot-support72 6 manual",
+    "events": 8,
+    "original_comparison": "real saved owners/UnlinkTask/LinkTask/RhythmsStep impact/PartwiseBuilder stream, not automatic image correction discovery",
+    "native_XML_music_stream": "matches original declared correction",
+    "XSD": "passed",
+    "MusicXML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+    "Part_Measure_cache": "unchanged",
+    "populateFRATs_LINKS_controller_complete": false,
+    "negative_cross_stack": "refused with no output pair",
+    "negative_automatic_status": "preserved; original13/16, native full-measure refusal with no output pair"
+  },
+  "unedited_double_CLI": {
+    "events": 8,
+    "XSD": "passed",
+    "previous_XML_bytes": "identical"
+  },
+  "negative_quarter_rest": "same refusal; no output pair",
+  "original_replay": "real no-op publication and missing-edge exception, controlled live/removed grade setters; not automatic discovery",
+  "prior_automatic_regression": "5images47 + parallel16 at6d65e59; not re-reported as current full rerun",
+  "full_suite": "historical595@95e191b; not rerun",
+  "completion_flags": false
+}
