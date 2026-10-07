@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Bounded SigReducer.detectOverlaps and SIGraph.reduceExclusions at LINKS.
-//! Rest/TimeWhole only, no support grade contributions or frozen conflicts.
+//! Rest/TimeWhole, including incoming zero-target augmentation support; no frozen conflicts.
 use crate::{
     beam_dispatch,
     shared_sig::{Graph, Key, Phase},
@@ -76,6 +76,18 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
             .ok_or("music_links_relations_required")?
         {
             if e["source"] != n["id"] && e["target"] != n["id"] {
+                continue;
+            }
+            if e["kind"] == "AugmentationRelation"
+                && n["kind"] == "RestInter"
+                && e["target"] == n["id"]
+                && e["target_ratio"] == 1.0
+                && nodes
+                    .iter()
+                    .any(|v| v["id"] == e["source"] && v["kind"] == "AugmentationDotInter")
+            {
+                // Support.getTargetCoeff is zero for AugmentationRelation:
+                // contextualization cannot rescue a weak rest interpretation.
                 continue;
             }
             if !matches!(e["kind"].as_str(), Some("Containment" | "Exclusion")) {
@@ -180,7 +192,7 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
     }
     *graph = next;
     Ok(
-        json!({"overlap_exclusions_inserted":overlaps,"removed_weak_symbol_ids":weak,"removed_conflict_symbol_ids":removed,"scope":"Rest/TimeWhole physical overlaps, no support/frozen conflicts; original strict best-grade exclusion order; containing empty chords cleaned by owner","full_LINKS_complete":false}),
+        json!({"overlap_exclusions_inserted":overlaps,"removed_weak_symbol_ids":weak,"removed_conflict_symbol_ids":removed,"scope":"Rest/TimeWhole physical overlaps and incoming zero-target augmentation support, other support/frozen conflicts pending; original strict best-grade exclusion order; containing empty chords cleaned by owner","full_LINKS_complete":false}),
     )
 }
 
@@ -233,6 +245,67 @@ mod tests {
                 );
             }
             assert!(s["relations"].as_array().unwrap().is_empty());
+        }
+    }
+    #[test]
+    fn incoming_rest_augmentation_does_not_rescue_a_weak_target() {
+        let f: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-augmentation/half-rest-original-support.json"
+        ))
+        .unwrap();
+        let original = &f["cases"][0];
+        let rk = Key {
+            system: 1,
+            phase: Phase::Symbol,
+            local: 1,
+        };
+        let dk = Key { local: 2, ..rk };
+        for case in original["declared_target_grade_controls"]
+            .as_array()
+            .unwrap()
+        {
+            let mut graph = Graph::default();
+            let rest = graph.vertex(rk, json!({"kind":"RestInter","shape":"HALF_REST","bounds":original["rest_bounds"],"grade":case["declared_target_grade"]}), false).unwrap();
+            graph.vertex(dk, json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":original["dot_bounds"],"grade":0.767}), false).unwrap();
+            graph.relations(1, Phase::Symbol, vec![(dk,rk,json!({"kind":"AugmentationRelation","grade":0.701,"source_ratio":original["source_ratio"],"target_ratio":original["target_ratio"]}))]).unwrap();
+            let mut unsupported = graph.clone();
+            unsupported.relations(1, Phase::Symbol, vec![(dk,rk,json!({"kind":"AugmentationRelation","grade":0.701,"source_ratio":original["source_ratio"],"target_ratio":1.1}))]).unwrap();
+            let before = unsupported.snapshot();
+            assert_eq!(
+                reduce(&mut unsupported).unwrap_err(),
+                "music_links_symbol_support_pending"
+            );
+            assert_eq!(unsupported.snapshot(), before);
+            let report = reduce(&mut graph).unwrap();
+            let after = graph.snapshot();
+            if case["original_contextual_target_grade"].as_f64().unwrap() < 0.5 {
+                assert_eq!(report["removed_weak_symbol_ids"], json!([rest]));
+                assert!(after["relations"].as_array().unwrap().is_empty());
+                assert!(
+                    after["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .all(|n| n["id"] != rest)
+                );
+            } else {
+                let rest = after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == rest)
+                    .unwrap();
+                assert_eq!(
+                    rest["contextual_grade"],
+                    case["original_contextual_target_grade"]
+                );
+                assert!(
+                    report["removed_weak_symbol_ids"]
+                        .as_array()
+                        .unwrap()
+                        .is_empty()
+                );
+            }
         }
     }
     #[test]

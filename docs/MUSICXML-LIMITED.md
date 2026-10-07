@@ -2090,3 +2090,24 @@ not an enabled dotted-rest example. Original emits no dots and numbers its
 removal. Its XSD validity is not recognition success. See
 `evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json`; the positive
 rest augmentation path remains pending without changing image admission.
+
+## Owned rest augmentation (2026-10-07)
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png \
+  /tmp/half-rest-augmentation.musicxml /tmp/half-rest-augmentation.json
+```
+
+This separate original-successful image contains B4 quarter + dotted half rest
+in measure1, then D5/B4 half notes in measure2. Native recognizes4 events and
+writes a real RestInter-owned dot, half-rest type and three-quarter-note
+duration. Original full-image music/XML/XSD and saved RestChord/Voice/slot
+getters are verified separately. Rest lookup uses original bounds, center-right,
+height margin and gap grades, with no image-specific coordinates in code.
+Incoming AugmentationRelation has target coefficient zero: it cannot rescue
+weak rests. Multiple/shared dot interpretations and orphan lifecycle remain
+pending. The earlier negative quarter-rest image still refuses; neither its
+original undotted result nor XSD validity is positive rest-dot evidence.
+All overall completion flags stayfalse, and broader nonUI functions remain on
+the full parity ledger.

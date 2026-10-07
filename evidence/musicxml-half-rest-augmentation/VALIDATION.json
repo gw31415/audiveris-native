@@ -1,0 +1,21 @@
+{
+  "baseline_source": "eebfcbb42046d7ada32658d425ee31e2206e0e5e",
+  "original_full_image": "separate half-rest image,4events including real dotted half rest; original XML/XSD passed",
+  "original_saved_controls": "RestChord/slot/Voice state, exact lookup geometry, dot part/Voice ownership, temporary target-grade controls are separate from full-image recognition",
+  "source_dependencies": [
+    "DotFactory.lateNoteAugmentationCheck",
+    "AugmentationDotInter.lookupRestLinks",
+    "AugmentationRelation/Support zero target coefficient",
+    "AbstractNote dot getters / AbstractChord.countDots",
+    "RestChord intrinsic duration / Voice / PartwiseBuilder"
+  ],
+  "target_tests": {
+    "music_symbol_reduction": 3,
+    "music_dots": 2
+  },
+  "format": "passed",
+  "clippy": "offline locked lib and musicxml bin -D warnings passed",
+  "native_precommit": "4events, original music/XML/XSD and owned getters matched",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false
+}

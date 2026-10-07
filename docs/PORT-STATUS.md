@@ -936,3 +936,12 @@ A declared14-pixel square from the earlier failing ink passes original glyph
 conversion but throws on a forced endpoint getter. Native keeps endpoint guards
 for geometry consumers. The distinct original-successful half-rest image now
 reaches the pending rest-support branch; no native dotted-rest success yet.
+
+Ordinary unshared rest augmentation is now connected from DotFactory's actual
+rest lookup to owned AugmentationRelation, rest contextualization/weak purge,
+RestChord dot count/duration, native Voice and Partwise dot output. The separate
+original-successful half-rest image supplies4 matching events and3/4 rest
+intrinsic duration. Declared original target-grade controls verify the zero
+target support coefficient separately. Multiple/competing/shared support and
+orphan-dot cleanup still require original lifecycle; the earlier undotted
+negative quarter-rest input remains refused. Full nonUI parity flags stayfalse.

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! DotFactory late note augmentation, owned AbstractNote/Chord dot getters.
+//! DotFactory late note/rest augmentation, owned AbstractNote/Chord dot getters.
 use crate::{
     music_measures::{Chord, ChordKind, Measure},
     music_symbols::flat_staff_y,
@@ -317,8 +317,10 @@ pub(crate) fn late_checks(
                 return Err("music_dot_articulation_checks_pending".into());
             }
         }
-        // Positive rest augmentation is deferred until supported rest conflict
-        // reduction is connected; never reinterpret it as an undotted rest.
+        let mut links = Vec::new();
+        if let Some(link) = head_link(&snapshot, b, il, &nearby)? {
+            links.push(link);
+        }
         let lu = [
             p[0] - 2 * il as i64,
             p[1] - (0.8 * il as f64).round_ties_even() as i64,
@@ -333,12 +335,17 @@ pub(crate) fn late_checks(
             let dx = p[0] - (rb[0] + rb[2] - 1);
             let dy = ((p[1] - center(rb)[1]).abs() as f64 - 0.45 * rb[3] as f64).max(0.);
             if dx >= (0.1 * il as f64).round_ties_even() as i64
-                && relation(dx as f64 / il as f64, dy / il as f64).is_some()
+                && let Some(rel) = relation(dx as f64 / il as f64, dy / il as f64)
             {
-                return Err("music_dot_supported_rest_reduction_pending".into());
+                links.push((key(&c.members[0])?, rel));
             }
         }
-        if let Some((head, rel)) = head_link(&snapshot, b, il, &nearby)? {
+        // Original applies all links. Multiple competing/shared supports still
+        // require their original exclusion lifecycle before image admission.
+        if links.len() > 1 {
+            return Err("music_dot_shared_or_competing_support_pending".into());
+        }
+        if let Some((note, rel)) = links.pop() {
             let local = snapshot["inters"]
                 .as_array()
                 .unwrap()
@@ -363,7 +370,7 @@ pub(crate) fn late_checks(
                 .ok_or("music_dot_registered_glyph_required")? as usize;
             let glyph = crate::beam_dispatch::glyph_json(&registry.get(gid)?.glyph);
             let id = staged.vertex(dk,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"staff_id":staff["id"],"grade":grade,"abnormal":false}),false)?;
-            staged.relations(system, Phase::Symbol, vec![(dk, head, rel)])?;
+            staged.relations(system, Phase::Symbol, vec![(dk, note, rel)])?;
             created.push(id);
         }
     }
@@ -548,7 +555,7 @@ pub(crate) fn contextualize_and_count(
     }
     *graph = staged;
     Ok(
-        json!({"removed_weak_or_inconsistent_dot_ids":removed,"discarded_inconsistent_dots":discarded,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/rest/mirror and competing dot interpretations pending"}),
+        json!({"removed_weak_or_inconsistent_dot_ids":removed,"discarded_inconsistent_dots":discarded,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/mirror and competing dot interpretations pending"}),
     )
 }
 pub(crate) fn bounds_with_dots(
