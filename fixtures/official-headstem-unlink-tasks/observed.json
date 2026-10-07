@@ -1,0 +1,1919 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual original saved-owner UnlinkTask over retained manual HeadStem after prior LinkTask do/undo/redo; same actual source publication, cache callbacks and CtrlTask RHYTHMS epilog; not preLink/PAGE/automatic correction discovery",
+  "impacted_steps": [
+    "RHYTHMS"
+  ],
+  "head_bounds": [
+    276,
+    237,
+    13,
+    10
+  ],
+  "target_head_bounds": [
+    396,
+    226,
+    13,
+    10
+  ],
+  "before": {
+    "identity": {
+      "manual_supports": [
+        {
+          "grade": 0.7,
+          "consistency": 1.0,
+          "source_ratio": 3.8,
+          "target_ratio": 8.0
+        }
+      ],
+      "stem": "new",
+      "initial_registered": false,
+      "current_is_initial": false,
+      "current_manual": false,
+      "duration": "7/64",
+      "end_time": "7/64",
+      "same_measure": true,
+      "same_part": true,
+      "same_voice": false,
+      "same_slot": false,
+      "same_member": true,
+      "time_offset": "0",
+      "sheet_modified": true,
+      "book_dirty": true
+    },
+    "cache": {
+      "cache_before_getters": {
+        "bounds": [
+          276,
+          195,
+          133,
+          52
+        ],
+        "head_location": [
+          409.0,
+          242.0
+        ],
+        "tail_location": [
+          409.0,
+          195.0
+        ],
+        "beams_null": false
+      },
+      "getters": {
+        "bounds": [
+          276,
+          195,
+          133,
+          52
+        ],
+        "head_location": [
+          409.0,
+          242.0
+        ],
+        "tail_location": [
+          409.0,
+          195.0
+        ],
+        "stem": "new",
+        "grade": 0.77,
+        "head_best_grade": 0.77
+      },
+      "cache_after_getters": {
+        "bounds": [
+          276,
+          195,
+          133,
+          52
+        ],
+        "head_location": [
+          409.0,
+          242.0
+        ],
+        "tail_location": [
+          409.0,
+          195.0
+        ],
+        "beams_null": false
+      }
+    },
+    "expected": "1"
+  },
+  "steps": [
+    {
+      "task": "UnlinkTask",
+      "operation": "do",
+      "fresh_registered": false,
+      "fresh_manual": true,
+      "after_task": {
+        "identity": {
+          "manual_supports": [],
+          "stem": "new",
+          "initial_registered": false,
+          "current_is_initial": false,
+          "current_manual": false,
+          "duration": "7/64",
+          "end_time": "7/64",
+          "same_measure": true,
+          "same_part": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_member": true,
+          "time_offset": "0",
+          "sheet_modified": true,
+          "book_dirty": true
+        },
+        "cache": {
+          "cache_before_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          },
+          "getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "stem": "new",
+            "grade": 0.77,
+            "head_best_grade": 0.77
+          },
+          "cache_after_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          }
+        },
+        "expected": "1"
+      },
+      "callbacks": [
+        {
+          "operation": "do",
+          "event": "edgeRemoved",
+          "kind": "HeadStemRelation",
+          "stage": "enter",
+          "owner": {
+            "identity": {
+              "manual_supports": [],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        },
+        {
+          "operation": "do",
+          "event": "edgeRemoved",
+          "kind": "HeadStemRelation",
+          "stage": "leave",
+          "owner": {
+            "identity": {
+              "manual_supports": [],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        }
+      ],
+      "publications": [],
+      "timing_after_impact": {
+        "expected": "1",
+        "actual": "9/16",
+        "stack_excess": null,
+        "abnormal": false,
+        "voices": [
+          {
+            "id": 1,
+            "heads": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                516,
+                215,
+                13,
+                10
+              ],
+              [
+                636,
+                226,
+                13,
+                10
+              ]
+            ],
+            "duration": "9/16",
+            "end_time": "9/16",
+            "termination": "-7/16",
+            "excess": null,
+            "slots": [
+              {
+                "slot_id": 1,
+                "status": "BEGIN",
+                "head_bounds": [
+                  396,
+                  226,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 2,
+                "status": "BEGIN",
+                "head_bounds": [
+                  516,
+                  215,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 3,
+                "status": "BEGIN",
+                "head_bounds": [
+                  636,
+                  226,
+                  13,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "heads": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "duration": "7/64",
+            "end_time": "7/64",
+            "termination": "-57/64",
+            "excess": null,
+            "slots": [
+              {
+                "slot_id": 1,
+                "status": "BEGIN",
+                "head_bounds": [
+                  276,
+                  237,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 2,
+                "status": "CONTINUE",
+                "head_bounds": [
+                  276,
+                  237,
+                  13,
+                  10
+                ]
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "id": 1,
+            "time_offset": "0",
+            "x_offset": 291,
+            "incoming_heads": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ]
+          },
+          {
+            "id": 2,
+            "time_offset": "1/16",
+            "x_offset": 441,
+            "incoming_heads": [
+              [
+                516,
+                215,
+                13,
+                10
+              ]
+            ]
+          },
+          {
+            "id": 3,
+            "time_offset": "5/16",
+            "x_offset": 561,
+            "incoming_heads": [
+              [
+                636,
+                226,
+                13,
+                10
+              ]
+            ]
+          }
+        ]
+      },
+      "after_impact": {
+        "identity": {
+          "manual_supports": [],
+          "stem": "new",
+          "initial_registered": false,
+          "current_is_initial": false,
+          "current_manual": false,
+          "duration": "7/64",
+          "end_time": "7/64",
+          "same_measure": true,
+          "same_part": true,
+          "same_voice": false,
+          "same_slot": false,
+          "same_member": true,
+          "time_offset": "0",
+          "sheet_modified": true,
+          "book_dirty": true
+        },
+        "cache": {
+          "cache_before_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          },
+          "getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "stem": "new",
+            "grade": 0.77,
+            "head_best_grade": 0.77
+          },
+          "cache_after_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          }
+        },
+        "expected": "1"
+      },
+      "music": [
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/16",
+          "step": "D",
+          "octave": 5,
+          "type": "16th",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "F",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "backup",
+          "measure": 1,
+          "duration": "9/16"
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "2",
+          "duration": "7/64",
+          "step": "B",
+          "octave": 4,
+          "type": "16th",
+          "dots": 2,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "F",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "B",
+          "octave": 4,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        }
+      ]
+    },
+    {
+      "task": "UnlinkTask",
+      "operation": "undo",
+      "fresh_registered": true,
+      "fresh_manual": true,
+      "after_task": {
+        "identity": {
+          "manual_supports": [
+            {
+              "grade": 0.7,
+              "consistency": 1.0,
+              "source_ratio": 3.8,
+              "target_ratio": 8.0
+            }
+          ],
+          "stem": "new",
+          "initial_registered": false,
+          "current_is_initial": false,
+          "current_manual": false,
+          "duration": "7/64",
+          "end_time": "7/64",
+          "same_measure": true,
+          "same_part": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_member": true,
+          "time_offset": "0",
+          "sheet_modified": true,
+          "book_dirty": true
+        },
+        "cache": {
+          "cache_before_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          },
+          "getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "stem": "new",
+            "grade": 0.77,
+            "head_best_grade": 0.77
+          },
+          "cache_after_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          }
+        },
+        "expected": "1"
+      },
+      "callbacks": [
+        {
+          "operation": "undo",
+          "event": "edgeAdded",
+          "kind": "HeadStemRelation",
+          "stage": "enter",
+          "owner": {
+            "identity": {
+              "manual_supports": [
+                {
+                  "grade": 0.7,
+                  "consistency": 1.0,
+                  "source_ratio": 3.8,
+                  "target_ratio": 8.0
+                }
+              ],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        },
+        {
+          "operation": "undo",
+          "event": "edgeAdded",
+          "kind": "HeadStemRelation",
+          "stage": "leave",
+          "owner": {
+            "identity": {
+              "manual_supports": [
+                {
+                  "grade": 0.7,
+                  "consistency": 1.0,
+                  "source_ratio": 3.8,
+                  "target_ratio": 8.0
+                }
+              ],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        }
+      ],
+      "publications": [
+        {
+          "source_is_head": true,
+          "owner": {
+            "identity": {
+              "manual_supports": [
+                {
+                  "grade": 0.7,
+                  "consistency": 1.0,
+                  "source_ratio": 3.8,
+                  "target_ratio": 8.0
+                }
+              ],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        }
+      ],
+      "timing_after_impact": {
+        "expected": "1",
+        "actual": "9/16",
+        "stack_excess": null,
+        "abnormal": false,
+        "voices": [
+          {
+            "id": 1,
+            "heads": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                516,
+                215,
+                13,
+                10
+              ],
+              [
+                636,
+                226,
+                13,
+                10
+              ]
+            ],
+            "duration": "9/16",
+            "end_time": "9/16",
+            "termination": "-7/16",
+            "excess": null,
+            "slots": [
+              {
+                "slot_id": 1,
+                "status": "BEGIN",
+                "head_bounds": [
+                  396,
+                  226,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 2,
+                "status": "BEGIN",
+                "head_bounds": [
+                  516,
+                  215,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 3,
+                "status": "BEGIN",
+                "head_bounds": [
+                  636,
+                  226,
+                  13,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "heads": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "duration": "7/64",
+            "end_time": "7/64",
+            "termination": "-57/64",
+            "excess": null,
+            "slots": [
+              {
+                "slot_id": 1,
+                "status": "BEGIN",
+                "head_bounds": [
+                  276,
+                  237,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 2,
+                "status": "CONTINUE",
+                "head_bounds": [
+                  276,
+                  237,
+                  13,
+                  10
+                ]
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "id": 1,
+            "time_offset": "0",
+            "x_offset": 291,
+            "incoming_heads": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ]
+          },
+          {
+            "id": 2,
+            "time_offset": "1/16",
+            "x_offset": 441,
+            "incoming_heads": [
+              [
+                516,
+                215,
+                13,
+                10
+              ]
+            ]
+          },
+          {
+            "id": 3,
+            "time_offset": "5/16",
+            "x_offset": 561,
+            "incoming_heads": [
+              [
+                636,
+                226,
+                13,
+                10
+              ]
+            ]
+          }
+        ]
+      },
+      "after_impact": {
+        "identity": {
+          "manual_supports": [
+            {
+              "grade": 0.7,
+              "consistency": 1.0,
+              "source_ratio": 3.8,
+              "target_ratio": 8.0
+            }
+          ],
+          "stem": "new",
+          "initial_registered": false,
+          "current_is_initial": false,
+          "current_manual": false,
+          "duration": "7/64",
+          "end_time": "7/64",
+          "same_measure": true,
+          "same_part": true,
+          "same_voice": false,
+          "same_slot": false,
+          "same_member": true,
+          "time_offset": "0",
+          "sheet_modified": true,
+          "book_dirty": true
+        },
+        "cache": {
+          "cache_before_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          },
+          "getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "stem": "new",
+            "grade": 0.77,
+            "head_best_grade": 0.77
+          },
+          "cache_after_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          }
+        },
+        "expected": "1"
+      },
+      "music": [
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/16",
+          "step": "D",
+          "octave": 5,
+          "type": "16th",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "F",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "backup",
+          "measure": 1,
+          "duration": "9/16"
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "2",
+          "duration": "7/64",
+          "step": "B",
+          "octave": 4,
+          "type": "16th",
+          "dots": 2,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "F",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "B",
+          "octave": 4,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        }
+      ]
+    },
+    {
+      "task": "UnlinkTask",
+      "operation": "redo",
+      "fresh_registered": false,
+      "fresh_manual": true,
+      "after_task": {
+        "identity": {
+          "manual_supports": [],
+          "stem": "new",
+          "initial_registered": false,
+          "current_is_initial": false,
+          "current_manual": false,
+          "duration": "7/64",
+          "end_time": "7/64",
+          "same_measure": true,
+          "same_part": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_member": true,
+          "time_offset": "0",
+          "sheet_modified": true,
+          "book_dirty": true
+        },
+        "cache": {
+          "cache_before_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          },
+          "getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "stem": "new",
+            "grade": 0.77,
+            "head_best_grade": 0.77
+          },
+          "cache_after_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          }
+        },
+        "expected": "1"
+      },
+      "callbacks": [
+        {
+          "operation": "redo",
+          "event": "edgeRemoved",
+          "kind": "HeadStemRelation",
+          "stage": "enter",
+          "owner": {
+            "identity": {
+              "manual_supports": [],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        },
+        {
+          "operation": "redo",
+          "event": "edgeRemoved",
+          "kind": "HeadStemRelation",
+          "stage": "leave",
+          "owner": {
+            "identity": {
+              "manual_supports": [],
+              "stem": "new",
+              "initial_registered": false,
+              "current_is_initial": false,
+              "current_manual": false,
+              "duration": "7/64",
+              "end_time": "7/64",
+              "same_measure": true,
+              "same_part": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_member": true,
+              "time_offset": "0",
+              "sheet_modified": true,
+              "book_dirty": true
+            },
+            "cache": {
+              "cache_before_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              },
+              "getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "stem": "new",
+                "grade": 0.77,
+                "head_best_grade": 0.77
+              },
+              "cache_after_getters": {
+                "bounds": [
+                  276,
+                  195,
+                  133,
+                  52
+                ],
+                "head_location": [
+                  409.0,
+                  242.0
+                ],
+                "tail_location": [
+                  409.0,
+                  195.0
+                ],
+                "beams_null": false
+              }
+            },
+            "expected": "1"
+          }
+        }
+      ],
+      "publications": [],
+      "timing_after_impact": {
+        "expected": "1",
+        "actual": "9/16",
+        "stack_excess": null,
+        "abnormal": false,
+        "voices": [
+          {
+            "id": 1,
+            "heads": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                516,
+                215,
+                13,
+                10
+              ],
+              [
+                636,
+                226,
+                13,
+                10
+              ]
+            ],
+            "duration": "9/16",
+            "end_time": "9/16",
+            "termination": "-7/16",
+            "excess": null,
+            "slots": [
+              {
+                "slot_id": 1,
+                "status": "BEGIN",
+                "head_bounds": [
+                  396,
+                  226,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 2,
+                "status": "BEGIN",
+                "head_bounds": [
+                  516,
+                  215,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 3,
+                "status": "BEGIN",
+                "head_bounds": [
+                  636,
+                  226,
+                  13,
+                  10
+                ]
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "heads": [
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ],
+            "duration": "7/64",
+            "end_time": "7/64",
+            "termination": "-57/64",
+            "excess": null,
+            "slots": [
+              {
+                "slot_id": 1,
+                "status": "BEGIN",
+                "head_bounds": [
+                  276,
+                  237,
+                  13,
+                  10
+                ]
+              },
+              {
+                "slot_id": 2,
+                "status": "CONTINUE",
+                "head_bounds": [
+                  276,
+                  237,
+                  13,
+                  10
+                ]
+              }
+            ]
+          }
+        ],
+        "slots": [
+          {
+            "id": 1,
+            "time_offset": "0",
+            "x_offset": 291,
+            "incoming_heads": [
+              [
+                396,
+                226,
+                13,
+                10
+              ],
+              [
+                276,
+                237,
+                13,
+                10
+              ]
+            ]
+          },
+          {
+            "id": 2,
+            "time_offset": "1/16",
+            "x_offset": 441,
+            "incoming_heads": [
+              [
+                516,
+                215,
+                13,
+                10
+              ]
+            ]
+          },
+          {
+            "id": 3,
+            "time_offset": "5/16",
+            "x_offset": 561,
+            "incoming_heads": [
+              [
+                636,
+                226,
+                13,
+                10
+              ]
+            ]
+          }
+        ]
+      },
+      "after_impact": {
+        "identity": {
+          "manual_supports": [],
+          "stem": "new",
+          "initial_registered": false,
+          "current_is_initial": false,
+          "current_manual": false,
+          "duration": "7/64",
+          "end_time": "7/64",
+          "same_measure": true,
+          "same_part": true,
+          "same_voice": false,
+          "same_slot": false,
+          "same_member": true,
+          "time_offset": "0",
+          "sheet_modified": true,
+          "book_dirty": true
+        },
+        "cache": {
+          "cache_before_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          },
+          "getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "stem": "new",
+            "grade": 0.77,
+            "head_best_grade": 0.77
+          },
+          "cache_after_getters": {
+            "bounds": [
+              276,
+              195,
+              133,
+              52
+            ],
+            "head_location": [
+              409.0,
+              242.0
+            ],
+            "tail_location": [
+              409.0,
+              195.0
+            ],
+            "beams_null": false
+          }
+        },
+        "expected": "1"
+      },
+      "music": [
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/16",
+          "step": "D",
+          "octave": 5,
+          "type": "16th",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "F",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "backup",
+          "measure": 1,
+          "duration": "9/16"
+        },
+        {
+          "kind": "note",
+          "measure": 1,
+          "voice": "2",
+          "duration": "7/64",
+          "step": "B",
+          "octave": 4,
+          "type": "16th",
+          "dots": 2,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "F",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "B",
+          "octave": 4,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        },
+        {
+          "kind": "note",
+          "measure": 2,
+          "voice": "1",
+          "duration": "1/4",
+          "step": "D",
+          "octave": 5,
+          "type": "quarter",
+          "dots": 0,
+          "chord": false
+        }
+      ]
+    }
+  ],
+  "preparation": "first3 original LinkTask steps exactly equal official-headstem-tasks/observed.json except added task label; no dirty/clock reset between task families"
+}

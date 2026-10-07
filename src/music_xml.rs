@@ -3390,205 +3390,238 @@ mod rational_owned_export_tests {
         assert_eq!(owner.chords[ci].stem, old_chord.stem);
         assert_eq!(owner.chords[ci].bounds, old_chord.bounds);
         assert_eq!(owner.chords[ci].members, old_chord.members);
-        for (operation, expected) in [
-            EditingOperation::Do,
-            EditingOperation::Undo,
-            EditingOperation::Redo,
-        ]
-        .into_iter()
-        .zip(callback["steps"].as_array().unwrap())
-        {
-            let owner = &mut export.owner;
-            let before = owner.owner.graph.snapshot();
-            let chord_before = before["inters"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|n| n["id"] == cid)
-                .unwrap();
-            let publication_count = before["edit_publications"].as_array().map_or(0, Vec::len);
-            owner.owner.graph.observe_chord_callbacks(ck);
-            let planned = sequence.perform_owned(owner, operation, "RHYTHMS").unwrap();
-            assert_eq!(
-                planned["first_impacted_step"],
-                callback["impacted_steps"][0]
-            );
-            assert_eq!(planned["planned_steps"], json!(["RHYTHMS"]));
-            assert_eq!(planned["reprocessed_steps"], json!([]));
-            assert_eq!(planned["rhythm_stack_targets"].as_array().unwrap().len(), 1);
-            assert_eq!(&owner.chords[ci] as *const _, chord_ptr);
-            assert_eq!(&owner.measures[0] as *const _, measure_ptr);
-            assert!(std::sync::Arc::ptr_eq(
-                &canonical,
-                &owner.owner.caches[&sk.system]
-                    .registered_stem(&owner.owner.graph, sk.local)
+        let unlink: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-headstem-unlink-tasks/observed.json"
+        ))
+        .unwrap();
+        for (unlinking, oracle) in [(false, &callback), (true, &unlink)] {
+            if unlinking {
+                let snapshot = export.owner.owner.graph.snapshot();
+                let id = snapshot["relations"]
+                    .as_array()
                     .unwrap()
-            ));
-            let graph = &owner.owner.graph;
-            let actual = graph.dot_callback_trace();
-            let frames = actual
-                .iter()
-                .filter(|f| f["event"] != "publish")
-                .collect::<Vec<_>>();
-            assert_eq!(
-                frames.len(),
-                expected["callbacks"].as_array().unwrap().len()
-            );
-            fn numbers(v: &Value) -> Value {
-                match v {
-                    Value::Number(n) => json!(n.as_f64().unwrap()),
-                    Value::Array(a) => json!(a.iter().map(numbers).collect::<Vec<_>>()),
-                    Value::Object(o) => {
-                        Value::Object(o.iter().map(|(k, v)| (k.clone(), numbers(v))).collect())
-                    }
-                    _ => v.clone(),
-                }
+                    .iter()
+                    .find(|e| {
+                        e["source"] == source["id"]
+                            && e["kind"] == "HeadStemRelation"
+                            && e["manual"] == true
+                    })
+                    .unwrap()["id"]
+                    .as_u64()
+                    .unwrap() as usize;
+                sequence = EditingSequence::from_tasks(vec![EditingTask::Relation(
+                    RelationTask::unlink_manual_head_stem(&export.owner, id).unwrap(),
+                )]);
             }
-            for (frame, oracle) in frames.iter().zip(expected["callbacks"].as_array().unwrap()) {
-                assert_eq!(frame["event"], oracle["event"]);
-                assert_eq!(frame["stage"], oracle["stage"]);
-                assert_eq!(frame["kind"], oracle["kind"]);
-                let observation = &frame["chord_observation"];
-                for field in ["duration", "end_time"] {
-                    assert_eq!(observation[field], oracle["owner"]["identity"][field]);
-                }
-                for field in ["cache_before_getters", "cache_after_getters"] {
-                    assert_eq!(
-                        numbers(&observation[field]),
-                        numbers(&oracle["owner"]["cache"][field])
-                    );
-                }
-                let chord = frame["state"]["inters"]
+            for (operation, expected) in [
+                EditingOperation::Do,
+                EditingOperation::Undo,
+                EditingOperation::Redo,
+            ]
+            .into_iter()
+            .zip(oracle["steps"].as_array().unwrap())
+            {
+                let owner = &mut export.owner;
+                let before = owner.owner.graph.snapshot();
+                let chord_before = before["inters"]
                     .as_array()
                     .unwrap()
                     .iter()
                     .find(|n| n["id"] == cid)
                     .unwrap();
-                for field in [
-                    "part_id",
-                    "measure_index",
-                    "member_ids",
-                    "voice",
-                    "slot_id",
-                    "time_offset",
-                ] {
-                    assert_eq!(chord[field], chord_before[field]);
+                let publication_count = before["edit_publications"].as_array().map_or(0, Vec::len);
+                owner.owner.graph.observe_chord_callbacks(ck);
+                let planned = sequence.perform_owned(owner, operation, "RHYTHMS").unwrap();
+                assert_eq!(
+                    planned["first_impacted_step"],
+                    callback["impacted_steps"][0]
+                );
+                assert_eq!(planned["planned_steps"], json!(["RHYTHMS"]));
+                assert_eq!(planned["reprocessed_steps"], json!([]));
+                assert_eq!(planned["rhythm_stack_targets"].as_array().unwrap().len(), 1);
+                assert_eq!(&owner.chords[ci] as *const _, chord_ptr);
+                assert_eq!(&owner.measures[0] as *const _, measure_ptr);
+                assert!(std::sync::Arc::ptr_eq(
+                    &canonical,
+                    &owner.owner.caches[&sk.system]
+                        .registered_stem(&owner.owner.graph, sk.local)
+                        .unwrap()
+                ));
+                let graph = &owner.owner.graph;
+                let actual = graph.dot_callback_trace();
+                let frames = actual
+                    .iter()
+                    .filter(|f| f["event"] != "publish")
+                    .collect::<Vec<_>>();
+                assert_eq!(
+                    frames.len(),
+                    expected["callbacks"].as_array().unwrap().len()
+                );
+                fn numbers(v: &Value) -> Value {
+                    match v {
+                        Value::Number(n) => json!(n.as_f64().unwrap()),
+                        Value::Array(a) => json!(a.iter().map(numbers).collect::<Vec<_>>()),
+                        Value::Object(o) => {
+                            Value::Object(o.iter().map(|(k, v)| (k.clone(), numbers(v))).collect())
+                        }
+                        _ => v.clone(),
+                    }
                 }
-                assert_eq!(
-                    frame["state"]["editing_book"]["sheet_modified"],
-                    oracle["owner"]["identity"]["sheet_modified"]
-                );
-                assert_eq!(
-                    frame["state"]["editing_book"]["book_dirty"],
-                    oracle["owner"]["identity"]["book_dirty"]
-                );
-            }
-            let task_snapshot = graph.snapshot();
-            let publications =
-                &task_snapshot["edit_publications"].as_array().unwrap()[publication_count..];
-            assert_eq!(
-                publications.len(),
-                expected["publications"].as_array().unwrap().len()
-            );
-            for (actual, oracle) in publications
-                .iter()
-                .zip(expected["publications"].as_array().unwrap())
-            {
-                assert_eq!(actual["inter_id"], source["id"]);
-                assert_eq!(oracle["source_is_head"], true);
-                for field in ["sheet_modified", "book_dirty"] {
+                for (frame, oracle) in frames.iter().zip(expected["callbacks"].as_array().unwrap())
+                {
+                    assert_eq!(frame["event"], oracle["event"]);
+                    assert_eq!(frame["stage"], oracle["stage"]);
+                    assert_eq!(frame["kind"], oracle["kind"]);
+                    let observation = &frame["chord_observation"];
+                    for field in ["duration", "end_time"] {
+                        assert_eq!(observation[field], oracle["owner"]["identity"][field]);
+                    }
+                    for field in ["cache_before_getters", "cache_after_getters"] {
+                        assert_eq!(
+                            numbers(&observation[field]),
+                            numbers(&oracle["owner"]["cache"][field])
+                        );
+                    }
+                    let chord = frame["state"]["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == cid)
+                        .unwrap();
+                    for field in [
+                        "part_id",
+                        "measure_index",
+                        "member_ids",
+                        "voice",
+                        "slot_id",
+                        "time_offset",
+                    ] {
+                        assert_eq!(chord[field], chord_before[field]);
+                    }
                     assert_eq!(
-                        actual["actual_dirty_state"][field],
-                        oracle["owner"]["identity"][field]
+                        frame["state"]["editing_book"]["sheet_modified"],
+                        oracle["owner"]["identity"]["sheet_modified"]
+                    );
+                    assert_eq!(
+                        frame["state"]["editing_book"]["book_dirty"],
+                        oracle["owner"]["identity"]["book_dirty"]
                     );
                 }
-            }
-            let after = graph.snapshot();
-            let identity = &expected["after_task"]["identity"];
-            assert_eq!(owner.chords[ci].stem, Some(sk));
-            assert_eq!(
-                graph.chord_duration(ck).unwrap().as_deref(),
-                identity["duration"].as_str()
-            );
-            let support = after["relations"].as_array().unwrap().iter().find(|e| {
-                e["source"] == source["id"]
-                    && e["kind"] == "HeadStemRelation"
-                    && e["manual"] == true
-            });
-            assert_eq!(
-                support.is_some(),
-                expected["fresh_registered"].as_bool().unwrap()
-            );
-            if let Some(e) = support {
-                assert_eq!(e["manual"], expected["fresh_manual"]);
-                for field in ["grade", "source_ratio", "target_ratio"] {
-                    assert_eq!(e[field], identity["manual_supports"][0][field]);
-                }
-            }
-            for field in ["sheet_modified", "book_dirty"] {
+                let task_snapshot = graph.snapshot();
+                let publications =
+                    &task_snapshot["edit_publications"].as_array().unwrap()[publication_count..];
                 assert_eq!(
-                    graph.editing_book_state().unwrap()[field],
-                    expected["after_impact"]["identity"][field]
+                    publications.len(),
+                    expected["publications"].as_array().unwrap().len()
                 );
-            }
-            assert_eq!(owner.measures[0].timing.expected, cached_expected);
-            let retained = Rhythm::retained(owner).unwrap();
-            let xml = export
-                .reprocess_selected_scoped(
-                    &[0],
-                    retained,
-                    "Music",
-                    RhythmScope::ObservedOwnedCorrection,
+                for (actual, oracle) in publications
+                    .iter()
+                    .zip(expected["publications"].as_array().unwrap())
+                {
+                    assert_eq!(actual["inter_id"], source["id"]);
+                    assert_eq!(
+                        actual["task"],
+                        if unlinking { "UnlinkTask" } else { "LinkTask" }
+                    );
+                    assert_eq!(oracle["source_is_head"], true);
+                    for field in ["sheet_modified", "book_dirty"] {
+                        assert_eq!(
+                            actual["actual_dirty_state"][field],
+                            oracle["owner"]["identity"][field]
+                        );
+                    }
+                }
+                let after = graph.snapshot();
+                let identity = &expected["after_task"]["identity"];
+                assert_eq!(owner.chords[ci].stem, Some(sk));
+                assert_eq!(
+                    graph.chord_duration(ck).unwrap().as_deref(),
+                    identity["duration"].as_str()
+                );
+                let support = after["relations"].as_array().unwrap().iter().find(|e| {
+                    e["source"] == source["id"]
+                        && e["kind"] == "HeadStemRelation"
+                        && e["manual"] == true
+                });
+                assert_eq!(
+                    support.is_some(),
+                    expected["fresh_registered"].as_bool().unwrap()
+                );
+                if let Some(e) = support {
+                    assert_eq!(e["manual"], expected["fresh_manual"]);
+                    for field in ["grade", "source_ratio", "target_ratio"] {
+                        assert_eq!(e[field], identity["manual_supports"][0][field]);
+                    }
+                }
+                for field in ["sheet_modified", "book_dirty"] {
+                    assert_eq!(
+                        graph.editing_book_state().unwrap()[field],
+                        expected["after_impact"]["identity"][field]
+                    );
+                }
+                assert_eq!(owner.measures[0].timing.expected, cached_expected);
+                let retained = Rhythm::retained(owner).unwrap();
+                let xml = export
+                    .reprocess_selected_scoped(
+                        &[0],
+                        retained,
+                        "Music",
+                        RhythmScope::ObservedOwnedCorrection,
+                    )
+                    .unwrap();
+                let owner = &mut export.owner;
+                let snapshot = owner.owner.graph.snapshot();
+                let bounds = |id| {
+                    let ch = snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == id)
+                        .unwrap();
+                    snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == ch["member_ids"][0])
+                        .unwrap()["bounds"]
+                        .clone()
+                };
+                let m = &owner.measures[0];
+                let voices = owner.voices.iter().filter(|v|v.measure==0).map(|v|json!({"id":v.id,"heads":v.chord_ids.iter().map(|id| bounds(*id)).collect::<Vec<_>>(),"duration":slot_duration(&owner.owner.graph,v,&m.timing.slots).unwrap().map(crate::music_time::format_fraction),"end_time":last_end_time(&owner.owner.graph,v).unwrap().map(crate::music_time::format_fraction),"termination":v.termination.map(crate::music_time::format_delta),"excess":v.excess.map(crate::music_time::format_fraction),"slots":m.timing.slots.iter().filter_map(|s|v.slots.get(&s.id).map(|info|json!({"slot_id":s.id,"status":if info.continuing{"CONTINUE"}else{"BEGIN"},"head_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>();
+                let slots = m.timing.slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_fraction),"x_offset":s.x_offset,"incoming_heads":s.incoming_ids.iter().map(|id|bounds(*id)).collect::<Vec<_>>()})).collect::<Vec<_>>();
+                assert_eq!(
+                    json!({"expected":m.timing.expected.map(crate::music_time::format_fraction),"actual":m.timing.actual.map(crate::music_time::format_fraction),"stack_excess":m.timing.excess.map(crate::music_time::format_fraction),"abnormal":m.timing.abnormal,"voices":voices,"slots":slots}),
+                    original["timing"]
+                );
+                assert_eq!(cached_expected, m.timing.expected);
+                assert_eq!(original["same_expected"], true);
+                let rhythm = Rhythm::retained(owner).unwrap();
+                let sequences = owner
+                    .measures
+                    .iter()
+                    .enumerate()
+                    .map(|(mi, m)| {
+                        crate::music_voice_export::sequence(
+                            &owner.owner.graph,
+                            &owner.voices,
+                            m,
+                            mi,
+                        )
+                        .unwrap()
+                    })
+                    .collect::<Vec<_>>();
+                let divisions = crate::music_voice_export::divisions(
+                    &owner.owner.graph,
+                    &owner.measures,
+                    &owner.chords,
                 )
                 .unwrap();
-            let owner = &mut export.owner;
-            let snapshot = owner.owner.graph.snapshot();
-            let bounds = |id| {
-                let ch = snapshot["inters"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .find(|n| n["id"] == id)
-                    .unwrap();
-                snapshot["inters"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .find(|n| n["id"] == ch["member_ids"][0])
-                    .unwrap()["bounds"]
-                    .clone()
-            };
-            let m = &owner.measures[0];
-            let voices = owner.voices.iter().filter(|v|v.measure==0).map(|v|json!({"id":v.id,"heads":v.chord_ids.iter().map(|id| bounds(*id)).collect::<Vec<_>>(),"duration":slot_duration(&owner.owner.graph,v,&m.timing.slots).unwrap().map(crate::music_time::format_fraction),"end_time":last_end_time(&owner.owner.graph,v).unwrap().map(crate::music_time::format_fraction),"termination":v.termination.map(crate::music_time::format_delta),"excess":v.excess.map(crate::music_time::format_fraction),"slots":m.timing.slots.iter().filter_map(|s|v.slots.get(&s.id).map(|info|json!({"slot_id":s.id,"status":if info.continuing{"CONTINUE"}else{"BEGIN"},"head_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>();
-            let slots = m.timing.slots.iter().map(|s|json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_fraction),"x_offset":s.x_offset,"incoming_heads":s.incoming_ids.iter().map(|id|bounds(*id)).collect::<Vec<_>>()})).collect::<Vec<_>>();
-            assert_eq!(
-                json!({"expected":m.timing.expected.map(crate::music_time::format_fraction),"actual":m.timing.actual.map(crate::music_time::format_fraction),"stack_excess":m.timing.excess.map(crate::music_time::format_fraction),"abnormal":m.timing.abnormal,"voices":voices,"slots":slots}),
-                original["timing"]
-            );
-            assert_eq!(cached_expected, m.timing.expected);
-            assert_eq!(original["same_expected"], true);
-            let rhythm = Rhythm::retained(owner).unwrap();
-            let sequences = owner
-                .measures
-                .iter()
-                .enumerate()
-                .map(|(mi, m)| {
-                    crate::music_voice_export::sequence(&owner.owner.graph, &owner.voices, m, mi)
-                        .unwrap()
-                })
-                .collect::<Vec<_>>();
-            let divisions = crate::music_voice_export::divisions(
-                &owner.owner.graph,
-                &owner.measures,
-                &owner.chords,
-            )
-            .unwrap();
-            assert_eq!(json!(divisions), original["quarter_divisions"]);
-            let mut stream = Vec::new();
-            for (mi, steps) in sequences.iter().enumerate() {
-                for step in steps {
-                    use crate::music_voice_export::Step;
-                    stream.push(match *step {
+                assert_eq!(json!(divisions), original["quarter_divisions"]);
+                let mut stream = Vec::new();
+                for (mi, steps) in sequences.iter().enumerate() {
+                    for step in steps {
+                        use crate::music_voice_export::Step;
+                        stream.push(match *step {
                     Step::Chord {id,voice,duration} => {
                         let e = rhythm.events.iter().find(|e|e["chord_id"]==id).unwrap();
                         json!({"kind":"note","measure":mi+1,"voice":voice.to_string(),"duration":duration.to_string(),"step":e["step"],"octave":e["octave"],"type":e["type"],"dots":e["dots"],"chord":e["chord"]})
@@ -3596,37 +3629,38 @@ mod rational_owned_export_tests {
                     Step::Backup(d) => json!({"kind":"backup","measure":mi+1,"duration":d.to_string()}),
                     Step::Forward {duration,..} => json!({"kind":"forward","measure":mi+1,"duration":duration.to_string()}),
                 });
+                    }
                 }
+                assert_eq!(json!(stream), original["original_export_stream"]);
+                assert_eq!(json!(stream), expected["music"]);
+                assert_eq!(xml.matches("<note>").count(), 8);
+                assert!(xml.contains("<divisions>16</divisions>"));
+                assert!(xml.contains("<backup><duration>36</duration></backup>"));
+                assert!(!xml.contains("<forward>"));
+                assert_eq!(
+                    owner.owner.prepared.report["MusicXML_written_from_native_image_recognition"],
+                    true
+                );
+                for flag in [
+                    "heads_complete",
+                    "stems_complete",
+                    "musicxml_complete",
+                    "epilog_complete",
+                    "automatic_raster_pipeline_complete",
+                ] {
+                    assert_eq!(owner.owner.prepared.report[flag], false);
+                }
+                if let Ok(path) = std::env::var("AUDIVERIS_RATIONAL_OWNER_XML") {
+                    std::fs::write(path, xml).unwrap();
+                }
+                let mut empty = crate::shared_sig::EditingSequence::new(vec![]);
+                assert_eq!(
+                    export
+                        .apply_editing_sequence(&mut empty, crate::shared_sig::EditingOperation::Do)
+                        .unwrap_err(),
+                    "music_reprocess_unedited_retained_export_required"
+                );
             }
-            assert_eq!(json!(stream), original["original_export_stream"]);
-            assert_eq!(json!(stream), expected["music"]);
-            assert_eq!(xml.matches("<note>").count(), 8);
-            assert!(xml.contains("<divisions>16</divisions>"));
-            assert!(xml.contains("<backup><duration>36</duration></backup>"));
-            assert!(!xml.contains("<forward>"));
-            assert_eq!(
-                owner.owner.prepared.report["MusicXML_written_from_native_image_recognition"],
-                true
-            );
-            for flag in [
-                "heads_complete",
-                "stems_complete",
-                "musicxml_complete",
-                "epilog_complete",
-                "automatic_raster_pipeline_complete",
-            ] {
-                assert_eq!(owner.owner.prepared.report[flag], false);
-            }
-            if let Ok(path) = std::env::var("AUDIVERIS_RATIONAL_OWNER_XML") {
-                std::fs::write(path, xml).unwrap();
-            }
-            let mut empty = crate::shared_sig::EditingSequence::new(vec![]);
-            assert_eq!(
-                export
-                    .apply_editing_sequence(&mut empty, crate::shared_sig::EditingOperation::Do)
-                    .unwrap_err(),
-                "music_reprocess_unedited_retained_export_required"
-            );
         }
     }
 }

@@ -2479,3 +2479,9 @@ original-matching callbacks/publications/dirty state before exact selected
 reprocessing. Undo keeps7/64 and the new ChordStem; no old-Stem restoration or
 underflow padding is synthesized. `evidence/musicxml-headstem-tasks/TRY.md`
 reproduces it. Public CLI examples and fine/complete-Voice guards remain unchanged.
+
+The same retained owner comparison now also executes UnlinkTask do/undo/redo;
+see `evidence/musicxml-headstem-unlink-tasks/TRY.md`. Addition/removal publication
+asymmetry, exact clocks, short Voices and XML remain original-equivalent.
+Controller preLink may move Containment or create/remove Chords, so this lower
+stage does not enable a public HeadStem correction switch or new image scope.

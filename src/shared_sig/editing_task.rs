@@ -371,6 +371,37 @@ impl RelationTask {
             }),
         })
     }
+    /// Unlink the compared live manual HeadStem on its actual current owner.
+    pub fn unlink_manual_head_stem(
+        owner: &crate::music_measures::OwnedMusic,
+        id: usize,
+    ) -> Result<Self, String> {
+        let graph = &owner.owner.graph;
+        let edge = graph
+            .edges
+            .get(
+                id.checked_sub(1)
+                    .ok_or("editing_relation_identity_required")?,
+            )
+            .filter(|e| {
+                !e.removed
+                    && e.key.phase == Phase::Stem
+                    && e.key.kind == "HeadStemRelation"
+                    && e.data["manual"] == true
+            })
+            .ok_or("editing_owned_manual_head_stem_required")?;
+        let head = graph.vertices[edge.key.source - 1].key;
+        let stem = graph.vertices[edge.key.target - 1].key;
+        let (index, _) = owner.manual_head_stem_owner(head, stem)?;
+        if owner.chords[index].stem != Some(stem) {
+            return Err("editing_head_stem_current_owner_required".into());
+        }
+        let mut task = Self::manual_head_stem(owner, head, stem, edge.data.clone())?;
+        task.link.relation = edge.data.clone();
+        task.link.edge = Some(id);
+        task.unlink = true;
+        Ok(task)
+    }
     fn perform_owned(
         &mut self,
         owner: &mut crate::music_measures::OwnedMusic,

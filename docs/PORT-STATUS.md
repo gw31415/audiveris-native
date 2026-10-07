@@ -1341,3 +1341,13 @@ actual canonical Stem/Chord ownership; task failures restore typed Chords/Graph.
 Notification is planned impact, not PAGE/project completion. See
 `evidence/musicxml-headstem-tasks/TRY.md` and `NEXT-DEPENDENCY.md`. General
 UnlinkTask/preLink/controller and public fine correction admission remain pending.
+
+### Actual retained HeadStem UnlinkTask
+
+The same canonical owner now performs actual UnlinkTask do/undo/redo after
+LinkTask. Original callback/cache/clock order2/2/2 and publication0/1/0 match;
+undo re-adds the same HeadStem while retaining new ChordStem/7/64. Exact selected
+reprocessing yields the same original8note short-Voice stream in all6 operations.
+`evidence/musicxml-headstem-unlink-tasks/TRY.md` reproduces the controlled stage.
+Public admission still needs preLink Addition/Removal/Containment member lifecycle;
+no new automatic image or HeadStem CLI success is claimed.
