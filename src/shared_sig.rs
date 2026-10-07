@@ -661,7 +661,7 @@ impl Graph {
             .collect::<Vec<_>>();
         next.remove_chord_identity_edges(&chord_edges)?;
         next.prune();
-        next.refresh_head_stem_abnormal(&affected_head_stem);
+        next.refresh_head_stem_abnormal(&affected_head_stem.into_iter().collect::<Vec<_>>());
         next.refresh_beam_groups(&removed)?;
         *self = next;
         Ok(())
@@ -694,8 +694,8 @@ impl Graph {
         if head.phase != Phase::Head || self.vertices[hid - 1].data["kind"] != "HeadInter" {
             return Err("cleaner_typed_owned_head_required".into());
         }
-        let mut affected = BTreeSet::new();
         let mut unique = BTreeSet::new();
+        let mut ordered = Vec::new();
         for id in ids {
             let e = self
                 .edges
@@ -713,19 +713,24 @@ impl Graph {
             {
                 return Err("cleaner_typed_live_head_stem_edge_required".into());
             }
-            unique.insert(*id);
-            affected.insert(e.key.source);
-            affected.insert(e.key.target);
+            if unique.insert(*id) {
+                ordered.push(*id);
+            }
         }
-        // All fallible ownership checks precede mutation. Original callbacks
-        // update abnormal only on the endpoints of removed live relations.
-        for id in unique {
+        // Validate the whole request before mutation, then let each callback see
+        // that edge removed and subsequent edges still live, in cleaner order.
+        for id in ordered {
+            let endpoints = [self.edges[id - 1].key.source, self.edges[id - 1].key.target];
             self.edges[id - 1].removed = true;
+            #[cfg(test)]
+            self.dot_callback_event("edgeRemoved", id, "enter");
+            self.refresh_head_stem_abnormal(&endpoints);
+            #[cfg(test)]
+            self.dot_callback_event("edgeRemoved", id, "leave");
         }
-        self.refresh_head_stem_abnormal(&affected);
         Ok(())
     }
-    fn refresh_head_stem_abnormal(&mut self, affected: &BTreeSet<usize>) {
+    fn refresh_head_stem_abnormal(&mut self, affected: &[usize]) {
         let linked = self
             .edges
             .iter()
@@ -733,7 +738,7 @@ impl Graph {
             .flat_map(|e| [e.key.source, e.key.target])
             .collect::<BTreeSet<_>>();
         for id in affected.iter().copied() {
-            let v = &mut self.vertices[id - 1];
+            let v = &self.vertices[id - 1];
             if !v.removed
                 && (v.data["kind"] == "StemInter"
                     || (v.data["kind"] == "HeadInter"
@@ -741,7 +746,7 @@ impl Graph {
                             crate::head_seed_search::ALL_STEM_SHAPES.contains(&s)
                         })))
             {
-                v.data["abnormal"] = json!(!linked.contains(&id));
+                self.set_owned_abnormal(id, !linked.contains(&id));
             }
         }
     }

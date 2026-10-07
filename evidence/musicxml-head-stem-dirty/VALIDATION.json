@@ -1,0 +1,23 @@
+{
+  "baseline_source": "d048fa0dcd365d60f3109d4a37fea59c6acd9c2e",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "existing retained HeadStemsCleaner edge removal: each edge callback observes remaining live edges; actual Head then Stem abnormal changes dirty the owning Book/SheetStub",
+  "original_control": "actual saved automatic Head/Stem/Chord/Measure/Voice; one declared alternate relation to another existing Stem, not automatic image success",
+  "geometry_boundary": "original saved Stem length33 versus current native38 on control; corresponding owners matched through recognized Head ownership, no final Stem glyph parity claim",
+  "ordered_callbacks": "validate entire request before mutation; preserve supplied cleaner relation order; each removal Head before Stem, same abnormal value remains clean",
+  "remaining": [
+    "general automatic/manual HeadStem added callbacks and manual ChordStem owner mutation",
+    "extensive vertex-removal lifecycle/intermediate callback coverage",
+    "other dirty sources, score reduction/project persistence and full controller/PAGE/history"
+  ],
+  "completion_flags": false,
+  "full_suite": "not rerun; historical595@95e191b",
+  "target_tests": {
+    "new_owned_callback_control": 1,
+    "existing_cleaner_partition_and_lifecycle": 3,
+    "existing_Book_callback_controller_control": 1,
+    "status": "passed5; initial control matched wrong stem bounds, corrected to original actual Head ownership"
+  },
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed"
+}

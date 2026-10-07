@@ -1204,3 +1204,11 @@ initial-processing flags. MusicXML render does not clear dirty or complete PAGE.
 Other SIG dirty sources, score reduction, repository/multi-sheet/project persistence
 remain partial. Evidence: `evidence/musicxml-editing-book-dirty/VALIDATION.json`.
 Latest targeted1+3 and fmt/clippy passed; full595 remains historical95e191b.
+
+Retained HeadStemsCleaner relation deletion now invokes abnormal updates per
+removed edge in supplied order, Head before Stem, and marks the actual editing
+Book/SheetStub only for changed values. A saved original owner with declared
+alternate support compares callback boundaries without claiming automatic image
+recognition or stem glyph geometry parity. Added/manual HeadChord mutation,
+generic vertex lifecycle and complete dirty coverage remain partial. Evidence:
+`evidence/musicxml-head-stem-dirty/VALIDATION.json`.
