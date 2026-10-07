@@ -398,6 +398,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         return Err("musicxml_single_page_one_part_scope_required".into());
     }
     admit_symbols(&m)?;
+    m.owner.graph.populate_dot_measures()?;
     // MeasureRhythm.process starts each admitted measure pass with the original
     // ownership/timing reset. General slot matching and correction reprocessing
     // entry remain pending; do not substitute clearing the entire SIG/cache.

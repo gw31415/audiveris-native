@@ -1,0 +1,701 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "actual saved chain cold/warm mutation and explicit factory-order reconstruction from same original glyphs then actual populateFRATs; not new image recognition/export",
+  "cases" : [ {
+    "mode" : "saved_cold",
+    "stages" : [ ],
+    "before" : [ {
+      "cached_part_id" : null,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : null,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "trace" : [ {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      } ]
+    } ],
+    "after_first" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    }, {
+      "cached_part_id" : null,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "after" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    }, {
+      "cached_part_id" : null,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : false,
+      "removed" : true
+    } ],
+    "head" : {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506,
+      "staff_id" : 1
+    },
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 235, 5, 4 ], [ 317, 235, 5, 4 ] ],
+    "measure" : {
+      "part_id" : 1,
+      "staff_id" : 1,
+      "left" : 81,
+      "right" : 711
+    }
+  }, {
+    "mode" : "saved_warm",
+    "stages" : [ ],
+    "before" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "trace" : [ {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      } ]
+    } ],
+    "after_first" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "after" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    } ],
+    "head" : {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506,
+      "staff_id" : 1
+    },
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 235, 5, 4 ], [ 317, 235, 5, 4 ] ],
+    "measure" : {
+      "part_id" : 1,
+      "staff_id" : 1,
+      "left" : 81,
+      "right" : 711
+    }
+  }, {
+    "mode" : "factory_order_then_FRAT",
+    "stages" : [ {
+      "action" : "SIG.addVertex(first)",
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : false
+      } ]
+    }, {
+      "action" : "first.setStaff",
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : false
+      } ]
+    }, {
+      "action" : "first support applied",
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : false
+      } ]
+    }, {
+      "action" : "SIG.addVertex(second)",
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "action" : "second support applied",
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "action" : "PageRhythm.populateFRATs",
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    } ],
+    "before" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "trace" : [ {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "enter",
+      "entity" : "edge0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "edgeRemoved",
+      "stage" : "leave",
+      "entity" : "edge0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot0",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "enter",
+      "entity" : "dot1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      } ]
+    }, {
+      "event" : "vertexRemoved",
+      "stage" : "leave",
+      "entity" : "dot1",
+      "depth" : 0,
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : false,
+        "registered" : false,
+        "removed" : true
+      } ]
+    } ],
+    "after_first" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "after" : [ {
+      "cached_part_id" : 1,
+      "staff_id" : 1,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    }, {
+      "cached_part_id" : 1,
+      "staff_id" : null,
+      "measure_member" : false,
+      "registered" : false,
+      "removed" : true
+    } ],
+    "head" : {
+      "kind" : "HeadInter",
+      "shape" : "NOTEHEAD_BLACK",
+      "bounds" : [ 276, 237, 13, 10 ],
+      "grade" : 0.506,
+      "staff_id" : 1
+    },
+    "chord_bounds" : [ 276, 206, 13, 41 ],
+    "dot_bounds" : [ [ 303, 235, 5, 4 ], [ 317, 235, 5, 4 ] ],
+    "measure" : {
+      "part_id" : 1,
+      "staff_id" : 1,
+      "left" : 81,
+      "right" : 711
+    }
+  } ]
+}

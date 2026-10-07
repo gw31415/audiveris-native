@@ -241,6 +241,7 @@ pub(crate) fn late_checks(
     il: usize,
 ) -> Result<Value, String> {
     let mut staged = graph.clone();
+    staged.bind_dot_measures(measures)?;
     let mut candidates = trials
         .iter()
         .filter_map(|t| {
@@ -369,7 +370,10 @@ pub(crate) fn late_checks(
                 .as_u64()
                 .ok_or("music_dot_registered_glyph_required")? as usize;
             let glyph = crate::beam_dispatch::glyph_json(&registry.get(gid)?.glyph);
-            let id = staged.vertex(dk,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"staff_id":staff["id"],"grade":grade,"abnormal":false}),false)?;
+            let mut data = json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"grade":grade,"abnormal":true});
+            let id = staged.vertex(dk, data.clone(), false)?;
+            data["staff_id"] = staff["id"].clone();
+            staged.vertex(dk, data, false)?;
             staged.relations(system, Phase::Symbol, vec![(dk, note, rel)])?;
             created.push(id);
         }

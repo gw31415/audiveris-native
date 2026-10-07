@@ -2174,3 +2174,15 @@ weak-cascade controls are separate from the existing five full-image CLI
 examples. Part/Measure cached membership and shared-support image admission
 remain unconnected. Evidence:
 `evidence/musicxml-dot-removal-receipts/VALIDATION.json`.
+
+Ordinary dot ownership now preserves lazy Part caching and actual Measure
+membership across SIG lifecycle callbacks. First-dot registration precedes
+staff/support assignment; second dots inherit Part through DoubleDot without a
+staff. The image CLI populates the dot subset of PageRhythm FRAT ownership before
+rhythm reset. Removal updates its containing Measure before SIG edge callbacks.
+Actual saved cold/warm controls and original same-glyph factory-order replay
+compare these states separately from existing image recognition/export. Full
+multi-staff/cross-Part stacks, other FRAT classes, shared-support image admission
+and complete cleaner/epilog remain partial. CLI reports expose the retained
+state at `shared_sig.augmentation_dot_ownership`. Evidence:
+`evidence/musicxml-dot-part-ownership/VALIDATION.json`.

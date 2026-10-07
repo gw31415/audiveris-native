@@ -7,6 +7,7 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+mod dot_ownership;
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Phase {
@@ -325,6 +326,7 @@ struct Vertex {
     data: Value,
     removed: bool,
     removing: bool,
+    cached_part: Option<u64>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct EdgeKey {
@@ -348,6 +350,7 @@ pub struct Graph {
     edges: Vec<Edge>,
     edge_keys: BTreeMap<EdgeKey, usize>,
     dot_removals: Vec<Value>,
+    dot_ownership: Option<dot_ownership::Ownership>,
     #[cfg(test)]
     trace_dot_callbacks: bool,
     #[cfg(test)]
@@ -389,6 +392,7 @@ impl Graph {
                 data: Value::Null,
                 removed,
                 removing: false,
+                cached_part: None,
             });
             id
         };
@@ -405,12 +409,18 @@ impl Graph {
         {
             data["contextual_grade"] = old.data["contextual_grade"].clone();
         }
+        let added = old.data.is_null() || old.removed;
         self.vertices[id - 1] = Vertex {
             key,
             data,
             removed,
             removing: old.removing,
+            cached_part: old.cached_part,
         };
+        if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
+            self.add_dot_to_measure(id)?;
+            self.vertices[id - 1].data["abnormal"] = json!(true);
+        }
         Ok(id)
     }
     fn endpoint(&self, key: Key) -> Result<usize, String> {
@@ -1024,6 +1034,7 @@ impl Graph {
         if outgoing.len() > 1 && outgoing.iter().any(|e| e.key.kind == "DoubleDotRelation") {
             return Err("music_dot_shared_vertex_callback_pending".into());
         }
+        self.remove_dot_from_measure(id)?;
         let dot = &self.vertices[id - 1];
         let mut removal = json!({"id":id,"origin":dot.key,"kind":dot.data["kind"],"shape":dot.data["shape"],"glyph_id":dot.data["glyph_id"],"bounds":dot.data["bounds"],"grade":dot.data["grade"],"contextual_grade":dot.data["contextual_grade"],"reason":"Inter.remove"});
         if let Some(cause) = cause {
@@ -2202,7 +2213,11 @@ impl Graph {
     }
 
     pub fn snapshot(&self) -> Value {
-        json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false})
+        let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
+        if self.dot_ownership.is_some() {
+            snapshot["augmentation_dot_ownership"] = self.dot_ownership_snapshot();
+        }
+        snapshot
     }
 }
 
