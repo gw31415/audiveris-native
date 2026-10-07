@@ -23,3 +23,16 @@ comparisons before image/correction guards expand. General controller/PageStep,
 history/project persistence, tuplets/shared stacks/multi-staff/refinePage/Score,
 CURVES/lyrics and complete cleaner/epilog remain nonUI parity dependencies.
 Historical595@95e191b is not a current full run; all completion flags stay false.
+
+Source-only follow-up (not a new runtime comparison): original9e1e55c
+AbstractInter.preEdit obtains searchLinks/searchUnlinks and creates EditingTask;
+it does not promote manual status or count dots. LinkTask.performDo adds the
+relation then publishes, performUndo removes it without publication.
+UnlinkTask.performDo removes without publication; performUndo adds the same
+relation then publishes. Their shared RelationTask constructor stores relation,
+without implicit setManual. Thus changing automatic undo into manual re-add or
+forcing countDots is not justified by these methods. Next observe real retained
+LinkTask/UnlinkTask sequence, publication and RhythmStep impact before connecting
+that distinct correction route; complete controller/preEdit/history stays pending.
+Sources: app/src/main/java/org/audiveris/omr/sig/{inter/AbstractInter.java,
+ui/LinkTask.java,ui/UnlinkTask.java,ui/RelationTask.java} at9e1e55cd2746037d059345881c53e6a6754bffbd.
