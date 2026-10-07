@@ -1,0 +1,21 @@
+{
+  "baseline_source": "c7bb0369c72e8f4a98c05f86a1d4ab294de530e5",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "selected original computeContextualGrade/deleteInters on two declared unshared dots and actual saved ordinary members: weak dot callback recursively removes a strong automatic dot; original SigListener remains at its original listener position",
+  "implemented": "transactional actual-deletion ledger in unregister order; shared actual-owner countDots helper used by callbacks and LINK; contextualize all selected dots before weak deletion so old snapshots cannot restore recursively removed vertices; consume receipts once, including deletions before LINK loop",
+  "native_original_comparison": "full callback entry/return order, identity/depth, intermediate note/chord dot counts, removed/registered/abnormal flags and live edges; contextual grades; mixed-owner count cause and physical candidate identity; manual retention and frozen rollback",
+  "not_claimed": "new shared-support image admission, general SIG support partitions or full deleteWeakInters, Part/Measure cached membership, complete LINK/cleaner/epilog, special-head or post-rhythm edits",
+  "target_tests": {
+    "music_dots_library": 9,
+    "shared_sig_library": 7,
+    "shared_sig_integration": 4,
+    "stem_cache_sig_integration": 2,
+    "sig_context_integration": 2
+  },
+  "target_total": 24,
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false,
+  "next": "original lazy Part cache and MeasureStack/Measure dot membership removal before SIG callbacks"
+}

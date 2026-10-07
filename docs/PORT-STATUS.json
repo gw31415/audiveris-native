@@ -421,6 +421,12 @@
       "unit": "ordinary dot removal preserves SIG registration through per-relation callbacks, original incoming/outgoing and bottom-up member order with observed mixed-owner reentry states",
       "limits": "three declared mixed HeadChord/RestChord controls plus actual double-dot chain; shared image admission, Part/Measure cache and complete LINK closure remain partial",
       "evidence": "evidence/musicxml-dot-callback-order/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual reentrant dot deletion ledger consumed once by LINK; typed countDots owner/member proof and contextualize-before-weak-removal prevent snapshot resurrection",
+      "limits": "mixed-owner declared controls and weak/strong callback control separate from existing5 full-image examples; Part/Measure cache, shared-support image admission and complete LINK remain partial",
+      "evidence": "evidence/musicxml-dot-removal-receipts/VALIDATION.json"
     }
   ],
   "function_groups": [

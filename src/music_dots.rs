@@ -687,7 +687,6 @@ pub(crate) fn reduce_consistencies(graph: &mut Graph, chords: &[Chord]) -> Resul
     let mut targets = Vec::new();
     let mut relations = Vec::new();
     let mut purged = Vec::new();
-    let mut discarded = Vec::new();
     let budget = staged.snapshot()["inters"].as_array().unwrap().len()
         + staged.snapshot()["relations"].as_array().unwrap().len()
         + 1;
@@ -705,17 +704,21 @@ pub(crate) fn reduce_consistencies(graph: &mut Graph, chords: &[Chord]) -> Resul
         targets.extend(t.iter().cloned());
         relations.extend(r.iter().cloned());
         purged.extend(p.iter().cloned());
-        discarded.extend(
-            counted["discarded_inconsistent_dots"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .cloned(),
-        );
         if t.is_empty() && r.is_empty() && p.is_empty() {
+            let deletions = staged.take_dot_removals();
+            let discarded = deletions
+                .iter()
+                .filter(|n| n["reason"] == "AbstractChord.countDots_inconsistent_nonmanual_zero")
+                .cloned()
+                .collect::<Vec<_>>();
+            for n in &discarded {
+                if !purged.contains(&n["id"]) {
+                    purged.push(n["id"].clone());
+                }
+            }
             *graph = staged;
             return Ok(
-                json!({"targets":{"removed_orphan_dot_ids":targets},"competition":{"removed_competing_relation_ids":relations},"counting":{"removed_weak_or_inconsistent_dot_ids":purged,"discarded_inconsistent_dots":discarded},"scope":"bounded connected dot checks/context/count repeat; full LINK adapter/order remains partial"}),
+                json!({"targets":{"removed_orphan_dot_ids":targets},"competition":{"removed_competing_relation_ids":relations},"counting":{"removed_weak_or_inconsistent_dot_ids":purged,"discarded_inconsistent_dots":discarded,"deleted_dot_inters":deletions},"scope":"bounded connected dot checks/context/count repeat; full LINK adapter/order remains partial"}),
             );
         }
     }
@@ -726,11 +729,12 @@ pub(crate) fn contextualize_and_count(
     graph: &mut Graph,
     chords: &[Chord],
 ) -> Result<Value, String> {
+    let start_removals = graph.pending_dot_removals().len();
     let snapshot = graph.snapshot();
     let mut staged = graph.clone();
     let nodes = snapshot["inters"].as_array().unwrap();
     let mut removed = Vec::new();
-    let mut discarded = Vec::new();
+    let mut weak = Vec::new();
     for dot in nodes.iter().filter(|n| n["kind"] == "AugmentationDotInter") {
         let rels = snapshot["relations"]
             .as_array()
@@ -748,7 +752,9 @@ pub(crate) fn contextualize_and_count(
         }
         let grade = dot["grade"].as_f64().ok_or("music_dot_grade_required")?;
         let contextual = if let Some(rel) = rels.first() {
-            let note = nodes
+            let note = snapshot["inters"]
+                .as_array()
+                .unwrap()
                 .iter()
                 .find(|n| n["id"] == rel["target"])
                 .ok_or("music_dot_live_note_required")?;
@@ -768,52 +774,33 @@ pub(crate) fn contextualize_and_count(
         } else {
             grade
         };
+        let mut n = dot.clone();
+        n["contextual_grade"] = json!(contextual);
+        staged.vertex(key(dot)?, n, false)?;
         if contextual < 0.5 && dot["frozen"] != true {
-            staged.remove_music_inter(key(dot)?)?;
-            removed.push(dot["id"].clone());
-        } else {
-            let mut n = dot.clone();
-            n["contextual_grade"] = json!(contextual);
-            staged.vertex(key(dot)?, n, false)?;
+            weak.push(key(dot)?);
         }
     }
+    for key in weak {
+        staged.remove_music_inter(key)?;
+    }
     for chord in chords {
-        let snap = staged.snapshot();
-        let mut counts = Vec::new();
-        for note in &chord.members {
-            counts.push(note_count(&snap, note));
-        }
-        if counts.is_empty() {
-            continue;
-        }
-        let dots =
-            (counts.iter().sum::<usize>() as f64 / counts.len() as f64).round_ties_even() as usize;
-        if dots == 0 && counts.iter().any(|&c| c != 0) {
-            for note in &chord.members {
-                if let Some(dot) = first_dot(&snap, note)
-                    && dot["manual"] != true
-                {
-                    staged.remove_music_inter(key(dot)?)?;
-                    removed.push(dot["id"].clone());
-                    discarded.push(json!({"id":dot["id"],"kind":dot["kind"],"shape":dot["shape"],"glyph_id":dot["glyph_id"],"bounds":dot["bounds"],"chord_id":chord.id,"note_id":note["id"],"member_dot_counts":counts,"rounded_chord_count":dots,"reason":"AbstractChord.countDots_inconsistent_nonmanual_zero"}));
-                }
-            }
-        }
-        let mut n = snap["inters"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .find(|n| n["id"] == chord.id)
-            .ok_or("music_dot_live_chord_required")?
-            .clone();
-        if dots != 0 || !n["dots_number"].is_null() {
-            n["dots_number"] = json!(dots);
-            staged.vertex(chord.key, n, false)?;
+        staged.count_owned_augmentation(chord.key)?;
+    }
+    let deletions = staged.pending_dot_removals()[start_removals..].to_vec();
+    let discarded = deletions
+        .iter()
+        .filter(|n| n["reason"] == "AbstractChord.countDots_inconsistent_nonmanual_zero")
+        .cloned()
+        .collect::<Vec<_>>();
+    for n in &deletions {
+        if !removed.contains(&n["id"]) {
+            removed.push(n["id"].clone());
         }
     }
     *graph = staged;
     Ok(
-        json!({"removed_weak_or_inconsistent_dot_ids":removed,"discarded_inconsistent_dots":discarded,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/mirror and competing dot interpretations pending"}),
+        json!({"removed_weak_or_inconsistent_dot_ids":removed,"discarded_inconsistent_dots":discarded,"deleted_dot_inters":deletions,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/mirror and competing dot interpretations pending"}),
     )
 }
 pub(crate) fn bounds_with_dots(
@@ -1357,6 +1344,44 @@ mod tests {
                 c["rest_edge_first"],
                 c["remaining_manual"]
             );
+            let removed = c["trace"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|e| e["event"] == "vertexRemoved" && e["stage"] == "enter")
+                .map(|e| dot_ids[e["entity"].as_str().unwrap()[3..].parse::<usize>().unwrap()])
+                .collect::<Vec<_>>();
+            assert_eq!(
+                graph
+                    .pending_dot_removals()
+                    .iter()
+                    .map(|n| n["id"].as_u64().unwrap() as usize)
+                    .collect::<Vec<_>>(),
+                removed
+            );
+            let receipts = reduce_consistencies(&mut graph, &[]).unwrap();
+            let counted = receipts["counting"]["discarded_inconsistent_dots"]
+                .as_array()
+                .unwrap();
+            assert_eq!(counted.len(), usize::from(c["remaining_manual"] != true));
+            if let Some(receipt) = counted.first() {
+                assert_eq!(receipt["id"], dot_ids[1]);
+                assert_eq!(receipt["chord_id"], owner_ids[0]);
+                assert_eq!(receipt["note_id"], note_ids[1]);
+                assert_eq!(receipt["bounds"], c["dot_bounds"][1]);
+                assert_eq!(receipt["member_dot_counts"], json!([0, 1]));
+            }
+            assert_eq!(
+                receipts["counting"]["deleted_dot_inters"]
+                    .as_array()
+                    .unwrap()
+                    .len(),
+                removed.len()
+            );
+            assert_eq!(
+                reduce_consistencies(&mut graph, &[]).unwrap()["counting"]["deleted_dot_inters"],
+                json!([])
+            );
         }
         let original: Value = serde_json::from_str(include_str!(
             "../fixtures/official-dot-callback-order/actual-chain.json"
@@ -1413,6 +1438,150 @@ mod tests {
                 &edges
             )),
             original["trace"]
+        );
+    }
+    #[test]
+    fn weak_dot_callback_records_strong_cascade_without_snapshot_resurrection() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-weak-cascade/observed.json"
+        ))
+        .unwrap();
+        let mut graph = Graph::default();
+        let ck = Key {
+            system: 1,
+            phase: Phase::Chord,
+            local: 1,
+        };
+        let cid = graph.vertex(ck, json!({"kind":"HeadChordInter","bounds":original["chord_bounds"],"part_id":1,"staff_id":1,"duration":null,"voice":null,"dots_number":1}), false).unwrap();
+        let mut notes = Vec::new();
+        let mut dots = Vec::new();
+        let mut note_ids = Vec::new();
+        let mut dot_ids = Vec::new();
+        for (i, n) in original["notes"].as_array().unwrap().iter().enumerate() {
+            let nk = Key {
+                system: 1,
+                phase: Phase::Head,
+                local: i + 1,
+            };
+            note_ids.push(graph.vertex(nk, json!({"kind":n["kind"],"shape":n["shape"],"bounds":n["bounds"],"grade":n["grade"],"staff_id":1}), false).unwrap());
+            notes.push(nk);
+            let dk = Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: i + 1,
+            };
+            dot_ids.push(graph.vertex(dk, json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":original["dot_bounds"][i],"grade":original["dot_grades"][i],"glyph_id":i+1,"staff_id":1,"abnormal":true}), false).unwrap());
+            dots.push(dk);
+            graph
+                .relations(
+                    1,
+                    Phase::Chord,
+                    vec![(ck, nk, json!({"kind":"Containment"}))],
+                )
+                .unwrap();
+            graph
+                .relations(
+                    1,
+                    Phase::Symbol,
+                    vec![(dk, nk, json!({"kind":"AugmentationRelation","grade":0.7}))],
+                )
+                .unwrap();
+        }
+        let before = graph.snapshot();
+        let edge_ids = before["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "AugmentationRelation")
+            .map(|e| e["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        let chord = Chord {
+            kind: ChordKind::Head,
+            key: ck,
+            id: cid,
+            stem: None,
+            members: before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|n| n["kind"] == "HeadInter")
+                .cloned()
+                .collect(),
+            measure: 0,
+            bounds: serde_json::from_value(original["chord_bounds"].clone()).unwrap(),
+        };
+        let mut frozen = graph.clone();
+        let mut strong = before["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == dot_ids[1])
+            .unwrap()
+            .clone();
+        strong["frozen"] = json!(true);
+        frozen.vertex(dots[1], strong, false).unwrap();
+        let frozen_before = frozen.snapshot();
+        assert!(contextualize_and_count(&mut frozen, std::slice::from_ref(&chord)).is_err());
+        assert_eq!(frozen.snapshot(), frozen_before);
+        assert!(frozen.pending_dot_removals().is_empty());
+        graph.enable_dot_callback_trace();
+        let counted = contextualize_and_count(&mut graph, std::slice::from_ref(&chord)).unwrap();
+        assert_eq!(
+            json!(normalized_dot_callback_trace(
+                &graph,
+                &note_ids,
+                &[cid],
+                &dot_ids,
+                &edge_ids
+            )),
+            original["trace"]
+        );
+        let deletions = counted["deleted_dot_inters"].as_array().unwrap();
+        assert_eq!(
+            deletions
+                .iter()
+                .map(|n| n["id"].clone())
+                .collect::<Vec<_>>(),
+            vec![json!(dot_ids[1]), json!(dot_ids[0])]
+        );
+        for (receipt, index) in deletions.iter().zip([1, 0]) {
+            assert_eq!(receipt["bounds"], original["dot_bounds"][index]);
+            assert_eq!(receipt["glyph_id"], index + 1);
+            assert_eq!(receipt["grade"], original["dot_grades"][index]);
+            assert!(
+                (receipt["contextual_grade"].as_f64().unwrap()
+                    - original["dot_contextual_grades"][index].as_f64().unwrap())
+                .abs()
+                    < 1e-12
+            );
+        }
+        assert_eq!(deletions[0]["chord_id"], cid);
+        assert_eq!(deletions[0]["note_id"], note_ids[1]);
+        assert_eq!(deletions[0]["member_dot_counts"], json!([0, 1]));
+        assert_eq!(
+            deletions[0]["reason"],
+            "AbstractChord.countDots_inconsistent_nonmanual_zero"
+        );
+        assert_eq!(deletions[1]["reason"], "Inter.remove");
+        assert!(
+            graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|n| n["kind"] != "AugmentationDotInter")
+        );
+        let linked = reduce_consistencies(&mut graph, std::slice::from_ref(&chord)).unwrap();
+        assert_eq!(
+            linked["counting"]["deleted_dot_inters"],
+            counted["deleted_dot_inters"]
+        );
+        assert_eq!(
+            linked["counting"]["discarded_inconsistent_dots"],
+            json!([deletions[0]])
+        );
+        assert_eq!(
+            reduce_consistencies(&mut graph, &[chord]).unwrap()["counting"]["deleted_dot_inters"],
+            json!([])
         );
     }
     #[test]

@@ -347,6 +347,7 @@ pub struct Graph {
     keys: BTreeMap<Key, usize>,
     edges: Vec<Edge>,
     edge_keys: BTreeMap<EdgeKey, usize>,
+    dot_removals: Vec<Value>,
     #[cfg(test)]
     trace_dot_callbacks: bool,
     #[cfg(test)]
@@ -493,7 +494,7 @@ impl Graph {
         }
         if self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             let mut next = self.clone();
-            next.remove_dot_vertex(id)?;
+            next.remove_dot_vertex(id, None)?;
             *self = next;
             return Ok(());
         }
@@ -988,7 +989,7 @@ impl Graph {
         *self = next;
         Ok(())
     }
-    fn remove_dot_vertex(&mut self, id: usize) -> Result<(), String> {
+    fn remove_dot_vertex(&mut self, id: usize, cause: Option<Value>) -> Result<(), String> {
         if self.vertices[id - 1].data["frozen"] == true {
             return Err("music_removal_frozen_inter".into());
         }
@@ -1023,6 +1024,16 @@ impl Graph {
         if outgoing.len() > 1 && outgoing.iter().any(|e| e.key.kind == "DoubleDotRelation") {
             return Err("music_dot_shared_vertex_callback_pending".into());
         }
+        let dot = &self.vertices[id - 1];
+        let mut removal = json!({"id":id,"origin":dot.key,"kind":dot.data["kind"],"shape":dot.data["shape"],"glyph_id":dot.data["glyph_id"],"bounds":dot.data["bounds"],"grade":dot.data["grade"],"contextual_grade":dot.data["contextual_grade"],"reason":"Inter.remove"});
+        if let Some(cause) = cause {
+            removal.as_object_mut().unwrap().extend(
+                cause
+                    .as_object()
+                    .ok_or("music_dot_removal_cause_required")?
+                    .clone(),
+            );
+        }
         self.vertices[id - 1].removing = true;
         for edge in incident {
             if self.edges[edge - 1].removed {
@@ -1036,11 +1047,34 @@ impl Graph {
         }
         self.vertices[id - 1].removing = false;
         self.vertices[id - 1].removed = true;
+        self.dot_removals.push(removal);
         #[cfg(test)]
         {
             self.dot_callback_event("vertexRemoved", id, "enter");
             self.dot_callback_event("vertexRemoved", id, "leave");
         }
+        Ok(())
+    }
+    pub(crate) fn pending_dot_removals(&self) -> &[Value] {
+        &self.dot_removals
+    }
+    pub(crate) fn take_dot_removals(&mut self) -> Vec<Value> {
+        std::mem::take(&mut self.dot_removals)
+    }
+    fn remove_counted_dot(&mut self, id: usize, cause: Value) -> Result<(), String> {
+        if self.vertices[id - 1].removed || self.vertices[id - 1].removing {
+            return Ok(());
+        }
+        let mut next = self.clone();
+        next.remove_dot_vertex(id, Some(cause))?;
+        *self = next;
+        Ok(())
+    }
+    pub(crate) fn count_owned_augmentation(&mut self, chord: Key) -> Result<(), String> {
+        let id = self.endpoint(chord)?;
+        let mut next = self.clone();
+        next.count_augmentation_chord(id)?;
+        *self = next;
         Ok(())
     }
     #[cfg(test)]
@@ -1098,19 +1132,31 @@ impl Graph {
             return Err("music_dot_owned_note_chord_required".into());
         }
         let owner = owners[0];
+        if self.vertices[owner - 1].data["kind"] != class || note.key.phase != phase {
+            return Err("music_dot_owned_note_chord_required".into());
+        }
+        self.count_augmentation_chord(owner)
+    }
+    fn count_augmentation_chord(&mut self, owner: usize) -> Result<(), String> {
         let chord = &self.vertices[owner - 1];
+        let (phase, class, note_class) = match chord.data["kind"].as_str() {
+            Some("HeadChordInter") => (Phase::Head, "HeadChordInter", "HeadInter"),
+            Some("RestChordInter") => (Phase::Symbol, "RestChordInter", "RestInter"),
+            _ => return Err("music_dot_owned_note_chord_required".into()),
+        };
         let mut members = self
             .edges
             .iter()
             .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == owner)
             .map(|e| e.key.target)
             .collect::<Vec<_>>();
-        if chord.removed
-            || chord.key.phase != Phase::Chord
-            || chord.data["kind"] != class
-            || members.is_empty()
-            || (class == "RestChordInter" && members.len() != 1)
-        {
+        if chord.removed || chord.key.phase != Phase::Chord || chord.data["kind"] != class {
+            return Err("music_dot_owned_note_chord_required".into());
+        }
+        if members.is_empty() {
+            return Ok(());
+        }
+        if class == "RestChordInter" && members.len() != 1 {
             return Err("music_dot_owned_note_chord_required".into());
         }
         if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
@@ -1134,7 +1180,7 @@ impl Graph {
             if member.removed
                 || member.key.phase != phase
                 || member.key.system != chord.key.system
-                || member.data["kind"] != note.data["kind"]
+                || member.data["kind"] != note_class
             {
                 return Err("music_dot_owned_note_member_required".into());
             }
@@ -1170,7 +1216,7 @@ impl Graph {
                 for dot_id in dot_ids {
                     let dot = &self.vertices[dot_id - 1];
                     if !dot.removed && dot.data["manual"] != true {
-                        self.remove_music_inter(dot.key)?;
+                        self.remove_counted_dot(dot_id,json!({"chord_id":owner,"note_id":id,"member_dot_counts":counts,"rounded_chord_count":dots,"reason":"AbstractChord.countDots_inconsistent_nonmanual_zero"}))?;
                     }
                 }
             }

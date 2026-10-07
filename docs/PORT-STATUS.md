@@ -1001,3 +1001,14 @@ double-dot chain compare all callback entry/return states. These controls do not
 admit shared-support images. Part/Measure caches and LINK candidate closure for
 all nested deletions remain partial. Evidence:
 `evidence/musicxml-dot-callback-order/VALIDATION.json`.
+
+LINK dot candidate receipts now retain every actual reentrant vertex deletion,
+once in unregister order, with original owner/member-count proof only for
+inconsistent automatic countDots cleanup. Weak/orphan deletion alone does not
+permit a previously unhandled dot image. An original weak-dot control confirms
+that its callback also deletes a strong automatic dot; contextualization now
+precedes weak deletion to prevent stale snapshot resurrection. Mixed-owner and
+weak-cascade controls are separate from the existing five full-image CLI
+examples. Part/Measure cached membership and shared-support image admission
+remain unconnected. Evidence:
+`evidence/musicxml-dot-removal-receipts/VALIDATION.json`.
