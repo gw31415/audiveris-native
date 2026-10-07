@@ -522,6 +522,11 @@
       "status": "implemented",
       "unit": "timed ordinary augmentation countDots -> shared uncached getDurationSansTuplet/endTime without clearing retained owner/clock; original manual added versus unconditional live-target removed callback",
       "limits": "saved real double-dot owners, declared same-base support transfer; callback control is not automatic shared-support image/correction admission. Export timed support guard remains until actual task/reprocess/rollback comparison. Partial-clock, special/tuplet and broader owner guards remain."
+    },
+    {
+      "status": "implemented",
+      "unit": "compared retained single-head same-stack augmentation transfer -> actual task callbacks -> cached expectedDuration stack reprocess/HIGH refinement -> native event binding/MusicXML, failure rollback; explicit Linux CLI move-dot-support",
+      "limits": "declared correction on one original saved successful double-dot image; automatic shared-support discovery, Rest/void/multi-head/DoubleDot editing, cross-stack and full controller/PageStep/history remain pending. Original nonmanual undo produces underfilled13/16 and native complete-measure refusal/rollback, not Java rollback. Genuine manual subsequent transfer do/undo/redo matches full music."
     }
   ],
   "function_groups": [
@@ -615,7 +620,7 @@
     {
       "original_function": "補正 / `InterController`, tasks/history, editors",
       "status": "partial",
-      "current_and_remaining": "Ordinary retained setters/support callbacks/tasks/do-undo-redo/planned impacts remain controlled. Export.apply_editing_sequence now executes bounded owned stack rhythm and HIGH Voice cleanup for raw same-stack dot bounds tasks; --edit-dot exposes that validated image-owned route. Task publications and planned RHYTHMS/PAGE impacts remain distinguished from executed components; PageStep, timed support edits, preEdit/history/general editors, persistence/multi-staff/complete cleaner remain pending. No report-based owner bypass or setter membership reconstruction; GUI presentation only excluded."
+      "current_and_remaining": "Ordinary retained setters/support callbacks/tasks/do-undo-redo/planned impacts remain controlled. Export.apply_editing_sequence executes bounded owned stack rhythm and HIGH Voice cleanup for same-stack dot bounds tasks and compared single-head black augmentation transfers. --edit-dot and --move-dot-support expose explicit retained-image corrections. Timed callback duration/endTime stays live without premature clock reset. Original automatic re-add underfills13/16; native complete-measure refusal restores all retained state. Task publications/planned RHYTHMS/PAGE remain separate from executed components; general timed Rest/void/multi-head/DoubleDot/shared support/cross-stack, PageStep, preEdit/history/general editors, persistence/multi-staff/complete cleaner remain pending. No report-based owner bypass or setter membership reconstruction; GUI presentation only excluded."
     },
     {
       "original_function": "パラメータ/処理選択 / CLI/constants, sheet/book settings",

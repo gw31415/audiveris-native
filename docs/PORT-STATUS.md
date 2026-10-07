@@ -1180,3 +1180,15 @@ link-add before unlink-remove; manual and automatic re-add behave differently.
 This does not admit automatic shared-support images or timed correction export;
 that guard awaits task/reprocess/rollback comparison. See
 `evidence/musicxml-timed-dot-support/NEXT-DEPENDENCY.md`.
+
+### Retained support transfer / real reprocessing checkpoint
+
+`--move-dot-support` now exposes the compared ordinary single-head same-stack
+augmentation transfer as an explicit correction after image recognition.
+EditingTask callbacks run with existing clocks/owners; actual stack reprocessing
+retains expectedDuration and does not call populateFRATs/LINKS. MusicXML music
+matches original PartwiseBuilder for the declared transfer. Manual subsequent
+transfer supports do/undo/redo. Original automatic re-add instead yields13/16;
+native keeps the complete-measure refusal and rolls back all retained state.
+This is not automatic correction discovery or full controller/history parity.
+`evidence/musicxml-timed-support-reprocess/NEXT-DEPENDENCY.md` lists the remainder.

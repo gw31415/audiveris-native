@@ -14,9 +14,61 @@ pub struct Export {
     provenance: [u8; 32],
 }
 impl Export {
-    /// Apply retained raw ordinary dot bounds tasks, then process their actual
+    /// Prepare an explicit transfer using this retained image's live identities.
+    /// No recognition search, manual membership rebuilding or report input.
+    pub fn dot_support_transfer(
+        &self,
+        dot_id: usize,
+        head_id: usize,
+    ) -> Result<crate::shared_sig::EditingSequence, String> {
+        use crate::shared_sig::{DefaultEditingTask, EditingLink, EditingSequence};
+        let graph = &self.owner.owner.graph;
+        let snapshot = graph.snapshot();
+        let nodes = snapshot["inters"].as_array().unwrap();
+        let dot = nodes
+            .iter()
+            .find(|n| n["id"] == dot_id && n["kind"] == "AugmentationDotInter")
+            .ok_or("editing_live_dot_identity_required")?;
+        let head = nodes
+            .iter()
+            .find(|n| n["id"] == head_id && n["kind"] == "HeadInter")
+            .ok_or("editing_live_head_identity_required")?;
+        let edges = snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["source"] == dot_id && e["kind"] == "AugmentationRelation")
+            .collect::<Vec<_>>();
+        if edges.len() != 1 || edges[0]["target"] == head_id {
+            return Err("editing_distinct_single_dot_support_required".into());
+        }
+        let key: Key = serde_json::from_value(dot["origin"].clone())
+            .map_err(|_| "editing_inter_identity_required")?;
+        let target: Key = serde_json::from_value(head["origin"].clone())
+            .map_err(|_| "editing_partner_identity_required")?;
+        let unlink =
+            EditingLink::from_registered(graph, key, edges[0]["id"].as_u64().unwrap() as usize)?;
+        let link = EditingLink::new(
+            target,
+            true,
+            json!({"kind":"AugmentationRelation","manual":true}),
+        );
+        let bounds = serde_json::from_value(dot["bounds"].clone())
+            .map_err(|_| "music_dot_bounds_required")?;
+        let sequence = EditingSequence::new(vec![DefaultEditingTask::new(
+            graph,
+            key,
+            bounds,
+            vec![link],
+            vec![unlink],
+        )?]);
+        sequence.require_ordinary_reprocess(graph)?;
+        Ok(sequence)
+    }
+    /// Apply compared ordinary dot bounds/support tasks, then process their actual
     /// stacks with cached expected durations. This does not rerun FRATs/LINKS
-    /// or complete PageStep/history/general timed support correction.
+    /// or complete PageStep/history/general timed support correction. Ordinary
+    /// single-head same-stack support transfers retain callbacks before reset.
     pub fn apply_editing_sequence(
         &mut self,
         sequence: &mut crate::shared_sig::EditingSequence,
@@ -25,7 +77,7 @@ impl Export {
         if provenance(&self.owner) != self.provenance {
             return Err("music_reprocess_unedited_retained_export_required".into());
         }
-        sequence.require_bounds_only_reprocess()?;
+        sequence.require_ordinary_reprocess(&self.owner.owner.graph)?;
         let old_rhythm = Rhythm::retained(&self.owner)?;
         let part_name = self.owner.owner.prepared.report["part_name"]
             .as_str()
@@ -36,6 +88,7 @@ impl Export {
         let mut next_sequence = sequence.clone();
         let planned = next_sequence.perform(&mut graph, operation, "PAGE")?;
         next_sequence.require_same_stack(&before_graph, &graph)?;
+        next_sequence.require_single_support(&graph)?;
         let targets = planned["rhythm_stack_targets"]
             .as_array()
             .ok_or("music_reprocess_stack_targets_required")?;
@@ -1447,6 +1500,25 @@ mod tests {
                     assert_eq!(expected["same_part"], true);
                 }
             }
+            let mut stale = graph.clone();
+            let selected_key: Key = serde_json::from_value(selected[1]["origin"].clone()).unwrap();
+            let mut projected = stale.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == selected[1]["id"])
+                .unwrap()
+                .clone();
+            projected["duration"] = json!("99");
+            stale.vertex(selected_key, projected, false).unwrap();
+            assert_eq!(
+                stale.chord_duration(selected_key).unwrap(),
+                Some("7/16".into())
+            );
+            assert_eq!(
+                stale.chord_end_time(selected_key).unwrap(),
+                Some("15/16".into())
+            );
             // Undo is observed before any rhythm reset: automatic re-add does
             // not count dots, whereas manual re-add does. Neither changes clocks.
             graph.enable_dot_callback_trace();
@@ -1486,6 +1558,224 @@ mod tests {
             }
             assert_eq!(after["augmentation_dot_ownership"], ownership);
         }
+    }
+    #[test]
+    fn original_timed_support_transfer_reprocesses_owned_stack_and_rolls_back_incomplete_undo() {
+        use crate::shared_sig::{
+            DefaultEditingTask, EditingLink, EditingOperation, EditingSequence,
+        };
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-timed-support-reprocess/observed.json"
+        ))
+        .unwrap();
+        let callback: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-timed-dot-support/observed.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let mut export = recognize(&image).unwrap();
+        let before_xml = export.xml.clone();
+        let before = export.owner.owner.graph.snapshot();
+        let first = &callback["cases"][0]["before"]["chords"][0];
+        let second = &callback["cases"][0]["before"]["chords"][1];
+        let nodes = before["inters"].as_array().unwrap();
+        let chord = |bounds: &Value| {
+            nodes
+                .iter()
+                .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == *bounds)
+                .unwrap()
+        };
+        let source = chord(&first["bounds"])["member_ids"][0].as_u64().unwrap() as usize;
+        let target = chord(&second["bounds"])["member_ids"][0].as_u64().unwrap() as usize;
+        let dot = before["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "AugmentationRelation" && e["target"] == source)
+            .unwrap()["source"]
+            .as_u64()
+            .unwrap() as usize;
+        let other_measure = rhythm_projection(&export.owner, 1);
+        let compare = |export: &Export, case: usize, op: usize| {
+            let original = &oracle["cases"][case]["steps"][op];
+            assert_eq!(
+                rhythm_projection(&export.owner, 0),
+                callback["cases"][case]["steps"][op]["after_reprocess"]["rhythm"]
+            );
+            assert_eq!(rhythm_projection(&export.owner, 1), other_measure);
+            assert_eq!(
+                export.owner.owner.graph.snapshot()["augmentation_dot_ownership"],
+                before["augmentation_dot_ownership"]
+            );
+            let events = export.owner.owner.prepared.report["events"]
+                .as_array()
+                .unwrap();
+            let original_events = original["original_export_stream"].as_array().unwrap();
+            assert_eq!(events.len(), original_events.len());
+            for (a, b) in events.iter().zip(original_events) {
+                for field in [
+                    "measure_number",
+                    "step",
+                    "octave",
+                    "voice",
+                    "time_offset",
+                    "type",
+                    "dots",
+                    "chord",
+                ] {
+                    assert_eq!(a[field], b[field]);
+                }
+                assert_eq!(
+                    rational((a["duration_quarters"].as_f64().unwrap() * 4.) as u32),
+                    b["duration"].as_str().unwrap()
+                );
+            }
+        };
+        let mut sequence = export.dot_support_transfer(dot, target).unwrap();
+        export.owner.owner.graph.enable_dot_callback_trace();
+        let actual = export
+            .apply_editing_sequence(&mut sequence, EditingOperation::Do)
+            .unwrap();
+        assert_eq!(actual["populateFRATs_called"], false);
+        assert_eq!(actual["LINKS_called"], false);
+        assert_eq!(
+            actual["processed_stack_targets"].as_array().unwrap().len(),
+            1
+        );
+        compare(&export, 0, 0);
+        let trace = export
+            .owner
+            .owner
+            .graph
+            .dot_callback_trace()
+            .iter()
+            .filter(|t| t["event"] != "publish")
+            .collect::<Vec<_>>();
+        assert_eq!(trace.len(), 4);
+        for (a, b) in trace
+            .iter()
+            .zip(callback["cases"][0]["trace"].as_array().unwrap())
+        {
+            assert_eq!(a["event"], b["event"]);
+            assert_eq!(a["stage"], b["stage"]);
+            assert_eq!(
+                a["state"]["augmentation_dot_ownership"],
+                before["augmentation_dot_ownership"]
+            );
+            for original in b["state"]["chords"].as_array().unwrap() {
+                let n = a["state"]["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == original["bounds"])
+                    .unwrap();
+                for f in ["duration", "time_offset", "voice", "slot_id"] {
+                    assert_eq!(n[f], original[f]);
+                }
+                assert_eq!(n["dots_number"], original["dots"]);
+            }
+        }
+        let shifted_xml = export.xml.clone();
+        assert_ne!(shifted_xml, before_xml);
+        // Original automatic re-add leaves dotsNumber0 and actual13/16.
+        // Native complete-measure export remains guarded and rolls back owners,
+        // report, XML, provenance and the retained task, rather than inventing dots.
+        assert_eq!(
+            callback["cases"][0]["steps"][1]["after_reprocess"]["rhythm"]["actual"],
+            "13/16"
+        );
+        let saved_provenance = export.provenance;
+        let saved_report = export.owner.owner.prepared.report.clone();
+        let saved_graph = export.owner.owner.graph.snapshot();
+        let saved_voice =
+            crate::music_voices::projection(&export.owner.voices, &export.owner.measures);
+        let saved_sequence = format!("{sequence:?}");
+        let error = export
+            .apply_editing_sequence(&mut sequence, EditingOperation::Undo)
+            .unwrap_err();
+        assert!(
+            error.starts_with("musicxml_incomplete_or_excess_measure:"),
+            "{error}"
+        );
+        assert_eq!(export.owner.owner.graph.snapshot(), saved_graph);
+        assert_eq!(export.owner.owner.prepared.report, saved_report);
+        assert_eq!(
+            crate::music_voices::projection(&export.owner.voices, &export.owner.measures),
+            saved_voice
+        );
+        assert_eq!(export.provenance, saved_provenance);
+        assert_eq!(format!("{sequence:?}"), saved_sequence);
+        assert_eq!(export.xml, shifted_xml);
+        compare(&export, 0, 0);
+        // The next transfer unlinks the genuinely manual support created by Do.
+        // Both directions can now recount under original callback conditions;
+        // no setter, forged report or test-only provenance reset is involved.
+        let mut manual = export.dot_support_transfer(dot, source).unwrap();
+        export
+            .apply_editing_sequence(&mut manual, EditingOperation::Do)
+            .unwrap();
+        compare(&export, 1, 1);
+        assert_eq!(export.xml, before_xml);
+        export
+            .apply_editing_sequence(&mut manual, EditingOperation::Undo)
+            .unwrap();
+        compare(&export, 1, 0);
+        assert_eq!(export.xml, shifted_xml);
+        export
+            .apply_editing_sequence(&mut manual, EditingOperation::Redo)
+            .unwrap();
+        compare(&export, 1, 1);
+        assert_eq!(export.xml, before_xml);
+        let now = export.owner.owner.graph.snapshot();
+        let other = export
+            .owner
+            .chords
+            .iter()
+            .find(|c| c.measure == 1)
+            .unwrap()
+            .members[0]["id"]
+            .as_u64()
+            .unwrap() as usize;
+        assert_eq!(
+            export.dot_support_transfer(dot, other).unwrap_err(),
+            "music_reprocess_timed_support_edit_pending"
+        );
+        let dot_node = now["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == dot)
+            .unwrap();
+        let partner = now["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == target)
+            .unwrap();
+        let key = serde_json::from_value(dot_node["origin"].clone()).unwrap();
+        let link = EditingLink::new(
+            serde_json::from_value(partner["origin"].clone()).unwrap(),
+            true,
+            json!({"kind":"AugmentationRelation","manual":true}),
+        );
+        let task = DefaultEditingTask::new(
+            &export.owner.owner.graph,
+            key,
+            serde_json::from_value(dot_node["bounds"].clone()).unwrap(),
+            vec![link],
+            vec![],
+        )
+        .unwrap();
+        assert_eq!(
+            export
+                .apply_editing_sequence(&mut EditingSequence::new(vec![task]), EditingOperation::Do)
+                .unwrap_err(),
+            "music_reprocess_shared_dot_support_edit_pending"
+        );
+        assert_eq!(export.owner.owner.graph.snapshot(), now);
     }
     #[test]
     fn original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation() {
@@ -1585,11 +1875,12 @@ mod tests {
             DefaultEditingTask::new(&export.owner.owner.graph, key, bounds, vec![], vec![unlink])
                 .unwrap();
         let mut unsupported = EditingSequence::new(vec![task]);
-        assert_eq!(
-            export
-                .apply_editing_sequence(&mut unsupported, EditingOperation::Do)
-                .unwrap_err(),
-            "music_reprocess_timed_support_edit_pending"
+        let error = export
+            .apply_editing_sequence(&mut unsupported, EditingOperation::Do)
+            .unwrap_err();
+        assert!(
+            error.starts_with("musicxml_incomplete_or_excess_measure:"),
+            "{error}"
         );
         assert_eq!(export.owner.owner.graph.snapshot(), undone);
         // A report cannot grant provenance to an already edited owner.

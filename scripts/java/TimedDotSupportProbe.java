@@ -16,6 +16,16 @@ public class TimedDotSupportProbe extends StackReprocessProbe {
    }));
   }if(found!=1)throw new IllegalStateException("original SigListener required");
  }
+ static Object exportStream(Object book)throws Exception {
+  Object score=((List<?>)call(book,"getScores")).get(0),xml=c("score.PartwiseBuilder").getMethod("build",c("score.Score")).invoke(null,score);
+  int units=(Integer)call(call(score,"getFirstPage"),"simpleDurationOf",make("math.Rational",1,1));List<Object> stream=new ArrayList<>();int number=0;
+  for(Object measure:(List<?>)call(((List<?>)call(xml,"getPart")).get(0),"getMeasure")){number++;Object onset=make("math.Rational",0,1),clock=onset;
+   for(Object item:(List<?>)call(measure,"getNoteOrBackupOrForward")){String kind=item.getClass().getSimpleName();
+    if(kind.equals("Note")){Object pitch=call(item,"getPitch"),d=make("math.Rational",((java.math.BigDecimal)call(item,"getDuration")).intValueExact(),units);boolean chord=call(item,"getChord")!=null;if(!chord){onset=clock;clock=call(clock,"plus",d);}stream.add(obj("measure_number",number,"step",call(pitch,"getStep").toString(),"octave",call(pitch,"getOctave"),"voice",Integer.parseInt((String)call(item,"getVoice")),"duration",d.toString(),"time_offset",onset.toString(),"type",call(call(item,"getType"),"getValue"),"dots",((List<?>)call(item,"getDot")).size(),"chord",chord));}
+    else if(kind.equals("Backup")||kind.equals("Forward"))throw new IllegalStateException("single-voice declared control expected");
+   }
+  }return stream;
+ }
  public static void main(String[] args)throws Exception {
   c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);List<Object> cases=new ArrayList<>();
   for(boolean manual:List.of(false,true)){
@@ -29,7 +39,7 @@ public class TimedDotSupportProbe extends StackReprocessProbe {
    List<Object> chords=List.of(c0,c1),voices=List.of(call(c0,"getVoice"),call(c1,"getVoice")),trace=new ArrayList<>(),steps=new ArrayList<>();Object before=clocks(a,chords,voices);
    Object editor=allocate(c("sig.ui.DefaultEditor"));field(editor,c("sheet.ui.ObjectEditor"),"object",d);field(editor,c("sheet.ui.ObjectEditor"),"system",a[2]);field(editor,c("sig.ui.DefaultEditor"),"originalBounds",call(d,"getBounds"));field(editor,c("sig.ui.DefaultEditor"),"latestBounds",call(d,"getBounds"));
    Object task=make("sig.ui.EditingTask",editor,List.of(make("sig.relation.Link",h1,fresh,true)),List.of(make("sig.relation.Link",h0,aug,true)));watch(a,chords,voices,trace);
-   for(String op:List.of("do","undo","redo")){call(task,op.equals("undo")?"performUndo":"performDo");javax.swing.SwingUtilities.invokeAndWait(()->{});Object after=clocks(a,chords,voices);call(pageRhythm,"reprocessStack",a[4]);steps.add(obj("operation",op,"after_task",after,"after_reprocess",clocks(a,chords,voices)));}
+   for(String op:List.of("do","undo","redo")){call(task,op.equals("undo")?"performUndo":"performDo");javax.swing.SwingUtilities.invokeAndWait(()->{});Object after=clocks(a,chords,voices);call(pageRhythm,"reprocessStack",a[4]);steps.add(obj("operation",op,"after_task",after,"after_reprocess",clocks(a,chords,voices),"original_export_stream",exportStream(a[0])));}
    cases.add(obj("original_support_manual",manual,"before",before,"steps",steps,"trace",trace));
   }
   new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj("original_source","9e1e55cd2746037d059345881c53e6a6754bffbd","scope","declared same-base support transfer on actual saved owners after real PageRhythm.reprocessStack; original task callbacks then real retained reprocess; not automatic correction discovery","cases",cases));System.exit(0);

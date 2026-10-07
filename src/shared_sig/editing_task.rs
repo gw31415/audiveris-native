@@ -251,14 +251,79 @@ impl EditingSequence {
     pub fn new(tasks: Vec<DefaultEditingTask>) -> Self {
         Self { tasks }
     }
-    pub(crate) fn require_bounds_only_reprocess(&self) -> Result<(), String> {
-        if self.tasks.is_empty()
-            || self
-                .tasks
-                .iter()
-                .any(|t| !t.links.is_empty() || !t.unlinks.is_empty())
-        {
+    pub(crate) fn require_ordinary_reprocess(&self, graph: &Graph) -> Result<(), String> {
+        if self.tasks.is_empty() {
             return Err("music_reprocess_timed_support_edit_pending".into());
+        }
+        for task in &self.tasks {
+            if task.links.is_empty() && task.unlinks.is_empty() {
+                continue;
+            }
+            if task.links.len() > 1 || task.unlinks.len() > 1 {
+                return Err("music_reprocess_timed_support_edit_pending".into());
+            }
+            let focus = graph.endpoint(task.inter)?;
+            let dot = &graph.vertices[focus - 1];
+            let target = graph
+                .dot_edit_stack_target(task.inter)?
+                .ok_or("editing_owned_stack_selection_required")?;
+            for link in task.links.iter().chain(&task.unlinks) {
+                if !link.outgoing || link.relation["kind"] != "AugmentationRelation" {
+                    return Err("music_reprocess_timed_support_edit_pending".into());
+                }
+                let (_, id) = link.endpoints(graph, task.inter)?;
+                let note = &graph.vertices[id - 1];
+                let owners = graph
+                    .live_edges()
+                    .into_iter()
+                    .filter(|e| e.key.kind == "Containment" && e.key.target == id)
+                    .map(|e| e.key.source)
+                    .collect::<Vec<_>>();
+                if note.removed
+                    || note.key.phase != Phase::Head
+                    || note.data["kind"] != "HeadInter"
+                    || note.data["shape"] != "NOTEHEAD_BLACK"
+                    || owners.len() != 1
+                {
+                    return Err("music_reprocess_timed_support_edit_pending".into());
+                }
+                let chord = &graph.vertices[owners[0] - 1];
+                let members = graph
+                    .live_edges()
+                    .into_iter()
+                    .filter(|e| e.key.kind == "Containment" && e.key.source == owners[0])
+                    .count();
+                if chord.removed
+                    || chord.data["kind"] != "HeadChordInter"
+                    || members != 1
+                    || chord.key.system != task.inter.system
+                    || chord.data["measure_index"] != target["measure_index"]
+                    || chord.data["part_id"] != dot.cached_part.map_or(Value::Null, |p| json!(p))
+                    || chord.data["staff_id"] != dot.data["staff_id"]
+                    || chord.data["duration"].as_str().is_none()
+                    || chord.data["time_offset"].as_str().is_none()
+                    || chord.data["voice"].as_u64().is_none()
+                    || chord.data["slot_id"].as_u64().is_none()
+                {
+                    return Err("music_reprocess_timed_support_edit_pending".into());
+                }
+                graph.chord_duration(chord.key)?;
+            }
+        }
+        Ok(())
+    }
+    pub(crate) fn require_single_support(&self, graph: &Graph) -> Result<(), String> {
+        for task in &self.tasks {
+            let id = graph.endpoint(task.inter)?;
+            if graph
+                .live_edges()
+                .into_iter()
+                .filter(|e| e.key.kind == "AugmentationRelation" && e.key.source == id)
+                .count()
+                > 1
+            {
+                return Err("music_reprocess_shared_dot_support_edit_pending".into());
+            }
         }
         Ok(())
     }

@@ -2313,3 +2313,28 @@ Timed ordinary support callbacks now update live duration/endTime while keeping
 Part/Measure/Voice/slot/time. This is a saved-owner control, not a new image or
 CLI correction admission. `--edit-dot` bounds-only example remains unchanged;
 Export timed support guard is still retained at this checkpoint.
+
+### Explicit ordinary support transfer (current checkpoint)
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  --move-dot-support 72 6 \
+  fixtures/official-image-musicxml-augmentation/double-augmentation.png \
+  support-moved.musicxml support-moved.report.json
+```
+
+IDs refer to this input's **live recognized** dot72 and head6; other inputs must
+use their own report/retained identities. This deliberately changes support from
+B4 to F5 after recognition; it is a user correction, not automatic interpretation
+of that image. The resulting8-note stream is compared with the original's same
+explicit task/reprocess/PartwiseBuilder operation. XML/XSD is checked separately.
+Only one ordinary black single-head support transfer inside the same retained
+stack is admitted; final shared support, rests/void/multi-head/DoubleDot tasks and
+cross-stack editing stay guarded. Tasks add new links before removing old ones;
+undo restores unlinks before removing new links. Added callback counts only
+manual relation/dot, removed callback counts a live target. Original nonmanual
+undo underfills13/16; native refuses a full-measure export and restores all state.
+A genuinely manual support created by transfer permits subsequent do/undo/redo
+through the library's retained sequence. Full controller/preEdit/history/PageStep,
+automatic target discovery and project persistence remain partial; flags false.
+Existing `--edit-dot` and unedited image examples are retained.
