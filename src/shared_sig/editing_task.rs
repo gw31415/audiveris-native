@@ -240,3 +240,78 @@ impl DefaultEditingTask {
         Ok(publication)
     }
 }
+
+/// UITaskList order plus CtrlTask impact notification for the retained dot tasks.
+/// A notification is not evidence that RhythmStep/PageStep reprocessing ran.
+#[derive(Clone, Debug)]
+pub struct EditingSequence {
+    tasks: Vec<DefaultEditingTask>,
+}
+impl EditingSequence {
+    pub fn new(tasks: Vec<DefaultEditingTask>) -> Self {
+        Self { tasks }
+    }
+    pub fn perform(
+        &mut self,
+        graph: &mut Graph,
+        operation: EditingOperation,
+        latest_step: &str,
+    ) -> Result<Value, String> {
+        const STEPS: [&str; 20] = [
+            "LOAD",
+            "BINARY",
+            "SCALE",
+            "GRID",
+            "HEADERS",
+            "STEM_SEEDS",
+            "BEAMS",
+            "LEDGERS",
+            "HEADS",
+            "STEMS",
+            "REDUCTION",
+            "CUE_BEAMS",
+            "TEXTS",
+            "MEASURES",
+            "CHORDS",
+            "CURVES",
+            "SYMBOLS",
+            "LINKS",
+            "RHYTHMS",
+            "PAGE",
+        ];
+        let latest = STEPS
+            .iter()
+            .position(|s| *s == latest_step)
+            .ok_or("editing_latest_step_required")?;
+        let mut next = graph.clone();
+        let mut sequence = self.clone();
+        if matches!(operation, EditingOperation::Undo) {
+            for task in sequence.tasks.iter_mut().rev() {
+                task.perform(&mut next, operation)?;
+            }
+        } else {
+            for task in &mut sequence.tasks {
+                task.perform(&mut next, operation)?;
+            }
+        }
+        // Every retained EditingTask is an AugmentationDotInter InterTask.
+        // Original isImpactedBy starts at RHYTHMS, not the edited link's class.
+        let first = (!sequence.tasks.is_empty())
+            .then(|| STEPS.iter().position(|s| *s == "RHYTHMS").unwrap());
+        let planned = first
+            .filter(|first| *first <= latest)
+            .map_or_else(Vec::new, |first| STEPS[first..=latest].to_vec());
+        let notification = json!({
+            "operation":operation.name(), "stage":"after_sequence_publications",
+            "inter_ids":sequence.tasks.iter().map(|t|next.id(t.inter).unwrap()).collect::<Vec<_>>(),
+            "mark_sheet_modified":matches!(operation,EditingOperation::Do),
+            "first_impacted_step":first.map(|i|STEPS[i]), "latest_completed_step":latest_step,
+            "planned_steps":planned, "reprocessed_steps":[],
+            "controller_impact_complete":false
+        });
+        next.edit_impacts.push(notification.clone());
+        *graph = next;
+        *self = sequence;
+        Ok(notification)
+    }
+}

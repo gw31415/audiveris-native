@@ -1077,3 +1077,13 @@ controller reprocessing, general editor/ensemble/history/multi-staff completion.
 Evidence: `evidence/musicxml-editing-task/VALIDATION.json`. Existing image CLI and
 negative quarter-rest admission remain unchanged; latest full595 is historical
 95e191b, not a current full rerun.
+
+Retained editing sequences now keep original UITaskList forward do/redo and reverse
+undo publication order. Original CtrlTask class-based selection starts dot edits
+at RHYTHMS; latest HEADS yields no step call, latest PAGE schedules RHYTHMS then
+PAGE. Native notifications distinguish DO-only modified intent and planned steps
+from actual reprocessing: `reprocessed_steps` is empty and
+`controller_impact_complete` stays false. Actual original below-first epilog and
+saved two-task order are controls, not automatic CLI correction. Native SheetStub
+persistence, preEdit/history/step execution/general editors remain pending.
+Evidence: `evidence/musicxml-editing-impact/VALIDATION.json`.

@@ -2245,3 +2245,7 @@ Retained ordinary-dot correction task model is available through the Rust librar
 CLI correction command: preEdit/controller impacts/history/general editors remain
 pending. Existing runnable image commands and their admission are unchanged.
 See [task control](../evidence/musicxml-editing-task/VALIDATION.json).
+
+`shared_sig::EditingSequence` adds retained task do/undo order and explicit impact
+notifications. It schedules required RHYTHMS/PAGE work after publication; it does
+not yet execute those steps or expose a correction CLI command.

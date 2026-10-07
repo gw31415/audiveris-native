@@ -1418,6 +1418,103 @@ mod tests {
         }).collect();
         assert_eq!(json!(trace), original["trace"]);
     }
+    #[test]
+    fn editing_sequence_reverses_actual_tasks_before_notifying_rhythm_impacts() {
+        use crate::shared_sig::{DefaultEditingTask, EditingOperation, EditingSequence};
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-editing-task/impact-observed.json"
+        ))
+        .unwrap();
+        let mut m = double_dot_symbolic_music();
+        let snapshot = m.owner.graph.snapshot();
+        let dots: Vec<_> = original["task_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|b| {
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["kind"] == "AugmentationDotInter" && &n["bounds"] == b)
+                    .unwrap()
+                    .clone()
+            })
+            .collect();
+        let ids: Vec<_> = dots
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap() as usize)
+            .collect();
+        let tasks = dots
+            .iter()
+            .enumerate()
+            .map(|(i, n)| {
+                let mut bounds: [i64; 4] = serde_json::from_value(n["bounds"].clone()).unwrap();
+                bounds[0] += 3 + i as i64;
+                DefaultEditingTask::new(&m.owner.graph, key(n).unwrap(), bounds, vec![], vec![])
+                    .unwrap()
+            })
+            .collect();
+        let mut sequence = EditingSequence::new(tasks);
+        let before = m.owner.graph.snapshot();
+        assert_eq!(
+            sequence
+                .perform(&mut m.owner.graph, EditingOperation::Do, "not-a-step")
+                .unwrap_err(),
+            "editing_latest_step_required"
+        );
+        assert_eq!(m.owner.graph.snapshot(), before);
+        for (i, op) in [
+            EditingOperation::Do,
+            EditingOperation::Undo,
+            EditingOperation::Redo,
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let effect = sequence.perform(&mut m.owner.graph, op, "HEADS").unwrap();
+            let snap = m.owner.graph.snapshot();
+            let c = &original["epilog_below_first"][i];
+            let actual: Vec<_> = snap["edit_publications"].as_array().unwrap()[i * 2..i * 2 + 2]
+                .iter()
+                .map(|p| {
+                    format!(
+                        "dot{}",
+                        ids.iter().position(|id| p["inter_id"] == *id).unwrap()
+                    )
+                })
+                .collect();
+            assert_eq!(json!(actual), c["task_publications"]);
+            let bounds: Vec<_> = ids
+                .iter()
+                .map(|id| {
+                    snap["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == *id)
+                        .unwrap()["bounds"]
+                        .clone()
+                })
+                .collect();
+            assert_eq!(json!(bounds), c["dot_bounds"]);
+            assert_eq!(
+                effect["first_impacted_step"],
+                original["first_impacted_step"]
+            );
+            assert_eq!(effect["mark_sheet_modified"], c["modified"]);
+            assert_eq!(effect["planned_steps"], c["impact_calls"]);
+            assert_eq!(effect["reprocessed_steps"], json!([]));
+            assert_eq!(effect["controller_impact_complete"], false);
+            assert_eq!(snap["edit_impacts"].as_array().unwrap().len(), i + 1);
+        }
+        let effect = sequence
+            .perform(&mut m.owner.graph, EditingOperation::Redo, "PAGE")
+            .unwrap();
+        assert_eq!(effect["planned_steps"], original["planned_through_page"]);
+        assert_eq!(effect["reprocessed_steps"], json!([]));
+        assert_eq!(effect["controller_impact_complete"], false);
+    }
     fn normalized_dot_callback_trace(
         graph: &Graph,
         notes: &[usize],

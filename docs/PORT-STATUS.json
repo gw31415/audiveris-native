@@ -463,6 +463,12 @@
       "unit": "retained ordinary dot DefaultEditor/EditingTask ordering, duplicate pruning, relation identity and publication",
       "limits": "actual saved-owner declared edit on image-owned Graph and physical registry; no automatic correction/GUI/controller impact/history/general editor/ensemble/multi-staff/shared-image/full cleaner completion",
       "evidence": "evidence/musicxml-editing-task/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "retained EditingSequence task order and original dot impact notification selection",
+      "limits": "saved two-task control; planned RHYTHMS/PAGE only, no actual step reprocessing or SheetStub persistence/preEdit/history/general correction CLI/shared-image success",
+      "evidence": "evidence/musicxml-editing-impact/VALIDATION.json"
     }
   ],
   "function_groups": [

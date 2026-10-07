@@ -1,0 +1,32 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "actual retained EditingTasks; actual UITaskList do/undo/redo publication order, original CtrlTask firstImpactedStep and below-first epilog (no impact reprocessing); controller fields installed headlessly without GUI constructor",
+  "task_bounds" : [ [ 303, 235, 5, 4 ], [ 317, 235, 5, 4 ] ],
+  "step_order" : [ "LOAD", "BINARY", "SCALE", "GRID", "HEADERS", "STEM_SEEDS", "BEAMS", "LEDGERS", "HEADS", "STEMS", "REDUCTION", "CUE_BEAMS", "TEXTS", "MEASURES", "CHORDS", "CURVES", "SYMBOLS", "LINKS", "RHYTHMS", "PAGE" ],
+  "impacted_by_dot" : [ "RHYTHMS", "PAGE" ],
+  "first_impacted_step" : "RHYTHMS",
+  "epilog_below_first" : [ {
+    "operation" : "do",
+    "latest" : "HEADS",
+    "modified" : true,
+    "impact_calls" : [ ],
+    "task_publications" : [ "dot0", "dot1" ],
+    "dot_bounds" : [ [ 306, 235, 5, 4 ], [ 321, 235, 5, 4 ] ]
+  }, {
+    "operation" : "undo",
+    "latest" : "HEADS",
+    "modified" : false,
+    "impact_calls" : [ ],
+    "task_publications" : [ "dot1", "dot0" ],
+    "dot_bounds" : [ [ 303, 235, 5, 4 ], [ 317, 235, 5, 4 ] ]
+  }, {
+    "operation" : "redo",
+    "latest" : "HEADS",
+    "modified" : false,
+    "impact_calls" : [ ],
+    "task_publications" : [ "dot0", "dot1" ],
+    "dot_bounds" : [ [ 306, 235, 5, 4 ], [ 321, 235, 5, 4 ] ]
+  } ],
+  "planned_through_page" : [ "RHYTHMS", "PAGE" ],
+  "actual_page_reprocessing_observed" : false
+}

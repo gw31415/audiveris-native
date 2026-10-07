@@ -10,7 +10,7 @@ use std::collections::{BTreeMap, BTreeSet};
 mod dot_ownership;
 mod editing_task;
 pub use dot_ownership::NoteOwnerEdit;
-pub use editing_task::{DefaultEditingTask, EditingLink, EditingOperation};
+pub use editing_task::{DefaultEditingTask, EditingLink, EditingOperation, EditingSequence};
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Phase {
@@ -357,6 +357,7 @@ pub struct Graph {
     edge_clock: u64,
     dot_removals: Vec<Value>,
     edit_publications: Vec<Value>,
+    edit_impacts: Vec<Value>,
     dot_ownership: Option<dot_ownership::Ownership>,
     #[cfg(test)]
     trace_dot_callbacks: bool,
@@ -2310,6 +2311,9 @@ impl Graph {
         }
         if !self.edit_publications.is_empty() {
             snapshot["edit_publications"] = json!(self.edit_publications);
+        }
+        if !self.edit_impacts.is_empty() {
+            snapshot["edit_impacts"] = json!(self.edit_impacts);
         }
         snapshot
     }

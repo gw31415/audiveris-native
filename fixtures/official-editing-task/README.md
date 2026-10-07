@@ -22,3 +22,9 @@ registry, then explicitly installs the saved cold cache/staff/grade/attachment
 control state. It does not count this declared edit as new full-image success.
 Original controller impact/reprocessing, general editors and ensemble
 invalidation are separate pending dependencies.
+
+`EditingImpactProbe.java` observes two original tasks' real publication order and
+bounds, CtrlTask.firstImpactedStep and epilog below RHYTHMS (latest HEADS). Actual
+through-PAGE reprocessing is not observed in this fixture; its inclusive schedule
+is separated from executed impacts. Native modified flag is notification intent,
+not yet persisted SheetStub mutation.
