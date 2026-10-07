@@ -1,0 +1,16 @@
+{
+  "baseline_source": "68ec2bd6e9fa9e603c5dbe169330db5387a32bd4",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual double-dot first-vertex removal with cold/warm Part getters; two declared real two-member HeadChord automatic/manual remaining-dot controls; not new image/export success",
+  "implemented": "ordinary note-owned count callback on actual augmentation relation and vertex removal; ties-even member mean; zero inconsistent count triggers reentrant nonmanual dot removal, manual remains; physical identity retained and failure atomic",
+  "limits": "Part getter cache/Measure augmentation collection differs by original warm/cold state and remains unconnected; exact intermediate callbacks for shared mixed owners, post-rhythm edits, special heads, discarded-candidate closure receipts and full LINK/cleaner remain partial",
+  "target_tests": {
+    "music_dots": 7,
+    "shared_sig": 7
+  },
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false,
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "pending_guard": "multiple outgoing dot supports refuse music_dot_shared_vertex_callback_pending until original intermediate callback/closure observations"
+}

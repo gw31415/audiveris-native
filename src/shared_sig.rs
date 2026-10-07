@@ -596,6 +596,36 @@ impl Graph {
             affected_head_stem.insert(e.key.source);
             affected_head_stem.insert(e.key.target);
         }
+        if removed.iter().any(|id| {
+            self.vertices[*id as usize - 1].data["kind"] == "AugmentationDotInter"
+                && self
+                    .edges
+                    .iter()
+                    .filter(|e| {
+                        !e.removed
+                            && e.key.source == *id as usize
+                            && matches!(
+                                e.key.kind.as_str(),
+                                "AugmentationRelation" | "DoubleDotRelation"
+                            )
+                    })
+                    .count()
+                    > 1
+        }) {
+            return Err("music_dot_shared_vertex_callback_pending".into());
+        }
+        let augmentation_notes = self
+            .edges
+            .iter()
+            .filter(|e| {
+                !e.removed
+                    && e.key.kind == "AugmentationRelation"
+                    && removed.contains(&(e.key.source as u64))
+                    && self.vertices[e.key.source - 1].data["kind"] == "AugmentationDotInter"
+                    && !removed.contains(&(e.key.target as u64))
+            })
+            .map(|e| e.key.target)
+            .collect::<BTreeSet<_>>();
         for id in &removed {
             next.vertices[*id as usize - 1].removed = true;
         }
@@ -616,6 +646,9 @@ impl Graph {
             .collect::<Vec<_>>();
         next.remove_chord_identity_edges(&chord_edges)?;
         next.prune();
+        for note in augmentation_notes {
+            next.recount_augmentation_note(note)?;
+        }
         next.refresh_head_stem_abnormal(&affected_head_stem);
         next.refresh_beam_groups(&removed)?;
         *self = next;
@@ -960,51 +993,97 @@ impl Graph {
         next.edges[id - 1].removed = true;
         next.refresh_augmentation_abnormal(&BTreeSet::from([edge.key.source]));
         if edge.key.kind == "AugmentationRelation" && !target.removed {
-            let owners = next
-                .edges
-                .iter()
-                .filter(|e| {
-                    !e.removed && e.key.kind == "Containment" && e.key.target == edge.key.target
-                })
-                .map(|e| e.key.source)
-                .collect::<Vec<_>>();
-            if owners.len() != 1 {
-                return Err("music_dot_owned_note_chord_required".into());
-            }
-            let owner = owners[0];
-            let members = next
-                .edges
-                .iter()
-                .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == owner)
-                .map(|e| e.key.target)
-                .collect::<Vec<_>>();
-            let chord = &next.vertices[owner - 1];
-            let (phase, class) = if target.data["kind"] == "RestInter" {
-                (Phase::Symbol, "RestChordInter")
-            } else {
-                if !matches!(
-                    target.data["shape"].as_str(),
-                    Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
-                ) {
-                    return Err("music_dot_special_head_callback_pending".into());
-                }
-                (Phase::Head, "HeadChordInter")
-            };
-            if chord.removed
-                || chord.key.phase != Phase::Chord
-                || target.key.phase != phase
-                || chord.data["kind"] != class
-                || members != [edge.key.target]
-            {
-                return Err("music_dot_single_note_chord_required".into());
-            }
-            if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
-                return Err("music_dot_rhythm_reset_required".into());
-            }
-            let dots = crate::music_dots::note_count(&next.snapshot(), &target.data);
-            next.vertices[owner - 1].data["dots_number"] = json!(dots);
+            next.recount_augmentation_note(edge.key.target)?;
         }
         *self = next;
+        Ok(())
+    }
+    fn recount_augmentation_note(&mut self, target: usize) -> Result<(), String> {
+        if self.vertices[target - 1].removed {
+            return Ok(());
+        }
+        let note = &self.vertices[target - 1];
+        let (phase, class) = match note.data["kind"].as_str() {
+            Some("RestInter") => (Phase::Symbol, "RestChordInter"),
+            Some("HeadInter") => (Phase::Head, "HeadChordInter"),
+            _ => return Err("music_dot_typed_supported_note_required".into()),
+        };
+        let owners = self
+            .edges
+            .iter()
+            .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.target == target)
+            .map(|e| e.key.source)
+            .collect::<Vec<_>>();
+        if owners.len() != 1 {
+            return Err("music_dot_owned_note_chord_required".into());
+        }
+        let owner = owners[0];
+        let chord = &self.vertices[owner - 1];
+        let members = self
+            .edges
+            .iter()
+            .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == owner)
+            .map(|e| e.key.target)
+            .collect::<Vec<_>>();
+        if chord.removed
+            || chord.key.phase != Phase::Chord
+            || chord.data["kind"] != class
+            || members.is_empty()
+            || (class == "RestChordInter" && members.len() != 1)
+        {
+            return Err("music_dot_owned_note_chord_required".into());
+        }
+        if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
+            return Err("music_dot_rhythm_reset_required".into());
+        }
+        let snapshot = self.snapshot();
+        let mut counts = Vec::new();
+        for id in &members {
+            let member = &self.vertices[id - 1];
+            if member.removed
+                || member.key.phase != phase
+                || member.key.system != chord.key.system
+                || member.data["kind"] != note.data["kind"]
+            {
+                return Err("music_dot_owned_note_member_required".into());
+            }
+            if phase == Phase::Head
+                && !matches!(
+                    member.data["shape"].as_str(),
+                    Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
+                )
+            {
+                return Err("music_dot_special_head_callback_pending".into());
+            }
+            counts.push(crate::music_dots::note_count(&snapshot, &member.data));
+        }
+        let dots =
+            (counts.iter().sum::<usize>() as f64 / counts.len() as f64).round_ties_even() as usize;
+        self.vertices[owner - 1].data["dots_number"] = json!(dots);
+        // countDots can remove other automatic dots, which calls countDots
+        // again. Each nested removal consumes a live vertex; manual dots stay.
+        if dots == 0 && counts.iter().any(|&c| c != 0) {
+            for id in members {
+                let snapshot = self.snapshot();
+                if crate::music_dots::note_count(&snapshot, &self.vertices[id - 1].data) == 0 {
+                    continue;
+                }
+                let dot_ids = self
+                    .edges
+                    .iter()
+                    .filter(|e| {
+                        !e.removed && e.key.kind == "AugmentationRelation" && e.key.target == id
+                    })
+                    .map(|e| e.key.source)
+                    .collect::<Vec<_>>();
+                for dot_id in dot_ids {
+                    let dot = &self.vertices[dot_id - 1];
+                    if !dot.removed && dot.data["manual"] != true {
+                        self.remove_music_inter(dot.key)?;
+                    }
+                }
+            }
+        }
         Ok(())
     }
     fn refresh_beam_groups(&mut self, removed: &[u64]) -> Result<(), String> {

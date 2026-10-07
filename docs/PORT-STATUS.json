@@ -409,6 +409,12 @@
       "unit": "owned HeadChord/top-down head augmentation support competition using stable upper/lower-dot and all supported integer-pitch parity before Rest/DoubleDot checks",
       "limits": "six declared original controls on ordinary single HeadChords; multiple/shared image admission, multi-member callback and full LINK sequence remain partial",
       "evidence": "evidence/musicxml-head-dot-competition/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary actual augmentation edge/vertex owner callback, multi-head ties-even mean and reentrant inconsistent automatic dot deletion with manual retention",
+      "limits": "actual first-dot chain loss and declared two-member controls; Part cache/Measure collection, shared intermediate callback order, closure receipts and full LINK/cleaner remain partial; image admission unchanged",
+      "evidence": "evidence/musicxml-dot-vertex-lifecycle/VALIDATION.json"
     }
   ],
   "function_groups": [

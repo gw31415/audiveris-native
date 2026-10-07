@@ -2145,3 +2145,12 @@ the head criterion. Existing CLI examples remain, while multiple/shared support
 creation/admission, multi-member callbacks, direct vertex-removal ownership and
 complete LINK/cleaner/epilog remain partial. Evidence:
 `evidence/musicxml-head-dot-competition/VALIDATION.json`.
+
+Dot vertex removal now recounts surviving actual ordinary note owners. The
+same callback handles multi-head mean counts and reentrant inconsistent automatic
+dot deletion; manual dots stay. Original actual first-dot chain mutation and
+two declared automatic/manual two-member controls are separate from full-image
+success. Existing CLI examples/admission guards remain. Part getter/Measure
+cached ownership, shared mixed-owner intermediate ordering, discarded-candidate
+closure receipts, post-rhythm edits and complete cleaner/epilog remain partial.
+Evidence: `evidence/musicxml-dot-vertex-lifecycle/VALIDATION.json`.

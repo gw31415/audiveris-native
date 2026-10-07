@@ -1128,13 +1128,7 @@ mod tests {
             );
         }
     }
-    #[test]
-    fn actual_double_dot_chain_detachment_recounts_owner_and_preserves_glyphs() {
-        let original: Value = serde_json::from_str(include_str!(
-            "../fixtures/official-dot-chain-detach/observed.json"
-        ))
-        .unwrap();
-        let cold = &original["cases"][0];
+    fn double_dot_symbolic_music() -> crate::music_measures::OwnedMusic {
         let image = crate::GrayImage::decode(include_bytes!(
             "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
         ))
@@ -1145,7 +1139,16 @@ mod tests {
         let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
         let owner = crate::music_links::finalize_stems(owner).unwrap();
         let m = crate::music_measures::continue_measures(owner).unwrap();
-        let mut m = crate::music_symbols::continue_symbols(m).unwrap();
+        crate::music_symbols::continue_symbols(m).unwrap()
+    }
+    #[test]
+    fn actual_double_dot_chain_detachment_recounts_owner_and_preserves_glyphs() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-chain-detach/observed.json"
+        ))
+        .unwrap();
+        let cold = &original["cases"][0];
+        let mut m = double_dot_symbolic_music();
         contextualize_and_count(&mut m.owner.graph, &m.chords).unwrap();
         let snapshot = m.owner.graph.snapshot();
         let by_bounds = |class, bounds: &Value| {
@@ -1240,6 +1243,170 @@ mod tests {
             );
         }
         assert!(crate::music_xml::continue_export(m).is_err());
+    }
+    #[test]
+    fn dot_vertex_callback_recounts_chain_and_cascades_only_automatic_chord_dots() {
+        let f: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-vertex-lifecycle/observed.json"
+        ))
+        .unwrap();
+        let mut m = double_dot_symbolic_music();
+        contextualize_and_count(&mut m.owner.graph, &m.chords).unwrap();
+        let c = &f["cases"][0];
+        let snapshot = m.owner.graph.snapshot();
+        let dots = c["dot_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|b| {
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["kind"] == "AugmentationDotInter" && &n["bounds"] == b)
+                    .unwrap()
+            })
+            .collect::<Vec<_>>();
+        let physical = dots
+            .iter()
+            .map(|d| {
+                let gid = d["glyph_id"].as_u64().unwrap() as usize;
+                (
+                    gid,
+                    crate::beam_dispatch::glyph_json(
+                        &m.owner.prepared.registry.get(gid).unwrap().glyph,
+                    ),
+                )
+            })
+            .collect::<Vec<_>>();
+        let observe = |graph: &Graph, keys: &[Key], chord: usize, expected: &Value| {
+            let snap = graph.snapshot();
+            for (k, e) in keys.iter().zip(expected["dots"].as_array().unwrap()) {
+                let id = graph.id(*k).unwrap();
+                let live = snap["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == id);
+                assert_eq!(live.is_none(), e["removed"]);
+                if let Some(n) = live {
+                    assert_eq!(n["abnormal"], e["abnormal"]);
+                }
+            }
+            assert_eq!(
+                snap["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == chord)
+                    .unwrap()["dots_number"],
+                expected["chord_dots"]
+            );
+        };
+        let chord = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == c["chord_bounds"])
+            .unwrap();
+        let cid = chord["id"].as_u64().unwrap() as usize;
+        let keys = dots.iter().map(|d| key(d).unwrap()).collect::<Vec<_>>();
+        m.owner.graph.remove_music_inter(keys[0]).unwrap();
+        observe(
+            &m.owner.graph,
+            &keys,
+            cid,
+            &c["after_first_dot_vertex_remove"],
+        );
+        let removed = m.owner.graph.snapshot();
+        m.owner.graph.remove_music_inter(keys[0]).unwrap();
+        assert_eq!(m.owner.graph.snapshot(), removed);
+        assert_eq!(
+            check_targets(&mut m.owner.graph).unwrap()["removed_orphan_dot_ids"]
+                .as_array()
+                .unwrap()
+                .len() as u64,
+            c["target_modifications"].as_u64().unwrap()
+        );
+        observe(&m.owner.graph, &keys, cid, &c["after_target_check"]);
+        for (gid, ink) in physical {
+            assert_eq!(
+                crate::beam_dispatch::glyph_json(
+                    &m.owner.prepared.registry.get(gid).unwrap().glyph
+                ),
+                ink
+            );
+        }
+        for c in f["cases"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|c| c["kind"] == "declared_multi")
+        {
+            let mut graph = Graph::default();
+            let ck = Key {
+                system: 1,
+                phase: Phase::Chord,
+                local: 1,
+            };
+            let cid=graph.vertex(ck,json!({"kind":"HeadChordInter","bounds":c["chord_bounds"],"part_id":1,"staff_id":1,"measure_index":1,"duration":null,"voice":null,"dots_number":c["before"]["chord_dots"]}),false).unwrap();
+            let mut dots = Vec::new();
+            for (i, b) in c["head_bounds"].as_array().unwrap().iter().enumerate() {
+                let hk = Key {
+                    phase: Phase::Head,
+                    local: i + 1,
+                    ..ck
+                };
+                let dk = Key {
+                    phase: Phase::Symbol,
+                    ..hk
+                };
+                graph.vertex(hk,json!({"kind":"HeadInter","shape":"NOTEHEAD_BLACK","bounds":b,"grade":0.8,"staff_id":1}),false).unwrap();
+                graph.vertex(dk,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":c["dot_bounds"][i],"grade":0.8,"staff_id":1,"manual":i==1 && c["remaining_dot_manual"]==true,"abnormal":true}),false).unwrap();
+                graph
+                    .relations(
+                        1,
+                        Phase::Chord,
+                        vec![(ck, hk, json!({"kind":"Containment"}))],
+                    )
+                    .unwrap();
+                graph
+                    .relations(
+                        1,
+                        Phase::Symbol,
+                        vec![(dk, hk, json!({"kind":"AugmentationRelation","grade":0.7}))],
+                    )
+                    .unwrap();
+                dots.push(dk);
+            }
+            if c["remaining_dot_manual"] != true {
+                let mut frozen = graph.clone();
+                let mut data = frozen.snapshot()["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == frozen.id(dots[1]).unwrap())
+                    .unwrap()
+                    .clone();
+                data["frozen"] = json!(true);
+                frozen.vertex(dots[1], data, false).unwrap();
+                let before = frozen.snapshot();
+                assert_eq!(
+                    frozen.remove_music_inter(dots[0]).unwrap_err(),
+                    "music_removal_frozen_inter"
+                );
+                assert_eq!(frozen.snapshot(), before);
+            }
+            graph.remove_music_inter(dots[0]).unwrap();
+            observe(&graph, &dots, cid, &c["after_first_dot_vertex_remove"]);
+            assert!(
+                check_targets(&mut graph).unwrap()["removed_orphan_dot_ids"]
+                    .as_array()
+                    .unwrap()
+                    .is_empty()
+            );
+            observe(&graph, &dots, cid, &c["after_target_check"]);
+        }
     }
     #[test]
     fn weak_rest_removal_marks_and_cleans_its_actual_orphan_dot() {
