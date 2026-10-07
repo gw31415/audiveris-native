@@ -1310,3 +1310,13 @@ Divisions inspect all owned page Chords, not only a selected Measure. No ending
 forward/padding is added. This is controlled scheduling, not automatic mapper
 or public fine correction admission; those guards and13/16 refusal stay. See
 `evidence/musicxml-rational-voice-clocks/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+### Actual Rational candidate mapper and Voice extinction
+
+Native narrow/wide/compound retrieval, starting Chord construction, rookie
+mapping/retry and extinction now choose the manual7/64 control Voice plan
+without supplied assignments or output times. Actual clocks use exact fractions
+and live duration/endTime, producing original-matching2 underfilled Voices and
+8note native output, identical to the earlier declared-plan bytes/XSD. The
+selected-stack duration/event adapter and task/controller publication still
+guard public correction acceptance. See `evidence/musicxml-rational-mapper/TRY.md`.

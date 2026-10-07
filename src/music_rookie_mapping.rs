@@ -3,6 +3,7 @@
 //! Owned image adapter retains actual compounds/Voices and no implicit
 //! tuplets. Implicit-tuplet analysis, unknown-time new-Voice inference
 //! and Merged remain pending.
+use crate::music_time::Fraction;
 use crate::{
     music_measure_slots::CompoundSlot, music_measures::Measure, music_voices::Voice,
     shared_sig::Graph,
@@ -79,7 +80,7 @@ struct Mapping {
 struct NarrowTime {
     id: usize,
     chord_ids: Vec<usize>,
-    time_offset: Option<u32>,
+    time_offset: Option<Fraction>,
 }
 struct ValidationInput {
     rookies: Vec<usize>,
@@ -88,9 +89,9 @@ struct ValidationInput {
     black: Vec<Pair>,
     next: Vec<Pair>,
     narrow: Vec<NarrowTime>,
-    active_ends: BTreeMap<usize, Option<u32>>,
-    rookie_durations: BTreeMap<usize, u32>,
-    expected: Option<u32>,
+    active_ends: BTreeMap<usize, Option<Fraction>>,
+    rookie_durations: BTreeMap<usize, Fraction>,
+    expected: Option<Fraction>,
     abnormal: bool,
 }
 struct ValidatedMapping {
@@ -140,9 +141,7 @@ fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, Str
                     .rookie_durations
                     .get(&pair.rookie)
                     .ok_or("music_mapping_rookie_duration_required")?;
-                let chord_end = end
-                    .checked_add(duration)
-                    .ok_or("music_mapping_time_overflow")?;
+                let chord_end = end.plus(duration)?;
                 if input.expected.is_some_and(|expected| chord_end > expected)
                     && !input.next.contains(pair)
                     && !input.black.contains(pair)
@@ -164,7 +163,7 @@ fn validated_mapping(mut input: ValidationInput) -> Result<ValidatedMapping, Str
         let mut retry_inferred = false;
         for narrow in &mut input.narrow {
             if narrow.time_offset.is_none() {
-                let mut inferred = BTreeMap::<u32, Vec<usize>>::new();
+                let mut inferred = BTreeMap::<Fraction, Vec<usize>>::new();
                 for rookie in &narrow.chord_ids {
                     let Some(pair) = map.pairs.iter().find(|p| p.rookie == *rookie) else {
                         continue;
@@ -321,7 +320,7 @@ pub(crate) struct Context<'a> {
     pub measure_index: usize,
     pub candidates: &'a crate::music_measure_slots::CandidateReferences,
     pub order: &'a mut crate::music_measure_slots::CandidateOrder,
-    pub expected: u32,
+    pub expected: Fraction,
     pub clef: &'a Value,
     pub interline: usize,
     pub lifetime: &'a crate::music_voice_lifetime::Lifetime,
@@ -338,11 +337,8 @@ fn node(snapshot: &Value, id: usize) -> Result<&Value, String> {
 fn bounds(n: &Value) -> Result<[i64; 4], String> {
     serde_json::from_value(n["bounds"].clone()).map_err(|_| "music_mapping_bounds_required".into())
 }
-fn time(n: &Value) -> Result<Option<u32>, String> {
-    n["time_offset"]
-        .as_str()
-        .map(crate::music_time::parse_ticks)
-        .transpose()
+fn time(n: &Value) -> Result<Option<Fraction>, String> {
+    n["time_offset"].as_str().map(Fraction::parse).transpose()
 }
 impl Context<'_> {
     fn read_grouped_slot_times(&mut self, slot: &CompoundSlot) -> Result<bool, String> {
@@ -383,7 +379,7 @@ impl Context<'_> {
             }
         }
         let Some(t) = target else { return Ok(false) };
-        crate::music_chord_time::set_and_push_ticks(
+        crate::music_chord_time::set_and_push(
             self.graph,
             self.voices,
             self.measures,
@@ -525,7 +521,7 @@ impl Context<'_> {
                 for &sibling in &siblings {
                     let actual = self.graph.snapshot();
                     if let Some(t) = time(node(&actual, sibling)?)? {
-                        crate::music_chord_time::set_and_push_ticks(
+                        crate::music_chord_time::set_and_push(
                             self.graph,
                             self.voices,
                             self.measures,
@@ -612,7 +608,7 @@ impl Context<'_> {
             self.fact(&snapshot, id)?;
         }
         let edges = snapshot["relations"].as_array().unwrap();
-        let mut times: BTreeMap<u32, Vec<usize>> = BTreeMap::new();
+        let mut times: BTreeMap<Fraction, Vec<usize>> = BTreeMap::new();
         for &id in &slot.chord_ids {
             if let Some(t) = time(node(&snapshot, id)?)? {
                 times.entry(t).or_default().push(id);
@@ -662,7 +658,7 @@ impl Context<'_> {
                 .ok_or("music_mapping_last_chord_required")?;
             // Current compared image scope explicitly has implicitTuplets=false.
             if crate::music_voices::last_end_time(self.graph, voice)?
-                .is_some_and(|t| t >= crate::music_time::Fraction::from_ticks(self.expected))
+                .is_some_and(|t| t >= self.expected)
             {
                 continue;
             }
@@ -703,28 +699,26 @@ impl Context<'_> {
                 .iter()
                 .map(|&id| {
                     let n = node(&snapshot, id)?;
-                    let end = match (time(n)?, n["duration"].as_str()) {
-                        (Some(start), Some(duration)) => Some(
-                            start
-                                .checked_add(crate::music_time::parse_ticks(duration)?)
-                                .ok_or("music_mapping_time_overflow")?,
-                        ),
-                        _ => None,
-                    };
-                    Ok((id, end))
+                    let key = serde_json::from_value(n["origin"].clone())
+                        .map_err(|_| "music_mapping_origin_required")?;
+                    Ok((
+                        id,
+                        self.graph
+                            .chord_end_time(key)?
+                            .as_deref()
+                            .map(Fraction::parse)
+                            .transpose()?,
+                    ))
                 })
                 .collect::<Result<BTreeMap<_, _>, String>>()?;
             let rookie_durations = rookies
                 .iter()
                 .map(|&id| {
-                    let n = node(&snapshot, id)?;
                     Ok((
                         id,
-                        crate::music_time::parse_ticks(
-                            n["duration"]
-                                .as_str()
-                                .ok_or("music_mapping_rookie_duration_required")?,
-                        )?,
+                        crate::music_duration::live_exact(&snapshot, id)?
+                            .intrinsic
+                            .ok_or("music_mapping_rookie_duration_required")?,
                     ))
                 })
                 .collect::<Result<BTreeMap<_, _>, String>>()?;
@@ -776,7 +770,7 @@ impl Context<'_> {
                             own,
                         )?;
                         if let Some(end) = end {
-                            crate::music_chord_time::set_and_push_ticks(
+                            crate::music_chord_time::set_and_push(
                                 self.graph,
                                 self.voices,
                                 self.measures,
@@ -799,7 +793,7 @@ impl Context<'_> {
             })
             .collect::<Vec<_>>();
         Ok((
-            json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_ticks(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":actives,"costs":costs,"mapping":result,"ok":true,"after":after,"validation":validation}),
+            json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_fraction(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":actives,"costs":costs,"mapping":result,"ok":true,"after":after,"validation":validation}),
             rookies,
         ))
     }
@@ -1030,7 +1024,7 @@ mod tests {
                 measure_index: mi,
                 candidates: &candidates,
                 order: &mut order,
-                expected: 16,
+                expected: Fraction::from_ticks(16),
                 clef,
                 interline: owner.owner.interline,
                 lifetime: &lifetime,
@@ -1321,12 +1315,7 @@ mod tests {
         }
     }
     fn observed_input(input: &Value) -> ValidationInput {
-        let ticks = |v: &Value| {
-            v.as_str()
-                .map(crate::music_time::parse_ticks)
-                .transpose()
-                .unwrap()
-        };
+        let ticks = |v: &Value| v.as_str().map(Fraction::parse).transpose().unwrap();
         ValidationInput {
             rookies: serde_json::from_value(input["rookies"].clone()).unwrap(),
             actives: serde_json::from_value(input["actives"].clone()).unwrap(),
@@ -1402,7 +1391,7 @@ mod tests {
                             .is_some_and(|m| m.pairs.iter().any(|p| p.rookie == *r))
                 })
                 .collect::<Vec<_>>();
-            let narrow=result.narrow.iter().map(|n|json!({"id":n.id,"time_offset":n.time_offset.map(crate::music_time::format_ticks)})).collect::<Vec<_>>();
+            let narrow=result.narrow.iter().map(|n|json!({"id":n.id,"time_offset":n.time_offset.map(crate::music_time::format_fraction)})).collect::<Vec<_>>();
             let mut output = json!({"mapping":result.mapping,"black":result.black,"remaining_rookies":remaining,"narrow":narrow});
             if case["output"].get("measure_abnormal").is_some() {
                 output["measure_abnormal"] = json!(result.abnormal);
@@ -1501,7 +1490,7 @@ mod tests {
             if unknown_active {
                 let time = case["input"]["narrow"][0]["time_offset"]
                     .as_str()
-                    .map(crate::music_time::parse_ticks)
+                    .map(Fraction::parse)
                     .transpose()
                     .unwrap();
                 slot_times.set(compounds[2].members[0].id, time).unwrap();
@@ -1523,7 +1512,7 @@ mod tests {
                 measure_index: mi,
                 candidates: &candidates,
                 order: &mut order,
-                expected: 16,
+                expected: Fraction::from_ticks(16),
                 clef,
                 interline: owner.owner.interline,
                 lifetime: &lifetime,
@@ -1697,7 +1686,7 @@ mod tests {
                 measure_index: mi,
                 candidates: &candidates,
                 order: &mut order,
-                expected: 16,
+                expected: Fraction::from_ticks(16),
                 clef,
                 interline: owner.owner.interline,
                 lifetime: &lifetime,
@@ -1844,7 +1833,7 @@ mod tests {
                     measure_index: mi,
                     candidates: &candidates,
                     order: &mut order,
-                    expected: 16,
+                    expected: Fraction::from_ticks(16),
                     clef,
                     interline: owner.owner.interline,
                     lifetime: &lifetime,
@@ -1994,7 +1983,7 @@ mod tests {
                         member["id"].as_u64().unwrap() as usize,
                         member["time_offset"]
                             .as_str()
-                            .map(crate::music_time::parse_ticks)
+                            .map(Fraction::parse)
                             .transpose()
                             .unwrap(),
                     )
@@ -2017,7 +2006,7 @@ mod tests {
                 measure_index: mi,
                 candidates: &candidates,
                 order: &mut order,
-                expected: 16,
+                expected: Fraction::from_ticks(16),
                 clef,
                 interline: owner.owner.interline,
                 lifetime: &lifetime,

@@ -17,3 +17,8 @@ not a public HeadStem correction option or new automatic image acceptance.
 The original Java control uses the same saved-page owner and actual
 PageRhythm.reprocessStack/PartwiseBuilder; original XML is not reused.
 Existing public image/correction examples in `docs/MUSICXML-LIMITED.md` remain.
+
+Historical sourcec357b75 supplied the Voice plan. Current main runs native
+candidate/start/mapper/extinction instead; see the later
+`evidence/musicxml-rational-mapper/TRY.md`. The old validation/readback records
+remain source-specific.

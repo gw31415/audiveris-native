@@ -4,6 +4,7 @@
 //! The image adapter uses actual chords/SIG in the existing zero-skew one-staff
 //! admission. General staff interpolation, dotted-note acquisition, cue chords
 //! and ChordsMapper remain separate dependencies, not planned omissions.
+use crate::music_time::Fraction;
 use crate::{
     music_measures::{Chord, ChordKind, Measure},
     shared_sig::Graph,
@@ -28,7 +29,7 @@ struct Fact {
     has_beams: bool,
     pitches: Vec<i64>,
     leading_pitch: i64,
-    time_offset: Option<u32>,
+    time_offset: Option<Fraction>,
 }
 #[derive(Deserialize)]
 struct Explicit {
@@ -532,11 +533,11 @@ impl CandidateReferences {
 /// views address one clock by its stable narrow ID, not one clock per compound.
 /// These clocks differ from the later timed MeasureStack slots.
 pub(crate) struct ClockState {
-    members: BTreeMap<usize, (Vec<usize>, Option<u32>)>,
+    members: BTreeMap<usize, (Vec<usize>, Option<Fraction>)>,
 }
 impl ClockState {
     pub(crate) fn new(compounds: &[CompoundSlot]) -> Result<Self, String> {
-        let mut members: BTreeMap<usize, (Vec<usize>, Option<u32>)> = BTreeMap::new();
+        let mut members: BTreeMap<usize, (Vec<usize>, Option<Fraction>)> = BTreeMap::new();
         for narrow in compounds.iter().flat_map(|c| &c.members) {
             if let Some((ids, _)) = members.get(&narrow.id) {
                 if ids != &narrow.chord_ids {
@@ -548,20 +549,20 @@ impl ClockState {
         }
         Ok(Self { members })
     }
-    pub(crate) fn get(&self, id: usize) -> Result<Option<u32>, String> {
+    pub(crate) fn get(&self, id: usize) -> Result<Option<Fraction>, String> {
         self.members
             .get(&id)
             .map(|m| m.1)
             .ok_or_else(|| "music_candidate_owned_narrow_required".into())
     }
-    pub(crate) fn set(&mut self, id: usize, time: Option<u32>) -> Result<(), String> {
+    pub(crate) fn set(&mut self, id: usize, time: Option<Fraction>) -> Result<(), String> {
         self.members
             .get_mut(&id)
             .ok_or("music_candidate_owned_narrow_required")?
             .1 = time;
         Ok(())
     }
-    pub(crate) fn first_time(&self, slot: &CompoundSlot) -> Result<Option<u32>, String> {
+    pub(crate) fn first_time(&self, slot: &CompoundSlot) -> Result<Option<Fraction>, String> {
         self.get(
             slot.members
                 .first()
@@ -570,7 +571,7 @@ impl ClockState {
         )
     }
     pub(crate) fn projection(&self, slot: &CompoundSlot) -> Result<Value, String> {
-        slot.members.iter().map(|s| self.get(s.id).map(|t| serde_json::json!({"id":s.id,"time_offset":t.map(crate::music_time::format_ticks)}))).collect::<Result<Vec<_>,_>>().map(|v|serde_json::json!(v))
+        slot.members.iter().map(|s| self.get(s.id).map(|t| serde_json::json!({"id":s.id,"time_offset":t.map(crate::music_time::format_fraction)}))).collect::<Result<Vec<_>,_>>().map(|v|serde_json::json!(v))
     }
 }
 fn compound(
@@ -708,7 +709,7 @@ pub(crate) fn from_owned(
             leading_pitch: pitch(leading)?,
             time_offset: nodes[&chord.id]["time_offset"]
                 .as_str()
-                .map(crate::music_time::parse_ticks)
+                .map(Fraction::parse)
                 .transpose()?,
         });
         stems.insert(chord.id, stem);

@@ -877,7 +877,7 @@ fn process_rhythm(
                 measure_index: mi,
                 candidates: &candidates,
                 order: &mut order,
-                expected: expected_ticks,
+                expected: Fraction::from_ticks(expected_ticks),
                 clef: initial_clef,
                 interline: m.owner.interline,
                 lifetime: &lifetime,
@@ -3313,29 +3313,6 @@ mod rational_owned_export_tests {
         let cached_expected = owner.measures[0].timing.expected;
         owner.apply_manual_head_stem_callback(hk,sk,json!({"kind":"HeadStemRelation","manual":true,"grade":0.7,"head_side":old["head_side"],"extension_point":old["extension_point"],"local_relation_id":edges.iter().filter_map(|e|e["local_relation_id"].as_u64()).max().unwrap()+1})).unwrap();
         assert_eq!(owner.measures[0].timing.expected, cached_expected);
-        // Compare actual owner algorithms with a declared original Voice plan.
-        // This does not substitute these observations for automatic mapper output.
-        let plan = original["timing"]["voices"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|v| {
-                v["heads"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .map(|bounds| {
-                        let id = head(bounds)["id"].as_u64().unwrap() as usize;
-                        owner
-                            .chords
-                            .iter()
-                            .find(|c| c.members.iter().any(|n| n["id"] == id))
-                            .unwrap()
-                    })
-                    .collect::<Vec<_>>()
-            })
-            .collect::<Vec<_>>();
-        let seeds = plan.iter().map(|v| v[0]).collect::<Vec<_>>();
         reset_stack_rhythm(&mut owner.measures[0], cached_expected);
         reset_rhythm(
             &mut owner.owner.graph,
@@ -3345,6 +3322,30 @@ mod rational_owned_export_tests {
             0,
         )
         .unwrap();
+        let chords = owner
+            .chords
+            .iter()
+            .filter(|c| c.measure == 0)
+            .collect::<Vec<_>>();
+        let (narrow, wide) = crate::music_measure_slots::from_owned(
+            &owner.owner.graph,
+            &owner.measures[0],
+            &chords,
+            owner.owner.interline,
+        )
+        .unwrap();
+        let centers = chords
+            .iter()
+            .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
+            .collect();
+        let compounds =
+            crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)
+                .unwrap();
+        let seeds = compounds[0]
+            .chord_ids
+            .iter()
+            .map(|id| chords.iter().find(|c| c.id == *id).copied().unwrap())
+            .collect::<Vec<_>>();
         process_starting_chords(
             &mut owner.owner.graph,
             &mut owner.voices,
@@ -3353,34 +3354,55 @@ mod rational_owned_export_tests {
             &seeds,
         )
         .unwrap();
-        for (ordinal, chords) in plan.iter().enumerate() {
-            let vi = owner
-                .voices
-                .iter()
-                .position(|v| v.measure == 0 && v.id == ordinal + 1)
-                .unwrap();
-            let mut time = Fraction::ZERO;
-            for c in chords {
-                if !owner.voices[vi].chord_ids.contains(&c.id) {
-                    assign_chord_voice(
-                        &mut owner.owner.graph,
-                        &mut owner.voices,
-                        &owner.measures,
-                        c.id,
-                        vi,
+        let candidates = crate::music_measure_slots::CandidateReferences::new(
+            &owner.owner.graph,
+            &owner.measures[0],
+            &compounds,
+        )
+        .unwrap();
+        let mut order =
+            crate::music_measure_slots::CandidateOrder::new(&compounds, &candidates).unwrap();
+        let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
+        let initial_clef = nodes
+            .iter()
+            .find(|n| {
+                n["kind"] == "ClefInter"
+                    && n["origin"]["system"] == owner.measures[0].system
+                    && n["staff_id"] == owner.measures[0].staff
+            })
+            .unwrap();
+        let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
+        let mut index = 0;
+        while let Some(slot) = order.at(index).cloned() {
+            crate::music_rookie_mapping::Context {
+                graph: &mut owner.owner.graph,
+                voices: &mut owner.voices,
+                measures: &mut owner.measures,
+                chords: &chords,
+                narrow: &narrow,
+                measure_index: 0,
+                candidates: &candidates,
+                order: &mut order,
+                expected: cached_expected.unwrap(),
+                clef: initial_clef,
+                interline: owner.owner.interline,
+                lifetime: &lifetime,
+                slot_times: &mut slot_times,
+            }
+            .map_slot(&slot)
+            .unwrap();
+            if order.contains(slot.key) {
+                lifetime
+                    .purge(
+                        &owner.owner.graph,
+                        &owner.voices,
+                        &mut owner.measures[0],
+                        0,
+                        &candidates,
+                        (&slot, slot_times.first_time(&slot).unwrap()),
                     )
                     .unwrap();
-                }
-                crate::music_chord_time::set_and_push(
-                    &mut owner.owner.graph,
-                    &owner.voices,
-                    &owner.measures,
-                    c.id,
-                    Some(time),
-                )
-                .unwrap();
-                time = Fraction::parse(&owner.owner.graph.chord_end_time(c.key).unwrap().unwrap())
-                    .unwrap();
+                index += 1;
             }
         }
         assert!(

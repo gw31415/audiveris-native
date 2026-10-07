@@ -2461,3 +2461,9 @@ reproduction command are in `evidence/musicxml-rational-voice-clocks/TRY.md`.
 The automatic mapper still has its sixteenth admission boundary and manual
 HeadStem RelationTask/controller integration remains pending. No new public
 image or correction option is enabled, and automatic13/16 is not padded.
+
+The current owned7/64 comparison derives Voice assignments through the actual
+native candidate mapper and extinction path, rather than supplying a Voice
+plan. Reproduce it with `evidence/musicxml-rational-mapper/TRY.md`. This advances
+owned correction processing; public CLI admission still waits for selected
+Rational processing and original RelationTask/controller comparisons.

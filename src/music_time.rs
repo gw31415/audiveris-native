@@ -122,6 +122,12 @@ impl PartialOrd for Fraction {
         Some(self.cmp(other))
     }
 }
+impl<'de> serde::Deserialize<'de> for Fraction {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        let text = <String as serde::Deserialize>::deserialize(deserializer)?;
+        Self::parse(&text).map_err(serde::de::Error::custom)
+    }
+}
 impl serde::Serialize for Fraction {
     fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
         serializer.collect_str(self)

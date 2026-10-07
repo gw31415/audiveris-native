@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! MeasureRhythm.purgeExtinctVoices and SlotMapper's explicit NextInVoice
 //! exception, with actual measure-scoped Voice identity and candidate abscissae.
+use crate::music_time::Fraction;
 use crate::{
     music_measure_slots::CompoundSlot, music_measures::Measure, music_voices::Voice,
     shared_sig::Graph,
@@ -42,7 +43,7 @@ impl Lifetime {
     }
     fn inspect(
         &mut self,
-        first_time: Option<u32>,
+        first_time: Option<Fraction>,
         current_x: i64,
         voices: &[Owner],
         chords: &BTreeMap<usize, Chord>,
@@ -69,15 +70,13 @@ impl Lifetime {
                 abnormal = true;
                 continue;
             };
-            let offset = crate::music_time::parse_ticks(offset)?;
-            let duration = crate::music_time::parse_ticks(
+            let offset = Fraction::parse(offset)?;
+            let duration = Fraction::parse(
                 last.duration
                     .as_deref()
                     .ok_or("music_voice_lifetime_duration_required")?,
             )?;
-            let end = offset
-                .checked_add(duration)
-                .ok_or("music_voice_lifetime_time_overflow")?;
+            let end = offset.plus(duration)?;
             if end < first_time {
                 let mut next = last.next;
                 let mut visited = BTreeSet::new();
@@ -113,7 +112,7 @@ impl Lifetime {
         measure: &mut Measure,
         measure_index: usize,
         candidates: &crate::music_measure_slots::CandidateReferences,
-        (slot, first_time): (&CompoundSlot, Option<u32>),
+        (slot, first_time): (&CompoundSlot, Option<Fraction>),
     ) -> Result<Value, String> {
         let snapshot = graph.snapshot();
         let nodes = snapshot["inters"].as_array().unwrap();
@@ -152,7 +151,10 @@ impl Lifetime {
                 Chord {
                     same_measure,
                     time_offset: n["time_offset"].as_str().map(str::to_owned),
-                    duration: n["duration"].as_str().map(str::to_owned),
+                    duration: graph.chord_duration(
+                        serde_json::from_value(n["origin"].clone())
+                            .map_err(|_| "music_voice_lifetime_origin_required")?,
+                    )?,
                     slot_x,
                     next,
                 },
@@ -170,7 +172,7 @@ impl Lifetime {
         let abnormal = self.inspect(first_time, current_x, &owners, &chords)?;
         measure.timing.abnormal |= abnormal;
         Ok(
-            json!({"slot_id":slot.id,"current_x":current_x,"first_time":first_time.map(crate::music_time::format_ticks),"extinct_voices":self.extinct,"measure_abnormal":measure.timing.abnormal}),
+            json!({"slot_id":slot.id,"current_x":current_x,"first_time":first_time.map(crate::music_time::format_fraction),"extinct_voices":self.extinct,"measure_abnormal":measure.timing.abnormal}),
         )
     }
 }
@@ -201,7 +203,7 @@ mod tests {
                 .collect();
             let first_time = c["first_time"]
                 .as_str()
-                .map(crate::music_time::parse_ticks)
+                .map(Fraction::parse)
                 .transpose()
                 .unwrap();
             let abnormal = lifetime
