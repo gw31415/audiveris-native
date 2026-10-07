@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Current returned-owner unit: actual manual reprocess/refusal/rollback/return export1 and mixed task1; fmt/clippy/XSD and native prior bytes passed. Prior2965046 targets4 and independent targets2/build/double8+mixed8 XSD/refusal/trees. Full595 historical95e191b; no full rerun. Final source readback pending corresponding READBACK.",
+  "latest_targeted_validation": "Source9749327 (implementation2d3e0ff): returned-owner selected rhythm/refine/export plus refusal/rollback1 and mixed task1, fmt/clippy/native XML/XSD/prior bytes passed. Independent same-source targets2/build/automatic double8+mixed8 and declared-return8 native XML/XSD/prior bytes, quarter refusal, root/src/crates passed. Prior2965046 targets4;175ab0d parallel16; a9108bf5images47. Full595 historical95e191b; no full rerun.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
@@ -739,7 +739,7 @@
     "status": "partial",
     "connected": "actual HeadStem added -> nested old ChordStem removed/new added cache callbacks -> Head/Stem abnormal; same retained OwnedMusic Chord and canonical Stem Arc, clocks/owners kept; exact uncached ordinary duration/endTime7/64; selected actual native rhythm attempt retains expectedDuration and refuses7/64, production rollback includes typed Chords; fresh ChordStem identity on declared owner return and original grade/Support accessors compared; actual returned-owner selected rhythm/refine/render control matches original8 notes and timing, native XML/XSD/prior bytes",
     "guard": "generic manual and export provenance guard remain; sixteenth-grid adapter still rejects7/64; no new automatic image or CLI admission",
-    "remaining": "Rational selected-stack clocks/slots/Voice process and Chord-inclusive rollback; underfilled voice export divisions; task publication/undo, missing anchors/general ownership, full cleaner/epilog/project state",
+    "remaining": "Rational slot/Voice clocks, underfilled termination/export divisions; actual HeadStem RelationTask/UnlinkTask/preLink/controller do/undo/redo/publication; missing anchors/general ownership and cache/beam callback branches; multiple staff/shared support, complete cleaner/epilog/project/history",
     "evidence": "evidence/musicxml-manual-chord-duration/VALIDATION.json; same original saved-owner control in official-manual-chord-cache"
   }
 }
