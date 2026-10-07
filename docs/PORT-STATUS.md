@@ -1135,3 +1135,12 @@ parallel-owner comparison gives2,1 after NextInVoice, then1,2 after preferred1.
 This is not automatic link/ID-preference discovery or new image admission. Tie,
 cross-Measure beam refinement, timed support/PageStep and general correction
 remain pending. Evidence: `evidence/musicxml-voice-refinement-links/VALIDATION.json`.
+
+Original retained HIGH refinement now resolves incoming classified ties, then the
+first Chord's actual BeamGroup containing the preceding Measure and its immediate
+group predecessor, before NextInVoice and preferred ID. Real-owner controlled
+IDs2/1 ->1/2 ->2/1 ->1/2 match original; membership/clocks/slots remain unchanged.
+This supersedes the earlier tie/beam refinement boundary only for retained-owner
+processing, not automatic link discovery, cross-bar image admission or tie export.
+Evidence: `evidence/musicxml-voice-tie-beam/VALIDATION.json`. Timed support editing,
+general Voice kinds/PageStep/shared stacks/full cleaner remain explicitly partial.

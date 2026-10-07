@@ -2276,6 +2276,89 @@ impl Graph {
         live.sort_by_key(|e| e.live_order);
         live
     }
+    /// Voices.getTiedId: first-Chord notes in ordinate order, live incident
+    /// SlurHead relations, RIGHT tie, LEFT head, then its first owned ensemble.
+    pub(crate) fn incoming_tied_voice_id(
+        &self,
+        id: usize,
+        mut voice_of: impl FnMut(usize) -> Result<Option<usize>, String>,
+    ) -> Result<Option<usize>, String> {
+        let chord = self
+            .vertices
+            .get(
+                id.checked_sub(1)
+                    .ok_or("music_refine_chord_identity_required")?,
+            )
+            .filter(|v| !v.removed)
+            .ok_or("music_refine_live_chord_required")?;
+        if !matches!(
+            chord.data["kind"].as_str(),
+            Some("HeadChordInter" | "RestChordInter")
+        ) {
+            return Err("music_refine_typed_chord_required".into());
+        }
+        let mut notes: Vec<_> = self
+            .live_edges()
+            .into_iter()
+            .filter(|e| e.key.kind == "Containment" && e.key.source == id)
+            .map(|e| e.key.target)
+            .collect();
+        notes.sort_by_key(|id| {
+            let bounds = &self.vertices[id - 1].data["bounds"];
+            std::cmp::Reverse(bounds[1].as_i64().unwrap() + bounds[3].as_i64().unwrap() / 2)
+        });
+        for note in notes {
+            if self.vertices[note - 1].data["kind"] != "HeadInter" {
+                continue;
+            }
+            for eid in self.incident_edges(note) {
+                let e = &self.edges[eid - 1];
+                if e.key.kind != "SlurHeadRelation" || e.data["side"] != "RIGHT" {
+                    continue;
+                }
+                let slur = if e.key.source == note {
+                    e.key.target
+                } else {
+                    e.key.source
+                };
+                let v = &self.vertices[slur - 1];
+                if v.data["kind"] != "SlurInter" || v.key.system != chord.key.system {
+                    return Err("music_refine_owned_slur_required".into());
+                }
+                if v.data["is_tie"] != true {
+                    continue;
+                }
+                let left = self.incident_edges(slur).into_iter().find_map(|eid| {
+                    let e = &self.edges[eid - 1];
+                    (e.key.kind == "SlurHeadRelation" && e.data["side"] == "LEFT").then_some(
+                        if e.key.source == slur {
+                            e.key.target
+                        } else {
+                            e.key.source
+                        },
+                    )
+                });
+                let Some(left) = left else {
+                    continue;
+                };
+                if self.vertices[left - 1].data["kind"] != "HeadInter" {
+                    return Err("music_refine_typed_tied_head_required".into());
+                }
+                if let Some(parent) = self.incident_edges(left).into_iter().find_map(|eid| {
+                    let e = &self.edges[eid - 1];
+                    (e.key.kind == "Containment" && e.key.target == left).then_some(e.key.source)
+                }) {
+                    if self.vertices[parent - 1].data["kind"] != "HeadChordInter" {
+                        return Err("music_refine_ordinary_tied_chord_required".into());
+                    }
+                    if let Some(id) = voice_of(parent)? {
+                        return Ok(Some(id));
+                    }
+                }
+            }
+        }
+        Ok(None)
+    }
     pub(crate) fn next_in_voice_neighbors(&self, id: usize) -> Result<Vec<usize>, String> {
         let vertex = self
             .vertices

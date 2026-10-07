@@ -2287,3 +2287,9 @@ objects/Chord members and rebinds event IDs. This is declared original/native ow
 comparison, not image discovery of such links or a new preference editing command.
 The same `--edit-dot` example remains usable; tie/cross-Measure beam refinement,
 timed support/general edits and PageStep remain explicitly pending.
+
+Retained-owner refinement now also follows original classified incoming tie and
+previous-Measure BeamGroup predecessor references before NextInVoice/preferred ID.
+Existing `--edit-dot` bounds-only example is unchanged; automatic tie/cross-bar
+beam discovery and support-changing corrections are not newly admitted. See
+[owner ordering comparison](../evidence/musicxml-voice-tie-beam/VALIDATION.json).

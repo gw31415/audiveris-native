@@ -107,7 +107,7 @@ impl Export {
         })();
         match result {
             Ok(xml) => {
-                let actual = json!({"planned_impact":planned,"processed_stack_targets":targets,"native_stack_rhythm":"existing admitted owned Measure pass -> finalCheck -> stack slots/actual","system_voice_refinement":"original HIGH purge/sort/rename, previous-Measure NextInVoice and preferred-ID swaps; tie/cross-Measure beam refinement pending","populateFRATs_called":false,"LINKS_called":false,"controller_impact_complete":false,"PageStep_complete":false});
+                let actual = json!({"planned_impact":planned,"processed_stack_targets":targets,"native_stack_rhythm":"existing admitted owned Measure pass -> finalCheck -> stack slots/actual","system_voice_refinement":"original HIGH purge/sort/rename, classified tie, previous-Measure BeamGroup predecessor, NextInVoice, then preferred-ID swaps; general Voice kinds and automatic link discovery pending","populateFRATs_called":false,"LINKS_called":false,"controller_impact_complete":false,"PageStep_complete":false});
                 self.owner.owner.prepared.report["editing_reprocess"] = actual.clone();
                 self.xml = xml;
                 self.provenance = provenance(&self.owner);
@@ -1534,14 +1534,14 @@ mod tests {
         assert_eq!(export.xml, before_xml);
     }
     #[test]
-    fn original_voice_links_swap_actual_owners_before_preferred_id_and_rebind_events() {
-        use crate::shared_sig::Phase;
+    fn original_voice_tie_beam_next_preference_keep_owned_clocks_and_export_binding() {
+        use crate::shared_sig::{Key, Phase};
         let original: Value = serde_json::from_str(include_str!(
-            "../fixtures/official-stack-reprocess/voice-links.json"
+            "../fixtures/official-stack-reprocess/voice-tie-beam.json"
         ))
         .unwrap();
         let image = GrayImage::decode(include_bytes!(
-            "../fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png"
+            "../fixtures/official-image-musicxml-parallel-voices/parallel-beam.png"
         ))
         .unwrap();
         let mut export = recognize(&image).unwrap();
@@ -1553,13 +1553,129 @@ mod tests {
                 .map(|c| (c.id, c.key))
                 .unwrap()
         };
-        let (source_id, source) = first_chord(m, &original["source_first_chord"]);
-        let (target_id, target) = first_chord(m, &original["target_first_chord"]);
+        let (source_id, source) = first_chord(m, &original["tie_source"]["bounds"]);
+        let (target_id, target) = first_chord(m, &original["target"]["bounds"]);
         let projection = |m: &OwnedMusic| {
             json!(m.voices.iter().filter(|v|v.measure==1).map(|v|json!({"id":v.id,"first_chord_bounds":m.chords.iter().find(|c|c.id==v.chord_ids[0]).unwrap().bounds})).collect::<Vec<_>>())
         };
         assert_eq!(projection(m), original["before"]);
         let before = m.owner.graph.snapshot();
+        let note_key = |m: &OwnedMusic, id| {
+            let member = m
+                .chords
+                .iter()
+                .find(|c| c.id == id)
+                .unwrap()
+                .members
+                .first()
+                .unwrap();
+            serde_json::from_value::<Key>(member["origin"].clone()).unwrap()
+        };
+        let left = note_key(m, source_id);
+        let right = note_key(m, target_id);
+        let slur = Key {
+            system: 1,
+            phase: Phase::Symbol,
+            local: before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|n| n["origin"]["phase"] == "SYMBOL")
+                .filter_map(|n| n["origin"]["local"].as_u64())
+                .max()
+                .unwrap_or(0) as usize
+                + 1,
+        };
+        m.owner
+            .graph
+            .vertex(
+                slur,
+                json!({"kind":"SlurInter","is_tie":true,"grade":0.8}),
+                false,
+            )
+            .unwrap();
+        m.owner
+            .graph
+            .relations(
+                1,
+                Phase::Symbol,
+                vec![
+                    (slur, left, json!({"kind":"SlurHeadRelation","side":"LEFT"})),
+                    (
+                        slur,
+                        right,
+                        json!({"kind":"SlurHeadRelation","side":"RIGHT"}),
+                    ),
+                ],
+            )
+            .unwrap();
+        crate::music_voices::refine_ordinary_system(
+            &mut m.owner.graph,
+            &mut m.voices,
+            &m.measures,
+            1,
+        )
+        .unwrap();
+        assert_eq!(projection(m), original["after_tie"]);
+        let beam = before["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "BeamInter" && n["bounds"] == original["beam_bounds"])
+            .unwrap();
+        let stem = before["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "ChordStemRelation" && e["source"] == target_id)
+            .unwrap()["target"]
+            .as_u64()
+            .unwrap();
+        let stem = before["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == stem)
+            .unwrap();
+        m.owner
+            .graph
+            .relations(
+                1,
+                Phase::Symbol,
+                vec![(
+                    serde_json::from_value(beam["origin"].clone()).unwrap(),
+                    serde_json::from_value(stem["origin"].clone()).unwrap(),
+                    json!({"kind":"BeamStemRelation","beam_portion":"LEFT"}),
+                )],
+            )
+            .unwrap();
+        let groups = crate::music_voices::beam_group_chords(&m.owner.graph).unwrap();
+        let group = groups
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|g| {
+                g["chords"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|c| c["id"] == target_id)
+            })
+            .unwrap();
+        let chords = group["chords"].as_array().unwrap();
+        let at = chords.iter().position(|c| c["id"] == target_id).unwrap();
+        assert_eq!(
+            chords[at - 1]["bounds"],
+            original["beam_predecessor"]["bounds"]
+        );
+        crate::music_voices::refine_ordinary_system(
+            &mut m.owner.graph,
+            &mut m.voices,
+            &m.measures,
+            1,
+        )
+        .unwrap();
+        assert_eq!(projection(m), original["after_beam"]);
         m.owner
             .graph
             .relations(
@@ -1633,7 +1749,7 @@ mod tests {
             .iter()
             .find(|n| n["id"] == source_id)
             .unwrap();
-        assert_eq!(source_node["voice"], original["source_voice_id"]);
+        assert_eq!(source_node["voice"], original["tie_source"]["voice_id"]);
         for node in after["inters"]
             .as_array()
             .unwrap()

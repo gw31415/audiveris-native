@@ -243,8 +243,8 @@ pub(crate) fn reset_stack_rhythm(measure: &mut Measure, expected: Option<u32>) {
 }
 
 /// Voices.refineSystem on admitted HIGH owners: purge/sort/rename, then actual
-/// previous-Measure NextInVoice and preferred-ID swaps. Tie and cross-Measure
-/// beam refinements require the remaining owner dependencies and stay guarded.
+/// tie, previous-Measure BeamGroup, NextInVoice and preferred-ID swaps, in
+/// original order. Classified relations are distinct from image discovery.
 pub(crate) fn refine_ordinary_system(
     graph: &mut crate::shared_sig::Graph,
     voices: &mut Vec<Voice>,
@@ -258,28 +258,7 @@ pub(crate) fn refine_ordinary_system(
         .iter()
         .map(|n| (n["id"].as_u64().unwrap() as usize, n))
         .collect();
-    if nodes
-        .values()
-        .any(|n| n["origin"]["system"] == system && n["kind"] == "SlurInter")
-    {
-        return Err("music_reprocess_tied_voice_refinement_pending".into());
-    }
     let groups = beam_group_chords(graph)?;
-    for group in groups
-        .as_array()
-        .unwrap()
-        .iter()
-        .filter(|g| g["system_id"] == system)
-    {
-        let mut owners = BTreeSet::new();
-        for chord in group["chords"].as_array().unwrap() {
-            let n = nodes[&(chord["id"].as_u64().unwrap() as usize)];
-            owners.insert((n["part_id"].as_u64(), n["measure_index"].as_u64()));
-        }
-        if owners.len() > 1 {
-            return Err("music_reprocess_cross_measure_beam_refinement_pending".into());
-        }
-    }
     let mut staged = graph.clone();
     let mut retained = voices.clone();
     let mut previous = BTreeMap::<u64, usize>::new();
@@ -350,6 +329,64 @@ pub(crate) fn refine_ordinary_system(
         for &index in &positions {
             let first_id = first(&retained[index]).unwrap();
             if let Some(&prev) = previous.get(&measure.part) {
+                let live = staged.snapshot();
+                let tied = staged.incoming_tied_voice_id(first_id, |other| {
+                    let chord = live["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == other)
+                        .ok_or("music_refine_live_tied_chord_required")?;
+                    // A null Chord Voice is valid after partial original rhythm.
+                    if chord["voice"].is_null() {
+                        return Ok(None);
+                    }
+                    let source = retained
+                        .iter()
+                        .find(|v| {
+                            v.chord_ids.contains(&other)
+                                && chord["voice"] == v.id
+                                && chord["part_id"] == measures[v.measure].part
+                                && chord["measure_index"] == measures[v.measure].index
+                                && chord["origin"]["system"] == measures[v.measure].system
+                        })
+                        .ok_or("music_refine_tied_owned_voice_required")?;
+                    Ok(Some(source.id))
+                })?;
+                if let Some(wanted) = tied {
+                    swap_voice_id(&mut staged, &mut retained, index, wanted)?;
+                }
+                if let Some(group_id) = chord_group(&snapshot, first_id)? {
+                    let group = groups
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|g| g["id"] == group_id)
+                        .ok_or("music_refine_live_beam_group_required")?;
+                    let chords = group["chords"].as_array().unwrap();
+                    let contains_previous = chords.iter().any(|c| {
+                        let n = nodes[&(c["id"].as_u64().unwrap() as usize)];
+                        n["origin"]["system"] == measures[prev].system
+                            && n["part_id"] == measures[prev].part
+                            && n["measure_index"] == measures[prev].index
+                    });
+                    if contains_previous
+                        && let Some(position) = chords
+                            .iter()
+                            .position(|c| c["id"] == first_id)
+                            .filter(|&position| position > 0)
+                    {
+                        let other = chords[position - 1]["id"].as_u64().unwrap() as usize;
+                        let source = retained
+                            .iter()
+                            .find(|v| {
+                                v.chord_ids.contains(&other) || v.measure_rest_chord == Some(other)
+                            })
+                            .ok_or("music_refine_beam_predecessor_owned_voice_required")?;
+                        let wanted = source.id;
+                        swap_voice_id(&mut staged, &mut retained, index, wanted)?;
+                    }
+                }
                 for other in staged.next_in_voice_neighbors(first_id)? {
                     let node = nodes
                         .get(&other)
