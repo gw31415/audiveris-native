@@ -252,7 +252,9 @@ impl ChordRemovalTask {
                         && vertex.key.system == measure.system
                         && vertex.data["part_id"] == measure.part
                         && vertex.data["measure_index"] == measure.index
-                        && vertex.data["voice"] == voice.id
+                        && vertex.voice_owner.as_ref().is_some_and(|identity| {
+                            std::sync::Arc::ptr_eq(identity, &voice.identity)
+                        })
                         && vertex.retained_voice.is_none()
                     {
                         vertex.retained_voice = Some(key);
@@ -318,16 +320,49 @@ impl OwnedMusic {
 }
 
 impl super::Graph {
-    pub(crate) fn chord_has_detached_voice(&self, key: Key) -> bool {
-        self.id(key)
-            .is_some_and(|id| self.vertices[id - 1].retained_voice.is_some())
+    pub(crate) fn chord_has_voice(&self, key: Key, voice: &crate::music_voices::Voice) -> bool {
+        self.id(key).is_some_and(|id| {
+            self.vertices[id - 1]
+                .voice_owner
+                .as_ref()
+                .is_some_and(|identity| std::sync::Arc::ptr_eq(identity, &voice.identity))
+        })
     }
-    pub(crate) fn bind_chord_to_live_voice(&mut self, key: Key) -> Result<(), String> {
+    pub(crate) fn bind_chord_to_live_voice(
+        &mut self,
+        key: Key,
+        voice: &crate::music_voices::Voice,
+    ) -> Result<(), String> {
         let id = self.endpoint(key)?;
-        if key.phase != super::Phase::Chord {
+        if key.phase != super::Phase::Chord || self.vertices[id - 1].data["voice"] != voice.id {
             return Err("music_voice_actual_chord_required".into());
         }
         self.vertices[id - 1].retained_voice = None;
+        self.vertices[id - 1].voice_owner = Some(voice.identity.clone());
+        Ok(())
+    }
+    pub(crate) fn rename_voice_references(
+        &mut self,
+        voice: &crate::music_voices::Voice,
+        id: usize,
+    ) -> Result<(), String> {
+        // Voice.setId changes its object, including cached Chord references
+        // absent from its list; old list entries can point to another Voice.
+        let bound = |v: &super::Vertex| {
+            v.voice_owner
+                .as_ref()
+                .is_some_and(|identity| std::sync::Arc::ptr_eq(identity, &voice.identity))
+        };
+        if self
+            .vertices
+            .iter()
+            .any(|v| bound(v) && v.data["voice"] != voice.id)
+        {
+            return Err("music_refine_ID_actual_chord_voice_required".into());
+        }
+        for v in self.vertices.iter_mut().filter(|v| bound(v)) {
+            v.data["voice"] = serde_json::json!(id);
+        }
         Ok(())
     }
     #[cfg(test)]

@@ -101,12 +101,26 @@ public class HeadStemPreLinkProbe {
                 "chords",names((Collection<?>)call(reused,"getChords"),labels),
                 "termination",rational(call(reused,"getTermination")),"slots",slotRows));
         }
+        Object swapped=labels.keySet().stream().filter(o->"swapped_voice".equals(labels.get(o))).findFirst().orElse(null);
+        if(swapped!=null) {
+            List<Object> slotRows=new ArrayList<>();
+            for(Object slot:(Collection<?>)call(stack,"getSlots")) {
+                Object info=call(swapped,"getSlotInfo",slot);
+                if(info!=null)slotRows.add(obj("id",call(slot,"getId"),
+                    "chord",labels.get(field(info,"sheet.rhythm.SlotVoice","chord")),
+                    "status",field(info,"sheet.rhythm.SlotVoice","status").toString()));
+            }
+            result.put("cached_swapped_voice",obj("id",call(swapped,"getId"),
+                "measure_registered",((Collection<?>)call(measure,"getVoices")).contains(swapped),
+                "chords",names((Collection<?>)call(swapped,"getChords"),labels),
+                "termination",rational(call(swapped,"getTermination")),"slots",slotRows));
+        }
         return result;
     }
     public static void main(String[] args) throws Exception {
         c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);
         List<Object> cases=new ArrayList<>();
-        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice", "existing_target_solo_voice_reuse")) {
+        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice", "existing_target_solo_voice_reuse", "existing_target_live_voice_swap")) {
             Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0]));
             Object sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");
             Object system=((List<?>)call(sheet,"getSystems")).get(0),sig=call(system,"getSig");
@@ -138,6 +152,20 @@ public class HeadStemPreLinkProbe {
                 Object solo=make("sheet.rhythm.Voice",oldChord,measure);
                 call(measure,"addVoice",solo);call(solo,"putSlotInfo",slot,info);
                 voices.put(oldChord,solo);labels.put(solo,"solo_voice");
+            }
+            Object liveSwap=null;
+            if(mode.equals("existing_target_live_voice_swap")) {
+                Object prior=state(sig,measure,stack,chords,labels,voices,slots,relations);
+                Object previous=call(oldChord,"getVoice"),slot=call(oldChord,"getSlot");
+                Object info=call(previous,"getSlotInfo",slot);
+                // Constructor/setVoice does not remove old Voice list entries.
+                Object freshVoice=make("sheet.rhythm.Voice",oldChord,measure);
+                call(measure,"addVoice",freshVoice);call(freshVoice,"putSlotInfo",slot,info);
+                labels.put(freshVoice,"swapped_voice");
+                Object rebound=state(sig,measure,stack,chords,labels,voices,slots,relations);
+                call(measure,"swapVoiceId",freshVoice,1);
+                liveSwap=obj("before",prior,"after_rebind",rebound,
+                    "after_swap",state(sig,measure,stack,chords,labels,voices,slots,relations));
             }
             if(mode.equals("new_target")) {
                 // Align declared setup with the native retained owner: warm
@@ -207,6 +235,11 @@ public class HeadStemPreLinkProbe {
             }
             Map<String,Object> result=obj("name",mode,"task_names",taskNames,"stem_facts",stemFacts,"relation_facts",relationFacts,"before",before,"steps",steps);
             if(voiceRebind!=null)result.put("voice_rebind",voiceRebind);
+            if(liveSwap!=null) {
+                result.put("live_voice_swap",liveSwap);
+                call(measure,"swapVoiceId",voices.get(targetChord),1);
+                result.put("retired_voice_number_reuse",state(sig,measure,stack,chords,labels,voices,slots,relations));
+            }
             cases.add(result);
         }
         new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj(

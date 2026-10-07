@@ -1436,3 +1436,23 @@ Other purge/rename/history identity paths, general Part/Measure/Voice callback a
 reprocessing integration, mirrors/controller/epilog/PAGE/persistence and automatic
 Stem extent parity remain pending. Public CLI/global flags stay guarded/false.
 See `evidence/musicxml-headstem-prelink-voice-reuse/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+A further retained-owner unit fixes live Voice renaming with overlapping old Chord
+lists. The original constructor/setVoice changes a reference without pruning its
+old list; Measure.swapVoiceId renames Voice objects, so those old entries cannot
+select Chord projections. The prior native list-based update reproduced chord0=2
+against original1. Stable actual Voice identities now drive assignment, renaming
+and retirement, while staged copies/rollback retain those identities. A fifth
+independent original control compares twelve raw preLink task boundaries/thirty
+listeners, original reference equality within callbacks, and explicit setup plus
+post-retirement number reuse states. The preceding four cases are unchanged.
+Native failure restores overlapping lists, actual references/Chords/Voices and
+slot/termination/excess/expected clocks, then retries the same Do/Undo/Redo sequence.
+
+This unit does not integrate all normal Chord/Part/Voice lists into callbacks or
+complete purge/reset/history and ordinary reprocessing. CLI/global guards remain,
+and automatic Stem extent still differs by five pixels. Existing refinement
+controls keep their original expected observations; their setup now renames/binds
+the actual native Voice instead of changing only numeric metadata. See
+`evidence/musicxml-headstem-prelink-voice-swap/TRY.md` and `NEXT-DEPENDENCY.md`.

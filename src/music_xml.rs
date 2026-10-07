@@ -2996,8 +2996,21 @@ mod tests {
                 .find(|n| n["origin"] == json!(key))
                 .unwrap()
                 .clone();
-            node[field] = value;
+            node[field] = value.clone();
             m.owner.graph.vertex(key, node, false).unwrap();
+            if field == "voice"
+                && let Some(number) = value.as_u64()
+            {
+                let chord = m.chords.iter().find(|c| c.key == key).unwrap();
+                if let Some(voice) = m
+                    .voices
+                    .iter()
+                    .find(|v| v.measure == chord.measure && v.id == number as usize)
+                {
+                    // Original justAssignVoice restores a reference, not a list entry.
+                    m.owner.graph.bind_chord_to_live_voice(key, voice).unwrap();
+                }
+            }
         };
         let projection = |m: &OwnedMusic| {
             json!(m.voices.iter().filter(|v|v.measure==1).map(|v|json!({"id":v.id,"first_chord_bounds":m.chords.iter().find(|c|c.id==v.chord_ids[0]).unwrap().bounds})).collect::<Vec<_>>())
@@ -3199,21 +3212,10 @@ mod tests {
         let mut export = recognize(&image).unwrap();
         let m = &mut export.owner;
         let first = m.voices.iter().position(|v| v.measure == 0).unwrap();
-        m.voices[first].id = 7;
-        let snapshot = m.owner.graph.snapshot();
-        for &id in &m.voices[first].chord_ids {
-            let mut n = snapshot["inters"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|n| n["id"] == id)
-                .unwrap()
-                .clone();
-            let key = serde_json::from_value(n["origin"].clone()).unwrap();
-            n["voice"] = json!(7);
-            m.owner.graph.vertex(key, n, false).unwrap();
-        }
+        // Original setup renames the actual Voice, retaining Chord references.
+        crate::music_voices::swap_voice_id(&mut m.owner.graph, &mut m.voices, first, 7).unwrap();
         let mut empty = m.voices[first].clone();
+        empty.identity = std::sync::Arc::new(());
         empty.id = 99;
         empty.chord_ids.clear();
         m.voices.push(empty);

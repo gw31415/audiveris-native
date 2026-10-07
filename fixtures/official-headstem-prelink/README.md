@@ -70,3 +70,17 @@ with its remaining Chord. Native reproduced the number-only no-op before the fix
 then matches original explicit rebind/task states while retaining old2 separately.
 General purge/rename/history identity paths and full owner reprocessing remain
 pending. The preceding three original controls are unchanged.
+
+
+The fifth original control constructs a new Voice without pruning its old member
+list, then calls the real Measure.swapVoiceId. Actual Chord references follow the
+new owner while the old list remains overlapping. The previous native list-based
+rename reproduced a wrong Chord number; stable actual bindings now select rename
+and assignment recipients. Twelve task boundaries/thirty listeners compare actual
+reference equality as well as number, member, clock and relation/manual state.
+A final surviving-Voice rename reuses the detached Voice's number without changing
+the detached object or slots. Previous four cases are unchanged. Observations are
+committed as compact JSON; provenance distinguishes original pretty-output hash
+from the parsed-equivalent committed representation. Other purge/history and full
+normal owner reprocessing/callback membership remain pending. See
+`evidence/musicxml-headstem-prelink-voice-swap/TRY.md`.

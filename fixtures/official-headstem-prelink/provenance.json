@@ -1,7 +1,7 @@
 {
   "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
   "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
-  "observer_sha256": "76b87706ddbea9e2c56a832c3467c94a0ae3a32cfdf1ce196fd4e673a174a814",
+  "observer_sha256": "b43c5d212cf1c87564e5d69d2e5203b1b6cbad1ccbafacec9554f66c46293600",
   "book_sha256": "009b0997d8dc4854c4ab7709614438240f1946bf1ebf32ff176fb3008a0a67e8",
   "native_outputs_used": false,
   "compile_argv": [
@@ -11,7 +11,7 @@
     "-cp",
     "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
     "-d",
-    "/tmp/prelink-voice-reuse-original-ok/classes",
+    "/tmp/prelink-live-voice-swap-complete-original/classes",
     "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java"
   ],
   "run_argv": [
@@ -19,19 +19,17 @@
     "-Xmx512m",
     "-XX:ActiveProcessorCount=2",
     "-Djava.awt.headless=true",
-    "-Duser.home=/tmp/prelink-voice-reuse-original-ok/home",
-    "-Djava.util.prefs.userRoot=/tmp/prelink-voice-reuse-original-ok/prefs",
+    "-Duser.home=/tmp/prelink-live-voice-swap-complete-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/prelink-live-voice-swap-complete-original/prefs",
     "-cp",
-    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/prelink-voice-reuse-original-ok/classes",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/prelink-live-voice-swap-complete-original/classes",
     "HeadStemPreLinkProbe",
     "/tmp/prelink-oracle/book/double-augmentation.omr",
-    "/tmp/prelink-voice-reuse-original-ok/observed.json"
+    "/tmp/prelink-live-voice-swap-complete-original/observed.json"
   ],
   "exit_code": 0,
-  "console_sha256": "d81c1e585ca11448ed04b5b2c06ecf21d8c9c8d5a819f282a9e13457a37eeb35",
-  "observed_sha256": "82caac80337754b82eef8b4f4724a0901eccb9d39538fe627cbea55856213cc2",
-  "compact_fixture_sha256": "eaac30e17410bd257e12af3346454c17fd0c384271736e05f0d61adf52acd1a0",
-  "input_png_sha256": "ec2a14009f5faa599a44a57072eca54a38943b44d45e21f7a7641f0653d55d67",
-  "prior_three_cases_unchanged": true,
-  "voice_reuse_setup": "after undo, real target-Chord Voice constructor reuses2, with original retained SlotVoice; old Chord.setVoice(new Voice2) changes actual binding; Slot/time/expected clocks untouched"
+  "console_sha256": "c1611513e4a57e0b6ef1bae219b438323e3e6845ea172a939c3c2722ed4a85d1",
+  "observed_sha256": "64ebfffa927f51f65eddd488d9e01ffc0473b6c69ce61973d68ee9192c721dec",
+  "committed_observed_sha256": "ebcc0e2769bf1bc1a8e65b69e6866f81832517ce3296c844fa25aaedc5b18004",
+  "committed_representation": "compact JSON; parsed observations equal original pretty JSON"
 }

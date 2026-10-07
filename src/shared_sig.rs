@@ -339,6 +339,7 @@ struct Vertex {
     removing: bool,
     cached_part: Option<u64>,
     retained_voice: Option<usize>,
+    voice_owner: Option<std::sync::Arc<()>>,
     chord_cache: Option<chord_cache::ChordCache>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -381,6 +382,8 @@ pub struct Graph {
     observed_chord: Option<Key>,
     #[cfg(test)]
     observed_chords: Vec<Key>,
+    #[cfg(test)]
+    observed_voice_bindings: Vec<(Key, std::sync::Arc<()>)>,
 }
 impl Graph {
     fn require_pre_heads(&self, system: u64) -> Result<(), String> {
@@ -418,6 +421,7 @@ impl Graph {
                 removing: false,
                 cached_part: None,
                 retained_voice: None,
+                voice_owner: None,
                 chord_cache: None,
             });
             id
@@ -439,7 +443,8 @@ impl Graph {
             data["contextual_grade"] = old.data["contextual_grade"].clone();
         }
         let added = old.data.is_null() || old.removed;
-        let retained_voice = if data["voice"] == old.data["voice"] {
+        let data_voice_unchanged = data["voice"] == old.data["voice"];
+        let retained_voice = if data_voice_unchanged {
             old.retained_voice
         } else {
             None
@@ -451,6 +456,11 @@ impl Graph {
             removing: old.removing,
             cached_part: old.cached_part,
             retained_voice,
+            voice_owner: if data_voice_unchanged {
+                old.voice_owner.clone()
+            } else {
+                None
+            },
             chord_cache: old.chord_cache.clone(),
         };
         if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
@@ -1328,6 +1338,17 @@ impl Graph {
                     data["lifecycle_removed"] = json!(v.removed || v.removing);
                     data["registered"] = json!(!v.removed);
                     data["retained_voice_key"] = json!(v.retained_voice);
+                    if let Some((_, identity)) = self
+                        .observed_voice_bindings
+                        .iter()
+                        .find(|(key, _)| *key == v.key)
+                    {
+                        data["same_observed_voice"] = json!(
+                            v.voice_owner
+                                .as_ref()
+                                .is_some_and(|owner| std::sync::Arc::ptr_eq(owner, identity))
+                        );
+                    }
                     data
                 })
                 .collect::<Vec<_>>()

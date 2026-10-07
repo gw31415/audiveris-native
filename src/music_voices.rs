@@ -6,9 +6,13 @@ use crate::music_measures::{Chord, Measure};
 use crate::music_time::{Delta, Fraction};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::Arc;
 
 #[derive(Clone)]
 pub(crate) struct Voice {
+    // Staging copies keep this owner identity; musical numbers and list entries
+    // alone cannot identify the Voice referenced by a cached Chord.
+    pub(crate) identity: Arc<()>,
     pub id: usize,
     pub measure: usize,
     pub starting_staff: u64,
@@ -114,6 +118,7 @@ fn construct(
     }
     let measure_rest_chord = measure_rests.first().map(|c| c.id);
     Ok(Voice {
+        identity: Arc::new(()),
         id,
         measure: measure_index,
         starting_staff: measure.staff,
@@ -430,7 +435,7 @@ fn chord_voice_id(
 /// Measure.swapVoiceId changes the selected Voice first, then transfers its old
 /// ID to the former owner. Chords retain their Voice object; their native scalar
 /// projection follows the actual owned membership, not another numeric label.
-fn swap_voice_id(
+pub(crate) fn swap_voice_id(
     graph: &mut crate::shared_sig::Graph,
     voices: &mut [Voice],
     index: usize,
@@ -456,31 +461,7 @@ fn set_owned_voice_id(
     voice: &mut Voice,
     id: usize,
 ) -> Result<(), String> {
-    let snapshot = graph.snapshot();
-    for chord in voice
-        .measure_rest_chord
-        .map_or_else(|| voice.chord_ids.clone(), |id| vec![id])
-    {
-        let mut node = snapshot["inters"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .find(|n| n["id"] == chord)
-            .ok_or("music_refine_swap_owned_chord_required")?
-            .clone();
-        // Voice.setId does not assign Chord.voice: membership can outlive
-        // a null reference left by partial original rhythm processing.
-        if node["voice"].is_null() {
-            continue;
-        }
-        if node["voice"] != voice.id {
-            return Err("music_refine_ID_actual_chord_voice_required".into());
-        }
-        let key = serde_json::from_value(node["origin"].clone())
-            .map_err(|_| "music_refine_swap_chord_origin_required")?;
-        node["voice"] = json!(id);
-        graph.vertex(key, node, false)?;
-    }
+    graph.rename_voice_references(voice, id)?;
     voice.id = id;
     Ok(())
 }
@@ -1287,9 +1268,9 @@ pub(crate) fn assign_chord_voice(
             .find(|n| n["id"] == id)
             .ok_or("music_voice_live_chord_required")?
             .clone();
-        // Musical numbers are reusable after Measure drops an empty Voice.
-        // A cached detached owner is a different object from this live Voice.
-        if chord["voice"] == voice.id && !staged.chord_has_detached_voice(key) {
+        // Reassignment and renaming can leave overlapping old member lists.
+        // Only the actual Voice reference terminates recursive assignment.
+        if staged.chord_has_voice(key, voice) {
             continue;
         }
         let members = snapshot["relations"]
@@ -1315,7 +1296,7 @@ pub(crate) fn assign_chord_voice(
         }
         chord["voice"] = json!(voice.id);
         staged.vertex(key, chord, false)?;
-        staged.bind_chord_to_live_voice(key)?;
+        staged.bind_chord_to_live_voice(key, voice)?;
         let owned = &mut retained[voice_index];
         if owned.measure_rest_chord != Some(id) && !owned.chord_ids.contains(&id) {
             owned.chord_ids.push(id);
