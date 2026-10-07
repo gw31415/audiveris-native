@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Uncached ordinary AbstractChord.getDurationSansTuplet on live SIG members.
+//! Uncached ordinary AbstractChord.getDuration on live SIG members.
 //! Exact sixteenth grid, supported ordinary shapes and two beam/flag levels;
 //! special/mirrored heads and tuplets remain separate dependencies.
 use serde_json::Value;

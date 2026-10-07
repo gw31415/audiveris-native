@@ -1269,6 +1269,12 @@ impl Graph {
             {
                 return Err("music_dot_rhythm_reset_required".into());
             }
+            if class != "HeadChordInter"
+                || members.len() != 1
+                || self.vertices[members[0] - 1].data["shape"] != "NOTEHEAD_BLACK"
+            {
+                return Err("music_dot_timed_special_or_multihead_callback_pending".into());
+            }
             crate::music_duration::live(&self.snapshot(), owner)?;
         }
         let ordinate = |id: &usize| -> Result<i64, String> {

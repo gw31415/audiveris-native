@@ -1385,6 +1385,29 @@ mod tests {
         ))
         .unwrap();
         let export = recognize(&image).unwrap();
+        let rest_image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png"
+        ))
+        .unwrap();
+        let mut rest = recognize(&rest_image).unwrap();
+        let saved = rest.owner.owner.graph.snapshot();
+        let edge = saved["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "AugmentationRelation")
+            .unwrap()["id"]
+            .as_u64()
+            .unwrap() as usize;
+        assert_eq!(
+            rest.owner
+                .owner
+                .graph
+                .remove_augmentation_edge(edge)
+                .unwrap_err(),
+            "music_dot_timed_special_or_multihead_callback_pending"
+        );
+        assert_eq!(rest.owner.owner.graph.snapshot(), saved);
         for case in oracle["cases"].as_array().unwrap() {
             let mut graph = export.owner.owner.graph.clone();
             let before = graph.snapshot();

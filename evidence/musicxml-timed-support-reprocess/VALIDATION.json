@@ -8,7 +8,7 @@
   "target_tests": {
     "passed": 3,
     "tests": [
-      "original_timed_dot_callbacks_keep_owned_clocks_and_derive_live_duration (includes getter ignoring stale duration projection)",
+      "original_timed_dot_callbacks_keep_owned_clocks_and_derive_live_duration (stale projection getter and real timed Rest refusal/unchanged Graph)",
       "original_timed_support_transfer_reprocesses_owned_stack_and_rolls_back_incomplete_undo (includes final shared-support and cross-stack refusal)",
       "original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation (unchanged bounds/provenance and actual incomplete unlink rollback)"
     ]
@@ -22,5 +22,7 @@
     "general controller/preEdit/history/PageStep/persistence",
     "timed Rest/void/multi-head/DoubleDot editing and shared/cross-stack owners",
     "general Voice/Part/shared stack/tuplets/refinePage/refineScore/CURVES/lyrics/full cleaner/epilog"
-  ]
+  ],
+  "callback_admission": "timed single ordinary black HeadChord only; unobserved timed Rest/void/multi-head rejected transactionally before dot count; uncached getter ignores stale duration projection",
+  "followup_source_parent": "92113bc1dda906b598aa118457298c4d3116cb5d"
 }
