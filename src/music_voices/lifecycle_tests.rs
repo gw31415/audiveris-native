@@ -67,7 +67,7 @@ fn actual_voice<'a>(owner: &'a OwnedMusic, reference: &Voice) -> &'a Voice {
         .iter()
         .find(|voice| Arc::ptr_eq(&voice.identity, &reference.identity))
         .or_else(|| owner.owner.graph.retained_voice_owner(&reference.identity))
-        .expect("old actual Voice lost after refineSystem purge")
+        .expect("actual Voice lost after lifecycle removal")
 }
 fn state(owner: &OwnedMusic, labels: &BTreeMap<usize, String>, refs: &[Voice]) -> Value {
     let voice_label = |voice: &Voice| {
@@ -135,12 +135,23 @@ fn original_refine_purge_keeps_positive_excess_and_reused_number_identity() {
     compare_purge(1);
 }
 fn compare_purge(index: usize) {
+    compare_lifecycle(index, 8);
+}
+#[test]
+fn original_measure_stack_reset_keeps_short_old_owners_and_legitimate_chord_reset() {
+    compare_lifecycle(0, 12);
+}
+#[test]
+fn original_measure_stack_reset_keeps_excess_old_owners_and_legitimate_chord_reset() {
+    compare_lifecycle(1, 12);
+}
+fn compare_lifecycle(index: usize, count: usize) {
     let oracle = original();
     let case = &oracle["cases"][index];
     let (mut owner, labels, mut refs) = prepare(case);
     let relations = owner.owner.graph.snapshot()["relations"].clone();
     let source_relations = &case["states"][0]["state"]["relations"];
-    for step in case["states"].as_array().unwrap().iter().take(8) {
+    for step in case["states"].as_array().unwrap().iter().take(count) {
         match step["phase"].as_str().unwrap() {
             "timed" => {}
             "emptied" => owner
@@ -160,7 +171,25 @@ fn compare_purge(index: usize) {
             "restored_old" => {
                 owner.voices.push(actual_voice(&owner, &refs[0]).clone());
             }
-            "reused" => {
+            "measure_reset" | "measure_reset_again" => {
+                let chords = owner.chords.as_ptr();
+                let slots = owner.measures[0].timing.slots.as_ptr();
+                reset_rhythm(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &mut owner.measures[0],
+                    &owner.chords,
+                    0,
+                )
+                .unwrap();
+                assert_eq!(owner.chords.as_ptr(), chords);
+                assert_eq!(owner.measures[0].timing.slots.as_ptr(), slots);
+            }
+            "stack_reset" => {
+                let expected = owner.measures[0].timing.expected;
+                reset_stack_rhythm(&mut owner.measures[0], expected);
+            }
+            "reused" | "rebuilt" => {
                 let id = *labels
                     .iter()
                     .find(|(_, label)| label.as_str() == "chord0")
@@ -279,5 +308,106 @@ fn failed_refine_after_purge_keeps_actual_owners_clocks_and_retry_identity() {
             .unwrap()
             .len(),
         1
+    );
+}
+
+#[test]
+fn failed_measure_reset_keeps_actual_owners_chords_clocks_and_retry_identity() {
+    let oracle = original();
+    let case = &oracle["cases"][1];
+    let (mut owner, labels, mut refs) = prepare(case);
+    owner
+        .voices
+        .iter_mut()
+        .find(|v| v.measure == 0)
+        .unwrap()
+        .chord_ids
+        .clear();
+    refine_ordinary_system(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &owner.measures,
+        1,
+    )
+    .unwrap();
+    let seed = owner
+        .chords
+        .iter()
+        .find(|c| labels.get(&c.id).is_some_and(|label| label == "chord0"))
+        .unwrap()
+        .clone();
+    let index = construct_owned_voice(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &owner.measures,
+        &seed,
+    )
+    .unwrap();
+    refs.push(owner.voices[index].clone());
+    let graph = owner.owner.graph.snapshot();
+    let layout = owner.layout();
+    let before = state(&owner, &labels, &refs);
+    let retained = owner.owner.graph.retained_voice_observations();
+    let voice_objects = owner
+        .voices
+        .iter()
+        .map(|v| v.identity.clone())
+        .collect::<Vec<_>>();
+    let chord_address = owner.chords.as_ptr();
+    let slot_address = owner.measures[0].timing.slots.as_ptr();
+    let mut invalid = owner.chords.clone();
+    invalid
+        .iter_mut()
+        .filter(|c| c.measure == 0)
+        .last()
+        .unwrap()
+        .id += 1000;
+    assert_eq!(
+        reset_rhythm(
+            &mut owner.owner.graph,
+            &mut owner.voices,
+            &mut owner.measures[0],
+            &invalid,
+            0
+        )
+        .unwrap_err(),
+        "music_rhythm_reset_owned_chord_required"
+    );
+    assert_eq!(owner.owner.graph.snapshot(), graph);
+    assert_eq!(owner.layout(), layout);
+    assert_eq!(state(&owner, &labels, &refs), before);
+    assert_eq!(owner.owner.graph.retained_voice_observations(), retained);
+    assert_eq!(owner.chords.as_ptr(), chord_address);
+    assert_eq!(owner.measures[0].timing.slots.as_ptr(), slot_address);
+    for (voice, identity) in owner.voices.iter().zip(&voice_objects) {
+        assert!(Arc::ptr_eq(&voice.identity, identity));
+    }
+    reset_rhythm(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &mut owner.measures[0],
+        &owner.chords,
+        0,
+    )
+    .unwrap();
+    compare(
+        &owner,
+        &labels,
+        &refs,
+        &case["states"][8]["state"],
+        &graph["relations"],
+        &case["states"][0]["state"]["relations"],
+    );
+    assert_eq!(owner.chords.as_ptr(), chord_address);
+    assert_eq!(owner.measures[0].timing.slots.as_ptr(), slot_address);
+    assert_eq!(
+        owner
+            .owner
+            .graph
+            .retained_voice_observations()
+            .as_array()
+            .unwrap()
+            .len(),
+        2
     );
 }

@@ -491,6 +491,15 @@ pub(crate) fn reset_rhythm(
     let snapshot = graph.snapshot();
     let nodes = snapshot["inters"].as_array().unwrap();
     let mut staged = graph.clone();
+    let mut retained = voices.clone();
+    let mut index = 0;
+    while index < retained.len() {
+        if retained[index].measure == measure_index {
+            staged.retain_voice_owner(retained.remove(index));
+        } else {
+            index += 1;
+        }
+    }
     for chord in chords.iter().filter(|c| c.measure == measure_index) {
         if chord.key.system != measure.system || graph.id(chord.key) != Some(chord.id) {
             return Err("music_rhythm_reset_owned_chord_required".into());
@@ -512,7 +521,7 @@ pub(crate) fn reset_rhythm(
         staged.vertex(chord.key, node, false)?;
     }
     *graph = staged;
-    voices.retain(|v| v.measure != measure_index);
+    *voices = retained;
     measure.timing.abnormal = false;
     Ok(())
 }

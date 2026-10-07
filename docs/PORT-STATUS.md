@@ -1487,3 +1487,19 @@ beam/tie/NextInVoice Voice getter integration remain next units. No full origina
 SIG equality or automatic Stem extent parity is claimed; public/global guards
 stay false/guarded. See `evidence/musicxml-voice-refine-retirement/TRY.md` and
 `NEXT-DEPENDENCY.md`.
+
+
+Actual Voice retention now covers genuine Measure.resetRhythm/Chord.resetTiming
+and separate stack reset. Both original controls compare24 boundary states,
+including unchanged16 prior purge/re-add/number-reuse observations. Measure
+reset preserves old actual Voice bodies/slots/termination/excess, Chord duration,
+manual state and stack timing; only legitimate Chord Voice/Slot/time references
+are cleared. Stack reset separately clears actual/excess/slots while expected1
+survives. Rebuilt Voice1 has a third identity. Native loss of the reused owner was
+reproduced before the fix. A later invalid Chord fails after staged retirement
+and earlier resets without changing actual Graph/Chords/Voice identities or
+clocks; repair/retry matches the original boundary. General rhythm/history,
+normal container retirement, cached beam/tie/NextInVoice getters and broader
+Part/controller/PAGE/persistence integration remain pending. Public/global guards
+stay false/guarded; no full SIG or automatic Stem extent parity is claimed. See
+`evidence/musicxml-voice-rhythm-reset/TRY.md` and `NEXT-DEPENDENCY.md`.
