@@ -248,9 +248,9 @@ impl Export {
         render(&mut self.owner, part_name, rhythm, false)
     }
 }
-use crate::music_time::{Fraction, format_fraction};
 #[cfg(test)]
 use crate::music_time::format_ticks as rational;
+use crate::music_time::{Fraction, format_fraction};
 // PartwiseBuilder.buildClef / areEqual: semantic identity, not header Inter id.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 struct ClefAttributes {
