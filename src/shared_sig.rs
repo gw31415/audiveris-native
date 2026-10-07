@@ -858,6 +858,35 @@ impl Graph {
             } else {
                 None
             };
+            let owned_chord_ordinal = if phase == Phase::Chord
+                && kind == "ChordStemRelation"
+                && owned_manual_chord == Some(a)
+            {
+                // HeadChord.setStem creates a fresh relation when no live
+                // partner relation exists; removed registration is not replay.
+                Some(
+                    match self
+                        .edge_keys
+                        .keys()
+                        .filter(|k| {
+                            k.system == system
+                                && k.phase == phase
+                                && k.source == source
+                                && k.target == target
+                                && k.kind == kind
+                        })
+                        .map(|k| k.ordinal)
+                        .max()
+                    {
+                        Some(last) => last
+                            .checked_add(1)
+                            .ok_or("shared_sig_relation_order_budget")?,
+                        None => 0,
+                    },
+                )
+            } else {
+                None
+            };
             let key = EdgeKey {
                 system,
                 phase,
@@ -871,7 +900,7 @@ impl Graph {
                         .filter(|i| *i > 0)
                         .ok_or("invalid_shared_stem_relation_id")?
                 } else {
-                    editing_ordinal.unwrap_or(*count)
+                    owned_chord_ordinal.or(editing_ordinal).unwrap_or(*count)
                 },
             };
             *count += 1;

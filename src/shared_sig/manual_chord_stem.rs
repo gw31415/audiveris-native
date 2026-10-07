@@ -8,7 +8,7 @@ impl Graph {
         chord: Key,
         head: Key,
         stem: Key,
-        relation: Value,
+        mut relation: Value,
     ) -> Result<(), String> {
         let cid = self.endpoint(chord)?;
         let hid = self.endpoint(head)?;
@@ -40,6 +40,22 @@ impl Graph {
         {
             return Err("manual_head_stem_declared_relation_properties_required".into());
         }
+        let consistency = if relation["consistency"].is_null() {
+            1.0
+        } else {
+            relation["consistency"]
+                .as_f64()
+                .ok_or("manual_head_stem_consistency_required")?
+        };
+        let grade = relation["grade"].as_f64().unwrap();
+        let source_ratio = 1.0 + (4.0 * consistency) * grade;
+        if !consistency.is_finite() || consistency < 0.0 || !source_ratio.is_finite() {
+            return Err("manual_head_stem_consistency_required".into());
+        }
+        // Support accessors derive these from the current grade, not from
+        // a previous automatic relation's serialized support projection.
+        relation["source_ratio"] = json!(source_ratio);
+        relation["target_ratio"] = json!(1.0 + 10.0 * grade);
         let mut next = self.clone();
         next.relations_impl(
             head.system,
@@ -84,13 +100,19 @@ impl Graph {
         if let Some(eid) = old {
             self.remove_chord_identity_edges(&[eid])?;
         }
+        if self.incident_edges(chord).iter().any(|eid| {
+            let e = &self.edges[*eid - 1];
+            e.key.source == chord && e.key.target == stem && e.key.kind == "ChordStemRelation"
+        }) {
+            return Ok(());
+        }
         let target = self.vertices[stem - 1].key;
         // HeadChord.setStem does not promote the new ChordStem to manual.
         self.relations_impl(
             retained.system,
             Phase::Chord,
             vec![(retained, target, json!({"kind":"ChordStemRelation"}))],
-            None,
+            Some(retained),
         )
     }
 }
@@ -175,9 +197,7 @@ mod tests {
         let canonical = cache
             .registered_stem(&export.owner.owner.graph, sk.local)
             .unwrap();
-        let mut declared = old.clone();
-        declared["manual"] = json!(true);
-        declared["grade"] = json!(0.7);
+        let mut declared = json!({"kind":"HeadStemRelation","manual":true,"grade":0.7,"head_side":old["head_side"],"extension_point":old["extension_point"]});
         declared["local_relation_id"] = json!(
             edges
                 .iter()
@@ -358,6 +378,118 @@ mod tests {
         // This correction is not yet an admitted export transaction: retained
         // provenance must reject unrelated reprocessing of the edited owner.
         let mut empty = crate::shared_sig::EditingSequence::new(vec![]);
+        assert_eq!(
+            export
+                .apply_editing_sequence(&mut empty, crate::shared_sig::EditingOperation::Do)
+                .unwrap_err(),
+            "music_reprocess_unedited_retained_export_required"
+        );
+        let identity: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-manual-chord-identity/observed.json"
+        ))
+        .unwrap();
+        let initial_cs = edges
+            .iter()
+            .find(|e| e["kind"] == "ChordStemRelation" && e["source"] == cid)
+            .unwrap();
+        let old_sk = serde_json::from_value(node(&old["target"])["origin"].clone()).unwrap();
+        let mut returning = json!({"kind":"HeadStemRelation","manual":true,"grade":0.7,"head_side":old["head_side"],"extension_point":old["extension_point"]});
+        returning["local_relation_id"] = json!(
+            edges
+                .iter()
+                .filter_map(|e| e["local_relation_id"].as_u64())
+                .max()
+                .unwrap()
+                + 2
+        );
+        export.owner.owner.graph.enable_dot_callback_trace();
+        export
+            .owner
+            .apply_manual_head_stem_callback(hk, old_sk, returning)
+            .unwrap();
+        let g = &export.owner.owner.graph;
+        assert_eq!(
+            g.dot_callback_trace().len(),
+            identity["return_callbacks"].as_array().unwrap().len()
+        );
+        for (frame, oracle) in g
+            .dot_callback_trace()
+            .iter()
+            .zip(identity["return_callbacks"].as_array().unwrap())
+        {
+            assert_eq!(frame["event"], oracle["event"]);
+            assert_eq!(frame["stage"], oracle["stage"]);
+            let eid = frame["id"].as_u64().unwrap() as usize;
+            assert_eq!(g.edges[eid - 1].key.kind, oracle["kind"]);
+            assert_eq!(
+                frame["id"] == initial_cs["id"],
+                oracle["edge_is_initial"].as_bool().unwrap()
+            );
+            let state = &frame["state"];
+            let live = state["relations"].as_array().unwrap();
+            assert_eq!(
+                live.iter().any(|e| e["id"] == initial_cs["id"]),
+                oracle["state"]["initial_registered"].as_bool().unwrap()
+            );
+            let current = live
+                .iter()
+                .find(|e| e["kind"] == "ChordStemRelation" && e["source"] == cid);
+            assert_eq!(
+                current.is_some_and(|e| e["id"] == initial_cs["id"]),
+                oracle["state"]["current_is_initial"].as_bool().unwrap()
+            );
+            let stem = current.map(|e| {
+                if e["target"] == old["target"] {
+                    "old"
+                } else {
+                    "new"
+                }
+            });
+            assert_eq!(stem, oracle["state"]["stem"].as_str());
+            assert_eq!(
+                current.map(|e| e["manual"] == true),
+                oracle["state"]["current_manual"].as_bool()
+            );
+            let supports = live.iter().filter(|e|e["kind"] == "HeadStemRelation" && e["source"] == source["id"] && e["manual"] == true).map(|e|json!({"grade":e["grade"],"consistency":e["consistency"].as_f64().unwrap_or(1.0),"source_ratio":e["source_ratio"],"target_ratio":e["target_ratio"]})).collect::<Vec<_>>();
+            assert_eq!(json!(supports), oracle["state"]["manual_supports"]);
+            for field in ["duration", "end_time"] {
+                assert_eq!(frame["chord_observation"][field], oracle["state"][field]);
+            }
+            let chord = state["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == cid)
+                .unwrap();
+            for field in [
+                "voice",
+                "slot_id",
+                "time_offset",
+                "part_id",
+                "measure_index",
+                "member_ids",
+            ] {
+                assert_eq!(chord[field], before[field]);
+            }
+            assert_eq!(
+                state["editing_book"]["sheet_modified"],
+                oracle["state"]["sheet_modified"]
+            );
+            assert_eq!(
+                state["editing_book"]["book_dirty"],
+                oracle["state"]["book_dirty"]
+            );
+        }
+        assert_eq!(export.owner.chords[ci].stem, Some(old_sk));
+        assert_eq!(
+            g.chord_duration(ck).unwrap().as_deref(),
+            identity["after_return"]["duration"].as_str()
+        );
+        assert_eq!(
+            g.chord_end_time(ck).unwrap().as_deref(),
+            identity["after_return"]["end_time"].as_str()
+        );
+        assert_eq!(actual_chord, &export.owner.chords[ci] as *const _);
         assert_eq!(
             export
                 .apply_editing_sequence(&mut empty, crate::shared_sig::EditingOperation::Do)

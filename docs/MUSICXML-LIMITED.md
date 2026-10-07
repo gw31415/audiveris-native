@@ -2441,3 +2441,8 @@ members. The compared manual owner control reaches selected rhythm processing
 but refuses7/64 and restores its old owner/XML. It does not add a manual
 HeadStem CLI option; original Rational/underfilled-Voice processing remains a
 required dependency before that admission.
+
+The lower-level manual owner stage preserves fresh ChordStem identity on a
+declared return to an old Stem and derives support ratios from current grade.
+Its saved-owner control is separate from task undo and automatic recognition.
+No manual HeadStem CLI switch or fine-duration export admission is enabled.

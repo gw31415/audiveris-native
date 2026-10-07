@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Source5f1c4c3: actual selected manual-owner reprocess/refusal/rollback1 and mixed task1; fmt/all-target clippy passed; independent target1/build/mixed8 prior XML bytes/XSD, quarter refusal and root/src/crates passed. Source175ab0d targets4/independent double8+parallel16+mixed8; a9108bf5images47+parallel16+mixed8. Full595 historical95e191b; no full rerun.",
+  "latest_targeted_validation": "Current fresh-identity unit: extended manual owner/cache/identity/grade1, selected rhythm refusal/rollback1, head/rest identity2; fmt/all-target clippy passed. Prior5f1c4c3 independent target1/build/mixed8 bytes/XSD/refusal/trees. Source175ab0d double8+parallel16+mixed8; a9108bf5images47+parallel16+mixed8. Full595 historical95e191b; no full rerun. Final source readback pending corresponding READBACK.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
@@ -737,7 +737,7 @@
   ],
   "retained_manual_chord_correction": {
     "status": "partial",
-    "connected": "actual HeadStem added -> nested old ChordStem removed/new added cache callbacks -> Head/Stem abnormal; same retained OwnedMusic Chord and canonical Stem Arc, clocks/owners kept; exact uncached ordinary duration/endTime7/64; selected actual native rhythm attempt retains expectedDuration and refuses7/64, production rollback includes typed Chords",
+    "connected": "actual HeadStem added -> nested old ChordStem removed/new added cache callbacks -> Head/Stem abnormal; same retained OwnedMusic Chord and canonical Stem Arc, clocks/owners kept; exact uncached ordinary duration/endTime7/64; selected actual native rhythm attempt retains expectedDuration and refuses7/64, production rollback includes typed Chords; fresh ChordStem identity on declared owner return and original grade/Support accessors compared",
     "guard": "generic manual and export provenance guard remain; sixteenth-grid adapter still rejects7/64; no new automatic image or CLI admission",
     "remaining": "Rational selected-stack clocks/slots/Voice process and Chord-inclusive rollback; underfilled voice export divisions; task publication/undo, missing anchors/general ownership, full cleaner/epilog/project state",
     "evidence": "evidence/musicxml-manual-chord-duration/VALIDATION.json; same original saved-owner control in official-manual-chord-cache"

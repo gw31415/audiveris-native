@@ -1484,9 +1484,7 @@ mod tests {
         let before_report = export.owner.owner.prepared.report.clone();
         let retained = Rhythm::retained(&export.owner).unwrap();
         let checkpoint = OwnedCheckpoint::capture(&export.owner);
-        let mut relation = old.clone();
-        relation["manual"] = json!(true);
-        relation["grade"] = json!(0.7);
+        let mut relation = json!({"kind":"HeadStemRelation","manual":true,"grade":0.7,"head_side":old["head_side"],"extension_point":old["extension_point"]});
         relation["local_relation_id"] = json!(
             edges
                 .iter()

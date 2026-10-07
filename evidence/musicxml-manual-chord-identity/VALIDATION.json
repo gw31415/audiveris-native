@@ -1,0 +1,16 @@
+{
+  "baseline_source": "b8ba1d45c1886ad003b129aaabbd7969ba7cfe34",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual retained same owner, explicit alternate manual HeadStem then a separate fresh manual relation back to original Stem; not task undo, reprocess success, or automatic new image acceptance",
+  "original": "HeadChord.setStem creates a new ChordStem object when no live partner exists, including after an older relation to that Stem was removed; already live relation is preserved",
+  "native_defect": "new original identity control failed before fix: removed initial ChordStem ID was replayed on return, while original initial object remains unregistered",
+  "fix": "owner-only registration allocates fresh ChordStem ordinal/ID and retains removed registration; checks existing live partner before adding; general registration replay unchanged",
+  "properties": "manual HeadStem preserves supplied grade/side/reference; Support source/target ratio derive from actual current grade and default/explicit consistency, not stale automatic projection; original default coefficients4 and10, grade0.7 -> source3.8/target8.0; ChordStem stays automatic",
+  "ownership": "same retained Chord/Part/Measure/member/Voice/slot/time across six return callbacks, duration/endTime7/64 ->7/16, no clock clearing",
+  "target_tests": "4 passed: extended manual owner/cache/identity/grade control1, actual selected reprocess/refusal/rollback1, original head/rest identity2",
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed",
+  "admission": "generic manual and public export provenance guard remain before and after return; no new CLI/image scope",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}

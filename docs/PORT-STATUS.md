@@ -1265,3 +1265,15 @@ Rollback restores actual Graph/cache/Measure/Chord/Voice and original XML/
 provenance. This is native refused processing, not manual export/automatic image
 success; original Rational reprocess still succeeds. Evidence:
 `evidence/musicxml-manual-chord-reprocess/VALIDATION.json`.
+
+### Fresh ChordStem identity after owner return
+
+Returning a declared manual HeadStem to a previously removed Stem partner now
+creates a fresh ChordStem registration, as original HeadChord.setStem does; the
+old relation stays removed and an already live partner is kept. A real saved
+owner control detected and fixed the earlier native ID replay, with six return
+callback boundaries and dynamic7/64 ->7/16 duration/endTime compared. Manual
+Support ratios derive from supplied grade/consistency; new ChordStem is not
+promoted. Part/Measure/member/Voice/slot/time are retained. This is two forward
+additions, not general task undo or new native export/automatic acceptance.
+Evidence: `evidence/musicxml-manual-chord-identity/VALIDATION.json`.
