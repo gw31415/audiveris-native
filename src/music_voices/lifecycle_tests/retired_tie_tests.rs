@@ -16,7 +16,7 @@ fn chord_named(owner: &OwnedMusic, labels: &BTreeMap<usize, String>, name: &str)
         .unwrap()
         .clone()
 }
-fn add_tie(owner: &mut OwnedMusic, source: &Chord, target: &Chord) {
+pub(super) fn add_tie(owner: &mut OwnedMusic, source: &Chord, target: &Chord) {
     let snapshot = owner.owner.graph.snapshot();
     let slur = Key {
         system: 1,
@@ -63,7 +63,11 @@ fn add_tie(owner: &mut OwnedMusic, source: &Chord, target: &Chord) {
         )
         .unwrap();
 }
-fn assign_cached_reference(owner: &mut OwnedMusic, chord: &Chord, reference: Option<&Voice>) {
+pub(super) fn assign_cached_reference(
+    owner: &mut OwnedMusic,
+    chord: &Chord,
+    reference: Option<&Voice>,
+) {
     let snapshot = owner.owner.graph.snapshot();
     let mut node = snapshot["inters"]
         .as_array()
@@ -104,7 +108,7 @@ fn tied_id(owner: &OwnedMusic, target: &Chord) -> Option<usize> {
         })
         .unwrap()
 }
-fn keep_rows(known: &mut BTreeMap<String, Value>, rows: &Value, field: &str) {
+pub(super) fn keep_rows(known: &mut BTreeMap<String, Value>, rows: &Value, field: &str) {
     let current = rows
         .as_array()
         .unwrap()

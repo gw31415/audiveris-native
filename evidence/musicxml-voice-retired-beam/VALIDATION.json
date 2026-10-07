@@ -1,0 +1,252 @@
+{
+  "baseline_commit": "09e8c360b349151bf7e34b30519b674d6ff9972b",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual cached BeamGroup first-Chord Voice getter, retired immediate predecessor, constructor propagation and legitimate overlapping HIGH member lists before Next/preferred and actual reset",
+  "independent_new_original_cases": 2,
+  "new_original_retired_BeamGroup_boundaries_compared": 26,
+  "previous_original_retired_incoming_tie_boundaries_unchanged": 20,
+  "previous_original_lifecycle_removal_Next_boundaries_unchanged": 44,
+  "pre_fix_reproductions": [
+    {
+      "source": "09e8c36 plus initial independent Beam control/regression before direct-group/cached-ID observations were added",
+      "exit_code": 101,
+      "first_failure": "reused phase real Voice constructor: music_group_retained_voice_owner_required",
+      "log": "BEFORE-GETTER.log",
+      "log_sha256": "4e68c9a589cd0652a238daba4793c21593e6f8db12a049a203f38b857a994283"
+    },
+    {
+      "source": "same control plus actual BeamGroup getter fix, before HIGH overlap fix",
+      "exit_code": 101,
+      "first_failure": "live_refined phase: music_refine_owned_HIGH_voice_required",
+      "log": "BEFORE-HIGH.log",
+      "log_sha256": "691fc5ce227a45b7da6e58cf289f00fe748e557f8941d11657522840be3d6021"
+    }
+  ],
+  "implemented": [
+    "BeamGroup cached Voice getter uses existing actual live/retired reference identity with scalar/System/Part/Measure checks",
+    "HIGH geometry accepts valid overlapping old member lists; System/Part/Measure/staff validation retained"
+  ],
+  "targeted_validation": {
+    "counts": {
+      "voices": 15,
+      "voice_refine": 2,
+      "voice_null": 1,
+      "rational": 1
+    },
+    "unique_selected_tests": 19,
+    "fmt": "passed",
+    "clippy_all_targets_D_warnings": "passed",
+    "MusicXML_CLI_build": "passed",
+    "Rational_XML_bytes": "identical",
+    "Rational_XML_XSD": "passed",
+    "Rational_XML_sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+  },
+  "checks": [
+    {
+      "check": "voices",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_voices::",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-voices-final.log"
+    },
+    {
+      "check": "voice_refine",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_xml::tests::original_voice",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-voice_refine-final.log"
+    },
+    {
+      "check": "voice_null",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "original_null_chord_voice"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-voice_null-final.log"
+    },
+    {
+      "check": "rational",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "actual_rational_slots_and_underfilled_voice_termination_match_original"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-rational-final.log"
+    },
+    {
+      "check": "fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-fmt-final.log"
+    },
+    {
+      "check": "clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-clippy-final.log"
+    },
+    {
+      "check": "build",
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-build-final.log"
+    },
+    {
+      "check": "CLI_XML_XSD",
+      "argv": [
+        "python3",
+        "scripts/check_retained_musicxml_regression.py",
+        "--native-bin",
+        "/workspace/audiveris-native/target/debug/audiveris-musicxml",
+        "--schema-dir",
+        "/workspace/native-build-tools/musicxml4",
+        "--output",
+        "/tmp/voice-retired-beam-cli-regression"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-retired-beam-CLI_XML_XSD-final.log"
+    }
+  ],
+  "cli_regression": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed",
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    },
+    "checker_sha256": "2e25261515add3a3207472d87edae241fc934fc79c18c65fbf433aab843d949e"
+  },
+  "tested_source_sha256": {
+    "src/music_voices.rs": "b8ee50813ebe49f7c15a94790f454744a31d17561c34a7226d06f78e10570d88",
+    "src/music_voices/lifecycle_tests.rs": "7ee5d62485f3f52300f0e1c7eb1c5c5c20930deae365f36415bdcec7fa37990d",
+    "src/music_voices/lifecycle_tests/retired_tie_tests.rs": "4c5568f9beb1774efb4bd6e6a0f6e62db4beeac3dd3da264c9c832cd90765064",
+    "src/music_voices/lifecycle_tests/retired_beam_tests.rs": "180ccc2fd11d19b0346f3779770239fc0881228eb83d6d2f345a5ef9edc0319d",
+    "src/shared_sig/voice_owners.rs": "f8d50295889fbc6f54c21e34663ba0daf27d52738ac84085c18a39f7a0ce0caa",
+    "scripts/java/VoiceRetiredBeamProbe.java": "b50daf2bc2a25f047822e54ad49b1f7dc2ff7009ca4a88ad77b417f8a569f822",
+    "scripts/java/VoiceRetiredTieProbe.java": "8873a0116844a634080ede8519b7109f896d9e7553eb621d4268488408be69c5",
+    "scripts/java/VoiceLifecycleProbe.java": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+    "scripts/java/HeadStemPreLinkProbe.java": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+    "scripts/run_voice_lifecycle_control.py": "e86eb674ce2c7410ca81f28e7523e5da0dab1fc290cacd1c63beefc7d4106cf8",
+    "fixtures/official-voice-retired-beam/observed.json": "400a8669d027caa72cce6be171dd966beb6f90f660b3a0e68a3ec92aadeb2ca8",
+    "fixtures/official-voice-retired-beam/provenance.json": "dc7eb6edee195dc63a115cbc82a1ecb4a92c4086de081ed3787594197ddbf7a7"
+  },
+  "native_failure_policy": "late malformed preferred ID after staged purge/tie/beam swaps, null predecessor, and refine after genuine reset preserve Graph, actual live/retained Voice bodies/identity, real typed Chords/layout/manual and expected/slots/termination/excess. Preferred repair/retry matches original refined state. Original refine after reset throws NullPointerException; native atomic guard policy is not Java UI/controller exception rollback parity.",
+  "comparison_limit": "declared classified tie/crossing BeamStem on original actual existing-image group; no automatic discovery, general Part/controller/history or full original/native SIG equality. Actual group order/Measure membership/cached IDs and manual/relation identity observed; no clock clear before callbacks or report ownership reconstruction.",
+  "pending": [
+    "selected rhythm reprocessing after legitimate Measure reset before system refinement",
+    "general Part/Measure callback membership and rhythm/history",
+    "automatic curve/mirror/controller/PAGE/persistence/export admission",
+    "five-pixel automatic Stem extent discrepancy"
+  ],
+  "public_CLI_guard": true,
+  "all_non_ui_complete": false,
+  "historical_649_not_rerun": true,
+  "ce785c9_not_obtained_regenerated_or_replaced": true,
+  "original_task_and_environment_unchanged": true,
+  "normal_main_save_readback_receipt": "reported separately after checkpoint commit; incoming tie09e8c36 verified in BASELINE-READBACK.json"
+}

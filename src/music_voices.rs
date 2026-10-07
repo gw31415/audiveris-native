@@ -324,11 +324,11 @@ pub(crate) fn refine_ordinary_system(
             if node["origin"]["system"] != measure.system
                 || node["part_id"] != measure.part
                 || node["measure_index"] != measure.index
-                || (!node["voice"].is_null() && node["voice"] != v.id)
                 || v.starting_staff != measure.staff
             {
                 return Err("music_refine_owned_HIGH_voice_required".into());
             }
+            // Reassignment leaves old member lists intact; HIGH uses their geometry.
             let slot = if v.measure_rest_chord.is_some() {
                 1
             } else {
@@ -905,16 +905,21 @@ pub(crate) fn beam_groups(
                 if chord["voice"].is_null() {
                     return Ok(None);
                 }
-                let voice = voices
-                    .iter()
-                    .find(|v| {
-                        v.chord_ids.contains(id)
-                            && chord["voice"] == v.id
-                            && measures[v.measure].system == system
-                            && chord["part_id"] == measures[v.measure].part
-                            && chord["measure_index"] == measures[v.measure].index
-                    })
+                let key = serde_json::from_value(chord["origin"].clone())
+                    .map_err(|_| "music_group_retained_voice_owner_required")?;
+                // Empty member lists and purging do not clear cached Chord ownership.
+                let voice = graph
+                    .chord_voice_owner(key, voices)?
                     .ok_or("music_group_retained_voice_owner_required")?;
+                if chord["voice"] != voice.id
+                    || !measures.get(voice.measure).is_some_and(|measure| {
+                        measure.system == system
+                            && chord["part_id"] == measure.part
+                            && chord["measure_index"] == measure.index
+                    })
+                {
+                    return Err("music_group_retained_voice_owner_required".into());
+                }
                 Ok(Some(voice))
             })
             .transpose()?

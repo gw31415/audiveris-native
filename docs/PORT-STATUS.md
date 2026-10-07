@@ -1549,3 +1549,25 @@ regressions without inventing a production fix. Dedicated retired BeamGroup,
 automatic curve recognition and broader Part/controller/history/PAGE/persistence
 remain pending; public/global guards stay false/guarded. See
 `evidence/musicxml-voice-retired-tie/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Actual retired BeamGroup comparison adds two independent original controls26
+boundaries. Empty old7 retains six slots and signed termination/excess. The
+actual group first-Chord getter and predecessor chord5 keep this cached owner,
+rather than substituting last old-Voice Chord9. Fresh Voice construction
+propagates ownership over four previous-Measure group Chords; fresh7 becomes1,
+beam1 overrides tie2, Next2 then preferred1 win. Restored old live3 with an
+overlapping member list is valid original HIGH sorting geometry, and re-purge
+updates the same retained body. Null/restored cached references and genuine
+Measure reset retain actual objects, expected/stack clocks and manual relations.
+
+Two native discrepancies were reproduced and fixed: group getter relied on
+live member lists instead of actual cached identity, and HIGH rejected a
+reassigned Chord remaining in an old list based on number inequality. Existing
+System/Part/Measure/staff and actual getter metadata guards remain. Late
+preferred-ID/null/reset failures preserve actual owners, typed Chords and
+clocks. Original refinement after reset throws NullPointerException; native
+atomic guard behavior is not Java exception rollback parity. General selected
+rhythm/history/Part/controller/PAGE/persistence and five-pixel Stem extent
+remain pending, with public/global completion flags false/guarded. See
+`evidence/musicxml-voice-retired-beam/TRY.md` and `NEXT-DEPENDENCY.md`.
