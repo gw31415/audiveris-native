@@ -379,6 +379,12 @@
       "unit": "ordinary unshared actual double-dot glyph/SIG ownership -> original7/4 intrinsic duration -> Voice and Partwise; exact integer gap geometry/geometric impact grading and actual empty-lookup weak FLAT factory/purge",
       "limits": "one original full-image8-event input; saved ownership/getters and declared controls separate; same-glyph first/second competition/shared/rest/positive accidentals and full nonUI parity remain partial",
       "evidence": "evidence/musicxml-double-augmentation/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "original inconsistent multi-head countDots automatic removal -> exact physical candidate admission -> undotted chord/Voice/Partwise",
+      "limits": "one original full-image12-event input; actual glyph/chord automatic-vs-manual declared controls separate; general supported conflicts/rest/shared/complete cleaner remain partial",
+      "evidence": "evidence/musicxml-inconsistent-augmentation/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -484,7 +490,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "evidence/musicxml-double-augmentation/NEXT-DEPENDENCY.md; no original nonUI omissions",
+  "next_image_integration": "evidence/musicxml-inconsistent-augmentation/NEXT-DEPENDENCY.md; no original nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,

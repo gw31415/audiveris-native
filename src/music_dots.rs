@@ -468,6 +468,7 @@ pub(crate) fn contextualize_and_count(
     let mut staged = graph.clone();
     let nodes = snapshot["inters"].as_array().unwrap();
     let mut removed = Vec::new();
+    let mut discarded = Vec::new();
     for dot in nodes.iter().filter(|n| n["kind"] == "AugmentationDotInter") {
         let rels = snapshot["relations"]
             .as_array()
@@ -529,6 +530,7 @@ pub(crate) fn contextualize_and_count(
                 {
                     staged.remove_music_inter(key(dot)?)?;
                     removed.push(dot["id"].clone());
+                    discarded.push(json!({"id":dot["id"],"kind":dot["kind"],"shape":dot["shape"],"glyph_id":dot["glyph_id"],"bounds":dot["bounds"],"chord_id":chord.id,"note_id":note["id"],"member_dot_counts":counts,"rounded_chord_count":dots,"reason":"AbstractChord.countDots_inconsistent_nonmanual_zero"}));
                 }
             }
         }
@@ -546,7 +548,7 @@ pub(crate) fn contextualize_and_count(
     }
     *graph = staged;
     Ok(
-        json!({"removed_weak_or_inconsistent_dot_ids":removed,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/rest/mirror and competing dot interpretations pending"}),
+        json!({"removed_weak_or_inconsistent_dot_ids":removed,"discarded_inconsistent_dots":discarded,"scope":"ordinary unshared first/second-dot supports and AbstractChord.countDots; repeat/staccato/rest/mirror and competing dot interpretations pending"}),
     )
 }
 pub(crate) fn bounds_with_dots(
@@ -575,6 +577,123 @@ pub(crate) fn bounds_with_dots(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn inconsistent_chord_dot_removal_admits_only_actual_automatic_cleanup() {
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png"
+        ))
+        .unwrap();
+        let owner = crate::stem_image_owned::prepare_items(&image).unwrap();
+        let owner = crate::music_links::prepare_beam_linking(owner).unwrap();
+        let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
+        let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
+        let owner = crate::music_links::finalize_stems(owner).unwrap();
+        let m = crate::music_measures::continue_measures(owner).unwrap();
+        let m = crate::music_symbols::continue_symbols(m).unwrap();
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-augmentation/inconsistent-count-controls.json"
+        ))
+        .unwrap();
+        let snapshot = m.owner.graph.snapshot();
+        let dot = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "AugmentationDotInter")
+            .unwrap();
+        for c in original["controls"].as_array().unwrap() {
+            let mut graph = m.owner.graph.clone();
+            let mut n = dot.clone();
+            n["manual"] = c["manual"].clone();
+            graph.vertex(key(dot).unwrap(), n, false).unwrap();
+            let counted = contextualize_and_count(&mut graph, &m.chords).unwrap();
+            let after = graph.snapshot();
+            assert_eq!(
+                after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .all(|n| n["id"] != dot["id"]),
+                c["dot_removed"]
+            );
+            if c["dot_removed"] == true {
+                let receipt = &counted["discarded_inconsistent_dots"][0];
+                assert_eq!(receipt["bounds"], c["glyph_bounds"]);
+                assert_eq!(receipt["member_dot_counts"], c["before_member_dot_counts"]);
+                assert_eq!(receipt["rounded_chord_count"], c["rounded_chord_dots"]);
+                let chord = after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == receipt["chord_id"])
+                    .unwrap();
+                assert_eq!(chord["bounds"], c["chord_bounds"]);
+                assert!(
+                    after["relations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .all(|e| e["source"] != dot["id"] && e["target"] != dot["id"])
+                );
+            } else {
+                assert!(
+                    counted["discarded_inconsistent_dots"]
+                        .as_array()
+                        .unwrap()
+                        .is_empty()
+                );
+            }
+        }
+        let mut frozen = m.owner.graph.clone();
+        let mut n = dot.clone();
+        n["frozen"] = json!(true);
+        frozen.vertex(key(dot).unwrap(), n, false).unwrap();
+        let before = frozen.snapshot();
+        assert_eq!(
+            contextualize_and_count(&mut frozen, &m.chords).unwrap_err(),
+            "music_removal_frozen_inter"
+        );
+        assert_eq!(frozen.snapshot(), before);
+        let export = crate::music_xml::continue_export(m).unwrap();
+        let report = &export.owner.owner.prepared.report;
+        let expected: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-image-musicxml-augmentation/inconsistent-observed.json"
+        ))
+        .unwrap();
+        assert_eq!(report["events"].as_array().unwrap().len(), 12);
+        for (a, e) in report["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(expected["events"].as_array().unwrap())
+        {
+            for k in [
+                "measure_number",
+                "step",
+                "octave",
+                "alter",
+                "voice",
+                "time_offset",
+                "duration_quarters",
+                "type",
+                "stem_direction",
+                "chord",
+                "dots",
+            ] {
+                assert_eq!(a[k], e[k], "{k}");
+            }
+        }
+        assert!(!export.xml.contains("<dot/>"));
+        assert_eq!(export.xml.matches("<chord/>").count(), 4);
+        assert_eq!(
+            report["symbols"]["limited_links"]["dot_counting"]["discarded_inconsistent_dots"]
+                .as_array()
+                .unwrap()
+                .len(),
+            1
+        );
+        assert_eq!(report["musicxml_complete"], false);
+    }
     #[test]
     fn exhausted_zero_weight_x_impact_preserves_original_relation_rejection() {
         let original: Value = serde_json::from_str(include_str!(

@@ -910,3 +910,10 @@ pause path. One eight-event original full image is distinct from actual saved
 getters and declared weak pause/unlinked flat/zero-weight gap controls.
 First/second same-glyph alternatives, positive accidental semantics and full
 cleaner/epilog remain pending. [Validation](../evidence/musicxml-double-augmentation/VALIDATION.json).
+
+Original inconsistent multi-head `countDots` now leaves an actual discarded-dot
+receipt for image admission. One original-successful12-note input exports
+undotted chords; declared-grade original automatic/manual controls are
+separate. Manual dots stay, frozen loss refuses atomically, and unknown missing
+dots still refuse. Full nonUI parity/cleaner flags remain false. Next:
+`evidence/musicxml-inconsistent-augmentation/NEXT-DEPENDENCY.md`.

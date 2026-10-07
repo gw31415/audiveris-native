@@ -2034,8 +2034,8 @@ contextualized and purged by the original weak threshold. A surviving pause
 still refuses. Separate saved original owner/getter and declared pause
 controls are distinguished from full-image recognition.
 
-Only ordinary unshared first-dot augmentation joins this checkpoint. Double
-dots, shared/mirrored dot selection, positive rest/pause/repeat/staccato,
+At this first-dot checkpoint only ordinary unshared first-dot augmentation
+was enabled. The following checkpoint adds double dots; shared/mirrored dot selection, positive rest/pause/repeat/staccato,
 unsupported supported conflicts and durations finer than sixteenths retain
 explicit guards. All other pending original nonUI features remain in the
 ledger. Global completion flags remain false.
@@ -2062,3 +2062,24 @@ sixteenth-tick durations. Shared/mirrored/rest/repeat/staccato dots, competing
 first/second same-glyph interpretations, tuplets and full cleanup remain
 partial. Erasing the real second dot refuses the incomplete measure; no
 missing duration is invented. Global completion flags remain false.
+
+## Inconsistent chord augmentation cleanup (2026-10-07)
+
+```sh
+./target/debug/audiveris-musicxml \
+  fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png \
+  /tmp/inconsistent-augmentation.musicxml /tmp/inconsistent-augmentation.json
+```
+
+A single dot attaches to one of two actual heads in the first chord. Original
+`countDots` rounds the mean `[1,0]` to zero and removes the automatic dot.
+Native admits this exact removed glyph using its owned cleanup receipt, then
+exports12 undotted quarter-note events matching the original full-image output.
+Separate original temporary-dot controls verify automatic deletion and manual
+retention; frozen ownership loss still refuses. No absent candidate is guessed
+away, and the first/double-dot successful examples remain supported.
+
+General rest/shared/mirrored/competing dot interpretations, positive
+accidentals/pauses, special heads, shared stacks, tuplets, lyrics/slur/tie and
+complete cleaner/epilog remain partial; none are removed from the final nonUI
+parity scope. Global completion flags remain false.

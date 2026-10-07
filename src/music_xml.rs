@@ -277,7 +277,19 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                         .ok_or("musicxml_dot_staff_required")?
                         .1;
                     let snapshot = m.owner.graph.snapshot();
+                    // Admission follows the actual countDots removal, never
+                    // an absent classifier candidate or a guessed undotted note.
+                    let discarded = m.owner.prepared.report["limited_links"]["dot_counting"]
+                        ["discarded_inconsistent_dots"]
+                        .as_array()
+                        .ok_or("musicxml_owned_dot_counting_required")?
+                        .iter()
+                        .any(|n| n["glyph_id"] == t["glyph_id"]
+                            && n["bounds"] == t["bounds"]
+                            && n["kind"] == "AugmentationDotInter"
+                            && n["reason"] == "AbstractChord.countDots_inconsistent_nonmanual_zero");
                     if crate::music_dots::distant_from_line(b, s, m.owner.interline, &snapshot)?
+                        && !discarded
                         && !snapshot["inters"].as_array().unwrap().iter().any(|n| {
                             n["kind"] == "AugmentationDotInter"
                                 && n["glyph_id"] == t["glyph_id"]
