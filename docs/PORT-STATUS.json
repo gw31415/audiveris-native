@@ -539,6 +539,12 @@
       "unit": "actual relation identity replay/no-op publication; missing raw removal refusal; retained relation grade/status read on re-add",
       "limits": "owned declared LinkTask/UnlinkTask controls, not general relation setter CLI or automatic discovery; mixed task/controller, special/shared owners and complete cleaner remain partial",
       "evidence": "evidence/musicxml-relation-tasks/REPLAY-VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "one retained mixed bounds EditingTask/UnlinkTask/LinkTask sequence -> ordered publications -> endpoint stack impact/reprocess/native export, explicit combined CLI",
+      "limits": "declared ordinary same-dot/same-stack owner control; real Java CtrlTask only through latestRHYTHMS compared, not full native controller/PAGE/history or Book/SheetStub dirty persistence",
+      "evidence": "evidence/musicxml-relation-tasks/MIXED-VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -645,7 +651,7 @@
       "current_and_remaining": "表示と入力UIだけを対象外とする。選択後の変更・validation・再計算は対象内。"
     }
   ],
-  "correction_CLI_design_status": "partial: explicit same-stack ordinary bounds (--edit-dot), editor support transfer (--move-dot-support), ordered relation tasks with explicit status (--link-dot-support); owned reprocess/rollback connected. General controller/history/PageStep pending",
+  "correction_CLI_design_status": "partial: explicit same-stack ordinary bounds (--edit-dot), editor support transfer (--move-dot-support), ordered relation tasks with explicit status (--link-dot-support); owned reprocess/rollback connected. General controller/history/PageStep pending; combined link-dot-support/edit-dot for the same dot uses one owned mixed sequence, full Book/Stub dirty/controller semantics remain partial",
   "next_image_integration": "evidence/musicxml-relation-tasks/NEXT-DEPENDENCY.md; no nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
@@ -655,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Source050f7ae: relation lifecycle1+required2 targets, fmt/clippy, independent double8 + relation correction8 original/XML/XSD/prior bytes; automatic13/16/cross-stack/quarter-rest refusal retained. Previous6d65e59:5images47+parallel16+explicit edits8 each. Full595 historical95e191b.",
+  "latest_targeted_validation": "Mixed owned sequence target1 and fmt/clippy passed; current mixed CLI independent readback pending. Prior050f7ae replay1+relation2 and limited CLI readback; full595 historical95e191b.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {

@@ -2,7 +2,7 @@
 //! Native image recognition to bounded MusicXML. No Java runtime or XML import.
 use audiveris_native::{
     GrayImage, music_xml,
-    shared_sig::{DefaultEditingTask, EditingOperation, EditingSequence},
+    shared_sig::{DefaultEditingTask, EditingOperation, EditingSequence, EditingTask},
 };
 use std::{
     collections::BTreeSet,
@@ -11,7 +11,7 @@ use std::{
     io::{Read, Write},
     path::{Path, PathBuf},
 };
-const USAGE: &str = "audiveris-musicxml [--edit-dot INTER_ID DX DY | --move-dot-support DOT_ID HEAD_ID | --link-dot-support DOT_ID HEAD_ID manual|automatic] [--slot-at MEASURE X] IMAGE OUTPUT.musicxml REPORT.json\naudiveris-musicxml [--slot-at MEASURE X] --output-dir EXISTING_DIR [--part-name NAME] IMAGE...";
+const USAGE: &str = "audiveris-musicxml [--move-dot-support DOT_ID HEAD_ID | --link-dot-support DOT_ID HEAD_ID manual|automatic] [--edit-dot INTER_ID DX DY] [--slot-at MEASURE X] IMAGE OUTPUT.musicxml REPORT.json\naudiveris-musicxml [--slot-at MEASURE X] --output-dir EXISTING_DIR [--part-name NAME] IMAGE...";
 struct Job {
     image: PathBuf,
     xml: PathBuf,
@@ -124,7 +124,7 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args = std::env::args_os().skip(1).collect::<Vec<_>>();
     if args.len() == 1 && args[0] == "--help" {
         println!(
-            "{USAGE}\nClean opaque PNG/PGM, <=4M pixels, zero skew, ordinary five-line Bravura/interline11, native pitched header clef/C-major-or-header-key/recognized constant binary meter single voice, connected flag/beam eighth and two-level sixteenth, quarter/half notes, quarter/half rests and default whole-measure rest; first-lower-ledger C4 only with retained concrete ledger; isolated/two-part quarter-half rest registration. Two/four-measure and system-break fixture validation; full HEADS/STEMS/OMR flags false. Ambiguous, incomplete or unsupported music refuses. Part name is metadata for a nontransposing part. slot-at is a read-only nearest-slot report query in the current single-staff measure; it does not edit recognition. edit-dot moves a retained ordinary dot through a bounds-only raw EditingTask and bounded owned-stack rhythm reprocessing; it does not discover support links or complete general correction/PageStep. move-dot-support explicitly transfers one retained ordinary single-head augmentation support in the same stack through original ordered callbacks and bounded reprocessing; it does not discover correction targets. link-dot-support uses real UnlinkTask then LinkTask; status is explicitly supplied and preserved, with source publication only on addition. Automatic support and undo can underfill the measure and are refused with rollback. General timed support, cross-stack and linked Voice refinement conditions remain pending. Outputs must not exist. Batch preflights all paths; on recognition failure it stops, retaining earlier reported successful pairs."
+            "{USAGE}\nClean opaque PNG/PGM, <=4M pixels, zero skew, ordinary five-line Bravura/interline11, native pitched header clef/C-major-or-header-key/recognized constant binary meter single voice, connected flag/beam eighth and two-level sixteenth, quarter/half notes, quarter/half rests and default whole-measure rest; first-lower-ledger C4 only with retained concrete ledger; isolated/two-part quarter-half rest registration. Two/four-measure and system-break fixture validation; full HEADS/STEMS/OMR flags false. Ambiguous, incomplete or unsupported music refuses. Part name is metadata for a nontransposing part. slot-at is a read-only nearest-slot report query in the current single-staff measure; it does not edit recognition. edit-dot moves a retained ordinary dot through a bounds-only raw EditingTask and bounded owned-stack rhythm reprocessing; it does not discover support links or complete general correction/PageStep. move-dot-support explicitly transfers one retained ordinary single-head augmentation support in the same stack through original ordered callbacks and bounded reprocessing; it does not discover correction targets. link-dot-support uses real UnlinkTask then LinkTask; status is explicitly supplied and preserved, with source publication only on addition. Automatic support and undo can underfill the measure and are refused with rollback. Combining link-dot-support with edit-dot for the same dot runs one EditingTask/UnlinkTask/LinkTask sequence with bounds first, callbacks/publications next, one impact/reprocess last. General timed support, cross-stack and linked Voice refinement conditions remain pending. Outputs must not exist. Batch preflights all paths; on recognition failure it stops, retaining earlier reported successful pairs."
         );
         return Ok(());
     }
@@ -206,8 +206,10 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         (None, args)
     };
     let (jobs, name) = options(remaining)?;
-    if edit.is_some() && support.is_some() {
-        return Err("select one correction task per invocation".into());
+    if let (Some((id, _, _)), Some((dot, _, manual))) = (edit, support)
+        && (manual.is_none() || id != dot as u64)
+    {
+        return Err("combined bounds/support correction requires the same dot and link-dot-support relation tasks".into());
     }
     if (edit.is_some() || support.is_some()) && jobs.len() != 1 {
         return Err("edit-dot applies to exactly one recognized image owner".into());
@@ -240,14 +242,15 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             }
             let image = GrayImage::decode(&bytes)?;
             let mut result = music_xml::recognize_named(&image, &name)?;
-            if let Some((dot, head, manual)) = support {
-                let mut sequence = if let Some(manual) = manual {
+            let mut sequence = if let Some((dot, head, manual)) = support {
+                Some(if let Some(manual) = manual {
                     result.dot_relation_transfer(dot, head, manual)?
                 } else {
                     result.dot_support_transfer(dot, head)?
-                };
-                result.apply_editing_sequence(&mut sequence, EditingOperation::Do)?;
-            }
+                })
+            } else {
+                None
+            };
             if let Some((id, dx, dy)) = edit {
                 let snapshot = result.owner.owner.graph.snapshot();
                 let dot = snapshot["inters"]
@@ -269,10 +272,14 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
                     vec![],
                     vec![],
                 )?;
-                result.apply_editing_sequence(
-                    &mut EditingSequence::new(vec![task]),
-                    EditingOperation::Do,
-                )?;
+                if let Some(sequence) = &mut sequence {
+                    sequence.prepend(EditingTask::Inter(task));
+                } else {
+                    sequence = Some(EditingSequence::new(vec![task]));
+                }
+            }
+            if let Some(mut sequence) = sequence {
+                result.apply_editing_sequence(&mut sequence, EditingOperation::Do)?;
             }
             if let Some((measure, x)) = query {
                 let selected = result.owner.closest_slot_at(measure, x)?;

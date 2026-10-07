@@ -375,6 +375,9 @@ impl EditingSequence {
     pub fn from_tasks(tasks: Vec<EditingTask>) -> Self {
         Self { tasks }
     }
+    pub fn prepend(&mut self, task: EditingTask) {
+        self.tasks.insert(0, task);
+    }
     pub(crate) fn require_ordinary_reprocess(&self, graph: &Graph) -> Result<(), String> {
         if self.tasks.is_empty() {
             return Err("music_reprocess_timed_support_edit_pending".into());

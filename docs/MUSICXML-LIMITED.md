@@ -2368,3 +2368,23 @@ still publishes source. Removing an absent object is an original exception;
 native refuses before impact/publication rather than silently accepting it.
 The same CLI example is retained. Grade setter and task-replay checks are owned
 controls; they do not add automatic correction discovery or general setter CLI.
+
+### One mixed bounds/support correction sequence
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  --link-dot-support 72 6 manual --edit-dot 72 3 0 \
+  fixtures/official-image-musicxml-augmentation/double-augmentation.png \
+  mixed-correction.musicxml mixed-correction.report.json
+```
+
+For the same retained dot this runs bounds EditingTask, UnlinkTask, LinkTask,
+then one selected-stack reprocess in a single rollback boundary. It keeps two
+source publications before impact; this is not two separately committed edits.
+The input/IDs above are an example; typed live ownership and stack checks remain
+mandatory. Combining distinct dots or the other editor-support task family is
+refused. Original CtrlTask RHYTHMS dispatch and native event/XML are compared as
+an explicit correction. Automatic undo remains13/16 and cannot be exported as a
+full measure. Full controller/PAGE/history and actual Book/SheetStub dirty-state
+persistence are partial: planned `mark_sheet_modified` records only the direct
+controller DO request, not all dirty changes caused by original callbacks.
