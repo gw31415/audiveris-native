@@ -18,6 +18,16 @@ pub(crate) struct Voice {
     pub slots: BTreeMap<usize, SlotVoice>,
     pub measure_rest_chord: Option<usize>,
 }
+impl std::fmt::Debug for Voice {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Voice")
+            .field("id", &self.id)
+            .field("measure", &self.measure)
+            .field("chord_ids", &self.chord_ids)
+            .field("slot_count", &self.slots.len())
+            .finish()
+    }
+}
 /// The admitted one-part/one-staff measure has one stack; general shared
 /// multi-part stacks remain pending and must share this state when connected.
 #[derive(Clone)]

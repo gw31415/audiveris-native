@@ -338,6 +338,7 @@ struct Vertex {
     removed: bool,
     removing: bool,
     cached_part: Option<u64>,
+    retained_voice: Option<usize>,
     chord_cache: Option<chord_cache::ChordCache>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -359,6 +360,7 @@ struct Edge {
 #[derive(Clone, Default, Debug)]
 pub struct Graph {
     pub(crate) editing_chords: Vec<chord_tasks::EditingHeadChord>,
+    retained_voices: Vec<crate::music_voices::Voice>,
     vertices: Vec<Vertex>,
     keys: BTreeMap<Key, usize>,
     edges: Vec<Edge>,
@@ -415,6 +417,7 @@ impl Graph {
                 removed,
                 removing: false,
                 cached_part: None,
+                retained_voice: None,
                 chord_cache: None,
             });
             id
@@ -436,12 +439,18 @@ impl Graph {
             data["contextual_grade"] = old.data["contextual_grade"].clone();
         }
         let added = old.data.is_null() || old.removed;
+        let retained_voice = if data["voice"] == old.data["voice"] {
+            old.retained_voice
+        } else {
+            None
+        };
         self.vertices[id - 1] = Vertex {
             key,
             data,
             removed,
             removing: old.removing,
             cached_part: old.cached_part,
+            retained_voice,
             chord_cache: old.chord_cache.clone(),
         };
         if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
@@ -1307,6 +1316,7 @@ impl Graph {
         }
         let mut state = self.snapshot();
         state["editing_chord_owners"] = self.editing_chord_observations();
+        state["retained_voice_owners"] = self.retained_voice_observations();
         state["inters"] = json!(
             self.vertices
                 .iter()
@@ -1317,6 +1327,7 @@ impl Graph {
                     }
                     data["lifecycle_removed"] = json!(v.removed || v.removing);
                     data["registered"] = json!(!v.removed);
+                    data["retained_voice_key"] = json!(v.retained_voice);
                     data
                 })
                 .collect::<Vec<_>>()

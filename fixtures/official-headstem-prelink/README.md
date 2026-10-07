@@ -48,3 +48,15 @@ python3 scripts/run_headstem_prelink_control.py \
 The checked-in observation was generated in this Cloud from a fresh original
 PAGE/save run of the committed PNG. It is new evidence, not a replacement or
 recreation of the unpushed `ce785c9` validation from the previous task.
+
+
+The third original control declares a single-Chord Voice using the real Voice
+constructor and retained original SlotVoice entry; its Slot/time/expected clocks
+are unchanged. Removing that Chord deletes the empty Voice from Measure.voices,
+but the same Chord still references the detached Voice and its slot information.
+Undo does not restore the Voice to the Measure list. Native retains the moved
+actual Voice in the Graph and binds cached Chords to a stable retained-owner key;
+no report-based recreation is used. Twelve task boundaries and thirty listener
+records are compared, including the detached Voice after deletion. General Voice
+reassignment and musical-id reuse/history across Part/Measure owners remain pending.
+The first two cases are unchanged from their earlier saved observations.

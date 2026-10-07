@@ -185,6 +185,40 @@ fn compare_graph(
             "manual {name}"
         );
     }
+    if expected["cached_solo_voice"]["measure_registered"] == false {
+        let id = label_id(&json!("chord0")).unwrap();
+        let node = nodes.iter().find(|n| n["id"] == id).unwrap();
+        let key = node["retained_voice_key"].as_u64().unwrap() as usize;
+        assert_eq!(
+            *identities
+                .entry("$retained_solo_voice".into())
+                .or_insert(key),
+            key
+        );
+        let actual = snapshot["retained_voice_owners"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|v| v["key"] == key)
+            .unwrap();
+        compare_solo_voice(actual, &expected["cached_solo_voice"], labels);
+    }
+}
+fn compare_solo_voice(actual: &Value, expected: &Value, labels: &BTreeMap<usize, String>) {
+    assert_eq!(actual["id"], expected["id"]);
+    assert_eq!(actual["termination"], expected["termination"]);
+    assert_eq!(
+        json!(
+            actual["chord_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|id| labels[&(id.as_u64().unwrap() as usize)].clone())
+                .collect::<Vec<_>>()
+        ),
+        expected["chords"]
+    );
+    assert_eq!(json!(actual["slots"].as_array().unwrap().iter().map(|slot|json!({"id":slot["id"],"chord":labels[&(slot["chord_id"].as_u64().unwrap() as usize)],"status":slot["status"]})).collect::<Vec<_>>()),expected["slots"]);
 }
 fn graph_state(
     graph: &mut Graph,
@@ -192,6 +226,7 @@ fn graph_state(
 ) -> (Value, BTreeMap<usize, Value>) {
     let mut state = graph.snapshot();
     state["editing_chord_owners"] = graph.editing_chord_observations();
+    state["retained_voice_owners"] = graph.retained_voice_observations();
     state["inters"] = json!(
         graph
             .vertices
@@ -200,6 +235,7 @@ fn graph_state(
                 let mut node = v.data.clone();
                 node["registered"] = json!(!v.removed);
                 node["lifecycle_removed"] = json!(v.removed || v.removing);
+                node["retained_voice_key"] = json!(v.retained_voice);
                 node
             })
             .collect::<Vec<_>>()
@@ -325,6 +361,50 @@ fn compare_owner(
                 .contains(&json!(name(&chord.id)))
         );
     }
+    if expected["cached_solo_voice"]["measure_registered"] == true {
+        let voice = owner
+            .voices
+            .iter()
+            .find(|v| json!(v.id) == expected["cached_solo_voice"]["id"] && v.measure == 0)
+            .unwrap();
+        compare_solo_voice(
+            &json!({"id":voice.id,"chord_ids":voice.chord_ids,"termination":voice.termination.map(crate::music_time::format_delta),"slots":voice.slots.iter().map(|(id,s)|json!({"id":id,"chord_id":s.chord_id,"status":if s.continuing{"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()}),
+            &expected["cached_solo_voice"],
+            labels,
+        );
+    }
+}
+fn declare_solo_voice(
+    owner: &mut crate::music_measures::OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+) {
+    let id = *labels
+        .iter()
+        .find(|(_, name)| name.as_str() == "chord0")
+        .unwrap()
+        .0;
+    let chord = owner.chords.iter().find(|c| c.id == id).unwrap().clone();
+    let slot_id = owner.owner.graph.vertices[id - 1].data["slot_id"]
+        .as_u64()
+        .unwrap() as usize;
+    let old = owner
+        .voices
+        .iter_mut()
+        .find(|v| v.measure == 0 && v.chord_ids.contains(&id))
+        .unwrap();
+    let slot_info = old.slots[&slot_id];
+    old.chord_ids.retain(|c| *c != id);
+    // This declared setup mirrors justAssignVoice(null), not a callback-time
+    // rhythm reset. Existing Slot/time/expected clocks remain untouched.
+    owner.owner.graph.vertices[id - 1].data["voice"] = Value::Null;
+    let voice = crate::music_voices::create_voice(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &owner.measures,
+        &chord,
+    )
+    .unwrap();
+    owner.voices[voice].slots.insert(slot_id, slot_info);
 }
 fn prepare(
     owner: &crate::music_measures::OwnedMusic,
@@ -396,6 +476,10 @@ fn existing_target_prelink_matches_original_empty_chord_tasks_and_callbacks() {
 fn new_target_prelink_matches_original_unplaced_chord_and_retained_redo() {
     compare_prelink_case(1);
 }
+#[test]
+fn last_chord_removal_retains_original_voice_and_slots_without_resurrecting_it() {
+    compare_prelink_case(2);
+}
 fn compare_prelink_case(case_index: usize) {
     let original: Value = serde_json::from_str(include_str!(
         "../../../fixtures/official-headstem-prelink/observed.json"
@@ -409,6 +493,9 @@ fn compare_prelink_case(case_index: usize) {
     let mut export = crate::music_xml::recognize(&image).unwrap();
     let mut labels = labels(&export.owner);
     saved_numeric_control(&mut export.owner, &labels, case);
+    if case_index == 2 {
+        declare_solo_voice(&mut export.owner, &labels);
+    }
     if case_index == 1 {
         let id = *labels
             .iter()
@@ -530,19 +617,26 @@ fn compare_prelink_case(case_index: usize) {
 }
 #[test]
 fn failed_prelink_sequence_restores_actual_chords_voice_and_expected_clocks() {
-    compare_failed_prelink(false);
+    compare_failed_prelink(false, false);
 }
 #[test]
 fn failed_new_target_prelink_restores_actual_owner_and_reuses_same_sequence() {
-    compare_failed_prelink(true);
+    compare_failed_prelink(true, false);
 }
-fn compare_failed_prelink(new_target: bool) {
+#[test]
+fn failed_last_voice_removal_restores_actual_voice_owner_and_clocks() {
+    compare_failed_prelink(false, true);
+}
+fn compare_failed_prelink(new_target: bool, solo_voice: bool) {
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
     ))
     .unwrap();
     let mut export = crate::music_xml::recognize(&image).unwrap();
     let labels = labels(&export.owner);
+    if solo_voice {
+        declare_solo_voice(&mut export.owner, &labels);
+    }
     if new_target {
         let id = *labels
             .iter()
@@ -574,6 +668,7 @@ fn compare_failed_prelink(new_target: bool) {
     assert_eq!(export.owner.owner.graph.snapshot(), graph);
     assert_eq!(export.owner.layout(), layout);
     assert!(export.owner.owner.graph.editing_chords.is_empty());
+    assert!(export.owner.owner.graph.retained_voices.is_empty());
     assert_eq!(export.owner.chords.as_ptr(), chords_address);
     assert_eq!(export.owner.measures[0].timing.expected, expected);
     assert_eq!(export.owner.voices.iter().map(|v|json!({"id":v.id,"members":v.chord_ids,"slots":v.slots.iter().map(|(id,s)|json!([id,s.chord_id,s.continuing])).collect::<Vec<_>>(),"termination":v.termination.map(|d|d.to_string())})).collect::<Vec<_>>(),voices);
@@ -596,5 +691,22 @@ fn compare_failed_prelink(new_target: bool) {
         assert_eq!(export.owner.owner.graph.editing_chords.len(), 1);
         assert_eq!(export.owner.owner.graph.editing_chords[0].key, key);
         assert_eq!(export.owner.measures[0].timing.expected, expected);
+    }
+    if solo_voice {
+        assert_eq!(export.owner.owner.graph.retained_voices.len(), 1);
+        sequence
+            .perform_owned(&mut export.owner, EditingOperation::Undo, "RHYTHMS")
+            .unwrap();
+        sequence
+            .perform_owned(&mut export.owner, EditingOperation::Redo, "RHYTHMS")
+            .unwrap();
+        assert_eq!(export.owner.owner.graph.retained_voices.len(), 1);
+        assert!(
+            !export
+                .owner
+                .voices
+                .iter()
+                .any(|v| v.measure == 0 && v.id == 2)
+        );
     }
 }

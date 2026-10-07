@@ -69,15 +69,30 @@ public class HeadStemPreLinkProbe {
             "manual",call(edge,"isManual")));
         for(Object voice:(Collection<?>)call(measure,"getVoices")) voiceRows.add(obj(
             "id",call(voice,"getId"),"chords",names((Collection<?>)call(voice,"getChords"),labels)));
-        return obj("chords",rows,"measure_chords",names((Collection<?>)call(measure,"getHeadChords"),labels),
+        Map<String,Object> result=obj("chords",rows,"measure_chords",names((Collection<?>)call(measure,"getHeadChords"),labels),
             "voices",voiceRows,"relations",liveRelations,
             "expected",rational(call(stack,"getExpectedDuration")),
             "actual",rational(call(stack,"getActualDuration")));
+        Object solo=labels.keySet().stream().filter(o->"solo_voice".equals(labels.get(o))).findFirst().orElse(null);
+        if(solo!=null) {
+            List<Object> slotRows=new ArrayList<>();
+            for(Object slot:(Collection<?>)call(stack,"getSlots")) {
+                Object info=call(solo,"getSlotInfo",slot);
+                if(info!=null)slotRows.add(obj("id",call(slot,"getId"),
+                    "chord",labels.get(field(info,"sheet.rhythm.SlotVoice","chord")),
+                    "status",field(info,"sheet.rhythm.SlotVoice","status").toString()));
+            }
+            result.put("cached_solo_voice",obj("id",call(solo,"getId"),
+                "measure_registered",((Collection<?>)call(measure,"getVoices")).contains(solo),
+                "chords",names((Collection<?>)call(solo,"getChords"),labels),
+                "termination",rational(call(solo,"getTermination")),"slots",slotRows));
+        }
+        return result;
     }
     public static void main(String[] args) throws Exception {
         c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);
         List<Object> cases=new ArrayList<>();
-        for(String mode:List.of("existing_target", "new_target")) {
+        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice")) {
             Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0]));
             Object sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");
             Object system=((List<?>)call(sheet,"getSystems")).get(0),sig=call(system,"getSig");
@@ -101,6 +116,15 @@ public class HeadStemPreLinkProbe {
             Object head=((List<?>)call(oldChord,"getMembers")).get(0),stem=call(targetChord,"getStem");
             Object oldHeadStem=null;
             for(Object e:(Collection<?>)call(sig,"edgesOf",head))if(e.getClass().getSimpleName().equals("HeadStemRelation"))oldHeadStem=e;
+            if(mode.equals("existing_target_solo_voice")) {
+                Object oldVoice=call(oldChord,"getVoice"),slot=call(oldChord,"getSlot");
+                Object info=call(oldVoice,"getSlotInfo",slot);
+                call(oldVoice,"removeChord",oldChord);
+                call(oldChord,"justAssignVoice",new Object[]{null});
+                Object solo=make("sheet.rhythm.Voice",oldChord,measure);
+                call(measure,"addVoice",solo);call(solo,"putSlotInfo",slot,info);
+                voices.put(oldChord,solo);labels.put(solo,"solo_voice");
+            }
             if(mode.equals("new_target")) {
                 // Align declared setup with the native retained owner: warm
                 // actual Part/Staff getters before the nonextensive removal.

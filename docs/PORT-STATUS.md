@@ -1407,3 +1407,17 @@ Graph clone rollback now restores that same registry; no report rebuild or
 callback-before clock reset is used. General normal Chord/Part/Voice callback
 membership and ordinary reprocessing remain pending; CLI guards stay in place.
 See `evidence/musicxml-headstem-prelink-callbacks/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+The next small unit preserves the actual empty Voice when the last Chord leaves
+Measure.voices. Cached Chords retain a distinct native owner key to the moved
+Voice and its old SlotVoice entries; undo does not restore Measure Voice-list
+membership. A new independent original single-Chord Voice control compares twelve
+raw task boundaries and thirty listener records. Native late failure restores
+actual Voices/Chords/Graph and clocks, then retries/undoes/redoes the same sequence
+without another retained Voice allocation. Earlier original cases are unchanged.
+General reassignment/reused musical voice numbers, Part/Measure/Voice integration,
+ordinary reprocessing/mirrors/controller/epilog/history/PAGE/persistence remain
+pending. Public CLI and all completion flags stay guarded/false; the five-pixel
+source Stem extent discrepancy is still separate from saved numeric controls.
+See `evidence/musicxml-headstem-prelink-voice/TRY.md` and `NEXT-DEPENDENCY.md`.

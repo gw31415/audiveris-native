@@ -232,11 +232,34 @@ impl ChordRemovalTask {
             {
                 voice.chord_ids.retain(|cid| *cid != id);
             }
-            owner.voices.retain(|v| {
-                v.measure != chord.measure
-                    || !v.chord_ids.is_empty()
-                    || v.measure_rest_chord.is_some()
-            });
+            let mut voice_index = 0;
+            while voice_index < owner.voices.len() {
+                let voice = &owner.voices[voice_index];
+                if voice.measure != chord.measure
+                    || !voice.chord_ids.is_empty()
+                    || voice.measure_rest_chord.is_some()
+                {
+                    voice_index += 1;
+                    continue;
+                }
+                // Measure.removeInter removes an empty Voice from its list;
+                // removed Chords still refer to that actual Voice and slots.
+                let voice = owner.voices.remove(voice_index);
+                let key = graph.retained_voices.len();
+                let measure = &owner.measures[voice.measure];
+                for vertex in &mut graph.vertices {
+                    if vertex.key.phase == super::Phase::Chord
+                        && vertex.key.system == measure.system
+                        && vertex.data["part_id"] == measure.part
+                        && vertex.data["measure_index"] == measure.index
+                        && vertex.data["voice"] == voice.id
+                        && vertex.retained_voice.is_none()
+                    {
+                        vertex.retained_voice = Some(key);
+                    }
+                }
+                graph.retained_voices.push(voice);
+            }
             self.retained = Some(chord);
             graph.vertices[id - 1].removing = true;
             graph.remove_chord_identity_edges(&edges)?;
@@ -295,6 +318,14 @@ impl OwnedMusic {
 }
 
 impl super::Graph {
+    #[cfg(test)]
+    pub(super) fn retained_voice_observations(&self) -> Value {
+        serde_json::json!(self.retained_voices.iter().enumerate().map(|(key,v)|serde_json::json!({
+            "key":key,"id":v.id,"measure":v.measure,"chord_ids":v.chord_ids,
+            "termination":v.termination.map(crate::music_time::format_delta),
+            "slots":v.slots.iter().map(|(id,s)|serde_json::json!({"id":id,"chord_id":s.chord_id,"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()
+        })).collect::<Vec<_>>())
+    }
     #[cfg(test)]
     pub(super) fn editing_chord_observations(&self) -> Value {
         serde_json::json!(self.editing_chords.iter().map(|c| serde_json::json!({

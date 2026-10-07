@@ -14,3 +14,6 @@ by five pixels; saved numeric controls do not certify automatic parity. Keep all
 nonUI scope and completion flags false, exact7/64/expectedDuration/short Voice
 termination/divisions. Do not normalize13/16 or add padding. ce785c9 remains an
 unobtained prior-environment local validation artifact.
+
+Last-Chord Voice retirement is now compared in `../musicxml-headstem-prelink-voice/`.
+Follow that newer NEXT-DEPENDENCY for reassignment/owner integration.

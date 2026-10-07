@@ -14,3 +14,8 @@ stays until corresponding original callback/rollback/export comparison agrees.
 General owner/tuplet/signed/multiple-staff, full cleaner/epilog/project/history
 remain pending, not omitted. Never normalize automatic13/16 or add ending padding.
 All global completion flags false; full595 remains historical95e191b.
+
+The subsequent preLink lifecycle saved controls are now implemented in four
+small source checkpoints: existing target, new unplaced Chord, new-Chord SIG
+callback ownership and last-Chord Voice retirement. Follow the latest
+`../musicxml-headstem-prelink-voice/NEXT-DEPENDENCY.md`; full parity remains false.
