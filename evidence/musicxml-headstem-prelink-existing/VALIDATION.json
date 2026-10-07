@@ -1,0 +1,111 @@
+{
+  "baseline_commit": "189f214c2c61ef1f5831a03e12906b683db62fa9",
+  "independently_fetched_baseline_tree": "55755c176e8d32617efb1e90590002073a16929b",
+  "scope": "existing-target raw preLink plus declared final LinkTask on actual image owner with explicit original saved numeric control",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_task_executions": 12,
+  "original_callback_boundaries": 30,
+  "targeted_checks": {
+    "editing_task_tests": {
+      "passed": 4,
+      "failed": 0
+    },
+    "extracted_pre_link_tests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "rational_owned_link_unlink_control": {
+      "passed": 1,
+      "XML_bytes": "identical to committed control",
+      "XSD": "passed",
+      "XML_sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+    },
+    "fmt": "passed",
+    "clippy_all_targets_D_warnings": "passed"
+  },
+  "cli_regression": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    }
+  },
+  "tested_source_sha256": {
+    "src/shared_sig.rs": "8a19c65176a8b11302a335a8b523b1e59d085790a434b383dc42f71ac3e99eb0",
+    "src/music_measures.rs": "b2779d90cbf2a8fe66baf27380e810fcb9aff9a62800b07286685fb946485713",
+    "src/shared_sig/chord_tasks.rs": "e79054d91d2b928a9e85bd6d276b8543a5615800720c326d18704e0094d726cb",
+    "src/shared_sig/editing_task.rs": "a4800a10b720836fac1a8ad3044624fd0dfaff09badc65cd5d3b99b7d7a6ab34",
+    "src/shared_sig/editing_task/pre_link_tests.rs": "e08ac9d868f8f258a417058b2a9e4e67abe1d48037b7685242cf5cac8d8e1261",
+    "src/shared_sig/chord_cache.rs": "b40ee4dc9da98e5e0fca39ffa62adbadeeedd430220a95f9ac6571149f69b3be",
+    "src/shared_sig/dot_ownership.rs": "f876bf7a205279c06ecd99ea2e68e3c7c36bd45648c34d8e9905c72b969b46df",
+    "scripts/java/HeadStemPreLinkProbe.java": "bcd8f5cbb007963d85d5f1a384242410c3648a082941629fde0d50f88fb5f3e2",
+    "scripts/run_headstem_prelink_control.py": "3763eb89757311bbbe1a3370349c7efa7889668d418b22de2ad7baad448a0d51",
+    "fixtures/official-headstem-prelink/observed.json": "b51e7329f5339b0b7381feed00af113482803755a82e9ef63d9d4f31030afaf5",
+    "fixtures/official-headstem-prelink/provenance.json": "8e4a78e982f750c4e2352eb95e5df14c9c7a2a9a0db0c003629cdb072dbd416d"
+  },
+  "all_non_ui_complete": false,
+  "public_correction_guard": "retained",
+  "remaining": [
+    "new-target AdditionTask unplaced Part/Measure and retained-reference redo",
+    "canonical mirror sharing",
+    "automatic Stem extent differs by five pixels from original saved bounds",
+    "InterController conflicting relation discovery and epilog",
+    "general ownership/history/PAGE/persistence"
+  ],
+  "prior_environment_evidence": {
+    "649_tests": "prior user handoff only; not rerun or relabeled as current validation",
+    "ce785c9": "not obtained, not regenerated, not replaced"
+  }
+}

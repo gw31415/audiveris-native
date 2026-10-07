@@ -1351,3 +1351,26 @@ reprocessing yields the same original8note short-Voice stream in all6 operations
 `evidence/musicxml-headstem-unlink-tasks/TRY.md` reproduces the controlled stage.
 Public admission still needs preLink Addition/Removal/Containment member lifecycle;
 no new automatic image or HeadStem CLI success is claimed.
+
+### Retained existing-target preLink and empty Chord lifecycle
+
+Original `HeadStemRelation.preLink` existing-target task order now runs through
+real Containment unlink, empty-Chord RemovalTask and member transfer, followed by
+the declared raw manual LinkTask. Twelve task boundaries and thirty listener
+entry/return observations agree under the declared saved numeric controls.
+Removal retains actual identity/Part/Measure/Voice/Slot clocks, removes Measure
+and Voice-list membership, and undo re-registers the same relations without
+restoring the Voice list. Rollback now includes typed Chords, Measures and Voices.
+
+The comparison rounds saved grades and declares original Stem bounds on the same
+canonical native Stems. Existing native image Stem extent is five pixels longer
+into the source head; this automatic-image discrepancy remains unresolved.
+New-target AdditionTask/unplaced Part/Measure, canonical mirrors, controller
+conflicting links and legitimate reprocess/export admission are next dependencies.
+All nonUI functions remain in scope and completion flags remain false.
+See `evidence/musicxml-headstem-prelink-existing/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+Cloud handoff evidence is distinct: `189f214` and tree
+`55755c176e8d32617efb1e90590002073a16929b` were independently fetched here.
+The previous task's 649 local tests/fmt/clippy at189f214 and unpushed `ce785c9`
+are handoff reports; this checkout neither obtained nor regenerated `ce785c9`.

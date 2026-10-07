@@ -9,9 +9,11 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod book_state;
 mod chord_cache;
+mod chord_tasks;
 mod dot_ownership;
 mod editing_task;
 mod manual_chord_stem;
+pub use chord_tasks::ChordRemovalTask;
 pub use dot_ownership::NoteOwnerEdit;
 pub use editing_task::{
     DefaultEditingTask, EditingLink, EditingOperation, EditingSequence, EditingTask, RelationTask,
@@ -374,6 +376,8 @@ pub struct Graph {
     dot_callback_trace: Vec<Value>,
     #[cfg(test)]
     observed_chord: Option<Key>,
+    #[cfg(test)]
+    observed_chords: Vec<Key>,
 }
 impl Graph {
     fn require_pre_heads(&self, system: u64) -> Result<(), String> {
@@ -845,7 +849,7 @@ impl Graph {
             let count = counts
                 .entry((source, target, kind.clone()))
                 .or_insert(0usize);
-            let editing_ordinal = if phase == Phase::Symbol {
+            let editing_ordinal = if matches!(phase, Phase::Symbol | Phase::Chord) {
                 data.as_object_mut()
                     .unwrap()
                     .remove("_editing_registration_ordinal")
@@ -1028,7 +1032,7 @@ impl Graph {
         for id in ids
             .iter()
             .copied()
-            .filter(|id| !self.vertices[*id - 1].removed)
+            .filter(|id| !self.vertices[*id - 1].removed && !self.vertices[*id - 1].removing)
             .collect::<Vec<_>>()
         {
             if self.vertices[id - 1].chord_cache.is_some() {
@@ -1316,6 +1320,12 @@ impl Graph {
             // cache snapshot; these reads also warm the next callback's cache.
             let observation = self.retained_chord_observation(chord).unwrap();
             self.dot_callback_trace.last_mut().unwrap()["chord_observation"] = observation;
+        }
+        let observations = self.observed_chords.clone().into_iter().map(|chord| {
+            serde_json::json!({"id":self.id(chord).unwrap(),"bounds":self.lifecycle_chord_bounds(chord).unwrap()})
+        }).collect::<Vec<_>>();
+        if !observations.is_empty() {
+            self.dot_callback_trace.last_mut().unwrap()["chord_observations"] = json!(observations);
         }
         if stage == "enter" {
             self.dot_callback_depth += 1;

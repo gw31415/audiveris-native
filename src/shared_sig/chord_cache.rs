@@ -10,6 +10,9 @@ pub(super) struct ChordCache {
     beams: Option<Vec<usize>>,
 }
 impl ChordCache {
+    pub(super) fn set_bounds(&mut self, bounds: [i64; 4]) {
+        self.bounds = Some(bounds);
+    }
     pub(super) fn snapshot(&self) -> Value {
         json!({"bounds":self.bounds,"head_location":self.head,"tail_location":self.tail,"beams_null":self.beams.is_none()})
     }
@@ -74,6 +77,9 @@ impl Graph {
     }
     pub(crate) fn retained_chord_getters(&mut self, key: Key) -> Result<ChordRead, String> {
         let id = self.endpoint(key)?;
+        self.read_retained_chord(id)
+    }
+    fn read_retained_chord(&mut self, id: usize) -> Result<ChordRead, String> {
         if self.vertices[id - 1].chord_cache.is_none() {
             return Err("retained_chord_cache_owner_required".into());
         }
@@ -164,6 +170,11 @@ impl Graph {
         Ok(beams)
     }
     #[cfg(test)]
+    pub(super) fn lifecycle_chord_bounds(&mut self, key: Key) -> Result<Option<[i64; 4]>, String> {
+        let id = self.id(key).ok_or("retained_chord_identity_required")?;
+        Ok(self.read_retained_chord(id)?.bounds)
+    }
+    #[cfg(test)]
     pub(super) fn retained_chord_observation(&mut self, key: Key) -> Result<Value, String> {
         let id = self.endpoint(key)?;
         let before = self.vertices[id - 1]
@@ -171,7 +182,7 @@ impl Graph {
             .as_ref()
             .ok_or("retained_chord_cache_owner_required")?
             .snapshot();
-        let read = self.retained_chord_getters(key)?;
+        let read = self.read_retained_chord(id)?;
         let after = self.vertices[id - 1]
             .chord_cache
             .as_ref()

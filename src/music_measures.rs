@@ -75,7 +75,7 @@ impl OwnedMusic {
         }
         let (index, chord) = owners[0];
         if chord.kind != ChordKind::Head
-            || chord.members.len() != 1
+            || chord.members.is_empty()
             || head.phase != Phase::Head
             || stem.phase != Phase::Stem
             || stem.system != chord.key.system
@@ -124,7 +124,7 @@ pub(crate) enum ChordKind {
     Head,
     Rest,
 }
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub(crate) struct Chord {
     pub kind: ChordKind,
     pub key: Key,

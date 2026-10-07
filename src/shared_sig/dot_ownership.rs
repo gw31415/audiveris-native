@@ -162,7 +162,7 @@ impl Graph {
         self.inter_edit_stack_target(inter)
     }
     pub(super) fn inter_edit_stack_target(&self, inter: Key) -> Result<Option<Value>, String> {
-        let id = self.endpoint(inter)?;
+        let id = self.id(inter).ok_or("editing_inter_identity_required")?;
         let owner = self
             .dot_ownership
             .as_ref()
