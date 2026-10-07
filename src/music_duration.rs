@@ -16,15 +16,13 @@ fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
 #[derive(Clone, Copy)]
 pub(crate) struct ChordDuration {
     pub(crate) intrinsic: Option<u32>,
-    pub(crate) note_type: &'static str,
-    pub(crate) beams_or_flags: usize,
-    pub(crate) dots: usize,
 }
+#[derive(Clone, Copy)]
 pub(crate) struct ExactChordDuration {
     pub(crate) intrinsic: Option<Fraction>,
     pub(crate) note_type: &'static str,
-    beams_or_flags: usize,
-    dots: usize,
+    pub(crate) beams_or_flags: usize,
+    pub(crate) dots: usize,
 }
 
 pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String> {
@@ -37,9 +35,6 @@ pub(crate) fn live(snapshot: &Value, id: usize) -> Result<ChordDuration, String>
                     .map_err(|_| "musicxml_dotted_duration_finer_than_sixteenth_pending".to_owned())
             })
             .transpose()?,
-        note_type: exact.note_type,
-        beams_or_flags: exact.beams_or_flags,
-        dots: exact.dots,
     })
 }
 

@@ -192,10 +192,23 @@ impl Export {
         old_rhythm: Rhythm,
         part_name: &str,
     ) -> Result<String, String> {
+        self.reprocess_selected_scoped(selected, old_rhythm, part_name, RhythmScope::Image)
+    }
+    fn reprocess_selected_scoped(
+        &mut self,
+        selected: &[usize],
+        old_rhythm: Rhythm,
+        part_name: &str,
+        scope: RhythmScope,
+    ) -> Result<String, String> {
         let mut rhythm = old_rhythm;
         let mut systems = Vec::new();
         for &mi in selected {
-            rhythm = process_rhythm(&mut self.owner, Some((std::slice::from_ref(&mi), &rhythm)))?;
+            rhythm = analyze_rhythm(
+                &mut self.owner,
+                Some((std::slice::from_ref(&mi), &rhythm)),
+                scope,
+            )?;
             let system = self.owner.measures[mi].system;
             // Original reprocessStack refines after each processed stack,
             // even if the same system occurs again in the impact list.
@@ -235,14 +248,9 @@ impl Export {
         render(&mut self.owner, part_name, rhythm, false)
     }
 }
-use crate::music_time::{Fraction, format_fraction, format_ticks as rational};
-fn quarters(ticks: u32) -> Value {
-    if ticks.is_multiple_of(4) {
-        json!(ticks / 4)
-    } else {
-        json!(ticks as f64 / 4.)
-    }
-}
+use crate::music_time::{Fraction, format_fraction};
+#[cfg(test)]
+use crate::music_time::format_ticks as rational;
 // PartwiseBuilder.buildClef / areEqual: semantic identity, not header Inter id.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 struct ClefAttributes {
@@ -293,12 +301,13 @@ fn write_clef(xml: &mut String, clef: ClefAttributes) {
     }
     xml.push_str("</clef>");
 }
-use crate::music_duration::ChordDuration;
+use crate::music_duration::ExactChordDuration;
 
 fn resolve_durations(
     graph: &mut crate::shared_sig::Graph,
     chords: &[&crate::music_measures::Chord],
-) -> Result<std::collections::BTreeMap<usize, ChordDuration>, String> {
+    scope: RhythmScope,
+) -> Result<std::collections::BTreeMap<usize, ExactChordDuration>, String> {
     let snapshot = graph.snapshot();
     let nodes = snapshot["inters"].as_array().unwrap();
     let edges = snapshot["relations"].as_array().unwrap();
@@ -335,13 +344,22 @@ fn resolve_durations(
         // Original ordinary getDuration reads the actual chord's getBeams.
         // A retained cache must be warmed by that read, not by report creation.
         staged.warm_retained_chord_beams(chord.key)?;
-        let result = crate::music_duration::live(&snapshot, chord.id)?;
+        let result = crate::music_duration::live_exact(&snapshot, chord.id)?;
+        if scope == RhythmScope::Image {
+            result
+                .intrinsic
+                .map(|d| {
+                    d.ticks()
+                        .map_err(|_| "musicxml_dotted_duration_finer_than_sixteenth_pending")
+                })
+                .transpose()?;
+        }
         let mut node = nodes
             .iter()
             .find(|n| n["id"] == chord.id)
             .ok_or("musicxml_duration_live_chord_required")?
             .clone();
-        node["duration"] = json!(result.intrinsic.map(rational));
+        node["duration"] = json!(result.intrinsic.map(format_fraction));
         staged.vertex(chord.key, node, false)?;
         resolved.insert(chord.id, result);
     }
@@ -578,9 +596,23 @@ impl Rhythm {
     }
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum RhythmScope {
+    Image,
+    // Public correction admission still needs original RelationTask/controller.
+    #[cfg(test)]
+    ObservedOwnedCorrection,
+}
 fn process_rhythm(
     m: &mut OwnedMusic,
     retained: Option<(&[usize], &Rhythm)>,
+) -> Result<Rhythm, String> {
+    analyze_rhythm(m, retained, RhythmScope::Image)
+}
+fn analyze_rhythm(
+    m: &mut OwnedMusic,
+    retained: Option<(&[usize], &Rhythm)>,
+    scope: RhythmScope,
 ) -> Result<Rhythm, String> {
     let initial = m.owner.graph.snapshot();
     let nodes = initial["inters"].as_array().unwrap();
@@ -663,15 +695,17 @@ fn process_rhythm(
         if meter.0 == 0 || meter.1 == 0 || whole_ticks % meter.1 != 0 {
             return Err("musicxml_measure_duration_finer_than_sixteenth_pending".into());
         }
-        let expected_ticks = if retained.is_some() {
+        let expected_duration = if retained.is_some() {
             m.measures[mi]
                 .timing
                 .expected
                 .ok_or("music_reprocess_unknown_expected_export_pending")?
-                .ticks()?
         } else {
-            whole_ticks / meter.1
+            Fraction::new(meter.0, meter.1)?
         };
+        if scope == RhythmScope::Image {
+            expected_duration.ticks()?;
+        }
         if let Some((selected, old)) = retained
             && !selected.contains(&mi)
         {
@@ -696,10 +730,7 @@ fn process_rhythm(
             );
             continue;
         }
-        crate::music_voices::reset_stack_rhythm(
-            &mut m.measures[mi],
-            Some(Fraction::from_ticks(expected_ticks)),
-        );
+        crate::music_voices::reset_stack_rhythm(&mut m.measures[mi], Some(expected_duration));
         crate::music_voices::reset_rhythm(
             &mut graph,
             &mut m.voices,
@@ -765,7 +796,7 @@ fn process_rhythm(
         }
         let fifths = carried_key.as_ref().map(|k| k.1);
         let key_id = carried_key.as_ref().map(|k| k.0.clone());
-        let mut offsets = BTreeMap::<usize, u32>::new();
+        let mut offsets = BTreeMap::<usize, Fraction>::new();
         let mut previous_right = BTreeMap::<usize, i64>::new();
         // PartwiseBuilder processes the measure clef even for rest-only music.
         // Use an actual native header Inter, never a writer default.
@@ -783,18 +814,23 @@ fn process_rhythm(
             .ok_or("musicxml_measure_local_clef_required")?;
         let initial_attributes = clef_attributes(initial_clef)?;
         let clef_id = initial_clef["id"].as_u64();
-        let durations = resolve_durations(&mut graph, &chords)?;
+        let durations = resolve_durations(&mut graph, &chords, scope)?;
         // Parallel admission follows the verified original owned duration and
         // group propagation path. Higher flags, levels above two and other meters
         // need their own acquisition/Voice comparisons before joining it.
-        if compounds.iter().any(|s| s.chord_ids.len() > 1)
+        if scope == RhythmScope::Image
+            && compounds.iter().any(|s| s.chord_ids.len() > 1)
             && (meter != (4, 4)
                 || chords.iter().any(|c| {
                     let d = durations[&c.id];
                     c.kind != crate::music_measures::ChordKind::Head
                         || !match d.beams_or_flags {
-                            0 => matches!(d.intrinsic, Some(4 | 8)),
-                            1 | 2 => d.intrinsic == Some(4 >> d.beams_or_flags),
+                            0 => d.intrinsic.is_some_and(|v| {
+                                v == Fraction::from_ticks(4) || v == Fraction::from_ticks(8)
+                            }),
+                            1 | 2 => {
+                                d.intrinsic == Some(Fraction::from_ticks(4 >> d.beams_or_flags))
+                            }
                             _ => false,
                         }
                 }))
@@ -877,7 +913,7 @@ fn process_rhythm(
                 measure_index: mi,
                 candidates: &candidates,
                 order: &mut order,
-                expected: Fraction::from_ticks(expected_ticks),
+                expected: expected_duration,
                 clef: initial_clef,
                 interline: m.owner.interline,
                 lifetime: &lifetime,
@@ -928,8 +964,8 @@ fn process_rhythm(
                 .find(|v| v.measure == mi && c["voice"] == v.id)
                 .ok_or("musicxml_general_new_voice_export_pending")?;
             let event_voice = owned_voice.id;
-            let cursor = offsets.get(&event_voice).copied().unwrap_or(0);
-            let offset = crate::music_time::parse_ticks(
+            let cursor = offsets.get(&event_voice).copied().unwrap_or(Fraction::ZERO);
+            let offset = Fraction::parse(
                 c["time_offset"]
                     .as_str()
                     .ok_or("musicxml_unknown_voice_clock_pending")?,
@@ -947,13 +983,13 @@ fn process_rhythm(
             }
             previous_right.insert(event_voice, chord.bounds[0] + chord.bounds[2] - 1);
             let measure_rest = owned_voice.measure_rest_chord == Some(chord.id);
-            let ChordDuration {
+            let ExactChordDuration {
                 intrinsic,
                 note_type,
                 dots,
                 ..
             } = durations[&chord.id];
-            let duration = intrinsic.unwrap_or(expected_ticks);
+            let duration = intrinsic.unwrap_or(expected_duration);
             // AbstractChordInter.getBeams: actual beam→stem and chord→stem
             // relations supply membership; x positions only order members.
             let mut beams = if let Some(stem) = chord.stem {
@@ -1093,7 +1129,7 @@ fn process_rhythm(
                 }
             }
             let beam_ids = beams.iter().map(|b| b["id"].clone()).collect::<Vec<_>>();
-            let intrinsic_duration = intrinsic.map(rational);
+            let intrinsic_duration = intrinsic.map(format_fraction);
             if c["duration"] != json!(intrinsic_duration) {
                 return Err("musicxml_chord_intrinsic_duration_mismatch".into());
             }
@@ -1188,18 +1224,13 @@ fn process_rhythm(
                 data["measure_number"] = json!(mi + 1);
                 data["effective_clef_id"] = json!(cid);
                 graph.vertex(key, data, false)?;
-                let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":rational(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":dots,"effective_clef_id":cid});
+                let mut event = json!({"note_id":note["id"],"chord_id":chord.id,"bounds":note["bounds"],"shape":shape,"rest":rest,"step":step,"octave":octave,"alter":alter,"effective_key_id":key_id,"effective_key_fifths":fifths,"flag_ids":flag_ids,"beam_ids":beam_ids,"stem_direction":stem_direction,"chord_stem_direction":chord_stem_direction,"time_offset":format_fraction(offset),"type":if measure_rest {Value::Null}else{json!(note_type)},"dots":dots,"effective_clef_id":cid});
                 if !beam_marks.is_empty() {
                     event["beams"] = json!(beam_marks);
                 }
                 events.push(event);
             }
-            offsets.insert(
-                event_voice,
-                offset
-                    .checked_add(duration)
-                    .ok_or("musicxml_voice_duration_overflow")?,
-            );
+            offsets.insert(event_voice, offset.plus(duration)?);
         }
         // Voice.checkDuration uses the last actual AbstractChord.getEndTime.
         // Normal-voice termination/excess updates precede the retained strict
@@ -1217,12 +1248,12 @@ fn process_rhythm(
                 .find(|n| n["id"] == chord.id)
                 .and_then(|n| n["time_offset"].as_str())
                 .ok_or("musicxml_chord_clock_required")?;
-            crate::music_chord_time::set_and_push_ticks(
+            crate::music_chord_time::set_and_push(
                 &mut graph,
                 &m.voices,
                 &m.measures,
                 chord.id,
-                Some(crate::music_time::parse_ticks(time)?),
+                Some(Fraction::parse(time)?),
             )?;
         }
         let timed = graph.snapshot();
@@ -1262,8 +1293,8 @@ fn process_rhythm(
         {
             crate::music_voice_export::bind_event(&graph, &m.voices, &m.measures[mi], mi, event)?;
         }
-        let offset = offsets.values().copied().max().unwrap_or(0);
-        if m.measures[mi].timing.actual != Some(Fraction::from_ticks(offset)) {
+        let offset = offsets.values().copied().max().unwrap_or(Fraction::ZERO);
+        if m.measures[mi].timing.actual != Some(offset) {
             return Err("musicxml_owned_stack_timing_mismatch".into());
         }
         for voice in m.voices.iter().filter(|v| v.measure == mi) {
@@ -1275,21 +1306,21 @@ fn process_rhythm(
             if if voice.measure_rest_chord.is_some() {
                 voice_end.is_some()
             } else {
-                voice_end != Some(Fraction::from_ticks(offset))
+                voice_end != Some(offset)
             } {
                 return Err("musicxml_owned_voice_timing_mismatch".into());
             }
-            if offset != expected_ticks {
+            if scope == RhythmScope::Image && offset != expected_duration {
                 return Err(format!(
                     "musicxml_incomplete_or_excess_measure:{}:{}:quarters={}:expected={}",
                     measure.system,
                     measure.index,
-                    quarters(offset),
-                    quarters(expected_ticks)
+                    offset.reported_units(4),
+                    expected_duration.reported_units(4)
                 ));
             }
         }
-        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":rational(expected_ticks),"actual_duration":m.measures[mi].timing.actual.map(format_fraction),"abnormal":m.measures[mi].timing.abnormal,"stack_excess":m.measures[mi].timing.excess.map(format_fraction),"slots":crate::music_voices::slots_projection(&m.measures[mi].timing.slots),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
+        measures.push(json!({"number":mi+1,"system_id":measure.system,"staff_id":measure.staff,"index":measure.index,"left":measure.left,"right":measure.right,"numerator":meter.0,"denominator":meter.1,"time_symbol":carried_time_symbol,"expected_duration":format_fraction(expected_duration),"actual_duration":m.measures[mi].timing.actual.map(format_fraction),"abnormal":m.measures[mi].timing.abnormal,"stack_excess":m.measures[mi].timing.excess.map(format_fraction),"slots":crate::music_voices::slots_projection(&m.measures[mi].timing.slots),"voice":voice_id,"clef_id":clef_id,"key_id":key_id,"fifths":fifths}));
     }
     if measures.is_empty() {
         return Err("musicxml_no_measures".into());
@@ -3271,7 +3302,7 @@ mod tests {
 #[cfg(test)]
 mod rational_owned_export_tests {
     use super::*;
-    use crate::music_voices::*;
+    use crate::music_voices::{last_end_time, slot_duration};
     #[test]
     fn actual_rational_slots_and_underfilled_voice_termination_match_original() {
         let original: Value = serde_json::from_str(include_str!(
@@ -3313,117 +3344,16 @@ mod rational_owned_export_tests {
         let cached_expected = owner.measures[0].timing.expected;
         owner.apply_manual_head_stem_callback(hk,sk,json!({"kind":"HeadStemRelation","manual":true,"grade":0.7,"head_side":old["head_side"],"extension_point":old["extension_point"],"local_relation_id":edges.iter().filter_map(|e|e["local_relation_id"].as_u64()).max().unwrap()+1})).unwrap();
         assert_eq!(owner.measures[0].timing.expected, cached_expected);
-        reset_stack_rhythm(&mut owner.measures[0], cached_expected);
-        reset_rhythm(
-            &mut owner.owner.graph,
-            &mut owner.voices,
-            &mut owner.measures[0],
-            &owner.chords,
-            0,
-        )
-        .unwrap();
-        let chords = owner
-            .chords
-            .iter()
-            .filter(|c| c.measure == 0)
-            .collect::<Vec<_>>();
-        let (narrow, wide) = crate::music_measure_slots::from_owned(
-            &owner.owner.graph,
-            &owner.measures[0],
-            &chords,
-            owner.owner.interline,
-        )
-        .unwrap();
-        let centers = chords
-            .iter()
-            .map(|c| (c.id, c.bounds[1] + c.bounds[3] / 2))
-            .collect();
-        let compounds =
-            crate::music_measure_slots::build_compounds(&narrow.slots, &wide.slots, &centers)
-                .unwrap();
-        let seeds = compounds[0]
-            .chord_ids
-            .iter()
-            .map(|id| chords.iter().find(|c| c.id == *id).copied().unwrap())
-            .collect::<Vec<_>>();
-        process_starting_chords(
-            &mut owner.owner.graph,
-            &mut owner.voices,
-            &owner.measures,
-            0,
-            &seeds,
-        )
-        .unwrap();
-        let candidates = crate::music_measure_slots::CandidateReferences::new(
-            &owner.owner.graph,
-            &owner.measures[0],
-            &compounds,
-        )
-        .unwrap();
-        let mut order =
-            crate::music_measure_slots::CandidateOrder::new(&compounds, &candidates).unwrap();
-        let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds).unwrap();
-        let initial_clef = nodes
-            .iter()
-            .find(|n| {
-                n["kind"] == "ClefInter"
-                    && n["origin"]["system"] == owner.measures[0].system
-                    && n["staff_id"] == owner.measures[0].staff
-            })
-            .unwrap();
-        let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
-        let mut index = 0;
-        while let Some(slot) = order.at(index).cloned() {
-            crate::music_rookie_mapping::Context {
-                graph: &mut owner.owner.graph,
-                voices: &mut owner.voices,
-                measures: &mut owner.measures,
-                chords: &chords,
-                narrow: &narrow,
-                measure_index: 0,
-                candidates: &candidates,
-                order: &mut order,
-                expected: cached_expected.unwrap(),
-                clef: initial_clef,
-                interline: owner.owner.interline,
-                lifetime: &lifetime,
-                slot_times: &mut slot_times,
-            }
-            .map_slot(&slot)
-            .unwrap();
-            if order.contains(slot.key) {
-                lifetime
-                    .purge(
-                        &owner.owner.graph,
-                        &owner.voices,
-                        &mut owner.measures[0],
-                        0,
-                        &candidates,
-                        (&slot, slot_times.first_time(&slot).unwrap()),
-                    )
-                    .unwrap();
-                index += 1;
-            }
-        }
-        assert!(
-            final_check(
-                &owner.owner.graph,
-                &mut owner.voices,
-                &mut owner.measures[0],
-                &owner.chords,
-                0
+        let retained = Rhythm::retained(owner).unwrap();
+        let xml = export
+            .reprocess_selected_scoped(
+                &[0],
+                retained,
+                "Music",
+                RhythmScope::ObservedOwnedCorrection,
             )
-            .unwrap()
-        );
-        generate_slots(
-            &mut owner.owner.graph,
-            &mut owner.voices,
-            &mut owner.measures[0],
-            0,
-        )
-        .unwrap();
-        read_stack_actual_duration(&owner.owner.graph, &owner.voices, &mut owner.measures[0], 0)
             .unwrap();
+        let owner = &mut export.owner;
         let snapshot = owner.owner.graph.snapshot();
         let bounds = |id| {
             let ch = snapshot["inters"]
@@ -3449,29 +3379,7 @@ mod rational_owned_export_tests {
         );
         assert_eq!(cached_expected, m.timing.expected);
         assert_eq!(original["same_expected"], true);
-        let mut rhythm = Rhythm::retained(owner).unwrap();
-        for (mi, measure) in owner.measures.iter().enumerate() {
-            for e in rhythm
-                .events
-                .iter_mut()
-                .filter(|e| e["measure_number"] == mi + 1)
-            {
-                crate::music_voice_export::bind_event(
-                    &owner.owner.graph,
-                    &owner.voices,
-                    measure,
-                    mi,
-                    e,
-                )
-                .unwrap();
-            }
-            rhythm.measures[mi]["actual_duration"] =
-                json!(measure.timing.actual.map(format_fraction));
-            rhythm.measures[mi]["expected_duration"] =
-                json!(measure.timing.expected.map(format_fraction));
-            rhythm.measures[mi]["abnormal"] = json!(measure.timing.abnormal);
-            rhythm.measures[mi]["slots"] = slots_projection(&measure.timing.slots);
-        }
+        let rhythm = Rhythm::retained(owner).unwrap();
         let sequences = owner
             .measures
             .iter()
@@ -3503,7 +3411,6 @@ mod rational_owned_export_tests {
             }
         }
         assert_eq!(json!(stream), original["original_export_stream"]);
-        let xml = render(owner, "Music", rhythm, false).unwrap();
         assert_eq!(xml.matches("<note>").count(), 8);
         assert!(xml.contains("<divisions>16</divisions>"));
         assert!(xml.contains("<backup><duration>36</duration></backup>"));

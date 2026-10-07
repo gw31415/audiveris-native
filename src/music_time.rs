@@ -170,6 +170,7 @@ pub(crate) fn format_ticks(ticks: u32) -> String {
     }
 }
 
+#[cfg(test)]
 pub(crate) fn parse_ticks(text: &str) -> Result<u32, String> {
     Fraction::parse(text)?.ticks()
 }

@@ -2467,3 +2467,9 @@ native candidate mapper and extinction path, rather than supplying a Voice
 plan. Reproduce it with `evidence/musicxml-rational-mapper/TRY.md`. This advances
 owned correction processing; public CLI admission still waits for selected
 Rational processing and original RelationTask/controller comparisons.
+
+The current exact owned control now invokes common selected-stack processing
+rather than assembling individual phase calls. It matches original7/64 timing,
+short Voice termination and8note export in test-only observed-owned scope:
+`evidence/musicxml-rational-selected-reprocess/TRY.md`. Public CLI examples and
+admission remain unchanged pending actual RelationTask/controller integration.

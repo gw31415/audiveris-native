@@ -1320,3 +1320,13 @@ and live duration/endTime, producing original-matching2 underfilled Voices and
 8note native output, identical to the earlier declared-plan bytes/XSD. The
 selected-stack duration/event adapter and task/controller publication still
 guard public correction acceptance. See `evidence/musicxml-rational-mapper/TRY.md`.
+
+### Exact selected-stack owned correction processing
+
+Common selected analyze/refine/rebind/render now resolves live ordinary fractions
+through actual Slot/Voice clocks and native export. The original saved-owner
+manual7/64 control matches two short Voices and8notes/divisions16/backup36 in a
+test-only observed-owned scope. Public image/correction guards remain; actual
+RelationTask/controller comparison is still required, and automatic13/16 stays
+incomplete. See `evidence/musicxml-rational-selected-reprocess/TRY.md` and
+`NEXT-DEPENDENCY.md`. Target module13 passed; full595 is historical95e191b.
