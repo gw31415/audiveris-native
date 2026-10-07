@@ -1220,3 +1220,14 @@ nested ChordStem removal (temporarily null stem) then addition/cache invalidatio
 while dirty can stay false. Actual retained Chord/cache/rhythm integration is the
 next dependency, guarded until compared. Evidence:
 `evidence/musicxml-head-stem-added/VALIDATION.json` and `NEXT-DEPENDENCY.md`.
+
+### Retained HeadChord lazy cache
+
+Existing OwnedMusic Chord identities now bind actual lazy bounds/head/tail/beams
+cache. Per-edge ChordStem callbacks invalidate it without clearing Part/Measure/
+Voice/slot/time; getters recompute from live members/current stem and snapshots
+remain read-only. Legacy geometric metadata is a derived projection, not cache
+state. Native manual HeadStem admission is still guarded. Original actual manual
+reprocess creates parallel Voices and7/64 on this flagged target, which remains
+outside native fine-duration admission. This is owned control comparison, not
+automatic image success. Evidence: `evidence/musicxml-manual-chord-cache/VALIDATION.json`.

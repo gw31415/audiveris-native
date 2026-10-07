@@ -511,6 +511,13 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     m.owner
         .graph
         .bind_editing_book(m.measures.iter().map(|m| m.system).collect())?;
+    m.owner.graph.bind_retained_chord_caches(
+        &m.chords
+            .iter()
+            .filter(|c| c.kind == crate::music_measures::ChordKind::Head)
+            .map(|c| (c.key, c.stem))
+            .collect::<Vec<_>>(),
+    )?;
     let xml = render(&mut m, part_name, rhythm, true)?;
     let provenance = provenance(&m);
     Ok(Export {

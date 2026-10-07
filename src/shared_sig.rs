@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod book_state;
+mod chord_cache;
 mod dot_ownership;
 mod editing_task;
 pub use dot_ownership::NoteOwnerEdit;
@@ -334,6 +335,7 @@ struct Vertex {
     removed: bool,
     removing: bool,
     cached_part: Option<u64>,
+    chord_cache: Option<chord_cache::ChordCache>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct EdgeKey {
@@ -405,6 +407,7 @@ impl Graph {
                 removed,
                 removing: false,
                 cached_part: None,
+                chord_cache: None,
             });
             id
         };
@@ -431,6 +434,7 @@ impl Graph {
             removed,
             removing: old.removing,
             cached_part: old.cached_part,
+            chord_cache: old.chord_cache.clone(),
         };
         if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             self.add_dot_to_measure(id)?;
@@ -890,7 +894,7 @@ impl Graph {
             let added = self.edges[id - 1].removed || self.edges[id - 1].data.is_null();
             let manual_count = key.kind == "AugmentationRelation"
                 && (data["manual"] == true || self.vertices[source - 1].data["manual"] == true);
-            if chord_identity && added {
+            if chord_identity && added && self.vertices[source - 1].chord_cache.is_none() {
                 affected_chords.insert(source);
             }
             let live_order = if added {
@@ -908,6 +912,13 @@ impl Graph {
                 data,
                 removed: false,
             };
+            if chord_identity && added && self.vertices[source - 1].chord_cache.is_some() {
+                #[cfg(test)]
+                self.dot_callback_event("edgeAdded", id, "enter");
+                self.invalidate_note_chords(&BTreeSet::from([source]))?;
+                #[cfg(test)]
+                self.dot_callback_event("edgeAdded", id, "leave");
+            }
             if added
                 && self.editing_book.is_some()
                 && self.edges[id - 1].key.kind == "HeadStemRelation"
@@ -987,6 +998,9 @@ impl Graph {
             .filter(|id| !self.vertices[*id - 1].removed)
             .collect::<Vec<_>>()
         {
+            if self.vertices[id - 1].chord_cache.is_some() {
+                self.vertices[id - 1].chord_cache = Some(chord_cache::ChordCache::default());
+            }
             let mut heads = Vec::new();
             let mut stem = None;
             for e in self
@@ -1068,7 +1082,16 @@ impl Graph {
         }
         let mut next = self.clone();
         for id in remove {
+            let source = next.edges[id - 1].key.source;
             next.edges[id - 1].removed = true;
+            if next.vertices[source - 1].chord_cache.is_some() {
+                #[cfg(test)]
+                next.dot_callback_event("edgeRemoved", id, "enter");
+                next.invalidate_note_chords(&BTreeSet::from([source]))?;
+                #[cfg(test)]
+                next.dot_callback_event("edgeRemoved", id, "leave");
+                affected.remove(&source);
+            }
         }
         next.invalidate_note_chords(&affected)?;
         *self = next;
@@ -1237,6 +1260,9 @@ impl Graph {
                 .iter()
                 .map(|v| {
                     let mut data = v.data.clone();
+                    if let Some(cache) = &v.chord_cache {
+                        data["retained_chord_cache"] = cache.snapshot();
+                    }
                     data["lifecycle_removed"] = json!(v.removed || v.removing);
                     data["registered"] = json!(!v.removed);
                     data
@@ -2519,7 +2545,7 @@ impl Graph {
     }
 
     pub fn snapshot(&self) -> Value {
-        let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.live_edges().into_iter().map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
+        let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|{let mut data=v.data.clone();if let Some(cache)=&v.chord_cache{data["retained_chord_cache"]=cache.snapshot();}data}).collect::<Vec<_>>(),"relations":self.live_edges().into_iter().map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
         if self.dot_ownership.is_some() {
             snapshot["augmentation_dot_ownership"] = self.dot_ownership_snapshot();
         }

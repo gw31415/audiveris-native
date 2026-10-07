@@ -1,0 +1,799 @@
+{
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual retained timed owner; explicit manual alternate HeadStem add, lazy cache reads at callback enter/leave, real PageRhythm.reprocessStack and PartwiseBuilder; not automatic image success",
+  "head_bounds": [
+    276,
+    237,
+    13,
+    10
+  ],
+  "target_head_bounds": [
+    396,
+    226,
+    13,
+    10
+  ],
+  "before": {
+    "cache_before_getters": {
+      "bounds": [
+        276,
+        206,
+        13,
+        41
+      ],
+      "head_location": [
+        289.0,
+        242.0
+      ],
+      "tail_location": [
+        289.0,
+        206.0
+      ],
+      "beams_null": false
+    },
+    "getters": {
+      "bounds": [
+        276,
+        206,
+        13,
+        41
+      ],
+      "head_location": [
+        289.0,
+        242.0
+      ],
+      "tail_location": [
+        289.0,
+        206.0
+      ],
+      "stem": "old",
+      "grade": 0.77,
+      "head_best_grade": 0.77
+    },
+    "cache_after_getters": {
+      "bounds": [
+        276,
+        206,
+        13,
+        41
+      ],
+      "head_location": [
+        289.0,
+        242.0
+      ],
+      "tail_location": [
+        289.0,
+        206.0
+      ],
+      "beams_null": false
+    },
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": true,
+    "same_slot": true,
+    "time_offset": "0",
+    "duration": "7/16",
+    "end_time": "7/16",
+    "head_abnormal": false,
+    "stem_abnormal": [
+      false,
+      false
+    ],
+    "sheet_modified": false,
+    "book_dirty": false
+  },
+  "after": {
+    "cache_before_getters": {
+      "bounds": [
+        276,
+        195,
+        133,
+        52
+      ],
+      "head_location": [
+        409.0,
+        242.0
+      ],
+      "tail_location": [
+        409.0,
+        195.0
+      ],
+      "beams_null": false
+    },
+    "getters": {
+      "bounds": [
+        276,
+        195,
+        133,
+        52
+      ],
+      "head_location": [
+        409.0,
+        242.0
+      ],
+      "tail_location": [
+        409.0,
+        195.0
+      ],
+      "stem": "new",
+      "grade": 0.77,
+      "head_best_grade": 0.77
+    },
+    "cache_after_getters": {
+      "bounds": [
+        276,
+        195,
+        133,
+        52
+      ],
+      "head_location": [
+        409.0,
+        242.0
+      ],
+      "tail_location": [
+        409.0,
+        195.0
+      ],
+      "beams_null": false
+    },
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": true,
+    "same_slot": true,
+    "time_offset": "0",
+    "duration": "7/64",
+    "end_time": "7/64",
+    "head_abnormal": false,
+    "stem_abnormal": [
+      false,
+      false
+    ],
+    "sheet_modified": false,
+    "book_dirty": false
+  },
+  "callbacks": [
+    {
+      "event": "edgeAdded",
+      "kind": "HeadStemRelation",
+      "stage": "enter",
+      "state": {
+        "cache_before_getters": {
+          "bounds": [
+            276,
+            206,
+            13,
+            41
+          ],
+          "head_location": [
+            289.0,
+            242.0
+          ],
+          "tail_location": [
+            289.0,
+            206.0
+          ],
+          "beams_null": false
+        },
+        "getters": {
+          "bounds": [
+            276,
+            206,
+            13,
+            41
+          ],
+          "head_location": [
+            289.0,
+            242.0
+          ],
+          "tail_location": [
+            289.0,
+            206.0
+          ],
+          "stem": "old",
+          "grade": 0.77,
+          "head_best_grade": 0.77
+        },
+        "cache_after_getters": {
+          "bounds": [
+            276,
+            206,
+            13,
+            41
+          ],
+          "head_location": [
+            289.0,
+            242.0
+          ],
+          "tail_location": [
+            289.0,
+            206.0
+          ],
+          "beams_null": false
+        },
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "time_offset": "0",
+        "duration": "7/16",
+        "end_time": "7/16",
+        "head_abnormal": false,
+        "stem_abnormal": [
+          false,
+          false
+        ],
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeRemoved",
+      "kind": "ChordStemRelation",
+      "stage": "enter",
+      "state": {
+        "cache_before_getters": {
+          "bounds": [
+            276,
+            206,
+            13,
+            41
+          ],
+          "head_location": [
+            289.0,
+            242.0
+          ],
+          "tail_location": [
+            289.0,
+            206.0
+          ],
+          "beams_null": false
+        },
+        "getters": {
+          "bounds": [
+            276,
+            206,
+            13,
+            41
+          ],
+          "head_location": [
+            289.0,
+            242.0
+          ],
+          "tail_location": [
+            289.0,
+            206.0
+          ],
+          "stem": null,
+          "grade": 0.77,
+          "head_best_grade": 0.77
+        },
+        "cache_after_getters": {
+          "bounds": [
+            276,
+            206,
+            13,
+            41
+          ],
+          "head_location": [
+            289.0,
+            242.0
+          ],
+          "tail_location": [
+            289.0,
+            206.0
+          ],
+          "beams_null": false
+        },
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "time_offset": "0",
+        "duration": "7/16",
+        "end_time": "7/16",
+        "head_abnormal": false,
+        "stem_abnormal": [
+          false,
+          false
+        ],
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeRemoved",
+      "kind": "ChordStemRelation",
+      "stage": "leave",
+      "state": {
+        "cache_before_getters": {
+          "bounds": null,
+          "head_location": null,
+          "tail_location": null,
+          "beams_null": true
+        },
+        "getters": {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "head_location": [
+            282.0,
+            242.0
+          ],
+          "tail_location": [
+            282.0,
+            242.0
+          ],
+          "stem": null,
+          "grade": 0.77,
+          "head_best_grade": 0.77
+        },
+        "cache_after_getters": {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "head_location": [
+            282.0,
+            242.0
+          ],
+          "tail_location": [
+            282.0,
+            242.0
+          ],
+          "beams_null": true
+        },
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "time_offset": "0",
+        "duration": "7/16",
+        "end_time": "7/16",
+        "head_abnormal": false,
+        "stem_abnormal": [
+          false,
+          false
+        ],
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "ChordStemRelation",
+      "stage": "enter",
+      "state": {
+        "cache_before_getters": {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "head_location": [
+            282.0,
+            242.0
+          ],
+          "tail_location": [
+            282.0,
+            242.0
+          ],
+          "beams_null": false
+        },
+        "getters": {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "head_location": [
+            282.0,
+            242.0
+          ],
+          "tail_location": [
+            282.0,
+            242.0
+          ],
+          "stem": "new",
+          "grade": 0.77,
+          "head_best_grade": 0.77
+        },
+        "cache_after_getters": {
+          "bounds": [
+            276,
+            237,
+            13,
+            10
+          ],
+          "head_location": [
+            282.0,
+            242.0
+          ],
+          "tail_location": [
+            282.0,
+            242.0
+          ],
+          "beams_null": false
+        },
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "time_offset": "0",
+        "duration": "7/64",
+        "end_time": "7/64",
+        "head_abnormal": false,
+        "stem_abnormal": [
+          false,
+          false
+        ],
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "ChordStemRelation",
+      "stage": "leave",
+      "state": {
+        "cache_before_getters": {
+          "bounds": null,
+          "head_location": null,
+          "tail_location": null,
+          "beams_null": true
+        },
+        "getters": {
+          "bounds": [
+            276,
+            195,
+            133,
+            52
+          ],
+          "head_location": [
+            409.0,
+            242.0
+          ],
+          "tail_location": [
+            409.0,
+            195.0
+          ],
+          "stem": "new",
+          "grade": 0.77,
+          "head_best_grade": 0.77
+        },
+        "cache_after_getters": {
+          "bounds": [
+            276,
+            195,
+            133,
+            52
+          ],
+          "head_location": [
+            409.0,
+            242.0
+          ],
+          "tail_location": [
+            409.0,
+            195.0
+          ],
+          "beams_null": true
+        },
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "time_offset": "0",
+        "duration": "7/64",
+        "end_time": "7/64",
+        "head_abnormal": false,
+        "stem_abnormal": [
+          false,
+          false
+        ],
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "HeadStemRelation",
+      "stage": "leave",
+      "state": {
+        "cache_before_getters": {
+          "bounds": [
+            276,
+            195,
+            133,
+            52
+          ],
+          "head_location": [
+            409.0,
+            242.0
+          ],
+          "tail_location": [
+            409.0,
+            195.0
+          ],
+          "beams_null": false
+        },
+        "getters": {
+          "bounds": [
+            276,
+            195,
+            133,
+            52
+          ],
+          "head_location": [
+            409.0,
+            242.0
+          ],
+          "tail_location": [
+            409.0,
+            195.0
+          ],
+          "stem": "new",
+          "grade": 0.77,
+          "head_best_grade": 0.77
+        },
+        "cache_after_getters": {
+          "bounds": [
+            276,
+            195,
+            133,
+            52
+          ],
+          "head_location": [
+            409.0,
+            242.0
+          ],
+          "tail_location": [
+            409.0,
+            195.0
+          ],
+          "beams_null": false
+        },
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "time_offset": "0",
+        "duration": "7/64",
+        "end_time": "7/64",
+        "head_abnormal": false,
+        "stem_abnormal": [
+          false,
+          false
+        ],
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    }
+  ],
+  "after_reprocess": {
+    "cache_before_getters": {
+      "bounds": [
+        276,
+        195,
+        133,
+        52
+      ],
+      "head_location": [
+        409.0,
+        242.0
+      ],
+      "tail_location": [
+        409.0,
+        195.0
+      ],
+      "beams_null": false
+    },
+    "getters": {
+      "bounds": [
+        276,
+        195,
+        133,
+        52
+      ],
+      "head_location": [
+        409.0,
+        242.0
+      ],
+      "tail_location": [
+        409.0,
+        195.0
+      ],
+      "stem": "new",
+      "grade": 0.77,
+      "head_best_grade": 0.77
+    },
+    "cache_after_getters": {
+      "bounds": [
+        276,
+        195,
+        133,
+        52
+      ],
+      "head_location": [
+        409.0,
+        242.0
+      ],
+      "tail_location": [
+        409.0,
+        195.0
+      ],
+      "beams_null": false
+    },
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": false,
+    "same_slot": false,
+    "time_offset": "0",
+    "duration": "7/64",
+    "end_time": "7/64",
+    "head_abnormal": false,
+    "stem_abnormal": [
+      false,
+      false
+    ],
+    "sheet_modified": false,
+    "book_dirty": false
+  },
+  "rhythm": {
+    "abnormal": false,
+    "voice_count": 2,
+    "stack_slot_count": 3,
+    "expected": "1",
+    "actual": "9/16",
+    "chords": [
+      {
+        "bounds": [
+          276,
+          195,
+          133,
+          52
+        ],
+        "duration": "7/64",
+        "time_offset": "0",
+        "voice": 2,
+        "slot_id": 1
+      },
+      {
+        "bounds": [
+          396,
+          195,
+          13,
+          41
+        ],
+        "duration": "1/16",
+        "time_offset": "0",
+        "voice": 1,
+        "slot_id": 1
+      },
+      {
+        "bounds": [
+          516,
+          184,
+          13,
+          41
+        ],
+        "duration": "1/4",
+        "time_offset": "1/16",
+        "voice": 1,
+        "slot_id": 2
+      },
+      {
+        "bounds": [
+          636,
+          195,
+          13,
+          41
+        ],
+        "duration": "1/4",
+        "time_offset": "5/16",
+        "voice": 1,
+        "slot_id": 3
+      }
+    ]
+  },
+  "original_export_stream": [
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "1/16",
+      "step": "D",
+      "octave": 5,
+      "type": "16th",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "F",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "backup",
+      "measure": 1,
+      "duration": "9/16"
+    },
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "2",
+      "duration": "7/64",
+      "step": "B",
+      "octave": 4,
+      "type": "16th",
+      "dots": 2,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "F",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "B",
+      "octave": 4,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    }
+  ]
+}

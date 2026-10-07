@@ -2415,3 +2415,9 @@ horizon here, not observed native SheetStub.doneSteps. `planned_steps` may inclu
 PAGE, while `controller_impact_complete` remains false and only the separately
 reported retained RHYTHMS work has executed. No PageStep completion or project
 persistence is inferred from this notification or the dirty booleans.
+
+Retained HeadChord entries also expose `retained_chord_cache`. This is lazy
+memory state: a ChordStem callback clears geometry/beams, whereas readonly report
+creation does not warm it. Existing CLI options and admitted images stay the
+same. Manual HeadStem/ChordStem corrections are not yet admitted by the export
+path; original saved-owner/reprocess observation is separate from native success.
