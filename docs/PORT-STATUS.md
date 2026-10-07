@@ -15,7 +15,7 @@
 
 全回帰の件数・ソースSHAは段階ごとの検証要約で示します。通常workspace移行前のMANIFESTとLaura352heads/513exclusionsなどの報告は当時のソースSHAを保ち、新ソースで再実行した証拠に読み替えません。
 
-直近の全回帰はsource `52943de`で583成功・0失敗・ignored 0。途中中断後は未完対象のみ再開し、176実行物を全照合。doc tests、対象fmt/clippy、別clone Linux build・20イベント・MusicXML4 XSDも通過。[検証記録](../evidence/musicxml-ordered-foundations/FULL-VALIDATION.json)。この後の説明だけのcommitは同じsrc/crates treeです。
+最新の全回帰はsource `95e191b8ffaf5df56f66684b9891cf100bdd8794`で595成功です。後続checkpointでは対象検証を行い、595件を新ソースの結果に読み替えません。以下は過去の全回帰記録です。source `52943de`で583成功・0失敗・ignored 0。途中中断後は未完対象のみ再開し、176実行物を全照合。doc tests、対象fmt/clippy、別clone Linux build・20イベント・MusicXML4 XSDも通過。[検証記録](../evidence/musicxml-ordered-foundations/FULL-VALIDATION.json)。この後の説明だけのcommitは同じsrc/crates treeです。
 
 続くordinary foundation overlap段階はsource `ea8c756`で対象37件・fmt/clippy成功。原版SIG11条件の実画素/core/Area/grade比較と、別clone Linux CLIの既存20+11イベント・MusicXML4 XSDを確認。競合hook画像ではnativeで新規overlap除外1件、2-system画像では0件です。原版の画像中SIG全件一致や新しい全回帰の証拠とは区別します。[今回の検証](../evidence/musicxml-foundation-overlap/VALIDATION.json)・[独立取得](../evidence/musicxml-foundation-overlap/READBACK.json)。
 

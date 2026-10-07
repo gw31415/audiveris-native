@@ -2409,3 +2409,9 @@ added callback. These are owned controls; CLI image admission is unchanged.
 Manual HeadStem changes need actual ChordStem/cache integration and are guarded,
 not approximated by the automatic callback. Original manual ownership can change
 without an abnormal or dirty change; controller DO remains a separate cause.
+
+Impact's legacy `latest_completed_step` field is the caller-supplied planning
+horizon here, not observed native SheetStub.doneSteps. `planned_steps` may include
+PAGE, while `controller_impact_complete` remains false and only the separately
+reported retained RHYTHMS work has executed. No PageStep completion or project
+persistence is inferred from this notification or the dirty booleans.
