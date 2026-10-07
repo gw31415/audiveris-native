@@ -368,4 +368,167 @@ mod tests {
             assert_eq!(json!(trace), c["trace"], "{}", c["mode"]);
         }
     }
+    fn readd_state(graph: &Graph, ids: &[usize]) -> Value {
+        let order = graph.dot_ownership.as_ref().unwrap().measures[0]
+            .dots
+            .iter()
+            .filter_map(|id| ids.iter().position(|d| d == id))
+            .collect::<Vec<_>>();
+        json!({"ownership":live_state(graph,ids),"measure_order":order,"contextual_grades":ids.iter().map(|id|graph.vertices[id-1].data["contextual_grade"].clone()).collect::<Vec<_>>()})
+    }
+    #[test]
+    fn original_same_dot_readd_retains_context_part_and_insertion_order_at_stack_edges() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-owner-readd/observed.json"
+        ))
+        .unwrap();
+        let lifecycle: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-part-ownership/observed.json"
+        ))
+        .unwrap();
+        let c = &lifecycle["cases"][0];
+        let empty_graph = || {
+            let mut graph = Graph::default();
+            let measures = original["stack_bounds"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .enumerate()
+                .map(|(i, b)| Measure {
+                    system: 1,
+                    part: 1,
+                    staff: 1,
+                    index: i + 1,
+                    left: b["left"].as_i64().unwrap(),
+                    right: b["right"].as_i64().unwrap(),
+                    timing: Default::default(),
+                })
+                .collect::<Vec<_>>();
+            graph.bind_dot_measures(&measures).unwrap();
+            graph
+        };
+        for control in original["cases"].as_array().unwrap() {
+            let mut graph = empty_graph();
+            let hk = Key {
+                system: 1,
+                phase: Phase::Head,
+                local: 1,
+            };
+            let ck = Key {
+                system: 1,
+                phase: Phase::Chord,
+                local: 1,
+            };
+            graph.vertex(hk, c["head"].clone(), false).unwrap();
+            graph.vertex(ck,json!({"kind":"HeadChordInter","bounds":c["chord_bounds"],"part_id":1,"staff_id":1,"duration":null,"voice":null,"dots_number":2}),false).unwrap();
+            graph
+                .relations(
+                    1,
+                    Phase::Chord,
+                    vec![(ck, hk, json!({"kind":"Containment"}))],
+                )
+                .unwrap();
+            let dots = [
+                Key {
+                    system: 1,
+                    phase: Phase::Symbol,
+                    local: 1,
+                },
+                Key {
+                    system: 1,
+                    phase: Phase::Symbol,
+                    local: 2,
+                },
+            ];
+            let mut data = Vec::new();
+            let mut ids = Vec::new();
+            for i in 0..2 {
+                let mut dot = json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":c["dot_bounds"][i],"grade":control["dot_grades"][i],"contextual_grade":control["before"]["contextual_grades"][i],"glyph_id":i+1});
+                ids.push(graph.vertex(dots[i], dot.clone(), false).unwrap());
+                if i == 0 {
+                    dot["staff_id"] = json!(1);
+                    graph.vertex(dots[i], dot.clone(), false).unwrap();
+                }
+                // Re-registration gets intrinsic/glyph state; context lives on the same Inter.
+                dot.as_object_mut().unwrap().remove("contextual_grade");
+                data.push(dot);
+            }
+            let support = vec![
+                (
+                    dots[0],
+                    hk,
+                    json!({"kind":"AugmentationRelation","grade":0.7}),
+                ),
+                (
+                    dots[1],
+                    dots[0],
+                    json!({"kind":"DoubleDotRelation","grade":0.7}),
+                ),
+            ];
+            graph.relations(1, Phase::Symbol, support.clone()).unwrap();
+            graph.dot_ownership.as_mut().unwrap().measures[0].dots = ids.clone();
+            if control["warm"] == true {
+                for k in dots {
+                    graph.augmentation_part(k).unwrap();
+                }
+            }
+            assert_eq!(readd_state(&graph, &ids), control["before"]);
+            graph.remove_music_inter(dots[0]).unwrap();
+            graph.remove_music_inter(dots[1]).unwrap();
+            let mut steps = vec![json!({"action":"remove both","state":readd_state(&graph,&ids)})];
+            graph.vertex(dots[1], data[1].clone(), false).unwrap();
+            steps.push(json!({"action":"readd second","state":readd_state(&graph,&ids)}));
+            graph.vertex(dots[0], data[0].clone(), false).unwrap();
+            steps.push(json!({"action":"readd first","state":readd_state(&graph,&ids)}));
+            graph.relations(1, Phase::Symbol, support).unwrap();
+            steps.push(json!({"action":"restore support","state":readd_state(&graph,&ids)}));
+            graph.populate_dot_measures().unwrap();
+            steps.push(json!({"action":"populateFRATs","state":readd_state(&graph,&ids)}));
+            assert_eq!(json!(steps), control["steps"], "warm={}", control["warm"]);
+            let once = graph.snapshot();
+            graph.populate_dot_measures().unwrap();
+            assert_eq!(graph.snapshot(), once);
+        }
+        for boundary in original["boundary"].as_array().unwrap() {
+            let mut graph = empty_graph();
+            let k = Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 1,
+            };
+            let x = boundary["center_x"].as_i64().unwrap();
+            let id=graph.vertex(k,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":[x-2,240,5,4],"staff_id":1,"grade":0.8}),false).unwrap();
+            assert_eq!(
+                json!(graph.stack_for_dot(id).unwrap().map(|i| i + 1)),
+                boundary["getStackAt_index"]
+            );
+            let membership = graph
+                .dot_ownership
+                .as_ref()
+                .unwrap()
+                .measures
+                .iter()
+                .map(|m| m.dots.contains(&id))
+                .collect::<Vec<_>>();
+            assert_eq!(json!(membership), boundary["added_membership"]);
+            assert_eq!(
+                json!(graph.vertices[id - 1].cached_part),
+                boundary["cached_part_id"]
+            );
+            graph.populate_dot_measures().unwrap();
+            assert_eq!(
+                json!(
+                    graph
+                        .dot_ownership
+                        .as_ref()
+                        .unwrap()
+                        .measures
+                        .iter()
+                        .map(|m| m.dots.contains(&id))
+                        .collect::<Vec<_>>()
+                ),
+                boundary["stack_filter"]
+            );
+        }
+    }
 }

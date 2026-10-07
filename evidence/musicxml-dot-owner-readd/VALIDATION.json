@@ -1,0 +1,22 @@
+{
+  "baseline_source": "fe5ff20681b2250cfac26c9a5bed8b1cc07be735",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual saved first/second dot cold/warm removal and same-Inter second-before-first re-addition, support restore and actual populateFRATs; three declared scalar stack edge queries using reused glyph/explicit bounds, no image coordinate search",
+  "observed": "Part and contextual grade persist on original removed/re-added Inter; ordered Measure membership remains second-before-first after population; exact left boundary excluded, shared right boundary selects preceding stack, next pixel selects following stack",
+  "before_fix": "target comparison failed: native intrinsic-state re-registration replaced dot contextual grades with null, while original same-Inter retained0.864/0.932; Part/membership order already matched",
+  "implemented": "same typed registered AugmentationDot identity with unchanged intrinsic grade retains its existing contextual grade, including after removal; existing lazy Part/ordered Measure lifecycle and left-exclusive/right-inclusive scalar boundary behavior verified",
+  "not_claimed": "new image acceptance or original automatic transient cache capture, general editing/setters or changed-grade context, re-added support insertion order, multi-staff/cross-Part/full FRAT ownership, complete cleaner/epilog",
+  "target_tests": {
+    "music_dots_library": 9,
+    "shared_sig_library_including_two_ownership_controls": 9,
+    "shared_sig_integration": 4,
+    "stem_cache_sig_integration": 2,
+    "sig_context_integration": 2
+  },
+  "target_total": 26,
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false,
+  "next": "explicit Part assignment and general non-UI owner editing/support insertion lifecycle"
+}

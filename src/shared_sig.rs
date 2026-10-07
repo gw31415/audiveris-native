@@ -399,9 +399,12 @@ impl Graph {
         data["id"] = json!(id);
         data["origin"] = json!(key);
         // Context lives on the registered Inter, not the glyph cache. Re-registering
-        // the same intrinsic stem/head must retain it, as original addVertex does.
+        // the same intrinsic stem/head/dot must retain it, as original addVertex does.
         let old = &self.vertices[id - 1];
-        if matches!(key.phase, Phase::Head | Phase::Stem)
+        if (matches!(key.phase, Phase::Head | Phase::Stem)
+            || (key.phase == Phase::Symbol
+                && data["kind"] == "AugmentationDotInter"
+                && old.data["kind"] == data["kind"]))
             && !removed
             && old.data["grade"] == data["grade"]
             && data["contextual_grade"].is_null()

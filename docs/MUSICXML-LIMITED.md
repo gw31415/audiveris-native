@@ -2186,3 +2186,24 @@ multi-staff/cross-Part stacks, other FRAT classes, shared-support image admissio
 and complete cleaner/epilog remain partial. CLI reports expose the retained
 state at `shared_sig.augmentation_dot_ownership`. Evidence:
 `evidence/musicxml-dot-part-ownership/VALIDATION.json`.
+
+Same retained-dot re-registration now preserves its contextual grade when the
+intrinsic grade is unchanged, matching original same-Inter add/remove. Saved
+cold/warm controls verify Part persistence and ordered Measure membership through
+second-before-first re-addition; original scalar stack boundaries verify
+left-exclusive/right-inclusive selection. These controls do not broaden image
+admission or demonstrate full correction/editing lifecycle. Existing image CLI
+examples and the negative quarter-rest boundary remain the regression scope.
+Evidence: `evidence/musicxml-dot-owner-readd/VALIDATION.json`.
+
+To inspect ordinary automatic dot ownership with the existing Linux source CLI:
+
+```sh
+mkdir -p work
+cargo run --locked --offline --bin audiveris-musicxml -- fixtures/official-image-musicxml-augmentation/double-augmentation.png work/dot-owner.musicxml work/dot-owner.json
+```
+
+Use fresh output names. The JSON's `shared_sig.augmentation_dot_ownership`
+contains actual Measure dot IDs and cached Part IDs; the XML remains generated
+from the recognized image. This is the existing verified double-dot example,
+not a new image acceptance case.
