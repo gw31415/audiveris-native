@@ -457,6 +457,12 @@
       "unit": "ordinary Augmentation/DoubleDot per-added-support callback, manual owner counting and reentrant automatic deletion",
       "limits": "three declared original saved-owner branches and all callback states; general correction task/multi-staff/shared-image/full cleaner remain partial",
       "evidence": "evidence/musicxml-dot-support-added/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "retained ordinary dot DefaultEditor/EditingTask ordering, duplicate pruning, relation identity and publication",
+      "limits": "actual saved-owner declared edit on image-owned Graph and physical registry; no automatic correction/GUI/controller impact/history/general editor/ensemble/multi-staff/shared-image/full cleaner completion",
+      "evidence": "evidence/musicxml-editing-task/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -547,8 +553,8 @@
     },
     {
       "original_function": "\u88dc\u6b63 / `InterController`, tasks/history, editors",
-      "status": "unimplemented",
-      "current_and_remaining": "\u4e0b\u8a18CLI\u6848\u306e\u5bfe\u8c61\u3002GUI\u30af\u30e9\u30b9\u5185\u306b\u5b58\u5728\u3059\u308b\u3053\u3068\u3092\u7406\u7531\u306b\u8a8d\u8b58\u30fb\u88dc\u6b63\u30ed\u30b8\u30c3\u30af\u3092\u9664\u5916\u3057\u306a\u3044\u3002 Ordinary Head/Rest/dot Part/staff/grade/bounds setter\u3068support callback\u306f\u539f\u7248\u5236\u5fa1\u6bd4\u8f03\u6e08\u307f\u3002\u88dc\u6b63task/history/editor\u30fbCLI\u88dc\u6b63command\u306f\u672a\u63a5\u7d9a\u306a\u306e\u3067\u672cgroup\u306funimplemented\u3092\u7dad\u6301\u3002EditingTask\u306edo\u306ffinalDoit\u2192new links\u2192old unlinks\u3001undo\u306feditor.undo\u2192old links\u2192new unlinks\u306e\u539f\u7248\u4f9d\u5b58\u3092\u5148\u306b\u78ba\u8a8d\u3059\u308b\u3002"
+      "status": "partial",
+      "current_and_remaining": "\u4e0b\u8a18CLI\u6848\u306e\u5bfe\u8c61\u3002GUI\u30af\u30e9\u30b9\u5185\u306b\u5b58\u5728\u3059\u308b\u3053\u3068\u3092\u7406\u7531\u306b\u8a8d\u8b58\u30fb\u88dc\u6b63\u30ed\u30b8\u30c3\u30af\u3092\u9664\u5916\u3057\u306a\u3044\u3002 Ordinary Head/Rest/dot Part/staff/grade/bounds setter\u3068support callback\u306f\u539f\u7248\u5236\u5fa1\u6bd4\u8f03\u6e08\u307f\u3002\u88dc\u6b63task/history/editor\u30fbCLI\u88dc\u6b63command\u306f\u672a\u63a5\u7d9a\u306a\u306e\u3067\u672cgroup\u306funimplemented\u3092\u7dad\u6301\u3002EditingTask\u306edo\u306ffinalDoit\u2192new links\u2192old unlinks\u3001undo\u306feditor.undo\u2192old links\u2192new unlinks\u306e\u539f\u7248\u4f9d\u5b58\u3092\u5148\u306b\u78ba\u8a8d\u3059\u308b\u3002 Retained ordinary-dot EditingTask model/link/publication boundary is implemented with saved-owner control; full preEdit/controller impact/history/general correction CLI remains unconnected."
     },
     {
       "original_function": "\u30d1\u30e9\u30e1\u30fc\u30bf/\u51e6\u7406\u9078\u629e / CLI/constants, sheet/book settings",

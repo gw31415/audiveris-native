@@ -1,0 +1,920 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "actual saved owners, original DefaultEditor model fields installed headlessly (GUI zoom/tracker constructor excluded), real EditingTask do-undo-redo with duplicate candidate and original Link callbacks; real InterService publication delivery, no rendered GUI or automatic image success/controller impact",
+  "notes" : [ {
+    "kind" : "HeadInter",
+    "shape" : "NOTEHEAD_BLACK",
+    "bounds" : [ 276, 237, 13, 10 ],
+    "grade" : 0.506
+  }, {
+    "kind" : "HeadInter",
+    "shape" : "NOTEHEAD_BLACK",
+    "bounds" : [ 516, 215, 13, 10 ],
+    "grade" : 0.506
+  } ],
+  "owner_bounds" : [ [ 276, 206, 13, 41 ], [ 516, 184, 13, 41 ] ],
+  "measure" : {
+    "left" : 81,
+    "right" : 711
+  },
+  "before" : {
+    "owners" : {
+      "note_dot_counts" : [ 2, 0 ],
+      "chord_dot_counts" : [ 2, 0 ],
+      "dots" : [ {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      }, {
+        "removed" : false,
+        "registered" : true,
+        "abnormal" : false
+      } ],
+      "edges_live" : [ true, false, true ]
+    },
+    "ownership" : [ {
+      "cached_part_id" : null,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : null,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "dot_fields" : [ {
+      "bounds" : [ 303, 235, 5, 4 ],
+      "grade" : 0.767,
+      "contextual_grade" : 0.864,
+      "has_glyph" : true,
+      "attachments" : 1
+    }, {
+      "bounds" : [ 317, 235, 5, 4 ],
+      "grade" : 0.767,
+      "contextual_grade" : 0.932,
+      "has_glyph" : true,
+      "attachments" : 0
+    } ],
+    "original_glyph_registered" : true
+  },
+  "steps" : [ {
+    "operation" : "do",
+    "retained_links" : 1,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 1
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "operation" : "undo",
+    "retained_links" : 1,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, false, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : true,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "operation" : "redo",
+    "retained_links" : 1,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  } ],
+  "trace" : [ {
+    "event" : "edgeAdded",
+    "stage" : "enter",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 2 ],
+        "chord_dot_counts" : [ 2, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 1
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeAdded",
+    "stage" : "leave",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 2 ],
+        "chord_dot_counts" : [ 2, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 1
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "enter",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 2, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 1
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "leave",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 1
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "publish",
+    "stage" : "delivered",
+    "entity" : "dot0",
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 1
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeAdded",
+    "stage" : "enter",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : true,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeAdded",
+    "stage" : "leave",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : true,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "enter",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, false, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : true,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "leave",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, false, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : true,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "publish",
+    "stage" : "delivered",
+    "entity" : "dot0",
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 0 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, false, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : true,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeAdded",
+    "stage" : "enter",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeAdded",
+    "stage" : "leave",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 2, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ true, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "enter",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "leave",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  }, {
+    "event" : "publish",
+    "stage" : "delivered",
+    "entity" : "dot0",
+    "state" : {
+      "owners" : {
+        "note_dot_counts" : [ 0, 2 ],
+        "chord_dot_counts" : [ 0, 0 ],
+        "dots" : [ {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        }, {
+          "removed" : false,
+          "registered" : true,
+          "abnormal" : false
+        } ],
+        "edges_live" : [ false, true, true ]
+      },
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "dot_fields" : [ {
+        "bounds" : [ 306, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864,
+        "has_glyph" : false,
+        "attachments" : 0
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932,
+        "has_glyph" : true,
+        "attachments" : 0
+      } ],
+      "original_glyph_registered" : true
+    }
+  } ]
+}

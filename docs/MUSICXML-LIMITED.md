@@ -2239,3 +2239,9 @@ This is not automatic shared-support image recognition or a complete correction
 command. Existing five-image CLI examples and quarter-rest refusal remain;
 Part/Measure editing tasks, multi-staff and full cleaner/epilog remain partial.
 Evidence: `evidence/musicxml-dot-support-added/VALIDATION.json`.
+
+Retained ordinary-dot correction task model is available through the Rust library
+(`shared_sig::DefaultEditingTask`), under saved owner control only. It is not a
+CLI correction command: preEdit/controller impacts/history/general editors remain
+pending. Existing runnable image commands and their admission are unchanged.
+See [task control](../evidence/musicxml-editing-task/VALIDATION.json).

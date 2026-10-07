@@ -39,7 +39,7 @@
 | PAGE/score / `ScoreReduction`, logical parts | 部分 | 単ページ改行・小節番号あり。複数ページ継続、part同定/結合、楽器/移調、跨systemの声部/slur/tie、repeat構造等の一般score統合が残る。 |
 | MusicXML / `PartwiseBuilder`, original proxymusic | 部分 | native MusicXML4 writer、限定イベント・system break・part名、schema/reimport比較あり。一般notation/direction/lyric/instrument/layout/score属性と.mxl圧縮、多ページexportの原版対応が残る。原版XMLの流用は認識完成に数えない。 |
 | プロジェクト保存・再開 / `Book`, `Sheet`, stage invalidation | 部分 | stage reportsとGit完全復元あり。native認識projectの永続化・読込・編集後の必要工程再実行、原版.omrとの対応/互換性は未対応。Gitソース保存とは別機能。 |
-| 補正 / `InterController`, tasks/history, editors | 未対応 | 下記CLI案の対象。GUIクラス内に存在することを理由に認識・補正ロジックを除外しない。 |
+| 補正 / `InterController`, tasks/history, editors | 部分 | 下記CLI案の対象。GUIクラス内に存在することを理由に認識・補正ロジックを除外しない。 |
 | パラメータ/処理選択 / CLI/constants, sheet/book settings | 部分 | 既存段階CLI/一部設定あり。原版の認識parameter、stage/page選択、再処理、出力設定への到達可能性を機能単位で移植する。 |
 | ウィンドウ/キャンバス/パネル/メニュー/マウス・zoom描画 | GUIのみ除外 | 表示と入力UIだけを対象外とする。選択後の変更・validation・再計算は対象内。 |
 
@@ -1065,3 +1065,15 @@ This is not automatic shared-support image recognition or a complete correction
 command. Existing five-image CLI examples and quarter-rest refusal remain;
 Part/Measure editing tasks, multi-staff and full cleaner/epilog remain partial.
 Evidence: `evidence/musicxml-dot-support-added/VALIDATION.json`.
+
+Ordinary retained-dot DefaultEditor/EditingTask now preserves original do/undo/redo
+ordering and relation-object identity. Failed duplicate links are pruned before
+undo; new successful links precede old unlink. Editor do detaches glyph and undo
+restores bounds/glyph and clears lookup attachments. Part/Measure caches and
+membership are not reconstructed. Fifteen original callback/publication states
+compare with actual image-owned native Graph/physical registry under explicitly
+installed saved cold owner control state. This is not automatic correction or
+controller reprocessing, general editor/ensemble/history/multi-staff completion.
+Evidence: `evidence/musicxml-editing-task/VALIDATION.json`. Existing image CLI and
+negative quarter-rest admission remain unchanged; latest full595 is historical
+95e191b, not a current full rerun.

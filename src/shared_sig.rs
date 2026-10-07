@@ -8,7 +8,9 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod dot_ownership;
+mod editing_task;
 pub use dot_ownership::NoteOwnerEdit;
+pub use editing_task::{DefaultEditingTask, EditingLink, EditingOperation};
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Phase {
@@ -354,6 +356,7 @@ pub struct Graph {
     edge_keys: BTreeMap<EdgeKey, usize>,
     edge_clock: u64,
     dot_removals: Vec<Value>,
+    edit_publications: Vec<Value>,
     dot_ownership: Option<dot_ownership::Ownership>,
     #[cfg(test)]
     trace_dot_callbacks: bool,
@@ -820,6 +823,19 @@ impl Graph {
             let count = counts
                 .entry((source, target, kind.clone()))
                 .or_insert(0usize);
+            let editing_ordinal = if phase == Phase::Symbol {
+                data.as_object_mut()
+                    .unwrap()
+                    .remove("_editing_registration_ordinal")
+                    .map(|v| {
+                        v.as_u64()
+                            .and_then(|v| usize::try_from(v).ok())
+                            .ok_or("editing_relation_identity_required")
+                    })
+                    .transpose()?
+            } else {
+                None
+            };
             let key = EdgeKey {
                 system,
                 phase,
@@ -833,7 +849,7 @@ impl Graph {
                         .filter(|i| *i > 0)
                         .ok_or("invalid_shared_stem_relation_id")?
                 } else {
-                    *count
+                    editing_ordinal.unwrap_or(*count)
                 },
             };
             *count += 1;
@@ -2291,6 +2307,9 @@ impl Graph {
         let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.live_edges().into_iter().map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
         if self.dot_ownership.is_some() {
             snapshot["augmentation_dot_ownership"] = self.dot_ownership_snapshot();
+        }
+        if !self.edit_publications.is_empty() {
+            snapshot["edit_publications"] = json!(self.edit_publications);
         }
         snapshot
     }

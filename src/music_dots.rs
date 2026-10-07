@@ -1241,6 +1241,183 @@ mod tests {
         }
         assert!(crate::music_xml::continue_export(m).is_err());
     }
+    #[test]
+    fn retained_editing_task_preserves_relation_identity_owners_and_publication_order() {
+        use crate::shared_sig::{DefaultEditingTask, EditingLink, EditingOperation, NoteOwnerEdit};
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-editing-task/observed.json"
+        ))
+        .unwrap();
+        let mut m = double_dot_symbolic_music();
+        contextualize_and_count(&mut m.owner.graph, &m.chords).unwrap();
+        m.owner.graph.populate_dot_measures().unwrap();
+        let initial = m.owner.graph.snapshot();
+        let find = |kind: &str, bounds: &Value| {
+            initial["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == kind && &n["bounds"] == bounds)
+                .unwrap()
+                .clone()
+        };
+        let notes: Vec<_> = original["notes"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|n| find("HeadInter", &n["bounds"]))
+            .collect();
+        let chords: Vec<_> = original["owner_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|b| find("HeadChordInter", b))
+            .collect();
+        let dots: Vec<_> = original["before"]["dot_fields"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|n| find("AugmentationDotInter", &n["bounds"]))
+            .collect();
+        let note_ids: Vec<_> = notes
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap() as usize)
+            .collect();
+        let owner_ids: Vec<_> = chords
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap() as usize)
+            .collect();
+        let dot_ids: Vec<_> = dots
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap() as usize)
+            .collect();
+        // The oracle starts from a saved cold owner model. Install that model
+        // explicitly; this is not evidence of automatic correction discovery.
+        for (i, d) in dots.iter().enumerate() {
+            let k = key(d).unwrap();
+            m.owner
+                .graph
+                .edit_note_owner(k, NoteOwnerEdit::Part(None))
+                .unwrap();
+            let staff = original["before"]["ownership"][i]["staff_id"].as_u64();
+            m.owner
+                .graph
+                .edit_note_owner(k, NoteOwnerEdit::Staff(staff))
+                .unwrap();
+            let mut data = d.clone();
+            data["staff_id"] = json!(staff);
+            data["grade"] = original["before"]["dot_fields"][i]["grade"].clone();
+            data["contextual_grade"] =
+                original["before"]["dot_fields"][i]["contextual_grade"].clone();
+            data["attachments"] = if i == 0 {
+                json!({"lookup":[1,2,3,4]})
+            } else {
+                json!({})
+            };
+            m.owner.graph.vertex(k, data, false).unwrap();
+        }
+        let physical: Vec<_> = dots
+            .iter()
+            .map(|d| {
+                let id = d["glyph_id"].as_u64().unwrap() as usize;
+                (
+                    id,
+                    crate::beam_dispatch::glyph_json(
+                        &m.owner.prepared.registry.get(id).unwrap().glyph,
+                    ),
+                )
+            })
+            .collect();
+        let edge_id = |kind: &str, source: usize, target: usize| {
+            initial["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["kind"] == kind && e["source"] == source && e["target"] == target)
+                .unwrap()["id"]
+                .as_u64()
+                .unwrap() as usize
+        };
+        let old = edge_id("AugmentationRelation", dot_ids[0], note_ids[0]);
+        let double = edge_id("DoubleDotRelation", dot_ids[1], dot_ids[0]);
+        let relation = json!({"kind":"AugmentationRelation","grade":0.7});
+        let mut latest: [i64; 4] = serde_json::from_value(dots[0]["bounds"].clone()).unwrap();
+        latest[0] += 3;
+        let mut task = DefaultEditingTask::new(
+            &m.owner.graph,
+            key(&dots[0]).unwrap(),
+            latest,
+            vec![
+                EditingLink::new(key(&notes[0]).unwrap(), true, relation.clone()),
+                EditingLink::new(key(&notes[1]).unwrap(), true, relation),
+            ],
+            vec![
+                EditingLink::from_registered(&m.owner.graph, key(&dots[0]).unwrap(), old).unwrap(),
+            ],
+        )
+        .unwrap();
+        let state = |snapshot: &Value, edges: &[usize], registered: bool| {
+            let node = |id| {
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == id)
+                    .unwrap()
+            };
+            let ownership = &snapshot["augmentation_dot_ownership"];
+            json!({"owners":{
+                "note_dot_counts":note_ids.iter().map(|id|note_count(snapshot,node(*id))).collect::<Vec<_>>(),
+                "chord_dot_counts":owner_ids.iter().map(|id|node(*id)["dots_number"].clone()).collect::<Vec<_>>(),
+                "dots":dot_ids.iter().map(|id|{let n=node(*id);json!({"removed":n["lifecycle_removed"]==true,"registered":n["registered"]!=false,"abnormal":n["abnormal"]})}).collect::<Vec<_>>(),
+                "edges_live":edges.iter().map(|id|snapshot["relations"].as_array().unwrap().iter().any(|r|r["id"]==*id)).collect::<Vec<_>>()},
+                "ownership":dot_ids.iter().map(|id|{let n=node(*id);json!({"cached_part_id":ownership["part_cache"].as_array().unwrap().iter().find(|c|c["id"]==*id).unwrap()["part_id"],"staff_id":n["staff_id"],"measure_member":ownership["measures"].as_array().unwrap().iter().any(|a|a["augmentation_dot_ids"].as_array().unwrap().contains(&json!(id))),"registered":n["registered"]!=false,"removed":n["lifecycle_removed"]==true})}).collect::<Vec<_>>(),
+                "dot_fields":dot_ids.iter().map(|id|{let n=node(*id);json!({"bounds":n["bounds"],"grade":n["grade"],"contextual_grade":n["contextual_grade"],"has_glyph":!n["glyph_id"].is_null() || !n["glyph"].is_null(),"attachments":n["attachments"].as_object().map_or(0,|a|a.len())})}).collect::<Vec<_>>(),
+                "original_glyph_registered":registered})
+        };
+        assert_eq!(
+            state(&m.owner.graph.snapshot(), &[old, usize::MAX, double], true),
+            original["before"]
+        );
+        m.owner.graph.enable_dot_callback_trace();
+        let mut added = 0;
+        for (i, operation) in [
+            EditingOperation::Do,
+            EditingOperation::Undo,
+            EditingOperation::Redo,
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let publication = task.perform(&mut m.owner.graph, operation).unwrap();
+            assert_eq!(publication["controller_impact_complete"], false);
+            if i == 0 {
+                added = m.owner.graph.dot_callback_trace()[0]["id"]
+                    .as_u64()
+                    .unwrap() as usize;
+            }
+            assert_eq!(
+                task.retained_links(),
+                original["steps"][i]["retained_links"].as_u64().unwrap() as usize
+            );
+            let registered = physical.iter().all(|(id, glyph)| {
+                crate::beam_dispatch::glyph_json(&m.owner.prepared.registry.get(*id).unwrap().glyph)
+                    == *glyph
+            });
+            assert_eq!(
+                state(&m.owner.graph.snapshot(), &[old, added, double], registered),
+                original["steps"][i]["state"]
+            );
+        }
+        let trace:Vec<_>=m.owner.graph.dot_callback_trace().iter().map(|event| {
+            let is_edge=event["event"].as_str().unwrap().starts_with("edge");
+            let ids=if is_edge {vec![old,added,double]} else {dot_ids.clone()};
+            let index=ids.iter().position(|id|event["id"]==*id).unwrap();
+            let mut n=json!({"event":event["event"],"stage":event["stage"],"entity":format!("{}{}",if is_edge {"edge"} else {"dot"},index),"state":state(&event["state"],&[old,added,double],true)});
+            if is_edge {n["depth"]=event["depth"].clone();} n
+        }).collect();
+        assert_eq!(json!(trace), original["trace"]);
+    }
     fn normalized_dot_callback_trace(
         graph: &Graph,
         notes: &[usize],

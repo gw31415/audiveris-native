@@ -1,0 +1,20 @@
+{
+  "baseline_source": "6755e26e3a5ef2d0eeba643ef6b79291d0d6e1e0",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual saved double-dot owners; original DefaultEditor model fields installed headlessly with drawing constructor excluded; real EditingTask, Link, SigListener and publication delivery",
+  "implemented": "ordinary retained-dot DefaultEditingTask do/undo/redo; new links before old unlink, reverse restoration order on undo; discard failed duplicates; stable relation object identity; glyph detach/restore and attachment cleanup; publication after synchronous callbacks; no Part/Measure reconstruction",
+  "observed": "15 callback/publication stages and before/do/undo/redo fields compare original owner count/cache/staff/Measure/grade/context/bounds; physical glyph registry remains intact",
+  "not_claimed": "automatic correction discovery, GUI rendering, controller impact/reprocessing/history, general editors/ensemble/multi-staff/shared image/full cleaner",
+  "target_tests": {
+    "music_dots_library": 11,
+    "shared_sig_library": 11,
+    "shared_sig_integration": 4,
+    "stem_cache_sig_integration": 2,
+    "sig_context_integration": 2
+  },
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false,
+  "target_total": 30
+}
