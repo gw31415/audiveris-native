@@ -1,0 +1,21 @@
+{
+  "baseline_source": "3c8a4ee6acbd4d3e559bfb3e04db4dace39c65e2",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual saved double-dot chain and a declared support to a distinct actual HeadChord in the same Measure; first head staff/Part cleared, same original support edge removed/re-added/repeated; all callback entry/return stages",
+  "before_fix": "native kept historical edge identity order [Double,first,other] after re-add, versus original live [Double,other,first]; Part must use other support after re-add, and callback visits other owner before first",
+  "implemented": "stable shared edge IDs separate from live insertion order; removed/re-added edge moves to end while repeated live registration keeps order; snapshot/first Part selection/incoming-then-outgoing removal copy/countDots automatic removal traverse current live order",
+  "observed": "first supported Part null returns immediately without staff fallback; before re-add getter null, after re-add actual Part1; original repeated live add returns false, no reorder; owner counts and dot/Measure/cache state match every callback stage",
+  "not_claimed": "shared-support automatic image admission, manual relation-added chord count callback, all relation class lifecycle, multi-staff/cross-Part/general correction tasks/full cleaner/epilog",
+  "target_tests": {
+    "music_dots_library": 9,
+    "shared_sig_library": 11,
+    "shared_sig_integration": 4,
+    "stem_cache_sig_integration": 2,
+    "sig_context_integration": 2
+  },
+  "target_total": 28,
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false
+}

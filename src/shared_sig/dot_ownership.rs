@@ -164,8 +164,9 @@ impl Graph {
         let system = v.key.system;
         if v.data["kind"] == "AugmentationDotInter" {
             if let Some(note) = self
-                .edges
-                .iter()
+                .incident_edges(id)
+                .into_iter()
+                .map(|i| &self.edges[i - 1])
                 .find(|e| {
                     !e.removed
                         && e.key.kind == "AugmentationRelation"
@@ -193,24 +194,19 @@ impl Graph {
                 return Ok(part);
             }
             let x = self.dot_center(id)?[0];
-            let mut incident = Vec::new();
-            for incoming in [true, false] {
-                for e in self.edges.iter().filter(|e| {
-                    !e.removed
-                        && e.key.kind == "DoubleDotRelation"
-                        && if incoming {
-                            e.key.target == id
-                        } else {
-                            e.key.source == id
-                        }
-                }) {
-                    incident.push(if e.key.source == id {
+            let incident = self
+                .incident_edges(id)
+                .into_iter()
+                .map(|i| &self.edges[i - 1])
+                .filter(|e| e.key.kind == "DoubleDotRelation")
+                .map(|e| {
+                    if e.key.source == id {
                         e.key.target
                     } else {
                         e.key.source
-                    });
-                }
-            }
+                    }
+                })
+                .collect::<Vec<_>>();
             for first in incident {
                 if self.dot_center(first)?[0] < x {
                     let part = self.part_for_inter(first)?;
@@ -771,6 +767,216 @@ mod tests {
             let (prefix,keys)=if e["event"]=="edgeRemoved" {("edge",&edges)}else{("dot",&ids)};
             let i=keys.iter().position(|id|e["id"]==*id).unwrap();
             json!({"event":e["event"],"stage":e["stage"],"entity":format!("{prefix}{i}"),"depth":e["depth"],"state":edit_state(&e["state"],&ids)})
+        }).collect::<Vec<_>>();
+        assert_eq!(json!(trace), observed["trace"]);
+    }
+    fn support_state(
+        snapshot: &Value,
+        notes: &[usize],
+        chords: &[usize],
+        dots: &[usize],
+        edges: &[usize],
+    ) -> Value {
+        let nodes = snapshot["inters"].as_array().unwrap();
+        let node = |id| nodes.iter().find(|n| n["id"] == id).unwrap();
+        let relations = snapshot["relations"].as_array().unwrap();
+        let mut incident = Vec::new();
+        for incoming in [true, false] {
+            for r in relations.iter().filter(|r| {
+                if incoming {
+                    r["target"] == dots[0]
+                } else {
+                    r["source"] == dots[0]
+                }
+            }) {
+                if let Some(i) = edges.iter().position(|id| r["id"] == *id)
+                    && !incident.contains(&i)
+                {
+                    incident.push(i);
+                }
+            }
+        }
+        json!({"owners":{"note_dot_counts":notes.iter().map(|id|crate::music_dots::note_count(snapshot,node(*id))).collect::<Vec<_>>(),
+            "chord_dot_counts":chords.iter().map(|id|node(*id)["dots_number"].clone()).collect::<Vec<_>>(),
+            "dots":dots.iter().map(|id| {let n=node(*id);json!({"removed":n["lifecycle_removed"],"registered":n["registered"],"abnormal":n["abnormal"]})}).collect::<Vec<_>>(),
+            "edges_live":edges.iter().map(|id|relations.iter().any(|r|r["id"]==*id)).collect::<Vec<_>>()},
+            "ownership":edit_state(snapshot,dots),"incident_order":incident})
+    }
+    #[test]
+    fn original_readded_support_changes_first_part_and_copied_callback_order() {
+        let observed: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-support-readd/observed.json"
+        ))
+        .unwrap();
+        let bounds: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-owner-readd/observed.json"
+        ))
+        .unwrap();
+        let mut graph = Graph::default();
+        let measures = bounds["stack_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .enumerate()
+            .map(|(i, b)| Measure {
+                system: 1,
+                part: 1,
+                staff: 1,
+                index: i + 1,
+                left: b["left"].as_i64().unwrap(),
+                right: b["right"].as_i64().unwrap(),
+                timing: Default::default(),
+            })
+            .collect::<Vec<_>>();
+        graph.bind_dot_measures(&measures).unwrap();
+        let mut notes = Vec::new();
+        let mut note_ids = Vec::new();
+        let mut chords = Vec::new();
+        let mut chord_ids = Vec::new();
+        for (i, n) in observed["notes"].as_array().unwrap().iter().enumerate() {
+            let hk = Key {
+                system: 1,
+                phase: Phase::Head,
+                local: i + 1,
+            };
+            let ck = Key {
+                system: 1,
+                phase: Phase::Chord,
+                local: i + 1,
+            };
+            let mut h = n.clone();
+            h["staff_id"] = json!(1);
+            note_ids.push(graph.vertex(hk, h, false).unwrap());
+            chord_ids.push(graph.vertex(ck,json!({"kind":"HeadChordInter","bounds":observed["owner_bounds"][i],"part_id":1,"staff_id":1,"duration":null,"voice":null,"dots_number":2}),false).unwrap());
+            graph
+                .relations(
+                    1,
+                    Phase::Chord,
+                    vec![(ck, hk, json!({"kind":"Containment"}))],
+                )
+                .unwrap();
+            notes.push(hk);
+            chords.push(ck);
+        }
+        let dots = [
+            Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 1,
+            },
+            Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 2,
+            },
+        ];
+        let mut ids = Vec::new();
+        for (i, k) in dots.iter().enumerate() {
+            let mut n = observed["before"]["ownership"]["nodes"][i].clone();
+            n["kind"] = json!("AugmentationDotInter");
+            n["shape"] = json!("AUGMENTATION_DOT");
+            n["glyph_id"] = json!(i + 1);
+            n["staff_id"] = observed["before"]["ownership"]["ownership"][i]["staff_id"].clone();
+            ids.push(graph.vertex(*k, n, false).unwrap());
+            graph.vertices[*ids.last().unwrap() - 1].cached_part = None;
+        }
+        graph.dot_ownership.as_mut().unwrap().measures[0].dots = ids.clone();
+        let aug = (
+            dots[0],
+            notes[0],
+            json!({"kind":"AugmentationRelation","grade":0.7}),
+        );
+        graph
+            .relations(
+                1,
+                Phase::Symbol,
+                vec![
+                    aug.clone(),
+                    (
+                        dots[1],
+                        dots[0],
+                        json!({"kind":"DoubleDotRelation","grade":0.7}),
+                    ),
+                    (
+                        dots[0],
+                        notes[1],
+                        json!({"kind":"AugmentationRelation","grade":0.7}),
+                    ),
+                ],
+            )
+            .unwrap();
+        let snap = graph.snapshot();
+        let edges = vec![
+            snap["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|r| r["kind"] == "AugmentationRelation" && r["target"] == note_ids[0])
+                .unwrap()["id"]
+                .as_u64()
+                .unwrap() as usize,
+            snap["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|r| r["kind"] == "AugmentationRelation" && r["target"] == note_ids[1])
+                .unwrap()["id"]
+                .as_u64()
+                .unwrap() as usize,
+            snap["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|r| r["kind"] == "DoubleDotRelation")
+                .unwrap()["id"]
+                .as_u64()
+                .unwrap() as usize,
+        ];
+        for k in &chords {
+            graph.count_owned_augmentation(*k).unwrap();
+        }
+        graph
+            .edit_note_owner(notes[0], NoteOwnerEdit::Part(None))
+            .unwrap();
+        graph
+            .edit_note_owner(notes[0], NoteOwnerEdit::Staff(None))
+            .unwrap();
+        graph
+            .edit_note_owner(dots[0], NoteOwnerEdit::Part(None))
+            .unwrap();
+        assert_eq!(
+            support_state(&all_vertices(&graph), &note_ids, &chord_ids, &ids, &edges),
+            observed["before"]
+        );
+        let part = graph.augmentation_part(dots[0]).unwrap();
+        assert_eq!(json!(part), observed["steps"][0]["result"]);
+        let mut stages = vec![
+            json!({"action":"getPart before readd","result":part,"state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}),
+        ];
+        graph.enable_dot_callback_trace();
+        graph.remove_augmentation_edge(edges[0]).unwrap();
+        stages.push(json!({"action":"remove first support","state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}));
+        graph
+            .relations(1, Phase::Symbol, vec![aug.clone()])
+            .unwrap();
+        stages.push(json!({"action":"readd same support","state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}));
+        assert_eq!(stages[2], observed["steps"][2]);
+        let same = graph.snapshot();
+        graph.relations(1, Phase::Symbol, vec![aug]).unwrap();
+        assert_eq!(same, graph.snapshot());
+        stages.push(json!({"action":"repeat live support","added":false,"state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}));
+        graph
+            .edit_note_owner(dots[0], NoteOwnerEdit::Part(None))
+            .unwrap();
+        let part = graph.augmentation_part(dots[0]).unwrap();
+        assert_eq!(json!(part), observed["steps"][4]["result"]);
+        stages.push(json!({"action":"getPart after readd","result":part,"state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}));
+        graph.remove_music_inter(dots[0]).unwrap();
+        stages.push(json!({"action":"remove dot","state":support_state(&all_vertices(&graph),&note_ids,&chord_ids,&ids,&edges)}));
+        assert_eq!(json!(stages), observed["steps"]);
+        let trace=graph.dot_callback_trace().iter().map(|e| {
+            let (prefix,keys)=if e["event"]=="edgeRemoved" {("edge",edges.as_slice())}else{("dot",ids.as_slice())};let i=keys.iter().position(|id|e["id"]==*id).unwrap();
+            json!({"event":e["event"],"stage":e["stage"],"entity":format!("{prefix}{i}"),"depth":e["depth"],"state":support_state(&e["state"],&note_ids,&chord_ids,&ids,&edges)})
         }).collect::<Vec<_>>();
         assert_eq!(json!(trace), observed["trace"]);
     }

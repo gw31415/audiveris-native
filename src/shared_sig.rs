@@ -189,6 +189,7 @@ mod weak_foundation_tests {
         );
         for source in [1, 2] {
             g.edges.push(Edge {
+                live_order: source as u64,
                 key: EdgeKey {
                     system: 1,
                     phase: Phase::Stem,
@@ -340,6 +341,7 @@ struct EdgeKey {
 }
 #[derive(Clone, Debug)]
 struct Edge {
+    live_order: u64,
     key: EdgeKey,
     data: Value,
     removed: bool,
@@ -350,6 +352,7 @@ pub struct Graph {
     keys: BTreeMap<Key, usize>,
     edges: Vec<Edge>,
     edge_keys: BTreeMap<EdgeKey, usize>,
+    edge_clock: u64,
     dot_removals: Vec<Value>,
     dot_ownership: Option<dot_ownership::Ownership>,
     #[cfg(test)]
@@ -821,6 +824,7 @@ impl Graph {
                 let id = self.edges.len() + 1;
                 self.edge_keys.insert(key.clone(), id);
                 self.edges.push(Edge {
+                    live_order: 0,
                     key: key.clone(),
                     data: Value::Null,
                     removed: false,
@@ -834,7 +838,17 @@ impl Graph {
             if chord_identity && (self.edges[id - 1].removed || self.edges[id - 1].data.is_null()) {
                 affected_chords.insert(source);
             }
+            let live_order = if self.edges[id - 1].removed || self.edges[id - 1].data.is_null() {
+                self.edge_clock = self
+                    .edge_clock
+                    .checked_add(1)
+                    .ok_or("shared_sig_relation_order_budget")?;
+                self.edge_clock
+            } else {
+                self.edges[id - 1].live_order
+            };
             self.edges[id - 1] = Edge {
+                live_order,
                 key,
                 data,
                 removed: false,
@@ -1009,25 +1023,13 @@ impl Graph {
         }
         // JGraphT edgesOf copies incoming edges before outgoing edges. The
         // removed Inter stays registered while those callbacks can reenter.
-        let mut incident = Vec::new();
-        for incoming in [true, false] {
-            for (i, e) in self.edges.iter().enumerate().filter(|(_, e)| {
-                !e.removed
-                    && if incoming {
-                        e.key.target == id
-                    } else {
-                        e.key.source == id
-                    }
-            }) {
-                if !matches!(
-                    e.key.kind.as_str(),
-                    "AugmentationRelation" | "DoubleDotRelation" | "Exclusion"
-                ) {
-                    return Err("music_dot_typed_vertex_removal_required".into());
-                }
-                if !incident.contains(&(i + 1)) {
-                    incident.push(i + 1);
-                }
+        let incident = self.incident_edges(id);
+        for i in &incident {
+            if !matches!(
+                self.edges[i - 1].key.kind.as_str(),
+                "AugmentationRelation" | "DoubleDotRelation" | "Exclusion"
+            ) {
+                return Err("music_dot_typed_vertex_removal_required".into());
             }
         }
         let outgoing = incident
@@ -1221,8 +1223,8 @@ impl Graph {
                     continue;
                 }
                 let dot_ids = self
-                    .edges
-                    .iter()
+                    .live_edges()
+                    .into_iter()
                     .filter(|e| {
                         !e.removed && e.key.kind == "AugmentationRelation" && e.key.target == id
                     })
@@ -2216,8 +2218,41 @@ impl Graph {
         Ok(())
     }
 
+    fn live_edges(&self) -> Vec<&Edge> {
+        let mut live = self.edges.iter().filter(|e| !e.removed).collect::<Vec<_>>();
+        live.sort_by_key(|e| e.live_order);
+        live
+    }
+    fn incident_edges(&self, id: usize) -> Vec<usize> {
+        let mut incident = Vec::new();
+        // JGraphT keeps live insertion order independently of stable relation IDs.
+        // edgesOf copies incoming first, then outgoing, without duplicating loops.
+        for incoming in [true, false] {
+            let mut edges = self
+                .edges
+                .iter()
+                .enumerate()
+                .filter(|(_, e)| {
+                    !e.removed
+                        && if incoming {
+                            e.key.target == id
+                        } else {
+                            e.key.source == id
+                        }
+                })
+                .collect::<Vec<_>>();
+            edges.sort_by_key(|(_, e)| e.live_order);
+            for (i, _) in edges {
+                if !incident.contains(&(i + 1)) {
+                    incident.push(i + 1);
+                }
+            }
+        }
+        incident
+    }
+
     pub fn snapshot(&self) -> Value {
-        let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.edges.iter().filter(|e|!e.removed).map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
+        let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.live_edges().into_iter().map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
         if self.dot_ownership.is_some() {
             snapshot["augmentation_dot_ownership"] = self.dot_ownership_snapshot();
         }

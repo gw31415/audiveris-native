@@ -2217,3 +2217,13 @@ new image admission. Moving bounds alone does not perform a complete correction
 task or repair old Measure membership. Multi-staff/shared support image admission,
 general edit tasks, support re-add ordering and complete cleaner/epilog remain
 partial. Evidence: `evidence/musicxml-dot-owner-edit/VALIDATION.json`.
+
+Retained support remove/re-add now keeps stable relation identity separately
+from live insertion order. Original first-supported Part selection (including
+null without fallback), incoming-before-outgoing callback copy and every owner
+count/cache/Measure callback stage match one declared shared-support control on
+actual saved HeadChord owners. Already-live support replay does not reorder.
+Existing image CLI admission is unchanged; this is not a shared-support image
+success. Manual support-added callbacks, general edit tasks, multi-staff and
+complete cleaner/epilog remain partial. Evidence:
+`evidence/musicxml-dot-support-readd/VALIDATION.json`.
