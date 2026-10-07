@@ -2207,3 +2207,13 @@ Use fresh output names. The JSON's `shared_sig.augmentation_dot_ownership`
 contains actual Measure dot IDs and cached Part IDs; the XML remains generated
 from the recognized image. This is the existing verified double-dot example,
 not a new image acceptance case.
+
+Ordinary Head/Rest/dot owner edits now follow original AbstractInter setters:
+explicit Part assignment/reset, staff, intrinsic grade and bounds preserve
+unrelated cached Part/context and actual Measure membership. DotFactory's image
+path uses the staff setter after SIG registration and before support. Actual
+saved-chain setter stages and callback entry/return states are a control, not
+new image admission. Moving bounds alone does not perform a complete correction
+task or repair old Measure membership. Multi-staff/shared support image admission,
+general edit tasks, support re-add ordering and complete cleaner/epilog remain
+partial. Evidence: `evidence/musicxml-dot-owner-edit/VALIDATION.json`.

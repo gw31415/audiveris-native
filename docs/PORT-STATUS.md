@@ -1033,3 +1033,13 @@ left-exclusive/right-inclusive selection. These controls do not broaden image
 admission or demonstrate full correction/editing lifecycle. Existing image CLI
 examples and the negative quarter-rest boundary remain the regression scope.
 Evidence: `evidence/musicxml-dot-owner-readd/VALIDATION.json`.
+
+Ordinary Head/Rest/dot owner edits now follow original AbstractInter setters:
+explicit Part assignment/reset, staff, intrinsic grade and bounds preserve
+unrelated cached Part/context and actual Measure membership. DotFactory's image
+path uses the staff setter after SIG registration and before support. Actual
+saved-chain setter stages and callback entry/return states are a control, not
+new image admission. Moving bounds alone does not perform a complete correction
+task or repair old Measure membership. Multi-staff/shared support image admission,
+general edit tasks, support re-add ordering and complete cleaner/epilog remain
+partial. Evidence: `evidence/musicxml-dot-owner-edit/VALIDATION.json`.

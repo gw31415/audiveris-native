@@ -439,6 +439,12 @@
       "unit": "same intrinsic-grade retained-dot re-registration preserves contextual grade; original cold/warm same-Inter Part/Measure order and scalar stack boundaries verified",
       "limits": "controlled saved lifecycle and declared stack edges separate from automatic image success; original general setters/correction routes, re-added support insertion order, multi-staff/general FRAT and full cleaner remain partial",
       "evidence": "evidence/musicxml-dot-owner-readd/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "ordinary typed Head/Rest/dot AbstractInter Part/staff/grade/bounds setters; DotFactory staff setter connected",
+      "limits": "actual saved-control setter/callback stages; general correction tasks/null grade or bounds/multi-staff/shared images/support re-add ordering/full cleaner remain partial",
+      "evidence": "evidence/musicxml-dot-owner-edit/VALIDATION.json"
     }
   ],
   "function_groups": [

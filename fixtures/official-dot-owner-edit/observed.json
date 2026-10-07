@@ -1,0 +1,487 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "declared owner setters on actual saved Inter then actual removal callbacks; no automatic image or multi-staff claim",
+  "before" : {
+    "ownership" : [ {
+      "cached_part_id" : null,
+      "staff_id" : 1,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    }, {
+      "cached_part_id" : null,
+      "staff_id" : null,
+      "measure_member" : true,
+      "registered" : true,
+      "removed" : false
+    } ],
+    "measure_order" : [ [ 0, 1 ], [ ] ],
+    "nodes" : [ {
+      "bounds" : [ 303, 235, 5, 4 ],
+      "grade" : 0.767,
+      "contextual_grade" : 0.864
+    }, {
+      "bounds" : [ 317, 235, 5, 4 ],
+      "grade" : 0.767,
+      "contextual_grade" : 0.932
+    } ]
+  },
+  "steps" : [ {
+    "action" : "setPart(existing)",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : 1,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "setStaff(null)",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "setGrade(0.4)",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "setPart(null)",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "getPart(support)",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 303, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "setBounds(next stack)",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "remove moved dot",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "action" : "remove second",
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  } ],
+  "trace" : [ {
+    "event" : "edgeRemoved",
+    "stage" : "enter",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "leave",
+    "entity" : "edge1",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "enter",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "edgeRemoved",
+    "stage" : "leave",
+    "entity" : "edge0",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "vertexRemoved",
+    "stage" : "enter",
+    "entity" : "dot0",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "vertexRemoved",
+    "stage" : "leave",
+    "entity" : "dot0",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : true,
+        "removed" : false
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "vertexRemoved",
+    "stage" : "enter",
+    "entity" : "dot1",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  }, {
+    "event" : "vertexRemoved",
+    "stage" : "leave",
+    "entity" : "dot1",
+    "depth" : 0,
+    "state" : {
+      "ownership" : [ {
+        "cached_part_id" : 1,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      }, {
+        "cached_part_id" : null,
+        "staff_id" : null,
+        "measure_member" : true,
+        "registered" : false,
+        "removed" : true
+      } ],
+      "measure_order" : [ [ 0, 1 ], [ ] ],
+      "nodes" : [ {
+        "bounds" : [ 710, 235, 5, 4 ],
+        "grade" : 0.4,
+        "contextual_grade" : 0.864
+      }, {
+        "bounds" : [ 317, 235, 5, 4 ],
+        "grade" : 0.767,
+        "contextual_grade" : 0.932
+      } ]
+    }
+  } ]
+}

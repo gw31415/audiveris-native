@@ -1,0 +1,20 @@
+{
+  "baseline_source": "819b7824c4711a68b297f404e4bb8a58a4178149",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_control": "actual saved double-dot chain; explicit Part/staff/grade/bounds setters followed by original SIG removal callbacks",
+  "implemented": "retained ordinary typed Head/Rest/dot owner setters; factory staff assignment uses same setter after registration and before support; setter preserves contextual grade, Part cache and Measure collection unless explicitly assigned",
+  "observed": "setPart(null) permits next supported getter to fill cache; staff/grade/bounds setters do not relocate membership or invalidate unrelated caches; removing moved dot routes through current stack, leaving old saved membership; all callback entry/return states compared",
+  "not_claimed": "end-user correction command lifecycle, multi-staff/cross-Part or shared image admission, complete cleaner/epilog, null grade/bounds, automatic original transient cache capture",
+  "target_tests": {
+    "music_dots_library": 9,
+    "shared_sig_library": 10,
+    "shared_sig_integration": 4,
+    "stem_cache_sig_integration": 2,
+    "sig_context_integration": 2
+  },
+  "target_total": 27,
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false
+}

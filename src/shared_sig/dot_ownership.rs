@@ -19,7 +19,72 @@ pub(super) struct Ownership {
     measures: Vec<Membership>,
     staff_parts: BTreeMap<(u64, u64), u64>,
 }
+/// AbstractInter setters for retained ordinary note/dot ownership. Higher-level
+/// correction commands must separately perform their original task lifecycle.
+#[derive(Clone, Debug)]
+pub enum NoteOwnerEdit {
+    Part(Option<u64>),
+    Staff(Option<u64>),
+    Grade(f64),
+    Bounds([i64; 4]),
+}
 impl Graph {
+    pub fn edit_note_owner(&mut self, key: Key, edit: NoteOwnerEdit) -> Result<(), String> {
+        let id = self.id(key).ok_or("music_note_owner_identity_required")?;
+        let v = &self.vertices[id - 1];
+        if !matches!(
+            (v.key.phase, v.data["kind"].as_str()),
+            (Phase::Head, Some("HeadInter"))
+                | (Phase::Symbol, Some("RestInter" | "AugmentationDotInter"))
+        ) {
+            return Err("music_note_owner_edit_pending".into());
+        }
+        match edit {
+            NoteOwnerEdit::Part(part) => {
+                if let Some(part) = part
+                    && !self.dot_ownership.as_ref().is_some_and(|owner| {
+                        owner
+                            .measures
+                            .iter()
+                            .any(|m| m.system == key.system && m.part == part)
+                    })
+                {
+                    return Err("music_note_owned_part_required".into());
+                }
+                self.vertices[id - 1].cached_part = part;
+            }
+            NoteOwnerEdit::Staff(staff) => {
+                if let Some(staff) = staff
+                    && !self
+                        .dot_ownership
+                        .as_ref()
+                        .is_some_and(|owner| owner.staff_parts.contains_key(&(key.system, staff)))
+                {
+                    return Err("music_note_owned_staff_required".into());
+                }
+                self.vertices[id - 1].data["staff_id"] = json!(staff);
+            }
+            NoteOwnerEdit::Grade(grade) => {
+                if !grade.is_finite() || !(0.0..=1.0).contains(&grade) {
+                    return Err("music_note_grade_required".into());
+                }
+                self.vertices[id - 1].data["grade"] = json!(grade);
+            }
+            NoteOwnerEdit::Bounds(bounds) => {
+                if bounds[2] <= 0
+                    || bounds[3] <= 0
+                    || bounds[0].checked_add(bounds[2]).is_none()
+                    || bounds[1].checked_add(bounds[3]).is_none()
+                {
+                    return Err("music_note_bounds_required".into());
+                }
+                self.vertices[id - 1].data["bounds"] = json!(bounds);
+            }
+        }
+        // These setters do not relocate Measure membership or invalidate Part/ctx.
+        // Doing so here would hide the original task/callback lifecycle boundaries.
+        Ok(())
+    }
     pub(crate) fn bind_dot_measures(&mut self, measures: &[Measure]) -> Result<(), String> {
         let mut ownership = Ownership::default();
         let mut identities = BTreeSet::new();
@@ -530,5 +595,183 @@ mod tests {
                 boundary["stack_filter"]
             );
         }
+    }
+    fn edit_state(snapshot: &Value, ids: &[usize]) -> Value {
+        let nodes = snapshot["inters"].as_array().unwrap();
+        let order = snapshot["augmentation_dot_ownership"]["measures"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|m| {
+                m["augmentation_dot_ids"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter_map(|id| ids.iter().position(|i| *id == *i))
+                    .collect::<Vec<_>>()
+            })
+            .collect::<Vec<_>>();
+        json!({"ownership":ownership_state(snapshot,ids),"measure_order":order,
+            "nodes":ids.iter().map(|id| {let n=nodes.iter().find(|n|n["id"]==*id).unwrap();
+                json!({"bounds":n["bounds"],"grade":n["grade"],"contextual_grade":n["contextual_grade"]})}).collect::<Vec<_>>()})
+    }
+    fn all_vertices(graph: &Graph) -> Value {
+        let mut s = graph.snapshot();
+        s["inters"] = json!(
+            graph
+                .vertices
+                .iter()
+                .map(|v| {
+                    let mut n = v.data.clone();
+                    n["registered"] = json!(!v.removed);
+                    n["lifecycle_removed"] = json!(v.removed || v.removing);
+                    n
+                })
+                .collect::<Vec<_>>()
+        );
+        s
+    }
+    #[test]
+    fn original_explicit_owner_setters_preserve_caches_and_callback_membership() {
+        let observed: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-owner-edit/observed.json"
+        ))
+        .unwrap();
+        let prior: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-part-ownership/observed.json"
+        ))
+        .unwrap();
+        let stacks: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-dot-owner-readd/observed.json"
+        ))
+        .unwrap();
+        let c = &prior["cases"][0];
+        let mut graph = Graph::default();
+        let measures = stacks["stack_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .enumerate()
+            .map(|(i, b)| Measure {
+                system: 1,
+                part: 1,
+                staff: 1,
+                index: i + 1,
+                left: b["left"].as_i64().unwrap(),
+                right: b["right"].as_i64().unwrap(),
+                timing: Default::default(),
+            })
+            .collect::<Vec<_>>();
+        graph.bind_dot_measures(&measures).unwrap();
+        let hk = Key {
+            system: 1,
+            phase: Phase::Head,
+            local: 1,
+        };
+        let ck = Key {
+            system: 1,
+            phase: Phase::Chord,
+            local: 1,
+        };
+        graph.vertex(hk, c["head"].clone(), false).unwrap();
+        graph.vertex(ck,json!({"kind":"HeadChordInter","bounds":c["chord_bounds"],"part_id":1,"staff_id":1,"duration":null,"voice":null,"dots_number":2}),false).unwrap();
+        graph
+            .relations(
+                1,
+                Phase::Chord,
+                vec![(ck, hk, json!({"kind":"Containment"}))],
+            )
+            .unwrap();
+        let dots = [
+            Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 1,
+            },
+            Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 2,
+            },
+        ];
+        let mut ids = Vec::new();
+        for (i, k) in dots.iter().enumerate() {
+            let n = &observed["before"]["nodes"][i];
+            ids.push(graph.vertex(*k,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":n["bounds"],"grade":n["grade"],"contextual_grade":n["contextual_grade"],"staff_id":if i==0 {json!(1)}else{Value::Null},"glyph_id":i+1}),false).unwrap());
+            graph.vertices[*ids.last().unwrap() - 1].cached_part = None;
+        }
+        graph.dot_ownership.as_mut().unwrap().measures[0].dots = ids.clone();
+        graph
+            .relations(
+                1,
+                Phase::Symbol,
+                vec![
+                    (
+                        dots[0],
+                        hk,
+                        json!({"kind":"AugmentationRelation","grade":0.7}),
+                    ),
+                    (
+                        dots[1],
+                        dots[0],
+                        json!({"kind":"DoubleDotRelation","grade":0.7}),
+                    ),
+                ],
+            )
+            .unwrap();
+        assert_eq!(edit_state(&all_vertices(&graph), &ids), observed["before"]);
+        let mut stages = Vec::new();
+        for (index, edit) in [
+            NoteOwnerEdit::Part(Some(1)),
+            NoteOwnerEdit::Staff(None),
+            NoteOwnerEdit::Grade(0.4),
+            NoteOwnerEdit::Part(None),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            graph.edit_note_owner(dots[0], edit).unwrap();
+            stages.push(json!({"action":observed["steps"][index]["action"],"state":edit_state(&all_vertices(&graph),&ids)}));
+        }
+        assert_eq!(graph.augmentation_part(dots[0]).unwrap(), Some(1));
+        stages.push(
+            json!({"action":"getPart(support)","state":edit_state(&all_vertices(&graph),&ids)}),
+        );
+        graph
+            .edit_note_owner(
+                dots[0],
+                NoteOwnerEdit::Bounds(
+                    serde_json::from_value(
+                        observed["steps"][5]["state"]["nodes"][0]["bounds"].clone(),
+                    )
+                    .unwrap(),
+                ),
+            )
+            .unwrap();
+        stages.push(json!({"action":"setBounds(next stack)","state":edit_state(&all_vertices(&graph),&ids)}));
+        let edges = graph
+            .edges
+            .iter()
+            .enumerate()
+            .filter(|(_, e)| {
+                matches!(
+                    e.key.kind.as_str(),
+                    "AugmentationRelation" | "DoubleDotRelation"
+                )
+            })
+            .map(|(i, _)| i + 1)
+            .collect::<Vec<_>>();
+        graph.enable_dot_callback_trace();
+        for (k, action) in dots.iter().zip(["remove moved dot", "remove second"]) {
+            graph.remove_music_inter(*k).unwrap();
+            stages.push(json!({"action":action,"state":edit_state(&all_vertices(&graph),&ids)}));
+        }
+        assert_eq!(json!(stages), observed["steps"]);
+        let trace=graph.dot_callback_trace().iter().map(|e| {
+            let (prefix,keys)=if e["event"]=="edgeRemoved" {("edge",&edges)}else{("dot",&ids)};
+            let i=keys.iter().position(|id|e["id"]==*id).unwrap();
+            json!({"event":e["event"],"stage":e["stage"],"entity":format!("{prefix}{i}"),"depth":e["depth"],"state":edit_state(&e["state"],&ids)})
+        }).collect::<Vec<_>>();
+        assert_eq!(json!(trace), observed["trace"]);
     }
 }

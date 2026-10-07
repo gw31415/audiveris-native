@@ -370,10 +370,16 @@ pub(crate) fn late_checks(
                 .as_u64()
                 .ok_or("music_dot_registered_glyph_required")? as usize;
             let glyph = crate::beam_dispatch::glyph_json(&registry.get(gid)?.glyph);
-            let mut data = json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"grade":grade,"abnormal":true});
-            let id = staged.vertex(dk, data.clone(), false)?;
-            data["staff_id"] = staff["id"].clone();
-            staged.vertex(dk, data, false)?;
+            let data = json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"grade":grade,"abnormal":true});
+            let id = staged.vertex(dk, data, false)?;
+            staged.edit_note_owner(
+                dk,
+                crate::shared_sig::NoteOwnerEdit::Staff(Some(
+                    staff["id"]
+                        .as_u64()
+                        .ok_or("music_dot_owned_staff_required")?,
+                )),
+            )?;
             staged.relations(system, Phase::Symbol, vec![(dk, note, rel)])?;
             created.push(id);
         }
