@@ -28,3 +28,17 @@ bounds, CtrlTask.firstImpactedStep and epilog below RHYTHMS (latest HEADS). Actu
 through-PAGE reprocessing is not observed in this fixture; its inclusive schedule
 is separated from executed impacts. Native modified flag is notification intent,
 not yet persisted SheetStub mutation.
+
+`EditingStackProbe.java` uses original SystemInfo.getStackAt and actual private
+RhythmsStep.Impact.add instances. A declared raw task moves the first dot to the
+center of an existing next stack, derived from real stack geometry; another dot
+stays in its original stack. do/redo selection is 2,1; undo is deduplicated1.
+Both dots still belong to their original Measure collection. This observes raw
+owner/task boundaries, not automatic correction or actual rhythm reprocessing.
+
+Publication boundary: original InterIndex queues UI delivery; the controlled
+probe drains the queue between raw task calls (and after each sequence). Native
+Graph journals publish requests at the corresponding post-callback task boundary.
+The owner states match the drained control; async controller/GUI delivery order
+relative to epilog is not claimed. Original sequence's base controller publish
+hook is empty; impact planning follows task publication requests.

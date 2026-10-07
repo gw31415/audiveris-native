@@ -1515,6 +1515,111 @@ mod tests {
         assert_eq!(effect["reprocessed_steps"], json!([]));
         assert_eq!(effect["controller_impact_complete"], false);
     }
+    #[test]
+    fn edited_current_centers_select_owned_stacks_without_rebuilding_measure_membership() {
+        use crate::shared_sig::{
+            DefaultEditingTask, EditingOperation, EditingSequence, NoteOwnerEdit,
+        };
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-editing-task/stack-observed.json"
+        ))
+        .unwrap();
+        let mut m = double_dot_symbolic_music();
+        m.owner.graph.populate_dot_measures().unwrap();
+        let snapshot = m.owner.graph.snapshot();
+        let dots: Vec<_> = original["original_bounds"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|b| {
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["kind"] == "AugmentationDotInter" && &n["bounds"] == b)
+                    .unwrap()
+                    .clone()
+            })
+            .collect();
+        let ids: Vec<_> = dots
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap() as usize)
+            .collect();
+        for (i, d) in dots.iter().enumerate() {
+            m.owner
+                .graph
+                .edit_note_owner(key(d).unwrap(), NoteOwnerEdit::Part(None))
+                .unwrap();
+            m.owner
+                .graph
+                .edit_note_owner(
+                    key(d).unwrap(),
+                    NoteOwnerEdit::Staff(if i == 0 { Some(1) } else { None }),
+                )
+                .unwrap();
+        }
+        let mut sequence = EditingSequence::new(
+            dots.iter()
+                .enumerate()
+                .map(|(i, d)| {
+                    DefaultEditingTask::new(
+                        &m.owner.graph,
+                        key(d).unwrap(),
+                        serde_json::from_value(original["latest_bounds"][i].clone()).unwrap(),
+                        vec![],
+                        vec![],
+                    )
+                    .unwrap()
+                })
+                .collect(),
+        );
+        for (i, op) in [
+            EditingOperation::Do,
+            EditingOperation::Undo,
+            EditingOperation::Redo,
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let notification = sequence.perform(&mut m.owner.graph, op, "PAGE").unwrap();
+            assert_eq!(
+                notification["rhythm_stack_targets"],
+                original["steps"][i]["stack_targets"]
+            );
+            assert_eq!(notification["reprocessed_steps"], json!([]));
+            assert_eq!(notification["controller_impact_complete"], false);
+            let s = m.owner.graph.snapshot();
+            let owner = &s["augmentation_dot_ownership"];
+            let nodes: Vec<_> = ids
+                .iter()
+                .map(|id| {
+                    s["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == *id)
+                        .unwrap()
+                })
+                .collect();
+            assert_eq!(
+                json!(
+                    nodes
+                        .iter()
+                        .map(|n| n["bounds"].clone())
+                        .collect::<Vec<_>>()
+                ),
+                original["steps"][i]["dot_bounds"]
+            );
+            let membership = owner["measures"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|a| a["system_id"] == 1 && a["measure_index"] == 1)
+                .unwrap();
+            let ownership:Vec<_>=ids.iter().zip(nodes).map(|(id,n)|json!({"cached_part_id":owner["part_cache"].as_array().unwrap().iter().find(|c|c["id"]==*id).unwrap()["part_id"],"staff_id":n["staff_id"],"measure_member":membership["augmentation_dot_ids"].as_array().unwrap().contains(&json!(id)),"registered":true,"removed":false})).collect();
+            assert_eq!(json!(ownership), original["steps"][i]["ownership"]);
+        }
+    }
     fn normalized_dot_callback_trace(
         graph: &Graph,
         notes: &[usize],

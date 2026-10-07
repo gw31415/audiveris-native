@@ -144,6 +144,22 @@ impl Graph {
             m.system == self.vertices[id - 1].key.system && m.left < x && x <= m.right
         }))
     }
+    pub(super) fn dot_edit_stack_target(&self, inter: Key) -> Result<Option<Value>, String> {
+        let id = self.id(inter).ok_or("editing_inter_identity_required")?;
+        if self.vertices[id - 1].data["kind"] != "AugmentationDotInter" {
+            return Err("editing_stack_task_class_pending".into());
+        }
+        let owner = self
+            .dot_ownership
+            .as_ref()
+            .ok_or("editing_owned_stack_selection_required")?;
+        // SystemInfo.getStackAt uses current center, not cached Part membership.
+        // Binding already enforces the retained one-staff/Part stack geometry.
+        Ok(self.stack_for_dot(id)?.map(|index| {
+            let m = &owner.measures[index];
+            json!({"system_id":m.system,"measure_index":m.index,"left":m.left,"right":m.right})
+        }))
+    }
     pub(crate) fn augmentation_part(&mut self, key: Key) -> Result<Option<u64>, String> {
         let id = self
             .id(key)

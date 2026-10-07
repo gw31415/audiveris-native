@@ -1087,3 +1087,19 @@ from actual reprocessing: `reprocessed_steps` is empty and
 saved two-task order are controls, not automatic CLI correction. Native SheetStub
 persistence, preEdit/history/step execution/general editors remain pending.
 Evidence: `evidence/musicxml-editing-impact/VALIDATION.json`.
+
+RHYTHMS impact notifications now select actual retained ordinary stacks by edited
+Inter center, with original encounter-order deduplication. A saved raw cross-stack
+task compares do/redo2,1 and undo1 against original SystemInfo.getStackAt and
+RhythmsStep.Impact.add, while cached Part/staff and original Measure membership
+remain unchanged. It does not relocate ownership, run StackRhythm/voice refinement
+or admit new images. The next handoff is actual stack reprocessing and PageStep:
+current image rhythm lives inside retained-SYMBOLS export and cannot consume an
+arbitrary edited Graph. Its owner/timed-chord guards remain in place. Full correction,
+preEdit/history/general editors/multi-staff/cleaner remain partial. Evidence:
+`evidence/musicxml-editing-stack/VALIDATION.json`.
+
+Publication control is queue-flushed original InterService delivery versus native
+post-callback publication request records. This does not prove GUI delivery or
+async ordering relative to controller epilog. Actual impact execution remains
+pending separately from task/owner controls.

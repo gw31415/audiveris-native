@@ -301,12 +301,22 @@ impl EditingSequence {
         let planned = first
             .filter(|first| *first <= latest)
             .map_or_else(Vec::new, |first| STEPS[first..=latest].to_vec());
+        let mut stack_targets = Vec::new();
+        if planned.contains(&"RHYTHMS") {
+            for task in &sequence.tasks {
+                if let Some(target) = next.dot_edit_stack_target(task.inter)?
+                    && !stack_targets.contains(&target)
+                {
+                    stack_targets.push(target);
+                }
+            }
+        }
         let notification = json!({
             "operation":operation.name(), "stage":"after_sequence_publications",
             "inter_ids":sequence.tasks.iter().map(|t|next.id(t.inter).unwrap()).collect::<Vec<_>>(),
             "mark_sheet_modified":matches!(operation,EditingOperation::Do),
             "first_impacted_step":first.map(|i|STEPS[i]), "latest_completed_step":latest_step,
-            "planned_steps":planned, "reprocessed_steps":[],
+            "planned_steps":planned, "rhythm_stack_targets":stack_targets, "reprocessed_steps":[],
             "controller_impact_complete":false
         });
         next.edit_impacts.push(notification.clone());

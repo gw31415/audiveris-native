@@ -469,6 +469,12 @@
       "unit": "retained EditingSequence task order and original dot impact notification selection",
       "limits": "saved two-task control; planned RHYTHMS/PAGE only, no actual step reprocessing or SheetStub persistence/preEdit/history/general correction CLI/shared-image success",
       "evidence": "evidence/musicxml-editing-impact/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual retained ordinary current-center stack targets for editing RHYTHMS notifications",
+      "limits": "saved cross-stack raw-task control with old Measure membership retained; no actual StackRhythm/voice/PageStep execution or automatic correction/general CLI editing/multi-staff/full cleaner",
+      "evidence": "evidence/musicxml-editing-stack/VALIDATION.json"
     }
   ],
   "function_groups": [
