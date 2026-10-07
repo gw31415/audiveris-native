@@ -10,7 +10,8 @@ actual step execution is claimed.
 
 Next: actual RhythmsStep.impact selects each retained edited Inter's current center
 in its actual SystemInfo stack, deduplicates stacks in encounter order, and calls
-PageRhythm.reprocessStack. PageStep follows with voice refinement and measure
+PageRhythm.reprocessStack (StackRhythm.process with retained expected duration,
+then Voices.refineSystem). PageStep follows with voice refinement and measure
 fixing for AugmentationDotInter. Observe real owned stack/cache invalidation and
 reprocessStack before connecting native execution; do not rebuild ownership in
 simple setters or infer full image correction from a saved control.
