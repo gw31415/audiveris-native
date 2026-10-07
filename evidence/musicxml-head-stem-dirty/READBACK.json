@@ -1,0 +1,58 @@
+{
+  "validated_source_commit": "9fc8dc44f1456adf609e554da48120346d277b8f",
+  "trees": {
+    "root": "f2e9ca8d4434c027b8c50b6b1782bbc41abe574b",
+    "src": "b430960c4bb8d07d1e59ff8a65d42f29782d6c45",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_fetch_build": "passed, same approved HTTPS path and existing clone",
+  "automatic_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+      "events": 15,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+      "events": 12,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+      "events": 4,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+      "events": 16,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    }
+  ],
+  "automatic_events": 63,
+  "mixed_declared_correction": {
+    "events": 8,
+    "prior_XML_bytes": "identical",
+    "XSD": "passed",
+    "dirty_publication_and_impact": "same as d26ab97"
+  },
+  "original_scope": "saved actual Head/Stem owner removal callbacks plus unchanged-value boundary; not automatic alternate-support discovery or final stem glyph parity",
+  "undotted_quarter_rest_boundary": "unchanged refusal, no outputs; original prior undotted failure not rerun",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}
