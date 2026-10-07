@@ -9,3 +9,9 @@ grades/purge and actual RestChord/Voice/Partwise ownership are required.
 
 Manual/frozen bars, supported/grouped bars and post-MEASURES StaffBarline closure
 need their own original lifecycle; all broader nonUI dependencies remain partial.
+
+Independent source40cc515 preserves4images43events. The original-successful
+half-rest input currently stops earlier at `unsupported_vertical_endpoint_geometry`
+in native vertical-stick construction. Observe the actual degenerate geometry
+and original BasicLine/filament endpoint contract before the positive rest
+link/support branch. Do not change positions or relax finite checks.

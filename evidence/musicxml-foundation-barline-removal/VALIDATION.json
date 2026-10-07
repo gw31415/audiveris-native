@@ -7,11 +7,13 @@
   "format": "passed",
   "clippy": "offline locked all-targets -D warnings passed",
   "new_test_functions": 1,
-  "independent_CLI": "pending fetch verification",
+  "independent_CLI": "source40cc515:4images43events original music/getters/XML/XSD; prior XML bytes unchanged",
   "new_rest_input": "original-only 4events positive dotted-half-rest; native dependency not yet enabled",
   "full_validation": {
     "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
     "passed": 595
   },
-  "completion_flags": false
+  "completion_flags": false,
+  "negative_quarter_rest": "bare bar removal now passes; refuses musicxml_possible_dot_lateChecks_pending; not positive evidence",
+  "positive_original_half_rest": "native earlier unsupported_vertical_endpoint_geometry; lifecycle proof is separate"
 }

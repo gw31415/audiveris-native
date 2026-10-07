@@ -1,0 +1,14 @@
+[
+  {
+    "input": "rest-augmentation-unconfirmed.png",
+    "status": "refused",
+    "error": "audiveris-musicxml: /workspace/work/git-workspace-migration/fresh-clone/fixtures/official-image-musicxml-augmentation/rest-augmentation-unconfirmed.png: musicxml_possible_dot_lateChecks_pending",
+    "exported": false
+  },
+  {
+    "input": "half-rest-augmentation.png",
+    "status": "refused",
+    "error": "audiveris-musicxml: /workspace/work/git-workspace-migration/fresh-clone/fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png: unsupported_vertical_endpoint_geometry",
+    "exported": false
+  }
+]
