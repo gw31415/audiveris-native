@@ -21,7 +21,27 @@ impl Export {
         dot_id: usize,
         head_id: usize,
     ) -> Result<crate::shared_sig::EditingSequence, String> {
-        use crate::shared_sig::{DefaultEditingTask, EditingLink, EditingSequence};
+        self.support_transfer(dot_id, head_id, None)
+    }
+    /// Declared relation correction: preserve supplied status and use actual
+    /// UnlinkTask then LinkTask, not the editor's add-before-remove sequence.
+    pub fn dot_relation_transfer(
+        &self,
+        dot_id: usize,
+        head_id: usize,
+        manual: bool,
+    ) -> Result<crate::shared_sig::EditingSequence, String> {
+        self.support_transfer(dot_id, head_id, Some(manual))
+    }
+    fn support_transfer(
+        &self,
+        dot_id: usize,
+        head_id: usize,
+        relation_manual: Option<bool>,
+    ) -> Result<crate::shared_sig::EditingSequence, String> {
+        use crate::shared_sig::{
+            DefaultEditingTask, EditingLink, EditingSequence, EditingTask, RelationTask,
+        };
         let graph = &self.owner.owner.graph;
         let snapshot = graph.snapshot();
         let nodes = snapshot["inters"].as_array().unwrap();
@@ -46,22 +66,34 @@ impl Export {
             .map_err(|_| "editing_inter_identity_required")?;
         let target: Key = serde_json::from_value(head["origin"].clone())
             .map_err(|_| "editing_partner_identity_required")?;
-        let unlink =
-            EditingLink::from_registered(graph, key, edges[0]["id"].as_u64().unwrap() as usize)?;
-        let link = EditingLink::new(
-            target,
-            true,
-            json!({"kind":"AugmentationRelation","manual":true}),
-        );
-        let bounds = serde_json::from_value(dot["bounds"].clone())
-            .map_err(|_| "music_dot_bounds_required")?;
-        let sequence = EditingSequence::new(vec![DefaultEditingTask::new(
-            graph,
-            key,
-            bounds,
-            vec![link],
-            vec![unlink],
-        )?]);
+        let edge = edges[0]["id"].as_u64().unwrap() as usize;
+        let sequence = if let Some(manual) = relation_manual {
+            EditingSequence::from_tasks(vec![
+                EditingTask::Relation(RelationTask::unlink(graph, edge)?),
+                EditingTask::Relation(RelationTask::link(
+                    graph,
+                    key,
+                    target,
+                    json!({"kind":"AugmentationRelation","manual":manual}),
+                )?),
+            ])
+        } else {
+            let unlink = EditingLink::from_registered(graph, key, edge)?;
+            let link = EditingLink::new(
+                target,
+                true,
+                json!({"kind":"AugmentationRelation","manual":true}),
+            );
+            let bounds = serde_json::from_value(dot["bounds"].clone())
+                .map_err(|_| "music_dot_bounds_required")?;
+            EditingSequence::new(vec![DefaultEditingTask::new(
+                graph,
+                key,
+                bounds,
+                vec![link],
+                vec![unlink],
+            )?])
+        };
         sequence.require_ordinary_reprocess(graph)?;
         Ok(sequence)
     }
@@ -1372,6 +1404,295 @@ mod tests {
         let mut chords: Vec<_> = owner.chords.iter().filter(|c| c.measure == mi).collect();
         chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
         json!({"abnormal":measure.timing.abnormal,"voice_count":owner.voices.iter().filter(|v|v.measure==mi).count(),"stack_slot_count":measure.timing.slots.len(),"expected":measure.timing.expected.map(rational),"actual":measure.timing.actual.map(rational),"chords":chords.iter().map(|c|{let n=snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"],"slot_id":n["slot_id"]})}).collect::<Vec<_>>()})
+    }
+    #[test]
+    fn original_relation_tasks_preserve_identity_status_clocks_and_publication() {
+        use crate::shared_sig::{EditingOperation, EditingSequence, EditingTask, RelationTask};
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-relation-tasks/observed.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let export = recognize(&image).unwrap();
+        for case in oracle["cases"].as_array().unwrap() {
+            let mut graph = export.owner.owner.graph.clone();
+            let before = graph.snapshot();
+            let nodes = before["inters"].as_array().unwrap();
+            let chords = case["before"]["chords"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|c| {
+                    nodes
+                        .iter()
+                        .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == c["bounds"])
+                        .unwrap()
+                        .clone()
+                })
+                .collect::<Vec<_>>();
+            let edge = before["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| {
+                    e["kind"] == "AugmentationRelation" && e["target"] == chords[0]["member_ids"][0]
+                })
+                .unwrap();
+            let dot = nodes.iter().find(|n| n["id"] == edge["source"]).unwrap();
+            let source: Key = serde_json::from_value(dot["origin"].clone()).unwrap();
+            let note = |i: usize| {
+                nodes
+                    .iter()
+                    .find(|n| n["id"] == chords[i]["member_ids"][0])
+                    .unwrap()
+            };
+            if case["old_manual"] == true {
+                let mut declared = edge.clone();
+                declared["manual"] = json!(true);
+                graph
+                    .relations(
+                        source.system,
+                        crate::shared_sig::Phase::Symbol,
+                        vec![(
+                            source,
+                            serde_json::from_value(note(0)["origin"].clone()).unwrap(),
+                            declared,
+                        )],
+                    )
+                    .unwrap();
+            }
+            let mut sequence = EditingSequence::from_tasks(vec![
+                EditingTask::Relation(RelationTask::unlink(&graph, edge["id"].as_u64().unwrap() as usize).unwrap()),
+                EditingTask::Relation(RelationTask::link(&graph, source,
+                    serde_json::from_value(note(1)["origin"].clone()).unwrap(),
+                    json!({"kind":"AugmentationRelation","grade":0.7,"manual":case["new_manual"]})).unwrap())]);
+            for (op_index, op) in [EditingOperation::Do, EditingOperation::Undo]
+                .into_iter()
+                .enumerate()
+            {
+                graph.enable_dot_callback_trace();
+                let impact = sequence.perform(&mut graph, op, "PAGE").unwrap();
+                assert_eq!(impact["planned_steps"], case["relation_impacted_steps"]);
+                assert_eq!(
+                    impact["rhythm_stack_targets"].as_array().unwrap().len(),
+                    case["impact_stack_count"].as_u64().unwrap() as usize
+                );
+                let trace = graph.dot_callback_trace();
+                assert_eq!(
+                    trace.iter().filter(|t| t["event"] == "publish").count(),
+                    case["steps"][op_index]["publications"]
+                        .as_array()
+                        .unwrap()
+                        .len()
+                );
+                assert_eq!(trace.last().unwrap()["event"], "publish");
+                let callbacks = trace
+                    .iter()
+                    .filter(|t| t["event"] != "publish")
+                    .collect::<Vec<_>>();
+                assert_eq!(callbacks.len(), 4);
+                for (a, b) in callbacks
+                    .iter()
+                    .zip(case["callback_trace"].as_array().unwrap()[op_index * 4..].iter())
+                {
+                    for field in ["event", "stage", "depth"] {
+                        assert_eq!(a[field], b[field]);
+                    }
+                    assert_eq!(
+                        a["state"]["augmentation_dot_ownership"],
+                        before["augmentation_dot_ownership"]
+                    );
+                    for (initial, expected) in
+                        chords.iter().zip(b["state"]["chords"].as_array().unwrap())
+                    {
+                        let current = a["state"]["inters"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .find(|n| n["id"] == initial["id"])
+                            .unwrap();
+                        assert_eq!(current["dots_number"], expected["dots"]);
+                        assert_eq!(current["duration"], expected["duration"]);
+                        for f in [
+                            "time_offset",
+                            "voice",
+                            "slot_id",
+                            "staff_id",
+                            "part_id",
+                            "measure_index",
+                        ] {
+                            assert_eq!(current[f], initial[f]);
+                        }
+                        if op_index == 0 {
+                            let key: Key =
+                                serde_json::from_value(current["origin"].clone()).unwrap();
+                            let live = crate::music_duration::live(
+                                &a["state"],
+                                current["id"].as_u64().unwrap() as usize,
+                            )
+                            .unwrap();
+                            assert_eq!(json!(live.intrinsic.map(rational)), expected["duration"]);
+                            assert_eq!(
+                                rational(
+                                    live.intrinsic.unwrap()
+                                        + crate::music_time::parse_ticks(
+                                            current["time_offset"].as_str().unwrap()
+                                        )
+                                        .unwrap()
+                                ),
+                                expected["end_time"].as_str().unwrap()
+                            );
+                            assert!(graph.id(key).is_some());
+                        }
+                    }
+                }
+                let after = graph.snapshot();
+                let retained_dot = after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == dot["id"])
+                    .unwrap();
+                for f in ["bounds", "glyph_id", "glyph"] {
+                    assert_eq!(retained_dot[f], dot[f]);
+                }
+                let live_edge = after["relations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|e| e["source"] == dot["id"] && e["kind"] == "AugmentationRelation")
+                    .unwrap();
+                assert_eq!(
+                    live_edge["manual"],
+                    if op_index == 0 {
+                        case["new_manual"].clone()
+                    } else if case["old_manual"] == true {
+                        json!(true)
+                    } else {
+                        edge["manual"].clone()
+                    }
+                );
+                if op_index == 1 {
+                    assert_eq!(live_edge["id"], edge["id"]);
+                }
+            }
+        }
+    }
+    #[test]
+    fn original_relation_task_impact_reprocesses_owned_voice_without_promoting_automatic_support() {
+        use crate::shared_sig::EditingOperation;
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-relation-tasks/observed.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let mut export = recognize(&image).unwrap();
+        let before = export.owner.owner.graph.snapshot();
+        let edge = before["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["kind"] == "AugmentationRelation")
+            .unwrap();
+        let dot = edge["source"].as_u64().unwrap() as usize;
+        let head = |i: usize| {
+            let bounds = &oracle["cases"][0]["before"]["chords"][i]["bounds"];
+            before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == *bounds)
+                .unwrap()["member_ids"][0]
+                .as_u64()
+                .unwrap() as usize
+        };
+        let mut automatic = export.dot_relation_transfer(dot, head(1), false).unwrap();
+        assert!(
+            export
+                .apply_editing_sequence(&mut automatic, EditingOperation::Do)
+                .unwrap_err()
+                .starts_with("musicxml_incomplete_or_excess_measure:")
+        );
+        assert_eq!(export.owner.owner.graph.snapshot(), before);
+        assert_eq!(
+            oracle["cases"][2]["steps"][0]["after_rhythm_impact"]["rhythm"]["actual"],
+            "13/16"
+        );
+        let compare = |e: &Export, case: usize, op: usize| {
+            let original = &oracle["cases"][case]["steps"][op];
+            assert_eq!(
+                rhythm_projection(&e.owner, 0),
+                original["after_rhythm_impact"]["rhythm"]
+            );
+            assert_eq!(
+                e.owner.owner.graph.snapshot()["augmentation_dot_ownership"],
+                before["augmentation_dot_ownership"]
+            );
+            let events = e.owner.owner.prepared.report["events"].as_array().unwrap();
+            let stream = original["original_export_stream"].as_array().unwrap();
+            assert_eq!(events.len(), stream.len());
+            for (a, b) in events.iter().zip(stream) {
+                for f in [
+                    "measure_number",
+                    "step",
+                    "octave",
+                    "voice",
+                    "time_offset",
+                    "type",
+                    "dots",
+                    "chord",
+                ] {
+                    assert_eq!(a[f], b[f]);
+                }
+                assert_eq!(
+                    rational((a["duration_quarters"].as_f64().unwrap() * 4.) as u32),
+                    b["duration"].as_str().unwrap()
+                );
+            }
+        };
+        let mut sequence = export.dot_relation_transfer(dot, head(1), true).unwrap();
+        let impact = export
+            .apply_editing_sequence(&mut sequence, EditingOperation::Do)
+            .unwrap();
+        assert_eq!(impact["populateFRATs_called"], false);
+        compare(&export, 0, 0);
+        let xml = export.xml.clone();
+        let graph = export.owner.owner.graph.snapshot();
+        assert!(
+            export
+                .apply_editing_sequence(&mut sequence, EditingOperation::Undo)
+                .unwrap_err()
+                .starts_with("musicxml_incomplete_or_excess_measure:")
+        );
+        assert_eq!(
+            oracle["cases"][0]["steps"][1]["after_rhythm_impact"]["rhythm"]["actual"],
+            "13/16"
+        );
+        assert_eq!(export.owner.owner.graph.snapshot(), graph);
+        assert_eq!(export.xml, xml);
+        // Only a genuinely applied manual relation becomes the old relation.
+        let mut back = export.dot_relation_transfer(dot, head(0), true).unwrap();
+        export
+            .apply_editing_sequence(&mut back, EditingOperation::Do)
+            .unwrap();
+        let mut manual = export.dot_relation_transfer(dot, head(1), true).unwrap();
+        for (i, op) in [
+            EditingOperation::Do,
+            EditingOperation::Undo,
+            EditingOperation::Redo,
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            export.apply_editing_sequence(&mut manual, op).unwrap();
+            compare(&export, 1, i);
+        }
     }
     #[test]
     fn original_timed_dot_callbacks_keep_owned_clocks_and_derive_live_duration() {

@@ -1,0 +1,24 @@
+{
+  "baseline_source": "e7561066945e5498a2b403b69fb70906db2c267d",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual saved ordinary single-head same-stack UnlinkTask + LinkTask, preserved relation/manual identity, original UITaskList do/undo/redo and real RhythmsStep.impact; declared correction, not automatic target discovery",
+  "callback_order": "do removes old then adds new; undo reverses tasks: removes new then re-adds same old object. Part/Measure/Voice/slot/time remain during callbacks; duration/endTime derive live dots",
+  "publication": "LinkTask do/redo and UnlinkTask undo publish source after added callback; neither removal publishes. Original service delivery observed separately from native invocation recording",
+  "impact": "original scans task list in original order, source then target; System.getStackAt center and LinkedHashSet ignoring null/deduplicating; actual retained one-stack RhythmsStep.impact -> reprocessStack, not populateFRATs",
+  "status": "constructors/callbacks do not promote automatic status; CLI status explicitly supplied",
+  "rollback": "automatic old undo and automatic new do observed original actual13/16, abnormal=false, underfilled PartwiseBuilder stream; native complete-measure refusal rolls back, not Java rollback/refusal",
+  "target_tests": {
+    "new": 2,
+    "existing_required": 3,
+    "status": "passed2 new +3 existing; no full rerun"
+  },
+  "format": "passed cargo fmt --all",
+  "clippy": "passed --all-targets -D warnings",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false,
+  "remaining": [
+    "general relation families/mixed task and controller history/PageStep/project persistence",
+    "timed Rest/void/multi-head/DoubleDot reprocessing and shared/cross-stack/multi-staff owners",
+    "general Voice/Part/shared stacks/tuplets/refinePage/refineScore/CURVES/lyrics/full cleaner/epilog"
+  ]
+}

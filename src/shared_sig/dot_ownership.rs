@@ -159,6 +159,10 @@ impl Graph {
         if self.vertices[id - 1].data["kind"] != "AugmentationDotInter" {
             return Err("editing_stack_task_class_pending".into());
         }
+        self.inter_edit_stack_target(inter)
+    }
+    pub(super) fn inter_edit_stack_target(&self, inter: Key) -> Result<Option<Value>, String> {
+        let id = self.endpoint(inter)?;
         let owner = self
             .dot_ownership
             .as_ref()

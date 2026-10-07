@@ -2338,3 +2338,26 @@ A genuinely manual support created by transfer permits subsequent do/undo/redo
 through the library's retained sequence. Full controller/preEdit/history/PageStep,
 automatic target discovery and project persistence remain partial; flags false.
 Existing `--edit-dot` and unedited image examples are retained.
+
+### Explicit relation-task support correction
+
+```sh
+cargo run --offline --locked --bin audiveris-musicxml -- \
+  --link-dot-support 72 6 manual \
+  fixtures/official-image-musicxml-augmentation/double-augmentation.png \
+  relation-support.musicxml relation-support.report.json
+```
+
+This uses the image's live IDs through **UnlinkTask then LinkTask**: remove old,
+add the supplied relation, publish source, then process selected actual stacks.
+Undo reverses execution, while impact visits source/target in original task order.
+Unlike `--move-dot-support`'s EditingTask, this does not edit bounds or detach glyphs.
+`manual|automatic` is an explicit relation status, never silently promoted.
+On this input `automatic` leaves an original13/16 measure; native refuses with no
+output pair. Automatic old-support undo is likewise refused transactionally.
+Genuine manual support do/undo/redo matches original owned rhythm/export.
+The positive8-note result is a **declared correction**, not automatic recognition
+of a new image or automatic correction target discovery. Original saved-owner
+controls, original real RhythmsStep processing and native XML/XSD checks are
+separate. Same-stack single black HeadChord guard, special/shared/cross-stack and
+full controller/PageStep limitations remain; nonUI parity is still incomplete.

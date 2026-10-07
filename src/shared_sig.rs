@@ -10,7 +10,9 @@ use std::collections::{BTreeMap, BTreeSet};
 mod dot_ownership;
 mod editing_task;
 pub use dot_ownership::NoteOwnerEdit;
-pub use editing_task::{DefaultEditingTask, EditingLink, EditingOperation, EditingSequence};
+pub use editing_task::{
+    DefaultEditingTask, EditingLink, EditingOperation, EditingSequence, EditingTask, RelationTask,
+};
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum Phase {

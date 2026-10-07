@@ -527,6 +527,12 @@
       "status": "implemented",
       "unit": "compared retained single-head same-stack augmentation transfer -> actual task callbacks -> cached expectedDuration stack reprocess/HIGH refinement -> native event binding/MusicXML, failure rollback; explicit Linux CLI move-dot-support",
       "limits": "declared correction on one original saved successful double-dot image; automatic shared-support discovery, Rest/void/multi-head/DoubleDot editing, cross-stack and full controller/PageStep/history remain pending. Original nonmanual undo produces underfilled13/16 and native complete-measure refusal/rollback, not Java rollback. Genuine manual subsequent transfer do/undo/redo matches full music."
+    },
+    {
+      "status": "implemented",
+      "unit": "actual owned UnlinkTask/LinkTask do/undo/publication and original-order endpoint stack impact -> retained stack reprocess/event binding/native MusicXML",
+      "limits": "actual saved ordinary single-head same-stack UnlinkTask + LinkTask, preserved relation/manual identity, original UITaskList do/undo/redo and real RhythmsStep.impact; declared correction, not automatic target discovery; original automatic13/16 is refused/rolled back by native, not promoted. Other relation kinds, mixed task controls/full controller remain partial.",
+      "evidence": "evidence/musicxml-relation-tasks/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -633,8 +639,8 @@
       "current_and_remaining": "表示と入力UIだけを対象外とする。選択後の変更・validation・再計算は対象内。"
     }
   ],
-  "correction_CLI_design_status": "partial: raw same-stack ordinary-dot bounds-only --edit-dot and library do/undo/reprocess; support edits, general controller/history/PageStep pending",
-  "next_image_integration": "evidence/musicxml-voice-first-null/NEXT-DEPENDENCY.md; no nonUI omissions",
+  "correction_CLI_design_status": "partial: explicit same-stack ordinary bounds (--edit-dot), editor support transfer (--move-dot-support), ordered relation tasks with explicit status (--link-dot-support); owned reprocess/rollback connected. General controller/history/PageStep pending",
+  "next_image_integration": "evidence/musicxml-relation-tasks/NEXT-DEPENDENCY.md; no nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -643,7 +649,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Original timed HIGH first-Chord-null membership/refinement ->2/1 without assigning Chord/Head Voice; native event guard retained. Current3 targets; evidence/musicxml-voice-first-null; full595 historical95e191b.",
+  "latest_targeted_validation": "Actual relation task2 targets plus existing timed callbacks/support/bounds3 passed; fmt/clippy all-targets passed; independent CLI readback pending; full595 historical95e191b",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {

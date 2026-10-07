@@ -62,6 +62,14 @@ impl EditingLink {
         Ok(if self.outgoing { (a, b) } else { (b, a) })
     }
     fn apply(&mut self, graph: &mut Graph, inter: Key) -> Result<bool, String> {
+        self.apply_relation(graph, inter, true)
+    }
+    fn apply_relation(
+        &mut self,
+        graph: &mut Graph,
+        inter: Key,
+        search_link: bool,
+    ) -> Result<bool, String> {
         let (source, target) = self.endpoints(graph, inter)?;
         if graph.vertices[source - 1].removed || graph.vertices[target - 1].removed {
             return Ok(false);
@@ -72,10 +80,11 @@ impl EditingLink {
         if !matches!(kind, "AugmentationRelation" | "DoubleDotRelation") {
             return Err("editing_relation_callback_pending".into());
         }
-        if graph
-            .live_edges()
-            .iter()
-            .any(|e| e.key.source == source && e.key.target == target && e.key.kind == kind)
+        if search_link
+            && graph
+                .live_edges()
+                .iter()
+                .any(|e| e.key.source == source && e.key.target == target && e.key.kind == kind)
         {
             return Ok(false);
         }
@@ -241,14 +250,111 @@ impl DefaultEditingTask {
     }
 }
 
+/// Actual RelationTask identity, separate from search Link.applyTo deduplication.
+#[derive(Clone, Debug)]
+pub struct RelationTask {
+    source: Key,
+    link: EditingLink,
+    unlink: bool,
+}
+impl RelationTask {
+    pub fn link(graph: &Graph, source: Key, target: Key, relation: Value) -> Result<Self, String> {
+        graph.endpoint(source)?;
+        graph.endpoint(target)?;
+        if source.system != target.system
+            || !matches!(
+                relation["kind"].as_str(),
+                Some("AugmentationRelation" | "DoubleDotRelation")
+            )
+        {
+            return Err("editing_relation_callback_pending".into());
+        }
+        Ok(Self {
+            source,
+            link: EditingLink::new(target, true, relation),
+            unlink: false,
+        })
+    }
+    pub fn unlink(graph: &Graph, id: usize) -> Result<Self, String> {
+        let edge = graph
+            .edges
+            .get(
+                id.checked_sub(1)
+                    .ok_or("editing_relation_identity_required")?,
+            )
+            .filter(|e| !e.removed)
+            .ok_or("editing_live_relation_required")?;
+        let source = graph.vertices[edge.key.source - 1].key;
+        Ok(Self {
+            source,
+            link: EditingLink::from_registered(graph, source, id)?,
+            unlink: true,
+        })
+    }
+    fn perform(&mut self, graph: &mut Graph, operation: EditingOperation) -> Result<(), String> {
+        let adding = self.unlink == matches!(operation, EditingOperation::Undo);
+        if adding {
+            self.link.apply_relation(graph, self.source, false)?;
+            let id = graph.endpoint(self.source)?;
+            graph
+                .edit_publications
+                .push(json!({"inter_id":id,"operation":operation.name(),
+                "phase":"after_task","task":if self.unlink {"UnlinkTask"}else{"LinkTask"},
+                "controller_impact_complete":false}));
+            #[cfg(test)]
+            graph.dot_callback_event("publish", id, "delivered");
+        } else {
+            self.link.remove(graph, self.source)?;
+        }
+        Ok(())
+    }
+}
+#[derive(Clone, Debug)]
+pub enum EditingTask {
+    Inter(DefaultEditingTask),
+    Relation(RelationTask),
+}
+impl EditingTask {
+    fn focus(&self) -> Key {
+        match self {
+            Self::Inter(t) => t.inter,
+            Self::Relation(t) => t.source,
+        }
+    }
+    fn supports(&self) -> Vec<&EditingLink> {
+        match self {
+            Self::Inter(t) => t.links.iter().chain(&t.unlinks).collect(),
+            Self::Relation(t) => vec![&t.link],
+        }
+    }
+    fn impact_inters(&self) -> Vec<Key> {
+        match self {
+            Self::Inter(t) => vec![t.inter],
+            Self::Relation(t) => vec![t.source, t.link.partner],
+        }
+    }
+    fn perform(&mut self, graph: &mut Graph, operation: EditingOperation) -> Result<(), String> {
+        match self {
+            Self::Inter(t) => {
+                t.perform(graph, operation)?;
+            }
+            Self::Relation(t) => t.perform(graph, operation)?,
+        }
+        Ok(())
+    }
+}
+
 /// UITaskList order plus CtrlTask impact notification for the retained dot tasks.
 /// A notification is not evidence that RhythmStep/PageStep reprocessing ran.
 #[derive(Clone, Debug)]
 pub struct EditingSequence {
-    tasks: Vec<DefaultEditingTask>,
+    tasks: Vec<EditingTask>,
 }
 impl EditingSequence {
     pub fn new(tasks: Vec<DefaultEditingTask>) -> Self {
+        Self::from_tasks(tasks.into_iter().map(EditingTask::Inter).collect())
+    }
+    pub fn from_tasks(tasks: Vec<EditingTask>) -> Self {
         Self { tasks }
     }
     pub(crate) fn require_ordinary_reprocess(&self, graph: &Graph) -> Result<(), String> {
@@ -256,22 +362,25 @@ impl EditingSequence {
             return Err("music_reprocess_timed_support_edit_pending".into());
         }
         for task in &self.tasks {
-            if task.links.is_empty() && task.unlinks.is_empty() {
+            let supports = task.supports();
+            if supports.is_empty() {
                 continue;
             }
-            if task.links.len() > 1 || task.unlinks.len() > 1 {
+            if let EditingTask::Inter(t) = task
+                && (t.links.len() > 1 || t.unlinks.len() > 1)
+            {
                 return Err("music_reprocess_timed_support_edit_pending".into());
             }
-            let focus = graph.endpoint(task.inter)?;
+            let focus = graph.endpoint(task.focus())?;
             let dot = &graph.vertices[focus - 1];
             let target = graph
-                .dot_edit_stack_target(task.inter)?
+                .dot_edit_stack_target(task.focus())?
                 .ok_or("editing_owned_stack_selection_required")?;
-            for link in task.links.iter().chain(&task.unlinks) {
+            for link in supports {
                 if !link.outgoing || link.relation["kind"] != "AugmentationRelation" {
                     return Err("music_reprocess_timed_support_edit_pending".into());
                 }
-                let (_, id) = link.endpoints(graph, task.inter)?;
+                let (_, id) = link.endpoints(graph, task.focus())?;
                 let note = &graph.vertices[id - 1];
                 let owners = graph
                     .live_edges()
@@ -296,7 +405,7 @@ impl EditingSequence {
                 if chord.removed
                     || chord.data["kind"] != "HeadChordInter"
                     || members != 1
-                    || chord.key.system != task.inter.system
+                    || chord.key.system != task.focus().system
                     || chord.data["measure_index"] != target["measure_index"]
                     || chord.data["part_id"] != dot.cached_part.map_or(Value::Null, |p| json!(p))
                     || chord.data["staff_id"] != dot.data["staff_id"]
@@ -314,7 +423,7 @@ impl EditingSequence {
     }
     pub(crate) fn require_single_support(&self, graph: &Graph) -> Result<(), String> {
         for task in &self.tasks {
-            let id = graph.endpoint(task.inter)?;
+            let id = graph.endpoint(task.focus())?;
             if graph
                 .live_edges()
                 .into_iter()
@@ -329,8 +438,8 @@ impl EditingSequence {
     }
     pub(crate) fn require_same_stack(&self, before: &Graph, after: &Graph) -> Result<(), String> {
         for task in &self.tasks {
-            if before.dot_edit_stack_target(task.inter)?
-                != after.dot_edit_stack_target(task.inter)?
+            if before.dot_edit_stack_target(task.focus())?
+                != after.dot_edit_stack_target(task.focus())?
             {
                 return Err("music_reprocess_cross_stack_owner_edit_pending".into());
             }
@@ -380,8 +489,8 @@ impl EditingSequence {
                 task.perform(&mut next, operation)?;
             }
         }
-        // Every retained EditingTask is an AugmentationDotInter InterTask.
-        // Original isImpactedBy starts at RHYTHMS, not the edited link's class.
+        // Dot InterTasks and retained augmentation RelationTasks first affect
+        // RHYTHMS. Other relation classes need their original impact boundary.
         let first = (!sequence.tasks.is_empty())
             .then(|| STEPS.iter().position(|s| *s == "RHYTHMS").unwrap());
         let planned = first
@@ -390,16 +499,20 @@ impl EditingSequence {
         let mut stack_targets = Vec::new();
         if planned.contains(&"RHYTHMS") {
             for task in &sequence.tasks {
-                if let Some(target) = next.dot_edit_stack_target(task.inter)?
-                    && !stack_targets.contains(&target)
-                {
-                    stack_targets.push(target);
+                // Impact scans the original task list even on undo; relations
+                // insert source then target into a LinkedHashSet.
+                for inter in task.impact_inters() {
+                    if let Some(target) = next.inter_edit_stack_target(inter)?
+                        && !stack_targets.contains(&target)
+                    {
+                        stack_targets.push(target);
+                    }
                 }
             }
         }
         let notification = json!({
             "operation":operation.name(), "stage":"after_sequence_publications",
-            "inter_ids":sequence.tasks.iter().map(|t|next.id(t.inter).unwrap()).collect::<Vec<_>>(),
+            "inter_ids":sequence.tasks.iter().map(|t|next.id(t.focus()).unwrap()).collect::<Vec<_>>(),
             "mark_sheet_modified":matches!(operation,EditingOperation::Do),
             "first_impacted_step":first.map(|i|STEPS[i]), "latest_completed_step":latest_step,
             "planned_steps":planned, "rhythm_stack_targets":stack_targets, "reprocessed_steps":[],
