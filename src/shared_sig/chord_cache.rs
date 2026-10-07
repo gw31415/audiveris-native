@@ -22,6 +22,20 @@ pub(crate) struct ChordRead {
     pub tail: Option<[i64; 2]>,
 }
 impl Graph {
+    pub(crate) fn retained_chord_stem(&self, key: Key) -> Result<Option<Key>, String> {
+        let id = self.endpoint(key)?;
+        if self.vertices[id - 1].chord_cache.is_none() {
+            return Err("retained_chord_cache_owner_required".into());
+        }
+        for eid in self.incident_edges(id) {
+            let edge = &self.edges[eid - 1];
+            if edge.key.source == id && edge.key.kind == "ChordStemRelation" {
+                self.validate_chord_identity(id, edge.key.target, &edge.key.kind)?;
+                return Ok(Some(self.vertices[edge.key.target - 1].key));
+            }
+        }
+        Ok(None)
+    }
     pub(crate) fn bind_retained_chord_caches(
         &mut self,
         chords: &[(Key, Option<Key>)],
@@ -143,7 +157,7 @@ impl Graph {
         Ok(beams)
     }
     #[cfg(test)]
-    fn retained_chord_observation(&mut self, key: Key) -> Result<Value, String> {
+    pub(super) fn retained_chord_observation(&mut self, key: Key) -> Result<Value, String> {
         let id = self.endpoint(key)?;
         let before = self.vertices[id - 1]
             .chord_cache

@@ -11,6 +11,7 @@ mod book_state;
 mod chord_cache;
 mod dot_ownership;
 mod editing_task;
+mod manual_chord_stem;
 pub use dot_ownership::NoteOwnerEdit;
 pub use editing_task::{
     DefaultEditingTask, EditingLink, EditingOperation, EditingSequence, EditingTask, RelationTask,
@@ -371,6 +372,8 @@ pub struct Graph {
     dot_callback_depth: usize,
     #[cfg(test)]
     dot_callback_trace: Vec<Value>,
+    #[cfg(test)]
+    observed_chord: Option<Key>,
 }
 impl Graph {
     fn require_pre_heads(&self, system: u64) -> Result<(), String> {
@@ -785,11 +788,11 @@ impl Graph {
             // Original identity callbacks operate on the actual registered
             // chord. Validate/update a stage before changing the retained SIG.
             let mut next = self.clone();
-            next.relations_impl(system, phase, relations)?;
+            next.relations_impl(system, phase, relations, None)?;
             *self = next;
             Ok(())
         } else {
-            self.relations_impl(system, phase, relations)
+            self.relations_impl(system, phase, relations, None)
         }
     }
     fn relations_impl(
@@ -797,6 +800,7 @@ impl Graph {
         system: u64,
         phase: Phase,
         relations: Vec<(Key, Key, Value)>,
+        owned_manual_chord: Option<Key>,
     ) -> Result<(), String> {
         let mut counts = BTreeMap::new();
         let mut affected_chords = BTreeSet::new();
@@ -932,17 +936,17 @@ impl Graph {
                 {
                     return Err("retained_head_stem_typed_endpoints_required".into());
                 }
-                // Manual added() can replace the real ChordStem owner before
-                // abnormal checks. Its retained rhythm/cache lifecycle is not yet
-                // connected; do not substitute the automatic callback tail.
-                if [&self.edges[id - 1].data, &head.data, &stem.data]
+                let manual = [&self.edges[id - 1].data, &head.data, &stem.data]
                     .iter()
-                    .any(|v| v["manual"] == true || v["is_manual"] == true)
-                {
+                    .any(|v| v["manual"] == true || v["is_manual"] == true);
+                if manual && owned_manual_chord.is_none() {
                     return Err("retained_manual_head_stem_owner_update_pending".into());
                 }
                 #[cfg(test)]
                 self.dot_callback_event("edgeAdded", id, "enter");
+                if manual {
+                    self.replace_manual_chord_stem(source, target, owned_manual_chord.unwrap())?;
+                }
                 self.refresh_head_stem_abnormal(&[source, target]);
                 #[cfg(test)]
                 self.dot_callback_event("edgeAdded", id, "leave");
@@ -1270,6 +1274,12 @@ impl Graph {
                 .collect::<Vec<_>>()
         );
         self.dot_callback_trace.push(json!({"event":event,"id":id,"stage":stage,"depth":self.dot_callback_depth,"state":state}));
+        if let Some(chord) = self.observed_chord {
+            // The oracle listener calls real getters after taking its raw
+            // cache snapshot; these reads also warm the next callback's cache.
+            let observation = self.retained_chord_observation(chord).unwrap();
+            self.dot_callback_trace.last_mut().unwrap()["chord_observation"] = observation;
+        }
         if stage == "enter" {
             self.dot_callback_depth += 1;
         }

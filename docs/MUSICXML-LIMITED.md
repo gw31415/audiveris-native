@@ -2421,3 +2421,11 @@ memory state: a ChordStem callback clears geometry/beams, whereas readonly repor
 creation does not warm it. Existing CLI options and admitted images stay the
 same. Manual HeadStem/ChordStem corrections are not yet admitted by the export
 path; original saved-owner/reprocess observation is separate from native success.
+
+The lower-level `OwnedMusic.apply_manual_head_stem_callback` now updates the
+actual retained ordinary Chord owner/cache after the compared nested callbacks.
+It is an explicit correction stage with supplied relation properties, not a
+MusicXML CLI option: publication, selected-stack reprocess and transactional
+export validation remain guarded. Existing CLI examples and input scope stay
+unchanged. An original7/64/underfilled parallel-Voice correction is tracked as
+a remaining dependency rather than silently rounded or completed.
