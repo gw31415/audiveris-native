@@ -1,0 +1,27 @@
+{
+  "scope" : "actual saved successful rest/dot Inter; temporary target grade .49; original contextualizeAndPurge and checkAugmentationDots lifecycle; not automatic image weak-rest evidence",
+  "cases" : [ {
+    "rest_bounds" : [ 511, 235, 14, 9 ],
+    "dot_bounds" : [ 528, 245, 5, 4 ],
+    "before_dot_abnormal" : false,
+    "before_measure_dot_present" : true,
+    "declared_target_grade" : 0.49,
+    "target_contextual_grade" : 0.49,
+    "after_original_contextualizeAndPurge" : {
+      "rest_removed" : true,
+      "rest_chord_removed" : true,
+      "dot_removed" : false,
+      "dot_abnormal" : true,
+      "dot_best_grade" : 0.8698593384434078,
+      "augmentation_edge_present" : false
+    },
+    "original_checkAugmentationDots_modifications" : 1,
+    "after_original_check" : {
+      "dot_removed" : true,
+      "live_in_SIG" : false,
+      "measure_dot_present" : false,
+      "physical_glyph_retained" : true,
+      "repeat_check_modifications" : 0
+    }
+  } ]
+}

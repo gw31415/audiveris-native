@@ -67,6 +67,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let containers =
         crate::music_containers::refresh(&graph, &m.measures, &mut m.chords, &mut m.voices)?;
     let empty_chords = containers.removed_chords;
+    let dot_targets = crate::music_dots::check_targets(&mut graph)?;
     let dot_counting = crate::music_dots::contextualize_and_count(&mut graph, &m.chords)?;
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
@@ -77,6 +78,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     }
     m.owner.prepared.report["limited_links"]["containers"] = containers.projection;
     m.owner.prepared.report["limited_links"]["dot_counting"] = dot_counting;
+    m.owner.prepared.report["limited_links"]["dot_target_consistency"] = dot_targets;
     m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
     m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
     Ok(m)

@@ -2111,3 +2111,11 @@ pending. The earlier negative quarter-rest image still refuses; neither its
 original undotted result nor XSD validity is positive rest-dot evidence.
 All overall completion flags stayfalse, and broader nonUI functions remain on
 the full parity ledger.
+
+Rest-loss orphan consistency (2026-10-07): the same successful half-rest example
+is retained. A separate original declared-grade control verifies weak-rest and
+chord deletion, surviving dot abnormal callback, then orphan-dot deletion with
+physical glyph retention. Native connects these owners before dot counting.
+No weak-rest image success is claimed from that control, and missing beats or
+unknown removed classifier candidates remain refused. Competing/shared supports
+and the complete LINK/cleaner/epilog sequence are still partial.

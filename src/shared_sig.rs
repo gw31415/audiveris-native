@@ -736,6 +736,7 @@ impl Graph {
     ) -> Result<(), String> {
         let mut counts = BTreeMap::new();
         let mut affected_chords = BTreeSet::new();
+        let mut affected_dots = BTreeSet::new();
         for (a, b, mut data) in relations {
             if a.system != system || b.system != system || !data.is_object() {
                 return Err("invalid_shared_sig_relation".into());
@@ -747,6 +748,9 @@ impl Graph {
                 .filter(|s| !s.is_empty())
                 .ok_or("invalid_shared_sig_relation_kind")?
                 .to_owned();
+            if matches!(kind.as_str(), "AugmentationRelation" | "DoubleDotRelation") {
+                affected_dots.insert(source);
+            }
             let chord_identity = matches!(
                 self.vertices[source - 1].data["kind"].as_str(),
                 Some("HeadChordInter" | "RestChordInter")
@@ -803,6 +807,7 @@ impl Graph {
             };
         }
         self.invalidate_note_chords(&affected_chords)?;
+        self.refresh_augmentation_abnormal(&affected_dots);
         Ok(())
     }
 
@@ -950,9 +955,42 @@ impl Graph {
         Ok(())
     }
     fn prune(&mut self) {
+        let mut dots = BTreeSet::new();
         for e in &mut self.edges {
             if self.vertices[e.key.source - 1].removed || self.vertices[e.key.target - 1].removed {
+                if !e.removed
+                    && matches!(
+                        e.key.kind.as_str(),
+                        "AugmentationRelation" | "DoubleDotRelation"
+                    )
+                {
+                    dots.insert(e.key.source);
+                }
                 e.removed = true;
+            }
+        }
+        self.refresh_augmentation_abnormal(&dots);
+    }
+    fn refresh_augmentation_abnormal(&mut self, affected: &BTreeSet<usize>) {
+        // Both relation callbacks recheck their surviving source dot. A second
+        // dot is normal through its outgoing DoubleDot even if the first dot
+        // has just lost its note; target consistency is a separate LINK check.
+        let linked = self
+            .edges
+            .iter()
+            .filter(|e| {
+                !e.removed
+                    && matches!(
+                        e.key.kind.as_str(),
+                        "AugmentationRelation" | "DoubleDotRelation"
+                    )
+            })
+            .map(|e| e.key.source)
+            .collect::<BTreeSet<_>>();
+        for &id in affected {
+            let v = &mut self.vertices[id - 1];
+            if !v.removed && v.data["kind"] == "AugmentationDotInter" {
+                v.data["abnormal"] = json!(!linked.contains(&id));
             }
         }
     }

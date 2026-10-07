@@ -945,3 +945,12 @@ intrinsic duration. Declared original target-grade controls verify the zero
 target support coefficient separately. Multiple/competing/shared support and
 orphan-dot cleanup still require original lifecycle; the earlier undotted
 negative quarter-rest input remains refused. Full nonUI parity flags stayfalse.
+
+Augmentation/DoubleDot relation removal now refreshes the surviving source
+Inter's abnormal state. Original checkAugmentationDots target selection runs
+before owned dot contextualization/counting, so actual weak-rest loss no longer
+leaves an unprocessable strong orphan. This is verified by temporary original
+rest-grade control on saved recognized Inter, not a new weak-rest full-image
+success. Physical registry persists; frozen ownership loss and missing rhythm
+still refuse. Multiple support selection and complete cleaner/epilog remain
+partial; all nonUI functions stay in the final scope.

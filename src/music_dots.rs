@@ -467,6 +467,54 @@ pub(crate) fn late_checks(
     )
 }
 
+pub(crate) fn check_targets(graph: &mut Graph) -> Result<Value, String> {
+    let mut staged = graph.clone();
+    let initial = graph.snapshot();
+    let mut removed = Vec::new();
+    for dot in initial["inters"]
+        .as_array()
+        .ok_or("music_dot_SIG_required")?
+        .iter()
+        .filter(|n| n["kind"] == "AugmentationDotInter")
+    {
+        let snapshot = staged.snapshot();
+        let edges = snapshot["relations"].as_array().unwrap();
+        if edges.iter().any(|e| {
+            e["kind"] == "AugmentationRelation"
+                && (e["source"] == dot["id"] || e["target"] == dot["id"])
+        }) {
+            continue;
+        }
+        let x = center(rect(dot)?)[0];
+        let mut left = false;
+        for e in edges.iter().filter(|e| {
+            e["kind"] == "DoubleDotRelation"
+                && (e["source"] == dot["id"] || e["target"] == dot["id"])
+        }) {
+            let other = if e["source"] == dot["id"] {
+                &e["target"]
+            } else {
+                &e["source"]
+            };
+            let opposite = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| &n["id"] == other && n["kind"] == "AugmentationDotInter")
+                .ok_or("music_dot_live_double_target_required")?;
+            left |= center(rect(opposite)?)[0] < x;
+        }
+        if !left {
+            staged.remove_music_inter(key(dot)?)?;
+            removed.push(dot["id"].clone());
+        }
+    }
+    *graph = staged;
+    Ok(
+        json!({"removed_orphan_dot_ids":removed,"scope":"original SigReducer.checkAugmentationDots; full LINK consistency sequence pending"}),
+    )
+}
+
 pub(crate) fn contextualize_and_count(
     graph: &mut Graph,
     chords: &[Chord],
@@ -584,6 +632,114 @@ pub(crate) fn bounds_with_dots(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn weak_rest_removal_marks_and_cleans_its_actual_orphan_dot() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rest-dot-orphan/observed.json"
+        ))
+        .unwrap();
+        let expected = &original["cases"][0];
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png"
+        ))
+        .unwrap();
+        let owner = crate::stem_image_owned::prepare_items(&image).unwrap();
+        let owner = crate::music_links::prepare_beam_linking(owner).unwrap();
+        let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
+        let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
+        let owner = crate::music_links::finalize_stems(owner).unwrap();
+        let m = crate::music_measures::continue_measures(owner).unwrap();
+        let mut m = crate::music_symbols::continue_symbols(m).unwrap();
+        let snapshot = m.owner.graph.snapshot();
+        let rest = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "RestInter" && n["bounds"] == expected["rest_bounds"])
+            .unwrap();
+        let dot = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "AugmentationDotInter" && n["bounds"] == expected["dot_bounds"])
+            .unwrap();
+        assert_eq!(dot["abnormal"], expected["before_dot_abnormal"]);
+        let gid = dot["glyph_id"].as_u64().unwrap() as usize;
+        let physical =
+            crate::beam_dispatch::glyph_json(&m.owner.prepared.registry.get(gid).unwrap().glyph);
+        let mut target = rest.clone();
+        target["grade"] = expected["declared_target_grade"].clone();
+        m.owner
+            .graph
+            .vertex(key(rest).unwrap(), target, false)
+            .unwrap();
+        crate::music_symbol_reduction::reduce(&mut m.owner.graph).unwrap();
+        let after = m.owner.graph.snapshot();
+        assert!(
+            after["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|n| n["id"] != rest["id"])
+        );
+        let orphan = after["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == dot["id"])
+            .unwrap();
+        assert_eq!(
+            orphan["abnormal"],
+            expected["after_original_contextualizeAndPurge"]["dot_abnormal"]
+        );
+        assert!(
+            after["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|e| e["kind"] != "AugmentationRelation")
+        );
+        let containers = crate::music_containers::refresh(
+            &m.owner.graph,
+            &m.measures,
+            &mut m.chords,
+            &mut m.voices,
+        )
+        .unwrap();
+        assert_eq!(containers.removed_chords.len(), 1);
+        let mut frozen = m.owner.graph.clone();
+        let mut data = orphan.clone();
+        data["frozen"] = json!(true);
+        frozen.vertex(key(dot).unwrap(), data, false).unwrap();
+        let before = frozen.snapshot();
+        assert_eq!(
+            check_targets(&mut frozen).unwrap_err(),
+            "music_removal_frozen_inter"
+        );
+        assert_eq!(frozen.snapshot(), before);
+        assert_eq!(
+            check_targets(&mut m.owner.graph).unwrap()["removed_orphan_dot_ids"],
+            json!([dot["id"]])
+        );
+        assert_eq!(
+            check_targets(&mut m.owner.graph).unwrap()["removed_orphan_dot_ids"],
+            json!([])
+        );
+        assert!(
+            m.owner.graph.snapshot()["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|n| n["id"] != dot["id"])
+        );
+        assert_eq!(
+            crate::beam_dispatch::glyph_json(&m.owner.prepared.registry.get(gid).unwrap().glyph),
+            physical
+        );
+        contextualize_and_count(&mut m.owner.graph, &m.chords).unwrap();
+        // Deleting a real weak interpretation does not synthesize missing beats.
+        assert!(crate::music_xml::continue_export(m).is_err());
+    }
     #[test]
     fn inconsistent_chord_dot_removal_admits_only_actual_automatic_cleanup() {
         let image = crate::GrayImage::decode(include_bytes!(
