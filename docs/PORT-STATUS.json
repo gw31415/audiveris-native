@@ -649,7 +649,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Actual relation task2 targets plus existing timed callbacks/support/bounds3 passed; fmt/clippy all-targets passed; independent CLI readback pending; full595 historical95e191b",
+  "latest_targeted_validation": "Source6d65e59: new actual relation task2 + existing timed/bounds3 targets, fmt/clippy passed; independent5images47 + parallel16 + bounds/editor-support/relation-support CLI8 each original/nativeXML/XSD, prior bytes maintained. Automatic13/16 and cross-stack refused; no current full run (historical595@95e191b).",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
