@@ -5,7 +5,10 @@ lifecycle verified as a declared-grade control. The previous negative quarter
 rest remains refused; there is no guessed dot/glyph admission.
 Next: SigReducer.checkAugmentedHeads/checkAugmentedRests/checkAugmentedDots and
 reduceAugmentations: preserve their relation grade/iteration selection and
-source-only lifecycle when multiple supported interpretations compete. Current
+source-only lifecycle when multiple supported interpretations compete. Original
+reduceAugmentations keeps the first strictly positive highest-grade edge in
+relation iteration order, preserves first on ties, and removes all if no grade
+exceeds zero; callbacks and a following target check are dependencies. Current
 DotFactory still refuses multiple supports; original multiply-supported image
 and controls are required before broadening that acceptance. Double-orphan
 chain cleanup has positive retain regression but no separate original
