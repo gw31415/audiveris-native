@@ -10,5 +10,5 @@
   "attempts": "one full image comparison; development harness missing-input path was corrected before this completed run; no position/score search",
   "implemented_feature": false,
   "completion_flags": false,
-  "next": "Original positive rest lookup/support and general barline/foundation ownership callbacks remain dependencies. Do not relax guard or use this as positive MusicXML parity evidence."
+  "next": "Original positive rest lookup/support and the failing foundation vertex/owner need observation before their lifecycle can be connected. The error alone does not identify the vertex kind. Do not relax the guard or use this input as positive MusicXML parity evidence."
 }

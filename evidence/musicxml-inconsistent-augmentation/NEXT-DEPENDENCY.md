@@ -19,5 +19,6 @@ input: original exports no dots and a7/8 pickup measure0; native refuses earlier
 at `unsupported_foundation_vertex_removal`. See
 `evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json`. Stop that
 comparison rather than tuning coordinates or admitting its wrong result.
-Original barline/foundation lifecycle callbacks must also be observed and
-connected before this earlier refusal can be extended.
+The failing foundation vertex/owner still needs observation before its
+original lifecycle callback can be connected; this error alone does not
+identify the affected kind or prove a barline removal.

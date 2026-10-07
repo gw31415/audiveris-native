@@ -570,7 +570,7 @@
       "native": "earlier unsupported_foundation_vertex_removal; admission unchanged",
       "evidence": "evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json",
       "retries": "one completed same-image comparison; no coordinate search",
-      "next": "positive original rest recognition and observed foundation/barline lifecycle callbacks required"
+      "next": "positive original rest recognition and observation of the failing foundation vertex/owner; affected kind unconfirmed"
     }
   ]
 }

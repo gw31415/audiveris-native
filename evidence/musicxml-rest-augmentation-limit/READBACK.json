@@ -1,0 +1,14 @@
+{
+  "readback_source_commit": "128567aab127af90152bf8e8899d45cac9e8b05d",
+  "trees": {
+    "root": "919353967a2398e4476e8279893571d2c0715008",
+    "src": "101ea45cc329e4364dc7dfed8a66aa9127e9f0f6",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "normal_main_push_independent_HTTPS_fetch": true,
+  "both_worktrees_clean": true,
+  "source_unchanged_since_validated_functional": "c685d73364759355af7a81ec9d81c0fd729fff39",
+  "previous_current_functional_check": "4images43events/XML/XSD and owned getters; not repeated for evidence-only commit",
+  "positive_rest_augmentation_implemented": false,
+  "completion_flags": false
+}
