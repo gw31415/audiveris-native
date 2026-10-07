@@ -1,0 +1,39 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "8873a0116844a634080ede8519b7109f896d9e7553eb621d4268488408be69c5",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "009b0997d8dc4854c4ab7709614438240f1946bf1ebf32ff176fb3008a0a67e8",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/voice-retired-tie-original/classes",
+    "/workspace/audiveris-native/scripts/java/VoiceRetiredTieProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/voice-retired-tie-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/voice-retired-tie-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/voice-retired-tie-original/classes",
+    "VoiceRetiredTieProbe",
+    "/tmp/prelink-oracle/book/double-augmentation.omr",
+    "/tmp/voice-retired-tie-original/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "a34f94730137a7d9d2fea78901b694e127cbfc787d73109930d8113f52f16848",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "observed_sha256": "315032509d02ed51242404bc1a6aa3976f41a46c73aed2465b2a7a7ac415c706",
+  "committed_compact_observed_sha256": "e94ce13a525bc2a5533477389219b5fbf1b9cfd4ee246f35487028abba1eab08",
+  "compact_parsed_equal_to_raw": true
+}

@@ -560,7 +560,7 @@ fn failed_normal_refresh_keeps_actual_chords_voice_manual_clocks_and_retry_owner
     );
 }
 
-fn prepare_retired_next(
+fn prepare_retired_owners(
     case: &Value,
 ) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, Vec<Chord>) {
     let (mut owner, mut labels, mut refs) = prepare(case);
@@ -591,6 +591,12 @@ fn prepare_retired_next(
             .unwrap()
             .clone(),
     );
+    (owner, labels, refs, target_chords)
+}
+fn prepare_retired_next(
+    case: &Value,
+) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, Vec<Chord>) {
+    let (mut owner, labels, refs, target_chords) = prepare_retired_owners(case);
     let source = owner
         .chords
         .iter()
@@ -786,3 +792,5 @@ fn failed_retired_next_refinement_keeps_actual_refs_clocks_and_retry_order() {
         1
     );
 }
+
+mod retired_tie_tests;

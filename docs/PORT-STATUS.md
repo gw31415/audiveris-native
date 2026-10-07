@@ -1534,3 +1534,18 @@ regression. Dedicated retired beam/tie comparisons are pending, not a current
 parity claim. General Part/callback/history/controller/PAGE/persistence and
 five-pixel Stem extent remain pending; public/global guards stay false/guarded.
 See `evidence/musicxml-voice-retired-next/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Dedicated retired incoming tie comparison now covers two original controls20
+boundaries. Production8744085 already agrees: cached old Voice7 is selected even
+with distinct fresh7 in the live list; null first-source follows the next tie,
+fresh7 becomes1 in refinement, restoring the old cached reference selects7.
+NextInVoice then imposes1 and preferred2 wins. Actual Voice objects, source Head/
+Chord and target reference identity, old four slots/termination/excess, manual
+relations, clocks and legitimate Measure reset are compared. A late preferred
+failure after staged incoming tie swap preserves actual owners/Chords/clocks;
+repair/retry matches original. This checkpoint adds original proof and targeted
+regressions without inventing a production fix. Dedicated retired BeamGroup,
+automatic curve recognition and broader Part/controller/history/PAGE/persistence
+remain pending; public/global guards stay false/guarded. See
+`evidence/musicxml-voice-retired-tie/TRY.md` and `NEXT-DEPENDENCY.md`.
