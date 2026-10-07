@@ -4,6 +4,27 @@ use crate::music_voices::Voice;
 use std::sync::Arc;
 
 impl Graph {
+    pub(crate) fn chord_voice_owner<'a>(
+        &'a self,
+        key: super::Key,
+        voices: &'a [Voice],
+    ) -> Result<Option<&'a Voice>, String> {
+        let id = self.endpoint(key)?;
+        let chord = &self.vertices[id - 1];
+        let Some(identity) = &chord.voice_owner else {
+            return if chord.data["voice"].is_null() {
+                Ok(None)
+            } else {
+                Err("music_refine_actual_chord_voice_required".into())
+            };
+        };
+        let voice = voices
+            .iter()
+            .chain(&self.retained_voices)
+            .find(|voice| Arc::ptr_eq(&voice.identity, identity))
+            .ok_or("music_refine_actual_chord_voice_required")?;
+        Ok(Some(voice))
+    }
     pub(crate) fn retain_voice_owner(&mut self, voice: Voice) -> usize {
         let key = self
             .retained_voices

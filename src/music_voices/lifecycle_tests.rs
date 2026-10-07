@@ -559,3 +559,230 @@ fn failed_normal_refresh_keeps_actual_chords_voice_manual_clocks_and_retry_owner
         1
     );
 }
+
+fn prepare_retired_next(
+    case: &Value,
+) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, Vec<Chord>) {
+    let (mut owner, mut labels, mut refs) = prepare(case);
+    let mut target_chords = owner
+        .chords
+        .iter()
+        .filter(|c| c.measure == 1)
+        .cloned()
+        .collect::<Vec<_>>();
+    target_chords.sort_by_key(|c| c.bounds[0]);
+    for (index, chord) in target_chords.iter().enumerate() {
+        labels.insert(chord.id, format!("chord{}", index + 4));
+        for (member, head) in chord.members.iter().enumerate() {
+            labels.insert(
+                head["id"].as_u64().unwrap() as usize,
+                format!("head{}_{}", index + 4, member),
+            );
+        }
+    }
+    let old = owner.voices.iter().position(|v| v.measure == 0).unwrap();
+    set_owned_voice_id(&mut owner.owner.graph, &mut owner.voices[old], 7).unwrap();
+    owner.voices[old].chord_ids.clear();
+    refs.push(
+        owner
+            .voices
+            .iter()
+            .find(|v| v.measure == 1)
+            .unwrap()
+            .clone(),
+    );
+    let source = owner
+        .chords
+        .iter()
+        .find(|c| labels.get(&c.id).is_some_and(|label| label == "chord3"))
+        .unwrap();
+    owner
+        .owner
+        .graph
+        .relations(
+            1,
+            crate::shared_sig::Phase::Symbol,
+            vec![(
+                source.key,
+                target_chords[0].key,
+                json!({"kind":"NextInVoiceRelation","manual":true}),
+            )],
+        )
+        .unwrap();
+    (owner, labels, refs, target_chords)
+}
+fn compare_retired_next(
+    owner: &OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    refs: &[Voice],
+    chords: &[Chord],
+    expected: &Value,
+    native_relations: &Value,
+    original_relations: &Value,
+) {
+    compare(
+        owner,
+        labels,
+        &refs[..1],
+        &expected["source"],
+        native_relations,
+        original_relations,
+    );
+    let voice = actual_voice(owner, &refs[1]);
+    let target = json!({"label":"target_voice","id":voice.id,"same_measure":voice.measure == 1,
+        "measure_registered":owner.voices.iter().any(|v|Arc::ptr_eq(&v.identity, &voice.identity)),
+        "chords":voice.chord_ids.iter().map(|id|labels[id].clone()).collect::<Vec<_>>(),
+        "slots":voice.slots.iter().map(|(id,s)|json!({"id":id,"chord":labels[&s.chord_id],"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>(),
+        "termination":voice.termination.map(crate::music_time::format_delta),"excess":voice.excess.map(crate::music_time::format_fraction)});
+    assert_eq!(target, expected["target"]);
+    let source = owner
+        .chords
+        .iter()
+        .find(|c| labels.get(&c.id).is_some_and(|label| label == "chord3"))
+        .unwrap();
+    assert_eq!(
+        json!(owner.owner.graph.chord_has_voice(source.key, &refs[0])),
+        expected["source_ref_equal"]
+    );
+    assert_eq!(
+        json!(owner.owner.graph.chord_has_voice(chords[0].key, &refs[1])),
+        expected["target_ref_equal"]
+    );
+    let next = native_relations
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|e| e["kind"] == "NextInVoiceRelation")
+        .unwrap();
+    assert_eq!(expected["relation_registered"], true);
+    assert_eq!(next["manual"], expected["relation_manual"]);
+}
+fn set_next_preferred(owner: &mut OwnedMusic, chord: &Chord, value: Value) {
+    let snapshot = owner.owner.graph.snapshot();
+    let mut node = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|n| n["id"] == chord.id)
+        .unwrap()
+        .clone();
+    node["preferred_voice_id"] = value;
+    owner.owner.graph.vertex(chord.key, node, false).unwrap();
+}
+#[test]
+fn original_next_refinement_reads_actual_retired_empty_voice_in_both_clock_cases() {
+    let oracle: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-voice-retired-next/observed.json"
+    ))
+    .unwrap();
+    for case in oracle["cases"].as_array().unwrap() {
+        let (mut owner, labels, refs, chords) = prepare_retired_next(case);
+        let relations = owner.owner.graph.snapshot()["relations"].clone();
+        let original_relations = &case["states"][0]["state"]["source"]["relations"];
+        for step in case["states"].as_array().unwrap() {
+            let phase = step["phase"].as_str().unwrap();
+            if phase == "preferred" {
+                set_next_preferred(&mut owner, &chords[0], json!(2));
+            }
+            if phase != "before" {
+                refine_ordinary_system(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &owner.measures,
+                    1,
+                )
+                .unwrap();
+            }
+            compare_retired_next(
+                &owner,
+                &labels,
+                &refs,
+                &chords,
+                &step["state"],
+                &relations,
+                original_relations,
+            );
+        }
+    }
+}
+
+#[test]
+fn failed_retired_next_refinement_keeps_actual_refs_clocks_and_retry_order() {
+    let oracle: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-voice-retired-next/observed.json"
+    ))
+    .unwrap();
+    let case = &oracle["cases"][1];
+    let (mut owner, labels, refs, chords) = prepare_retired_next(case);
+    set_next_preferred(&mut owner, &chords[0], json!("invalid"));
+    let graph = owner.owner.graph.snapshot();
+    let layout = owner.layout();
+    let source = state(&owner, &labels, &refs[..1]);
+    let identities = owner
+        .voices
+        .iter()
+        .map(|v| v.identity.clone())
+        .collect::<Vec<_>>();
+    let target = crate::shared_sig::Graph::retained_voice_observations(&owner.owner.graph);
+    let voices = projection(&owner.voices, &owner.measures);
+    let chord_address = owner.chords.as_ptr();
+    let slots = owner
+        .measures
+        .iter()
+        .map(|m| m.timing.slots.as_ptr())
+        .collect::<Vec<_>>();
+    assert_eq!(
+        refine_ordinary_system(
+            &mut owner.owner.graph,
+            &mut owner.voices,
+            &owner.measures,
+            1
+        )
+        .unwrap_err(),
+        "music_refine_preferred_ID_outside_native_range_pending"
+    );
+    assert_eq!(owner.owner.graph.snapshot(), graph);
+    assert_eq!(owner.layout(), layout);
+    assert_eq!(state(&owner, &labels, &refs[..1]), source);
+    assert_eq!(owner.owner.graph.retained_voice_observations(), target);
+    assert_eq!(projection(&owner.voices, &owner.measures), voices);
+    assert_eq!(owner.chords.as_ptr(), chord_address);
+    assert_eq!(
+        owner
+            .measures
+            .iter()
+            .map(|m| m.timing.slots.as_ptr())
+            .collect::<Vec<_>>(),
+        slots
+    );
+    for (voice, identity) in owner.voices.iter().zip(identities) {
+        assert!(Arc::ptr_eq(&voice.identity, &identity));
+    }
+    set_next_preferred(&mut owner, &chords[0], json!(2));
+    refine_ordinary_system(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &owner.measures,
+        1,
+    )
+    .unwrap();
+    compare_retired_next(
+        &owner,
+        &labels,
+        &refs,
+        &chords,
+        &case["states"][3]["state"],
+        &graph["relations"],
+        &case["states"][0]["state"]["source"]["relations"],
+    );
+    assert_eq!(
+        owner
+            .owner
+            .graph
+            .retained_voice_observations()
+            .as_array()
+            .unwrap()
+            .len(),
+        1
+    );
+}

@@ -351,9 +351,8 @@ pub(crate) fn refine_ordinary_system(
         for &index in &positions {
             let first_id = first(&retained[index]).unwrap();
             if let Some(&prev) = previous.get(&measure.part) {
-                let live = staged.snapshot();
                 let tied = staged.incoming_tied_voice_id(first_id, |other| {
-                    chord_voice_id(&live, &retained, measures, other)
+                    chord_voice_id(&staged, &retained, measures, other)
                 })?;
                 if let Some(wanted) = tied {
                     swap_voice_id(&mut staged, &mut retained, index, wanted)?;
@@ -379,9 +378,8 @@ pub(crate) fn refine_ordinary_system(
                             .filter(|&position| position > 0)
                     {
                         let other = chords[position - 1]["id"].as_u64().unwrap() as usize;
-                        let wanted =
-                            chord_voice_id(&staged.snapshot(), &retained, measures, other)?
-                                .ok_or("music_refine_beam_predecessor_owned_voice_required")?;
+                        let wanted = chord_voice_id(&staged, &retained, measures, other)?
+                            .ok_or("music_refine_beam_predecessor_owned_voice_required")?;
                         swap_voice_id(&mut staged, &mut retained, index, wanted)?;
                     }
                 }
@@ -395,7 +393,7 @@ pub(crate) fn refine_ordinary_system(
                     {
                         continue;
                     }
-                    let wanted = chord_voice_id(&staged.snapshot(), &retained, measures, other)?
+                    let wanted = chord_voice_id(&staged, &retained, measures, other)?
                         .ok_or("music_refine_previous_owned_voice_required")?;
                     swap_voice_id(&mut staged, &mut retained, index, wanted)?;
                     break;
@@ -417,11 +415,12 @@ pub(crate) fn refine_ordinary_system(
 }
 
 fn chord_voice_id(
-    snapshot: &Value,
+    graph: &crate::shared_sig::Graph,
     voices: &[Voice],
     measures: &[Measure],
     id: usize,
 ) -> Result<Option<usize>, String> {
+    let snapshot = graph.snapshot();
     let chord = snapshot["inters"]
         .as_array()
         .unwrap()
@@ -431,18 +430,20 @@ fn chord_voice_id(
     if chord["voice"].is_null() {
         return Ok(None);
     }
-    let voice = voices
-        .iter()
-        .find(|v| {
-            (v.chord_ids.contains(&id) || v.measure_rest_chord == Some(id))
-                && chord["voice"] == v.id
-                && measures.get(v.measure).is_some_and(|m| {
-                    chord["part_id"] == m.part
-                        && chord["measure_index"] == m.index
-                        && chord["origin"]["system"] == m.system
-                })
-        })
+    let key = serde_json::from_value(chord["origin"].clone())
+        .map_err(|_| "music_refine_actual_chord_voice_required")?;
+    let voice = graph
+        .chord_voice_owner(key, voices)?
         .ok_or("music_refine_actual_chord_voice_required")?;
+    if chord["voice"] != voice.id
+        || !measures.get(voice.measure).is_some_and(|m| {
+            chord["part_id"] == m.part
+                && chord["measure_index"] == m.index
+                && chord["origin"]["system"] == m.system
+        })
+    {
+        return Err("music_refine_actual_chord_voice_required".into());
+    }
     Ok(Some(voice.id))
 }
 

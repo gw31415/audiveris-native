@@ -1519,3 +1519,18 @@ retains one actual owner. General Part/Measure callbacks/history, retired Voice
 getters through beam/tie/NextInVoice and broader controller/PAGE/persistence stay
 pending. Public/global guards remain false/guarded. See
 `evidence/musicxml-voice-container-retirement/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Cached retired Voice lookup now follows actual identity through live and
+retained owners. Two new original NextInVoice controls compare8 boundaries:
+purge leaves old empty Voice7/slots/termination/excess referenced by previous
+Measure Chords, NextInVoice renames target1 to7, repeat keeps7, then preferred2
+wins. Native live-list-only refusal was reproduced before the fix. A malformed
+later preferred ID fails after staged purge and actual reference-based swap,
+without changing actual Graph/Voices/identities/Chords/manual relations or
+expected/slot/termination/excess; repair/retry agrees. Common tie/BeamGroup
+lookup uses this getter and existing live/null original controls remain in
+regression. Dedicated retired beam/tie comparisons are pending, not a current
+parity claim. General Part/callback/history/controller/PAGE/persistence and
+five-pixel Stem extent remain pending; public/global guards stay false/guarded.
+See `evidence/musicxml-voice-retired-next/TRY.md` and `NEXT-DEPENDENCY.md`.
