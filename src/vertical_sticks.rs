@@ -90,6 +90,44 @@ pub(crate) fn retrieve_oriented(
     main_vertical: bool,
     min_side_ratio: f64,
 ) -> Result<Vec<Value>, String> {
+    retrieve_assembled(
+        vertical,
+        horizontal,
+        max_thickness,
+        min_core,
+        main_vertical,
+        min_side_ratio,
+        true,
+    )
+}
+
+pub(crate) fn retrieve_glyphs(
+    vertical: &[SeedSection],
+    horizontal: &[SeedSection],
+    max_thickness: i64,
+    min_core: i64,
+) -> Result<Vec<Value>, String> {
+    // StemBuilder.lookupChunks calls toGlyph without asking for filament endpoints.
+    retrieve_assembled(
+        vertical,
+        horizontal,
+        max_thickness,
+        min_core,
+        true,
+        0.4,
+        false,
+    )
+}
+
+fn retrieve_assembled(
+    vertical: &[SeedSection],
+    horizontal: &[SeedSection],
+    max_thickness: i64,
+    min_core: i64,
+    main_vertical: bool,
+    min_side_ratio: f64,
+    with_geometry: bool,
+) -> Result<Vec<Value>, String> {
     let major = if main_vertical { 3 } else { 2 };
     let coord = major - 2;
     if !min_side_ratio.is_finite() || !(0.0..=1.0).contains(&min_side_ratio) {
@@ -315,14 +353,17 @@ pub(crate) fn retrieve_oriented(
             }
         }
         sort_members(&mut members, &sections);
-        answer.push(describe(&members, &sections, main_vertical)?);
+        answer.push(if with_geometry {
+            describe(&members, &sections, main_vertical)?
+        } else {
+            glyph_of(&members, &sections, main_vertical)
+        });
     }
     Ok(answer)
 }
 fn describe(m: &[usize], sections: &[SeedSection], main_vertical: bool) -> Result<Value, String> {
     let b = box_of(m, sections);
     let mut sums = [0f64; 6];
-    let mut pixels = BTreeMap::<i64, BTreeSet<i64>>::new();
     for &i in m {
         let mut local = [0f64; 6];
         for (x, y) in sections[i].pixels() {
@@ -333,8 +374,6 @@ fn describe(m: &[usize], sections: &[SeedSection], main_vertical: bool) -> Resul
             local[3] += xf * xf;
             local[4] += yf * yf;
             local[5] += xf * yf;
-            let (pos, coord) = if main_vertical { (x, y) } else { (y, x) };
-            pixels.entry(pos).or_default().insert(coord);
         }
         for k in 0..6 {
             sums[k] += local[k];
@@ -384,7 +423,25 @@ fn describe(m: &[usize], sections: &[SeedSection], main_vertical: bool) -> Resul
         .chain(&line_stop)
         .any(|v| !v.is_finite())
     {
-        return Err("unsupported_vertical_endpoint_geometry".into());
+        return Err(format!(
+            "unsupported_vertical_endpoint_geometry:{}",
+            json!({"bounds":b,"main_vertical":main_vertical,"line":[a,bb,c],"moments":[h,v],"weight":n,"start":start,"stop":stop,"line_start":line_start,"line_stop":line_stop})
+        ));
+    }
+
+    Ok(
+        json!({"bounds":b,"members":m.iter().map(|&i|sections[i].snapshot()).collect::<Vec<_>>(),"center":[b[0]as f64+b[2]as f64/2.,b[1]as f64+b[3]as f64/2.],"start":start,"stop":stop,"line":[line_start[0],line_start[1],line_stop[0],line_stop[1]],"mean_distance":distance,"weight":n as usize,"basic_line":{"a":a,"b":bb,"c":c,"point_count":n as usize},"glyph":glyph_of(m, sections, main_vertical)}),
+    )
+}
+
+fn glyph_of(m: &[usize], sections: &[SeedSection], main_vertical: bool) -> Value {
+    let b = box_of(m, sections);
+    let mut pixels = BTreeMap::<i64, BTreeSet<i64>>::new();
+    for &i in m {
+        for (x, y) in sections[i].pixels() {
+            let (pos, coord) = if main_vertical { (x, y) } else { (y, x) };
+            pixels.entry(pos).or_default().insert(coord);
+        }
     }
     let mut runs = Vec::new();
     let (pos_origin, coord_origin) = if main_vertical {
@@ -411,9 +468,7 @@ fn describe(m: &[usize], sections: &[SeedSection], main_vertical: bool) -> Resul
             runs.push([x - pos_origin, first - coord_origin, last - first + 1]);
         }
     }
-    Ok(
-        json!({"bounds":b,"members":m.iter().map(|&i|sections[i].snapshot()).collect::<Vec<_>>(),"center":[b[0]as f64+b[2]as f64/2.,b[1]as f64+b[3]as f64/2.],"start":start,"stop":stop,"line":[line_start[0],line_start[1],line_stop[0],line_stop[1]],"mean_distance":distance,"weight":n as usize,"basic_line":{"a":a,"b":bb,"c":c,"point_count":n as usize},"glyph":{"bounds":b,"orientation":if main_vertical { "VERTICAL" } else { "HORIZONTAL" },"runs":runs}}),
-    )
+    json!({"bounds":b,"orientation":if main_vertical { "VERTICAL" } else { "HORIZONTAL" },"runs":runs})
 }
 
 /// Native GRID section dispatch and strict system-edge filtering, before seed checks.

@@ -98,3 +98,29 @@ fn empty_invalid_skew_identity_and_centroid_overflow_refuse_without_mutation() {
     );
     assert_eq!(json!(section), before);
 }
+
+#[test]
+fn raw_chunk_glyph_does_not_require_invertible_rough_endpoints() {
+    let f: Value = serde_json::from_str(include_str!(
+        "../fixtures/official-stem-chunk-glyph/observed.json"
+    ))
+    .unwrap();
+    let sections: Vec<SeedSection> =
+        serde_json::from_value(f["vertical_sections"].clone()).unwrap();
+    let p = Parameters {
+        theoretical_line: [530., 230., 530., 265.],
+        ..parameters()
+    };
+    let area = [[526., 230.], [534., 230.], [534., 265.], [526., 265.]];
+    let selected = stem_parts_lookup::collect(&sections, &[], &area, None, &p).unwrap();
+    assert_eq!(selected.vertical_ids, vec![1]);
+    assert_eq!(
+        selected.raw_glyphs,
+        vec![f["candidates"][0]["glyph"].clone()]
+    );
+    assert!(
+        audiveris_native::vertical_sticks::retrieve(&sections, &[], 5, 1)
+            .unwrap_err()
+            .starts_with("unsupported_vertical_endpoint_geometry")
+    );
+}

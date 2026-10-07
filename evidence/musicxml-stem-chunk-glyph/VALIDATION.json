@@ -1,0 +1,15 @@
+{
+  "baseline": "db08ec876c6fd0fa5297f17fa13ff803e1828cc9",
+  "original_control": "original retrieveSticks/toGlyph succeeds on declared14-pixel section; forced endpoint getter throws Line is vertical; not an automatic image selection replay",
+  "original_dependency": "StemBuilder.lookupChunks bytecode61 retrieveSticks,125 toGlyph,128 registerOriginal; no endpoint getter",
+  "targets_passed": {
+    "stem_parts_lookup": 3,
+    "vertical_sticks": 2
+  },
+  "retained_controls": "2343 lookup cases4459 raw glyphs;12 saved seed candidate geometries and factory controls",
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "positive_original_image_native": "passes earlier endpoint calculation; now refuses music_dot_supported_rest_reduction_pending; no MusicXML",
+  "full_suite": "not rerun;595 historical95e191b",
+  "completion_flags": false
+}

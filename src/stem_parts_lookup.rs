@@ -180,10 +180,11 @@ pub fn collect(
         selected.sort_by_key(|s| (s.first_pos, s.runs.iter().map(|r| r[0]).min().unwrap()));
     }
     // Preserve lookup order before StickFactory sorts its own horizontal copy.
-    let sticks = vertical_sticks::retrieve(&selected_v, &selected_h, p.max_stem_thickness, 1)?;
+    let sticks =
+        vertical_sticks::retrieve_glyphs(&selected_v, &selected_h, p.max_stem_thickness, 1)?;
     Ok(Selected {
         vertical_ids: selected_v.iter().map(|s| s.id).collect(),
         horizontal_ids: selected_h.iter().map(|s| s.id).collect(),
-        raw_glyphs: sticks.into_iter().map(|s| s["glyph"].clone()).collect(),
+        raw_glyphs: sticks,
     })
 }

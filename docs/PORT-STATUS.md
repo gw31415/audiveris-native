@@ -929,3 +929,10 @@ bounds[528,219,2,47]. Original actual GRID lifecycle confirms Staff/SIG removal,
 idempotence and glyph retention. The corresponding guarded native removal now
 feeds live Staff membership into MEASURES. GRID glyph IDs are not HEADS/STEMS
 registry IDs. This is a lifecycle unit, not positive dotted-rest recognition.
+
+StemBuilder.lookupChunks now assembles physical chunk glyphs without forcing
+StraightFilament endpoint getters, as in original toGlyph/registerOriginal.
+A declared14-pixel square from the earlier failing ink passes original glyph
+conversion but throws on a forced endpoint getter. Native keeps endpoint guards
+for geometry consumers. The distinct original-successful half-rest image now
+reaches the pending rest-support branch; no native dotted-rest success yet.
