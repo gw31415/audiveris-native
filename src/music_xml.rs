@@ -107,7 +107,7 @@ impl Export {
         })();
         match result {
             Ok(xml) => {
-                let actual = json!({"planned_impact":planned,"processed_stack_targets":targets,"native_stack_rhythm":"existing admitted owned Measure pass -> finalCheck -> stack slots/actual","system_voice_refinement":"original purge/sort/rename HIGH prefix; linked refinement conditions explicitly pending","populateFRATs_called":false,"LINKS_called":false,"controller_impact_complete":false,"PageStep_complete":false});
+                let actual = json!({"planned_impact":planned,"processed_stack_targets":targets,"native_stack_rhythm":"existing admitted owned Measure pass -> finalCheck -> stack slots/actual","system_voice_refinement":"original HIGH purge/sort/rename, previous-Measure NextInVoice and preferred-ID swaps; tie/cross-Measure beam refinement pending","populateFRATs_called":false,"LINKS_called":false,"controller_impact_complete":false,"PageStep_complete":false});
                 self.owner.owner.prepared.report["editing_reprocess"] = actual.clone();
                 self.xml = xml;
                 self.provenance = provenance(&self.owner);
@@ -1532,6 +1532,124 @@ mod tests {
             "music_reprocess_unedited_retained_export_required"
         );
         assert_eq!(export.xml, before_xml);
+    }
+    #[test]
+    fn original_voice_links_swap_actual_owners_before_preferred_id_and_rebind_events() {
+        use crate::shared_sig::Phase;
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-reprocess/voice-links.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png"
+        ))
+        .unwrap();
+        let mut export = recognize(&image).unwrap();
+        let m = &mut export.owner;
+        let first_chord = |m: &OwnedMusic, bounds: &Value| {
+            m.chords
+                .iter()
+                .find(|c| json!(c.bounds) == *bounds)
+                .map(|c| (c.id, c.key))
+                .unwrap()
+        };
+        let (source_id, source) = first_chord(m, &original["source_first_chord"]);
+        let (target_id, target) = first_chord(m, &original["target_first_chord"]);
+        let projection = |m: &OwnedMusic| {
+            json!(m.voices.iter().filter(|v|v.measure==1).map(|v|json!({"id":v.id,"first_chord_bounds":m.chords.iter().find(|c|c.id==v.chord_ids[0]).unwrap().bounds})).collect::<Vec<_>>())
+        };
+        assert_eq!(projection(m), original["before"]);
+        let before = m.owner.graph.snapshot();
+        m.owner
+            .graph
+            .relations(
+                1,
+                Phase::Symbol,
+                vec![(source, target, json!({"kind":"NextInVoiceRelation"}))],
+            )
+            .unwrap();
+        crate::music_voices::refine_ordinary_system(
+            &mut m.owner.graph,
+            &mut m.voices,
+            &m.measures,
+            1,
+        )
+        .unwrap();
+        assert_eq!(projection(m), original["after_next"]);
+        let mut events = m.owner.prepared.report["events"]
+            .as_array()
+            .unwrap()
+            .clone();
+        for event in &mut events {
+            let mi = event["measure_number"].as_u64().unwrap() as usize - 1;
+            crate::music_voice_export::bind_event(
+                &m.owner.graph,
+                &m.voices,
+                &m.measures[mi],
+                mi,
+                event,
+            )
+            .unwrap();
+            let chord = m
+                .chords
+                .iter()
+                .find(|c| c.id == event["chord_id"].as_u64().unwrap() as usize)
+                .unwrap();
+            let voice = m
+                .voices
+                .iter()
+                .find(|v| v.measure == mi && v.chord_ids.contains(&chord.id))
+                .unwrap();
+            assert_eq!(event["voice"], voice.id);
+        }
+        let steps =
+            crate::music_voice_export::sequence(&m.owner.graph, &m.voices, &m.measures[1], 1)
+                .unwrap();
+        assert!(
+            matches!(steps.first(),Some(crate::music_voice_export::Step::Chord{id,voice:2,..}) if *id==target_id)
+        );
+        let snapshot = m.owner.graph.snapshot();
+        let mut chord = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == target_id)
+            .unwrap()
+            .clone();
+        chord["preferred_voice_id"] = json!(1);
+        m.owner.graph.vertex(target, chord, false).unwrap();
+        crate::music_voices::refine_ordinary_system(
+            &mut m.owner.graph,
+            &mut m.voices,
+            &m.measures,
+            1,
+        )
+        .unwrap();
+        assert_eq!(projection(m), original["after_preferred"]);
+        let after = m.owner.graph.snapshot();
+        let source_node = after["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == source_id)
+            .unwrap();
+        assert_eq!(source_node["voice"], original["source_voice_id"]);
+        for node in after["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| n["origin"]["phase"] == "CHORD")
+        {
+            let old = before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == node["id"])
+                .unwrap();
+            for field in ["duration", "time_offset", "slot_id", "bounds", "member_ids"] {
+                assert_eq!(node[field], old[field]);
+            }
+        }
     }
     #[test]
     fn original_voice_refinement_purges_actual_empty_owner_and_renames_rhythm_created_high() {

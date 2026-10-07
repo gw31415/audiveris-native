@@ -2279,3 +2279,11 @@ refinement, shared/multi-staff stacks and general corrections remain pending.
 An ordinary edited dot reprocess matches original saved-owner clocks/slots/Voice
 while retaining other measures/cache/glyph; it is not evidence of automatic
 image correction or broader image admission. All completion flags stay false.
+
+The later Voice refinement unit connects existing actual NextInVoice references
+across adjacent owned Measures and applies preferred-ID collisions last, matching
+original Voices.refineSystem/Measure.swapVoiceId. It preserves the retained Voice
+objects/Chord members and rebinds event IDs. This is declared original/native owner
+comparison, not image discovery of such links or a new preference editing command.
+The same `--edit-dot` example remains usable; tie/cross-Measure beam refinement,
+timed support/general edits and PageStep remain explicitly pending.

@@ -1126,3 +1126,12 @@ correction execution, not automatic correction discovery or full controller/Page
 processing. Original full saved-owner processing and fresh-HIGH cleanup controls
 are separate from existing five-image47-event automatic image regression.
 Evidence: `evidence/musicxml-owned-reprocess/VALIDATION.json`.
+
+Actual adjacent-Measure NextInVoice and first-Chord preferred-ID Voice refinement
+now follow original order after HIGH purge/sort/rename. Collision swaps update
+real retained Voice objects and their owned Chord projection, then output binds
+those owners; clocks/slots/cache/membership stay unchanged. Original declared
+parallel-owner comparison gives2,1 after NextInVoice, then1,2 after preferred1.
+This is not automatic link/ID-preference discovery or new image admission. Tie,
+cross-Measure beam refinement, timed support/PageStep and general correction
+remain pending. Evidence: `evidence/musicxml-voice-refinement-links/VALIDATION.json`.

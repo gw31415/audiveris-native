@@ -19,3 +19,8 @@ PageRhythm processing first creates HIGH Voices, then a declared ID7 and an empt
 Voice registered by Measure.addVoice exercise actual refineSystem purge/rename.
 The cold saved Voice boundary stays distinct (ID7 remains7 on that saved-only
 control); native image-created HIGH processing is not a serialized Voice importer.
+
+VoiceLinksProbe uses the existing original-successful parallel-quarters book.
+Actual PageRhythm creates owned parallel Voices; a declared NextInVoice relation
+crosses adjacent Measures, then preferred1 exercises collision order. It compares
+real refineSystem ID2,1 -> ID1,2, not automatic relation discovery or a new image.

@@ -2276,6 +2276,44 @@ impl Graph {
         live.sort_by_key(|e| e.live_order);
         live
     }
+    pub(crate) fn next_in_voice_neighbors(&self, id: usize) -> Result<Vec<usize>, String> {
+        let vertex = self
+            .vertices
+            .get(
+                id.checked_sub(1)
+                    .ok_or("music_refine_chord_identity_required")?,
+            )
+            .ok_or("music_refine_chord_identity_required")?;
+        if vertex.removed {
+            return Ok(Vec::new());
+        }
+        if !matches!(
+            vertex.data["kind"].as_str(),
+            Some("HeadChordInter" | "RestChordInter")
+        ) {
+            return Err("music_refine_typed_chord_required".into());
+        }
+        let mut others = Vec::new();
+        for eid in self.incident_edges(id) {
+            let edge = &self.edges[eid - 1];
+            if edge.key.kind != "NextInVoiceRelation" {
+                continue;
+            }
+            let other = if edge.key.source == id {
+                edge.key.target
+            } else {
+                edge.key.source
+            };
+            if !matches!(
+                self.vertices[other - 1].data["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            ) {
+                return Err("music_refine_next_typed_chord_required".into());
+            }
+            others.push(other);
+        }
+        Ok(others)
+    }
     fn incident_edges(&self, id: usize) -> Vec<usize> {
         let mut incident = Vec::new();
         // JGraphT keeps live insertion order independently of stable relation IDs.

@@ -487,6 +487,12 @@
       "unit": "typed ordinary bounds-only edit of retained exported owner -> cached-duration Stack/Measure rhythm -> bounded HIGH Voice purge/sort/rename -> native MusicXML",
       "limits": "no populateFRATs/LINKS or ownership rebuilding; timed support edits, linked Voice refinement, shared stacks/multi-staff/PageStep/history and complete cleaner remain partial",
       "evidence": "evidence/musicxml-owned-reprocess/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "original previous-Measure NextInVoice and preferred-ID collision swaps on actual retained HIGH Voice/Chord owners",
+      "limits": "saved/declarative owner comparison, not automatic NextInVoice or preferred choice discovery; tie/cross-Measure beam, timed support/PageStep/general correction pending",
+      "evidence": "evidence/musicxml-voice-refinement-links/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -558,7 +564,8 @@
       "starting_voice_loop": "Original unconditional stable ordinate-sorted constructors/time0 connect multiple ordinary starts in these actual parallel images; raw reassignment object controls are separate. Mixed measure-rest starts and other Voice families stay guarded.",
       "all_voice_final_check": "Original standard-chord Voice/time and all-Voice duration checks connect five sequential object controls and actual parallel quarter/half/flag/beam images. Complete/nonoverlap admission is per Voice; a shorter lower Voice refuses despite a complete upper one.",
       "owned_event_binding": "Mapped actual Voice/onset/intrinsic duration feeds image events and Voice-major writer. Two parallel quarter images plus four new duration images agree on full original exports and actual chord/slot/Voice getters; positive known first forward is retained. Unknown/backwards/overlap/incomplete ends remain refused. General ensemble/rhythm/shared stacks remain partial. Same-stem uniform multi-head chords now retain actual Containment and share one onset/duration/Voice; Separated distance reads highest-note pitch and heads-only union center. Original actual image and saved-owner getters checked separately. Live member order now also supplies events[].chord; uniform two-head eighth chords share one intrinsic duration/group clock. One full original image14 notes agrees; actual saved group/shortening getters distinct. FLAG2 actual glyph registration and flag-value sum now shorten ordinary uniform heads to1/16; source-grade ordered multi-connection Stem direction is shared with foundation, no selected-image IDs. One15-note full original upward-flag chord image and one separate actual SIG lookup control agree.",
-      "owned_correction_reprocess": "Cached expected -> Stack-only reset -> actual Measure/Voice/Chord rhythm -> finalCheck before stack slots/actual -> bounded HIGH purge/sort/rename. Same selected owner feeds native export; retained other measures preserve rhythm. No populateFRATs in this entry. Original linked Voice refinement/implicit tuplet/shared stack/general repair remain pending."
+      "owned_correction_reprocess": "Cached expected -> Stack-only reset -> actual Measure/Voice/Chord rhythm -> finalCheck before stack slots/actual -> bounded HIGH purge/sort/rename. Same selected owner feeds native export; retained other measures preserve rhythm. No populateFRATs in this entry. Original linked Voice refinement/implicit tuplet/shared stack/general repair remain pending.",
+      "owned_voice_refinement": "HIGH purge/sort/rename -> actual previous-Measure NextInVoice neighbor in original incoming/outgoing live relation order -> preferred-ID swap with former owner. Native Chord ID projection follows owned Voice membership and events rebind after refinement. Declared original control, no automatic link discovery; tie/cross-Measure beam/general Voice kinds remain guarded."
     },
     {
       "original_function": "PAGE/score / `ScoreReduction`, logical parts",
@@ -602,7 +609,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Owned reprocess unit: original real PageRhythm call/stage comparison, fresh HIGH Voice purge/rename control, target regressions and independent readback recorded in evidence/musicxml-owned-reprocess; historical595 remains95e191b, no current full rerun.",
+  "latest_targeted_validation": "Current linked Voice unit: original live adjacent-Measure NextInVoice -> preferred-ID collision control; actual owned Voice/Chord IDs and all-Voice event/sequence binding checked. Current-source receipts in evidence/musicxml-voice-refinement-links; no current full rerun, historical595 at95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

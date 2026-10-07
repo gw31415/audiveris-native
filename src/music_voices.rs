@@ -242,9 +242,9 @@ pub(crate) fn reset_stack_rhythm(measure: &mut Measure, expected: Option<u32>) {
     measure.timing.actual = None;
 }
 
-/// Voices.refineSystem's purge/sort/rename prefix on the admitted HIGH owners.
-/// Tie/beam/NextInVoice/preferred ID links require the remaining refinement
-/// dependencies; reject those edits rather than produce a partially refined ID.
+/// Voices.refineSystem on admitted HIGH owners: purge/sort/rename, then actual
+/// previous-Measure NextInVoice and preferred-ID swaps. Tie and cross-Measure
+/// beam refinements require the remaining owner dependencies and stay guarded.
 pub(crate) fn refine_ordinary_system(
     graph: &mut crate::shared_sig::Graph,
     voices: &mut Vec<Voice>,
@@ -258,14 +258,11 @@ pub(crate) fn refine_ordinary_system(
         .iter()
         .map(|n| (n["id"].as_u64().unwrap() as usize, n))
         .collect();
-    if nodes.values().any(|n| {
-        n["origin"]["system"] == system
-            && (n["kind"] == "SlurInter" || !n["preferred_voice_id"].is_null())
-    }) || snapshot["relations"].as_array().unwrap().iter().any(|e| {
-        e["kind"] == "NextInVoiceRelation"
-            && nodes[&(e["source"].as_u64().unwrap() as usize)]["origin"]["system"] == system
-    }) {
-        return Err("music_reprocess_linked_voice_refinement_pending".into());
+    if nodes
+        .values()
+        .any(|n| n["origin"]["system"] == system && n["kind"] == "SlurInter")
+    {
+        return Err("music_reprocess_tied_voice_refinement_pending".into());
     }
     let groups = beam_group_chords(graph)?;
     for group in groups
@@ -285,6 +282,7 @@ pub(crate) fn refine_ordinary_system(
     }
     let mut staged = graph.clone();
     let mut retained = voices.clone();
+    let mut previous = BTreeMap::<u64, usize>::new();
     for (mi, measure) in measures
         .iter()
         .enumerate()
@@ -346,12 +344,92 @@ pub(crate) fn refine_ordinary_system(
                 staged.vertex(key, node, false)?;
             }
         }
-        for (i, voice) in positions.into_iter().zip(ordered) {
+        for (&i, voice) in positions.iter().zip(ordered) {
             retained[i] = voice;
         }
+        for &index in &positions {
+            let first_id = first(&retained[index]).unwrap();
+            if let Some(&prev) = previous.get(&measure.part) {
+                for other in staged.next_in_voice_neighbors(first_id)? {
+                    let node = nodes
+                        .get(&other)
+                        .ok_or("music_refine_next_chord_required")?;
+                    if node["origin"]["system"] != measure.system
+                        || node["part_id"] != measure.part
+                        || node["measure_index"] != measures[prev].index
+                    {
+                        continue;
+                    }
+                    let source = retained
+                        .iter()
+                        .find(|v| {
+                            v.measure == prev
+                                && (v.chord_ids.contains(&other)
+                                    || v.measure_rest_chord == Some(other))
+                        })
+                        .ok_or("music_refine_previous_owned_voice_required")?;
+                    let wanted = source.id;
+                    swap_voice_id(&mut staged, &mut retained, index, wanted)?;
+                    break;
+                }
+            }
+            if !nodes[&first_id]["preferred_voice_id"].is_null() {
+                let wanted = nodes[&first_id]["preferred_voice_id"]
+                    .as_u64()
+                    .and_then(|id| usize::try_from(id).ok())
+                    .ok_or("music_refine_preferred_ID_outside_native_range_pending")?;
+                swap_voice_id(&mut staged, &mut retained, index, wanted)?;
+            }
+        }
+        previous.insert(measure.part, mi);
     }
     *graph = staged;
     *voices = retained;
+    Ok(())
+}
+
+/// Measure.swapVoiceId changes the selected Voice first, then transfers its old
+/// ID to the former owner. Chords retain their Voice object; their native scalar
+/// projection follows the actual owned membership, not another numeric label.
+fn swap_voice_id(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut [Voice],
+    index: usize,
+    wanted: usize,
+) -> Result<(), String> {
+    let old = voices[index].id;
+    if old == wanted {
+        return Ok(());
+    }
+    let measure = voices[index].measure;
+    let previous = voices
+        .iter()
+        .position(|v| v.measure == measure && v.id == wanted);
+    let set = |graph: &mut crate::shared_sig::Graph, voice: &mut Voice, id| -> Result<(), String> {
+        let snapshot = graph.snapshot();
+        for chord in voice
+            .measure_rest_chord
+            .map_or_else(|| voice.chord_ids.clone(), |id| vec![id])
+        {
+            let mut node = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == chord)
+                .ok_or("music_refine_swap_owned_chord_required")?
+                .clone();
+            let key = serde_json::from_value(node["origin"].clone())
+                .map_err(|_| "music_refine_swap_chord_origin_required")?;
+            node["voice"] = json!(id);
+            graph.vertex(key, node, false)?;
+        }
+        voice.id = id;
+        Ok(())
+    };
+    set(graph, &mut voices[index], wanted)?;
+    if let Some(previous) = previous {
+        set(graph, &mut voices[previous], old)?;
+    }
     Ok(())
 }
 
