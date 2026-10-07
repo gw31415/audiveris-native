@@ -1,0 +1,43 @@
+{
+  "validated_source_commit": "6cbc679f87fc0d999c5eb2b51bdcf2c7bd223b5f",
+  "trees": {
+    "root": "cbc53f5b66f14cd22b0d4f9f2c280214930196ab",
+    "src": "9854c1aa0d77dea5185d41ac2dd641538d7a3b10",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_fetch_build": "passed, same approved HTTPS path and existing clone",
+  "automatic_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+      "events": 16,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    }
+  ],
+  "automatic_events": 24,
+  "mixed_declared_correction": {
+    "events": 8,
+    "prior_XML_bytes": "identical",
+    "XSD": "passed",
+    "dirty_publication_and_impact": "same as d26ab97",
+    "cache_binding": "actual retained HeadChord caches present, initial geometry/beams warmed by owned getters"
+  },
+  "original_scope": "real saved-owner manual7/64 actual rhythm/Partwise versus native candidate/start/mapper/extinction without declared Voice plan; exact Slot/Voice/underflow/divisions16/8notes. Common exact selected analyze/refine/rebind/render compared in test-only observed-owner scope; actual task/controller/public admission still pending; not new automatic image/CLI admission",
+  "undotted_quarter_rest_boundary": "unchanged refusal, no outputs; original prior undotted failure not rerun",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false,
+  "owned_selected_control": {
+    "events": 8,
+    "XSD": "passed",
+    "prior_native_control_bytes": "identical",
+    "Voice_plan": "derived by actual native candidate/start/mapper/extinction, no original assignments or clocks supplied",
+    "scope": "explicit manual callback input, actual owned HeadStem LinkTask do/undo/redo followed by common selected reprocess in test-only observed-owner scope, not public CLI success"
+  },
+  "independent_target_tests": "retained owner HeadStem LinkTask do/undo/redo/cache/publication/dirty and exact selected rhythm/export comparison1 passed"
+}
