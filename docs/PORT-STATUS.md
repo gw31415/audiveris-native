@@ -1456,3 +1456,19 @@ and automatic Stem extent still differs by five pixels. Existing refinement
 controls keep their original expected observations; their setup now renames/binds
 the actual native Voice instead of changing only numeric metadata. See
 `evidence/musicxml-headstem-prelink-voice-swap/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+The next small lifecycle unit follows original Measure.removeVoiceChord's early
+stop. Two actual Voice lists can retain the same Chord after setVoice. The first
+empty Voice is removed and stops the loop; later lists remain through Do/Undo and
+can be removed on Redo. Native reproduced deletion of both owners at once and now
+uses successful membership removal/first-empty order. A sixth original control
+adds twelve task boundaries/thirty listener records plus three setup states; old
+five observations are unchanged. Cached old/new slots and original reference
+equality are compared in callbacks. Late native failure restores both actual
+Voices/lists/identities, Chords and clocks before the same sequence retries with
+retained counts1/1/2. Remaining normal container/purge/reset/history owner paths,
+Part/Measure/Voice callback/reprocessing integration, mirrors/controller/PAGE/
+persistence and source Stem extent parity are pending; global/public CLI guards
+stay false/guarded. See `evidence/musicxml-headstem-prelink-voice-stop/TRY.md` and
+`NEXT-DEPENDENCY.md`.

@@ -84,3 +84,13 @@ committed as compact JSON; provenance distinguishes original pretty-output hash
 from the parsed-equivalent committed representation. Other purge/history and full
 normal owner reprocessing/callback membership remain pending. See
 `evidence/musicxml-headstem-prelink-voice-swap/TRY.md`.
+
+
+The sixth original control has two overlapping single-Chord Voice lists with
+unchanged actual Chord/Slot clocks. Measure.removeVoiceChord stops when the first
+removal empties its Voice: Do/Undo preserve the later list, Redo deletes it. Native
+reproduced premature pruning of both Voices, then matches twelve task boundaries/
+thirty listener records and cached old/new Voice slots/reference equality. The
+five preceding controls are unchanged. This is raw lifecycle, not full normal
+callback-list/reprocessing integration. See
+`evidence/musicxml-headstem-prelink-voice-stop/TRY.md`.

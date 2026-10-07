@@ -1,7 +1,7 @@
 {
   "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
   "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
-  "observer_sha256": "b43c5d212cf1c87564e5d69d2e5203b1b6cbad1ccbafacec9554f66c46293600",
+  "observer_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
   "book_sha256": "009b0997d8dc4854c4ab7709614438240f1946bf1ebf32ff176fb3008a0a67e8",
   "native_outputs_used": false,
   "compile_argv": [
@@ -11,7 +11,7 @@
     "-cp",
     "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
     "-d",
-    "/tmp/prelink-live-voice-swap-complete-original/classes",
+    "/tmp/prelink-overlap-empty-voice-original/classes",
     "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java"
   ],
   "run_argv": [
@@ -19,17 +19,17 @@
     "-Xmx512m",
     "-XX:ActiveProcessorCount=2",
     "-Djava.awt.headless=true",
-    "-Duser.home=/tmp/prelink-live-voice-swap-complete-original/home",
-    "-Djava.util.prefs.userRoot=/tmp/prelink-live-voice-swap-complete-original/prefs",
+    "-Duser.home=/tmp/prelink-overlap-empty-voice-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/prelink-overlap-empty-voice-original/prefs",
     "-cp",
-    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/prelink-live-voice-swap-complete-original/classes",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/prelink-overlap-empty-voice-original/classes",
     "HeadStemPreLinkProbe",
     "/tmp/prelink-oracle/book/double-augmentation.omr",
-    "/tmp/prelink-live-voice-swap-complete-original/observed.json"
+    "/tmp/prelink-overlap-empty-voice-original/observed.json"
   ],
   "exit_code": 0,
-  "console_sha256": "c1611513e4a57e0b6ef1bae219b438323e3e6845ea172a939c3c2722ed4a85d1",
-  "observed_sha256": "64ebfffa927f51f65eddd488d9e01ffc0473b6c69ce61973d68ee9192c721dec",
-  "committed_observed_sha256": "ebcc0e2769bf1bc1a8e65b69e6866f81832517ce3296c844fa25aaedc5b18004",
+  "console_sha256": "41ae38a8f77add0368eb68ed4ff1e73d917fd969d4a2db4cca7c2b9453da6ac5",
+  "observed_sha256": "dcb3003784627f4b7c980c8ecca1f11365c74302b825e5533a4c462d0f163e8a",
+  "committed_observed_sha256": "bba169ed561f1e5d2ddef87b8778847a87c06c04488d79c5cfa9a3fa2eacc17f",
   "committed_representation": "compact JSON; parsed observations equal original pretty JSON"
 }

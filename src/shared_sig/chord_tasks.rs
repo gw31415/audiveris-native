@@ -225,20 +225,19 @@ impl ChordRemovalTask {
                 );
             }
             let chord = owner.chords.remove(index);
-            for voice in owner
-                .voices
-                .iter_mut()
-                .filter(|v| v.measure == chord.measure)
-            {
-                voice.chord_ids.retain(|cid| *cid != id);
-            }
             let mut voice_index = 0;
             while voice_index < owner.voices.len() {
-                let voice = &owner.voices[voice_index];
-                if voice.measure != chord.measure
-                    || !voice.chord_ids.is_empty()
-                    || voice.measure_rest_chord.is_some()
-                {
+                let voice = &mut owner.voices[voice_index];
+                if voice.measure != chord.measure {
+                    voice_index += 1;
+                    continue;
+                }
+                let Some(member) = voice.chord_ids.iter().position(|cid| *cid == id) else {
+                    voice_index += 1;
+                    continue;
+                };
+                voice.chord_ids.remove(member);
+                if !voice.chord_ids.is_empty() {
                     voice_index += 1;
                     continue;
                 }
@@ -261,6 +260,9 @@ impl ChordRemovalTask {
                     }
                 }
                 graph.retained_voices.push(voice);
+                // Original removeVoiceChord stops after the first Voice becomes
+                // empty; subsequent overlapping lists remain for the next task.
+                break;
             }
             self.retained = Some(chord);
             graph.vertices[id - 1].removing = true;

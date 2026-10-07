@@ -205,6 +205,25 @@ fn compare_graph(
             "manual {name}"
         );
     }
+    if expected["cached_overlap_old_voice"]["measure_registered"] == false {
+        let id = label_id(&json!("chord1")).unwrap();
+        let key = nodes.iter().find(|n| n["id"] == id).unwrap()["retained_voice_key"]
+            .as_u64()
+            .unwrap() as usize;
+        assert_eq!(
+            *identities
+                .entry("$retained_overlap_old_voice".into())
+                .or_insert(key),
+            key
+        );
+        let actual = snapshot["retained_voice_owners"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|v| v["key"] == key)
+            .unwrap();
+        compare_solo_voice(actual, &expected["cached_overlap_old_voice"], labels);
+    }
     if expected["cached_swapped_voice"]["measure_registered"] == false {
         let id = label_id(&json!("chord0")).unwrap();
         let node = nodes.iter().find(|n| n["id"] == id).unwrap();
@@ -436,6 +455,33 @@ fn compare_owner(
             labels,
         );
     }
+    if !expected["cached_overlap_old_voice"].is_null() {
+        let live = expected["cached_overlap_old_voice"]["measure_registered"] == true;
+        let voice = if live {
+            owner
+                .voices
+                .iter()
+                .find(|v| {
+                    v.measure == 0 && json!(v.id) == expected["cached_overlap_old_voice"]["id"]
+                })
+                .unwrap()
+        } else {
+            owner
+                .owner
+                .graph
+                .retained_voices
+                .iter()
+                .find(|v| {
+                    v.measure == 0 && json!(v.id) == expected["cached_overlap_old_voice"]["id"]
+                })
+                .unwrap()
+        };
+        compare_solo_voice(
+            &json!({"id":voice.id,"chord_ids":voice.chord_ids,"termination":voice.termination.map(crate::music_time::format_delta),"slots":voice.slots.iter().map(|(id,s)|json!({"id":id,"chord_id":s.chord_id,"status":if s.continuing{"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()}),
+            &expected["cached_overlap_old_voice"],
+            labels,
+        );
+    }
     if !expected["cached_swapped_voice"].is_null() {
         let live = expected["cached_swapped_voice"]["measure_registered"] == true;
         let voice = if live {
@@ -530,6 +576,20 @@ fn declare_reused_voice(
         voice,
     )
     .unwrap();
+}
+fn trim_old_voice(owner: &mut crate::music_measures::OwnedMusic, labels: &BTreeMap<usize, String>) {
+    let id = *labels
+        .iter()
+        .find(|(_, label)| label.as_str() == "chord0")
+        .unwrap()
+        .0;
+    owner
+        .voices
+        .iter_mut()
+        .find(|v| v.measure == 0 && v.chord_ids.contains(&id))
+        .unwrap()
+        .chord_ids
+        .retain(|other| *other == id);
 }
 fn declare_live_voice(
     owner: &mut crate::music_measures::OwnedMusic,
@@ -665,6 +725,10 @@ fn same_number_reassigned_voice_changes_actual_owner_without_old_slot_transfer()
 fn live_voice_swap_preserves_reference_despite_overlapping_old_chord_list() {
     compare_prelink_case(4);
 }
+#[test]
+fn first_empty_voice_removal_stops_before_second_overlapping_owner() {
+    compare_prelink_case(5);
+}
 fn compare_prelink_case(case_index: usize) {
     let original: Value = serde_json::from_str(include_str!(
         "../../../fixtures/official-headstem-prelink/observed.json"
@@ -693,7 +757,7 @@ fn compare_prelink_case(case_index: usize) {
             .perform_owned(&mut export.owner, EditingOperation::Do)
             .unwrap();
     }
-    if case_index == 4 {
+    if (4..=5).contains(&case_index) {
         export.owner.owner.graph.observed_voice_bindings = export
             .owner
             .chords
@@ -710,6 +774,34 @@ fn compare_prelink_case(case_index: usize) {
                 )
             })
             .collect();
+        if case_index == 5 {
+            let mut setup_identities = BTreeMap::new();
+            compare_state(
+                &mut export.owner,
+                &labels,
+                &mut setup_identities,
+                &case["relation_facts"],
+                &case["overlapping_voice_setup"]["before"],
+            );
+            trim_old_voice(&mut export.owner, &labels);
+            compare_state(
+                &mut export.owner,
+                &labels,
+                &mut setup_identities,
+                &case["relation_facts"],
+                &case["overlapping_voice_setup"]["after_trim"],
+            );
+            declare_live_voice(&mut export.owner, &labels);
+            compare_state(
+                &mut export.owner,
+                &labels,
+                &mut setup_identities,
+                &case["relation_facts"],
+                &case["overlapping_voice_setup"]["after_rebind"],
+            );
+        }
+    }
+    if case_index == 4 {
         let mut setup_identities = BTreeMap::new();
         compare_state(
             &mut export.owner,
@@ -975,20 +1067,32 @@ fn failed_reused_number_voice_edit_restores_current_and_retired_owners() {
 }
 #[test]
 fn failed_live_voice_swap_prelink_restores_actual_reference_and_old_list_members() {
+    compare_failed_voice_swap(false);
+}
+#[test]
+fn failed_overlapping_empty_voice_prelink_restores_first_and_later_actual_owners() {
+    compare_failed_voice_swap(true);
+}
+fn compare_failed_voice_swap(overlapping: bool) {
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
     ))
     .unwrap();
     let mut export = crate::music_xml::recognize(&image).unwrap();
     let labels = labels(&export.owner);
+    if overlapping {
+        trim_old_voice(&mut export.owner, &labels);
+    }
     let voice = declare_live_voice(&mut export.owner, &labels);
-    crate::music_voices::swap_voice_id(
-        &mut export.owner.owner.graph,
-        &mut export.owner.voices,
-        voice,
-        1,
-    )
-    .unwrap();
+    if !overlapping {
+        crate::music_voices::swap_voice_id(
+            &mut export.owner.owner.graph,
+            &mut export.owner.voices,
+            voice,
+            1,
+        )
+        .unwrap();
+    }
     let bindings = export
         .owner
         .chords
@@ -1057,18 +1161,24 @@ fn failed_live_voice_swap_prelink_restores_actual_reference_and_old_list_members
         unreachable!()
     };
     last.owned_chord.as_mut().unwrap().stem = saved;
-    for operation in [
+    for (op_index, operation) in [
         EditingOperation::Do,
         EditingOperation::Undo,
         EditingOperation::Redo,
-    ] {
+    ]
+    .into_iter()
+    .enumerate()
+    {
         sequence
             .perform_owned(&mut export.owner, operation, "RHYTHMS")
             .unwrap();
-        assert_eq!(export.owner.owner.graph.retained_voices.len(), 1);
+        assert_eq!(
+            export.owner.owner.graph.retained_voices.len(),
+            if overlapping && op_index == 2 { 2 } else { 1 }
+        );
         assert!(std::sync::Arc::ptr_eq(
             &export.owner.owner.graph.retained_voices[0].identity,
-            &voice_objects[voice]
+            &voice_objects[if overlapping { 0 } else { voice }]
         ));
         for (key, identity) in &bindings {
             assert!(std::sync::Arc::ptr_eq(

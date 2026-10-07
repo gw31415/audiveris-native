@@ -115,12 +115,26 @@ public class HeadStemPreLinkProbe {
                 "chords",names((Collection<?>)call(swapped,"getChords"),labels),
                 "termination",rational(call(swapped,"getTermination")),"slots",slotRows));
         }
+        Object overlapOld=labels.keySet().stream().filter(o->"overlap_old_voice".equals(labels.get(o))).findFirst().orElse(null);
+        if(overlapOld!=null) {
+            List<Object> slotRows=new ArrayList<>();
+            for(Object slot:(Collection<?>)call(stack,"getSlots")) {
+                Object info=call(overlapOld,"getSlotInfo",slot);
+                if(info!=null)slotRows.add(obj("id",call(slot,"getId"),
+                    "chord",labels.get(field(info,"sheet.rhythm.SlotVoice","chord")),
+                    "status",field(info,"sheet.rhythm.SlotVoice","status").toString()));
+            }
+            result.put("cached_overlap_old_voice",obj("id",call(overlapOld,"getId"),
+                "measure_registered",((Collection<?>)call(measure,"getVoices")).contains(overlapOld),
+                "chords",names((Collection<?>)call(overlapOld,"getChords"),labels),
+                "termination",rational(call(overlapOld,"getTermination")),"slots",slotRows));
+        }
         return result;
     }
     public static void main(String[] args) throws Exception {
         c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);
         List<Object> cases=new ArrayList<>();
-        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice", "existing_target_solo_voice_reuse", "existing_target_live_voice_swap")) {
+        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice", "existing_target_solo_voice_reuse", "existing_target_live_voice_swap", "existing_target_overlapping_solo_voices")) {
             Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0]));
             Object sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");
             Object system=((List<?>)call(sheet,"getSystems")).get(0),sig=call(system,"getSig");
@@ -166,6 +180,20 @@ public class HeadStemPreLinkProbe {
                 call(measure,"swapVoiceId",freshVoice,1);
                 liveSwap=obj("before",prior,"after_rebind",rebound,
                     "after_swap",state(sig,measure,stack,chords,labels,voices,slots,relations));
+            }
+            Object overlapping=null;
+            if(mode.equals("existing_target_overlapping_solo_voices")) {
+                Object previous=call(oldChord,"getVoice"),slot=call(oldChord,"getSlot");
+                Object info=call(previous,"getSlotInfo",slot);
+                Object prior=state(sig,measure,stack,chords,labels,voices,slots,relations);
+                labels.put(previous,"overlap_old_voice");
+                for(Object other:chords)if(other!=oldChord)call(previous,"removeChord",other);
+                Object trimmed=state(sig,measure,stack,chords,labels,voices,slots,relations);
+                Object freshVoice=make("sheet.rhythm.Voice",oldChord,measure);
+                call(measure,"addVoice",freshVoice);call(freshVoice,"putSlotInfo",slot,info);
+                labels.put(freshVoice,"swapped_voice");
+                overlapping=obj("before",prior,"after_trim",trimmed,
+                    "after_rebind",state(sig,measure,stack,chords,labels,voices,slots,relations));
             }
             if(mode.equals("new_target")) {
                 // Align declared setup with the native retained owner: warm
@@ -234,6 +262,7 @@ public class HeadStemPreLinkProbe {
                 }
             }
             Map<String,Object> result=obj("name",mode,"task_names",taskNames,"stem_facts",stemFacts,"relation_facts",relationFacts,"before",before,"steps",steps);
+            if(overlapping!=null)result.put("overlapping_voice_setup",overlapping);
             if(voiceRebind!=null)result.put("voice_rebind",voiceRebind);
             if(liveSwap!=null) {
                 result.put("live_voice_swap",liveSwap);
