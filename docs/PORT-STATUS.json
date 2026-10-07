@@ -661,7 +661,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Current fresh-identity unit: extended manual owner/cache/identity/grade1, selected rhythm refusal/rollback1, head/rest identity2; fmt/all-target clippy passed. Prior5f1c4c3 independent target1/build/mixed8 bytes/XSD/refusal/trees. Source175ab0d double8+parallel16+mixed8; a9108bf5images47+parallel16+mixed8. Full595 historical95e191b; no full rerun. Final source readback pending corresponding READBACK.",
+  "latest_targeted_validation": "Source2965046: extended manual owner/cache/identity/grade1, selected rhythm refusal/rollback1, head/rest identity2; fmt/all-target clippy passed; independent targets2/build/double8+mixed8 prior bytes/XSD/refusal/root/src/crates passed. Prior175ab0d double8+parallel16+mixed8; a9108bf5images47+parallel16+mixed8. Full595 historical95e191b; no full rerun.",
   "updated_timezone": "Etc/UTC",
   "reduction_and_cleaner_units": [
     {
