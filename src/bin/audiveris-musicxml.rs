@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Native image recognition to bounded MusicXML. No Java runtime or XML import.
-use audiveris_native::{GrayImage, music_xml};
+use audiveris_native::{
+    GrayImage, music_xml,
+    shared_sig::{DefaultEditingTask, EditingOperation, EditingSequence},
+};
 use std::{
     collections::BTreeSet,
     ffi::OsString,
@@ -8,7 +11,7 @@ use std::{
     io::{Read, Write},
     path::{Path, PathBuf},
 };
-const USAGE: &str = "audiveris-musicxml [--slot-at MEASURE X] IMAGE OUTPUT.musicxml REPORT.json\naudiveris-musicxml [--slot-at MEASURE X] --output-dir EXISTING_DIR [--part-name NAME] IMAGE...";
+const USAGE: &str = "audiveris-musicxml [--edit-dot INTER_ID DX DY] [--slot-at MEASURE X] IMAGE OUTPUT.musicxml REPORT.json\naudiveris-musicxml [--slot-at MEASURE X] --output-dir EXISTING_DIR [--part-name NAME] IMAGE...";
 struct Job {
     image: PathBuf,
     xml: PathBuf,
@@ -121,10 +124,33 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args = std::env::args_os().skip(1).collect::<Vec<_>>();
     if args.len() == 1 && args[0] == "--help" {
         println!(
-            "{USAGE}\nClean opaque PNG/PGM, <=4M pixels, zero skew, ordinary five-line Bravura/interline11, native pitched header clef/C-major-or-header-key/recognized constant binary meter single voice, connected flag/beam eighth and two-level sixteenth, quarter/half notes, quarter/half rests and default whole-measure rest; first-lower-ledger C4 only with retained concrete ledger; isolated/two-part quarter-half rest registration. Two/four-measure and system-break fixture validation; full HEADS/STEMS/OMR flags false. Ambiguous, incomplete or unsupported music refuses. Part name is metadata for a nontransposing part. slot-at is a read-only nearest-slot report query in the current single-staff measure; it does not edit recognition. Outputs must not exist. Batch preflights all paths; on recognition failure it stops, retaining earlier reported successful pairs."
+            "{USAGE}\nClean opaque PNG/PGM, <=4M pixels, zero skew, ordinary five-line Bravura/interline11, native pitched header clef/C-major-or-header-key/recognized constant binary meter single voice, connected flag/beam eighth and two-level sixteenth, quarter/half notes, quarter/half rests and default whole-measure rest; first-lower-ledger C4 only with retained concrete ledger; isolated/two-part quarter-half rest registration. Two/four-measure and system-break fixture validation; full HEADS/STEMS/OMR flags false. Ambiguous, incomplete or unsupported music refuses. Part name is metadata for a nontransposing part. slot-at is a read-only nearest-slot report query in the current single-staff measure; it does not edit recognition. edit-dot moves a retained ordinary dot through a bounds-only raw EditingTask and bounded owned-stack rhythm reprocessing; it does not discover support links or complete general correction/PageStep. Timed support, cross-stack and linked Voice refinement conditions remain pending. Outputs must not exist. Batch preflights all paths; on recognition failure it stops, retaining earlier reported successful pairs."
         );
         return Ok(());
     }
+    let (edit, args) = if args.first().is_some_and(|a| a == "--edit-dot") {
+        let id = args
+            .get(1)
+            .and_then(|a| a.to_str())
+            .ok_or(USAGE)?
+            .parse::<u64>()?;
+        let dx = args
+            .get(2)
+            .and_then(|a| a.to_str())
+            .ok_or(USAGE)?
+            .parse::<i64>()?;
+        let dy = args
+            .get(3)
+            .and_then(|a| a.to_str())
+            .ok_or(USAGE)?
+            .parse::<i64>()?;
+        if id == 0 {
+            return Err("edit-dot requires a positive native Inter ID".into());
+        }
+        (Some((id, dx, dy)), &args[4..])
+    } else {
+        (None, args.as_slice())
+    };
     let (query, remaining) = if args.first().is_some_and(|a| a == "--slot-at") {
         let measure = args
             .get(1)
@@ -144,9 +170,12 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         }
         (Some((measure, x)), &args[3..])
     } else {
-        (None, args.as_slice())
+        (None, args)
     };
     let (jobs, name) = options(remaining)?;
+    if edit.is_some() && jobs.len() != 1 {
+        return Err("edit-dot applies to exactly one recognized image owner".into());
+    }
     if name.trim().is_empty() || name.len() > 256 || name.chars().any(char::is_control) {
         return Err("part-name requires a nonempty single line up to256 UTF8 bytes".into());
     }
@@ -175,6 +204,32 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
             }
             let image = GrayImage::decode(&bytes)?;
             let mut result = music_xml::recognize_named(&image, &name)?;
+            if let Some((id, dx, dy)) = edit {
+                let snapshot = result.owner.owner.graph.snapshot();
+                let dot = snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == id && n["kind"] == "AugmentationDotInter")
+                    .ok_or(
+                        "edit-dot requires a live ordinary AugmentationDotInter from this image",
+                    )?;
+                let key = serde_json::from_value(dot["origin"].clone())?;
+                let mut bounds: [i64; 4] = serde_json::from_value(dot["bounds"].clone())?;
+                bounds[0] = bounds[0].checked_add(dx).ok_or("edit-dot x overflow")?;
+                bounds[1] = bounds[1].checked_add(dy).ok_or("edit-dot y overflow")?;
+                let task = DefaultEditingTask::new(
+                    &result.owner.owner.graph,
+                    key,
+                    bounds,
+                    vec![],
+                    vec![],
+                )?;
+                result.apply_editing_sequence(
+                    &mut EditingSequence::new(vec![task]),
+                    EditingOperation::Do,
+                )?;
+            }
             if let Some((measure, x)) = query {
                 let selected = result.owner.closest_slot_at(measure, x)?;
                 result.owner.owner.prepared.report["slot_query"] = selected;

@@ -242,6 +242,119 @@ pub(crate) fn reset_stack_rhythm(measure: &mut Measure, expected: Option<u32>) {
     measure.timing.actual = None;
 }
 
+/// Voices.refineSystem's purge/sort/rename prefix on the admitted HIGH owners.
+/// Tie/beam/NextInVoice/preferred ID links require the remaining refinement
+/// dependencies; reject those edits rather than produce a partially refined ID.
+pub(crate) fn refine_ordinary_system(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measures: &[Measure],
+    system: u64,
+) -> Result<(), String> {
+    let snapshot = graph.snapshot();
+    let nodes: BTreeMap<_, _> = snapshot["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|n| (n["id"].as_u64().unwrap() as usize, n))
+        .collect();
+    if nodes.values().any(|n| {
+        n["origin"]["system"] == system
+            && (n["kind"] == "SlurInter" || !n["preferred_voice_id"].is_null())
+    }) || snapshot["relations"].as_array().unwrap().iter().any(|e| {
+        e["kind"] == "NextInVoiceRelation"
+            && nodes[&(e["source"].as_u64().unwrap() as usize)]["origin"]["system"] == system
+    }) {
+        return Err("music_reprocess_linked_voice_refinement_pending".into());
+    }
+    let groups = beam_group_chords(graph)?;
+    for group in groups
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|g| g["system_id"] == system)
+    {
+        let mut owners = BTreeSet::new();
+        for chord in group["chords"].as_array().unwrap() {
+            let n = nodes[&(chord["id"].as_u64().unwrap() as usize)];
+            owners.insert((n["part_id"].as_u64(), n["measure_index"].as_u64()));
+        }
+        if owners.len() > 1 {
+            return Err("music_reprocess_cross_measure_beam_refinement_pending".into());
+        }
+    }
+    let mut staged = graph.clone();
+    let mut retained = voices.clone();
+    for (mi, measure) in measures
+        .iter()
+        .enumerate()
+        .filter(|(_, m)| m.system == system)
+    {
+        let first = |v: &Voice| {
+            v.measure_rest_chord
+                .or_else(|| v.chord_ids.first().copied())
+        };
+        retained.retain(|v| v.measure != mi || first(v).is_some());
+        let positions: Vec<_> = retained
+            .iter()
+            .enumerate()
+            .filter(|(_, v)| v.measure == mi)
+            .map(|(i, _)| i)
+            .collect();
+        let mut ordered: Vec<_> = positions.iter().map(|&i| retained[i].clone()).collect();
+        let mut keys = BTreeMap::new();
+        for v in &ordered {
+            let id = first(v).unwrap();
+            let node = nodes
+                .get(&id)
+                .ok_or("music_refine_live_first_chord_required")?;
+            if node["origin"]["system"] != measure.system
+                || node["part_id"] != measure.part
+                || node["measure_index"] != measure.index
+                || node["voice"] != v.id
+                || v.starting_staff != measure.staff
+            {
+                return Err("music_refine_owned_HIGH_voice_required".into());
+            }
+            let slot = if v.measure_rest_chord.is_some() {
+                1
+            } else {
+                node["slot_id"]
+                    .as_u64()
+                    .ok_or("music_refine_first_slot_required")?
+            };
+            let y = node["bounds"][1]
+                .as_i64()
+                .ok_or("music_refine_first_chord_bounds_required")?;
+            keys.insert(id, (slot, y));
+        }
+        ordered.sort_by_key(|v| keys[&first(v).unwrap()]);
+        for (ordinal, voice) in ordered.iter_mut().enumerate() {
+            voice.id = ordinal + 1;
+            let members: Vec<_> = voice
+                .measure_rest_chord
+                .map_or_else(|| voice.chord_ids.clone(), |id| vec![id]);
+            for id in members {
+                let mut node = nodes
+                    .get(&id)
+                    .ok_or("music_refine_owned_chord_required")?
+                    .to_owned()
+                    .clone();
+                let key = serde_json::from_value(node["origin"].clone())
+                    .map_err(|_| "music_refine_chord_origin_required")?;
+                node["voice"] = json!(voice.id);
+                staged.vertex(key, node, false)?;
+            }
+        }
+        for (i, voice) in positions.into_iter().zip(ordered) {
+            retained[i] = voice;
+        }
+    }
+    *graph = staged;
+    *voices = retained;
+    Ok(())
+}
+
 /// Measure.resetRhythm -> AbstractChordInter.resetTiming before rhythm passes.
 /// Clear only this measure's Voices, abnormal flag, chord slot/voice/time.
 /// Original Measure reset does not reset chord duration or stack timing/slots.

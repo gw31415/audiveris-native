@@ -2249,3 +2249,33 @@ See [task control](../evidence/musicxml-editing-task/VALIDATION.json).
 `shared_sig::EditingSequence` adds retained task do/undo order and explicit impact
 notifications. It schedules required RHYTHMS/PAGE work after publication; it does
 not yet execute those steps or expose a correction CLI command.
+
+Later retained-owner checkpoint supersedes the earlier notification-only boundary:
+`Export::apply_editing_sequence` runs a bounded actual Stack/Measure pass on edited
+native owners using retained expectedDuration, then HIGH Voice purge/sort/rename
+and native export. The image-entry ownership guard remains unchanged; serialized
+reports cannot establish edited-owner provenance. The reprocessing entry does not
+call `populateFRATs` or LINKS and does not rebuild dot Part/Measure membership.
+Failure restores Graph/rhythm/report and does not advance the task sequence.
+
+Run the same ordinary double-dot input through the new raw bounds-only command:
+
+```sh
+cargo build --offline --locked -j1 --bin audiveris-musicxml
+# ID72 is the first native dot in this saved input; generic code selects no fixed ID.
+/path/to/audiveris-musicxml --edit-dot 72 3 0 \
+  fixtures/official-image-musicxml-augmentation/double-augmentation.png \
+  /existing/output/dot-edited.musicxml /existing/output/dot-edited.report.json
+```
+
+Use the native live `AugmentationDotInter` ID from an ordinary recognition report;
+IDs belong to that exact recognized input. Output paths must not exist. The command
+accepts exactly one image. It moves the retained dot via raw EditingTask; it does
+not search for replacement support links. Library sequences additionally support
+undo/redo. `editing_reprocess` separates planned RHYTHMS/PAGE impact from actually
+processed owned stacks and the bounded Voice prefix. Full controller/PageStep,
+support-changing timed edits, cross-stack ownership editing, linked Voice ID
+refinement, shared/multi-staff stacks and general corrections remain pending.
+An ordinary edited dot reprocess matches original saved-owner clocks/slots/Voice
+while retaining other measures/cache/glyph; it is not evidence of automatic
+image correction or broader image admission. All completion flags stay false.

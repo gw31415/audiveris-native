@@ -1,0 +1,27 @@
+{
+  "baseline_source": "008902f7b474eb5e3cb5e7100eba08dcce48a44d",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "implemented": "retained export provenance -> original bounds-only EditingSequence publication/impact -> cached expectedDuration/Stack reset -> existing actual Measure/Chord/Voice rhythm pass -> finalCheck -> stack slots/actual -> original HIGH purge/sort/rename prefix -> native writer; failure restores owner/timing/report and leaves sequence unchanged",
+  "original_controls": "real PageRhythm.reprocessStack and original stage replay from stack-reprocess fixture; separately real refineSystem with rhythm-created HIGH ID7 and actual Measure.addVoice empty99 (purged, rename1). Cold saved ID7 remains7; not native saved Voice import coverage.",
+  "automatic_image_scope": "existing image pipeline unchanged; explicit --edit-dot manually chosen retained dot geometry is correction execution, not automatic correction discovery",
+  "not_claimed": [
+    "full PageRhythm/StackRhythm/MeasureRhythm/Voices parity",
+    "timed support/cross-stack edits and linked Voice refinement",
+    "complete controller PageStep/history/persistence/general editors/shared stacks/multi-staff/cleaner"
+  ],
+  "native_entry_guards": "original SYMBOLS admission unchanged; private retained-export provenance rejects pre-edited/tampered owner even if caller rewrites report; typed tasks do not rebuild membership or change support; no populateFRATs/LINKS on reprocess",
+  "target_tests": {
+    "passed": 4,
+    "tests": [
+      "original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation",
+      "original_voice_refinement_purges_actual_empty_owner_and_renames_rhythm_created_high",
+      "original_saved_group_getters_and_declared_beam_rest_follow_actual_ensemble",
+      "editing_sequence_reverses_actual_tasks_before_notifying_rhythm_impacts"
+    ]
+  },
+  "format": "passed",
+  "clippy": "passed --all-targets -D warnings",
+  "image_readback": "pending independent fetch",
+  "full_suite": "not rerun; historical595 at95e191b",
+  "completion_flags": false
+}

@@ -1,0 +1,30 @@
+{
+  "scope": "declared live original Voice ID7 plus actual Measure.addVoice empty Voice99, real Voices.refineSystem; not automatic image correction",
+  "before": [
+    {
+      "id": 7,
+      "first_chord_bounds": [
+        276,
+        206,
+        13,
+        41
+      ]
+    },
+    {
+      "id": 99,
+      "first_chord_bounds": null
+    }
+  ],
+  "after": [
+    {
+      "id": 7,
+      "first_chord_bounds": [
+        276,
+        206,
+        13,
+        41
+      ]
+    }
+  ],
+  "not_claimed": "saved-only Voice kind initialization is not covered by native image-created HIGH Voice; cold ID7 stays7, rhythm-created ID7 renames1"
+}

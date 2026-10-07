@@ -251,6 +251,27 @@ impl EditingSequence {
     pub fn new(tasks: Vec<DefaultEditingTask>) -> Self {
         Self { tasks }
     }
+    pub(crate) fn require_bounds_only_reprocess(&self) -> Result<(), String> {
+        if self.tasks.is_empty()
+            || self
+                .tasks
+                .iter()
+                .any(|t| !t.links.is_empty() || !t.unlinks.is_empty())
+        {
+            return Err("music_reprocess_timed_support_edit_pending".into());
+        }
+        Ok(())
+    }
+    pub(crate) fn require_same_stack(&self, before: &Graph, after: &Graph) -> Result<(), String> {
+        for task in &self.tasks {
+            if before.dot_edit_stack_target(task.inter)?
+                != after.dot_edit_stack_target(task.inter)?
+            {
+                return Err("music_reprocess_cross_stack_owner_edit_pending".into());
+            }
+        }
+        Ok(())
+    }
     pub fn perform(
         &mut self,
         graph: &mut Graph,

@@ -1113,3 +1113,16 @@ state. Native corrected-owner entry and system-wide Voice refinement remain pend
 this checkpoint integrates the reset/order into the existing image export only.
 Evidence: `evidence/musicxml-stack-reprocess/VALIDATION.json`. Full595 remains
 historical95e191b; no new full rerun or broader image admission.
+
+A separate retained-export correction entry now runs bounded actual stack rhythm:
+`Export.apply_editing_sequence` consumes typed same-stack ordinary-dot bounds
+commands, preserving cached expectedDuration and Part/Measure membership. It does
+not falsify the SYMBOLS report or call populateFRATs/LINKS. FinalCheck now precedes
+Stack slots/actual as in original. Actual HIGH Voice purge/sort/rename follows;
+linked tie/beam/NextInVoice/preferred-ID refinement is explicitly pending. Native
+writer consumes the resulting owner; failure rolls it back. `--edit-dot` makes
+this bounds-only raw-task path runnable after image recognition. This is manual
+correction execution, not automatic correction discovery or full controller/Page
+processing. Original full saved-owner processing and fresh-HIGH cleanup controls
+are separate from existing five-image47-event automatic image regression.
+Evidence: `evidence/musicxml-owned-reprocess/VALIDATION.json`.

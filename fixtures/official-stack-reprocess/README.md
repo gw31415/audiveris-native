@@ -13,3 +13,9 @@ and Voices.refineSystem methods to expose intermediate states. Replay is labelle
 separately and equals the real complete call. Neither calls populateFRATs.
 Only stack reset/order is integrated natively at this checkpoint. Complete edited
 owner reprocessing and correction CLI are not claimed. Existing images reused.
+
+The subsequent owned-reprocess unit additionally uses VoiceRefineProbe: real
+PageRhythm processing first creates HIGH Voices, then a declared ID7 and an empty
+Voice registered by Measure.addVoice exercise actual refineSystem purge/rename.
+The cold saved Voice boundary stays distinct (ID7 remains7 on that saved-only
+control); native image-created HIGH processing is not a serialized Voice importer.
