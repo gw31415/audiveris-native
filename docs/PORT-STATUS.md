@@ -1330,3 +1330,14 @@ test-only observed-owned scope. Public image/correction guards remain; actual
 RelationTask/controller comparison is still required, and automatic13/16 stays
 incomplete. See `evidence/musicxml-rational-selected-reprocess/TRY.md` and
 `NEXT-DEPENDENCY.md`. Target module13 passed; full595 is historical95e191b.
+
+### Actual retained HeadStem LinkTask
+
+Original real LinkTask/UITaskList and CtrlTask RHYTHMS comparison now covers
+DO/UNDO/REDO callback/cache/owner clocks6/2/2, publication1/0/1 and manual status.
+Undo removes the fresh HeadStem without restoring old ChordStem; exact7/64 and
+short Voices remain through native selected reprocessing/export. Tasks bind to
+actual canonical Stem/Chord ownership; task failures restore typed Chords/Graph.
+Notification is planned impact, not PAGE/project completion. See
+`evidence/musicxml-headstem-tasks/TRY.md` and `NEXT-DEPENDENCY.md`. General
+UnlinkTask/preLink/controller and public fine correction admission remain pending.

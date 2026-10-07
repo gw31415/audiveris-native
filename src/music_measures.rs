@@ -25,6 +25,41 @@ impl OwnedMusic {
         stem: Key,
         relation: Value,
     ) -> Result<Key, String> {
+        let (index, key) = self.manual_head_stem_owner(head, stem)?;
+        let graph = &self.owner.graph;
+        let chord = &self.chords[index];
+        let cache = self
+            .owner
+            .caches
+            .get(&stem.system)
+            .ok_or("manual_head_stem_actual_cache_required")?;
+        let canonical = cache.registered_stem(graph, stem.local)?;
+        let mut next = graph.clone();
+        if next.retained_chord_stem(chord.key)? != chord.stem {
+            return Err("manual_head_stem_retained_stem_mismatch".into());
+        }
+        next.add_owned_manual_head_stem(chord.key, head, stem, relation)?;
+        let read = next.retained_chord_getters(chord.key)?;
+        if read.stem != Some(stem)
+            || !std::sync::Arc::ptr_eq(&canonical, &cache.registered_stem(&next, stem.local)?)
+        {
+            return Err("manual_head_stem_canonical_owner_changed".into());
+        }
+        let bounds = read
+            .bounds
+            .ok_or("manual_head_stem_chord_bounds_required")?;
+        self.owner.graph = next;
+        // Keep the same retained chord/member/measure/voice objects. The live
+        // identity relation and cache getters supply this continuation's stem.
+        self.chords[index].stem = read.stem;
+        self.chords[index].bounds = bounds;
+        Ok(key)
+    }
+    pub(crate) fn manual_head_stem_owner(
+        &self,
+        head: Key,
+        stem: Key,
+    ) -> Result<(usize, Key), String> {
         let graph = &self.owner.graph;
         let hid = graph
             .id(head)
@@ -47,33 +82,7 @@ impl OwnedMusic {
         {
             return Err("manual_head_stem_ordinary_retained_owner_required".into());
         }
-        let cache = self
-            .owner
-            .caches
-            .get(&stem.system)
-            .ok_or("manual_head_stem_actual_cache_required")?;
-        let canonical = cache.registered_stem(graph, stem.local)?;
-        let mut next = graph.clone();
-        if next.retained_chord_stem(chord.key)? != chord.stem {
-            return Err("manual_head_stem_retained_stem_mismatch".into());
-        }
-        next.add_owned_manual_head_stem(chord.key, head, stem, relation)?;
-        let read = next.retained_chord_getters(chord.key)?;
-        if read.stem != Some(stem)
-            || !std::sync::Arc::ptr_eq(&canonical, &cache.registered_stem(&next, stem.local)?)
-        {
-            return Err("manual_head_stem_canonical_owner_changed".into());
-        }
-        let bounds = read
-            .bounds
-            .ok_or("manual_head_stem_chord_bounds_required")?;
-        let key = chord.key;
-        self.owner.graph = next;
-        // Keep the same retained chord/member/measure/voice objects. The live
-        // identity relation and cache getters supply this continuation's stem.
-        self.chords[index].stem = read.stem;
-        self.chords[index].bounds = bounds;
-        Ok(key)
+        Ok((index, chord.key))
     }
     /// Read-only original nearest-slot selection in the admitted one-staff,
     /// zero-skew measure. Its staff fixes the reference for getXOffset(point,

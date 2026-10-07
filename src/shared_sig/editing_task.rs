@@ -289,10 +289,16 @@ impl DefaultEditingTask {
 
 /// Actual RelationTask identity, separate from search Link.applyTo deduplication.
 #[derive(Clone, Debug)]
+struct RetainedHeadStem {
+    chord: Key,
+    stem: std::sync::Arc<crate::stem_cache_sig::CachedStem>,
+}
+#[derive(Clone, Debug)]
 pub struct RelationTask {
     source: Key,
     link: EditingLink,
     unlink: bool,
+    owned_chord: Option<RetainedHeadStem>,
 }
 impl RelationTask {
     pub fn link(graph: &Graph, source: Key, target: Key, relation: Value) -> Result<Self, String> {
@@ -310,6 +316,7 @@ impl RelationTask {
             source,
             link: EditingLink::new(target, true, relation),
             unlink: false,
+            owned_chord: None,
         })
     }
     pub fn unlink(graph: &Graph, id: usize) -> Result<Self, String> {
@@ -326,20 +333,141 @@ impl RelationTask {
             source,
             link: EditingLink::from_registered(graph, source, id)?,
             unlink: true,
+            owned_chord: None,
         })
     }
+    /// Explicit retained-owner task; this does not run controller preLink or
+    /// admit a new recognition/correction CLI input.
+    pub fn manual_head_stem(
+        owner: &crate::music_measures::OwnedMusic,
+        head: Key,
+        stem: Key,
+        mut relation: Value,
+    ) -> Result<Self, String> {
+        let (_, chord) = owner.manual_head_stem_owner(head, stem)?;
+        let graph = &owner.owner.graph;
+        graph.endpoint(head)?;
+        graph.endpoint(stem)?;
+        let canonical = owner
+            .owner
+            .caches
+            .get(&stem.system)
+            .ok_or("manual_head_stem_actual_cache_required")?
+            .registered_stem(graph, stem.local)?;
+        if relation["kind"] != "HeadStemRelation" || relation["manual"] != true {
+            return Err("manual_head_stem_declared_relation_properties_required".into());
+        }
+        relation
+            .as_object_mut()
+            .ok_or("invalid_shared_sig_relation")?
+            .remove("local_relation_id");
+        Ok(Self {
+            source: head,
+            link: EditingLink::new(stem, true, relation),
+            unlink: false,
+            owned_chord: Some(RetainedHeadStem {
+                chord,
+                stem: canonical,
+            }),
+        })
+    }
+    fn perform_owned(
+        &mut self,
+        owner: &mut crate::music_measures::OwnedMusic,
+        operation: EditingOperation,
+    ) -> Result<(), String> {
+        let Some(binding) = self.owned_chord.as_ref() else {
+            return self.perform(&mut owner.owner.graph, operation);
+        };
+        let (_, current) = owner.manual_head_stem_owner(self.source, self.link.partner)?;
+        let canonical = owner
+            .owner
+            .caches
+            .get(&self.link.partner.system)
+            .ok_or("manual_head_stem_actual_cache_required")?
+            .registered_stem(&owner.owner.graph, self.link.partner.local)?;
+        if current != binding.chord || !std::sync::Arc::ptr_eq(&canonical, &binding.stem) {
+            return Err("manual_head_stem_retained_owner_changed".into());
+        }
+        let adding = self.unlink == matches!(operation, EditingOperation::Undo);
+        if adding {
+            let retained = self.link.edge.map(|id| &owner.owner.graph.edges[id - 1]);
+            if retained.is_none_or(|e| e.removed) {
+                if let Some(edge) = retained {
+                    self.link.relation = edge.data.clone();
+                }
+                if self.link.edge.is_none() {
+                    let ordinal = owner
+                        .owner
+                        .graph
+                        .edges
+                        .iter()
+                        .filter(|e| e.key.phase == Phase::Stem)
+                        .map(|e| e.key.ordinal)
+                        .max()
+                        .unwrap_or(0)
+                        .checked_add(1)
+                        .ok_or("shared_sig_relation_order_budget")?;
+                    self.link.relation["local_relation_id"] = json!(ordinal);
+                }
+                owner.apply_manual_head_stem_callback(
+                    self.source,
+                    self.link.partner,
+                    self.link.relation.clone(),
+                )?;
+                let graph = &owner.owner.graph;
+                let source = graph.endpoint(self.source)?;
+                let target = graph.endpoint(self.link.partner)?;
+                let ordinal = self.link.relation["local_relation_id"]
+                    .as_u64()
+                    .ok_or("editing_relation_identity_required")?
+                    as usize;
+                self.link.edge = graph
+                    .edges
+                    .iter()
+                    .position(|e| {
+                        e.key.phase == Phase::Stem
+                            && e.key.kind == "HeadStemRelation"
+                            && e.key.source == source
+                            && e.key.target == target
+                            && e.key.ordinal == ordinal
+                    })
+                    .map(|i| i + 1);
+                if self.link.edge.is_none() {
+                    return Err("editing_relation_identity_required".into());
+                }
+            }
+            self.publish(&mut owner.owner.graph, operation)?;
+        } else {
+            let id = self.link.edge.ok_or("editing_live_relation_required")?;
+            // HeadStemRelation.removed checks endpoints. It does not restore
+            // the ChordStem removed by the earlier nested added callback.
+            owner
+                .owner
+                .graph
+                .remove_head_stem_edges(self.source, &[id])?;
+        }
+        Ok(())
+    }
+    fn publish(&self, graph: &mut Graph, operation: EditingOperation) -> Result<(), String> {
+        let id = graph.endpoint(self.source)?;
+        graph
+            .edit_publications
+            .push(json!({"inter_id":id,"operation":operation.name(),
+            "phase":"after_task","task":if self.unlink {"UnlinkTask"}else{"LinkTask"},
+            "actual_dirty_state":graph.editing_book_state(),"controller_impact_complete":false}));
+        #[cfg(test)]
+        graph.dot_callback_event("publish", id, "delivered");
+        Ok(())
+    }
     fn perform(&mut self, graph: &mut Graph, operation: EditingOperation) -> Result<(), String> {
+        if self.owned_chord.is_some() {
+            return Err("editing_actual_music_owner_required".into());
+        }
         let adding = self.unlink == matches!(operation, EditingOperation::Undo);
         if adding {
             self.link.apply_relation(graph, self.source, false)?;
-            let id = graph.endpoint(self.source)?;
-            graph
-                .edit_publications
-                .push(json!({"inter_id":id,"operation":operation.name(),
-                "phase":"after_task","task":if self.unlink {"UnlinkTask"}else{"LinkTask"},
-                "actual_dirty_state":graph.editing_book_state(),"controller_impact_complete":false}));
-            #[cfg(test)]
-            graph.dot_callback_event("publish", id, "delivered");
+            self.publish(graph, operation)?;
         } else {
             let id = self.link.edge.ok_or("editing_live_relation_required")?;
             if graph.edges[id - 1].removed {
@@ -517,6 +645,50 @@ impl EditingSequence {
         *self = sequence;
         Ok(notification)
     }
+    /// Run real tasks against retained Chords as well as SIG. The notification
+    /// is still planned impact; the caller must separately reprocess its stacks.
+    pub fn perform_owned(
+        &mut self,
+        owner: &mut crate::music_measures::OwnedMusic,
+        operation: EditingOperation,
+        latest_step: &str,
+    ) -> Result<Value, String> {
+        let latest = STEPS
+            .iter()
+            .position(|s| *s == latest_step)
+            .ok_or("editing_latest_step_required")?;
+        let graph = owner.owner.graph.clone();
+        let chords = owner.chords.clone();
+        let mut sequence = self.clone();
+        let result = (|| {
+            let tasks: Box<dyn Iterator<Item = &mut EditingTask> + '_> =
+                if matches!(operation, EditingOperation::Undo) {
+                    Box::new(sequence.tasks.iter_mut().rev())
+                } else {
+                    Box::new(sequence.tasks.iter_mut())
+                };
+            for task in tasks {
+                match task {
+                    EditingTask::Relation(t) => t.perform_owned(owner, operation)?,
+                    EditingTask::Inter(t) => {
+                        t.perform(&mut owner.owner.graph, operation)?;
+                    }
+                }
+            }
+            sequence.notify_impact(&mut owner.owner.graph, operation, latest_step, latest)
+        })();
+        match result {
+            Ok(notification) => {
+                *self = sequence;
+                Ok(notification)
+            }
+            Err(error) => {
+                owner.owner.graph = graph;
+                owner.chords.clone_from(&chords);
+                Err(error)
+            }
+        }
+    }
     fn notify_impact(
         &self,
         next: &mut Graph,
@@ -527,8 +699,8 @@ impl EditingSequence {
         if matches!(operation, EditingOperation::Do) {
             next.mark_controller_sheet_modified();
         }
-        // Dot InterTasks and retained augmentation RelationTasks first affect
-        // RHYTHMS. Other relation classes need their original impact boundary.
+        // Compared dot tasks and ordinary HeadStem LinkTasks first affect RHYTHMS.
+        // Other relation classes need their original impact boundary.
         let first =
             (!self.tasks.is_empty()).then(|| STEPS.iter().position(|s| *s == "RHYTHMS").unwrap());
         let planned = first

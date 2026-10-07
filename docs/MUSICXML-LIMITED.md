@@ -2473,3 +2473,9 @@ rather than assembling individual phase calls. It matches original7/64 timing,
 short Voice termination and8note export in test-only observed-owned scope:
 `evidence/musicxml-rational-selected-reprocess/TRY.md`. Public CLI examples and
 admission remain unchanged pending actual RelationTask/controller integration.
+
+The retained manual HeadStem control now runs actual LinkTask do/undo/redo with
+original-matching callbacks/publications/dirty state before exact selected
+reprocessing. Undo keeps7/64 and the new ChordStem; no old-Stem restoration or
+underflow padding is synthesized. `evidence/musicxml-headstem-tasks/TRY.md`
+reproduces it. Public CLI examples and fine/complete-Voice guards remain unchanged.

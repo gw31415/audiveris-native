@@ -1279,6 +1279,11 @@ impl Graph {
         &self.dot_callback_trace
     }
     #[cfg(test)]
+    pub(crate) fn observe_chord_callbacks(&mut self, chord: Key) {
+        self.enable_dot_callback_trace();
+        self.observed_chord = Some(chord);
+    }
+    #[cfg(test)]
     fn dot_callback_event(&mut self, event: &str, id: usize, stage: &str) {
         if !self.trace_dot_callbacks {
             return;
@@ -1302,6 +1307,10 @@ impl Graph {
                 .collect::<Vec<_>>()
         );
         self.dot_callback_trace.push(json!({"event":event,"id":id,"stage":stage,"depth":self.dot_callback_depth,"state":state}));
+        if event != "publish" {
+            self.dot_callback_trace.last_mut().unwrap()["kind"] =
+                json!(self.edges[id - 1].key.kind);
+        }
         if let Some(chord) = self.observed_chord {
             // The oracle listener calls real getters after taking its raw
             // cache snapshot; these reads also warm the next callback's cache.
