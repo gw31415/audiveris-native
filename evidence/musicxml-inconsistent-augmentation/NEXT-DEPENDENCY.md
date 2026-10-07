@@ -13,3 +13,11 @@ Shared/mirrored heads, competing first/second same-glyph hypotheses,
 repeat/staccato dots, positive accidentals/pauses and special heads need their
 original branches. Shared stacks, tuplets, lyrics/slur/tie and complete
 cleaner/epilog remain required by the nonUI parity goal. Global flags stay false.
+
+The single follow-up `rest-augmentation-unconfirmed.png` is not that successful
+input: original exports no dots and a7/8 pickup measure0; native refuses earlier
+at `unsupported_foundation_vertex_removal`. See
+`evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json`. Stop that
+comparison rather than tuning coordinates or admitting its wrong result.
+Original barline/foundation lifecycle callbacks must also be observed and
+connected before this earlier refusal can be extended.

@@ -563,6 +563,14 @@
       "evidence": "evidence/musicxml-all-measure-rest/ORIGINAL-LIMIT.json",
       "retries": "one original run; no coordinate search",
       "next": "evidence/musicxml-all-measure-rest/NEXT-DEPENDENCY.md"
+    },
+    {
+      "case": "one follow-up rest augmentation image",
+      "original": "no augmentation exported; first measure0 has7/8 intrinsic time despite XSD validity",
+      "native": "earlier unsupported_foundation_vertex_removal; admission unchanged",
+      "evidence": "evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json",
+      "retries": "one completed same-image comparison; no coordinate search",
+      "next": "positive original rest recognition and observed foundation/barline lifecycle callbacks required"
     }
   ]
 }

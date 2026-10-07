@@ -917,3 +917,9 @@ undotted chords; declared-grade original automatic/manual controls are
 separate. Manual dots stay, frozen loss refuses atomically, and unknown missing
 dots still refuse. Full nonUI parity/cleaner flags remain false. Next:
 `evidence/musicxml-inconsistent-augmentation/NEXT-DEPENDENCY.md`.
+
+The follow-up dotted-rest image is a negative/unconfirmed boundary: original
+exports no dot and a7/8 pickup, while native refuses at an earlier foundation
+removal callback. It is not a positive feature or native-only rest bug. One
+comparison was stopped; no coordinate search or admission expansion. Evidence:
+`evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json`.

@@ -2083,3 +2083,10 @@ General rest/shared/mirrored/competing dot interpretations, positive
 accidentals/pauses, special heads, shared stacks, tuplets, lyrics/slur/tie and
 complete cleaner/epilog remain partial; none are removed from the final nonUI
 parity scope. Global completion flags remain false.
+
+The follow-up `rest-augmentation-unconfirmed.png` is a negative comparison,
+not an enabled dotted-rest example. Original emits no dots and numbers its
+7/8 first measure0; native refuses earlier at an unconnected foundation
+removal. Its XSD validity is not recognition success. See
+`evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json`; the positive
+rest augmentation path remains pending without changing image admission.
