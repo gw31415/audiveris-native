@@ -1768,6 +1768,189 @@ mod tests {
         }
     }
     #[test]
+    fn original_null_chord_voice_stays_null_during_refinement_and_id_collision() {
+        use crate::shared_sig::{Key, Phase};
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stack-reprocess/voice-null-reference.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png"
+        ))
+        .unwrap();
+        let mut export = recognize(&image).unwrap();
+        let m = &mut export.owner;
+        let chord = |m: &OwnedMusic, field: &str| {
+            let c = m
+                .chords
+                .iter()
+                .find(|c| json!(c.bounds) == original[field])
+                .unwrap();
+            (c.id, c.key)
+        };
+        let (source, source_key) = chord(m, "source_bounds");
+        let (target, target_key) = chord(m, "target_bounds");
+        let (fallback, _) = chord(m, "fallback_bounds");
+        let (swap_null, swap_null_key) = chord(m, "swap_null_bounds");
+        let add_tie = |m: &mut OwnedMusic, from| {
+            let snapshot = m.owner.graph.snapshot();
+            let key = Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter(|n| n["origin"]["phase"] == "SYMBOL")
+                    .filter_map(|n| n["origin"]["local"].as_u64())
+                    .max()
+                    .unwrap_or(0) as usize
+                    + 1,
+            };
+            let note = |id| {
+                serde_json::from_value(
+                    m.chords.iter().find(|c| c.id == id).unwrap().members[0]["origin"].clone(),
+                )
+                .unwrap()
+            };
+            let left = note(from);
+            let right = note(target);
+            m.owner
+                .graph
+                .vertex(
+                    key,
+                    json!({"kind":"SlurInter","is_tie":true,"grade":0.8}),
+                    false,
+                )
+                .unwrap();
+            m.owner
+                .graph
+                .relations(
+                    1,
+                    Phase::Symbol,
+                    vec![
+                        (key, left, json!({"kind":"SlurHeadRelation","side":"LEFT"})),
+                        (
+                            key,
+                            right,
+                            json!({"kind":"SlurHeadRelation","side":"RIGHT"}),
+                        ),
+                    ],
+                )
+                .unwrap();
+        };
+        let edit = |m: &mut OwnedMusic, key: Key, field: &str, value: Value| {
+            let snapshot = m.owner.graph.snapshot();
+            let mut node = snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["origin"] == json!(key))
+                .unwrap()
+                .clone();
+            node[field] = value;
+            m.owner.graph.vertex(key, node, false).unwrap();
+        };
+        let projection = |m: &OwnedMusic| {
+            json!(m.voices.iter().filter(|v|v.measure==1).map(|v|json!({"id":v.id,"first_chord_bounds":m.chords.iter().find(|c|c.id==v.chord_ids[0]).unwrap().bounds})).collect::<Vec<_>>())
+        };
+        let refine = |m: &mut OwnedMusic| {
+            crate::music_voices::refine_ordinary_system(
+                &mut m.owner.graph,
+                &mut m.voices,
+                &m.measures,
+                1,
+            )
+            .unwrap()
+        };
+        let tied = |m: &OwnedMusic| {
+            let snapshot = m.owner.graph.snapshot();
+            m.owner
+                .graph
+                .incoming_tied_voice_id(target, |id| {
+                    Ok(snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == id)
+                        .unwrap()["voice"]
+                        .as_u64()
+                        .map(|id| id as usize))
+                })
+                .unwrap()
+        };
+        let before = m.owner.graph.snapshot();
+        let members: Vec<_> = m.voices.iter().map(|v| v.chord_ids.clone()).collect();
+        add_tie(m, source);
+        assert_eq!(json!(tied(m)), original["initial_tied_id"]);
+        refine(m);
+        assert_eq!(projection(m), original["after_tie"]);
+        edit(m, source_key, "voice", Value::Null);
+        assert_eq!(json!(tied(m)), original["null_tied_id"]);
+        refine(m);
+        assert_eq!(projection(m), original["after_null"]);
+        assert_eq!(json!(tied(m)), original["null_tied_id"]);
+        add_tie(m, fallback);
+        assert_eq!(json!(tied(m)), original["fallback_tied_id"]);
+        refine(m);
+        assert_eq!(projection(m), original["after_fallback"]);
+        let source_voice = m
+            .voices
+            .iter()
+            .find(|v| v.chord_ids.contains(&source))
+            .unwrap()
+            .id;
+        edit(m, source_key, "voice", json!(source_voice));
+        assert_eq!(json!(tied(m)), original["restored_tied_id"]);
+        refine(m);
+        assert_eq!(projection(m), original["after_restored"]);
+        edit(m, swap_null_key, "voice", Value::Null);
+        edit(m, target_key, "preferred_voice_id", json!(1));
+        refine(m);
+        assert_eq!(projection(m), original["after_preferred_swap"]);
+        let after = m.owner.graph.snapshot();
+        assert_eq!(
+            after["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == swap_null)
+                .unwrap()["voice"],
+            original["null_reference_after_preferred_swap"]
+        );
+        assert_eq!(
+            m.voices
+                .iter()
+                .map(|v| v.chord_ids.clone())
+                .collect::<Vec<_>>(),
+            members
+        );
+        for node in after["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| n["origin"]["phase"] == "CHORD")
+        {
+            let old = before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == node["id"])
+                .unwrap();
+            for field in [
+                "duration",
+                "time_offset",
+                "slot_id",
+                "bounds",
+                "member_ids",
+                "part_id",
+                "measure_index",
+            ] {
+                assert_eq!(node[field], old[field]);
+            }
+        }
+    }
+    #[test]
     fn original_voice_refinement_purges_actual_empty_owner_and_renames_rhythm_created_high() {
         let original: Value = serde_json::from_str(include_str!(
             "../fixtures/official-stack-reprocess/voice-refine.json"

@@ -2293,3 +2293,8 @@ previous-Measure BeamGroup predecessor references before NextInVoice/preferred I
 Existing `--edit-dot` bounds-only example is unchanged; automatic tie/cross-bar
 beam discovery and support-changing corrections are not newly admitted. See
 [owner ordering comparison](../evidence/musicxml-voice-tie-beam/VALIDATION.json).
+
+Retained Voice ID changes preserve null Chord Voice references left by partial
+rhythm instead of rebuilding ownership. Controlled fallback tie priority matches
+original; this adds no null-reference image acceptance or new correction option.
+The existing automatic examples and bounds-only `--edit-dot` command are retained.

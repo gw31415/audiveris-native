@@ -499,6 +499,12 @@
       "unit": "Voices.refineSystem retained HIGH incoming classified tie -> first BeamGroup actual previous-Measure predecessor -> NextInVoice -> preferred ID",
       "limits": "declared real owners; no automatic CURVES/cross-bar beam admission/tie export; general Voice kinds/shared stacks/multi-staff/PageStep/timed support/full cleaner partial",
       "evidence": "evidence/musicxml-voice-tie-beam/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "original Voice.setId preserves null Chord references; first nonnull incoming tied Voice priority",
+      "limits": "declared partial rhythm control; no null-reference image admission/timed support/full controller",
+      "evidence": "evidence/musicxml-voice-null-reference/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -605,8 +611,8 @@
       "current_and_remaining": "表示と入力UIだけを対象外とする。選択後の変更・validation・再計算は対象内。"
     }
   ],
-  "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "evidence/musicxml-voice-tie-beam/NEXT-DEPENDENCY.md; no nonUI omissions",
+  "correction_CLI_design_status": "partial: raw same-stack ordinary-dot bounds-only --edit-dot and library do/undo/reprocess; support edits, general controller/history/PageStep pending",
+  "next_image_integration": "evidence/musicxml-voice-null-reference/NEXT-DEPENDENCY.md; no nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,
@@ -615,7 +621,7 @@
   "automatic_raster_pipeline_complete": false,
   "historical_ledger_initial_validated_source_commit": "c3451645cdfad9dc3e1dd28d175099f5119ef1b9",
   "historical_ledger_initial_validated_checkpoint": "checkpoints/sol-musicxml-compound-sig-20261005",
-  "latest_targeted_validation": "Retained HIGH tie -> previous-Measure BeamGroup predecessor -> NextInVoice -> preferred ID real-owner control; evidence/musicxml-voice-tie-beam. Existing image/manual-correction scope unchanged; historical595 at95e191b.",
+  "latest_targeted_validation": "Null Chord Voice preserved during retained HIGH rename/collision; original null tie/fallback/restored-first priority; current5 target tests, evidence/musicxml-voice-null-reference. No current full suite; historical595 at95e191b.",
   "updated_timezone": "America/Los_Angeles",
   "reduction_and_cleaner_units": [
     {

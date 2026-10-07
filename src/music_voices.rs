@@ -307,21 +307,7 @@ pub(crate) fn refine_ordinary_system(
         }
         ordered.sort_by_key(|v| keys[&first(v).unwrap()]);
         for (ordinal, voice) in ordered.iter_mut().enumerate() {
-            voice.id = ordinal + 1;
-            let members: Vec<_> = voice
-                .measure_rest_chord
-                .map_or_else(|| voice.chord_ids.clone(), |id| vec![id]);
-            for id in members {
-                let mut node = nodes
-                    .get(&id)
-                    .ok_or("music_refine_owned_chord_required")?
-                    .to_owned()
-                    .clone();
-                let key = serde_json::from_value(node["origin"].clone())
-                    .map_err(|_| "music_refine_chord_origin_required")?;
-                node["voice"] = json!(voice.id);
-                staged.vertex(key, node, false)?;
-            }
+            set_owned_voice_id(&mut staged, voice, ordinal + 1)?;
         }
         for (&i, voice) in positions.iter().zip(ordered) {
             retained[i] = voice;
@@ -442,31 +428,44 @@ fn swap_voice_id(
     let previous = voices
         .iter()
         .position(|v| v.measure == measure && v.id == wanted);
-    let set = |graph: &mut crate::shared_sig::Graph, voice: &mut Voice, id| -> Result<(), String> {
-        let snapshot = graph.snapshot();
-        for chord in voice
-            .measure_rest_chord
-            .map_or_else(|| voice.chord_ids.clone(), |id| vec![id])
-        {
-            let mut node = snapshot["inters"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|n| n["id"] == chord)
-                .ok_or("music_refine_swap_owned_chord_required")?
-                .clone();
-            let key = serde_json::from_value(node["origin"].clone())
-                .map_err(|_| "music_refine_swap_chord_origin_required")?;
-            node["voice"] = json!(id);
-            graph.vertex(key, node, false)?;
-        }
-        voice.id = id;
-        Ok(())
-    };
-    set(graph, &mut voices[index], wanted)?;
+    set_owned_voice_id(graph, &mut voices[index], wanted)?;
     if let Some(previous) = previous {
-        set(graph, &mut voices[previous], old)?;
+        set_owned_voice_id(graph, &mut voices[previous], old)?;
     }
+    Ok(())
+}
+
+fn set_owned_voice_id(
+    graph: &mut crate::shared_sig::Graph,
+    voice: &mut Voice,
+    id: usize,
+) -> Result<(), String> {
+    let snapshot = graph.snapshot();
+    for chord in voice
+        .measure_rest_chord
+        .map_or_else(|| voice.chord_ids.clone(), |id| vec![id])
+    {
+        let mut node = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == chord)
+            .ok_or("music_refine_swap_owned_chord_required")?
+            .clone();
+        // Voice.setId does not assign Chord.voice: membership can outlive
+        // a null reference left by partial original rhythm processing.
+        if node["voice"].is_null() {
+            continue;
+        }
+        if node["voice"] != voice.id {
+            return Err("music_refine_ID_actual_chord_voice_required".into());
+        }
+        let key = serde_json::from_value(node["origin"].clone())
+            .map_err(|_| "music_refine_swap_chord_origin_required")?;
+        node["voice"] = json!(id);
+        graph.vertex(key, node, false)?;
+    }
+    voice.id = id;
     Ok(())
 }
 

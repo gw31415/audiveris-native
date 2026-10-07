@@ -1144,3 +1144,11 @@ This supersedes the earlier tie/beam refinement boundary only for retained-owner
 processing, not automatic link discovery, cross-bar image admission or tie export.
 Evidence: `evidence/musicxml-voice-tie-beam/VALIDATION.json`. Timed support editing,
 general Voice kinds/PageStep/shared stacks/full cleaner remain explicitly partial.
+
+Original partial-rhythm null reference control revealed and fixed a native
+rename mismatch: retained Voice.chords does not grant Chord.voice. Renaming and
+ID collisions preserve null instead of recreating it, so incoming ties skip that
+source and try the next live relation. Actual membership/clocks/slots/cache are
+unchanged; this control does not admit a new null-reference image/export.
+Evidence: `evidence/musicxml-voice-null-reference/VALIDATION.json`. Next BeamGroup/
+NextInVoice nullable predecessor boundaries and general owner/controller remain.
