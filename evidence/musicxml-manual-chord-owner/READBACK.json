@@ -1,0 +1,59 @@
+{
+  "validated_source_commit": "a9108bf49ac8abd444906f7b83b90cf5de950a3e",
+  "trees": {
+    "root": "3e7e61d93d0517f1bf3e01f406455e5d96e28779",
+    "src": "e50f9e8276de33348a849c767bd38d4176d3f03a",
+    "crates": "1450af3daa14592feeccc919ba654fe6193ca71c"
+  },
+  "independent_fetch_build": "passed, same approved HTTPS path and existing clone",
+  "automatic_inputs": [
+    {
+      "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+      "events": 15,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+      "events": 8,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+      "events": 12,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+      "events": 4,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    },
+    {
+      "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+      "events": 16,
+      "XSD": "passed",
+      "prior_XML_bytes": "identical"
+    }
+  ],
+  "automatic_events": 63,
+  "mixed_declared_correction": {
+    "events": 8,
+    "prior_XML_bytes": "identical",
+    "XSD": "passed",
+    "dirty_publication_and_impact": "same as d26ab97",
+    "cache_binding": "actual retained HeadChord caches present, initial geometry/beams warmed by owned getters"
+  },
+  "original_scope": "saved actual HeadChord cold/warm getters and nested identity callbacks; explicit native owned manual callback sequence compared; generic/export manual admission guarded, fine duration7/64 not admitted",
+  "undotted_quarter_rest_boundary": "unchanged refusal, no outputs; original prior undotted failure not rerun",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}
