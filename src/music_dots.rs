@@ -80,7 +80,7 @@ pub(crate) fn first_dot<'a>(snapshot: &'a Value, note: &Value) -> Option<&'a Val
         .iter()
         .find(|n| n["id"] == edge["source"] && n["kind"] == "AugmentationDotInter")
 }
-fn note_count(snapshot: &Value, note: &Value) -> usize {
+pub(crate) fn note_count(snapshot: &Value, note: &Value) -> usize {
     first_dot(snapshot, note).map_or(0, |dot| {
         if snapshot["relations"].as_array().unwrap().iter().any(|e| {
             e["kind"] == "DoubleDotRelation"
@@ -515,6 +515,114 @@ pub(crate) fn check_targets(graph: &mut Graph) -> Result<Value, String> {
     )
 }
 
+pub(crate) fn reduce_supported_competition(graph: &mut Graph) -> Result<Value, String> {
+    let mut staged = graph.clone();
+    let initial = staged.snapshot();
+    let nodes = initial["inters"]
+        .as_array()
+        .ok_or("music_dot_SIG_required")?;
+    // Head selection uses top/bottom dots and every supported note's integer
+    // pitch, not relation grade. Keep that branch pending rather than rank it.
+    for head in nodes.iter().filter(|n| n["kind"] == "HeadInter") {
+        if initial["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "AugmentationRelation" && e["target"] == head["id"])
+            .count()
+            > 1
+        {
+            return Err("music_dot_head_augmentation_competition_pending".into());
+        }
+    }
+    let mut removed = Vec::new();
+    for (class, kind) in [
+        ("RestInter", "AugmentationRelation"),
+        ("AugmentationDotInter", "DoubleDotRelation"),
+    ] {
+        for node in nodes.iter().filter(|n| n["kind"] == class) {
+            let snapshot = staged.snapshot();
+            let edges = snapshot["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|e| {
+                    e["kind"] == kind && (e["source"] == node["id"] || e["target"] == node["id"])
+                })
+                .collect::<Vec<_>>();
+            if edges.len() <= 1 {
+                continue;
+            }
+            let mut best_grade = 0.;
+            let mut best = None;
+            for e in &edges {
+                let grade = e["grade"]
+                    .as_f64()
+                    .filter(|g| g.is_finite() && (0.0..=1.0).contains(g))
+                    .ok_or("music_dot_relation_grade_required")?;
+                if grade > best_grade {
+                    best_grade = grade;
+                    best = Some(e["id"].clone());
+                }
+            }
+            for e in edges {
+                if best.as_ref() != Some(&e["id"]) {
+                    let id = e["id"]
+                        .as_u64()
+                        .ok_or("music_dot_relation_identity_required")?
+                        as usize;
+                    staged.remove_augmentation_edge(id)?;
+                    removed.push(json!(id));
+                }
+            }
+        }
+    }
+    *graph = staged;
+    Ok(
+        json!({"removed_competing_relation_ids":removed,"scope":"original checkAugmentedRests/checkAugmentedDots strict positive grade/first tie order; competing heads and general LINK consistency pending"}),
+    )
+}
+
+pub(crate) fn reduce_consistencies(graph: &mut Graph, chords: &[Chord]) -> Result<Value, String> {
+    let mut staged = graph.clone();
+    let mut targets = Vec::new();
+    let mut relations = Vec::new();
+    let mut purged = Vec::new();
+    let mut discarded = Vec::new();
+    let budget = staged.snapshot()["inters"].as_array().unwrap().len()
+        + staged.snapshot()["relations"].as_array().unwrap().len()
+        + 1;
+    for _ in 0..budget {
+        let target = check_targets(&mut staged)?;
+        let competition = reduce_supported_competition(&mut staged)?;
+        let counted = contextualize_and_count(&mut staged, chords)?;
+        let t = target["removed_orphan_dot_ids"].as_array().unwrap();
+        let r = competition["removed_competing_relation_ids"]
+            .as_array()
+            .unwrap();
+        let p = counted["removed_weak_or_inconsistent_dot_ids"]
+            .as_array()
+            .unwrap();
+        targets.extend(t.iter().cloned());
+        relations.extend(r.iter().cloned());
+        purged.extend(p.iter().cloned());
+        discarded.extend(
+            counted["discarded_inconsistent_dots"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .cloned(),
+        );
+        if t.is_empty() && r.is_empty() && p.is_empty() {
+            *graph = staged;
+            return Ok(
+                json!({"targets":{"removed_orphan_dot_ids":targets},"competition":{"removed_competing_relation_ids":relations},"counting":{"removed_weak_or_inconsistent_dot_ids":purged,"discarded_inconsistent_dots":discarded},"scope":"bounded connected dot checks/context/count repeat; full LINK adapter/order remains partial"}),
+            );
+        }
+    }
+    Err("music_dot_consistency_convergence_required".into())
+}
+
 pub(crate) fn contextualize_and_count(
     graph: &mut Graph,
     chords: &[Chord],
@@ -536,28 +644,31 @@ pub(crate) fn contextualize_and_count(
                 ) && e["source"] == dot["id"]
             })
             .collect::<Vec<_>>();
-        if rels.len() != 1 {
+        if rels.len() > 1 {
             return Err("music_dot_shared_or_competing_support_pending".into());
         }
-        let rel = rels[0];
-        let note = nodes
-            .iter()
-            .find(|n| n["id"] == rel["target"])
-            .ok_or("music_dot_live_note_required")?;
         let grade = dot["grade"].as_f64().ok_or("music_dot_grade_required")?;
-        let coefficient = if rel["kind"] == "DoubleDotRelation" {
-            5.
+        let contextual = if let Some(rel) = rels.first() {
+            let note = nodes
+                .iter()
+                .find(|n| n["id"] == rel["target"])
+                .ok_or("music_dot_live_note_required")?;
+            let coefficient = if rel["kind"] == "DoubleDotRelation" {
+                5.
+            } else {
+                3.
+            };
+            let sum = coefficient
+                * rel["grade"]
+                    .as_f64()
+                    .ok_or("music_dot_relation_grade_required")?
+                * note["grade"]
+                    .as_f64()
+                    .ok_or("music_dot_note_grade_required")?;
+            ((1. + sum) * grade) / (1. + sum * grade)
         } else {
-            3.
+            grade
         };
-        let sum = coefficient
-            * rel["grade"]
-                .as_f64()
-                .ok_or("music_dot_relation_grade_required")?
-            * note["grade"]
-                .as_f64()
-                .ok_or("music_dot_note_grade_required")?;
-        let contextual = ((1. + sum) * grade) / (1. + sum * grade);
         if contextual < 0.5 && dot["frozen"] != true {
             staged.remove_music_inter(key(dot)?)?;
             removed.push(dot["id"].clone());
@@ -632,6 +743,184 @@ pub(crate) fn bounds_with_dots(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_rest_and_double_competition_preserves_edge_order_and_owner_callbacks() {
+        let f: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-competition/observed.json"
+        ))
+        .unwrap();
+        for c in f["cases"].as_array().unwrap() {
+            let mut graph = Graph::default();
+            let rk = Key {
+                system: 1,
+                phase: Phase::Symbol,
+                local: 1,
+            };
+            let ck = Key {
+                phase: Phase::Chord,
+                ..rk
+            };
+            let rid = graph.vertex(rk,json!({"kind":"RestInter","shape":"HALF_REST","bounds":c["rest"]["bounds"],"grade":c["rest"]["grade"],"staff_id":1}),false).unwrap();
+            let cid = graph.vertex(ck,json!({"kind":"RestChordInter","bounds":c["chord"]["bounds"],"part_id":1,"staff_id":1,"measure_index":1,"duration":null,"voice":null,"dots_number":c["before"]["chord_dots"]}),false).unwrap();
+            graph
+                .relations(
+                    1,
+                    Phase::Chord,
+                    vec![(ck, rk, json!({"kind":"Containment"}))],
+                )
+                .unwrap();
+            let mut dots = Vec::new();
+            for (i, bounds) in c["dot_bounds"].as_array().unwrap().iter().enumerate() {
+                let dk = Key { local: i + 2, ..rk };
+                graph.vertex(dk,json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":bounds,"grade":0.8,"staff_id":1,"abnormal":true}),false).unwrap();
+                dots.push(dk);
+            }
+            let doubled = c["kind"] == "double";
+            let mut added = Vec::new();
+            if doubled {
+                added.push((dots[0],rk,json!({"kind":"AugmentationRelation","grade":0.7,"source_ratio":3.1,"target_ratio":1.})));
+            }
+            for (i, grade) in c["grades"].as_array().unwrap().iter().enumerate() {
+                added.push((dots[i + usize::from(doubled)],if doubled {dots[0]} else {rk},json!({"kind":if doubled {"DoubleDotRelation"} else {"AugmentationRelation"},"grade":grade,"source_ratio":1.+ if doubled {5.} else {3.}*grade.as_f64().unwrap(),"target_ratio":1.})));
+            }
+            graph.relations(1, Phase::Symbol, added).unwrap();
+            let before = graph.snapshot();
+            let edge_ids = before["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|e| e["kind"] != "Containment")
+                .map(|e| e["id"].clone())
+                .collect::<Vec<_>>();
+            let observe = |g: &Graph, expected: &Value| {
+                let snapshot = g.snapshot();
+                for (k, e) in dots.iter().zip(expected["dots"].as_array().unwrap()) {
+                    let id = g.id(*k).unwrap();
+                    let node = snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .chain(snapshot["tombstones"].as_array().unwrap())
+                        .find(|n| n["id"] == id)
+                        .unwrap();
+                    assert_eq!(
+                        snapshot["tombstones"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .any(|n| n["id"] == id),
+                        e["removed"]
+                    );
+                    if e["removed"] != true {
+                        assert_eq!(node["abnormal"], e["abnormal"]);
+                    }
+                }
+                for (id, live) in edge_ids
+                    .iter()
+                    .zip(expected["edges_live"].as_array().unwrap())
+                {
+                    assert_eq!(
+                        snapshot["relations"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .any(|e| &e["id"] == id),
+                        *live
+                    );
+                }
+                let chord = snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == cid)
+                    .unwrap();
+                assert_eq!(chord["dots_number"], expected["chord_dots"]);
+                assert!(
+                    snapshot["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|n| n["id"] == rid)
+                );
+            };
+            let mut repeated = graph.clone();
+            let chord = Chord {
+                kind: ChordKind::Rest,
+                key: ck,
+                id: cid,
+                stem: None,
+                members: vec![
+                    before["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == rid)
+                        .unwrap()
+                        .clone(),
+                ],
+                measure: 0,
+                bounds: serde_json::from_value(c["chord"]["bounds"].clone()).unwrap(),
+            };
+            let report = reduce_consistencies(&mut repeated, &[chord]).unwrap();
+            assert_eq!(
+                report["competition"]["removed_competing_relation_ids"]
+                    .as_array()
+                    .unwrap()
+                    .len() as u64,
+                c["competition_modifications"].as_u64().unwrap()
+            );
+            observe(&repeated, &c["after_next_target_check_and_count"]);
+            if c["grades"] == json!([0.3, 0.8]) && !doubled {
+                let mut frozen = graph.clone();
+                let mut dot = before["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == graph.id(dots[0]).unwrap())
+                    .unwrap()
+                    .clone();
+                dot["frozen"] = json!(true);
+                frozen.vertex(dots[0], dot, false).unwrap();
+                let before = frozen.snapshot();
+                assert_eq!(
+                    reduce_supported_competition(&mut frozen).unwrap_err(),
+                    "music_dot_frozen_competition_pending"
+                );
+                assert_eq!(frozen.snapshot(), before);
+            }
+            observe(&graph, &c["before"]);
+            assert!(
+                check_targets(&mut graph).unwrap()["removed_orphan_dot_ids"]
+                    .as_array()
+                    .unwrap()
+                    .is_empty()
+            );
+            let result = reduce_supported_competition(&mut graph).unwrap();
+            assert_eq!(
+                result["removed_competing_relation_ids"]
+                    .as_array()
+                    .unwrap()
+                    .len() as u64,
+                c["competition_modifications"].as_u64().unwrap()
+            );
+            observe(&graph, &c["after_competition_callback"]);
+            for id in result["removed_competing_relation_ids"].as_array().unwrap() {
+                let before = graph.snapshot();
+                graph
+                    .remove_augmentation_edge(id.as_u64().unwrap() as usize)
+                    .unwrap();
+                assert_eq!(graph.snapshot(), before);
+            }
+            assert_eq!(
+                check_targets(&mut graph).unwrap()["removed_orphan_dot_ids"]
+                    .as_array()
+                    .unwrap()
+                    .len() as u64,
+                c["later_target_check_modifications"].as_u64().unwrap()
+            );
+            observe(&graph, &c["after_next_target_check_and_count"]);
+        }
+    }
     #[test]
     fn weak_rest_removal_marks_and_cleans_its_actual_orphan_dot() {
         let original: Value = serde_json::from_str(include_str!(

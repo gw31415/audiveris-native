@@ -1,0 +1,312 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "declared temporary dots/grades on saved actual original RestChord; direct original rest/double competition, edge callbacks and later target check; not automatic image success",
+  "cases" : [ {
+    "kind" : "rest",
+    "grades" : [ 0.3, 0.8 ],
+    "rest" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "grade" : 0.72
+    },
+    "chord" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "dot_bounds" : [ [ 528, 245, 5, 4 ], [ 531, 246, 5, 4 ] ],
+    "before" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "first_target_check_modifications" : 0,
+    "competition_modifications" : 1,
+    "after_competition_callback" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : true,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ false, true ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "later_target_check_modifications" : 1,
+    "after_next_target_check_and_count" : {
+      "dots" : [ {
+        "removed" : true,
+        "abnormal" : true,
+        "measure_member" : false
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ false, true ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "physical_glyphs_retained" : true
+  }, {
+    "kind" : "rest",
+    "grades" : [ 0.8, 0.8 ],
+    "rest" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "grade" : 0.72
+    },
+    "chord" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "dot_bounds" : [ [ 528, 245, 5, 4 ], [ 531, 246, 5, 4 ] ],
+    "before" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "first_target_check_modifications" : 0,
+    "competition_modifications" : 1,
+    "after_competition_callback" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : true,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, false ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "later_target_check_modifications" : 1,
+    "after_next_target_check_and_count" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : true,
+        "abnormal" : true,
+        "measure_member" : false
+      } ],
+      "edges_live" : [ true, false ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "physical_glyphs_retained" : true
+  }, {
+    "kind" : "rest",
+    "grades" : [ 0.0, 0.0 ],
+    "rest" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "grade" : 0.72
+    },
+    "chord" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "dot_bounds" : [ [ 528, 245, 5, 4 ], [ 531, 246, 5, 4 ] ],
+    "before" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "first_target_check_modifications" : 0,
+    "competition_modifications" : 2,
+    "after_competition_callback" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : true,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : true,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ false, false ],
+      "chord_dots" : 0,
+      "chord_intrinsic_duration" : "1/2"
+    },
+    "later_target_check_modifications" : 2,
+    "after_next_target_check_and_count" : {
+      "dots" : [ {
+        "removed" : true,
+        "abnormal" : true,
+        "measure_member" : false
+      }, {
+        "removed" : true,
+        "abnormal" : true,
+        "measure_member" : false
+      } ],
+      "edges_live" : [ false, false ],
+      "chord_dots" : 0,
+      "chord_intrinsic_duration" : "1/2"
+    },
+    "physical_glyphs_retained" : true
+  }, {
+    "kind" : "rest",
+    "grades" : [ 0.8, 0.3 ],
+    "rest" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "grade" : 0.72
+    },
+    "chord" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "dot_bounds" : [ [ 528, 245, 5, 4 ], [ 531, 246, 5, 4 ] ],
+    "before" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, true ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "first_target_check_modifications" : 0,
+    "competition_modifications" : 1,
+    "after_competition_callback" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : true,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, false ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "later_target_check_modifications" : 1,
+    "after_next_target_check_and_count" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : true,
+        "abnormal" : true,
+        "measure_member" : false
+      } ],
+      "edges_live" : [ true, false ],
+      "chord_dots" : 1,
+      "chord_intrinsic_duration" : "3/4"
+    },
+    "physical_glyphs_retained" : true
+  }, {
+    "kind" : "double",
+    "grades" : [ 0.3, 0.8 ],
+    "rest" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "grade" : 0.72
+    },
+    "chord" : {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "part_id" : 1,
+      "staff_id" : 1
+    },
+    "dot_bounds" : [ [ 528, 245, 5, 4 ], [ 538, 245, 5, 4 ], [ 541, 246, 5, 4 ] ],
+    "before" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, true, true ],
+      "chord_dots" : 2,
+      "chord_intrinsic_duration" : "7/8"
+    },
+    "first_target_check_modifications" : 0,
+    "competition_modifications" : 1,
+    "after_competition_callback" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : true,
+        "measure_member" : true
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, false, true ],
+      "chord_dots" : 2,
+      "chord_intrinsic_duration" : "7/8"
+    },
+    "later_target_check_modifications" : 1,
+    "after_next_target_check_and_count" : {
+      "dots" : [ {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      }, {
+        "removed" : true,
+        "abnormal" : true,
+        "measure_member" : false
+      }, {
+        "removed" : false,
+        "abnormal" : false,
+        "measure_member" : true
+      } ],
+      "edges_live" : [ true, false, true ],
+      "chord_dots" : 2,
+      "chord_intrinsic_duration" : "7/8"
+    },
+    "physical_glyphs_retained" : true
+  } ]
+}

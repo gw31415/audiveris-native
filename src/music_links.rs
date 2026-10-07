@@ -67,8 +67,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let containers =
         crate::music_containers::refresh(&graph, &m.measures, &mut m.chords, &mut m.voices)?;
     let empty_chords = containers.removed_chords;
-    let dot_targets = crate::music_dots::check_targets(&mut graph)?;
-    let dot_counting = crate::music_dots::contextualize_and_count(&mut graph, &m.chords)?;
+    let dot_consistency = crate::music_dots::reduce_consistencies(&mut graph, &m.chords)?;
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
     m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"Rest/TimeWhole physical overlaps with incoming zero-target augmentation support, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
@@ -77,8 +76,11 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             json!(removed_beam_head_supports);
     }
     m.owner.prepared.report["limited_links"]["containers"] = containers.projection;
-    m.owner.prepared.report["limited_links"]["dot_counting"] = dot_counting;
-    m.owner.prepared.report["limited_links"]["dot_target_consistency"] = dot_targets;
+    m.owner.prepared.report["limited_links"]["dot_counting"] = dot_consistency["counting"].clone();
+    m.owner.prepared.report["limited_links"]["dot_target_consistency"] =
+        dot_consistency["targets"].clone();
+    m.owner.prepared.report["limited_links"]["dot_competition"] =
+        dot_consistency["competition"].clone();
     m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
     m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
     Ok(m)

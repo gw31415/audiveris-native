@@ -2119,3 +2119,11 @@ physical glyph retention. Native connects these owners before dot counting.
 No weak-rest image success is claimed from that control, and missing beats or
 unknown removed classifier candidates remain refused. Competing/shared supports
 and the complete LINK/cleaner/epilog sequence are still partial.
+
+Rest/second-dot supported competition: original rest and DoubleDot relation
+selection is connected to source callbacks and the following target checks.
+Five declared original controls verify larger-grade/first-tie/all-zero choices
+and synchronous single-RestChord dot counts. This is not a new successful
+image set; the existing half-rest and note/double-dot examples are retained.
+Creation/admission guards for shared support, competing heads/seconds and unknown
+removed glyphs remain. Full LINK/cleaner/epilog and post-rhythm editing staypartial.

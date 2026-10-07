@@ -954,3 +954,14 @@ rest-grade control on saved recognized Inter, not a new weak-rest full-image
 success. Physical registry persists; frozen ownership loss and missing rhythm
 still refuse. Multiple support selection and complete cleaner/epilog remain
 partial; all nonUI functions stay in the final scope.
+
+Rest/DoubleDot competition now uses original strictly greatest positive grade
+and relation iteration order (ties preserve first; all-zero removes all).
+Actual edge removal refreshes the source dot; incoming rest augmentation also
+recounts the actual single RestChord immediately, while DoubleDot removal does
+not recount the note chord. The connected dot checks/context/count repeat keeps
+owned deletion receipts. Five original declared controls are distinct from
+full-image recognition; no new image scope is claimed. Competing-head
+upper/lower/integer-pitch selection, multi-member callbacks, post-rhythm editing
+and the complete LINK adapter/cleaner/epilog remain partial. Creation/admission
+guards and all global completion flags stay in place.

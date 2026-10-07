@@ -932,6 +932,68 @@ impl Graph {
         *self = next;
         Ok(())
     }
+    pub(crate) fn remove_augmentation_edge(&mut self, id: usize) -> Result<(), String> {
+        let edge = self
+            .edges
+            .get(id.checked_sub(1).ok_or("invalid_dot_relation_id")?)
+            .ok_or("missing_dot_relation")?;
+        let source = &self.vertices[edge.key.source - 1];
+        let target = &self.vertices[edge.key.target - 1];
+        if source.data["kind"] != "AugmentationDotInter"
+            || source.key.phase != Phase::Symbol
+            || target.key.system != source.key.system
+            || !matches!(
+                (edge.key.kind.as_str(), target.data["kind"].as_str()),
+                ("AugmentationRelation", Some("RestInter"))
+                    | ("DoubleDotRelation", Some("AugmentationDotInter"))
+            )
+        {
+            return Err("music_dot_typed_rest_or_double_removal_required".into());
+        }
+        if edge.removed {
+            return Ok(());
+        }
+        if source.data["frozen"] == true || target.data["frozen"] == true {
+            return Err("music_dot_frozen_competition_pending".into());
+        }
+        let mut next = self.clone();
+        next.edges[id - 1].removed = true;
+        next.refresh_augmentation_abnormal(&BTreeSet::from([edge.key.source]));
+        if edge.key.kind == "AugmentationRelation" && !target.removed {
+            let owners = next
+                .edges
+                .iter()
+                .filter(|e| {
+                    !e.removed && e.key.kind == "Containment" && e.key.target == edge.key.target
+                })
+                .map(|e| e.key.source)
+                .collect::<Vec<_>>();
+            if owners.len() != 1 {
+                return Err("music_dot_owned_rest_chord_required".into());
+            }
+            let owner = owners[0];
+            let members = next
+                .edges
+                .iter()
+                .filter(|e| !e.removed && e.key.kind == "Containment" && e.key.source == owner)
+                .map(|e| e.key.target)
+                .collect::<Vec<_>>();
+            let chord = &next.vertices[owner - 1];
+            if chord.removed
+                || chord.data["kind"] != "RestChordInter"
+                || members != [edge.key.target]
+            {
+                return Err("music_dot_single_rest_chord_required".into());
+            }
+            if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
+                return Err("music_dot_rhythm_reset_required".into());
+            }
+            let dots = crate::music_dots::note_count(&next.snapshot(), &target.data);
+            next.vertices[owner - 1].data["dots_number"] = json!(dots);
+        }
+        *self = next;
+        Ok(())
+    }
     fn refresh_beam_groups(&mut self, removed: &[u64]) -> Result<(), String> {
         let mut snap = self.snapshot();
         let dying = crate::beam_groups::remove_owned_members(&mut snap, removed)?;
