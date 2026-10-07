@@ -319,6 +319,14 @@ pub struct RelationTask {
     owned_chord: Option<RetainedHeadStem>,
 }
 impl RelationTask {
+    fn added_chord_link(chord: Key, partner: Key, relation: Value) -> Self {
+        Self {
+            source: chord,
+            link: EditingLink::new(partner, true, relation),
+            unlink: false,
+            owned_chord: None,
+        }
+    }
     pub fn chord_link(
         owner: &crate::music_measures::OwnedMusic,
         chord: Key,
@@ -496,7 +504,18 @@ impl RelationTask {
         let Some(binding) = self.owned_chord.as_ref() else {
             return self.perform(&mut owner.owner.graph, operation);
         };
-        let (_, current) = owner.manual_head_stem_owner(self.source, self.link.partner)?;
+        let current =
+            if let Some(chord) = owner.editing_chords.iter().find(|c| c.key == binding.chord) {
+                let head = owner.owner.graph.endpoint(self.source)?;
+                if !chord.in_measure || !chord.members.iter().any(|h| h["id"] == head) {
+                    return Err("manual_head_stem_retained_owner_changed".into());
+                }
+                chord.key
+            } else {
+                owner
+                    .manual_head_stem_owner(self.source, self.link.partner)?
+                    .1
+            };
         let canonical = owner
             .owner
             .caches
@@ -527,11 +546,21 @@ impl RelationTask {
                         .ok_or("shared_sig_relation_order_budget")?;
                     self.link.relation["local_relation_id"] = json!(ordinal);
                 }
-                owner.apply_manual_head_stem_callback(
-                    self.source,
-                    self.link.partner,
-                    self.link.relation.clone(),
-                )?;
+                if owner.editing_chords.iter().any(|c| c.key == current) {
+                    owner.owner.graph.add_owned_manual_head_stem(
+                        current,
+                        self.source,
+                        self.link.partner,
+                        self.link.relation.clone(),
+                    )?;
+                    owner.sync_task_chord(current)?;
+                } else {
+                    owner.apply_manual_head_stem_callback(
+                        self.source,
+                        self.link.partner,
+                        self.link.relation.clone(),
+                    )?;
+                }
                 let graph = &owner.owner.graph;
                 let source = graph.endpoint(self.source)?;
                 let target = graph.endpoint(self.link.partner)?;
@@ -605,6 +634,7 @@ pub enum EditingTask {
     Inter(DefaultEditingTask),
     Relation(RelationTask),
     ChordRemoval(super::ChordRemovalTask),
+    ChordAddition(super::ChordAdditionTask),
 }
 impl EditingTask {
     fn focus(&self) -> Key {
@@ -612,13 +642,14 @@ impl EditingTask {
             Self::Inter(t) => t.inter,
             Self::Relation(t) => t.source,
             Self::ChordRemoval(t) => t.key(),
+            Self::ChordAddition(t) => t.key(),
         }
     }
     fn supports(&self) -> Vec<&EditingLink> {
         match self {
             Self::Inter(t) => t.links.iter().chain(&t.unlinks).collect(),
             Self::Relation(t) => vec![&t.link],
-            Self::ChordRemoval(_) => Vec::new(),
+            Self::ChordRemoval(_) | Self::ChordAddition(_) => Vec::new(),
         }
     }
     fn impact_inters(&self) -> Vec<Key> {
@@ -626,6 +657,7 @@ impl EditingTask {
             Self::Inter(t) => vec![t.inter],
             Self::Relation(t) => vec![t.source, t.link.partner],
             Self::ChordRemoval(t) => vec![t.key()],
+            Self::ChordAddition(t) => vec![t.key()],
         }
     }
     fn perform(&mut self, graph: &mut Graph, operation: EditingOperation) -> Result<(), String> {
@@ -634,7 +666,9 @@ impl EditingTask {
                 t.perform(graph, operation)?;
             }
             Self::Relation(t) => t.perform(graph, operation)?,
-            Self::ChordRemoval(_) => return Err("editing_actual_music_owner_required".into()),
+            Self::ChordRemoval(_) | Self::ChordAddition(_) => {
+                return Err("editing_actual_music_owner_required".into());
+            }
         }
         Ok(())
     }
@@ -647,7 +681,7 @@ pub struct EditingSequence {
     tasks: Vec<EditingTask>,
 }
 impl EditingSequence {
-    /// Original preLink's existing-stem-chord movement followed by a declared
+    /// Original preLink's ordinary Chord move/creation followed by a declared
     /// raw LinkTask. Controller conflict discovery/epilog is separate.
     pub fn head_stem_pre_link(
         owner: &crate::music_measures::OwnedMusic,
@@ -693,15 +727,17 @@ impl EditingSequence {
                 return Err("prelink_canonical_mirror_lifecycle_pending".into());
             }
         }
-        let target = graph
-            .incident_edges(sid)
-            .into_iter()
-            .find_map(|eid| {
-                let edge = &graph.edges[eid - 1];
-                (edge.key.kind == "ChordStemRelation" && edge.key.target == sid)
-                    .then_some(graph.vertices[edge.key.source - 1].key)
-            })
-            .ok_or("prelink_new_target_chord_lifecycle_pending")?;
+        let target = graph.incident_edges(sid).into_iter().find_map(|eid| {
+            let edge = &graph.edges[eid - 1];
+            (edge.key.kind == "ChordStemRelation" && edge.key.target == sid)
+                .then_some(graph.vertices[edge.key.source - 1].key)
+        });
+        let addition = if target.is_none() {
+            Some(super::ChordAdditionTask::new(owner, stem)?)
+        } else {
+            None
+        };
+        let target = target.unwrap_or_else(|| addition.as_ref().unwrap().key());
         let mut task = RelationTask::manual_head_stem(owner, head, stem, relation)?;
         task.owned_chord.as_mut().unwrap().chord = target;
         let mut tasks = Vec::new();
@@ -723,12 +759,26 @@ impl EditingSequence {
                     owner, old,
                 )?));
             }
-            tasks.push(EditingTask::Relation(RelationTask::chord_link(
-                owner,
-                target,
-                head,
-                json!({"kind":"Containment"}),
-            )?));
+            if let Some(addition) = addition {
+                tasks.push(EditingTask::ChordAddition(addition));
+                tasks.push(EditingTask::Relation(RelationTask::added_chord_link(
+                    target,
+                    stem,
+                    json!({"kind":"ChordStemRelation"}),
+                )));
+                tasks.push(EditingTask::Relation(RelationTask::added_chord_link(
+                    target,
+                    head,
+                    json!({"kind":"Containment"}),
+                )));
+            } else {
+                tasks.push(EditingTask::Relation(RelationTask::chord_link(
+                    owner,
+                    target,
+                    head,
+                    json!({"kind":"Containment"}),
+                )?));
+            }
         }
         tasks.push(EditingTask::Relation(task));
         Ok(Self::from_tasks(tasks))
@@ -747,6 +797,7 @@ impl EditingSequence {
         match task {
             EditingTask::Relation(t) => t.perform_owned(owner, operation),
             EditingTask::ChordRemoval(t) => t.perform_owned(owner, operation),
+            EditingTask::ChordAddition(t) => t.perform_owned(owner, operation),
             EditingTask::Inter(t) => t.perform(&mut owner.owner.graph, operation).map(|_| ()),
         }
     }
@@ -758,14 +809,15 @@ impl EditingSequence {
             return Err("music_reprocess_timed_support_edit_pending".into());
         }
         for task in &self.tasks {
-            if matches!(task, EditingTask::ChordRemoval(_))
-                || task.supports().iter().any(|link| {
-                    matches!(
-                        link.relation["kind"].as_str(),
-                        Some("Containment" | "ChordStemRelation")
-                    )
-                })
-            {
+            if matches!(
+                task,
+                EditingTask::ChordRemoval(_) | EditingTask::ChordAddition(_)
+            ) || task.supports().iter().any(|link| {
+                matches!(
+                    link.relation["kind"].as_str(),
+                    Some("Containment" | "ChordStemRelation")
+                )
+            }) {
                 return Err("music_reprocess_chord_lifecycle_pending".into());
             }
             let supports = task.supports();
@@ -895,6 +947,7 @@ impl EditingSequence {
         let chords = owner.chords.clone();
         let measures = owner.measures.clone();
         let voices = owner.voices.clone();
+        let editing_chords = owner.editing_chords.clone();
         let mut sequence = self.clone();
         let result = (|| {
             let tasks: Box<dyn Iterator<Item = &mut EditingTask> + '_> =
@@ -918,6 +971,7 @@ impl EditingSequence {
                 owner.chords.clone_from(&chords);
                 owner.measures.clone_from(&measures);
                 owner.voices.clone_from(&voices);
+                owner.editing_chords.clone_from(&editing_chords);
                 Err(error)
             }
         }

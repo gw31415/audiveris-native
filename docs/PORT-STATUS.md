@@ -1365,8 +1365,9 @@ restoring the Voice list. Rollback now includes typed Chords, Measures and Voice
 The comparison rounds saved grades and declares original Stem bounds on the same
 canonical native Stems. Existing native image Stem extent is five pixels longer
 into the source head; this automatic-image discrepancy remains unresolved.
-New-target AdditionTask/unplaced Part/Measure, canonical mirrors, controller
-conflicting links and legitimate reprocess/export admission are next dependencies.
+New-target AdditionTask/unplaced Part/Measure is now compared at the next
+checkpoint below. Canonical mirrors, controller conflicting links and legitimate
+reprocess/export admission remain dependencies.
 All nonUI functions remain in scope and completion flags remain false.
 See `evidence/musicxml-headstem-prelink-existing/TRY.md` and `NEXT-DEPENDENCY.md`.
 
@@ -1374,3 +1375,24 @@ Cloud handoff evidence is distinct: `189f214` and tree
 `55755c176e8d32617efb1e90590002073a16929b` were independently fetched here.
 The previous task's 649 local tests/fmt/clippy at189f214 and unpushed `ce785c9`
 are handoff reports; this checkout neither obtained nor regenerated `ce785c9`.
+
+
+The next retained raw preLink unit represents newly added HeadChords in an actual
+editing-owner registry with nullable geometry and lazy Measure placement. Eighteen
+Do/Undo/Redo task boundaries and forty-two original listener records match the
+explicit saved-owner control. First AdditionTask has no Part/Measure; first
+Containment supplies the actual Head and placement; undo keeps the lazy reference
+and redo appends to the Measure after vertex listeners. A late failure restores
+Graph, real Chords, editing Chords, Measures, Voices and expectedDuration before
+the same sequence can be retried. This is native atomic failure validation, not
+an assertion that the original Java UI exception handler performs atomic rollback.
+
+Callback Graph/getter state and typed owner state at every task boundary are
+compared separately. Full owner membership inside every callback, integration
+of editing Chords into ordinary Part/Measure/Voice reprocessing, canonical mirrors,
+empty Voice/Part movement variants and controller conflicting-relation tasks
+are pending. Original new-target setup warms actual Part/Staff before removing
+only the target Chord; existing-target observations are unchanged. Public CLI
+admission and global completion flags remain guarded/false. Automatic source
+Stem extent still differs by five pixels; this is not full-image correction parity.
+See `evidence/musicxml-headstem-prelink-new/TRY.md` and `NEXT-DEPENDENCY.md`.

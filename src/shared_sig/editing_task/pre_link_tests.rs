@@ -49,7 +49,12 @@ fn compare_graph(
     };
     for row in expected["chords"].as_array().unwrap() {
         let id = label_id(&row["label"]).unwrap();
-        let node = nodes.iter().find(|n| n["id"] == id).unwrap();
+        let Some(node) = nodes.iter().find(|n| n["id"] == id) else {
+            assert_eq!(row["registered"], false);
+            assert_eq!(row["removed"], false);
+            assert!(row["bounds"].is_null());
+            continue;
+        };
         assert_eq!(
             node["registered"], row["registered"],
             "registered {}",
@@ -160,9 +165,12 @@ fn graph_state(
             })
             .collect::<Vec<_>>()
     );
+    let count = graph.vertices.len();
     let bounds = labels
         .iter()
-        .filter(|(_, name)| name.starts_with("chord"))
+        .filter(|(id, name)| {
+            (name.starts_with("chord") || name.as_str() == "new_chord") && **id <= count
+        })
         .map(|(id, _)| {
             (
                 *id,
@@ -189,6 +197,13 @@ fn compare_owner(
                 .iter()
                 .filter(|c| c.measure == 0)
                 .map(|c| name(&c.id))
+                .chain(
+                    owner
+                        .editing_chords
+                        .iter()
+                        .filter(|c| c.in_measure && c.measure == Some(0))
+                        .map(|c| name(&c.id))
+                )
                 .collect::<Vec<_>>()
         ),
         expected["measure_chords"]
@@ -237,6 +252,37 @@ fn compare_owner(
             row["stem"]
         );
         assert_eq!(json!(chord.bounds), row["bounds"]);
+    }
+    for chord in &owner.editing_chords {
+        let row = expected["chords"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|r| r["label"] == *name(&chord.id))
+            .unwrap();
+        assert_eq!(
+            json!(
+                chord
+                    .members
+                    .iter()
+                    .map(|h| name(&(h["id"].as_u64().unwrap() as usize)))
+                    .collect::<Vec<_>>()
+            ),
+            row["members"]
+        );
+        assert_eq!(
+            json!(chord.stem.map(|k| name(&owner.owner.graph.id(k).unwrap()))),
+            row["stem"]
+        );
+        assert_eq!(json!(chord.bounds), row["bounds"]);
+        assert_eq!(json!(chord.measure == Some(0)), row["same_measure"]);
+        assert_eq!(
+            chord.in_measure,
+            expected["measure_chords"]
+                .as_array()
+                .unwrap()
+                .contains(&json!(name(&chord.id)))
+        );
     }
 }
 fn prepare(
@@ -303,19 +349,44 @@ fn saved_numeric_control(
 }
 #[test]
 fn existing_target_prelink_matches_original_empty_chord_tasks_and_callbacks() {
+    compare_prelink_case(0);
+}
+#[test]
+fn new_target_prelink_matches_original_unplaced_chord_and_retained_redo() {
+    compare_prelink_case(1);
+}
+fn compare_prelink_case(case_index: usize) {
     let original: Value = serde_json::from_str(include_str!(
         "../../../fixtures/official-headstem-prelink/observed.json"
     ))
     .unwrap();
-    let case = &original["cases"][0];
+    let case = &original["cases"][case_index];
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
     ))
     .unwrap();
     let mut export = crate::music_xml::recognize(&image).unwrap();
-    let labels = labels(&export.owner);
+    let mut labels = labels(&export.owner);
     saved_numeric_control(&mut export.owner, &labels, case);
+    if case_index == 1 {
+        let id = *labels
+            .iter()
+            .find(|(_, label)| label.as_str() == "chord1")
+            .unwrap()
+            .0;
+        let key = export.owner.owner.graph.vertices[id - 1].key;
+        let mut removal = super::super::ChordRemovalTask::new(&export.owner, key).unwrap();
+        removal
+            .perform_owned(&mut export.owner, EditingOperation::Do)
+            .unwrap();
+    }
     let mut sequence = prepare(&export.owner, &labels);
+    if case_index == 1 {
+        labels.insert(
+            export.owner.owner.graph.vertices.len() + 1,
+            "new_chord".into(),
+        );
+    }
     let mut identities = BTreeMap::new();
     let graph = &mut export.owner.owner.graph;
     graph.observed_chords = labels
@@ -323,6 +394,13 @@ fn existing_target_prelink_matches_original_empty_chord_tasks_and_callbacks() {
         .filter(|(_, name)| name.starts_with("chord"))
         .map(|(id, _)| graph.vertices[*id - 1].key)
         .collect();
+    if let Some(EditingTask::ChordAddition(addition)) = sequence
+        .tasks
+        .iter()
+        .find(|t| matches!(t, EditingTask::ChordAddition(_)))
+    {
+        graph.observed_chords.push(addition.key());
+    }
     let (state, bounds) = graph_state(graph, &labels);
     compare_graph(
         graph,
@@ -411,12 +489,31 @@ fn existing_target_prelink_matches_original_empty_chord_tasks_and_callbacks() {
 }
 #[test]
 fn failed_prelink_sequence_restores_actual_chords_voice_and_expected_clocks() {
+    compare_failed_prelink(false);
+}
+#[test]
+fn failed_new_target_prelink_restores_actual_owner_and_reuses_same_sequence() {
+    compare_failed_prelink(true);
+}
+fn compare_failed_prelink(new_target: bool) {
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
     ))
     .unwrap();
     let mut export = crate::music_xml::recognize(&image).unwrap();
     let labels = labels(&export.owner);
+    if new_target {
+        let id = *labels
+            .iter()
+            .find(|(_, label)| label.as_str() == "chord1")
+            .unwrap()
+            .0;
+        let key = export.owner.owner.graph.vertices[id - 1].key;
+        let mut removal = super::super::ChordRemovalTask::new(&export.owner, key).unwrap();
+        removal
+            .perform_owned(&mut export.owner, EditingOperation::Do)
+            .unwrap();
+    }
     let mut sequence = prepare(&export.owner, &labels);
     let EditingTask::Relation(last) = sequence.tasks.last_mut().unwrap() else {
         unreachable!()
@@ -435,6 +532,7 @@ fn failed_prelink_sequence_restores_actual_chords_voice_and_expected_clocks() {
     );
     assert_eq!(export.owner.owner.graph.snapshot(), graph);
     assert_eq!(export.owner.layout(), layout);
+    assert!(export.owner.editing_chords.is_empty());
     assert_eq!(export.owner.chords.as_ptr(), chords_address);
     assert_eq!(export.owner.measures[0].timing.expected, expected);
     assert_eq!(export.owner.voices.iter().map(|v|json!({"id":v.id,"members":v.chord_ids,"slots":v.slots.iter().map(|(id,s)|json!([id,s.chord_id,s.continuing])).collect::<Vec<_>>(),"termination":v.termination.map(|d|d.to_string())})).collect::<Vec<_>>(),voices);
@@ -445,4 +543,17 @@ fn failed_prelink_sequence_restores_actual_chords_voice_and_expected_clocks() {
     sequence
         .perform_owned(&mut export.owner, EditingOperation::Do, "RHYTHMS")
         .unwrap();
+    if new_target {
+        assert_eq!(export.owner.editing_chords.len(), 1);
+        let key = export.owner.editing_chords[0].key;
+        sequence
+            .perform_owned(&mut export.owner, EditingOperation::Undo, "RHYTHMS")
+            .unwrap();
+        sequence
+            .perform_owned(&mut export.owner, EditingOperation::Redo, "RHYTHMS")
+            .unwrap();
+        assert_eq!(export.owner.editing_chords.len(), 1);
+        assert_eq!(export.owner.editing_chords[0].key, key);
+        assert_eq!(export.owner.measures[0].timing.expected, expected);
+    }
 }

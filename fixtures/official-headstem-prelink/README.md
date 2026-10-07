@@ -24,10 +24,16 @@ five pixels into the head beyond original saved bounds. Full-image stem extent
 parity is pending; this control does not certify it or enable public CLI input.
 
 The new-target case is original evidence for the next AdditionTask dependency.
-It removes only the target Chord as declared setup, retaining its real stem and
-head. Its initial empty new Chord has no Part or Measure; Containment later
+It warms the retained target Part/Staff getters, then removes only the target
+Chord as declared setup, retaining its real stem and head. Existing-target
+observations are unchanged from the first source checkpoint. Its initial empty new Chord has no Part or Measure; Containment later
 places it. Redo can reuse Part/Measure references cached during its first run.
-Native admission for this branch and canonical mirror sharing remains guarded.
+Native now compares eighteen task executions and forty-two listener records
+for this branch, with real typed editing HeadChord placement at each task
+boundary. General Part/Measure/Voice integration, ordinary reprocessing and
+canonical mirror sharing remain guarded. Callback Graph/getter state and task
+boundary typed ownership are distinct observations; full owner membership
+inside every callback is not certified.
 
 Reproduce with a saved original double-augmentation book:
 

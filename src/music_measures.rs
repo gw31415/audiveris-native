@@ -14,6 +14,7 @@ pub struct OwnedMusic {
     pub(crate) measures: Vec<Measure>,
     pub(crate) chords: Vec<Chord>,
     pub(crate) voices: Vec<crate::music_voices::Voice>,
+    pub(crate) editing_chords: Vec<crate::shared_sig::chord_tasks::EditingHeadChord>,
 }
 impl OwnedMusic {
     /// Apply the compared callback to an existing ordinary retained HeadChord.
@@ -419,5 +420,6 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
         measures,
         chords,
         voices: Vec::new(),
+        editing_chords: Vec::new(),
     })
 }

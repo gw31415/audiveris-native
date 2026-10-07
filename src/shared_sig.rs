@@ -9,11 +9,11 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod book_state;
 mod chord_cache;
-mod chord_tasks;
+pub(crate) mod chord_tasks;
 mod dot_ownership;
 mod editing_task;
 mod manual_chord_stem;
-pub use chord_tasks::ChordRemovalTask;
+pub use chord_tasks::{ChordAdditionTask, ChordRemovalTask};
 pub use dot_ownership::NoteOwnerEdit;
 pub use editing_task::{
     DefaultEditingTask, EditingLink, EditingOperation, EditingSequence, EditingTask, RelationTask,
@@ -1091,6 +1091,7 @@ impl Graph {
             data["leading_note_id"] = json!(geometry.leading_id);
             data["head_location"] = json!(geometry.head_location);
             data["tail_location"] = json!(geometry.tail_location);
+            self.read_chord_placement(self.vertices[id - 1].key)?;
         }
         Ok(())
     }
@@ -1295,6 +1296,11 @@ impl Graph {
         if stage == "leave" {
             self.dot_callback_depth -= 1;
         }
+        // The original listener reads getPart/getStaff before its state row.
+        // Those lazy reads can resolve a newly contained actual head at entry.
+        for chord in self.observed_chords.clone() {
+            self.read_chord_placement(chord).unwrap();
+        }
         let mut state = self.snapshot();
         state["inters"] = json!(
             self.vertices
@@ -1321,8 +1327,9 @@ impl Graph {
             let observation = self.retained_chord_observation(chord).unwrap();
             self.dot_callback_trace.last_mut().unwrap()["chord_observation"] = observation;
         }
-        let observations = self.observed_chords.clone().into_iter().map(|chord| {
-            serde_json::json!({"id":self.id(chord).unwrap(),"bounds":self.lifecycle_chord_bounds(chord).unwrap()})
+        let observations = self.observed_chords.clone().into_iter().filter_map(|chord| {
+            let id = self.id(chord)?;
+            Some(serde_json::json!({"id":id,"bounds":self.lifecycle_chord_bounds(chord).unwrap()}))
         }).collect::<Vec<_>>();
         if !observations.is_empty() {
             self.dot_callback_trace.last_mut().unwrap()["chord_observations"] = json!(observations);

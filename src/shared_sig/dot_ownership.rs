@@ -163,6 +163,14 @@ impl Graph {
     }
     pub(super) fn inter_edit_stack_target(&self, inter: Key) -> Result<Option<Value>, String> {
         let id = self.id(inter).ok_or("editing_inter_identity_required")?;
+        // A retained empty HeadChord can have no center after undo. Original
+        // RhythmsStep skips InterTasks with a null center; partner inters still
+        // select their real stack in the declared relation task closure.
+        if self.vertices[id - 1].data["kind"] == "HeadChordInter"
+            && self.vertices[id - 1].data["bounds"].is_null()
+        {
+            return Ok(None);
+        }
         let owner = self
             .dot_ownership
             .as_ref()
@@ -183,7 +191,7 @@ impl Graph {
         }
         self.part_for_inter(id)
     }
-    fn part_for_inter(&mut self, id: usize) -> Result<Option<u64>, String> {
+    pub(super) fn part_for_inter(&mut self, id: usize) -> Result<Option<u64>, String> {
         let v = &self.vertices[id - 1];
         if v.cached_part.is_some() {
             return Ok(v.cached_part);

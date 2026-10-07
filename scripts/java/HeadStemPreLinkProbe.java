@@ -101,7 +101,12 @@ public class HeadStemPreLinkProbe {
             Object head=((List<?>)call(oldChord,"getMembers")).get(0),stem=call(targetChord,"getStem");
             Object oldHeadStem=null;
             for(Object e:(Collection<?>)call(sig,"edgesOf",head))if(e.getClass().getSimpleName().equals("HeadStemRelation"))oldHeadStem=e;
-            if(mode.equals("new_target"))call(targetChord,"remove",false);
+            if(mode.equals("new_target")) {
+                // Align declared setup with the native retained owner: warm
+                // actual Part/Staff getters before the nonextensive removal.
+                call(targetChord,"getPart");call(targetChord,"getStaff");
+                call(targetChord,"remove",false);
+            }
             for(Object e:(Collection<?>)call(sig,"edgeSet")) {
                 String k=e.getClass().getSimpleName();
                 String sourceLabel=labels.get(call(sig,"getEdgeSource",e));

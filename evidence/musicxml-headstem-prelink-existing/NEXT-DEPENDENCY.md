@@ -8,13 +8,15 @@ RemovalTask undo replays the same surviving relation objects; it does not restor
 old Voice membership. Failure rollback covers real Chords, Measures, Voices,
 expectedDuration, Graph identities and task receipts.
 
-Next is original new-target AdditionTask and ChordStem/Containment lifecycle:
+The next original new-target AdditionTask and ChordStem/Containment unit is
+now compared in `../musicxml-headstem-prelink-new/`. Its scope is:
 new HeadChord has no Part/Measure during initial addition, joins its stack when
 Containment supplies the first real head, retains lazy owner references on undo,
 and can be registered into its Measure earlier on redo. Add canonical head
 sharing/mirror tasks after the unplaced/retained Chord owner is represented.
-Then compare InterController conflicting-relation tasks, genuine reprocessing
-and export before widening CLI admission.
+Full callback owner membership and ordinary Part/Measure/Voice integration
+remain pending before canonical mirror sharing and InterController conflicting
+relations/reprocessing/export. Follow the newer `NEXT-DEPENDENCY.md`.
 
 The saved-owner comparison declares saved Stem bounds and three-decimal grades
 on actual native objects. Native's automatic source Stem extends five pixels

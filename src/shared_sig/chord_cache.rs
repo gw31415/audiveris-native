@@ -25,6 +25,30 @@ pub(crate) struct ChordRead {
     pub tail: Option<[i64; 2]>,
 }
 impl Graph {
+    pub(super) fn read_chord_placement(&mut self, key: Key) -> Result<(), String> {
+        if self.dot_ownership.is_none() {
+            return Ok(());
+        }
+        let Some(id) = self.id(key) else {
+            return Ok(());
+        };
+        if !self.vertices[id - 1].data["part_id"].is_null()
+            && !self.vertices[id - 1].data["staff_id"].is_null()
+        {
+            return Ok(());
+        }
+        let head = self.incident_edges(id).into_iter().find_map(|eid| {
+            let edge = &self.edges[eid - 1];
+            (edge.key.source == id && edge.key.kind == "Containment").then_some(edge.key.target)
+        });
+        if let Some(head) = head {
+            let part = self.part_for_inter(head)?;
+            let staff = self.vertices[head - 1].data["staff_id"].clone();
+            self.vertices[id - 1].data["part_id"] = json!(part);
+            self.vertices[id - 1].data["staff_id"] = staff;
+        }
+        Ok(())
+    }
     pub(crate) fn warm_retained_chord_beams(&mut self, key: Key) -> Result<(), String> {
         let id = self.endpoint(key)?;
         if self.vertices[id - 1].chord_cache.is_some() {
