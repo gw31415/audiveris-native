@@ -922,6 +922,119 @@ mod tests {
         }
     }
     #[test]
+    fn actual_double_dot_chain_detachment_recounts_owner_and_preserves_glyphs() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-dot-chain-detach/observed.json"
+        ))
+        .unwrap();
+        let cold = &original["cases"][0];
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let owner = crate::stem_image_owned::prepare_items(&image).unwrap();
+        let owner = crate::music_links::prepare_beam_linking(owner).unwrap();
+        let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
+        let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
+        let owner = crate::music_links::finalize_stems(owner).unwrap();
+        let m = crate::music_measures::continue_measures(owner).unwrap();
+        let mut m = crate::music_symbols::continue_symbols(m).unwrap();
+        contextualize_and_count(&mut m.owner.graph, &m.chords).unwrap();
+        let snapshot = m.owner.graph.snapshot();
+        let by_bounds = |class, bounds: &Value| {
+            snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["kind"] == class && &n["bounds"] == bounds)
+                .unwrap()
+        };
+        let first = by_bounds("AugmentationDotInter", &cold["first_bounds"]);
+        let second = by_bounds("AugmentationDotInter", &cold["second_bounds"]);
+        let head = by_bounds("HeadInter", &cold["head_bounds"]);
+        let chord = by_bounds("HeadChordInter", &cold["chord_bounds"]);
+        let edge = snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|e| {
+                e["kind"] == "AugmentationRelation"
+                    && e["source"] == first["id"]
+                    && e["target"] == head["id"]
+            })
+            .unwrap();
+        assert_eq!(chord["dots_number"], cold["before"]["chord_dots"]);
+        let physical = [first, second].map(|d| {
+            let id = d["glyph_id"].as_u64().unwrap() as usize;
+            (
+                id,
+                crate::beam_dispatch::glyph_json(&m.owner.prepared.registry.get(id).unwrap().glyph),
+            )
+        });
+        let mut timed = m.owner.graph.clone();
+        let mut data = chord.clone();
+        data["voice"] = json!(1);
+        timed.vertex(key(chord).unwrap(), data, false).unwrap();
+        let before = timed.snapshot();
+        assert_eq!(
+            timed
+                .remove_augmentation_edge(edge["id"].as_u64().unwrap() as usize)
+                .unwrap_err(),
+            "music_dot_rhythm_reset_required"
+        );
+        assert_eq!(timed.snapshot(), before);
+        m.owner
+            .graph
+            .remove_augmentation_edge(edge["id"].as_u64().unwrap() as usize)
+            .unwrap();
+        let detached = m.owner.graph.snapshot();
+        let live = detached["inters"].as_array().unwrap();
+        for (node, flag) in [(first, "first_abnormal"), (second, "second_abnormal")] {
+            assert_eq!(
+                live.iter().find(|n| n["id"] == node["id"]).unwrap()["abnormal"],
+                cold["after_original_augmentation_edge_remove_callback"][flag]
+            );
+        }
+        assert_eq!(
+            live.iter().find(|n| n["id"] == chord["id"]).unwrap()["dots_number"],
+            cold["after_original_augmentation_edge_remove_callback"]["chord_dots"]
+        );
+        assert_eq!(
+            check_targets(&mut m.owner.graph).unwrap()["removed_orphan_dot_ids"]
+                .as_array()
+                .unwrap()
+                .len() as u64,
+            cold["original_target_check_modifications"]
+                .as_u64()
+                .unwrap()
+        );
+        assert!(
+            check_targets(&mut m.owner.graph).unwrap()["removed_orphan_dot_ids"]
+                .as_array()
+                .unwrap()
+                .is_empty()
+        );
+        let after = m.owner.graph.snapshot();
+        let live = after["inters"].as_array().unwrap();
+        assert!(
+            live.iter()
+                .all(|n| n["id"] != first["id"] && n["id"] != second["id"])
+        );
+        assert!(live.iter().any(|n| n["id"] == head["id"]));
+        assert!(live.iter().any(|n| n["id"] == chord["id"]));
+        assert_eq!(
+            live.iter().find(|n| n["id"] == chord["id"]).unwrap()["dots_number"],
+            cold["after_original_target_check"]["chord_dots"]
+        );
+        for (id, glyph) in physical {
+            assert_eq!(
+                crate::beam_dispatch::glyph_json(&m.owner.prepared.registry.get(id).unwrap().glyph),
+                glyph
+            );
+        }
+        assert!(crate::music_xml::continue_export(m).is_err());
+    }
+    #[test]
     fn weak_rest_removal_marks_and_cleans_its_actual_orphan_dot() {
         let original: Value = serde_json::from_str(include_str!(
             "../fixtures/official-rest-dot-orphan/observed.json"

@@ -965,3 +965,12 @@ full-image recognition; no new image scope is claimed. Competing-head
 upper/lower/integer-pitch selection, multi-member callbacks, post-rhythm editing
 and the complete LINK adapter/cleaner/epilog remain partial. Creation/admission
 guards and all global completion flags stay in place.
+
+Actual double-dot chain detachment is verified separately from image export:
+removing its real head support immediately recounts the single ordinary owned
+HeadChord; the next target check removes both dots in order and retains glyphs.
+Post-Voice mutation still requires rhythm reset. Original lazy Part getter
+caches change whether the removed second dot remains in its Measure collection;
+that cached ownership is observed, not yet matched by native. Competing-head
+selection, multi-member callbacks and complete cleaner/epilog remain pending.
+Evidence: `evidence/musicxml-dot-chain-detach/VALIDATION.json`.

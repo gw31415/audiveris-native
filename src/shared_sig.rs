@@ -944,11 +944,11 @@ impl Graph {
             || target.key.system != source.key.system
             || !matches!(
                 (edge.key.kind.as_str(), target.data["kind"].as_str()),
-                ("AugmentationRelation", Some("RestInter"))
+                ("AugmentationRelation", Some("RestInter" | "HeadInter"))
                     | ("DoubleDotRelation", Some("AugmentationDotInter"))
             )
         {
-            return Err("music_dot_typed_rest_or_double_removal_required".into());
+            return Err("music_dot_typed_note_or_double_removal_required".into());
         }
         if edge.removed {
             return Ok(());
@@ -969,7 +969,7 @@ impl Graph {
                 .map(|e| e.key.source)
                 .collect::<Vec<_>>();
             if owners.len() != 1 {
-                return Err("music_dot_owned_rest_chord_required".into());
+                return Err("music_dot_owned_note_chord_required".into());
             }
             let owner = owners[0];
             let members = next
@@ -979,11 +979,24 @@ impl Graph {
                 .map(|e| e.key.target)
                 .collect::<Vec<_>>();
             let chord = &next.vertices[owner - 1];
+            let (phase, class) = if target.data["kind"] == "RestInter" {
+                (Phase::Symbol, "RestChordInter")
+            } else {
+                if !matches!(
+                    target.data["shape"].as_str(),
+                    Some("NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
+                ) {
+                    return Err("music_dot_special_head_callback_pending".into());
+                }
+                (Phase::Head, "HeadChordInter")
+            };
             if chord.removed
-                || chord.data["kind"] != "RestChordInter"
+                || chord.key.phase != Phase::Chord
+                || target.key.phase != phase
+                || chord.data["kind"] != class
                 || members != [edge.key.target]
             {
-                return Err("music_dot_single_rest_chord_required".into());
+                return Err("music_dot_single_note_chord_required".into());
             }
             if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
                 return Err("music_dot_rhythm_reset_required".into());

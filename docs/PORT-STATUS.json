@@ -391,6 +391,18 @@
       "unit": "observed pre-MEASURES bare GRID BarlineInter removal -> live staff collection -> MEASURES; identities, GRID physical glyph and canonical stem caches retained",
       "limits": "manual/frozen, supported/grouped or post-MEASURES closure guarded; negative rest input is not positive augmentation evidence",
       "evidence": "evidence/musicxml-foundation-barline-removal/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "Rest/DoubleDot positive-maximum relation competition, source callbacks and bounded dot target/context/count repeat",
+      "limits": "five declared original controls; head upper/lower/pitch branch and complete LINK adapter remain partial; no new image admission",
+      "evidence": "evidence/musicxml-dot-competition/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "actual single ordinary HeadChord augmentation-edge detachment callback and first/second dot target cleanup with physical glyph retention",
+      "limits": "actual saved double-dot mutation, not new full-image success; original lazy Part cache/Measure collection ownership, multi-member/special heads and post-rhythm reset remain unconnected",
+      "evidence": "evidence/musicxml-dot-chain-detach/VALIDATION.json"
     }
   ],
   "function_groups": [

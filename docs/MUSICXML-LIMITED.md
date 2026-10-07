@@ -2127,3 +2127,12 @@ and synchronous single-RestChord dot counts. This is not a new successful
 image set; the existing half-rest and note/double-dot examples are retained.
 Creation/admission guards for shared support, competing heads/seconds and unknown
 removed glyphs remain. Full LINK/cleaner/epilog and post-rhythm editing staypartial.
+
+Actual double-dot chain detachment is verified separately from image export:
+removing its real head support immediately recounts the single ordinary owned
+HeadChord; the next target check removes both dots in order and retains glyphs.
+Post-Voice mutation still requires rhythm reset. Original lazy Part getter
+caches change whether the removed second dot remains in its Measure collection;
+that cached ownership is observed, not yet matched by native. Competing-head
+selection, multi-member callbacks and complete cleaner/epilog remain pending.
+Evidence: `evidence/musicxml-dot-chain-detach/VALIDATION.json`.
