@@ -1503,3 +1503,19 @@ normal container retirement, cached beam/tie/NextInVoice getters and broader
 Part/controller/PAGE/persistence integration remain pending. Public/global guards
 stay false/guarded; no full SIG or automatic Stem extent parity is claimed. See
 `evidence/musicxml-voice-rhythm-reset/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Normal music_containers/Measure.removeVoiceChord now uses the same common
+actual retained Voice owner as task removal, purge and Measure reset. Two new
+independent original timed Measure callbacks compare12 method boundaries:
+consecutive removals finally drop registration while old four slots, signed
+termination-5/8 or+1/2/excess1/2, cached Chord Voice references and manual seed
+survive. Original SIG removal is separately compared in existing exclusive/
+shared controls; this does not claim full SIG or inside-listener equality.
+Native old-object loss was reproduced before the fix. A later invalid Chord
+fails refresh after deletion detection without changing actual Chords/Graph/
+Voice identities, manual or expected/slot/termination/excess fields; repair/retry
+retains one actual owner. General Part/Measure callbacks/history, retired Voice
+getters through beam/tie/NextInVoice and broader controller/PAGE/persistence stay
+pending. Public/global guards remain false/guarded. See
+`evidence/musicxml-voice-container-retirement/TRY.md` and `NEXT-DEPENDENCY.md`.

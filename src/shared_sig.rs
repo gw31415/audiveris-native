@@ -2985,9 +2985,13 @@ mod rest_chord_identity_tests {
                 .iter()
                 .find(|c| c["name"] == case["name"])
                 .unwrap();
-            let initial_refresh =
-                crate::music_containers::refresh(&graph, &measures, &mut owned, &mut Vec::new())
-                    .unwrap();
+            let initial_refresh = crate::music_containers::refresh(
+                &mut graph,
+                &measures,
+                &mut owned,
+                &mut Vec::new(),
+            )
+            .unwrap();
             assert_eq!(
                 container_labels(&initial_refresh.projection, &labels),
                 expected_containers["initial"]
@@ -3006,7 +3010,7 @@ mod rest_chord_identity_tests {
                 let before_refresh = describe(&owned);
                 assert!(
                     crate::music_containers::refresh(
-                        &graph,
+                        &mut graph,
                         &measures,
                         &mut owned,
                         &mut Vec::new()
@@ -3054,9 +3058,13 @@ mod rest_chord_identity_tests {
                 "{}:after",
                 case["name"]
             );
-            let refresh =
-                crate::music_containers::refresh(&graph, &measures, &mut owned, &mut Vec::new())
-                    .unwrap();
+            let refresh = crate::music_containers::refresh(
+                &mut graph,
+                &measures,
+                &mut owned,
+                &mut Vec::new(),
+            )
+            .unwrap();
             assert_eq!(
                 container_labels(&refresh.projection, &labels),
                 expected_containers["after"]

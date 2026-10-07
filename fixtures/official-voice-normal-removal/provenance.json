@@ -1,0 +1,40 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "6a9ca74991dcf52b552bea4e93259823fa685263d6f0b2045048a877cdb06e7f",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "009b0997d8dc4854c4ab7709614438240f1946bf1ebf32ff176fb3008a0a67e8",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/voice-normal-removal-manual-original/classes",
+    "/workspace/audiveris-native/scripts/java/VoiceRemovalLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/voice-normal-removal-manual-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/voice-normal-removal-manual-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/voice-normal-removal-manual-original/classes",
+    "VoiceRemovalLifecycleProbe",
+    "/tmp/prelink-oracle/book/double-augmentation.omr",
+    "/tmp/voice-normal-removal-manual-original/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "9afab8895fce28760b315a03f56799884acc63c2f9c30cd794a8400d5638e793",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "observed_sha256": "959a787915d5af2e3a1cf6468caee5da99601ad39bd77fbb6c9bcfbfe6a2beb7",
+  "committed_compact_observed_sha256": "daacb8e5de748d85bba7f778ce564a268be9800e8bc38329573daaf3df69f337",
+  "compact_parsed_equal_to_raw": true,
+  "earlier_removal_observations_unchanged_after_manual_observer_added": true
+}

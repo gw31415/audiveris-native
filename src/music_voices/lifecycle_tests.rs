@@ -411,3 +411,151 @@ fn failed_measure_reset_keeps_actual_owners_chords_clocks_and_retry_identity() {
         2
     );
 }
+
+fn removal_state(
+    owner: &OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    reference: &Voice,
+    chords: &[Chord],
+) -> Value {
+    let voice = actual_voice(owner, reference);
+    let timing = &owner.measures[0].timing;
+    json!({"manual_seed":owner.owner.graph.cached_chord_manual_status(chords[0].key),"voices":[{"label":"old_voice","id":voice.id,"same_measure":voice.measure == 0,
+        "measure_registered":owner.voices.iter().any(|v| Arc::ptr_eq(&v.identity, &voice.identity)),
+        "chords":voice.chord_ids.iter().map(|id|labels[id].clone()).collect::<Vec<_>>(),
+        "slots":voice.slots.iter().map(|(id,s)|json!({"id":id,"chord":labels[&s.chord_id],"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>(),
+        "termination":voice.termination.map(crate::music_time::format_delta),"excess":voice.excess.map(crate::music_time::format_fraction)}],
+        "measure_voices":owner.voices.iter().filter(|v|v.measure == 0).map(|_|"old_voice").collect::<Vec<_>>(),
+        "measure_chords":owner.chords.iter().filter(|c|c.measure == 0).map(|c|labels[&c.id].clone()).collect::<Vec<_>>(),
+        "cached_chord_voices":chords.iter().map(|c|if owner.owner.graph.chord_has_voice(c.key, reference) {Some("old_voice")} else {None}).collect::<Vec<_>>(),
+        "measure_abnormal":timing.abnormal,"expected":timing.expected.map(crate::music_time::format_fraction),
+        "actual":timing.actual.map(crate::music_time::format_fraction),"excess":timing.excess.map(crate::music_time::format_fraction),
+        "stack_slot_ids":timing.slots.iter().map(|s|s.id).collect::<Vec<_>>()})
+}
+#[test]
+fn original_normal_chord_removal_retains_short_and_excess_actual_voice_owners() {
+    let oracle: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-voice-normal-removal/observed.json"
+    ))
+    .unwrap();
+    for case in oracle["cases"].as_array().unwrap() {
+        let (mut owner, labels, refs) = prepare(case);
+        let chords = owner
+            .chords
+            .iter()
+            .filter(|c| c.measure == 0)
+            .cloned()
+            .collect::<Vec<_>>();
+        for (index, step) in case["states"].as_array().unwrap().iter().enumerate() {
+            if index > 0 {
+                let chord = &chords[(index - 1).min(3)];
+                owner.owner.graph.remove_music_inter(chord.key).unwrap();
+                crate::music_containers::refresh(
+                    &mut owner.owner.graph,
+                    &owner.measures,
+                    &mut owner.chords,
+                    &mut owner.voices,
+                )
+                .unwrap();
+            }
+            assert_eq!(
+                removal_state(&owner, &labels, &refs[0], &chords),
+                step["state"],
+                "{} {}",
+                case["name"],
+                step["phase"]
+            );
+        }
+    }
+}
+
+#[test]
+fn failed_normal_refresh_keeps_actual_chords_voice_manual_clocks_and_retry_owner() {
+    let oracle: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-voice-normal-removal/observed.json"
+    ))
+    .unwrap();
+    let case = &oracle["cases"][1];
+    let (mut owner, labels, refs) = prepare(case);
+    let chords = owner
+        .chords
+        .iter()
+        .filter(|c| c.measure == 0)
+        .cloned()
+        .collect::<Vec<_>>();
+    for chord in &chords[..3] {
+        owner.owner.graph.remove_music_inter(chord.key).unwrap();
+        crate::music_containers::refresh(
+            &mut owner.owner.graph,
+            &owner.measures,
+            &mut owner.chords,
+            &mut owner.voices,
+        )
+        .unwrap();
+    }
+    owner.owner.graph.remove_music_inter(chords[3].key).unwrap();
+    let graph = owner.owner.graph.snapshot();
+    let layout = owner.layout();
+    let before = removal_state(&owner, &labels, &refs[0], &chords);
+    let chord_address = owner.chords.as_ptr();
+    let slots = owner.measures[0].timing.slots.as_ptr();
+    let identities = owner
+        .voices
+        .iter()
+        .map(|v| v.identity.clone())
+        .collect::<Vec<_>>();
+    let saved = owner.chords.last().unwrap().id;
+    owner.chords.last_mut().unwrap().id += 1000;
+    let invalid_chords = format!("{:?}", owner.chords);
+    assert_eq!(
+        crate::music_containers::refresh(
+            &mut owner.owner.graph,
+            &owner.measures,
+            &mut owner.chords,
+            &mut owner.voices
+        )
+        .err()
+        .unwrap(),
+        "music_container_chord_identity_required"
+    );
+    assert_eq!(format!("{:?}", owner.chords), invalid_chords);
+    owner.chords.last_mut().unwrap().id = saved;
+    assert_eq!(owner.owner.graph.snapshot(), graph);
+    assert_eq!(owner.layout(), layout);
+    assert_eq!(removal_state(&owner, &labels, &refs[0], &chords), before);
+    assert_eq!(owner.chords.as_ptr(), chord_address);
+    assert_eq!(owner.measures[0].timing.slots.as_ptr(), slots);
+    assert!(
+        owner
+            .owner
+            .graph
+            .retained_voice_observations()
+            .as_array()
+            .unwrap()
+            .is_empty()
+    );
+    for (voice, identity) in owner.voices.iter().zip(identities) {
+        assert!(Arc::ptr_eq(&voice.identity, &identity));
+    }
+    crate::music_containers::refresh(
+        &mut owner.owner.graph,
+        &owner.measures,
+        &mut owner.chords,
+        &mut owner.voices,
+    )
+    .unwrap();
+    assert_eq!(
+        removal_state(&owner, &labels, &refs[0], &chords),
+        case["states"][4]["state"]
+    );
+    assert_eq!(
+        owner
+            .owner
+            .graph
+            .retained_voice_observations()
+            .as_array()
+            .unwrap()
+            .len(),
+        1
+    );
+}

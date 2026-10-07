@@ -2205,7 +2205,7 @@ mod tests {
                 .all(|e| e["kind"] != "AugmentationRelation")
         );
         let containers = crate::music_containers::refresh(
-            &m.owner.graph,
+            &mut m.owner.graph,
             &m.measures,
             &mut m.chords,
             &mut m.voices,

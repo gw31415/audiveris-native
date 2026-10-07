@@ -29,6 +29,12 @@ impl Graph {
         key
     }
     #[cfg(test)]
+    pub(crate) fn cached_chord_manual_status(&self, key: super::Key) -> bool {
+        let id = self.id(key).unwrap();
+        assert_eq!(key.phase, super::Phase::Chord);
+        self.vertices[id - 1].data["manual"] == true
+    }
+    #[cfg(test)]
     pub(crate) fn retained_voice_owner(&self, identity: &Arc<()>) -> Option<&Voice> {
         self.retained_voices
             .iter()

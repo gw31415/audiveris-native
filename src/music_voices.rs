@@ -229,14 +229,18 @@ pub(crate) fn process_starting_chords(
 
 /// Measure.removeVoiceChord -> Voice.removeChord. Remove an empty Voice only
 /// when this removal actually removed its chord, matching the original loop.
-pub(crate) fn remove_chords(voices: &mut Vec<Voice>, removed: &[usize]) {
+pub(crate) fn remove_chords(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    removed: &[usize],
+) {
     for id in removed {
         let mut index = 0;
         while index < voices.len() {
             if let Some(member) = voices[index].chord_ids.iter().position(|c| c == id) {
                 voices[index].chord_ids.remove(member);
                 if voices[index].chord_ids.is_empty() {
-                    voices.remove(index);
+                    graph.retain_voice_owner(voices.remove(index));
                     break;
                 }
             }
@@ -2303,7 +2307,7 @@ mod group_tests {
         .unwrap();
         owner.owner.graph.remove_music_inter(last_key).unwrap();
         crate::music_containers::refresh(
-            &owner.owner.graph,
+            &mut owner.owner.graph,
             &owner.measures,
             &mut owner.chords,
             &mut owner.voices,

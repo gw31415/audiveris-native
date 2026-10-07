@@ -15,7 +15,7 @@ pub(crate) struct Refresh {
     pub projection: Value,
 }
 pub(crate) fn refresh(
-    graph: &Graph,
+    graph: &mut Graph,
     measures: &[Measure],
     chords: &mut Vec<Chord>,
     voices: &mut Vec<crate::music_voices::Voice>,
@@ -191,7 +191,7 @@ pub(crate) fn refresh(
         "head_chord_ids":retained.iter().filter(|c|c.measure==i&&c.kind == ChordKind::Head).map(|c|c.id).collect::<Vec<_>>(),
         "rest_chord_ids":retained.iter().filter(|c|c.measure==i&&c.kind == ChordKind::Rest).map(|c|c.id).collect::<Vec<_>>()
     })).collect::<Vec<_>>();
-    crate::music_voices::remove_chords(voices, &removed_chords);
+    crate::music_voices::remove_chords(graph, voices, &removed_chords);
     *chords = retained;
     Ok(Refresh {
         removed_chords,
@@ -344,7 +344,7 @@ mod tests {
             );
         };
         compare(&graph, "before");
-        refresh(&graph, &measures, &mut chords, &mut Vec::new()).unwrap();
+        refresh(&mut graph, &measures, &mut chords, &mut Vec::new()).unwrap();
         let registry_before = registry.clone();
         let cache_before = stem.snapshot().unwrap();
         // A failing callback remains atomic across both Graph and canonical Arc.
@@ -364,7 +364,7 @@ mod tests {
         assert_eq!(stem.snapshot().unwrap(), cache_before);
         cache.remove(&mut graph, &stem).unwrap();
         compare(&graph, "after");
-        let refreshed = refresh(&graph, &measures, &mut chords, &mut Vec::new()).unwrap();
+        let refreshed = refresh(&mut graph, &measures, &mut chords, &mut Vec::new()).unwrap();
         assert!(refreshed.removed_chords.is_empty());
         assert_eq!(chords[0].kind, ChordKind::Head);
         assert_eq!(chords[0].stem, None);
@@ -556,7 +556,7 @@ mod head_chord_removal_tests {
                     }
                     graph.remove_music_inter(chord_key).unwrap();
                 }
-                let containers = refresh(&graph, &measures, &mut chords, &mut voices).unwrap();
+                let containers = refresh(&mut graph, &measures, &mut chords, &mut voices).unwrap();
                 if stage == "after" {
                     assert_eq!(containers.removed_chords, vec![cid]);
                 }
