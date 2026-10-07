@@ -91,7 +91,7 @@ impl OwnedMusic {
             crate::music_voices::closest_slot(&measure.timing.slots, x - measure.left as f64);
         Ok(
             json!({"measure_number":measure_number,"system_id":measure.system,"part_id":measure.part,"staff_id":measure.staff,"x":x,
-            "slot":slot.map(|s|json!({"id":s.id,"x_offset":s.x_offset,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_chord_ids":s.incoming_ids}))}),
+            "slot":slot.map(|s|json!({"id":s.id,"x_offset":s.x_offset,"time_offset":s.time_offset.map(crate::music_time::format_fraction),"incoming_chord_ids":s.incoming_ids}))}),
         )
     }
     /// Layout read from the live continuation, before meter or rhythm is set.

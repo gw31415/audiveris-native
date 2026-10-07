@@ -1299,3 +1299,14 @@ boundaries, retaining owner/expectedDuration/dirty state. Slot/Voice Rational
 clocks, underfilled export and actual task publication remain pending; the
 image mapper/public correction guards stay. See
 `evidence/musicxml-rational-chord-clocks/NEXT-DEPENDENCY.md`.
+
+### Rational stack Slots, Voice termination and owned export
+
+Actual expected/actual/excess, Slots and Voice duration/end/termination now use
+exact fractions. Native owned algorithms with a declared original Voice plan
+match the real original manual7/64 reprocess: expected1, actual9/16, two short
+Voices9/16 and7/64, termination-7/16 and-57/64,8notes/divisions16/backup36.
+Divisions inspect all owned page Chords, not only a selected Measure. No ending
+forward/padding is added. This is controlled scheduling, not automatic mapper
+or public fine correction admission; those guards and13/16 refusal stay. See
+`evidence/musicxml-rational-voice-clocks/TRY.md` and `NEXT-DEPENDENCY.md`.

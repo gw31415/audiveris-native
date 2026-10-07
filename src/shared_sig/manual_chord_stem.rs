@@ -472,7 +472,7 @@ mod tests {
                 export.owner.measures[measure]
                     .timing
                     .expected
-                    .map(crate::music_time::format_ticks),
+                    .map(crate::music_time::format_fraction),
                 row["expected_duration"].as_str().map(str::to_owned)
             );
             assert_eq!(row["same_expected"], true);

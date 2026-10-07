@@ -661,8 +661,8 @@ impl Context<'_> {
                 .last()
                 .ok_or("music_mapping_last_chord_required")?;
             // Current compared image scope explicitly has implicitTuplets=false.
-            if crate::music_voices::last_end_ticks(self.graph, voice)?
-                .is_some_and(|t| t >= self.expected)
+            if crate::music_voices::last_end_time(self.graph, voice)?
+                .is_some_and(|t| t >= crate::music_time::Fraction::from_ticks(self.expected))
             {
                 continue;
             }
@@ -1125,7 +1125,7 @@ mod tests {
             let snapshot = context.graph.snapshot();
             let bounds = |id| node(&snapshot, id).unwrap()["bounds"].clone();
             let slots = &context.measures[mi].timing.slots;
-            let stack = json!({"slots":slots.iter().map(|s| json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_ticks),"incoming_bounds":s.incoming_ids.iter().map(|&id| bounds(id)).collect::<Vec<_>>()})).collect::<Vec<_>>(),"voices":context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"slots":slots.iter().filter_map(|s| v.slots.get(&s.id).map(|info| json!({"slot_id":s.id,"status":if info.continuing {"CONTINUE"} else {"BEGIN"},"chord_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>(),"abnormal":context.measures[mi].timing.abnormal});
+            let stack = json!({"slots":slots.iter().map(|s| json!({"id":s.id,"time_offset":s.time_offset.map(crate::music_time::format_fraction),"incoming_bounds":s.incoming_ids.iter().map(|&id| bounds(id)).collect::<Vec<_>>()})).collect::<Vec<_>>(),"voices":context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"slots":slots.iter().filter_map(|s| v.slots.get(&s.id).map(|info| json!({"slot_id":s.id,"status":if info.continuing {"CONTINUE"} else {"BEGIN"},"chord_bounds":bounds(info.chord_id)}))).collect::<Vec<_>>()})).collect::<Vec<_>>(),"abnormal":context.measures[mi].timing.abnormal});
             assert_eq!(stack, export["stack"], "{}", case["name"]);
             let events = source_events
                 .iter()
@@ -1185,25 +1185,28 @@ mod tests {
                 "musicxml_voice_owned_event_required"
             );
             assert_eq!(invalid_event, before);
-            let sequences = vec![
-                crate::music_voice_export::sequence(
-                    context.graph,
-                    context.voices,
-                    &context.measures[mi],
-                    mi,
-                )
-                .unwrap(),
-            ];
+            let sequences = [crate::music_voice_export::sequence(
+                context.graph,
+                context.voices,
+                &context.measures[mi],
+                mi,
+            )
+            .unwrap()];
             let stream = sequences[0].iter().map(|s| match *s {
                 crate::music_voice_export::Step::Chord { id, voice, duration } => {
                     let e = events.iter().find(|e| e["chord_id"] == id).unwrap();
-                    json!({"kind":"chord","voice":voice,"step":e["step"],"octave":e["octave"],"type":e["type"],"stem":e["stem_direction"],"duration":crate::music_time::format_ticks(duration)})
+                    json!({"kind":"chord","voice":voice,"step":e["step"],"octave":e["octave"],"type":e["type"],"stem":e["stem_direction"],"duration":crate::music_time::format_fraction(duration)})
                 },
-                crate::music_voice_export::Step::Backup(duration) => json!({"kind":"backup","duration":crate::music_time::format_ticks(duration)}),
-                crate::music_voice_export::Step::Forward { voice, duration } => json!({"kind":"forward","voice":voice,"duration":crate::music_time::format_ticks(duration)}),
+                crate::music_voice_export::Step::Backup(duration) => json!({"kind":"backup","duration":crate::music_time::format_fraction(duration)}),
+                crate::music_voice_export::Step::Forward { voice, duration } => json!({"kind":"forward","voice":voice,"duration":crate::music_time::format_fraction(duration)}),
             }).collect::<Vec<_>>();
             assert_eq!(json!(stream), export["export_stream"], "{}", case["name"]);
-            let divisions = crate::music_voice_export::divisions(&sequences);
+            let divisions = crate::music_voice_export::divisions(
+                context.graph,
+                context.measures,
+                &owner.chords,
+            )
+            .unwrap();
             let mut xml = String::new();
             crate::music_voice_export::write_measure(
                 context.graph,
@@ -1256,7 +1259,7 @@ mod tests {
                     if let Some(expected) = mutation.get("expected") {
                         context.measures[mi].timing.expected = expected
                             .as_str()
-                            .map(crate::music_time::parse_ticks)
+                            .map(crate::music_time::Fraction::parse)
                             .transpose()
                             .unwrap();
                     }
@@ -1271,9 +1274,9 @@ mod tests {
                         mi,
                     )
                     .unwrap();
-                    let voices = context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"termination":v.termination.map(crate::music_time::format_delta_ticks),"excess":v.excess.map(crate::music_time::format_ticks)})).collect::<Vec<_>>();
+                    let voices = context.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"termination":v.termination.map(crate::music_time::format_delta),"excess":v.excess.map(crate::music_time::format_fraction)})).collect::<Vec<_>>();
                     let timing = &context.measures[mi].timing;
-                    let actual = json!({"ok":ok,"voices":voices,"expected":timing.expected.map(crate::music_time::format_ticks),"abnormal":timing.abnormal,"stack_excess":timing.excess.map(crate::music_time::format_ticks)});
+                    let actual = json!({"ok":ok,"voices":voices,"expected":timing.expected.map(crate::music_time::format_fraction),"abnormal":timing.abnormal,"stack_excess":timing.excess.map(crate::music_time::format_fraction)});
                     let mut expected = observation.clone();
                     expected.as_object_mut().unwrap().remove("name");
                     expected.as_object_mut().unwrap().remove("mutation");

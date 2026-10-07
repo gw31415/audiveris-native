@@ -1,0 +1,14 @@
+{
+  "baseline_source": "b4fc615",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "original real manual7/64 PageRhythm/Voice/Slot/Partwise compared to native actual owned algorithms with explicitly declared Voice plan; not automatic mapper or public correction admission",
+  "native_result": "expected1,actual9/16; Voice9/16 and7/64; termination-7/16 and-57/64; CONTINUE table and8 original-matching notes, divisions16/backup36; no ending-forward or rounded fractions",
+  "divisions": "all owned page Chords, not selected Measure or backup/forward; legacy native coarse positive division behavior retained, original zero-divisions pages not claimed",
+  "guards": "public provenance/manual guard and sixteenth automatic mapper admission unchanged; actual manual selected refusal/rollback includes Chord/cache/expected and automatic13/16 stays refused",
+  "target_tests": "13 passed: new owned Rational/underfilled export1, manual refusal/rollback/return1, mixed tasks/automatic undo1, nested cache/identity/Rational Chord propagation1, mapper8, original group/slot/Voice/tie boundaries1; subsequent changes only clippy inspect_err form and test Vec->array, same behavior",
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed",
+  "native_XML": "control.musicxml,8notes/divisions16/backup36, MusicXML4 XSD passed; native writer, original XML not reused",
+  "full_suite": "not rerun; historical595@95e191b",
+  "completion_flags": false
+}

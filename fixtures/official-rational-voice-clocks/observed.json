@@ -1,0 +1,150 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "real saved owner manual HeadStem callback followed by actual PageRhythm.reprocessStack, Voice/Slot getters and PartwiseBuilder; native comparison may declare mapped Voice/chord schedules, not claim automatic image/reprocess success",
+  "quarter_divisions" : 16,
+  "same_expected" : true,
+  "timing" : {
+    "expected" : "1",
+    "actual" : "9/16",
+    "stack_excess" : null,
+    "abnormal" : false,
+    "voices" : [ {
+      "id" : 1,
+      "heads" : [ [ 396, 226, 13, 10 ], [ 516, 215, 13, 10 ], [ 636, 226, 13, 10 ] ],
+      "duration" : "9/16",
+      "end_time" : "9/16",
+      "termination" : "-7/16",
+      "excess" : null,
+      "slots" : [ {
+        "slot_id" : 1,
+        "status" : "BEGIN",
+        "head_bounds" : [ 396, 226, 13, 10 ]
+      }, {
+        "slot_id" : 2,
+        "status" : "BEGIN",
+        "head_bounds" : [ 516, 215, 13, 10 ]
+      }, {
+        "slot_id" : 3,
+        "status" : "BEGIN",
+        "head_bounds" : [ 636, 226, 13, 10 ]
+      } ]
+    }, {
+      "id" : 2,
+      "heads" : [ [ 276, 237, 13, 10 ] ],
+      "duration" : "7/64",
+      "end_time" : "7/64",
+      "termination" : "-57/64",
+      "excess" : null,
+      "slots" : [ {
+        "slot_id" : 1,
+        "status" : "BEGIN",
+        "head_bounds" : [ 276, 237, 13, 10 ]
+      }, {
+        "slot_id" : 2,
+        "status" : "CONTINUE",
+        "head_bounds" : [ 276, 237, 13, 10 ]
+      } ]
+    } ],
+    "slots" : [ {
+      "id" : 1,
+      "time_offset" : "0",
+      "x_offset" : 291,
+      "incoming_heads" : [ [ 396, 226, 13, 10 ], [ 276, 237, 13, 10 ] ]
+    }, {
+      "id" : 2,
+      "time_offset" : "1/16",
+      "x_offset" : 441,
+      "incoming_heads" : [ [ 516, 215, 13, 10 ] ]
+    }, {
+      "id" : 3,
+      "time_offset" : "5/16",
+      "x_offset" : 561,
+      "incoming_heads" : [ [ 636, 226, 13, 10 ] ]
+    } ]
+  },
+  "original_export_stream" : [ {
+    "kind" : "note",
+    "measure" : 1,
+    "voice" : "1",
+    "duration" : "1/16",
+    "step" : "D",
+    "octave" : 5,
+    "type" : "16th",
+    "dots" : 0,
+    "chord" : false
+  }, {
+    "kind" : "note",
+    "measure" : 1,
+    "voice" : "1",
+    "duration" : "1/4",
+    "step" : "F",
+    "octave" : 5,
+    "type" : "quarter",
+    "dots" : 0,
+    "chord" : false
+  }, {
+    "kind" : "note",
+    "measure" : 1,
+    "voice" : "1",
+    "duration" : "1/4",
+    "step" : "D",
+    "octave" : 5,
+    "type" : "quarter",
+    "dots" : 0,
+    "chord" : false
+  }, {
+    "kind" : "backup",
+    "measure" : 1,
+    "duration" : "9/16"
+  }, {
+    "kind" : "note",
+    "measure" : 1,
+    "voice" : "2",
+    "duration" : "7/64",
+    "step" : "B",
+    "octave" : 4,
+    "type" : "16th",
+    "dots" : 2,
+    "chord" : false
+  }, {
+    "kind" : "note",
+    "measure" : 2,
+    "voice" : "1",
+    "duration" : "1/4",
+    "step" : "F",
+    "octave" : 5,
+    "type" : "quarter",
+    "dots" : 0,
+    "chord" : false
+  }, {
+    "kind" : "note",
+    "measure" : 2,
+    "voice" : "1",
+    "duration" : "1/4",
+    "step" : "D",
+    "octave" : 5,
+    "type" : "quarter",
+    "dots" : 0,
+    "chord" : false
+  }, {
+    "kind" : "note",
+    "measure" : 2,
+    "voice" : "1",
+    "duration" : "1/4",
+    "step" : "B",
+    "octave" : 4,
+    "type" : "quarter",
+    "dots" : 0,
+    "chord" : false
+  }, {
+    "kind" : "note",
+    "measure" : 2,
+    "voice" : "1",
+    "duration" : "1/4",
+    "step" : "D",
+    "octave" : 5,
+    "type" : "quarter",
+    "dots" : 0,
+    "chord" : false
+  } ]
+}

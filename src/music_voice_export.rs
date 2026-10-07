@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! PartwiseBuilder.processMeasure's Voice/BEGIN traversal on retained owners.
 //! The existing one-staff image admission remains separate from this traversal.
+use crate::music_time::Fraction;
 use crate::{music_measures::Measure, music_voices::Voice, shared_sig::Graph};
 use serde_json::{Value, json};
 use std::{collections::BTreeSet, fmt::Write};
@@ -9,16 +10,16 @@ pub(crate) enum Step {
     Chord {
         id: usize,
         voice: usize,
-        duration: u32,
+        duration: Fraction,
     },
-    Backup(u32),
+    Backup(Fraction),
     Forward {
         voice: usize,
-        duration: u32,
+        duration: Fraction,
     },
 }
 impl Step {
-    fn duration(&self) -> u32 {
+    fn duration(&self) -> Fraction {
         match *self {
             Self::Chord { duration, .. }
             | Self::Backup(duration)
@@ -69,27 +70,34 @@ pub(crate) fn bind_event(
         .iter()
         .position(|n| n["id"] == event["note_id"])
         .ok_or("musicxml_voice_owned_event_required")?;
-    let onset = crate::music_time::parse_ticks(
+    let onset = Fraction::parse(
         chord["time_offset"]
             .as_str()
             .ok_or("musicxml_unknown_voice_clock_pending")?,
     )?;
-    let duration = if measure_rest {
+    let (duration, note_type) = if measure_rest {
         // The current owned writer requires computed stack duration. Original
         // fallback ONE for an unresolved measure-rest stack is not admitted.
-        measure
-            .timing
-            .actual
-            .ok_or("musicxml_measure_rest_actual_duration_required")?
+        (
+            measure
+                .timing
+                .actual
+                .ok_or("musicxml_measure_rest_actual_duration_required")?,
+            None,
+        )
     } else {
-        crate::music_time::parse_ticks(
-            chord["duration"]
-                .as_str()
+        let live = crate::music_duration::live_exact(&snapshot, id)?;
+        (
+            live.intrinsic
                 .ok_or("musicxml_voice_chord_duration_required")?,
-        )?
+            Some(live.note_type),
+        )
     };
-    if duration == 0 {
+    if duration == Fraction::ZERO {
         return Err("musicxml_exact_positive_division_required".into());
+    }
+    if let Some(note_type) = note_type {
+        event["type"] = json!(note_type);
     }
     event["voice"] = json!(voice.id);
     event["chord"] = json!(index != 0);
@@ -98,24 +106,17 @@ pub(crate) fn bind_event(
     } else {
         chord["dots_number"].as_u64().unwrap_or(0)
     });
-    event["time_offset"] = json!(crate::music_time::format_ticks(onset));
-    event["offset_quarters"] = reported_units(onset, 4);
-    event["duration"] = json!(crate::music_time::format_ticks(duration));
-    event["duration_quarters"] = reported_units(duration, 4);
-    event["duration_eighths"] = reported_units(duration, 2);
+    event["time_offset"] = json!(onset.to_string());
+    event["offset_quarters"] = onset.reported_units(4);
+    event["duration"] = json!(duration.to_string());
+    event["duration_quarters"] = duration.reported_units(4);
+    event["duration_eighths"] = duration.reported_units(8);
     event["measure_rest"] = json!(measure_rest);
     event["measure_number"] = json!(measure_index + 1);
     event["measure_index"] = json!(measure.index);
     event["system_id"] = json!(measure.system);
     event["staff_id"] = json!(measure.staff);
     Ok(())
-}
-fn reported_units(ticks: u32, divisor: u32) -> Value {
-    if ticks.is_multiple_of(divisor) {
-        json!(ticks / divisor)
-    } else {
-        json!(f64::from(ticks) / f64::from(divisor))
-    }
 }
 
 fn chord_notes<'a>(nodes: &'a [Value], chord: &Value) -> Result<Vec<&'a Value>, String> {
@@ -171,11 +172,11 @@ pub(crate) fn sequence(
         Ok(n)
     };
     let mut steps = Vec::new();
-    let mut cursor = 0;
+    let mut cursor = Fraction::ZERO;
     for voice in voices.iter().filter(|v| v.measure == measure_index) {
-        if cursor != 0 {
+        if cursor != Fraction::ZERO {
             steps.push(Step::Backup(cursor));
-            cursor = 0;
+            cursor = Fraction::ZERO;
         }
         if let Some(id) = voice.measure_rest_chord {
             chord(id, voice)?;
@@ -200,7 +201,7 @@ pub(crate) fn sequence(
                     return Err("musicxml_voice_owned_BEGIN_required".into());
                 }
                 let n = chord(info.chord_id, voice)?;
-                let onset = crate::music_time::parse_ticks(
+                let onset = Fraction::parse(
                     n["time_offset"]
                         .as_str()
                         .ok_or("musicxml_unknown_voice_clock_pending")?,
@@ -211,49 +212,89 @@ pub(crate) fn sequence(
                 if cursor < onset {
                     steps.push(Step::Forward {
                         voice: voice.id,
-                        duration: onset - cursor,
+                        duration: onset
+                            .difference(cursor)?
+                            .excess()
+                            .ok_or("musicxml_exact_positive_division_required")?,
                     });
                     cursor = onset;
                 }
-                let duration = crate::music_time::parse_ticks(
-                    n["duration"]
-                        .as_str()
-                        .ok_or("musicxml_voice_chord_duration_required")?,
-                )?;
+                let duration = crate::music_duration::live_exact(&snapshot, info.chord_id)?
+                    .intrinsic
+                    .ok_or("musicxml_voice_chord_duration_required")?;
                 steps.push(Step::Chord {
                     id: info.chord_id,
                     voice: voice.id,
                     duration,
                 });
-                cursor = cursor
-                    .checked_add(duration)
-                    .ok_or("music_time_tick_overflow")?;
+                cursor = cursor.plus(duration)?;
             }
         }
     }
+    // Original ending-forward code is disabled: underfilled Voice stays short.
     Ok(steps)
 }
 
-pub(crate) fn divisions(sequences: &[Vec<Step>]) -> u32 {
-    sequences
-        .iter()
-        .flatten()
-        .map(|s| match s.duration() % 4 {
-            0 => 1,
-            2 => 2,
-            _ => 4,
-        })
-        .max()
-        .unwrap_or(1)
+/// Page.computeDurationDivisor uses standard Chord durations, not inserted
+/// backup/forward steps; PartwiseBuilder converts QUARTER by that denominator.
+pub(crate) fn divisions(
+    graph: &Graph,
+    measures: &[Measure],
+    chords: &[crate::music_measures::Chord],
+) -> Result<u32, String> {
+    let snapshot = graph.snapshot();
+    let mut divisor = 1_u32;
+    for chord in chords {
+        let measure = measures
+            .get(chord.measure)
+            .ok_or("musicxml_divisions_owned_measure_required")?;
+        let node = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == chord.id)
+            .ok_or("musicxml_divisions_live_chord_required")?;
+        if graph.id(chord.key) != Some(chord.id)
+            || node["origin"]["system"] != measure.system
+            || node["part_id"] != measure.part
+            || node["measure_index"] != measure.index
+        {
+            return Err("musicxml_divisions_owned_chord_required".into());
+        }
+        let duration = crate::music_duration::live_exact(&snapshot, chord.id)?
+            .intrinsic
+            .or(measure.timing.expected);
+        if let Some(duration) = duration {
+            let denominator = duration.denominator();
+            let (mut a, mut b) = (divisor, denominator);
+            while b != 0 {
+                (a, b) = (b, a % b);
+            }
+            divisor = divisor
+                .checked_mul(denominator / a)
+                .ok_or("music_time_rational_overflow")?;
+        }
+    }
+    // Preserve existing positive divisions for coarser-only native pages.
+    // Original zero-division rest pages remain separately unverified/rejected.
+    if divisor < 4 {
+        return Ok(1);
+    }
+    if !divisor.is_multiple_of(4) {
+        return Err("musicxml_nonintegral_quarter_divisions_pending".into());
+    }
+    Ok(divisor / 4)
 }
-fn units(ticks: u32, divisions: u32) -> Result<u32, String> {
-    let scaled = ticks
-        .checked_mul(divisions)
-        .ok_or("music_time_tick_overflow")?;
-    if divisions == 0 || scaled == 0 || !scaled.is_multiple_of(4) {
+fn units(duration: Fraction, divisions: u32) -> Result<u32, String> {
+    let units = duration.units(
+        divisions
+            .checked_mul(4)
+            .ok_or("music_time_rational_overflow")?,
+    )?;
+    if units == 0 {
         return Err("musicxml_exact_positive_division_required".into());
     }
-    Ok(scaled / 4)
+    Ok(units)
 }
 pub(crate) fn write_measure(
     graph: &Graph,

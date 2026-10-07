@@ -22,7 +22,7 @@ pub(crate) struct ChordDuration {
 }
 pub(crate) struct ExactChordDuration {
     pub(crate) intrinsic: Option<Fraction>,
-    note_type: &'static str,
+    pub(crate) note_type: &'static str,
     beams_or_flags: usize,
     dots: usize,
 }

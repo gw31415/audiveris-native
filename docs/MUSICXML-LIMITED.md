@@ -2453,3 +2453,11 @@ CLI. Its native XML/XSD and test command are saved in
 `evidence/musicxml-manual-return-reprocess/TRY.md`. This is declared owner control,
 not a new automatic image or public HeadStem correction option. First7/64, general
 task undo/publication and complete Rational/underfilled-Voice export stay pending.
+
+Actual stack Slot/Voice clocks and owned note/backup/forward export now preserve
+ordinary finer fractions such as7/64. The declared owner comparison outputs
+8notes with two underfilled Voices, divisions16 and a9/16 backup; source and
+reproduction command are in `evidence/musicxml-rational-voice-clocks/TRY.md`.
+The automatic mapper still has its sixteenth admission boundary and manual
+HeadStem RelationTask/controller integration remains pending. No new public
+image or correction option is enabled, and automatic13/16 is not padded.

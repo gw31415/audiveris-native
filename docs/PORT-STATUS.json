@@ -741,6 +741,7 @@
     "guard": "generic manual and export provenance guard remain; sixteenth-grid adapter still rejects7/64; no new automatic image or CLI admission",
     "remaining": "Rational slot/Voice clocks, underfilled termination/export divisions; actual HeadStem RelationTask/UnlinkTask/preLink/controller do/undo/redo/publication; missing anchors/general ownership and cache/beam callback branches; multiple staff/shared support, complete cleaner/epilog/project/history",
     "evidence": "evidence/musicxml-manual-chord-duration/VALIDATION.json; same original saved-owner control in official-manual-chord-cache",
-    "rational_chord_clock": "partial: actual setAndPushTime/sequence-group-tie reads live exact getEndTime; real saved-owner manual7/64 plus declared NextInVoice0,1/64,null/cross-Measure comparison; Slot/Voice clocks/export and actual task undo/publication pending; not automatic/public CLI admission"
+    "rational_chord_clock": "partial: actual setAndPushTime/sequence-group-tie reads live exact getEndTime; real saved-owner manual7/64 plus declared NextInVoice0,1/64,null/cross-Measure comparison; Slot/Voice clocks/export and actual task undo/publication pending; not automatic/public CLI admission",
+    "rational_slots_and_voice": "partial: actual Measure/stack Slot/Voice clocks/duration/termination and native Partwise export use reduced fractions; original manual7/64 reprocess output compared against declared native Voice plan: expected1/actual9/16,9/16+7/64 Voices,-7/16+-57/64 termination,CONTINUE,8notes/divisions16/backup36. Full-page owned Chord division inference; no ending forward. Automatic mapper/transient clocks/selected fine reprocess and actual RelationTask/controller admission still pending; no public guard update."
   }
 }
