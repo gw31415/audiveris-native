@@ -170,50 +170,7 @@ impl Export {
         }
         let checkpoint = OwnedCheckpoint::capture(&self.owner);
         self.owner.owner.graph = graph;
-        let result = (|| {
-            let mut rhythm = old_rhythm;
-            let mut systems = Vec::new();
-            for &mi in &selected {
-                rhythm =
-                    process_rhythm(&mut self.owner, Some((std::slice::from_ref(&mi), &rhythm)))?;
-                let system = self.owner.measures[mi].system;
-                // Original reprocessStack refines after each processed stack,
-                // even if the same system occurs again in the impact list.
-                crate::music_voices::refine_ordinary_system(
-                    &mut self.owner.owner.graph,
-                    &mut self.owner.voices,
-                    &self.owner.measures,
-                    system,
-                )?;
-                systems.push(system);
-            }
-            for (mi, measure) in self.owner.measures.iter().enumerate() {
-                if !systems.contains(&measure.system) {
-                    continue;
-                }
-                for event in rhythm
-                    .events
-                    .iter_mut()
-                    .filter(|e| e["measure_number"] == mi + 1)
-                {
-                    crate::music_voice_export::bind_event(
-                        &self.owner.owner.graph,
-                        &self.owner.voices,
-                        measure,
-                        mi,
-                        event,
-                    )?;
-                }
-                rhythm.measures[mi]["voice"] = json!(
-                    self.owner
-                        .voices
-                        .iter()
-                        .find(|v| v.measure == mi)
-                        .map(|v| v.id)
-                );
-            }
-            render(&mut self.owner, &part_name, rhythm, false)
-        })();
+        let result = self.reprocess_selected(&selected, old_rhythm, &part_name);
         match result {
             Ok(xml) => {
                 let actual = json!({"planned_impact":planned,"processed_stack_targets":targets,"native_stack_rhythm":"existing admitted owned Measure pass -> finalCheck -> stack slots/actual","system_voice_refinement":"original HIGH purge/sort/rename, classified tie, previous-Measure BeamGroup predecessor, NextInVoice, then preferred-ID swaps; general Voice kinds and automatic link discovery pending","populateFRATs_called":false,"LINKS_called":false,"controller_impact_complete":false,"PageStep_complete":false});
@@ -228,6 +185,54 @@ impl Export {
                 Err(error)
             }
         }
+    }
+    fn reprocess_selected(
+        &mut self,
+        selected: &[usize],
+        old_rhythm: Rhythm,
+        part_name: &str,
+    ) -> Result<String, String> {
+        let mut rhythm = old_rhythm;
+        let mut systems = Vec::new();
+        for &mi in selected {
+            rhythm = process_rhythm(&mut self.owner, Some((std::slice::from_ref(&mi), &rhythm)))?;
+            let system = self.owner.measures[mi].system;
+            // Original reprocessStack refines after each processed stack,
+            // even if the same system occurs again in the impact list.
+            crate::music_voices::refine_ordinary_system(
+                &mut self.owner.owner.graph,
+                &mut self.owner.voices,
+                &self.owner.measures,
+                system,
+            )?;
+            systems.push(system);
+        }
+        for (mi, measure) in self.owner.measures.iter().enumerate() {
+            if !systems.contains(&measure.system) {
+                continue;
+            }
+            for event in rhythm
+                .events
+                .iter_mut()
+                .filter(|e| e["measure_number"] == mi + 1)
+            {
+                crate::music_voice_export::bind_event(
+                    &self.owner.owner.graph,
+                    &self.owner.voices,
+                    measure,
+                    mi,
+                    event,
+                )?;
+            }
+            rhythm.measures[mi]["voice"] = json!(
+                self.owner
+                    .voices
+                    .iter()
+                    .find(|v| v.measure == mi)
+                    .map(|v| v.id)
+            );
+        }
+        render(&mut self.owner, part_name, rhythm, false)
     }
 }
 use crate::music_time::format_ticks as rational;
@@ -327,6 +332,9 @@ fn resolve_durations(
         if live_stem != owned_stem {
             return Err("musicxml_actual_chord_stem_required".into());
         }
+        // Original ordinary getDuration reads the actual chord's getBeams.
+        // A retained cache must be warmed by that read, not by report creation.
+        staged.warm_retained_chord_beams(chord.key)?;
         let result = crate::music_duration::live(&snapshot, chord.id)?;
         let mut node = nodes
             .iter()
@@ -1535,6 +1543,83 @@ mod tests {
         assert_eq!(export.xml, before_xml);
         assert_eq!(provenance(&export.owner), export.provenance);
         assert_eq!(&export.owner.chords[ci] as *const _, chord_address);
+        let returned: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-manual-chord-identity/observed.json"
+        ))
+        .unwrap();
+        let retained = Rhythm::retained(&export.owner).unwrap();
+        let part_name = export.owner.owner.prepared.report["part_name"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let old_stem = export.owner.chords[ci].stem.unwrap();
+        let base = edges
+            .iter()
+            .filter_map(|e| e["local_relation_id"].as_u64())
+            .max()
+            .unwrap();
+        for (i, target) in [sk, old_stem].into_iter().enumerate() {
+            export.owner.apply_manual_head_stem_callback(hk,target,json!({"kind":"HeadStemRelation","manual":true,"grade":0.7,"head_side":old["head_side"],"extension_point":old["extension_point"],"local_relation_id":base+1+i as u64})).unwrap();
+        }
+        assert_eq!(export.owner.chords[ci].stem, Some(old_stem));
+        let xml = export
+            .reprocess_selected(&[mi], retained, &part_name)
+            .unwrap();
+        assert_eq!(xml, before_xml);
+        let actual = rhythm_projection(&export.owner, mi);
+        for field in [
+            "abnormal",
+            "voice_count",
+            "stack_slot_count",
+            "expected",
+            "actual",
+            "chords",
+        ] {
+            assert_eq!(actual[field], returned["rhythm"][field], "{field}");
+        }
+        let events = export.owner.owner.prepared.report["events"]
+            .as_array()
+            .unwrap();
+        let stream = returned["original_export_stream"].as_array().unwrap();
+        assert_eq!(events.len(), stream.len());
+        for (a, b) in events.iter().zip(stream) {
+            assert_eq!(b["kind"], "note");
+            assert_eq!(a["measure_number"], b["measure"]);
+            assert_eq!(
+                a["voice"].as_u64(),
+                b["voice"].as_str().map(|s| s.parse().unwrap())
+            );
+            for field in ["step", "octave", "type", "dots", "chord"] {
+                assert_eq!(a[field], b[field], "{field}");
+            }
+            assert_eq!(
+                rational((a["duration_quarters"].as_f64().unwrap() * 4.) as u32),
+                b["duration"].as_str().unwrap()
+            );
+        }
+        assert_eq!(export.owner.chords[ci].stem, Some(old_stem));
+        assert_eq!(&export.owner.chords[ci] as *const _, chord_address);
+        let current = export.owner.owner.graph.snapshot();
+        let chord = current["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == *cid)
+            .unwrap();
+        assert_eq!(
+            chord["retained_chord_cache"]["beams_null"],
+            original["after_reprocess"]["cache_after_getters"]["beams_null"]
+        );
+        let mut empty = crate::shared_sig::EditingSequence::new(vec![]);
+        assert_eq!(
+            export
+                .apply_editing_sequence(&mut empty, crate::shared_sig::EditingOperation::Do)
+                .unwrap_err(),
+            "music_reprocess_unedited_retained_export_required"
+        );
+        if let Ok(path) = std::env::var("AUDIVERIS_MANUAL_RETURN_XML") {
+            std::fs::write(path, xml).unwrap();
+        }
     }
     fn rhythm_projection(owner: &OwnedMusic, mi: usize) -> Value {
         let snapshot = owner.owner.graph.snapshot();

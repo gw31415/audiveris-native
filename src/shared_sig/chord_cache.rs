@@ -22,6 +22,13 @@ pub(crate) struct ChordRead {
     pub tail: Option<[i64; 2]>,
 }
 impl Graph {
+    pub(crate) fn warm_retained_chord_beams(&mut self, key: Key) -> Result<(), String> {
+        let id = self.endpoint(key)?;
+        if self.vertices[id - 1].chord_cache.is_some() {
+            self.retained_chord_beams(key)?;
+        }
+        Ok(())
+    }
     pub(crate) fn retained_chord_stem(&self, key: Key) -> Result<Option<Key>, String> {
         let id = self.endpoint(key)?;
         if self.vertices[id - 1].chord_cache.is_none() {

@@ -1277,3 +1277,15 @@ Support ratios derive from supplied grade/consistency; new ChordStem is not
 promoted. Part/Measure/member/Voice/slot/time are retained. This is two forward
 additions, not general task undo or new native export/automatic acceptance.
 Evidence: `evidence/musicxml-manual-chord-identity/VALIDATION.json`.
+
+### Returned-owner rhythm and native MusicXML control
+
+Ordinary correction CLI and retained owner controls now share the actual selected
+stack/refine/render helper. Two declared manual additions returning to the original
+Stem produce eight native notes with original expected/actual timing, Voice/slot/
+chord states and musical contents; XML passes XSD and equals prior native bytes.
+Retained getBeams cache is read during live duration resolution. First7/64 remains
+a refused/rolled-back control; generic/manual provenance guards stay. This is not
+new automatic recognition or general task/CLI admission. Evidence and native XML:
+`evidence/musicxml-manual-return-reprocess/VALIDATION.json`, `control.musicxml`,
+`TRY.md`. Full595 remains historical95e191b.

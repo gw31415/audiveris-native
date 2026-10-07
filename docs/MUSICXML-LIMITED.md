@@ -2446,3 +2446,10 @@ The lower-level manual owner stage preserves fresh ChordStem identity on a
 declared return to an old Stem and derives support ratios from current grade.
 Its saved-owner control is separate from task undo and automatic recognition.
 No manual HeadStem CLI switch or fine-duration export admission is enabled.
+
+A native retained-owner return control now produces eight original-matching notes
+through the same selected rhythm/refine/render helper used by existing correction
+CLI. Its native XML/XSD and test command are saved in
+`evidence/musicxml-manual-return-reprocess/TRY.md`. This is declared owner control,
+not a new automatic image or public HeadStem correction option. First7/64, general
+task undo/publication and complete Rational/underfilled-Voice export stay pending.

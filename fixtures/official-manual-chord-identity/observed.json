@@ -1,265 +1,482 @@
 {
-  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
-  "scope" : "actual retained same owner, declared alternate manual HeadStem then separate fresh manual relation back to original Stem; not LinkTask undo/reprocess/export or automatic image success",
-  "head_bounds" : [ 276, 237, 13, 10 ],
-  "target_head_bounds" : [ 396, 226, 13, 10 ],
-  "before" : {
-    "manual_supports" : [ ],
-    "stem" : "old",
-    "initial_registered" : true,
-    "current_is_initial" : true,
-    "current_manual" : false,
-    "duration" : "7/16",
-    "end_time" : "7/16",
-    "same_measure" : true,
-    "same_part" : true,
-    "same_voice" : true,
-    "same_slot" : true,
-    "same_member" : true,
-    "time_offset" : "0",
-    "sheet_modified" : false,
-    "book_dirty" : false
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual retained same owner, declared alternate manual HeadStem then separate fresh manual relation back to original Stem; not LinkTask undo or automatic image success; real PageRhythm/PartwiseBuilder after return observed",
+  "head_bounds": [
+    276,
+    237,
+    13,
+    10
+  ],
+  "target_head_bounds": [
+    396,
+    226,
+    13,
+    10
+  ],
+  "before": {
+    "manual_supports": [],
+    "stem": "old",
+    "initial_registered": true,
+    "current_is_initial": true,
+    "current_manual": false,
+    "duration": "7/16",
+    "end_time": "7/16",
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": true,
+    "same_slot": true,
+    "same_member": true,
+    "time_offset": "0",
+    "sheet_modified": false,
+    "book_dirty": false
   },
-  "after_first" : {
-    "manual_supports" : [ {
-      "grade" : 0.7,
-      "consistency" : 1.0,
-      "source_ratio" : 3.8,
-      "target_ratio" : 8.0
-    } ],
-    "stem" : "new",
-    "initial_registered" : false,
-    "current_is_initial" : false,
-    "current_manual" : false,
-    "duration" : "7/64",
-    "end_time" : "7/64",
-    "same_measure" : true,
-    "same_part" : true,
-    "same_voice" : true,
-    "same_slot" : true,
-    "same_member" : true,
-    "time_offset" : "0",
-    "sheet_modified" : false,
-    "book_dirty" : false
+  "after_first": {
+    "manual_supports": [
+      {
+        "grade": 0.7,
+        "consistency": 1.0,
+        "source_ratio": 3.8,
+        "target_ratio": 8.0
+      }
+    ],
+    "stem": "new",
+    "initial_registered": false,
+    "current_is_initial": false,
+    "current_manual": false,
+    "duration": "7/64",
+    "end_time": "7/64",
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": true,
+    "same_slot": true,
+    "same_member": true,
+    "time_offset": "0",
+    "sheet_modified": false,
+    "book_dirty": false
   },
-  "after_return" : {
-    "manual_supports" : [ {
-      "grade" : 0.7,
-      "consistency" : 1.0,
-      "source_ratio" : 3.8,
-      "target_ratio" : 8.0
-    }, {
-      "grade" : 0.7,
-      "consistency" : 1.0,
-      "source_ratio" : 3.8,
-      "target_ratio" : 8.0
-    } ],
-    "stem" : "old",
-    "initial_registered" : false,
-    "current_is_initial" : false,
-    "current_manual" : false,
-    "duration" : "7/16",
-    "end_time" : "7/16",
-    "same_measure" : true,
-    "same_part" : true,
-    "same_voice" : true,
-    "same_slot" : true,
-    "same_member" : true,
-    "time_offset" : "0",
-    "sheet_modified" : false,
-    "book_dirty" : false
+  "after_return": {
+    "manual_supports": [
+      {
+        "grade": 0.7,
+        "consistency": 1.0,
+        "source_ratio": 3.8,
+        "target_ratio": 8.0
+      },
+      {
+        "grade": 0.7,
+        "consistency": 1.0,
+        "source_ratio": 3.8,
+        "target_ratio": 8.0
+      }
+    ],
+    "stem": "old",
+    "initial_registered": false,
+    "current_is_initial": false,
+    "current_manual": false,
+    "duration": "7/16",
+    "end_time": "7/16",
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": true,
+    "same_slot": true,
+    "same_member": true,
+    "time_offset": "0",
+    "sheet_modified": false,
+    "book_dirty": false
   },
-  "return_callbacks" : [ {
-    "event" : "edgeAdded",
-    "kind" : "HeadStemRelation",
-    "stage" : "enter",
-    "edge_is_initial" : false,
-    "state" : {
-      "manual_supports" : [ {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      }, {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      } ],
-      "stem" : "new",
-      "initial_registered" : false,
-      "current_is_initial" : false,
-      "current_manual" : false,
-      "duration" : "7/64",
-      "end_time" : "7/64",
-      "same_measure" : true,
-      "same_part" : true,
-      "same_voice" : true,
-      "same_slot" : true,
-      "same_member" : true,
-      "time_offset" : "0",
-      "sheet_modified" : false,
-      "book_dirty" : false
+  "return_callbacks": [
+    {
+      "event": "edgeAdded",
+      "kind": "HeadStemRelation",
+      "stage": "enter",
+      "edge_is_initial": false,
+      "state": {
+        "manual_supports": [
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          },
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          }
+        ],
+        "stem": "new",
+        "initial_registered": false,
+        "current_is_initial": false,
+        "current_manual": false,
+        "duration": "7/64",
+        "end_time": "7/64",
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "same_member": true,
+        "time_offset": "0",
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeRemoved",
+      "kind": "ChordStemRelation",
+      "stage": "enter",
+      "edge_is_initial": false,
+      "state": {
+        "manual_supports": [
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          },
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          }
+        ],
+        "stem": null,
+        "initial_registered": false,
+        "current_is_initial": false,
+        "current_manual": null,
+        "duration": "7/16",
+        "end_time": "7/16",
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "same_member": true,
+        "time_offset": "0",
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeRemoved",
+      "kind": "ChordStemRelation",
+      "stage": "leave",
+      "edge_is_initial": false,
+      "state": {
+        "manual_supports": [
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          },
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          }
+        ],
+        "stem": null,
+        "initial_registered": false,
+        "current_is_initial": false,
+        "current_manual": null,
+        "duration": "7/16",
+        "end_time": "7/16",
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "same_member": true,
+        "time_offset": "0",
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "ChordStemRelation",
+      "stage": "enter",
+      "edge_is_initial": false,
+      "state": {
+        "manual_supports": [
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          },
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          }
+        ],
+        "stem": "old",
+        "initial_registered": false,
+        "current_is_initial": false,
+        "current_manual": false,
+        "duration": "7/16",
+        "end_time": "7/16",
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "same_member": true,
+        "time_offset": "0",
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "ChordStemRelation",
+      "stage": "leave",
+      "edge_is_initial": false,
+      "state": {
+        "manual_supports": [
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          },
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          }
+        ],
+        "stem": "old",
+        "initial_registered": false,
+        "current_is_initial": false,
+        "current_manual": false,
+        "duration": "7/16",
+        "end_time": "7/16",
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "same_member": true,
+        "time_offset": "0",
+        "sheet_modified": false,
+        "book_dirty": false
+      }
+    },
+    {
+      "event": "edgeAdded",
+      "kind": "HeadStemRelation",
+      "stage": "leave",
+      "edge_is_initial": false,
+      "state": {
+        "manual_supports": [
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          },
+          {
+            "grade": 0.7,
+            "consistency": 1.0,
+            "source_ratio": 3.8,
+            "target_ratio": 8.0
+          }
+        ],
+        "stem": "old",
+        "initial_registered": false,
+        "current_is_initial": false,
+        "current_manual": false,
+        "duration": "7/16",
+        "end_time": "7/16",
+        "same_measure": true,
+        "same_part": true,
+        "same_voice": true,
+        "same_slot": true,
+        "same_member": true,
+        "time_offset": "0",
+        "sheet_modified": false,
+        "book_dirty": false
+      }
     }
-  }, {
-    "event" : "edgeRemoved",
-    "kind" : "ChordStemRelation",
-    "stage" : "enter",
-    "edge_is_initial" : false,
-    "state" : {
-      "manual_supports" : [ {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      }, {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      } ],
-      "stem" : null,
-      "initial_registered" : false,
-      "current_is_initial" : false,
-      "current_manual" : null,
-      "duration" : "7/16",
-      "end_time" : "7/16",
-      "same_measure" : true,
-      "same_part" : true,
-      "same_voice" : true,
-      "same_slot" : true,
-      "same_member" : true,
-      "time_offset" : "0",
-      "sheet_modified" : false,
-      "book_dirty" : false
+  ],
+  "after_reprocess": {
+    "manual_supports": [
+      {
+        "grade": 0.7,
+        "consistency": 1.0,
+        "source_ratio": 3.8,
+        "target_ratio": 8.0
+      },
+      {
+        "grade": 0.7,
+        "consistency": 1.0,
+        "source_ratio": 3.8,
+        "target_ratio": 8.0
+      }
+    ],
+    "stem": "old",
+    "initial_registered": false,
+    "current_is_initial": false,
+    "current_manual": false,
+    "duration": "7/16",
+    "end_time": "7/16",
+    "same_measure": true,
+    "same_part": true,
+    "same_voice": false,
+    "same_slot": false,
+    "same_member": true,
+    "time_offset": "0",
+    "sheet_modified": false,
+    "book_dirty": false
+  },
+  "rhythm": {
+    "abnormal": false,
+    "voice_count": 1,
+    "stack_slot_count": 4,
+    "expected": "1",
+    "actual": "1",
+    "chords": [
+      {
+        "bounds": [
+          276,
+          206,
+          13,
+          41
+        ],
+        "duration": "7/16",
+        "time_offset": "0",
+        "voice": 1,
+        "slot_id": 1
+      },
+      {
+        "bounds": [
+          396,
+          195,
+          13,
+          41
+        ],
+        "duration": "1/16",
+        "time_offset": "7/16",
+        "voice": 1,
+        "slot_id": 2
+      },
+      {
+        "bounds": [
+          516,
+          184,
+          13,
+          41
+        ],
+        "duration": "1/4",
+        "time_offset": "1/2",
+        "voice": 1,
+        "slot_id": 3
+      },
+      {
+        "bounds": [
+          636,
+          195,
+          13,
+          41
+        ],
+        "duration": "1/4",
+        "time_offset": "3/4",
+        "voice": 1,
+        "slot_id": 4
+      }
+    ]
+  },
+  "original_export_stream": [
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "7/16",
+      "step": "B",
+      "octave": 4,
+      "type": "quarter",
+      "dots": 2,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "1/16",
+      "step": "D",
+      "octave": 5,
+      "type": "16th",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "F",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 1,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "F",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "B",
+      "octave": 4,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
+    },
+    {
+      "kind": "note",
+      "measure": 2,
+      "voice": "1",
+      "duration": "1/4",
+      "step": "D",
+      "octave": 5,
+      "type": "quarter",
+      "dots": 0,
+      "chord": false
     }
-  }, {
-    "event" : "edgeRemoved",
-    "kind" : "ChordStemRelation",
-    "stage" : "leave",
-    "edge_is_initial" : false,
-    "state" : {
-      "manual_supports" : [ {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      }, {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      } ],
-      "stem" : null,
-      "initial_registered" : false,
-      "current_is_initial" : false,
-      "current_manual" : null,
-      "duration" : "7/16",
-      "end_time" : "7/16",
-      "same_measure" : true,
-      "same_part" : true,
-      "same_voice" : true,
-      "same_slot" : true,
-      "same_member" : true,
-      "time_offset" : "0",
-      "sheet_modified" : false,
-      "book_dirty" : false
-    }
-  }, {
-    "event" : "edgeAdded",
-    "kind" : "ChordStemRelation",
-    "stage" : "enter",
-    "edge_is_initial" : false,
-    "state" : {
-      "manual_supports" : [ {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      }, {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      } ],
-      "stem" : "old",
-      "initial_registered" : false,
-      "current_is_initial" : false,
-      "current_manual" : false,
-      "duration" : "7/16",
-      "end_time" : "7/16",
-      "same_measure" : true,
-      "same_part" : true,
-      "same_voice" : true,
-      "same_slot" : true,
-      "same_member" : true,
-      "time_offset" : "0",
-      "sheet_modified" : false,
-      "book_dirty" : false
-    }
-  }, {
-    "event" : "edgeAdded",
-    "kind" : "ChordStemRelation",
-    "stage" : "leave",
-    "edge_is_initial" : false,
-    "state" : {
-      "manual_supports" : [ {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      }, {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      } ],
-      "stem" : "old",
-      "initial_registered" : false,
-      "current_is_initial" : false,
-      "current_manual" : false,
-      "duration" : "7/16",
-      "end_time" : "7/16",
-      "same_measure" : true,
-      "same_part" : true,
-      "same_voice" : true,
-      "same_slot" : true,
-      "same_member" : true,
-      "time_offset" : "0",
-      "sheet_modified" : false,
-      "book_dirty" : false
-    }
-  }, {
-    "event" : "edgeAdded",
-    "kind" : "HeadStemRelation",
-    "stage" : "leave",
-    "edge_is_initial" : false,
-    "state" : {
-      "manual_supports" : [ {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      }, {
-        "grade" : 0.7,
-        "consistency" : 1.0,
-        "source_ratio" : 3.8,
-        "target_ratio" : 8.0
-      } ],
-      "stem" : "old",
-      "initial_registered" : false,
-      "current_is_initial" : false,
-      "current_manual" : false,
-      "duration" : "7/16",
-      "end_time" : "7/16",
-      "same_measure" : true,
-      "same_part" : true,
-      "same_voice" : true,
-      "same_slot" : true,
-      "same_member" : true,
-      "time_offset" : "0",
-      "sheet_modified" : false,
-      "book_dirty" : false
-    }
-  } ]
+  ]
 }
