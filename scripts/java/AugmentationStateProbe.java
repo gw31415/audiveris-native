@@ -29,6 +29,12 @@ public class AugmentationStateProbe extends RookieMappingProbe {
      String kind=rel.getClass().getSimpleName();
      if(!kind.equals("AugmentationRelation")&&!kind.equals("DoubleDotRelation"))continue;
      Object source=call(sig,"getEdgeSource",rel),target=call(sig,"getEdgeTarget",rel);
+     if(kind.equals("AugmentationRelation")&&target.getClass().getSimpleName().equals("RestInter")) {
+      java.awt.Point dp=(java.awt.Point)call(source,"getCenter"),rp=(java.awt.Point)call(target,"getCenterRight");
+      Object precise=make("sig.relation.AugmentationRelation");double il=((Number)call(call(sheet,"getScale"),"getInterline")).doubleValue();
+      call(precise,"setOutGaps",(dp.x-rp.x)/il,Math.max(0,Math.abs(dp.y-rp.y)-.45*((java.awt.Rectangle)call(target,"getBounds")).height)/il,call(system,"getProfile"));
+      links.add(obj("kind","original_rest_geometry_recomputed_relation","grade",call(precise,"getGrade"),"dx",call(precise,"getDx"),"dy",call(precise,"getDy")));
+     }
      if(kind.equals("DoubleDotRelation")) {
       java.awt.Point dp=(java.awt.Point)call(source,"getCenter"),rp=(java.awt.Point)call(target,"getCenterRight");
       Object precise=make("sig.relation.DoubleDotRelation");double il=((Number)call(call(sheet,"getScale"),"getInterline")).doubleValue();

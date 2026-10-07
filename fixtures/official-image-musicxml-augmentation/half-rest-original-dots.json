@@ -1,0 +1,82 @@
+{
+  "original_source" : "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope" : "saved recognized dot ownership/duration getters and exact original geometry regrading; separate declared CAESURA classifier score uses original factory/context on temporary original Inter; no declared clocks/music changes",
+  "chords" : [ {
+    "bounds" : [ 276, 206, 13, 41 ],
+    "bounds_with_dots" : [ 276, 206, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/4",
+    "intrinsic_with_dots" : "1/4",
+    "notes" : [ {
+      "bounds" : [ 276, 237, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 511, 235, 14, 9 ],
+    "bounds_with_dots" : [ 511, 235, 22, 14 ],
+    "dots_number" : 1,
+    "intrinsic_without_dots" : "1/2",
+    "intrinsic_with_dots" : "3/4",
+    "notes" : [ {
+      "bounds" : [ 511, 235, 14, 9 ],
+      "dot_count" : 1,
+      "first_dot_bounds" : [ 528, 245, 5, 4 ]
+    } ]
+  }, {
+    "bounds" : [ 753, 195, 13, 41 ],
+    "bounds_with_dots" : [ 753, 195, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/2",
+    "intrinsic_with_dots" : "1/2",
+    "notes" : [ {
+      "bounds" : [ 753, 226, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  }, {
+    "bounds" : [ 993, 206, 13, 41 ],
+    "bounds_with_dots" : [ 993, 206, 13, 41 ],
+    "dots_number" : 0,
+    "intrinsic_without_dots" : "1/2",
+    "intrinsic_with_dots" : "1/2",
+    "notes" : [ {
+      "bounds" : [ 993, 237, 13, 10 ],
+      "dot_count" : 0,
+      "first_dot_bounds" : null
+    } ]
+  } ],
+  "dots" : [ {
+    "bounds" : [ 528, 245, 5, 4 ],
+    "grade" : 0.767,
+    "best_grade" : 0.892,
+    "profile" : 0,
+    "system_profile" : 1,
+    "links" : [ {
+      "kind" : "original_rest_geometry_recomputed_relation",
+      "grade" : 0.7007575757575757,
+      "dx" : 0.5454545454545454,
+      "dy" : 0.3590909090909091
+    }, {
+      "kind" : "AugmentationRelation",
+      "source_bounds" : [ 528, 245, 5, 4 ],
+      "target_bounds" : [ 511, 235, 14, 9 ],
+      "grade" : 0.701,
+      "dx" : 0.545,
+      "dy" : 0.359
+    } ],
+    "lookup_head_bounds" : null
+  } ],
+  "declared_pause_controls" : [ {
+    "declared_classifier_score" : 0.18859216955421593,
+    "bounds" : [ 528, 245, 5, 4 ],
+    "partner_bounds" : [ 276, 206, 13, 41 ],
+    "partner_grade" : 0.77,
+    "relation_grade" : 0.8420751029052429,
+    "dx" : 22.727272727272727,
+    "grade" : 0.15087373564337275,
+    "contextual_grade" : 0.3435328121558861,
+    "weak" : true
+  } ],
+  "declared_flat_controls" : [ ]
+}

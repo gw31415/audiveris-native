@@ -385,6 +385,12 @@
       "unit": "original inconsistent multi-head countDots automatic removal -> exact physical candidate admission -> undotted chord/Voice/Partwise",
       "limits": "one original full-image12-event input; actual glyph/chord automatic-vs-manual declared controls separate; general supported conflicts/rest/shared/complete cleaner remain partial",
       "evidence": "evidence/musicxml-inconsistent-augmentation/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "observed pre-MEASURES bare GRID BarlineInter removal -> live staff collection -> MEASURES; identities, GRID physical glyph and canonical stem caches retained",
+      "limits": "manual/frozen, supported/grouped or post-MEASURES closure guarded; negative rest input is not positive augmentation evidence",
+      "evidence": "evidence/musicxml-foundation-barline-removal/VALIDATION.json"
     }
   ],
   "function_groups": [
@@ -490,7 +496,7 @@
     }
   ],
   "correction_CLI_design_status": "proposed/unimplemented, derived from original InterController tasks and edit/reprocess/history behavior",
-  "next_image_integration": "evidence/musicxml-inconsistent-augmentation/NEXT-DEPENDENCY.md; no original nonUI omissions",
+  "next_image_integration": "evidence/musicxml-foundation-barline-removal/NEXT-DEPENDENCY.md; no nonUI omissions",
   "legacy_time_estimate_applies_to_full_parity": false,
   "heads_complete": false,
   "stems_complete": false,

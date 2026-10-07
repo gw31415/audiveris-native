@@ -136,14 +136,8 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                 .as_f64()
                 .ok_or("missing_staff_right")?
                 .round_ties_even() as i64;
-            let mut bars = nodes
-                .iter()
-                .filter(|n| {
-                    n["kind"] == "BarlineInter"
-                        && n["origin"]["system"] == sid
-                        && n["staff_id"] == staff_id
-                })
-                .collect::<Vec<_>>();
+            let owned_bars = graph.staff_barlines(sid, staff_id);
+            let mut bars = owned_bars.iter().collect::<Vec<_>>();
             bars.sort_by_key(|n| center(n).map(|p| p.0).unwrap_or(i64::MIN));
             let mut previous = left;
             let mut index = 0;

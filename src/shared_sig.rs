@@ -28,6 +28,127 @@ pub enum Phase {
 #[cfg(test)]
 mod weak_foundation_tests {
     use super::*;
+    #[test]
+    fn actual_grid_bar_removal_updates_staff_membership_and_preserves_registry() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-foundation-barline-removal/observed.json"
+        ))
+        .unwrap();
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/rest-augmentation-unconfirmed.png"
+        ))
+        .unwrap();
+        let owned = crate::stem_image_owned::prepare_items(&image).unwrap();
+        let snapshot = owned.graph.snapshot();
+        let bar = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "BarlineInter" && n["bounds"] == original["bar"]["bounds"])
+            .unwrap();
+        let k: Key = serde_json::from_value(bar["origin"].clone()).unwrap();
+        assert_eq!(
+            k,
+            Key {
+                system: 1,
+                phase: Phase::Grid,
+                local: 2
+            }
+        );
+        assert_eq!(bar["staff_id"], original["bar"]["staff_id"]);
+        let bounds =
+            |bars: Vec<Value>| bars.iter().map(|b| b["bounds"].clone()).collect::<Vec<_>>();
+        assert_eq!(
+            bounds(owned.graph.staff_barlines(1, 1)),
+            original["before_staff_barlines"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|b| b["bounds"].clone())
+                .collect::<Vec<_>>()
+        );
+        let mut graph = owned.graph.clone();
+        graph.remove_foundation_barline(k).unwrap();
+        assert_eq!(
+            bounds(graph.staff_barlines(1, 1)),
+            original["after_staff_barlines"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|b| b["bounds"].clone())
+                .collect::<Vec<_>>()
+        );
+        assert!(graph.vertices[bar["id"].as_u64().unwrap() as usize - 1].removed);
+        let after = graph.snapshot();
+        graph.remove_foundation_barline(k).unwrap();
+        assert_eq!(graph.snapshot(), after);
+        assert_eq!(graph.id(k), Some(bar["id"].as_u64().unwrap() as usize));
+        assert_eq!(bar["glyph_id_namespace"], "GRID");
+        let physical = owned.upstream_report["grid_ir"]["glyphs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|g| g["id"] == bar["glyph_id"])
+            .unwrap()
+            .clone();
+        assert_eq!(physical["left"], bar["bounds"][0]);
+        assert_eq!(
+            graph.vertices[bar["id"].as_u64().unwrap() as usize - 1].data["glyph_id"],
+            physical["id"]
+        );
+        for property in ["manual", "frozen"] {
+            let mut protected = owned.graph.clone();
+            let mut n = bar.clone();
+            n[property] = json!(true);
+            protected.vertex(k, n, false).unwrap();
+            let before = protected.snapshot();
+            assert!(protected.remove_foundation_barline(k).is_err());
+            assert_eq!(protected.snapshot(), before);
+        }
+        let mut ensemble = owned.graph.clone();
+        let parent = Key {
+            system: 1,
+            phase: Phase::StaffBarline,
+            local: 1,
+        };
+        ensemble
+            .vertex(
+                parent,
+                json!({"kind":"StaffBarlineInter","staff_id":1,"bounds":bar["bounds"]}),
+                false,
+            )
+            .unwrap();
+        ensemble
+            .relations(
+                1,
+                Phase::StaffBarline,
+                vec![(parent, k, json!({"kind":"Containment"}))],
+            )
+            .unwrap();
+        let before = ensemble.snapshot();
+        assert!(ensemble.remove_foundation_barline(k).is_err());
+        assert_eq!(ensemble.snapshot(), before);
+        let owner = crate::music_links::prepare_beam_linking(owned).unwrap();
+        let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
+        let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
+        assert_eq!(
+            bounds(owner.graph.staff_barlines(1, 1)),
+            original["after_staff_barlines"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|b| b["bounds"].clone())
+                .collect::<Vec<_>>()
+        );
+        assert!(
+            owner.upstream_report["grid_ir"]["glyphs"]
+                .as_array()
+                .unwrap()
+                .contains(&physical)
+        );
+        let m = crate::music_measures::continue_measures(owner).unwrap();
+        assert_eq!(m.layout()["measures"].as_array().unwrap().len(), 2);
+    }
     fn add(g: &mut Graph, local: usize, data: Value) {
         g.vertex(
             Key {
@@ -297,6 +418,51 @@ impl Graph {
             }
         }
     }
+    /// Staff membership is a view of the live owner, not the historical GRID report.
+    pub(crate) fn staff_barlines(&self, system: u64, staff: u64) -> Vec<Value> {
+        self.vertices
+            .iter()
+            .filter(|v| {
+                !v.removed
+                    && v.key.system == system
+                    && v.data["kind"] == "BarlineInter"
+                    && v.data["staff_id"] == staff
+            })
+            .map(|v| v.data.clone())
+            .collect()
+    }
+
+    fn remove_foundation_barline(&mut self, key: Key) -> Result<(), String> {
+        let id = self.id(key).ok_or("missing_shared_sig_endpoint")?;
+        let v = &self.vertices[id - 1];
+        if key.phase != Phase::Grid
+            || v.data["kind"] != "BarlineInter"
+            || v.data["staff_id"].as_u64().is_none()
+        {
+            return Err("music_foundation_owned_GRID_barline_required".into());
+        }
+        if v.removed {
+            return Ok(());
+        }
+        if v.data["frozen"] == true
+            || v.data["is_frozen"] == true
+            || v.data["manual"] == true
+            || v.data["is_manual"] == true
+        {
+            return Err("music_foundation_protected_barline_removal_pending".into());
+        }
+        // Post-MEASURES closure, grouped bars and support callbacks need their
+        // own original owners; removing a bare GRID member cannot cover them.
+        if self.edges.iter().any(|e| {
+            !e.removed && (e.key.source == id || e.key.target == id) && e.key.kind != "Exclusion"
+        }) {
+            return Err("music_foundation_barline_ensemble_or_support_removal_pending".into());
+        }
+        self.vertices[id - 1].removed = true;
+        self.prune();
+        Ok(())
+    }
+
     /// Bounded ledger/beam/symbol/container removals retain IDs and incident tombstones.
     /// Cached stems and head callbacks must use their dedicated removal path.
     pub(crate) fn remove_music_inter(&mut self, key: Key) -> Result<(), String> {
@@ -1563,6 +1729,14 @@ impl Graph {
         for event in &plan.events {
             match *event {
                 Event::RemoveVertex(id) => {
+                    let candidate = next
+                        .vertices
+                        .get(id.checked_sub(1).ok_or("invalid_foundation_vertex_id")? as usize)
+                        .ok_or("missing_foundation_vertex")?;
+                    if candidate.data["kind"] == "BarlineInter" {
+                        next.remove_foundation_barline(candidate.key)?;
+                        continue;
+                    }
                     let v = next
                         .vertices
                         .get_mut(id.checked_sub(1).ok_or("invalid_foundation_vertex_id")? as usize)
@@ -1579,7 +1753,10 @@ impl Graph {
                             )
                         )
                     {
-                        return Err("unsupported_foundation_vertex_removal".into());
+                        return Err(format!(
+                            "unsupported_foundation_vertex_removal:{}",
+                            json!({"id":id,"kind":v.data["kind"],"bounds":v.data["bounds"],"origin":v.key,"staff_id":v.data["staff_id"],"removed":v.removed})
+                        ));
                     }
                     v.removed = true;
                     next.prune();

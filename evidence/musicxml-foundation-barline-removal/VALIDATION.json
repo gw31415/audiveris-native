@@ -1,0 +1,17 @@
+{
+  "baseline_source": "38ad971dacd924fe076f07ab919f39e4e745fa0b",
+  "targets_passed": [
+    "shared_sig::weak_foundation_tests::actual_grid_bar_removal_updates_staff_membership_and_preserves_registry: actual negative-input native owner, original actual GRID lifecycle, manual/frozen/ensemble guards and two MEASURES",
+    "shared_sig::weak_foundation_tests::weak_threshold_frozen_ledger_and_incident_edges_retain_identities"
+  ],
+  "format": "passed",
+  "clippy": "offline locked all-targets -D warnings passed",
+  "new_test_functions": 1,
+  "independent_CLI": "pending fetch verification",
+  "new_rest_input": "original-only 4events positive dotted-half-rest; native dependency not yet enabled",
+  "full_validation": {
+    "source": "95e191b8ffaf5df56f66684b9891cf100bdd8794",
+    "passed": 595
+  },
+  "completion_flags": false
+}

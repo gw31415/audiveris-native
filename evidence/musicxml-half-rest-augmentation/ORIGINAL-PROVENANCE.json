@@ -1,0 +1,31 @@
+{
+  "argv": [
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/workspace/work/musicxml-half-rest-augmentation/original-full/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/workspace/work/musicxml-stems44/original-limited-central-rest-ambiguous-corrected/page/cache",
+    "-Djava.util.prefs.userRoot=/workspace/work/musicxml-half-rest-augmentation/original-full/prefs",
+    "-Duser.home=/workspace/work/musicxml-half-rest-augmentation/original-full/home",
+    "-cp",
+    "/workspace/onboarding/linux-oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "RHYTHMS",
+    "-export",
+    "-output",
+    "/workspace/work/musicxml-half-rest-augmentation/original-full",
+    "--",
+    "/workspace/work/musicxml-half-rest-augmentation/half-rest-augmentation.png"
+  ],
+  "exit_code": 0,
+  "input_sha256": "0bcc1518a6f4bfbd65187d55b037bad55db4020ecb0306daa33912536b7f2975",
+  "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "one independent quarter and dotted half rest plus two half notes, fixed physical glyph gap/space, no position search, no coordinate sweep, unmodified original5.11 full-image export"
+}

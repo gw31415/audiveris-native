@@ -1,0 +1,10 @@
+{
+  "original_success": true,
+  "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+  "full_image_events": 4,
+  "dotted_half_rest_duration": "3/4",
+  "original_XML_XSD": "passed",
+  "original_loaded_dot_RestChord_Voice_getters": "observed separately",
+  "native_implementation": "pending; not yet positive CLI success",
+  "completion_flags": false
+}

@@ -923,3 +923,9 @@ exports no dot and a7/8 pickup, while native refuses at an earlier foundation
 removal callback. It is not a positive feature or native-only rest bug. One
 comparison was stopped; no coordinate search or admission expansion. Evidence:
 `evidence/musicxml-rest-augmentation-limit/ORIGINAL-LIMIT.json`.
+
+Actual failing negative-input vertex: bare GRID BarlineInter ID2, staff1/system1,
+bounds[528,219,2,47]. Original actual GRID lifecycle confirms Staff/SIG removal,
+idempotence and glyph retention. The corresponding guarded native removal now
+feeds live Staff membership into MEASURES. GRID glyph IDs are not HEADS/STEMS
+registry IDs. This is a lifecycle unit, not positive dotted-rest recognition.
