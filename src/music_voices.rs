@@ -1287,7 +1287,9 @@ pub(crate) fn assign_chord_voice(
             .find(|n| n["id"] == id)
             .ok_or("music_voice_live_chord_required")?
             .clone();
-        if chord["voice"] == voice.id {
+        // Musical numbers are reusable after Measure drops an empty Voice.
+        // A cached detached owner is a different object from this live Voice.
+        if chord["voice"] == voice.id && !staged.chord_has_detached_voice(key) {
             continue;
         }
         let members = snapshot["relations"]
@@ -1313,6 +1315,7 @@ pub(crate) fn assign_chord_voice(
         }
         chord["voice"] = json!(voice.id);
         staged.vertex(key, chord, false)?;
+        staged.bind_chord_to_live_voice(key)?;
         let owned = &mut retained[voice_index];
         if owned.measure_rest_chord != Some(id) && !owned.chord_ids.contains(&id) {
             owned.chord_ids.push(id);

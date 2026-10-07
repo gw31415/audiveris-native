@@ -60,3 +60,13 @@ no report-based recreation is used. Twelve task boundaries and thirty listener
 records are compared, including the detached Voice after deletion. General Voice
 reassignment and musical-id reuse/history across Part/Measure owners remain pending.
 The first two cases are unchanged from their earlier saved observations.
+
+
+The fourth original control constructs a new live Voice2 after the old solo Voice2
+has retired and the old Chord has been restored by undo. Actual setVoice(new2)
+rebinds that Chord even though its musical number stays2. Old2 keeps slot1; new2
+keeps slot2 and gains the Chord in its member list. Subsequent redo preserves new2
+with its remaining Chord. Native reproduced the number-only no-op before the fix,
+then matches original explicit rebind/task states while retaining old2 separately.
+General purge/rename/history identity paths and full owner reprocessing remain
+pending. The preceding three original controls are unchanged.

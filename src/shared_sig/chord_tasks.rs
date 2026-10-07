@@ -318,6 +318,18 @@ impl OwnedMusic {
 }
 
 impl super::Graph {
+    pub(crate) fn chord_has_detached_voice(&self, key: Key) -> bool {
+        self.id(key)
+            .is_some_and(|id| self.vertices[id - 1].retained_voice.is_some())
+    }
+    pub(crate) fn bind_chord_to_live_voice(&mut self, key: Key) -> Result<(), String> {
+        let id = self.endpoint(key)?;
+        if key.phase != super::Phase::Chord {
+            return Err("music_voice_actual_chord_required".into());
+        }
+        self.vertices[id - 1].retained_voice = None;
+        Ok(())
+    }
     #[cfg(test)]
     pub(super) fn retained_voice_observations(&self) -> Value {
         serde_json::json!(self.retained_voices.iter().enumerate().map(|(key,v)|serde_json::json!({

@@ -19,3 +19,6 @@ The subsequent preLink lifecycle saved controls are now implemented in four
 small source checkpoints: existing target, new unplaced Chord, new-Chord SIG
 callback ownership and last-Chord Voice retirement. Follow the latest
 `../musicxml-headstem-prelink-voice/NEXT-DEPENDENCY.md`; full parity remains false.
+
+The further explicit same-number Voice reassignment unit is now compared.
+Latest continuation: `../musicxml-headstem-prelink-voice-reuse/NEXT-DEPENDENCY.md`.

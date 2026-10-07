@@ -15,3 +15,6 @@ or callback-before clock clearing,13/16 normalization or ending padding. Native
 source Stem bounds are still five pixels longer into the head; saved bounds are
 explicit controls, not new image parity. Full nonUI scope and all flags stay false.
 Original task/environment and unpushed local ce785c9 were not changed/regenerated.
+
+The explicit same-number reassignment control is now implemented in
+`../musicxml-headstem-prelink-voice-reuse/`. Follow its newer NEXT-DEPENDENCY.

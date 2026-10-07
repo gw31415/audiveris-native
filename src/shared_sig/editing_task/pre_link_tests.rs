@@ -2,6 +2,15 @@
 use super::*;
 use std::collections::BTreeMap;
 
+fn actual_voice_clocks(owner: &crate::music_measures::OwnedMusic) -> Value {
+    json!(owner.voices.iter().map(|v| json!({"id":v.id,"measure":v.measure,
+        "starting_staff":v.starting_staff,"members":v.chord_ids,
+        "slots":v.slots.iter().map(|(id,s)|json!([id,s.chord_id,s.continuing])).collect::<Vec<_>>(),
+        "termination":v.termination.map(crate::music_time::format_delta),
+        "excess":v.excess.map(crate::music_time::format_fraction),"measure_rest":v.measure_rest_chord
+    })).collect::<Vec<_>>())
+}
+
 fn labels(owner: &crate::music_measures::OwnedMusic) -> BTreeMap<usize, String> {
     let mut chords = owner
         .chords
@@ -188,7 +197,21 @@ fn compare_graph(
     if expected["cached_solo_voice"]["measure_registered"] == false {
         let id = label_id(&json!("chord0")).unwrap();
         let node = nodes.iter().find(|n| n["id"] == id).unwrap();
-        let key = node["retained_voice_key"].as_u64().unwrap() as usize;
+        let expected_chord = expected["chords"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["label"] == "chord0")
+            .unwrap();
+        let key = if expected_chord["same_voice"] == false {
+            assert!(
+                node["retained_voice_key"].is_null(),
+                "setVoice must replace the detached owner even when its number is reused"
+            );
+            identities["$retained_solo_voice"]
+        } else {
+            node["retained_voice_key"].as_u64().unwrap() as usize
+        };
         assert_eq!(
             *identities
                 .entry("$retained_solo_voice".into())
@@ -373,14 +396,33 @@ fn compare_owner(
             labels,
         );
     }
+    if expected["cached_reused_voice"]["measure_registered"] == true {
+        let voice = owner
+            .voices
+            .iter()
+            .find(|v| v.measure == 0 && json!(v.id) == expected["cached_reused_voice"]["id"])
+            .unwrap();
+        compare_solo_voice(
+            &json!({"id":voice.id,"chord_ids":voice.chord_ids,"termination":voice.termination.map(crate::music_time::format_delta),"slots":voice.slots.iter().map(|(id,s)|json!({"id":id,"chord_id":s.chord_id,"status":if s.continuing{"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()}),
+            &expected["cached_reused_voice"],
+            labels,
+        );
+    }
 }
 fn declare_solo_voice(
     owner: &mut crate::music_measures::OwnedMusic,
     labels: &BTreeMap<usize, String>,
 ) {
+    declare_voice_for(owner, labels, "chord0");
+}
+fn declare_voice_for(
+    owner: &mut crate::music_measures::OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    name: &str,
+) -> usize {
     let id = *labels
         .iter()
-        .find(|(_, name)| name.as_str() == "chord0")
+        .find(|(_, label)| label.as_str() == name)
         .unwrap()
         .0;
     let chord = owner.chords.iter().find(|c| c.id == id).unwrap().clone();
@@ -405,6 +447,26 @@ fn declare_solo_voice(
     )
     .unwrap();
     owner.voices[voice].slots.insert(slot_id, slot_info);
+    voice
+}
+fn declare_reused_voice(
+    owner: &mut crate::music_measures::OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+) {
+    let voice = declare_voice_for(owner, labels, "chord1");
+    let chord = *labels
+        .iter()
+        .find(|(_, label)| label.as_str() == "chord0")
+        .unwrap()
+        .0;
+    crate::music_voices::assign_chord_voice(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &owner.measures,
+        chord,
+        voice,
+    )
+    .unwrap();
 }
 fn prepare(
     owner: &crate::music_measures::OwnedMusic,
@@ -480,6 +542,10 @@ fn new_target_prelink_matches_original_unplaced_chord_and_retained_redo() {
 fn last_chord_removal_retains_original_voice_and_slots_without_resurrecting_it() {
     compare_prelink_case(2);
 }
+#[test]
+fn same_number_reassigned_voice_changes_actual_owner_without_old_slot_transfer() {
+    compare_prelink_case(3);
+}
 fn compare_prelink_case(case_index: usize) {
     let original: Value = serde_json::from_str(include_str!(
         "../../../fixtures/official-headstem-prelink/observed.json"
@@ -493,7 +559,7 @@ fn compare_prelink_case(case_index: usize) {
     let mut export = crate::music_xml::recognize(&image).unwrap();
     let mut labels = labels(&export.owner);
     saved_numeric_control(&mut export.owner, &labels, case);
-    if case_index == 2 {
+    if case_index >= 2 {
         declare_solo_voice(&mut export.owner, &labels);
     }
     if case_index == 1 {
@@ -548,6 +614,31 @@ fn compare_prelink_case(case_index: usize) {
     .into_iter()
     .enumerate()
     {
+        if case_index == 3 && op_index == 2 {
+            let (state, bounds) = graph_state(&mut export.owner.owner.graph, &labels);
+            compare_graph(
+                &export.owner.owner.graph,
+                &state,
+                &bounds,
+                &labels,
+                &mut identities,
+                &case["relation_facts"],
+                &case["voice_rebind"]["before"],
+            );
+            compare_owner(&export.owner, &labels, &case["voice_rebind"]["before"]);
+            declare_reused_voice(&mut export.owner, &labels);
+            let (state, bounds) = graph_state(&mut export.owner.owner.graph, &labels);
+            compare_graph(
+                &export.owner.owner.graph,
+                &state,
+                &bounds,
+                &labels,
+                &mut identities,
+                &case["relation_facts"],
+                &case["voice_rebind"]["after"],
+            );
+            compare_owner(&export.owner, &labels, &case["voice_rebind"]["after"]);
+        }
         let order = if matches!(operation, EditingOperation::Undo) {
             (0..sequence.tasks.len()).rev().collect::<Vec<_>>()
         } else {
@@ -627,6 +718,72 @@ fn failed_new_target_prelink_restores_actual_owner_and_reuses_same_sequence() {
 fn failed_last_voice_removal_restores_actual_voice_owner_and_clocks() {
     compare_failed_prelink(false, true);
 }
+#[test]
+fn failed_reused_number_voice_edit_restores_current_and_retired_owners() {
+    let image = crate::GrayImage::decode(include_bytes!(
+        "../../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    ))
+    .unwrap();
+    let mut export = crate::music_xml::recognize(&image).unwrap();
+    let labels = labels(&export.owner);
+    declare_solo_voice(&mut export.owner, &labels);
+    let mut sequence = prepare(&export.owner, &labels);
+    sequence
+        .perform_owned(&mut export.owner, EditingOperation::Do, "RHYTHMS")
+        .unwrap();
+    sequence
+        .perform_owned(&mut export.owner, EditingOperation::Undo, "RHYTHMS")
+        .unwrap();
+    declare_reused_voice(&mut export.owner, &labels);
+    let snapshot = export.owner.owner.graph.snapshot();
+    let layout = export.owner.layout();
+    let retired = export.owner.owner.graph.retained_voice_observations();
+    let voices = actual_voice_clocks(&export.owner);
+    let expected = export.owner.measures[0].timing.expected;
+    let wrong = labels
+        .iter()
+        .find(|(_, label)| label.as_str() == "stem0")
+        .unwrap()
+        .0;
+    let key = export.owner.owner.graph.vertices[*wrong - 1].key;
+    let canonical = export.owner.owner.caches[&key.system]
+        .registered_stem(&export.owner.owner.graph, key.local)
+        .unwrap();
+    let EditingTask::Relation(last) = sequence.tasks.last_mut().unwrap() else {
+        unreachable!()
+    };
+    let stem = last.owned_chord.as_ref().unwrap().stem.clone();
+    last.owned_chord.as_mut().unwrap().stem = canonical;
+    assert_eq!(
+        sequence
+            .perform_owned(&mut export.owner, EditingOperation::Redo, "RHYTHMS")
+            .unwrap_err(),
+        "manual_head_stem_retained_owner_changed"
+    );
+    assert_eq!(export.owner.owner.graph.snapshot(), snapshot);
+    assert_eq!(export.owner.layout(), layout);
+    assert_eq!(
+        export.owner.owner.graph.retained_voice_observations(),
+        retired
+    );
+    assert_eq!(actual_voice_clocks(&export.owner), voices);
+    assert_eq!(export.owner.measures[0].timing.expected, expected);
+    let EditingTask::Relation(last) = sequence.tasks.last_mut().unwrap() else {
+        unreachable!()
+    };
+    last.owned_chord.as_mut().unwrap().stem = stem;
+    sequence
+        .perform_owned(&mut export.owner, EditingOperation::Redo, "RHYTHMS")
+        .unwrap();
+    assert_eq!(export.owner.owner.graph.retained_voices.len(), 1);
+    assert!(
+        export
+            .owner
+            .voices
+            .iter()
+            .any(|v| v.measure == 0 && v.id == 2)
+    );
+}
 fn compare_failed_prelink(new_target: bool, solo_voice: bool) {
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
@@ -657,7 +814,7 @@ fn compare_failed_prelink(new_target: bool, solo_voice: bool) {
     let graph = export.owner.owner.graph.snapshot();
     let layout = export.owner.layout();
     let chords_address = export.owner.chords.as_ptr();
-    let voices=export.owner.voices.iter().map(|v|json!({"id":v.id,"members":v.chord_ids,"slots":v.slots.iter().map(|(id,s)|json!([id,s.chord_id,s.continuing])).collect::<Vec<_>>(),"termination":v.termination.map(|d|d.to_string())})).collect::<Vec<_>>();
+    let voices = actual_voice_clocks(&export.owner);
     let expected = export.owner.measures[0].timing.expected;
     assert_eq!(
         sequence
@@ -671,7 +828,7 @@ fn compare_failed_prelink(new_target: bool, solo_voice: bool) {
     assert!(export.owner.owner.graph.retained_voices.is_empty());
     assert_eq!(export.owner.chords.as_ptr(), chords_address);
     assert_eq!(export.owner.measures[0].timing.expected, expected);
-    assert_eq!(export.owner.voices.iter().map(|v|json!({"id":v.id,"members":v.chord_ids,"slots":v.slots.iter().map(|(id,s)|json!([id,s.chord_id,s.continuing])).collect::<Vec<_>>(),"termination":v.termination.map(|d|d.to_string())})).collect::<Vec<_>>(),voices);
+    assert_eq!(actual_voice_clocks(&export.owner), voices);
     let EditingTask::Relation(last) = sequence.tasks.last_mut().unwrap() else {
         unreachable!()
     };

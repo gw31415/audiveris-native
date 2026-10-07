@@ -1421,3 +1421,18 @@ ordinary reprocessing/mirrors/controller/epilog/history/PAGE/persistence remain
 pending. Public CLI and all completion flags stay guarded/false; the five-pixel
 source Stem extent discrepancy is still separate from saved numeric controls.
 See `evidence/musicxml-headstem-prelink-voice/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Another small unit fixes explicit Voice reassignment after musical number reuse.
+An independent original control creates new live Voice2 while detached old Voice2
+still exists, and setVoice(new2) changes actual ownership despite equal numbers.
+The previous native number-only shortcut reproduced a mismatch; detached owner
+binding now prevents that shortcut and is replaced on explicit live assignment.
+New2 gains the actual Chord list entry and keeps slot2; old2 retains slot1. Source
+Slot/time/expected clocks are not reset or copied between those Voice owners.
+Twelve task boundaries/thirty listeners plus explicit rebind states agree; late
+failed redo restores actual current/retired Voice clocks and Chords before retry.
+Other purge/rename/history identity paths, general Part/Measure/Voice callback and
+reprocessing integration, mirrors/controller/epilog/PAGE/persistence and automatic
+Stem extent parity remain pending. Public CLI/global flags stay guarded/false.
+See `evidence/musicxml-headstem-prelink-voice-reuse/TRY.md` and `NEXT-DEPENDENCY.md`.

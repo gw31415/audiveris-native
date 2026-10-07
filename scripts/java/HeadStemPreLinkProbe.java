@@ -87,12 +87,26 @@ public class HeadStemPreLinkProbe {
                 "chords",names((Collection<?>)call(solo,"getChords"),labels),
                 "termination",rational(call(solo,"getTermination")),"slots",slotRows));
         }
+        Object reused=labels.keySet().stream().filter(o->"reused_voice".equals(labels.get(o))).findFirst().orElse(null);
+        if(reused!=null) {
+            List<Object> slotRows=new ArrayList<>();
+            for(Object slot:(Collection<?>)call(stack,"getSlots")) {
+                Object info=call(reused,"getSlotInfo",slot);
+                if(info!=null)slotRows.add(obj("id",call(slot,"getId"),
+                    "chord",labels.get(field(info,"sheet.rhythm.SlotVoice","chord")),
+                    "status",field(info,"sheet.rhythm.SlotVoice","status").toString()));
+            }
+            result.put("cached_reused_voice",obj("id",call(reused,"getId"),
+                "measure_registered",((Collection<?>)call(measure,"getVoices")).contains(reused),
+                "chords",names((Collection<?>)call(reused,"getChords"),labels),
+                "termination",rational(call(reused,"getTermination")),"slots",slotRows));
+        }
         return result;
     }
     public static void main(String[] args) throws Exception {
         c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);
         List<Object> cases=new ArrayList<>();
-        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice")) {
+        for(String mode:List.of("existing_target", "new_target", "existing_target_solo_voice", "existing_target_solo_voice_reuse")) {
             Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0]));
             Object sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");
             Object system=((List<?>)call(sheet,"getSystems")).get(0),sig=call(system,"getSig");
@@ -116,7 +130,7 @@ public class HeadStemPreLinkProbe {
             Object head=((List<?>)call(oldChord,"getMembers")).get(0),stem=call(targetChord,"getStem");
             Object oldHeadStem=null;
             for(Object e:(Collection<?>)call(sig,"edgesOf",head))if(e.getClass().getSimpleName().equals("HeadStemRelation"))oldHeadStem=e;
-            if(mode.equals("existing_target_solo_voice")) {
+            if(mode.startsWith("existing_target_solo_voice")) {
                 Object oldVoice=call(oldChord,"getVoice"),slot=call(oldChord,"getSlot");
                 Object info=call(oldVoice,"getSlotInfo",slot);
                 call(oldVoice,"removeChord",oldChord);
@@ -171,7 +185,19 @@ public class HeadStemPreLinkProbe {
                 }));
             }
             Object before=state(sig,measure,stack,chords,labels,voices,slots,relations);
+            Object voiceRebind=null;
             for(String operation:List.of("do","undo","redo")) {
+                if(operation.equals("redo")&&mode.equals("existing_target_solo_voice_reuse")) {
+                    Object prior=state(sig,measure,stack,chords,labels,voices,slots,relations);
+                    Object previous=call(targetChord,"getVoice"),slot=call(targetChord,"getSlot");
+                    Object info=call(previous,"getSlotInfo",slot);
+                    call(previous,"removeChord",targetChord);
+                    call(targetChord,"justAssignVoice",new Object[]{null});
+                    Object reused=make("sheet.rhythm.Voice",targetChord,measure);
+                    call(measure,"addVoice",reused);call(reused,"putSlotInfo",slot,info);
+                    labels.put(reused,"reused_voice");call(oldChord,"setVoice",reused);
+                    voiceRebind=obj("before",prior,"after",state(sig,measure,stack,chords,labels,voices,slots,relations));
+                }
                 List<Object> ordered=new ArrayList<>(tasks);if(operation.equals("undo"))Collections.reverse(ordered);
                 for(Object task:ordered) {
                     trace.clear();call(task,operation.equals("undo")?"performUndo":"performDo");
@@ -179,7 +205,9 @@ public class HeadStemPreLinkProbe {
                         "callbacks",new ArrayList<>(trace),"state",state(sig,measure,stack,chords,labels,voices,slots,relations)));
                 }
             }
-            cases.add(obj("name",mode,"task_names",taskNames,"stem_facts",stemFacts,"relation_facts",relationFacts,"before",before,"steps",steps));
+            Map<String,Object> result=obj("name",mode,"task_names",taskNames,"stem_facts",stemFacts,"relation_facts",relationFacts,"before",before,"steps",steps);
+            if(voiceRebind!=null)result.put("voice_rebind",voiceRebind);
+            cases.add(result);
         }
         new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj(
             "original_source","9e1e55cd2746037d059345881c53e6a6754bffbd",
