@@ -13,6 +13,32 @@ pub struct Export {
     pub xml: String,
     provenance: [u8; 32],
 }
+struct OwnedCheckpoint {
+    graph: crate::shared_sig::Graph,
+    measures: Vec<crate::music_measures::Measure>,
+    chords: Vec<crate::music_measures::Chord>,
+    voices: Vec<crate::music_voices::Voice>,
+    report: Value,
+}
+impl OwnedCheckpoint {
+    fn capture(owner: &OwnedMusic) -> Self {
+        Self {
+            graph: owner.owner.graph.clone(),
+            measures: owner.measures.clone(),
+            chords: owner.chords.clone(),
+            voices: owner.voices.clone(),
+            report: owner.owner.prepared.report.clone(),
+        }
+    }
+    fn restore(self, owner: &mut OwnedMusic) {
+        owner.owner.graph = self.graph;
+        owner.measures.clone_from(&self.measures);
+        owner.chords.clone_from(&self.chords);
+        owner.voices.clone_from(&self.voices);
+        // This is the pre-edit projection, not an input for rebuilding owners.
+        owner.owner.prepared.report = self.report;
+    }
+}
 impl Export {
     /// Prepare an explicit transfer using this retained image's live identities.
     /// No recognition search, manual membership rebuilding or report input.
@@ -142,9 +168,7 @@ impl Export {
         if selected.is_empty() {
             return Err("music_reprocess_actual_stack_owner_required".into());
         }
-        let before_measures = self.owner.measures.clone();
-        let before_voices = self.owner.voices.clone();
-        let before_report = self.owner.owner.prepared.report.clone();
+        let checkpoint = OwnedCheckpoint::capture(&self.owner);
         self.owner.owner.graph = graph;
         let result = (|| {
             let mut rhythm = old_rhythm;
@@ -200,10 +224,7 @@ impl Export {
                 Ok(actual)
             }
             Err(error) => {
-                self.owner.owner.graph = before_graph;
-                self.owner.measures = before_measures;
-                self.owner.voices = before_voices;
-                self.owner.owner.prepared.report = before_report;
+                checkpoint.restore(&mut self.owner);
                 Err(error)
             }
         }
@@ -1410,6 +1431,113 @@ pub fn recognize_named(image: &GrayImage, part_name: &str) -> Result<Export, Str
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn retained_manual_owner_reprocess_refuses_fine_grid_and_restores_actual_chord() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-manual-chord-cache/observed.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let mut export = recognize(&image).unwrap();
+        let initial = export.owner.owner.graph.snapshot();
+        let nodes = initial["inters"].as_array().unwrap();
+        let head = |bounds: &Value| {
+            nodes
+                .iter()
+                .find(|n| n["kind"] == "HeadInter" && n["bounds"] == *bounds)
+                .unwrap()
+        };
+        let h = head(&original["head_bounds"]);
+        let target = head(&original["target_head_bounds"]);
+        let edges = initial["relations"].as_array().unwrap();
+        let stem_edge = |id: &Value| {
+            edges
+                .iter()
+                .find(|e| e["kind"] == "HeadStemRelation" && e["source"] == *id)
+                .unwrap()
+        };
+        let old = stem_edge(&h["id"]);
+        let sid = &stem_edge(&target["id"])["target"];
+        let hk = serde_json::from_value(h["origin"].clone()).unwrap();
+        let sk = serde_json::from_value(
+            nodes.iter().find(|n| n["id"] == *sid).unwrap()["origin"].clone(),
+        )
+        .unwrap();
+        let cid = &edges
+            .iter()
+            .find(|e| e["kind"] == "Containment" && e["target"] == h["id"])
+            .unwrap()["source"];
+        let ci = export
+            .owner
+            .chords
+            .iter()
+            .position(|c| json!(c.id) == *cid)
+            .unwrap();
+        let mi = export.owner.chords[ci].measure;
+        let chord_address = &export.owner.chords[ci] as *const _;
+        let before_layout = export.owner.layout();
+        let before_rhythm = rhythm_projection(&export.owner, mi);
+        let before_xml = export.xml.clone();
+        let before_report = export.owner.owner.prepared.report.clone();
+        let retained = Rhythm::retained(&export.owner).unwrap();
+        let checkpoint = OwnedCheckpoint::capture(&export.owner);
+        let mut relation = old.clone();
+        relation["manual"] = json!(true);
+        relation["grade"] = json!(0.7);
+        relation["local_relation_id"] = json!(
+            edges
+                .iter()
+                .filter_map(|e| e["local_relation_id"].as_u64())
+                .max()
+                .unwrap()
+                + 1
+        );
+        let key = export
+            .owner
+            .apply_manual_head_stem_callback(hk, sk, relation)
+            .unwrap();
+        assert_eq!(export.owner.chords[ci].stem, Some(sk));
+        assert_eq!(
+            export
+                .owner
+                .owner
+                .graph
+                .chord_duration(key)
+                .unwrap()
+                .as_deref(),
+            original["after"]["duration"].as_str()
+        );
+        assert_eq!(
+            export.owner.measures[mi].timing.expected.map(rational),
+            original["rhythm"]["expected"].as_str().map(str::to_owned)
+        );
+        let error = process_rhythm(&mut export.owner, Some((&[mi], &retained)))
+            .err()
+            .unwrap();
+        // Original reprocess succeeds with Rational7/64. Native fails at its
+        // grid boundary, after callbacks, not at stale Chord ownership checks.
+        assert_eq!(
+            error,
+            "musicxml_dotted_duration_finer_than_sixteenth_pending"
+        );
+        assert_eq!(export.owner.chords[ci].stem, Some(sk));
+        assert_ne!(rhythm_projection(&export.owner, mi), before_rhythm);
+        assert_eq!(
+            export.owner.measures[mi].timing.expected.map(rational),
+            original["rhythm"]["expected"].as_str().map(str::to_owned)
+        );
+        checkpoint.restore(&mut export.owner);
+        assert_eq!(export.owner.owner.graph.snapshot(), initial);
+        assert_eq!(export.owner.layout(), before_layout);
+        assert_eq!(rhythm_projection(&export.owner, mi), before_rhythm);
+        assert_eq!(export.owner.owner.prepared.report, before_report);
+        assert_eq!(export.xml, before_xml);
+        assert_eq!(provenance(&export.owner), export.provenance);
+        assert_eq!(&export.owner.chords[ci] as *const _, chord_address);
+    }
     fn rhythm_projection(owner: &OwnedMusic, mi: usize) -> Value {
         let snapshot = owner.owner.graph.snapshot();
         let measure = &owner.measures[mi];

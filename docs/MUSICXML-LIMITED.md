@@ -2435,3 +2435,9 @@ read exact fractions such as7/64. Getter success is separate from MusicXML
 admission: current rhythmic clocks/export continue to reject finer-than-
 sixteenth durations. Manual HeadStem correction remains a lower-level owned
 control, with no new CLI switch or automatic image reception enabled.
+
+The retained edit rollback checkpoint also covers actual Chord stem/geometry/
+members. The compared manual owner control reaches selected rhythm processing
+but refuses7/64 and restores its old owner/XML. It does not add a manual
+HeadStem CLI option; original Rational/underfilled-Voice processing remains a
+required dependency before that admission.

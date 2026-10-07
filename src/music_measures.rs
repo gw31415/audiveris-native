@@ -115,6 +115,7 @@ pub(crate) enum ChordKind {
     Head,
     Rest,
 }
+#[derive(Clone)]
 pub(crate) struct Chord {
     pub kind: ChordKind,
     pub key: Key,

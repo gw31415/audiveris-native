@@ -1254,3 +1254,14 @@ Rational clocks/Voice processing/underfilled export and manual CLI transactions
 remain pending. This does not expand automatic image acceptance or complete
 signed/general Rational parity. Evidence:
 `evidence/musicxml-manual-chord-duration/VALIDATION.json`.
+
+### Changed Chord reprocess refusal and rollback
+
+The existing edit checkpoint now retains actual Chords, including stem/bounds/
+members. A control invokes the real selected native rhythm pass after the owned
+manual callback: retained expectedDuration survives, clocks reset only in the
+legitimate rhythm pass, and native fails at7/64 rather than stale ownership.
+Rollback restores actual Graph/cache/Measure/Chord/Voice and original XML/
+provenance. This is native refused processing, not manual export/automatic image
+success; original Rational reprocess still succeeds. Evidence:
+`evidence/musicxml-manual-chord-reprocess/VALIDATION.json`.
