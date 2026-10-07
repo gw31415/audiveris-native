@@ -1140,6 +1140,31 @@ impl Graph {
         *self = next;
         Ok(())
     }
+    /// Original uncached ordinary duration; does not mutate clocks or ownership.
+    pub fn chord_duration(&self, key: Key) -> Result<Option<String>, String> {
+        let id = self
+            .id(key)
+            .ok_or("musicxml_duration_live_chord_required")?;
+        Ok(crate::music_duration::live(&self.snapshot(), id)?
+            .intrinsic
+            .map(crate::music_time::format_ticks))
+    }
+    /// Original getEndTime uses the current duration and retained timeOffset.
+    pub fn chord_end_time(&self, key: Key) -> Result<Option<String>, String> {
+        let id = self
+            .id(key)
+            .ok_or("musicxml_duration_live_chord_required")?;
+        let Some(duration) = crate::music_duration::live(&self.snapshot(), id)?.intrinsic else {
+            return Ok(None);
+        };
+        let Some(offset) = self.vertices[id - 1].data["time_offset"].as_str() else {
+            return Ok(None);
+        };
+        let end = crate::music_time::parse_ticks(offset)?
+            .checked_add(duration)
+            .ok_or("music_time_tick_overflow")?;
+        Ok(Some(crate::music_time::format_ticks(end)))
+    }
     pub(crate) fn count_owned_augmentation(&mut self, chord: Key) -> Result<(), String> {
         let id = self.endpoint(chord)?;
         let mut next = self.clone();
@@ -1229,8 +1254,22 @@ impl Graph {
         if class == "RestChordInter" && members.len() != 1 {
             return Err("music_dot_owned_note_chord_required".into());
         }
-        if !chord.data["duration"].is_null() || !chord.data["voice"].is_null() {
-            return Err("music_dot_rhythm_reset_required".into());
+        let timed = !chord.data["duration"].is_null() || !chord.data["voice"].is_null();
+        if timed {
+            let data = &chord.data;
+            let actual_measure = self
+                .dot_ownership
+                .as_ref()
+                .is_some_and(|owners| owners.contains_chord(chord.key.system, data));
+            if !actual_measure
+                || data["duration"].as_str().is_none()
+                || data["time_offset"].as_str().is_none()
+                || data["voice"].as_u64().is_none()
+                || data["slot_id"].as_u64().is_none()
+            {
+                return Err("music_dot_rhythm_reset_required".into());
+            }
+            crate::music_duration::live(&self.snapshot(), owner)?;
         }
         let ordinate = |id: &usize| -> Result<i64, String> {
             let b = &self.vertices[id - 1].data["bounds"];
@@ -1267,6 +1306,13 @@ impl Graph {
         let dots =
             (counts.iter().sum::<usize>() as f64 / counts.len() as f64).round_ties_even() as usize;
         self.vertices[owner - 1].data["dots_number"] = json!(dots);
+        if timed {
+            // Original getters derive duration from countDots' live inputs;
+            // this projection must change without resetting Voice/slot/time.
+            let duration = crate::music_duration::live(&self.snapshot(), owner)?;
+            self.vertices[owner - 1].data["duration"] =
+                json!(duration.intrinsic.map(crate::music_time::format_ticks));
+        }
         // countDots can remove other automatic dots, which calls countDots
         // again. Each nested removal consumes a live vertex; manual dots stay.
         if dots == 0 && counts.iter().any(|&c| c != 0) {

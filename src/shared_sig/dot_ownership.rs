@@ -19,6 +19,16 @@ pub(super) struct Ownership {
     measures: Vec<Membership>,
     staff_parts: BTreeMap<(u64, u64), u64>,
 }
+impl Ownership {
+    pub(super) fn contains_chord(&self, system: u64, chord: &Value) -> bool {
+        self.measures.iter().any(|m| {
+            m.system == system
+                && chord["measure_index"] == m.index
+                && chord["part_id"] == m.part
+                && chord["staff_id"] == m.staff
+        })
+    }
+}
 /// AbstractInter setters for retained ordinary note/dot ownership. Higher-level
 /// correction commands must separately perform their original task lifecycle.
 #[derive(Clone, Debug)]

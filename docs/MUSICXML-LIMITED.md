@@ -2308,3 +2308,8 @@ Original timed first-Chord-null Voice refinement is now controlled as a separate
 owner lifecycle. It does not grant MusicXML event ownership: event binding still
 rejects null, and automatic image/`--edit-dot` admission remains unchanged.
 Timed support edits are still guarded; do not clear clocks ahead of callbacks.
+
+Timed ordinary support callbacks now update live duration/endTime while keeping
+Part/Measure/Voice/slot/time. This is a saved-owner control, not a new image or
+CLI correction admission. `--edit-dot` bounds-only example remains unchanged;
+Export timed support guard is still retained at this checkpoint.

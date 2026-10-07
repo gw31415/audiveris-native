@@ -182,26 +182,8 @@ fn write_clef(xml: &mut String, clef: ClefAttributes) {
     }
     xml.push_str("</clef>");
 }
-fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
-    match shape {
-        "NOTEHEAD_BLACK" | "QUARTER_REST" => Ok((1, "quarter")),
-        "NOTEHEAD_VOID" | "HALF_REST" => Ok((2, "half")),
-        _ => Err(format!(
-            "musicxml_note_duration_outside_quarter_half_scope:{shape}"
-        )),
-    }
-}
-#[derive(Clone, Copy)]
-struct ChordDuration {
-    intrinsic: Option<u32>,
-    note_type: &'static str,
-    beams_or_flags: usize,
-    dots: usize,
-}
+use crate::music_duration::ChordDuration;
 
-// Resolve the admitted original AbstractChord.getDuration before starting
-// Voice/group time propagation. All existing shape/flag/beam guards remain;
-// general tuplet/special-head duration is a separate dependency.
 fn resolve_durations(
     graph: &mut crate::shared_sig::Graph,
     chords: &[&crate::music_measures::Chord],
@@ -212,108 +194,34 @@ fn resolve_durations(
     let mut resolved = std::collections::BTreeMap::new();
     let mut staged = graph.clone();
     for chord in chords {
-        let first = chord
-            .members
-            .first()
-            .ok_or("musicxml_chord_member_required")?;
-        let note = nodes
+        let live_members = edges
             .iter()
-            .find(|n| n["id"] == first["id"])
-            .ok_or("musicxml_duration_live_note_required")?;
-        let shape = note["shape"]
-            .as_str()
-            .ok_or("musicxml_note_shape_required")?;
-        let rest = note["kind"] == "RestInter";
-        let mut member_ids = std::collections::BTreeSet::new();
-        for member in &chord.members {
-            let live = nodes
-                .iter()
-                .find(|n| n["id"] == member["id"])
-                .ok_or("musicxml_duration_live_note_required")?;
-            let id = live["id"]
-                .as_u64()
-                .ok_or("musicxml_chord_member_required")?;
-            if !member_ids.insert(id)
-                || live["kind"] != note["kind"]
-                || live["shape"] != note["shape"]
-                || (rest && chord.members.len() != 1)
-            {
-                // Mirrored mixed shapes need the original per-note type/filled
-                // notehead branch; their duration cannot admit ordinary export.
-                return Err("musicxml_mixed_or_special_chord_members_pending".into());
-            }
+            .filter(|e| e["kind"] == "Containment" && e["source"] == chord.id)
+            .map(|e| e["target"].as_u64().unwrap())
+            .collect::<std::collections::BTreeSet<_>>();
+        let owned_members = chord
+            .members
+            .iter()
+            .map(|n| n["id"].as_u64().unwrap())
+            .collect::<std::collections::BTreeSet<_>>();
+        if live_members != owned_members || owned_members.len() != chord.members.len() {
+            return Err("musicxml_actual_chord_members_required".into());
         }
-        let whole = rest && crate::music_voices::is_measure_rest_shape(shape, false);
-        let result = if whole {
-            ChordDuration {
-                intrinsic: None,
-                note_type: "whole",
-                beams_or_flags: 0,
-                dots: 0,
-            }
-        } else {
-            let (base, mut note_type) = note_duration(shape)?;
-            let mut duration = base * 4;
-            let mut count = 0;
-            if !rest {
-                let beams = crate::music_voices::chord_beams(&snapshot, chord.id)?;
-                let stem = chord
-                    .stem
-                    .map(|key| graph.id(key).ok_or("musicxml_actual_chord_stem_required"))
-                    .transpose()?;
-                let flags = nodes
-                    .iter()
-                    .filter(|n| {
-                        n["kind"] == "FlagInter"
-                            && stem.is_some_and(|id| {
-                                edges.iter().any(|e| {
-                                    e["kind"] == "FlagStemRelation"
-                                        && e["source"] == n["id"]
-                                        && e["target"] == id
-                                })
-                            })
-                    })
-                    .collect::<Vec<_>>();
-                if !flags.is_empty() || !beams.is_empty() {
-                    if shape != "NOTEHEAD_BLACK"
-                        || (!flags.is_empty() && !beams.is_empty())
-                        || flags.len() > 1
-                        || beams.len() > 2
-                        || flags
-                            .first()
-                            .is_some_and(|f| !matches!(f["value"].as_u64(), Some(1 | 2)))
-                    {
-                        return Err("musicxml_flagged_void_rest_or_multiple_flags_pending".into());
-                    }
-                    count = flags
-                        .iter()
-                        .map(|f| f["value"].as_u64().unwrap() as usize)
-                        .sum::<usize>()
-                        + beams.len();
-                    duration /= 1 << count;
-                    note_type = if count == 1 { "eighth" } else { "16th" };
-                }
-            }
-            let live_chord = nodes
-                .iter()
-                .find(|n| n["id"] == chord.id)
-                .ok_or("musicxml_duration_live_chord_required")?;
-            let dots = live_chord["dots_number"].as_u64().unwrap_or(0) as usize;
-            match dots {
-                0 => {}
-                1 if duration.is_multiple_of(2) => duration = duration / 2 * 3,
-                1 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
-                2 if duration.is_multiple_of(4) => duration = duration / 4 * 7,
-                2 => return Err("musicxml_dotted_duration_finer_than_sixteenth_pending".into()),
-                _ => return Err("musicxml_invalid_dot_count".into()),
-            }
-            ChordDuration {
-                intrinsic: Some(duration),
-                note_type,
-                beams_or_flags: count,
-                dots,
-            }
-        };
+        let live_stem = edges
+            .iter()
+            .filter(|e| e["kind"] == "ChordStemRelation" && e["source"] == chord.id)
+            .map(|e| e["target"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        let owned_stem = chord
+            .stem
+            .map(|key| graph.id(key).ok_or("musicxml_actual_chord_stem_required"))
+            .transpose()?
+            .into_iter()
+            .collect::<Vec<_>>();
+        if live_stem != owned_stem {
+            return Err("musicxml_actual_chord_stem_required".into());
+        }
+        let result = crate::music_duration::live(&snapshot, chord.id)?;
         let mut node = nodes
             .iter()
             .find(|n| n["id"] == chord.id)
@@ -1411,6 +1319,173 @@ mod tests {
         let mut chords: Vec<_> = owner.chords.iter().filter(|c| c.measure == mi).collect();
         chords.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
         json!({"abnormal":measure.timing.abnormal,"voice_count":owner.voices.iter().filter(|v|v.measure==mi).count(),"stack_slot_count":measure.timing.slots.len(),"expected":measure.timing.expected.map(rational),"actual":measure.timing.actual.map(rational),"chords":chords.iter().map(|c|{let n=snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"],"slot_id":n["slot_id"]})}).collect::<Vec<_>>()})
+    }
+    #[test]
+    fn original_timed_dot_callbacks_keep_owned_clocks_and_derive_live_duration() {
+        use crate::shared_sig::{DefaultEditingTask, EditingLink, EditingOperation};
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-timed-dot-support/observed.json"
+        ))
+        .unwrap();
+        let image = GrayImage::decode(include_bytes!(
+            "../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let export = recognize(&image).unwrap();
+        for case in oracle["cases"].as_array().unwrap() {
+            let mut graph = export.owner.owner.graph.clone();
+            let before = graph.snapshot();
+            let nodes = before["inters"].as_array().unwrap();
+            let selected = case["before"]["chords"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|c| {
+                    nodes
+                        .iter()
+                        .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == c["bounds"])
+                        .unwrap()
+                        .clone()
+                })
+                .collect::<Vec<_>>();
+            let first = before["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| {
+                    e["kind"] == "AugmentationRelation"
+                        && selected[0]["member_ids"]
+                            .as_array()
+                            .unwrap()
+                            .contains(&e["target"])
+                })
+                .unwrap();
+            let dot = nodes.iter().find(|n| n["id"] == first["source"]).unwrap();
+            let key: Key = serde_json::from_value(dot["origin"].clone()).unwrap();
+            let target = nodes
+                .iter()
+                .find(|n| n["id"] == selected[1]["member_ids"][0])
+                .unwrap();
+            let target_key: Key = serde_json::from_value(target["origin"].clone()).unwrap();
+            if case["original_support_manual"] == true {
+                let note = nodes.iter().find(|n| n["id"] == first["target"]).unwrap();
+                let mut edge = first.clone();
+                edge["manual"] = json!(true);
+                graph
+                    .relations(
+                        key.system,
+                        crate::shared_sig::Phase::Symbol,
+                        vec![(
+                            key,
+                            serde_json::from_value(note["origin"].clone()).unwrap(),
+                            edge,
+                        )],
+                    )
+                    .unwrap();
+            }
+            let unlink =
+                EditingLink::from_registered(&graph, key, first["id"].as_u64().unwrap() as usize)
+                    .unwrap();
+            let link = EditingLink::new(
+                target_key,
+                true,
+                json!({"kind":"AugmentationRelation","grade":0.7,"manual":true}),
+            );
+            let mut task = DefaultEditingTask::new(
+                &graph,
+                key,
+                serde_json::from_value(dot["bounds"].clone()).unwrap(),
+                vec![link],
+                vec![unlink],
+            )
+            .unwrap();
+            let ownership = graph.snapshot()["augmentation_dot_ownership"].clone();
+            graph.enable_dot_callback_trace();
+            task.perform(&mut graph, EditingOperation::Do).unwrap();
+            let traces = graph
+                .dot_callback_trace()
+                .iter()
+                .filter(|t| t["event"] != "publish")
+                .collect::<Vec<_>>();
+            assert_eq!(traces.len(), 4);
+            for (actual, original) in traces.iter().zip(case["trace"].as_array().unwrap()) {
+                assert_eq!(actual["event"], original["event"]);
+                assert_eq!(actual["stage"], original["stage"]);
+                assert_eq!(actual["depth"], original["depth"]);
+                assert_eq!(actual["state"]["augmentation_dot_ownership"], ownership);
+                for (source, expected) in selected
+                    .iter()
+                    .zip(original["state"]["chords"].as_array().unwrap())
+                {
+                    let node = actual["state"]["inters"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|n| n["id"] == source["id"])
+                        .unwrap();
+                    let live = crate::music_duration::live(
+                        &actual["state"],
+                        node["id"].as_u64().unwrap() as usize,
+                    )
+                    .unwrap();
+                    assert_eq!(json!(live.intrinsic.map(rational)), expected["duration"]);
+                    assert_eq!(node["duration"], expected["duration"]);
+                    let end = live.intrinsic.unwrap()
+                        + crate::music_time::parse_ticks(node["time_offset"].as_str().unwrap())
+                            .unwrap();
+                    assert_eq!(rational(end), expected["end_time"].as_str().unwrap());
+                    for f in ["time_offset", "voice", "slot_id"] {
+                        assert_eq!(node[f], expected[f]);
+                        assert_eq!(node[f], source[f]);
+                    }
+                    for f in ["part_id", "measure_index", "staff_id"] {
+                        assert_eq!(node[f], source[f]);
+                    }
+                    assert_eq!(node["dots_number"], expected["dots"]);
+                    assert_eq!(expected["same_voice"], true);
+                    assert_eq!(expected["same_measure"], true);
+                    assert_eq!(expected["same_part"], true);
+                }
+            }
+            // Undo is observed before any rhythm reset: automatic re-add does
+            // not count dots, whereas manual re-add does. Neither changes clocks.
+            graph.enable_dot_callback_trace();
+            task.perform(&mut graph, EditingOperation::Undo).unwrap();
+            let expected = if case["original_support_manual"] == true {
+                2
+            } else {
+                0
+            };
+            let selected_key: Key = serde_json::from_value(selected[0]["origin"].clone()).unwrap();
+            assert_eq!(
+                graph.chord_duration(selected_key).unwrap(),
+                Some(if expected == 2 { "7/16" } else { "1/4" }.into())
+            );
+            assert_eq!(
+                graph.chord_end_time(selected_key).unwrap(),
+                graph.chord_duration(selected_key).unwrap()
+            );
+            let after = graph.snapshot();
+            for source in &selected {
+                let node = after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == source["id"])
+                    .unwrap();
+                for f in [
+                    "time_offset",
+                    "voice",
+                    "slot_id",
+                    "part_id",
+                    "measure_index",
+                    "staff_id",
+                ] {
+                    assert_eq!(node[f], source[f]);
+                }
+            }
+            assert_eq!(after["augmentation_dot_ownership"], ownership);
+        }
     }
     #[test]
     fn original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation() {

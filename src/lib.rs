@@ -501,6 +501,7 @@ mod music_beams;
 mod music_chord_time;
 mod music_containers;
 mod music_dots;
+mod music_duration;
 mod music_flags;
 mod music_headers;
 mod music_ledger_reduction;

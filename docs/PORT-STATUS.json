@@ -517,6 +517,11 @@
       "unit": "original retained timed HIGH first-Chord-null membership and tie refinement, with export guard retained",
       "limits": "declared owner control; not null-reference image/export success; general kinds/shared/controller partial",
       "evidence": "evidence/musicxml-voice-first-null/VALIDATION.json"
+    },
+    {
+      "status": "implemented",
+      "unit": "timed ordinary augmentation countDots -> shared uncached getDurationSansTuplet/endTime without clearing retained owner/clock; original manual added versus unconditional live-target removed callback",
+      "limits": "saved real double-dot owners, declared same-base support transfer; callback control is not automatic shared-support image/correction admission. Export timed support guard remains until actual task/reprocess/rollback comparison. Partial-clock, special/tuplet and broader owner guards remain."
     }
   ],
   "function_groups": [

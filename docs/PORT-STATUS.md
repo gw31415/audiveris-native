@@ -1169,3 +1169,14 @@ not automatic image/export acceptance. Existing Part/Measure/staff/slot and
 conflicting-reference guards remain. Evidence:
 `evidence/musicxml-voice-first-null/VALIDATION.json`. Timed support callback/live
 duration refresh and general Voice/shared/controller remain next dependencies.
+
+### Timed ordinary dot callback checkpoint
+
+Original `AugmentationRelation.added/removed` and uncached
+`AbstractChordInter.getDurationSansTuplet/getEndTime` are connected for retained
+ordinary timed chords. `countDots` changes live duration without clearing clocks,
+Voice or Part/Measure membership. A saved real double-dot owner control observes
+link-add before unlink-remove; manual and automatic re-add behave differently.
+This does not admit automatic shared-support images or timed correction export;
+that guard awaits task/reprocess/rollback comparison. See
+`evidence/musicxml-timed-dot-support/NEXT-DEPENDENCY.md`.
