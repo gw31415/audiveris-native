@@ -1213,7 +1213,7 @@ fn process_rhythm(
                 .find(|n| n["id"] == chord.id)
                 .and_then(|n| n["time_offset"].as_str())
                 .ok_or("musicxml_chord_clock_required")?;
-            crate::music_chord_time::set_and_push(
+            crate::music_chord_time::set_and_push_ticks(
                 &mut graph,
                 &m.voices,
                 &m.measures,

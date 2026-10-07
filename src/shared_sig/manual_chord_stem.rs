@@ -384,6 +384,99 @@ mod tests {
                 .unwrap_err(),
             "music_reprocess_unedited_retained_export_required"
         );
+        let clocks: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-rational-chord-clocks/observed.json"
+        ))
+        .unwrap();
+        let rows = clocks["observations"][0]["chords"].as_array().unwrap();
+        let controlled = rows
+            .iter()
+            .map(|row| {
+                let note = nodes
+                    .iter()
+                    .find(|n| n["kind"] == "HeadInter" && n["bounds"] == row["head_bounds"])
+                    .unwrap();
+                let id = edges
+                    .iter()
+                    .find(|e| e["kind"] == "Containment" && e["target"] == note["id"])
+                    .unwrap()["source"]
+                    .as_u64()
+                    .unwrap() as usize;
+                export.owner.chords.iter().find(|c| c.id == id).unwrap()
+            })
+            .collect::<Vec<_>>();
+        let mut clock_graph = export.owner.owner.graph.clone();
+        for (a, b) in [(0, 2), (2, 3), (3, 4)] {
+            clock_graph
+                .relations(
+                    controlled[a].key.system,
+                    Phase::Chord,
+                    vec![(
+                        controlled[a].key,
+                        controlled[b].key,
+                        json!({"kind":"NextInVoiceRelation"}),
+                    )],
+                )
+                .unwrap();
+        }
+        let before_clocks = clock_graph.snapshot();
+        for row in clocks["observations"].as_array().unwrap() {
+            let time = row["input"]
+                .as_str()
+                .map(crate::music_time::Fraction::parse)
+                .transpose()
+                .unwrap();
+            crate::music_chord_time::set_and_push(
+                &mut clock_graph,
+                &export.owner.voices,
+                &export.owner.measures,
+                controlled[0].id,
+                time,
+            )
+            .unwrap();
+            let state = clock_graph.snapshot();
+            for (c, expected) in controlled.iter().zip(row["chords"].as_array().unwrap()) {
+                let n = state["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == c.id)
+                    .unwrap();
+                let old = before_clocks["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == c.id)
+                    .unwrap();
+                assert_eq!(n["time_offset"], expected["time_offset"]);
+                assert_eq!(
+                    json!(clock_graph.chord_duration(c.key).unwrap()),
+                    expected["duration"]
+                );
+                assert_eq!(
+                    json!(clock_graph.chord_end_time(c.key).unwrap()),
+                    expected["end_time"]
+                );
+                for (field, identity) in [
+                    ("part_id", "same_part"),
+                    ("measure_index", "same_measure"),
+                    ("voice", "same_voice"),
+                    ("slot_id", "same_slot"),
+                ] {
+                    assert_eq!(expected[identity], true);
+                    assert_eq!(n[field], old[field]);
+                }
+            }
+            assert_eq!(state["editing_book"]["book_dirty"], row["book_dirty"]);
+            assert_eq!(
+                export.owner.measures[measure]
+                    .timing
+                    .expected
+                    .map(crate::music_time::format_ticks),
+                row["expected_duration"].as_str().map(str::to_owned)
+            );
+            assert_eq!(row["same_expected"], true);
+        }
         let identity: Value = serde_json::from_str(include_str!(
             "../../fixtures/official-manual-chord-identity/observed.json"
         ))

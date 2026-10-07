@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Reduced nonnegative Rational duration/getter arithmetic. Rhythm clocks
 //! still use sixteenth ticks; full signed Rational/tuplet processing is pending.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) struct Fraction {
     numerator: u32,
     denominator: u32,
@@ -54,6 +54,9 @@ impl Fraction {
                 .checked_mul(other.denominator)
                 .ok_or("music_time_rational_overflow")?,
         )
+    }
+    pub(crate) fn from_ticks(ticks: u32) -> Self {
+        Self::new(ticks, 16).expect("nonzero constant denominator")
     }
     pub(crate) fn ticks(self) -> Result<u32, String> {
         if !16_u32.is_multiple_of(self.denominator) {

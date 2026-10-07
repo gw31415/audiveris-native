@@ -383,7 +383,7 @@ impl Context<'_> {
             }
         }
         let Some(t) = target else { return Ok(false) };
-        crate::music_chord_time::set_and_push(
+        crate::music_chord_time::set_and_push_ticks(
             self.graph,
             self.voices,
             self.measures,
@@ -525,7 +525,7 @@ impl Context<'_> {
                 for &sibling in &siblings {
                     let actual = self.graph.snapshot();
                     if let Some(t) = time(node(&actual, sibling)?)? {
-                        crate::music_chord_time::set_and_push(
+                        crate::music_chord_time::set_and_push_ticks(
                             self.graph,
                             self.voices,
                             self.measures,
@@ -776,7 +776,7 @@ impl Context<'_> {
                             own,
                         )?;
                         if let Some(end) = end {
-                            crate::music_chord_time::set_and_push(
+                            crate::music_chord_time::set_and_push_ticks(
                                 self.graph,
                                 self.voices,
                                 self.measures,
@@ -832,7 +832,7 @@ mod tests {
                     chords[0],
                 )
                 .unwrap();
-                crate::music_chord_time::set_and_push(
+                crate::music_chord_time::set_and_push_ticks(
                     &mut owner.owner.graph,
                     &owner.voices,
                     &owner.measures,
@@ -995,7 +995,7 @@ mod tests {
                 )
                 .unwrap();
                 let end = crate::music_time::parse_ticks(active["end"].as_str().unwrap()).unwrap();
-                crate::music_chord_time::set_and_push(
+                crate::music_chord_time::set_and_push_ticks(
                     &mut owner.owner.graph,
                     &owner.voices,
                     &owner.measures,
@@ -1460,7 +1460,7 @@ mod tests {
                 own,
             )
             .unwrap();
-            crate::music_chord_time::set_and_push(
+            crate::music_chord_time::set_and_push_ticks(
                 &mut owner.owner.graph,
                 &owner.voices,
                 &owner.measures,
@@ -1468,7 +1468,7 @@ mod tests {
                 if unknown_active { None } else { Some(12) },
             )
             .unwrap();
-            crate::music_chord_time::set_and_push(
+            crate::music_chord_time::set_and_push_ticks(
                 &mut owner.owner.graph,
                 &owner.voices,
                 &owner.measures,
@@ -1639,7 +1639,7 @@ mod tests {
                     .map(crate::music_time::parse_ticks)
                     .transpose()
                     .unwrap();
-                crate::music_chord_time::set_and_push(
+                crate::music_chord_time::set_and_push_ticks(
                     &mut owner.owner.graph,
                     &owner.voices,
                     &owner.measures,
@@ -1805,7 +1805,7 @@ mod tests {
                 .map(crate::music_time::parse_ticks)
                 .transpose()
                 .unwrap();
-            crate::music_chord_time::set_and_push(
+            crate::music_chord_time::set_and_push_ticks(
                 &mut owner.owner.graph,
                 &owner.voices,
                 &owner.measures,
@@ -1938,7 +1938,7 @@ mod tests {
                     .map(crate::music_time::parse_ticks)
                     .transpose()
                     .unwrap();
-                crate::music_chord_time::set_and_push(
+                crate::music_chord_time::set_and_push_ticks(
                     &mut owner.owner.graph,
                     &owner.voices,
                     &owner.measures,

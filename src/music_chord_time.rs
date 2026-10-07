@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! AbstractChordInter.setAndPushTime/pushTime: original sequence -> group ->
 //! classified tie order, using actual chord ownership and live SIG relations.
-//! Resolved normal-chord duration on the current exact grid only. Automatic
-//! relation acquisition, measure-rest duration and general Rational are pending.
+//! Exact ordinary Rational clocks. Automatic relation acquisition, measure-rest
+//! duration and tuplet/special-head duration remain separate dependencies.
+use crate::music_time::Fraction;
 use crate::{music_measures::Measure, music_voices::Voice, shared_sig::Graph};
 use serde_json::{Value, json};
 
@@ -38,26 +39,38 @@ fn same_measure(snapshot: &Value, a: usize, b: usize) -> Result<bool, String> {
     };
     Ok(identity(a)? == identity(b)?)
 }
-fn set_time(graph: &mut Graph, id: usize, time: Option<u32>) -> Result<(), String> {
+fn set_time(graph: &mut Graph, id: usize, time: Option<Fraction>) -> Result<(), String> {
     let snapshot = graph.snapshot();
     let mut n = chord(&snapshot, id)?.clone();
     let key = serde_json::from_value(n["origin"].clone())
         .map_err(|_| "music_chord_time_origin_required")?;
-    n["time_offset"] = json!(time.map(crate::music_time::format_ticks));
+    n["time_offset"] = json!(time.map(|t| t.to_string()));
     graph.vertex(key, n, false)?;
     Ok(())
 }
-fn end_time(graph: &Graph, id: usize) -> Result<Option<u32>, String> {
+fn end_time(graph: &Graph, id: usize) -> Result<Option<Fraction>, String> {
     let snapshot = graph.snapshot();
     let n = chord(&snapshot, id)?;
-    let (Some(time), Some(duration)) = (n["time_offset"].as_str(), n["duration"].as_str()) else {
-        return Ok(None);
-    };
-    crate::music_time::parse_ticks(time)?
-        .checked_add(crate::music_time::parse_ticks(duration)?)
-        .map(Some)
-        .ok_or_else(|| "music_time_tick_overflow".into())
+    let key = serde_json::from_value(n["origin"].clone())
+        .map_err(|_| "music_chord_time_origin_required")?;
+    graph
+        .chord_end_time(key)?
+        .as_deref()
+        .map(Fraction::parse)
+        .transpose()
 }
+/// The image mapper still admits a sixteenth grid. Convert at that boundary,
+/// without constraining the actual Chord clock or its live duration getter.
+pub(crate) fn set_and_push_ticks(
+    graph: &mut Graph,
+    voices: &[Voice],
+    measures: &[Measure],
+    id: usize,
+    time: Option<u32>,
+) -> Result<(), String> {
+    set_and_push(graph, voices, measures, id, time.map(Fraction::from_ticks))
+}
+
 enum Action {
     Push(usize),
     Sequence(usize),
@@ -73,7 +86,7 @@ pub(crate) fn set_and_push(
     voices: &[Voice],
     measures: &[Measure],
     id: usize,
-    time: Option<u32>,
+    time: Option<Fraction>,
 ) -> Result<(), String> {
     let mut staged = graph.clone();
     set_time(&mut staged, id, time)?;

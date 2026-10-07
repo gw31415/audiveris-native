@@ -1289,3 +1289,13 @@ a refused/rolled-back control; generic/manual provenance guards stay. This is no
 new automatic recognition or general task/CLI admission. Evidence and native XML:
 `evidence/musicxml-manual-return-reprocess/VALIDATION.json`, `control.musicxml`,
 `TRY.md`. Full595 remains historical95e191b.
+
+### Rational actual Chord clock propagation
+
+Original sequence/group/tie clock propagation now uses exact ordinary fractions
+and live getEndTime instead of projected cached duration. Real saved-owner
+manual7/64 plus declared NextInVoice controls compare0,1/64,null and cross-Measure
+boundaries, retaining owner/expectedDuration/dirty state. Slot/Voice Rational
+clocks, underfilled export and actual task publication remain pending; the
+image mapper/public correction guards stay. See
+`evidence/musicxml-rational-chord-clocks/NEXT-DEPENDENCY.md`.

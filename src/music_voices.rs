@@ -195,7 +195,13 @@ pub(crate) fn process_starting_chords(
     let mut retained = voices.clone();
     for &(chord, _) in &ordered {
         construct_owned_voice(&mut staged, &mut retained, measures, chord)?;
-        crate::music_chord_time::set_and_push(&mut staged, &retained, measures, chord.id, Some(0))?;
+        crate::music_chord_time::set_and_push_ticks(
+            &mut staged,
+            &retained,
+            measures,
+            chord.id,
+            Some(0),
+        )?;
     }
     *graph = staged;
     *voices = retained;
@@ -1824,7 +1830,7 @@ mod group_tests {
                 "cross-measure" => next(&mut graph, chord_ids[3], other_id),
                 _ => {}
             }
-            crate::music_chord_time::set_and_push(
+            crate::music_chord_time::set_and_push_ticks(
                 &mut graph,
                 &owner.voices,
                 &owner.measures,
@@ -1858,17 +1864,20 @@ mod group_tests {
         first["duration"] = json!("1/32");
         bad_clock.vertex(first_key, first, false).unwrap();
         let before = bad_clock.snapshot();
-        assert!(
-            crate::music_chord_time::set_and_push(
-                &mut bad_clock,
-                &owner.voices,
-                &owner.measures,
-                chord_ids[0],
-                Some(0)
-            )
-            .is_err()
+        crate::music_chord_time::set_and_push_ticks(
+            &mut bad_clock,
+            &owner.voices,
+            &owner.measures,
+            chord_ids[0],
+            Some(0),
+        )
+        .unwrap();
+        // getEndTime reads the live duration, never a forged report/cache value.
+        assert_eq!(
+            bad_clock.chord_duration(first_key).unwrap(),
+            owner.owner.graph.chord_duration(first_key).unwrap()
         );
-        assert_eq!(bad_clock.snapshot(), before);
+        assert_eq!(bad_clock.snapshot()["inters"], before["inters"]);
         let timed_page_graph = owner.owner.graph.clone();
         let snapshot = owner.owner.graph.snapshot();
         let before_cache = snapshot["inters"]
