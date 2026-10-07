@@ -1,0 +1,28 @@
+{
+  "baseline_source": "3e3137bf9bd0032cb3762bf77cfec305ff585d4f",
+  "original_source": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_scope": "actual saved Book/SheetStub/SIG, per-task mixed UITaskList do/undo/redo and real CtrlTask RHYTHMS epilog; explicit clean setter baselines",
+  "native_scope": "actual retained single-image editing owner bound after initial recognition/rhythm; callback and controller flags, not imported project flags",
+  "observations": [
+    "SheetStub.setModified(true) marks stub, Book modified and dirty; false does not clear Book",
+    "Book.isModified includes actual stub modified even when Book field is false; repository absent in control",
+    "changed AbstractInter.setAbnormal marks owning stub; same value, bounds and source publication alone do not",
+    "DO directly marks stub before step dispatch even below first impacted step; UNDO/REDO callbacks can independently dirty",
+    "Book dirty means score reduction needed, not PageStep complete or project stored"
+  ],
+  "target_tests": {
+    "new_original_intermediate_comparison": 1,
+    "existing_relation_and_mixed_corrections": 3,
+    "status": "passed"
+  },
+  "fmt": "passed",
+  "clippy": "all-targets -D warnings passed",
+  "full_suite": "not rerun; historical595@95e191b",
+  "automatic_undo": "original13/16 remains incomplete; native export refuses with transactional rollback",
+  "completion_flags": false,
+  "remaining": [
+    "other actual abnormal/lifecycle dirty sources and general task/controller dispatch",
+    "Book score reduction, sample repository, multi-sheet ownership and project store/load",
+    "PAGE/history, shared/multi-staff support and complete cleaner/epilog"
+  ]
+}

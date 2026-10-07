@@ -7,6 +7,7 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+mod book_state;
 mod dot_ownership;
 mod editing_task;
 pub use dot_ownership::NoteOwnerEdit;
@@ -361,6 +362,7 @@ pub struct Graph {
     edit_publications: Vec<Value>,
     edit_impacts: Vec<Value>,
     dot_ownership: Option<dot_ownership::Ownership>,
+    editing_book: Option<book_state::BookState>,
     #[cfg(test)]
     trace_dot_callbacks: bool,
     #[cfg(test)]
@@ -1403,9 +1405,9 @@ impl Graph {
             .map(|e| e.key.source)
             .collect::<BTreeSet<_>>();
         for &id in affected {
-            let v = &mut self.vertices[id - 1];
+            let v = &self.vertices[id - 1];
             if !v.removed && !v.removing && v.data["kind"] == "AugmentationDotInter" {
-                v.data["abnormal"] = json!(!linked.contains(&id));
+                self.set_owned_abnormal(id, !linked.contains(&id));
             }
         }
     }
@@ -2483,6 +2485,9 @@ impl Graph {
         let mut snapshot = json!({"schema":"audiveris-native.shared-sig.v1","id_namespace":"native shared registration-order vertex and relation IDs; not JVM IDs","inters":self.vertices.iter().filter(|v|!v.removed).map(|v|v.data.clone()).collect::<Vec<_>>(),"relations":self.live_edges().into_iter().map(|e|e.data.clone()).collect::<Vec<_>>(),"tombstones":self.vertices.iter().enumerate().filter(|(_,v)|v.removed).map(|(i,v)|json!({"id":i+1,"origin":v.key})).collect::<Vec<_>>(),"musicxml_complete":false});
         if self.dot_ownership.is_some() {
             snapshot["augmentation_dot_ownership"] = self.dot_ownership_snapshot();
+        }
+        if let Some(book) = self.editing_book_state() {
+            snapshot["editing_book"] = book;
         }
         if !self.edit_publications.is_empty() {
             snapshot["edit_publications"] = json!(self.edit_publications);

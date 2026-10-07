@@ -2,6 +2,29 @@
 use super::{Graph, Key, NoteOwnerEdit, Phase};
 use serde_json::{Value, json};
 
+const STEPS: [&str; 20] = [
+    "LOAD",
+    "BINARY",
+    "SCALE",
+    "GRID",
+    "HEADERS",
+    "STEM_SEEDS",
+    "BEAMS",
+    "LEDGERS",
+    "HEADS",
+    "STEMS",
+    "REDUCTION",
+    "CUE_BEAMS",
+    "TEXTS",
+    "MEASURES",
+    "CHORDS",
+    "CURVES",
+    "SYMBOLS",
+    "LINKS",
+    "RHYTHMS",
+    "PAGE",
+];
+
 #[derive(Clone, Debug)]
 pub struct EditingLink {
     partner: Key,
@@ -254,7 +277,7 @@ impl DefaultEditingTask {
         }
         // Neither raw editor nor task reconstructs Measure membership. Controller
         // impact belongs after task publication, and remains a separate boundary.
-        let publication = json!({"inter_id":id,"operation":operation.name(),"phase":"after_task","controller_impact_complete":false});
+        let publication = json!({"inter_id":id,"operation":operation.name(),"phase":"after_task","actual_dirty_state":next.editing_book_state(),"controller_impact_complete":false});
         next.edit_publications.push(publication.clone());
         #[cfg(test)]
         next.dot_callback_event("publish", id, "delivered");
@@ -314,7 +337,7 @@ impl RelationTask {
                 .edit_publications
                 .push(json!({"inter_id":id,"operation":operation.name(),
                 "phase":"after_task","task":if self.unlink {"UnlinkTask"}else{"LinkTask"},
-                "controller_impact_complete":false}));
+                "actual_dirty_state":graph.editing_book_state(),"controller_impact_complete":false}));
             #[cfg(test)]
             graph.dot_callback_event("publish", id, "delivered");
         } else {
@@ -473,28 +496,6 @@ impl EditingSequence {
         operation: EditingOperation,
         latest_step: &str,
     ) -> Result<Value, String> {
-        const STEPS: [&str; 20] = [
-            "LOAD",
-            "BINARY",
-            "SCALE",
-            "GRID",
-            "HEADERS",
-            "STEM_SEEDS",
-            "BEAMS",
-            "LEDGERS",
-            "HEADS",
-            "STEMS",
-            "REDUCTION",
-            "CUE_BEAMS",
-            "TEXTS",
-            "MEASURES",
-            "CHORDS",
-            "CURVES",
-            "SYMBOLS",
-            "LINKS",
-            "RHYTHMS",
-            "PAGE",
-        ];
         let latest = STEPS
             .iter()
             .position(|s| *s == latest_step)
@@ -510,16 +511,31 @@ impl EditingSequence {
                 task.perform(&mut next, operation)?;
             }
         }
+        let notification = sequence.notify_impact(&mut next, operation, latest_step, latest)?;
+        *graph = next;
+        *self = sequence;
+        Ok(notification)
+    }
+    fn notify_impact(
+        &self,
+        next: &mut Graph,
+        operation: EditingOperation,
+        latest_step: &str,
+        latest: usize,
+    ) -> Result<Value, String> {
+        if matches!(operation, EditingOperation::Do) {
+            next.mark_controller_sheet_modified();
+        }
         // Dot InterTasks and retained augmentation RelationTasks first affect
         // RHYTHMS. Other relation classes need their original impact boundary.
-        let first = (!sequence.tasks.is_empty())
-            .then(|| STEPS.iter().position(|s| *s == "RHYTHMS").unwrap());
+        let first =
+            (!self.tasks.is_empty()).then(|| STEPS.iter().position(|s| *s == "RHYTHMS").unwrap());
         let planned = first
             .filter(|first| *first <= latest)
             .map_or_else(Vec::new, |first| STEPS[first..=latest].to_vec());
         let mut stack_targets = Vec::new();
         if planned.contains(&"RHYTHMS") {
-            for task in &sequence.tasks {
+            for task in &self.tasks {
                 // Impact scans the original task list even on undo; relations
                 // insert source then target into a LinkedHashSet.
                 for inter in task.impact_inters() {
@@ -533,15 +549,14 @@ impl EditingSequence {
         }
         let notification = json!({
             "operation":operation.name(), "stage":"after_sequence_publications",
-            "inter_ids":sequence.tasks.iter().map(|t|next.id(t.focus()).unwrap()).collect::<Vec<_>>(),
+            "inter_ids":self.tasks.iter().map(|t|next.id(t.focus()).unwrap()).collect::<Vec<_>>(),
             "mark_sheet_modified":matches!(operation,EditingOperation::Do),
             "first_impacted_step":first.map(|i|STEPS[i]), "latest_completed_step":latest_step,
             "planned_steps":planned, "rhythm_stack_targets":stack_targets, "reprocessed_steps":[],
+            "actual_dirty_state":next.editing_book_state(),"project_persistence_complete":false,
             "controller_impact_complete":false
         });
         next.edit_impacts.push(notification.clone());
-        *graph = next;
-        *self = sequence;
         Ok(notification)
     }
 }
@@ -549,6 +564,151 @@ impl EditingSequence {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn owned_book_dirty_callbacks_and_controller_requests_match_original_intermediates() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../../fixtures/official-editing-book-dirty/observed.json"
+        ))
+        .unwrap();
+        let image = crate::GrayImage::decode(include_bytes!(
+            "../../fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+        ))
+        .unwrap();
+        let export = crate::music_xml::recognize(&image).unwrap();
+        let mut graph = export.owner.owner.graph.clone();
+        let initial = graph.snapshot();
+        let dot = initial["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| n["kind"] == "AugmentationDotInter")
+            .min_by_key(|n| n["bounds"][0].as_i64())
+            .unwrap();
+        let id = dot["id"].as_u64().unwrap() as usize;
+        let key: Key = serde_json::from_value(dot["origin"].clone()).unwrap();
+        let head = initial["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["kind"] == "HeadChordInter" && n["bounds"] == oracle["target_chord_bounds"])
+            .unwrap()["member_ids"][0]
+            .as_u64()
+            .unwrap() as usize;
+        let clean = |g: &mut Graph| {
+            let b = g.editing_book.as_mut().unwrap();
+            b.set_stub_modified(false);
+            b.set_modified(false);
+            b.set_dirty(false);
+        };
+        let compare = |g: &Graph, expected: &Value| {
+            let actual = g.editing_book_state().unwrap();
+            for field in [
+                "sheet_modified",
+                "book_modified",
+                "book_modified_field",
+                "book_dirty",
+            ] {
+                assert_eq!(actual[field], expected[field], "{field}");
+            }
+            assert_eq!(
+                g.vertices[id - 1].data["abnormal"],
+                expected["dot_abnormal"]
+            );
+            assert_eq!(actual["system_ids"], json!([key.system]));
+            assert_eq!(actual["project_persistence_complete"], false);
+        };
+        for step in oracle["setters"].as_array().unwrap() {
+            let b = graph.editing_book.as_mut().unwrap();
+            match step["operation"].as_str().unwrap() {
+                "clean" => clean(&mut graph),
+                "stub_true" => b.set_stub_modified(true),
+                "stub_false" => b.set_stub_modified(false),
+                "book_false" => b.set_modified(false),
+                "dirty_false" => b.set_dirty(false),
+                "book_false_with_stub_true" => {
+                    b.set_stub_modified(true);
+                    b.set_modified(false);
+                }
+                _ => unreachable!(),
+            }
+            compare(&graph, &step["state"]);
+        }
+        let mut bounds: [i64; 4] = serde_json::from_value(dot["bounds"].clone()).unwrap();
+        bounds[0] += 3;
+        let mut sequence = export.dot_relation_transfer(id, head, true).unwrap();
+        sequence.prepend(EditingTask::Inter(
+            DefaultEditingTask::new(&graph, key, bounds, vec![], vec![]).unwrap(),
+        ));
+        for (i, op) in [
+            EditingOperation::Do,
+            EditingOperation::Undo,
+            EditingOperation::Redo,
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            clean(&mut graph);
+            graph.enable_dot_callback_trace();
+            let original = &oracle["operations"][i];
+            compare(&graph, &original["states"][0]["state"]);
+            let indexes = if matches!(op, EditingOperation::Undo) {
+                vec![2, 1, 0]
+            } else {
+                vec![0, 1, 2]
+            };
+            for (j, index) in indexes.into_iter().enumerate() {
+                sequence.tasks[index].perform(&mut graph, op).unwrap();
+                compare(&graph, &original["states"][j + 1]["state"]);
+            }
+            let callbacks = graph
+                .dot_callback_trace()
+                .iter()
+                .filter(|e| e["event"] != "publish")
+                .collect::<Vec<_>>();
+            assert_eq!(
+                callbacks.len(),
+                original["callbacks"].as_array().unwrap().len()
+            );
+            for (a, b) in callbacks
+                .into_iter()
+                .zip(original["callbacks"].as_array().unwrap())
+            {
+                for f in ["event", "stage"] {
+                    assert_eq!(a[f], b[f]);
+                }
+                for f in [
+                    "sheet_modified",
+                    "book_modified",
+                    "book_modified_field",
+                    "book_dirty",
+                ] {
+                    assert_eq!(a["state"]["editing_book"][f], b["state"][f]);
+                }
+            }
+            let notice = sequence
+                .notify_impact(&mut graph, op, "RHYTHMS", 18)
+                .unwrap();
+            compare(&graph, &original["states"][4]["state"]);
+            assert_eq!(
+                notice["mark_sheet_modified"],
+                matches!(op, EditingOperation::Do)
+            );
+            assert_eq!(notice["actual_dirty_state"]["sheet_modified"], true);
+            assert_eq!(notice["controller_impact_complete"], false);
+        }
+        clean(&mut graph);
+        graph.set_owned_abnormal(id, false);
+        compare(&graph, &oracle["stable"][0]["state"]);
+        sequence.tasks[2]
+            .perform(&mut graph, EditingOperation::Do)
+            .unwrap();
+        compare(&graph, &oracle["stable"][1]["state"]);
+        let notice = sequence
+            .notify_impact(&mut graph, EditingOperation::Do, "HEADS", 8)
+            .unwrap();
+        compare(&graph, &oracle["stable"][2]["state"]);
+        assert_eq!(notice["planned_steps"], json!([]));
+    }
     #[test]
     fn actual_relation_task_replay_publishes_without_callback_and_missing_remove_refuses() {
         let oracle: Value = serde_json::from_str(include_str!(

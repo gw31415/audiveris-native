@@ -1192,3 +1192,15 @@ transfer supports do/undo/redo. Original automatic re-add instead yields13/16;
 native keeps the complete-measure refusal and rolls back all retained state.
 This is not automatic correction discovery or full controller/history parity.
 `evidence/musicxml-timed-support-reprocess/NEXT-DEPENDENCY.md` lists the remainder.
+
+### Retained Book/SheetStub callback state
+
+Actual retained single-image editing ownership now records ordinary dot abnormal
+callback dirty propagation separately from controller DO requests and publication.
+Original Book/SheetStub setters, do/undo/redo intermediate flags, unchanged-value
+and below-first-step boundaries match the saved actual owner control. Binding
+begins after initial recognition/rhythm: this does not reconstruct persisted or
+initial-processing flags. MusicXML render does not clear dirty or complete PAGE.
+Other SIG dirty sources, score reduction, repository/multi-sheet/project persistence
+remain partial. Evidence: `evidence/musicxml-editing-book-dirty/VALIDATION.json`.
+Latest targeted1+3 and fmt/clippy passed; full595 remains historical95e191b.

@@ -506,6 +506,11 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     admit_symbols(&m)?;
     m.owner.graph.populate_dot_measures()?;
     let rhythm = process_rhythm(&mut m, None)?;
+    // A new retained editing owner is not an imported/persisted Book. Do not
+    // infer prior dirty flags or clear them when writing MusicXML.
+    m.owner
+        .graph
+        .bind_editing_book(m.measures.iter().map(|m| m.system).collect())?;
     let xml = render(&mut m, part_name, rhythm, true)?;
     let provenance = provenance(&m);
     Ok(Export {

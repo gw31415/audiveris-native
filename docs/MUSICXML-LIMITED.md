@@ -2388,3 +2388,17 @@ an explicit correction. Automatic undo remains13/16 and cannot be exported as a
 full measure. Full controller/PAGE/history and actual Book/SheetStub dirty-state
 persistence are partial: planned `mark_sheet_modified` records only the direct
 controller DO request, not all dirty changes caused by original callbacks.
+
+### Editing dirty-state observation
+
+The existing mixed correction command also reports `shared_sig.editing_book`
+and each publication/impact's `actual_dirty_state`. These come from the retained
+Book/SheetStub editing owner, not planned impact flags. Bounds/publication alone
+can remain clean; a changed dot abnormal callback dirties the owner before impact.
+Controller DO marks it even below the first impacted step. UNDO/REDO can dirty
+through callbacks without a direct DO request. Sheet flag false does not clear
+Book flags. Writing MusicXML does not imply score reduction or project storage.
+
+Tracking begins after initial recognition/rhythm on the current single-image
+owner; imported project flags, all dirty sources, multi-sheet/repository state
+and store/load remain partial. No new image or correction scope is admitted.
