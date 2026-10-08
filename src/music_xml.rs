@@ -3699,3 +3699,5 @@ mod tuplet_sans_duration;
 
 mod tuplet_beats;
 pub use tuplet_beats::TupletBeatPlan;
+
+mod tuplet_force;

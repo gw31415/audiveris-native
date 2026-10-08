@@ -19,6 +19,12 @@ impl OwnedMusic {
         {
             return Ok(key);
         }
+        self.with_tuplet_owners(|owner| owner.generate_tuplet_on(number, mi, group, font))
+    }
+    pub(super) fn with_tuplet_owners<T>(
+        &mut self,
+        operation: impl FnOnce(&mut Self) -> Result<T, String>,
+    ) -> Result<T, String> {
         let old_graph = self.owner.graph.clone();
         let held = self
             .measures
@@ -31,11 +37,17 @@ impl OwnedMusic {
                 (tuplets, stack)
             })
             .collect::<Vec<_>>();
-        let result = self.generate_tuplet_on(number, mi, group, font);
+        let result = operation(self);
         if result.is_err() {
             self.owner.graph = old_graph;
-            for (measure, (tuplets, stack)) in self.measures.iter_mut().zip(held) {
+        }
+        for (measure, (tuplets, stack)) in self.measures.iter_mut().zip(held) {
+            // An all-existing force call changes no actual container. Keep
+            // its original storage as well as its member identities.
+            if result.is_err() || measure.tuplets == tuplets {
                 measure.tuplets = tuplets;
+            }
+            if result.is_err() || measure.stack_tuplets == stack {
                 measure.stack_tuplets = stack;
             }
         }

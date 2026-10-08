@@ -1915,3 +1915,13 @@ manual/relation identity and old clocks remain intact. Explicit beat planning is
 not automatic signature/force admission. Evidence musicxml-tuplet-beat; force
 generation/eligibility, inspect/merge/second pass/real font binding remain, full
 nonUI completion false.
+
+### Actual Voice force generation/reuse (continuation of539497a)
+
+Original4 cases/8 private force calls/26 fresh callbacks compare composed actual
+beat grouping/BeamGroup extension/split/generation and repeated same-object result
+refs. Second force reuses objects with no callbacks. Outer later allocation failure
+restores earlier completed Tuplet/real container storage/Chord/Slot clocks; all-
+existing calls retain unchanged storage. Explicit source beat/font controls precede
+ordinary binding. Evidence musicxml-tuplet-force. Eligibility/inspect/merge/second
+pass and real signature/font/switch ownership remain; full nonUI completion false.

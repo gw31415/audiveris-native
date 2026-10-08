@@ -141,6 +141,10 @@ impl Graph {
         self.tuplet_addition_failure = count;
     }
     #[cfg(test)]
+    pub(crate) fn fail_tuplet_registration_after(&mut self, count: Option<usize>) {
+        self.tuplet_registration_failure = count;
+    }
+    #[cfg(test)]
     pub(crate) fn take_tuplet_additions(&mut self) -> Vec<TupletAdditionObservation> {
         self.tuplet_additions
             .as_mut()
@@ -184,6 +188,19 @@ impl Graph {
                     sig_attached,
                     containers: owners.containers,
                 });
+        }
+        if edge.is_none()
+            && self.tuplet_registration_failure.is_some_and(|count| {
+                self.tuplet_additions.as_ref().is_some_and(|events| {
+                    events
+                        .iter()
+                        .filter(|event| event.phase == "vertex_registered")
+                        .count()
+                        == count
+                })
+            })
+        {
+            return Err("music_tuplet_addition_observer_failure".into());
         }
         if edge.is_some() && self.tuplet_addition_failure == Some(self.tuplet_chords(tuplet)?.len())
         {

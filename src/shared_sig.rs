@@ -390,6 +390,8 @@ pub struct Graph {
     tuplet_additions: Option<Vec<tuplet_addition::TupletAdditionObservation>>,
     #[cfg(test)]
     tuplet_addition_failure: Option<usize>,
+    #[cfg(test)]
+    tuplet_registration_failure: Option<usize>,
     dot_removals: Vec<Value>,
     edit_publications: Vec<Value>,
     edit_impacts: Vec<Value>,

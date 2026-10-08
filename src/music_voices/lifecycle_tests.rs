@@ -830,3 +830,5 @@ mod tuplet_stack_tests;
 mod tuplet_sans_tests;
 
 mod tuplet_beat_tests;
+
+mod tuplet_force_tests;
