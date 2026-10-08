@@ -43,9 +43,8 @@ fn intersection(m: [f64; 4], h: [i32; 2], t: [i32; 2]) -> Result<[i32; 2], Strin
         (a * (x3 - x4) - (x1 - x2) * b) / den,
         (a * (y3 - y4) - (y1 - y2) * b) / den,
     ];
-    if p.iter().any(|v| !v.is_finite() || v.abs() > 16_000_000.) {
-        return Err("music_rest_actual_chord_geometry_required".into());
-    }
+    // A RestChord's zero-length head/tail line yields NaN. Original
+    // PointUtil.rounded narrows Math.rint to int, including NaN -> zero.
     Ok(p.map(|v| v.round_ties_even() as i32))
 }
 fn overlap(a: [i32; 4], b: [i32; 4]) -> bool {
@@ -253,7 +252,28 @@ impl OwnedMusic {
         white: &[Key],
     ) -> Result<Vec<usize>, String> {
         let mut graph = self.owner.graph.clone();
-        let area = self.prepare_rest_polygon(&mut graph, number, group, left, right)?;
+        let added = self.lookup_interleaved_rests_on(
+            &mut graph,
+            number,
+            group,
+            [left, right],
+            candidates,
+            white,
+        )?;
+        self.owner.graph = graph;
+        Ok(added)
+    }
+    pub(super) fn lookup_interleaved_rests_on(
+        &self,
+        graph: &mut Graph,
+        number: usize,
+        group: Key,
+        pair: [Key; 2],
+        candidates: &[Key],
+        white: &[Key],
+    ) -> Result<Vec<usize>, String> {
+        let [left, right] = pair;
+        let area = self.prepare_rest_polygon(graph, number, group, left, right)?;
         for &key in white {
             let chord = self
                 .chords
@@ -261,7 +281,7 @@ impl OwnedMusic {
                 .find(|c| c.key == key && c.kind == ChordKind::Rest)
                 .ok_or("music_rest_actual_rest_chord_required")?;
             validate_measure_chord(
-                &graph,
+                graph,
                 self.measures
                     .get(chord.measure)
                     .ok_or("music_rest_actual_measure_required")?,
@@ -278,7 +298,7 @@ impl OwnedMusic {
                 continue;
             }
             seen.push(key);
-            let Some(candidate) = self.rest_candidate(&graph, &area, key)?.0 else {
+            let Some(candidate) = self.rest_candidate(graph, &area, key)?.0 else {
                 continue;
             };
             let (beam, distance) = candidate.nearest;
@@ -304,13 +324,13 @@ impl OwnedMusic {
                     }
                     let sibling = owners[0];
                     validate_measure_chord(
-                        &graph,
+                        graph,
                         self.measures
                             .get(sibling.measure)
                             .ok_or("music_rest_actual_measure_required")?,
                         sibling,
                     )?;
-                    actual_rest_note(&graph, sibling)?;
+                    actual_rest_note(graph, sibling)?;
                     if white.contains(&sibling.key)
                         || distance > f64::from(graph.beam_rest_distance(eid)?)
                     {
@@ -335,11 +355,10 @@ impl OwnedMusic {
                 self.owner.interline,
             )?);
         }
-        self.owner.graph = graph;
         Ok(added)
     }
 }
-fn chord_geometry(
+pub(super) fn chord_geometry(
     graph: &mut Graph,
     chord: &Chord,
 ) -> Result<crate::shared_sig::ChordRead, String> {

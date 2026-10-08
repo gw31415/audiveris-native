@@ -1780,3 +1780,16 @@ implicit-tuplet removal-before-clear/detect/reset preparation remain next before
 ordinary selected integration. Re-add/controller/history and general nullable/
 mutable/multipart/full nonUI remain pending; all full/public flags stay false.
 See evidence/musicxml-beam-rest-competition.
+
+Captured actual BeamGroup Chords now drive complete explicit white-before-plain
+detection on retained owners. Ten pinned original short/excess controls and20
+post-callback observations compare strict endpoints/null, Next/Separate priority,
+existing RestChord capture, held HeadChord bounds sorting and original NaN->int0
+intersection. Late plain-member failure after white addition restores relations,
+clocks and actual physical owners for same-owner retry. Sixteen unique targets,
+fmt/clippy/build, existing63+correction8 and exact7/64 XML bytes/XSD pass.
+Ordinary selected complete prep still requires original implicit Tuplet removal
+BEFORE clear/detect/reset, then later implicit generation/merge ownership.
+This is an intermediate checkpoint; authorized next work continues. Full/nonUI
+and public flags remain false, original task/work/unobtainedce785c9 held.
+See evidence/musicxml-beam-rest-detect.

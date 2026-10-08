@@ -957,6 +957,17 @@ fn collect_beam_group_chords(
         .iter()
         .map(|n| (n["id"].as_u64().unwrap() as usize, n))
         .collect();
+    let mut bounds = BTreeMap::new();
+    for (&id, node) in &nodes {
+        if matches!(
+            node["kind"].as_str(),
+            Some("HeadChordInter" | "RestChordInter")
+        ) {
+            let key = serde_json::from_value(node["origin"].clone())
+                .map_err(|_| "music_group_chord_origin_required")?;
+            bounds.insert(id, graph.retained_or_live_chord_bounds(key)?);
+        }
+    }
     let edges = snapshot["relations"].as_array().unwrap();
     let mut rows = Vec::new();
     for group in nodes.values().filter(|n| n["kind"] == "BeamGroupInter") {
@@ -1042,10 +1053,7 @@ fn collect_beam_group_chords(
             }
             // Each beam first sorts its head/rest chords by center. The group
             // then collects these lists and stably sorts by left abscissa.
-            beam_chords.sort_by_key(|id| {
-                nodes[id]["bounds"][0].as_i64().unwrap()
-                    + nodes[id]["bounds"][2].as_i64().unwrap() / 2
-            });
+            beam_chords.sort_by_key(|id| bounds[id][0] + bounds[id][2] / 2);
             for id in beam_chords {
                 if seen.insert(id) {
                     chord_ids.push(id);
@@ -1055,11 +1063,11 @@ fn collect_beam_group_chords(
         // Original getChords uses byAbscissa (left bounds), not the Voice's
         // center comparator. LinkedHashSet preserves ties and removes aliases.
         if sort_group_by_left {
-            chord_ids.sort_by_key(|id| nodes[id]["bounds"][0].as_i64().unwrap());
+            chord_ids.sort_by_key(|id| bounds[id][0]);
         }
         rows.push(json!({"id":gid,"system_id":system,"bounds":group["bounds"],
             "beams":beams.iter().map(|n|json!({"id":n["id"],"kind":n["kind"],"bounds":n["bounds"]})).collect::<Vec<_>>(),
-            "chords":chord_ids.iter().map(|id| {let n=nodes[id];json!({"id":id,"kind":n["kind"],"bounds":n["bounds"],"voice":n["voice"],"measure_number":n["measure_number"]})}).collect::<Vec<_>>()
+            "chords":chord_ids.iter().map(|id| {let n=nodes[id];json!({"id":id,"kind":n["kind"],"bounds":bounds[id],"voice":n["voice"],"measure_number":n["measure_number"]})}).collect::<Vec<_>>()
             }));
     }
     Ok(json!(rows))

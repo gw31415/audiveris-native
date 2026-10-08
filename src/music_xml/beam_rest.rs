@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 use crate::music_measures::{ChordKind, OwnedMusic};
+use crate::shared_sig::{Graph, Key};
 use std::collections::BTreeMap;
+
+pub(super) struct RestGroupCandidates {
+    pub group: Key,
+    pub seeds: Vec<Key>,
+    pub black: Vec<Key>,
+    pub white: Vec<Key>,
+    pub plain: Vec<Key>,
+    pub measures: Vec<usize>,
+}
 
 impl OwnedMusic {
     pub fn staff_midline_at(&self, measure_number: usize, x: i32) -> Result<i32, String> {
@@ -120,95 +130,146 @@ impl OwnedMusic {
             .ok_or("music_rest_actual_measure_required")?;
         let mut graph = self.owner.graph.clone();
         let groups = measure_groups(&mut graph, &self.measures[mi], &self.chords, mi)?;
-        let rows = crate::music_voices::beam_group_chords(&graph)?;
-        let member_rows = crate::music_voices::beam_group_chords_by_member(&graph)?;
         let mut candidates = Vec::new();
         for group in groups {
-            let row = rows
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|g| g["id"] == group)
-                .ok_or("music_rest_actual_group_required")?;
-            let seeds = row["chords"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .map(|c| c["id"].as_u64().unwrap() as usize)
-                .collect::<Vec<_>>();
-            let black = linked_rest_ids(
-                &graph,
-                &self.chords,
-                &seeds,
-                false,
-                &["SeparateVoiceRelation"],
-            )?;
-            // The original call site supplies Next only, despite its broader
-            // SameVoice wording in the surrounding Javadoc.
-            let mut white =
-                linked_rest_ids(&graph, &self.chords, &seeds, true, &["NextInVoiceRelation"])?;
-            white.retain(|id| !black.contains(id));
-            let member_row = member_rows
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|row| row["id"] == group)
-                .ok_or("music_rest_actual_group_required")?;
-            let mut measure_indices = Vec::new();
-            for row in member_row["chords"].as_array().unwrap() {
-                let chord = self
-                    .chords
-                    .iter()
-                    .find(|c| row["id"] == c.id)
-                    .ok_or("music_rest_actual_chord_required")?;
-                let measure = self
-                    .measures
-                    .get(chord.measure)
-                    .ok_or("music_rest_actual_measure_required")?;
-                validate_measure_chord(&graph, measure, chord)?;
-                if !measure_indices.contains(&chord.measure) {
-                    measure_indices.push(chord.measure);
-                }
-            }
-            // Original sorts by Stack.left. The admitted single-staff part
-            // shares that retained Measure boundary; multipart stacks remain pending.
-            measure_indices.sort_by_key(|mi| self.measures[*mi].left);
-            let mut plain = Vec::new();
-            for &mi in &measure_indices {
-                let measure = &self.measures[mi];
-                let snapshot = graph.snapshot();
-                if snapshot["inters"].as_array().unwrap().iter().any(|node| {
-                    node["kind"] == "RestChordInter"
-                        && node["origin"]["system"] == measure.system
-                        && node["part_id"] == measure.part
-                        && node["staff_id"] == measure.staff
-                        && node["measure_index"] == measure.index
-                        && !self.chords.iter().any(|c| {
-                            c.measure == mi && c.kind == ChordKind::Rest && node["id"] == c.id
-                        })
-                }) {
-                    return Err("music_rest_actual_chord_required".into());
-                }
-                for chord in self
-                    .chords
-                    .iter()
-                    .filter(|c| c.measure == mi && c.kind == ChordKind::Rest)
-                {
-                    validate_measure_chord(&graph, &self.measures[mi], chord)?;
-                    if !black.contains(&chord.id)
-                        && !white.contains(&chord.id)
-                        && !plain.contains(&chord.id)
-                    {
-                        plain.push(chord.id);
-                    }
-                }
-            }
-            candidates.push(serde_json::json!({"group_id":group,"seed_chord_ids":seeds,
-                "black_rest_ids":black,"white_rest_ids":white,"plain_rest_ids":plain,
-                "measure_numbers":measure_indices.iter().map(|mi|mi+1).collect::<Vec<_>>(),"rest_detection_complete":false}));
+            let c = self.group_rest_candidates(&graph, group)?;
+            let ids = |keys: &[Key]| {
+                keys.iter()
+                    .map(|k| graph.id(*k).unwrap())
+                    .collect::<Vec<_>>()
+            };
+            candidates.push(serde_json::json!({"group_id":group,"seed_chord_ids":ids(&c.seeds),
+                "black_rest_ids":ids(&c.black),"white_rest_ids":ids(&c.white),"plain_rest_ids":ids(&c.plain),
+                "measure_numbers":c.measures.iter().map(|mi|mi+1).collect::<Vec<_>>(),"rest_detection_complete":false}));
         }
         self.owner.graph = graph;
         Ok(serde_json::json!(candidates))
+    }
+    pub(super) fn group_rest_candidates(
+        &self,
+        graph: &Graph,
+        group: usize,
+    ) -> Result<RestGroupCandidates, String> {
+        let rows = crate::music_voices::beam_group_chords(graph)?;
+        let member_rows = crate::music_voices::beam_group_chords_by_member(graph)?;
+        let row = rows
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|g| g["id"] == group)
+            .ok_or("music_rest_actual_group_required")?;
+        let seeds = row["chords"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|c| c["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        let black = linked_rest_ids(
+            graph,
+            &self.chords,
+            &seeds,
+            false,
+            &["SeparateVoiceRelation"],
+        )?;
+        // The original call site supplies Next only, despite its broader
+        // SameVoice wording in the surrounding Javadoc.
+        let mut white =
+            linked_rest_ids(graph, &self.chords, &seeds, true, &["NextInVoiceRelation"])?;
+        white.retain(|id| !black.contains(id));
+        let member_row = member_rows
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|row| row["id"] == group)
+            .ok_or("music_rest_actual_group_required")?;
+        let mut measure_indices = Vec::new();
+        for row in member_row["chords"].as_array().unwrap() {
+            let chord = self
+                .chords
+                .iter()
+                .find(|c| row["id"] == c.id)
+                .ok_or("music_rest_actual_chord_required")?;
+            let measure = self
+                .measures
+                .get(chord.measure)
+                .ok_or("music_rest_actual_measure_required")?;
+            validate_measure_chord(graph, measure, chord)?;
+            if !measure_indices.contains(&chord.measure) {
+                measure_indices.push(chord.measure);
+            }
+        }
+        // Original sorts by Stack.left. The admitted single-staff part
+        // shares that retained Measure boundary; multipart stacks remain pending.
+        measure_indices.sort_by_key(|mi| self.measures[*mi].left);
+        let mut plain = Vec::new();
+        for &mi in &measure_indices {
+            let measure = &self.measures[mi];
+            let snapshot = graph.snapshot();
+            if snapshot["inters"].as_array().unwrap().iter().any(|node| {
+                node["kind"] == "RestChordInter"
+                    && node["origin"]["system"] == measure.system
+                    && node["part_id"] == measure.part
+                    && node["staff_id"] == measure.staff
+                    && node["measure_index"] == measure.index
+                    && !self
+                        .chords
+                        .iter()
+                        .any(|c| c.measure == mi && c.kind == ChordKind::Rest && node["id"] == c.id)
+            }) {
+                return Err("music_rest_actual_chord_required".into());
+            }
+            for chord in self
+                .chords
+                .iter()
+                .filter(|c| c.measure == mi && c.kind == ChordKind::Rest)
+            {
+                validate_measure_chord(graph, &self.measures[mi], chord)?;
+                if !black.contains(&chord.id)
+                    && !white.contains(&chord.id)
+                    && !plain.contains(&chord.id)
+                {
+                    plain.push(chord.id);
+                }
+            }
+        }
+        let keys = |ids: &[usize]| -> Result<Vec<Key>, String> {
+            ids.iter()
+                .map(|id| {
+                    let chord = self
+                        .chords
+                        .iter()
+                        .find(|c| c.id == *id)
+                        .ok_or("music_rest_actual_chord_required")?;
+                    validate_measure_chord(
+                        graph,
+                        self.measures
+                            .get(chord.measure)
+                            .ok_or("music_rest_actual_measure_required")?,
+                        chord,
+                    )?;
+                    Ok(chord.key)
+                })
+                .collect()
+        };
+        let snapshot = graph.snapshot();
+        let group_key = serde_json::from_value(
+            snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == group)
+                .ok_or("music_rest_actual_group_required")?["origin"]
+                .clone(),
+        )
+        .map_err(|_| "music_rest_actual_group_required")?;
+        Ok(RestGroupCandidates {
+            group: group_key,
+            seeds: keys(&seeds)?,
+            black: keys(&black)?,
+            white: keys(&white)?,
+            plain: keys(&plain)?,
+            measures: measure_indices,
+        })
     }
     #[cfg(test)]
     pub(crate) fn actual_measure_beam_groups(

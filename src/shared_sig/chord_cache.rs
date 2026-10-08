@@ -25,6 +25,22 @@ pub(crate) struct ChordRead {
     pub tail: Option<[i64; 2]>,
 }
 impl Graph {
+    pub(crate) fn retained_or_live_chord_bounds(&self, key: Key) -> Result<[i64; 4], String> {
+        let id = self.endpoint(key)?;
+        let vertex = &self.vertices[id - 1];
+        if let Some(cache) = &vertex.chord_cache {
+            if let Some(bounds) = cache.bounds {
+                return Ok(bounds);
+            }
+            let mut staged = self.clone();
+            return staged
+                .retained_chord_getters(key)?
+                .bounds
+                .ok_or("music_group_chord_bounds_required".into());
+        }
+        serde_json::from_value(vertex.data["bounds"].clone())
+            .map_err(|_| "music_group_chord_bounds_required".into())
+    }
     pub(super) fn read_chord_placement(&mut self, key: Key) -> Result<(), String> {
         if self.dot_ownership.is_none() {
             return Ok(());

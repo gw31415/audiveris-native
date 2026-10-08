@@ -107,7 +107,7 @@ fn add_old(c: &mut Control, bs: &[Key], spec: &Value) -> Vec<(usize, String)> {
     }
     tracked
 }
-fn registrations(c: &Control, tracked: &[(usize, String)]) -> Value {
+pub(super) fn registrations(c: &Control, tracked: &[(usize, String)]) -> Value {
     json!(
         tracked
             .iter()
@@ -119,7 +119,7 @@ fn registrations(c: &Control, tracked: &[(usize, String)]) -> Value {
             .collect::<Vec<_>>()
     )
 }
-fn observed_callback(
+pub(super) fn observed_callback(
     c: &Control,
     observation: &CallbackObservation,
     tracked: &[(usize, String)],
