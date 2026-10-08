@@ -25,6 +25,7 @@ fn original_staff_midline_selection_interpolation_rounding_and_extrapolation_mat
             })
             .collect::<Vec<_>>();
         let staff = StaffGeometry {
+            specific_interline: 11,
             abscissae: [0, 500],
             id: 1,
             system: 1,

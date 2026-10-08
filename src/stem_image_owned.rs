@@ -9,6 +9,7 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 pub struct OwnedItems {
+    pub(crate) systems: Vec<std::sync::Arc<crate::grid_ir::SystemGeometry>>,
     pub(crate) grid_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) ledger_memberships: crate::ledger_membership_owners::LedgerMemberships,
     pub(crate) parts: Vec<std::sync::Arc<crate::grid_ir::PartGeometry>>,
@@ -76,6 +77,7 @@ pub fn continue_items(
         .main;
     upstream.ledger_memberships.validate(&upstream.graph)?;
     Ok(OwnedItems {
+        systems: upstream.systems,
         grid_glyphs: upstream.grid_glyphs,
         ledger_memberships: upstream.ledger_memberships,
         parts: upstream.parts,

@@ -2,6 +2,7 @@
 use super::*;
 fn staff(id: u64) -> Arc<StaffGeometry> {
     Arc::new(StaffGeometry {
+        specific_interline: 11,
         id,
         system: 1,
         abscissae: [10, 500],

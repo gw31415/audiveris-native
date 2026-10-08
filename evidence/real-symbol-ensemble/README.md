@@ -18,6 +18,6 @@ An exploratory exact best-grade assertion failed. Grade numerical equality is
 not claimed by this cleaner contract; numerical residuals are recorded apart
 from the matching strength decisions and remain a recognition-quality dependency.
 Weak standalone optional glyph collection is still explicit pending work when
-an input requires it. The source full-cleaned-mask hash is retained, but this
+an input requires it. The historical mask observation is invalid and qualified in MASK-QUALIFICATION.md; the corrected source mask remains separate. This
 unit does not certify equality of the entire native cleaner mask or real-score
 MusicXML. Synthetic XML regressions remain separate from quality acceptance.

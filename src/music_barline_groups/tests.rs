@@ -3,6 +3,7 @@ use super::*;
 use crate::shared_sig::Phase;
 fn staff(id: u64) -> Arc<StaffGeometry> {
     Arc::new(StaffGeometry {
+        specific_interline: 11,
         id,
         system: 1,
         abscissae: [0, 500],
@@ -152,7 +153,14 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
     .unwrap();
     let page = crate::page_runtime::analyze(&image, "page-glyphs", None, None).unwrap();
     let held_glyphs = page.grid_glyphs.clone();
+    let held_systems = page.systems.clone();
     let owner = crate::stem_image_owned::continue_items(&image, page).unwrap();
+    assert!(
+        held_systems
+            .iter()
+            .zip(&owner.systems)
+            .all(|(a, b)| Arc::ptr_eq(a, b) && Arc::ptr_eq(&a.area, &b.area))
+    );
     assert_eq!(held_glyphs.len(), owner.grid_glyphs.len());
     assert!(
         held_glyphs
@@ -242,6 +250,7 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
     let music = crate::music_measures::continue_measures(owner).unwrap();
     crate::music_measures::assert_real_chords(&music);
     crate::music_symbols::assert_real_ensemble_visits(&music);
+    crate::music_symbols::assert_real_symbol_geometry(&music);
     assert_eq!(
         parts.iter().map(|p| p.staffs.len()).collect::<Vec<_>>(),
         vec![1, 2, 1, 2]

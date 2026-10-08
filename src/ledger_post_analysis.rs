@@ -131,6 +131,11 @@ pub(crate) enum MembershipEvent {
         system: u64,
         membership: crate::ledger_registration::StaffMembership,
     },
+    VirtualLines {
+        system: u64,
+        staff: u64,
+        curves: std::collections::BTreeMap<i32, std::sync::Arc<Curve>>,
+    },
 }
 pub(crate) fn process_observed(
     image: &GrayImage,
@@ -313,6 +318,7 @@ pub(crate) fn process_observed(
                 .find(|m| m["staff_id"].as_u64() == Some(staff.id))
                 .unwrap();
             let mut ledger_paths = Vec::new();
+            let mut virtual_lines = std::collections::BTreeMap::new();
             for sign in [-1_i32, 1] {
                 let mut curve =
                     Curve::interpolate(staff.lines[if sign < 0 { 0 } else { 4 }].clone())
@@ -338,10 +344,16 @@ pub(crate) fn process_observed(
                         delta.add((m[1] + m[3]) / 2. - curve.y(x));
                     }
                     curve = curve.translated_y(delta.s / delta.n as f64);
+                    virtual_lines.insert(index, std::sync::Arc::new(curve.clone()));
                     ledger_paths.push(json!({"index":index,"segments":curve.path_segments()}));
                 }
             }
             ledger_paths.sort_by_key(|p| p["index"].as_i64().unwrap());
+            observe(MembershipEvent::VirtualLines {
+                system,
+                staff: staff.id,
+                curves: virtual_lines,
+            });
             paths.push(json!({"staff_id":staff.id,"ledger_paths":ledger_paths}));
         }
         report["post_analysis_complete"] = json!(true);

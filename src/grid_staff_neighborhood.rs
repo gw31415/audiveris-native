@@ -8,6 +8,39 @@ pub(crate) struct StaffNeighborhood {
     pub(crate) staffs: Vec<Arc<StaffGeometry>>,
     pub(crate) parts: Vec<Arc<PartGeometry>>,
 }
+pub(crate) fn closest(
+    staffs: &[Arc<StaffGeometry>],
+    areas: &[Arc<Band>],
+    system: u64,
+    point: [f64; 2],
+) -> Result<Option<Arc<StaffGeometry>>, String> {
+    if staffs.len() != areas.len() || point.iter().any(|v| !v.is_finite()) {
+        return Err("grid_actual_staff_area_required".into());
+    }
+    let mut selected = None;
+    for (index, staff) in staffs
+        .iter()
+        .enumerate()
+        .filter(|(_, s)| s.system == system)
+    {
+        if areas[index].contains(point)? {
+            let top = staff
+                .lines
+                .first()
+                .ok_or("grid_actual_staff_lines_required")?
+                .y(point[0]);
+            let bottom = staff.lines.last().unwrap().y(point[0]);
+            if !top.is_finite() || !bottom.is_finite() {
+                return Err("grid_actual_staff_lines_required".into());
+            }
+            let distance = (top - point[1]).max(point[1] - bottom) as i32;
+            if selected.as_ref().is_none_or(|(_, best)| distance < *best) {
+                selected = Some((staff.clone(), distance));
+            }
+        }
+    }
+    Ok(selected.map(|(staff, _)| staff))
+}
 impl StaffNeighborhood {
     pub(crate) fn part_bounds(&self) -> Vec<[i32; 4]> {
         debug_assert_eq!(self.staffs.len(), self.parts.len());
@@ -31,31 +64,16 @@ pub(crate) fn around(
         .enumerate()
         .filter(|(_, s)| s.system == system)
         .collect::<Vec<_>>();
-    let mut closest = None;
-    for (i, (index, staff)) in current.iter().enumerate() {
-        if areas[*index].contains(point)? {
-            let top = staff
-                .lines
-                .first()
-                .ok_or("grid_actual_staff_lines_required")?
-                .y(point[0]);
-            let bottom = staff.lines.last().unwrap().y(point[0]);
-            if !top.is_finite() || !bottom.is_finite() {
-                return Err("grid_actual_staff_lines_required".into());
-            }
-            let distance = (top - point[1]).max(point[1] - bottom) as i32;
-            if closest.is_none_or(|(_, best)| distance < best) {
-                closest = Some((i, distance));
-            }
-        }
-    }
-    let Some((index, _)) = closest else {
+    let Some(staff) = closest(staffs, areas, system, point)? else {
         return Ok(StaffNeighborhood {
             staffs: Vec::new(),
             parts: Vec::new(),
         });
     };
-    let staff = current[index].1;
+    let index = current
+        .iter()
+        .position(|(_, s)| Arc::ptr_eq(s, &staff))
+        .ok_or("grid_actual_closest_staff_required")?;
     let to_top = staff.lines.first().unwrap().y(point[0]) - point[1];
     let to_bottom = staff.lines.last().unwrap().y(point[0]) - point[1];
     let mut first = index;

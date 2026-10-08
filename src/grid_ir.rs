@@ -17,10 +17,55 @@ use std::sync::Arc;
 pub(crate) struct StaffGeometry {
     pub(crate) id: u64,
     pub(crate) system: u64,
+    pub(crate) specific_interline: usize,
     pub(crate) abscissae: [i32; 2],
     pub(crate) lines: Vec<Arc<Curve>>,
 }
 impl StaffGeometry {
+    pub(crate) fn pitch_at(
+        &self,
+        virtual_lines: &BTreeMap<i32, Arc<Curve>>,
+        point: [f64; 2],
+    ) -> Result<f64, String> {
+        if self.lines.len() < 2
+            || self.specific_interline == 0
+            || point.iter().any(|p| !p.is_finite())
+        {
+            return Err("music_actual_fresh_staff_pitch_required".into());
+        }
+        let top = self.lines.first().unwrap().y(point[0]);
+        let bottom = self.lines.last().unwrap().y(point[0]);
+        if !top.is_finite() || !bottom.is_finite() || bottom <= top {
+            return Err("music_actual_fresh_staff_pitch_required".into());
+        }
+        let span = (self.lines.len() - 1) as f64;
+        let y = point[1];
+        if y >= top && y <= bottom {
+            Ok(span * (2. * y - bottom - top) / (bottom - top))
+        } else {
+            let dir = if y < top { -1 } else { 1 };
+            let (mut line, mut pitch) = if dir < 0 {
+                (top, -span)
+            } else {
+                (bottom, span)
+            };
+            for level in 1..=1024 {
+                let Some(curve) = virtual_lines.get(&(dir * level)) else {
+                    break;
+                };
+                let next = curve.y(point[0]);
+                if !next.is_finite() || (next - line) * dir as f64 <= 0. {
+                    return Err("music_actual_virtual_ledger_pitch_required".into());
+                }
+                if (next - y) * dir as f64 >= 0. {
+                    return Ok(pitch + 2. * dir as f64 * (y - line) / (next - line));
+                }
+                line = next;
+                pitch += 2. * dir as f64;
+            }
+            Ok(pitch + 2. * (y - line) / self.specific_interline as f64)
+        }
+    }
     pub(crate) fn middle_at(&self, x: i32) -> Result<i32, String> {
         let index = self
             .lines
@@ -43,10 +88,18 @@ pub(crate) struct PartGeometry {
     pub(crate) bounds: [i32; 4],
 }
 pub(crate) struct OwnedGrid {
+    pub(crate) systems: Vec<Arc<SystemGeometry>>,
     pub(crate) physical_glyphs: Vec<Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) parts: Vec<Arc<PartGeometry>>,
     pub(crate) staff_areas: Vec<Arc<crate::system_area_geometry::Band>>,
     pub(crate) report: Value,
+    pub(crate) staffs: Vec<Arc<StaffGeometry>>,
+}
+#[derive(Debug)]
+pub(crate) struct SystemGeometry {
+    pub(crate) id: u64,
+    pub(crate) left: i32,
+    pub(crate) area: Arc<crate::system_area_geometry::Band>,
     pub(crate) staffs: Vec<Arc<StaffGeometry>>,
 }
 #[derive(Default)]
@@ -216,6 +269,9 @@ pub(crate) fn build_owned(
         actual_staffs.push(Arc::new(StaffGeometry {
             id,
             system: system["id"].as_u64().unwrap(),
+            specific_interline: staff["interline"]
+                .as_u64()
+                .unwrap_or(sc.interline.main as u64) as usize,
             abscissae: [
                 staff["left"]
                     .as_f64()
@@ -351,7 +407,29 @@ pub(crate) fn build_owned(
             bounds: area_bounds.ok_or("grid_actual_nonempty_part_required")?,
         }));
     }
+    let actual_systems = out
+        .iter()
+        .zip(layout.system_areas)
+        .map(|(system, area)| {
+            let id = system["id"]
+                .as_u64()
+                .ok_or("grid_actual_system_id_required")?;
+            Ok(Arc::new(SystemGeometry {
+                id,
+                left: system["coordinates"][0]
+                    .as_i64()
+                    .ok_or("grid_actual_system_left_required")? as i32,
+                area: Arc::new(area),
+                staffs: actual_staffs
+                    .iter()
+                    .filter(|s| s.system == id)
+                    .cloned()
+                    .collect(),
+            }))
+        })
+        .collect::<Result<Vec<_>, String>>()?;
     Ok(OwnedGrid {
+        systems: actual_systems,
         physical_glyphs: integrated.physical_glyphs,
         report: integrated.report,
         staffs: actual_staffs,

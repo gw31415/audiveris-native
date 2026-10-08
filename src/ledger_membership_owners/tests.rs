@@ -76,6 +76,7 @@ fn original_shared_duplicate_and_retired_ledger_references_keep_different_map_in
     .unwrap();
     let staff = |id| {
         Arc::new(crate::grid_ir::StaffGeometry {
+            specific_interline: 11,
             abscissae: [0, 500],
             id,
             system: 1,
@@ -118,6 +119,12 @@ fn original_shared_duplicate_and_retired_ledger_references_keep_different_map_in
         )
         .unwrap();
     assert_eq!(state(&owners, &graph), original["frames"][0]["state"]);
+    let cached = Arc::new(crate::curves::Curve::interpolate(vec![[0., 11.], [500., 11.]]).unwrap());
+    owners
+        .set_virtual_lines(1, 3, [(1, cached.clone())].into())
+        .unwrap();
+    let saved = owners.clone();
+    assert!(Arc::ptr_eq(&saved.maps[1].virtual_lines[&1], &cached));
     owners
         .record(
             1,
@@ -147,6 +154,15 @@ fn original_shared_duplicate_and_retired_ledger_references_keep_different_map_in
     assert_eq!(state(&owners, &graph), before);
     owners.remove_from_owner(key, Some(3));
     graph.remove_music_inter(key).unwrap();
+    let cache_control: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-symbol-geometry/image-observed.json"
+    ))
+    .unwrap();
+    assert_eq!(
+        cache_control["physical_ledger_removal_control"]["virtual_cache_identity_preserved"],
+        true
+    );
+    assert!(Arc::ptr_eq(&owners.maps[1].virtual_lines[&1], &cached));
     owners.validate(&graph).unwrap();
     assert_eq!(state(&owners, &graph), original["frames"][2]["state"]);
     assert!(Arc::ptr_eq(&owners.maps[0].staff, &staffs[0]));

@@ -11,6 +11,7 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 const MODEL: &[u8] = include_bytes!("../crates/audiveris-classifier/models/audiveris-5.11.0.json");
+mod geometry;
 // RestInter.createValid: grow the rest glyph horizontally, intersect the
 // actual HeadChord (including its stem tail), then compare center2D strictly.
 fn rest_too_close_to_chord(b: [i64; 4], d: i64, c: &Chord) -> bool {
@@ -125,17 +126,6 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
         .as_array()
         .ok_or("music_filter_headers_required")?
     {
-        let s = o.upstream_report["grid_ir"]["staffs"]
-            .as_array()
-            .ok_or("music_filter_staffs_required")?
-            .iter()
-            .find(|s| s["id"] == h["staff_id"])
-            .ok_or("music_filter_staff_required")?;
-        if s["lines"].as_array().is_none_or(|a| a.len() != 5)
-            || s["specific_interline"] != o.interline
-        {
-            return Err("music_symbols_uniform_five_lines_required".into());
-        }
         let left = h["start"].as_i64().ok_or("music_header_start_required")?;
         let right = h["stop"].as_i64().ok_or("music_header_stop_required")?;
         let staff = o
@@ -146,6 +136,9 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                     && Some(staff.system) == h["system_id"].as_u64()
             })
             .ok_or("music_actual_header_staff_required")?;
+        if staff.lines.len() != 5 || staff.specific_interline != o.interline {
+            return Err("music_symbols_uniform_five_lines_required".into());
+        }
         erase_rectangle(&mut im, header_rectangle(staff, left, right, o.interline)?);
         if h["clef"]["frozen"] != true {
             return Err("music_frozen_header_clef_required".into());
@@ -376,15 +369,16 @@ pub(crate) fn time(shape: &str) -> Option<(u32, u32)> {
 fn checked(
     shape: &str,
     g: &GlyphPixels,
-    s: &Value,
+    s: &crate::grid_ir::StaffGeometry,
     il: usize,
     nodes: &[Value],
+    pitch: f64,
 ) -> Result<Option<String>, String> {
     let y = g.top as f64 + g.height as f64 / 2.;
     let scale = il as f64;
-    let pitch = 2. * (y - flat_staff_y(s, 2)?) / scale;
-    let left = s["left"].as_f64().ok_or("music_staff_left_required")?;
-    let right = s["right"].as_f64().ok_or("music_staff_right_required")?;
+    let x = g.left as f64 + g.width as f64 / 2.;
+    let left = s.abscissae[0] as f64;
+    let right = s.abscissae[1] as f64;
     if (g.left as f64 + g.width as f64) < left || g.left as f64 > right {
         return Ok(None);
     }
@@ -407,8 +401,8 @@ fn checked(
             | "ONE_128TH_REST"
     );
     if rest {
-        let gap = (flat_staff_y(s, 0)? - (g.top as f64 + g.height as f64))
-            .max(g.top as f64 - flat_staff_y(s, 4)?)
+        let gap = (s.lines.first().unwrap().y(x) - (g.top as f64 + g.height as f64))
+            .max(g.top as f64 - s.lines.last().unwrap().y(x))
             .max(0.);
         if gap > (scale * 8.).round_ties_even() || (shape == "LONG_REST" && pitch.abs() > 0.5) {
             return Ok(None);
@@ -441,6 +435,7 @@ fn checked(
 fn symbol_candidates(
     glyphs: &[GlyphPixels],
     il: usize,
+    system_left: i32,
 ) -> Result<Vec<(GlyphPixels, Vec<GlyphPixels>)>, String> {
     let minimum = (0.03 * (il * il) as f64).round_ties_even() as usize;
     let mut parts = glyphs
@@ -506,7 +501,11 @@ fn symbol_candidates(
             }
             // SymbolAdapter isTooLarge applies to clustered glyphs only.
             // The left-of-system brace exception remains outside our scope.
-            if group.len() == 2 && (g.width > 4 * il || g.height > 10 * il) {
+            if group.len() == 2
+                && (g.width > 4 * il
+                    || (g.left as f64 + g.width as f64 / 2. >= system_left as f64
+                        && g.height > 10 * il))
+            {
                 return Err("music_symbols_cluster_size_or_brace_pending".into());
             }
             candidates.push((
@@ -540,16 +539,20 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let model = audiveris_classifier::Model::from_json(MODEL).map_err(|e| e.to_string())?;
     let initial = m.owner.graph.snapshot();
     let nodes = initial["inters"].as_array().unwrap();
-    let staffs = m.owner.upstream_report["grid_ir"]["staffs"]
-        .as_array()
-        .ok_or("music_symbol_staffs_required")?;
     let mut graph = m.owner.graph.clone();
     let mut registry = m.owner.prepared.registry.clone();
     let mut trials = Vec::new();
     let mut accepted = Vec::new();
     let mut new_chords = Vec::new();
-    let candidates = symbol_candidates(&glyphs, il)?;
-    for (g, parts) in &candidates {
+    let mut candidates = Vec::new();
+    for group in geometry::dispatch(&m.owner, &glyphs)? {
+        let system = group.system;
+        let glyphs = group.glyphs.into_iter().cloned().collect::<Vec<_>>();
+        for (g, parts) in symbol_candidates(&glyphs, il, system.left)? {
+            candidates.push((system.clone(), g, parts));
+        }
+    }
+    for (system, g, parts) in &candidates {
         let part_count = parts.len();
         let mut part_ids = Vec::new();
         for part in parts {
@@ -563,17 +566,19 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         {
             continue;
         }
-        let y = g.top as f64 + g.height as f64 / 2.;
-        let s = staffs
-            .iter()
-            .map(|s| Ok(((y - flat_staff_y(s, 2)?).abs(), s)))
-            .collect::<Result<Vec<_>, String>>()?
-            .into_iter()
-            .min_by(|a, b| a.0.total_cmp(&b.0))
-            .ok_or("missing_symbol_staff")?
-            .1;
-        let sid = s["system_id"].as_u64().ok_or("missing_symbol_system")?;
-        let staff = s["id"].as_u64().ok_or("missing_symbol_staff_id")?;
+        let gid = registry.register(g)?;
+        registry.add_group(gid, beam_dispatch::Group::Symbol)?;
+        let point = [
+            g.left as f64 + g.width as f64 / 2.,
+            g.top as f64 + g.height as f64 / 2.,
+        ];
+        let sid = system.id;
+        let Some(s) = geometry::closest(&m.owner, system, point)? else {
+            trials.push(json!({"system_id":sid,"glyph_id":gid,"bounds":beam_dispatch::glyph_json(g)["bounds"],"closest_staff":null,"decision":"outside_actual_Staff_areas"}));
+            continue;
+        };
+        let staff = s.id;
+        let pitch = m.owner.ledger_memberships.pitch_at(&s, point)?;
         let features = audiveris_glyph_features::from_runs(
             audiveris_glyph_features::Geometry {
                 width: g.width,
@@ -596,14 +601,12 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         let scores = model.evaluate(&features).map_err(|e| e.to_string())?.scores;
         let mut ranks = (0..scores.len()).collect::<Vec<_>>();
         ranks.sort_by(|a, b| scores[*b].total_cmp(&scores[*a]));
-        let gid = registry.register(g)?;
-        registry.add_group(gid, beam_dispatch::Group::Symbol)?;
         let mut evaluations = Vec::new();
         for i in ranks {
             if scores[i] < 0.15 || evaluations.len() == 2 {
                 break;
             }
-            let Some(shape) = checked(&model.output_labels()[i], g, s, il, nodes)? else {
+            let Some(shape) = checked(&model.output_labels()[i], g, &s, il, nodes, pitch)? else {
                 continue;
             };
             if evaluations.iter().any(|e: &Value| e["shape"] == shape) {
@@ -728,7 +731,11 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 data["numerator"] = json!(num);
                 data["denominator"] = json!(den);
             } else {
-                data["pitch"] = json!(2. * (centroid[1] as f64 - flat_staff_y(s, 2)?) / il as f64);
+                data["pitch"] = json!(
+                    m.owner
+                        .ledger_memberships
+                        .pitch_at(&s, centroid.map(|v| v as f64))?
+                );
             }
             let id = graph.vertex(key, data.clone(), false)?;
             created.push(key);
@@ -784,6 +791,9 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         .commit_symbol_extension(registry)?;
     m.owner.graph = graph;
     m.chords.extend(new_chords);
+    let staffs = m.owner.upstream_report["grid_ir"]["staffs"]
+        .as_array()
+        .ok_or("music_dot_staff_metadata_required")?;
     let dot_late_checks = crate::music_dots::late_checks(
         &mut m.owner.graph,
         &m.owner.prepared.registry,
@@ -858,7 +868,7 @@ mod cluster_boundary {
             .map(beam_dispatch::glyph_from_json)
             .collect::<Result<Vec<_>, _>>()
             .unwrap();
-        let candidates = symbol_candidates(&parts, 11).unwrap();
+        let candidates = symbol_candidates(&parts, 11, 0).unwrap();
         assert_eq!(
             candidates
                 .iter()
@@ -872,10 +882,10 @@ mod cluster_boundary {
         extra.left += 3;
         three.push(extra);
         assert_eq!(
-            symbol_candidates(&three, 11).unwrap_err(),
+            symbol_candidates(&three, 11, 0).unwrap_err(),
             "music_symbols_more_than_two_cluster_parts_pending"
         );
-        assert!(symbol_candidates(&[], 11).unwrap().is_empty());
+        assert!(symbol_candidates(&[], 11, 0).unwrap().is_empty());
     }
 }
 
@@ -898,3 +908,7 @@ pub(crate) use grid_glyph_tests::assert_real_brace_glyphs;
 mod ensemble_tests;
 #[cfg(test)]
 pub(crate) use ensemble_tests::assert_real_ensemble_visits;
+#[cfg(test)]
+mod geometry_tests;
+#[cfg(test)]
+pub(crate) use geometry_tests::assert_real_symbol_geometry;

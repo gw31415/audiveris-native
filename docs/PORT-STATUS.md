@@ -15,12 +15,14 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
-最新の画像接続: 実Containmentによる67強Chord・94Headの消去訪問順を原版と比較し、
-個別には弱い1Headも親Chord経由で接続した。全94件の強弱判定とbottom-up順は一致。
-grade数値は93件に差（最大0.000363878）があり、判定一致と区別して保存した。
-実画像CLI v13は175.89秒で2部品限定clusterのガードへ到達し、XML未出力。
-対象2件・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSDは成功。
-[証拠](../evidence/real-symbol-ensemble/VALIDATION.json)・[次依存](../evidence/real-symbol-ensemble/NEXT-DEPENDENCY.md)。
+最新の画像接続: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
+543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。
+仮想曲線はpost-analysis callbackで保持し、後の物理Ledger削除やreportから作り直さない。
+対象3件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
+実画像CLI v14は166.27秒で多部品clusterガードに到達し、XML未出力。
+古い全マスク観測は誤ったImageJ constructorによる全0バイトで無効と明示した。
+正しい原版マスクとの差109画素は未解決。強弱判定の観測は修正後も同一で保持した。
+[証拠](../evidence/real-symbol-geometry/VALIDATION.json)・[次依存](../evidence/real-symbol-geometry/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

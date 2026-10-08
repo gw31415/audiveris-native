@@ -10,6 +10,7 @@ fn staffs(ids: &[u64]) -> Vec<Arc<crate::grid_ir::StaffGeometry>> {
     ids.iter()
         .map(|id| {
             Arc::new(crate::grid_ir::StaffGeometry {
+                specific_interline: 11,
                 abscissae: [0, 500],
                 id: *id,
                 system: 1,

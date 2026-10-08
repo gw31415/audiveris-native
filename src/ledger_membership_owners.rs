@@ -13,6 +13,7 @@ pub(crate) struct LedgerMemberships {
 pub(crate) struct StaffLedgers {
     pub(crate) staff: Arc<StaffGeometry>,
     pub(crate) lines: BTreeMap<i32, Vec<Key>>,
+    pub(crate) virtual_lines: BTreeMap<i32, Arc<crate::curves::Curve>>,
 }
 impl LedgerMemberships {
     pub(crate) fn record(
@@ -61,9 +62,39 @@ impl LedgerMemberships {
             }
             map.lines = lines;
         } else {
-            self.maps.push(StaffLedgers { staff, lines });
+            self.maps.push(StaffLedgers {
+                staff,
+                lines,
+                virtual_lines: BTreeMap::new(),
+            });
         }
         Ok(())
+    }
+    pub(crate) fn set_virtual_lines(
+        &mut self,
+        system: u64,
+        staff: u64,
+        curves: BTreeMap<i32, Arc<crate::curves::Curve>>,
+    ) -> Result<(), String> {
+        let map = self
+            .maps
+            .iter_mut()
+            .find(|m| m.staff.system == system && m.staff.id == staff)
+            .ok_or("ledger_virtual_lines_actual_staff_required")?;
+        map.virtual_lines = curves;
+        Ok(())
+    }
+    pub(crate) fn pitch_at(
+        &self,
+        staff: &Arc<StaffGeometry>,
+        point: [f64; 2],
+    ) -> Result<f64, String> {
+        let map = self
+            .maps
+            .iter()
+            .find(|m| Arc::ptr_eq(&m.staff, staff))
+            .ok_or("music_pitch_actual_Staff_ledger_cache_required")?;
+        staff.pitch_at(&map.virtual_lines, point)
     }
     pub(crate) fn retire_post_analysis(&mut self, system: u64, ledgers: &[usize]) {
         for map in self.maps.iter_mut().filter(|m| m.staff.system == system) {
@@ -73,6 +104,8 @@ impl LedgerMemberships {
         }
     }
     pub(crate) fn remove_from_owner(&mut self, key: Key, staff_id: Option<u64>) {
+        // Staff.removeLedger changes physical membership only. Virtual lines
+        // retain the post-analysis geometry until an explicit rebuild boundary.
         let Some(staff_id) = staff_id else { return };
         let Some(map) = self
             .maps

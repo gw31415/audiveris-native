@@ -53,7 +53,10 @@ Stem/Chord/head/tail幾何で原版に一致した。原版標準のREDUCTION He
 実Beam/Hook18個の傾斜消去も原版全ピクセル行と比較して接続済み。
 実Chord経由の弱Head消去も、67強Chord/94Headの強弱判定とbottom-up訪問順で原版一致し接続済み。
 grade数値は最大0.000363878の差があり、数値同等性を主張しない。
-実画像CLI v13は175.89秒で2部品限定clusterガードへ到達し、XMLは未出力。
+実System領域・Staff/null/曲線音高も796地点と543 glyph中心で原版と比較して接続済み。
+post-analysisの12仮想Ledger曲線をcallbackから保持し、物理Ledger削除後も維持する。
+古い全マスクの全0バイト観測は無効と明示し、正しい原版との差109画素を未解決として記録した。
+実画像CLI v14は166.27秒で2部品限定clusterガードへ到達し、XMLは未出力。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、

@@ -5,6 +5,7 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) systems: Vec<std::sync::Arc<crate::grid_ir::SystemGeometry>>,
     pub(crate) grid_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) ledger_memberships: crate::ledger_membership_owners::LedgerMemberships,
     pub(crate) parts: Vec<std::sync::Arc<crate::grid_ir::PartGeometry>>,
@@ -390,6 +391,13 @@ pub fn analyze(
                             } => {
                                 ledger_memberships.record(system, membership, &owned_grid.staffs)?
                             }
+                            crate::ledger_post_analysis::MembershipEvent::VirtualLines {
+                                system,
+                                staff,
+                                curves,
+                            } => {
+                                ledger_memberships.set_virtual_lines(system, staff, curves)?;
+                            }
                         }
                     }
                     ledger_memberships.validate(&common_graph)?;
@@ -721,6 +729,7 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        systems: owned_grid.systems,
         grid_glyphs: owned_grid.physical_glyphs,
         ledger_memberships,
         parts: owned_grid.parts,
