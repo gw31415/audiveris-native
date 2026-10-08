@@ -36,13 +36,13 @@ impl OwnedMusic {
         Ok(result)
     }
 }
-fn measure_index(measures: &[Measure], number: usize) -> Result<usize, String> {
+pub(super) fn measure_index(measures: &[Measure], number: usize) -> Result<usize, String> {
     number
         .checked_sub(1)
         .filter(|mi| *mi < measures.len())
         .ok_or_else(|| "music_actual_tuplet_measure_required".into())
 }
-fn actual<'a>(
+pub(super) fn actual<'a>(
     graph: &Graph,
     measures: &[Measure],
     chords: &'a [Chord],

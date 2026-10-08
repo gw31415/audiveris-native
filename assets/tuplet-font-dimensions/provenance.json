@@ -1,0 +1,66 @@
+{
+  "exit_code": 0,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/tuplet-font-original/classes",
+    "/tmp/TupletFontProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/tuplet-font-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/tuplet-font-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/tuplet-font-original/classes",
+    "TupletFontProbe",
+    "/tmp/tuplet-font-original/observed.json"
+  ],
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "observer_sha256": "d3a08cd97c001d9dd7ea374f60ea990fe425432f1665572e8c2adbfd37154186",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "native_outputs_used": false,
+  "observed_sha256": "8fa749d946ecbe5e85da89e8e470a8b60b2fa0d2ecb342dc32ebf657551e6a60",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "font_sha256": {
+    "Bravura.otf": "dca2d90c88437a701b1c2e71fa54e76f9fa41d7deee935d74dc871ea66ecfdd2",
+    "Leland.otf": "cacca69cb750d851023d52a8e41d3373904aa82afc7247085f37d4ee6823506c",
+    "Primus.ttf": "25f73922f6462d50a250e98cbb3b69909a7546eae8167e99592c3d641b80facd",
+    "FinaleJazz.otf": "a8ea0408ef7628ca38ae29eaa1b4357d2b0bf11747f6eee3c5f9ed5cca358e08",
+    "JazzPerc.ttf": "310ef24d859055f1ba026fe3a86359eb3be1e3ebbcac6cb9029281952e958538",
+    "MusicalSymbols.ttf": "07fb37d9fd2c6ccceb1124d0e9e7aa8a4ffe03ae2f0a3bff5e620b241b59d5cc"
+  },
+  "asset_sha256": "8b2efa4a3534ecef24d298a30e128a64b9baa4aefacdba93c9e652386d333805",
+  "raw_output": "/tmp/tuplet-font-original",
+  "resource_rows": 1536,
+  "dimensions_only_asset": true,
+  "interline_range": [
+    1,
+    128
+  ],
+  "families": [
+    "Bravura",
+    "Leland",
+    "Primus",
+    "FinaleJazz",
+    "JazzPerc",
+    "MusicalSymbols"
+  ],
+  "source_sha256": {
+    "ui/symbol/FontSymbol.java": "e3c6181d471b6116ab48e0b41b21a1aee8b041361cd8096027d99583a57c58e3",
+    "ui/symbol/ShapeSymbol.java": "6d6b9844ff0fdb4c1b1b2c1d7750794a343cb0dd7e641003898bddaca62b3db5",
+    "ui/symbol/OmrFont.java": "f335a923775f968f0768cba0ea76de0113d806a96c51a259689e587f20eb388d",
+    "ui/symbol/MusicFont.java": "0e56cf2174e36c9c6e99a6f50a45bcb86c9b689e5bc841fcedf6528597de3d8e",
+    "ui/symbol/MusicFamily.java": "b1889f3c526311a7dee70b67fd8908216756d8e5f90feeeb42065f57bd8139f1",
+    "ui/symbol/BravuraSymbols.java": "f5accfd5711386365f71089cd41009a763f2834ffdeeb7b41a56baf6cf8959bf",
+    "ui/symbol/LelandSymbols.java": "552436e1d8ccb128a52a3616dbf4fcc3d62a3bcc3b8b9711216b989e40dff89b",
+    "ui/symbol/FinaleJazzSymbols.java": "74bc67c145f9f22fd3b6229b4aebf46ca24b4a36a35479720680bcac29c457a1"
+  }
+}

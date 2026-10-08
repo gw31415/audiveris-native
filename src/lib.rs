@@ -504,6 +504,7 @@ mod music_containers;
 mod music_dots;
 mod music_duration;
 mod music_flags;
+pub mod music_font_symbols;
 mod music_headers;
 mod music_ledger_reduction;
 mod music_links;

@@ -816,4 +816,5 @@ mod beam_rest_detect_tests;
 mod tuplet_preparation_tests;
 
 mod selected_preparation_tests;
+mod tuplet_placement_tests;
 mod tuplet_reuse_tests;

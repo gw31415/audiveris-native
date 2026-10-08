@@ -10,8 +10,10 @@ mod beam_rest_lookup;
 mod selected_cli_tests;
 pub(crate) mod stack_rhythm;
 mod tuplet_groups;
+mod tuplet_placement;
 mod tuplet_preparation;
 pub use tuplet_groups::TupletGroups;
+pub use tuplet_placement::TupletPlan;
 
 use crate::{GrayImage, music_measures::OwnedMusic, music_symbols, shared_sig::Key};
 use serde_json::{Value, json};

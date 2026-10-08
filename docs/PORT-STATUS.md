@@ -1835,3 +1835,20 @@ bytes/XSD pass. None is the existing-object selector phase only; font dimensions
 bounds, fresh implicit callbacks/containers/relations, generation inspection/force/
 merge/second pass and full nonUI ledger remain next. Full/public flags false;
 work189/original task/unobtainedce unchanged. See evidence/musicxml-tuplet-reuse.
+
+Tuplet existing/new pre-add placement now compares120 pinned short/excess
+controls over6 explicit control-local family values. Source-measured immutable
+FontSymbol dimensions use base4*interline, independent of calibrated HEADS:1536
+rows/all6 families/two shapes/scales1..128,11,663 bytes hash pinned. Native plans
+actual supplied Chord cache direction votes/negative tie/default, duplicate size
+votes and integer rectangle union/center/height margin. Geometry is declared on
+real retained Chords to isolate placement; automatic Stem5px remains separate.
+Late actual getter failure restores staged caches/Graph and same physical owners.
+Early existing/manual object precedes mismatched font/later null. Seven unique
+targets, fmt/clippy/build and existing63+correction8/exact7/64 XML bytes/XSD pass.
+Original360 allocation callbacks/generated/removed states are held losslessly for
+next dependency, not claimed as native allocation parity. Fresh added/container/
+link lifecycle, lazy getters/inspect/force/merge/second pass and full ledger remain.
+Explicit font resources do not infer actual SheetStub family ownership or implement
+general/unbounded font layout. Full/public flags false/work189/original/unobtainedce
+held. See evidence/musicxml-tuplet-placement and assets/tuplet-font-dimensions.
