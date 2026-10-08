@@ -160,10 +160,16 @@ impl<'a> Ownership<'a> {
         }) {
             match e["kind"].as_str() {
                 Some(
-                    "HeadStemRelation" | "HeadHeadRelation" | "BeamStemRelation"
-                    | "BeamHeadRelation" | "BeamBeamRelation" | "MirrorRelation",
+                    "HeadStemRelation"
+                    | "HeadHeadRelation"
+                    | "BeamStemRelation"
+                    | "BeamHeadRelation"
+                    | "BeamBeamRelation"
+                    | "MirrorRelation"
+                    | "NoExclusion"
+                    | "BarConnectionRelation",
                 ) => return Ok(false),
-                Some("Containment" | "ChordStemRelation" | "Exclusion" | "NoExclusion") => {}
+                Some("Containment" | "ChordStemRelation" | "Exclusion" | "BarGroupRelation") => {}
                 _ => return Err("overlap_owned_support_kind_pending".into()),
             }
         }

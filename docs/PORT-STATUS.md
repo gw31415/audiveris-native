@@ -2049,3 +2049,11 @@ Evidence real-beam-neighborhood records this interim connection and targeted XML
 regression. Independent source-score comparison finds 73/101 exact events in the
 92-event original export; voice/chord/notation remain unscored. Real-image quality is
 not accepted, and recognition-required overlap/graph/rhythm/output work continues.
+
+Retained real-image GRID BarConnector area and Brace glyph overlap now matches
+11 original actual objects and11 directional/support controls. NULL connector glyphs
+are legitimate; NoExclusion/BarConnection Support suppress exclusions, BarGroup does
+not. Existing manual relation bodies and repeat identity remain. Evidence real-grid-
+overlap. Full An Laura now reaches the subsequent foundation kind admission guard;
+that retained GRID reduction and later recognition/rhythm/output remain. No real
+image MusicXML or quality acceptance is claimed.

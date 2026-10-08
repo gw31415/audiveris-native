@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Original SigReducer.detectOverlaps on the actual ordinary foundation owner.
-//! Ordinary/special head size contacts; mirror/ensemble/text/slur remain pending.
+//! Retained GRID connectors/brace glyphs and head/beam contacts; full classes remain pending.
 use crate::{
     beam_dispatch,
     shared_sig::{Graph, Key},
@@ -82,7 +82,10 @@ impl Geometry {
         } else {
             b
         };
-        let area = if matches!(n["kind"].as_str(), Some("HeadInter" | "HeadChordInter")) {
+        let area = if matches!(
+            n["kind"].as_str(),
+            Some("HeadInter" | "HeadChordInter" | "BraceInter")
+        ) {
             None
         } else {
             let m: [f64; 4] = serde_json::from_value(n["median"].clone())
@@ -176,9 +179,14 @@ fn candidates(snapshot: &Value) -> Result<Vec<&Value>, String> {
                     | "BeamInter"
                     | "BeamHookInter"
                     | "BarlineInter"
+                    | "BarConnectorInter"
+                    | "BraceInter"
             )
         ) {
-            return Err("foundation_overlap_class_dependency_pending".into());
+            return Err(format!(
+                "foundation_overlap_class_dependency_pending:{}",
+                n["kind"].as_str().unwrap_or("unknown")
+            ));
         }
         if n["kind"] == "HeadInter"
             && !n["shape"]
@@ -333,22 +341,26 @@ pub(crate) fn discover(owned: &mut OwnedItems) -> Result<Value, String> {
             {
                 return Err("stale_foundation_overlap_grid_geometry".into());
             }
-            let g = grid["glyphs"]
-                .as_array()
-                .ok_or("foundation_overlap_grid_registry_required")?
-                .iter()
-                .find(|v| v["id"] == n["glyph_id"])
-                .ok_or("foundation_overlap_grid_glyph_required")?;
-            let mut runs = Vec::new();
-            for run in g["runs"]
-                .as_array()
-                .ok_or("foundation_overlap_grid_runs_required")?
-            {
-                runs.push(json!([run["position"], run["start"], run["length"]]));
+            if n["glyph_id"].is_null() {
+                None
+            } else {
+                let g = grid["glyphs"]
+                    .as_array()
+                    .ok_or("foundation_overlap_grid_registry_required")?
+                    .iter()
+                    .find(|v| v["id"] == n["glyph_id"])
+                    .ok_or("foundation_overlap_grid_glyph_required")?;
+                let mut runs = Vec::new();
+                for run in g["runs"]
+                    .as_array()
+                    .ok_or("foundation_overlap_grid_runs_required")?
+                {
+                    runs.push(json!([run["position"], run["start"], run["length"]]));
+                }
+                let canonical = json!({"bounds":[g["left"],g["top"],g["width"],g["height"]],"orientation":g["orientation"],"runs":runs});
+                grid_ids.push(n["glyph_id"].clone());
+                Some(beam_dispatch::glyph_from_json(&canonical)?)
             }
-            let canonical = json!({"bounds":[g["left"],g["top"],g["width"],g["height"]],"orientation":g["orientation"],"runs":runs});
-            grid_ids.push(n["glyph_id"].clone());
-            Some(beam_dispatch::glyph_from_json(&canonical)?)
         } else if !n["glyph"].is_null() {
             let g = beam_dispatch::glyph_from_json(&n["glyph"])?;
             let id = n["glyph_id"]
@@ -848,3 +860,6 @@ mod tests {
         assert_eq!(before, owned.graph.snapshot());
     }
 }
+
+#[cfg(test)]
+mod grid_tests;

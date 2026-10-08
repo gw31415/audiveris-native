@@ -2343,6 +2343,8 @@ impl Graph {
                                     | "BeamHookInter"
                                     | "SmallBeamInter"
                                     | "BarlineInter"
+                                    | "BarConnectorInter"
+                                    | "BraceInter"
                             )
                         )
                     })
@@ -2368,6 +2370,8 @@ impl Graph {
                             | "BeamHeadRelation"
                             | "BeamBeamRelation"
                             | "MirrorRelation"
+                            | "NoExclusion"
+                            | "BarConnectionRelation"
                     ))
             {
                 return Ok(false);
