@@ -81,7 +81,7 @@ pub(super) fn existing_on(
     }
     Ok(None)
 }
-fn chord_group(graph: &mut Graph, key: Key) -> Result<Option<usize>, String> {
+pub(super) fn chord_group(graph: &mut Graph, key: Key) -> Result<Option<usize>, String> {
     let Some(beam) = graph.actual_chord_beams(key)?.first().copied() else {
         return Ok(None);
     };

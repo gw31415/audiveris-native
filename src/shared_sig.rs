@@ -389,6 +389,8 @@ pub struct Graph {
     #[cfg(test)]
     tuplet_removal_containers: Option<tuplet::TupletContainers>,
     #[cfg(test)]
+    tuplet_observer_order: usize,
+    #[cfg(test)]
     tuplet_additions: Option<Vec<tuplet_addition::TupletAdditionObservation>>,
     #[cfg(test)]
     tuplet_candidate_clocks: Option<Value>,

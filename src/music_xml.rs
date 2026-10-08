@@ -3712,3 +3712,5 @@ mod tuplet_shrink;
 mod tuplet_inspect;
 
 mod tuplet_collection;
+
+mod tuplet_merge;

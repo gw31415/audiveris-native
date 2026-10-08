@@ -36,6 +36,8 @@ pub(crate) type TupletContainers = Vec<(Vec<Key>, Vec<Key>)>;
 #[cfg(test)]
 #[derive(Clone, Debug)]
 pub(crate) struct TupletRemovalObservation {
+    pub order: usize,
+    pub sig_attached: bool,
     pub edge: usize,
     pub tuplet: Key,
     pub phase: &'static str,
@@ -493,6 +495,8 @@ impl Graph {
         if self.tuplet_removals.is_none() {
             return;
         }
+        let order = self.tuplet_observer_order;
+        self.tuplet_observer_order += 1;
         let held_removals = self.tuplet_removals.take();
         let held_additions = self.tuplet_additions.take();
         let graph = self.clone();
@@ -501,6 +505,8 @@ impl Graph {
         let v = &self.vertices[self.edges[edge - 1].key.target - 1];
         let state = serde_json::json!({"registered":!v.removed,"removed":v.removing||v.removed,"manual":self.edges[edge-1].data["manual"]==true});
         let row = TupletRemovalObservation {
+            order,
+            sig_attached: v.tuplet_cache.as_ref().unwrap().sig_attached,
             edge,
             tuplet,
             phase,
@@ -541,6 +547,11 @@ impl Graph {
             .as_mut()
             .map(std::mem::take)
             .unwrap_or_default()
+    }
+    #[cfg(test)]
+    pub(crate) fn retained_tuplet_body(&self, key: Key) -> serde_json::Value {
+        self.retained_tuplet_status(key).unwrap();
+        self.vertices[self.id(key).unwrap() - 1].data.clone()
     }
     #[cfg(test)]
     pub(crate) fn tuplet_registration(&self, key: Key) -> serde_json::Value {

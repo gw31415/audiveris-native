@@ -850,3 +850,5 @@ mod tuplet_shrink_nullable_tests;
 mod tuplet_inspect_tests;
 
 mod tuplet_collection_tests;
+
+mod tuplet_merge_tests;

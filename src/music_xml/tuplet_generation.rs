@@ -163,6 +163,11 @@ impl OwnedMusic {
                 stack: &stack,
                 clocks,
                 containers,
+                container_members: self
+                    .measures
+                    .iter()
+                    .map(|m| (m.tuplets.clone(), m.stack_tuplets.clone()))
+                    .collect(),
             },
         )
     }

@@ -2012,3 +2012,12 @@ rollback and prefix retry. Raw unassigned collections and actual owner copies ar
 observed rather than inferred from unions/report. Evidence musicxml-tuplet-remove-
 collection. Stale-predecessor merge, second pass and ordinary resources remain;
 shared multipart/extensive relations/full nonUI/public false.
+
+Actual stale-predecessor Tuplet merge now preserves captured current Voice order,
+same/different/NULL real BeamGroups and removed previous object/group after fresh
+or reused generation. Eight original controls/41 ordered callbacks compare actual
+old and fresh signs/shape/bounds/manual relations, raw containers and old Chord/
+Voice/StackSlot clocks. Source late registration partial state is distinguished
+from native outer graph/cache/container/physical-owner rollback and retry. Evidence
+musicxml-tuplet-merge. Capture-old/find-new/remove-old second pass and ordinary
+resource binding remain; full/public nonUI false. No new authentication or environment.

@@ -5,6 +5,7 @@ use crate::music_font_symbols::TupletShape;
 #[cfg(test)]
 #[derive(Clone, Debug)]
 pub(crate) struct TupletAdditionObservation {
+    pub order: usize,
     pub tuplet: Key,
     pub edge: Option<usize>,
     pub phase: &'static str,
@@ -14,6 +15,7 @@ pub(crate) struct TupletAdditionObservation {
     pub sig_attached: bool,
     pub containers: Vec<[bool; 3]>,
     pub candidate_clocks: Option<serde_json::Value>,
+    pub container_members: super::tuplet::TupletContainers,
 }
 #[cfg(test)]
 pub(crate) struct TupletAdditionOwners<'a> {
@@ -21,6 +23,7 @@ pub(crate) struct TupletAdditionOwners<'a> {
     pub stack: &'a [Key],
     pub clocks: &'a [Key],
     pub containers: Vec<[bool; 3]>,
+    pub container_members: super::tuplet::TupletContainers,
 }
 impl Graph {
     pub(crate) fn fresh_tuplet_key(&self, system: u64) -> Result<Key, String> {
@@ -165,6 +168,8 @@ impl Graph {
         owners: TupletAdditionOwners<'_>,
     ) -> Result<(), String> {
         if self.tuplet_additions.is_some() {
+            let order = self.tuplet_observer_order;
+            self.tuplet_observer_order += 1;
             // The original listener reads live durations and warms the factor
             // at this boundary; observing a later final graph loses that order.
             for &key in owners.clocks {
@@ -186,6 +191,7 @@ impl Graph {
                 .as_mut()
                 .unwrap()
                 .push(TupletAdditionObservation {
+                    order,
                     tuplet,
                     edge,
                     phase,
@@ -195,6 +201,7 @@ impl Graph {
                     sig_attached,
                     containers: owners.containers,
                     candidate_clocks: self.tuplet_candidate_clocks.clone(),
+                    container_members: owners.container_members,
                 });
         }
         if edge.is_none()
