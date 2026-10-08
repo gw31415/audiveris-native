@@ -33,7 +33,7 @@ fn original() -> Value {
     }
     d
 }
-fn prepare(case: &Value) -> Prepared {
+pub(super) fn prepare(case: &Value) -> Prepared {
     let mut p = control(case);
     for row in case["geometry"].as_array().unwrap() {
         let key = chord_key(&p.c, row["chord"].as_str().unwrap());

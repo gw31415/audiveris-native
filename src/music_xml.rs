@@ -3701,3 +3701,5 @@ mod tuplet_beats;
 pub use tuplet_beats::TupletBeatPlan;
 
 mod tuplet_force;
+
+mod tuplet_find;

@@ -1925,3 +1925,13 @@ restores earlier completed Tuplet/real container storage/Chord/Slot clocks; all-
 existing calls retain unchanged storage. Explicit source beat/font controls precede
 ordinary binding. Evidence musicxml-tuplet-force. Eligibility/inspect/merge/second
 pass and real signature/font/switch ownership remain; full nonUI completion false.
+
+### Actual ordinary Voice implicit Tuplet find/force (continuation of5ed8453)
+
+Original32 find controls compare ZERO/null/nonzero first start, exact dotted sans-
+Tuplet ratio, actual Voice selection,18 fresh objects and8 null/zero expected
+failures. Null/nonZERO starts bypass later sum/expected/beat/font without inventing
+Voice IDs. Old physical Chord/Slot clocks/manual objects remain. Evidence
+musicxml-tuplet-find. Rest-Voice constructor/empty live Voice boundary follows
+before inspect/merge/second rhythm pass and real font/signature/switch integration;
+full nonUI completion remains false.
