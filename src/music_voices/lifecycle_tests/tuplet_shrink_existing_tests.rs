@@ -22,7 +22,7 @@ fn original() -> Value {
     }
     d
 }
-fn set_time(p: &mut Prepared, key: crate::shared_sig::Key, value: &Value) {
+pub(super) fn set_time(p: &mut Prepared, key: crate::shared_sig::Key, value: &Value) {
     let snap = p.c.owner.owner.graph.snapshot();
     let mut n = snap["inters"]
         .as_array()
@@ -34,7 +34,7 @@ fn set_time(p: &mut Prepared, key: crate::shared_sig::Key, value: &Value) {
     n["time_offset"] = value.clone();
     p.c.owner.owner.graph.vertex(key, n, false).unwrap();
 }
-fn clocks(candidates: &crate::music_xml::RhythmCandidates) -> Value {
+pub(super) fn clocks(candidates: &crate::music_xml::RhythmCandidates) -> Value {
     let mut rows = Vec::new();
     for slot in &candidates.compounds {
         for narrow in &slot.members {

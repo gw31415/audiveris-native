@@ -16,6 +16,14 @@ pub struct RhythmCandidates {
     pub(crate) clocks: ClockState,
 }
 impl RhythmCandidates {
+    #[cfg(test)]
+    pub(crate) fn clock_observation(&self, clocks: &ClockState) -> Result<Value, String> {
+        self.compounds
+            .iter()
+            .map(|s| clocks.projection(s))
+            .collect::<Result<Vec<_>, _>>()
+            .map(|v| json!(v))
+    }
     pub fn observe(&self) -> Result<Value, String> {
         Ok(json!(
             self.compounds

@@ -13,6 +13,7 @@ pub(crate) struct TupletAdditionObservation {
     pub graph: Graph,
     pub sig_attached: bool,
     pub containers: Vec<[bool; 3]>,
+    pub candidate_clocks: Option<serde_json::Value>,
 }
 #[cfg(test)]
 pub(crate) struct TupletAdditionOwners<'a> {
@@ -137,6 +138,10 @@ impl Graph {
         self.tuplet_additions = Some(Vec::new());
     }
     #[cfg(test)]
+    pub(crate) fn trace_tuplet_candidate_clocks(&mut self, clocks: Option<serde_json::Value>) {
+        self.tuplet_candidate_clocks = clocks;
+    }
+    #[cfg(test)]
     pub(crate) fn fail_tuplet_addition_after(&mut self, count: Option<usize>) {
         self.tuplet_addition_failure = count;
     }
@@ -187,6 +192,7 @@ impl Graph {
                     graph,
                     sig_attached,
                     containers: owners.containers,
+                    candidate_clocks: self.tuplet_candidate_clocks.clone(),
                 });
         }
         if edge.is_none()

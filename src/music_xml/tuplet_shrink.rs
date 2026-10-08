@@ -64,6 +64,11 @@ impl OwnedMusic {
         }
         let mut clocks = candidates.clocks.clone();
         let result = self.with_tuplet_owners(|owner| {
+            #[cfg(test)]
+            owner
+                .owner
+                .graph
+                .trace_tuplet_candidate_clocks(Some(candidates.clock_observation(&clocks)?));
             let plan = owner.extend_rhythm_tuplet_group(number, group, &[])?;
             let extended = plan.extended;
             let mut generated = Vec::new();
@@ -111,6 +116,10 @@ impl OwnedMusic {
                         .narrow_owner(id)
                         .ok_or("music_tuplet_actual_narrow_slot_required")?;
                     clocks.set_owner(narrow, Some(time))?;
+                    #[cfg(test)]
+                    owner.owner.graph.trace_tuplet_candidate_clocks(Some(
+                        candidates.clock_observation(&clocks)?,
+                    ));
                 }
                 previous = Some(key);
             }
@@ -138,6 +147,8 @@ impl OwnedMusic {
                     )?;
                 }
             }
+            #[cfg(test)]
+            owner.owner.graph.trace_tuplet_candidate_clocks(None);
             Ok(generated)
         });
         if result.is_ok() {

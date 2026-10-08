@@ -1979,3 +1979,11 @@ late cast leaves earlier1/12 and1/6 narrow clocks; native outer rollback restore
 actual Graph/Chord/candidate/container state and retries. Evidence
 musicxml-tuplet-shrink-existing. Fresh callback and nullable fallback/inspect/merge/
 second pass/normal resource binding remain; full nonUI false.
+
+Fresh actual-candidate shrink now captures original registration/ChordTuplet callback
+clocks before later exact push/narrow assignments: five source controls/four fresh
+Tuplets/26 callbacks, genuine old Voice/StackSlots/end/excess/expected/manual state.
+A second-link failure restores outer native actual containers/cache/Chord/candidate
+clocks and permits retry. Explicit resource/cached geometry controls follow actual
+candidate retrieval. Evidence musicxml-tuplet-shrink-fresh; nullable fallback and
+inspect/merge/second pass/ordinary resource binding remain; full/public false.

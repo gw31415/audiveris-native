@@ -389,6 +389,8 @@ pub struct Graph {
     #[cfg(test)]
     tuplet_additions: Option<Vec<tuplet_addition::TupletAdditionObservation>>,
     #[cfg(test)]
+    tuplet_candidate_clocks: Option<Value>,
+    #[cfg(test)]
     tuplet_addition_failure: Option<usize>,
     #[cfg(test)]
     tuplet_registration_failure: Option<usize>,
