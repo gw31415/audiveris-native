@@ -1957,3 +1957,13 @@ refinement removal without triggering sort/rename early. Physical Chord/Slot clo
 manual objects/expected/report remain. Evidence musicxml-voice-tuplet-sequence.
 InspectVoicesEnd/shrink real candidate owners/merge/second pass and actual resource
 binding remain; full nonUI complete false.
+
+### Actual narrow Slot owner clocks (continuation of8d172a6)
+
+Original4 constructor controls/20 states distinguish shared member objects from
+distinct objects with reused ID7 and compounds with reused ID3. Native member clones
+keep Arc identity and clock reads/writes follow actual owners, preserving duplicate
+Chord concatenation/first-containing lookup/backrefs/old Voice and Stack Slot clocks.
+Ambiguous numeric validation cannot merge distinct objects. Evidence
+musicxml-narrow-slot-owners. Actual in-pass shrink/inspect/merge/second rhythm pass,
+fully typed validation resource binding and general ledger remain; full nonUI false.

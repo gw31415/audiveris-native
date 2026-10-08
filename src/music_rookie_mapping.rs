@@ -352,7 +352,7 @@ impl Context<'_> {
                 }
             }
             if times.len() == 1 {
-                self.slot_times.set(member.id, times.first().copied())?;
+                self.slot_times.set_owner(member, times.first().copied())?;
             } else if times.len() > 1 {
                 // Original nonimplicit analyzeTimes has no pair to blacklist before mapping.
                 ok = false;
@@ -595,13 +595,7 @@ impl Context<'_> {
             if chord.measure != self.measure_index || self.graph.id(chord.key) != Some(id) {
                 return Err("music_mapping_owned_measure_chord_required".into());
             }
-            self.slot_times.get(
-                slot.members
-                    .iter()
-                    .find(|s| s.chord_ids.contains(&id))
-                    .unwrap()
-                    .id,
-            )?;
+            self.slot_times.get_owner(slot.narrow_owner(id).unwrap())?;
         }
         let snapshot = self.graph.snapshot();
         for &id in &slot.chord_ids {
@@ -726,7 +720,7 @@ impl Context<'_> {
                 .members
                 .iter()
                 .map(|s| {
-                    self.slot_times.get(s.id).map(|t| NarrowTime {
+                    self.slot_times.get_owner(s).map(|t| NarrowTime {
                         id: s.id,
                         chord_ids: s.chord_ids.clone(),
                         time_offset: t,
@@ -748,7 +742,14 @@ impl Context<'_> {
             self.measures[self.measure_index].timing.abnormal |= validated.abnormal;
             validation = json!({"black":validated.black,"applied":validated.applied});
             for narrow in validated.narrow {
-                self.slot_times.set(narrow.id, narrow.time_offset)?;
+                let mut owners = slot.members.iter().filter(|m| m.id == narrow.id);
+                let owner = owners
+                    .next()
+                    .ok_or("music_candidate_owned_narrow_required")?;
+                if owners.any(|other| !std::sync::Arc::ptr_eq(&other.identity, &owner.identity)) {
+                    return Err("music_candidate_ambiguous_narrow_number".into());
+                }
+                self.slot_times.set_owner(owner, narrow.time_offset)?;
             }
             if let Some(map) = validated.mapping {
                 if validated.applied {
@@ -953,6 +954,7 @@ mod tests {
                 .unwrap()
                 .iter()
                 .map(|m| crate::music_measure_slots::MeasureSlot {
+                    identity: std::sync::Arc::new(()),
                     id: m["id"].as_u64().unwrap() as usize,
                     chord_ids: m["chord_ids"]
                         .as_array()
@@ -1649,6 +1651,7 @@ mod tests {
                 key: 0,
                 id: 3,
                 members: vec![crate::music_measure_slots::MeasureSlot {
+                    identity: std::sync::Arc::new(()),
                     id: 3,
                     chord_ids: ids.clone(),
                 }],
@@ -1763,6 +1766,7 @@ mod tests {
                     key: i,
                     id: constructor["id"].as_u64().unwrap() as usize,
                     members: vec![crate::music_measure_slots::MeasureSlot {
+                        identity: std::sync::Arc::new(()),
                         id: i + 1,
                         chord_ids: constructor["narrow_chord_ids"]
                             .as_array()
@@ -1947,6 +1951,7 @@ mod tests {
                 .unwrap()
                 .iter()
                 .map(|m| crate::music_measure_slots::MeasureSlot {
+                    identity: std::sync::Arc::new(()),
                     id: m["id"].as_u64().unwrap() as usize,
                     chord_ids: m["chord_ids"]
                         .as_array()

@@ -62,6 +62,8 @@ struct Relation {
 }
 #[derive(Clone, Serialize, Deserialize)]
 pub(crate) struct MeasureSlot {
+    #[serde(skip)]
+    pub(crate) identity: std::sync::Arc<()>,
     pub id: usize,
     pub chord_ids: Vec<usize>,
 }
@@ -341,6 +343,7 @@ fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
             slots.last_mut().unwrap().chord_ids.push(c.id);
         } else {
             slots.push(MeasureSlot {
+                identity: std::sync::Arc::new(()),
                 id: slots.len() + 1,
                 chord_ids: vec![c.id],
             });
@@ -378,11 +381,11 @@ pub(crate) struct CompoundSlot {
     pub chord_ids: Vec<usize>,
 }
 impl CompoundSlot {
+    pub(crate) fn narrow_owner(&self, chord: usize) -> Option<&MeasureSlot> {
+        self.members.iter().find(|s| s.chord_ids.contains(&chord))
+    }
     pub(crate) fn narrow_slot(&self, chord: usize) -> Option<usize> {
-        self.members
-            .iter()
-            .find(|s| s.chord_ids.contains(&chord))
-            .map(|s| s.id)
+        self.narrow_owner(chord).map(|s| s.id)
     }
     pub(crate) fn projection(&self) -> Value {
         serde_json::json!({"id":self.id,"narrow_slot_ids":self.members.iter().map(|s|s.id).collect::<Vec<_>>(),"chord_ids":self.chord_ids,"lookup":self.chord_ids.iter().map(|id|serde_json::json!({"chord_id":id,"narrow_slot_id":self.narrow_slot(*id)})).collect::<Vec<_>>()})
@@ -530,52 +533,96 @@ impl CandidateReferences {
     }
 }
 /// Measure-scoped transient narrow-slot objects retain their own nullable clock.
-/// Compound members may alias the same original narrow object, so cloned member
-/// views address one clock by its stable narrow ID, not one clock per compound.
+/// Shared compound members address one clock through the actual narrow owner;
+/// reused numbers on distinct objects must not combine their clocks.
 /// These clocks differ from the later timed MeasureStack slots.
+#[derive(Clone)]
 pub(crate) struct ClockState {
-    members: BTreeMap<usize, (Vec<usize>, Option<Fraction>)>,
+    members: Vec<NarrowClock>,
+}
+#[derive(Clone)]
+struct NarrowClock {
+    identity: std::sync::Arc<()>,
+    #[cfg(test)]
+    id: usize,
+    chords: Vec<usize>,
+    time: Option<Fraction>,
 }
 impl ClockState {
     pub(crate) fn new(compounds: &[CompoundSlot]) -> Result<Self, String> {
-        let mut members: BTreeMap<usize, (Vec<usize>, Option<Fraction>)> = BTreeMap::new();
+        let mut members: Vec<NarrowClock> = Vec::new();
         for narrow in compounds.iter().flat_map(|c| &c.members) {
-            if let Some((ids, _)) = members.get(&narrow.id) {
-                if ids != &narrow.chord_ids {
+            if let Some(owner) = members
+                .iter()
+                .find(|m| std::sync::Arc::ptr_eq(&m.identity, &narrow.identity))
+            {
+                if owner.chords != narrow.chord_ids {
                     return Err("music_candidate_narrow_identity_required".into());
                 }
             } else {
-                members.insert(narrow.id, (narrow.chord_ids.clone(), None));
+                members.push(NarrowClock {
+                    identity: narrow.identity.clone(),
+                    #[cfg(test)]
+                    id: narrow.id,
+                    chords: narrow.chord_ids.clone(),
+                    time: None,
+                });
             }
         }
         Ok(Self { members })
     }
-    pub(crate) fn get(&self, id: usize) -> Result<Option<Fraction>, String> {
+    pub(crate) fn get_owner(&self, owner: &MeasureSlot) -> Result<Option<Fraction>, String> {
         self.members
-            .get(&id)
-            .map(|m| m.1)
+            .iter()
+            .find(|m| std::sync::Arc::ptr_eq(&m.identity, &owner.identity))
+            .map(|m| m.time)
             .ok_or_else(|| "music_candidate_owned_narrow_required".into())
     }
-    pub(crate) fn set(&mut self, id: usize, time: Option<Fraction>) -> Result<(), String> {
+    pub(crate) fn set_owner(
+        &mut self,
+        owner: &MeasureSlot,
+        time: Option<Fraction>,
+    ) -> Result<(), String> {
         self.members
-            .get_mut(&id)
+            .iter_mut()
+            .find(|m| std::sync::Arc::ptr_eq(&m.identity, &owner.identity))
             .ok_or("music_candidate_owned_narrow_required")?
-            .1 = time;
+            .time = time;
+        Ok(())
+    }
+    #[cfg(test)]
+    fn unique_number(&self, id: usize) -> Result<usize, String> {
+        let mut owners = self.members.iter().enumerate().filter(|(_, m)| m.id == id);
+        let (i, _) = owners
+            .next()
+            .ok_or("music_candidate_owned_narrow_required")?;
+        if owners.next().is_some() {
+            return Err("music_candidate_ambiguous_narrow_number".into());
+        }
+        Ok(i)
+    }
+    #[cfg(test)]
+    pub(crate) fn get(&self, id: usize) -> Result<Option<Fraction>, String> {
+        Ok(self.members[self.unique_number(id)?].time)
+    }
+    #[cfg(test)]
+    pub(crate) fn set(&mut self, id: usize, time: Option<Fraction>) -> Result<(), String> {
+        let i = self.unique_number(id)?;
+        self.members[i].time = time;
         Ok(())
     }
     pub(crate) fn first_time(&self, slot: &CompoundSlot) -> Result<Option<Fraction>, String> {
-        self.get(
+        self.get_owner(
             slot.members
                 .first()
-                .ok_or("music_candidate_first_narrow_required")?
-                .id,
+                .ok_or("music_candidate_first_narrow_required")?,
         )
     }
     pub(crate) fn projection(&self, slot: &CompoundSlot) -> Result<Value, String> {
-        slot.members.iter().map(|s| self.get(s.id).map(|t| serde_json::json!({"id":s.id,"time_offset":t.map(crate::music_time::format_fraction)}))).collect::<Result<Vec<_>,_>>().map(|v|serde_json::json!(v))
+        slot.members.iter().map(|s| self.get_owner(s).map(|t| serde_json::json!({"id":s.id,"time_offset":t.map(crate::music_time::format_fraction)}))).collect::<Result<Vec<_>,_>>().map(|v|serde_json::json!(v))
     }
 }
-fn compound(
+pub(crate) fn compound(
     id: usize,
     members: &[MeasureSlot],
     centers: &BTreeMap<usize, i64>,
@@ -845,6 +892,7 @@ mod tests {
                 let ordinals: Vec<usize> =
                     serde_json::from_value(constructor["chord_ids"].clone()).unwrap();
                 let member = MeasureSlot {
+                    identity: std::sync::Arc::new(()),
                     id: constructor["id"].as_u64().unwrap() as usize,
                     chord_ids: ordinals.iter().map(|&i| chords[i].id).collect(),
                 };

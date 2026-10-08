@@ -1,0 +1,51 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "ea9ca7972da310aca55dc0b2e3cf2e7d4799c74d609a709797bc44ad8caeaf03",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "d15a1af7003f2fa85b76c97da70bc01be1a227551f8f256518c37b8e3927c918",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/narrow-slot-owners-original/classes",
+    "/tmp/NarrowSlotOwnersProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/narrow-slot-owners-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/narrow-slot-owners-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/narrow-slot-owners-original/classes",
+    "NarrowSlotOwnersProbe",
+    "/tmp/retired-beam-book/book/parallel-beam.omr",
+    "/tmp/narrow-slot-owners-original/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "60be33d17a8dd3cde9469f557f526f4ccff0ceaae27e954c7bce4c26c6725dc1",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "687c088288f22d889225449a774a0866983a426e7a26be853b536b6cb873921e",
+  "raw_output": "/tmp/narrow-slot-owners-original",
+  "raw_observed_sha256": "687c088288f22d889225449a774a0866983a426e7a26be853b536b6cb873921e",
+  "fixture_sha256": "69026a20721e026c142299098e2e8e1fe770605e129e086955a968e7dc291f5e",
+  "compact_fixture_lossless": true,
+  "compact_encoding": "lossless frame/relation interning only; no native outputs",
+  "original_source_sha256": {
+    "sheet/rhythm/TupletGenerator.java": "cf466f9cf6431044b8dcf0cb321d8313af2b1b96b47b07b294158ea069b23261",
+    "sheet/rhythm/Voice.java": "5cb2bd8f4e667f283679d8de13b1f774ba32a35eb0cbb9f6138e40337d8a89c1",
+    "sheet/rhythm/Slot.java": "068e83b8b95bfa67402daa9d4a9d5d09104ba0fecd81ac005a127f51939b5ef8",
+    "sig/inter/AbstractChordInter.java": "c65453b636f624054c40675aaa877d17d0e7b1551fb4457702e91d33b0f7588c",
+    "sheet/rhythm/Measure.java": "c1299a305ff168ffe57b5a537da384ca63d69beda5ecc57bd2f64ce0f372e611"
+  }
+}

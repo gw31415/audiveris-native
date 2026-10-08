@@ -838,3 +838,5 @@ mod tuplet_find_tests;
 mod tuplet_find_inputs_tests;
 
 mod voice_tuplet_sequence_tests;
+
+mod narrow_slot_owners_tests;
