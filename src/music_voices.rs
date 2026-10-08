@@ -20,6 +20,9 @@ pub(crate) struct Voice {
     pub measure: usize,
     pub starting_staff: u64,
     pub chord_ids: Vec<usize>,
+    // getChords exposes both null and empty as [], but direct duration reads
+    // distinguish resetChords' null list from the last removeChord's empty list.
+    pub(crate) chords_initialized: bool,
     pub termination: Option<Delta>,
     pub excess: Option<Fraction>,
     pub slots: BTreeMap<usize, SlotVoice>,
@@ -31,8 +34,15 @@ impl std::fmt::Debug for Voice {
             .field("id", &self.id)
             .field("measure", &self.measure)
             .field("chord_ids", &self.chord_ids)
+            .field("chords_initialized", &self.chords_initialized)
             .field("slot_count", &self.slots.len())
             .finish()
+    }
+}
+impl Voice {
+    pub(crate) fn reset_chords(&mut self) {
+        self.chord_ids = Vec::new();
+        self.chords_initialized = false;
     }
 }
 /// The admitted one-part/one-staff measure has one stack; general shared
@@ -131,6 +141,7 @@ fn construct(
         } else {
             members.iter().map(|c| c.id).collect()
         },
+        chords_initialized: measure_rest_chord.is_none(),
         termination: None,
         excess: None,
         slots: BTreeMap::new(),
@@ -1361,6 +1372,7 @@ pub(crate) fn assign_chord_voice(
         staged.bind_chord_to_live_voice(key, voice)?;
         let owned = &mut retained[voice_index];
         if owned.measure_rest_chord != Some(id) && !owned.chord_ids.contains(&id) {
+            owned.chords_initialized = true;
             owned.chord_ids.push(id);
             owned.chord_ids.sort_by_key(|id| {
                 nodes[id]["bounds"][0].as_i64().unwrap()

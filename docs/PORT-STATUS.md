@@ -1935,3 +1935,15 @@ Voice IDs. Old physical Chord/Slot clocks/manual objects remain. Evidence
 musicxml-tuplet-find. Rest-Voice constructor/empty live Voice boundary follows
 before inspect/merge/second rhythm pass and real font/signature/switch integration;
 full nonUI completion remains false.
+
+### Actual Voice null-list reset and real measure-rest constructor (continuation of6cc3d2b)
+
+Source two short/excess controls distinguish allocated-empty ZERO sum from
+resetChords null-list NPE and registered-empty find index failure. Old Chord/Slot/
+Voice clocks/manual ownership remain. Real WHOLE_REST/RestChord factory produces
+actual ID3 and separate rest reference; before/after reset its null normal list
+returns null duration and bypasses find before expected access. Native uses actual
+nullable Voice state/current-retained identity and direct list lifecycle, without
+Measure purge or number synthesis. Evidence musicxml-tuplet-find-inputs. Actual
+Voice Tuplet getters/inspect-shrink/merge/second pass/signature/font/switch remain;
+full nonUI complete false.

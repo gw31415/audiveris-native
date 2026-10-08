@@ -3703,3 +3703,4 @@ pub use tuplet_beats::TupletBeatPlan;
 mod tuplet_force;
 
 mod tuplet_find;
+mod voice_chords;

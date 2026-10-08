@@ -582,7 +582,7 @@ fn prepare_retired_owners(
     }
     let old = owner.voices.iter().position(|v| v.measure == 0).unwrap();
     set_owned_voice_id(&mut owner.owner.graph, &mut owner.voices[old], 7).unwrap();
-    owner.voices[old].chord_ids.clear();
+    owner.voices[old].reset_chords();
     refs.push(
         owner
             .voices
@@ -834,3 +834,5 @@ mod tuplet_beat_tests;
 mod tuplet_force_tests;
 
 mod tuplet_find_tests;
+
+mod tuplet_find_inputs_tests;

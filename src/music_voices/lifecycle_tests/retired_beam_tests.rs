@@ -172,7 +172,7 @@ pub(super) fn prepare_beam(
     )
     .unwrap();
     set_owned_voice_id(&mut owner.owner.graph, &mut owner.voices[old], 7).unwrap();
-    owner.voices[old].chord_ids.clear();
+    owner.voices[old].reset_chords();
     add_tie(&mut owner, &support, &target);
     let snap = owner.owner.graph.snapshot();
     let beam = snap["inters"]
@@ -403,6 +403,7 @@ fn original_retired_beam_predecessor_keeps_real_group_owners_reuse_order_and_res
                 }
                 "restored_live" => {
                     let mut old = actual_voice(&owner, &refs[0]).clone();
+                    old.chords_initialized = true;
                     old.chord_ids.push(predecessor.id);
                     owner.voices.push(old);
                 }
@@ -411,8 +412,7 @@ fn original_retired_beam_predecessor_keeps_real_group_owners_reuse_order_and_res
                     .iter_mut()
                     .find(|v| Arc::ptr_eq(&v.identity, &refs[0].identity))
                     .unwrap()
-                    .chord_ids
-                    .clear(),
+                    .reset_chords(),
                 "next" => owner
                     .owner
                     .graph

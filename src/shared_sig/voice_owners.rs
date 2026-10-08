@@ -108,4 +108,9 @@ impl Graph {
             .iter()
             .find(|voice| Arc::ptr_eq(&voice.identity, identity))
     }
+    pub(crate) fn retained_voice_owner_mut(&mut self, identity: &Arc<()>) -> Option<&mut Voice> {
+        self.retained_voices
+            .iter_mut()
+            .find(|voice| Arc::ptr_eq(&voice.identity, identity))
+    }
 }

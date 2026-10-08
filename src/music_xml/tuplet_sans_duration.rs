@@ -47,6 +47,9 @@ impl OwnedMusic {
         if voice.measure_rest_chord.is_some() {
             return Ok(None);
         }
+        if !voice.chords_initialized {
+            return Err("music_tuplet_null_voice_chord_list".into());
+        }
         let ids = voice.chord_ids.clone();
         let mut graph = self.owner.graph.clone();
         let mut sum = crate::music_time::Fraction::ZERO;
