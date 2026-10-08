@@ -91,7 +91,7 @@ mod weak_foundation_tests {
                 .collect::<Vec<_>>()
         );
         let mut graph = owned.graph.clone();
-        graph.remove_foundation_barline(k).unwrap();
+        graph.remove_foundation_grid_member(k).unwrap();
         assert_eq!(
             bounds(graph.staff_barlines(1, 1)),
             original["after_staff_barlines"]
@@ -103,7 +103,7 @@ mod weak_foundation_tests {
         );
         assert!(graph.vertices[bar["id"].as_u64().unwrap() as usize - 1].removed);
         let after = graph.snapshot();
-        graph.remove_foundation_barline(k).unwrap();
+        graph.remove_foundation_grid_member(k).unwrap();
         assert_eq!(graph.snapshot(), after);
         assert_eq!(graph.id(k), Some(bar["id"].as_u64().unwrap() as usize));
         assert_eq!(bar["glyph_id_namespace"], "GRID");
@@ -125,7 +125,7 @@ mod weak_foundation_tests {
             n[property] = json!(true);
             protected.vertex(k, n, false).unwrap();
             let before = protected.snapshot();
-            assert!(protected.remove_foundation_barline(k).is_err());
+            assert!(protected.remove_foundation_grid_member(k).is_err());
             assert_eq!(protected.snapshot(), before);
         }
         let mut ensemble = owned.graph.clone();
@@ -149,7 +149,7 @@ mod weak_foundation_tests {
             )
             .unwrap();
         let before = ensemble.snapshot();
-        assert!(ensemble.remove_foundation_barline(k).is_err());
+        assert!(ensemble.remove_foundation_grid_member(k).is_err());
         assert_eq!(ensemble.snapshot(), before);
         let owner = crate::music_links::prepare_beam_linking(owned).unwrap();
         let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
@@ -549,14 +549,17 @@ impl Graph {
             .collect()
     }
 
-    fn remove_foundation_barline(&mut self, key: Key) -> Result<(), String> {
+    fn remove_foundation_grid_member(&mut self, key: Key) -> Result<(), String> {
         let id = self.id(key).ok_or("missing_shared_sig_endpoint")?;
         let v = &self.vertices[id - 1];
         if key.phase != Phase::Grid
-            || v.data["kind"] != "BarlineInter"
-            || v.data["staff_id"].as_u64().is_none()
+            || !matches!(
+                v.data["kind"].as_str(),
+                Some("BarlineInter" | "BarConnectorInter" | "BraceInter")
+            )
+            || (v.data["kind"] == "BarlineInter" && v.data["staff_id"].as_u64().is_none())
         {
-            return Err("music_foundation_owned_GRID_barline_required".into());
+            return Err("music_foundation_owned_GRID_member_required".into());
         }
         if v.removed {
             return Ok(());
@@ -566,14 +569,18 @@ impl Graph {
             || v.data["manual"] == true
             || v.data["is_manual"] == true
         {
-            return Err("music_foundation_protected_barline_removal_pending".into());
+            return Err("music_foundation_protected_GRID_member_removal_pending".into());
         }
+        // Manual Brace removal splits actual Parts; recognition never substitutes
+        // a tombstone for that structural callback. Keep it protected above.
         // Post-MEASURES closure, grouped bars and support callbacks need their
         // own original owners; removing a bare GRID member cannot cover them.
         if self.edges.iter().any(|e| {
-            !e.removed && (e.key.source == id || e.key.target == id) && e.key.kind != "Exclusion"
+            !e.removed
+                && (e.key.source == id || e.key.target == id)
+                && !matches!(e.key.kind.as_str(), "Exclusion" | "NoExclusion")
         }) {
-            return Err("music_foundation_barline_ensemble_or_support_removal_pending".into());
+            return Err("music_foundation_GRID_ensemble_or_support_removal_pending".into());
         }
         self.vertices[id - 1].removed = true;
         self.prune();
@@ -2148,7 +2155,10 @@ impl Graph {
                 // still rejecting unsupported external supports/other classes.
                 let external = if source { e.key.target } else { e.key.source };
                 if e.key.kind == "Exclusion"
-                    && self.vertices[external - 1].data["kind"] == "BarlineInter"
+                    && matches!(
+                        self.vertices[external - 1].data["kind"].as_str(),
+                        Some("BarlineInter" | "BarConnectorInter" | "BraceInter")
+                    )
                 {
                     continue;
                 }
@@ -2267,9 +2277,20 @@ impl Graph {
             }
             if !matches!(
                 v.data["kind"].as_str(),
-                Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "BarlineInter")
+                Some(
+                    "HeadInter"
+                        | "StemInter"
+                        | "BeamInter"
+                        | "BeamHookInter"
+                        | "BarlineInter"
+                        | "BarConnectorInter"
+                        | "BraceInter"
+                )
             ) {
-                return Err("unsupported_weak_foundation_kind".into());
+                return Err(format!(
+                    "unsupported_weak_foundation_kind:{}",
+                    v.data["kind"].as_str().unwrap_or("unknown")
+                ));
             }
             let grade = v.data["contextual_grade"]
                 .as_f64()
@@ -2281,7 +2302,15 @@ impl Graph {
         }
         let mut next = self.clone();
         for id in &remove {
-            next.vertices[*id - 1].removed = true;
+            let vertex = &next.vertices[*id - 1];
+            if matches!(
+                vertex.data["kind"].as_str(),
+                Some("BarConnectorInter" | "BraceInter")
+            ) {
+                next.remove_foundation_grid_member(vertex.key)?;
+            } else {
+                next.vertices[*id - 1].removed = true;
+            }
         }
         next.prune();
         next.refresh_beam_groups(&remove.iter().map(|id| *id as u64).collect::<Vec<_>>())?;
@@ -2401,8 +2430,11 @@ impl Graph {
                         .vertices
                         .get(id.checked_sub(1).ok_or("invalid_foundation_vertex_id")? as usize)
                         .ok_or("missing_foundation_vertex")?;
-                    if candidate.data["kind"] == "BarlineInter" {
-                        next.remove_foundation_barline(candidate.key)?;
+                    if matches!(
+                        candidate.data["kind"].as_str(),
+                        Some("BarlineInter" | "BarConnectorInter" | "BraceInter")
+                    ) {
+                        next.remove_foundation_grid_member(candidate.key)?;
                         continue;
                     }
                     let v = next
@@ -3217,3 +3249,6 @@ mod beam_ensemble_tests {
 }
 
 pub(crate) use chord_cache::ChordRead;
+
+#[cfg(test)]
+mod grid_foundation_tests;

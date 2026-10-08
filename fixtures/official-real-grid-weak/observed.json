@@ -1,0 +1,252 @@
+{
+  "scope" : "original automatic Brace/BarConnector weak deletion on isolated SIG with actual original Staff/Part objects; contextual boundary, frozen exclusions, registration order, manual relation and automatic Part preservation; manual Brace structural editing excluded",
+  "cases" : [ {
+    "name" : "both-below",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ "brace", "connector" ],
+    "live" : [ ],
+    "brace_removed" : true,
+    "connector_removed" : true,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : false,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "brace-boundary",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.5,
+      "frozen" : false,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ "connector" ],
+    "live" : [ "brace" ],
+    "brace_removed" : false,
+    "connector_removed" : true,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : false,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "connector-boundary",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.5,
+      "frozen" : false,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ "brace" ],
+    "live" : [ "connector" ],
+    "brace_removed" : true,
+    "connector_removed" : false,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : false,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "both-strong",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8,
+      "frozen" : false,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.8,
+      "frozen" : false,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ ],
+    "live" : [ "brace", "connector" ],
+    "brace_removed" : false,
+    "connector_removed" : false,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : true,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "brace-frozen-below",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : true,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ "connector" ],
+    "live" : [ "brace" ],
+    "brace_removed" : false,
+    "connector_removed" : true,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : false,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "connector-frozen-below",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : true,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ "brace" ],
+    "live" : [ "connector" ],
+    "brace_removed" : true,
+    "connector_removed" : false,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : false,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "both-frozen-below",
+    "nodes" : [ {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : true,
+      "manual" : false
+    }, {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : true,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    } ],
+    "removed_order" : [ ],
+    "live" : [ "brace", "connector" ],
+    "brace_removed" : false,
+    "connector_removed" : false,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : true,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  }, {
+    "name" : "reverse-registration-both-below",
+    "nodes" : [ {
+      "label" : "connector",
+      "kind" : "BarConnectorInter",
+      "shape" : "THIN_CONNECTOR",
+      "bounds" : [ 128, 100, 4, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false,
+      "median" : [ 130.0, 100.0, 130.0, 120.0 ],
+      "width" : 4.0
+    }, {
+      "label" : "brace",
+      "kind" : "BraceInter",
+      "shape" : "BRACE",
+      "bounds" : [ 100, 100, 12, 20 ],
+      "grade" : 0.8,
+      "contextual_grade" : 0.499,
+      "frozen" : false,
+      "manual" : false
+    } ],
+    "removed_order" : [ "connector", "brace" ],
+    "live" : [ ],
+    "brace_removed" : true,
+    "connector_removed" : true,
+    "same_original_part_and_staff_members" : true,
+    "relation_registered" : false,
+    "relation_manual_retained" : true,
+    "repeat_removed_count" : 0
+  } ]
+}

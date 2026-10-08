@@ -651,10 +651,28 @@ fn validate_role(input: &Value, chords: bool) -> Result<(), String> {
         }
         if !matches!(
             n["kind"].as_str(),
-            Some("HeadInter" | "StemInter" | "BeamInter" | "BeamHookInter" | "BarlineInter")
+            Some(
+                "HeadInter"
+                    | "StemInter"
+                    | "BeamInter"
+                    | "BeamHookInter"
+                    | "BarlineInter"
+                    | "BarConnectorInter"
+                    | "BraceInter"
+            )
         ) && !(chords && n["kind"] == "SmallBeamInter")
         {
-            return Err("unsupported_head_foundation_kind".into());
+            return Err(format!(
+                "unsupported_head_foundation_kind:{}",
+                n["kind"].as_str().unwrap_or("unknown")
+            ));
+        }
+        if matches!(n["kind"].as_str(), Some("BarConnectorInter" | "BraceInter")) {
+            let key: crate::shared_sig::Key = serde_json::from_value(n["origin"].clone())
+                .map_err(|_| "foundation_actual_GRID_origin_required")?;
+            if key.phase != crate::shared_sig::Phase::Grid || key.system == 0 || key.local == 0 {
+                return Err("foundation_actual_GRID_origin_required".into());
+            }
         }
         if matches!(n["kind"].as_str(), Some("HeadInter" | "StemInter"))
             && (n["frozen"] == true || n["is_frozen"] == true)

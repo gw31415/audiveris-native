@@ -1,0 +1,44 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "f38a500b03b16a3dcdc57d6502d5b426a9134124e0751ec3356994e483986832",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "f8d7be416912db85e4d5991c55f65882600002b2d5256ab27619533b1977645b",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/real-grid-weak-original-v1/classes",
+    "/workspace/audiveris-native/scripts/java/FoundationGridWeakProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/real-grid-weak-original-v1/home",
+    "-Djava.util.prefs.userRoot=/tmp/real-grid-weak-original-v1/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-grid-weak-original-v1/classes",
+    "FoundationGridWeakProbe",
+    "/tmp/real-score-laura-original-v1/laura-gray.omr",
+    "/tmp/real-grid-weak-original-v1/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "f9a0a0348804f8fa1b69f3ab015be24eac3ff7a937a08540593695500a8090f0",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "89e49bc24eead05f23d9652417678114e97bfdd43b7fb5d073b5cbf5997eef21",
+  "source_files": {
+    "sig/SIGraph.java": "6b6ff3172d1f194566a7f59aa2c854cb62ea9c4deab79a43b6b0b85e1d4c4c2f",
+    "sig/inter/BraceInter.java": "69c9056d710fac481e06ed7fa8dba86e0cd5c9d679fb0bd7d0f4fdfe32876013",
+    "sig/inter/BarConnectorInter.java": "c57cd28951ff55ae6c9907f7283784956f6fbd9fe50d94bf425c2038e1d16be9"
+  }
+}

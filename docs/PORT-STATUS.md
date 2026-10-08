@@ -2057,3 +2057,10 @@ not. Existing manual relation bodies and repeat identity remain. Evidence real-g
 overlap. Full An Laura now reaches the subsequent foundation kind admission guard;
 that retained GRID reduction and later recognition/rhythm/output remain. No real
 image MusicXML or quality acceptance is claimed.
+
+Actual GRID Brace/BarConnector bodies now reach foundation checks with original
+frozen/contextual grades. Eight source automatic weak controls and actual full-image
+Brace retirement preserve Part/Staff/Curve Arc/storage and physical registry; manual
+structural removal and late bad endpoint roll back prefix/relations. Evidence real-
+grid-foundation. Full An Laura progresses to the multi-Staff ledger reduction guard;
+real image MusicXML/quality acceptance remains false and work continues.
