@@ -2121,3 +2121,15 @@ Stack rhythm/voices/output and independent quality acceptance remain.
 Full unchanged image CLI now reaches SYMBOLS music_symbols_curved_or_skew_staff_pending
 in171.66 seconds with no XML; the retained actual Staff/Curve ordinate and skew
 lookup is the next recognition dependency. All image-quality flags remain false.
+
+SYMBOLS header erasure now evaluates the retained actual Staff curves at header
+stop and fills the original inclusive rectangle. Original PageCleaner invocation
+on the unchanged image records six rectangles and a full-page pixel mask; native
+compares those boundaries and actual Part/Staff refs without rebuilding geometry
+from report GRID ownership.
+Evidence real-symbol-headers. This removes the header's flat-line assumption only;
+later cleaner raster/weak optionals and actual symbol Staff/pitch selection remain,
+along with full real-image XML and independent musical quality acceptance.
+Full unchanged image CLI v9 passes the curved header and reaches
+music_cleaner_beam_ledger_other_shapes_pending in172.82 seconds, with no XML.
+The next unit is actual physical GRID Inter area/glyph erasure; quality stays false.

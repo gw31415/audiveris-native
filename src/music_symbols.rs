@@ -53,6 +53,34 @@ pub(crate) fn flat_staff_y(s: &Value, index: usize) -> Result<f64, String> {
     }
     Ok(y)
 }
+fn header_rectangle(
+    staff: &crate::grid_ir::StaffGeometry,
+    left: i64,
+    right: i64,
+    interline: usize,
+) -> Result<[i64; 4], String> {
+    if staff.lines.len() != 5 || right < left || interline == 0 {
+        return Err("music_actual_header_geometry_required".into());
+    }
+    let top = staff.lines[0].y(right as f64);
+    let bottom = staff.lines[4].y(right as f64);
+    if !top.is_finite() || !bottom.is_finite() || bottom < top {
+        return Err("music_actual_header_geometry_required".into());
+    }
+    // PageCleaner uses a rectangle at the header's right ordinate, even when
+    // the retained Staff lines curve across the rectangle's width.
+    let margin = (interline as f64 * 0.5).round_ties_even() as i64;
+    let top = top.round_ties_even() as i64 - margin;
+    let bottom = bottom.round_ties_even() as i64 + margin;
+    Ok([left, top, right - left + 1, bottom - top + 1])
+}
+fn erase_rectangle(im: &mut GrayImage, bounds: [i64; 4]) {
+    for y in bounds[1]..bounds[1] + bounds[3] {
+        for x in bounds[0]..bounds[0] + bounds[2] {
+            white(im, x, y);
+        }
+    }
+}
 fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
     let o = &m.owner;
     let mut im = GrayImage::from_pgm(&o.upstream_output_pixels)?;
@@ -74,14 +102,15 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
         }
         let left = h["start"].as_i64().ok_or("music_header_start_required")?;
         let right = h["stop"].as_i64().ok_or("music_header_stop_required")?;
-        let dy = (o.interline as f64 * 0.5).round_ties_even() as i64;
-        for y in flat_staff_y(s, 0)?.round_ties_even() as i64 - dy
-            ..=flat_staff_y(s, 4)?.round_ties_even() as i64 + dy
-        {
-            for x in left..=right {
-                white(&mut im, x, y);
-            }
-        }
+        let staff = o
+            .staffs
+            .iter()
+            .find(|staff| {
+                Some(staff.id) == h["staff_id"].as_u64()
+                    && Some(staff.system) == h["system_id"].as_u64()
+            })
+            .ok_or("music_actual_header_staff_required")?;
+        erase_rectangle(&mut im, header_rectangle(staff, left, right, o.interline)?);
         if h["clef"]["frozen"] != true {
             return Err("music_frozen_header_clef_required".into());
         }
@@ -816,3 +845,8 @@ mod cluster_boundary {
         assert!(symbol_candidates(&[], 11).unwrap().is_empty());
     }
 }
+
+#[cfg(test)]
+mod header_tests;
+#[cfg(test)]
+pub(crate) use header_tests::assert_real_headers;
