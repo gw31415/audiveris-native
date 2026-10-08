@@ -287,6 +287,7 @@ mod tests {
             )
             .unwrap();
         let measures = vec![Measure {
+            geometry: None,
             system: 1,
             part: 1,
             staff: 1,
@@ -468,6 +469,7 @@ mod head_chord_removal_tests {
                 relation:json!({"kind":"HeadStemRelation","profile":0,"head_side":"RIGHT","extension_point":[313.,254.],
                     "dx":0.,"dy":0.,"grade":1.,"consistency":1.,"source_ratio":5.,"target_ratio":11.,"invading":true,"manual":false})}]).unwrap();
             let measures = vec![Measure {
+                geometry: None,
                 system: 1,
                 part: 1,
                 staff: 1,

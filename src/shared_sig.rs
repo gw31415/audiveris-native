@@ -24,6 +24,8 @@ pub(crate) mod chord_tasks;
 mod dot_ownership;
 mod editing_task;
 mod manual_chord_stem;
+#[cfg(test)]
+mod stem_refinement_tests;
 mod voice_owners;
 pub use chord_tasks::{ChordAdditionTask, ChordRemovalTask};
 pub use dot_ownership::NoteOwnerEdit;
@@ -375,6 +377,8 @@ struct Edge {
 }
 #[derive(Clone, Default, Debug)]
 pub struct Graph {
+    // This certificate is held by the live graph; reports cannot supply it.
+    refined_stem_geometry: BTreeMap<Key, Value>,
     pub(crate) editing_chords: Vec<chord_tasks::EditingHeadChord>,
     retained_voices: Vec<crate::music_voices::Voice>,
     vertices: Vec<Vertex>,
@@ -1959,6 +1963,7 @@ impl Graph {
         if system == 0 || stems.len() > 100_000 || attachments.len() > 1_000_000 {
             return Err("invalid_shared_stem_system_or_budget".into());
         }
+        let retained_relations = self.snapshot()["relations"].clone();
         let mut next = self.clone();
         next.phase(system, Phase::Stem);
         let mut seen = BTreeSet::new();
@@ -1974,16 +1979,22 @@ impl Graph {
             let glyph = crate::beam_dispatch::glyph_from_json(&stem["glyph"])?;
             let grade = stem["grade"].as_f64().ok_or("invalid_shared_stem_grade")?;
             let expected = crate::stem_glyph::record(local, &glyph, grade)?;
-            for field in ["kind", "shape", "bounds", "median", "width"] {
-                if stem[field] != expected[field] {
-                    return Err("inconsistent_shared_stem_geometry".into());
-                }
-            }
             let key = Key {
                 system,
                 phase: Phase::Stem,
                 local,
             };
+            let fields = ["kind", "shape", "bounds", "median", "width"];
+            let constructor = fields.iter().all(|field| stem[*field] == expected[*field]);
+            let retained = self.refined_stem_geometry.get(&key).is_some_and(|actual| {
+                fields
+                    .iter()
+                    .chain(std::iter::once(&"glyph"))
+                    .all(|field| stem[*field] == actual[*field])
+            });
+            if !constructor && !retained {
+                return Err("inconsistent_shared_stem_geometry".into());
+            }
             let mut data = stem.clone();
             data["abnormal"] = if stem["removed"] == true {
                 next.id(key)
@@ -2059,7 +2070,21 @@ impl Graph {
             let dx = r["dx"].as_f64().ok_or("invalid_shared_stem_gap")?;
             let dy = r["dy"].as_f64().ok_or("invalid_shared_stem_gap")?;
             let mut expected = crate::head_stem_relation::gap_grade(dx, dy, profile)?;
-            let consistency = if let Some(main) = r.get("consistency_interline") {
+            // Refinement changes the median, but never resets the existing
+            // relation's constructor-time consistency or support ratios.
+            let preserved = self.refined_stem_geometry.contains_key(&target_key)
+                && retained_relations.as_array().unwrap().iter().any(|old| {
+                    old == r
+                        && old["source"] == source
+                        && old["target"] == target
+                        && old["local_relation_id"] == attachment.local
+                });
+            let consistency = if preserved {
+                r["consistency"]
+                    .as_f64()
+                    .filter(|v| v.is_finite() && *v > 0.)
+                    .ok_or("invalid_shared_retained_stem_consistency")?
+            } else if let Some(main) = r.get("consistency_interline") {
                 let interline = main
                     .as_u64()
                     .and_then(|n| usize::try_from(n).ok())
@@ -2997,6 +3022,7 @@ mod rest_chord_identity_tests {
         ))
         .unwrap();
         let measures = vec![crate::music_measures::Measure {
+            geometry: None,
             system: 1,
             part: 1,
             staff: 1,
@@ -3273,3 +3299,42 @@ pub(crate) use chord_cache::ChordRead;
 
 #[cfg(test)]
 mod grid_foundation_tests;
+
+impl Graph {
+    pub(crate) fn refine_stem_median(
+        &mut self,
+        key: Key,
+        median: [f64; 4],
+    ) -> Result<Value, String> {
+        let id = self.id(key).ok_or("stem_refinement_actual_Stem_required")?;
+        let (n, removed) = self.retained_inter(key)?;
+        if key.phase != Phase::Stem
+            || n["kind"] != "StemInter"
+            || removed
+            || median
+                .iter()
+                .any(|v| !v.is_finite() || v.abs() > 4_000_000.)
+            || median[1] >= median[3]
+        {
+            return Err("stem_refinement_live_vertical_median_required".into());
+        }
+        let width = n["width"]
+            .as_f64()
+            .filter(|w| w.is_finite() && *w > 0.)
+            .ok_or("stem_refinement_actual_width_required")?;
+        let left = (median[0].min(median[2]) - width / 2.).floor();
+        let right = (median[0].max(median[2]) + width / 2.).ceil();
+        let top = median[1].floor();
+        let bottom = median[3].ceil();
+        self.vertices[id - 1].data["median"] = json!(median);
+        self.vertices[id - 1].data["bounds"] = json!([
+            left as i64,
+            top as i64,
+            (right - left) as i64,
+            (bottom - top) as i64
+        ]);
+        let updated = self.vertices[id - 1].data.clone();
+        self.refined_stem_geometry.insert(key, updated.clone());
+        Ok(updated)
+    }
+}

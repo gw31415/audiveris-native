@@ -2387,6 +2387,7 @@ mod tests {
             let m = &c["measure"];
             graph
                 .bind_dot_measures(&[Measure {
+                    geometry: None,
                     system: 1,
                     part: m["part_id"].as_u64().unwrap(),
                     staff: m["staff_id"].as_u64().unwrap(),

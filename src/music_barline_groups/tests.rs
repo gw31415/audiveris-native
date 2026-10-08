@@ -226,12 +226,8 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
     let parts = owner.parts.clone();
     owner.upstream_report["grid_ir"]["systems"] = json!([]);
     owner.upstream_report["grid_ir"]["staffs"] = json!([]);
-    assert_eq!(
-        crate::music_measures::continue_measures(owner)
-            .err()
-            .unwrap(),
-        "music_multistaff_chord_dispatch_pending"
-    );
+    let music = crate::music_measures::continue_measures(owner).unwrap();
+    crate::music_measures::assert_real_chords(&music);
     assert_eq!(
         parts.iter().map(|p| p.staffs.len()).collect::<Vec<_>>(),
         vec![1, 2, 1, 2]

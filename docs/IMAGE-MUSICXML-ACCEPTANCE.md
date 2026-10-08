@@ -44,7 +44,10 @@
 GRID整合と実Staff mapによる普通の複数Staff Ledger pruningも接続済み。
 STEMSの既存経路を越え、MEASURESの保持済みgrouped barlineを原版18群/21memberと
 比較して接続した。同じ実Part/StaffのPartBarline・8 Measure・4共有Stack幾何所有も接続し、
-実ライブラリ経路は `music_multistaff_chord_dispatch_pending` に到達した。
+実ライブラリ経路はCHORDSの67 Chord/94 Head、全member/音高/Staff/Part/Measure所属、
+Stem/Chord/head/tail幾何で原版に一致した。原版標準のREDUCTION Head-end refineも
+元glyph/cache identityを保って接続した。実画像CLIは `music_symbols_curved_or_skew_staff_pending` に到達した。
+XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。
@@ -53,7 +56,7 @@ XMLを出力できない。staff消去済み同名開発fixtureでの `no_regula
 ## 改訂した残工程
 
 1. 複数part/staffでのbeam周辺の実所有選択は接続済み。次の実入力切断点である
-   MEASURESの保持済みGRID/grouped barlineは接続済み。実piano PartのMeasure/Stack幾何所有も接続済み。次に複段Chord dispatchと共有rhythm時計を接続し、
+   MEASURESの保持済みGRID/grouped barlineは接続済み。実piano PartのMeasure/Stack幾何所有も接続済み。複段Chord dispatchと原版標準Stem Head-end refineも接続済み。次にSYMBOLSの複段所属と共有rhythm時計を接続し、
    その後同じ実譜面のSYMBOLS/rhythm/output切断点を順に解消する。実画像のLedger
    共有補正は0件で一致し、真に共有する別入力では再所属補正を省略しない。
 2. 調号/臨時記号、複段part、和音、実音価・小節・voice・必要な記号関係を画像から保つ。

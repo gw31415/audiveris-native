@@ -85,6 +85,45 @@ pub(crate) struct PartLayout {
     pub(crate) left: Option<Arc<PartBarline>>,
     pub(crate) measures: Vec<Arc<MeasureLayout>>,
 }
+impl PartLayout {
+    /// Part.getMeasureAt selects the first containing Staff area, then the first
+    /// right bar after the point. A null Staff source stays null for the fallback.
+    pub(crate) fn measure_at(
+        &self,
+        staffs: &[Arc<StaffGeometry>],
+        areas: &[Arc<crate::system_area_geometry::Band>],
+        point: [f64; 2],
+    ) -> Result<Option<Arc<MeasureLayout>>, String> {
+        if staffs.len() != areas.len() || point.iter().any(|v| !v.is_finite()) {
+            return Err("music_actual_Part_Staff_area_required".into());
+        }
+        for staff in &self.part.staffs {
+            let index = staffs
+                .iter()
+                .position(|s| Arc::ptr_eq(s, staff))
+                .ok_or("music_actual_Part_Staff_area_required")?;
+            if !areas[index].contains(point)? {
+                continue;
+            }
+            if point[0] < staff.abscissae[0] as f64 || point[0] > staff.abscissae[1] as f64 {
+                return Ok(None);
+            }
+            for measure in &self.measures {
+                if measure
+                    .right
+                    .as_ref()
+                    .map(|b| b.right_x(staff))
+                    .transpose()?
+                    .is_none_or(|x| point[0] <= x as f64)
+                {
+                    return Ok(Some(measure.clone()));
+                }
+            }
+            return Ok(None);
+        }
+        Ok(None)
+    }
+}
 pub(crate) struct StackOwner {
     pub(crate) stack: Arc<Stack>,
     pub(crate) measures: Vec<Arc<MeasureLayout>>,

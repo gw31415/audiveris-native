@@ -200,6 +200,9 @@ pub(crate) fn continue_reduction(mut owned: OwnedItems) -> Result<OwnedItems, St
         &owned.graph.snapshot(),
         &owned.upstream_report,
     );
+    let refinement = crate::stem_head_refinement::apply(&mut owned)?;
+    owned.prepared.report["stem_head_end_refinement"] = refinement;
+    owned.prepared.report["shared_sig"] = owned.graph.snapshot();
     Ok(owned)
 }
 

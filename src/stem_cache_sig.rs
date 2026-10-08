@@ -178,6 +178,9 @@ impl Retriever {
                     &beam_dispatch::glyph_from_json(&state["glyph"])?,
                     state["grade"].as_f64().unwrap(),
                 )?;
+                for field in ["median", "bounds", "width"] {
+                    r[field] = state[field].clone();
+                }
                 r["removed"] = json!(true);
                 r["impacts"] = state["impacts"].clone();
                 r["glyph_id"] = json!(key.local);

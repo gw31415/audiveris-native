@@ -363,6 +363,7 @@ mod tests {
         for c in original["cases"].as_array().unwrap() {
             let mut graph = Graph::default();
             let measure = Measure {
+                geometry: None,
                 system: 1,
                 part: c["measure"]["part_id"].as_u64().unwrap(),
                 staff: c["measure"]["staff_id"].as_u64().unwrap(),
@@ -511,6 +512,7 @@ mod tests {
                 .iter()
                 .enumerate()
                 .map(|(i, b)| Measure {
+                    geometry: None,
                     system: 1,
                     part: 1,
                     staff: 1,
@@ -706,6 +708,7 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(i, b)| Measure {
+                geometry: None,
                 system: 1,
                 part: 1,
                 staff: 1,
@@ -878,6 +881,7 @@ mod tests {
             .iter()
             .enumerate()
             .map(|(i, b)| Measure {
+                geometry: None,
                 system: 1,
                 part: 1,
                 staff: 1,

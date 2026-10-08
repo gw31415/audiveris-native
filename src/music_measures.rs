@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! MEASURES/head CHORDS continuation, before SYMBOLS and rhythm.
 //! Translation of MeasuresBuilder.buildPartMeasures and ChordsBuilder.connectHead/
-//! getStemChords/dispatchChords for single-staff parts and single-stem heads.
+//! getStemChords/dispatchChords for actual Part-wide single-stem head owners.
 use crate::{
     shared_sig::{Key, Phase},
     stem_image_owned::OwnedItems,
@@ -118,6 +118,7 @@ pub(crate) struct Measure {
     pub index: usize,
     pub left: i64,
     pub right: i64,
+    pub(crate) geometry: Option<std::sync::Arc<crate::music_measure_layout::MeasureLayout>>,
     pub timing: crate::music_voices::MeasureTiming,
     pub tuplets: Vec<Key>,
     // In the admitted single-part path this is the actual Stack unassigned set.
@@ -212,9 +213,6 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
         for layout in measure_layout.parts.iter().filter(|p| p.part.system == sid) {
             let part = &layout.part;
             let pid = part.id;
-            if part.staffs.len() != 1 {
-                return Err("music_multistaff_chord_dispatch_pending".into());
-            }
             let actual_staff = part.staffs[0].clone();
             if !owner
                 .staffs
@@ -236,109 +234,113 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     index: planned.index,
                     left,
                     right,
+                    geometry: Some(planned.clone()),
                     timing: Default::default(),
                     tuplets: Vec::new(),
                     stack_tuplets: Vec::new(),
                 });
             }
-            for key in graph.live_inter_keys(sid, "StaffBarlineInter") {
-                let (bar, _) = graph.retained_inter(key)?;
-                if bar["staff_id"] != staff_id {
-                    continue;
-                }
-                if bar["back_to_back"] == true {
-                    return Err("music_back_to_back_PartBarline_export_pending".into());
-                }
-                bar_rows.push(json!({"id":graph.id(key),"origin":key,"physical_barline_id":bar["member_ids"][0],"member_ids":bar["member_ids"],"staff_id":staff_id,"x":bar["right_x"],"leading":bar["leading"],"style":bar["style"]}));
-            }
-            let header = owner.upstream_report["headers"]["staffs"]
-                .as_array()
-                .into_iter()
-                .flatten()
-                .find(|h| h["staff_id"] == staff_id && h["system_id"] == sid)
-                .ok_or("music_staff_header_required")?;
-            let mut clef = header["clef"].clone();
-            if clef["shape"].as_str().is_none() {
-                return Err("music_native_clef_required".into());
-            }
-            let key = Key {
-                system: sid,
-                phase: Phase::MusicHeader,
-                local: staff_id as usize,
-            };
-            clef["kind"] = json!("ClefInter");
-            clef["source_header_id"] = clef["id"].clone();
-            clef["staff_id"] = json!(staff_id);
-            let id = graph.vertex(key, clef, false)?;
-            clef_rows.push(json!({"id":id,"origin":key,"staff_id":staff_id}));
-            let relations = owner.upstream_report["headers"]["systems"]
-                .as_array()
-                .into_iter()
-                .flatten()
-                .find(|s| s["system_id"] == sid)
-                .and_then(|s| s["relations"].as_array())
-                .ok_or("music_header_relations_required")?;
-            let imported = crate::music_headers::import_key(
-                &mut graph,
-                &mut owner.prepared.registry,
-                header,
-                key,
-                relations,
-            )?;
-            if !imported.is_null() {
-                key_rows.push(imported);
-            }
-            let imported = crate::music_headers::import_time(
-                &mut graph,
-                &mut owner.prepared.registry,
-                header,
-                sid,
-                relations,
-            )?;
-            if !imported.is_null() {
-                time_rows.push(imported);
-            }
-
-            let mut heads = nodes
-                .iter()
-                .filter(|n| {
-                    n["kind"] == "HeadInter"
-                        && n["origin"]["system"] == sid
-                        && n["staff_id"] == staff_id
-                })
-                .collect::<Vec<_>>();
-            heads.sort_by_key(|n| center(n).map(|p| p.0).unwrap_or(i64::MIN));
             let mut by_stem = BTreeMap::<Key, Vec<Value>>::new();
             let mut stem_order = Vec::new();
-            for head in heads {
-                let rels = edges
+            for actual_staff in &part.staffs {
+                let staff_id = actual_staff.id;
+                for key in graph.live_inter_keys(sid, "StaffBarlineInter") {
+                    let (bar, _) = graph.retained_inter(key)?;
+                    if bar["staff_id"] != staff_id {
+                        continue;
+                    }
+                    if bar["back_to_back"] == true {
+                        return Err("music_back_to_back_PartBarline_export_pending".into());
+                    }
+                    bar_rows.push(json!({"id":graph.id(key),"origin":key,"physical_barline_id":bar["member_ids"][0],"member_ids":bar["member_ids"],"staff_id":staff_id,"x":bar["right_x"],"leading":bar["leading"],"style":bar["style"]}));
+                }
+                let header = owner.upstream_report["headers"]["staffs"]
+                    .as_array()
+                    .into_iter()
+                    .flatten()
+                    .find(|h| h["staff_id"] == staff_id && h["system_id"] == sid)
+                    .ok_or("music_staff_header_required")?;
+                let mut clef = header["clef"].clone();
+                if clef["shape"].as_str().is_none() {
+                    return Err("music_native_clef_required".into());
+                }
+                let key = Key {
+                    system: sid,
+                    phase: Phase::MusicHeader,
+                    local: staff_id as usize,
+                };
+                clef["kind"] = json!("ClefInter");
+                clef["source_header_id"] = clef["id"].clone();
+                clef["staff_id"] = json!(staff_id);
+                let id = graph.vertex(key, clef, false)?;
+                clef_rows.push(json!({"id":id,"origin":key,"staff_id":staff_id}));
+                let relations = owner.upstream_report["headers"]["systems"]
+                    .as_array()
+                    .into_iter()
+                    .flatten()
+                    .find(|s| s["system_id"] == sid)
+                    .and_then(|s| s["relations"].as_array())
+                    .ok_or("music_header_relations_required")?;
+                let imported = crate::music_headers::import_key(
+                    &mut graph,
+                    &mut owner.prepared.registry,
+                    header,
+                    key,
+                    relations,
+                )?;
+                if !imported.is_null() {
+                    key_rows.push(imported);
+                }
+                let imported = crate::music_headers::import_time(
+                    &mut graph,
+                    &mut owner.prepared.registry,
+                    header,
+                    sid,
+                    relations,
+                )?;
+                if !imported.is_null() {
+                    time_rows.push(imported);
+                }
+
+                let mut heads = nodes
                     .iter()
-                    .filter(|e| e["kind"] == "HeadStemRelation" && e["source"] == head["id"])
+                    .filter(|n| {
+                        n["kind"] == "HeadInter"
+                            && n["origin"]["system"] == sid
+                            && n["staff_id"] == staff_id
+                    })
                     .collect::<Vec<_>>();
-                if rels.len() != 1 {
-                    return Err("music_shared_or_stemless_head_chords_pending".into());
+                heads.sort_by_key(|n| center(n).map(|p| p.0).unwrap_or(i64::MIN));
+                for head in heads {
+                    let rels = edges
+                        .iter()
+                        .filter(|e| e["kind"] == "HeadStemRelation" && e["source"] == head["id"])
+                        .collect::<Vec<_>>();
+                    if rels.len() != 1 {
+                        return Err("music_shared_or_stemless_head_chords_pending".into());
+                    }
+                    let stem = nodes
+                        .iter()
+                        .find(|n| n["kind"] == "StemInter" && n["id"] == rels[0]["target"])
+                        .ok_or("missing_chord_stem")?;
+                    let key: Key = serde_json::from_value(stem["origin"].clone())
+                        .map_err(|_| "invalid_chord_stem_origin")?;
+                    // Confirm this is still the canonical registered object in the live cache.
+                    if owner
+                        .caches
+                        .get(&sid)
+                        .ok_or("missing_music_cache")?
+                        .registered_stem(&owner.graph, key.local)?
+                        .snapshot()?["id"]
+                        != stem["id"]
+                    {
+                        return Err("stale_music_cache_stem".into());
+                    }
+                    if !by_stem.contains_key(&key) {
+                        stem_order.push(key);
+                    }
+                    by_stem.entry(key).or_default().push(head.clone());
                 }
-                let stem = nodes
-                    .iter()
-                    .find(|n| n["kind"] == "StemInter" && n["id"] == rels[0]["target"])
-                    .ok_or("missing_chord_stem")?;
-                let key: Key = serde_json::from_value(stem["origin"].clone())
-                    .map_err(|_| "invalid_chord_stem_origin")?;
-                // Confirm this is still the canonical registered object in the live cache.
-                if owner
-                    .caches
-                    .get(&sid)
-                    .ok_or("missing_music_cache")?
-                    .registered_stem(&owner.graph, key.local)?
-                    .snapshot()?["id"]
-                    != stem["id"]
-                {
-                    return Err("stale_music_cache_stem".into());
-                }
-                if !by_stem.contains_key(&key) {
-                    stem_order.push(key);
-                }
-                by_stem.entry(key).or_default().push(head.clone());
             }
             for stem in stem_order {
                 let members = by_stem.remove(&stem).unwrap();
@@ -354,17 +356,41 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     .into_iter()
                     .cloned()
                     .collect();
-                let cx = bounds[0] + bounds[2] / 2;
+                let point = [
+                    (bounds[0] + bounds[2] / 2) as f64,
+                    (bounds[1] + bounds[3] / 2) as f64,
+                ];
+                let mut planned = layout.measure_at(&owner.staffs, &owner.staff_areas, point)?;
+                if planned.is_none() {
+                    let point = geometry
+                        .head_location
+                        .ok_or("music_chord_head_location_required")?;
+                    planned = layout.measure_at(
+                        &owner.staffs,
+                        &owner.staff_areas,
+                        [point[0] as f64, point[1] as f64],
+                    )?;
+                }
+                let planned = planned.ok_or("chord_outside_native_measure")?;
                 let measure = measures
                     .iter()
                     .position(|m| {
-                        m.system == sid
-                            && m.part == pid
-                            && m.staff == staff_id
-                            && m.left < cx
-                            && cx <= m.right
+                        m.geometry
+                            .as_ref()
+                            .is_some_and(|g| std::sync::Arc::ptr_eq(g, &planned))
                     })
-                    .ok_or("chord_outside_native_measure")?;
+                    .ok_or("music_actual_Chord_Measure_required")?;
+                let staff_ids = part
+                    .staffs
+                    .iter()
+                    .filter(|s| members.iter().any(|h| h["staff_id"] == s.id))
+                    .map(|s| s.id)
+                    .collect::<Vec<_>>();
+                let staff_id = if staff_ids.len() == 1 {
+                    Some(staff_ids[0])
+                } else {
+                    None
+                };
                 let key = Key {
                     system: sid,
                     phase: Phase::Chord,
@@ -374,7 +400,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                         .count()
                         + 1,
                 };
-                let id = graph.vertex(key,json!({"kind":"HeadChordInter","bounds":bounds,"staff_id":staff_id,"part_id":pid,"measure_index":measures[measure].index,"stem_id":graph.id(stem),"member_ids":members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"leading_note_id":geometry.leading_id,"head_location":geometry.head_location,"tail_location":geometry.tail_location,"duration":null,"voice":null}),false)?;
+                let id = graph.vertex(key,json!({"kind":"HeadChordInter","bounds":bounds,"staff_id":staff_id,"staff_ids":staff_ids,"part_id":pid,"measure_index":measures[measure].index,"stem_id":graph.id(stem),"member_ids":members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"leading_note_id":geometry.leading_id,"head_location":geometry.head_location,"tail_location":geometry.tail_location,"duration":null,"voice":null}),false)?;
                 let mut relations = vec![(key, stem, json!({"kind":"ChordStemRelation"}))];
                 for head in &members {
                     let hkey: Key = serde_json::from_value(head["origin"].clone())
@@ -400,7 +426,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     crate::stem_overlap_ownership::Ownership::new(&snapshot)?;
     owner.graph = graph;
     let reduction = std::mem::take(&mut owner.prepared.report);
-    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"actual_measure_layout":measure_layout.projection(&owner.graph),"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native grouped physical barlines with complete actual Staff columns, actual multi-Staff PartBarline/Measure layouts and common Stack references; chord dispatch currently single-staff and single-stem; canonical Part/Staff/cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["missing bar columns/back-to-back export/multi-Staff chord dispatch/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"actual_measure_layout":measure_layout.projection(&owner.graph),"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native grouped physical barlines with complete actual Staff columns, actual multi-Staff PartBarline/Measure layouts and common Stack references; Part-wide single-stem chord dispatch across constituent Staffs; canonical Part/Staff/cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["missing bar columns/back-to-back export/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     Ok(OwnedMusic {
         owner,
         measures,
@@ -408,4 +434,11 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
         chords,
         voices: Vec::new(),
     })
+}
+
+#[cfg(test)]
+mod tests;
+#[cfg(test)]
+pub(crate) fn assert_real_chords(music: &OwnedMusic) {
+    tests::assert_real_chords(music);
 }

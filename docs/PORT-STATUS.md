@@ -2106,3 +2106,18 @@ music_multistaff_chord_dispatch_pending; real native CLI XML/quality is still
 unaccepted. Shared Stack geometry does not claim shared rhythm/Slot completion.
 Evidence real-part-measures. Continue actual piano Chord dispatch and downstream
 recognition/rhythm/output, excluding unrelated APIs under the revised image goal.
+
+Actual Part-wide Chord construction/dispatch now keeps the piano's same multi-Staff
+Part and retained Measure geometry instead of separate Staff measures. Original
+normal same-image CHORDS comparison matches67 Chords/94 Heads, all member pitch/
+Staff/Part/Measure relationships and Chord/Stem/head/tail geometry. Original default
+ReductionStep.refineHeadEnd is connected with the same physical glyph/cache Arc,
+held geometry and unchanged constructor-time relation consistency. All67 Stem
+glyph bounds/weight/width match; median residual is below4e-12 pixels. A late bad
+Head anchor preserves prefix/cache/manual relation bodies, and later cache sync
+retains internally certified refined geometry. Evidence real-head-chords. This is
+not accepted real-image MusicXML quality; SYMBOLS multi-Staff membership, common
+Stack rhythm/voices/output and independent quality acceptance remain.
+Full unchanged image CLI now reaches SYMBOLS music_symbols_curved_or_skew_staff_pending
+in171.66 seconds with no XML; the retained actual Staff/Curve ordinate and skew
+lookup is the next recognition dependency. All image-quality flags remain false.

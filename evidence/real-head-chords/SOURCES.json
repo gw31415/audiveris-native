@@ -1,0 +1,33 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "sources": [
+    {
+      "path": "step/ReductionStep.java",
+      "sha256": "25c02d85a5ba4270a035e5347fe125df336d7c6368e148a936bc9c046b6acee4"
+    },
+    {
+      "path": "sheet/note/ChordsBuilder.java",
+      "sha256": "ab1b0467c92fa3157e1d6d59d7a96fec40de787b54d512d9f69fd329f5427f4b"
+    },
+    {
+      "path": "sheet/note/ChordsStep.java",
+      "sha256": "70eb6a8022498dac214b831eaae0192771d74ee88319d25be3899fc93bbd86e0"
+    },
+    {
+      "path": "sig/inter/StemInter.java",
+      "sha256": "bcdb1b67694f45de89a9ad8712222e77af7c6e29247f5edd487d8dcabd11eeec"
+    },
+    {
+      "path": "sig/inter/AbstractVerticalInter.java",
+      "sha256": "39002b48db8b6f37436276b17ee9aada0db410a0cd1823b91a02906dce45360c"
+    },
+    {
+      "path": "sheet/Part.java",
+      "sha256": "a57e2bb280a6d8e56316e8fe79ee3bf11be69f883f4c8c694d9b2a421cd35aff"
+    },
+    {
+      "path": "sheet/rhythm/Measure.java",
+      "sha256": "c1299a305ff168ffe57b5a537da384ca63d69beda5ecc57bd2f64ce0f372e611"
+    }
+  ]
+}
