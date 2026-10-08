@@ -798,3 +798,5 @@ mod retired_tie_tests;
 mod retired_beam_tests;
 
 mod reset_rhythm_tests;
+
+mod selected_rhythm_tests;

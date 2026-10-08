@@ -16,3 +16,7 @@ separate stack rebuild and then rejects the null predecessor. The native Page
 transaction preserves the pre-call state on that guard; no source is invented
 and no refinement is skipped. No production fix is required by this control.
 Original/source/book/JAR/helper hashes and exact commands are in provenance.
+
+The executed shared Reset observer is preserved at native
+Git0db637c:scripts/java/VoiceResetRhythmProbe.java, matching this provenance.
+Later selected-impact preparation does not replace these observations.

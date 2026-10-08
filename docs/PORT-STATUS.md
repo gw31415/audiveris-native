@@ -1631,3 +1631,23 @@ whose production code is unchanged, without duplicate execution. Full selected
 impact ordering and other nonUI dependencies remain pending and global flags
 false/guarded. See `evidence/musicxml-voice-page-null-rhythm/TRY.md` and
 `NEXT-DEPENDENCY.md`.
+
+
+Actual source-first selected rhythm impact adds four independent original cases
+14 boundaries: separate Page stack calls and actual RhythmsStep.impact(Collection)
+with source,target,source agree. Original LinkedHashSet first-encounter order
+suppresses the duplicate actual stack; debug calls confirm two selected Page
+calls per case, with system refinement after each. Real old/new source/target
+Voice bodies, cached expected/old clocks, manual relations and actual Chord/Slot
+identity remain compared. Target has four new Voices/four Slots and actual5/8.
+
+OwnedMusic.reprocess_selected_stack_rhythms stages the whole first-encounter
+selection, then commits Graph/Voices and only selected timing. Later actual
+member failure preserves real Chords/Slot storage/Voice identities and all old
+clock/manual/layout/report state; repair/retry agrees with original impact.
+Target-first [2,1] retains the null guard without order repair or source invention.
+Single-stack APIs share this transaction; normal selected editing/export shares
+its actual mapper and post-stack refinement. Public selected CLI render bridge,
+full controller/task impacts and other nonUI dependencies remain pending;
+global flags stay false/guarded. See
+`evidence/musicxml-voice-selected-rhythm/TRY.md` and `NEXT-DEPENDENCY.md`.

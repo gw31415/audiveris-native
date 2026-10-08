@@ -280,11 +280,35 @@ impl OwnedMusic {
     pub fn reprocess_page_stack_rhythm(&mut self, measure_number: usize) -> Result<(), String> {
         self.rebuild_stack_rhythm(measure_number, true)
     }
+    /// Ordinary RhythmsStep impact order: retain first encounters of actual
+    /// stacks and refine each containing system immediately after rebuilding.
+    pub fn reprocess_selected_stack_rhythms(
+        &mut self,
+        measure_numbers: &[usize],
+    ) -> Result<(), String> {
+        self.rebuild_selected_rhythm(measure_numbers, true)
+    }
     fn rebuild_stack_rhythm(&mut self, measure_number: usize, refine: bool) -> Result<(), String> {
-        let mi = measure_number
-            .checked_sub(1)
-            .filter(|i| *i < self.measures.len())
-            .ok_or("music_selected_actual_measure_required")?;
+        self.rebuild_selected_rhythm(&[measure_number], refine)
+    }
+    fn rebuild_selected_rhythm(
+        &mut self,
+        measure_numbers: &[usize],
+        refine: bool,
+    ) -> Result<(), String> {
+        let mut selected = Vec::new();
+        for number in measure_numbers {
+            let mi = number
+                .checked_sub(1)
+                .filter(|i| *i < self.measures.len())
+                .ok_or("music_selected_actual_measure_required")?;
+            if !selected.contains(&mi) {
+                selected.push(mi);
+            }
+        }
+        if selected.is_empty() {
+            return Ok(());
+        }
         let mut graph = self.owner.graph.clone();
         let mut voices = self.voices.clone();
         let mut measures = self.measures.clone();
@@ -295,13 +319,17 @@ impl OwnedMusic {
             chords: &self.chords,
             interline: self.owner.interline,
         };
-        context.process_stack(mi)?;
-        if refine {
-            context.refine_system(mi)?;
+        for &mi in &selected {
+            context.process_stack(mi)?;
+            if refine {
+                context.refine_system(mi)?;
+            }
         }
         self.owner.graph = graph;
         self.voices = voices;
-        self.measures[mi].timing = measures.remove(mi).timing;
+        for mi in selected {
+            self.measures[mi].timing = std::mem::take(&mut measures[mi].timing);
+        }
         Ok(())
     }
 }

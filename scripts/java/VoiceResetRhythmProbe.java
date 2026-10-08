@@ -57,7 +57,12 @@ public class VoiceResetRhythmProbe extends VoiceRetiredBeamProbe {
             Object fresh=make("sheet.rhythm.Voice",seed,measure);call(measure,"addVoice",fresh);call(fresh,"setId",7);labels.put(fresh,"new_voice");refs.add(fresh);refine(system);
             Object nextRelation=make("sig.relation.NextInVoiceRelation");call(nextRelation,"setManual",true);call(sig,"addEdge",supportLast,target,nextRelation);labels.put(nextRelation,"relation"+relations.size());relations.add(nextRelation);call(target,"setPreferredVoiceId",1);refine(system);
             List<Object> states=new ArrayList<>();Object expected=call(stack,"getExpectedDuration");
-            for(String phase:page?(mode.endsWith("_null")?List.of("before_reset","measure_reset","page_target_failed"):List.of("before_reset","measure_reset","page_stack")):mode.endsWith("_full")?List.of("before_reset","measure_reset","full_stack","refined"):List.of("before_reset","measure_reset","stack_reset","measure_processed","stack_slots","refined")) {
+            List<String> phases;
+            if(mode.endsWith("_ordered"))phases=List.of("before_reset","measure_reset","page_stack","page_target");
+            else if(mode.endsWith("_impact"))phases=List.of("before_reset","measure_reset","impact");
+            else if(page)phases=mode.endsWith("_null")?List.of("before_reset","measure_reset","page_target_failed"):List.of("before_reset","measure_reset","page_stack");
+            else phases=mode.endsWith("_full")?List.of("before_reset","measure_reset","full_stack","refined"):List.of("before_reset","measure_reset","stack_reset","measure_processed","stack_slots","refined");
+            for(String phase:phases) {
                 String failure=null;
                 switch(phase) {
                     case "measure_reset" -> call(measure,"resetRhythm");
@@ -67,6 +72,8 @@ public class VoiceResetRhythmProbe extends VoiceRetiredBeamProbe {
                         if(failure==null)throw new IllegalStateException("null source unexpectedly refined");
                         int ordinal=0;for(Object v:(List<?>)call(targetMeasure,"getVoices"))labels.put(v,"rebuilt_target"+ordinal++);
                     }
+                    case "page_target" -> {call(make("sheet.rhythm.PageRhythm",call(system,"getPage")),"reprocessStack",stacks.get(1));int ordinal=0;for(Object v:(List<?>)call(targetMeasure,"getVoices"))labels.put(v,"rebuilt_target"+ordinal++);}
+                    case "impact" -> {call(make("sheet.rhythm.RhythmsStep"),"impact",List.of(seed,target,seed));int ordinal=0;for(Object v:(List<?>)call(measure,"getVoices")){labels.put(v,"rebuilt_voice"+ordinal++);refs.add(v);}ordinal=0;for(Object v:(List<?>)call(targetMeasure,"getVoices"))labels.put(v,"rebuilt_target"+ordinal++);}
                     case "stack_reset" -> call(stack,"resetRhythm");
                     case "measure_processed", "full_stack", "page_stack" -> {if(phase.equals("page_stack"))call(make("sheet.rhythm.PageRhythm",call(system,"getPage")),"reprocessStack",stack);else if(phase.equals("full_stack"))call(make("sheet.rhythm.StackRhythm",stack),"process",expected);else call(make("sheet.rhythm.MeasureRhythm",measure),"process");int ordinal=0;for(Object v:(List<?>)call(measure,"getVoices")){labels.put(v,"rebuilt_voice"+ordinal++);refs.add(v);}}
                     case "stack_slots" -> {Object rhythm=make("sheet.rhythm.StackRhythm",stack);for(String name:List.of("generateStackSlots","readStackActualDuration")){java.lang.reflect.Method m=c("sheet.rhythm.StackRhythm").getDeclaredMethod(name);m.setAccessible(true);m.invoke(rhythm);}}
@@ -74,7 +81,7 @@ public class VoiceResetRhythmProbe extends VoiceRetiredBeamProbe {
                 }
                 Map<String,Object> state=(Map<String,Object>)frame(sig,measure,stack,chords,refs,labels,slots,relations,targetMeasure,targetRefs,group,predecessor,target);
                 Map<String,Object> step=obj("phase",phase,"state",state,"expected_object_same",call(stack,"getExpectedDuration")==expected);
-                if(failure!=null){step.put("original_failure",failure);List<Object> rebuilt=new ArrayList<>();for(Object v:(List<?>)call(targetMeasure,"getVoices"))rebuilt.add(voiceState(v,targetMeasure,labels));state.put("target_rebuilt",rebuilt);List<Object> targetAll=new ArrayList<>(targetRefs);targetAll.addAll((List<?>)call(targetMeasure,"getVoices"));state.put("target_state",observe(sig,targetMeasure,stacks.get(1),next,targetAll,labels,slots,relations));}
+                if(failure!=null||phase.equals("page_target")||phase.equals("impact")){if(failure!=null)step.put("original_failure",failure);List<Object> rebuilt=new ArrayList<>();for(Object v:(List<?>)call(targetMeasure,"getVoices"))rebuilt.add(voiceState(v,targetMeasure,labels));state.put("target_rebuilt",rebuilt);List<Object> targetAll=new ArrayList<>(targetRefs);targetAll.addAll((List<?>)call(targetMeasure,"getVoices"));state.put("target_state",observe(sig,targetMeasure,stacks.get(1),next,targetAll,labels,slots,relations));}
                 states.add(step);
             }
             cases.add(obj("name",mode,"declared_last_offset",offset.toString(),"geometry",geometry,"seed",labels.get(seed),"last",labels.get(last),"support_last",labels.get(supportLast),"target",labels.get(target),"beam_bounds",rect(call(beam,"getBounds")),"states",states));

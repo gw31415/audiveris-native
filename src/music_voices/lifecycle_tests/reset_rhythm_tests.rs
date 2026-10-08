@@ -19,7 +19,7 @@ fn original() -> Value {
     ))
     .unwrap()
 }
-fn prepare(case: &Value) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, usize) {
+pub(super) fn prepare(case: &Value) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, usize) {
     let (mut owner, labels, mut refs, group) = prepare_beam(case);
     let seed = named(&owner, &labels, case["seed"].as_str().unwrap());
     let support = named(&owner, &labels, case["support_last"].as_str().unwrap());
@@ -70,7 +70,7 @@ fn prepare(case: &Value) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, us
     .unwrap();
     (owner, labels, refs, group)
 }
-fn append_rebuilt(owner: &OwnedMusic, refs: &mut Vec<Voice>) {
+pub(super) fn append_rebuilt(owner: &OwnedMusic, refs: &mut Vec<Voice>) {
     let rebuilt = owner
         .voices
         .iter()
@@ -566,6 +566,15 @@ fn original_null_unselected_source_allows_next_stack_rebuild_then_refuses_page_r
             identity
         ));
     }
+    assert_eq!(
+        owner.reprocess_selected_stack_rhythms(&[2, 1]).unwrap_err(),
+        "music_refine_beam_predecessor_owned_voice_required"
+    );
+    assert_eq!(owner.owner.graph.snapshot(), graph);
+    assert_eq!(
+        projection(&owner.voices, &owner.measures),
+        projection_before
+    );
     owner.reprocess_stack_rhythm(2).unwrap();
     let rebuilt = owner
         .voices
