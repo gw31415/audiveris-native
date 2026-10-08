@@ -468,6 +468,7 @@ pub(crate) struct PartMembership {
     pub(crate) system: u64,
 }
 pub(crate) struct IntegratedGrid {
+    pub(crate) physical_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) report: Value,
     pub(crate) parts: Vec<PartMembership>,
 }
@@ -480,19 +481,30 @@ pub fn integrate(
     Ok(integrate_owned(ir, completion, sc, height)?.report)
 }
 pub(crate) fn integrate_owned(
+    ir: Value,
+    completion: &Value,
+    sc: &Scale,
+    height: usize,
+) -> Result<IntegratedGrid, String> {
+    let mut registry = crate::grid_ir::GlyphRegistry::default();
+    for g in ir["glyphs"].as_array().unwrap() {
+        registry.register(g);
+    }
+    integrate_registered(ir, completion, sc, height, registry)
+}
+// The recognition path moves its original registry through brace registration;
+// the report-only facade above cannot replace those held physical objects.
+pub(crate) fn integrate_registered(
     mut ir: Value,
     completion: &Value,
     sc: &Scale,
     height: usize,
+    mut registry: crate::grid_ir::GlyphRegistry,
 ) -> Result<IntegratedGrid, String> {
     let mut actual_parts = Vec::new();
     let staffs = ir["staffs"].as_array().unwrap().clone();
     let systems = ir["systems"].as_array().unwrap().clone();
     let mut bars = ir["bar_semantics"].clone();
-    let mut registry = crate::grid_ir::GlyphRegistry::default();
-    for g in ir["glyphs"].as_array().unwrap() {
-        registry.register(g);
-    }
     let curves: Vec<Vec<Curve>> = staffs
         .iter()
         .map(|s| s["lines"].as_array().unwrap().iter().map(curve).collect())
@@ -747,6 +759,7 @@ pub(crate) fn integrate_owned(
     ]);
     bars["status"] = json!("bar_brace_bracket_semantics_partial");
     ir["bar_semantics"] = bars;
+    let physical_glyphs = registry.physical_glyphs()?;
     ir["glyphs"] = json!(registry.entries);
     ir["pending"] = json!([
         "brace fallback alignment (explicitly rejected); natural line-root trigger unverified",
@@ -754,6 +767,7 @@ pub(crate) fn integrate_owned(
         "non-GRID SIG relation types and contexts"
     ]);
     Ok(IntegratedGrid {
+        physical_glyphs,
         report: ir,
         parts: actual_parts,
     })

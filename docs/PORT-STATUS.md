@@ -2143,3 +2143,16 @@ Retaining that constructor-produced physical registry is next. Evidence real-sym
 normalized thin rectangle contour branch is admitted; general slopes and real
 SYMBOLS ensemble/weak-optional order remain subsequent recognition work.
 Real image MusicXML and musical quality acceptance remain false.
+
+GRID physical glyphs now begin as typed objects at registration and move through
+Brace integration/PAGE/STEMS on the same Arcs. Recognition passes the original
+registry, while the report-only facade remains separate. Actual Brace erasure
+resolves the canonical GRID node's glyph ID in that retained physical registry;
+it no longer expects an absent Beam-format glyph projection. The real-image
+target blanks report glyphs, matches two original Brace run tables, and preserves
+all PAGE/STEMS physical Arcs, graph bodies and registry storage. Evidence
+real-grid-glyphs. Recognition/rhythm/output and independent quality remain pending.
+Full unchanged image CLI v11 passes physical Brace erasure and reaches
+beam PageCleaner sloping/wider stroke raster pending in170.56 seconds, no XML.
+The next image dependency is14 sloping contours among18 original Beam/Hook bodies,
+then real Chord-based cleaner visitor order. Real-image quality remains false.

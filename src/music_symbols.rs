@@ -29,6 +29,10 @@ fn white(im: &mut GrayImage, x: i64, y: i64) {
 }
 fn glyph_erase(im: &mut GrayImage, v: &Value) -> Result<(), String> {
     let g = beam_dispatch::glyph_from_json(v)?;
+    glyph_pixels_erase(im, &g);
+    Ok(())
+}
+fn glyph_pixels_erase(im: &mut GrayImage, g: &GlyphPixels) {
     for r in &g.runs {
         for along in r.start..r.start + r.length {
             let (x, y) = match g.orientation {
@@ -38,7 +42,6 @@ fn glyph_erase(im: &mut GrayImage, v: &Value) -> Result<(), String> {
             white(im, g.left as i64 + x as i64, g.top as i64 + y as i64);
         }
     }
-    Ok(())
 }
 pub(crate) fn flat_staff_y(s: &Value, index: usize) -> Result<f64, String> {
     let p = s["lines"][index]["points"]
@@ -325,6 +328,11 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                         white(&mut im, x, y);
                     }
                 }
+            }
+            "BraceInter" => {
+                let key = serde_json::from_value(n["origin"].clone())
+                    .map_err(|_| "music_actual_brace_identity_required")?;
+                glyph_pixels_erase(&mut im, o.grid_physical_glyph(key)?);
             }
             "BeamInter" | "BeamHookInter" => {
                 if n["contextual_grade"].as_f64().is_none_or(|g| g < 0.7) {
@@ -880,3 +888,8 @@ pub(crate) use header_tests::assert_real_headers;
 mod area_tests;
 #[cfg(test)]
 pub(crate) use area_tests::assert_real_vertical_areas;
+
+#[cfg(test)]
+mod grid_glyph_tests;
+#[cfg(test)]
+pub(crate) use grid_glyph_tests::assert_real_brace_glyphs;

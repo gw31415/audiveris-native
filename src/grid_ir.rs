@@ -43,6 +43,7 @@ pub(crate) struct PartGeometry {
     pub(crate) bounds: [i32; 4],
 }
 pub(crate) struct OwnedGrid {
+    pub(crate) physical_glyphs: Vec<Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) parts: Vec<Arc<PartGeometry>>,
     pub(crate) staff_areas: Vec<Arc<crate::system_area_geometry::Band>>,
     pub(crate) report: Value,
@@ -50,6 +51,9 @@ pub(crate) struct OwnedGrid {
 }
 #[derive(Default)]
 pub struct GlyphRegistry {
+    // Legacy registration returns an ID; owned GRID construction checks these
+    // results before publishing its physical registry or any downstream owner.
+    physical: Vec<Result<Arc<audiveris_staff_removal::GlyphPixels>, String>>,
     keys: BTreeMap<String, usize>,
     pub entries: Vec<Value>,
 }
@@ -63,9 +67,28 @@ impl GlyphRegistry {
         let id = self.entries.len() + 1;
         let mut value = canonical;
         value["id"] = json!(id);
+        let physical = (|| {
+            let runs = g["runs"]
+                .as_array()
+                .ok_or("grid_physical_runs_required")?
+                .iter()
+                .map(|r| json!([r["position"], r["start"], r["length"]]))
+                .collect::<Vec<_>>();
+            crate::beam_dispatch::glyph_from_json(&json!({
+                "bounds":[g["left"],g["top"],g["width"],g["height"]],
+                "orientation":g["orientation"],"runs":runs
+            }))
+            .map(Arc::new)
+        })();
+        self.physical.push(physical);
         self.entries.push(value);
         self.keys.insert(key, id);
         id
+    }
+    pub(crate) fn physical_glyphs(
+        &self,
+    ) -> Result<Vec<Arc<audiveris_staff_removal::GlyphPixels>>, String> {
+        self.physical.iter().cloned().collect()
     }
 }
 fn points(v: &Value) -> Vec<Point> {
@@ -288,11 +311,12 @@ pub(crate) fn build_owned(
         system["horizontal_section_ids"] = json!(collect(&horizontal)?);
         system["vertical_section_ids"] = json!(collect(&prep.vertical)?);
     }
-    let integrated = crate::braces::integrate_owned(
-        json!({"schema":"audiveris-native.grid-ir.v1","grid_complete":false,"glyph_id_namespace":"native exact-pixel registry; not Java numeric IDs","section_namespaces":["post-removal horizontal","original vertical"],"staffs":staffs,"systems":out,"glyphs":registry.entries,"bar_semantics":bars,"hlag":horizontal.iter().map(section).collect::<Vec<_>>(),"vlag":prep.vertical.iter().map(section).collect::<Vec<_>>(),"pending":["complete BarsRetriever interpretations and contextualization","staff areas and page allocation"]}),
+    let integrated = crate::braces::integrate_registered(
+        json!({"schema":"audiveris-native.grid-ir.v1","grid_complete":false,"glyph_id_namespace":"native exact-pixel registry; not Java numeric IDs","section_namespaces":["post-removal horizontal","original vertical"],"staffs":staffs,"systems":out,"glyphs":registry.entries.clone(),"bar_semantics":bars,"hlag":horizontal.iter().map(section).collect::<Vec<_>>(),"vlag":prep.vertical.iter().map(section).collect::<Vec<_>>(),"pending":["complete BarsRetriever interpretations and contextualization","staff areas and page allocation"]}),
         completion,
         sc,
         residual.height,
+        registry,
     )?;
     let mut parts = Vec::new();
     for membership in integrated.parts {
@@ -328,6 +352,7 @@ pub(crate) fn build_owned(
         }));
     }
     Ok(OwnedGrid {
+        physical_glyphs: integrated.physical_glyphs,
         report: integrated.report,
         staffs: actual_staffs,
         parts,

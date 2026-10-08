@@ -9,6 +9,7 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 pub struct OwnedItems {
+    pub(crate) grid_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) ledger_memberships: crate::ledger_membership_owners::LedgerMemberships,
     pub(crate) parts: Vec<std::sync::Arc<crate::grid_ir::PartGeometry>>,
     pub(crate) staff_areas: Vec<std::sync::Arc<crate::system_area_geometry::Band>>,
@@ -75,6 +76,7 @@ pub fn continue_items(
         .main;
     upstream.ledger_memberships.validate(&upstream.graph)?;
     Ok(OwnedItems {
+        grid_glyphs: upstream.grid_glyphs,
         ledger_memberships: upstream.ledger_memberships,
         parts: upstream.parts,
         staff_areas: upstream.staff_areas,
@@ -89,4 +91,24 @@ pub fn continue_items(
         free_glyphs: upstream.free_glyphs,
         prepared,
     })
+}
+
+impl OwnedItems {
+    pub(crate) fn grid_physical_glyph(
+        &self,
+        key: crate::shared_sig::Key,
+    ) -> Result<&std::sync::Arc<audiveris_staff_removal::GlyphPixels>, String> {
+        let (body, _) = self.graph.retained_inter(key)?;
+        if key.phase != crate::shared_sig::Phase::Grid || body["glyph_id_namespace"] != "GRID" {
+            return Err("music_actual_GRID_glyph_owner_required".into());
+        }
+        let id = body["glyph_id"]
+            .as_u64()
+            .and_then(|id| usize::try_from(id).ok())
+            .and_then(|id| id.checked_sub(1))
+            .ok_or("music_actual_GRID_glyph_identity_required")?;
+        self.grid_glyphs
+            .get(id)
+            .ok_or("music_actual_GRID_physical_glyph_required".into())
+    }
 }

@@ -150,7 +150,16 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
         "../../fixtures/official-grid/laura-gray.png"
     ))
     .unwrap();
-    let owner = crate::stem_image_owned::prepare_items(&image).unwrap();
+    let page = crate::page_runtime::analyze(&image, "page-glyphs", None, None).unwrap();
+    let held_glyphs = page.grid_glyphs.clone();
+    let owner = crate::stem_image_owned::continue_items(&image, page).unwrap();
+    assert_eq!(held_glyphs.len(), owner.grid_glyphs.len());
+    assert!(
+        held_glyphs
+            .iter()
+            .zip(&owner.grid_glyphs)
+            .all(|(a, b)| Arc::ptr_eq(a, b))
+    );
     let owner = crate::music_links::prepare_beam_linking(owner).unwrap();
     let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
     let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
@@ -225,6 +234,7 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
     crate::music_measure_layout::assert_real_layout(&owner);
     crate::music_symbols::assert_real_headers(&owner);
     crate::music_symbols::assert_real_vertical_areas(&owner);
+    crate::music_symbols::assert_real_brace_glyphs(&mut owner);
     let parts = owner.parts.clone();
     owner.upstream_report["grid_ir"]["systems"] = json!([]);
     owner.upstream_report["grid_ir"]["staffs"] = json!([]);

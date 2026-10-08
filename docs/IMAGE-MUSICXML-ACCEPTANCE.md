@@ -49,7 +49,8 @@ Stem/Chord/head/tail幾何で原版に一致した。原版標準のREDUCTION He
 元glyph/cache identityを保って接続した。実Staff曲線によるヘッダー消去も6 Staffの原版矩形/ピクセルと比較して接続済み。
 実Barline/BarConnector30個の消去ラスタも原版と比較済み。
 実画像CLI v10ではBraceへの未接続glyph参照が `invalid_beam_canonical_bounds` として
-判明し、その試験分岐を閉じた。次はGRID constructorから実glyph registryを保持する。
+判明し、その試験分岐を閉じた。GRID constructorから実glyph registryを同じArcで保持してBrace消去へ接続済み。
+実画像CLI v11は170.56秒でBeamの傾斜輪郭消去に到達し、XMLは未出力。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
