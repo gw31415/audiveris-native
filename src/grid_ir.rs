@@ -99,6 +99,7 @@ pub(crate) struct OwnedGrid {
 pub(crate) struct SystemGeometry {
     pub(crate) id: u64,
     pub(crate) left: i32,
+    pub(crate) profile: u32,
     pub(crate) area: Arc<crate::system_area_geometry::Band>,
     pub(crate) staffs: Vec<Arc<StaffGeometry>>,
 }
@@ -416,6 +417,8 @@ pub(crate) fn build_owned(
                 .ok_or("grid_actual_system_id_required")?;
             Ok(Arc::new(SystemGeometry {
                 id,
+                // Fresh PNG sheets retain original Standard input quality.
+                profile: 1,
                 left: system["coordinates"][0]
                     .as_i64()
                     .ok_or("grid_actual_system_left_required")? as i32,

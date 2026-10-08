@@ -7,6 +7,7 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+mod alter_callbacks;
 mod beam_rest;
 mod tuplet;
 mod tuplet_addition;
@@ -539,6 +540,9 @@ impl Graph {
             self.add_dot_to_measure(id)?;
             self.vertices[id - 1].data["abnormal"] = json!(true);
         }
+        if !removed && added && self.vertices[id - 1].data["kind"] == "AlterInter" {
+            self.vertices[id - 1].data["abnormal"] = json!(true);
+        }
         Ok(id)
     }
     fn endpoint(&self, key: Key) -> Result<usize, String> {
@@ -888,7 +892,10 @@ impl Graph {
             && relations
                 .iter()
                 .any(|(_, _, r)| r["kind"] == "HeadStemRelation");
-        if chords || dots || retained_stems {
+        let alters = relations
+            .iter()
+            .any(|(_, _, r)| r["kind"] == "AlterHeadRelation");
+        if chords || dots || retained_stems || alters {
             // Original identity callbacks operate on the actual registered
             // chord. Validate/update a stage before changing the retained SIG.
             let mut next = self.clone();
@@ -919,6 +926,9 @@ impl Graph {
                 .filter(|s| !s.is_empty())
                 .ok_or("invalid_shared_sig_relation_kind")?
                 .to_owned();
+            if kind == "AlterHeadRelation" {
+                self.validate_alter_head(source, target, &data)?;
+            }
             let dot_support = matches!(kind.as_str(), "AugmentationRelation" | "DoubleDotRelation");
             if dot_support {
                 let a = &self.vertices[source - 1];
@@ -1084,6 +1094,9 @@ impl Graph {
                 self.refresh_head_stem_abnormal(&[source, target]);
                 #[cfg(test)]
                 self.dot_callback_event("edgeAdded", id, "leave");
+            }
+            if added && self.edges[id - 1].key.kind == "AlterHeadRelation" {
+                self.refresh_alter_abnormal(&[source]);
             }
             if added && dot_support {
                 #[cfg(test)]
@@ -1614,6 +1627,17 @@ impl Graph {
         Ok(())
     }
     fn prune(&mut self) {
+        let alters = self
+            .live_edges()
+            .iter()
+            .filter(|e| {
+                e.key.kind == "AlterHeadRelation"
+                    && (self.vertices[e.key.source - 1].removed
+                        || self.vertices[e.key.target - 1].removed)
+            })
+            .map(|e| e.data["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        self.remove_alter_edges_ordered(&alters);
         let mut dots = BTreeSet::new();
         for e in &mut self.edges {
             if self.vertices[e.key.source - 1].removed || self.vertices[e.key.target - 1].removed {
@@ -2254,6 +2278,12 @@ impl Graph {
                 e.data["kind"].as_str(),
                 Some("Containment" | "ChordStemRelation")
             ) {
+                continue;
+            }
+            // Accidental support has a zero target coefficient. Linking an
+            // Alter cannot change existing Head/Stem contextual grades.
+            if e.key.kind == "AlterHeadRelation" && e.data["target_ratio"] == 1.0 {
+                self.validate_alter_head(e.key.source, e.key.target, &e.data)?;
                 continue;
             }
             // Augmentation supports the dot only (target coefficient zero).

@@ -24,7 +24,14 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 古い全マスク観測は誤ったImageJ constructorによる全0バイトで無効と明示した。
 実Bravura51ptの整数pointSize/4を保持し、消去余白を原版の2pxへ修正した。
 正しい原版全マスク3,132,856バイト・黒82,837画素が一致。修正前の109画素差と強弱判定観測は保持した。
-[証拠](../evidence/real-symbol-clusters/VALIDATION.json)・[次依存](../evidence/real-symbol-clusters/NEXT-DEPENDENCY.md)。
+[証拠](../evidence/real-symbol-clusters/VALIDATION.json)。
+実Staff/仮想Ledger曲線を使うAlter factoryも接続し、原版17件（リンク13/未接続4）の音高、
+作成→SIG追加→Headリンク→競合Exclusionの順序、abnormal callbackと不正リンクrollbackを比較した。
+これは原版shape/gradeを制御入力とするfactory比較で、classifier全体の同等性ではない。
+対象3件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
+実画像CLI v17は170.86秒で `music_dot_multistaff_stack_filter_pending` に到達し、XMLは未出力。
+次は保持済みPart/Staff/Measure/Stackを使うDot所属処理。品質受入は未達。
+[証拠](../evidence/real-symbol-alter-factory/VALIDATION.json)・[次依存](../evidence/real-symbol-alter-factory/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

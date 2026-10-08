@@ -57,7 +57,10 @@ grade数値は最大0.000363878の差があり、数値同等性を主張しな�
 post-analysisの12仮想Ledger曲線をcallbackから保持し、物理Ledger削除後も維持する。
 古い全マスクの全0バイト観測は無効と明示した。実Bravura51ptの整数pointSize/4を保持してHead消去余白を3pxから原版の2pxへ修正し、正しい原版全マスク3,132,856バイト・黒82,837画素が一致した。以前の109画素差は修正前証拠として保持する。
 実System所属543 glyphから原版の176 cluster・最大23部品の7部品選択と788候補集合を比較し、2部品限定を解除した。原版自身のHashSet順は再観測で変わるため、候補集合と遭遇順固定の再帰契約を比較した。実譜面の記号生成・rhythm・XML品質受入はまだ未完。実画像CLI v16は166.87秒でpositive AlterHead linkガードへ進み、XMLは未出力。
-XMLはまだ出力できない。
+実Alter factoryの17件（リンク13/未接続4）は原版の音高・中間状態・関係値と一致した。
+これは実glyphに原版shape/gradeを与えた制御比較で、classifier全体の同等性ではない。
+実画像CLI v17は170.86秒で複数StaffのDot所属ガードに到達した。保持済み実Part/Measure/Stack
+による所属と曲線Staff選択、後続記号reduction・共有rhythm・出力を接続する。XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。

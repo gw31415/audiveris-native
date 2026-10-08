@@ -12,7 +12,7 @@ use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 const MODEL: &[u8] = include_bytes!("../crates/audiveris-classifier/models/audiveris-5.11.0.json");
 mod clusters;
-mod geometry;
+pub(crate) mod geometry;
 fn head_dilation(point_size: u16) -> i64 {
     // Template divides integer pointSize by four before scaling the margin.
     ((point_size / 4) as f64 * 0.2).round_ties_even() as i64
@@ -454,7 +454,7 @@ fn actual_fine_boxes(
         })
         .collect()
 }
-fn symbol_candidates(
+pub(crate) fn symbol_candidates(
     glyphs: &[GlyphPixels],
     il: usize,
     left: i32,
@@ -567,36 +567,18 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let b = [g.left as i64, g.top as i64, g.width as i64, g.height as i64];
             let rest = shape.ends_with("_REST");
             let meter = time(shape);
-            if shape == "FLAT" {
-                if m.owner.catalog.family != "Bravura" {
-                    return Err("music_alter_font_area_pitch_offset_pending".into());
-                }
-                crate::music_alters::require_empty_links(shape, b, sid, il, &graph.snapshot())?;
-                let inputs = crate::key_preparation::staff_inputs(
-                    &m.owner.upstream_report["grid_ir"],
-                    &m.owner.upstream_report["clef_registration"],
-                    il,
-                )?;
-                let input = inputs
-                    .iter()
-                    .find(|s| s.staff_id == staff)
-                    .ok_or("music_alter_staff_required")?;
-                let mut data = crate::key_components::make_alter(
-                    g,
-                    e["score"].as_f64().unwrap(),
-                    crate::key_slices::Shape::Flat,
-                    input,
-                )?;
-                data["kind"] = json!("AlterInter");
-                data["staff_id"] = json!(staff);
-                data["glyph_id"] = json!(gid);
-                data["abnormal"] = json!(true);
+            if matches!(
+                shape,
+                "FLAT" | "NATURAL" | "SHARP" | "DOUBLE_FLAT" | "DOUBLE_SHARP"
+            ) {
+                let data = crate::music_alters::create(&m.owner, g, shape, grade, &s, gid)?;
                 let key = Key {
                     system: sid,
                     phase: Phase::Symbol,
                     local: gid * 2 + created.len(),
                 };
                 graph.vertex(key, data, false)?;
+                crate::music_alters::set_links(&mut graph, key, il, system.profile)?;
                 created.push(key);
                 continue;
             }

@@ -7,11 +7,13 @@ encounter recursive contracts now agree. Original HashSet component/trial order
 varies across fresh runs; retain the explicit qualification.
 
 Next compare actual InterFactory/AlterInter creation before LINKS with original
-Java. The factory creates the unlinked Alter first; its closest actual Staff and
-cached virtual Ledger curves determine centroid/geometric pitch. Preserve manual
+Java. Original detailed factory comparison confirms create -> SIG addVertex ->
+setLinks(systemHeads) -> same-glyph Exclusion, all within the SYMBOLS factory.
+The new Alter is briefly unlinked before setLinks; closest actual Staff and cached
+virtual Ledger curves determine centroid/geometric pitch. Preserve manual
 status, existing relations/owners and callback order; do not rebuild Staff from
 report or perform Head link lookup before the original phase. Connect positive
-AlterHead search at its original boundary before unsupported weak purge, keeping
+AlterHead search immediately after addVertex before competing Exclusion, keeping
 real Chord rollback and clocks. Compare real accidental glyphs and intermediate
 unlinked/linked states, then continue actual symbols/Part-Measure/rhythm/export.
 

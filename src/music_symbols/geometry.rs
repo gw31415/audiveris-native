@@ -2,11 +2,11 @@
 use crate::{beam_dispatch, grid_ir::SystemGeometry, stem_image_owned::OwnedItems};
 use audiveris_staff_removal::GlyphPixels;
 use std::sync::Arc;
-pub(super) struct SystemGlyphs<'a> {
-    pub(super) system: Arc<SystemGeometry>,
-    pub(super) glyphs: Vec<&'a GlyphPixels>,
+pub(crate) struct SystemGlyphs<'a> {
+    pub(crate) system: Arc<SystemGeometry>,
+    pub(crate) glyphs: Vec<&'a GlyphPixels>,
 }
-pub(super) fn dispatch<'a>(
+pub(crate) fn dispatch<'a>(
     owner: &OwnedItems,
     glyphs: &'a [GlyphPixels],
 ) -> Result<Vec<SystemGlyphs<'a>>, String> {
@@ -28,7 +28,7 @@ pub(super) fn dispatch<'a>(
     }
     Ok(grouped)
 }
-pub(super) fn closest(
+pub(crate) fn closest(
     owner: &OwnedItems,
     system: &SystemGeometry,
     point: [f64; 2],
