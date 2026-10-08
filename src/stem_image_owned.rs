@@ -9,6 +9,7 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 pub struct OwnedItems {
+    pub(crate) sheet_skew: crate::sheet_skew::SheetSkew,
     pub(crate) interline: usize,
     pub(crate) catalog: crate::head_staff_catalog::TemplateCatalog,
     pub upstream_report: Value,
@@ -69,6 +70,7 @@ pub fn continue_items(
         .interline
         .main;
     Ok(OwnedItems {
+        sheet_skew: upstream.sheet_skew,
         interline,
         catalog,
         upstream_report: upstream.report,

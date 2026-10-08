@@ -3,6 +3,28 @@ use crate::music_measures::{ChordKind, OwnedMusic};
 use std::collections::BTreeMap;
 
 impl OwnedMusic {
+    /// Query a real member group using the sheet geometry retained by the image
+    /// owner. Full detection still requires the original add/lookup passes.
+    pub fn nearest_interleaved_rest_beam(
+        &mut self,
+        measure_number: usize,
+        group: crate::shared_sig::Key,
+        point: [i32; 2],
+    ) -> Result<Option<(crate::shared_sig::Key, f64)>, String> {
+        let mi = measure_number
+            .checked_sub(1)
+            .filter(|mi| *mi < self.measures.len())
+            .ok_or("music_rest_actual_measure_required")?;
+        let mut graph = self.owner.graph.clone();
+        let groups = measure_groups(&mut graph, &self.measures[mi], &self.chords, mi)?;
+        let id = graph.id(group).ok_or("music_rest_actual_group_required")?;
+        if !groups.contains(&id) {
+            return Err("music_rest_actual_measure_group_required".into());
+        }
+        let result = graph.nearest_rest_beam(group, point, self.owner.sheet_skew)?;
+        self.owner.graph = graph;
+        Ok(result)
+    }
     /// Observe relation candidates on actual owned groups before geometry and
     /// rhythm. This does not add BeamRest edges or construct Voice owners.
     pub fn interleaved_rest_candidates(

@@ -19,7 +19,7 @@ pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, Stri
     if nodes.iter().any(|n| n["kind"] == "StemInter") {
         return Err("music_preexisting_stem_pending".into());
     }
-    if o.upstream_report["line_completion"]["global_slope"] != 0.0 {
+    if o.sheet_skew.slope() != 0.0 || o.upstream_report["line_completion"]["global_slope"] != 0.0 {
         return Err("music_beam_zero_skew_required".into());
     }
     let generations =

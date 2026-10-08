@@ -4,6 +4,54 @@ use serde_json::json;
 use std::sync::Arc;
 
 impl Graph {
+    pub(crate) fn nearest_rest_beam(
+        &self,
+        group: Key,
+        point: [i32; 2],
+        skew: crate::sheet_skew::SheetSkew,
+    ) -> Result<Option<(Key, f64)>, String> {
+        let gid = self.endpoint(group)?;
+        if group.phase != Phase::Group || self.vertices[gid - 1].data["kind"] != "BeamGroupInter" {
+            return Err("music_rest_actual_group_required".into());
+        }
+        let point = [point[0] as f64, point[1] as f64];
+        let vertical = skew.vertical(point);
+        let mut nearest = None;
+        for edge in self
+            .edges
+            .iter()
+            .filter(|e| !e.removed && e.key.source == gid && e.key.kind == "Containment")
+        {
+            let beam = &self.vertices[edge.key.target - 1];
+            if beam.removed || beam.key.system != group.system {
+                return Err("music_rest_actual_group_beam_required".into());
+            }
+            match beam.data["kind"].as_str() {
+                Some("BeamHookInter" | "SmallBeamInter") => continue,
+                Some("BeamInter") => {}
+                _ => return Err("music_rest_actual_group_beam_required".into()),
+            }
+            let median: [f64; 4] = serde_json::from_value(beam.data["median"].clone())
+                .map_err(|_| "music_rest_actual_beam_median_required")?;
+            if !median.iter().all(|n| n.is_finite()) {
+                return Err("music_rest_actual_beam_median_required".into());
+            }
+            let [x1, y1, x2, y2] = median;
+            let [x3, y3, x4, y4] = vertical;
+            let den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+            let v12 = x1 * y2 - y1 * x2;
+            let v34 = x3 * y4 - y3 * x4;
+            let x = (v12 * (x3 - x4) - (x1 - x2) * v34) / den;
+            let y = (v12 * (y3 - y4) - (y1 - y2) * v34) / den;
+            if x >= x1 && x <= x2 {
+                let distance = (point[0] - x).hypot(point[1] - y);
+                if nearest.is_none_or(|(_, best)| distance < best) {
+                    nearest = Some((beam.key, distance));
+                }
+            }
+        }
+        Ok(nearest)
+    }
     pub(crate) fn rest_chord_beams(&mut self, key: Key) -> Result<Arc<Vec<usize>>, String> {
         let id = self.endpoint(key)?;
         if key.phase != Phase::Chord || self.vertices[id - 1].data["kind"] != "RestChordInter" {

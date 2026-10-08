@@ -16,9 +16,12 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--oracle-home", type=Path, required=True)
 parser.add_argument("--book", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
-parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe"),
+parser.add_argument("--fresh-beams", type=Path, help="Nearest probe only: hash-recorded original in-memory BEAMS measurement")
+parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe", "BeamRestNearestProbe"),
                     default="VoiceLifecycleProbe")
 args = parser.parse_args()
+if args.fresh_beams is not None and args.probe != "BeamRestNearestProbe":
+    parser.error("--fresh-beams is only valid for BeamRestNearestProbe")
 output = args.output.resolve()
 output.mkdir()
 for name in ("classes", "home", "cache", "data", "config", "prefs"):
@@ -33,7 +36,7 @@ compile_args = [str(compiler), "--release", "21", "-cp", str(lib / "app/*"),
                 str(oracle.ROOT / "scripts/java/HeadStemPreLinkProbe.java")]
 if args.probe != "VoiceLifecycleProbe":
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java"))
-if args.probe == "BeamRestLinkedProbe":
+if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/BeamRestClearProbe.java"))
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java"))
@@ -45,6 +48,8 @@ run_args = [str(lib / "runtime/bin/java"), "-Xmx512m", "-XX:ActiveProcessorCount
             "-Djava.awt.headless=true", "-Duser.home=" + str(output / "home"),
             "-Djava.util.prefs.userRoot=" + str(output / "prefs"), "-cp", classpath,
             args.probe, str(args.book.resolve()), str(output / "observed.json")]
+if args.fresh_beams is not None:
+    run_args.append(str(args.fresh_beams.resolve()))
 env = dict(os.environ)
 for key, directory in (("XDG_CONFIG_HOME", "config"), ("XDG_DATA_HOME", "data"), ("XDG_CACHE_HOME", "cache")):
     env[key] = str(output / directory)
@@ -65,7 +70,7 @@ record = {
 }
 if args.probe != "VoiceLifecycleProbe":
     record["lifecycle_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java")
-if args.probe == "BeamRestLinkedProbe":
+if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe"):
     record["clear_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/BeamRestClearProbe.java")
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     record["tie_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java")
@@ -75,6 +80,9 @@ if args.probe in ("VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSele
     record["reset_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceResetRhythmProbe.java")
 if result.returncode == 0:
     record["observed_sha256"] = oracle.sha(output / "observed.json")
+if args.fresh_beams is not None:
+    record["original_fresh_beams_sha256"] = oracle.sha(args.fresh_beams)
+    record["fresh_beams_scope"] = "original independent raw BEAMS geometry as a declared real SIG group; stored timed source group untouched"
 (output / "provenance.json").write_text(json.dumps(record, indent=2) + "\n")
 print(json.dumps({"output": str(output), "exit_code": result.returncode}))
 raise SystemExit(result.returncode)

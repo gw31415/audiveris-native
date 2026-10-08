@@ -5,6 +5,7 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) sheet_skew: crate::sheet_skew::SheetSkew,
     pub report: Value,
     pub output_pixels: Vec<u8>,
     pub graph: crate::shared_sig::Graph,
@@ -72,7 +73,8 @@ pub fn analyze(
     let sticks = audiveris_native::bar_sticks::analyze(&binary, &sc, &prep, &projection);
     let slope = factory["line_filtering"]["global_slope"]
         .as_f64()
-        .unwrap_or(0.);
+        .ok_or("music_measured_sheet_skew_required")?;
+    let sheet_skew = crate::sheet_skew::SheetSkew::new(slope)?;
     let systems = audiveris_native::system_graph::analyze(&binary, &sc, &staff, &sticks, slope);
     let completion = audiveris_native::line_completion::analyze(
         &binary,
@@ -679,6 +681,7 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        sheet_skew,
         report: page_report,
         output_pixels,
         graph: common_graph,

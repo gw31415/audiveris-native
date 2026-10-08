@@ -1691,3 +1691,17 @@ placeholder Voice IDs or report reconstruction. Nearest-beam geometry, addition
 callbacks and plain lookup remain next before full clear/detect can join normal
 rhythm; all full/public completion flags stay false. See
 evidence/musicxml-beam-rest-linked.
+
+### Retained measured Skew and nearest interleaved-rest beam
+
+Native Page now carries measured SheetSkew to its actual item owner instead of
+recovering it from a mutable report or defaulting a missing measurement to zero.
+The existing zero-skew admission remains guarded. Actual-measure nearest queries
+match pinned full-only/skewed-intersection/inclusive-endpoint/strict-member-tie
+semantics across two original controls/432 queries, retaining all old Chord/
+Slot/Voice/cache clocks and identities. Later invalid member geometry refuses
+transactionally. Original fresh BEAMS medians match native live precision;
+the saved book's JAXB one-decimal boundary is explicitly separate, without
+rounding the actual native owner. BeamRest addition callbacks and plain lookup
+remain next before full clear/detect/implicit-tuplet preparation can join normal
+rhythm. All full/public flags remain false. See evidence/musicxml-beam-rest-nearest.
