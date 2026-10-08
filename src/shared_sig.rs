@@ -16,6 +16,7 @@ pub use tuplet::TupletFactor;
 pub(crate) use tuplet::TupletRemovalObservation;
 mod book_state;
 mod chord_cache;
+mod chord_duration;
 pub(crate) mod chord_tasks;
 mod dot_ownership;
 mod editing_task;

@@ -1863,3 +1863,15 @@ field control only: no original setShape workflow. Ordinary null-Staff/fresh
 Tuplet/XML admission remains guarded. Evidence: musicxml-tuplet-getters. Raw
 sans-dot separation, fresh allocation callbacks, force/inspect/merge/second pass
 remain next; full nonUI completion remains false.
+
+### Actual raw duration and partial Tuplet base/Part (continuation of667b399)
+
+All34 original shape-duration aliases plus non-note null, ignored dots0/1/2/9,
+actual Beam/Flag sum and exact mirrored VOID promotion are compared on retained
+physical Chord owners. Raw primitive is independent of dot/Tuplet/measure-rest
+wrapper; ordinary special shape image/XML admission remains guarded. Source
+partial base caching differs from outer transaction rollback. Inherited Part
+reads existing Staff without triggering lazy Staff; critical fresh Stack boundary
+is retained. Evidence musicxml-tuplet-raw-base has560+10+6 original boundaries
+and4 fresh base references. Fresh Tuplet allocation callbacks and force/inspect/
+merge/second pass remain next; full nonUI completion remains false.

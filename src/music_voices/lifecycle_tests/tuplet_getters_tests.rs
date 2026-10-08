@@ -24,7 +24,7 @@ fn original() -> Value {
     }
     d
 }
-fn node(p: &Prepared, key: Key) -> Value {
+pub(super) fn node(p: &Prepared, key: Key) -> Value {
     p.c.owner.owner.graph.snapshot()["inters"]
         .as_array()
         .unwrap()
@@ -33,7 +33,7 @@ fn node(p: &Prepared, key: Key) -> Value {
         .unwrap()
         .clone()
 }
-fn link(p: &mut Prepared, chord: usize, tuplet: usize, manual: bool) {
+pub(super) fn link(p: &mut Prepared, chord: usize, tuplet: usize, manual: bool) {
     let source = chord_key(&p.c, &format!("chord{chord}"));
     let target = p.tuplets[tuplet];
     p.c.owner

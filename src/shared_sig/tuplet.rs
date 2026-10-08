@@ -57,7 +57,10 @@ impl Graph {
             })
             .clone())
     }
-    pub(crate) fn tuplet_base_duration(&self, key: Key) -> Result<Option<Arc<Fraction>>, String> {
+    pub(crate) fn tuplet_base_duration(
+        &mut self,
+        key: Key,
+    ) -> Result<Option<Arc<Fraction>>, String> {
         self.tuplet_status(key)?;
         let id = self.endpoint(key)?;
         let cache = self.vertices[id - 1]
@@ -68,21 +71,28 @@ impl Graph {
             return Ok(cache.base.borrow().clone());
         }
         for chord in self.tuplet_chords(key)? {
-            let duration =
-                crate::music_duration::live_intrinsic(&self.snapshot(), self.endpoint(chord)?)?;
-            let raw = duration
-                .intrinsic
-                .ok_or("music_tuplet_base_special_duration_pending")?;
-            let raw = match duration.dots {
-                1 => raw.times(Fraction::new(2, 3)?)?,
-                2 => raw.times(Fraction::new(4, 7)?)?,
-                _ => raw,
-            };
-            if cache.base.borrow().as_ref().is_none_or(|base| **base > raw) {
-                *cache.base.borrow_mut() = Some(Arc::new(raw));
+            let raw = self.raw_chord_duration(chord)?;
+            let mut base = self.vertices[id - 1]
+                .tuplet_cache
+                .as_ref()
+                .unwrap()
+                .base
+                .borrow_mut();
+            match (base.as_ref(), raw) {
+                (None, raw) => *base = raw.map(Arc::new),
+                (Some(_), None) => return Err("music_tuplet_null_raw_duration_after_base".into()),
+                (Some(old), Some(raw)) if **old > raw => *base = Some(Arc::new(raw)),
+                _ => {}
             }
         }
-        Ok(cache.base.borrow().clone())
+        let base = self.vertices[id - 1]
+            .tuplet_cache
+            .as_ref()
+            .unwrap()
+            .base
+            .borrow()
+            .clone();
+        Ok(base)
     }
     pub(crate) fn tuplet_voice_identity(&self, key: Key) -> Result<Option<Arc<()>>, String> {
         let Some(chord) = self.tuplet_chords(key)?.first().copied() else {
@@ -179,16 +189,11 @@ impl Graph {
         // AbstractInter.setStaff leaves an already cached Part untouched.
         Ok(())
     }
-    pub(crate) fn tuplet_part(
-        &mut self,
-        key: Key,
-        staffs: &[Arc<crate::grid_ir::StaffGeometry>],
-    ) -> Result<Option<u64>, String> {
+    pub(crate) fn tuplet_part(&mut self, key: Key) -> Result<Option<u64>, String> {
         self.tuplet_status(key)?;
         let id = self.endpoint(key)?;
-        if self.vertices[id - 1].cached_part.is_none() {
-            self.tuplet_staff(key, staffs)?;
-        }
+        // Inherited getPart reads the existing Staff field; it must not invoke
+        // virtual getStaff and change Stack.addInter's unassigned boundary.
         self.part_for_inter(id)
     }
     pub(crate) fn validate_tuplet_chord_container(

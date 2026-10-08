@@ -1,0 +1,49 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "23019a834ef820593c27a1395de4308b68e320c5a5bbfea1b0c579ea6a406be3",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "d15a1af7003f2fa85b76c97da70bc01be1a227551f8f256518c37b8e3927c918",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/tuplet-base-failure-original/classes",
+    "/workspace/audiveris-native/scripts/java/TupletBaseFailureProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/tuplet-base-failure-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/tuplet-base-failure-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/tuplet-base-failure-original/classes",
+    "TupletBaseFailureProbe",
+    "/tmp/retired-beam-book/book/parallel-beam.omr",
+    "/tmp/tuplet-base-failure-original/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "ac3d5f04b45b46a5a5d9cf325da909b04172dcbb057b4fd4c9e617a7f02919cb",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "9ebde4566d715c3d915f2e026c27c584d5ef5040a742b8292acdbf02c3eeeaa0",
+  "raw_output": "/tmp/tuplet-base-failure-original",
+  "raw_observed_sha256": "9ebde4566d715c3d915f2e026c27c584d5ef5040a742b8292acdbf02c3eeeaa0",
+  "fixture_sha256": "74cac5e1607520a99b54247c81fdffa79c9cf3a3d88769fd6839a995b3fdc55b",
+  "compact_fixture_lossless": true,
+  "compact_encoding": "exact frame/relation interning only; no native outputs",
+  "original_source_sha256": {
+    "sig/inter/AbstractChordInter.java": "c65453b636f624054c40675aaa877d17d0e7b1551fb4457702e91d33b0f7588c",
+    "sig/inter/AbstractInter.java": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548",
+    "sig/inter/TupletInter.java": "7adc8b88dba6f16904c072d7fd864848c4172e9e7560e8525c21de68031d6584"
+  }
+}

@@ -54,13 +54,34 @@ impl OwnedMusic {
         }
         Ok(())
     }
+    pub fn raw_rhythm_chord_duration(&mut self, key: Key) -> Result<Option<String>, String> {
+        let ch = self
+            .chords
+            .iter()
+            .find(|ch| ch.key == key)
+            .ok_or("music_actual_tuplet_chord_owner_required")?;
+        let m = self
+            .measures
+            .get(ch.measure)
+            .ok_or("music_actual_tuplet_measure_required")?;
+        self.owner
+            .graph
+            .validate_tuplet_chord_container(key, ch.id, m.part, m.index, ch.kind)?;
+        if key.system != m.system {
+            return Err("music_actual_tuplet_chord_owner_required".into());
+        }
+        let mut graph = self.owner.graph.clone();
+        let raw = graph.raw_chord_duration(key)?;
+        self.owner.graph = graph;
+        Ok(raw.map(crate::music_time::format_fraction))
+    }
     pub fn read_rhythm_tuplet(&mut self, key: Key) -> Result<TupletRead, String> {
         self.require_tuplet_owner(key)?;
         let mut graph = self.owner.graph.clone();
         let factor = graph.tuplet_duration_factor(key)?;
         let base = graph.tuplet_base_duration(key)?;
         let staff = graph.tuplet_staff(key, &self.owner.staffs)?;
-        let part = graph.tuplet_part(key, &self.owner.staffs)?;
+        let part = graph.tuplet_part(key)?;
         let voice = graph.tuplet_voice_identity(key)?;
         let mut chords = Vec::new();
         for chord in graph.tuplet_chords(key)? {
