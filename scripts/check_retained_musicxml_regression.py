@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--native-bin", type=Path, required=True)
 parser.add_argument("--schema-dir", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
+parser.add_argument("--reprocess-stacks", help="Pass an explicit selected measure sequence to the CLI")
 args = parser.parse_args()
 output = args.output.resolve()
 output.mkdir()
@@ -39,6 +40,8 @@ for index, case in enumerate(cases):
     argv = [str(args.native_bin.resolve())]
     if index == 6:
         argv += ["--link-dot-support", "72", "6", "manual", "--edit-dot", "72", "3", "0"]
+    if args.reprocess_stacks is not None:
+        argv += ["--reprocess-stacks", args.reprocess_stacks]
     argv += [str(ROOT / case["input"]), str(xml), str(report)]
     run = subprocess.run(argv, capture_output=True, text=True)
     (output / f"case{index}.log").write_text(run.stdout + run.stderr)
@@ -49,12 +52,23 @@ for index, case in enumerate(cases):
     assert len(observed["events"]) == case["events"]
     assert observed["musicxml_complete"] is False
     assert observed["automatic_raster_pipeline_complete"] is False
+    if args.reprocess_stacks is not None:
+        requested = [int(n) for n in args.reprocess_stacks.split(",")]
+        actual = observed["selected_rhythm_reprocess"]
+        assert actual["requested_stack_numbers"] == requested
+        assert actual["processed_stack_numbers"] == list(dict.fromkeys(requested))
+        assert actual["controller_impact_complete"] is False
+        assert actual["PageStep_complete"] is False
+        if index == 6:
+            assert observed["editing_reprocess"]["planned_impact"]["first_impacted_step"] == "RHYTHMS"
     schema.assertValid(etree.parse(str(xml)))
     results.append(dict(case, XML_sha256=sha, previous_XML_bytes="identical", XSD="passed"))
 record = {"automatic_inputs": results[:6], "automatic_events": sum(r["events"] for r in results[:6]),
           "declared_correction": results[6], "XSD_sha256": {
               p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in schema_dir.glob("*.xsd")},
           "checker_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+if args.reprocess_stacks is not None:
+    record["selected_stack_numbers"] = [int(n) for n in args.reprocess_stacks.split(",")]
 (output / "RESULTS.json").write_text(json.dumps(record, indent=2) + "\n")
 print(json.dumps({"automatic_events": record["automatic_events"], "declared_events": results[6]["events"],
                   "XML_bytes": "identical", "XSD": "passed"}))

@@ -3,6 +3,8 @@
 //! Shape.getNoteDuration, MeasureRhythm.processStartingChords, Voice.addChord,
 //! AbstractChordInter.getEndTime, Page.numberMeasures/simpleDurationOf and
 //! PartwiseBuilder note/attribute ordering guide this explicitly bounded path.
+#[cfg(test)]
+mod selected_cli_tests;
 pub(crate) mod stack_rhythm;
 
 use crate::{GrayImage, music_measures::OwnedMusic, music_symbols, shared_sig::Key};
@@ -42,6 +44,68 @@ impl OwnedCheckpoint {
     }
 }
 impl Export {
+    /// Rebuild selected admitted image stacks in first encounter order, then
+    /// bind MusicXML to the resulting actual Voice/Slot clocks.
+    pub fn reprocess_stack_rhythms(&mut self, stack_numbers: &[usize]) -> Result<Value, String> {
+        if provenance(&self.owner) != self.provenance {
+            return Err("music_reprocess_unedited_retained_export_required".into());
+        }
+        if stack_numbers.is_empty() {
+            return Err("music_reprocess_actual_stack_owner_required".into());
+        }
+        let mut selected = Vec::new();
+        for number in stack_numbers {
+            let mi = number
+                .checked_sub(1)
+                .filter(|mi| *mi < self.owner.measures.len())
+                .ok_or("music_reprocess_actual_stack_owner_required")?;
+            if !selected.contains(&mi) {
+                selected.push(mi);
+            }
+        }
+        let rhythm = Rhythm::retained(&self.owner)?;
+        let part_name = self.owner.owner.prepared.report["part_name"]
+            .as_str()
+            .ok_or("music_reprocess_retained_part_name_required")?
+            .to_owned();
+        let report = self.owner.owner.prepared.report.clone();
+        let graph = self.owner.owner.graph.clone();
+        let graph = std::mem::replace(&mut self.owner.owner.graph, graph);
+        let voices = self.owner.voices.clone();
+        let voices = std::mem::replace(&mut self.owner.voices, voices);
+        let measures = self.owner.measures.clone();
+        let mut measures = std::mem::replace(&mut self.owner.measures, measures);
+        // Stage rhythm containers without replacing actual Chords. Keep the
+        // original Slot storage intact until XML binding also succeeds.
+        let result = self.reprocess_selected(&selected, rhythm, &part_name);
+        if result.is_ok() {
+            for &mi in &selected {
+                measures[mi].timing = std::mem::take(&mut self.owner.measures[mi].timing);
+            }
+        }
+        self.owner.measures = measures;
+        match result {
+            Ok(xml) => {
+                let actual = json!({"requested_stack_numbers":stack_numbers,
+                    "processed_stack_numbers":selected.iter().map(|mi| mi+1).collect::<Vec<_>>(),
+                    "scope":"retained admitted image stacks",
+                    "controller_impact_complete":false,"PageStep_complete":false});
+                if let Some(editing) = report.get("editing_reprocess") {
+                    self.owner.owner.prepared.report["editing_reprocess"] = editing.clone();
+                }
+                self.owner.owner.prepared.report["selected_rhythm_reprocess"] = actual.clone();
+                self.xml = xml;
+                self.provenance = provenance(&self.owner);
+                Ok(actual)
+            }
+            Err(error) => {
+                self.owner.owner.graph = graph;
+                self.owner.voices = voices;
+                self.owner.owner.prepared.report = report;
+                Err(error)
+            }
+        }
+    }
     /// Prepare an explicit transfer using this retained image's live identities.
     /// No recognition search, manual membership rebuilding or report input.
     pub fn dot_support_transfer(
@@ -3585,6 +3649,10 @@ mod rational_owned_export_tests {
                     export
                         .apply_editing_sequence(&mut empty, crate::shared_sig::EditingOperation::Do)
                         .unwrap_err(),
+                    "music_reprocess_unedited_retained_export_required"
+                );
+                assert_eq!(
+                    export.reprocess_stack_rhythms(&[1]).unwrap_err(),
                     "music_reprocess_unedited_retained_export_required"
                 );
             }

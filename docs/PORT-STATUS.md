@@ -1651,3 +1651,16 @@ its actual mapper and post-stack refinement. Public selected CLI render bridge,
 full controller/task impacts and other nonUI dependencies remain pending;
 global flags stay false/guarded. See
 `evidence/musicxml-voice-selected-rhythm/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+### Retained selected stack CLI bridge
+
+`audiveris-musicxml --reprocess-stacks MEASURE,...` now runs the existing admitted
+Image selected rhythm path in first encounter order with duplicate suppression,
+per-stack actual system refinement and real Voice/Slot XML binding. The original
+order proof is retained at a4060de. New transactional coverage keeps original
+actual Chords/Measures and untouched Slot storage, and restores actual owners,
+old identities, expected clocks and XML/report on a later member or final XML
+validation failure. Prior admitted dot correction evidence survives an explicit
+selected pass. Existing Image/correction/fine-grid guards and all global/full
+nonUI flags remain unchanged. See evidence/musicxml-selected-cli-rhythm; next is
+original pre-reset BeamRest clear/detect preparation and implicit tuplet passes.
