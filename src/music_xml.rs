@@ -476,7 +476,7 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
     let trials = m.owner.prepared.report["classifier_trials"]
         .as_array()
         .ok_or("musicxml_symbol_trials_required")?;
-    if m.owner.prepared.report["symbol_cluster_scope"] != "isolated-and-two-parts" {
+    if m.owner.prepared.report["symbol_cluster_scope"] != "original-seven-part-cap-recursive" {
         return Err("musicxml_compound_symbol_parts_pending".into());
     }
     for t in trials {

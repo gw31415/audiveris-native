@@ -19,11 +19,12 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。
 仮想曲線はpost-analysis callbackで保持し、後の物理Ledger削除やreportから作り直さない。
 対象3件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
-実画像CLI v15は168.48秒で多部品clusterガードに到達し、XML未出力。
+実所属543 glyph、176 cluster・最大23部品から原版7部品選択、788候補集合と遭遇順固定の再帰契約を比較し、2部品限定を解除した。
+原版自身のHashSet順は再観測で53部品順/25試行順が変わり、候補集合は同じ。実譜面XML品質受入は未達。実画像CLI v16は166.87秒でpositive AlterHead linkガードへ進み、XMLは未出力。
 古い全マスク観測は誤ったImageJ constructorによる全0バイトで無効と明示した。
 実Bravura51ptの整数pointSize/4を保持し、消去余白を原版の2pxへ修正した。
 正しい原版全マスク3,132,856バイト・黒82,837画素が一致。修正前の109画素差と強弱判定観測は保持した。
-[証拠](../evidence/real-head-cleaner-margin/VALIDATION.json)・[次依存](../evidence/real-head-cleaner-margin/NEXT-DEPENDENCY.md)。
+[証拠](../evidence/real-symbol-clusters/VALIDATION.json)・[次依存](../evidence/real-symbol-clusters/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 
@@ -53,7 +54,7 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 | TEXTS / `TextsStep`, Tesseract, words/sentences | 未対応 | 歌詞・題名/作曲者・tempo/メトロノーム・文字role認識、staff/partとの関連付け・OCR修正。原版のローカルOCR依存に沿う。外部AI設計に置換しない。 |
 | MEASURES/CHORDS / `MeasuresBuilder`, `ChordsBuilder`, `MeasureFiller` | 部分 | 単staff/単stemの小節・chord形成あり。複段part、和音、stemless whole/breve、cross-staff、複数stem、repeat/double bar等の一般形成/補正が残る。 |
 | CURVES / `CurvesStep`, slur/wedge/ending/rehearsal builders | 未対応 | 音楽上のslur/tie/wedge/ending/rehearsal認識・接続。nativeの`curves.rs`はGRID曲線補間であり、この工程の移植証拠ではない。 |
-| SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory` | 部分 | classifier・isolated/2部品rest/time・実加線へのdot距離検査と普通の1旗→stem接続あり。原版7部品上限のcluster、全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 |
+| SYMBOLS / `SymbolsFilter`, `SymbolsBuilder`, `InterFactory`, `DotFactory` | 部分 | classifier・原版7部品上限の再帰cluster・isolated/compound rest/time・実加線へのdot距離検査と普通の1旗→stem接続あり。全形のfactory/shape checks、真正augmentation/staccato/repeat dot、flag/accidental/articulation/dynamics/ornament/数字等の生成とlateChecksが残る。149分類出力を全記号の意味接続済みと扱わない。 |
 | RHYTHMS / `SlotsRetriever`, `ChordsMapper`, `StackRhythm`, `MeasureRhythm`, `PageRhythm`, `Voices` | 部分 | 認識済み拍子に応じた完全小節の単声の二段beam十六分/beam・旗付き八分/四分/二分イベントをnativeで計算（全画像比較は4/4と3/4）。一般slot/voice割当、他beam/flag音価、付点/連符、tie、pickup/不足超過小節、複声部/複段/途中拍子変更の原版処理は未接続。 |
 | PAGE/score / `ScoreReduction`, logical parts | 部分 | 単ページ改行・小節番号あり。複数ページ継続、part同定/結合、楽器/移調、跨systemの声部/slur/tie、repeat構造等の一般score統合が残る。 |
 | MusicXML / `PartwiseBuilder`, original proxymusic | 部分 | native MusicXML4 writer、限定イベント・system break・part名、schema/reimport比較あり。一般notation/direction/lyric/instrument/layout/score属性と.mxl圧縮、多ページexportの原版対応が残る。原版XMLの流用は認識完成に数えない。 |

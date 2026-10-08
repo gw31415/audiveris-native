@@ -145,5 +145,6 @@ pub(crate) fn assert_real_symbol_geometry(music: &OwnedMusic) {
             row["foreground_points"]
         );
     }
+    super::clusters_tests::assert_actual_image_clusters(music, &cleaned);
     assert_eq!(owner.graph.snapshot(), before);
 }

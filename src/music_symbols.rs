@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Strong SymbolsFilter + bounded SymbolsBuilder/InterFactory continuation.
-//! Isolated/two-part classification; compound musical Inter conflicts remain pending.
+//! Original capped recursive candidate generation; remaining factories/conflicts are pending.
 use crate::{
     GrayImage, beam_dispatch,
     music_measures::{Chord, OwnedMusic},
@@ -11,6 +11,7 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 const MODEL: &[u8] = include_bytes!("../crates/audiveris-classifier/models/audiveris-5.11.0.json");
+mod clusters;
 mod geometry;
 fn head_dilation(point_size: u16) -> i64 {
     // Template divides integer pointSize by four before scaling the margin.
@@ -434,96 +435,32 @@ fn checked(
     // is created. Their specific ShapeChecker/InterFactory dependencies remain.
     Ok(Some(shape.to_owned()))
 }
-// Glyphs.buildLinks + GlyphCluster.decompose, deliberately bounded to
-// two-part components. Larger clusters refuse rather than discarding parts.
+fn actual_fine_boxes(
+    graph: &crate::shared_sig::Graph,
+    system: u64,
+    il: usize,
+) -> Result<Vec<[i64; 4]>, String> {
+    graph
+        .live_inter_keys(system, "SmallChordInter")
+        .into_iter()
+        .map(|key| {
+            let (chord, removed) = graph.retained_inter(key)?;
+            if removed {
+                return Err("music_actual_small_chord_required".into());
+            }
+            let bounds: [i64; 4] = serde_json::from_value(chord["bounds"].clone())
+                .map_err(|_| "music_actual_small_chord_bounds_required")?;
+            Ok([bounds[0] + bounds[2], bounds[1], il as i64, bounds[3]])
+        })
+        .collect()
+}
 fn symbol_candidates(
     glyphs: &[GlyphPixels],
     il: usize,
-    system_left: i32,
+    left: i32,
+    fine_boxes: &[[i64; 4]],
 ) -> Result<Vec<(GlyphPixels, Vec<GlyphPixels>)>, String> {
-    let minimum = (0.03 * (il * il) as f64).round_ties_even() as usize;
-    let mut parts = glyphs
-        .iter()
-        .filter(|g| crate::clef_candidates::weight(g) >= minimum)
-        .cloned()
-        .collect::<Vec<_>>();
-    parts.sort_by_key(|g| g.left);
-    let mut neighbors = vec![Vec::new(); parts.len()];
-    let gap = (0.8 * il as f64).ceil() as i64;
-    for (i, a) in parts.iter().enumerate() {
-        for (j, b) in parts.iter().enumerate().skip(i + 1) {
-            if b.left as i64 >= a.left as i64 + a.width as i64 + gap {
-                break;
-            }
-            if b.top as i64 >= a.top as i64 + a.height as i64 + gap
-                || a.top as i64 - gap >= b.top as i64 + b.height as i64
-            {
-                continue;
-            }
-            let pair = [a.clone(), b.clone()];
-            let links = crate::clef_candidates::links_at_distance(&pair, 0.8 * il as f64)
-                .map_err(|e| e.to_string())?;
-            if links[0] != 0 {
-                neighbors[i].push(j);
-                neighbors[j].push(i);
-            }
-        }
-    }
-    let mut visited = vec![false; parts.len()];
-    let mut candidates = Vec::new();
-    for start in 0..parts.len() {
-        if visited[start] {
-            continue;
-        }
-        let mut component = vec![start];
-        visited[start] = true;
-        let mut at = 0;
-        while at < component.len() {
-            for &j in &neighbors[component[at]] {
-                if !visited[j] {
-                    visited[j] = true;
-                    component.push(j);
-                }
-            }
-            at += 1;
-        }
-        if component.len() > 2 {
-            return Err("music_symbols_more_than_two_cluster_parts_pending".into());
-        }
-        component.sort_by_key(|&i| std::cmp::Reverse(crate::clef_candidates::weight(&parts[i])));
-        let group = component
-            .iter()
-            .map(|&i| parts[i].clone())
-            .collect::<Vec<_>>();
-        // Original stable heavier seed first: seed, its compound, next seed.
-        let masks: &[u16] = if group.len() == 2 { &[1, 3, 2] } else { &[1] };
-        for &mask in masks {
-            let g = crate::clef_candidates::compound(&group, mask);
-            let weight = crate::clef_candidates::weight(&g);
-            if weight as f64 / ((il * il) as f64) < 0.04 {
-                continue;
-            }
-            // SymbolAdapter isTooLarge applies to clustered glyphs only.
-            // The left-of-system brace exception remains outside our scope.
-            if group.len() == 2
-                && (g.width > 4 * il
-                    || (g.left as f64 + g.width as f64 / 2. >= system_left as f64
-                        && g.height > 10 * il))
-            {
-                return Err("music_symbols_cluster_size_or_brace_pending".into());
-            }
-            candidates.push((
-                g,
-                group
-                    .iter()
-                    .enumerate()
-                    .filter(|(i, _)| mask & (1 << i) != 0)
-                    .map(|(_, g)| g.clone())
-                    .collect(),
-            ));
-        }
-    }
-    Ok(candidates)
+    clusters::candidates(glyphs, il, left, fine_boxes)
 }
 pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     if m.owner.prepared.report["schema"] != "audiveris-native.music-measures-head-chords.v1"
@@ -545,6 +482,10 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let nodes = initial["inters"].as_array().unwrap();
     let mut graph = m.owner.graph.clone();
     let mut registry = m.owner.prepared.registry.clone();
+    for glyph in &glyphs {
+        let id = registry.register(glyph)?;
+        registry.add_group(id, beam_dispatch::Group::Symbol)?;
+    }
     let mut trials = Vec::new();
     let mut accepted = Vec::new();
     let mut new_chords = Vec::new();
@@ -552,7 +493,8 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     for group in geometry::dispatch(&m.owner, &glyphs)? {
         let system = group.system;
         let glyphs = group.glyphs.into_iter().cloned().collect::<Vec<_>>();
-        for (g, parts) in symbol_candidates(&glyphs, il, system.left)? {
+        let fine_boxes = actual_fine_boxes(&graph, system.id, il)?;
+        for (g, parts) in symbol_candidates(&glyphs, il, system.left, &fine_boxes)? {
             candidates.push((system.clone(), g, parts));
         }
     }
@@ -808,7 +750,7 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         il,
     )?;
     let previous = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.music-symbols-isolated.v1","measures_head_chords":previous,"symbol_filter_PGM_SHA256":format!("{:x}",Sha256::digest(im.pgm())),"symbol_glyphs":glyphs.iter().map(beam_dispatch::glyph_json).collect::<Vec<_>>(),"classifier_trials":trials,"symbol_cluster_scope":"isolated-and-two-parts","symbols":accepted,"shared_sig":m.owner.graph.snapshot(),"scope":"strong heads/stems/ledgers, flat uniform staff and axis-aligned barline erasure; isolated/two-part classification with bounded unsupported-support-free Rest/TimeWhole SIG exclusions; actual Graph/registry/cache retained","pending":["clusters above two parts/other physical symbols and supported/frozen conflict reduction/fine small-chord glyphs/weak optionals","factory.lateChecks/symbol epilog/flags/dots/accidentals/LINKS/rhythm/export","general stroked areas/full symbol reduction/cleaner/epilog","nonzero skew/real scans/special staff/full24shapes/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.music-symbols-isolated.v1","measures_head_chords":previous,"symbol_filter_PGM_SHA256":format!("{:x}",Sha256::digest(im.pgm())),"symbol_glyphs":glyphs.iter().map(beam_dispatch::glyph_json).collect::<Vec<_>>(),"classifier_trials":trials,"symbol_cluster_scope":"original-seven-part-cap-recursive","symbols":accepted,"shared_sig":m.owner.graph.snapshot(),"scope":"actual System/Staff/virtual Ledger curves and original strong cleaner; stable connected glyphs, original cap7 recursive classification with bounded Rest/TimeWhole SIG exclusions; actual Graph/registry/cache retained","pending":["other physical factories/shape checks and supported/frozen conflict reduction/weak optionals","factory.lateChecks/symbol epilog/flags/dots/accidentals/LINKS/rhythm/export","general stroked areas/full symbol reduction/cleaner/epilog","nonzero skew/real scans/special staff/full24shapes/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["dot_late_checks"] = dot_late_checks;
     Ok(m)
 }
@@ -860,7 +802,7 @@ mod cluster_boundary {
         }
     }
     #[test]
-    fn original_two_part_cluster_order_and_larger_cluster_refusal() {
+    fn original_two_part_cluster_order() {
         let fixture: Value = serde_json::from_str(include_str!(
             "../fixtures/official-image-musicxml-ledger/residue-parts.json"
         ))
@@ -872,7 +814,7 @@ mod cluster_boundary {
             .map(beam_dispatch::glyph_from_json)
             .collect::<Result<Vec<_>, _>>()
             .unwrap();
-        let candidates = symbol_candidates(&parts, 11, 0).unwrap();
+        let candidates = symbol_candidates(&parts, 11, 0, &[]).unwrap();
         assert_eq!(
             candidates
                 .iter()
@@ -881,15 +823,6 @@ mod cluster_boundary {
             vec![1, 2, 1]
         );
         assert_eq!(crate::clef_candidates::weight(&candidates[1].0), 10);
-        let mut three = parts;
-        let mut extra = three[0].clone();
-        extra.left += 3;
-        three.push(extra);
-        assert_eq!(
-            symbol_candidates(&three, 11, 0).unwrap_err(),
-            "music_symbols_more_than_two_cluster_parts_pending"
-        );
-        assert!(symbol_candidates(&[], 11, 0).unwrap().is_empty());
     }
 }
 
@@ -918,3 +851,6 @@ mod geometry_tests;
 pub(crate) use geometry_tests::assert_real_symbol_geometry;
 #[cfg(test)]
 mod dilation_tests;
+
+#[cfg(test)]
+mod clusters_tests;

@@ -1,0 +1,35 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "files": {
+    "scripts/java/RealSymbolCandidatesImageProbe.java": "668a88e03a8bd56812e412369034272dfbfef840302b5b011f19056a5db087b5",
+    "scripts/java/RealSymbolClusterOrderImageProbe.java": "9b910d40d3c3e38ca6aedbb8daa7e9a1faa0882f0263200a8458cc3f3c30612b",
+    "fixtures/official-symbol-clusters/image-observed.json": "ddbe882b199813ddf4e36a6a1b499c76e84baf8365a3b61a407c6f37c0d8891a",
+    "fixtures/official-symbol-clusters/image-provenance.json": "90aa29013c0a45fffee140d3a1580ad0d088c4bea11b573db45bd2985e0239cc",
+    "fixtures/official-symbol-clusters/order-provenance.json": "226582ca7e28b4b2e347686a1c9c488f967aca240d032b90f59d989172290b29"
+  },
+  "original_order_comparison": "/tmp/real-symbol-cluster-order-original-v1/observed.json versus /tmp/real-symbol-candidates-original-v5/observed.json",
+  "jgrapht_jar_sha256": "dfa596e9f0d0838f1b5e81dd0cd60e3a76c2c290ac25a0a029ffde58cf5e4c14",
+  "pinned_sources": {
+    "glyph/GlyphCluster.java": "ffc5e0bbbb7735e6bf597d5163b1cd550f02e244025db41fac48ce26b06ae260",
+    "glyph/Glyphs.java": "9b9bb6bed8441ddbb81b4f9114042fb60c3681a3edf32f5acd4c0ee0e619bab5",
+    "sheet/symbol/SymbolsBuilder.java": "47c18cc7605d0c5a91ed3c2fccb174d79bdaa003f584872261841ba445ec1cbf"
+  },
+  "no_original_answers_used_in_native_recognition": true,
+  "runtime_inspection": [
+    {
+      "class_name": "org.jgrapht.alg.connectivity.ConnectivityInspector$MyTraversalListener",
+      "method": "connectedComponentStarted",
+      "actual_bytecode_allocates": "java.util.HashSet"
+    },
+    {
+      "class_name": "org.audiveris.omr.glyph.Glyph",
+      "method": "hashCode",
+      "actual_bytecode_includes": "left/top/RunTable.hashCode"
+    },
+    {
+      "class_name": "org.audiveris.omr.run.RunTable",
+      "method": "hashCode",
+      "actual_bytecode_includes": "Objects.hashCode(Orientation)/width/height/weight"
+    }
+  ]
+}
