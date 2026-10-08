@@ -2156,3 +2156,14 @@ Full unchanged image CLI v11 passes physical Brace erasure and reaches
 beam PageCleaner sloping/wider stroke raster pending in170.56 seconds, no XML.
 The next image dependency is14 sloping contours among18 original Beam/Hook bodies,
 then real Chord-based cleaner visitor order. Real-image quality remains false.
+
+Original sloping Beam/Hook cleaner raster is connected through normalized convex
+miter contours and raw area fill, without a bounding-box replacement. Eighteen
+actual native graph Beam/Hook bodies match original median/height and every pixel
+row; fourteen cross normalized rows. Eight independent declared boundary/slope
+controls and old rectangle/Hook contracts pass. Canonical graph and constructor
+physical registry stay held. Evidence real-beam-raster. Wider/collapsed/bevel
+contours retain explicit dependencies if required; musical quality remains false.
+Full unchanged image CLI v12 passes Beam contours and reaches
+music_filter_weak_head_optionals_pending in173.7 seconds, no XML.
+Continue actual strong Chord visitor order; quality remains false.

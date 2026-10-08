@@ -3,6 +3,7 @@
 //! endpoint checks, on actual retained SIG objects. Bounded ordinary beam/hook groups.
 use crate::shared_sig::{Graph, Key, Phase};
 use serde_json::{Value, json};
+mod raster;
 fn key(n: &Value) -> Result<Key, String> {
     serde_json::from_value(n["origin"].clone()).map_err(|_| "owned beam origin required".into())
 }
@@ -227,23 +228,10 @@ pub(crate) fn area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, St
         restore(&n["median"][3])?,
     ];
     let h = restore(&n["height"])?;
-    let margin = (interline as f64 * 0.1) as f32;
-    let top = l[1] - h / 2.;
-    let bottom = l[1] + h / 2.;
-    let pixel = |v: f64| (v + 0.25).floor();
-    // DMarlin normalizes each path vertex to NearestPixelQuarter before the
-    // thin AA-off contour. A slightly sloping physical area can normalize to
-    // exactly the same rectangle; the contour also contains its fill. Admit
-    // only that branch, not a bounding-box erasure of arbitrary sloping ink.
-    if !matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter"))
-        || l[0] >= l[2]
-        || h <= 0.
-        || pixel(top) != pixel(l[3] - h / 2.)
-        || pixel(bottom) != pixel(l[3] + h / 2.)
-    {
-        return Err("beam PageCleaner sloping/wider stroke raster pending".into());
+    if !matches!(n["kind"].as_str(), Some("BeamInter" | "BeamHookInter")) {
+        return Err("beam PageCleaner body required".into());
     }
-    rectangle_rows([l[0], top, l[2], bottom], margin)
+    raster::rows(l, h, (interline as f64 * 0.1) as f32)
 }
 
 #[cfg(test)]
@@ -460,14 +448,7 @@ mod tests {
         .unwrap();
         for c in controls["cases"].as_array().unwrap() {
             let n = json!({"kind":"BeamInter","median":c["median"],"height":c["height"]});
-            let median = c["median"].as_array().unwrap();
-            if median[1] == 209.7 && median[3] == 209.8 {
-                // Normalization crosses a row: this branch still refuses,
-                // rather than erasing the rectangular hull of sloping ink.
-                assert!(area_rows(&n, 11).is_err());
-            } else {
-                assert_eq!(json!(area_rows(&n, 11).unwrap()), c["white_rows"]);
-            }
+            assert_eq!(json!(area_rows(&n, 11).unwrap()), c["white_rows"]);
         }
         let continuation: Value = serde_json::from_str(include_str!(
             "../fixtures/official-image-musicxml-beam-subdivisions/eighth-continuation.json"
@@ -480,7 +461,14 @@ mod tests {
             continuation["systems"][0]["PageCleaner_beam_white_rows"]
         );
         beam["median"][3] = json!(210.);
-        assert!(area_rows(&beam, 11).is_err());
+        let slope: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-beam-sloped-raster/observed.json"
+        ))
+        .unwrap();
+        assert_eq!(
+            json!(area_rows(&beam, 11).unwrap()),
+            slope["cases"][0]["white_rows"]
+        );
         beam["median"][3] = beam["median"][1].clone();
         beam["height"] = json!(0.);
         assert!(area_rows(&beam, 11).is_err());
@@ -563,3 +551,8 @@ mod tests {
         }
     }
 }
+
+#[cfg(test)]
+mod raster_tests;
+#[cfg(test)]
+pub(crate) use raster_tests::assert_real_rasters;

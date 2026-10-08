@@ -1,0 +1,40 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "sources": [
+    {
+      "path": "sheet/PageCleaner.java",
+      "sha256": "f787d2059b81aeaa96427b35b8168dad4dc81b81da848e7d2c586a608a6f0d14",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/PageCleaner.java"
+    },
+    {
+      "path": "sig/inter/AbstractBeamInter.java",
+      "sha256": "9a9723bcbca45a686b643bc62b97df91137c341531c3862456916150c61b8d9c",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractBeamInter.java"
+    },
+    {
+      "path": "math/AreaUtil.java",
+      "sha256": "0af548f3089fc25ba991e4289ba4e783620a57d19a9d634c87f7320120d26320",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/math/AreaUtil.java"
+    }
+  ],
+  "runtime_sources": [
+    {
+      "path": "DMarlinRenderingEngine.java",
+      "tag": "jdk-25.0.3+9",
+      "sha256": "005c27d2454e0aafe6bb54572e42dd4ea3f727ef0ccc565cce8b5379517db4b5",
+      "url": "https://raw.githubusercontent.com/openjdk/jdk25u/jdk-25.0.3%2B9/src/java.desktop/share/classes/sun/java2d/marlin/DMarlinRenderingEngine.java"
+    },
+    {
+      "path": "Stroker.java",
+      "tag": "jdk-25.0.3+9",
+      "sha256": "868b4c21a8e92784c904d2e9207e4064f3a4e0f2d0fa8e06ff7a23b69427640c",
+      "url": "https://raw.githubusercontent.com/openjdk/jdk25u/jdk-25.0.3%2B9/src/java.desktop/share/classes/sun/java2d/marlin/Stroker.java"
+    },
+    {
+      "path": "Renderer.java",
+      "tag": "jdk-25.0.3+9",
+      "sha256": "bcfecec63c33c6e9e727f6688a3d504f9d021bc346b7c12742fbf779de3f706b",
+      "url": "https://raw.githubusercontent.com/openjdk/jdk25u/jdk-25.0.3%2B9/src/java.desktop/share/classes/sun/java2d/marlin/Renderer.java"
+    }
+  ]
+}

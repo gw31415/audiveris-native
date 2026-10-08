@@ -1,0 +1,26 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "runtime": "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime",
+  "observer_sha256": "055b5d28759c4a05560e49abd4735bcc56865db15102d69f451803b53b4e8260",
+  "commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/beam-sloped-raster-original-v1/classes",
+      "/workspace/audiveris-native/scripts/java/BeamSlopedRasterProbe.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Djava.awt.headless=true",
+      "-cp",
+      "/tmp/beam-sloped-raster-original-v1/classes",
+      "BeamSlopedRasterProbe",
+      "/tmp/beam-sloped-raster-original-v1/observed.json"
+    ]
+  ],
+  "exit_code": 0,
+  "native_outputs_used": false,
+  "observed_sha256": "cd6e094eb50118d299e4884f38ef903096fe33f7faad96518230e4e6db67aaa5"
+}

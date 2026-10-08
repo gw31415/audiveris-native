@@ -235,6 +235,7 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
     crate::music_symbols::assert_real_headers(&owner);
     crate::music_symbols::assert_real_vertical_areas(&owner);
     crate::music_symbols::assert_real_brace_glyphs(&mut owner);
+    crate::music_beams::assert_real_rasters(&owner);
     let parts = owner.parts.clone();
     owner.upstream_report["grid_ir"]["systems"] = json!([]);
     owner.upstream_report["grid_ir"]["staffs"] = json!([]);
