@@ -1719,3 +1719,18 @@ manual flags, expected/end/excess and unused registration identity. Clear/reset/
 invalidation boundaries remain distinct. Plain lookup, complete clear/detect,
 implicit tuplets and the full nonUI ledger remain pending, with admission and
 completion flags false. See evidence/musicxml-beam-rest-added.
+
+### Plain rest candidates from actual Measure membership
+
+Actual group measures are collected from beam/member chord encounter order,
+then stably ordered by actual measure left in the admitted single-staff part.
+Real Measure rest insertion order supplies plain candidates after original
+black/white subtraction. Two original controls/ten states show a manual foreign
+BeamRest expanding the group to the foreign actual Measure, without replacing
+its null Voice or the held empty Rest cache. Collection preserves actual owners,
+clocks and manual relation identities across clear and legitimate source reset.
+A missing later foreign plain owner refuses and rolls back instead of silently
+omitting that rest. Plain lookup polygons, competing removals/additions, full
+clear/detect and implicit tuplets remain pending before normal rhythm; general
+multipart/nullable owners and the full nonUI ledger stay unfinished, with all
+full/public flags false. See evidence/musicxml-beam-rest-plain.

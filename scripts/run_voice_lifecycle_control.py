@@ -17,7 +17,7 @@ parser.add_argument("--oracle-home", type=Path, required=True)
 parser.add_argument("--book", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--fresh-beams", type=Path, help="Nearest probe only: hash-recorded original in-memory BEAMS measurement")
-parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe"),
+parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe", "BeamRestPlainProbe"),
                     default="VoiceLifecycleProbe")
 args = parser.parse_args()
 if args.fresh_beams is not None and args.probe != "BeamRestNearestProbe":
@@ -57,7 +57,7 @@ if args.probe == "BeamRestAddedProbe":
     compile_args[compile_args.index("-cp") + 1] = str(signatures) + os.pathsep + str(lib / "app/*")
 if args.probe != "VoiceLifecycleProbe":
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java"))
-if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe"):
+if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe", "BeamRestPlainProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/BeamRestClearProbe.java"))
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java"))
@@ -94,7 +94,7 @@ if signature_sources:
     record["compile_signatures_on_runtime_classpath"] = False
 if args.probe != "VoiceLifecycleProbe":
     record["lifecycle_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java")
-if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe"):
+if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe", "BeamRestPlainProbe"):
     record["clear_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/BeamRestClearProbe.java")
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     record["tie_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java")

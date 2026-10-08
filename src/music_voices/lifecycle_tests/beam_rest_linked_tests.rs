@@ -18,7 +18,7 @@ fn original() -> Value {
     }
     observed
 }
-fn chord_key(c: &Control, label: &str) -> Key {
+pub(super) fn chord_key(c: &Control, label: &str) -> Key {
     c.owner
         .chords
         .iter()
@@ -26,7 +26,7 @@ fn chord_key(c: &Control, label: &str) -> Key {
         .unwrap()
         .key
 }
-fn declare_links(c: &mut Control, case: &Value) -> Vec<(usize, String)> {
+pub(super) fn declare_links(c: &mut Control, case: &Value) -> Vec<(usize, String)> {
     let endpoint = |s: &str| {
         match s {
             "seed" => case["seed"].as_str().unwrap(),
@@ -124,7 +124,7 @@ fn add_manual(c: &mut Control) -> usize {
         .as_u64()
         .unwrap() as usize
 }
-fn queries(c: &mut Control, seed: &str, links: &[(usize, String)]) -> Value {
+pub(super) fn queries(c: &mut Control, seed: &str, links: &[(usize, String)]) -> Value {
     let groups = c.owner.interleaved_rest_candidates(1).unwrap();
     assert_eq!(groups.as_array().unwrap().len(), 1);
     let row = &groups[0];

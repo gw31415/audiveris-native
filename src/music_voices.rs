@@ -935,6 +935,21 @@ pub(crate) fn beam_groups(
 /// BeamGroup.getChords does not read getVoice. Slot geometry may be retrieved
 /// while other measures still have their retained Voices and clocks.
 pub(crate) fn beam_group_chords(graph: &crate::shared_sig::Graph) -> Result<Value, String> {
+    collect_beam_group_chords(graph, true)
+}
+
+pub(crate) fn beam_group_chords_by_member(
+    graph: &crate::shared_sig::Graph,
+) -> Result<Value, String> {
+    // getMeasures collects before the group left sort; stable measure ties
+    // would otherwise lose the original beam/member encounter order.
+    collect_beam_group_chords(graph, false)
+}
+
+fn collect_beam_group_chords(
+    graph: &crate::shared_sig::Graph,
+    sort_group_by_left: bool,
+) -> Result<Value, String> {
     let snapshot = graph.snapshot();
     let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
         .as_array()
@@ -1039,7 +1054,9 @@ pub(crate) fn beam_group_chords(graph: &crate::shared_sig::Graph) -> Result<Valu
         }
         // Original getChords uses byAbscissa (left bounds), not the Voice's
         // center comparator. LinkedHashSet preserves ties and removes aliases.
-        chord_ids.sort_by_key(|id| nodes[id]["bounds"][0].as_i64().unwrap());
+        if sort_group_by_left {
+            chord_ids.sort_by_key(|id| nodes[id]["bounds"][0].as_i64().unwrap());
+        }
         rows.push(json!({"id":gid,"system_id":system,"bounds":group["bounds"],
             "beams":beams.iter().map(|n|json!({"id":n["id"],"kind":n["kind"],"bounds":n["bounds"]})).collect::<Vec<_>>(),
             "chords":chord_ids.iter().map(|id| {let n=nodes[id];json!({"id":id,"kind":n["kind"],"bounds":n["bounds"],"voice":n["voice"],"measure_number":n["measure_number"]})}).collect::<Vec<_>>()
