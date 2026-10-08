@@ -79,7 +79,6 @@ impl Graph {
         assert_eq!(key.phase, super::Phase::Chord);
         self.vertices[id - 1].data["manual"] == true
     }
-    #[cfg(test)]
     pub(crate) fn retained_voice_owner(&self, identity: &Arc<()>) -> Option<&Voice> {
         self.retained_voices
             .iter()

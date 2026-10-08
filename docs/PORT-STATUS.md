@@ -1895,3 +1895,13 @@ MeasureRhythm removal; no global cleanup normalization. Outer failure restores
 all actual container storage including a prior retired other-Stack object.
 Evidence musicxml-tuplet-stack. Force eligibility/sans-Tuplet/grouping, inspect/
 merge/second pass and ordinary font binding remain; full nonUI false.
+
+### Actual dotted sans-Tuplet Chord/Voice sum (continuation of36aa619)
+
+Original144 Chord+16 Voice reads compare raw inputs, dots1/2/ignored9 and default
+measure-rest-shape bypass while actual manual SIX relation/old clocks remain.
+Six original reset/reprocess boundaries retain old Voice sums/physical Chords
+and distinguish new objects reusing numbers1/2. Source unknown labels and Slot
+identity are observed without ID-based ownership substitution. Evidence
+musicxml-tuplet-sans. Beat grouping/force eligibility, rest-Voice/switch ownership,
+inspect/merge/second pass/font binding remain; full nonUI false.

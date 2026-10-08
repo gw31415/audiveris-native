@@ -58,8 +58,7 @@ fn is_rest(shape: &str) -> bool {
     )
 }
 impl Graph {
-    /// Raw source getter: dot/Tuplet and measure-rest treatment do not enter it.
-    pub(crate) fn raw_chord_duration(&mut self, key: Key) -> Result<Option<Fraction>, String> {
+    fn raw_first_note(&self, key: Key) -> Result<Option<(usize, String)>, String> {
         let id = self.endpoint(key)?;
         if key.phase != Phase::Chord
             || !matches!(
@@ -93,6 +92,14 @@ impl Graph {
             .as_str()
             .ok_or("music_raw_actual_note_shape_required")?
             .to_owned();
+        Ok(Some((note, shape)))
+    }
+    /// Raw source getter: dot/Tuplet and measure-rest treatment do not enter it.
+    pub(crate) fn raw_chord_duration(&mut self, key: Key) -> Result<Option<Fraction>, String> {
+        let Some((note, shape)) = self.raw_first_note(key)? else {
+            return Ok(None);
+        };
+        let id = self.endpoint(key)?;
         let mut duration = shape_duration(&shape)?;
         if is_rest(&shape) {
             return Ok(duration);
@@ -143,5 +150,39 @@ impl Graph {
             duration = Some(raw);
         }
         Ok(duration)
+    }
+    pub(crate) fn sans_tuplet_chord_duration(
+        &mut self,
+        key: Key,
+        partial_whole_rests: bool,
+    ) -> Result<Option<Fraction>, String> {
+        let Some(raw) = self.raw_chord_duration(key)? else {
+            return Ok(None);
+        };
+        let Some((_, shape)) = self.raw_first_note(key)? else {
+            return Ok(Some(raw));
+        };
+        if crate::music_voices::is_measure_rest_shape(&shape, partial_whole_rests) {
+            return Ok(Some(raw));
+        }
+        let id = self.endpoint(key)?;
+        let value = &self.vertices[id - 1].data["dots_number"];
+        let dots = if value.is_null() {
+            0
+        } else {
+            value
+                .as_i64()
+                .ok_or("music_duration_actual_dot_count_required")?
+        };
+        let ratio = match dots {
+            1 => Some(Fraction::new(3, 2)?),
+            2 => Some(Fraction::new(7, 4)?),
+            _ => None,
+        };
+        Ok(Some(if let Some(ratio) = ratio {
+            raw.times(ratio)?
+        } else {
+            raw
+        }))
     }
 }

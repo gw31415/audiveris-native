@@ -3694,3 +3694,5 @@ mod rational_owned_export_tests {
         }
     }
 }
+
+mod tuplet_sans_duration;
