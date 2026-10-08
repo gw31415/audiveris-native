@@ -4,6 +4,30 @@ use crate::music_voices::Voice;
 use std::sync::Arc;
 
 impl Graph {
+    pub(crate) fn actual_chord_time_offset(
+        &self,
+        key: super::Key,
+    ) -> Result<Option<crate::music_time::Fraction>, String> {
+        let id = self.endpoint(key)?;
+        let chord = &self.vertices[id - 1];
+        if key.phase != super::Phase::Chord
+            || !matches!(
+                chord.data["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            )
+        {
+            return Err("music_tuplet_actual_chord_clock_required".into());
+        }
+        let value = &chord.data["time_offset"];
+        if value.is_null() {
+            return Ok(None);
+        }
+        Ok(Some(crate::music_time::Fraction::parse(
+            value
+                .as_str()
+                .ok_or("music_tuplet_actual_chord_clock_required")?,
+        )?))
+    }
     pub(crate) fn set_chord_slot(
         &mut self,
         key: super::Key,

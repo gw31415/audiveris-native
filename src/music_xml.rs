@@ -3696,3 +3696,6 @@ mod rational_owned_export_tests {
 }
 
 mod tuplet_sans_duration;
+
+mod tuplet_beats;
+pub use tuplet_beats::TupletBeatPlan;

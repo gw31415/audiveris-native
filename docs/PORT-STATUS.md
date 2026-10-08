@@ -1905,3 +1905,13 @@ and distinguish new objects reusing numbers1/2. Source unknown labels and Slot
 identity are observed without ID-based ownership substitution. Evidence
 musicxml-tuplet-sans. Beat grouping/force eligibility, rest-Voice/switch ownership,
 inspect/merge/second pass/font binding remain; full nonUI false.
+
+### Actual ordered Voice beat grouping (continuation of3d61c65)
+
+Original96 private buildGroups/checkGroups controls compare raw beat3/2, one
+nextTime increment per Chord, large gaps/backwards offsets,32 null failures and
+4 HALF-to-QUARTER fallbacks across actual BeamGroups. Physical owner/Slot storage,
+manual/relation identity and old clocks remain intact. Explicit beat planning is
+not automatic signature/force admission. Evidence musicxml-tuplet-beat; force
+generation/eligibility, inspect/merge/second pass/real font binding remain, full
+nonUI completion false.

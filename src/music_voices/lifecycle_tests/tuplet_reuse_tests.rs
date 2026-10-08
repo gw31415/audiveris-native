@@ -19,7 +19,7 @@ fn original() -> Value {
     }
     d
 }
-fn prepare(case: &Value) -> Prepared {
+pub(super) fn prepare(case: &Value) -> Prepared {
     let mut p = control(case);
     let spec = &case["declared_extra_group"];
     let snapshot = p.c.owner.owner.graph.snapshot();
