@@ -112,6 +112,36 @@ pub fn process(
     fore: usize,
     registry: &mut Registry,
 ) -> Result<Value, String> {
+    process_observed(
+        image,
+        systems,
+        staffs,
+        candidates,
+        main_interline,
+        fore,
+        (registry, &mut |_| {}),
+    )
+}
+pub(crate) enum MembershipEvent {
+    Retire {
+        system: u64,
+        ledgers: Vec<usize>,
+    },
+    Build {
+        system: u64,
+        membership: crate::ledger_registration::StaffMembership,
+    },
+}
+pub(crate) fn process_observed(
+    image: &GrayImage,
+    systems: &[Value],
+    staffs: &[(u64, Vec<Staff>)],
+    candidates: &[Value],
+    main_interline: usize,
+    fore: usize,
+    retained: (&mut Registry, &mut impl FnMut(MembershipEvent)),
+) -> Result<Value, String> {
+    let (registry, observe) = retained;
     let mut infos = Vec::new();
     let mut discarded = Vec::<(u64, usize)>::new();
     for sys in systems {
@@ -214,6 +244,10 @@ pub fn process(
             }
         }
         if !affected.is_empty() {
+            observe(MembershipEvent::Retire {
+                system,
+                ledgers: nodes.iter().filter(|n| n.removed).map(|n| n.id).collect(),
+            });
             let selected = affected
                 .iter()
                 .map(|id| {
@@ -237,18 +271,21 @@ pub fn process(
                 .iter()
                 .find(|c| c["system_id"].as_u64() == Some(system))
                 .ok_or("missing_post_candidates")?;
-            report = crate::ledger_registration::build_resume(
+            report = crate::ledger_registration::build_resume_observed(
                 image,
                 c["candidates"].as_array().unwrap(),
                 &selected,
                 main_interline,
                 fore,
                 registry,
-                Resume {
-                    nodes,
-                    maps,
-                    blocked,
-                },
+                (
+                    Resume {
+                        nodes,
+                        maps,
+                        blocked,
+                    },
+                    &mut |membership| observe(MembershipEvent::Build { system, membership }),
+                ),
             )?;
             let mut nodes: Vec<Ledger> = serde_json::from_value(report["inters"].clone()).unwrap();
             let active = report["staff_maps"]

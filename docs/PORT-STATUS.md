@@ -2064,3 +2064,11 @@ Brace retirement preserve Part/Staff/Curve Arc/storage and physical registry; ma
 structural removal and late bad endpoint roll back prefix/relations. Evidence real-
 grid-foundation. Full An Laura progresses to the multi-Staff ledger reduction guard;
 real image MusicXML/quality acceptance remains false and work continues.
+
+Constructor-produced Ledger memberships are now held through PAGE/STEMS with
+actual Staff/Curve Arc and canonical Graph body references, not report reconstruction.
+Fresh real An Laura original LEDGERS/HEADS frames match two systems/six Staffs/26
+bodies and maps. Three declared shared/duplicate/retired-reference frames preserve
+first body index, differing map indices, last Staff-only removal and body identity.
+Evidence real-ledger-memberships. The ordinary multi-Staff ledger guard is still
+pending, alongside later real image recognition/rhythm/output/quality acceptance.

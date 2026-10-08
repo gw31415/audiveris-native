@@ -425,6 +425,11 @@ impl Graph {
         }
         Ok(())
     }
+    pub(crate) fn retained_inter(&self, key: Key) -> Result<(&Value, bool), String> {
+        let id = self.id(key).ok_or("missing_actual_retained_inter")?;
+        let vertex = &self.vertices[id - 1];
+        Ok((&vertex.data, vertex.removed))
+    }
     pub fn id(&self, key: Key) -> Option<usize> {
         self.keys.get(&key).copied()
     }

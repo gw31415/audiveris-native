@@ -52,6 +52,7 @@ fn supported(ledger: &Value, nodes: &[Value], interline: f64) -> Result<bool, St
     Ok(false)
 }
 pub(crate) fn check(mut o: OwnedItems) -> Result<OwnedItems, String> {
+    o.ledger_memberships.validate(&o.graph)?;
     let snapshot = o.graph.snapshot();
     let mut ledgers = snapshot["inters"]
         .as_array()
@@ -106,6 +107,9 @@ pub(crate) fn check(mut o: OwnedItems) -> Result<OwnedItems, String> {
             if !supported(n, live["inters"].as_array().unwrap(), o.interline as f64)? {
                 let key: Key = serde_json::from_value(n["origin"].clone())
                     .map_err(|_| "music_ledger_origin_required")?;
+                let (body, _) = o.graph.retained_inter(key)?;
+                o.ledger_memberships
+                    .remove_from_owner(key, body["staff_id"].as_u64());
                 o.graph.remove_music_inter(key)?;
                 removed.push(json!({"id":n["id"],"origin":key,"bounds":n["bounds"],"index":n["index"],"glyph_id":n["glyph_id"]}));
             }

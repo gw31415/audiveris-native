@@ -122,6 +122,31 @@ pub fn build_resume(
     registry: &mut Registry,
     resume: Resume,
 ) -> Result<Value, String> {
+    build_resume_observed(
+        image,
+        candidates,
+        staffs,
+        main_interline,
+        fore,
+        registry,
+        (resume, &mut |_| {}),
+    )
+}
+#[derive(Clone, Debug)]
+pub(crate) struct StaffMembership {
+    pub(crate) staff_id: u64,
+    pub(crate) lines: Vec<(i32, Vec<usize>)>,
+}
+pub(crate) fn build_resume_observed(
+    image: &GrayImage,
+    candidates: &[Value],
+    staffs: &[Staff],
+    main_interline: usize,
+    fore: usize,
+    registry: &mut Registry,
+    retained: (Resume, &mut impl FnMut(StaffMembership)),
+) -> Result<Value, String> {
+    let (resume, observe) = retained;
     if candidates.len() > 32768 || staffs.len() > 128 {
         return Err("ledger_registration_budget".into());
     }
@@ -150,6 +175,7 @@ pub fn build_resume(
             Curve::interpolate(staff.lines[4].clone()).ok_or("invalid_ledger_staff_curve")?;
         let mut prior = Vec::<PreviousLedger>::new();
         let mut lines = Vec::new();
+        let mut actual_lines = Vec::new();
         if !staff.tablature {
             for sign in [-1_i32, 1] {
                 if sign < 0 && staff.merged_last {
@@ -276,10 +302,16 @@ pub fn build_resume(
                             stop: [line[2], line[3]],
                         });
                     }
-                    lines.push(json!({"index":index,"ledger_ids":accepted.iter().map(|&n|nodes[n].id).collect::<Vec<_>>()}));
+                    let members = accepted.iter().map(|&n| nodes[n].id).collect::<Vec<_>>();
+                    actual_lines.push((index, members.clone()));
+                    lines.push(json!({"index":index,"ledger_ids":members}));
                 }
             }
         }
+        observe(StaffMembership {
+            staff_id: staff.id,
+            lines: actual_lines,
+        });
         let value = json!({"staff_id":staff.id,"lines":lines});
         if let Some(row) = maps
             .iter_mut()

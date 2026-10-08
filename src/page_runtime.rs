@@ -5,6 +5,7 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) ledger_memberships: crate::ledger_membership_owners::LedgerMemberships,
     pub(crate) parts: Vec<std::sync::Arc<crate::grid_ir::PartGeometry>>,
     pub(crate) staff_areas: Vec<std::sync::Arc<crate::system_area_geometry::Band>>,
     pub(crate) staffs: Vec<std::sync::Arc<crate::grid_ir::StaffGeometry>>,
@@ -296,6 +297,7 @@ pub fn analyze(
     } else {
         serde_json::json!({"candidate_prefix_complete":false,"ledgers_complete":false,"error":"incomplete_beams_epilog_dependency"})
     };
+    let mut ledger_memberships = crate::ledger_membership_owners::LedgerMemberships::default();
     let ledger_registration = if ledger_candidates["candidate_prefix_complete"] == true {
         if let Some(context) = &mut beam_context {
             let mut systems = Vec::new();
@@ -305,15 +307,24 @@ pub fn analyze(
                 let outcome = (|| {
                     let staffs =
                         audiveris_native::ledger_registration::staffs_from_grid(&grid_ir, id)?;
-                    let report = audiveris_native::ledger_registration::build(
+                    let mut memberships = Vec::new();
+                    let report = audiveris_native::ledger_registration::build_resume_observed(
                         &residual,
                         row["candidates"].as_array().unwrap(),
                         &staffs,
                         sc.interline.main,
                         sc.line.main,
                         &mut context.registry,
+                        (
+                            crate::ledger_registration::Resume::default(),
+                            &mut |membership| memberships.push(membership),
+                        ),
                     )?;
                     common_graph.sync_ledgers(id, report["inters"].as_array().unwrap())?;
+                    for membership in memberships {
+                        ledger_memberships.record(id, membership, &owned_grid.staffs)?;
+                    }
+                    ledger_memberships.validate(&common_graph)?;
                     Ok::<_, String>(serde_json::json!({"system_id":id,"registration":report}))
                 })();
                 match outcome {
@@ -345,15 +356,18 @@ pub fn analyze(
                     ))
                 })
                 .collect::<Result<Vec<_>, String>>();
+            let mut membership_events = Vec::new();
             match specs.and_then(|specs| {
-                audiveris_native::ledger_post_analysis::process(
+                audiveris_native::ledger_post_analysis::process_observed(
                     &residual,
                     ledger_registration["systems"].as_array().unwrap(),
                     &specs,
                     ledger_candidates["systems"].as_array().unwrap(),
                     sc.interline.main,
                     sc.line.main,
-                    &mut context.registry,
+                    (&mut context.registry, &mut |event| {
+                        membership_events.push(event)
+                    }),
                 )
             }) {
                 Ok(mut report) => {
@@ -363,6 +377,21 @@ pub fn analyze(
                             system["registration"]["inters"].as_array().unwrap(),
                         )?;
                     }
+                    for event in membership_events {
+                        match event {
+                            crate::ledger_post_analysis::MembershipEvent::Retire {
+                                system,
+                                ledgers,
+                            } => ledger_memberships.retire_post_analysis(system, &ledgers),
+                            crate::ledger_post_analysis::MembershipEvent::Build {
+                                system,
+                                membership,
+                            } => {
+                                ledger_memberships.record(system, membership, &owned_grid.staffs)?
+                            }
+                        }
+                    }
+                    ledger_memberships.validate(&common_graph)?;
                     report["glyph_registry"] = context.registry.snapshot();
                     report
                 }
@@ -691,6 +720,7 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        ledger_memberships,
         parts: owned_grid.parts,
         staff_areas: owned_grid.staff_areas,
         staffs: owned_grid.staffs,

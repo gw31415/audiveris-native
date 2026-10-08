@@ -1,0 +1,7 @@
+# Next dependency — real image quality
+
+Constructor-produced Ledger memberships now retain original Staff/Curve references and canonical live/retired Ledger bodies, with distinct map indices and duplicate references. The actual An Laura pre-STEMS state has26 bodies, six Staff maps and no shared objects, matching original LEDGERS and HEADS frames exactly. The real image still reaches the prior one-Staff-only ledger guard.
+
+Connect ordinary multi-Staff checkLedgers using these held map memberships and original sorted Staff/index/member order. Resolve next-line references from actual bodies even when retained/removed rather than filtering solely through a report snapshot. Original fixAllSharedLedgers returns zero for this actual state; preserve an explicit boundary for a genuinely shared object until its head/ledger reassignment and pitch/other-map purge are compared. Do not infer original membership from the final staff_id or omit objects to bypass the guard.
+
+Verify actual multi-Staff pruning versus original, callback/Part/manual/body identity and selected rollback, then run native full An Laura to identify the next recognition-required failure. Continue toward image -> recognition -> MusicXML and independent original/truth pitch/duration/rest/chord/voice/meter/symbol quality. Maintain normal main checkpoint/readback and necessary existing XML/XSD regression; the all-nonUI API goal remains superseded.
