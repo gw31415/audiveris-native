@@ -143,9 +143,9 @@ impl Graph {
         let point = [point[0] as f64, point[1] as f64];
         let mut nearest = None;
         for edge in self
-            .edges
-            .iter()
-            .filter(|e| !e.removed && e.key.source == gid && e.key.kind == "Containment")
+            .live_edges()
+            .into_iter()
+            .filter(|e| e.key.source == gid && e.key.kind == "Containment")
         {
             let beam = &self.vertices[edge.key.target - 1];
             if beam.removed || beam.key.system != group.system {
@@ -170,6 +170,39 @@ impl Graph {
             }
         }
         Ok(nearest)
+    }
+    pub(crate) fn main_rest_median(&self, group: Key) -> Result<Option<[f64; 4]>, String> {
+        let gid = self.endpoint(group)?;
+        if group.phase != Phase::Group || self.vertices[gid - 1].data["kind"] != "BeamGroupInter" {
+            return Err("music_rest_actual_group_required".into());
+        }
+        let mut main = None;
+        for edge in self
+            .live_edges()
+            .into_iter()
+            .filter(|e| e.key.source == gid && e.key.kind == "Containment")
+        {
+            let beam = &self.vertices[edge.key.target - 1];
+            if beam.removed
+                || beam.key.system != group.system
+                || !matches!(
+                    beam.data["kind"].as_str(),
+                    Some("BeamInter" | "BeamHookInter" | "SmallBeamInter")
+                )
+            {
+                return Err("music_rest_actual_group_beam_required".into());
+            }
+            let median: [f64; 4] = serde_json::from_value(beam.data["median"].clone())
+                .map_err(|_| "music_rest_actual_beam_median_required")?;
+            if !median.iter().all(|v| v.is_finite()) {
+                return Err("music_rest_actual_beam_median_required".into());
+            }
+            // Main geometry includes Hook/Small; nearest candidates are full Beam only.
+            if main.is_none_or(|old: [f64; 4]| old[2] - old[0] < median[2] - median[0]) {
+                main = Some(median);
+            }
+        }
+        Ok(main)
     }
     pub(crate) fn rest_chord_beams(&mut self, key: Key) -> Result<Arc<Vec<usize>>, String> {
         let id = self.endpoint(key)?;

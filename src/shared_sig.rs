@@ -3182,3 +3182,5 @@ mod beam_ensemble_tests {
         }
     }
 }
+
+pub(crate) use chord_cache::ChordRead;

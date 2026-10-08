@@ -33,3 +33,11 @@ Rectangle intersection additionally translates Area.intersects and
 Order1.accumulateCrossings from those already-retained OpenJDK sources.
 Its line-crossing interval parity uses bounded sorted endpoint pairs.
 The same GPL-2.0-only WITH Classpath-exception-2.0 license applies.
+
+Polygon rectangle lookup additionally translates java.awt.Polygon.intersects
+and sun.awt.geom.Crossings.accumulateLine (EvenOdd), OpenJDK jdk-25+36.
+Copyright (c) 1995, 2021, Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.
+The same GPL-2.0-only WITH Classpath-exception-2.0 license and retained exception
+apply. Source snapshots are upstream/Polygon.java and upstream/Crossings.java;
+https://github.com/openjdk/jdk/tree/jdk-25%2B36/src/java.desktop/share/classes

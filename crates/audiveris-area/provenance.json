@@ -6,7 +6,7 @@
   "runtime_comparison": "official Audiveris5.11.0 Linux runtime Java25.0.3, independently retained control hashes in evidence/beam-prolog-review/provenance.json",
   "files": {
     "LICENSE": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
-    "NOTICE": "2670109fbcef6f7fe2952c2028acd0eae09da6330a35fa156045828081fa7765",
+    "NOTICE": "71a8ab49aa594bc04c44a917e7fe4f7886f45ee626883dcbcdb0997cb073279f",
     "upstream/Curve.java": "578c74681f643fb72eb95ef45d08a6eeb79d9a1f22dfdb6c1ec4c1a543ca2d15",
     "upstream/Order1.java": "a8af7312e94cf39d6f3718b5ef6d1dfed274c59def521b5e8168cc3c30a9e266",
     "upstream/Order2.java": "e9b9e9526e76b1b22cab97e4e3bfa73f89c8c26a8f0c244342ce87cc0bdc045d",
@@ -19,7 +19,9 @@
     "upstream/hypot-vectors.txt": "7678f839d94fb28837f9fadbe25d31a2768994e35776422fc8dcb9723ee446ec",
     "upstream/Area.java": "128fbd86d42f462acf3e011458450381ef70f826f3e34877746e1166ff0afe91",
     "upstream/Rectangle2D.java": "9efff49d8bbd1cf50cd3d789aee3a691f103dfbfc93ed873d12fd6c539885ab1",
-    "upstream/RectangularShape.java": "cea8e5ca4c4dc889378f1fae5e6ea978f4aa871e592d4ddc25c735b44e1b741a"
+    "upstream/RectangularShape.java": "cea8e5ca4c4dc889378f1fae5e6ea978f4aa871e592d4ddc25c735b44e1b741a",
+    "upstream/Polygon.java": "a1ba57b487b86502145146b8a619a109aefd82bf7501e3b4747bc6c5121fd059",
+    "upstream/Crossings.java": "ee7720c250da75a654171f2703d051386c4acb43314a5a0c3ec0cc8c9b95af75"
   },
   "fdlibm_hypot": {
     "source": "already-local jdk-21.0.12.1+1/lib/src.zip!java.base/java/lang/FdLibm.java",
@@ -55,5 +57,17 @@
       "max_y_bands": 1024,
       "unsupported_branch": "fail before original large-operation intermediate-consumption branch"
     }
+  },
+  "polygon_rectangle_lookup": {
+    "source": "OpenJDK jdk-25+36 primary raw java.desktop sources, independently downloaded to /tmp then retained under upstream/",
+    "urls": [
+      "https://raw.githubusercontent.com/openjdk/jdk/jdk-25%2B36/src/java.desktop/share/classes/java/awt/Polygon.java",
+      "https://raw.githubusercontent.com/openjdk/jdk/jdk-25%2B36/src/java.desktop/share/classes/sun/awt/geom/Crossings.java"
+    ],
+    "scope": "Polygon.intersects bounding reject and Crossings.accumulateLine EvenOdd intervals; 128 integer points, \u00b116000000 coordinates; preserves strict contact and self-overlap cancellation",
+    "native_source_sha256": "de258ae2cc58a8ea9f5ef88a6726f4db9cdc0231812fc9de631d9d68d2404dcb",
+    "original_rectangle_samples": 500,
+    "oracle": "official Audiveris pinned Java25 runtime via BeamRestPolygonProbe; fixtures/official-beam-rest-polygon/provenance.json",
+    "license": "GPL-2.0-only WITH Classpath-exception-2.0"
   }
 }

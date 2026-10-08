@@ -99,6 +99,24 @@ impl Graph {
         }
         Ok(())
     }
+    #[cfg(test)]
+    pub(crate) fn declare_chord_geometry(
+        &mut self,
+        key: Key,
+        bounds: [i64; 4],
+        head: [i64; 2],
+        tail: [i64; 2],
+    ) -> Result<(), String> {
+        let id = self.endpoint(key)?;
+        let cache = self.vertices[id - 1]
+            .chord_cache
+            .as_mut()
+            .ok_or("retained_chord_cache_owner_required")?;
+        cache.bounds = Some(bounds);
+        cache.head = Some(head);
+        cache.tail = Some(tail);
+        Ok(())
+    }
     pub(crate) fn retained_chord_getters(&mut self, key: Key) -> Result<ChordRead, String> {
         let id = self.endpoint(key)?;
         self.read_retained_chord(id)

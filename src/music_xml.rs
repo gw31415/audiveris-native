@@ -4,6 +4,7 @@
 //! AbstractChordInter.getEndTime, Page.numberMeasures/simpleDurationOf and
 //! PartwiseBuilder note/attribute ordering guide this explicitly bounded path.
 pub(crate) mod beam_rest;
+mod beam_rest_lookup;
 #[cfg(test)]
 mod selected_cli_tests;
 pub(crate) mod stack_rhythm;

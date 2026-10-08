@@ -504,3 +504,6 @@ mod tests {
 
 mod linear;
 pub use linear::LinearArea;
+
+mod polygon;
+pub use polygon::polygon_intersects_rect;

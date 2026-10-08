@@ -1749,3 +1749,17 @@ source precision. Selected success/later-failure/retry retains Staff/Curve refs.
 Actual plain lookup polygons/competing callbacks, mutable Staff/controller
 lifecycle, full clear/detect and implicit tuples remain pending; full/public
 flags stay false. See evidence/musicxml-staff-midline.
+
+### Actual cached-Chord polygon lookup geometry
+
+Explicit actual-group lookup geometry now reads held Chord head/tail/bounds and
+actual persistent Staff/Curve identity. Original middle-line extension, opposite
+direction rounded intersections, strict x overlap and even-odd Polygon rectangle
+contact match560 original private lookup decisions plus500 boundary controls.
+Main median includes Hook/Small with first equal-width ownership; nearest remains
+full Beam only. Cached Rest/Voice/Slot refs and clocks persist; a missing late
+actual member refuses transactionally and retries on the same owners. Automatic
+Stem5px extent discrepancy stays recorded separately without coercion. Competing
+manual removal callbacks/fresh addition, full clear/detect/implicit tuples, mutable
+Staff/Rest and full nonUI remain pending, with all full/public flags false. See
+evidence/musicxml-beam-rest-polygon.

@@ -350,7 +350,7 @@ pub(crate) fn linked_rest_ids(
     Ok(all)
 }
 
-fn measure_groups(
+pub(super) fn measure_groups(
     graph: &mut crate::shared_sig::Graph,
     measure: &crate::music_measures::Measure,
     chords: &[crate::music_measures::Chord],
@@ -391,7 +391,7 @@ fn measure_groups(
     Ok(groups)
 }
 
-fn validate_measure_chord(
+pub(super) fn validate_measure_chord(
     graph: &crate::shared_sig::Graph,
     measure: &crate::music_measures::Measure,
     chord: &crate::music_measures::Chord,

@@ -806,3 +806,5 @@ mod beam_rest_nearest_tests;
 mod beam_rest_plain_tests;
 mod selected_rhythm_tests;
 mod staff_midline_tests;
+
+mod beam_rest_polygon_tests;
