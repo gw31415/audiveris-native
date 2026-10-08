@@ -1664,3 +1664,15 @@ validation failure. Prior admitted dot correction evidence survives an explicit
 selected pass. Existing Image/correction/fine-grid guards and all global/full
 nonUI flags remain unchanged. See evidence/musicxml-selected-cli-rhythm; next is
 original pre-reset BeamRest clear/detect preparation and implicit tuplet passes.
+
+### Pre-reset BeamRest clear and actual RestChord cache lifetime
+
+An explicit actual-measure clear backend now removes automatic BeamRest edges
+and retains manual registration identity without resetting rhythm clocks or
+creating Voices. RestChord beam-list cache objects survive clear and legitimate
+Measure reset, and change only on actual cache invalidation, matching six
+original controls/30 boundaries. A later typed endpoint failure rolls back staged
+removal with actual Chords/Slots/Voice clocks and cache identities intact. This
+backend stays separate from normal rhythm until BeamGroup interleaved-rest
+detection is compared; implicit tuplets, generalized controller/tasks and the
+remaining nonUI ledger are pending. See evidence/musicxml-beam-rest-clear.

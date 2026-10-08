@@ -799,4 +799,5 @@ mod retired_beam_tests;
 
 mod reset_rhythm_tests;
 
+mod beam_rest_clear_tests;
 mod selected_rhythm_tests;

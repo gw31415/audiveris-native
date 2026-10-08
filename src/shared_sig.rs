@@ -7,6 +7,7 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+mod beam_rest;
 mod book_state;
 mod chord_cache;
 pub(crate) mod chord_tasks;
@@ -343,6 +344,7 @@ struct Vertex {
     voice_owner: Option<std::sync::Arc<()>>,
     slot_owner: Option<std::sync::Arc<()>>,
     chord_cache: Option<chord_cache::ChordCache>,
+    rest_beams: Option<std::sync::Arc<Vec<usize>>>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct EdgeKey {
@@ -426,6 +428,7 @@ impl Graph {
                 voice_owner: None,
                 slot_owner: None,
                 chord_cache: None,
+                rest_beams: None,
             });
             id
         };
@@ -471,6 +474,7 @@ impl Graph {
                 None
             },
             chord_cache: old.chord_cache.clone(),
+            rest_beams: old.rest_beams.clone(),
         };
         if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             self.add_dot_to_measure(id)?;
@@ -1065,6 +1069,7 @@ impl Graph {
             .filter(|id| !self.vertices[*id - 1].removed && !self.vertices[*id - 1].removing)
             .collect::<Vec<_>>()
         {
+            self.vertices[id - 1].rest_beams = None;
             if self.vertices[id - 1].chord_cache.is_some() {
                 self.vertices[id - 1].chord_cache = Some(chord_cache::ChordCache::default());
             }

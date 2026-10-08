@@ -77,7 +77,7 @@ pub(super) fn measure_state(
     chords.sort_by_key(|c| (c.bounds[0], c.bounds[1]));
     let rows=chords.iter().map(|ch|{
         let node=snap["inters"].as_array().unwrap().iter().find(|n|n["id"]==ch.id).unwrap();
-        let baseline=refs.iter().filter(|v|v.measure==mi).take(2).flat_map(|v|v.slots.iter()).find(|(_,s)|s.chord_id==ch.id&&!s.continuing).map(|(id,_)|json!(id)).unwrap();
+        let baseline=refs.iter().filter(|v|v.measure==mi).take(2).flat_map(|v|v.slots.iter()).find(|(_,s)|s.chord_id==ch.id&&!s.continuing).map(|(id,_)|json!(id)).unwrap_or(Value::Null);
         let v=graph.chord_voice_owner(ch.key,&owner.voices).unwrap();
         json!({"label":labels[&ch.id],"registered":true,"same_measure":ch.measure==mi,"manual":node["manual"]==true,
             "members":ch.members.iter().map(|n|labels[&(n["id"].as_u64().unwrap() as usize)].clone()).collect::<Vec<_>>(),
