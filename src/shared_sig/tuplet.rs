@@ -16,6 +16,33 @@ pub(crate) struct TupletRemovalObservation {
 }
 
 impl Graph {
+    pub(crate) fn first_chord_tuplet(&self, key: Key) -> Result<Option<Key>, String> {
+        let id = self.endpoint(key)?;
+        let chord = &self.vertices[id - 1];
+        if key.phase != Phase::Chord
+            || !matches!(
+                chord.data["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            )
+        {
+            return Err("music_actual_tuplet_chord_required".into());
+        }
+        for eid in self.incident_edges(id) {
+            let edge = &self.edges[eid - 1];
+            if edge.key.kind == "ChordTupletRelation" {
+                if edge.key.source != id {
+                    return Err("music_actual_chord_tuplet_relation_required".into());
+                }
+                let tuplet = self.vertices[edge.key.target - 1].key;
+                if tuplet.system != key.system {
+                    return Err("music_actual_chord_tuplet_relation_required".into());
+                }
+                self.tuplet_status(tuplet)?;
+                return Ok(Some(tuplet));
+            }
+        }
+        Ok(None)
+    }
     pub(crate) fn tuplet_chords(&self, key: Key) -> Result<Vec<Key>, String> {
         self.tuplet_status(key)?;
         let id = self.endpoint(key)?;

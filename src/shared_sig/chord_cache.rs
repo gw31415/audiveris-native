@@ -25,6 +25,14 @@ pub(crate) struct ChordRead {
     pub tail: Option<[i64; 2]>,
 }
 impl Graph {
+    #[cfg(test)]
+    pub(crate) fn invalidate_owned_head_chord_cache(&mut self, key: Key) -> Result<(), String> {
+        let id = self.endpoint(key)?;
+        if key.phase != Phase::Chord || self.vertices[id - 1].data["kind"] != "HeadChordInter" {
+            return Err("music_actual_tuplet_chord_required".into());
+        }
+        self.invalidate_note_chords(&std::collections::BTreeSet::from([id]))
+    }
     pub(crate) fn retained_or_live_chord_bounds(&self, key: Key) -> Result<[i64; 4], String> {
         let id = self.endpoint(key)?;
         let vertex = &self.vertices[id - 1];

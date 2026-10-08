@@ -1822,3 +1822,16 @@ native keeps its exact Fraction value. Actual TupletGenerator object reuse/group
 extension/split, fresh generation, second pass/merge and full ledger remain next.
 Full/public completion false; work189/original task/unobtainedce retained.
 See evidence/musicxml-selected-preparation.
+
+Actual Tuplet reuse phase and borrowed group extension/first-pivot split now
+compare22 pinned short/excess scenarios. Supplied/incident live encounter returns
+actual explicit/manual/Stack-only Tuplet immediately, including before a later
+null. Original GraphListener records zero graph changes; old Voice/Slot and ending/
+excess clocks remain. Beam members alone are deduplicated, initial/lone duplicates
+remain, stable integer centers and one split preserve actual group refs. Late
+actual physical Chord mismatch rolls back staged getters for same-owner retry.
+Nine unique targets, fmt/clippy/build, existing63+correction8 and exact7/64 XML
+bytes/XSD pass. None is the existing-object selector phase only; font dimensions/
+bounds, fresh implicit callbacks/containers/relations, generation inspection/force/
+merge/second pass and full nonUI ledger remain next. Full/public flags false;
+work189/original task/unobtainedce unchanged. See evidence/musicxml-tuplet-reuse.

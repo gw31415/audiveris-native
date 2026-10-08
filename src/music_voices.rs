@@ -935,7 +935,7 @@ pub(crate) fn beam_groups(
 /// BeamGroup.getChords does not read getVoice. Slot geometry may be retrieved
 /// while other measures still have their retained Voices and clocks.
 pub(crate) fn beam_group_chords(graph: &crate::shared_sig::Graph) -> Result<Value, String> {
-    collect_beam_group_chords(graph, true)
+    collect_beam_group_chords(graph, true, None)
 }
 
 pub(crate) fn beam_group_chords_by_member(
@@ -943,12 +943,20 @@ pub(crate) fn beam_group_chords_by_member(
 ) -> Result<Value, String> {
     // getMeasures collects before the group left sort; stable measure ties
     // would otherwise lose the original beam/member encounter order.
-    collect_beam_group_chords(graph, false)
+    collect_beam_group_chords(graph, false, None)
+}
+
+pub(crate) fn beam_group_chords_for(
+    graph: &crate::shared_sig::Graph,
+    group: usize,
+) -> Result<Value, String> {
+    collect_beam_group_chords(graph, true, Some(group))
 }
 
 fn collect_beam_group_chords(
     graph: &crate::shared_sig::Graph,
     sort_group_by_left: bool,
+    selected_group: Option<usize>,
 ) -> Result<Value, String> {
     let snapshot = graph.snapshot();
     let nodes: std::collections::BTreeMap<_, _> = snapshot["inters"]
@@ -958,20 +966,13 @@ fn collect_beam_group_chords(
         .map(|n| (n["id"].as_u64().unwrap() as usize, n))
         .collect();
     let mut bounds = BTreeMap::new();
-    for (&id, node) in &nodes {
-        if matches!(
-            node["kind"].as_str(),
-            Some("HeadChordInter" | "RestChordInter")
-        ) {
-            let key = serde_json::from_value(node["origin"].clone())
-                .map_err(|_| "music_group_chord_origin_required")?;
-            bounds.insert(id, graph.retained_or_live_chord_bounds(key)?);
-        }
-    }
     let edges = snapshot["relations"].as_array().unwrap();
     let mut rows = Vec::new();
     for group in nodes.values().filter(|n| n["kind"] == "BeamGroupInter") {
         let gid = group["id"].as_u64().unwrap() as usize;
+        if selected_group.is_some_and(|id| id != gid) {
+            continue;
+        }
         let system = group["origin"]["system"].as_u64().unwrap();
         let beams = edges
             .iter()
@@ -1045,6 +1046,11 @@ fn collect_beam_group_chords(
                     let chord = nodes.get(&id).ok_or("music_group_live_chord_required")?;
                     if chord["kind"] != kind || chord["origin"]["system"] != system {
                         return Err("music_group_typed_owned_chord_required".into());
+                    }
+                    if let std::collections::btree_map::Entry::Vacant(entry) = bounds.entry(id) {
+                        let key = serde_json::from_value(chord["origin"].clone())
+                            .map_err(|_| "music_group_chord_origin_required")?;
+                        entry.insert(graph.retained_or_live_chord_bounds(key)?);
                     }
                     if beam_seen.insert(id) {
                         beam_chords.push(id);
