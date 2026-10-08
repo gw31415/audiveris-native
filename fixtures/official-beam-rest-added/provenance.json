@@ -1,0 +1,50 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "d1d0a10a7ab991e1d6d4f090519698949b3a96f55937a14daa6245daf26772ac",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "d15a1af7003f2fa85b76c97da70bc01be1a227551f8f256518c37b8e3927c918",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/tmp/beam-rest-added-traced-original-v2/compile-signatures:/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/beam-rest-added-traced-original-v2/classes",
+    "/workspace/audiveris-native/scripts/java/BeamRestAddedProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/beam-rest-added-traced-original-v2/home",
+    "-Djava.util.prefs.userRoot=/tmp/beam-rest-added-traced-original-v2/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/beam-rest-added-traced-original-v2/classes",
+    "BeamRestAddedProbe",
+    "/tmp/retired-beam-book/book/parallel-beam.omr",
+    "/tmp/beam-rest-added-traced-original-v2/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "76213d366f07a30c2f68d41b1b2720fdad82427d6174d652c3af0037180a4558",
+  "compile_only_signatures": {
+    "compile-signatures/org/audiveris/omr/sig/inter/Inter.java": "adbf510b173fac8dc3cfb4341f0d6619bf093b3e3f371b3715390c7755d2b737",
+    "compile-signatures/org/audiveris/omr/sig/relation/Relation.java": "f672cfcce880d2b21d51c2d0767c44eee99d1f5ac405137d60c283f97d601879",
+    "compile-signatures/org/audiveris/omr/sig/relation/BeamRestRelation.java": "636d0351eef55addf13818e06397f4a091b74534b7af28ae4f0d38d0daf322ab"
+  },
+  "compile_signatures_on_runtime_classpath": false,
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "4a18bb83cdd3539ca48f1f51e40659a8ae509e2a0ab00f2134c7bc9c77794c94",
+  "retained_observed_sha256": "6d0b39d4ff9f3b195b6b60561bf8b016042167a8fd5466e9179f1aca8f4fef08",
+  "retained_encoding": "lossless owned_sets and relation_sets indexes",
+  "cases": 2,
+  "states": 24,
+  "callbacks": 28
+}

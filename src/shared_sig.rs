@@ -8,6 +8,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod beam_rest;
+#[cfg(test)]
+pub(crate) use beam_rest::CallbackObservation;
 mod book_state;
 mod chord_cache;
 pub(crate) mod chord_tasks;
@@ -371,6 +373,8 @@ pub struct Graph {
     edges: Vec<Edge>,
     edge_keys: BTreeMap<EdgeKey, usize>,
     edge_clock: u64,
+    #[cfg(test)]
+    beam_rest_callbacks: Option<Vec<beam_rest::CallbackObservation>>,
     dot_removals: Vec<Value>,
     edit_publications: Vec<Value>,
     edit_impacts: Vec<Value>,

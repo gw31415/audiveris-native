@@ -3,6 +3,76 @@ use crate::music_measures::{ChordKind, OwnedMusic};
 use std::collections::BTreeMap;
 
 impl OwnedMusic {
+    /// Stage original addition callbacks on real measure/group/rest owners.
+    /// Full detection still needs plain lookup and the original preparation pass.
+    pub fn add_interleaved_rests(
+        &mut self,
+        measure_number: usize,
+        links: &[(crate::shared_sig::Key, crate::shared_sig::Key, bool)],
+    ) -> Result<Vec<usize>, String> {
+        let mi = measure_number
+            .checked_sub(1)
+            .filter(|mi| *mi < self.measures.len())
+            .ok_or("music_rest_actual_measure_required")?;
+        let mut graph = self.owner.graph.clone();
+        let groups = measure_groups(&mut graph, &self.measures[mi], &self.chords, mi)?;
+        let mut ids = Vec::new();
+        for &(beam, rest, manual) in links {
+            let snapshot = graph.snapshot();
+            let bid = graph.id(beam).ok_or("music_rest_actual_beam_required")?;
+            if !snapshot["relations"].as_array().unwrap().iter().any(|e| {
+                e["kind"] == "Containment"
+                    && e["target"] == bid
+                    && groups.iter().any(|g| e["source"] == *g)
+            }) {
+                return Err("music_rest_actual_measure_group_required".into());
+            }
+            let chord = self
+                .chords
+                .iter()
+                .find(|c| c.key == rest && c.kind == ChordKind::Rest && c.measure == mi)
+                .ok_or("music_rest_actual_measure_chord_required")?;
+            let mut members = Vec::new();
+            for member in &chord.members {
+                let key: crate::shared_sig::Key = serde_json::from_value(member["origin"].clone())
+                    .map_err(|_| "music_rest_actual_note_required")?;
+                let note_id = graph.id(key).ok_or("music_rest_actual_note_required")?;
+                let note = snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .find(|n| n["id"] == note_id)
+                    .ok_or("music_rest_actual_note_required")?;
+                if note["kind"] != "RestInter"
+                    || member["id"] != note_id
+                    || !snapshot["relations"].as_array().unwrap().iter().any(|e| {
+                        e["kind"] == "Containment"
+                            && e["source"] == chord.id
+                            && e["target"] == note_id
+                    })
+                {
+                    return Err("music_rest_actual_note_required".into());
+                }
+                let bounds: [i32; 4] = serde_json::from_value(note["bounds"].clone())
+                    .map_err(|_| "music_rest_actual_note_bounds_required")?;
+                let y = bounds[1]
+                    .checked_add(bounds[3] / 2)
+                    .ok_or("music_rest_actual_note_bounds_required")?;
+                members.push((key, y));
+            }
+            members.sort_by_key(|(_, y)| std::cmp::Reverse(*y));
+            let key = members.first().ok_or("music_rest_actual_note_required")?.0;
+            ids.push(graph.add_owned_beam_rest(
+                beam,
+                key,
+                manual,
+                self.owner.sheet_skew,
+                self.owner.interline,
+            )?);
+        }
+        self.owner.graph = graph;
+        Ok(ids)
+    }
     /// Query a real member group using the sheet geometry retained by the image
     /// owner. Full detection still requires the original add/lookup passes.
     pub fn nearest_interleaved_rest_beam(

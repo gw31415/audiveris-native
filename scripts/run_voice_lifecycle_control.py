@@ -17,7 +17,7 @@ parser.add_argument("--oracle-home", type=Path, required=True)
 parser.add_argument("--book", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--fresh-beams", type=Path, help="Nearest probe only: hash-recorded original in-memory BEAMS measurement")
-parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe", "BeamRestNearestProbe"),
+parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe"),
                     default="VoiceLifecycleProbe")
 args = parser.parse_args()
 if args.fresh_beams is not None and args.probe != "BeamRestNearestProbe":
@@ -34,9 +34,30 @@ classpath = str(lib / "app/*") + os.pathsep + str(output / "classes")
 compile_args = [str(compiler), "--release", "21", "-cp", str(lib / "app/*"),
                 "-d", str(output / "classes"), str(source),
                 str(oracle.ROOT / "scripts/java/HeadStemPreLinkProbe.java")]
+signature_sources = []
+if args.probe == "BeamRestAddedProbe":
+    # The existing compiler is 21 and the pinned runtime/JAR is 25. These
+    # signatures only let javac emit an override; they are absent at runtime,
+    # where the subclass invokes the untouched pinned BeamRestRelation.added.
+    signatures = output / "compile-signatures"
+    signatures.mkdir()
+    for name, body in {
+        "sig/inter/Inter": "public interface Inter {}",
+        "sig/relation/Relation": "public abstract class Relation {}",
+        "sig/relation/BeamRestRelation": "public class BeamRestRelation extends Relation { public void added(org.jgrapht.event.GraphEdgeChangeEvent<org.audiveris.omr.sig.inter.Inter,Relation> event) {} }",
+    }.items():
+        source_file = signatures / ("org/audiveris/omr/" + name + ".java")
+        source_file.parent.mkdir(parents=True, exist_ok=True)
+        source_file.write_text("package org.audiveris.omr." + name.rsplit("/", 1)[0].replace("/", ".") + ";\n" + body + "\n")
+        signature_sources.append(source_file)
+    with (output / "signatures-compile.log").open("w") as log:
+        subprocess.run([str(compiler), "--release", "21", "-cp", str(lib / "app/*"),
+                        "-d", str(signatures), *map(str, signature_sources)],
+                       stdout=log, stderr=subprocess.STDOUT, check=True)
+    compile_args[compile_args.index("-cp") + 1] = str(signatures) + os.pathsep + str(lib / "app/*")
 if args.probe != "VoiceLifecycleProbe":
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java"))
-if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe"):
+if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/BeamRestClearProbe.java"))
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java"))
@@ -68,9 +89,12 @@ record = {
     "exit_code": result.returncode,
     "console_sha256": oracle.sha(output / "console.log"),
 }
+if signature_sources:
+    record["compile_only_signatures"] = {str(path.relative_to(output)): oracle.sha(path) for path in signature_sources}
+    record["compile_signatures_on_runtime_classpath"] = False
 if args.probe != "VoiceLifecycleProbe":
     record["lifecycle_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java")
-if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe"):
+if args.probe in ("BeamRestLinkedProbe", "BeamRestNearestProbe", "BeamRestAddedProbe"):
     record["clear_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/BeamRestClearProbe.java")
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     record["tie_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java")

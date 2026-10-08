@@ -1705,3 +1705,17 @@ the saved book's JAXB one-decimal boundary is explicitly separate, without
 rounding the actual native owner. BeamRest addition callbacks and plain lookup
 remain next before full clear/detect/implicit-tuplet preparation can join normal
 rhythm. All full/public flags remain false. See evidence/musicxml-beam-rest-nearest.
+
+### Actual BeamRest addition before rhythm reset
+
+The explicit actual-measure backend now registers fresh full-beam/rest relations
+and performs original addition callbacks without changing Chord/Voice/Slot clocks
+or the retained Rest beam-list object. Parallel additions preserve the old manual
+relation identity. Two original short/excess controls compare 24 states and 28
+callback entry/exit observations, including ties-even dy, strict Scale pixel gap
+boundaries, Skew and live side-support abnormal transitions. A later missing
+actual member rolls back the entire staged batch, retaining physical owners,
+manual flags, expected/end/excess and unused registration identity. Clear/reset/
+invalidation boundaries remain distinct. Plain lookup, complete clear/detect,
+implicit tuplets and the full nonUI ledger remain pending, with admission and
+completion flags false. See evidence/musicxml-beam-rest-added.

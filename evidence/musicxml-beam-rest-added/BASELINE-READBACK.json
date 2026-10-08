@@ -1,0 +1,10 @@
+{
+  "commit": "5c8db21072b3519bf411e9760098d97a4c86fa35",
+  "tree": "9e5cab65db89886ae8ce62b7429011900949e9d3",
+  "normal_main_push": true,
+  "remote_commit_equal": true,
+  "fetched_commit_equal": true,
+  "fetched_tree_equal": true,
+  "clean": true,
+  "preserved_work": true
+}
