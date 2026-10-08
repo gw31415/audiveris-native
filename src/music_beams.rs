@@ -196,7 +196,7 @@ pub(crate) fn clean_head_supports(graph: &mut Graph) -> Result<Vec<usize>, Strin
 /// context. The certified Java2D AA-off normalized one-pixel contour branch
 /// is rectangular after contour normalization. Wider strokes and slopes that
 /// cross normalized pixel rows stay pending.
-fn rectangle_rows(b: [f64; 4], margin: f32) -> Result<Vec<[i64; 3]>, String> {
+pub(crate) fn rectangle_rows(b: [f64; 4], margin: f32) -> Result<Vec<[i64; 3]>, String> {
     if !(1.0..1.5).contains(&margin)
         || b.iter().any(|v| !v.is_finite() || v.abs() > 4_000_000.)
         || b[0] >= b[2]

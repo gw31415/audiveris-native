@@ -81,6 +81,39 @@ fn erase_rectangle(im: &mut GrayImage, bounds: [i64; 4]) {
         }
     }
 }
+fn vertical_area_rows(n: &Value, interline: usize) -> Result<Vec<[i64; 3]>, String> {
+    if !matches!(
+        n["kind"].as_str(),
+        Some("BarlineInter" | "BarConnectorInter")
+    ) {
+        return Err("music_vertical_cleaner_body_required".into());
+    }
+    let median: [f64; 4] = serde_json::from_value(n["median"].clone())
+        .map_err(|_| "music_vertical_cleaner_median_required")?;
+    let width = n["width"]
+        .as_f64()
+        .filter(|w| w.is_finite() && *w > 0.)
+        .ok_or("music_vertical_cleaner_width_required")?;
+    let pixel = |v: f64| (v + 0.25).floor();
+    // A ribbon's bounding box does not preserve a sloping contour's pixels.
+    // Admit the original thin stroke only when its normalized sides coincide.
+    if median.iter().any(|v| !v.is_finite())
+        || median[1] >= median[3]
+        || pixel(median[0] - width / 2.) != pixel(median[2] - width / 2.)
+        || pixel(median[0] + width / 2.) != pixel(median[2] + width / 2.)
+    {
+        return Err("music_vertical_cleaner_sloping_raster_pending".into());
+    }
+    crate::music_beams::rectangle_rows(
+        [
+            median[0] - width / 2.,
+            median[1],
+            median[0] + width / 2.,
+            median[3],
+        ],
+        (interline as f64 * 0.1) as f32,
+    )
+}
 fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
     let o = &m.owner;
     let mut im = GrayImage::from_pgm(&o.upstream_output_pixels)?;
@@ -286,17 +319,9 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                 }
                 glyph_erase(&mut im, &n["glyph"])?;
             }
-            "BarlineInter" => {
-                if n["median"][0] != n["median"][2] {
-                    return Err("music_cleaner_sloping_barline_raster_pending".into());
-                }
-                let b: [i64; 4] = serde_json::from_value(n["bounds"].clone())
-                    .map_err(|_| "music_bar_bounds_required")?;
-                // Observed axis-aligned raster from the saved prototype. Full
-                // BasicStroke cap/join/area parity is deliberately not claimed.
-                let d = (o.interline as f64 * 0.1).round_ties_even() as i64;
-                for y in b[1] - d..b[1] + b[3] + d {
-                    for x in b[0] - d..b[0] + b[2] + d {
+            "BarlineInter" | "BarConnectorInter" => {
+                for [y, left, right] in vertical_area_rows(n, o.interline)? {
+                    for x in left..right {
                         white(&mut im, x, y);
                     }
                 }
@@ -850,3 +875,8 @@ mod cluster_boundary {
 mod header_tests;
 #[cfg(test)]
 pub(crate) use header_tests::assert_real_headers;
+
+#[cfg(test)]
+mod area_tests;
+#[cfg(test)]
+pub(crate) use area_tests::assert_real_vertical_areas;

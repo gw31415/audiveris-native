@@ -2133,3 +2133,13 @@ along with full real-image XML and independent musical quality acceptance.
 Full unchanged image CLI v9 passes the curved header and reaches
 music_cleaner_beam_ledger_other_shapes_pending in172.82 seconds, with no XML.
 The next unit is actual physical GRID Inter area/glyph erasure; quality stays false.
+
+Actual SYMBOLS structural Inter erasure now uses retained vertical median/ribbon
+width instead of an inflated Barline bounding box. Original actual visitor
+comparison matches all21 Barline and9 null-glyph BarConnector rasters, reading
+the same canonical graph bodies and preserving graph/relations/clocks. A preliminary Brace
+branch was closed after actual CLI exposed missing canonical GRID glyph ownership.
+Retaining that constructor-produced physical registry is next. Evidence real-symbol-areas. Only the existing
+normalized thin rectangle contour branch is admitted; general slopes and real
+SYMBOLS ensemble/weak-optional order remain subsequent recognition work.
+Real image MusicXML and musical quality acceptance remain false.

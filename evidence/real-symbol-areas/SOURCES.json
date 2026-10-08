@@ -1,0 +1,20 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "sources": [
+    {
+      "path": "sheet/PageCleaner.java",
+      "sha256": "f787d2059b81aeaa96427b35b8168dad4dc81b81da848e7d2c586a608a6f0d14",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/PageCleaner.java"
+    },
+    {
+      "path": "sheet/symbol/SymbolsFilter.java",
+      "sha256": "700b1b72b78beb4b616c56428978b666c056c664488ae2cd097c641a415ba712",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/symbol/SymbolsFilter.java"
+    },
+    {
+      "path": "sig/inter/AbstractVerticalInter.java",
+      "sha256": "39002b48db8b6f37436276b17ee9aada0db410a0cd1823b91a02906dce45360c",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractVerticalInter.java"
+    }
+  ]
+}

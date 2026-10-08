@@ -47,7 +47,9 @@ STEMSの既存経路を越え、MEASURESの保持済みgrouped barlineを原版1
 実ライブラリ経路はCHORDSの67 Chord/94 Head、全member/音高/Staff/Part/Measure所属、
 Stem/Chord/head/tail幾何で原版に一致した。原版標準のREDUCTION Head-end refineも
 元glyph/cache identityを保って接続した。実Staff曲線によるヘッダー消去も6 Staffの原版矩形/ピクセルと比較して接続済み。
-実画像CLI v9は `music_cleaner_beam_ledger_other_shapes_pending` に172.82秒で到達した。
+実Barline/BarConnector30個の消去ラスタも原版と比較済み。
+実画像CLI v10ではBraceへの未接続glyph参照が `invalid_beam_canonical_bounds` として
+判明し、その試験分岐を閉じた。次はGRID constructorから実glyph registryを保持する。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
