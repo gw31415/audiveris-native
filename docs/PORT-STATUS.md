@@ -2072,3 +2072,13 @@ bodies and maps. Three declared shared/duplicate/retired-reference frames preser
 first body index, differing map indices, last Staff-only removal and body identity.
 Evidence real-ledger-memberships. The ordinary multi-Staff ledger guard is still
 pending, alongside later real image recognition/rhythm/output/quality acceptance.
+
+Ordinary multi-Staff Ledger pruning now uses retained actual Staff maps in original
+Staff/index/member order, including removed next-line bodies and duplicate aliases.
+Four original declared controls and fresh unchanged image HEADS comparison match26
+bodies/six Staffs/10 removals with no shared case. Late malformed Head failure keeps
+actual maps/body identities intact; selected rollback and XML/XSD regressions pass.
+Evidence real-ledger-reduction. Full An Laura passes existing STEMS foundations and
+now stops at MEASURES music_single_barlines_head_only_scope_required. Grouped GRID
+barlines/retained multi-Staff piano Part and later recognition/rhythm/output remain;
+real image quality is not accepted. Continue the revised image-quality goal.

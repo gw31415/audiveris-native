@@ -1,0 +1,61 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "7586b937bc79dbef0217386b5cd0178d23a1146b20d68e076211c6e5f1bb2f44",
+  "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "compile_commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/real-ledger-reduction-original-v1/compile-only",
+      "/tmp/real-ledger-reduction-original-v1/compile-only/Book.java",
+      "/tmp/real-ledger-reduction-original-v1/compile-only/RunClass.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-ledger-reduction-original-v1/compile-only",
+      "-d",
+      "/tmp/real-ledger-reduction-original-v1/classes",
+      "/workspace/audiveris-native/scripts/java/RealLedgerReductionImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+    ]
+  ],
+  "compile_only_signatures_on_runtime_classpath": false,
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/real-ledger-reduction-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-ledger-reduction-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-ledger-reduction-original-v1/prefs",
+    "-Duser.home=/tmp/real-ledger-reduction-original-v1/home",
+    "-Dnative.probe.output=/tmp/real-ledger-reduction-original-v1/observed.json",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-ledger-reduction-original-v1/classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "RealLedgerReductionImageProbe",
+    "-output",
+    "/tmp/real-ledger-reduction-original-v1",
+    "--",
+    "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+  ],
+  "exit_code": 0,
+  "console_sha256": "b8260c53ba360deeb4b455b23aaa45d98dfcde6b7ead9b2ec93e062cc2f92ce1",
+  "native_outputs_used": false,
+  "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+  "observed_sha256": "eae88ba5b50e78d4044073a40d7a42cea4a86cc9a3289bb6f384977ab30df5c5"
+}

@@ -1,0 +1,39 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "1daa2fca9bfa4f43256048dab04864a4903ce87d9b5b0978e2e342d2e921442d",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "86b11a4614cd33c720e43ef7c62444701d4f5d4a68fb52fcc6aafd620182318e",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/ledger-reduction-original-v4/classes",
+    "/workspace/audiveris-native/scripts/java/LedgerReductionProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/ledger-reduction-original-v4/home",
+    "-Djava.util.prefs.userRoot=/tmp/ledger-reduction-original-v4/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/ledger-reduction-original-v4/classes",
+    "LedgerReductionProbe",
+    "/tmp/real-ledger-membership-original-v1/laura-gray.omr",
+    "/tmp/ledger-reduction-original-v4/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "56cd1546df09d2cbc5913e258824bef80e32bee0c7ea323965fbee3b87e4ba15",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "b502615049f38168c4129a61802142f7232e91ebeb0a3923a849aca43719a114"
+}

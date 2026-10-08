@@ -1,0 +1,736 @@
+{
+  "scope" : "original private checkLedgers on declared isolated SIG and actual three Staff objects; original maps, duplicate, distinct body/map indices, other Staff head and retired next-line references",
+  "interline" : 11,
+  "cases" : [ {
+    "name" : "orphan-chain-with-duplicate",
+    "nodes" : [ {
+      "label" : "ledger0",
+      "bounds" : [ 100, 199, 11, 2 ],
+      "index" : 1,
+      "staff_id" : 2,
+      "removed" : false
+    }, {
+      "label" : "ledger1",
+      "bounds" : [ 100, 199, 11, 2 ],
+      "index" : 2,
+      "staff_id" : 2,
+      "removed" : false
+    }, {
+      "label" : "ledger2",
+      "bounds" : [ 220, 199, 11, 2 ],
+      "index" : -1,
+      "staff_id" : 3,
+      "removed" : false
+    } ],
+    "heads" : [ ],
+    "before" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0", "ledger0" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger1" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger2" ]
+        } ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : 1,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger1",
+        "removed" : false,
+        "registered" : true,
+        "index" : 2,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger2",
+        "removed" : false,
+        "registered" : true,
+        "index" : -1,
+        "owner_staff" : 3
+      } ]
+    },
+    "shared" : 0,
+    "removed_count" : 3,
+    "after" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : true,
+        "registered" : false,
+        "index" : 1,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger1",
+        "removed" : true,
+        "registered" : false,
+        "index" : 2,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger2",
+        "removed" : true,
+        "registered" : false,
+        "index" : -1,
+        "owner_staff" : 3
+      } ]
+    },
+    "repeat_count" : 0
+  }, {
+    "name" : "head-uses-map-index-and-other-staff",
+    "nodes" : [ {
+      "label" : "ledger0",
+      "bounds" : [ 100, 199, 11, 2 ],
+      "index" : 99,
+      "staff_id" : 2,
+      "removed" : false
+    } ],
+    "heads" : [ {
+      "kind" : "HeadInter",
+      "bounds" : [ 110, 205, 8, 8 ],
+      "pitch" : 6.0,
+      "staff_id" : 3
+    } ],
+    "before" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : 99,
+        "owner_staff" : 2
+      } ]
+    },
+    "shared" : 0,
+    "removed_count" : 0,
+    "after" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : 99,
+        "owner_staff" : 2
+      } ]
+    },
+    "repeat_count" : 0
+  }, {
+    "name" : "head-boundary-contact",
+    "nodes" : [ {
+      "label" : "ledger0",
+      "bounds" : [ 100, 199, 11, 2 ],
+      "index" : 99,
+      "staff_id" : 2,
+      "removed" : false
+    } ],
+    "heads" : [ {
+      "kind" : "HeadInter",
+      "bounds" : [ 111, 205, 8, 8 ],
+      "pitch" : 6.0,
+      "staff_id" : 3
+    } ],
+    "before" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : 99,
+        "owner_staff" : 2
+      } ]
+    },
+    "shared" : 0,
+    "removed_count" : 1,
+    "after" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : true,
+        "registered" : false,
+        "index" : 99,
+        "owner_staff" : 2
+      } ]
+    },
+    "repeat_count" : 0
+  }, {
+    "name" : "retired-next-reference",
+    "nodes" : [ {
+      "label" : "ledger0",
+      "bounds" : [ 100, 199, 11, 2 ],
+      "index" : 1,
+      "staff_id" : 2,
+      "removed" : false
+    }, {
+      "label" : "ledger1",
+      "bounds" : [ 100, 199, 11, 2 ],
+      "index" : 2,
+      "staff_id" : 3,
+      "removed" : true
+    } ],
+    "heads" : [ ],
+    "before" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger1" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : 1,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger1",
+        "removed" : true,
+        "registered" : false,
+        "index" : 2,
+        "owner_staff" : 3
+      } ]
+    },
+    "shared" : 0,
+    "removed_count" : 0,
+    "after" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger0" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger1" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : 1,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger1",
+        "removed" : true,
+        "registered" : false,
+        "index" : 2,
+        "owner_staff" : 3
+      } ]
+    },
+    "repeat_count" : 0
+  } ],
+  "real_head_stage" : [ {
+    "system" : 1,
+    "before" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger0" ]
+        }, {
+          "index" : 1,
+          "members" : [ "ledger1" ]
+        } ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger2" ]
+        }, {
+          "index" : 1,
+          "members" : [ "ledger3", "ledger4", "ledger5", "ledger6" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger7", "ledger8", "ledger9" ]
+        } ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 1
+      }, {
+        "label" : "ledger1",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 1
+      }, {
+        "label" : "ledger2",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger3",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger4",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger5",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger6",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger7",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 3
+      }, {
+        "label" : "ledger8",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 3
+      }, {
+        "label" : "ledger9",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 3
+      } ]
+    },
+    "shared" : 0,
+    "removed_count" : 4,
+    "after" : {
+      "maps" : [ {
+        "staff" : 1,
+        "lines" : [ ]
+      }, {
+        "staff" : 2,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger4", "ledger5", "ledger6" ]
+        } ]
+      }, {
+        "staff" : 3,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger7", "ledger8", "ledger9" ]
+        } ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 1
+      }, {
+        "label" : "ledger1",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 1
+      }, {
+        "label" : "ledger2",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger3",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger4",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger5",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger6",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 2
+      }, {
+        "label" : "ledger7",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 3
+      }, {
+        "label" : "ledger8",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 3
+      }, {
+        "label" : "ledger9",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 3
+      } ]
+    }
+  }, {
+    "system" : 2,
+    "before" : {
+      "maps" : [ {
+        "staff" : 4,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger0", "ledger1" ]
+        }, {
+          "index" : 1,
+          "members" : [ "ledger2" ]
+        } ]
+      }, {
+        "staff" : 5,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger3" ]
+        }, {
+          "index" : 1,
+          "members" : [ "ledger4", "ledger5", "ledger6", "ledger7", "ledger8", "ledger9", "ledger10", "ledger11" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger12" ]
+        } ]
+      }, {
+        "staff" : 6,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger13", "ledger14" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger15" ]
+        } ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 4
+      }, {
+        "label" : "ledger1",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 4
+      }, {
+        "label" : "ledger2",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 4
+      }, {
+        "label" : "ledger3",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger4",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger5",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger6",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger7",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger8",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger9",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger10",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger11",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger12",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger13",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 6
+      }, {
+        "label" : "ledger14",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 6
+      }, {
+        "label" : "ledger15",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 6
+      } ]
+    },
+    "shared" : 0,
+    "removed_count" : 6,
+    "after" : {
+      "maps" : [ {
+        "staff" : 4,
+        "lines" : [ {
+          "index" : -1,
+          "members" : [ "ledger1" ]
+        } ]
+      }, {
+        "staff" : 5,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger5", "ledger6", "ledger8", "ledger9", "ledger10", "ledger11" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger12" ]
+        } ]
+      }, {
+        "staff" : 6,
+        "lines" : [ {
+          "index" : 1,
+          "members" : [ "ledger13" ]
+        }, {
+          "index" : 2,
+          "members" : [ "ledger15" ]
+        } ]
+      } ],
+      "bodies" : [ {
+        "label" : "ledger0",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 4
+      }, {
+        "label" : "ledger1",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 4
+      }, {
+        "label" : "ledger2",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 4
+      }, {
+        "label" : "ledger3",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger4",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger5",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger6",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger7",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger8",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger9",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger10",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger11",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger12",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 5
+      }, {
+        "label" : "ledger13",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 6
+      }, {
+        "label" : "ledger14",
+        "removed" : true,
+        "registered" : false,
+        "index" : null,
+        "owner_staff" : 6
+      }, {
+        "label" : "ledger15",
+        "removed" : false,
+        "registered" : true,
+        "index" : null,
+        "owner_staff" : 6
+      } ]
+    }
+  } ]
+}

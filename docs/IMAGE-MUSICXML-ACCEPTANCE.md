@@ -41,7 +41,8 @@
 
 同じ画像のnativeは複数Partのbeam周辺Staff選択を原版60地点と比較して接続した。
 実BarConnector/Braceの重なり判定も接続し、現在はその先の
-GRID整合処理も接続済みで、`music_shared_or_special_ledger_reduction_pending` に
+GRID整合と実Staff mapによる普通の複数Staff Ledger pruningも接続済み。
+STEMSの既存経路を越え、MEASURESの `music_single_barlines_head_only_scope_required` に
 到達した。XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。
 今回Linuxで原版を実行しており、新たなMac処理・再render・環境移動はしていない。
@@ -49,8 +50,9 @@ GRID整合処理も接続済みで、`music_shared_or_special_ledger_reduction_p
 ## 改訂した残工程
 
 1. 複数part/staffでのbeam周辺の実所有選択は接続済み。次の実入力切断点である
-   multi-Staff ledgerの実所属・共有補正を原Java比較で接続し、その後同じ実譜面の
-   HEADS/STEMS/MEASURES/SYMBOLS切断点を順に解消する。
+   MEASURESの保持済みGRID/grouped barlineと複数Staff piano Partを原Java比較で接続し、
+   その後同じ実譜面のSYMBOLS/rhythm/output切断点を順に解消する。実画像のLedger
+   共有補正は0件で一致し、真に共有する別入力では再所属補正を省略しない。
 2. 調号/臨時記号、複段part、和音、実音価・小節・voice・必要な記号関係を画像から保つ。
    既に移植したrhythm内部処理は、実入力が要求する順に本経路へ接続する。reportから
    所有を再構築したり、callback前に旧時計を消したりしない。
