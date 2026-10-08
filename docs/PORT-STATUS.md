@@ -1615,3 +1615,19 @@ hashes remain pinned to8ae5b66. General MeasureRhythm passes, multipart stacks,
 controller/history/PAGE/project/persistence remain pending; public/global
 flags stay false/guarded. See `evidence/musicxml-voice-page-rhythm/TRY.md` and
 `NEXT-DEPENDENCY.md`.
+
+
+One independent null-unselected-source original Page control adds three method
+boundaries. Actual next-stack rhythm constructs four fresh Voice bodies and
+four Slots, actual duration5/8 and shortages-3/8/-1/2; real Chord time/Voice/Slot
+references and old target bodies are observed before the original system
+refinement throws NullPointerException. Production2a3bed1 already agrees with
+that separate rebuild and refuses the null predecessor. Its public Page
+transaction instead preserves all pre-call actual owner/clock/manual/Slot state
+on failure; this is native atomic guard policy, not Java exception rollback
+parity. No production fix or source invention is required. Seven relevant
+native targets and fmt/clippy pass; previous XML/XSD is explicitly at2a3bed1,
+whose production code is unchanged, without duplicate execution. Full selected
+impact ordering and other nonUI dependencies remain pending and global flags
+false/guarded. See `evidence/musicxml-voice-page-null-rhythm/TRY.md` and
+`NEXT-DEPENDENCY.md`.

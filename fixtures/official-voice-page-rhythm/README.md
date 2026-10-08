@@ -13,3 +13,7 @@ refinement observations. No original/native clock erasure occurs before the
 existing callbacks. Original raw/hash/helper/book/JAR provenance is retained.
 General MeasureRhythm passes, multipart stacks and controller/history remain
 pending; these ordinary cases do not assert full PAGE or public CLI admission.
+
+The executed shared Reset observer for this acquisition is preserved at native
+Git2a3bed1:scripts/java/VoiceResetRhythmProbe.java, matching the recorded helper
+SHA. Later null-source observations do not replace this acquisition.

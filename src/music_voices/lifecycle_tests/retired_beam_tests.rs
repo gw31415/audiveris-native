@@ -58,33 +58,41 @@ pub(super) fn source_state_with_names(
     refs: &[Voice],
     names: &[&str],
 ) -> Value {
+    measure_state(owner, labels, refs, names, 0)
+}
+pub(super) fn measure_state(
+    owner: &OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    refs: &[Voice],
+    names: &[&str],
+    mi: usize,
+) -> Value {
     let graph = &owner.owner.graph;
     let snap = graph.snapshot();
     let mut chords = owner
         .chords
         .iter()
-        .filter(|c| c.measure == 0)
+        .filter(|c| c.measure == mi)
         .collect::<Vec<_>>();
     chords.sort_by_key(|c| (c.bounds[0], c.bounds[1]));
     let rows=chords.iter().map(|ch|{
         let node=snap["inters"].as_array().unwrap().iter().find(|n|n["id"]==ch.id).unwrap();
-        let baseline=refs[..2].iter().flat_map(|v|v.slots.iter()).find(|(_,s)|s.chord_id==ch.id&&!s.continuing).map(|(id,_)|json!(id)).unwrap();
+        let baseline=refs.iter().filter(|v|v.measure==mi).take(2).flat_map(|v|v.slots.iter()).find(|(_,s)|s.chord_id==ch.id&&!s.continuing).map(|(id,_)|json!(id)).unwrap();
         let v=graph.chord_voice_owner(ch.key,&owner.voices).unwrap();
-        json!({"label":labels[&ch.id],"registered":true,"same_measure":ch.measure==0,"manual":node["manual"]==true,
+        json!({"label":labels[&ch.id],"registered":true,"same_measure":ch.measure==mi,"manual":node["manual"]==true,
             "members":ch.members.iter().map(|n|labels[&(n["id"].as_u64().unwrap() as usize)].clone()).collect::<Vec<_>>(),
             "voice":v.map(|v|voice_name(v,refs,names)),"same_baseline_slot":node["slot_id"]==baseline,
             "slot_id":node["slot_id"],"time_offset":node["time_offset"],"duration":graph.chord_duration(ch.key).unwrap(),"end_time":graph.chord_end_time(ch.key).unwrap()})
     }).collect::<Vec<_>>();
     let source_refs = refs
         .iter()
-        .enumerate()
-        .filter(|(i, _)| *i < 2 || *i >= 4)
-        .map(|(_, r)| voice_row(owner, r, refs, names, labels, 0))
+        .filter(|r| actual_voice(owner, r).measure == mi)
+        .map(|r| voice_row(owner, r, refs, names, labels, mi))
         .collect::<Vec<_>>();
-    let timing = &owner.measures[0].timing;
+    let timing = &owner.measures[mi].timing;
     json!({"chords":rows,"voices":source_refs,
-        "measure_voices":owner.voices.iter().filter(|v|v.measure==0).map(|v|voice_name(v,refs,names)).collect::<Vec<_>>(),
-        "measure_chords":owner.chords.iter().filter(|c|c.measure==0).map(|c|labels[&c.id].clone()).collect::<Vec<_>>(),
+        "measure_voices":owner.voices.iter().filter(|v|v.measure==mi).map(|v|voice_name(v,refs,names)).collect::<Vec<_>>(),
+        "measure_chords":owner.chords.iter().filter(|c|c.measure==mi).map(|c|labels[&c.id].clone()).collect::<Vec<_>>(),
         "measure_abnormal":timing.abnormal,"expected":timing.expected.map(crate::music_time::format_fraction),"actual":timing.actual.map(crate::music_time::format_fraction),
         "excess":timing.excess.map(crate::music_time::format_fraction),"stack_slot_ids":timing.slots.iter().map(|s|s.id).collect::<Vec<_>>()})
 }

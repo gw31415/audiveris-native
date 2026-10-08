@@ -439,3 +439,201 @@ fn late_page_preferred_failure_rolls_back_rebuilt_actual_owners_chords_and_slots
         &graph["relations"],
     );
 }
+
+#[test]
+fn original_null_unselected_source_allows_next_stack_rebuild_then_refuses_page_refinement() {
+    use super::retired_beam_tests::{measure_state, voice_row};
+    let oracle: Value = serde_json::from_str(include_str!(
+        "../../../fixtures/official-voice-page-null-rhythm/observed.json"
+    ))
+    .unwrap();
+    let case = &oracle["cases"][0];
+    let (mut owner, labels, mut refs, group) = prepare(case);
+    let names = [
+        "old_voice",
+        "support_voice",
+        "target_voice",
+        "target_lower_voice",
+        "new_voice",
+        "rebuilt_target0",
+        "rebuilt_target1",
+        "rebuilt_target2",
+        "rebuilt_target3",
+    ];
+    let slots = owner
+        .chords
+        .iter()
+        .filter(|c| c.measure == 0)
+        .map(|c| {
+            (
+                c.id,
+                owner
+                    .owner
+                    .graph
+                    .chord_slot_identity(c.key)
+                    .unwrap()
+                    .clone(),
+            )
+        })
+        .collect::<BTreeMap<_, _>>();
+    let relations = owner.owner.graph.snapshot()["relations"].clone();
+    compare_owned(
+        &owner,
+        &labels,
+        (&refs, &names, Some(&slots)),
+        group,
+        case,
+        &case["states"][0],
+        &relations,
+    );
+    reset_rhythm(
+        &mut owner.owner.graph,
+        &mut owner.voices,
+        &mut owner.measures[0],
+        &owner.chords,
+        0,
+    )
+    .unwrap();
+    compare_owned(
+        &owner,
+        &labels,
+        (&refs, &names, Some(&slots)),
+        group,
+        case,
+        &case["states"][1],
+        &relations,
+    );
+    let graph = owner.owner.graph.snapshot();
+    let projection_before = projection(&owner.voices, &owner.measures);
+    let pool = owner.owner.graph.retained_voice_observations();
+    let clock = source_state_with_names(&owner, &labels, &refs, &names);
+    let report = owner.owner.prepared.report.clone();
+    let layout = owner.layout();
+    let address = owner.chords.as_ptr();
+    let storage = owner
+        .measures
+        .iter()
+        .map(|m| m.timing.slots.as_ptr())
+        .collect::<Vec<_>>();
+    let target_slots = owner
+        .chords
+        .iter()
+        .filter(|c| c.measure == 1)
+        .map(|c| {
+            (
+                c.key,
+                owner
+                    .owner
+                    .graph
+                    .chord_slot_identity(c.key)
+                    .unwrap()
+                    .clone(),
+            )
+        })
+        .collect::<Vec<_>>();
+    assert_eq!(
+        case["states"][2]["original_failure"],
+        "NullPointerException"
+    );
+    assert_eq!(
+        owner.reprocess_page_stack_rhythm(2).unwrap_err(),
+        "music_refine_beam_predecessor_owned_voice_required"
+    );
+    assert_eq!(owner.owner.graph.snapshot(), graph);
+    assert_eq!(
+        projection(&owner.voices, &owner.measures),
+        projection_before
+    );
+    assert_eq!(owner.owner.graph.retained_voice_observations(), pool);
+    assert_eq!(
+        source_state_with_names(&owner, &labels, &refs, &names),
+        clock
+    );
+    assert_eq!(owner.owner.prepared.report, report);
+    assert_eq!(owner.layout(), layout);
+    assert_eq!(owner.chords.as_ptr(), address);
+    assert_eq!(
+        owner
+            .measures
+            .iter()
+            .map(|m| m.timing.slots.as_ptr())
+            .collect::<Vec<_>>(),
+        storage
+    );
+    for (key, identity) in &target_slots {
+        assert!(Arc::ptr_eq(
+            owner.owner.graph.chord_slot_identity(*key).unwrap(),
+            identity
+        ));
+    }
+    owner.reprocess_stack_rhythm(2).unwrap();
+    let rebuilt = owner
+        .voices
+        .iter()
+        .filter(|v| v.measure == 1)
+        .cloned()
+        .collect::<Vec<_>>();
+    assert_eq!(rebuilt.len(), 4);
+    for v in &rebuilt {
+        assert!(!refs.iter().any(|r| Arc::ptr_eq(&r.identity, &v.identity)));
+    }
+    refs.extend(rebuilt);
+    compare_owned(
+        &owner,
+        &labels,
+        (&refs, &names, Some(&slots)),
+        group,
+        case,
+        &case["states"][2],
+        &relations,
+    );
+    assert_eq!(
+        json!(
+            refs[5..]
+                .iter()
+                .map(|r| voice_row(&owner, r, &refs, &names, &labels, 1))
+                .collect::<Vec<_>>()
+        ),
+        case["states"][2]["state"]["target_rebuilt"]
+    );
+    let mut target_state = measure_state(&owner, &labels, &refs, &names, 1);
+    for row in target_state["chords"].as_array_mut().unwrap() {
+        let chord = owner
+            .chords
+            .iter()
+            .find(|c| labels[&c.id] == row["label"])
+            .unwrap();
+        let old = &target_slots
+            .iter()
+            .find(|(key, _)| *key == chord.key)
+            .unwrap()
+            .1;
+        row["same_baseline_slot"] = json!(Arc::ptr_eq(
+            owner.owner.graph.chord_slot_identity(chord.key).unwrap(),
+            old
+        ));
+    }
+    for (field, wanted) in case["states"][2]["state"]["target_state"]
+        .as_object()
+        .unwrap()
+        .iter()
+        .filter(|(k, _)| k.as_str() != "relations")
+    {
+        assert_eq!(
+            &target_state[field], wanted,
+            "target rebuilt before null-source failure: {field}"
+        );
+    }
+    let staged = owner.owner.graph.snapshot();
+    assert_eq!(
+        refine_ordinary_system(
+            &mut owner.owner.graph,
+            &mut owner.voices,
+            &owner.measures,
+            1
+        )
+        .unwrap_err(),
+        "music_refine_beam_predecessor_owned_voice_required"
+    );
+    assert_eq!(owner.owner.graph.snapshot(), staged);
+}
