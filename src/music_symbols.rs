@@ -12,6 +12,10 @@ use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 const MODEL: &[u8] = include_bytes!("../crates/audiveris-classifier/models/audiveris-5.11.0.json");
 mod geometry;
+fn head_dilation(point_size: u16) -> i64 {
+    // Template divides integer pointSize by four before scaling the margin.
+    ((point_size / 4) as f64 * 0.2).round_ties_even() as i64
+}
 // RestInter.createValid: grow the rest glyph horizontally, intersect the
 // actual HeadChord (including its stem tail), then compare center2D strictly.
 fn rest_too_close_to_chord(b: [i64; 4], d: i64, c: &Chord) -> bool {
@@ -280,7 +284,7 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                         fore.insert((xx, yy));
                     }
                 }
-                let d = (o.catalog.stored_point_size as f64 / 4. * 0.2).round_ties_even() as i64;
+                let d = head_dilation(o.catalog.stored_point_size);
                 for (x, y) in fore {
                     for yy in y - d..=y + d {
                         for xx in x - d..=x + d {
@@ -912,3 +916,5 @@ pub(crate) use ensemble_tests::assert_real_ensemble_visits;
 mod geometry_tests;
 #[cfg(test)]
 pub(crate) use geometry_tests::assert_real_symbol_geometry;
+#[cfg(test)]
+mod dilation_tests;

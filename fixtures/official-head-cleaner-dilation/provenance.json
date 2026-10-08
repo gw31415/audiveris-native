@@ -1,0 +1,28 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "a53d3d6fb2a37234beb9d1b20f935f4a0e569998b549dd96307d211c1a98f565",
+  "commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/head-cleaner-dilation-original-v2/classes",
+      "/workspace/audiveris-native/scripts/java/HeadCleanerDilationProbe.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+      "-Xmx512m",
+      "-XX:ActiveProcessorCount=2",
+      "-Djava.awt.headless=true",
+      "-cp",
+      "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/head-cleaner-dilation-original-v2/classes",
+      "HeadCleanerDilationProbe",
+      "/tmp/head-cleaner-dilation-original-v2/observed.json"
+    ]
+  ],
+  "exit_code": 0,
+  "native_outputs_used": false,
+  "observed_sha256": "9533428dcabcd6ba2221cde93ba9f347fbb93b084c89ff105149ee95c696d56c"
+}

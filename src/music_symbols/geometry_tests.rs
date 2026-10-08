@@ -101,10 +101,49 @@ pub(crate) fn assert_real_symbol_geometry(music: &OwnedMusic) {
     }
     let cleaned = filter(music).unwrap();
     std::fs::write(
-        "/tmp/real-symbol-geometry-native-cleaner.pixels",
+        "/tmp/real-head-cleaner-margin-native-cleaner.pixels",
         &cleaned.pixels,
     )
     .unwrap();
-    std::fs::write("/tmp/real-symbol-geometry-native-cleaner.json", serde_json::to_vec_pretty(&json!({"width":cleaned.width,"height":cleaned.height,"pixel_sha256":format!("{:x}",Sha256::digest(&cleaned.pixels))})).unwrap()).unwrap();
+    let original: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-symbol-cleaner/corrected-observed.json"
+    ))
+    .unwrap();
+    let metadata = json!({"catalog":owner.catalog,"dilation":head_dilation(owner.catalog.stored_point_size),"pixel_sha256":format!("{:x}",Sha256::digest(&cleaned.pixels))});
+    std::fs::write(
+        "/tmp/real-head-cleaner-margin-native-cleaner.json",
+        serde_json::to_vec_pretty(&metadata).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(metadata["pixel_sha256"], original["pixel_sha256"]);
+    let source: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-head-cleaner-templates/image-observed.json"
+    ))
+    .unwrap();
+    let bank = owner.catalog.bank().unwrap();
+    for row in source["templates"].as_array().unwrap() {
+        assert_eq!(json!(owner.catalog.family), row["family"]);
+        assert_eq!(json!(owner.catalog.stored_point_size), row["point_size"]);
+        let asset = bank
+            .get(
+                row["shape"].as_str().unwrap(),
+                owner.catalog.stored_point_size,
+            )
+            .unwrap();
+        assert_eq!(json!(asset.dimensions().0), row["width"]);
+        assert_eq!(json!(asset.dimensions().1), row["height"]);
+        assert_eq!(
+            json!(
+                asset
+                    .template()
+                    .points()
+                    .iter()
+                    .filter(|p| p.distance == 0.)
+                    .map(|p| [p.x, p.y])
+                    .collect::<Vec<_>>()
+            ),
+            row["foreground_points"]
+        );
+    }
     assert_eq!(owner.graph.snapshot(), before);
 }

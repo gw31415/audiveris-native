@@ -19,10 +19,11 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。
 仮想曲線はpost-analysis callbackで保持し、後の物理Ledger削除やreportから作り直さない。
 対象3件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
-実画像CLI v14は166.27秒で多部品clusterガードに到達し、XML未出力。
+実画像CLI v15は168.48秒で多部品clusterガードに到達し、XML未出力。
 古い全マスク観測は誤ったImageJ constructorによる全0バイトで無効と明示した。
-正しい原版マスクとの差109画素は未解決。強弱判定の観測は修正後も同一で保持した。
-[証拠](../evidence/real-symbol-geometry/VALIDATION.json)・[次依存](../evidence/real-symbol-geometry/NEXT-DEPENDENCY.md)。
+実Bravura51ptの整数pointSize/4を保持し、消去余白を原版の2pxへ修正した。
+正しい原版全マスク3,132,856バイト・黒82,837画素が一致。修正前の109画素差と強弱判定観測は保持した。
+[証拠](../evidence/real-head-cleaner-margin/VALIDATION.json)・[次依存](../evidence/real-head-cleaner-margin/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 
