@@ -26,7 +26,7 @@
 - 同じ曲の独立CC0 .mscxを正解参照として使用し、原版とnativeそれぞれの欠落・追加・
   音高/音価/声部/小節/記号関係誤りを記録する。原版との一致だけで原版の誤りを正解に
   しない。nativeの各音楽品質指標が原版以上であることと、残差の実譜面上の確認が受入条件。
-  現在はこの正解比較が未実施なので、品質同等性を主張しない。
+  現在はeventの正解比較のみ着手しており、声部連続性・和音群・記号関係の比較は未完。品質同等性を主張しない。
 - native出力がMusicXML4 XSDに通り、独立readerで全part/小節/声部/イベントを読めること。
   原版より良い相違は独立正解と実譜面で説明する。未比較カテゴリを成功に含めない。
 - 既存合成63イベント＋明示補正8とexact7/64 XML bytes/XSDは回帰として保持する。
@@ -39,15 +39,16 @@
 現在の原版画像exportは成功（2parts×4小節、92note要素、和音継続27、3/4、beam45）。
 これらは原版の認識件数であり、独立正解92件一致や品質受入を示さない。
 
-同じ画像のnativeは `beam builder surrounding multiple parts pending` で停止し、
-XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
+同じ画像のnativeは複数Partのbeam周辺Staff選択を原版60地点と比較して接続した。
+現在はその先の `foundation_overlap_class_dependency_pending` で停止し、XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。
 今回Linuxで原版を実行しており、新たなMac処理・再render・環境移動はしていない。
 
 ## 改訂した残工程
 
-1. 複数part/staffでのbeam周辺の実所有選択を原Javaと実画像の中間状態で比較し接続する。
-   その後、同じ実譜面の実行で現れた次のHEADS/STEMS/MEASURES/SYMBOLS切断点を順に解消する。
+1. 複数part/staffでのbeam周辺の実所有選択は接続済み。次の実入力切断点である
+   foundation overlapの実class/geometryを原Java比較で接続し、その後同じ実譜面の
+   HEADS/STEMS/MEASURES/SYMBOLS切断点を順に解消する。
 2. 調号/臨時記号、複段part、和音、実音価・小節・voice・必要な記号関係を画像から保つ。
    既に移植したrhythm内部処理は、実入力が要求する順に本経路へ接続する。reportから
    所有を再構築したり、callback前に旧時計を消したりしない。
@@ -58,3 +59,9 @@ XMLを出力できない。staff消去済み同名開発fixtureでの `no_regula
 
 現状: **画像品質受入未達**。元task/環境/work189を保持し、未取得ce785c9を取得済み扱い・
 置換・再生成しない。認証・通常Gitに実障害なし。小checkpointは途中報告として継続する。
+
+初回の独立event比較: 原版92eventのうち73が元スコア101eventとstaff/小節/onset/
+MIDI/音価/graceで厳密一致。precision0.79348、recall0.72277、F1=0.75648。
+声部連続性・和音群・記号関係はこのevent multisetの指標では評価していない。
+[全残差](../evidence/real-image-quality-baseline/ORIGINAL-EVENT-QUALITY.json)。
+これは初期基準であり、native品質受入や最終品質判定ではない。

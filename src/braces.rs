@@ -460,12 +460,32 @@ pub fn analyze(
 }
 /// Attach actual brace glyphs/inters and default part/page topology to the native GRID IR.
 /// Numeric IDs remain native; missing brace fallback/bracket recognition stays explicit.
+#[derive(serde::Serialize)]
+pub(crate) struct PartMembership {
+    pub(crate) id: u64,
+    pub(crate) staff_ids: Vec<u64>,
+    #[serde(skip)]
+    pub(crate) system: u64,
+}
+pub(crate) struct IntegratedGrid {
+    pub(crate) report: Value,
+    pub(crate) parts: Vec<PartMembership>,
+}
 pub fn integrate(
-    mut ir: Value,
+    ir: Value,
     completion: &Value,
     sc: &Scale,
     height: usize,
 ) -> Result<Value, String> {
+    Ok(integrate_owned(ir, completion, sc, height)?.report)
+}
+pub(crate) fn integrate_owned(
+    mut ir: Value,
+    completion: &Value,
+    sc: &Scale,
+    height: usize,
+) -> Result<IntegratedGrid, String> {
+    let mut actual_parts = Vec::new();
     let staffs = ir["staffs"].as_array().unwrap().clone();
     let systems = ir["systems"].as_array().unwrap().clone();
     let mut bars = ir["bar_semantics"].clone();
@@ -655,21 +675,34 @@ pub fn integrate(
                 })
         });
         sys["part_groups"] = json!(groups);
-        let mut parts = vec![];
+        let mut parts = Vec::<PartMembership>::new();
         let mut next = ids[0];
         for (first, last) in spans {
             for id in next..first {
-                parts.push(json!({"id":parts.len()+1,"staff_ids":[id]}));
+                parts.push(PartMembership {
+                    id: parts.len() as u64 + 1,
+                    staff_ids: vec![id as u64],
+                    system: sys["id"].as_u64().unwrap(),
+                });
             }
             if last >= next {
-                parts.push(json!({"id":parts.len()+1,"staff_ids":(first.max(next)..=last).collect::<Vec<_>>()}));
+                parts.push(PartMembership {
+                    id: parts.len() as u64 + 1,
+                    staff_ids: (first.max(next)..=last).map(|id| id as u64).collect(),
+                    system: sys["id"].as_u64().unwrap(),
+                });
                 next = last + 1;
             }
         }
         for id in next..=*ids.last().unwrap() {
-            parts.push(json!({"id":parts.len()+1,"staff_ids":[id]}));
+            parts.push(PartMembership {
+                id: parts.len() as u64 + 1,
+                staff_ids: vec![id as u64],
+                system: sys["id"].as_u64().unwrap(),
+            });
         }
         sys["parts"] = json!(parts);
+        actual_parts.extend(parts);
     }
     let slope = completion["global_slope"].as_f64().unwrap();
     let norm = (1. + slope * slope).sqrt();
@@ -700,6 +733,7 @@ pub fn integrate(
         .unwrap()
         .is_empty()
     {
+        actual_parts.clear();
         for sys in &mut output {
             sys["parts"] = Value::Null;
             sys["parts_status"] = json!("unsupported_brace_topology");
@@ -719,5 +753,8 @@ pub fn integrate(
         "bracket font metrics beyond Bravura interline 11/16",
         "non-GRID SIG relation types and contexts"
     ]);
-    Ok(ir)
+    Ok(IntegratedGrid {
+        report: ir,
+        parts: actual_parts,
+    })
 }

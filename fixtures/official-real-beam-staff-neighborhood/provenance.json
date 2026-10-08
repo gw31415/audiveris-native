@@ -1,0 +1,48 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "42d89beb7bec7ec48c49fc1578c2d921d29f3378be84698a9b2f3787879ffb0e",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "f8d7be416912db85e4d5991c55f65882600002b2d5256ab27619533b1977645b",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/real-beam-neighborhood-original-v2/classes",
+    "/workspace/audiveris-native/scripts/java/BeamStaffNeighborhoodProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/real-beam-neighborhood-original-v2/home",
+    "-Djava.util.prefs.userRoot=/tmp/real-beam-neighborhood-original-v2/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-beam-neighborhood-original-v2/classes",
+    "BeamStaffNeighborhoodProbe",
+    "/tmp/real-score-laura-original-v1/laura-gray.omr",
+    "/tmp/real-beam-neighborhood-original-v2/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "d1cb78f0c1a4b5bc6b310d7c220d7aa9edcdd06ce4dfa52569d5a156389a4c5f",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "3fcd764c4f4987566d5177c9535d695d78773696011c48fa5c5a9499688f3a04",
+  "original_source_sha256": {
+    "sheet/SystemInfo.java": "ca5046588d72fc9eef0f21d6957cd2d34d63510599ca3f89aa70a73a2a690952",
+    "sheet/Staff.java": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57",
+    "sheet/StaffManager.java": "3fc3f109b1255dbdc58914c11d3d9f8f3027f6124f49192cd0dc1ec86ca4a77f",
+    "sheet/Part.java": "a57e2bb280a6d8e56316e8fe79ee3bf11be69f883f4c8c694d9b2a421cd35aff",
+    "sheet/stem/BeamLinker.java": "131f91f6605ecf03463ef4b6021a461240f99d7dfe2b1a1b94b0213d158d1747"
+  },
+  "real_image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "original_book_origin": "unmodified pinned original full real-image export, evidence/real-image-quality-baseline/BASELINE.json"
+}

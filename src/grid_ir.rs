@@ -34,7 +34,16 @@ impl StaffGeometry {
         Ok(y.round_ties_even() as i32)
     }
 }
+#[derive(Debug)]
+pub(crate) struct PartGeometry {
+    pub(crate) id: u64,
+    pub(crate) system: u64,
+    pub(crate) staffs: Vec<Arc<StaffGeometry>>,
+    pub(crate) bounds: [i32; 4],
+}
 pub(crate) struct OwnedGrid {
+    pub(crate) parts: Vec<Arc<PartGeometry>>,
+    pub(crate) staff_areas: Vec<Arc<crate::system_area_geometry::Band>>,
     pub(crate) report: Value,
     pub(crate) staffs: Vec<Arc<StaffGeometry>>,
 }
@@ -268,14 +277,49 @@ pub(crate) fn build_owned(
         system["horizontal_section_ids"] = json!(collect(&horizontal)?);
         system["vertical_section_ids"] = json!(collect(&prep.vertical)?);
     }
-    let report = crate::braces::integrate(
+    let integrated = crate::braces::integrate_owned(
         json!({"schema":"audiveris-native.grid-ir.v1","grid_complete":false,"glyph_id_namespace":"native exact-pixel registry; not Java numeric IDs","section_namespaces":["post-removal horizontal","original vertical"],"staffs":staffs,"systems":out,"glyphs":registry.entries,"bar_semantics":bars,"hlag":horizontal.iter().map(section).collect::<Vec<_>>(),"vlag":prep.vertical.iter().map(section).collect::<Vec<_>>(),"pending":["complete BarsRetriever interpretations and contextualization","staff areas and page allocation"]}),
         completion,
         sc,
         residual.height,
     )?;
+    let mut parts = Vec::new();
+    for membership in integrated.parts {
+        let mut members = Vec::new();
+        let mut area_bounds = None;
+        for id in membership.staff_ids {
+            let index = actual_staffs
+                .iter()
+                .position(|s| s.id == id && s.system == membership.system)
+                .ok_or("grid_actual_part_staff_required")?;
+            let b = layout.staff_areas[index].bounds()?;
+            area_bounds = Some(match area_bounds {
+                None => b,
+                Some(a) => {
+                    let a: [i32; 4] = a;
+                    let x = a[0].min(b[0]);
+                    let y = a[1].min(b[1]);
+                    [
+                        x,
+                        y,
+                        (a[0] + a[2]).max(b[0] + b[2]) - x,
+                        (a[1] + a[3]).max(b[1] + b[3]) - y,
+                    ]
+                }
+            });
+            members.push(actual_staffs[index].clone());
+        }
+        parts.push(Arc::new(PartGeometry {
+            id: membership.id,
+            system: membership.system,
+            staffs: members,
+            bounds: area_bounds.ok_or("grid_actual_nonempty_part_required")?,
+        }));
+    }
     Ok(OwnedGrid {
-        report,
+        report: integrated.report,
         staffs: actual_staffs,
+        parts,
+        staff_areas: layout.staff_areas.into_iter().map(Arc::new).collect(),
     })
 }

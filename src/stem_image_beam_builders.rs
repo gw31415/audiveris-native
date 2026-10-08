@@ -59,7 +59,6 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
     let report = o.prepared.report.clone();
     let generation = &report["head_chunks_plan"]["head_parts_plan"]["beam_generation_plan"];
     let source = &generation["beam_target_plan"]["head_linker_plan"]["source_plan"];
-    let plan = &source["stump_plan"]["seed_plan"]["head_plan"];
     let seeds = &source["stump_plan"]["seed_plan"];
     let page = &o.upstream_report;
     let grid = &page["grid_ir"];
@@ -159,11 +158,6 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
             .collect::<Result<Vec<_>, String>>()?;
         // StemsRetriever processes stable descending beam width.
         order_by_width(&mut active, &live)?;
-        let ctx = &plan["systems"][si]["image_context"];
-        let parts = arr(&ctx["parts"])?;
-        if parts.len() != 1 {
-            return Err("beam builder surrounding multiple parts pending".into());
-        }
         let vertical = members(&v, &grid["systems"][si]["vertical_section_ids"])?;
         let horizontal = members(&h, &grid["systems"][si]["horizontal_section_ids"])?;
         let all = arr(&report["systems"][si]["cases"])?;
@@ -178,6 +172,19 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                 .map_err(|_| "beam builder surviving seeds required")?;
         let mut cases = Vec::new();
         for cat in &active {
+            let actual = live
+                .iter()
+                .find(|n| n["origin"]["local"] == cat["beam"]["id"])
+                .ok_or("beam builder actual beam required")?;
+            let b = bounds(&actual["bounds"])?;
+            let surrounding = crate::grid_staff_neighborhood::around(
+                &o.staffs,
+                &o.staff_areas,
+                &o.parts,
+                sid,
+                [(b[0] + b[2] / 2) as f64, (b[1] + b[3] / 2) as f64],
+            )?;
+
             for (bli, b) in arr(&cat["base_blinkers"])?.iter().enumerate() {
                 if b["anchor"] == true {
                     return Err("beam builder anchor geometry pending".into());
@@ -201,7 +208,7 @@ pub(crate) fn prepare(o: &mut OwnedItems) -> Result<Vec<Vec<Value>>, String> {
                         max_seed_dy_ratio: 0.25,
                         gap_pixels: (il * 1.2).round_ties_even() as i32,
                         system_bounds: layout.system_areas[si].bounds()?,
-                        surrounding_part_bounds: vec![bounds(&parts[0]["bounds"])?],
+                        surrounding_part_bounds: surrounding.part_bounds(),
                         limit: None,
                     };
                     let initial = stem_beam_lookup_area::generate(&lookup)?;

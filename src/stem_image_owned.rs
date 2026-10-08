@@ -9,6 +9,8 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 pub struct OwnedItems {
+    pub(crate) parts: Vec<std::sync::Arc<crate::grid_ir::PartGeometry>>,
+    pub(crate) staff_areas: Vec<std::sync::Arc<crate::system_area_geometry::Band>>,
     pub(crate) staffs: Vec<std::sync::Arc<crate::grid_ir::StaffGeometry>>,
     pub(crate) sheet_skew: crate::sheet_skew::SheetSkew,
     pub(crate) interline: usize,
@@ -71,6 +73,8 @@ pub fn continue_items(
         .interline
         .main;
     Ok(OwnedItems {
+        parts: upstream.parts,
+        staff_areas: upstream.staff_areas,
         staffs: upstream.staffs,
         sheet_skew: upstream.sheet_skew,
         interline,

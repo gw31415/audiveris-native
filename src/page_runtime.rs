@@ -5,6 +5,8 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) parts: Vec<std::sync::Arc<crate::grid_ir::PartGeometry>>,
+    pub(crate) staff_areas: Vec<std::sync::Arc<crate::system_area_geometry::Band>>,
     pub(crate) staffs: Vec<std::sync::Arc<crate::grid_ir::StaffGeometry>>,
     pub(crate) sheet_skew: crate::sheet_skew::SheetSkew,
     pub report: Value,
@@ -689,6 +691,8 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        parts: owned_grid.parts,
+        staff_areas: owned_grid.staff_areas,
         staffs: owned_grid.staffs,
         sheet_skew,
         report: page_report,

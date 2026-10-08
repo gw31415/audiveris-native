@@ -13,3 +13,10 @@ the historical complete render; historical renderer exit -6 remains qualified.
 No new Mac rendering, alternate environment, authentication or archive transfer.
 See docs/IMAGE-MUSICXML-ACCEPTANCE.md for the revised actual acceptance and remaining
 recognition connections. This is a real failure baseline, not quality parity.
+
+Independent MuseScore3 event comparison now finds73 of101 exact staff/measure/
+onset/MIDI/duration/grace events in the original92-event export (precision0.79348,
+recall0.72277,F1=0.75648). ORIGINAL-EVENT-QUALITY.json lists every missing/extra
+event. This is a preliminary event metric, with voice continuity/chord grouping/
+notation relations still unscored; quality_accepted stays false. Two declared
+notation controls verify chord/grace/rest/backup/staff timing and error detection.

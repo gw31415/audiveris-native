@@ -2039,3 +2039,13 @@ first/pass2/switch/NULL versus zero expected and source partial callback failure
 versus native actual owner/cache/storage rollback/retry. Evidence musicxml-tuplet-
 second-pass. Retaining map candidates and real ordinary resources remain; full/
 public nonUI false. Checkpoints are interim and work continues within authorization.
+
+Real image quality goal: actual GRID Part/Staff/Curve and area ownership now reaches
+beam builders, with source containing-area/integer-distance/core-curve neighborhood
+selection. Two real systems/60 points/18 beam centers match actual original Staff
+and Part identities, including duplicated same-Part references. Unmodified An Laura
+now passes the multi-Part beam guard and stops at foundation overlap class admission.
+Evidence real-beam-neighborhood records this interim connection and targeted XML/XSD
+regression. Independent source-score comparison finds 73/101 exact events in the
+92-event original export; voice/chord/notation remain unscored. Real-image quality is
+not accepted, and recognition-required overlap/graph/rhythm/output work continues.
