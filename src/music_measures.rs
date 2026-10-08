@@ -118,6 +118,10 @@ pub(crate) struct Measure {
     pub left: i64,
     pub right: i64,
     pub timing: crate::music_voices::MeasureTiming,
+    pub tuplets: Vec<Key>,
+    // In the admitted single-part path this is the actual Stack unassigned set.
+    // Multipart stacks must share one container before extending this admission.
+    pub stack_tuplets: Vec<Key>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum ChordKind {
@@ -244,6 +248,8 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                         left: previous,
                         right: x,
                         timing: Default::default(),
+                        tuplets: Vec::new(),
+                        stack_tuplets: Vec::new(),
                     });
                 }
                 previous = x;
@@ -262,6 +268,8 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     left: previous,
                     right,
                     timing: Default::default(),
+                    tuplets: Vec::new(),
+                    stack_tuplets: Vec::new(),
                 });
             }
             let header = owner.upstream_report["headers"]["staffs"]

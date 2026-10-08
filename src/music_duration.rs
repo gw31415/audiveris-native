@@ -42,6 +42,30 @@ pub(crate) fn live_exact(snapshot: &Value, id: usize) -> Result<ExactChordDurati
     let nodes = snapshot["inters"]
         .as_array()
         .ok_or("missing_music_inters")?;
+    let chord = nodes
+        .iter()
+        .find(|n| n["id"] == id)
+        .ok_or("musicxml_duration_live_chord_required")?;
+    if !matches!(
+        chord["kind"].as_str(),
+        Some("HeadChordInter" | "RestChordInter")
+    ) {
+        return Err("musicxml_duration_live_chord_required".into());
+    }
+    if snapshot["relations"]
+        .as_array()
+        .ok_or("missing_music_relations")?
+        .iter()
+        .any(|e| e["kind"] == "ChordTupletRelation" && (e["source"] == id || e["target"] == id))
+    {
+        return Err("musicxml_tuplet_duration_pending".into());
+    }
+    live_intrinsic(snapshot, id)
+}
+pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDuration, String> {
+    let nodes = snapshot["inters"]
+        .as_array()
+        .ok_or("missing_music_inters")?;
     let edges = snapshot["relations"]
         .as_array()
         .ok_or("missing_music_relations")?;
@@ -54,12 +78,6 @@ pub(crate) fn live_exact(snapshot: &Value, id: usize) -> Result<ExactChordDurati
         Some("HeadChordInter" | "RestChordInter")
     ) {
         return Err("musicxml_duration_live_chord_required".into());
-    }
-    if edges
-        .iter()
-        .any(|e| e["kind"] == "ChordTupletRelation" && (e["source"] == id || e["target"] == id))
-    {
-        return Err("musicxml_tuplet_duration_pending".into());
     }
     let members = edges
         .iter()

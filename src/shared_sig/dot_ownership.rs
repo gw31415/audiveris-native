@@ -370,6 +370,8 @@ mod tests {
                 left: c["measure"]["left"].as_i64().unwrap(),
                 right: c["measure"]["right"].as_i64().unwrap(),
                 timing: Default::default(),
+                tuplets: Vec::new(),
+                stack_tuplets: Vec::new(),
             };
             graph.bind_dot_measures(&[measure]).unwrap();
             let hk = Key {
@@ -516,6 +518,8 @@ mod tests {
                     left: b["left"].as_i64().unwrap(),
                     right: b["right"].as_i64().unwrap(),
                     timing: Default::default(),
+                    tuplets: Vec::new(),
+                    stack_tuplets: Vec::new(),
                 })
                 .collect::<Vec<_>>();
             graph.bind_dot_measures(&measures).unwrap();
@@ -709,6 +713,8 @@ mod tests {
                 left: b["left"].as_i64().unwrap(),
                 right: b["right"].as_i64().unwrap(),
                 timing: Default::default(),
+                tuplets: Vec::new(),
+                stack_tuplets: Vec::new(),
             })
             .collect::<Vec<_>>();
         graph.bind_dot_measures(&measures).unwrap();
@@ -879,6 +885,8 @@ mod tests {
                 left: b["left"].as_i64().unwrap(),
                 right: b["right"].as_i64().unwrap(),
                 timing: Default::default(),
+                tuplets: Vec::new(),
+                stack_tuplets: Vec::new(),
             })
             .collect::<Vec<_>>();
         graph.bind_dot_measures(&measures).unwrap();

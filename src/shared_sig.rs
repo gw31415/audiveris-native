@@ -8,8 +8,11 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod beam_rest;
+mod tuplet;
 #[cfg(test)]
 pub(crate) use beam_rest::CallbackObservation;
+#[cfg(test)]
+pub(crate) use tuplet::TupletRemovalObservation;
 mod book_state;
 mod chord_cache;
 pub(crate) mod chord_tasks;
@@ -375,6 +378,8 @@ pub struct Graph {
     edge_clock: u64,
     #[cfg(test)]
     beam_rest_callbacks: Option<Vec<beam_rest::CallbackObservation>>,
+    #[cfg(test)]
+    tuplet_removals: Option<Vec<tuplet::TupletRemovalObservation>>,
     dot_removals: Vec<Value>,
     edit_publications: Vec<Value>,
     edit_impacts: Vec<Value>,
@@ -1288,17 +1293,14 @@ impl Graph {
         let id = self
             .id(key)
             .ok_or("musicxml_duration_live_chord_required")?;
-        Ok(crate::music_duration::live_exact(&self.snapshot(), id)?
-            .intrinsic
-            .map(|d| d.to_string()))
+        Ok(self.exact_tuplet_duration(id)?.map(|d| d.to_string()))
     }
     /// Original getEndTime uses the current duration and retained timeOffset.
     pub fn chord_end_time(&self, key: Key) -> Result<Option<String>, String> {
         let id = self
             .id(key)
             .ok_or("musicxml_duration_live_chord_required")?;
-        let Some(duration) = crate::music_duration::live_exact(&self.snapshot(), id)?.intrinsic
-        else {
+        let Some(duration) = self.exact_tuplet_duration(id)? else {
             return Ok(None);
         };
         let Some(offset) = self.vertices[id - 1].data["time_offset"].as_str() else {
@@ -2920,6 +2922,8 @@ mod rest_chord_identity_tests {
             left: 200,
             right: 400,
             timing: Default::default(),
+            tuplets: Vec::new(),
+            stack_tuplets: Vec::new(),
         }];
         for case in oracle["cases"].as_array().unwrap() {
             let mut graph = Graph::default();

@@ -2394,6 +2394,8 @@ mod tests {
                     left: m["left"].as_i64().unwrap(),
                     right: m["right"].as_i64().unwrap(),
                     timing: Default::default(),
+                    tuplets: Vec::new(),
+                    stack_tuplets: Vec::new(),
                 }])
                 .unwrap();
             let ck = Key {

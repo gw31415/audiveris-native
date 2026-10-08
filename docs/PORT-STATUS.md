@@ -1793,3 +1793,17 @@ BEFORE clear/detect/reset, then later implicit generation/merge ownership.
 This is an intermediate checkpoint; authorized next work continues. Full/nonUI
 and public flags remain false, original task/work/unobtainedce785c9 held.
 See evidence/musicxml-beam-rest-detect.
+
+Original implicit Tuplet preparation now retains real Measure insertion order and
+admitted Stack unassigned references. Two short/excess controls compare ten
+remove/clear/detect/reset boundaries and six post-removal callbacks with removed
+SIG vertex still registered, containers already detached and old clocks held.
+Manual implicit signs are removed; explicit/manual and Stack-only null-source
+implicit signs survive. Live Chord duration/end follows first actual2/3 or4/6
+factor; ordinary XML tuplet admission stays guarded. Combined late captured-Rest
+member failure rolls back tuplets container storage, actual Chords and clocks.
+Seven unique targets, fmt/clippy/build, default63+correction8 and exact7/64 XML
+bytes/XSD pass. Next borrowed real-owner complete prep connection must preserve
+existing selected admission/rollback; implicit generation/merge and full ledger
+remain pending. Full nonUI/public flags false; same task/work/unobtainedce held.
+See evidence/musicxml-tuplet-preparation.

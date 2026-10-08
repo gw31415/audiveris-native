@@ -4,7 +4,7 @@ use serde_json::json;
 use std::sync::Arc;
 
 #[cfg(test)]
-type CallbackOwners = Vec<(Key, Option<Arc<()>>, Option<Arc<()>>)>;
+pub(super) type CallbackOwners = Vec<(Key, Option<Arc<()>>, Option<Arc<()>>)>;
 
 #[cfg(test)]
 #[derive(Clone, Debug)]

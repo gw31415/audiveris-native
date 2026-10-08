@@ -9,6 +9,7 @@ mod beam_rest_lookup;
 #[cfg(test)]
 mod selected_cli_tests;
 pub(crate) mod stack_rhythm;
+mod tuplet_preparation;
 
 use crate::{GrayImage, music_measures::OwnedMusic, music_symbols, shared_sig::Key};
 use serde_json::{Value, json};
