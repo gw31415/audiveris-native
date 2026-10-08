@@ -969,6 +969,7 @@ mod tests {
                 .collect::<Vec<_>>();
             ids.sort_by_key(|id| centers[id]);
             compounds.push(CompoundSlot {
+                identity: std::sync::Arc::new(()),
                 key: 3,
                 id: 3,
                 members,
@@ -1644,6 +1645,7 @@ mod tests {
                 serde_json::from_value(case["input"]["slot_chord_ids"].clone()).unwrap();
             let ids = ordinals.iter().map(|&i| chords[i].id).collect::<Vec<_>>();
             let declared = CompoundSlot {
+                identity: std::sync::Arc::new(()),
                 key: 0,
                 id: 3,
                 members: vec![crate::music_measure_slots::MeasureSlot {
@@ -1757,6 +1759,7 @@ mod tests {
                 .iter()
                 .enumerate()
                 .map(|(i, constructor)| CompoundSlot {
+                    identity: std::sync::Arc::new(()),
                     key: i,
                     id: constructor["id"].as_u64().unwrap() as usize,
                     members: vec![crate::music_measure_slots::MeasureSlot {
@@ -1963,6 +1966,7 @@ mod tests {
                 c.bounds[1] + c.bounds[3] / 2
             });
             let compounds = [CompoundSlot {
+                identity: std::sync::Arc::new(()),
                 key: 0,
                 id: 1,
                 members,

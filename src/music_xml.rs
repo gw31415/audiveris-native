@@ -3,6 +3,8 @@
 //! Shape.getNoteDuration, MeasureRhythm.processStartingChords, Voice.addChord,
 //! AbstractChordInter.getEndTime, Page.numberMeasures/simpleDurationOf and
 //! PartwiseBuilder note/attribute ordering guide this explicitly bounded path.
+pub(crate) mod stack_rhythm;
+
 use crate::{GrayImage, music_measures::OwnedMusic, music_symbols, shared_sig::Key};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
@@ -599,6 +601,7 @@ impl Rhythm {
 #[derive(Clone, Copy, PartialEq, Eq)]
 enum RhythmScope {
     Image,
+    OwnedRhythm,
     // Public correction admission still needs original RelationTask/controller.
     #[cfg(test)]
     ObservedOwnedCorrection,
@@ -837,118 +840,31 @@ fn analyze_rhythm(
         {
             return Err("musicxml_parallel_quarter_voice_scope_pending".into());
         }
-        // MeasureRhythm.processStartingChords selects measure rests plus the
-        // first compound's chords, in stable center-ordinate order.
-        let mut starting = chords
-            .iter()
-            .filter(|c| {
-                c.kind == crate::music_measures::ChordKind::Rest
-                    && c.members
-                        .first()
-                        .and_then(|n| n["shape"].as_str())
-                        .is_some_and(|s| crate::music_voices::is_measure_rest_shape(s, false))
-            })
-            .map(|c| c.id)
-            .collect::<Vec<_>>();
-        if let Some(first) = compounds.first() {
-            starting.extend(&first.chord_ids);
+        let mapped = stack_rhythm::Context {
+            graph: &mut graph,
+            voices: &mut m.voices,
+            measures: &mut m.measures,
+            chords: &m.chords,
+            interline: m.owner.interline,
         }
-        starting.sort_by_key(|id| centers[id]);
-        if starting.len() != 1
-            && starting.iter().any(|id| {
-                chords
-                    .iter()
-                    .any(|c| c.id == *id && c.kind == crate::music_measures::ChordKind::Rest)
-            })
-        {
-            return Err("musicxml_starting_parallel_voice_mapping_pending".into());
-        }
-        let seeds = starting
-            .iter()
-            .map(|id| {
-                chords
-                    .iter()
-                    .find(|c| c.id == *id)
-                    .copied()
-                    .ok_or("musicxml_starting_owned_chord_required")
-            })
-            .collect::<Result<Vec<_>, _>>()?;
-        crate::music_voices::process_starting_chords(
-            &mut graph,
-            &mut m.voices,
-            &m.measures,
-            mi,
-            &seeds,
-        )?;
-        let voice_index = m
+        .map(stack_rhythm::Prepared {
+            chords: &chords,
+            narrow: &narrow,
+            compounds: &compounds,
+            expected: expected_duration,
+            clef: initial_clef,
+            measure_index: mi,
+        })?;
+        preliminary_slots[mi]
+            .as_object_mut()
+            .unwrap()
+            .extend(mapped.as_object().unwrap().clone());
+        let voice_id = m
             .voices
             .iter()
-            .position(|v| v.measure == mi)
-            .ok_or("musicxml_starting_actual_voice_required")?;
-        let voice_id = m.voices[voice_index].id;
-        let start_snapshot = graph.snapshot();
-        preliminary_slots[mi]["starting_chord_ids"] = json!(starting);
-        preliminary_slots[mi]["starting_state"] = json!({"voices":m.voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"is_measure_rest":v.measure_rest_chord.is_some(),"chord_ids":v.chord_ids,"measure_rest_chord_id":v.measure_rest_chord})).collect::<Vec<_>>(),"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});
-        preliminary_slots[mi]["mapping_steps"] = json!([]);
-        preliminary_slots[mi]["mapping_validation_steps"] = json!([]);
-        preliminary_slots[mi]["extinction_steps"] = json!([]);
-        let mut lifetime = crate::music_voice_lifetime::Lifetime::default();
-        let candidates = crate::music_measure_slots::CandidateReferences::new(
-            &graph,
-            &m.measures[mi],
-            &compounds,
-        )?;
-        let mut slot_times = crate::music_measure_slots::ClockState::new(&compounds)?;
-        let mut order = crate::music_measure_slots::CandidateOrder::new(&compounds, &candidates)?;
-        preliminary_slots[mi]["candidate_time_steps"] = json!([]);
-        let mut candidate_index = 0;
-        while let Some(slot) = order.at(candidate_index).cloned() {
-            let before = slot_times.projection(&slot)?;
-            let mut step = crate::music_rookie_mapping::Context {
-                graph: &mut graph,
-                voices: &mut m.voices,
-                measures: &mut m.measures,
-                chords: &chords,
-                narrow: &narrow,
-                measure_index: mi,
-                candidates: &candidates,
-                order: &mut order,
-                expected: expected_duration,
-                clef: initial_clef,
-                interline: m.owner.interline,
-                lifetime: &lifetime,
-                slot_times: &mut slot_times,
-            }
-            .map_slot(&slot)?;
-            let validation = step.as_object_mut().unwrap().remove("validation").unwrap();
-            preliminary_slots[mi]["mapping_validation_steps"]
-                .as_array_mut()
-                .unwrap()
-                .push(json!({"slot_id":slot.id,"validation":validation}));
-            preliminary_slots[mi]["mapping_steps"]
-                .as_array_mut()
-                .unwrap()
-                .push(step);
-            preliminary_slots[mi]["candidate_time_steps"].as_array_mut().unwrap().push(json!({"slot_id":slot.id,"before":before,"after":slot_times.projection(&slot)?,"ok":true}));
-            if order.contains(slot.key) {
-                let first_time = slot_times.first_time(&slot)?;
-                let extinction = lifetime.purge(
-                    &graph,
-                    &m.voices,
-                    &mut m.measures[mi],
-                    mi,
-                    &candidates,
-                    (&slot, first_time),
-                )?;
-                preliminary_slots[mi]["extinction_steps"]
-                    .as_array_mut()
-                    .unwrap()
-                    .push(extinction);
-                candidate_index += 1;
-            }
-        }
-        preliminary_slots[mi]["candidate_order_after"] =
-            json!(order.ordered().map(|s| s.projection()).collect::<Vec<_>>());
+            .find(|v| v.measure == mi)
+            .ok_or("musicxml_starting_actual_voice_required")?
+            .id;
         for &chord in &chords {
             let current_chords = graph.snapshot();
             let mut c = current_chords["inters"]
@@ -3562,6 +3478,10 @@ mod rational_owned_export_tests {
                     );
                 }
                 assert_eq!(owner.measures[0].timing.expected, cached_expected);
+                owner.reprocess_stack_rhythm(1).unwrap();
+                assert_eq!(owner.measures[0].timing.expected, cached_expected);
+                let rebuilt_timing =
+                    crate::music_voices::projection(&owner.voices, &owner.measures);
                 let retained = Rhythm::retained(owner).unwrap();
                 let xml = export
                     .reprocess_selected_scoped(
@@ -3572,6 +3492,10 @@ mod rational_owned_export_tests {
                     )
                     .unwrap();
                 let owner = &mut export.owner;
+                assert_eq!(
+                    crate::music_voices::projection(&owner.voices, &owner.measures),
+                    rebuilt_timing
+                );
                 let snapshot = owner.owner.graph.snapshot();
                 let bounds = |id| {
                     let ch = snapshot["inters"]

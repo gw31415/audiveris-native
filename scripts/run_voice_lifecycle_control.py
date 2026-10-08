@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--oracle-home", type=Path, required=True)
 parser.add_argument("--book", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
-parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe"),
+parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe"),
                     default="VoiceLifecycleProbe")
 args = parser.parse_args()
 output = args.output.resolve()
@@ -33,8 +33,10 @@ compile_args = [str(compiler), "--release", "21", "-cp", str(lib / "app/*"),
                 str(oracle.ROOT / "scripts/java/HeadStemPreLinkProbe.java")]
 if args.probe != "VoiceLifecycleProbe":
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java"))
-if args.probe == "VoiceRetiredBeamProbe":
+if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java"))
+if args.probe == "VoiceResetRhythmProbe":
+    compile_args.append(str(oracle.ROOT / "scripts/java/VoiceRetiredBeamProbe.java"))
 run_args = [str(lib / "runtime/bin/java"), "-Xmx512m", "-XX:ActiveProcessorCount=2",
             "-Djava.awt.headless=true", "-Duser.home=" + str(output / "home"),
             "-Djava.util.prefs.userRoot=" + str(output / "prefs"), "-cp", classpath,
@@ -59,8 +61,10 @@ record = {
 }
 if args.probe != "VoiceLifecycleProbe":
     record["lifecycle_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java")
-if args.probe == "VoiceRetiredBeamProbe":
+if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe"):
     record["tie_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java")
+if args.probe == "VoiceResetRhythmProbe":
+    record["beam_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceRetiredBeamProbe.java")
 if result.returncode == 0:
     record["observed_sha256"] = oracle.sha(output / "observed.json")
 (output / "provenance.json").write_text(json.dumps(record, indent=2) + "\n")

@@ -1,0 +1,43 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "61036319b592cc666d519e6fcbf1f95758c85a5a9105353b3bd6f34813f67d1c",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "d15a1af7003f2fa85b76c97da70bc01be1a227551f8f256518c37b8e3927c918",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/voice-reset-rhythm-final-original/classes",
+    "/workspace/audiveris-native/scripts/java/VoiceResetRhythmProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceRetiredTieProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceRetiredBeamProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/voice-reset-rhythm-final-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/voice-reset-rhythm-final-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/voice-reset-rhythm-final-original/classes",
+    "VoiceResetRhythmProbe",
+    "/tmp/retired-beam-book/book/parallel-beam.omr",
+    "/tmp/voice-reset-rhythm-final-original/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "1f57d79347a7165b98e255a17ec14d0fa92b3dd5f78a8d59b62187d73b24f0f8",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "tie_helper_sha256": "8873a0116844a634080ede8519b7109f896d9e7553eb621d4268488408be69c5",
+  "beam_helper_sha256": "b50daf2bc2a25f047822e54ad49b1f7dc2ff7009ca4a88ad77b417f8a569f822",
+  "observed_sha256": "9b087f0ef0da516434c5542b3f5acbff0a9900fc01ea37a92fbfb66bb89b4dc6",
+  "committed_compact_observed_sha256": "2dc722279ff4102f6512d63b225a0289138e950936ff979d0d361a613be725b6",
+  "compact_parsed_equal_to_raw": true
+}

@@ -1571,3 +1571,27 @@ atomic guard behavior is not Java exception rollback parity. General selected
 rhythm/history/Part/controller/PAGE/persistence and five-pixel Stem extent
 remain pending, with public/global completion flags false/guarded. See
 `evidence/musicxml-voice-retired-beam/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Genuine Measure reset followed by ordinary selected stack rhythm now compares
+four independently loaded original cases20 method boundaries. Actual
+MeasureRhythm.process constructs two new Voice bodies and seven CompoundSlots
+before stack slot generation; actual StackRhythm.process agrees with the
+separate six-slot/actual-duration sequence before system refinement. Empty old7,
+support2 and distinct fresh1 retain original six slots, termination/excess,
+manual relations and source/target Chord identity. Cached expectedDuration is
+preserved. The initial native null CompoundSlot references were reproduced;
+common mapper constructor binding and new real Slot identity retain object
+semantics when stack slot numbers are reused. Genuine reset is the only point
+that clears cached Chord Voice/Slot/time references.
+
+OwnedMusic.reprocess_stack_rhythm stages actual Graph/Voice/Measure state while
+retaining actual Chord storage and untouched Measure Slot storage. Actual member
+failure after staged reset preserves all owner/clock/manual/identity state and
+retries against the original full-stack state. The same mapper is connected to
+the existing image/selected export path; six manual HeadStem Link/Unlink actions
+also exercise the new stack backend with original exact7/64, underfilled Voice
+termination/divisions and native XML. Full MeasureRhythm implicit tuplet/rest
+passes, multipart stacks and Page/controller/history integration remain pending;
+public/global flags stay false/guarded. See
+`evidence/musicxml-voice-reset-rhythm/TRY.md` and `NEXT-DEPENDENCY.md`.

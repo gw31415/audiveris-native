@@ -39,6 +39,7 @@ impl std::fmt::Debug for Voice {
 /// multi-part stacks remain pending and must share this state when connected.
 #[derive(Clone)]
 pub(crate) struct Slot {
+    pub identity: Arc<()>,
     pub id: usize,
     pub time_offset: Option<Fraction>,
     pub x_offset: i64,
@@ -590,20 +591,21 @@ pub(crate) fn generate_slots(
         incoming.clear();
         incoming.extend(ordered.into_iter().map(|(id, _, _)| id));
         let slot_id = slots.len() + 1;
-        for &id in &incoming {
-            let mut data = node(id)?.clone();
-            let key = serde_json::from_value(data["origin"].clone())
-                .map_err(|_| "music_slot_actual_origin_required")?;
-            data["slot_id"] = json!(slot_id);
-            staged_graph.vertex(key, data, false)?;
-        }
-        time_to_slot.insert(*time, slot_id);
-        slots.push(Slot {
+        let slot = Slot {
+            identity: Arc::new(()),
             id: slot_id,
             time_offset: Some(*time),
             x_offset,
             incoming_ids: incoming,
-        });
+        };
+        for &id in &slot.incoming_ids {
+            let data = node(id)?;
+            let key = serde_json::from_value(data["origin"].clone())
+                .map_err(|_| "music_slot_actual_origin_required")?;
+            staged_graph.set_chord_slot(key, slot_id, &slot.identity)?;
+        }
+        time_to_slot.insert(*time, slot_id);
+        slots.push(slot);
     }
     for voice in staged_voices
         .iter_mut()

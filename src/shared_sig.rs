@@ -341,6 +341,7 @@ struct Vertex {
     cached_part: Option<u64>,
     retained_voice: Option<usize>,
     voice_owner: Option<std::sync::Arc<()>>,
+    slot_owner: Option<std::sync::Arc<()>>,
     chord_cache: Option<chord_cache::ChordCache>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -423,6 +424,7 @@ impl Graph {
                 cached_part: None,
                 retained_voice: None,
                 voice_owner: None,
+                slot_owner: None,
                 chord_cache: None,
             });
             id
@@ -444,6 +446,7 @@ impl Graph {
             data["contextual_grade"] = old.data["contextual_grade"].clone();
         }
         let added = old.data.is_null() || old.removed;
+        let data_slot_unchanged = data["slot_id"] == old.data["slot_id"];
         let data_voice_unchanged = data["voice"] == old.data["voice"];
         let retained_voice = if data_voice_unchanged {
             old.retained_voice
@@ -459,6 +462,11 @@ impl Graph {
             retained_voice,
             voice_owner: if data_voice_unchanged {
                 old.voice_owner.clone()
+            } else {
+                None
+            },
+            slot_owner: if data_slot_unchanged {
+                old.slot_owner.clone()
             } else {
                 None
             },

@@ -4,6 +4,30 @@ use crate::music_voices::Voice;
 use std::sync::Arc;
 
 impl Graph {
+    pub(crate) fn set_chord_slot(
+        &mut self,
+        key: super::Key,
+        id: usize,
+        identity: &Arc<()>,
+    ) -> Result<(), String> {
+        let endpoint = self.endpoint(key)?;
+        let chord = &mut self.vertices[endpoint - 1];
+        if key.phase != super::Phase::Chord
+            || !matches!(
+                chord.data["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            )
+        {
+            return Err("music_slot_actual_chord_required".into());
+        }
+        chord.data["slot_id"] = serde_json::json!(id);
+        chord.slot_owner = Some(identity.clone());
+        Ok(())
+    }
+    #[cfg(test)]
+    pub(crate) fn chord_slot_identity(&self, key: super::Key) -> Option<&Arc<()>> {
+        self.vertices[self.id(key)? - 1].slot_owner.as_ref()
+    }
     pub(crate) fn chord_voice_owner<'a>(
         &'a self,
         key: super::Key,

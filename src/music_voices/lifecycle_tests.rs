@@ -796,3 +796,5 @@ fn failed_retired_next_refinement_keeps_actual_refs_clocks_and_retry_order() {
 mod retired_tie_tests;
 
 mod retired_beam_tests;
+
+mod reset_rhythm_tests;

@@ -370,6 +370,7 @@ fn retrieve(input: &Input, wide: bool) -> Result<Retrieval, String> {
 /// removed. getNarrowSlot takes the first containing member, as in Java.
 #[derive(Clone)]
 pub(crate) struct CompoundSlot {
+    pub identity: std::sync::Arc<()>,
     // Merge can renumber slots; references keep the constructor identity.
     pub key: usize,
     pub id: usize,
@@ -589,6 +590,7 @@ fn compound(
     }
     chord_ids.sort_by_key(|id| centers[id]);
     Ok(CompoundSlot {
+        identity: std::sync::Arc::new(()),
         key: id - 1,
         id,
         members: members.to_vec(),

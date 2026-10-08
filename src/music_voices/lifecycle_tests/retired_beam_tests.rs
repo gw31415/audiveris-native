@@ -9,7 +9,7 @@ fn original_beam() -> Value {
     ))
     .unwrap()
 }
-fn named(owner: &OwnedMusic, labels: &BTreeMap<usize, String>, name: &str) -> Chord {
+pub(super) fn named(owner: &OwnedMusic, labels: &BTreeMap<usize, String>, name: &str) -> Chord {
     owner
         .chords
         .iter()
@@ -23,7 +23,7 @@ fn voice_name<'a>(voice: &Voice, refs: &[Voice], names: &'a [&str]) -> &'a str {
         .position(|r| Arc::ptr_eq(&r.identity, &voice.identity))
         .unwrap()]
 }
-fn voice_row(
+pub(super) fn voice_row(
     owner: &OwnedMusic,
     reference: &Voice,
     refs: &[Voice],
@@ -45,7 +45,19 @@ const NAMES: [&str; 5] = [
     "target_lower_voice",
     "new_voice",
 ];
-fn source_state(owner: &OwnedMusic, labels: &BTreeMap<usize, String>, refs: &[Voice]) -> Value {
+pub(super) fn source_state(
+    owner: &OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    refs: &[Voice],
+) -> Value {
+    source_state_with_names(owner, labels, refs, &NAMES)
+}
+pub(super) fn source_state_with_names(
+    owner: &OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    refs: &[Voice],
+    names: &[&str],
+) -> Value {
     let graph = &owner.owner.graph;
     let snap = graph.snapshot();
     let mut chords = owner
@@ -60,23 +72,25 @@ fn source_state(owner: &OwnedMusic, labels: &BTreeMap<usize, String>, refs: &[Vo
         let v=graph.chord_voice_owner(ch.key,&owner.voices).unwrap();
         json!({"label":labels[&ch.id],"registered":true,"same_measure":ch.measure==0,"manual":node["manual"]==true,
             "members":ch.members.iter().map(|n|labels[&(n["id"].as_u64().unwrap() as usize)].clone()).collect::<Vec<_>>(),
-            "voice":v.map(|v|voice_name(v,refs,&NAMES)),"same_baseline_slot":node["slot_id"]==baseline,
+            "voice":v.map(|v|voice_name(v,refs,names)),"same_baseline_slot":node["slot_id"]==baseline,
             "slot_id":node["slot_id"],"time_offset":node["time_offset"],"duration":graph.chord_duration(ch.key).unwrap(),"end_time":graph.chord_end_time(ch.key).unwrap()})
     }).collect::<Vec<_>>();
     let source_refs = refs
         .iter()
         .enumerate()
-        .filter(|(i, _)| *i < 2 || *i == 4)
-        .map(|(_, r)| voice_row(owner, r, refs, &NAMES, labels, 0))
+        .filter(|(i, _)| *i < 2 || *i >= 4)
+        .map(|(_, r)| voice_row(owner, r, refs, names, labels, 0))
         .collect::<Vec<_>>();
     let timing = &owner.measures[0].timing;
     json!({"chords":rows,"voices":source_refs,
-        "measure_voices":owner.voices.iter().filter(|v|v.measure==0).map(|v|voice_name(v,refs,&NAMES)).collect::<Vec<_>>(),
+        "measure_voices":owner.voices.iter().filter(|v|v.measure==0).map(|v|voice_name(v,refs,names)).collect::<Vec<_>>(),
         "measure_chords":owner.chords.iter().filter(|c|c.measure==0).map(|c|labels[&c.id].clone()).collect::<Vec<_>>(),
         "measure_abnormal":timing.abnormal,"expected":timing.expected.map(crate::music_time::format_fraction),"actual":timing.actual.map(crate::music_time::format_fraction),
         "excess":timing.excess.map(crate::music_time::format_fraction),"stack_slot_ids":timing.slots.iter().map(|s|s.id).collect::<Vec<_>>()})
 }
-fn prepare_beam(case: &Value) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, usize) {
+pub(super) fn prepare_beam(
+    case: &Value,
+) -> (OwnedMusic, BTreeMap<usize, String>, Vec<Voice>, usize) {
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-parallel-voices/parallel-beam.png"
     ))
@@ -200,9 +214,46 @@ fn compare_beam(
     step: &Value,
     relations: &Value,
 ) {
+    compare_owned(
+        owner,
+        labels,
+        (refs, &NAMES, None),
+        group_id,
+        case,
+        step,
+        relations,
+    );
+}
+type SlotOwners = BTreeMap<usize, Arc<()>>;
+pub(super) fn compare_owned(
+    owner: &OwnedMusic,
+    labels: &BTreeMap<usize, String>,
+    references: (&[Voice], &[&str], Option<&SlotOwners>),
+    group_id: usize,
+    case: &Value,
+    step: &Value,
+    relations: &Value,
+) {
+    let (refs, names, slots) = references;
     let phase = step["phase"].as_str().unwrap();
     let expected = &step["state"];
-    let actual = source_state(owner, labels, refs);
+    let mut actual = source_state_with_names(owner, labels, refs, names);
+    if let Some(slots) = slots {
+        for row in actual["chords"].as_array_mut().unwrap() {
+            let chord = owner
+                .chords
+                .iter()
+                .find(|c| labels[&c.id] == row["label"])
+                .unwrap();
+            row["same_baseline_slot"] = json!(
+                owner
+                    .owner
+                    .graph
+                    .chord_slot_identity(chord.key)
+                    .is_some_and(|s| Arc::ptr_eq(s, &slots[&chord.id]))
+            );
+        }
+    }
     for (key, wanted) in expected["source"]
         .as_object()
         .unwrap()
@@ -214,8 +265,8 @@ fn compare_beam(
     assert_eq!(owner.owner.graph.snapshot()["relations"], *relations);
     assert_eq!(
         json!([
-            voice_row(owner, &refs[2], refs, &NAMES, labels, 1),
-            voice_row(owner, &refs[3], refs, &NAMES, labels, 1)
+            voice_row(owner, &refs[2], refs, names, labels, 1),
+            voice_row(owner, &refs[3], refs, names, labels, 1)
         ]),
         expected["target"],
         "{phase}: target"
@@ -260,7 +311,7 @@ fn compare_beam(
     let rows=group["chords"].as_array().unwrap().iter().map(|c|{
         let chord=owner.chords.iter().find(|ch|ch.id==c["id"].as_u64().unwrap() as usize).unwrap();
         let voice=owner.owner.graph.chord_voice_owner(chord.key,&owner.voices).unwrap();
-        json!({"chord":labels[&chord.id],"previous_measure":chord.measure==0,"voice":voice.map(|v|voice_name(v,refs,&NAMES))})
+        json!({"chord":labels[&chord.id],"previous_measure":chord.measure==0,"voice":voice.map(|v|voice_name(v,refs,names))})
     }).collect::<Vec<_>>();
     assert_eq!(
         rows.first()
