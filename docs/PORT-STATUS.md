@@ -2002,3 +2002,13 @@ Voice1/12,1/6,7/24,5/12,2/3 narrow changes; native outer rollback restores actua
 Graph/Chord/candidate/container/manual state. Evidence musicxml-tuplet-inspect-end.
 Collection removal/stale-predecessor merge, second pass and real ordinary resources
 remain; full/public false.
+
+Ordered Tuplet collection removal now preserves explicit/implicit/manual actual
+objects, duplicate retired references, caller Measure->Stack Part/unassigned detach,
+explicit actual center lookup (NULL is valid), implicit other-Stack retired ownership
+and18 old-clock callbacks across8 source controls. A later NULL member preserves
+source partial removal separately from native actual Graph/container/cache/manual
+rollback and prefix retry. Raw unassigned collections and actual owner copies are
+observed rather than inferred from unions/report. Evidence musicxml-tuplet-remove-
+collection. Stale-predecessor merge, second pass and ordinary resources remain;
+shared multipart/extensive relations/full nonUI/public false.

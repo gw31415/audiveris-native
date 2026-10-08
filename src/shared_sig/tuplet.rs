@@ -31,6 +31,9 @@ impl Default for TupletCache {
 }
 
 #[cfg(test)]
+pub(crate) type TupletContainers = Vec<(Vec<Key>, Vec<Key>)>;
+
+#[cfg(test)]
 #[derive(Clone, Debug)]
 pub(crate) struct TupletRemovalObservation {
     pub edge: usize,
@@ -41,6 +44,8 @@ pub(crate) struct TupletRemovalObservation {
     pub state: serde_json::Value,
     pub snapshot: serde_json::Value,
     pub owners: super::beam_rest::CallbackOwners,
+    pub graph: Graph,
+    pub containers: Option<TupletContainers>,
 }
 
 impl Graph {
@@ -350,7 +355,12 @@ impl Graph {
             .collect()
     }
     pub(crate) fn tuplet_status(&self, key: Key) -> Result<(bool, bool), String> {
-        let id = self.endpoint(key)?;
+        self.endpoint(key)?;
+        let (implicit, manual, _) = self.retained_tuplet_status(key)?;
+        Ok((implicit, manual))
+    }
+    pub(crate) fn retained_tuplet_status(&self, key: Key) -> Result<(bool, bool, bool), String> {
+        let id = self.id(key).ok_or("music_actual_tuplet_owner_required")?;
         let v = &self.vertices[id - 1];
         if key.phase != Phase::Symbol
             || v.data["kind"] != "TupletInter"
@@ -361,7 +371,28 @@ impl Graph {
         {
             return Err("music_actual_tuplet_owner_required".into());
         }
-        Ok((v.data["implicit"] == true, v.data["manual"] == true))
+        Ok((
+            v.data["implicit"] == true,
+            v.data["manual"] == true,
+            v.removed,
+        ))
+    }
+    pub(crate) fn retained_tuplet_part(&mut self, key: Key) -> Result<Option<u64>, String> {
+        self.retained_tuplet_status(key)?;
+        self.part_for_inter(self.id(key).unwrap())
+    }
+    pub(crate) fn tuplet_center_x(&self, key: Key) -> Result<Option<i64>, String> {
+        self.retained_tuplet_status(key)?;
+        let bounds = &self.vertices[self.id(key).unwrap() - 1].data["bounds"];
+        if bounds.is_null() {
+            return Ok(None);
+        }
+        let b: [i64; 4] = serde_json::from_value(bounds.clone())
+            .map_err(|_| "music_tuplet_actual_bounds_required")?;
+        Ok(Some(
+            b[0].checked_add(b[2] / 2)
+                .ok_or("music_tuplet_actual_center_required")?,
+        ))
     }
     pub(super) fn exact_tuplet_duration(&self, id: usize) -> Result<Option<Fraction>, String> {
         let Some(mut duration) =
@@ -398,6 +429,17 @@ impl Graph {
         if !self.tuplet_status(key)?.0 {
             return Err("music_actual_implicit_tuplet_required".into());
         }
+        self.remove_owned_tuplet(key, measure, stack)
+    }
+    pub(crate) fn remove_owned_tuplet(
+        &mut self,
+        key: Key,
+        measure: &[Key],
+        stack: &[Key],
+    ) -> Result<(), String> {
+        if self.retained_tuplet_status(key)?.2 {
+            return Ok(());
+        }
         let id = self.endpoint(key)?;
         let incident = self.incident_edges(id);
         for &eid in &incident {
@@ -425,7 +467,7 @@ impl Graph {
         for eid in incident {
             self.edges[eid - 1].removed = true;
             if self.edges[eid - 1].key.kind == "ChordTupletRelation" {
-                // Removed implicit tuplets skip checkAbnormal; old Chord clocks
+                // Whole-vertex removal skips checkAbnormal; old Chord clocks
                 // and relation bodies survive while the vertex is registered.
                 #[cfg(test)]
                 for phase in ["entered", "finished"] {
@@ -448,6 +490,14 @@ impl Graph {
         measure: &[Key],
         stack: &[Key],
     ) {
+        if self.tuplet_removals.is_none() {
+            return;
+        }
+        let held_removals = self.tuplet_removals.take();
+        let held_additions = self.tuplet_additions.take();
+        let graph = self.clone();
+        self.tuplet_removals = held_removals;
+        self.tuplet_additions = held_additions;
         let v = &self.vertices[self.edges[edge - 1].key.target - 1];
         let state = serde_json::json!({"registered":!v.removed,"removed":v.removing||v.removed,"manual":self.edges[edge-1].data["manual"]==true});
         let row = TupletRemovalObservation {
@@ -458,6 +508,8 @@ impl Graph {
             stack_tuplets: stack.to_vec(),
             state,
             snapshot: self.snapshot(),
+            graph,
+            containers: self.tuplet_removal_containers.clone(),
             owners: self
                 .vertices
                 .iter()
@@ -478,6 +530,10 @@ impl Graph {
     #[cfg(test)]
     pub(crate) fn trace_tuplet_removals(&mut self) {
         self.tuplet_removals = Some(Vec::new());
+    }
+    #[cfg(test)]
+    pub(crate) fn trace_tuplet_removal_containers(&mut self, containers: Option<TupletContainers>) {
+        self.tuplet_removal_containers = containers;
     }
     #[cfg(test)]
     pub(crate) fn take_tuplet_removals(&mut self) -> Vec<TupletRemovalObservation> {

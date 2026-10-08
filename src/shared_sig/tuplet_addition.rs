@@ -172,7 +172,9 @@ impl Graph {
                 self.chord_end_time(key)?;
             }
             let held = self.tuplet_additions.take();
+            let removals = self.tuplet_removals.take();
             let graph = self.clone();
+            self.tuplet_removals = removals;
             self.tuplet_additions = held;
             let id = self.endpoint(tuplet)?;
             let sig_attached = self.vertices[id - 1]
