@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--oracle-home", type=Path, required=True)
 parser.add_argument("--book", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
-parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe"),
+parser.add_argument("--probe", choices=("VoiceLifecycleProbe", "VoiceRemovalLifecycleProbe", "VoiceRetiredNextProbe", "VoiceRetiredTieProbe", "VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe", "BeamRestClearProbe", "BeamRestLinkedProbe"),
                     default="VoiceLifecycleProbe")
 args = parser.parse_args()
 output = args.output.resolve()
@@ -33,6 +33,8 @@ compile_args = [str(compiler), "--release", "21", "-cp", str(lib / "app/*"),
                 str(oracle.ROOT / "scripts/java/HeadStemPreLinkProbe.java")]
 if args.probe != "VoiceLifecycleProbe":
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java"))
+if args.probe == "BeamRestLinkedProbe":
+    compile_args.append(str(oracle.ROOT / "scripts/java/BeamRestClearProbe.java"))
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     compile_args.append(str(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java"))
 if args.probe in ("VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
@@ -63,6 +65,8 @@ record = {
 }
 if args.probe != "VoiceLifecycleProbe":
     record["lifecycle_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceLifecycleProbe.java")
+if args.probe == "BeamRestLinkedProbe":
+    record["clear_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/BeamRestClearProbe.java")
 if args.probe in ("VoiceRetiredBeamProbe", "VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):
     record["tie_helper_sha256"] = oracle.sha(oracle.ROOT / "scripts/java/VoiceRetiredTieProbe.java")
 if args.probe in ("VoiceResetRhythmProbe", "VoicePageRhythmProbe", "VoicePageNullRhythmProbe", "VoiceSelectedRhythmProbe"):

@@ -3,7 +3,7 @@
 //! Shape.getNoteDuration, MeasureRhythm.processStartingChords, Voice.addChord,
 //! AbstractChordInter.getEndTime, Page.numberMeasures/simpleDurationOf and
 //! PartwiseBuilder note/attribute ordering guide this explicitly bounded path.
-mod beam_rest;
+pub(crate) mod beam_rest;
 #[cfg(test)]
 mod selected_cli_tests;
 pub(crate) mod stack_rhythm;

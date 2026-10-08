@@ -17,16 +17,16 @@ fn original() -> Value {
     }
     observed
 }
-struct Control {
-    owner: OwnedMusic,
-    labels: BTreeMap<usize, String>,
-    refs: Vec<Voice>,
-    rests: Vec<Key>,
-    baseline: Vec<Arc<Vec<usize>>>,
-    beam: usize,
-    relations: Vec<usize>,
+pub(super) struct Control {
+    pub(super) owner: OwnedMusic,
+    pub(super) labels: BTreeMap<usize, String>,
+    pub(super) refs: Vec<Voice>,
+    pub(super) rests: Vec<Key>,
+    pub(super) baseline: Vec<Arc<Vec<usize>>>,
+    pub(super) beam: usize,
+    pub(super) relations: Vec<usize>,
 }
-fn prepare_control(case: &Value) -> Control {
+pub(super) fn prepare_control(case: &Value) -> Control {
     let image = crate::GrayImage::decode(include_bytes!(
         "../../../fixtures/official-image-musicxml-parallel-voices/parallel-beam.png"
     ))
@@ -173,7 +173,7 @@ fn prepare_control(case: &Value) -> Control {
         labels.insert(id, format!("rest{i}"));
         labels.insert(cid, format!("rest_chord{i}"));
         rests.push(chord);
-        if mi == 0 {
+        if mi == 0 && declared["beam_link"] != false {
             owner.owner.graph.relations(1,Phase::Symbol,vec![(beam_key,rest,json!({"kind":"BeamRestRelation","manual":declared["manual"],"beam_portion":"CENTER"}))]).unwrap();
             let edge = owner.owner.graph.snapshot()["relations"]
                 .as_array()
@@ -200,7 +200,7 @@ fn prepare_control(case: &Value) -> Control {
         relations,
     }
 }
-fn frame(c: &mut Control) -> Value {
+pub(super) fn frame(c: &mut Control) -> Value {
     let groups = c.owner.actual_measure_beam_groups(1).unwrap();
     let snapshot = c.owner.owner.graph.snapshot();
     let mut owned = super::retired_beam_tests::measure_state(

@@ -1676,3 +1676,18 @@ removal with actual Chords/Slots/Voice clocks and cache identities intact. This
 backend stays separate from normal rhythm until BeamGroup interleaved-rest
 detection is compared; implicit tuplets, generalized controller/tasks and the
 remaining nonUI ledger are pending. See evidence/musicxml-beam-rest-clear.
+
+### Actual linked rest candidates before detection
+
+The actual-owner candidate query matches pinned getLinkedRests in two original
+cases/eight boundaries. Incoming relations precede outgoing; layered Rest-only
+closure keeps insertion order, cycles and foreign-Measure/null-Voice references.
+The detector's actual Next-only whitelist excludes Same-only links and removes
+the direct Separate blacklist after closure. Manual BeamRest changes actual
+group seeds while preserving the old empty Rest beam-cache object. Genuine
+Measure reset keeps old Voice/cache objects and clears only legitimate Chord
+clock/Slot ownership. Missing actual Rest owners refuse transactionally without
+placeholder Voice IDs or report reconstruction. Nearest-beam geometry, addition
+callbacks and plain lookup remain next before full clear/detect can join normal
+rhythm; all full/public completion flags stay false. See
+evidence/musicxml-beam-rest-linked.

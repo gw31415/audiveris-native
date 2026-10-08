@@ -1,0 +1,41 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "3a9b4da962b09d44545f89d8d8ede470530a5012f939da29c4a105f994c6373e",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "d15a1af7003f2fa85b76c97da70bc01be1a227551f8f256518c37b8e3927c918",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/beam-rest-linked-original/classes",
+    "/workspace/audiveris-native/scripts/java/BeamRestLinkedProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/beam-rest-linked-original/home",
+    "-Djava.util.prefs.userRoot=/tmp/beam-rest-linked-original/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/beam-rest-linked-original/classes",
+    "BeamRestLinkedProbe",
+    "/tmp/retired-beam-book/book/parallel-beam.omr",
+    "/tmp/beam-rest-linked-original/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "c52baf15dacfee0c00fed24999739af68f17d3fc706d75f9b28ff84fba93395d",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "0c1fc20939437f4776b4865858f3a7f8c455879ea5204af03e6b5427f1c09fc9",
+  "retained_observed_sha256": "2ebb433c01bba0c608802057fcb2e4aacd09a93f326ad158e05d4f19e111ae22",
+  "retained_format": "lossless shared relation arrays; expansion equals every raw original field"
+}
