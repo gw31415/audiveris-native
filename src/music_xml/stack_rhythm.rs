@@ -152,6 +152,38 @@ impl Context<'_> {
             json!(order.ordered().map(|s| s.projection()).collect::<Vec<_>>());
         Ok(observations)
     }
+    fn process_stack(&mut self, mi: usize) -> Result<(), String> {
+        let expected = self
+            .measures
+            .get(mi)
+            .ok_or("music_selected_actual_measure_required")?
+            .timing
+            .expected
+            .ok_or("music_reprocess_unknown_expected_export_pending")?;
+        crate::music_voices::reset_stack_rhythm(&mut self.measures[mi], Some(expected));
+        self.process_measure(mi)?;
+        crate::music_voices::generate_slots(self.graph, self.voices, &mut self.measures[mi], mi)?;
+        crate::music_voices::read_stack_actual_duration(
+            self.graph,
+            self.voices,
+            &mut self.measures[mi],
+            mi,
+        )
+    }
+    pub(super) fn refine_system(&mut self, mi: usize) -> Result<u64, String> {
+        let system = self
+            .measures
+            .get(mi)
+            .ok_or("music_selected_actual_measure_required")?
+            .system;
+        crate::music_voices::refine_ordinary_system(
+            self.graph,
+            self.voices,
+            self.measures,
+            system,
+        )?;
+        Ok(system)
+    }
     pub(crate) fn process_measure(&mut self, mi: usize) -> Result<Value, String> {
         let measure = self
             .measures
@@ -241,28 +273,32 @@ impl OwnedMusic {
     /// Rebuild a compared ordinary one-Measure stack from real Chords before
     /// system Voice refinement. Image/XML admission remains a separate stage.
     pub fn reprocess_stack_rhythm(&mut self, measure_number: usize) -> Result<(), String> {
+        self.rebuild_stack_rhythm(measure_number, false)
+    }
+    /// Compared ordinary PageRhythm.reprocessStack: actual stack rhythm first,
+    /// then refinement of its containing system, committed as one transaction.
+    pub fn reprocess_page_stack_rhythm(&mut self, measure_number: usize) -> Result<(), String> {
+        self.rebuild_stack_rhythm(measure_number, true)
+    }
+    fn rebuild_stack_rhythm(&mut self, measure_number: usize, refine: bool) -> Result<(), String> {
         let mi = measure_number
             .checked_sub(1)
             .filter(|i| *i < self.measures.len())
             .ok_or("music_selected_actual_measure_required")?;
-        let expected = self.measures[mi]
-            .timing
-            .expected
-            .ok_or("music_reprocess_unknown_expected_export_pending")?;
         let mut graph = self.owner.graph.clone();
         let mut voices = self.voices.clone();
         let mut measures = self.measures.clone();
-        crate::music_voices::reset_stack_rhythm(&mut measures[mi], Some(expected));
-        Context {
+        let mut context = Context {
             graph: &mut graph,
             voices: &mut voices,
             measures: &mut measures,
             chords: &self.chords,
             interline: self.owner.interline,
+        };
+        context.process_stack(mi)?;
+        if refine {
+            context.refine_system(mi)?;
         }
-        .process_measure(mi)?;
-        crate::music_voices::generate_slots(&mut graph, &mut voices, &mut measures[mi], mi)?;
-        crate::music_voices::read_stack_actual_duration(&graph, &voices, &mut measures[mi], mi)?;
         self.owner.graph = graph;
         self.voices = voices;
         self.measures[mi].timing = measures.remove(mi).timing;

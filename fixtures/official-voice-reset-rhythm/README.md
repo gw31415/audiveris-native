@@ -26,3 +26,8 @@ stack-slot/read-duration state. No artificial Voice numbering or report owner
 reconstruction is performed. General implicit tuplets/interleaved-rest passes,
 multipart stacks, automatic cross-bar acquisition and controller/history are
 outside this comparison and remain pending.
+
+The executed observer for this acquisition is preserved in native Git8ae5b66
+at scripts/java/VoiceResetRhythmProbe.java; its SHA matches provenance.json.
+Later extraction of common preparation supports the PageRhythm control without
+replacing these observations or their recorded executed-source hashes.

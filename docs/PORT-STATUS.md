@@ -1595,3 +1595,23 @@ termination/divisions and native XML. Full MeasureRhythm implicit tuplet/rest
 passes, multipart stacks and Page/controller/history integration remain pending;
 public/global flags stay false/guarded. See
 `evidence/musicxml-voice-reset-rhythm/TRY.md` and `NEXT-DEPENDENCY.md`.
+
+
+Original PageRhythm.reprocessStack after genuine Measure reset adds two
+independent controls six method boundaries. Its actual stack rebuild then
+system refinement agrees with the earlier decomposed result; old Voice/Slot
+bodies, signed termination/excess, cached expectedDuration and actual BeamGroup/
+tie/Next identities survive. OwnedMusic.reprocess_page_stack_rhythm runs that
+ordinary ordering as one native transaction. Late malformed preferred failure
+preserves every actual Chord/Slot/Voice identity, old clocks/manual relations,
+layout/report and untouched Slot storage; repair/retry agrees. This guard's
+atomic rollback is not Java malformed-type/exception rollback parity.
+
+The existing selected editing/export impact uses the common post-stack system
+refinement routine; each selected stack still refines immediately, including
+repeated systems. Six HeadStem actions exercise the Page backend with original
+exact7/64, shortage/divisions and native XML. Original Reset executed-source
+hashes remain pinned to8ae5b66. General MeasureRhythm passes, multipart stacks,
+controller/history/PAGE/project/persistence remain pending; public/global
+flags stay false/guarded. See `evidence/musicxml-voice-page-rhythm/TRY.md` and
+`NEXT-DEPENDENCY.md`.

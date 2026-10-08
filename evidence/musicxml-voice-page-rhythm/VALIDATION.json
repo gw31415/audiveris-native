@@ -1,0 +1,236 @@
+{
+  "baseline_commit": "8ae5b66117210d00fe3d189d0acb1176c49fd34e",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "actual ordinary PageRhythm selected stack rebuild -> containing-system refinement; native late preferred guard rollback distinct from Java exception behavior",
+  "new_independent_original_cases": 2,
+  "new_original_Page_method_boundaries_compared": 6,
+  "previous_Reset_boundaries_preserved_and_compared": 20,
+  "original_Page_equals_prior_decomposed_stack_then_refine": true,
+  "targeted_validation": {
+    "unique_selected_tests": 10,
+    "fmt": "passed",
+    "clippy_all_targets_D_warnings": "passed",
+    "MusicXML_CLI_build": "passed",
+    "Rational_XML_bytes": "identical",
+    "Rational_XML_XSD": "passed",
+    "Rational_XML_sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+  },
+  "checks": [
+    {
+      "check": "page_reset",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "reset_rhythm_tests"
+      ],
+      "exit_code": 0,
+      "tests": 4,
+      "log": "/tmp/voice-page-rhythm-native.log"
+    },
+    {
+      "check": "voice_refine",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_xml::tests::original_voice",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-voice_refine-final.log",
+      "tests": 2
+    },
+    {
+      "check": "voice_null",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "original_null_chord_voice"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-voice_null-final.log",
+      "tests": 1
+    },
+    {
+      "check": "rational",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "actual_rational_slots_and_underfilled_voice_termination_match_original"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-rational-final.log",
+      "tests": 1
+    },
+    {
+      "check": "bounds",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "original_bounds_edit_reprocesses_retained_stack_and_undo_without_frat_repopulation"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-bounds-final.log",
+      "tests": 1
+    },
+    {
+      "check": "timed_support",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "original_timed_support_transfer_reprocesses_owned_stack_and_rolls_back_incomplete_undo"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-timed_support-final.log",
+      "tests": 1
+    },
+    {
+      "check": "fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-fmt-final.log",
+      "tests": null
+    },
+    {
+      "check": "clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-clippy-final.log",
+      "tests": null
+    },
+    {
+      "check": "build",
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/voice-page-rhythm-build-final.log",
+      "tests": null
+    }
+  ],
+  "native_rollback": [
+    "all actual Chord fields/storage",
+    "every actual cached Slot identity and untouched Slot storage",
+    "actual live/retained Voice identities and old slot/termination/excess bodies",
+    "Graph/manual relations and expectedDuration/clocks",
+    "layout/report"
+  ],
+  "remaining": "null unselected source after selected next-stack rebuild; general MeasureRhythm passes, multipart stacks and controller/history/PAGE/project/persistence pending; public/global guards false",
+  "historical_649_repeated": false,
+  "ce785c9_obtained_or_regenerated": false,
+  "cli_regression": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed",
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    },
+    "checker_sha256": "2e25261515add3a3207472d87edae241fc934fc79c18c65fbf433aab843d949e"
+  },
+  "evidence_sha256": {
+    "fixtures/official-voice-page-rhythm/observed.json": "b494366bda3b2154bb9a99a805bc15dd35ac5587ccca5e30dbab6f6e4ef0da97",
+    "fixtures/official-voice-page-rhythm/provenance.json": "40d95758aa71ecb84a0600e8b8842efe9a2d3b6d032d483652bbc8718469e2e7",
+    "scripts/java/VoicePageRhythmProbe.java": "7d14e9241f7a5de152cd19bfbdb271614719bb6da3005febe0c327081a61dc70",
+    "scripts/java/VoiceResetRhythmProbe.java": "11d458be30b3358f91c773c991d2c08b5f1137dc0f49ca1c93460f14e3de8aab",
+    "src/music_xml/stack_rhythm.rs": "36bde60a91ad3c930bf2b52b0405ed0ffa8d34a1980b05ca7c1f463681f1fe22",
+    "src/music_voices/lifecycle_tests/reset_rhythm_tests.rs": "bc952aa5a02c303e63498fc3664efb882e6c13ead0fe36f72cc6e2e85824de57"
+  }
+}

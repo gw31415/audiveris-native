@@ -284,3 +284,158 @@ fn selected_rhythm_failure_keeps_actual_chords_retired_owners_and_clock_state_fo
         &graph["relations"],
     );
 }
+
+fn original_page() -> Value {
+    serde_json::from_str(include_str!(
+        "../../../fixtures/official-voice-page-rhythm/observed.json"
+    ))
+    .unwrap()
+}
+#[test]
+fn original_page_stack_rebuild_precedes_system_refinement_and_preserves_actual_relationships() {
+    for case in original_page()["cases"].as_array().unwrap() {
+        let (mut owner, labels, mut refs, group) = prepare(case);
+        let slots = owner
+            .chords
+            .iter()
+            .filter(|c| c.measure == 0)
+            .map(|c| {
+                (
+                    c.id,
+                    owner
+                        .owner
+                        .graph
+                        .chord_slot_identity(c.key)
+                        .unwrap()
+                        .clone(),
+                )
+            })
+            .collect::<BTreeMap<_, _>>();
+        let address = owner.chords.as_ptr();
+        let target_slots = owner.measures[1].timing.slots.as_ptr();
+        let relations = owner.owner.graph.snapshot()["relations"].clone();
+        for step in case["states"].as_array().unwrap() {
+            match step["phase"].as_str().unwrap() {
+                "before_reset" => {}
+                "measure_reset" => reset_rhythm(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &mut owner.measures[0],
+                    &owner.chords,
+                    0,
+                )
+                .unwrap(),
+                "page_stack" => {
+                    owner.reprocess_page_stack_rhythm(1).unwrap();
+                    append_rebuilt(&owner, &mut refs);
+                }
+                other => panic!("unobserved Page phase {other}"),
+            }
+            assert_eq!(owner.chords.as_ptr(), address);
+            assert_eq!(owner.measures[1].timing.slots.as_ptr(), target_slots);
+            assert_eq!(step["expected_object_same"], true);
+            compare_owned(
+                &owner,
+                &labels,
+                (&refs, &NAMES, Some(&slots)),
+                group,
+                case,
+                step,
+                &relations,
+            );
+        }
+    }
+}
+#[test]
+fn late_page_preferred_failure_rolls_back_rebuilt_actual_owners_chords_and_slots() {
+    let original = original_page();
+    let case = &original["cases"][1];
+    let (mut owner, labels, mut refs, group) = prepare(case);
+    let target = named(&owner, &labels, case["target"].as_str().unwrap());
+    let slots = owner
+        .chords
+        .iter()
+        .map(|c| {
+            (
+                c.id,
+                owner
+                    .owner
+                    .graph
+                    .chord_slot_identity(c.key)
+                    .unwrap()
+                    .clone(),
+            )
+        })
+        .collect::<BTreeMap<_, _>>();
+    set_next_preferred(&mut owner, &target, json!("invalid"));
+    let graph = owner.owner.graph.snapshot();
+    let voices = projection(&owner.voices, &owner.measures);
+    let clocks = source_state_with_names(&owner, &labels, &refs, &NAMES);
+    let pool = owner.owner.graph.retained_voice_observations();
+    let report = owner.owner.prepared.report.clone();
+    let layout = owner.layout();
+    let actual_chords = owner.chords.clone();
+    let address = owner.chords.as_ptr();
+    let slot_storage = owner
+        .measures
+        .iter()
+        .map(|m| m.timing.slots.as_ptr())
+        .collect::<Vec<_>>();
+    let identities = owner
+        .voices
+        .iter()
+        .map(|v| v.identity.clone())
+        .collect::<Vec<_>>();
+    assert_eq!(
+        owner.reprocess_page_stack_rhythm(1).unwrap_err(),
+        "music_refine_preferred_ID_outside_native_range_pending"
+    );
+    assert_eq!(owner.owner.graph.snapshot(), graph);
+    assert_eq!(projection(&owner.voices, &owner.measures), voices);
+    assert_eq!(
+        source_state_with_names(&owner, &labels, &refs, &NAMES),
+        clocks
+    );
+    assert_eq!(owner.owner.graph.retained_voice_observations(), pool);
+    assert_eq!(owner.owner.prepared.report, report);
+    assert_eq!(owner.layout(), layout);
+    assert_eq!(owner.chords.as_ptr(), address);
+    assert_eq!(
+        owner
+            .measures
+            .iter()
+            .map(|m| m.timing.slots.as_ptr())
+            .collect::<Vec<_>>(),
+        slot_storage
+    );
+    for (ch, old) in owner.chords.iter().zip(actual_chords) {
+        assert_eq!(ch.members, old.members);
+        assert_eq!(ch.stem, old.stem);
+        assert_eq!(ch.bounds, old.bounds);
+        assert_eq!(ch.measure, old.measure);
+        assert_eq!(ch.key, old.key);
+        assert!(Arc::ptr_eq(
+            owner.owner.graph.chord_slot_identity(ch.key).unwrap(),
+            &slots[&ch.id]
+        ));
+    }
+    for (v, id) in owner.voices.iter().zip(identities) {
+        assert!(Arc::ptr_eq(&v.identity, &id));
+    }
+    set_next_preferred(&mut owner, &target, json!(1));
+    owner.reprocess_page_stack_rhythm(1).unwrap();
+    append_rebuilt(&owner, &mut refs);
+    let source_slots = slots
+        .into_iter()
+        .filter(|(id, _)| owner.chords.iter().any(|c| c.id == *id && c.measure == 0))
+        .collect::<BTreeMap<_, _>>();
+    compare_owned(
+        &owner,
+        &labels,
+        (&refs, &NAMES, Some(&source_slots)),
+        group,
+        case,
+        &case["states"][2],
+        &graph["relations"],
+    );
+}

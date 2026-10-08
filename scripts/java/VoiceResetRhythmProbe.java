@@ -19,11 +19,11 @@ public class VoiceResetRhythmProbe extends VoiceRetiredBeamProbe {
             "same_target_group",call(target,"getBeamGroup")==group,"predecessor",labels.get(predecessor),
             "predecessor_ref_old",call(predecessor,"getVoice")==refs.get(0),"tied_id",tied(targetRefs.get(0)));
     }
-    public static void main(String[] args) throws Exception {
+    static List<Object> observe(String bookPath,List<String> modes,boolean page) throws Exception {
         c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);
         List<Object> cases=new ArrayList<>();
-        for(String mode:List.of("short","excess","short_full","excess_full")) {
-            Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0]));
+        for(String mode:modes) {
+            Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(bookPath));
             Object sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");
             Object system=((List<?>)call(sheet,"getSystems")).get(0),sig=call(system,"getSig");
             List<?> stacks=(List<?>)call(system,"getStacks");
@@ -57,11 +57,11 @@ public class VoiceResetRhythmProbe extends VoiceRetiredBeamProbe {
             Object fresh=make("sheet.rhythm.Voice",seed,measure);call(measure,"addVoice",fresh);call(fresh,"setId",7);labels.put(fresh,"new_voice");refs.add(fresh);refine(system);
             Object nextRelation=make("sig.relation.NextInVoiceRelation");call(nextRelation,"setManual",true);call(sig,"addEdge",supportLast,target,nextRelation);labels.put(nextRelation,"relation"+relations.size());relations.add(nextRelation);call(target,"setPreferredVoiceId",1);refine(system);
             List<Object> states=new ArrayList<>();Object expected=call(stack,"getExpectedDuration");
-            for(String phase:mode.endsWith("_full")?List.of("before_reset","measure_reset","full_stack","refined"):List.of("before_reset","measure_reset","stack_reset","measure_processed","stack_slots","refined")) {
+            for(String phase:page?List.of("before_reset","measure_reset","page_stack"):mode.endsWith("_full")?List.of("before_reset","measure_reset","full_stack","refined"):List.of("before_reset","measure_reset","stack_reset","measure_processed","stack_slots","refined")) {
                 switch(phase) {
                     case "measure_reset" -> call(measure,"resetRhythm");
                     case "stack_reset" -> call(stack,"resetRhythm");
-                    case "measure_processed", "full_stack" -> {if(phase.equals("full_stack"))call(make("sheet.rhythm.StackRhythm",stack),"process",expected);else call(make("sheet.rhythm.MeasureRhythm",measure),"process");int ordinal=0;for(Object v:(List<?>)call(measure,"getVoices")){labels.put(v,"rebuilt_voice"+ordinal++);refs.add(v);}}
+                    case "measure_processed", "full_stack", "page_stack" -> {if(phase.equals("page_stack"))call(make("sheet.rhythm.PageRhythm",call(system,"getPage")),"reprocessStack",stack);else if(phase.equals("full_stack"))call(make("sheet.rhythm.StackRhythm",stack),"process",expected);else call(make("sheet.rhythm.MeasureRhythm",measure),"process");int ordinal=0;for(Object v:(List<?>)call(measure,"getVoices")){labels.put(v,"rebuilt_voice"+ordinal++);refs.add(v);}}
                     case "stack_slots" -> {Object rhythm=make("sheet.rhythm.StackRhythm",stack);for(String name:List.of("generateStackSlots","readStackActualDuration")){java.lang.reflect.Method m=c("sheet.rhythm.StackRhythm").getDeclaredMethod(name);m.setAccessible(true);m.invoke(rhythm);}}
                     case "refined" -> refine(system);
                 }
@@ -69,6 +69,10 @@ public class VoiceResetRhythmProbe extends VoiceRetiredBeamProbe {
             }
             cases.add(obj("name",mode,"declared_last_offset",offset.toString(),"geometry",geometry,"seed",labels.get(seed),"last",labels.get(last),"support_last",labels.get(supportLast),"target",labels.get(target),"beam_bounds",rect(call(beam,"getBounds")),"states",states));
         }
+        return cases;
+    }
+    public static void main(String[] args) throws Exception {
+        List<Object> cases=observe(args[0],List.of("short","excess","short_full","excess_full"),false);
         new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj("scope","genuine Measure reset, Stack reset, actual MeasureRhythm before Stack slots/read-duration and system refinement; preserved old Voice/Slot bodies and actual BeamGroup/Next relations; no automatic cross-bar or general controller admission","cases",cases));
     }
 }

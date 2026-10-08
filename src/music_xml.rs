@@ -211,15 +211,16 @@ impl Export {
                 Some((std::slice::from_ref(&mi), &rhythm)),
                 scope,
             )?;
-            let system = self.owner.measures[mi].system;
             // Original reprocessStack refines after each processed stack,
             // even if the same system occurs again in the impact list.
-            crate::music_voices::refine_ordinary_system(
-                &mut self.owner.owner.graph,
-                &mut self.owner.voices,
-                &self.owner.measures,
-                system,
-            )?;
+            let system = stack_rhythm::Context {
+                graph: &mut self.owner.owner.graph,
+                voices: &mut self.owner.voices,
+                measures: &mut self.owner.measures,
+                chords: &self.owner.chords,
+                interline: self.owner.owner.interline,
+            }
+            .refine_system(mi)?;
             systems.push(system);
         }
         for (mi, measure) in self.owner.measures.iter().enumerate() {
@@ -3478,7 +3479,7 @@ mod rational_owned_export_tests {
                     );
                 }
                 assert_eq!(owner.measures[0].timing.expected, cached_expected);
-                owner.reprocess_stack_rhythm(1).unwrap();
+                owner.reprocess_page_stack_rhythm(1).unwrap();
                 assert_eq!(owner.measures[0].timing.expected, cached_expected);
                 let rebuilt_timing =
                     crate::music_voices::projection(&owner.voices, &owner.measures);
