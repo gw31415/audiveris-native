@@ -1875,3 +1875,13 @@ reads existing Staff without triggering lazy Staff; critical fresh Stack boundar
 is retained. Evidence musicxml-tuplet-raw-base has560+10+6 original boundaries
 and4 fresh base references. Fresh Tuplet allocation callbacks and force/inspect/
 merge/second pass remain next; full nonUI completion remains false.
+
+### Fresh implicit Tuplet callback lifecycle (continuation of4eebedd)
+
+The preserved120 original generation cases/360 callbacks now compare native fresh
+vertex-before-SIG, added unassigned Stack/Measure order, supplied-order fresh
+parallel relations, getter cache order and removal while old real Chord/Voice/
+Slot clocks stay intact. Failure restores nonempty/manual actual containers and
+backing storage. Actual source Stack boundaries/null/other-Stack ownership follow
+before force/inspect/merge/second pass and ordinary font/rhythm admission. Evidence
+musicxml-tuplet-generation; full nonUI completion remains false.

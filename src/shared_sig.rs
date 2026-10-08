@@ -9,11 +9,14 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod beam_rest;
 mod tuplet;
+mod tuplet_addition;
 #[cfg(test)]
 pub(crate) use beam_rest::CallbackObservation;
 pub use tuplet::TupletFactor;
 #[cfg(test)]
 pub(crate) use tuplet::TupletRemovalObservation;
+#[cfg(test)]
+pub(crate) use tuplet_addition::TupletAdditionObservation;
 mod book_state;
 mod chord_cache;
 mod chord_duration;
@@ -383,6 +386,10 @@ pub struct Graph {
     beam_rest_callbacks: Option<Vec<beam_rest::CallbackObservation>>,
     #[cfg(test)]
     tuplet_removals: Option<Vec<tuplet::TupletRemovalObservation>>,
+    #[cfg(test)]
+    tuplet_additions: Option<Vec<tuplet_addition::TupletAdditionObservation>>,
+    #[cfg(test)]
+    tuplet_addition_failure: Option<usize>,
     dot_removals: Vec<Value>,
     edit_publications: Vec<Value>,
     edit_impacts: Vec<Value>,

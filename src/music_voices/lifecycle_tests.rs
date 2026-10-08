@@ -822,3 +822,5 @@ mod tuplet_reuse_tests;
 mod tuplet_getters_tests;
 
 mod tuplet_raw_base_tests;
+
+mod tuplet_generation_tests;

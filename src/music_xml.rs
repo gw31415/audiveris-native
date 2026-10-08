@@ -12,6 +12,7 @@ pub(crate) mod stack_rhythm;
 mod tuplet_getters;
 mod tuplet_groups;
 pub use tuplet_getters::TupletRead;
+mod tuplet_generation;
 mod tuplet_placement;
 mod tuplet_preparation;
 pub use tuplet_groups::TupletGroups;

@@ -12,11 +12,22 @@ pub struct TupletFactor {
     pub actual_num: u32,
     pub actual_den: u32,
 }
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub(super) struct TupletCache {
     factor: OnceCell<Arc<TupletFactor>>,
     base: RefCell<Option<Arc<Fraction>>>,
     staff: Option<Arc<crate::grid_ir::StaffGeometry>>,
+    pub(super) sig_attached: bool,
+}
+impl Default for TupletCache {
+    fn default() -> Self {
+        Self {
+            factor: OnceCell::new(),
+            base: RefCell::new(None),
+            staff: None,
+            sig_attached: true,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -260,7 +271,7 @@ impl Graph {
             .tuplet_cache
             .as_ref()
             .unwrap();
-        serde_json::json!({"factor":c.factor.get().map(|f|[f.actual_num,f.actual_den]),"base":c.base.borrow().as_ref().map(|b|**b),"staff":c.staff.as_ref().map(|s|s.id)})
+        serde_json::json!({"factor":c.factor.get().map(|f|[f.actual_num,f.actual_den]),"base":c.base.borrow().as_ref().map(|b|**b),"staff":c.staff.as_ref().map(|s|s.id),"part":self.vertices[self.id(key).unwrap()-1].cached_part,"sig_attached":c.sig_attached})
     }
     pub(crate) fn first_chord_tuplet(&self, key: Key) -> Result<Option<Key>, String> {
         let id = self.endpoint(key)?;
@@ -292,6 +303,14 @@ impl Graph {
     pub(crate) fn tuplet_chords(&self, key: Key) -> Result<Vec<Key>, String> {
         self.tuplet_status(key)?;
         let id = self.endpoint(key)?;
+        if !self.vertices[id - 1]
+            .tuplet_cache
+            .as_ref()
+            .ok_or("music_actual_tuplet_cache_required")?
+            .sig_attached
+        {
+            return Err("music_actual_tuplet_SIG_attachment_required".into());
+        }
         self.incident_edges(id)
             .into_iter()
             .filter(|eid| self.edges[*eid - 1].key.kind == "ChordTupletRelation")

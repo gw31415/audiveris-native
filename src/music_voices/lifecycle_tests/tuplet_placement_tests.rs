@@ -8,7 +8,7 @@ use crate::{
     shared_sig::{Key, Phase},
 };
 
-fn original() -> Value {
+pub(super) fn original() -> Value {
     let mut d: Value = serde_json::from_str(include_str!(
         "../../../fixtures/official-tuplet-placement/observed.json"
     ))
@@ -40,7 +40,7 @@ fn original() -> Value {
     }
     d
 }
-fn declare(p: &mut Prepared, scenario: &Value) -> Vec<Key> {
+pub(super) fn declare(p: &mut Prepared, scenario: &Value) -> Vec<Key> {
     for row in scenario["geometry"].as_array().unwrap() {
         let key = chord_key(&p.c, row["chord"].as_str().unwrap());
         p.c.owner

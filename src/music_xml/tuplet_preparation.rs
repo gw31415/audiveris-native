@@ -103,37 +103,47 @@ fn remove_on(
             .ok_or("music_actual_tuplet_measure_required")?,
     )?;
     let mi = number - 1;
-    let mut staged = graph.clone();
-    let mut measure = measures[mi].tuplets.clone();
-    let mut stack = measures[mi].stack_tuplets.clone();
-    for key in implicit {
-        for source in staged.tuplet_chords(key)? {
-            let chord = chords
-                .iter()
-                .find(|ch| ch.key == source)
-                .ok_or("music_actual_tuplet_chord_owner_required")?;
-            super::beam_rest::validate_measure_chord(
-                &staged,
-                measures
-                    .get(chord.measure)
-                    .ok_or("music_actual_tuplet_measure_required")?,
-                chord,
-            )?;
-        }
-        measure.retain(|k| *k != key);
-        stack.retain(|k| *k != key);
-        let mut all = measure.clone();
-        for &key in &stack {
-            if !all.contains(&key) {
-                all.push(key);
+    let old_graph = graph.clone();
+    let stage = measures[mi].tuplets.clone();
+    let old_measure = std::mem::replace(&mut measures[mi].tuplets, stage);
+    let stage = measures[mi].stack_tuplets.clone();
+    let old_stack = std::mem::replace(&mut measures[mi].stack_tuplets, stage);
+    let result = (|| {
+        for key in implicit {
+            for source in graph.tuplet_chords(key)? {
+                let chord = chords
+                    .iter()
+                    .find(|ch| ch.key == source)
+                    .ok_or("music_actual_tuplet_chord_owner_required")?;
+                super::beam_rest::validate_measure_chord(
+                    graph,
+                    measures
+                        .get(chord.measure)
+                        .ok_or("music_actual_tuplet_measure_required")?,
+                    chord,
+                )?;
             }
+            measures[mi].tuplets.retain(|k| *k != key);
+            // Stack.removeInter reads existing Staff/Part after Measure detach;
+            // callbacks must see these actual containers with the old clocks.
+            graph.tuplet_part(key)?;
+            measures[mi].stack_tuplets.retain(|k| *k != key);
+            let mut all = measures[mi].tuplets.clone();
+            for &key in &measures[mi].stack_tuplets {
+                if !all.contains(&key) {
+                    all.push(key);
+                }
+            }
+            graph.remove_owned_implicit_tuplet(key, &measures[mi].tuplets, &all)?;
         }
-        staged.remove_owned_implicit_tuplet(key, &measure, &all)?;
+        Ok(())
+    })();
+    if result.is_err() {
+        *graph = old_graph;
+        measures[mi].tuplets = old_measure;
+        measures[mi].stack_tuplets = old_stack;
     }
-    *graph = staged;
-    measures[mi].tuplets = measure;
-    measures[mi].stack_tuplets = stack;
-    Ok(())
+    result
 }
 pub(super) fn prepare_on(
     graph: &mut crate::shared_sig::Graph,
