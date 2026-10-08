@@ -12,6 +12,14 @@ pub(crate) struct TupletAdditionObservation {
     pub stack_tuplets: Vec<Key>,
     pub graph: Graph,
     pub sig_attached: bool,
+    pub containers: Vec<[bool; 3]>,
+}
+#[cfg(test)]
+pub(crate) struct TupletAdditionOwners<'a> {
+    pub measure: &'a [Key],
+    pub stack: &'a [Key],
+    pub clocks: &'a [Key],
+    pub containers: Vec<[bool; 3]>,
 }
 impl Graph {
     pub(crate) fn fresh_tuplet_key(&self, system: u64) -> Result<Key, String> {
@@ -145,14 +153,12 @@ impl Graph {
         tuplet: Key,
         edge: Option<usize>,
         phase: &'static str,
-        measure: &[Key],
-        stack: &[Key],
-        clocks: &[Key],
+        owners: TupletAdditionOwners<'_>,
     ) -> Result<(), String> {
         if self.tuplet_additions.is_some() {
             // The original listener reads live durations and warms the factor
             // at this boundary; observing a later final graph loses that order.
-            for &key in clocks {
+            for &key in owners.clocks {
                 self.chord_duration(key)?;
                 self.chord_end_time(key)?;
             }
@@ -172,10 +178,11 @@ impl Graph {
                     tuplet,
                     edge,
                     phase,
-                    measure_tuplets: measure.to_vec(),
-                    stack_tuplets: stack.to_vec(),
+                    measure_tuplets: owners.measure.to_vec(),
+                    stack_tuplets: owners.stack.to_vec(),
                     graph,
                     sig_attached,
+                    containers: owners.containers,
                 });
         }
         if edge.is_some() && self.tuplet_addition_failure == Some(self.tuplet_chords(tuplet)?.len())

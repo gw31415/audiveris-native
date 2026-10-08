@@ -16,7 +16,7 @@ pub use tuplet::TupletFactor;
 #[cfg(test)]
 pub(crate) use tuplet::TupletRemovalObservation;
 #[cfg(test)]
-pub(crate) use tuplet_addition::TupletAdditionObservation;
+pub(crate) use tuplet_addition::{TupletAdditionObservation, TupletAdditionOwners};
 mod book_state;
 mod chord_cache;
 mod chord_duration;

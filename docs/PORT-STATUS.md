@@ -1885,3 +1885,13 @@ Slot clocks stay intact. Failure restores nonempty/manual actual containers and
 backing storage. Actual source Stack boundaries/null/other-Stack ownership follow
 before force/inspect/merge/second pass and ordinary font/rhythm admission. Evidence
 musicxml-tuplet-generation; full nonUI completion remains false.
+
+### Actual Stack boundary/null/other-Stack Tuplet ownership (continuation of75c6f26)
+
+Source22 controls/44 callbacks compare left-excluded/right-included actual
+Measure ranges, null outside, and generator Measure differing from added's
+unassigned Stack. The other Stack keeps a retired Tuplet reference after own
+MeasureRhythm removal; no global cleanup normalization. Outer failure restores
+all actual container storage including a prior retired other-Stack object.
+Evidence musicxml-tuplet-stack. Force eligibility/sans-Tuplet/grouping, inspect/
+merge/second pass and ordinary font binding remain; full nonUI false.

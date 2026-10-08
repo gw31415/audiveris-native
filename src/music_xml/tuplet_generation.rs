@@ -20,15 +20,24 @@ impl OwnedMusic {
             return Ok(key);
         }
         let old_graph = self.owner.graph.clone();
-        let stage = self.measures[mi].tuplets.clone();
-        let old_measure = std::mem::replace(&mut self.measures[mi].tuplets, stage);
-        let stage = self.measures[mi].stack_tuplets.clone();
-        let old_stack = std::mem::replace(&mut self.measures[mi].stack_tuplets, stage);
+        let held = self
+            .measures
+            .iter_mut()
+            .map(|measure| {
+                let stage = measure.tuplets.clone();
+                let tuplets = std::mem::replace(&mut measure.tuplets, stage);
+                let stage = measure.stack_tuplets.clone();
+                let stack = std::mem::replace(&mut measure.stack_tuplets, stage);
+                (tuplets, stack)
+            })
+            .collect::<Vec<_>>();
         let result = self.generate_tuplet_on(number, mi, group, font);
         if result.is_err() {
             self.owner.graph = old_graph;
-            self.measures[mi].tuplets = old_measure;
-            self.measures[mi].stack_tuplets = old_stack;
+            for (measure, (tuplets, stack)) in self.measures.iter_mut().zip(held) {
+                measure.tuplets = tuplets;
+                measure.stack_tuplets = stack;
+            }
         }
         result
     }
@@ -64,12 +73,13 @@ impl OwnedMusic {
         let x = bounds[0]
             .checked_add(bounds[2] / 2)
             .ok_or("music_tuplet_actual_center_required")?;
-        // Actual bar/staff abscissa boundary comparison is the next coverage
-        // unit; no guessed Stack ownership is admitted at its boundary.
-        let margin = self.owner.interline as i64;
-        if x <= measure.left + margin || x >= measure.right - margin {
-            return Err("music_tuplet_stack_abscissa_boundary_pending".into());
-        }
+        // In the retained single-staff/single-barline path these are the
+        // actual Measure abscissae. Source includes right and excludes left;
+        // added may locate another Stack, or none, before generator membership.
+        let added_stack = self
+            .measures
+            .iter()
+            .position(|m| m.system == system && x > m.left && x <= m.right);
         let key = self.owner.graph.fresh_tuplet_key(system)?;
         #[cfg(test)]
         let clocks = self
@@ -80,22 +90,14 @@ impl OwnedMusic {
             .collect::<Vec<_>>();
         self.owner.graph.register_fresh_tuplet(key, shape, bounds)?;
         #[cfg(test)]
-        {
-            let stack = self.tuplet_stack_union(mi);
-            self.owner.graph.observe_tuplet_addition(
-                key,
-                None,
-                "vertex_registered",
-                &self.measures[mi].tuplets,
-                &stack,
-                &clocks,
-            )?;
-        }
+        self.observe_tuplet_owner_addition(key, None, "vertex_registered", mi, &clocks)?;
         self.owner.graph.attach_fresh_tuplet(key)?;
         if self.owner.graph.tuplet_part(key)?.is_some() {
             return Err("music_tuplet_fresh_part_must_be_null".into());
         }
-        self.measures[mi].stack_tuplets.push(key);
+        if let Some(stack) = added_stack {
+            self.measures[stack].stack_tuplets.push(key);
+        }
         self.owner.graph.set_tuplet_abnormal(key, true)?;
         self.owner.graph.set_tuplet_abnormal(key, false)?;
         self.measures[mi].tuplets.push(key);
@@ -105,28 +107,51 @@ impl OwnedMusic {
                 .graph
                 .add_generated_chord_tuplet(chord, key, shape)?;
             #[cfg(test)]
-            {
-                let stack = self.tuplet_stack_union(mi);
-                self.owner.graph.observe_tuplet_addition(
-                    key,
-                    Some(_edge),
-                    "chord_tuplet_added",
-                    &self.measures[mi].tuplets,
-                    &stack,
-                    &clocks,
-                )?;
-            }
+            self.observe_tuplet_owner_addition(
+                key,
+                Some(_edge),
+                "chord_tuplet_added",
+                mi,
+                &clocks,
+            )?;
         }
         Ok(key)
     }
     #[cfg(test)]
-    fn tuplet_stack_union(&self, mi: usize) -> Vec<Key> {
-        let mut keys = self.measures[mi].tuplets.clone();
+    fn observe_tuplet_owner_addition(
+        &mut self,
+        key: Key,
+        edge: Option<usize>,
+        phase: &'static str,
+        mi: usize,
+        clocks: &[Key],
+    ) -> Result<(), String> {
+        let mut stack = self.measures[mi].tuplets.clone();
         for &key in &self.measures[mi].stack_tuplets {
-            if !keys.contains(&key) {
-                keys.push(key);
+            if !stack.contains(&key) {
+                stack.push(key);
             }
         }
-        keys
+        let containers = self
+            .measures
+            .iter()
+            .filter(|m| m.system == key.system)
+            .map(|m| {
+                let measure = m.tuplets.contains(&key);
+                let unassigned = m.stack_tuplets.contains(&key);
+                [measure, measure || unassigned, unassigned]
+            })
+            .collect();
+        self.owner.graph.observe_tuplet_addition(
+            key,
+            edge,
+            phase,
+            crate::shared_sig::TupletAdditionOwners {
+                measure: &self.measures[mi].tuplets,
+                stack: &stack,
+                clocks,
+                containers,
+            },
+        )
     }
 }

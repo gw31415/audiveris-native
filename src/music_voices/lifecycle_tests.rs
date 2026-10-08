@@ -824,3 +824,5 @@ mod tuplet_getters_tests;
 mod tuplet_raw_base_tests;
 
 mod tuplet_generation_tests;
+
+mod tuplet_stack_tests;
