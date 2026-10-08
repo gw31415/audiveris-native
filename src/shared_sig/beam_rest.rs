@@ -11,6 +11,7 @@ type CallbackOwners = Vec<(Key, Option<Arc<()>>, Option<Arc<()>>)>;
 pub(crate) struct CallbackObservation {
     pub(crate) edge: usize,
     pub(crate) phase: &'static str,
+    pub(crate) registration: serde_json::Value,
     pub(crate) snapshot: serde_json::Value,
     pub(crate) owners: CallbackOwners,
 }
@@ -230,7 +231,84 @@ impl Graph {
             crate::music_voices::chord_beams(&self.snapshot(), id)
         }
     }
+    pub(crate) fn beam_rest_relations(&self, key: Key) -> Result<Vec<(usize, Key, Key)>, String> {
+        let id = self.endpoint(key)?;
+        self.incident_edges(id)
+            .into_iter()
+            .filter(|eid| self.edges[*eid - 1].key.kind == "BeamRestRelation")
+            .map(|eid| {
+                let edge = &self.edges[eid - 1];
+                let beam = &self.vertices[edge.key.source - 1];
+                let rest = &self.vertices[edge.key.target - 1];
+                if beam.removed
+                    || rest.removed
+                    || beam.key.phase != Phase::Beam
+                    || rest.key.phase != Phase::Symbol
+                    || beam.key.system != rest.key.system
+                    || !matches!(
+                        beam.data["kind"].as_str(),
+                        Some("BeamInter" | "BeamHookInter" | "SmallBeamInter")
+                    )
+                    || rest.data["kind"] != "RestInter"
+                {
+                    return Err("music_rest_actual_typed_relation_required".into());
+                }
+                Ok((eid, beam.key, rest.key))
+            })
+            .collect()
+    }
+    pub(crate) fn beam_rest_distance(&self, id: usize) -> Result<i32, String> {
+        self.edges
+            .get(
+                id.checked_sub(1)
+                    .ok_or("music_rest_relation_identity_required")?,
+            )
+            .filter(|e| !e.removed && e.key.kind == "BeamRestRelation")
+            .and_then(|e| e.data["dy"].as_i64())
+            .and_then(|v| i32::try_from(v).ok())
+            .ok_or_else(|| "music_rest_actual_relation_distance_required".into())
+    }
+    pub(crate) fn rest_contains_candidate_vertical(
+        &self,
+        rest: Key,
+        center: [i32; 2],
+        skew: crate::sheet_skew::SheetSkew,
+    ) -> Result<bool, String> {
+        let id = self.endpoint(rest)?;
+        let vertex = &self.vertices[id - 1];
+        if vertex.data["kind"] != "RestInter" {
+            return Err("music_rest_actual_note_required".into());
+        }
+        let bounds: [i32; 4] = serde_json::from_value(vertex.data["bounds"].clone())
+            .map_err(|_| "music_rest_actual_note_bounds_required")?;
+        let y = bounds[1]
+            .checked_add(bounds[3] / 2)
+            .ok_or("music_rest_actual_note_bounds_required")? as f64;
+        let [x1, y1, x2, y2] = skew.vertical(center.map(f64::from));
+        let (x3, y3, x4, y4) = (0., y, 1000., y);
+        let den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+        let (a, b) = (x1 * y2 - y1 * x2, x3 * y4 - y3 * x4);
+        let (x, y) = (
+            (a * (x3 - x4) - (x1 - x2) * b) / den,
+            (a * (y3 - y4) - (y1 - y2) * b) / den,
+        );
+        if !x.is_finite() || !y.is_finite() {
+            return Err("music_rest_actual_geometry_required".into());
+        }
+        Ok(bounds[2] > 0
+            && bounds[3] > 0
+            && x >= bounds[0] as f64
+            && y >= bounds[1] as f64
+            && x < bounds[0] as f64 + bounds[2] as f64
+            && y < bounds[1] as f64 + bounds[3] as f64)
+    }
     pub(crate) fn remove_owned_beam_rest(&mut self, id: usize) -> Result<(), String> {
+        self.remove_beam_rest_callback(id, true)
+    }
+    pub(crate) fn remove_lookup_beam_rest(&mut self, id: usize) -> Result<(), String> {
+        self.remove_beam_rest_callback(id, false)
+    }
+    fn remove_beam_rest_callback(&mut self, id: usize, automatic_only: bool) -> Result<(), String> {
         let edge = self
             .edges
             .get(
@@ -242,20 +320,30 @@ impl Graph {
         let source = edge.key.source;
         let beam = &self.vertices[source - 1];
         let rest = &self.vertices[edge.key.target - 1];
-        if edge.data["manual"] == true
+        if (automatic_only
+            && (edge.data["manual"] == true || beam.data["kind"] == "SmallBeamInter"))
             || beam.removed
             || rest.removed
             || !matches!(
                 beam.data["kind"].as_str(),
-                Some("BeamInter" | "BeamHookInter")
+                Some("BeamInter" | "BeamHookInter" | "SmallBeamInter")
             )
             || rest.data["kind"] != "RestInter"
             || beam.key.system != rest.key.system
         {
-            return Err("music_rest_automatic_typed_relation_required".into());
+            return Err(if automatic_only {
+                "music_rest_automatic_typed_relation_required"
+            } else {
+                "music_rest_actual_typed_relation_required"
+            }
+            .into());
         }
         self.edges[id - 1].removed = true;
+        #[cfg(test)]
+        self.observe_beam_rest_callback(id, "remove_entered");
         self.check_beam_rest_abnormal(source);
+        #[cfg(test)]
+        self.observe_beam_rest_callback(id, "remove_finished");
         Ok(())
     }
     fn check_beam_rest_abnormal(&mut self, source: usize) {
@@ -276,6 +364,22 @@ impl Graph {
         self.vertices[source - 1].data["abnormal"] = json!(abnormal);
     }
     #[cfg(test)]
+    pub(crate) fn beam_rest_registration_ordinal(&self, id: usize) -> usize {
+        self.edges[id - 1].key.ordinal
+    }
+    #[cfg(test)]
+    pub(crate) fn beam_rest_endpoints(&self, id: usize) -> Result<(usize, usize), String> {
+        let e = self
+            .edges
+            .get(
+                id.checked_sub(1)
+                    .ok_or("music_rest_relation_identity_required")?,
+            )
+            .filter(|e| e.key.kind == "BeamRestRelation")
+            .ok_or("music_rest_relation_identity_required")?;
+        Ok((e.key.source, e.key.target))
+    }
+    #[cfg(test)]
     pub(crate) fn beam_rest_registration(&self, id: usize) -> serde_json::Value {
         let edge = &self.edges[id - 1];
         json!({"registered":!edge.removed,"manual":edge.data["manual"]==true,
@@ -293,6 +397,7 @@ impl Graph {
         let row = CallbackObservation {
             edge,
             phase,
+            registration: self.beam_rest_registration(edge),
             snapshot: self.snapshot(),
             owners: self
                 .vertices

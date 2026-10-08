@@ -54,15 +54,17 @@ pub(super) fn prepare(case: &Value) -> (Control, Key) {
             )
             .unwrap();
         c.labels.insert(id, b["label"].as_str().unwrap().into());
-        c.owner
-            .owner
-            .graph
-            .relations(
-                1,
-                Phase::Group,
-                vec![(group, key, json!({"kind":"Containment"}))],
-            )
-            .unwrap();
+        if b["in_source_group"] != false {
+            c.owner
+                .owner
+                .graph
+                .relations(
+                    1,
+                    Phase::Group,
+                    vec![(group, key, json!({"kind":"Containment"}))],
+                )
+                .unwrap();
+        }
     }
     (c, group)
 }

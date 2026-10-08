@@ -808,3 +808,5 @@ mod selected_rhythm_tests;
 mod staff_midline_tests;
 
 mod beam_rest_polygon_tests;
+
+mod beam_rest_competition_tests;

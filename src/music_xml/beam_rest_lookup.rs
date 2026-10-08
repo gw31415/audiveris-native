@@ -6,6 +6,18 @@ use crate::{
 };
 use serde_json::{Value, json};
 
+struct RestPolygon {
+    group: Key,
+    polygon: [[i32; 2]; 4],
+    left_bounds: [i32; 4],
+    right_bounds: [i32; 4],
+    main_median: Option<[f64; 4]>,
+}
+struct RestCandidate {
+    rest: Key,
+    center: [i32; 2],
+    nearest: (Key, f64),
+}
 fn point(p: Option<[i64; 2]>) -> Result<[i32; 2], String> {
     p.ok_or("music_rest_actual_chord_geometry_required")?
         .map(i32::try_from)
@@ -57,15 +69,14 @@ impl OwnedMusic {
         self.owner.graph = graph;
         Ok(query)
     }
-    pub(super) fn prepare_rest_lookup(
+    fn prepare_rest_polygon(
         &self,
         graph: &mut Graph,
         number: usize,
         group: Key,
         left: Key,
         right: Key,
-        candidates: &[Key],
-    ) -> Result<Value, String> {
+    ) -> Result<RestPolygon, String> {
         let mi = number
             .checked_sub(1)
             .filter(|mi| *mi < self.measures.len())
@@ -135,7 +146,7 @@ impl OwnedMusic {
             }
             [rh, rt, lt, lh]
         } else {
-            let (mut uh, ut, dh, dt, us) = (
+            let (mut uh, ut, mut dh, dt, us) = (
                 if ld < 0 { lh } else { rh },
                 if ld < 0 { lt } else { rt },
                 if ld > 0 { lh } else { rh },
@@ -147,6 +158,11 @@ impl OwnedMusic {
             let mid = us.middle_at(mid_x)?;
             if uh[1] > mid {
                 uh[1] = mid;
+                // With zero left direction both original variables alias the
+                // same right Point; extending one must also extend the other.
+                if ld == 0 {
+                    dh = uh;
+                }
             }
             let m = median.ok_or("music_rest_actual_beam_median_required")?;
             let um = intersection(m, uh, ut)?;
@@ -160,38 +176,167 @@ impl OwnedMusic {
                 .ok_or("music_rest_actual_chord_geometry_required")?;
             [uh, um, dm, [dm[0], last_y]]
         };
+        Ok(RestPolygon {
+            group,
+            polygon,
+            left_bounds: lb,
+            right_bounds: rb,
+            main_median: median,
+        })
+    }
+    fn prepare_rest_lookup(
+        &self,
+        graph: &mut Graph,
+        number: usize,
+        group: Key,
+        left: Key,
+        right: Key,
+        candidates: &[Key],
+    ) -> Result<Value, String> {
+        let area = self.prepare_rest_polygon(graph, number, group, left, right)?;
         let mut rows = Vec::new();
         for &key in candidates {
+            let (candidate, intersects, x_overlap, id) = self.rest_candidate(graph, &area, key)?;
+            rows.push(json!({"chord_id":id,"intersects":intersects,"x_overlap":x_overlap,"nearest_beam_id":candidate.as_ref().map(|c|graph.id(c.nearest.0).unwrap()),"eligible":candidate.is_some()}));
+        }
+        Ok(
+            json!({"polygon":area.polygon,"main_median":area.main_median,"candidates":rows,"rest_detection_complete":false}),
+        )
+    }
+    fn rest_candidate(
+        &self,
+        graph: &Graph,
+        area: &RestPolygon,
+        key: Key,
+    ) -> Result<(Option<RestCandidate>, bool, bool, usize), String> {
+        let chord = self
+            .chords
+            .iter()
+            .find(|c| c.key == key)
+            .ok_or("music_rest_actual_chord_required")?;
+        validate_measure_chord(
+            graph,
+            self.measures
+                .get(chord.measure)
+                .ok_or("music_rest_actual_measure_required")?,
+            chord,
+        )?;
+        if chord.kind != ChordKind::Rest || key.system != area.group.system {
+            return Err("music_rest_actual_rest_chord_required".into());
+        }
+        let bounds = rectangle(chord.bounds)?;
+        let intersects = audiveris_area::polygon_intersects_rect(&area.polygon, bounds)?;
+        let x_overlap = overlap(bounds, area.left_bounds) || overlap(bounds, area.right_bounds);
+        let candidate = if intersects && !x_overlap {
+            let (rest, center) = actual_rest_note(graph, chord)?;
+            graph
+                .nearest_rest_beam(area.group, center, self.owner.sheet_skew)?
+                .map(|nearest| RestCandidate {
+                    rest,
+                    center,
+                    nearest,
+                })
+        } else {
+            None
+        };
+        Ok((candidate, intersects, x_overlap, chord.id))
+    }
+    /// Original plain lookup on an explicit adjacent Chord pair and actual rest
+    /// candidates. Complete clear/detect and tuplet preparation remain pending.
+    pub fn lookup_interleaved_rests(
+        &mut self,
+        number: usize,
+        group: Key,
+        left: Key,
+        right: Key,
+        candidates: &[Key],
+        white: &[Key],
+    ) -> Result<Vec<usize>, String> {
+        let mut graph = self.owner.graph.clone();
+        let area = self.prepare_rest_polygon(&mut graph, number, group, left, right)?;
+        for &key in white {
             let chord = self
                 .chords
                 .iter()
-                .find(|c| c.key == key)
-                .ok_or("music_rest_actual_chord_required")?;
+                .find(|c| c.key == key && c.kind == ChordKind::Rest)
+                .ok_or("music_rest_actual_rest_chord_required")?;
             validate_measure_chord(
-                graph,
+                &graph,
                 self.measures
                     .get(chord.measure)
                     .ok_or("music_rest_actual_measure_required")?,
                 chord,
             )?;
-            if chord.kind != ChordKind::Rest || key.system != group.system {
+            if key.system != group.system {
                 return Err("music_rest_actual_rest_chord_required".into());
             }
-            let bounds = rectangle(chord.bounds)?;
-            let intersects = audiveris_area::polygon_intersects_rect(&polygon, bounds)?;
-            let x_overlap = overlap(bounds, lb) || overlap(bounds, rb);
-            let mut nearest = None;
-            if intersects && !x_overlap {
-                let (rest, center) = actual_rest_note(graph, chord)?;
-                nearest = graph.nearest_rest_beam(group, center, self.owner.sheet_skew)?;
-                let _ = rest;
-            }
-            rows.push(json!({"chord_id":chord.id,"intersects":intersects,"x_overlap":x_overlap,
-                "nearest_beam_id":nearest.map(|(b,_)|graph.id(b).unwrap()),"eligible":nearest.is_some()}));
         }
-        Ok(
-            json!({"polygon":polygon,"main_median":median,"candidates":rows,"rest_detection_complete":false}),
-        )
+        let mut added = Vec::new();
+        let mut seen = Vec::new();
+        'candidate: for &key in candidates {
+            if seen.contains(&key) {
+                continue;
+            }
+            seen.push(key);
+            let Some(candidate) = self.rest_candidate(&graph, &area, key)?.0 else {
+                continue;
+            };
+            let (beam, distance) = candidate.nearest;
+            for (eid, _, rest) in graph.beam_rest_relations(beam)? {
+                if graph.rest_contains_candidate_vertical(
+                    rest,
+                    candidate.center,
+                    self.owner.sheet_skew,
+                )? {
+                    let owners = self
+                        .chords
+                        .iter()
+                        .filter(|ch| {
+                            ch.kind == ChordKind::Rest
+                                && ch.members.iter().any(|n| {
+                                    serde_json::from_value::<Key>(n["origin"].clone()).ok()
+                                        == Some(rest)
+                                })
+                        })
+                        .collect::<Vec<_>>();
+                    if owners.len() != 1 {
+                        return Err("music_rest_actual_chord_required".into());
+                    }
+                    let sibling = owners[0];
+                    validate_measure_chord(
+                        &graph,
+                        self.measures
+                            .get(sibling.measure)
+                            .ok_or("music_rest_actual_measure_required")?,
+                        sibling,
+                    )?;
+                    actual_rest_note(&graph, sibling)?;
+                    if white.contains(&sibling.key)
+                        || distance > f64::from(graph.beam_rest_distance(eid)?)
+                    {
+                        continue 'candidate;
+                    }
+                    graph.remove_lookup_beam_rest(eid)?;
+                }
+            }
+            // A later competitor rejection keeps earlier removals in this same
+            // lookup. Only execution errors discard the whole staged operation.
+            for (eid, _, _) in graph.beam_rest_relations(candidate.rest)? {
+                if distance > f64::from(graph.beam_rest_distance(eid)?) {
+                    continue 'candidate;
+                }
+                graph.remove_lookup_beam_rest(eid)?;
+            }
+            added.push(graph.add_owned_beam_rest(
+                beam,
+                candidate.rest,
+                false,
+                self.owner.sheet_skew,
+                self.owner.interline,
+            )?);
+        }
+        self.owner.graph = graph;
+        Ok(added)
     }
 }
 fn chord_geometry(

@@ -1763,3 +1763,20 @@ Stem5px extent discrepancy stays recorded separately without coercion. Competing
 manual removal callbacks/fresh addition, full clear/detect/implicit tuples, mutable
 Staff/Rest and full nonUI remain pending, with all full/public flags false. See
 evidence/musicxml-beam-rest-polygon.
+
+### Actual competing BeamRest removal and fresh addition
+
+Explicit plain lookup now removes losing manual/automatic relations in original
+live encounter order before fresh automatic registration. Original36 scenarios/
+80 observations compare white priority, nearest-double versus rounded-dy refusal,
+skewed sibling contains/contact, reinserted old relation identity/order, side
+callback abnormal transitions and earlier-removal/later-rejection retention.
+Callback clocks, physical Chord/Staff/Curve/Voice/Slot and Rest-cache refs persist.
+Late actual-member failure after earlier staged removal/addition rolls back with
+manual bodies and unused relation IDs held for same-owner repair/retry. Fresh
+original observations are after callbacks; native entry retains original clocks
+and independent added-callback proof. Full white-before-plain detect and original
+implicit-tuplet removal-before-clear/detect/reset preparation remain next before
+ordinary selected integration. Re-add/controller/history and general nullable/
+mutable/multipart/full nonUI remain pending; all full/public flags stay false.
+See evidence/musicxml-beam-rest-competition.
