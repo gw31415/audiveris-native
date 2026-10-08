@@ -241,6 +241,7 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
     owner.upstream_report["grid_ir"]["staffs"] = json!([]);
     let music = crate::music_measures::continue_measures(owner).unwrap();
     crate::music_measures::assert_real_chords(&music);
+    crate::music_symbols::assert_real_ensemble_visits(&music);
     assert_eq!(
         parts.iter().map(|p| p.staffs.len()).collect::<Vec<_>>(),
         vec![1, 2, 1, 2]

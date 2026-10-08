@@ -248,13 +248,14 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
             }
         }
     }
-    for n in o.graph.snapshot()["inters"]
-        .as_array()
-        .ok_or("music_filter_SIG_required")?
-    {
+    for (key, weak) in o.graph.symbol_cleaner_visits()? {
+        let (n, removed) = o.graph.retained_inter(key)?;
+        if removed {
+            return Err("music_cleaner_live_visitor_required".into());
+        }
         match n["kind"].as_str().ok_or("music_cleaner_kind_required")? {
             "HeadInter" => {
-                if n["contextual_grade"].as_f64().is_none_or(|g| g < 0.6) {
+                if weak {
                     return Err("music_filter_weak_head_optionals_pending".into());
                 }
                 let a = bank
@@ -296,7 +297,7 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                 }
             }
             "StemInter" => {
-                if n["contextual_grade"].as_f64().is_none_or(|g| g < 0.7) {
+                if weak {
                     return Err("music_filter_weak_stem_optionals_pending".into());
                 }
                 glyph_erase(&mut im, &n["glyph"])?;
@@ -308,8 +309,7 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                 if n["shape"] != "LEDGER" {
                     return Err("music_ledger_shape_required".into());
                 }
-                let best = n["contextual_grade"].as_f64().or(n["grade"].as_f64());
-                if n["frozen"] != true && best.is_none_or(|g| !g.is_finite() || g < 0.4) {
+                if weak {
                     return Err("music_filter_weak_ledger_optionals_pending".into());
                 }
                 let id = n["glyph_id"]
@@ -335,7 +335,7 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
                 glyph_pixels_erase(&mut im, o.grid_physical_glyph(key)?);
             }
             "BeamInter" | "BeamHookInter" => {
-                if n["contextual_grade"].as_f64().is_none_or(|g| g < 0.7) {
+                if weak {
                     return Err("music_filter_weak_beam_optionals_pending".into());
                 }
                 for [y, left, right] in crate::music_beams::area_rows(n, o.interline)? {
@@ -893,3 +893,8 @@ pub(crate) use area_tests::assert_real_vertical_areas;
 mod grid_glyph_tests;
 #[cfg(test)]
 pub(crate) use grid_glyph_tests::assert_real_brace_glyphs;
+
+#[cfg(test)]
+mod ensemble_tests;
+#[cfg(test)]
+pub(crate) use ensemble_tests::assert_real_ensemble_visits;

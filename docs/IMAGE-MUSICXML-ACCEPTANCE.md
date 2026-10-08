@@ -51,7 +51,9 @@ Stem/Chord/head/tail幾何で原版に一致した。原版標準のREDUCTION He
 実画像CLI v10ではBraceへの未接続glyph参照が `invalid_beam_canonical_bounds` として
 判明し、その試験分岐を閉じた。GRID constructorから実glyph registryを同じArcで保持してBrace消去へ接続済み。
 実Beam/Hook18個の傾斜消去も原版全ピクセル行と比較して接続済み。
-実画像CLI v12は173.7秒で実Chord経由の弱Head消去に到達し、XMLは未出力。
+実Chord経由の弱Head消去も、67強Chord/94Headの強弱判定とbottom-up訪問順で原版一致し接続済み。
+grade数値は最大0.000363878の差があり、数値同等性を主張しない。
+実画像CLI v13は175.89秒で2部品限定clusterガードへ到達し、XMLは未出力。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、

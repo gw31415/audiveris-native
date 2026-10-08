@@ -26,6 +26,7 @@ mod editing_task;
 mod manual_chord_stem;
 #[cfg(test)]
 mod stem_refinement_tests;
+mod symbol_cleaner;
 mod voice_owners;
 pub use chord_tasks::{ChordAdditionTask, ChordRemovalTask};
 pub use dot_ownership::NoteOwnerEdit;

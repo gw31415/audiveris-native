@@ -15,6 +15,13 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
+最新の画像接続: 実Containmentによる67強Chord・94Headの消去訪問順を原版と比較し、
+個別には弱い1Headも親Chord経由で接続した。全94件の強弱判定とbottom-up順は一致。
+grade数値は93件に差（最大0.000363878）があり、判定一致と区別して保存した。
+実画像CLI v13は175.89秒で2部品限定clusterのガードへ到達し、XML未出力。
+対象2件・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSDは成功。
+[証拠](../evidence/real-symbol-ensemble/VALIDATION.json)・[次依存](../evidence/real-symbol-ensemble/NEXT-DEPENDENCY.md)。
+
 ## 実装済みの具体的単位
 
 - PNG 8-bit grayscale/PGM読取、原版の適応二値化・runs・classifier特徴量と149出力モデル推論。入出力形式・領域上限・全種類のページ処理は下表の部分対応です。
