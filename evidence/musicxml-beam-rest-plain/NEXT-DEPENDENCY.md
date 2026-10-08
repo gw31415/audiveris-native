@@ -2,7 +2,7 @@
 
 Actual plain candidate collection is compared. Continue pinned lookupRests on
 real left/right Chords and candidates before selected rhythm reset/refinement.
-Current OwnedPage/OwnedItems retain measured Skew but not an actual Staff
+At this checkpoint OwnedPage/OwnedItems retain measured Skew but not an actual Staff
 middle-line owner: staff/line/grid geometry survives in report views only.
 First retain the measured Staff/line geometry while native page analysis owns
 it (line_completion/grid_ir), then move it with the image/item owner. Compare
@@ -11,6 +11,8 @@ mutable report, rebuilding Staff ownership there, guessing zero slope/coordinate
 or treating polygon lookup as already supported. Prepared's physical glyph
 registry does not replace a Staff middle-line owner. This is an implementation
 dependency, not a Git/authentication or Cloud-environment failure.
+The subsequent evidence/musicxml-staff-midline checkpoint retains these actual
+Staff/Curve references and compares middle-line reads; continue its latest NEXT.
 Retain actual head/tail/staff middle-line geometry; compare same-direction head
 extension and opposite-direction area above main median, including PointUtil
 ties-even intersection rounding. Polygon.intersects(Rectangle) boundary contact

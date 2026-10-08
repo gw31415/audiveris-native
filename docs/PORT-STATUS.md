@@ -1734,3 +1734,18 @@ omitting that rest. Plain lookup polygons, competing removals/additions, full
 clear/detect and implicit tuplets remain pending before normal rhythm; general
 multipart/nullable owners and the full nonUI ledger stay unfinished, with all
 full/public flags false. See evidence/musicxml-beam-rest-plain.
+
+### Actual persistent Staff middle-line owners
+
+GRID now retains the actual simplified StaffLine Curves in Staff geometry owners
+before report publication, moving the same Staff/Curve references through Page,
+items and Music. Actual middle-line reads ignore altered report staff/line fields
+and refuse missing real Staff ownership without clock/Slot/Voice changes.
+Thirteen original source samples and forty-five declared real Staff samples
+compare 1/2/4/5/6-line lower-middle selection, interpolation/extrapolation and
+ties-even integer yAt. Original StaffLine's +0.5px construction boundary and
+explicit yAt(int) reflection are recorded separately from unchanged native
+source precision. Selected success/later-failure/retry retains Staff/Curve refs.
+Actual plain lookup polygons/competing callbacks, mutable Staff/controller
+lifecycle, full clear/detect and implicit tuples remain pending; full/public
+flags stay false. See evidence/musicxml-staff-midline.

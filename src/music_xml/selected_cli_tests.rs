@@ -8,10 +8,20 @@ fn image() -> GrayImage {
     ))
     .unwrap()
 }
+fn staff_refs(export: &Export, held: &[Arc<crate::grid_ir::StaffGeometry>]) {
+    assert_eq!(export.owner.owner.staffs.len(), held.len());
+    for (staff, old) in export.owner.owner.staffs.iter().zip(held) {
+        assert!(Arc::ptr_eq(staff, old));
+        for (line, old) in staff.lines.iter().zip(&old.lines) {
+            assert!(Arc::ptr_eq(line, old));
+        }
+    }
+}
 
 #[test]
 fn selected_cli_rebinds_real_voices_once_and_keeps_unselected_slots() {
     let mut export = recognize(&image()).unwrap();
+    let staffs = export.owner.owner.staffs.clone();
     let xml = export.xml.clone();
     let chords = export.owner.chords.as_ptr();
     let measures = export.owner.measures.as_ptr();
@@ -37,6 +47,7 @@ fn selected_cli_rebinds_real_voices_once_and_keeps_unselected_slots() {
         })
         .collect::<Vec<_>>();
     let actual = export.reprocess_stack_rhythms(&[2, 1, 2]).unwrap();
+    staff_refs(&export, &staffs);
     assert_eq!(actual["requested_stack_numbers"], json!([2, 1, 2]));
     assert_eq!(actual["processed_stack_numbers"], json!([2, 1]));
     assert_eq!(export.xml, xml);
@@ -105,6 +116,7 @@ fn selected_cli_rebinds_real_voices_once_and_keeps_unselected_slots() {
         untouched.abnormal,
     );
     export.reprocess_stack_rhythms(&[1]).unwrap();
+    staff_refs(&export, &staffs);
     let untouched = &export.owner.measures[1].timing;
     assert_eq!(untouched.slots.as_ptr(), storage);
     assert_eq!(
@@ -133,6 +145,7 @@ fn selected_cli_rebinds_real_voices_once_and_keeps_unselected_slots() {
 #[test]
 fn selected_cli_late_member_failure_restores_original_storage_and_retries() {
     let mut export = recognize(&image()).unwrap();
+    let staffs = export.owner.owner.staffs.clone();
     let xml = export.xml.clone();
     let index = export
         .owner
@@ -171,6 +184,7 @@ fn selected_cli_late_member_failure_restores_original_storage_and_retries() {
         export.reprocess_stack_rhythms(&[1, 2, 1]).unwrap_err(),
         "musicxml_actual_chord_members_required"
     );
+    staff_refs(&export, &staffs);
     assert_eq!(provenance(&export.owner), before);
     assert_eq!(export.owner.owner.graph.snapshot(), graph);
     assert_eq!(export.owner.owner.prepared.report, report);
@@ -203,6 +217,7 @@ fn selected_cli_late_member_failure_restores_original_storage_and_retries() {
     export.owner.chords[index].members.pop();
     export.provenance = provenance(&export.owner);
     export.reprocess_stack_rhythms(&[1, 2, 1]).unwrap();
+    staff_refs(&export, &staffs);
     assert_eq!(export.xml, xml);
     let events = export.owner.owner.prepared.report["events"]
         .as_array_mut()
@@ -235,6 +250,7 @@ fn selected_cli_late_member_failure_restores_original_storage_and_retries() {
         export.reprocess_stack_rhythms(&[1]).unwrap_err(),
         "musicxml_voice_unique_owned_event_required"
     );
+    staff_refs(&export, &staffs);
     assert_eq!(provenance(&export.owner), before_render);
     assert_eq!(export.owner.measures.as_ptr(), measure_storage);
     assert_eq!(export.owner.chords.as_ptr(), chord_storage);

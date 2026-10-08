@@ -1,0 +1,42 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "bcf2df968182b967bda4064168f33325b38a53ff19f49cbd1e88ab2568ad7d78",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "d15a1af7003f2fa85b76c97da70bc01be1a227551f8f256518c37b8e3927c918",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/staff-midline-original-v3/classes",
+    "/workspace/audiveris-native/scripts/java/StaffMidlineProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/staff-midline-original-v3/home",
+    "-Djava.util.prefs.userRoot=/tmp/staff-midline-original-v3/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/staff-midline-original-v3/classes",
+    "StaffMidlineProbe",
+    "/tmp/retired-beam-book/book/parallel-beam.omr",
+    "/tmp/staff-midline-original-v3/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "1f17f655ba9059d6bd7a561ac4908f6923885dc20fc35280f7af73db6ad3a329",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "observed_sha256": "949daa28ea25dfaac81c1dacc5c1a2c460bc95d4eefa133befaa24195b170235",
+  "pinned_source_sha256": {
+    "sheet/Staff.java": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57",
+    "sheet/StaffLine.java": "1b9bd544246b78e37bf022ea3dfc8243fd8db508f2e7b9db2aecdf7c0d4b3744"
+  },
+  "observed_integer_overload": "explicit getMethod(yAt,int.class)"
+}

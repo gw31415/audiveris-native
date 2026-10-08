@@ -1,0 +1,223 @@
+{
+  "baseline_commit": "e1090bfccc01433e89b310d219a606f604f29925",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "original_source_samples": 13,
+  "original_declared_staff_controls": 5,
+  "original_declared_samples": 45,
+  "total_original_samples": 58,
+  "raw_original_sha256": "949daa28ea25dfaac81c1dacc5c1a2c460bc95d4eefa133befaa24195b170235",
+  "raw_fixture_equal": true,
+  "unique_targeted_tests": 7,
+  "checks": [
+    {
+      "check": "staff",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "staff_midline_tests",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-staff-final.log",
+      "tests": 2
+    },
+    {
+      "check": "selected",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "selected_cli_tests",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-selected-final.log",
+      "tests": 2
+    },
+    {
+      "check": "voice_refine",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_xml::tests::original_voice",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-voice_refine-final.log",
+      "tests": 2
+    },
+    {
+      "check": "rational",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "actual_rational_slots_and_underfilled_voice_termination_match_original",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-rational-final.log",
+      "tests": 1
+    },
+    {
+      "check": "selected_final",
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "selected_cli_tests",
+        "--",
+        "--test-threads=2"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-selected_final-final.log",
+      "tests": 2
+    },
+    {
+      "check": "fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-fmt-final.log",
+      "tests": null
+    },
+    {
+      "check": "clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-clippy-final.log",
+      "tests": null
+    },
+    {
+      "check": "build",
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/staff-midline-build-final.log",
+      "tests": null
+    }
+  ],
+  "default_CLI_regression": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed",
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    },
+    "checker_sha256": "44064e43ce013fc4a5fb2a03799b8647f7d8c3016a6da8b227603debbfa654ac"
+  },
+  "Rational_XML": {
+    "bytes": "identical",
+    "XSD": "passed",
+    "sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+  },
+  "observed_contract": "actual retained GRID persistent Staff/Curve geometry moves through Page/items/Music with identical references; actual source middle-line13 and five real1/2/4/5/6-line original controls45 match interpolation/global-slope extrapolation/lower-middle even selection/ties-even yAt(int); declared input and +0.5px retained points remain separate",
+  "actual_ownership": "changing mutable report Staff ID/lines cannot change actual middle-line output; missing actual Staff refuses without Chord/Slot/Voice clock or cache changes; restore same Staff/Curve refs, not report reconstruction; selected success/later-member failure/retry and final XML failure preserve Staff/Curve references",
+  "failures_corrected": "first control omitted original StaffLine constructor +0.5px; second generic-reflection yAt selected double instead of int. Both raw outputs/native failures retained; explicit int overload and original input/retained point fields now observed; no production interpolation or actual measured source geometry changed to hide failures. Selected2 repeated only after adding final XML rollback observation.",
+  "native_source_precision": "actual measured Curve points unchanged after report mutation; original13 integer outputs equal; no JAXB rounding/coercion of native actual points",
+  "pinned_source_sha256": {
+    "sheet/Staff.java": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57",
+    "sheet/StaffLine.java": "1b9bd544246b78e37bf022ea3dfc8243fd8db508f2e7b9db2aecdf7c0d4b3744"
+  },
+  "new_archives_generated": false,
+  "source_book_preserved": true,
+  "historical_649_repeated": false,
+  "selected_full_profile_repeated": false,
+  "ce785c9_obtained_or_regenerated": false,
+  "remaining": "plain lookup polygons, competing manual relation removal/fresh-add callbacks, full clear/detect and implicit tuples before normal rhythm; mutable Staff/controller owner lifecycle and full/nonUI remain pending with flags false"
+}

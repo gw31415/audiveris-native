@@ -1,0 +1,271 @@
+{
+  "scope" : "actual loaded source Staff middle-line samples and five independently declared real Staff/StaffLine controls; even lower-index selection, cubic interpolation/global-slope extrapolation, ties-even yAt(int); no native output input or archive creation",
+  "source" : {
+    "staff_id" : 1,
+    "middle_points" : [ [ 81.0, 243.0 ], [ 1198.0, 243.0 ] ],
+    "samples" : [ {
+      "x" : -20,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 0,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 145,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 146,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 288,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 299,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 360,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 459,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 470,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 630,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 981,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 1100,
+      "y" : 243,
+      "same_middle_line" : true
+    }, {
+      "x" : 2000,
+      "y" : 243,
+      "same_middle_line" : true
+    } ]
+  },
+  "cases" : [ {
+    "line_count" : 1,
+    "lines" : [ [ [ -5.0, 100.0 ], [ 8.0, 106.0 ], [ 24.0, 98.0 ], [ 45.0, 112.0 ] ] ],
+    "retained_lines" : [ [ [ -5.0, 100.5 ], [ 8.0, 106.5 ], [ 24.0, 98.5 ], [ 45.0, 112.5 ] ] ],
+    "middle_index" : 0,
+    "samples" : [ {
+      "x" : -20,
+      "y" : 97,
+      "same_middle_line" : true
+    }, {
+      "x" : -5,
+      "y" : 100,
+      "same_middle_line" : true
+    }, {
+      "x" : 0,
+      "y" : 105,
+      "same_middle_line" : true
+    }, {
+      "x" : 8,
+      "y" : 106,
+      "same_middle_line" : true
+    }, {
+      "x" : 13,
+      "y" : 104,
+      "same_middle_line" : true
+    }, {
+      "x" : 24,
+      "y" : 98,
+      "same_middle_line" : true
+    }, {
+      "x" : 35,
+      "y" : 103,
+      "same_middle_line" : true
+    }, {
+      "x" : 45,
+      "y" : 112,
+      "same_middle_line" : true
+    }, {
+      "x" : 80,
+      "y" : 121,
+      "same_middle_line" : true
+    } ]
+  }, {
+    "line_count" : 2,
+    "lines" : [ [ [ -5.0, 100.0 ], [ 8.0, 106.0 ], [ 24.0, 98.0 ], [ 45.0, 112.0 ] ], [ [ -5.0, 111.0 ], [ 8.0, 117.0 ], [ 24.0, 109.0 ], [ 45.0, 123.0 ] ] ],
+    "retained_lines" : [ [ [ -5.0, 100.5 ], [ 8.0, 106.5 ], [ 24.0, 98.5 ], [ 45.0, 112.5 ] ], [ [ -5.0, 111.5 ], [ 8.0, 117.5 ], [ 24.0, 109.5 ], [ 45.0, 123.5 ] ] ],
+    "middle_index" : 0,
+    "samples" : [ {
+      "x" : -20,
+      "y" : 97,
+      "same_middle_line" : true
+    }, {
+      "x" : -5,
+      "y" : 100,
+      "same_middle_line" : true
+    }, {
+      "x" : 0,
+      "y" : 105,
+      "same_middle_line" : true
+    }, {
+      "x" : 8,
+      "y" : 106,
+      "same_middle_line" : true
+    }, {
+      "x" : 13,
+      "y" : 104,
+      "same_middle_line" : true
+    }, {
+      "x" : 24,
+      "y" : 98,
+      "same_middle_line" : true
+    }, {
+      "x" : 35,
+      "y" : 103,
+      "same_middle_line" : true
+    }, {
+      "x" : 45,
+      "y" : 112,
+      "same_middle_line" : true
+    }, {
+      "x" : 80,
+      "y" : 121,
+      "same_middle_line" : true
+    } ]
+  }, {
+    "line_count" : 4,
+    "lines" : [ [ [ -5.0, 100.0 ], [ 8.0, 106.0 ], [ 24.0, 98.0 ], [ 45.0, 112.0 ] ], [ [ -5.0, 111.0 ], [ 8.0, 117.0 ], [ 24.0, 109.0 ], [ 45.0, 123.0 ] ], [ [ -5.0, 122.0 ], [ 8.0, 128.0 ], [ 24.0, 120.0 ], [ 45.0, 134.0 ] ], [ [ -5.0, 133.0 ], [ 8.0, 139.0 ], [ 24.0, 131.0 ], [ 45.0, 145.0 ] ] ],
+    "retained_lines" : [ [ [ -5.0, 100.5 ], [ 8.0, 106.5 ], [ 24.0, 98.5 ], [ 45.0, 112.5 ] ], [ [ -5.0, 111.5 ], [ 8.0, 117.5 ], [ 24.0, 109.5 ], [ 45.0, 123.5 ] ], [ [ -5.0, 122.5 ], [ 8.0, 128.5 ], [ 24.0, 120.5 ], [ 45.0, 134.5 ] ], [ [ -5.0, 133.5 ], [ 8.0, 139.5 ], [ 24.0, 131.5 ], [ 45.0, 145.5 ] ] ],
+    "middle_index" : 1,
+    "samples" : [ {
+      "x" : -20,
+      "y" : 108,
+      "same_middle_line" : true
+    }, {
+      "x" : -5,
+      "y" : 112,
+      "same_middle_line" : true
+    }, {
+      "x" : 0,
+      "y" : 116,
+      "same_middle_line" : true
+    }, {
+      "x" : 8,
+      "y" : 118,
+      "same_middle_line" : true
+    }, {
+      "x" : 13,
+      "y" : 115,
+      "same_middle_line" : true
+    }, {
+      "x" : 24,
+      "y" : 110,
+      "same_middle_line" : true
+    }, {
+      "x" : 35,
+      "y" : 114,
+      "same_middle_line" : true
+    }, {
+      "x" : 45,
+      "y" : 124,
+      "same_middle_line" : true
+    }, {
+      "x" : 80,
+      "y" : 132,
+      "same_middle_line" : true
+    } ]
+  }, {
+    "line_count" : 5,
+    "lines" : [ [ [ -5.0, 100.0 ], [ 8.0, 106.0 ], [ 24.0, 98.0 ], [ 45.0, 112.0 ] ], [ [ -5.0, 111.0 ], [ 8.0, 117.0 ], [ 24.0, 109.0 ], [ 45.0, 123.0 ] ], [ [ -5.0, 122.0 ], [ 8.0, 128.0 ], [ 24.0, 120.0 ], [ 45.0, 134.0 ] ], [ [ -5.0, 133.0 ], [ 8.0, 139.0 ], [ 24.0, 131.0 ], [ 45.0, 145.0 ] ], [ [ -5.0, 144.0 ], [ 8.0, 150.0 ], [ 24.0, 142.0 ], [ 45.0, 156.0 ] ] ],
+    "retained_lines" : [ [ [ -5.0, 100.5 ], [ 8.0, 106.5 ], [ 24.0, 98.5 ], [ 45.0, 112.5 ] ], [ [ -5.0, 111.5 ], [ 8.0, 117.5 ], [ 24.0, 109.5 ], [ 45.0, 123.5 ] ], [ [ -5.0, 122.5 ], [ 8.0, 128.5 ], [ 24.0, 120.5 ], [ 45.0, 134.5 ] ], [ [ -5.0, 133.5 ], [ 8.0, 139.5 ], [ 24.0, 131.5 ], [ 45.0, 145.5 ] ], [ [ -5.0, 144.5 ], [ 8.0, 150.5 ], [ 24.0, 142.5 ], [ 45.0, 156.5 ] ] ],
+    "middle_index" : 2,
+    "samples" : [ {
+      "x" : -20,
+      "y" : 119,
+      "same_middle_line" : true
+    }, {
+      "x" : -5,
+      "y" : 122,
+      "same_middle_line" : true
+    }, {
+      "x" : 0,
+      "y" : 127,
+      "same_middle_line" : true
+    }, {
+      "x" : 8,
+      "y" : 128,
+      "same_middle_line" : true
+    }, {
+      "x" : 13,
+      "y" : 126,
+      "same_middle_line" : true
+    }, {
+      "x" : 24,
+      "y" : 120,
+      "same_middle_line" : true
+    }, {
+      "x" : 35,
+      "y" : 125,
+      "same_middle_line" : true
+    }, {
+      "x" : 45,
+      "y" : 134,
+      "same_middle_line" : true
+    }, {
+      "x" : 80,
+      "y" : 143,
+      "same_middle_line" : true
+    } ]
+  }, {
+    "line_count" : 6,
+    "lines" : [ [ [ -5.0, 100.0 ], [ 8.0, 106.0 ], [ 24.0, 98.0 ], [ 45.0, 112.0 ] ], [ [ -5.0, 111.0 ], [ 8.0, 117.0 ], [ 24.0, 109.0 ], [ 45.0, 123.0 ] ], [ [ -5.0, 122.0 ], [ 8.0, 128.0 ], [ 24.0, 120.0 ], [ 45.0, 134.0 ] ], [ [ -5.0, 133.0 ], [ 8.0, 139.0 ], [ 24.0, 131.0 ], [ 45.0, 145.0 ] ], [ [ -5.0, 144.0 ], [ 8.0, 150.0 ], [ 24.0, 142.0 ], [ 45.0, 156.0 ] ], [ [ -5.0, 155.0 ], [ 8.0, 161.0 ], [ 24.0, 153.0 ], [ 45.0, 167.0 ] ] ],
+    "retained_lines" : [ [ [ -5.0, 100.5 ], [ 8.0, 106.5 ], [ 24.0, 98.5 ], [ 45.0, 112.5 ] ], [ [ -5.0, 111.5 ], [ 8.0, 117.5 ], [ 24.0, 109.5 ], [ 45.0, 123.5 ] ], [ [ -5.0, 122.5 ], [ 8.0, 128.5 ], [ 24.0, 120.5 ], [ 45.0, 134.5 ] ], [ [ -5.0, 133.5 ], [ 8.0, 139.5 ], [ 24.0, 131.5 ], [ 45.0, 145.5 ] ], [ [ -5.0, 144.5 ], [ 8.0, 150.5 ], [ 24.0, 142.5 ], [ 45.0, 156.5 ] ], [ [ -5.0, 155.5 ], [ 8.0, 161.5 ], [ 24.0, 153.5 ], [ 45.0, 167.5 ] ] ],
+    "middle_index" : 2,
+    "samples" : [ {
+      "x" : -20,
+      "y" : 119,
+      "same_middle_line" : true
+    }, {
+      "x" : -5,
+      "y" : 122,
+      "same_middle_line" : true
+    }, {
+      "x" : 0,
+      "y" : 127,
+      "same_middle_line" : true
+    }, {
+      "x" : 8,
+      "y" : 128,
+      "same_middle_line" : true
+    }, {
+      "x" : 13,
+      "y" : 126,
+      "same_middle_line" : true
+    }, {
+      "x" : 24,
+      "y" : 120,
+      "same_middle_line" : true
+    }, {
+      "x" : 35,
+      "y" : 125,
+      "same_middle_line" : true
+    }, {
+      "x" : 45,
+      "y" : 134,
+      "same_middle_line" : true
+    }, {
+      "x" : 80,
+      "y" : 143,
+      "same_middle_line" : true
+    } ]
+  } ]
+}

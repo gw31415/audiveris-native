@@ -11,6 +11,33 @@ use crate::{
 };
 use serde_json::{Value, json};
 use std::collections::BTreeMap;
+use std::sync::Arc;
+
+#[derive(Debug)]
+pub(crate) struct StaffGeometry {
+    pub(crate) id: u64,
+    pub(crate) system: u64,
+    pub(crate) lines: Vec<Arc<Curve>>,
+}
+impl StaffGeometry {
+    pub(crate) fn middle_at(&self, x: i32) -> Result<i32, String> {
+        let index = self
+            .lines
+            .len()
+            .checked_sub(1)
+            .ok_or("music_actual_staff_midline_required")?
+            / 2;
+        let y = self.lines[index].y(x as f64);
+        if !y.is_finite() {
+            return Err("music_actual_staff_midline_required".into());
+        }
+        Ok(y.round_ties_even() as i32)
+    }
+}
+pub(crate) struct OwnedGrid {
+    pub(crate) report: Value,
+    pub(crate) staffs: Vec<Arc<StaffGeometry>>,
+}
 #[derive(Default)]
 pub struct GlyphRegistry {
     keys: BTreeMap<String, usize>,
@@ -96,6 +123,16 @@ pub fn build(
     systems: &Value,
     sticks: &Value,
 ) -> Result<Value, String> {
+    Ok(build_owned(residual, sc, prep, completion, systems, sticks)?.report)
+}
+pub(crate) fn build_owned(
+    residual: &GrayImage,
+    sc: &Scale,
+    prep: &GridPreparation,
+    completion: &Value,
+    systems: &Value,
+    sticks: &Value,
+) -> Result<OwnedGrid, String> {
     if systems["status"] != "initial_systems" {
         return Err("initial_systems_unavailable".into());
     }
@@ -109,14 +146,15 @@ pub fn build(
         .ok_or("line_membership_unavailable")?;
     let mut registry = GlyphRegistry::default();
     let bars = crate::bar_semantics::build(sc, sticks, systems, completion, &mut registry)?;
-    let mut curves: Vec<Vec<Curve>> = vec![];
+    let mut curves: Vec<Vec<Arc<Curve>>> = vec![];
     let mut staffs = vec![];
+    let mut actual_staffs = Vec::new();
     let mut gi = 0;
     for staff in final_staffs {
         let mut lines = vec![];
         let mut staff_curves = vec![];
         for line in staff["lines"].as_array().unwrap() {
-            let curve = simplify(points(&line["points"]), sc.interline.main * 4)?;
+            let curve = Arc::new(simplify(points(&line["points"]), sc.interline.main * 4)?);
             let g = &glyphs[gi];
             gi += 1;
             let id = registry.register(g);
@@ -142,6 +180,11 @@ pub fn build(
         if staff["small"] == true {
             staffs.last_mut().unwrap()["small"] = json!(true);
         }
+        actual_staffs.push(Arc::new(StaffGeometry {
+            id,
+            system: system["id"].as_u64().unwrap(),
+            lines: staff_curves.clone(),
+        }));
         curves.push(staff_curves);
     }
     // LagManager.dispatchRuns: discard long vertical runs from NO_STAFF, then build ALL horizontal sections.
@@ -225,10 +268,14 @@ pub fn build(
         system["horizontal_section_ids"] = json!(collect(&horizontal)?);
         system["vertical_section_ids"] = json!(collect(&prep.vertical)?);
     }
-    crate::braces::integrate(
+    let report = crate::braces::integrate(
         json!({"schema":"audiveris-native.grid-ir.v1","grid_complete":false,"glyph_id_namespace":"native exact-pixel registry; not Java numeric IDs","section_namespaces":["post-removal horizontal","original vertical"],"staffs":staffs,"systems":out,"glyphs":registry.entries,"bar_semantics":bars,"hlag":horizontal.iter().map(section).collect::<Vec<_>>(),"vlag":prep.vertical.iter().map(section).collect::<Vec<_>>(),"pending":["complete BarsRetriever interpretations and contextualization","staff areas and page allocation"]}),
         completion,
         sc,
         residual.height,
-    )
+    )?;
+    Ok(OwnedGrid {
+        report,
+        staffs: actual_staffs,
+    })
 }

@@ -9,6 +9,7 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 pub struct OwnedItems {
+    pub(crate) staffs: Vec<std::sync::Arc<crate::grid_ir::StaffGeometry>>,
     pub(crate) sheet_skew: crate::sheet_skew::SheetSkew,
     pub(crate) interline: usize,
     pub(crate) catalog: crate::head_staff_catalog::TemplateCatalog,
@@ -70,6 +71,7 @@ pub fn continue_items(
         .interline
         .main;
     Ok(OwnedItems {
+        staffs: upstream.staffs,
         sheet_skew: upstream.sheet_skew,
         interline,
         catalog,

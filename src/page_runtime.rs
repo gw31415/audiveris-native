@@ -5,6 +5,7 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) staffs: Vec<std::sync::Arc<crate::grid_ir::StaffGeometry>>,
     pub(crate) sheet_skew: crate::sheet_skew::SheetSkew,
     pub report: Value,
     pub output_pixels: Vec<u8>,
@@ -99,8 +100,15 @@ pub fn analyze(
         sc.interline.main as u32,
         model,
     )?;
-    let mut grid_ir =
-        audiveris_native::grid_ir::build(&residual, &sc, &prep, &completion, &systems, &sticks)?;
+    let owned_grid = audiveris_native::grid_ir::build_owned(
+        &residual,
+        &sc,
+        &prep,
+        &completion,
+        &systems,
+        &sticks,
+    )?;
+    let mut grid_ir = owned_grid.report;
     let header_preparation = audiveris_native::header_preparation::from_grid(&grid_ir)?;
     let clef_candidates = audiveris_native::clef_candidates::analyze(
         &residual,
@@ -681,6 +689,7 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        staffs: owned_grid.staffs,
         sheet_skew,
         report: page_report,
         output_pixels,

@@ -3,6 +3,19 @@ use crate::music_measures::{ChordKind, OwnedMusic};
 use std::collections::BTreeMap;
 
 impl OwnedMusic {
+    pub fn staff_midline_at(&self, measure_number: usize, x: i32) -> Result<i32, String> {
+        let measure = measure_number
+            .checked_sub(1)
+            .and_then(|mi| self.measures.get(mi))
+            .ok_or("music_rest_actual_measure_required")?;
+        let staff = self
+            .owner
+            .staffs
+            .iter()
+            .find(|staff| staff.id == measure.staff && staff.system == measure.system)
+            .ok_or("music_actual_staff_owner_required")?;
+        staff.middle_at(x)
+    }
     /// Stage original addition callbacks on real measure/group/rest owners.
     /// Full detection still needs plain lookup and the original preparation pass.
     pub fn add_interleaved_rests(
