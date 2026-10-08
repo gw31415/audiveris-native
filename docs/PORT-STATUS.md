@@ -1947,3 +1947,13 @@ nullable Voice state/current-retained identity and direct list lifecycle, withou
 Measure purge or number synthesis. Evidence musicxml-tuplet-find-inputs. Actual
 Voice Tuplet getters/inspect-shrink/merge/second pass/signature/font/switch remain;
 full nonUI complete false.
+
+### Actual Voice Tuplet readers and pure Measure purge (continuation of3515653)
+
+Original5 cases/25 states/50 Voice rows compare first relation encounter vs any-
+relation last Chord, absent/null successor, allocated-empty/null getter distinction,
+retired old object and restored current encounter order. Pure purge shares existing
+refinement removal without triggering sort/rename early. Physical Chord/Slot clocks,
+manual objects/expected/report remain. Evidence musicxml-voice-tuplet-sequence.
+InspectVoicesEnd/shrink real candidate owners/merge/second pass and actual resource
+binding remain; full nonUI complete false.

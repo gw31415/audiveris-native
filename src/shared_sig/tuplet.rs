@@ -273,6 +273,21 @@ impl Graph {
             .unwrap();
         serde_json::json!({"factor":c.factor.get().map(|f|[f.actual_num,f.actual_den]),"base":c.base.borrow().as_ref().map(|b|**b),"staff":c.staff.as_ref().map(|s|s.id),"part":self.vertices[self.id(key).unwrap()-1].cached_part,"sig_attached":c.sig_attached})
     }
+    pub(crate) fn chord_has_tuplet_relation(&self, key: Key) -> Result<bool, String> {
+        let id = self.endpoint(key)?;
+        if key.phase != Phase::Chord
+            || !matches!(
+                self.vertices[id - 1].data["kind"].as_str(),
+                Some("HeadChordInter" | "RestChordInter")
+            )
+        {
+            return Err("music_actual_tuplet_chord_required".into());
+        }
+        Ok(self
+            .incident_edges(id)
+            .iter()
+            .any(|eid| self.edges[*eid - 1].key.kind == "ChordTupletRelation"))
+    }
     pub(crate) fn first_chord_tuplet(&self, key: Key) -> Result<Option<Key>, String> {
         let id = self.endpoint(key)?;
         let chord = &self.vertices[id - 1];

@@ -260,6 +260,24 @@ pub(crate) fn remove_chords(
         }
     }
 }
+pub(crate) fn purge_measure_voices(
+    graph: &mut crate::shared_sig::Graph,
+    voices: &mut Vec<Voice>,
+    measure_index: usize,
+) {
+    let mut i = 0;
+    while i < voices.len() {
+        let voice = &voices[i];
+        if voice.measure == measure_index
+            && voice.measure_rest_chord.is_none()
+            && voice.chord_ids.is_empty()
+        {
+            graph.retain_voice_owner(voices.remove(i));
+        } else {
+            i += 1;
+        }
+    }
+}
 pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
     json!(
         voices
@@ -312,14 +330,7 @@ pub(crate) fn refine_ordinary_system(
             v.measure_rest_chord
                 .or_else(|| v.chord_ids.first().copied())
         };
-        let mut index = 0;
-        while index < retained.len() {
-            if retained[index].measure == mi && first(&retained[index]).is_none() {
-                staged.retain_voice_owner(retained.remove(index));
-            } else {
-                index += 1;
-            }
-        }
+        purge_measure_voices(&mut staged, &mut retained, mi);
         let positions: Vec<_> = retained
             .iter()
             .enumerate()

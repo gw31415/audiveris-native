@@ -3704,3 +3704,4 @@ mod tuplet_force;
 
 mod tuplet_find;
 mod voice_chords;
+mod voice_tuplets;
