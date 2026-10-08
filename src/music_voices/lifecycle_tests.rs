@@ -844,3 +844,5 @@ mod narrow_slot_owners_tests;
 mod tuplet_shrink_existing_tests;
 
 mod tuplet_shrink_fresh_tests;
+
+mod tuplet_shrink_nullable_tests;

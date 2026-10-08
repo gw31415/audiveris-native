@@ -1987,3 +1987,10 @@ A second-link failure restores outer native actual containers/cache/Chord/candid
 clocks and permits retry. Explicit resource/cached geometry controls follow actual
 candidate retrieval. Evidence musicxml-tuplet-shrink-fresh; nullable fallback and
 inspect/merge/second pass/ordinary resource binding remain; full/public false.
+
+Nullable shrink now follows actual stopChord Voice across live/retained owners,
+returns on legitimate NULL/empty lists, preserves source absent/empty/reversed
+range semantics without inventing Voice IDs. Nine original controls retain actual
+Chord/StackSlot/Voice/expected/end/excess/manual identity and candidate clocks with
+zero new Graph callbacks. Evidence musicxml-tuplet-shrink-nullable. Signed inspect,
+merge/second pass and ordinary resource binding remain; full/public false.

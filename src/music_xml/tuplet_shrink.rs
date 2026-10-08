@@ -16,6 +16,28 @@ impl OwnedMusic {
         last_sync: Option<&str>,
         font: &TupletFontSymbols,
     ) -> Result<Vec<Key>, String> {
+        self.shrink_rhythm_voice_from(candidates, Some(identity), stop, last_sync, font)
+    }
+    /// A null Voice follows the actual stop Chord's owner, including a retired one.
+    pub fn shrink_rhythm_voice_from(
+        &mut self,
+        candidates: &mut RhythmCandidates,
+        identity: Option<&Arc<()>>,
+        stop: Option<Key>,
+        last_sync: Option<&str>,
+        font: &TupletFontSymbols,
+    ) -> Result<Vec<Key>, String> {
+        let identity = match identity {
+            Some(identity) => Some(identity.clone()),
+            None => stop
+                .map(|key| self.owner.graph.chord_voice_owner(key, &self.voices))
+                .transpose()?
+                .flatten()
+                .map(|v| v.identity.clone()),
+        };
+        let Some(identity) = identity else {
+            return Ok(Vec::new());
+        };
         let number = candidates.number;
         let mi = super::tuplet_groups::measure_index(&self.measures, number)?;
         let m = &self.measures[mi];
@@ -25,8 +47,8 @@ impl OwnedMusic {
         let voice = self
             .voices
             .iter()
-            .find(|v| Arc::ptr_eq(&v.identity, identity))
-            .or_else(|| self.owner.graph.retained_voice_owner(identity))
+            .find(|v| Arc::ptr_eq(&v.identity, &identity))
+            .or_else(|| self.owner.graph.retained_voice_owner(&identity))
             .filter(|v| v.measure == mi)
             .ok_or("music_actual_tuplet_voice_owner_required")?;
         let chords = voice
