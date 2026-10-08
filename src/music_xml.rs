@@ -3714,3 +3714,5 @@ mod tuplet_inspect;
 mod tuplet_collection;
 
 mod tuplet_merge;
+
+mod tuplet_second_pass;

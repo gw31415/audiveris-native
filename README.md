@@ -1,5 +1,7 @@
 通常Git workspaceへの移行手順と履歴の扱いは[こちら](docs/GIT-WORKSPACE.md)。ルートから直接Cargo buildできます。
 
+現在のゴールは、代表的な実譜面PNGから原版Audiverisと同等品質のMusicXMLをnative CLIで出力することです。周辺変換・一般編集/undo・project保存互換・認識に不要な全API再現は対象外です。[受入条件と残工程](docs/IMAGE-MUSICXML-ACCEPTANCE.md)。合成入力の成功だけで品質同等とは判断しません。
+
 ## 現在の目標と移植台帳（2026-10-05）
 
 UI表示を除く原Audiveris5.11の認識・解析・補正・保存・MusicXML出力機能の同等性が最終目標です。原版機能を省略する予定はありません。限定画像CLIは小段階の成果です。[実装済み/部分/未対応/GUIのみ除外と接続順](docs/PORT-STATUS.md)、[現段階CLI手順](docs/MUSICXML-LIMITED.md)。以下の個別記録は当時の境界・ソースSHAとして保持します。

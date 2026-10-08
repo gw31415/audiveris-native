@@ -852,3 +852,5 @@ mod tuplet_inspect_tests;
 mod tuplet_collection_tests;
 
 mod tuplet_merge_tests;
+
+mod tuplet_second_pass_tests;

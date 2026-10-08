@@ -1,0 +1,84 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "image": {
+    "file": "fixtures/official-grid/laura-gray.png",
+    "width": 1489,
+    "height": 2104,
+    "decoded_L_pixel_sha256": "1409021704fc10991babd90335ccb89a241cd73059a497dadf21a5b54fa234cb",
+    "complete_rendered_page": true,
+    "original_renderer_qualification": "fixtures/rendered/manifest.json; original historical render exit -6 despite complete verified PNG; no current render or Mac use"
+  },
+  "image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx768m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/real-score-laura-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-score-laura-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-score-laura-original-v1/prefs",
+    "-Duser.home=/tmp/real-score-laura-original-v1/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-export",
+    "-output",
+    "/tmp/real-score-laura-original-v1",
+    "--",
+    "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 8.85,
+  "native_results_used": false,
+  "original_XML_sha256": "4f979b7cfce80dd56a7babac36f4cec59a774bfd0577e9e9724be706b31dcc94",
+  "original_MXL_sha256": "0a731bff1ca28d9334c62d3d3513c58545d5c667b434fcaf02fd0bb73992f0ac",
+  "original_console_sha256": "079aacb7d5da0620077295141228867f36c490ef843c605e3d8a11d53befd4de",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "original_summary": {
+    "parts": 2,
+    "part_measure_counts": [
+      4,
+      4
+    ],
+    "notes": 92,
+    "rests": 0,
+    "chord_continuations": 27,
+    "voices": [
+      "1",
+      "2",
+      "3",
+      "5",
+      "6"
+    ],
+    "staffs": [
+      "1",
+      "2"
+    ],
+    "meters": [
+      "3/4"
+    ],
+    "ties": 0,
+    "slurs": 0,
+    "beams": 45
+  },
+  "native": {
+    "commit": "718acb1937b1ed9d755b816afa99e221a7bc65cf",
+    "unchanged_recognition_src": true,
+    "exit_code": 1,
+    "error": "beam builder surrounding multiple parts pending",
+    "XML_written": false
+  },
+  "source_truth": {
+    "file": "fixtures/openscore-lieder/lc6019054.mscx",
+    "sha256": "c884cf023a152e0af29be3719f158a8ec8903cd312b6f1d880bc6b43dcbc1682",
+    "license": "CC0-1.0",
+    "truth_comparison_complete": false
+  },
+  "real_image_quality_accepted": false,
+  "development_erased_staff_image_excluded": "fixtures/official-stem-seeds-pixels/laura-gray.png (different pixels; initial native-v1 diagnostic excluded)"
+}

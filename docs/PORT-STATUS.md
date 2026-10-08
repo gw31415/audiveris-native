@@ -1,10 +1,19 @@
-# 原Audiveris 5.11との機能同等性：移植台帳とCLI接続順
+# 画像入力から原Audiveris同等品質のMusicXMLへ：現在位置と接続順
 
-更新日: 2026-10-05（America/Los_Angeles）。対象原版は5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
+更新日: 2026-10-08。対象原版5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
 
-最終目標は、UIの表示・入力装置を除く、原版の譜面認識・解析・補正・保存・MusicXML出力機能の同等性です。原版機能を意図的に省略する予定はありません。通常五線・Bravura・ト音記号・単声などの現在の制限は、小チェックポイントで検証した範囲であり、最終スコープの縮小ではありません。GUI内にある処理も、譜面の意味・形状・関係・再計算に影響する部分は移植対象です。
+ユーザーが終了条件を変更しました。現在のゴールは、少なくともPNG画像入力から、
+代表的な実譜面を原版Audiverisと同等品質で認識し、native Rust CLIでMusicXMLへ出力することです。
+PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に不要な原版全API再現は対象外です。
+認識に必要な実所有・関係・callback・rhythm処理は保持し、画像→認識→出力の未接続箇所を優先します。
+旧「非UI全APIを省略なく移植」goalと、そのための工程はこの変更で終了条件から外れました。
+下の機能別台帳・古い工程説明・checkpointは当時の証拠として保持し、現在の残作業一覧とは区別します。
 
-台帳は現在の実コード・保存済み原版観測・原版クラスの対応に基づく機能群の棚卸しです。全原版メソッドの網羅監査が完了したという主張ではありません。未調査の細部は未対応に含め、工程ごとに細分化します。「部分」は条件指定kernel、保存XMLからの比較、画像CLI接続のいずれかが存在する状態で、原版工程全体の完成を意味しません。HEADS/STEMS/MusicXML/epilog/全自動処理の完了フラグはfalseです。
+現在の受入条件・実譜面基準・品質差・優先工程は [画像MusicXML品質受入](IMAGE-MUSICXML-ACCEPTANCE.md) に記載します。
+合成63イベント＋明示補正8とexact7/64のXML/XSD成功は回帰証拠です。実譜面の同等品質の証拠には読み替えません。
+画像入力からの実譜面品質受入はまだ未達であり、現在のglobal完了フラグをtrueにはしません。
+環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
+未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
 ## 実装済みの具体的単位
 
@@ -2021,3 +2030,12 @@ Voice/StackSlot clocks. Source late registration partial state is distinguished
 from native outer graph/cache/container/physical-owner rollback and retry. Evidence
 musicxml-tuplet-merge. Capture-old/find-new/remove-old second pass and ordinary
 resource binding remain; full/public nonUI false. No new authentication or environment.
+
+First-pass implicit recheck captures old actual Measure signs before find creates
+or reuses signs, removes exactly that capture only for nonempty returns, preserves
+returned duplicates/retired objects, and reaches the next genuine reset without
+clearing callback clocks. Ten original controls/20 callbacks cover old/new coexist,
+first/pass2/switch/NULL versus zero expected and source partial callback failures
+versus native actual owner/cache/storage rollback/retry. Evidence musicxml-tuplet-
+second-pass. Retaining map candidates and real ordinary resources remain; full/
+public nonUI false. Checkpoints are interim and work continues within authorization.

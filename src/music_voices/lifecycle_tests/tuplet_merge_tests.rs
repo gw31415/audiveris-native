@@ -31,7 +31,7 @@ fn original() -> Value {
     }
     d
 }
-fn prepare(case: &Value) -> Prepared {
+pub(super) fn prepare(case: &Value) -> Prepared {
     let extra = case["declared_extra_groups"].as_array().unwrap();
     let mut p = if extra.is_empty() {
         control(case)
@@ -64,7 +64,7 @@ fn prepare(case: &Value) -> Prepared {
     }
     p
 }
-fn name(p: &Prepared, key: Key, new: &[Key]) -> String {
+pub(super) fn name(p: &Prepared, key: Key, new: &[Key]) -> String {
     p.tuplets
         .iter()
         .position(|&t| t == key)
@@ -113,7 +113,7 @@ fn signs(p: &Prepared, g: &Graph, new: &[Key], details: bool) -> Value {
             .collect::<Vec<_>>()
     )
 }
-fn state(p: &mut Prepared, new: &[Key]) -> Value {
+pub(super) fn state(p: &mut Prepared, new: &[Key]) -> Value {
     let relations = p
         .relations
         .iter()
@@ -126,12 +126,12 @@ fn state(p: &mut Prepared, new: &[Key]) -> Value {
     let m = &p.c.owner.measures;
     json!({"measure_tuplets":names(p,&m[0].tuplets,new),"stack_tuplets":names(p,&all(&m[0].tuplets,&m[0].stack_tuplets),new),"other_stack_tuplets":names(p,&all(&m[1].tuplets,&m[1].stack_tuplets),new),"root_unassigned":names(p,&m[0].stack_tuplets,new),"other_unassigned":names(p,&m[1].stack_tuplets,new),"tuplets":signs(p,&p.c.owner.owner.graph,new,true),"relations":relations,"state":frame(&mut p.c)})
 }
-fn normalized(mut v: Value) -> Value {
+pub(super) fn normalized(mut v: Value) -> Value {
     v.as_object_mut().unwrap().remove("phase");
     v["state"]["owned"]["relations"] = json!([]);
     v
 }
-fn compare(actual: Value, expected: Value, label: &str) {
+pub(super) fn compare(actual: Value, expected: Value, label: &str) {
     if actual != expected {
         std::fs::write(
             format!("/tmp/tuplet-merge-{label}-native.json"),
@@ -172,49 +172,13 @@ fn original_merge_keeps_stale_previous_groups_and_actual_beam_identity_with_orde
         p.c.owner.owner.graph.trace_tuplet_additions();
         p.c.owner.owner.graph.trace_tuplet_removals();
         let returned = p.c.owner.merge_rhythm_tuplets(1, &font).unwrap();
-        let additions = p.c.owner.owner.graph.take_tuplet_additions();
-        let removals = p.c.owner.owner.graph.take_tuplet_removals();
-        let mut new = Vec::new();
-        for cb in &additions {
-            if !new.contains(&cb.tuplet) {
-                new.push(cb.tuplet);
-            }
-        }
-        let mut callbacks = Vec::new();
-        for cb in removals.iter().filter(|cb| cb.phase == "finished") {
-            let containers = cb.containers.as_ref().unwrap();
-            let held = std::mem::replace(&mut p.c.owner.owner.graph, cb.graph.clone());
-            let clocks = frame(&mut p.c)["owned"].clone();
-            p.c.owner.owner.graph = held;
-            let snapshot = cb.graph.snapshot();
-            let node = snapshot["inters"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|n| n["id"] == cb.graph.id(cb.tuplet).unwrap())
-                .unwrap();
-            callbacks.push((cb.order,json!({"phase":"chord_tuplet_removed","edge":p.relations.iter().find(|(id,_)|*id==cb.edge).unwrap().1,"tuplet":name(&p,cb.tuplet,&new),"sig_attached":cb.sig_attached,"registered":cb.state["registered"],"removed":cb.state["removed"],"abnormal":node["abnormal"]==true,"manual":cb.state["manual"],"measure_tuplets":names(&p,&cb.measure_tuplets,&new),"stack_tuplets":names(&p,&cb.stack_tuplets,&new),"root_unassigned":names(&p,&containers[0].1,&new),"old_tuplets":signs(&p,&cb.graph,&[],false),"clocks":clocks})));
-        }
-        for cb in &additions {
-            let held = std::mem::replace(&mut p.c.owner.owner.graph, cb.graph.clone());
-            let clocks = frame(&mut p.c)["owned"].clone();
-            p.c.owner.owner.graph = held;
-            let snapshot = cb.graph.snapshot();
-            let node = snapshot["inters"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .find(|n| n["id"] == cb.graph.id(cb.tuplet).unwrap())
-                .unwrap();
-            callbacks.push((cb.order,json!({"phase":cb.phase,"edge":null,"tuplet":name(&p,cb.tuplet,&new),"sig_attached":cb.sig_attached,"registered":cb.graph.tuplet_registration(cb.tuplet)["registered"],"removed":cb.graph.tuplet_registration(cb.tuplet)["removed"],"abnormal":node["abnormal"]==true,"manual":cb.edge.map(|id|cb.graph.tuplet_relation_registration(id)["manual"].clone()),"measure_tuplets":names(&p,&cb.measure_tuplets,&new),"stack_tuplets":names(&p,&cb.stack_tuplets,&new),"root_unassigned":names(&p,&cb.container_members[0].1,&new),"old_tuplets":signs(&p,&cb.graph,&[],false),"clocks":clocks})));
-        }
-        callbacks.sort_by_key(|(order, _)| *order);
+        let (new, callbacks) = observed_callbacks(&mut p);
         let mut source = case["callbacks"].clone();
         for cb in source.as_array_mut().unwrap() {
             cb["clocks"]["relations"] = json!([]);
         }
         compare(
-            json!(callbacks.into_iter().map(|(_, v)| v).collect::<Vec<_>>()),
+            callbacks,
             source,
             &format!("{}-callbacks", case["name"].as_str().unwrap()),
         );
@@ -297,4 +261,48 @@ fn merge_registration_failure_restores_actual_old_signs_manual_relations_contain
         normalized(source["phases"][1].clone()),
         "retry",
     );
+}
+
+pub(super) fn observed_callbacks(p: &mut Prepared) -> (Vec<Key>, Value) {
+    let additions = p.c.owner.owner.graph.take_tuplet_additions();
+    let removals = p.c.owner.owner.graph.take_tuplet_removals();
+    let mut new = Vec::new();
+    for cb in &additions {
+        if !new.contains(&cb.tuplet) {
+            new.push(cb.tuplet);
+        }
+    }
+    let mut callbacks = Vec::new();
+    for cb in removals.iter().filter(|cb| cb.phase == "finished") {
+        let containers = cb.containers.as_ref().unwrap();
+        let held = std::mem::replace(&mut p.c.owner.owner.graph, cb.graph.clone());
+        let clocks = frame(&mut p.c)["owned"].clone();
+        p.c.owner.owner.graph = held;
+        let snapshot = cb.graph.snapshot();
+        let node = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == cb.graph.id(cb.tuplet).unwrap())
+            .unwrap();
+        callbacks.push((cb.order,json!({"phase":"chord_tuplet_removed","edge":p.relations.iter().find(|(id,_)|*id==cb.edge).unwrap().1,"tuplet":name(p,cb.tuplet,&new),"sig_attached":cb.sig_attached,"registered":cb.state["registered"],"removed":cb.state["removed"],"abnormal":node["abnormal"]==true,"manual":cb.state["manual"],"measure_tuplets":names(p,&cb.measure_tuplets,&new),"stack_tuplets":names(p,&cb.stack_tuplets,&new),"root_unassigned":names(p,&containers[0].1,&new),"old_tuplets":signs(p,&cb.graph,&[],false),"clocks":clocks})));
+    }
+    for cb in &additions {
+        let held = std::mem::replace(&mut p.c.owner.owner.graph, cb.graph.clone());
+        let clocks = frame(&mut p.c)["owned"].clone();
+        p.c.owner.owner.graph = held;
+        let snapshot = cb.graph.snapshot();
+        let node = snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == cb.graph.id(cb.tuplet).unwrap())
+            .unwrap();
+        callbacks.push((cb.order,json!({"phase":cb.phase,"edge":null,"tuplet":name(p,cb.tuplet,&new),"sig_attached":cb.sig_attached,"registered":cb.graph.tuplet_registration(cb.tuplet)["registered"],"removed":cb.graph.tuplet_registration(cb.tuplet)["removed"],"abnormal":node["abnormal"]==true,"manual":cb.edge.map(|id|cb.graph.tuplet_relation_registration(id)["manual"].clone()),"measure_tuplets":names(p,&cb.measure_tuplets,&new),"stack_tuplets":names(p,&cb.stack_tuplets,&new),"root_unassigned":names(p,&cb.container_members[0].1,&new),"old_tuplets":signs(p,&cb.graph,&[],false),"clocks":clocks})));
+    }
+    callbacks.sort_by_key(|(order, _)| *order);
+    (
+        new,
+        json!(callbacks.into_iter().map(|(_, v)| v).collect::<Vec<_>>()),
+    )
 }
