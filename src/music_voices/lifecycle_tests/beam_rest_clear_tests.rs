@@ -202,6 +202,9 @@ pub(super) fn prepare_control(case: &Value) -> Control {
 }
 pub(super) fn frame(c: &mut Control) -> Value {
     let groups = c.owner.actual_measure_beam_groups(1).unwrap();
+    frame_with_groups(c, &groups)
+}
+pub(super) fn frame_with_groups(c: &mut Control, groups: &[usize]) -> Value {
     let snapshot = c.owner.owner.graph.snapshot();
     let names = (0..c.refs.len())
         .map(|i| format!("voice{i}"))

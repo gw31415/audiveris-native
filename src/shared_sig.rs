@@ -11,6 +11,7 @@ mod beam_rest;
 mod tuplet;
 #[cfg(test)]
 pub(crate) use beam_rest::CallbackObservation;
+pub use tuplet::TupletFactor;
 #[cfg(test)]
 pub(crate) use tuplet::TupletRemovalObservation;
 mod book_state;
@@ -350,6 +351,7 @@ struct Vertex {
     slot_owner: Option<std::sync::Arc<()>>,
     chord_cache: Option<chord_cache::ChordCache>,
     rest_beams: Option<std::sync::Arc<Vec<usize>>>,
+    tuplet_cache: Option<tuplet::TupletCache>,
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 struct EdgeKey {
@@ -438,6 +440,7 @@ impl Graph {
                 slot_owner: None,
                 chord_cache: None,
                 rest_beams: None,
+                tuplet_cache: None,
             });
             id
         };
@@ -465,6 +468,11 @@ impl Graph {
         } else {
             None
         };
+        let tuplet_cache = if data["kind"] == "TupletInter" {
+            Some(old.tuplet_cache.clone().unwrap_or_default())
+        } else {
+            None
+        };
         self.vertices[id - 1] = Vertex {
             key,
             data,
@@ -484,6 +492,7 @@ impl Graph {
             },
             chord_cache: old.chord_cache.clone(),
             rest_beams: old.rest_beams.clone(),
+            tuplet_cache,
         };
         if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             self.add_dot_to_measure(id)?;

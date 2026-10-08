@@ -1852,3 +1852,14 @@ link lifecycle, lazy getters/inspect/force/merge/second pass and full ledger rem
 Explicit font resources do not infer actual SheetStub family ownership or implement
 general/unbounded font layout. Full/public flags false/work189/original/unobtainedce
 held. See evidence/musicxml-tuplet-placement and assets/tuplet-font-dimensions.
+
+### Retained Tuplet lazy getters (2026-10-08, continuation of96859d8)
+
+Actual cached unreduced factor4/6, base/Staff retention, cached Part across null
+Staff, first incoming relation Voice/null and musical-number reuse are compared
+at20 pinned original boundaries. Real Chord ownership and native Staff/Curve/
+Voice/Slot references survive staged getter rollback. Shape variation is private
+field control only: no original setShape workflow. Ordinary null-Staff/fresh
+Tuplet/XML admission remains guarded. Evidence: musicxml-tuplet-getters. Raw
+sans-dot separation, fresh allocation callbacks, force/inspect/merge/second pass
+remain next; full nonUI completion remains false.

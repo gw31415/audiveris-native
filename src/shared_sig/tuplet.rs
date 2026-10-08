@@ -1,6 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 use super::{Graph, Key, Phase};
 use crate::music_time::Fraction;
+use std::{
+    cell::{OnceCell, RefCell},
+    sync::Arc,
+};
+
+// DurationFactor keeps actual4/6 identity even when arithmetic reduces it to2/3.
+#[derive(Debug)]
+pub struct TupletFactor {
+    pub actual_num: u32,
+    pub actual_den: u32,
+}
+#[derive(Clone, Debug, Default)]
+pub(super) struct TupletCache {
+    factor: OnceCell<Arc<TupletFactor>>,
+    base: RefCell<Option<Arc<Fraction>>>,
+    staff: Option<Arc<crate::grid_ir::StaffGeometry>>,
+}
 
 #[cfg(test)]
 #[derive(Clone, Debug)]
@@ -16,6 +33,230 @@ pub(crate) struct TupletRemovalObservation {
 }
 
 impl Graph {
+    pub(crate) fn tuplet_duration_factor(&self, key: Key) -> Result<Arc<TupletFactor>, String> {
+        self.tuplet_status(key)?;
+        let id = self.endpoint(key)?;
+        let cache = self.vertices[id - 1]
+            .tuplet_cache
+            .as_ref()
+            .ok_or("music_actual_tuplet_cache_required")?;
+        Ok(cache
+            .factor
+            .get_or_init(|| {
+                Arc::new(if self.vertices[id - 1].data["shape"] == "TUPLET_THREE" {
+                    TupletFactor {
+                        actual_num: 2,
+                        actual_den: 3,
+                    }
+                } else {
+                    TupletFactor {
+                        actual_num: 4,
+                        actual_den: 6,
+                    }
+                })
+            })
+            .clone())
+    }
+    pub(crate) fn tuplet_base_duration(&self, key: Key) -> Result<Option<Arc<Fraction>>, String> {
+        self.tuplet_status(key)?;
+        let id = self.endpoint(key)?;
+        let cache = self.vertices[id - 1]
+            .tuplet_cache
+            .as_ref()
+            .ok_or("music_actual_tuplet_cache_required")?;
+        if cache.base.borrow().is_some() {
+            return Ok(cache.base.borrow().clone());
+        }
+        for chord in self.tuplet_chords(key)? {
+            let duration =
+                crate::music_duration::live_intrinsic(&self.snapshot(), self.endpoint(chord)?)?;
+            let raw = duration
+                .intrinsic
+                .ok_or("music_tuplet_base_special_duration_pending")?;
+            let raw = match duration.dots {
+                1 => raw.times(Fraction::new(2, 3)?)?,
+                2 => raw.times(Fraction::new(4, 7)?)?,
+                _ => raw,
+            };
+            if cache.base.borrow().as_ref().is_none_or(|base| **base > raw) {
+                *cache.base.borrow_mut() = Some(Arc::new(raw));
+            }
+        }
+        Ok(cache.base.borrow().clone())
+    }
+    pub(crate) fn tuplet_voice_identity(&self, key: Key) -> Result<Option<Arc<()>>, String> {
+        let Some(chord) = self.tuplet_chords(key)?.first().copied() else {
+            return Ok(None);
+        };
+        let id = self.endpoint(chord)?;
+        // The first actual source's null Voice is the result, not a reason to
+        // choose a later source or reuse a musical number.
+        Ok(self.vertices[id - 1].voice_owner.clone())
+    }
+    pub(crate) fn tuplet_staff(
+        &mut self,
+        key: Key,
+        staffs: &[Arc<crate::grid_ir::StaffGeometry>],
+    ) -> Result<Option<Arc<crate::grid_ir::StaffGeometry>>, String> {
+        self.tuplet_status(key)?;
+        let id = self.endpoint(key)?;
+        let cache = self.vertices[id - 1]
+            .tuplet_cache
+            .as_ref()
+            .ok_or("music_actual_tuplet_cache_required")?;
+        if cache.staff.is_some() {
+            return Ok(cache.staff.clone());
+        }
+        if let Some(staff) = self.vertices[id - 1].data["staff_id"].as_u64() {
+            let owner = staffs
+                .iter()
+                .find(|s| s.system == key.system && s.id == staff)
+                .ok_or("music_actual_tuplet_staff_required")?
+                .clone();
+            self.vertices[id - 1].tuplet_cache.as_mut().unwrap().staff = Some(owner.clone());
+            return Ok(Some(owner));
+        }
+        for chord in self.tuplet_chords(key)? {
+            let cid = self.endpoint(chord)?;
+            let mut staff = self.vertices[cid - 1].data["staff_id"].as_u64();
+            if staff.is_none() {
+                let mut notes = self
+                    .incident_edges(cid)
+                    .into_iter()
+                    .filter_map(|eid| {
+                        let e = &self.edges[eid - 1];
+                        (e.key.source == cid && e.key.kind == "Containment").then_some(e.key.target)
+                    })
+                    .collect::<Vec<_>>();
+                let mut centers = std::collections::BTreeMap::new();
+                for &note in &notes {
+                    let n = &self.vertices[note - 1];
+                    if n.removed
+                        || n.key.system != key.system
+                        || !matches!(n.data["kind"].as_str(), Some("HeadInter" | "RestInter"))
+                    {
+                        return Err("music_actual_tuplet_staff_note_required".into());
+                    }
+                    let b: [i64; 4] = serde_json::from_value(n.data["bounds"].clone())
+                        .map_err(|_| "music_actual_tuplet_staff_note_required")?;
+                    centers.insert(note, b[1] + b[3] / 2);
+                }
+                notes.sort_by_key(|n| std::cmp::Reverse(centers[n]));
+                if let (Some(first), Some(last)) = (notes.first(), notes.last()) {
+                    let bottom = self.vertices[*first - 1].data["staff_id"].as_u64();
+                    let top = self.vertices[*last - 1].data["staff_id"].as_u64();
+                    if bottom == top {
+                        staff = top;
+                        self.vertices[cid - 1].data["staff_id"] = serde_json::json!(staff);
+                    }
+                }
+            }
+            if let Some(staff) = staff {
+                let owner = staffs
+                    .iter()
+                    .find(|s| s.system == key.system && s.id == staff)
+                    .ok_or("music_actual_tuplet_staff_required")?
+                    .clone();
+                self.vertices[id - 1].data["staff_id"] = serde_json::json!(staff);
+                self.vertices[id - 1].tuplet_cache.as_mut().unwrap().staff = Some(owner.clone());
+                return Ok(Some(owner));
+            }
+        }
+        Ok(None)
+    }
+    pub(crate) fn set_tuplet_staff(
+        &mut self,
+        key: Key,
+        staff: Option<Arc<crate::grid_ir::StaffGeometry>>,
+    ) -> Result<(), String> {
+        self.tuplet_status(key)?;
+        let id = self.endpoint(key)?;
+        if staff.as_ref().is_some_and(|s| s.system != key.system) {
+            return Err("music_actual_tuplet_staff_required".into());
+        }
+        self.vertices[id - 1].data["staff_id"] = serde_json::json!(staff.as_ref().map(|s| s.id));
+        self.vertices[id - 1].tuplet_cache.as_mut().unwrap().staff = staff;
+        // AbstractInter.setStaff leaves an already cached Part untouched.
+        Ok(())
+    }
+    pub(crate) fn tuplet_part(
+        &mut self,
+        key: Key,
+        staffs: &[Arc<crate::grid_ir::StaffGeometry>],
+    ) -> Result<Option<u64>, String> {
+        self.tuplet_status(key)?;
+        let id = self.endpoint(key)?;
+        if self.vertices[id - 1].cached_part.is_none() {
+            self.tuplet_staff(key, staffs)?;
+        }
+        self.part_for_inter(id)
+    }
+    pub(crate) fn validate_tuplet_chord_container(
+        &self,
+        key: Key,
+        id: usize,
+        part: u64,
+        index: usize,
+        kind: crate::music_measures::ChordKind,
+    ) -> Result<(), String> {
+        if self.endpoint(key)? != id {
+            return Err("music_actual_tuplet_chord_owner_required".into());
+        }
+        let node = &self.vertices[id - 1].data;
+        if node["part_id"] != part
+            || node["measure_index"] != index
+            || node["kind"]
+                != match kind {
+                    crate::music_measures::ChordKind::Head => "HeadChordInter",
+                    crate::music_measures::ChordKind::Rest => "RestChordInter",
+                }
+        {
+            return Err("music_actual_tuplet_chord_owner_required".into());
+        }
+        Ok(())
+    }
+    pub(crate) fn chord_tuplet_target(&self, eid: usize) -> Result<Key, String> {
+        let e = self
+            .edges
+            .get(
+                eid.checked_sub(1)
+                    .ok_or("music_actual_chord_tuplet_relation_required")?,
+            )
+            .ok_or("music_actual_chord_tuplet_relation_required")?;
+        if e.key.kind != "ChordTupletRelation" {
+            return Err("music_actual_chord_tuplet_relation_required".into());
+        }
+        Ok(self.vertices[e.key.target - 1].key)
+    }
+    pub(crate) fn remove_owned_chord_tuplet(&mut self, eid: usize) -> Result<(), String> {
+        let e = self
+            .edges
+            .get(
+                eid.checked_sub(1)
+                    .ok_or("music_actual_chord_tuplet_relation_required")?,
+            )
+            .ok_or("music_actual_chord_tuplet_relation_required")?;
+        if e.key.kind != "ChordTupletRelation" {
+            return Err("music_actual_chord_tuplet_relation_required".into());
+        }
+        if e.removed {
+            return Ok(());
+        }
+        let key = self.vertices[e.key.target - 1].key;
+        if !self.tuplet_status(key)?.0 {
+            return Err("music_tuplet_explicit_relation_removal_pending".into());
+        }
+        self.edges[eid - 1].removed = true;
+        Ok(())
+    }
+    #[cfg(test)]
+    pub(crate) fn tuplet_cache_observation(&self, key: Key) -> serde_json::Value {
+        let c = self.vertices[self.id(key).unwrap() - 1]
+            .tuplet_cache
+            .as_ref()
+            .unwrap();
+        serde_json::json!({"factor":c.factor.get().map(|f|[f.actual_num,f.actual_den]),"base":c.base.borrow().as_ref().map(|b|**b),"staff":c.staff.as_ref().map(|s|s.id)})
+    }
     pub(crate) fn first_chord_tuplet(&self, key: Key) -> Result<Option<Key>, String> {
         let id = self.endpoint(key)?;
         let chord = &self.vertices[id - 1];
@@ -54,7 +295,18 @@ impl Graph {
                 if edge.key.target != id {
                     return Err("music_actual_chord_tuplet_relation_required".into());
                 }
-                Ok(self.vertices[edge.key.source - 1].key)
+                let chord = &self.vertices[edge.key.source - 1];
+                if chord.removed
+                    || chord.key.system != key.system
+                    || chord.key.phase != Phase::Chord
+                    || !matches!(
+                        chord.data["kind"].as_str(),
+                        Some("HeadChordInter" | "RestChordInter")
+                    )
+                {
+                    return Err("music_actual_chord_tuplet_relation_required".into());
+                }
+                Ok(chord.key)
             })
             .collect()
     }
@@ -92,11 +344,8 @@ impl Graph {
                 return Err("music_actual_chord_tuplet_relation_required".into());
             }
             self.tuplet_status(tuplet.key)?;
-            let factor = if tuplet.data["shape"] == "TUPLET_THREE" {
-                Fraction::new(2, 3)?
-            } else {
-                Fraction::new(4, 6)?
-            };
+            let cached = self.tuplet_duration_factor(tuplet.key)?;
+            let factor = Fraction::new(cached.actual_num, cached.actual_den)?;
             duration = duration.times(factor)?;
         }
         Ok(Some(duration))
