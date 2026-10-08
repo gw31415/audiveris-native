@@ -139,6 +139,19 @@ pub(crate) struct Delta {
     magnitude: Fraction,
 }
 impl Delta {
+    pub(crate) fn is_zero(self) -> bool {
+        self.magnitude == Fraction::ZERO
+    }
+    pub(crate) fn is_positive_ratio(self, divisor: Self, ratio: Fraction) -> Result<bool, String> {
+        if divisor.is_zero() || ratio == Fraction::ZERO {
+            return Err("music_time_positive_ratio_required".into());
+        }
+        // Both differences can be negative although their source clocks are nonnegative.
+        Ok(
+            self.negative == divisor.negative
+                && self.magnitude == divisor.magnitude.times(ratio)?,
+        )
+    }
     pub(crate) fn excess(self) -> Option<Fraction> {
         (!self.negative && self.magnitude != Fraction::ZERO).then_some(self.magnitude)
     }

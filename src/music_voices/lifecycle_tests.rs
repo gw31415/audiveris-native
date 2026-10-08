@@ -846,3 +846,5 @@ mod tuplet_shrink_existing_tests;
 mod tuplet_shrink_fresh_tests;
 
 mod tuplet_shrink_nullable_tests;
+
+mod tuplet_inspect_tests;

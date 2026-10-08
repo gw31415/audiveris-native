@@ -3708,3 +3708,5 @@ mod voice_chords;
 mod voice_tuplets;
 pub use rhythm_candidates::RhythmCandidates;
 mod tuplet_shrink;
+
+mod tuplet_inspect;

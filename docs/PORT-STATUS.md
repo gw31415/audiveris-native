@@ -1994,3 +1994,11 @@ range semantics without inventing Voice IDs. Nine original controls retain actua
 Chord/StackSlot/Voice/expected/end/excess/manual identity and candidate clocks with
 zero new Graph callbacks. Evidence musicxml-tuplet-shrink-nullable. Signed inspect,
 merge/second pass and ordinary resource binding remain; full/public false.
+
+Actual Voice tail inspection now selects first implicit/last ANY-related/successor
+owners and expected-null/zero-normal/signed exact3/2 eligibility. Ten source controls
+include both differences negative and a later Voice null-time failure after first
+Voice1/12,1/6,7/24,5/12,2/3 narrow changes; native outer rollback restores actual
+Graph/Chord/candidate/container/manual state. Evidence musicxml-tuplet-inspect-end.
+Collection removal/stale-predecessor merge, second pass and real ordinary resources
+remain; full/public false.
