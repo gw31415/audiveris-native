@@ -155,26 +155,44 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     let edges = initial["relations"]
         .as_array()
         .ok_or("missing_music_relations")?;
-    if nodes.iter().any(|n| {
-        !matches!(
-            n["kind"].as_str(),
+    for n in nodes {
+        match n["kind"].as_str() {
             Some(
-                "BarlineInter"
-                    | "HeadInter"
-                    | "StemInter"
-                    | "LedgerInter"
-                    | "BeamInter"
-                    | "BeamHookInter"
-                    | "BeamGroupInter"
-            )
-        )
-    }) || edges.iter().any(|e| e["kind"] == "BarGroupRelation")
-    {
-        return Err("music_single_barlines_head_only_scope_required".into());
+                "BarlineInter" | "HeadInter" | "StemInter" | "LedgerInter" | "BeamInter"
+                | "BeamHookInter" | "BeamGroupInter",
+            ) => {}
+            Some("BraceInter" | "BarConnectorInter") => {
+                let key: Key = serde_json::from_value(n["origin"].clone())
+                    .map_err(|_| "music_measures_actual_GRID_required")?;
+                if key.phase != Phase::Grid
+                    || (n["kind"] == "BraceInter"
+                        && n["staff_id"].as_u64().is_some()
+                        && !owner
+                            .staffs
+                            .iter()
+                            .any(|s| s.system == key.system && n["staff_id"] == s.id))
+                {
+                    return Err("music_measures_actual_GRID_required".into());
+                }
+            }
+            _ => return Err("music_single_barlines_head_only_scope_required".into()),
+        }
     }
-    let grid = &owner.upstream_report["grid_ir"];
-    let systems = grid["systems"].as_array().ok_or("missing_music_systems")?;
-    let staffs = grid["staffs"].as_array().ok_or("missing_music_staffs")?;
+    for edge in edges.iter().filter(|r| r["kind"] == "BarGroupRelation") {
+        for endpoint in [&edge["source"], &edge["target"]] {
+            if !nodes
+                .iter()
+                .any(|n| &n["id"] == endpoint && n["kind"] == "BarlineInter")
+            {
+                return Err("music_measures_actual_BarGroup_required".into());
+            }
+        }
+    }
+    let systems = owner
+        .staffs
+        .iter()
+        .map(|s| s.system)
+        .collect::<std::collections::BTreeSet<_>>();
     let mut graph = owner.graph.clone();
     let mut measures = Vec::new();
     let mut chords = Vec::new();
@@ -182,59 +200,58 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     let mut clef_rows = Vec::new();
     let mut key_rows = Vec::new();
     let mut time_rows = Vec::new();
-    for system in systems {
-        let sid = system["id"].as_u64().ok_or("invalid_music_system")?;
-        let parts = system["parts"].as_array().ok_or("missing_music_parts")?;
-        for part in parts {
-            let pid = part["id"].as_u64().ok_or("invalid_music_part")?;
-            let staff_ids = part["staff_ids"]
-                .as_array()
-                .ok_or("missing_music_part_staffs")?;
-            if staff_ids.len() != 1 {
+    for sid in systems {
+        let actual_staffs = owner
+            .staffs
+            .iter()
+            .filter(|s| s.system == sid)
+            .cloned()
+            .collect::<Vec<_>>();
+        let mut system_groups = Vec::new();
+        for staff in &actual_staffs {
+            system_groups.extend(crate::music_barline_groups::groups(
+                &graph,
+                staff.clone(),
+                owner.sheet_skew,
+            )?);
+        }
+        crate::music_barline_groups::complete_columns(
+            &system_groups,
+            &actual_staffs,
+            owner.interline,
+        )?;
+        for part in owner.parts.iter().filter(|p| p.system == sid) {
+            let pid = part.id;
+            if part.staffs.len() != 1 {
                 return Err("music_multistaff_parts_pending".into());
             }
-            let staff_id = staff_ids[0].as_u64().ok_or("invalid_music_staff")?;
-            let staff = staffs
+            let actual_staff = part.staffs[0].clone();
+            if !owner
+                .staffs
                 .iter()
-                .find(|s| s["id"] == staff_id && s["system_id"] == sid)
-                .ok_or("missing_music_staff")?;
-            if staff["lines"].as_array().is_none_or(|l| l.len() != 5) {
+                .any(|s| std::sync::Arc::ptr_eq(s, &actual_staff))
+            {
+                return Err("music_measures_actual_Part_Staff_required".into());
+            }
+            let staff_id = actual_staff.id;
+            if actual_staff.lines.len() != 5 {
                 return Err("music_special_staff_pending".into());
             }
-            let left = staff["left"]
-                .as_f64()
-                .ok_or("missing_staff_left")?
-                .round_ties_even() as i64;
-            let right = staff["right"]
-                .as_f64()
-                .ok_or("missing_staff_right")?
-                .round_ties_even() as i64;
-            let owned_bars = graph.staff_barlines(sid, staff_id);
-            let mut bars = owned_bars.iter().collect::<Vec<_>>();
-            bars.sort_by_key(|n| center(n).map(|p| p.0).unwrap_or(i64::MIN));
+            let left = actual_staff.abscissae[0] as i64;
+            let right = actual_staff.abscissae[1] as i64;
+            let groups =
+                crate::music_barline_groups::groups(&graph, actual_staff, owner.sheet_skew)?;
             let mut previous = left;
             let mut index = 0;
-            for (i, bar) in bars.iter().enumerate() {
-                let x = center(bar)?.0;
-                if i > 0 && x <= center(bars[i - 1])?.0 {
-                    return Err("music_duplicate_barline_pending_grouping".into());
+            for group in &groups {
+                if group.members.len() >= 3 {
+                    return Err("music_back_to_back_PartBarline_ownership_pending".into());
                 }
-                // StaffBarlineInter.isStaffEnd: scale.toPixels(maxShift=1.0).
-                let leading = (x - left).abs() <= owner.interline as i64;
-                let key = Key {
-                    system: sid,
-                    phase: Phase::StaffBarline,
-                    local: bar["id"].as_u64().ok_or("missing_bar_id")? as usize,
-                };
-                let id = graph.vertex(key, json!({"kind":"StaffBarlineInter","staff_id":staff_id,"bounds":bar["bounds"],"member_ids":[bar["id"]],"style":"REGULAR","leading":leading}), false)?;
-                let member: Key = serde_json::from_value(bar["origin"].clone())
-                    .map_err(|_| "invalid_bar_origin")?;
-                graph.relations(
-                    sid,
-                    Phase::StaffBarline,
-                    vec![(key, member, json!({"kind":"Containment"}))],
-                )?;
-                bar_rows.push(json!({"id":id,"origin":key,"physical_barline_id":bar["id"],"staff_id":staff_id,"x":x,"leading":leading}));
+                let (key, id) = group.register(&mut graph, owner.interline)?;
+                let x = group.right_x;
+                let leading = ((group.bounds[0] + group.bounds[2] / 2) - left).abs()
+                    <= owner.interline as i64;
+                bar_rows.push(json!({"id":id,"origin":key,"physical_barline_id":graph.id(group.members[0]),"member_ids":group.members.iter().map(|k|graph.id(*k)).collect::<Vec<_>>(),"staff_id":staff_id,"x":x,"leading":leading,"style":group.style}));
                 if !leading {
                     if x <= previous {
                         return Err("invalid_music_measure_width".into());
@@ -254,8 +271,10 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                 }
                 previous = x;
             }
-            if bars.is_empty()
-                || (center(bars[bars.len() - 1])?.0 - right).abs() > owner.interline as i64
+            if groups.is_empty()
+                || (groups.last().unwrap().bounds[0] + groups.last().unwrap().bounds[2] / 2 - right)
+                    .abs()
+                    > owner.interline as i64
             {
                 if right <= previous {
                     return Err("invalid_trailing_music_measure".into());
@@ -421,7 +440,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     crate::stem_overlap_ownership::Ownership::new(&snapshot)?;
     owner.graph = graph;
     let reduction = std::mem::take(&mut owner.prepared.report);
-    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native single-barline, single-staff parts, single-stem heads; canonical cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["bar groups/repeats/multi-staff consistency/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native grouped physical barlines with complete actual Staff columns, single-staff parts and single-stem heads; canonical Part/Staff/cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["missing bar columns/back-to-back PartBarline/multi-Staff Part/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     Ok(OwnedMusic {
         owner,
         measures,

@@ -17,6 +17,7 @@ use std::sync::Arc;
 pub(crate) struct StaffGeometry {
     pub(crate) id: u64,
     pub(crate) system: u64,
+    pub(crate) abscissae: [i32; 2],
     pub(crate) lines: Vec<Arc<Curve>>,
 }
 impl StaffGeometry {
@@ -192,6 +193,16 @@ pub(crate) fn build_owned(
         actual_staffs.push(Arc::new(StaffGeometry {
             id,
             system: system["id"].as_u64().unwrap(),
+            abscissae: [
+                staff["left"]
+                    .as_f64()
+                    .ok_or("actual_staff_left_required")?
+                    .round_ties_even() as i32,
+                staff["right"]
+                    .as_f64()
+                    .ok_or("actual_staff_right_required")?
+                    .round_ties_even() as i32,
+            ],
             lines: staff_curves.clone(),
         }));
         curves.push(staff_curves);

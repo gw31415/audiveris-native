@@ -1,0 +1,12 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "source_SHA256": {
+    "step/OmrStep.java": "e5f312d5b4bb1450d0a9d8d14884a2fc5e93513989839285d6f8c9e047d00a44",
+    "sheet/stem/StemsStep.java": "791a2c7d25e944b026277f25057809e2bfe27137c7ff06bc7dd1ae5d41e5a6ce",
+    "sheet/rhythm/MeasuresBuilder.java": "4222036cce38a1f457f177bd78992b22952f9f619c67fa1ee7684d87d77924d8",
+    "sig/inter/StaffBarlineInter.java": "632c21b282dfa366ad7a3c13e5d10f0c337b54acb4c648f68416a9a2c59152f5",
+    "sheet/Staff.java": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57",
+    "sheet/PartBarline.java": "c0bbedbef77a97169680eac950b9cc67fecd392d9f73ed65ee6ffeed28b5dd82",
+    "sheet/Skew.java": "77ffef88497042407a5dc29e7278ad996cf9c4e8f3cf05fa3344227056529037"
+  }
+}

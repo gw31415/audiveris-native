@@ -1,0 +1,39 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "52a0bebc255beb00d41ae13529e462ba329d635ac0e09713598db0eac805d5f4",
+  "reflection_helper_sha256": "4eda0218958d8e686045677b82bdd57bbc207980883863ba73da02d63de0f0c1",
+  "book_sha256": "f8d7be416912db85e4d5991c55f65882600002b2d5256ab27619533b1977645b",
+  "native_outputs_used": false,
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/bar-group-constructor-original-v1/classes",
+    "/workspace/audiveris-native/scripts/java/BarGroupConstructorProbe.java",
+    "/workspace/audiveris-native/scripts/java/HeadStemPreLinkProbe.java",
+    "/workspace/audiveris-native/scripts/java/VoiceLifecycleProbe.java",
+    "/workspace/audiveris-native/scripts/java/BeamRestClearProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Duser.home=/tmp/bar-group-constructor-original-v1/home",
+    "-Djava.util.prefs.userRoot=/tmp/bar-group-constructor-original-v1/prefs",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/bar-group-constructor-original-v1/classes",
+    "BarGroupConstructorProbe",
+    "/tmp/real-score-laura-original-v1/laura-gray.omr",
+    "/tmp/bar-group-constructor-original-v1/observed.json"
+  ],
+  "exit_code": 0,
+  "console_sha256": "ab7034a5e05a74fafde08442bf098fdce27e2760aceb1de56d6f86e53debd8c2",
+  "lifecycle_helper_sha256": "b742ae671cd56795e71745ce652b079b650027ee8d72c94d684ef90c001372c2",
+  "clear_helper_sha256": "005f960d2f745f6e9c7c50122fde75a97f7c30e7e5f8195b78082fdd30153faf",
+  "observed_sha256": "bc0497850e98165163d5415f7eb7f54ae256dfe438ac7f45c9d1587b108137fc"
+}

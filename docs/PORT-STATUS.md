@@ -2082,3 +2082,15 @@ Evidence real-ledger-reduction. Full An Laura passes existing STEMS foundations 
 now stops at MEASURES music_single_barlines_head_only_scope_required. Grouped GRID
 barlines/retained multi-Staff piano Part and later recognition/rhythm/output remain;
 real image quality is not accepted. Continue the revised image-quality goal.
+
+Actual grouped physical barlines now keep the same Staff/Curve abscissae, directed
+BarGroup member keys and manual relation identities through MEASURES admission.
+Eight original constructor cases and live same-image original TEXTS-to-MEASURES
+observations match18 groups/21 members across six Staffs. Frozen aggregation,
+automatic ensemble status, intrinsic grade and null four-member style match.
+The actual full-image library path still retains four Part objects with Staff
+counts1/2/1/2 when upstream report GRID ownership is blank; it now reaches
+music_multistaff_parts_pending. This is not a full-image CLI/XML success.
+Evidence real-barline-groups records necessary focused and XML/XSD regressions.
+Next connect actual piano PartBarline/Measure and common system Stack ownership.
+Real-image quality remains unaccepted; unrelated API/editor work stays excluded.

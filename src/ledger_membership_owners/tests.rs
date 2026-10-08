@@ -76,6 +76,7 @@ fn original_shared_duplicate_and_retired_ledger_references_keep_different_map_in
     .unwrap();
     let staff = |id| {
         Arc::new(crate::grid_ir::StaffGeometry {
+            abscissae: [0, 500],
             id,
             system: 1,
             lines: vec![Arc::new(

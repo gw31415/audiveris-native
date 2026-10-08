@@ -425,6 +425,21 @@ impl Graph {
         }
         Ok(())
     }
+    pub(crate) fn live_inter_keys(&self, system: u64, kind: &str) -> Vec<Key> {
+        self.vertices
+            .iter()
+            .filter(|v| !v.removed && v.key.system == system && v.data["kind"] == kind)
+            .map(|v| v.key)
+            .collect()
+    }
+    pub(crate) fn has_relation(&self, source: Key, target: Key, kind: &str) -> bool {
+        let (Some(source), Some(target)) = (self.id(source), self.id(target)) else {
+            return false;
+        };
+        self.edges.iter().any(|e| {
+            !e.removed && e.key.source == source && e.key.target == target && e.key.kind == kind
+        })
+    }
     pub(crate) fn retained_inter(&self, key: Key) -> Result<(&Value, bool), String> {
         let id = self.id(key).ok_or("missing_actual_retained_inter")?;
         let vertex = &self.vertices[id - 1];
@@ -541,6 +556,7 @@ impl Graph {
         }
     }
     /// Staff membership is a view of the live owner, not the historical GRID report.
+    #[cfg(test)]
     pub(crate) fn staff_barlines(&self, system: u64, staff: u64) -> Vec<Value> {
         self.vertices
             .iter()
