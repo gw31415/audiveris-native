@@ -509,6 +509,7 @@ pub mod music_font_symbols;
 mod music_headers;
 mod music_ledger_reduction;
 mod music_links;
+mod music_measure_layout;
 mod music_measure_slots;
 pub mod music_measures;
 mod music_pauses;

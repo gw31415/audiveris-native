@@ -222,6 +222,7 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
         complete_columns(&actual, &staffs, 11).unwrap();
     }
 
+    crate::music_measure_layout::assert_real_layout(&owner);
     let parts = owner.parts.clone();
     owner.upstream_report["grid_ir"]["systems"] = json!([]);
     owner.upstream_report["grid_ir"]["staffs"] = json!([]);
@@ -229,7 +230,7 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
         crate::music_measures::continue_measures(owner)
             .err()
             .unwrap(),
-        "music_multistaff_parts_pending"
+        "music_multistaff_chord_dispatch_pending"
     );
     assert_eq!(
         parts.iter().map(|p| p.staffs.len()).collect::<Vec<_>>(),

@@ -2094,3 +2094,15 @@ music_multistaff_parts_pending. This is not a full-image CLI/XML success.
 Evidence real-barline-groups records necessary focused and XML/XSD regressions.
 Next connect actual piano PartBarline/Measure and common system Stack ownership.
 Real-image quality remains unaccepted; unrelated API/editor work stays excluded.
+
+Real PartBarline and Measure layout now holds the same actual GRID Part/Staff/Curve
+objects, ordered StaffBarline member objects and common system Stack references.
+Original same-image live normal-dispatch MEASURES comparison matches four Parts,
+eight Measures and four Stacks, including the piano's per-Staff abscissae and the
+previous right bar's identity as the next effective left bar. Late noncanonical
+Staff failure stages graph/container allocation without touching clocks. Existing
+single-Staff continuation consumes this layout. The full-image library reaches
+music_multistaff_chord_dispatch_pending; real native CLI XML/quality is still
+unaccepted. Shared Stack geometry does not claim shared rhythm/Slot completion.
+Evidence real-part-measures. Continue actual piano Chord dispatch and downstream
+recognition/rhythm/output, excluding unrelated APIs under the revised image goal.

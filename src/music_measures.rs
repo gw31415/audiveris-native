@@ -12,6 +12,7 @@ use std::collections::BTreeMap;
 pub struct OwnedMusic {
     pub owner: OwnedItems,
     pub(crate) measures: Vec<Measure>,
+    pub(crate) measure_layout: crate::music_measure_layout::Layout,
     pub(crate) chords: Vec<Chord>,
     pub(crate) voices: Vec<crate::music_voices::Voice>,
 }
@@ -106,7 +107,7 @@ impl OwnedMusic {
     /// Layout read from the live continuation, before meter or rhythm is set.
     pub fn layout(&self) -> Value {
         let row = |c: &Chord| json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":self.measures[c.measure].index,"member_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null});
-        json!({"measures":self.measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":self.chords.iter().filter(|c|c.kind == ChordKind::Head).map(|c|{let mut v=row(c);v["head_ids"]=v["member_ids"].take();v}).collect::<Vec<_>>(),"rest_chords":self.chords.iter().filter(|c|c.kind == ChordKind::Rest).map(row).collect::<Vec<_>>()})
+        json!({"actual_measure_layout":self.measure_layout.projection(&self.owner.graph),"measures":self.measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":self.chords.iter().filter(|c|c.kind == ChordKind::Head).map(|c|{let mut v=row(c);v["head_ids"]=v["member_ids"].take();v}).collect::<Vec<_>>(),"rest_chords":self.chords.iter().filter(|c|c.kind == ChordKind::Rest).map(row).collect::<Vec<_>>()})
     }
 }
 #[derive(Clone)]
@@ -194,6 +195,13 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
         .map(|s| s.system)
         .collect::<std::collections::BTreeSet<_>>();
     let mut graph = owner.graph.clone();
+    let measure_layout = crate::music_measure_layout::build(
+        &mut graph,
+        &owner.staffs,
+        &owner.parts,
+        owner.sheet_skew,
+        owner.interline,
+    )?;
     let mut measures = Vec::new();
     let mut chords = Vec::new();
     let mut bar_rows = Vec::new();
@@ -201,29 +209,11 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     let mut key_rows = Vec::new();
     let mut time_rows = Vec::new();
     for sid in systems {
-        let actual_staffs = owner
-            .staffs
-            .iter()
-            .filter(|s| s.system == sid)
-            .cloned()
-            .collect::<Vec<_>>();
-        let mut system_groups = Vec::new();
-        for staff in &actual_staffs {
-            system_groups.extend(crate::music_barline_groups::groups(
-                &graph,
-                staff.clone(),
-                owner.sheet_skew,
-            )?);
-        }
-        crate::music_barline_groups::complete_columns(
-            &system_groups,
-            &actual_staffs,
-            owner.interline,
-        )?;
-        for part in owner.parts.iter().filter(|p| p.system == sid) {
+        for layout in measure_layout.parts.iter().filter(|p| p.part.system == sid) {
+            let part = &layout.part;
             let pid = part.id;
             if part.staffs.len() != 1 {
-                return Err("music_multistaff_parts_pending".into());
+                return Err("music_multistaff_chord_dispatch_pending".into());
             }
             let actual_staff = part.staffs[0].clone();
             if !owner
@@ -237,59 +227,29 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
             if actual_staff.lines.len() != 5 {
                 return Err("music_special_staff_pending".into());
             }
-            let left = actual_staff.abscissae[0] as i64;
-            let right = actual_staff.abscissae[1] as i64;
-            let groups =
-                crate::music_barline_groups::groups(&graph, actual_staff, owner.sheet_skew)?;
-            let mut previous = left;
-            let mut index = 0;
-            for group in &groups {
-                if group.members.len() >= 3 {
-                    return Err("music_back_to_back_PartBarline_ownership_pending".into());
-                }
-                let (key, id) = group.register(&mut graph, owner.interline)?;
-                let x = group.right_x;
-                let leading = ((group.bounds[0] + group.bounds[2] / 2) - left).abs()
-                    <= owner.interline as i64;
-                bar_rows.push(json!({"id":id,"origin":key,"physical_barline_id":graph.id(group.members[0]),"member_ids":group.members.iter().map(|k|graph.id(*k)).collect::<Vec<_>>(),"staff_id":staff_id,"x":x,"leading":leading,"style":group.style}));
-                if !leading {
-                    if x <= previous {
-                        return Err("invalid_music_measure_width".into());
-                    }
-                    index += 1;
-                    measures.push(Measure {
-                        system: sid,
-                        part: pid,
-                        staff: staff_id,
-                        index,
-                        left: previous,
-                        right: x,
-                        timing: Default::default(),
-                        tuplets: Vec::new(),
-                        stack_tuplets: Vec::new(),
-                    });
-                }
-                previous = x;
-            }
-            if groups.is_empty()
-                || (groups.last().unwrap().bounds[0] + groups.last().unwrap().bounds[2] / 2 - right)
-                    .abs()
-                    > owner.interline as i64
-            {
-                if right <= previous {
-                    return Err("invalid_trailing_music_measure".into());
-                }
+            for planned in &layout.measures {
+                let [left, right] = planned.abscissae(&actual_staff)?;
                 measures.push(Measure {
                     system: sid,
                     part: pid,
                     staff: staff_id,
-                    index: index + 1,
-                    left: previous,
+                    index: planned.index,
+                    left,
                     right,
                     timing: Default::default(),
                     tuplets: Vec::new(),
                     stack_tuplets: Vec::new(),
                 });
+            }
+            for key in graph.live_inter_keys(sid, "StaffBarlineInter") {
+                let (bar, _) = graph.retained_inter(key)?;
+                if bar["staff_id"] != staff_id {
+                    continue;
+                }
+                if bar["back_to_back"] == true {
+                    return Err("music_back_to_back_PartBarline_export_pending".into());
+                }
+                bar_rows.push(json!({"id":graph.id(key),"origin":key,"physical_barline_id":bar["member_ids"][0],"member_ids":bar["member_ids"],"staff_id":staff_id,"x":bar["right_x"],"leading":bar["leading"],"style":bar["style"]}));
             }
             let header = owner.upstream_report["headers"]["staffs"]
                 .as_array()
@@ -440,10 +400,11 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     crate::stem_overlap_ownership::Ownership::new(&snapshot)?;
     owner.graph = graph;
     let reduction = std::mem::take(&mut owner.prepared.report);
-    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native grouped physical barlines with complete actual Staff columns, single-staff parts and single-stem heads; canonical Part/Staff/cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["missing bar columns/back-to-back PartBarline/multi-Staff Part/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"actual_measure_layout":measure_layout.projection(&owner.graph),"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native grouped physical barlines with complete actual Staff columns, actual multi-Staff PartBarline/Measure layouts and common Stack references; chord dispatch currently single-staff and single-stem; canonical Part/Staff/cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["missing bar columns/back-to-back export/multi-Staff chord dispatch/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     Ok(OwnedMusic {
         owner,
         measures,
+        measure_layout,
         chords,
         voices: Vec::new(),
     })

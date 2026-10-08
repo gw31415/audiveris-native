@@ -1,0 +1,25 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "sources": [
+    {
+      "path": "sheet/rhythm/MeasuresBuilder.java",
+      "sha256": "4222036cce38a1f457f177bd78992b22952f9f619c67fa1ee7684d87d77924d8"
+    },
+    {
+      "path": "sheet/rhythm/Measure.java",
+      "sha256": "c1299a305ff168ffe57b5a537da384ca63d69beda5ecc57bd2f64ce0f372e611"
+    },
+    {
+      "path": "sheet/PartBarline.java",
+      "sha256": "c0bbedbef77a97169680eac950b9cc67fecd392d9f73ed65ee6ffeed28b5dd82"
+    },
+    {
+      "path": "sheet/Staff.java",
+      "sha256": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57"
+    },
+    {
+      "path": "sig/inter/StaffBarlineInter.java",
+      "sha256": "632c21b282dfa366ad7a3c13e5d10f0c337b54acb4c648f68416a9a2c59152f5"
+    }
+  ]
+}
