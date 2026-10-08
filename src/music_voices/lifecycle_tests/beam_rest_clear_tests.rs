@@ -25,6 +25,7 @@ pub(super) struct Control {
     pub(super) baseline: Vec<Arc<Vec<usize>>>,
     pub(super) beam: usize,
     pub(super) relations: Vec<usize>,
+    pub(super) chord_slots: BTreeMap<Key, Option<Arc<()>>>,
 }
 pub(super) fn prepare_control(case: &Value) -> Control {
     let image = crate::GrayImage::decode(include_bytes!(
@@ -190,6 +191,16 @@ pub(super) fn prepare_control(case: &Value) -> Control {
         .iter()
         .map(|r| owner.owner.graph.rest_chord_beams(*r).unwrap())
         .collect();
+    let chord_slots = owner
+        .chords
+        .iter()
+        .map(|ch| {
+            (
+                ch.key,
+                owner.owner.graph.chord_slot_identity(ch.key).cloned(),
+            )
+        })
+        .collect();
     Control {
         owner,
         labels,
@@ -198,6 +209,7 @@ pub(super) fn prepare_control(case: &Value) -> Control {
         baseline,
         beam,
         relations,
+        chord_slots,
     }
 }
 pub(super) fn frame(c: &mut Control) -> Value {
@@ -223,6 +235,26 @@ pub(super) fn frame_with_groups(c: &mut Control, groups: &[usize]) -> Value {
         .as_array_mut()
         .unwrap()
         .sort_by_key(|ch| order.iter().position(|label| json!(label) == ch["label"]));
+    for row in owned["chords"].as_array_mut().unwrap() {
+        let key = c
+            .owner
+            .chords
+            .iter()
+            .find(|ch| {
+                c.labels
+                    .get(&ch.id)
+                    .is_some_and(|label| json!(label) == row["label"])
+            })
+            .unwrap()
+            .key;
+        let old = c.chord_slots.get(&key).and_then(Option::as_ref);
+        let current = c.owner.owner.graph.chord_slot_identity(key);
+        row["same_baseline_slot"] = json!(match (old, current) {
+            (Some(old), Some(current)) => Arc::ptr_eq(old, current),
+            (None, None) => true,
+            _ => false,
+        });
+    }
     owned["measure_chords"] = json!(
         c.owner
             .chords

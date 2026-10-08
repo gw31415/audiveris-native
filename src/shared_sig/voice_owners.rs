@@ -48,7 +48,6 @@ impl Graph {
         chord.slot_owner = Some(identity.clone());
         Ok(())
     }
-    #[cfg(test)]
     pub(crate) fn chord_slot_identity(&self, key: super::Key) -> Option<&Arc<()>> {
         self.vertices[self.id(key)? - 1].slot_owner.as_ref()
     }

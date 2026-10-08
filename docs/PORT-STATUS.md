@@ -1967,3 +1967,15 @@ Chord concatenation/first-containing lookup/backrefs/old Voice and Stack Slot cl
 Ambiguous numeric validation cannot merge distinct objects. Evidence
 musicxml-narrow-slot-owners. Actual in-pass shrink/inspect/merge/second rhythm pass,
 fully typed validation resource binding and general ledger remain; full nonUI false.
+
+### Existing-Tuplet shrink on actual candidates (continuation ofb8318fa)
+
+Original7 direct private-method controls use actual generator and actual retrieved
+narrow/compound owners. Native retains candidate Arcs/clocks, matches exact7/64,
+stop/default-first/BeamGroup extension/reuse, Chord push before narrow update, no
+fresh callbacks and held Voice/Stack Slot/end/excess/manual/expected. Baseline Slot
+observation now compares held Arcs across same-number old/new objects. Original
+late cast leaves earlier1/12 and1/6 narrow clocks; native outer rollback restores
+actual Graph/Chord/candidate/container state and retries. Evidence
+musicxml-tuplet-shrink-existing. Fresh callback and nullable fallback/inspect/merge/
+second pass/normal resource binding remain; full nonUI false.

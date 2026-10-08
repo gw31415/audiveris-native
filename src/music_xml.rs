@@ -3702,6 +3702,9 @@ pub use tuplet_beats::TupletBeatPlan;
 
 mod tuplet_force;
 
+mod rhythm_candidates;
 mod tuplet_find;
 mod voice_chords;
 mod voice_tuplets;
+pub use rhythm_candidates::RhythmCandidates;
+mod tuplet_shrink;
