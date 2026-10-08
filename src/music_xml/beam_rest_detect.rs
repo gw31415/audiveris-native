@@ -9,17 +9,28 @@ impl OwnedMusic {
     /// Detect on retained real groups without resetting the callback clocks.
     /// The complete MeasureRhythm preparation also removes implicit tuplets.
     pub fn detect_interleaved_rests(&mut self, number: usize) -> Result<Vec<usize>, String> {
+        let mut graph = self.owner.graph.clone();
+        let added = self.rest_owners().detect_on(&mut graph, number)?;
+        self.owner.graph = graph;
+        Ok(added)
+    }
+}
+impl super::beam_rest::RestOwners<'_> {
+    pub(super) fn detect_on(
+        &self,
+        graph: &mut crate::shared_sig::Graph,
+        number: usize,
+    ) -> Result<Vec<usize>, String> {
         let mi = number
             .checked_sub(1)
             .filter(|mi| *mi < self.measures.len())
             .ok_or("music_rest_actual_measure_required")?;
-        let mut graph = self.owner.graph.clone();
-        let groups = measure_groups(&mut graph, &self.measures[mi], &self.chords, mi)?;
+        let groups = measure_groups(graph, &self.measures[mi], self.chords, mi)?;
         let mut added = Vec::new();
         for id in groups {
             // Hold this group's original Chord list before white additions;
             // later groups must see the effects of earlier group detection.
-            let candidates = self.group_rest_candidates(&graph, id)?;
+            let candidates = self.group_rest_candidates(graph, id)?;
             for pair in candidates.seeds.windows(2) {
                 let actual = |key: Key| {
                     self.chords
@@ -33,30 +44,28 @@ impl OwnedMusic {
                         .map(|p| p[0])
                         .ok_or("music_rest_actual_chord_geometry_required")
                 };
-                let left = tail_x(chord_geometry(&mut graph, actual(pair[0])?)?)?;
-                let right = tail_x(chord_geometry(&mut graph, actual(pair[1])?)?)?;
+                let left = tail_x(chord_geometry(graph, actual(pair[0])?)?)?;
+                let right = tail_x(chord_geometry(graph, actual(pair[1])?)?)?;
                 for &key in &candidates.white {
                     let chord = actual(key)?;
-                    let x = tail_x(chord_geometry(&mut graph, chord)?)?;
+                    let x = tail_x(chord_geometry(graph, chord)?)?;
                     if x > left && x < right {
-                        let (rest, center) = actual_rest_note(&graph, chord)?;
-                        if let Some((beam, _)) = graph.nearest_rest_beam(
-                            candidates.group,
-                            center,
-                            self.owner.sheet_skew,
-                        )? {
+                        let (rest, center) = actual_rest_note(graph, chord)?;
+                        if let Some((beam, _)) =
+                            graph.nearest_rest_beam(candidates.group, center, self.geometry.skew)?
+                        {
                             added.push(graph.add_owned_beam_rest(
                                 beam,
                                 rest,
                                 false,
-                                self.owner.sheet_skew,
-                                self.owner.interline,
+                                self.geometry.skew,
+                                self.geometry.interline,
                             )?);
                         }
                     }
                 }
                 added.extend(self.lookup_interleaved_rests_on(
-                    &mut graph,
+                    graph,
                     number,
                     candidates.group,
                     [pair[0], pair[1]],
@@ -65,7 +74,6 @@ impl OwnedMusic {
                 )?);
             }
         }
-        self.owner.graph = graph;
         Ok(added)
     }
 }

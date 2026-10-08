@@ -203,13 +203,12 @@ pub(super) fn prepare_control(case: &Value) -> Control {
 pub(super) fn frame(c: &mut Control) -> Value {
     let groups = c.owner.actual_measure_beam_groups(1).unwrap();
     let snapshot = c.owner.owner.graph.snapshot();
-    let mut owned = super::retired_beam_tests::measure_state(
-        &c.owner,
-        &c.labels,
-        &c.refs,
-        &["voice0", "voice1"],
-        0,
-    );
+    let names = (0..c.refs.len())
+        .map(|i| format!("voice{i}"))
+        .collect::<Vec<_>>();
+    let names = names.iter().map(String::as_str).collect::<Vec<_>>();
+    let mut owned =
+        super::retired_beam_tests::measure_state(&c.owner, &c.labels, &c.refs, &names, 0);
     let order = c
         .owner
         .chords

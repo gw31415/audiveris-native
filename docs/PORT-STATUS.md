@@ -1807,3 +1807,18 @@ bytes/XSD pass. Next borrowed real-owner complete prep connection must preserve
 existing selected admission/rollback; implicit generation/merge and full ledger
 remain pending. Full nonUI/public flags false; same task/work/unobtainedce held.
 See evidence/musicxml-tuplet-preparation.
+
+Complete compared preparation now borrows actual Chord/Measure/Staff/Curve
+owners in ordinary image and selected Stack processing after Stack reset before
+Measure reset. Actual Book/Chord caches bind before initial rhythm, required by
+real group getters. Tuplet containers commit/rollback with selected Graph/clocks.
+Two original no-prior-reset Stack controls compare six boundaries and six
+post-removal callbacks, fresh Voice/Slot construction before system refinement,
+then refinement. Late target failure restores original Tuplet collection storage,
+manual objects and physical Chord/old Slot/Voice clocks for same-owner retry.
+Seventeen unique targets, fmt/clippy/build and existing63+correction8/exact7/64
+XML bytes/XSD pass. Original Java expectedDuration object identity is observed;
+native keeps its exact Fraction value. Actual TupletGenerator object reuse/group
+extension/split, fresh generation, second pass/merge and full ledger remain next.
+Full/public completion false; work189/original task/unobtainedce retained.
+See evidence/musicxml-selected-preparation.

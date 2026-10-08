@@ -149,6 +149,11 @@ fn original_measure_reset_rebuilds_actual_voices_before_stack_slots_and_system_r
                         measures: &mut owner.measures,
                         chords: &owner.chords,
                         interline: owner.owner.interline,
+                        rest_geometry: crate::music_xml::beam_rest::RestGeometry {
+                            staffs: &owner.owner.staffs,
+                            skew: owner.owner.sheet_skew,
+                            interline: owner.owner.interline,
+                        },
                     }
                     .process_measure(0)
                     .unwrap();

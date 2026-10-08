@@ -12,6 +12,17 @@ pub(super) struct RestGroupCandidates {
     pub measures: Vec<usize>,
 }
 
+#[derive(Clone, Copy)]
+pub(crate) struct RestGeometry<'a> {
+    pub staffs: &'a [std::sync::Arc<crate::grid_ir::StaffGeometry>],
+    pub skew: crate::sheet_skew::SheetSkew,
+    pub interline: usize,
+}
+pub(super) struct RestOwners<'a> {
+    pub measures: &'a [crate::music_measures::Measure],
+    pub chords: &'a [crate::music_measures::Chord],
+    pub geometry: RestGeometry<'a>,
+}
 impl OwnedMusic {
     pub fn staff_midline_at(&self, measure_number: usize, x: i32) -> Result<i32, String> {
         let measure = measure_number
@@ -132,7 +143,7 @@ impl OwnedMusic {
         let groups = measure_groups(&mut graph, &self.measures[mi], &self.chords, mi)?;
         let mut candidates = Vec::new();
         for group in groups {
-            let c = self.group_rest_candidates(&graph, group)?;
+            let c = self.rest_owners().group_rest_candidates(&graph, group)?;
             let ids = |keys: &[Key]| {
                 keys.iter()
                     .map(|k| graph.id(*k).unwrap())
@@ -145,6 +156,37 @@ impl OwnedMusic {
         self.owner.graph = graph;
         Ok(serde_json::json!(candidates))
     }
+    #[cfg(test)]
+    pub(crate) fn actual_measure_beam_groups(
+        &mut self,
+        number: usize,
+    ) -> Result<Vec<usize>, String> {
+        let mi = number
+            .checked_sub(1)
+            .filter(|mi| *mi < self.measures.len())
+            .ok_or("music_rest_actual_measure_required")?;
+        measure_groups(&mut self.owner.graph, &self.measures[mi], &self.chords, mi)
+    }
+
+    pub fn clear_interleaved_rests(&mut self, number: usize) -> Result<(), String> {
+        let mut graph = self.owner.graph.clone();
+        self.rest_owners().clear_on(&mut graph, number)?;
+        self.owner.graph = graph;
+        Ok(())
+    }
+    pub(super) fn rest_owners(&self) -> RestOwners<'_> {
+        RestOwners {
+            measures: &self.measures,
+            chords: &self.chords,
+            geometry: RestGeometry {
+                staffs: &self.owner.staffs,
+                skew: self.owner.sheet_skew,
+                interline: self.owner.interline,
+            },
+        }
+    }
+}
+impl RestOwners<'_> {
     pub(super) fn group_rest_candidates(
         &self,
         graph: &Graph,
@@ -166,7 +208,7 @@ impl OwnedMusic {
             .collect::<Vec<_>>();
         let black = linked_rest_ids(
             graph,
-            &self.chords,
+            self.chords,
             &seeds,
             false,
             &["SeparateVoiceRelation"],
@@ -174,7 +216,7 @@ impl OwnedMusic {
         // The original call site supplies Next only, despite its broader
         // SameVoice wording in the surrounding Javadoc.
         let mut white =
-            linked_rest_ids(graph, &self.chords, &seeds, true, &["NextInVoiceRelation"])?;
+            linked_rest_ids(graph, self.chords, &seeds, true, &["NextInVoiceRelation"])?;
         white.retain(|id| !black.contains(id));
         let member_row = member_rows
             .as_array()
@@ -271,28 +313,13 @@ impl OwnedMusic {
             measures: measure_indices,
         })
     }
-    #[cfg(test)]
-    pub(crate) fn actual_measure_beam_groups(
-        &mut self,
-        number: usize,
-    ) -> Result<Vec<usize>, String> {
-        let mi = number
-            .checked_sub(1)
-            .filter(|mi| *mi < self.measures.len())
-            .ok_or("music_rest_actual_measure_required")?;
-        measure_groups(&mut self.owner.graph, &self.measures[mi], &self.chords, mi)
-    }
-
-    /// Original pre-reset clear pass on actual measure/beam owners. Detection
-    /// must be compared before this pass is connected to normal rhythm.
-    pub fn clear_interleaved_rests(&mut self, measure_number: usize) -> Result<(), String> {
+    pub(super) fn clear_on(&self, graph: &mut Graph, measure_number: usize) -> Result<(), String> {
         let mi = measure_number
             .checked_sub(1)
             .filter(|mi| *mi < self.measures.len())
             .ok_or("music_rest_actual_measure_required")?;
         let measure = &self.measures[mi];
-        let mut graph = self.owner.graph.clone();
-        let groups = measure_groups(&mut graph, measure, &self.chords, mi)?;
+        let groups = measure_groups(graph, measure, self.chords, mi)?;
         let snapshot = graph.snapshot();
         let nodes = snapshot["inters"]
             .as_array()
@@ -319,7 +346,6 @@ impl OwnedMusic {
                 }
             }
         }
-        self.owner.graph = graph;
         Ok(())
     }
 }

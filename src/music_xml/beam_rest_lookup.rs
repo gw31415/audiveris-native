@@ -64,10 +64,37 @@ impl OwnedMusic {
         candidates: &[Key],
     ) -> Result<Value, String> {
         let mut graph = self.owner.graph.clone();
-        let query = self.prepare_rest_lookup(&mut graph, number, group, left, right, candidates)?;
+        let query = self
+            .rest_owners()
+            .prepare_rest_lookup(&mut graph, number, group, left, right, candidates)?;
         self.owner.graph = graph;
         Ok(query)
     }
+    /// Original plain lookup on an explicit adjacent Chord pair and actual rest
+    /// candidates. Complete clear/detect and tuplet preparation remain pending.
+    pub fn lookup_interleaved_rests(
+        &mut self,
+        number: usize,
+        group: Key,
+        left: Key,
+        right: Key,
+        candidates: &[Key],
+        white: &[Key],
+    ) -> Result<Vec<usize>, String> {
+        let mut graph = self.owner.graph.clone();
+        let added = self.rest_owners().lookup_interleaved_rests_on(
+            &mut graph,
+            number,
+            group,
+            [left, right],
+            candidates,
+            white,
+        )?;
+        self.owner.graph = graph;
+        Ok(added)
+    }
+}
+impl super::beam_rest::RestOwners<'_> {
     fn prepare_rest_polygon(
         &self,
         graph: &mut Graph,
@@ -80,7 +107,7 @@ impl OwnedMusic {
             .checked_sub(1)
             .filter(|mi| *mi < self.measures.len())
             .ok_or("music_rest_actual_measure_required")?;
-        let groups = measure_groups(graph, &self.measures[mi], &self.chords, mi)?;
+        let groups = measure_groups(graph, &self.measures[mi], self.chords, mi)?;
         let gid = graph.id(group).ok_or("music_rest_actual_group_required")?;
         if !groups.contains(&gid) {
             return Err("music_rest_actual_measure_group_required".into());
@@ -125,7 +152,7 @@ impl OwnedMusic {
         let rd = (i64::from(rh[1]) - i64::from(rt[1])).signum();
         let median = graph.main_rest_median(group)?;
         let staff = |mi: usize| {
-            self.owner
+            self.geometry
                 .staffs
                 .iter()
                 .find(|s| s.id == self.measures[mi].staff && s.system == self.measures[mi].system)
@@ -229,7 +256,7 @@ impl OwnedMusic {
         let candidate = if intersects && !x_overlap {
             let (rest, center) = actual_rest_note(graph, chord)?;
             graph
-                .nearest_rest_beam(area.group, center, self.owner.sheet_skew)?
+                .nearest_rest_beam(area.group, center, self.geometry.skew)?
                 .map(|nearest| RestCandidate {
                     rest,
                     center,
@@ -239,29 +266,6 @@ impl OwnedMusic {
             None
         };
         Ok((candidate, intersects, x_overlap, chord.id))
-    }
-    /// Original plain lookup on an explicit adjacent Chord pair and actual rest
-    /// candidates. Complete clear/detect and tuplet preparation remain pending.
-    pub fn lookup_interleaved_rests(
-        &mut self,
-        number: usize,
-        group: Key,
-        left: Key,
-        right: Key,
-        candidates: &[Key],
-        white: &[Key],
-    ) -> Result<Vec<usize>, String> {
-        let mut graph = self.owner.graph.clone();
-        let added = self.lookup_interleaved_rests_on(
-            &mut graph,
-            number,
-            group,
-            [left, right],
-            candidates,
-            white,
-        )?;
-        self.owner.graph = graph;
-        Ok(added)
     }
     pub(super) fn lookup_interleaved_rests_on(
         &self,
@@ -306,7 +310,7 @@ impl OwnedMusic {
                 if graph.rest_contains_candidate_vertical(
                     rest,
                     candidate.center,
-                    self.owner.sheet_skew,
+                    self.geometry.skew,
                 )? {
                     let owners = self
                         .chords
@@ -351,13 +355,14 @@ impl OwnedMusic {
                 beam,
                 candidate.rest,
                 false,
-                self.owner.sheet_skew,
-                self.owner.interline,
+                self.geometry.skew,
+                self.geometry.interline,
             )?);
         }
         Ok(added)
     }
 }
+
 pub(super) fn chord_geometry(
     graph: &mut Graph,
     chord: &Chord,

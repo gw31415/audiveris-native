@@ -10,6 +10,7 @@ pub(crate) struct Context<'a> {
     pub measures: &'a mut [Measure],
     pub chords: &'a [Chord],
     pub interline: usize,
+    pub rest_geometry: super::beam_rest::RestGeometry<'a>,
 }
 pub(super) struct Prepared<'a> {
     pub chords: &'a [&'a Chord],
@@ -202,6 +203,13 @@ impl Context<'_> {
         if chords.is_empty() {
             return Err("music_selected_actual_chords_required".into());
         }
+        super::tuplet_preparation::prepare_on(
+            self.graph,
+            self.measures,
+            self.chords,
+            self.rest_geometry,
+            mi + 1,
+        )?;
         crate::music_voices::reset_rhythm(
             self.graph,
             self.voices,
@@ -318,6 +326,11 @@ impl OwnedMusic {
             measures: &mut measures,
             chords: &self.chords,
             interline: self.owner.interline,
+            rest_geometry: super::beam_rest::RestGeometry {
+                staffs: &self.owner.staffs,
+                skew: self.owner.sheet_skew,
+                interline: self.owner.interline,
+            },
         };
         for &mi in &selected {
             context.process_stack(mi)?;
@@ -329,6 +342,8 @@ impl OwnedMusic {
         self.voices = voices;
         for mi in selected {
             self.measures[mi].timing = std::mem::take(&mut measures[mi].timing);
+            self.measures[mi].tuplets = std::mem::take(&mut measures[mi].tuplets);
+            self.measures[mi].stack_tuplets = std::mem::take(&mut measures[mi].stack_tuplets);
         }
         Ok(())
     }

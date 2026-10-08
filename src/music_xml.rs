@@ -85,6 +85,9 @@ impl Export {
         if result.is_ok() {
             for &mi in &selected {
                 measures[mi].timing = std::mem::take(&mut self.owner.measures[mi].timing);
+                measures[mi].tuplets = std::mem::take(&mut self.owner.measures[mi].tuplets);
+                measures[mi].stack_tuplets =
+                    std::mem::take(&mut self.owner.measures[mi].stack_tuplets);
             }
         }
         self.owner.measures = measures;
@@ -287,6 +290,11 @@ impl Export {
                 measures: &mut self.owner.measures,
                 chords: &self.owner.chords,
                 interline: self.owner.owner.interline,
+                rest_geometry: beam_rest::RestGeometry {
+                    staffs: &self.owner.owner.staffs,
+                    skew: self.owner.owner.sheet_skew,
+                    interline: self.owner.owner.interline,
+                },
             }
             .refine_system(mi)?;
             systems.push(system);
@@ -623,7 +631,6 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     }
     admit_symbols(&m)?;
     m.owner.graph.populate_dot_measures()?;
-    let rhythm = process_rhythm(&mut m, None)?;
     // A new retained editing owner is not an imported/persisted Book. Do not
     // infer prior dirty flags or clear them when writing MusicXML.
     m.owner
@@ -636,6 +643,7 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
             .map(|c| (c.key, c.stem))
             .collect::<Vec<_>>(),
     )?;
+    let rhythm = process_rhythm(&mut m, None)?;
     let xml = render(&mut m, part_name, rhythm, true)?;
     let provenance = provenance(&m);
     Ok(Export {
@@ -803,6 +811,17 @@ fn analyze_rhythm(
             continue;
         }
         crate::music_voices::reset_stack_rhythm(&mut m.measures[mi], Some(expected_duration));
+        tuplet_preparation::prepare_on(
+            &mut graph,
+            &mut m.measures,
+            &m.chords,
+            beam_rest::RestGeometry {
+                staffs: &m.owner.staffs,
+                skew: m.owner.sheet_skew,
+                interline: m.owner.interline,
+            },
+            mi + 1,
+        )?;
         crate::music_voices::reset_rhythm(
             &mut graph,
             &mut m.voices,
@@ -915,6 +934,11 @@ fn analyze_rhythm(
             measures: &mut m.measures,
             chords: &m.chords,
             interline: m.owner.interline,
+            rest_geometry: beam_rest::RestGeometry {
+                staffs: &m.owner.staffs,
+                skew: m.owner.sheet_skew,
+                interline: m.owner.interline,
+            },
         }
         .map(stack_rhythm::Prepared {
             chords: &chords,

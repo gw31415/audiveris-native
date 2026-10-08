@@ -22,14 +22,16 @@ fn original() -> Value {
     }
     d
 }
-struct Prepared {
-    c: Control,
-    tuplets: Vec<Key>,
-    relations: Vec<(usize, String)>,
+pub(super) struct Prepared {
+    pub(super) c: Control,
+    pub(super) tuplets: Vec<Key>,
+    pub(super) relations: Vec<(usize, String)>,
 }
-fn control(case: &Value) -> Prepared {
+pub(super) fn control(case: &Value) -> Prepared {
     let (mut c, _) = prepare(case);
-    declare(&mut c, case, &case["geometry"]);
+    if case["geometry"].is_object() {
+        declare(&mut c, case, &case["geometry"]);
+    }
     declare_links(&mut c, case);
     let snapshot = c.owner.owner.graph.snapshot();
     let local = snapshot["inters"]
@@ -104,46 +106,48 @@ fn control(case: &Value) -> Prepared {
             .unwrap() as usize;
         relations.push((id, format!("tuple_link{i}")));
     }
-    let snapshot = c.owner.owner.graph.snapshot();
-    let beam: Key = serde_json::from_value(
-        snapshot["inters"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .find(|n| {
-                c.labels
-                    .get(&(n["id"].as_u64().unwrap() as usize))
-                    .is_some_and(|l| l == "competition_beam0")
-            })
-            .unwrap()["origin"]
-            .clone(),
-    )
-    .unwrap();
-    for i in 0..2 {
-        let ch = c
-            .owner
-            .chords
-            .iter()
-            .find(|ch| ch.key == c.rests[i])
-            .unwrap();
-        let note = serde_json::from_value(ch.members[0]["origin"].clone()).unwrap();
-        c.owner
-            .owner
-            .graph
-            .add_owned_beam_rest(
-                beam,
-                note,
-                i == 1,
-                c.owner.owner.sheet_skew,
-                c.owner.owner.interline,
-            )
-            .unwrap();
-        c.owner
-            .owner
-            .graph
-            .invalidate_owned_rest_cache(ch.key)
-            .unwrap();
-        c.baseline[i] = c.owner.owner.graph.rest_chord_beams(ch.key).unwrap();
+    if !c.rests.is_empty() {
+        let snapshot = c.owner.owner.graph.snapshot();
+        let beam: Key = serde_json::from_value(
+            snapshot["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| {
+                    c.labels
+                        .get(&(n["id"].as_u64().unwrap() as usize))
+                        .is_some_and(|l| l == "competition_beam0")
+                })
+                .unwrap()["origin"]
+                .clone(),
+        )
+        .unwrap();
+        for i in 0..2 {
+            let ch = c
+                .owner
+                .chords
+                .iter()
+                .find(|ch| ch.key == c.rests[i])
+                .unwrap();
+            let note = serde_json::from_value(ch.members[0]["origin"].clone()).unwrap();
+            c.owner
+                .owner
+                .graph
+                .add_owned_beam_rest(
+                    beam,
+                    note,
+                    i == 1,
+                    c.owner.owner.sheet_skew,
+                    c.owner.owner.interline,
+                )
+                .unwrap();
+            c.owner
+                .owner
+                .graph
+                .invalidate_owned_rest_cache(ch.key)
+                .unwrap();
+            c.baseline[i] = c.owner.owner.graph.rest_chord_beams(ch.key).unwrap();
+        }
     }
     Prepared {
         c,
@@ -170,7 +174,7 @@ fn names(c: &Control, keys: &[Key]) -> Value {
             .collect::<Vec<_>>()
     )
 }
-fn state(p: &mut Prepared) -> Value {
+pub(super) fn state(p: &mut Prepared) -> Value {
     let mut all = p.c.owner.measures[0].tuplets.clone();
     for &key in &p.c.owner.measures[0].stack_tuplets {
         if !all.contains(&key) {
@@ -203,7 +207,7 @@ fn normalized(mut v: Value) -> Value {
     v["state"]["owned"]["relations"] = json!([]);
     v
 }
-fn callback(
+pub(super) fn callback(
     p: &Prepared,
     cb: &TupletRemovalObservation,
     slots: &BTreeMap<Key, Option<Arc<()>>>,
