@@ -2,7 +2,12 @@
 use super::*;
 use crate::music_time::{format_delta, format_fraction};
 
-pub(crate) fn assert_real_measure_rhythm(music: &OwnedMusic) {
+pub(crate) struct RecognitionFrame {
+    pub graph: crate::shared_sig::Graph,
+    pub measures: Vec<crate::music_measures::Measure>,
+    pub voices: Vec<crate::music_voices::Voice>,
+}
+pub(crate) fn assert_real_measure_rhythm(music: &OwnedMusic) -> RecognitionFrame {
     let source: Value = serde_json::from_str(include_str!(
         "../../../fixtures/official-measure-rhythm/image-observed.json"
     ))
@@ -175,4 +180,9 @@ pub(crate) fn assert_real_measure_rhythm(music: &OwnedMusic) {
     }
     assert_eq!(music.owner.graph.snapshot(), before);
     std::fs::write("/tmp/real-measure-rhythm-native-observed.json",serde_json::to_vec_pretty(&json!({"measures":rows,"mappings":mappings,"all8_real_MeasureRhythm_results_and_states_match":true,"original_input_owner_unchanged":true})).unwrap()).unwrap();
+    RecognitionFrame {
+        graph,
+        measures,
+        voices,
+    }
 }

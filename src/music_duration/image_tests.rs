@@ -167,5 +167,9 @@ pub(crate) fn assert_real_duration_reads(mut music: OwnedMusic, preparation: Val
     crate::music_voices::image_tests::assert_real_voice_families(&music);
     crate::music_rookie_mapping::image_tests::assert_real_voice_distances(&music);
     crate::music_measure_slots::image_tests::assert_real_measure_slots(&music);
-    crate::music_xml::stack_rhythm::image_tests::assert_real_measure_rhythm(&music);
+    let frame = crate::music_xml::stack_rhythm::image_tests::assert_real_measure_rhythm(&music);
+    music.owner.graph = frame.graph;
+    music.measures.clone_from(&frame.measures);
+    music.voices = frame.voices;
+    crate::music_voices::shared_stack::image_tests::assert_real_shared_slots(&mut music);
 }

@@ -295,6 +295,27 @@ impl Context<'_> {
     }
 }
 impl OwnedMusic {
+    pub fn gather_recognized_stack_rhythm(&mut self, stack_number: usize) -> Result<(), String> {
+        let si = stack_number
+            .checked_sub(1)
+            .filter(|si| *si < self.measure_layout.stacks.len())
+            .ok_or("music_actual_shared_Stack_required")?;
+        let mut stack = self.measure_layout.stacks[si].clone();
+        let mut graph = self.owner.graph.clone();
+        let mut voices = self.voices.clone();
+        let mut measures = self.measures.clone();
+        crate::music_voices::shared_stack::gather_actual_stack_rhythm(
+            &mut graph,
+            &mut voices,
+            &mut measures,
+            &mut stack,
+        )?;
+        self.owner.graph = graph;
+        self.voices = voices;
+        self.measures.clone_from(&measures);
+        self.measure_layout.stacks[si].timing = stack.timing;
+        Ok(())
+    }
     /// Rebuild a compared ordinary one-Measure stack from real Chords before
     /// system Voice refinement. Image/XML admission remains a separate stage.
     pub fn reprocess_stack_rhythm(&mut self, measure_number: usize) -> Result<(), String> {

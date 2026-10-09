@@ -11,6 +11,7 @@ use std::sync::Arc;
 pub(crate) mod image_tests;
 #[cfg(test)]
 mod lifecycle_tests;
+pub(crate) mod shared_stack;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum VoiceKind {
@@ -111,6 +112,13 @@ pub(crate) struct Slot {
 pub(crate) struct SlotVoice {
     pub chord_id: usize,
     pub continuing: bool,
+}
+#[derive(Clone, Default)]
+pub(crate) struct StackTiming {
+    pub expected: Option<Fraction>,
+    pub excess: Option<Fraction>,
+    pub slots: Vec<Slot>,
+    pub actual: Option<Fraction>,
 }
 #[derive(Clone, Default)]
 pub(crate) struct MeasureTiming {

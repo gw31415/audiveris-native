@@ -187,3 +187,16 @@ fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。今回の比較�
 次は同じ実Stackの両Partを共有Slot/終了量へ集約し、Voice refinement後に
 複段clef/key・臨時記号・staccato・強弱・pedalとnative出力へ接続する。
 [証拠](../evidence/real-measure-rhythm/VALIDATION.json)・[次依存](../evidence/real-measure-rhythm/NEXT-DEPENDENCY.md)。
+
+両Partの実Voiceを同じ保持済みStackから集約し、Stackにcanonical時計・Slot
+集合を持たせた。Part側の時計viewは同じSlot identityを共有する。原版4 Stackの
+11/5/6/6 Slots、incoming順・Voice BEGIN/CONTINUE・終了量/excess・actualが
+一致（最初は15/16/excess3/16）。67 Chordの参照も一致し、null時計2件は
+同番号の新Stack Slotとは別の旧候補objectを保持した。Graph/Voice/Measure/
+canonical時計はstageしてcommitし、既存rollback snapshotにもStack時計を含めた。
+対象7件・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。
+環境通知後に画像成功まででrunnerが終了したため、後続検証だけを再開した。
+system refinementと複段MusicXML出力は未接続で品質未達。次はVoiceKindごとの
+並べ替え・番号調整と実参照保持を比較し、実header time rangeによる通常処理へ
+接続する。その後、実clef/key・臨時記号・staccato・強弱・pedalと出力を接続する。
+[証拠](../evidence/real-stack-slots/VALIDATION.json)・[次依存](../evidence/real-stack-slots/NEXT-DEPENDENCY.md)。

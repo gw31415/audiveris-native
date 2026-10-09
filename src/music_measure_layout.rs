@@ -164,9 +164,11 @@ impl PartLayout {
         Ok(None)
     }
 }
+#[derive(Clone)]
 pub(crate) struct StackOwner {
     pub(crate) stack: Arc<Stack>,
     pub(crate) measures: Vec<Arc<MeasureLayout>>,
+    pub(crate) timing: Option<crate::music_voices::StackTiming>,
 }
 pub(crate) struct Layout {
     pub(crate) parts: Vec<PartLayout>,
@@ -287,6 +289,7 @@ pub(crate) fn build(
                                 index: result.stacks.len() - stack_start + 1,
                             }),
                             measures: Vec::new(),
+                            timing: None,
                         });
                     }
                     let stack = &mut result.stacks[stack_start + index - 1];
@@ -324,6 +327,7 @@ pub(crate) fn build(
                             index: result.stacks.len() - stack_start + 1,
                         }),
                         measures: Vec::new(),
+                        timing: None,
                     });
                 }
                 let stack = &mut result.stacks[stack_start + index - 1];

@@ -33,6 +33,7 @@ struct OwnedCheckpoint {
     measures: Vec<crate::music_measures::Measure>,
     chords: Vec<crate::music_measures::Chord>,
     voices: Vec<crate::music_voices::Voice>,
+    stack_timing: Vec<Option<crate::music_voices::StackTiming>>,
     report: Value,
 }
 impl OwnedCheckpoint {
@@ -42,6 +43,12 @@ impl OwnedCheckpoint {
             measures: owner.measures.clone(),
             chords: owner.chords.clone(),
             voices: owner.voices.clone(),
+            stack_timing: owner
+                .measure_layout
+                .stacks
+                .iter()
+                .map(|s| s.timing.clone())
+                .collect(),
             report: owner.owner.prepared.report.clone(),
         }
     }
@@ -50,6 +57,14 @@ impl OwnedCheckpoint {
         owner.measures.clone_from(&self.measures);
         owner.chords.clone_from(&self.chords);
         owner.voices.clone_from(&self.voices);
+        for (stack, timing) in owner
+            .measure_layout
+            .stacks
+            .iter_mut()
+            .zip(self.stack_timing)
+        {
+            stack.timing = timing;
+        }
         // This is the pre-edit projection, not an input for rebuilding owners.
         owner.owner.prepared.report = self.report;
     }
