@@ -50,7 +50,11 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     }
     let systems = grid::build_systems(&bin, &mut staves, &scale);
     let (nostaff, removed) = staff::remove_lines(&bin, &staves, &scale);
-    log(verbose, &t, format!("GRID {} staves, {} systems", staves.len(), systems.len()));
+    log(
+        verbose,
+        &t,
+        format!("GRID {} staves, {} systems", staves.len(), systems.len()),
+    );
     let mut headers = Vec::new();
     for s in staves.iter_mut() {
         let hd = header::recognize(&nostaff, s, &scale);
@@ -60,7 +64,12 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     // Bars found inside the headers (e.g. time signature digits) are not measure boundaries.
     let mut systems = systems;
     for sys in systems.iter_mut() {
-        let stop = sys.staves.iter().map(|&s| staves[s].header_stop).max().unwrap();
+        let stop = sys
+            .staves
+            .iter()
+            .map(|&s| staves[s].header_stop)
+            .max()
+            .unwrap();
         let first = sys.boundaries[0].clone();
         sys.boundaries.retain(|b| b.x0 >= stop || b.x0 == first.x0);
     }
@@ -70,16 +79,34 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     for si in 0..staves.len() {
         ledgers.extend(beams::ledgers(&nostaff, &staves, si, &scale));
     }
-    log(verbose, &t, format!("BEAMS {} candidates, LEDGERS {}", beams.len(), ledgers.len()));
+    log(
+        verbose,
+        &t,
+        format!(
+            "BEAMS {} candidates, LEDGERS {}",
+            beams.len(),
+            ledgers.len()
+        ),
+    );
     let catalog = Catalog::new(heads::head_point_size(&nostaff, &scale));
     let cells = heads::build_cells(&bin, &removed, &nostaff, &ledgers, &scale);
     let mut candidates = Vec::new();
     for sys in &systems {
         for &si in &sys.staves {
-            candidates.extend(heads::detect(&cells, &catalog, &staves, si, sys, &ledgers, &beams, &scale));
+            candidates.extend(heads::detect(
+                &cells, &catalog, &staves, si, sys, &ledgers, &beams, &scale,
+            ));
         }
     }
-    log(verbose, &t, format!("HEADS {} candidates (point size {})", candidates.len(), catalog.point_size));
+    log(
+        verbose,
+        &t,
+        format!(
+            "HEADS {} candidates (point size {})",
+            candidates.len(),
+            catalog.point_size
+        ),
+    );
     if let Ok(v) = std::env::var("OMR_PROBE") {
         let v: Vec<i32> = v.split(',').map(|x| x.parse().unwrap()).collect();
         let r = Rect::new(v[0] - 15, v[1] - 15, 30, 30);
@@ -89,9 +116,18 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     }
     let (mut heads, mut stems) = stems::link(&nostaff, candidates, &scale);
     stems::attach_beams(&mut stems, &heads, &beams, &scale);
-    log(verbose, &t, format!("STEMS {} heads, {} stems", heads.len(), stems.len()));
-    let items: Vec<Rect> = headers.iter().flat_map(|h| h.items.iter().map(|i| i.0)).collect();
-    let residual = symbols::residual(&nostaff, &heads, &catalog, &stems, &beams, &ledgers, &systems, &staves, &items, &scale);
+    log(
+        verbose,
+        &t,
+        format!("STEMS {} heads, {} stems", heads.len(), stems.len()),
+    );
+    let items: Vec<Rect> = headers
+        .iter()
+        .flat_map(|h| h.items.iter().map(|i| i.0))
+        .collect();
+    let residual = symbols::residual(
+        &nostaff, &heads, &catalog, &stems, &beams, &ledgers, &systems, &staves, &items, &scale,
+    );
     let symbols = symbols::recognize(&residual, &staves, &scale);
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));

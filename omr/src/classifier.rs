@@ -18,7 +18,10 @@ struct ModelFile {
 static MODEL: OnceLock<ModelFile> = OnceLock::new();
 
 fn model() -> &'static ModelFile {
-    MODEL.get_or_init(|| serde_json::from_slice(include_bytes!("../assets/classifier.json")).expect("classifier model"))
+    MODEL.get_or_init(|| {
+        serde_json::from_slice(include_bytes!("../assets/classifier.json"))
+            .expect("classifier model")
+    })
 }
 
 fn forward(input: &[f64], weights: &[Vec<f64>]) -> Vec<f64> {
@@ -50,7 +53,12 @@ pub fn classify(glyph: &Component, interline: i32) -> Vec<(&'static str, f64)> {
         return Vec::new();
     };
     let m = model();
-    let norm: Vec<f64> = raw.iter().zip(&m.means).zip(&m.stds).map(|((v, mu), s)| (v - mu) / s).collect();
+    let norm: Vec<f64> = raw
+        .iter()
+        .zip(&m.means)
+        .zip(&m.stds)
+        .map(|((v, mu), s)| (v - mu) / s)
+        .collect();
     let hidden = forward(&norm, &m.hidden_weights);
     let scores = forward(&hidden, &m.output_weights);
     let mut out: Vec<(&'static str, f64)> = OUTPUT_LABELS.iter().copied().zip(scores).collect();

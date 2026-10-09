@@ -68,7 +68,8 @@ pub fn residual(
         // erase their pixels where the horizontal run is stem-thin, so that
         // flags and dots touching the stem are kept.
         let len = s.bottom - s.top + 1;
-        let is_col = |x: i32| ((s.top..=s.bottom).filter(|&y| nostaff.get(x, y)).count() as i32) * 2 >= len;
+        let is_col =
+            |x: i32| ((s.top..=s.bottom).filter(|&y| nostaff.get(x, y)).count() as i32) * 2 >= len;
         // Contiguous stem columns around s.x only.
         let mut x0 = s.x;
         while x0 > s.x - ms && is_col(x0 - 1) {
@@ -109,7 +110,10 @@ pub fn residual(
     }
     for sys in systems {
         let top = staves[sys.staves[0]].top(sys.left as f64).round() as i32 - 1;
-        let bot = staves[*sys.staves.last().unwrap()].bottom(sys.left as f64).round() as i32 + 1;
+        let bot = staves[*sys.staves.last().unwrap()]
+            .bottom(sys.left as f64)
+            .round() as i32
+            + 1;
         for b in &sys.boundaries {
             for x in b.x0 - 1..=b.x1 + 1 {
                 for y in top..=bot {
@@ -190,7 +194,9 @@ fn relevant(shape: &str) -> bool {
 fn plausible(shape: &str, b: &Rect, il: f64) -> bool {
     let (w, h) = (b.w as f64 / il, b.h as f64 / il);
     match shape {
-        "DOT_set" => (0.2..=0.9).contains(&w) && (0.2..=0.9).contains(&h) && w / h <= 2.0 && h / w <= 2.0,
+        "DOT_set" => {
+            (0.2..=0.9).contains(&w) && (0.2..=0.9).contains(&h) && w / h <= 2.0 && h / w <= 2.0
+        }
         "HW_REST_set" => (0.7..=2.0).contains(&w) && (0.25..=0.9).contains(&h),
         "QUARTER_REST" => (1.8..=3.6).contains(&h),
         "BREVE_REST" | "LONG_REST" => (0.8..=4.2).contains(&h) && w <= 1.5,
@@ -216,7 +222,10 @@ pub fn min_grade(shape: &str) -> f64 {
 pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symbol> {
     let il = scale.interline;
     let min_weight = ((il * il) as f64 * 0.04).max(4.0) as usize;
-    let mut comps: Vec<Component> = components(residual, None).into_iter().filter(|c| c.weight() >= min_weight).collect();
+    let mut comps: Vec<Component> = components(residual, None)
+        .into_iter()
+        .filter(|c| c.weight() >= min_weight)
+        .collect();
     // Keep glyphs whose center is close to a staff.
     let staff_of = |r: &Rect| -> Option<usize> {
         let (x, y) = (r.cx(), r.cy());
@@ -225,7 +234,13 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             .enumerate()
             .filter(|(_, s)| x >= (s.left - il) as f64 && x <= (s.right + il) as f64)
             .map(|(i, s)| {
-                let d = if y < s.top(x) { s.top(x) - y } else if y > s.bottom(x) { y - s.bottom(x) } else { 0.0 };
+                let d = if y < s.top(x) {
+                    s.top(x) - y
+                } else if y > s.bottom(x) {
+                    y - s.bottom(x)
+                } else {
+                    0.0
+                };
                 (i, d)
             })
             .filter(|(_, d)| *d <= 4.0 * il as f64)
@@ -255,7 +270,10 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             && plausible(s, &g.bounds, il as f64)
         {
             let n = g.pixels.len() as f64;
-            let c = (g.pixels.iter().map(|p| p.0 as f64).sum::<f64>() / n, g.pixels.iter().map(|p| p.1 as f64).sum::<f64>() / n);
+            let c = (
+                g.pixels.iter().map(|p| p.0 as f64).sum::<f64>() / n,
+                g.pixels.iter().map(|p| p.1 as f64).sum::<f64>() / n,
+            );
             cands.push((idx, s, gr, g.bounds, c));
         }
     };
@@ -268,10 +286,14 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             if near(&comps[i].bounds, &comps[j].bounds) {
                 eval(vec![i, j], &comps, &mut cands);
                 for k in j + 1..comps.len() {
-                    if comps[k].bounds.x > comps[j].bounds.right().max(comps[i].bounds.right()) + gap {
+                    if comps[k].bounds.x
+                        > comps[j].bounds.right().max(comps[i].bounds.right()) + gap
+                    {
                         break;
                     }
-                    if near(&comps[i].bounds, &comps[k].bounds) || near(&comps[j].bounds, &comps[k].bounds) {
+                    if near(&comps[i].bounds, &comps[k].bounds)
+                        || near(&comps[j].bounds, &comps[k].bounds)
+                    {
                         eval(vec![i, j, k], &comps, &mut cands);
                     }
                 }
@@ -279,7 +301,11 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
         }
     }
     // Prefer larger groups at equal quality, then grade.
-    cands.sort_by(|a, b| (b.2 + 0.05 * b.0.len() as f64).partial_cmp(&(a.2 + 0.05 * a.0.len() as f64)).unwrap());
+    cands.sort_by(|a, b| {
+        (b.2 + 0.05 * b.0.len() as f64)
+            .partial_cmp(&(a.2 + 0.05 * a.0.len() as f64))
+            .unwrap()
+    });
     let mut used = vec![false; comps.len()];
     let mut out = Vec::new();
     for (idx, shape, grade, bounds, centroid) in cands {
@@ -293,10 +319,18 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             // Time signatures and clefs lie within the staff height.
             let st = &staves[si];
             let inside = bounds.cy() > st.top(bounds.cx()) && bounds.cy() < st.bottom(bounds.cx());
-            if (shape.starts_with("TIME_") || shape.ends_with("_TIME") || shape.contains("CLEF")) && !inside {
+            if (shape.starts_with("TIME_") || shape.ends_with("_TIME") || shape.contains("CLEF"))
+                && !inside
+            {
                 continue;
             }
-            out.push(Symbol { shape, grade, bounds, staff: si, centroid });
+            out.push(Symbol {
+                shape,
+                grade,
+                bounds,
+                staff: si,
+                centroid,
+            });
         }
     }
     out.sort_by_key(|s| s.bounds.x);
@@ -310,9 +344,15 @@ pub fn stem_flags(residual: &Bitmap, stem: &Stem, scale: &Scale) -> u32 {
     let len = stem.bottom - stem.top;
     // From the tip to just before the heads.
     let h = (len - il).clamp(il, 5 * il);
-    let zone = if stem.up { Rect::new(stem.x - 2, stem.top - 2, il + il / 2, h) } else { Rect::new(stem.x - 2, stem.bottom - h, il + il / 2, h + 3) };
-    let parts: Vec<Component> =
-        components(residual, Some(zone)).into_iter().filter(|c| c.weight() >= 6 && c.bounds.w >= 3).collect();
+    let zone = if stem.up {
+        Rect::new(stem.x - 2, stem.top - 2, il + il / 2, h)
+    } else {
+        Rect::new(stem.x - 2, stem.bottom - h, il + il / 2, h + 3)
+    };
+    let parts: Vec<Component> = components(residual, Some(zone))
+        .into_iter()
+        .filter(|c| c.weight() >= 6 && c.bounds.w >= 3)
+        .collect();
     if parts.is_empty() {
         return 0;
     }
@@ -320,11 +360,23 @@ pub fn stem_flags(residual: &Bitmap, stem: &Stem, scale: &Scale) -> u32 {
     let g = Component::merge(&refs);
     let ev = classify(&g, il);
     if std::env::var("OMR_FLAG").is_ok() {
-        eprintln!("flag stem x {} {}..{} glyph {:?} -> {:?}", stem.x, stem.top, stem.bottom, g.bounds, &ev[..3]);
+        eprintln!(
+            "flag stem x {} {}..{} glyph {:?} -> {:?}",
+            stem.x,
+            stem.top,
+            stem.bottom,
+            g.bounds,
+            &ev[..3]
+        );
     }
     let suffix_ok = |s: &str| s.ends_with("_DOWN") != stem.up;
     ev.first()
         .filter(|(s, g)| s.starts_with("FLAG_") && suffix_ok(s) && *g >= 0.2)
-        .map(|(s, _)| s.trim_start_matches("FLAG_").trim_end_matches("_DOWN").parse().unwrap_or(0))
+        .map(|(s, _)| {
+            s.trim_start_matches("FLAG_")
+                .trim_end_matches("_DOWN")
+                .parse()
+                .unwrap_or(0)
+        })
         .unwrap_or(0)
 }

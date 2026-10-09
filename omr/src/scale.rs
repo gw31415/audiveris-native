@@ -30,7 +30,9 @@ impl Scale {
 }
 
 fn peak(hist: &[u64], lo: usize, hi: usize) -> Option<usize> {
-    (lo..hi.min(hist.len())).max_by_key(|&i| hist[i]).filter(|&i| hist[i] > 0)
+    (lo..hi.min(hist.len()))
+        .max_by_key(|&i| hist[i])
+        .filter(|&i| hist[i] > 0)
 }
 
 /// Extent of a peak: contiguous range around `p` where counts stay >= ratio * hist[p].
@@ -123,7 +125,9 @@ pub fn compute(img: &Bitmap) -> Result<Scale, String> {
     let stem = peak(&horiz, 1, (interline / 2).max(2)).unwrap_or(line.max(2));
     let (_, stem_hi) = peak_range(&horiz, stem, 0.25);
     if interline < 6 {
-        return Err(format!("interline {interline} too small; image resolution too low"));
+        return Err(format!(
+            "interline {interline} too small; image resolution too low"
+        ));
     }
     Ok(Scale {
         line: line as i32,

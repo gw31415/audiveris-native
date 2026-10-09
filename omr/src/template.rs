@@ -21,7 +21,12 @@ pub enum HeadShape {
 }
 
 impl HeadShape {
-    pub const ALL: [HeadShape; 4] = [HeadShape::Breve, HeadShape::Whole, HeadShape::Void, HeadShape::Black];
+    pub const ALL: [HeadShape; 4] = [
+        HeadShape::Breve,
+        HeadShape::Whole,
+        HeadShape::Void,
+        HeadShape::Black,
+    ];
     fn codepoint(self) -> char {
         match self {
             HeadShape::Black => '\u{E0A4}',
@@ -69,7 +74,12 @@ impl Template {
     /// Slim bounds when anchored MIDDLE_LEFT at (x, y).
     pub fn slim_at(&self, x: i32, y: i32) -> Rect {
         let (ox, oy) = self.middle_left();
-        Rect::new(x - ox + self.slim.x, y - oy + self.slim.y, self.slim.w, self.slim.h)
+        Rect::new(
+            x - ox + self.slim.x,
+            y - oy + self.slim.y,
+            self.slim.w,
+            self.slim.h,
+        )
     }
 
     /// Matching distance in [0, 1] anchored MIDDLE_LEFT at (x, y).
@@ -97,7 +107,11 @@ impl Template {
                 total += weight;
             }
         }
-        if weights == 0.0 { f64::MAX } else { total / weights }
+        if weights == 0.0 {
+            f64::MAX
+        } else {
+            total / weights
+        }
     }
 
     /// Ratio of hole key points actually white.
@@ -119,7 +133,11 @@ impl Template {
                 actual += 1;
             }
         }
-        if expected == 0 { 0.0 } else { actual as f64 / expected as f64 }
+        if expected == 0 {
+            0.0
+        } else {
+            actual as f64 / expected as f64
+        }
     }
 
     /// Ratio of foreground key points actually black (unknown cells ignored).
@@ -145,7 +163,10 @@ impl Template {
 
     /// Foreground key points (template coordinates).
     pub fn fore_points(&self) -> impl Iterator<Item = (i32, i32)> + '_ {
-        self.keys.iter().filter(|k| matches!(k.2, Kind::Fore)).map(|k| (k.0, k.1))
+        self.keys
+            .iter()
+            .filter(|k| matches!(k.2, Kind::Fore))
+            .map(|k| (k.0, k.1))
     }
 
     pub fn origin_at(&self, x: i32, y: i32) -> (i32, i32) {
@@ -226,7 +247,13 @@ pub fn build(shape: HeadShape, point_size: i32) -> Option<Template> {
     let x2 = (0..w).rev().find(|&x| col(x))?;
     let y1 = (0..h).find(|&y| row(y))?;
     let y2 = (0..h).rev().find(|&y| row(y))?;
-    Some(Template { shape, width: w, height: h, slim: Rect::new(x1, y1, x2 - x1 + 1, y2 - y1 + 1), keys })
+    Some(Template {
+        shape,
+        width: w,
+        height: h,
+        slim: Rect::new(x1, y1, x2 - x1 + 1, y2 - y1 + 1),
+        keys,
+    })
 }
 
 /// Width in pixels of the black notehead at a given point size.

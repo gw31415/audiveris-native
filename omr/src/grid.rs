@@ -91,12 +91,21 @@ pub fn staff_bars(img: &Bitmap, staves: &[Staff], si: usize, scale: &Scale) -> V
         let xm = (x0 + x1) as f64 / 2.0;
         let top = s.top(xm).round() as i32;
         let bot = s.bottom(xm).round() as i32;
-        let up = (si > 0).then(|| &staves[si - 1]).filter(|p| connected(img, x0, x1, p.bottom(xm).round() as i32, top));
-        let down = staves.get(si + 1).filter(|n| connected(img, x0, x1, bot, n.top(xm).round() as i32));
+        let up = (si > 0)
+            .then(|| &staves[si - 1])
+            .filter(|p| connected(img, x0, x1, p.bottom(xm).round() as i32, top));
+        let down = staves
+            .get(si + 1)
+            .filter(|n| connected(img, x0, x1, bot, n.top(xm).round() as i32));
         let clean_up = up.is_some() || clean_end(img, x0, x1, top, -1, scale);
         let clean_down = down.is_some() || clean_end(img, x0, x1, bot, 1, scale);
         if clean_up && clean_down {
-            bars.push(Bar { x0, x1, connected_up: up.is_some(), connected_down: down.is_some() });
+            bars.push(Bar {
+                x0,
+                x1,
+                connected_up: up.is_some(),
+                connected_down: down.is_some(),
+            });
         }
     }
     bars
@@ -136,7 +145,9 @@ fn clean_end(img: &Bitmap, x0: i32, x1: i32, y: i32, dir: i32, scale: &Scale) ->
 
 pub fn build_systems(img: &Bitmap, staves: &mut [Staff], scale: &Scale) -> Vec<System> {
     let il = scale.interline;
-    let bars: Vec<Vec<Bar>> = (0..staves.len()).map(|i| staff_bars(img, staves, i, scale)).collect();
+    let bars: Vec<Vec<Bar>> = (0..staves.len())
+        .map(|i| staff_bars(img, staves, i, scale))
+        .collect();
     // Systems: chain staves linked by a connected bar.
     let mut systems: Vec<Vec<usize>> = Vec::new();
     for i in 0..staves.len() {
@@ -191,22 +202,43 @@ pub fn build_systems(img: &Bitmap, staves: &mut [Staff], scale: &Scale) -> Vec<S
                 [true, false, ..] => BarStyle::HeavyLight,
                 _ => BarStyle::LightLight,
             };
-            boundaries.push(Boundary { x0: group[0].x0, x1: group[j - i].x1, style });
+            boundaries.push(Boundary {
+                x0: group[0].x0,
+                x1: group[j - i].x1,
+                style,
+            });
             i = j + 1;
         }
         // Ensure a starting boundary at the system left.
         if boundaries.first().is_none_or(|b| b.x0 > left + il) {
-            boundaries.insert(0, Boundary { x0: left, x1: left, style: BarStyle::Regular });
+            boundaries.insert(
+                0,
+                Boundary {
+                    x0: left,
+                    x1: left,
+                    style: BarStyle::Regular,
+                },
+            );
         }
         if boundaries.last().is_none_or(|b| b.x1 < right - il) {
-            boundaries.push(Boundary { x0: right, x1: right, style: BarStyle::Regular });
+            boundaries.push(Boundary {
+                x0: right,
+                x1: right,
+                style: BarStyle::Regular,
+            });
         }
         for &si in &sys {
             staves[si].left = boundaries[0].x1 + 1;
             staves[si].right = boundaries.last().unwrap().x0 - 1;
         }
         let parts = detect_parts(img, staves, &sys, scale);
-        out.push(System { staves: sys, parts, boundaries, left, right });
+        out.push(System {
+            staves: sys,
+            parts,
+            boundaries,
+            left,
+            right,
+        });
     }
     out
 }

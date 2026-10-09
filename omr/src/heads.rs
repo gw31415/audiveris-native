@@ -45,10 +45,20 @@ pub struct Catalog {
 
 impl Catalog {
     pub fn new(point_size: i32) -> Self {
-        let templates = HeadShape::ALL.iter().filter_map(|&s| template::build(s, point_size)).collect();
+        let templates = HeadShape::ALL
+            .iter()
+            .filter_map(|&s| template::build(s, point_size))
+            .collect();
         let sps = (point_size as f64 * 0.67).round() as i32;
-        let small = [HeadShape::Black, HeadShape::Void].iter().filter_map(|&s| template::build(s, sps)).collect();
-        Self { point_size, templates, small }
+        let small = [HeadShape::Black, HeadShape::Void]
+            .iter()
+            .filter_map(|&s| template::build(s, sps))
+            .collect();
+        Self {
+            point_size,
+            templates,
+            small,
+        }
     }
     pub fn get(&self, shape: HeadShape) -> &Template {
         self.templates.iter().find(|t| t.shape == shape).unwrap()
@@ -75,7 +85,10 @@ pub fn head_point_size(nostaff: &Bitmap, scale: &Scale) -> i32 {
         }
     }
     let nominal = 4 * scale.interline;
-    let Some(width) = (0..hist.len()).max_by_key(|&i| hist[i]).filter(|&i| hist[i] > 0) else {
+    let Some(width) = (0..hist.len())
+        .max_by_key(|&i| hist[i])
+        .filter(|&i| hist[i] > 0)
+    else {
         return nominal;
     };
     // Choose the point size whose black template slim width matches best.
@@ -99,9 +112,19 @@ pub struct Cells {
 }
 
 /// Image used for template matching: staff lines, ledgers and stem seeds are UNKNOWN.
-pub fn build_cells(bin: &Bitmap, removed: &Bitmap, nostaff: &Bitmap, ledgers: &[Ledger], scale: &Scale) -> Cells {
+pub fn build_cells(
+    bin: &Bitmap,
+    removed: &Bitmap,
+    nostaff: &Bitmap,
+    ledgers: &[Ledger],
+    scale: &Scale,
+) -> Cells {
     let (w, h) = (bin.width, bin.height);
-    let mut data: Vec<u8> = bin.data.iter().map(|&b| if b { BLACK } else { WHITE }).collect();
+    let mut data: Vec<u8> = bin
+        .data
+        .iter()
+        .map(|&b| if b { BLACK } else { WHITE })
+        .collect();
     for i in 0..w * h {
         if removed.data[i] {
             data[i] = UNKNOWN;
@@ -133,7 +156,12 @@ pub fn build_cells(bin: &Bitmap, removed: &Bitmap, nostaff: &Bitmap, ledgers: &[
     for i in 0..w * h {
         known_black.data[i] = data[i] == BLACK;
     }
-    Cells { data, w: w as i32, h: h as i32, dist: chamfer_distance(&known_black) }
+    Cells {
+        data,
+        w: w as i32,
+        h: h as i32,
+        dist: chamfer_distance(&known_black),
+    }
 }
 
 struct Scan {
@@ -163,8 +191,16 @@ pub fn detect(
     // Barline areas of the system (with vertical margin) and long beams are competitors.
     let sys_top = staves[system.staves[0]].top(s.mid_x()) as i32 - 2 * il;
     let sys_bot = staves[*system.staves.last().unwrap()].bottom(s.mid_x()) as i32 + 2 * il;
-    let bars: Vec<Rect> = system.boundaries.iter().map(|b| Rect::new(b.x0, sys_top, b.x1 - b.x0 + 1, sys_bot - sys_top)).collect();
-    let long_beams: Vec<Rect> = beams.iter().filter(|b| b.width() >= 2.5 * il as f64).map(|b| b.bounds()).collect();
+    let bars: Vec<Rect> = system
+        .boundaries
+        .iter()
+        .map(|b| Rect::new(b.x0, sys_top, b.x1 - b.x0 + 1, sys_bot - sys_top))
+        .collect();
+    let long_beams: Vec<Rect> = beams
+        .iter()
+        .filter(|b| b.width() >= 2.5 * il as f64)
+        .map(|b| b.bounds())
+        .collect();
 
     let mut scans: Vec<Scan> = Vec::new();
     let left = s.header_stop.max(s.left);
@@ -176,12 +212,24 @@ pub fn detect(
             _ => None,
         };
         let staff = s.clone();
-        scans.push(Scan { pitch: p, x_from: left, x_to: right, open_dir: open, y: Box::new(move |x| staff.pitch_y(p as f64, x as f64).round() as i32) });
+        scans.push(Scan {
+            pitch: p,
+            x_from: left,
+            x_to: right,
+            open_dir: open,
+            y: Box::new(move |x| staff.pitch_y(p as f64, x as f64).round() as i32),
+        });
     }
     for l in ledgers.iter().filter(|l| l.staff == si) {
         let dir = l.index.signum();
         let (ly, x_from, x_to) = (l.y, (l.x0 - il / 2).max(left), l.x1 - il / 2);
-        scans.push(Scan { pitch: l.pitch(), x_from, x_to, open_dir: None, y: Box::new(move |_| ly.round() as i32) });
+        scans.push(Scan {
+            pitch: l.pitch(),
+            x_from,
+            x_to,
+            open_dir: None,
+            y: Box::new(move |_| ly.round() as i32),
+        });
         let half = il as f64 / 2.0;
         scans.push(Scan {
             pitch: l.pitch() + dir,
@@ -210,7 +258,11 @@ pub fn detect(
         while x0 <= scan.x_to {
             let y0 = (scan.y)(x0);
             let probe = x0 + template_half;
-            if probe >= cells.w || y0 < 0 || y0 >= cells.h || cells.dist[(y0 * cells.w + probe) as usize] / 3 > template_half {
+            if probe >= cells.w
+                || y0 < 0
+                || y0 >= cells.h
+                || cells.dist[(y0 * cells.w + probe) as usize] / 3 > template_half
+            {
                 x0 += 2 * template_half;
                 continue;
             }
@@ -219,7 +271,9 @@ pub fn detect(
                 for &dy in &y_offsets {
                     let y = y0 + dy;
                     let slim = t.slim_at(x0, y);
-                    if bars.iter().any(|b| b.intersects(&slim)) || long_beams.iter().any(|b| b.intersects(&slim)) {
+                    if bars.iter().any(|b| b.intersects(&slim))
+                        || long_beams.iter().any(|b| b.intersects(&slim))
+                    {
                         continue;
                     }
                     let d = t.evaluate(&cells.data, cells.w, cells.h, x0, y);
@@ -231,7 +285,9 @@ pub fn detect(
                 let mut shape = t.shape;
                 if shape == HeadShape::Black {
                     let void = catalog.get(HeadShape::Void);
-                    if void.hole_white_ratio(&cells.data, cells.w, cells.h, x0, y) >= MIN_HOLE_WHITE_RATIO {
+                    if void.hole_white_ratio(&cells.data, cells.w, cells.h, x0, y)
+                        >= MIN_HOLE_WHITE_RATIO
+                    {
                         shape = HeadShape::Void;
                     }
                 }
@@ -240,17 +296,35 @@ pub fn detect(
                 if shape.stemless() && grade < 0.5 {
                     continue;
                 }
-                let head = Head { staff: si, shape, pitch: scan.pitch, bounds: catalog.get(shape).slim_at(x0, y), grade, dist: d, ctx: grade };
+                let bounds = catalog.get(shape).slim_at(x0, y);
+                // Pitch from the actual matched position (scans may overlap near ledgers).
+                let pitch = s.pitch_of(bounds.cy(), bounds.cx()).round() as i32;
+                let _ = scan.pitch;
+                let head = Head {
+                    staff: si,
+                    shape,
+                    pitch,
+                    bounds,
+                    grade,
+                    dist: d,
+                    ctx: grade,
+                };
                 // A small (cue / grace) head matching better is not a standard head:
                 // it is left to the symbol classifier (grace notes).
-                if !shape.stemless() && catalog.get(shape).fore_black_ratio(&cells.data, cells.w, cells.h, x0, y) < 0.8 {
-                    let st = catalog.get_small(shape);
+                if !shape.stemless()
+                    && catalog
+                        .get(shape)
+                        .fore_black_ratio(&cells.data, cells.w, cells.h, x0, y)
+                        < 0.8
+                {
                     let mut best_small: Option<(f64, i32, i32)> = None;
-                    for sx in x0..=x0 + il / 3 {
-                        for sy in y - 1..=y + 1 {
-                            let ds = st.evaluate(&cells.data, cells.w, cells.h, sx, sy);
-                            if best_small.is_none_or(|b| ds < b.0) {
-                                best_small = Some((ds, sx, sy));
+                    for st in &catalog.small {
+                        for sx in x0 - 2..=x0 + il / 2 {
+                            for sy in y - 2..=y + 2 {
+                                let ds = st.evaluate(&cells.data, cells.w, cells.h, sx, sy);
+                                if best_small.is_none_or(|b| ds < b.0) {
+                                    best_small = Some((ds, sx, sy));
+                                }
                             }
                         }
                     }
@@ -267,7 +341,10 @@ pub fn detect(
         let mut kept: Vec<Head> = Vec::new();
         let mut anchors: Vec<f64> = Vec::new();
         for h in found {
-            if anchors.iter().any(|&ax| (h.bounds.cx() - ax).abs() <= max_dx as f64) {
+            if anchors
+                .iter()
+                .any(|&ax| (h.bounds.cx() - ax).abs() <= max_dx as f64)
+            {
                 continue;
             }
             anchors.push(h.bounds.cx());
@@ -280,11 +357,17 @@ pub fn detect(
 
 /// HeadInter.overlaps: same staff, close pitches and significant horizontal / area overlap.
 pub fn overlaps(a: &Head, b: &Head) -> bool {
-    let dp = if a.staff == b.staff { Some((a.pitch - b.pitch).abs()) } else { None };
+    let dp = if a.staff == b.staff {
+        Some((a.pitch - b.pitch).abs())
+    } else {
+        None
+    };
     if dp.is_some_and(|d| d > 1) {
         return false;
     }
-    let Some(common) = a.bounds.intersection(&b.bounds) else { return false };
+    let Some(common) = a.bounds.intersection(&b.bounds) else {
+        return false;
+    };
     let min_w = a.bounds.w.min(b.bounds.w);
     let wr = common.w as f64 / min_w as f64;
     if wr <= 0.2 {

@@ -47,7 +47,11 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
     let stroke = |x0: i32, x1: i32, up: bool| -> i32 {
         (x0..=x1)
             .map(|x| {
-                let y = if up { b.y + b.h / 3 } else { b.bottom() - b.h / 3 };
+                let y = if up {
+                    b.y + b.h / 3
+                } else {
+                    b.bottom() - b.h / 3
+                };
                 if !nostaff.get(x, y) {
                     return 0;
                 }
@@ -61,7 +65,10 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
         for x in x0..=x1 {
             let yc = b.y + b.h / 2;
             // Start from any black pixel near the head center row in this column.
-            let Some(ys) = (0..=b.h / 3).flat_map(|d| [yc - d, yc + d]).find(|&y| nostaff.get(x, y)) else {
+            let Some(ys) = (0..=b.h / 3)
+                .flat_map(|d| [yc - d, yc + d])
+                .find(|&y| nostaff.get(x, y))
+            else {
                 continue;
             };
             let (top, bottom) = nostaff.vrun_at(x, ys);
@@ -72,9 +79,15 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
                 continue;
             }
             // The part beyond the head must be thin.
-            let (ya, yb) = if up_len >= down_len { (top, b.y - 1) } else { (b.bottom() + 1, bottom) };
+            let (ya, yb) = if up_len >= down_len {
+                (top, b.y - 1)
+            } else {
+                (b.bottom() + 1, bottom)
+            };
             let n = (yb - ya + 1).max(1);
-            let thin = (ya..=yb).filter(|&y| y >= 0 && (hr[(y * w + x) as usize] as i32) <= ms + 2).count() as i32;
+            let thin = (ya..=yb)
+                .filter(|&y| y >= 0 && (hr[(y * w + x) as usize] as i32) <= ms + 2)
+                .count() as i32;
             if (thin as f64) < (1.0 * il).max(0.3 * n as f64) {
                 continue;
             }
@@ -87,7 +100,11 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
     if head.shape.has_hole() {
         // Natural / sharp signs: strokes leave the "hole" on both sides in opposite directions.
         let up = b.y - link.top >= link.bottom - b.bottom();
-        let other = (b.x..b.right()).filter(|&x| (x - link.x).abs() > ms + 1).map(|x| stroke(x, x, !up)).max().unwrap_or(0);
+        let other = (b.x..b.right())
+            .filter(|&x| (x - link.x).abs() > ms + 1)
+            .map(|x| stroke(x, x, !up))
+            .max()
+            .unwrap_or(0);
         if other as f64 >= 0.6 * il {
             return None;
         }
@@ -98,7 +115,16 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
 /// Link heads to stems, reduce conflicting heads, build stems.
 pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Vec<Stem>) {
     let hr = nostaff.horizontal_run_lengths();
-    let links: Vec<Option<Link>> = heads.iter().map(|h| if h.shape.stemless() { None } else { find_stem(nostaff, &hr, h, scale) }).collect();
+    let links: Vec<Option<Link>> = heads
+        .iter()
+        .map(|h| {
+            if h.shape.stemless() {
+                None
+            } else {
+                find_stem(nostaff, &hr, h, scale)
+            }
+        })
+        .collect();
     // Contextual grade (Audiveris GradeUtil.contextual): ctx = (1+C)g / (1+Cg),
     // where C = partner grade * (ratio - 1) for the head-stem support, the
     // ratio being 1 + 4 (headSupportCoeff) * relation grade. The stem grade
@@ -123,12 +149,21 @@ pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Ve
     if let Ok(v) = std::env::var("OMR_PROBE") {
         let v: Vec<i32> = v.split(',').map(|x| x.parse().unwrap()).collect();
         for (i, h) in heads.iter().enumerate() {
-            if h.bounds.intersects(&crate::binary::Rect::new(v[0] - 5, v[1] - 5, 10, 10)) {
-                eprintln!("link {:?} {} ctx {:.2} link {:?}", h.shape, h.pitch, ctx[i], links[i].as_ref().map(|l| (l.x, l.top, l.bottom)));
+            if h.bounds
+                .intersects(&crate::binary::Rect::new(v[0] - 5, v[1] - 5, 10, 10))
+            {
+                eprintln!(
+                    "link {:?} {} ctx {:.2} link {:?}",
+                    h.shape,
+                    h.pitch,
+                    ctx[i],
+                    links[i].as_ref().map(|l| (l.x, l.top, l.bottom))
+                );
             }
         }
     }
-    let mut order: Vec<usize> = (0..heads.len()).filter(|&i| (links[i].is_some() || heads[i].shape.stemless()) && ctx[i] >= 0.5)
+    let mut order: Vec<usize> = (0..heads.len())
+        .filter(|&i| (links[i].is_some() || heads[i].shape.stemless()) && ctx[i] >= 0.5)
         .collect();
     order.sort_by(|&a, &b| ctx[b].partial_cmp(&ctx[a]).unwrap());
     let mut kept: Vec<usize> = Vec::new();
@@ -144,32 +179,68 @@ pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Ve
     let tol = scale.max_stem + 1;
     for i in kept {
         let hi = out_heads.len();
-        out_heads.push(Head { ctx: ctx[i], ..heads[i].clone() });
+        out_heads.push(Head {
+            ctx: ctx[i],
+            ..heads[i].clone()
+        });
         if let Some(l) = &links[i] {
-            let existing = stems.iter_mut().find(|s| (s.x - l.x).abs() <= tol && s.top <= l.bottom && l.top <= s.bottom);
+            let existing = stems
+                .iter_mut()
+                .find(|s| (s.x - l.x).abs() <= tol && s.top <= l.bottom && l.top <= s.bottom);
             match existing {
                 Some(s) => {
                     s.heads.push(hi);
                     s.top = s.top.min(l.top);
                     s.bottom = s.bottom.max(l.bottom);
                 }
-                None => stems.push(Stem { x: l.x, top: l.top, bottom: l.bottom, up: true, heads: vec![hi], beams: vec![], flags: 0 }),
+                None => stems.push(Stem {
+                    x: l.x,
+                    top: l.top,
+                    bottom: l.bottom,
+                    up: true,
+                    heads: vec![hi],
+                    beams: vec![],
+                    flags: 0,
+                }),
             }
         }
     }
     for s in &mut stems {
-        let hmin = s.heads.iter().map(|&h| out_heads[h].bounds.y).min().unwrap();
-        let hmax = s.heads.iter().map(|&h| out_heads[h].bounds.bottom()).max().unwrap();
+        let hmin = s
+            .heads
+            .iter()
+            .map(|&h| out_heads[h].bounds.y)
+            .min()
+            .unwrap();
+        let hmax = s
+            .heads
+            .iter()
+            .map(|&h| out_heads[h].bounds.bottom())
+            .max()
+            .unwrap();
         s.up = (hmin - s.top) >= (s.bottom - hmax);
     }
     // Heads on the unusual side of the stem (right of an up stem, left of a
     // down stem) are only valid as the second of an interval of a second.
     let mut drop = vec![false; out_heads.len()];
     for s in &mut stems {
-        let normal = |h: &Head| if s.up { h.bounds.cx() < s.x as f64 } else { h.bounds.cx() > s.x as f64 };
-        let odd: Vec<usize> = s.heads.iter().copied().filter(|&h| !normal(&out_heads[h])).collect();
+        let normal = |h: &Head| {
+            if s.up {
+                h.bounds.cx() < s.x as f64
+            } else {
+                h.bounds.cx() > s.x as f64
+            }
+        };
+        let odd: Vec<usize> = s
+            .heads
+            .iter()
+            .copied()
+            .filter(|&h| !normal(&out_heads[h]))
+            .collect();
         for h in odd {
-            let ok = s.heads.iter().any(|&o| normal(&out_heads[o]) && (out_heads[o].pitch - out_heads[h].pitch).abs() == 1);
+            let ok = s.heads.iter().any(|&o| {
+                normal(&out_heads[o]) && (out_heads[o].pitch - out_heads[h].pitch).abs() == 1
+            });
             if !ok && s.heads.len() > 1 {
                 drop[h] = true;
             }
@@ -182,7 +253,11 @@ pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Ve
         let min_tail = 1.75 * il;
         for &h in &s.heads {
             let cy = out_heads[h].bounds.cy();
-            let tail = if s.up { cy - s.top as f64 } else { s.bottom as f64 - cy };
+            let tail = if s.up {
+                cy - s.top as f64
+            } else {
+                s.bottom as f64 - cy
+            };
             if tail < min_tail {
                 drop[h] = true;
             }
@@ -215,7 +290,11 @@ pub fn attach_beams(stems: &mut [Stem], heads: &[Head], beams: &[Beam], scale: &
         let x = s.x as f64;
         let tol = (scale.max_stem + 2) as f64;
         let hy: Vec<f64> = s.heads.iter().map(|&h| heads[h].bounds.cy()).collect();
-        let head_end = if s.up { hy.iter().cloned().fold(f64::MAX, f64::min) } else { hy.iter().cloned().fold(f64::MIN, f64::max) };
+        let head_end = if s.up {
+            hy.iter().cloned().fold(f64::MAX, f64::min)
+        } else {
+            hy.iter().cloned().fold(f64::MIN, f64::max)
+        };
         let mut list: Vec<(f64, usize)> = Vec::new();
         for (bi, b) in beams.iter().enumerate() {
             if x < b.x0 - tol || x > b.x1 + tol {
@@ -224,7 +303,11 @@ pub fn attach_beams(stems: &mut [Stem], heads: &[Head], beams: &[Beam], scale: &
             let y = b.y_at(x.clamp(b.x0, b.x1));
             // Beam must be on the stem, between its tip and its heads (with margin).
             let tip = s.tip() as f64;
-            let ok = if s.up { y >= tip - 0.5 * il && y <= head_end - 1.0 * il } else { y <= tip + 0.5 * il && y >= head_end + 1.0 * il };
+            let ok = if s.up {
+                y >= tip - 0.5 * il && y <= head_end - 1.0 * il
+            } else {
+                y <= tip + 0.5 * il && y >= head_end + 1.0 * il
+            };
             if ok {
                 list.push(((y - tip).abs(), bi));
             }
@@ -236,17 +319,25 @@ pub fn attach_beams(stems: &mut [Stem], heads: &[Head], beams: &[Beam], scale: &
 
 /// Remove heads excluded by symbols (accidentals, rests) recognized on their
 /// location, then stems left without heads.
-pub fn purge_by_symbols(heads: &mut Vec<Head>, stems: &mut Vec<Stem>, symbols: &[crate::symbols::Symbol]) {
+pub fn purge_by_symbols(
+    heads: &mut Vec<Head>,
+    stems: &mut Vec<Stem>,
+    symbols: &[crate::symbols::Symbol],
+) {
     let excluded: Vec<bool> = heads
         .iter()
         .map(|h| {
             symbols.iter().any(|s| {
-                let competing = matches!(s.shape, "NATURAL" | "SHARP" | "FLAT" | "DOUBLE_SHARP" | "DOUBLE_FLAT")
-                    || s.shape.ends_with("_REST")
+                let competing = matches!(
+                    s.shape,
+                    "NATURAL" | "SHARP" | "FLAT" | "DOUBLE_SHARP" | "DOUBLE_FLAT"
+                ) || s.shape.ends_with("_REST")
                     || s.shape == "HW_REST_set";
                 competing
                     && s.grade > h.ctx
-                    && s.bounds.intersection(&h.bounds).is_some_and(|i| i.area() as f64 >= 0.4 * h.bounds.area() as f64)
+                    && s.bounds
+                        .intersection(&h.bounds)
+                        .is_some_and(|i| i.area() as f64 >= 0.4 * h.bounds.area() as f64)
             })
         })
         .collect();
@@ -260,7 +351,12 @@ pub fn purge_by_symbols(heads: &mut Vec<Head>, stems: &mut Vec<Stem>, symbols: &
     }
     *heads = kept;
     for s in stems.iter_mut() {
-        s.heads = s.heads.iter().filter(|&&h| map[h] != usize::MAX).map(|&h| map[h]).collect();
+        s.heads = s
+            .heads
+            .iter()
+            .filter(|&&h| map[h] != usize::MAX)
+            .map(|&h| map[h])
+            .collect();
     }
     stems.retain(|s| !s.heads.is_empty());
 }

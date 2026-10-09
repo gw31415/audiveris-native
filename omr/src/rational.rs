@@ -22,7 +22,10 @@ impl Q {
     pub fn new(n: i64, d: i64) -> Q {
         let g = gcd(n, d).max(1);
         let s = if d < 0 { -1 } else { 1 };
-        Q { n: s * n / g, d: s * d / g }
+        Q {
+            n: s * n / g,
+            d: s * d / g,
+        }
     }
     pub fn f(self) -> f64 {
         self.n as f64 / self.d as f64

@@ -10,23 +10,89 @@ use crate::scale::Scale;
 
 #[derive(Clone, Debug, serde::Serialize)]
 pub struct Line {
-    /// Sorted (x, y) samples along the line center.
-    pub pts: Vec<(f64, f64)>,
+    /// y = c0 + c1 * t + c2 * t^2, with t = (x - x0) / scale
+    pub c: [f64; 3],
+    pub x0: f64,
+    pub xs: f64,
 }
 
 impl Line {
     pub fn y_at(&self, x: f64) -> f64 {
-        let p = &self.pts;
-        if p.len() == 1 {
-            return p[0].1;
-        }
-        let i = match p.binary_search_by(|q| q.0.partial_cmp(&x).unwrap()) {
-            Ok(i) => return p[i].1,
-            Err(i) => i.clamp(1, p.len() - 1),
-        };
-        let (a, b) = (p[i - 1], p[i]);
-        a.1 + (b.1 - a.1) * (x - a.0) / (b.0 - a.0)
+        let t = (x - self.x0) / self.xs;
+        self.c[0] + self.c[1] * t + self.c[2] * t * t
     }
+
+    /// Robust least-squares quadratic fit of line samples (outliers rejected).
+    pub fn fit(pts: &[(f64, f64)]) -> Line {
+        let x0 = pts.iter().map(|p| p.0).sum::<f64>() / pts.len() as f64;
+        let xs = pts.iter().map(|p| (p.0 - x0).abs()).fold(1.0, f64::max);
+        let mut used: Vec<(f64, f64)> = pts.to_vec();
+        let mut line = Line {
+            c: [used[0].1, 0.0, 0.0],
+            x0,
+            xs,
+        };
+        for _ in 0..4 {
+            let deg = if used.len() >= 8 {
+                2
+            } else if used.len() >= 2 {
+                1
+            } else {
+                0
+            };
+            line.c = lsq(&used, x0, xs, deg);
+            let keep: Vec<(f64, f64)> = pts
+                .iter()
+                .copied()
+                .filter(|p| (p.1 - line.y_at(p.0)).abs() <= 1.5)
+                .collect();
+            if keep.len() < 2 || keep.len() == used.len() {
+                break;
+            }
+            used = keep;
+        }
+        line
+    }
+}
+
+fn lsq(pts: &[(f64, f64)], x0: f64, xs: f64, deg: usize) -> [f64; 3] {
+    let n = deg + 1;
+    let mut a = [[0.0f64; 4]; 3];
+    for &(x, y) in pts {
+        let t = (x - x0) / xs;
+        let pw = [1.0, t, t * t];
+        for i in 0..n {
+            for j in 0..n {
+                a[i][j] += pw[i] * pw[j];
+            }
+            a[i][3] += pw[i] * y;
+        }
+    }
+    // Gaussian elimination.
+    for i in 0..n {
+        let p = (i..n)
+            .max_by(|&r, &q| a[r][i].abs().partial_cmp(&a[q][i].abs()).unwrap())
+            .unwrap();
+        a.swap(i, p);
+        if a[i][i].abs() < 1e-12 {
+            continue;
+        }
+        for r in 0..n {
+            if r != i {
+                let f = a[r][i] / a[i][i];
+                for c in i..4 {
+                    a[r][c] -= f * a[i][c];
+                }
+            }
+        }
+    }
+    let mut c = [0.0; 3];
+    for i in 0..n {
+        if a[i][i].abs() > 1e-12 {
+            c[i] = a[i][3] / a[i][i];
+        }
+    }
+    c
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -120,7 +186,12 @@ fn combs_at(ys: &[f64], il: f64) -> Vec<[f64; 5]> {
             let best = ys
                 .iter()
                 .filter(|&&y| y - last >= lo && y - last <= hi)
-                .min_by(|a, b| ((*a - last) - step).abs().partial_cmp(&((*b - last) - step).abs()).unwrap());
+                .min_by(|a, b| {
+                    ((*a - last) - step)
+                        .abs()
+                        .partial_cmp(&((*b - last) - step).abs())
+                        .unwrap()
+                });
             match best {
                 Some(&y) => {
                     if chain.len() > 1 {
@@ -182,6 +253,35 @@ pub fn retrieve(img: &Bitmap, scale: &Scale) -> Vec<Staff> {
             None => chains.push(Chain { combs: vec![ci] }),
         }
     }
+    // 2b. Merge chains that continue each other (same lines after a wide gap).
+    chains.sort_by_key(|c| combs[c.combs[0]].x);
+    let mut merged: Vec<Chain> = Vec::new();
+    for ch in chains {
+        let first = &combs[ch.combs[0]];
+        let target = merged.iter_mut().find(|m| {
+            let last = &combs[*m.combs.last().unwrap()];
+            if last.x >= first.x {
+                return false;
+            }
+            let fit = Line::fit(
+                &m.combs
+                    .iter()
+                    .map(|&k| (combs[k].x as f64, combs[k].ys[2]))
+                    .collect::<Vec<_>>(),
+            );
+            let dy = fit.y_at(first.x as f64) - first.ys[2];
+            let spacing = (0..5)
+                .map(|i| (last.ys[i] - last.ys[0]) - (first.ys[i] - first.ys[0]))
+                .map(f64::abs)
+                .fold(0.0, f64::max);
+            dy.abs() <= 0.3 * il && spacing <= 0.25 * il
+        });
+        match target {
+            Some(m) => m.combs.extend(ch.combs),
+            None => merged.push(ch),
+        }
+    }
+    let chains = merged;
     // 3. Keep significant chains, trace lines.
     let mut staves = Vec::new();
     for ch in chains {
@@ -194,29 +294,26 @@ pub fn retrieve(img: &Bitmap, scale: &Scale) -> Vec<Staff> {
         let mut lefts = Vec::new();
         let mut rights = Vec::new();
         for i in 0..5 {
-            let mut pts: Vec<(f64, f64)> = ch.combs.iter().map(|&k| (combs[k].x as f64, combs[k].ys[i])).collect();
-            pts = smooth(&pts);
-            let line = Line { pts: pts.clone() };
-            let l = trace_end(img, &line, first.x, -1, scale);
-            let r = trace_end(img, &line, last.x, 1, scale);
-            lefts.push(l);
-            rights.push(r);
+            let pts: Vec<(f64, f64)> = ch
+                .combs
+                .iter()
+                .map(|&k| (combs[k].x as f64, combs[k].ys[i]))
+                .collect();
+            let line = Line::fit(&pts);
+            lefts.push(trace_end(img, &line, first.x, -1, scale));
+            rights.push(trace_end(img, &line, last.x, 1, scale));
             lines.push(line);
         }
         lefts.sort();
         rights.sort();
         let (left, right) = (lefts[2], rights[2]);
-        for line in &mut lines {
-            let yl = line.y_at(left as f64);
-            let yr = line.y_at(right as f64);
-            if line.pts[0].0 > left as f64 {
-                line.pts.insert(0, (left as f64, yl));
-            }
-            if line.pts.last().unwrap().0 < right as f64 {
-                line.pts.push((right as f64, yr));
-            }
-        }
-        staves.push(Staff { id: 0, lines, left, right, header_stop: left });
+        staves.push(Staff {
+            id: 0,
+            lines,
+            left,
+            right,
+            header_stop: left,
+        });
     }
     // Drop staves overlapping a better (longer) one.
     staves.sort_by(|a, b| (b.right - b.left).cmp(&(a.right - a.left)));
@@ -242,23 +339,6 @@ pub fn retrieve(img: &Bitmap, scale: &Scale) -> Vec<Staff> {
     kept
 }
 
-/// Median-of-3 smoothing of ordinates to resist local noise.
-fn smooth(pts: &[(f64, f64)]) -> Vec<(f64, f64)> {
-    if pts.len() < 3 {
-        return pts.to_vec();
-    }
-    let mut out = Vec::with_capacity(pts.len());
-    for i in 0..pts.len() {
-        let a = pts[i.saturating_sub(1)].1;
-        let b = pts[i].1;
-        let c = pts[(i + 1).min(pts.len() - 1)].1;
-        let mut v = [a, b, c];
-        v.sort_by(|p, q| p.partial_cmp(q).unwrap());
-        out.push((pts[i].0, v[1]));
-    }
-    out
-}
-
 /// Follow a line from abscissa x0 in direction dir while black pixels remain near it.
 fn trace_end(img: &Bitmap, line: &Line, x0: i32, dir: i32, scale: &Scale) -> i32 {
     let tol = (scale.line / 2 + 1).max(1);
@@ -266,23 +346,12 @@ fn trace_end(img: &Bitmap, line: &Line, x0: i32, dir: i32, scale: &Scale) -> i32
     let mut x = x0;
     let mut last_ok = x0;
     let mut misses = 0;
-    // Use local slope from the end of the known samples.
-    let (ex, ey, slope) = {
-        let p = &line.pts;
-        let (a, b) = if dir > 0 { (p[p.len().saturating_sub(4)], p[p.len() - 1]) } else { (p[(p.len() - 1).min(3)], p[0]) };
-        let s = if (b.0 - a.0).abs() > 0.0 { (b.1 - a.1) / (b.0 - a.0) } else { 0.0 };
-        (b.0, b.1, s)
-    };
     loop {
         x += dir;
         if x < 0 || x >= img.width as i32 {
             break;
         }
-        let y = if (dir > 0 && (x as f64) > ex) || (dir < 0 && (x as f64) < ex) {
-            ey + slope * (x as f64 - ex)
-        } else {
-            line.y_at(x as f64)
-        };
+        let y = line.y_at(x as f64);
         let yc = y.round() as i32;
         if (-tol..=tol).any(|d| img.get(x, yc + d)) {
             last_ok = x;

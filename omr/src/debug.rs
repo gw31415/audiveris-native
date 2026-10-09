@@ -12,7 +12,11 @@ impl Overlay {
         let mut img = RgbImage::new(bin.width as u32, bin.height as u32);
         for (i, &b) in bin.data.iter().enumerate() {
             let v = if b { 150 } else { 255 };
-            img.put_pixel((i % bin.width) as u32, (i / bin.width) as u32, Rgb([v, v, v]));
+            img.put_pixel(
+                (i % bin.width) as u32,
+                (i / bin.width) as u32,
+                Rgb([v, v, v]),
+            );
         }
         Self { img }
     }
@@ -35,7 +39,11 @@ impl Overlay {
         let n = ((x1 - x0).abs().max((y1 - y0).abs()) as i32).max(1);
         for i in 0..=n {
             let t = i as f64 / n as f64;
-            self.dot((x0 + t * (x1 - x0)).round() as i32, (y0 + t * (y1 - y0)).round() as i32, c);
+            self.dot(
+                (x0 + t * (x1 - x0)).round() as i32,
+                (y0 + t * (y1 - y0)).round() as i32,
+                c,
+            );
         }
     }
     pub fn save(&self, path: &std::path::Path) -> Result<(), String> {

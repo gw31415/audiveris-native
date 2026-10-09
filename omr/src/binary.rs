@@ -12,7 +12,11 @@ pub struct Bitmap {
 
 impl Bitmap {
     pub fn new(width: usize, height: usize) -> Self {
-        Self { width, height, data: vec![false; width * height] }
+        Self {
+            width,
+            height,
+            data: vec![false; width * height],
+        }
     }
 
     #[inline]
@@ -159,7 +163,12 @@ impl Rect {
     pub fn union(&self, o: &Rect) -> Rect {
         let x = self.x.min(o.x);
         let y = self.y.min(o.y);
-        Rect::new(x, y, self.right().max(o.right()) - x, self.bottom().max(o.bottom()) - y)
+        Rect::new(
+            x,
+            y,
+            self.right().max(o.right()) - x,
+            self.bottom().max(o.bottom()) - y,
+        )
     }
     pub fn grow(&self, dx: i32, dy: i32) -> Rect {
         Rect::new(self.x - dx, self.y - dy, self.w + 2 * dx, self.h + 2 * dy)
@@ -211,8 +220,9 @@ pub fn binarize(width: usize, height: usize, gray: &[u8]) -> Bitmap {
             let x2 = (x + 19).min(width);
             let area = ((x2 - x1) * (y2 - y1)) as f64;
             let rect = |a: &[u64]| {
-                (a[y2 * stride + x2] + a[y1 * stride + x1] - a[y1 * stride + x2] - a[y2 * stride + x1])
-                    as f64
+                (a[y2 * stride + x2] + a[y1 * stride + x1]
+                    - a[y1 * stride + x2]
+                    - a[y2 * stride + x1]) as f64
                     / area
             };
             let mean = rect(&sums);

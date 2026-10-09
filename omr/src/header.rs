@@ -103,10 +103,24 @@ pub fn columns(mut comps: Vec<Component>) -> Vec<Component> {
 }
 
 pub fn time_of(shape: &str) -> Option<TimeSig> {
-    let t = |b, bt| Some(TimeSig { beats: b, beat_type: bt, symbol: None });
+    let t = |b, bt| {
+        Some(TimeSig {
+            beats: b,
+            beat_type: bt,
+            symbol: None,
+        })
+    };
     match shape {
-        "COMMON_TIME" => Some(TimeSig { beats: 4, beat_type: 4, symbol: Some("common") }),
-        "CUT_TIME" => Some(TimeSig { beats: 2, beat_type: 2, symbol: Some("cut") }),
+        "COMMON_TIME" => Some(TimeSig {
+            beats: 4,
+            beat_type: 4,
+            symbol: Some("common"),
+        }),
+        "CUT_TIME" => Some(TimeSig {
+            beats: 2,
+            beat_type: 2,
+            symbol: Some("cut"),
+        }),
         "TIME_FOUR_FOUR" => t(4, 4),
         "TIME_TWO_TWO" => t(2, 2),
         "TIME_TWO_FOUR" => t(2, 4),
@@ -143,7 +157,12 @@ fn best_among<'a>(ev: &[(&'a str, f64)], pred: impl Fn(&str) -> bool) -> Option<
 }
 
 /// Recognize a time signature from a column (whole pair, or numerator over denominator).
-pub fn time_from_column(col: &Component, parts: &[Component], staff: &Staff, il: i32) -> Option<TimeSig> {
+pub fn time_from_column(
+    col: &Component,
+    parts: &[Component],
+    staff: &Staff,
+    il: i32,
+) -> Option<TimeSig> {
     let ev = classify(col, il);
     if let Some((s, g)) = ev.first()
         && *g >= 0.1
@@ -161,10 +180,16 @@ pub fn time_from_column(col: &Component, parts: &[Component], staff: &Staff, il:
     let num = |v: &[&Component]| -> Option<u32> {
         let g = Component::merge(v);
         let ev = classify(&g, il);
-        best_among(&ev, |s| digit_of(s).is_some()).filter(|e| e.1 >= 0.1).and_then(|e| digit_of(e.0))
+        best_among(&ev, |s| digit_of(s).is_some())
+            .filter(|e| e.1 >= 0.1)
+            .and_then(|e| digit_of(e.0))
     };
     let (n, d) = (num(&upper)?, num(&lower)?);
-    (n > 0 && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig { beats: n, beat_type: d, symbol: None })
+    (n > 0 && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig {
+        beats: n,
+        beat_type: d,
+        symbol: None,
+    })
 }
 
 pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
@@ -181,15 +206,27 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
             c.bounds.bottom() > top - il / 2 && c.bounds.y < bot + il / 2
         })
         .collect();
-    let mut header = Header { clef: None, fifths: 0, time: None, stop: x0, items: Vec::new() };
+    let mut header = Header {
+        clef: None,
+        fifths: 0,
+        time: None,
+        stop: x0,
+        items: Vec::new(),
+    };
     let cols_parts: Vec<(Component, Vec<Component>)> = {
         let mut sorted = comps.clone();
         sorted.sort_by_key(|c| c.bounds.x);
         let cols = columns(sorted.clone());
         cols.into_iter()
             .map(|col| {
-                let parts =
-                    sorted.iter().filter(|c| col.bounds.intersects(&c.bounds) || col.bounds.union(&c.bounds) == col.bounds).cloned().collect();
+                let parts = sorted
+                    .iter()
+                    .filter(|c| {
+                        col.bounds.intersects(&c.bounds)
+                            || col.bounds.union(&c.bounds) == col.bounds
+                    })
+                    .cloned()
+                    .collect();
                 (col, parts)
             })
             .collect()
@@ -200,7 +237,8 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
     {
         let mut best: Option<(&str, f64, usize, Component)> = None;
         for k in 1..=4.min(cols_parts.len()) {
-            let merged = Component::merge(&cols_parts[..k].iter().map(|c| &c.0).collect::<Vec<_>>());
+            let merged =
+                Component::merge(&cols_parts[..k].iter().map(|c| &c.0).collect::<Vec<_>>());
             if merged.bounds.x - x0 > 2 * il || merged.bounds.w > 4 * il {
                 break;
             }
@@ -230,14 +268,20 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
         let col = &cols_parts[i].0;
         let gap = if count == 0 { 2 * il } else { il };
         if col.bounds.x - header.stop > gap || col.bounds.h > 4 * il {
-            if std::env::var("OMR_DEBUG").is_ok() { eprintln!("  stop at {:?}", col.bounds); }
+            if std::env::var("OMR_DEBUG").is_ok() {
+                eprintln!("  stop at {:?}", col.bounds);
+            }
             break;
         }
         let is_alter = |ev: &[(&'static str, f64)]| {
-            ev.first().copied().filter(|(s, g)| (*s == "SHARP" || *s == "FLAT") && *g >= 0.1 && key_kind.is_none_or(|k| k == *s))
+            ev.first().copied().filter(|(s, g)| {
+                (*s == "SHARP" || *s == "FLAT") && *g >= 0.1 && key_kind.is_none_or(|k| k == *s)
+            })
         };
         let mut ev = classify(col, il);
-        if std::env::var("OMR_DEBUG").is_ok() { eprintln!("  col {:?} {:?}", col.bounds, &ev[..3]); }
+        if std::env::var("OMR_DEBUG").is_ok() {
+            eprintln!("  col {:?} {:?}", col.bounds, &ev[..3]);
+        }
         let mut used = 1;
         if is_alter(&ev).is_none()
             && let Some((c2, _)) = cols_parts.get(i + 1)
@@ -252,7 +296,12 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
             }
         }
         let Some((s, _)) = is_alter(&ev) else { break };
-        let col = &Component::merge(&cols_parts[i..i + used].iter().map(|c| &c.0).collect::<Vec<_>>());
+        let col = &Component::merge(
+            &cols_parts[i..i + used]
+                .iter()
+                .map(|c| &c.0)
+                .collect::<Vec<_>>(),
+        );
         key_kind = Some(s);
         count += 1;
         header.stop = col.bounds.right();
@@ -272,7 +321,9 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
         {
             header.time = Some(t);
             header.stop = col.bounds.right();
-            header.items.push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
+            header
+                .items
+                .push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
         }
     }
     header.stop += il / 3;

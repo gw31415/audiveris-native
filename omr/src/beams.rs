@@ -31,7 +31,12 @@ impl Beam {
     pub fn bounds(&self) -> Rect {
         let y0 = self.y_at(self.x0).min(self.y_at(self.x1)) - self.thickness / 2.0;
         let y1 = self.y_at(self.x0).max(self.y_at(self.x1)) + self.thickness / 2.0;
-        Rect::new(self.x0.floor() as i32, y0.floor() as i32, (self.x1 - self.x0).ceil() as i32 + 1, (y1 - y0).ceil() as i32 + 1)
+        Rect::new(
+            self.x0.floor() as i32,
+            y0.floor() as i32,
+            (self.x1 - self.x0).ceil() as i32 + 1,
+            (y1 - y0).ceil() as i32 + 1,
+        )
     }
 }
 
@@ -92,7 +97,10 @@ pub fn detect(nostaff: &Bitmap, scale: &Scale) -> Vec<Beam> {
         let mx = cols.iter().map(|c| c.0).sum::<f64>() / n;
         let my = cols.iter().map(|c| (c.1 + c.2) / 2.0).sum::<f64>() / n;
         let sxx = cols.iter().map(|c| (c.0 - mx).powi(2)).sum::<f64>();
-        let sxy = cols.iter().map(|c| (c.0 - mx) * ((c.1 + c.2) / 2.0 - my)).sum::<f64>();
+        let sxy = cols
+            .iter()
+            .map(|c| (c.0 - mx) * ((c.1 + c.2) / 2.0 - my))
+            .sum::<f64>();
         let a = if sxx > 0.0 { sxy / sxx } else { 0.0 };
         let b = my - a * mx;
         if a.abs() > 1.0 {
@@ -105,7 +113,10 @@ pub fn detect(nostaff: &Bitmap, scale: &Scale) -> Vec<Beam> {
             continue;
         }
         // Straightness: center deviation and filling of the parallelogram.
-        let dev = cols.iter().map(|c| ((c.1 + c.2) / 2.0 - (a * c.0 + b)).abs()).fold(0.0, f64::max);
+        let dev = cols
+            .iter()
+            .map(|c| ((c.1 + c.2) / 2.0 - (a * c.0 + b)).abs())
+            .fold(0.0, f64::max);
         let fill = c.weight() as f64 / (t * cols.len() as f64);
         if dev > 0.25 * il + 1.0 || fill < 0.75 {
             continue;
@@ -134,7 +145,11 @@ pub struct Ledger {
 
 impl Ledger {
     pub fn pitch(&self) -> i32 {
-        if self.index < 0 { -4 + 2 * self.index } else { 4 + 2 * self.index }
+        if self.index < 0 {
+            -4 + 2 * self.index
+        } else {
+            4 + 2 * self.index
+        }
     }
 }
 
@@ -178,11 +193,24 @@ pub fn ledgers(nostaff: &Bitmap, staves: &[Staff], si: usize, scale: &Scale) -> 
                     n.count() * 2 >= v.len()
                 };
                 let e = ((b - a + 1) / 6).max(2);
-                let prev_ok = k == 1 || out.iter().any(|l| l.index == dir * (k - 1) && l.x0 <= b && l.x1 >= a);
-                if prev_ok && ends_thin(&mut (a..a + e)) && ends_thin(&mut (b - e + 1..=b)) && b - a < 4 * il {
+                let prev_ok = k == 1
+                    || out
+                        .iter()
+                        .any(|l| l.index == dir * (k - 1) && l.x0 <= b && l.x1 >= a);
+                if prev_ok
+                    && ends_thin(&mut (a..a + e))
+                    && ends_thin(&mut (b - e + 1..=b))
+                    && b - a < 4 * il
+                {
                     // Center ordinate: center of the thin run at the ends.
                     let (p, q) = nostaff.vrun_at(a + e / 2, y);
-                    found.push(Ledger { staff: si, index: dir * k, x0: a, x1: b, y: (p + q) as f64 / 2.0 });
+                    found.push(Ledger {
+                        staff: si,
+                        index: dir * k,
+                        x0: a,
+                        x1: b,
+                        y: (p + q) as f64 / 2.0,
+                    });
                 }
                 x = b + 1;
             }

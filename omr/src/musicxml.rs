@@ -23,7 +23,9 @@ fn type_name(base: Q) -> &'static str {
 }
 
 fn esc(s: &str) -> String {
-    s.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
+    s.replace('&', "&amp;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
 }
 
 fn divisions(score: &Score) -> i64 {
@@ -60,7 +62,12 @@ pub fn write(score: &Score, title: &str) -> String {
     x.push_str("  <identification><encoding><software>audiveris-native</software></encoding></identification>\n");
     x.push_str("  <part-list>\n");
     for (i, p) in score.parts.iter().enumerate() {
-        let _ = writeln!(x, "    <score-part id=\"P{}\"><part-name>{}</part-name></score-part>", i + 1, esc(&p.name));
+        let _ = writeln!(
+            x,
+            "    <score-part id=\"P{}\"><part-name>{}</part-name></score-part>",
+            i + 1,
+            esc(&p.name)
+        );
     }
     x.push_str("  </part-list>\n");
     for (i, p) in score.parts.iter().enumerate() {
@@ -80,7 +87,10 @@ pub fn write(score: &Score, title: &str) -> String {
                 BarStyle::Heavy => Some("heavy"),
             };
             if let Some(s) = style {
-                let _ = writeln!(x, "      <barline location=\"right\"><bar-style>{s}</bar-style></barline>");
+                let _ = writeln!(
+                    x,
+                    "      <barline location=\"right\"><bar-style>{s}</bar-style></barline>"
+                );
             }
             x.push_str("    </measure>\n");
         }
@@ -93,7 +103,10 @@ pub fn write(score: &Score, title: &str) -> String {
 fn write_attributes(x: &mut String, m: &Measure, first: bool, div: i64, staves: u32) {
     let Some(a) = &m.attributes else {
         if first {
-            let _ = writeln!(x, "      <attributes><divisions>{div}</divisions></attributes>");
+            let _ = writeln!(
+                x,
+                "      <attributes><divisions>{div}</divisions></attributes>"
+            );
         }
         return;
     };
@@ -107,10 +120,18 @@ fn write_attributes(x: &mut String, m: &Measure, first: bool, div: i64, staves: 
     if let Some(t) = a.time {
         match t.symbol {
             Some(s) => {
-                let _ = writeln!(x, "        <time symbol=\"{s}\"><beats>{}</beats><beat-type>{}</beat-type></time>", t.beats, t.beat_type);
+                let _ = writeln!(
+                    x,
+                    "        <time symbol=\"{s}\"><beats>{}</beats><beat-type>{}</beat-type></time>",
+                    t.beats, t.beat_type
+                );
             }
             None => {
-                let _ = writeln!(x, "        <time><beats>{}</beats><beat-type>{}</beat-type></time>", t.beats, t.beat_type);
+                let _ = writeln!(
+                    x,
+                    "        <time><beats>{}</beats><beat-type>{}</beat-type></time>",
+                    t.beats, t.beat_type
+                );
             }
         }
     }
@@ -125,8 +146,15 @@ fn write_attributes(x: &mut String, m: &Measure, first: bool, div: i64, staves: 
 
 fn write_clef(x: &mut String, n: u32, c: crate::header::ClefKind, staves: u32, indent: &str) {
     let (sign, line, oct) = c.musicxml();
-    let num = if staves > 1 { format!(" number=\"{n}\"") } else { String::new() };
-    let _ = write!(x, "{indent}<clef{num}><sign>{sign}</sign><line>{line}</line>");
+    let num = if staves > 1 {
+        format!(" number=\"{n}\"")
+    } else {
+        String::new()
+    };
+    let _ = write!(
+        x,
+        "{indent}<clef{num}><sign>{sign}</sign><line>{line}</line>"
+    );
     if oct != 0 {
         let _ = write!(x, "<clef-octave-change>{oct}</clef-octave-change>");
     }
@@ -141,9 +169,18 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
         // Empty measure: one whole-measure rest per staff.
         for n in 1..=staves {
             if n > 1 {
-                let _ = writeln!(x, "      <backup><duration>{}</duration></backup>", dur(m.expected, div));
+                let _ = writeln!(
+                    x,
+                    "      <backup><duration>{}</duration></backup>",
+                    dur(m.expected, div)
+                );
             }
-            let _ = write!(x, "      <note><rest measure=\"yes\"/><duration>{}</duration><voice>{}</voice>", dur(m.expected, div), 1 + 4 * (n - 1));
+            let _ = write!(
+                x,
+                "      <note><rest measure=\"yes\"/><duration>{}</duration><voice>{}</voice>",
+                dur(m.expected, div),
+                1 + 4 * (n - 1)
+            );
             if staves > 1 {
                 let _ = write!(x, "<staff>{n}</staff>");
             }
@@ -160,7 +197,11 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
         let mut cursor = Q::ZERO;
         for e in evs {
             if e.start > cursor {
-                let _ = write!(x, "      <forward><duration>{}</duration><voice>{v}</voice>", dur(e.start - cursor, div));
+                let _ = write!(
+                    x,
+                    "      <forward><duration>{}</duration><voice>{v}</voice>",
+                    dur(e.start - cursor, div)
+                );
                 if staves > 1 {
                     let _ = write!(x, "<staff>{staff}</staff>");
                 }
@@ -168,7 +209,11 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
                 cursor = e.start;
             } else if e.start < cursor {
                 // Overlap inside a voice (recognition inconsistency): back up.
-                let _ = writeln!(x, "      <backup><duration>{}</duration></backup>", dur(cursor - e.start, div));
+                let _ = writeln!(
+                    x,
+                    "      <backup><duration>{}</duration></backup>",
+                    dur(cursor - e.start, div)
+                );
                 cursor = e.start;
             }
             for (ci, (n, t, c)) in m.clef_changes.iter().enumerate() {
@@ -197,7 +242,11 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
             cursor = e.start + e.duration;
         }
         if vi + 1 < voices.len() && cursor > Q::ZERO {
-            let _ = writeln!(x, "      <backup><duration>{}</duration></backup>", dur(cursor, div));
+            let _ = writeln!(
+                x,
+                "      <backup><duration>{}</duration></backup>",
+                dur(cursor, div)
+            );
         }
     }
 }
@@ -206,9 +255,15 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
     let d = dur(e.duration, div);
     let common_tail = |x: &mut String, with_beams: bool| {
         if let Some((a, b)) = e.tuplet {
-            let _ = write!(x, "<time-modification><actual-notes>{a}</actual-notes><normal-notes>{b}</normal-notes></time-modification>");
+            let _ = write!(
+                x,
+                "<time-modification><actual-notes>{a}</actual-notes><normal-notes>{b}</normal-notes></time-modification>"
+            );
         }
-        if let Kind::Chord { stem_up: Some(up), .. } = e.kind {
+        if let Kind::Chord {
+            stem_up: Some(up), ..
+        } = e.kind
+        {
             let _ = write!(x, "<stem>{}</stem>", if up { "up" } else { "down" });
         }
         if staves > 1 {
@@ -223,9 +278,18 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
     match &e.kind {
         Kind::Rest { whole_measure } => {
             if *whole_measure {
-                let _ = write!(x, "      <note><rest measure=\"yes\"/><duration>{d}</duration><voice>{}</voice>", e.voice);
+                let _ = write!(
+                    x,
+                    "      <note><rest measure=\"yes\"/><duration>{d}</duration><voice>{}</voice>",
+                    e.voice
+                );
             } else {
-                let _ = write!(x, "      <note><rest/><duration>{d}</duration><voice>{}</voice><type>{}</type>", e.voice, type_name(e.base));
+                let _ = write!(
+                    x,
+                    "      <note><rest/><duration>{d}</duration><voice>{}</voice><type>{}</type>",
+                    e.voice,
+                    type_name(e.base)
+                );
                 for _ in 0..e.dots {
                     x.push_str("<dot/>");
                 }
@@ -243,7 +307,13 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
                 if p.alter != 0 {
                     let _ = write!(x, "<alter>{}</alter>", p.alter);
                 }
-                let _ = write!(x, "<octave>{}</octave></pitch><duration>{d}</duration><voice>{}</voice><type>{}</type>", p.octave, e.voice, type_name(e.base));
+                let _ = write!(
+                    x,
+                    "<octave>{}</octave></pitch><duration>{d}</duration><voice>{}</voice><type>{}</type>",
+                    p.octave,
+                    e.voice,
+                    type_name(e.base)
+                );
                 for _ in 0..e.dots {
                     x.push_str("<dot/>");
                 }

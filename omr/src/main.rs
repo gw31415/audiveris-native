@@ -42,7 +42,12 @@ struct Args {
 }
 
 fn parse_args() -> Result<Args, String> {
-    let mut a = Args { inputs: Vec::new(), output: None, debug: None, verbose: false };
+    let mut a = Args {
+        inputs: Vec::new(),
+        output: None,
+        debug: None,
+        verbose: false,
+    };
     let mut it = std::env::args().skip(1);
     while let Some(s) = it.next() {
         match s.as_str() {
@@ -50,7 +55,9 @@ fn parse_args() -> Result<Args, String> {
                 println!("{USAGE}");
                 std::process::exit(0);
             }
-            "-o" | "--output" => a.output = Some(it.next().ok_or("missing value for --output")?.into()),
+            "-o" | "--output" => {
+                a.output = Some(it.next().ok_or("missing value for --output")?.into())
+            }
             "--debug" => a.debug = Some(it.next().ok_or("missing value for --debug")?.into()),
             "-v" | "--verbose" => a.verbose = true,
             s if s.starts_with('-') => return Err(format!("unknown option {s}\n\n{USAGE}")),
@@ -63,7 +70,12 @@ fn parse_args() -> Result<Args, String> {
     Ok(a)
 }
 
-fn write_debug(dir: &Path, stem: &str, sheet: &pipeline::Sheet, score: &score::Score) -> Result<(), String> {
+fn write_debug(
+    dir: &Path,
+    stem: &str,
+    sheet: &pipeline::Sheet,
+    score: &score::Score,
+) -> Result<(), String> {
     std::fs::create_dir_all(dir).map_err(|e| e.to_string())?;
     let mut ov = debug::Overlay::new(&sheet.binary);
     for s in &sheet.staves {
@@ -77,7 +89,10 @@ fn write_debug(dir: &Path, stem: &str, sheet: &pipeline::Sheet, score: &score::S
         let top = sheet.staves[sys.staves[0]].top(sys.left as f64) as i32;
         let bot = sheet.staves[*sys.staves.last().unwrap()].bottom(sys.left as f64) as i32;
         for b in &sys.boundaries {
-            ov.rect(binary::Rect::new(b.x0, top, b.x1 - b.x0 + 1, bot - top), [0, 200, 0]);
+            ov.rect(
+                binary::Rect::new(b.x0, top, b.x1 - b.x0 + 1, bot - top),
+                [0, 200, 0],
+            );
         }
     }
     for h in &sheet.headers {
@@ -120,7 +135,11 @@ fn write_debug(dir: &Path, stem: &str, sheet: &pipeline::Sheet, score: &score::S
         "symbols": sheet.symbols,
         "score": score,
     });
-    std::fs::write(dir.join(format!("{stem}.json")), serde_json::to_string_pretty(&json).unwrap()).map_err(|e| e.to_string())
+    std::fs::write(
+        dir.join(format!("{stem}.json")),
+        serde_json::to_string_pretty(&json).unwrap(),
+    )
+    .map_err(|e| e.to_string())
 }
 
 fn run() -> Result<(), String> {
@@ -149,9 +168,15 @@ fn run() -> Result<(), String> {
         }
     }
     let score = book.unwrap();
-    let title = args.inputs[0].file_stem().and_then(|s| s.to_str()).unwrap_or("Score");
+    let title = args.inputs[0]
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("Score");
     let xml = musicxml::write(&score, title);
-    let out = args.output.clone().unwrap_or_else(|| args.inputs[0].with_extension("musicxml"));
+    let out = args
+        .output
+        .clone()
+        .unwrap_or_else(|| args.inputs[0].with_extension("musicxml"));
     std::fs::write(&out, xml).map_err(|e| format!("{}: {e}", out.display()))?;
     if args.verbose {
         eprintln!("wrote {}", out.display());
