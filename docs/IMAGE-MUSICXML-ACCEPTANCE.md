@@ -351,3 +351,13 @@ Der WinterのArpeggiatoで停止し、まだXML未出力。次は実head-only lo
 checked symbol lifecycle、null物理clefと論理export状態、必要なSlur接続へ進む。
 [証拠](../evidence/real-tuplet-ornament-purge/VALIDATION.json)・
 [次依存](../evidence/real-tuplet-ornament-purge/NEXT-DEPENDENCY.md)。
+
+Arpeggiatoのfactoryを後段の全Chord矩形判定から、生成時点の同じSystem内の実Chordと
+現在の実Head Containmentによるlookupへ接続した。Der Winterの1候補は原版と同じ
+47 Chord、同じlookup/head-only矩形でnull、Graph全体と実System/Part/Measureを保持する。
+幾何境界3件・同じ実画像の連符/Ornament対象・exact7/64対象の計5件、fmt/clippy/build、
+既存63＋補正8/exact7/64 XML byte/XSD成功。公開CLIは次の9形状へ進みXML未出力。
+正のArpeggiato callback/exportと任意同値xの遭遇順は未比較として残す。
+次はnull物理clef数値と論理export状態、追加記号の実factory lifecycle、Slurへ進む。
+[証拠](../evidence/real-arpeggiato-factory/VALIDATION.json)・
+[次依存](../evidence/real-arpeggiato-factory/NEXT-DEPENDENCY.md)。品質受入は未達。

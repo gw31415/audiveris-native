@@ -1,0 +1,82 @@
+{
+  "factory_candidates": [
+    {
+      "actual_factory_head_chord_count": 47,
+      "bounds": [
+        805,
+        803,
+        1,
+        16
+      ],
+      "edge_delta": 0,
+      "intrinsic_grade": 0.2209584833755336,
+      "lookup_bounds": [
+        806,
+        803,
+        28,
+        16
+      ],
+      "nearby_actual_same_system_head_chords": [
+        {
+          "actual_measure": {
+            "measure_index": 3,
+            "part": 2,
+            "system": 1
+          },
+          "bounds": [
+            807,
+            758,
+            14,
+            67
+          ],
+          "heads_bounds": [
+            807,
+            758,
+            14,
+            12
+          ],
+          "heads_intersect_lookup": false,
+          "id": 725,
+          "key": {
+            "local": 40,
+            "phase": "CHORD",
+            "system": 1
+          },
+          "manual": null,
+          "measure_pointer": 139779496971152,
+          "members": [
+            {
+              "bounds": [
+                807,
+                758,
+                14,
+                12
+              ],
+              "id": 324,
+              "key": {
+                "local": 168,
+                "phase": "HEAD",
+                "system": 1
+              },
+              "manual": null
+            }
+          ],
+          "part_pointer": 139780119724496,
+          "slot": null,
+          "time_offset": null,
+          "voice": null,
+          "y_overlap": -33
+        }
+      ],
+      "profile": 1,
+      "returns_null": true,
+      "same_entire_graph": true,
+      "selected": null,
+      "system": 1,
+      "system_pointer": 139780119695760,
+      "vertex_delta": 0
+    }
+  ],
+  "original_observations_used_as_native_inputs": false,
+  "stage": "actual native checked SYMBOLS factory before weak removal"
+}

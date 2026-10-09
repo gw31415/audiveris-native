@@ -603,6 +603,10 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let b = [g.left as i64, g.top as i64, g.width as i64, g.height as i64];
             let rest = shape.ends_with("_REST");
             let meter = time(shape);
+            if shape == "ARPEGGIATO" {
+                crate::music_arpeggiato::require_null_factory(&graph, &m, sid, b, grade)?;
+                continue;
+            }
             if shape == "DOT_set" {
                 if crate::music_dots::geometry::distant(&m.owner, &s, b)? {
                     crate::music_repeat_dots::instant_check(&m, sid, b)?;

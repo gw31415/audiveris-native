@@ -1,0 +1,36 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "music_arpeggiato::tests::head_only_overlap_excludes_a_stem_only_hit_and_open_rectangle_edges",
+    "music_arpeggiato::tests::relation_admission_keeps_maximum_overlap_first_tie_and_one_tenth_boundary",
+    "music_arpeggiato::tests::scale_rounding_and_profile_fallback_preserve_the_lookup_width",
+    "music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original",
+    "music_xml::rational_owned_export_tests::actual_rational_slots_and_underfilled_voice_termination_match_original",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 250.10535395500483,
+  "source_sha256": {
+    "src/lib.rs": "ddaee0b9e011300a9adf110923baecfa73d728d0bfcb5f732fb159643d96b921",
+    "src/music_arpeggiato.rs": "2720c8b05e9f41347ec116bfb7edbd73a4dcca7ce329a0990cc67787f0d92601",
+    "src/music_arpeggiato/tests.rs": "ccabca09f60877e9676c2d0c2e182d8b0cc42c7c5d34436f54f3b99c6d78f1cd",
+    "src/music_xml.rs": "4608e2f35644dec7475631ca57cbb418dbc4e86b5fa85c2f83427779863c53a9",
+    "src/music_symbols.rs": "007e216377c3f5903f11203c33ea1ff4ee8eb073c829a0f5eb0aac77b2ae4064",
+    "src/music_links.rs": "64db8b138df3e1cc46e849ecb813aa759f49c7af7d2e1501845fe21164df782b",
+    "src/music_rests.rs": "c3381556e35128f3b65657e7455f3781416af5d37542539959d8f519ece585a3",
+    "src/music_rests/tests.rs": "61d3d10bdc213c60348141324bfc1807e599b9656c91987cd678d9d11a329a91",
+    "src/music_tuplets.rs": "aceab4e4b061ed45b3d4fce871ff50eaa0a6ac8d7546c185bf1ed9207a8c2e84",
+    "src/music_tuplets/tests.rs": "4bb56bfbc8b5cf3729c30cd7e845ff74db9dd3898cba5dec25f74452e50889dd",
+    "src/music_measures.rs": "a3c9c28f42b2617178ba107e33434e22d6e78b3d673c3f32caa3637c224c312d",
+    "src/music_ornaments.rs": "f85cc7ef80fb1292341563171c4bd2a21d6c1d9e76bbf28e8d770f62e6ec1757",
+    "src/music_ornaments/tests.rs": "9344bc24e3d641ff3706f9df4c9c72f6a090d1859c531c431c7c076320a2c7b1",
+    "src/shared_sig/explicit_tuplet.rs": "87a6d82bd2dcb936ef5c9a961df30280225dab2192b5b488f963c2bbbcbeef21",
+    "src/shared_sig/ornament.rs": "6018955216fc428df70b6bc31902a9331b9514c5eae6cba838000ec174429cf3",
+    "src/shared_sig.rs": "4a2239b96355dfe4b25bbf1f0a34272a2fc62fa5289bfe9c1bae167e464a43ad"
+  },
+  "binary_sha256": "d498d782b7725ae0776c76eba14da9d7df0382005b94f5312733659ebeef6b21",
+  "unique_targets": 5,
+  "source_stable": true
+}

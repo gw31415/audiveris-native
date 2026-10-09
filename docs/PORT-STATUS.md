@@ -15,11 +15,11 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
-現在の通常画像CLIは、AnLauraの追加7形状とDer WinterのArpeggiato lookupへ到達しました。
-実連符3辺のcallbackと実Ornament3件の後段弱削除を比較し、現production対象5件と
-63＋補正8/exact7/64のXML byte/XSD回帰が成功しています。浮動confidence差は別記録です。
+現在の通常画像CLIは、AnLauraの追加7形状とDer Winterの追加9形状へ到達しました。
+実Arpeggiato factoryは原版と同じ47 Chordを対象にhead-only boundsでnullとなり、
+対象5件・fmt/clippy/build・既存63＋補正8/exact7/64 XML byte/XSDが成功しています。
 両実ページのMusicXMLはまだ未出力で、品質受入は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-tuplet-ornament-purge/NEXT-DEPENDENCY.md) を使います。
+直近の作業順は [保存NEXT依存](../evidence/real-arpeggiato-factory/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。
@@ -2470,3 +2470,13 @@ Der WinterのArpeggiatoで停止し、まだXML未出力。次は実head-only lo
 checked symbol lifecycle、null物理clefと論理export状態、必要なSlur接続へ進む。
 [証拠](../evidence/real-tuplet-ornament-purge/VALIDATION.json)・
 [次依存](../evidence/real-tuplet-ornament-purge/NEXT-DEPENDENCY.md)。
+
+Arpeggiatoのfactoryを後段の全Chord矩形判定から、生成時点の同じSystem内の実Chordと
+現在の実Head Containmentによるlookupへ接続した。Der Winterの1候補は原版と同じ
+47 Chord、同じlookup/head-only矩形でnull、Graph全体と実System/Part/Measureを保持する。
+幾何境界3件・同じ実画像の連符/Ornament対象・exact7/64対象の計5件、fmt/clippy/build、
+既存63＋補正8/exact7/64 XML byte/XSD成功。公開CLIは次の9形状へ進みXML未出力。
+正のArpeggiato callback/exportと任意同値xの遭遇順は未比較として残す。
+次はnull物理clef数値と論理export状態、追加記号の実factory lifecycle、Slurへ進む。
+[証拠](../evidence/real-arpeggiato-factory/VALIDATION.json)・
+[次依存](../evidence/real-arpeggiato-factory/NEXT-DEPENDENCY.md)。品質受入は未達。

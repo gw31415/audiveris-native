@@ -259,7 +259,9 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
     let owner = crate::music_links::finalize_stems(owner).unwrap();
     let music = crate::music_measures::continue_measures(owner).unwrap();
+    crate::music_arpeggiato::tests::begin_factory_observation();
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
+    crate::music_arpeggiato::tests::assert_der_winter_null_factory(&music);
     std::fs::write("/tmp/real-rest-symbol-candidates.json",serde_json::to_vec(&json!({"symbol_glyphs":music.owner.prepared.report["symbol_glyphs"],"classifier_trials":music.owner.prepared.report["classifier_trials"]})).unwrap()).unwrap();
     let actual_sig = music.owner.graph.snapshot();
     let native_inputs = music.chords.iter().map(|chord| {

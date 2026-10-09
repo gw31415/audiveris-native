@@ -702,19 +702,9 @@ fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
                 continue;
             }
             if shape == "ARPEGGIATO" {
-                let b = serde_json::from_value(trial["bounds"].clone())
-                    .map_err(|_| "musicxml_arpeggiato_bounds_required")?;
-                if arpeggiato_may_link(
-                    b,
-                    m.owner.interline,
-                    &m.chords
-                        .iter()
-                        .filter(|c| c.kind == crate::music_measures::ChordKind::Head)
-                        .map(|c| c.bounds)
-                        .collect::<Vec<_>>(),
-                ) {
-                    return Err("musicxml_arpeggiato_chord_link_pending".into());
-                }
+                // The checked SYMBOLS factory already required a null lookup
+                // against the then-live owners; reduction can remove Chords.
+                continue;
             } else if !(matches!(
                 shape,
                 "CLUTTER"
