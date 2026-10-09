@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 use super::*;
+#[cfg(test)]
+pub(crate) mod image_tests;
 use crate::music_measure_slots::{CompoundSlot, Retrieval};
 use crate::music_measures::{Chord, Measure};
 use crate::music_voices::Voice;
@@ -186,6 +188,16 @@ impl Context<'_> {
         Ok(system)
     }
     pub(crate) fn process_measure(&mut self, mi: usize) -> Result<Value, String> {
+        let (observations, ok) = self.process_recognition_measure(mi)?;
+        if !ok {
+            return Err("musicxml_original_measure_final_check_failed".into());
+        }
+        Ok(observations)
+    }
+    pub(crate) fn process_recognition_measure(
+        &mut self,
+        mi: usize,
+    ) -> Result<(Value, bool), String> {
         let measure = self
             .measures
             .get(mi)
@@ -196,6 +208,13 @@ impl Context<'_> {
             .expected
             .ok_or("music_reprocess_unknown_expected_export_pending")?;
         let owned_chords = self.chords;
+        self.graph.bind_recognition_chord_caches(
+            &owned_chords
+                .iter()
+                .filter(|c| c.kind == crate::music_measures::ChordKind::Head)
+                .map(|c| (c.key, c.stem))
+                .collect::<Vec<_>>(),
+        )?;
         let mut chords = owned_chords
             .iter()
             .filter(|c| c.measure == mi)
@@ -265,16 +284,14 @@ impl Context<'_> {
             clef,
             measure_index: mi,
         })?;
-        if !crate::music_voices::final_check(
+        let ok = crate::music_voices::final_check(
             self.graph,
             self.voices,
             &mut self.measures[mi],
             owned_chords,
             mi,
-        )? {
-            return Err("musicxml_original_measure_final_check_failed".into());
-        }
-        Ok(observations)
+        )?;
+        Ok((observations, ok))
     }
 }
 impl OwnedMusic {

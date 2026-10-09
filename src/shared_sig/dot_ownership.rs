@@ -291,6 +291,21 @@ impl Graph {
             .ok_or("music_actual_Stack_geometry_required")?;
         Ok(Some(measure.stack.clone()))
     }
+    pub(crate) fn require_actual_music_measure(
+        &self,
+        geometry: &Arc<crate::music_measure_layout::MeasureLayout>,
+    ) -> Result<(), String> {
+        if !self.dot_ownership.as_ref().is_some_and(|owner| {
+            owner.measures.iter().any(|m| {
+                m.geometry
+                    .as_ref()
+                    .is_some_and(|g| Arc::ptr_eq(g, geometry))
+            })
+        }) {
+            return Err("music_stack_actual_geometry_required".into());
+        }
+        Ok(())
+    }
     pub(crate) fn actual_music_stack_x_offset(
         &self,
         geometry: &Arc<crate::music_measure_layout::MeasureLayout>,

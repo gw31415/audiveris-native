@@ -174,3 +174,16 @@ narrow/wide/compoundの全member・順序が一致し、読み取りで全Graph�
 品質受入は未達。次は原版の共有Stack rhythm、null時計・超過・Voice終了量と
 refinement前後の実所有を比較し、複段Partの必要な記号と出力へ接続する。
 [証拠](../evidence/real-measure-slots/VALIDATION.json)・[次依存](../evidence/real-measure-slots/NEXT-DEPENDENCY.md)。
+
+原版のfalse MeasureRhythm結果を保持する認識経路を、selected再処理の厳密な
+失敗・rollback経路から分けた。実Chord/Stemからcacheを登録し、editing Bookを
+作らず時計getterへ接続する。BeamRest準備は登録済み実Measure ArcとPartの
+全Staff所属を検査する。推定不能なrookieの実Voiceとnull時計も保持する。
+実8小節のVoice kind/番号/member順・候補Slot・時計・終了量・excess・判定が
+原版一致（false2小節を含む）。実Measure Arcとrelation/manual statusを保持。
+初期のcache未登録と下段Staff拒否の2失敗も証拠として残した。対象12件、
+fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。今回の比較は
+共有Slot生成前。最新全画像CLIは未変更ガードのv29でXML未出力、品質未達。
+次は同じ実Stackの両Partを共有Slot/終了量へ集約し、Voice refinement後に
+複段clef/key・臨時記号・staccato・強弱・pedalとnative出力へ接続する。
+[証拠](../evidence/real-measure-rhythm/VALIDATION.json)・[次依存](../evidence/real-measure-rhythm/NEXT-DEPENDENCY.md)。

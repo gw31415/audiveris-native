@@ -1,0 +1,362 @@
+{
+  "completed": [
+    {
+      "actual": {
+        "abnormal": false,
+        "chords": [
+          {
+            "bounds": [
+              387,
+              381,
+              15,
+              43
+            ],
+            "duration": "3/16",
+            "slot": 1,
+            "time_offset": "0",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              471,
+              379,
+              15,
+              51
+            ],
+            "duration": "1/32",
+            "slot": 2,
+            "time_offset": "3/16",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              556,
+              382,
+              15,
+              54
+            ],
+            "duration": "1/32",
+            "slot": 3,
+            "time_offset": "7/32",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              640,
+              390,
+              15,
+              46
+            ],
+            "duration": "1/8",
+            "slot": 4,
+            "time_offset": "1/4",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              725,
+              390,
+              15,
+              46
+            ],
+            "duration": "1/8",
+            "slot": 5,
+            "time_offset": "3/8",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              809,
+              390,
+              15,
+              46
+            ],
+            "duration": "1/8",
+            "slot": 6,
+            "time_offset": "1/2",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              894,
+              396,
+              15,
+              45
+            ],
+            "duration": "1/8",
+            "slot": 7,
+            "time_offset": "5/8",
+            "voice": 1
+          }
+        ],
+        "expected": "3/4",
+        "measure_index": 1,
+        "ok": true,
+        "part": 1,
+        "system": 1,
+        "voices": [
+          {
+            "chords": [
+              {
+                "bounds": [
+                  387,
+                  381,
+                  15,
+                  43
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  471,
+                  379,
+                  15,
+                  51
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  556,
+                  382,
+                  15,
+                  54
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  640,
+                  390,
+                  15,
+                  46
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  725,
+                  390,
+                  15,
+                  46
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  809,
+                  390,
+                  15,
+                  46
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  894,
+                  396,
+                  15,
+                  45
+                ],
+                "measure_index": 1,
+                "part": 1
+              }
+            ],
+            "excess": null,
+            "id": 1,
+            "kind": "HIGH",
+            "slots": [],
+            "starting_staff": 1,
+            "termination": "0"
+          }
+        ]
+      },
+      "expected": {
+        "abnormal": false,
+        "chords": [
+          {
+            "bounds": [
+              387,
+              381,
+              15,
+              43
+            ],
+            "duration": "3/16",
+            "slot": 1,
+            "time_offset": "0",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              471,
+              379,
+              15,
+              51
+            ],
+            "duration": "1/32",
+            "slot": 2,
+            "time_offset": "3/16",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              556,
+              382,
+              15,
+              54
+            ],
+            "duration": "1/32",
+            "slot": 3,
+            "time_offset": "7/32",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              640,
+              390,
+              15,
+              46
+            ],
+            "duration": "1/8",
+            "slot": 4,
+            "time_offset": "1/4",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              725,
+              390,
+              15,
+              46
+            ],
+            "duration": "1/8",
+            "slot": 5,
+            "time_offset": "3/8",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              809,
+              390,
+              15,
+              46
+            ],
+            "duration": "1/8",
+            "slot": 6,
+            "time_offset": "1/2",
+            "voice": 1
+          },
+          {
+            "bounds": [
+              894,
+              396,
+              15,
+              45
+            ],
+            "duration": "1/8",
+            "slot": 7,
+            "time_offset": "5/8",
+            "voice": 1
+          }
+        ],
+        "expected": "3/4",
+        "measure_index": 1,
+        "ok": true,
+        "part": 1,
+        "system": 1,
+        "voices": [
+          {
+            "chords": [
+              {
+                "bounds": [
+                  387,
+                  381,
+                  15,
+                  43
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  471,
+                  379,
+                  15,
+                  51
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  556,
+                  382,
+                  15,
+                  54
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  640,
+                  390,
+                  15,
+                  46
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  725,
+                  390,
+                  15,
+                  46
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  809,
+                  390,
+                  15,
+                  46
+                ],
+                "measure_index": 1,
+                "part": 1
+              },
+              {
+                "bounds": [
+                  894,
+                  396,
+                  15,
+                  45
+                ],
+                "measure_index": 1,
+                "part": 1
+              }
+            ],
+            "excess": null,
+            "id": 1,
+            "kind": "HIGH",
+            "slots": [],
+            "starting_staff": 1,
+            "termination": "0"
+          }
+        ]
+      }
+    }
+  ],
+  "error": "music_rest_actual_measure_chord_required",
+  "measure_index": 1,
+  "part": 2,
+  "system": 1
+}

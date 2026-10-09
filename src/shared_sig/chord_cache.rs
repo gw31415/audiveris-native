@@ -101,6 +101,12 @@ impl Graph {
         if self.editing_book.is_none() {
             return Err("chord_cache_actual_editing_book_required".into());
         }
+        self.bind_recognition_chord_caches(chords)
+    }
+    pub(crate) fn bind_recognition_chord_caches(
+        &mut self,
+        chords: &[(Key, Option<Key>)],
+    ) -> Result<(), String> {
         for (key, _) in chords {
             let id = self.endpoint(*key)?;
             if key.phase != Phase::Chord || self.vertices[id - 1].data["kind"] != "HeadChordInter" {

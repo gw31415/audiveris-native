@@ -565,12 +565,14 @@ impl Context<'_> {
                         break;
                     }
                 }
-                if siblings.is_empty() && time(node(&self.graph.snapshot(), id)?)?.is_none() {
-                    if self.merge_with_previous_slot(slot, id)? {
-                        return Ok(created);
-                    }
-                    return Err("music_mapping_new_voice_time_inference_pending".into());
+                if siblings.is_empty()
+                    && time(node(&self.graph.snapshot(), id)?)?.is_none()
+                    && self.merge_with_previous_slot(slot, id)?
+                {
+                    return Ok(created);
                 }
+                // Original createNewVoices retains an unresolved rookie clock;
+                // finalCheck marks the Measure abnormal after all Voices are read.
             }
         }
         Ok(created)

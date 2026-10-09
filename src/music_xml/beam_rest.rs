@@ -490,10 +490,21 @@ pub(super) fn validate_measure_chord(
         .iter()
         .find(|n| n["id"] == chord.id)
         .ok_or("music_rest_actual_chord_required")?;
+    let staff_belongs = if let Some(geometry) = &measure.geometry {
+        graph.require_actual_music_measure(geometry)?;
+        geometry.part.system == measure.system
+            && geometry.part.id == measure.part
+            && geometry.index == measure.index
+            && node["staff_id"]
+                .as_u64()
+                .is_some_and(|staff| geometry.part.staffs.iter().any(|s| s.id == staff))
+    } else {
+        node["staff_id"] == measure.staff
+    };
     if graph.id(chord.key) != Some(chord.id)
         || chord.key.system != measure.system
         || node["part_id"] != measure.part
-        || node["staff_id"] != measure.staff
+        || !staff_belongs
         || node["measure_index"] != measure.index
         || node["kind"]
             != match chord.kind {
