@@ -50,10 +50,17 @@ own-grade/manual/frozen条件が一致した。実Head intrinsic gradeでの残�
 局所Alter除去2個も一致。全SIGの弱除去・後続LINKS状態とは区別する。
 対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
 実画像CLI v22は184.55秒で `unsupported_head_stem_flag_external_relation` に到達し、XML未出力。
-次は支持partnerへ影響しない外部Exclusionのcontext projectionを原版比較し、実relationを
-保持して後続の競合除去へ渡す。共有container/rhythm、臨時記号の音高伝播、出力と品質受入は未完。
+支持partnerへ影響しない外部Exclusion/NoExclusionはcontext計算から外し、実relation
+identity/manual metadataは後続競合処理まで保持する。原版216 focused verticesと
+Flag–Rest Exclusion 2本でcontext不変・同一object復元を確認した。native全記号経路も
+2本が一致し、全外部non-Support辺でcontext不変・未知のnonzero supportでrollback。
+nativeには追加TimeWhole候補との9辺があり、認識成功へ数えない。原版の
+handleTimes/BasicTimeColumnが未接続なので、中間状態の比較が次工程。
+共有container/rhythm、臨時記号の音高伝播、出力と品質受入は未完。
+対象6件とfmt/clippy/build、63＋補正8/exact7/64 XML bytes/XSDは成功。
+実画像CLI v23は183.16秒で `music_symbol_cross_kind_exclusion_pending`、XML未出力。
 正repeat生成・pair処理とshared Stack全filterも必要な入力へ後続接続する。
-[証拠](../evidence/real-supported-alter/VALIDATION.json)・[次依存](../evidence/real-supported-alter/NEXT-DEPENDENCY.md)。
+[証拠](../evidence/real-context-projection/VALIDATION.json)・[次依存](../evidence/real-context-projection/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

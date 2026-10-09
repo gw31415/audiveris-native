@@ -1,0 +1,14 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "files": {
+    "scripts/java/RealContextProjectionImageProbe.java": "6e80726da119f64714e7416ddfeb4561b10e3b8c647160bbb4ca68a8d40e131c",
+    "fixtures/official-context-projection/image-observed.json": "02fc480fa037b7c6beb89fbc5b75072c8f669c0f126bcf52cc190cd638ad23a4",
+    "fixtures/official-context-projection/image-provenance.json": "92ee275c87d24a5961fe2db3a88da9712ab5b0507d5ac421e10ef007cf368aa6"
+  },
+  "pinned_sources": {
+    "sig/SIGraph.java": "6b6ff3172d1f194566a7f59aa2c854cb62ea9c4deab79a43b6b0b85e1d4c4c2f",
+    "sig/relation/NoExclusion.java": "1cd69cb24c90643ad927f26a1483116a6449ea30bc52b64bc1f4d03b69db179e",
+    "sig/relation/Exclusion.java": "e11b275769ab1dded6344ea234ac387c719142dd9e0f3a2fc09417f05347459b"
+  },
+  "native_inputs_are_unchanged_image_only": true
+}

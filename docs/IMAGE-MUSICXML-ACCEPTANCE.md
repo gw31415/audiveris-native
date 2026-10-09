@@ -75,7 +75,12 @@ supportのcontextualizationガードへ進み、次は支持付き臨時記号�
 後続に残す。実Alter支持のcontextualization/weak purgeは17実記号と204宣言条件で比較し、
 実Head intrinsic gradeの残差最大2.22e-16、除去2個が一致して接続済み。対象6件とXML/XSD
 回帰成功。実画像CLI v22は184.55秒でHead/Stem/Flagの外部relation projectionへ進み、
-その原版比較が次の切断点。後続競合除去・共有container/rhythm・音高伝播と出力は未完。
+外部non-Supportのcontext projectionを原版216 vertices/Flag–Rest2辺と比較して接続した。
+実辺identity/manual/Chord時計を保持し、未知の外部supportはrollbackする。nativeの
+追加TimeWhole9候補は未受入。原版handleTimes/BasicTimeColumnの未接続を中間状態から
+比較する。後続競合除去・共有container/rhythm・音高伝播と出力は未完。
+対象6件とfmt/clippy/build、63＋補正8/exact7/64 XML bytes/XSDは成功。
+実画像CLI v23は183.16秒で `music_symbol_cross_kind_exclusion_pending`、XML未出力。
 原版最終XMLの8 staccatoはまだnative出力で比較できていない。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。

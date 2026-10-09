@@ -10,6 +10,8 @@ use std::collections::{BTreeMap, BTreeSet};
 mod alter_callbacks;
 mod articulation_callbacks;
 mod beam_rest;
+#[cfg(test)]
+mod context_projection_image_tests;
 mod tuplet;
 mod tuplet_addition;
 #[cfg(test)]
@@ -2347,6 +2349,12 @@ impl Graph {
             }
             let source = ids.contains(&e.key.source);
             let target = ids.contains(&e.key.target);
+            // Exclusion/NoExclusion are not support. With an external endpoint
+            // they cannot conflict between this projection's support partners.
+            // Keep the real edge for subsequent recognition conflict reduction.
+            if source != target && matches!(e.key.kind.as_str(), "Exclusion" | "NoExclusion") {
+                continue;
+            }
             if source != target {
                 return Err("unsupported_head_stem_flag_external_relation".into());
             }

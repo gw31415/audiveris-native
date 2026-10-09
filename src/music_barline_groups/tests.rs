@@ -255,4 +255,5 @@ fn real_foundation_bar_groups_and_construction_match_original_before_multistaff_
         parts.iter().map(|p| p.staffs.len()).collect::<Vec<_>>(),
         vec![1, 2, 1, 2]
     );
+    crate::shared_sig::Graph::assert_real_context_projection(music);
 }
