@@ -26,7 +26,7 @@
 - 同じ曲の独立CC0 .mscxを正解参照として使用し、原版とnativeそれぞれの欠落・追加・
   音高/音価/声部/小節/記号関係誤りを記録する。原版との一致だけで原版の誤りを正解に
   しない。nativeの各音楽品質指標が原版以上であることと、残差の実譜面上の確認が受入条件。
-  現在はeventの正解比較のみ着手しており、声部連続性・和音群・記号関係の比較は未完。品質同等性を主張しない。
+  event・実Chord群・小節内声部隣接・slurの独立正解比較を接続した。小節を跨ぐ声部継続と未収録の関係は未完。品質同等性を主張しない。
 - native出力がMusicXML4 XSDに通り、独立readerで全part/小節/声部/イベントを読めること。
   原版より良い相違は独立正解と実譜面で説明する。未比較カテゴリを成功に含めない。
 - 既存合成63イベント＋明示補正8とexact7/64 XML bytes/XSDは回帰として保持する。
@@ -321,3 +321,10 @@ Der Winterの未改変CC0譜面をLinux MuseScore3.2.3で全ページ画像化�
 既存XML/XSD回帰は成功。実所有の原版観測と幾何数値残差を分けた
 [最新証拠](../evidence/real-image-admission/VALIDATION.json)・
 [次依存](../evidence/real-image-admission/NEXT-DEPENDENCY.md)に沿い、品質falseのまま続ける。
+
+独立元スコアとの構造比較を追加した。既存の原版XMLを読み取り、実Chordの音集合、
+小節内の声部隣接、拍子・pickup・小節占有量、休符・slur端点/組を比較する。
+13契約テスト成功。AnLauraはChord50/70、Der Winterは86/106、休符9/9・slur6/6。
+これらは原版の品質基準でありnative成功ではない。小節を跨ぐ声部継続、tie-bearing
+truth、cross-staff、beam等はこの比較器の未評価範囲として明示する。
+[構造比較と全残差](../evidence/real-structure-quality/README.md)。

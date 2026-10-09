@@ -2434,3 +2434,10 @@ referenceY差−0.0333611があり、全画像geometry数値一致とは扱わ�
 build・63＋補正8/exact7/64 XML bytes/XSD成功。An Laura公開v4はTUPLET_THREEへ、
 Der Winter v2はSTEMS後のmusic_native_clef_requiredへ進み、両方XML未出力。品質未達。
 [証拠](../evidence/real-image-admission/VALIDATION.json)・[次依存](../evidence/real-image-admission/NEXT-DEPENDENCY.md)。
+
+独立元スコアとの構造比較を追加した。既存の原版XMLを読み取り、実Chordの音集合、
+小節内の声部隣接、拍子・pickup・小節占有量、休符・slur端点/組を比較する。
+13契約テスト成功。AnLauraはChord50/70、Der Winterは86/106、休符9/9・slur6/6。
+これらは原版の品質基準でありnative成功ではない。小節を跨ぐ声部継続、tie-bearing
+truth、cross-staff、beam等はこの比較器の未評価範囲として明示する。
+[構造比較と全残差](../evidence/real-structure-quality/README.md)。

@@ -1,0 +1,53 @@
+{
+  "tests": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-p",
+      "test_score_structure_quality.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.125854509009514
+  },
+  "pages": {
+    "laura": {
+      "argv": [
+        "python3",
+        "scripts/compare_score_structure_quality.py",
+        "fixtures/openscore-lieder/lc6019054.mscx",
+        "evidence/real-image-quality-baseline/laura-original.musicxml",
+        "/tmp/real-structure-quality-v1/validated/laura-original.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.055931604001671076
+    },
+    "der-winter": {
+      "argv": [
+        "python3",
+        "scripts/compare_score_structure_quality.py",
+        "fixtures/openscore-lieder/lc6053913.mscx",
+        "evidence/real-rest-quality-baseline/der-winter-original.musicxml",
+        "/tmp/real-structure-quality-v1/validated/der-winter-original.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.056852923007681966
+    }
+  },
+  "files_sha256": {
+    "scripts/compare_score_structure_quality.py": "3e6158765fc3168b1a521b2f0f6aeb1f42bfc13aaed79886c2f796000878321d",
+    "scripts/tests/test_score_structure_quality.py": "cce230e4928a6229700d5009b99aa9350c725a4502de1659fce1aec93fc2a3bd",
+    "fixtures/openscore-lieder/lc6019054.mscx": "c884cf023a152e0af29be3719f158a8ec8903cd312b6f1d880bc6b43dcbc1682",
+    "fixtures/openscore-lieder/lc6053913.mscx": "776b60aa1488636fe8d2e83c79391aa80d15981ce17ecc2ca30ca3a3fac6ccd6",
+    "evidence/real-image-quality-baseline/laura-original.musicxml": "4f979b7cfce80dd56a7babac36f4cec59a774bfd0577e9e9724be706b31dcc94",
+    "evidence/real-rest-quality-baseline/der-winter-original.musicxml": "e04333e06b7c58181824602b4b57367d5c2aad2b2b7811707fa2dc3f3e26c7fb"
+  },
+  "original_rerun": false,
+  "native_rerun": false,
+  "quality_accepted": false,
+  "external_network_used": false
+}
