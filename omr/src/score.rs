@@ -724,6 +724,7 @@ fn build_measure(
     }
 
     assign_voices(&mut events, il);
+    implicit_tuplets(sheet, &mut events, m.expected);
     assign_times(&mut events, il);
     assign_beams(sheet, &mut events, il);
 
@@ -814,6 +815,80 @@ fn assign_voices(events: &mut [Event], il: f64) {
 
 /// Time slots: events aligned in abscissa share the same start time. Each
 /// event starts when its voice is available and its slot begins.
+/// Implicit tuplets (as Audiveris rhythm checks): when a voice overflows the
+/// measure, beam groups of 3 (or 6) chords of equal value become triplets,
+/// first the groups already marked nearby, then the others, until it fits.
+fn implicit_tuplets(sheet: &Sheet, events: &mut [Event], expected: Q) {
+    let mut voices: Vec<u32> = events.iter().map(|e| e.voice).collect();
+    voices.sort();
+    voices.dedup();
+    for v in voices {
+        let total = |evs: &[Event]| evs.iter().filter(|e| e.voice == v).fold(Q::ZERO, |a, e| a + e.duration);
+        if total(events) <= expected {
+            continue;
+        }
+        // Beam groups: events of this voice whose stems share a beam (transitively).
+        let idx: Vec<usize> = (0..events.len()).filter(|&i| events[i].voice == v && events[i].stem.is_some()).collect();
+        let mut group = vec![usize::MAX; events.len()];
+        let mut next = 0;
+        for (a, &i) in idx.iter().enumerate() {
+            if group[i] == usize::MAX {
+                group[i] = next;
+                next += 1;
+            }
+            for &j in &idx[a + 1..] {
+                let (bi, bj) = (&sheet.stems[events[i].stem.unwrap()].beams, &sheet.stems[events[j].stem.unwrap()].beams);
+                if bi.iter().any(|b| bj.contains(b)) {
+                    let (gi, gj) = (group[i], group[j]);
+                    if gj == usize::MAX {
+                        group[j] = gi;
+                    } else if gj != gi {
+                        for g in group.iter_mut() {
+                            if *g == gj {
+                                *g = gi;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        let mut groups: Vec<Vec<usize>> = Vec::new();
+        for g in 0..next {
+            let mut members: Vec<usize> = idx.iter().copied().filter(|&i| group[i] == g).collect();
+            members.sort_by(|&a, &b| events[a].x.partial_cmp(&events[b].x).unwrap());
+            let n = members.len();
+            if (n == 3 || n == 6) && events[members[0]].tuplet.is_none() && members.iter().all(|&i| events[i].dots == 0) {
+                let sum = members.iter().fold(Q::ZERO, |a, &i| a + events[i].base);
+                // Triplet of equal notes, or 3 units mixing e.g. quarter + eighth.
+                let unit = members.iter().map(|&i| events[i].base).min().unwrap();
+                if sum == unit * Q::new(n as i64, 1) || sum == unit * Q::new(3, 1) {
+                    groups.push(members);
+                }
+            }
+        }
+        // Convert the first k groups only if that makes the voice fit exactly.
+        let before = total(events);
+        let mut acc = Q::ZERO;
+        let mut k = 0;
+        for g in &groups {
+            acc = acc + g.iter().fold(Q::ZERO, |a, &i| a + events[i].duration) * Q::new(1, 3);
+            k += 1;
+            if before - acc <= expected {
+                break;
+            }
+        }
+        if k == 0 || before - acc != expected {
+            continue;
+        }
+        for g in &groups[..k] {
+            for &i in g {
+                events[i].tuplet = Some((3, 2));
+                events[i].duration = events[i].duration * Q::new(2, 3);
+            }
+        }
+    }
+}
+
 fn assign_times(events: &mut [Event], il: f64) {
     let mut order: Vec<usize> = (0..events.len()).collect();
     order.sort_by(|&a, &b| events[a].x.partial_cmp(&events[b].x).unwrap());

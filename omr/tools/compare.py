@@ -109,7 +109,14 @@ def name(e):
     return f"s{staff}@{float(start):g}:{w}/{float(dur):g}"
 
 
+VERBOSE = False
+
+
 def main():
+    global VERBOSE
+    if '-v' in sys.argv:
+        sys.argv.remove('-v')
+        VERBOSE = True
     a = load(sys.argv[1])
     b = []
     for path in sys.argv[2:]:  # several outputs (pages) are concatenated part-wise
@@ -147,8 +154,11 @@ def main():
             xa = [f"{w}/{d}" for _, w, d in sa.get(st, [])]
             xb = [f"{w}/{d}" for _, w, d in sb.get(st, [])]
             sm = SequenceMatcher(None, xa, xb, autojunk=False)
-            fm += sum(bl.size for bl in sm.get_matching_blocks())
+            k = sum(bl.size for bl in sm.get_matching_blocks())
+            fm += k
             ft += max(len(xa), len(xb))
+            if '-v' in sys.argv[0:1] or VERBOSE:
+                print(f"  part {pi + 1} staff {st}: {k}/{max(len(xa), len(xb))} (ref {len(xa)}, test {len(xb)})")
     print(f"FLAT {fm}/{ft} = {fm / max(ft, 1):.3f}")
 
 
