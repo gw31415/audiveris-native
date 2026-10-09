@@ -101,7 +101,7 @@ pub fn compute(img: &Bitmap) -> Result<Scale, String> {
             }
         }
     }
-    let lo = ((0.3 * interline as f64).round() as usize).max(line_hi.max(line + 1) + 2);
+    let lo = ((0.4 * interline as f64).round() as usize).max(line_hi.max(line + 1) + 2);
     let hi = (0.75 * interline as f64).round() as usize;
     let beam = peak(&beam_hist, lo, hi + 1)
         .filter(|&p| beam_hist[p] as f64 >= 5.0 * interline as f64)

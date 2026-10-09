@@ -145,9 +145,10 @@ fn write_debug(
 fn run() -> Result<(), String> {
     let args = parse_args()?;
     let mut book: Option<score::Score> = None;
+    let mut state = score::State::default();
     for input in &args.inputs {
         let sheet = pipeline::process(input, args.verbose)?;
-        let page = score::build(&sheet);
+        let page = score::build(&sheet, &mut state);
         if let Some(dir) = &args.debug {
             let stem = input.file_stem().and_then(|s| s.to_str()).unwrap_or("page");
             write_debug(dir, stem, &sheet, &page)?;

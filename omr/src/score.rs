@@ -170,12 +170,20 @@ fn mode(values: impl Iterator<Item = i32>) -> Option<i32> {
         .map(|(v, _)| v)
 }
 
-pub fn build(sheet: &Sheet) -> Score {
+/// Musical state carried from one page to the next.
+#[derive(Default)]
+pub struct State {
+    clefs: HashMap<(usize, u32), ClefKind>,
+    fifths: Option<i32>,
+    time: Option<TimeSig>,
+}
+
+pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     let il = sheet.scale.interline as f64;
     let mut parts: Vec<Part> = Vec::new();
-    let mut clef_state: HashMap<(usize, u32), ClefKind> = HashMap::new();
-    let mut fifths_state: Option<i32> = None;
-    let mut time_state: Option<TimeSig> = None;
+    let mut clef_state = std::mem::take(&mut state.clefs);
+    let mut fifths_state = state.fifths;
+    let mut time_state = state.time;
 
     for sys in &sheet.systems {
         // System-wide key and time from the staff headers.
@@ -278,6 +286,7 @@ pub fn build(sheet: &Sheet) -> Score {
             }
         }
     }
+    *state = State { clefs: clef_state, fifths: fifths_state, time: time_state };
     Score { parts }
 }
 
