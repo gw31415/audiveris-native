@@ -71,6 +71,14 @@ Dot membershipの位置を別Measure配列へ使う接続ミスは、同じ実St
 実画像CLI v24は182.01秒で `music_symbol_cross_kind_exclusion_pending`、XML未出力。
 [証拠](../evidence/real-time-column-failure/VALIDATION.json)・[次依存](../evidence/real-time-column-failure/NEXT-DEPENDENCY.md)。
 
+Flag–Rest同一実glyphの弱休符は、exclusion選択より先に全targetのcontextを書いて削除する。
+原版の自動2組・manual宣言2組と一致し、旗と実HeadChord時計、削除relationのID/manual
+metadataを保持した。遅いfrozen失敗は実Chord7/64時計・expected3/4を含む全graphを戻す。
+強い休符/frozen/他cross-kindは未検証ガード。対象9件とfmt/clippy/build、
+63＋補正8/exact7/64 XML bytes/XSD成功。次は実Part全Staffを使うcontainer refresh。
+実画像CLI v25は179.9秒で `music_container_owned_measure_required`、XML未出力。
+[証拠](../evidence/real-flag-rest-weak/VALIDATION.json)・[次依存](../evidence/real-flag-rest-weak/NEXT-DEPENDENCY.md)。
+
 ## 実装済みの具体的単位
 
 - PNG 8-bit grayscale/PGM読取、原版の適応二値化・runs・classifier特徴量と149出力モデル推論。入出力形式・領域上限・全種類のページ処理は下表の部分対応です。

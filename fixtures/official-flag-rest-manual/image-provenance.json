@@ -1,0 +1,61 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "393fabb39c6a0af2b03f7d40131670b997645a0157a6f75aed7ffa76a5ea38b3",
+  "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "compile_commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/real-flag-rest-manual-original-v1/compile-only",
+      "/tmp/real-flag-rest-manual-original-v1/compile-only/Book.java",
+      "/tmp/real-flag-rest-manual-original-v1/compile-only/RunClass.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-flag-rest-manual-original-v1/compile-only",
+      "-d",
+      "/tmp/real-flag-rest-manual-original-v1/classes",
+      "/tmp/RealFlagRestManualImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+    ]
+  ],
+  "compile_only_signatures_on_runtime_classpath": false,
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/real-flag-rest-manual-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-flag-rest-manual-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-flag-rest-manual-original-v1/prefs",
+    "-Duser.home=/tmp/real-flag-rest-manual-original-v1/home",
+    "-Dnative.probe.output=/tmp/real-flag-rest-manual-original-v1/observed.json",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-flag-rest-manual-original-v1/classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "RealFlagRestManualImageProbe",
+    "-output",
+    "/tmp/real-flag-rest-manual-original-v1",
+    "--",
+    "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+  ],
+  "exit_code": 0,
+  "console_sha256": "d12905e734d4808f2c8b74fe7d47d03f5860917e80639c560676c74dc67eef26",
+  "native_outputs_used": false,
+  "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+  "observed_sha256": "be5b276f069f914a4770f74f23d694b2b43d25b305c99a288752406868b66fb2"
+}

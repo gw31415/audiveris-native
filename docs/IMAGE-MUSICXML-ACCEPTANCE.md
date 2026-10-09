@@ -94,6 +94,14 @@ XMLを出力できない。staff消去済み同名開発fixtureでの `no_regula
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。
 今回Linuxで原版を実行しており、新たなMac処理・再render・環境移動はしていない。
 
+Flag–Rest同一実glyphの弱休符は、exclusion選択より先に全targetのcontextを書いて削除する。
+原版の自動2組・manual宣言2組と一致し、旗と実HeadChord時計、削除relationのID/manual
+metadataを保持した。遅いfrozen失敗は実Chord7/64時計・expected3/4を含む全graphを戻す。
+強い休符/frozen/他cross-kindは未検証ガード。対象9件とfmt/clippy/build、
+63＋補正8/exact7/64 XML bytes/XSD成功。次は実Part全Staffを使うcontainer refresh。
+実画像CLI v25は179.9秒で `music_container_owned_measure_required`、XML未出力。
+[証拠](../evidence/real-flag-rest-weak/VALIDATION.json)・[次依存](../evidence/real-flag-rest-weak/NEXT-DEPENDENCY.md)。
+
 ## 改訂した残工程
 
 1. 複数part/staffでのbeam周辺の実所有選択は接続済み。次の実入力切断点である

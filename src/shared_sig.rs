@@ -12,6 +12,8 @@ mod articulation_callbacks;
 mod beam_rest;
 #[cfg(test)]
 mod context_projection_image_tests;
+#[cfg(test)]
+mod flag_rest_weak_image_tests;
 mod tuplet;
 mod tuplet_addition;
 #[cfg(test)]

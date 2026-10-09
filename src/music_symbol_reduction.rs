@@ -62,6 +62,35 @@ fn overlap(a: &Value, b: &Value) -> Result<bool, String> {
     let pixels = crate::clef_candidates::pixels(&a_g).collect::<std::collections::BTreeSet<_>>();
     Ok(crate::clef_candidates::pixels(&b_g).any(|p| pixels.contains(&p)))
 }
+fn weak_rest_flag_exclusion(n: &Value, e: &Value, nodes: &[Value]) -> bool {
+    if n["kind"] != "RestInter"
+        || n["frozen"] == true
+        || !n["grade"]
+            .as_f64()
+            .is_some_and(|g| g.is_finite() && (0.0..0.5).contains(&g))
+    {
+        return false;
+    }
+    let other_id = if e["source"] == n["id"] {
+        &e["target"]
+    } else {
+        &e["source"]
+    };
+    let Some(flag) = nodes
+        .iter()
+        .find(|v| v["id"] == *other_id && v["kind"] == "FlagInter")
+    else {
+        return false;
+    };
+    flag["origin"]["phase"] == "SYMBOL"
+        && flag["origin"]["system"] == n["origin"]["system"]
+        && flag["contextual_grade"]
+            .as_f64()
+            .is_some_and(|g| g.is_finite() && (0.5..=1.0).contains(&g))
+        && !n["glyph_id"].is_null()
+        && flag["glyph_id"] == n["glyph_id"]
+        && flag["glyph"] == n["glyph"]
+}
 pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
     let mut next = graph.clone();
     let initial = graph.snapshot();
@@ -94,6 +123,7 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
                 return Err("music_links_symbol_support_pending".into());
             }
             if e["kind"] == "Exclusion"
+                && !weak_rest_flag_exclusion(n, e, nodes)
                 && ["source", "target"]
                     .iter()
                     .any(|endpoint| !nodes.iter().any(|v| v["id"] == e[*endpoint] && symbol(v)))
@@ -131,19 +161,24 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
             overlaps.push(json!([a["id"], b["id"]]));
         }
     }
-    let mut weak = Vec::new();
-    for n in symbols {
+    // Contextualize all targets before the first removal callback. Zero-target
+    // augmentation and non-Support exclusions cannot raise a Rest grade.
+    let mut grades = Vec::new();
+    for n in &symbols {
         let grade = n["grade"]
             .as_f64()
             .filter(|g| g.is_finite() && (0.0..=1.0).contains(g))
             .ok_or("music_links_grade_required")?;
+        let mut data = (*n).clone();
+        data["contextual_grade"] = json!(grade);
+        next.vertex(key(n)?, data, false)?;
+        grades.push(grade);
+    }
+    let mut weak = Vec::new();
+    for (n, grade) in symbols.iter().zip(grades) {
         if grade < 0.5 && n["frozen"] != true {
             next.remove_music_inter(key(n)?)?;
             weak.push(n["id"].clone());
-        } else {
-            let mut data = n.clone();
-            data["contextual_grade"] = json!(grade);
-            next.vertex(key(n)?, data, false)?;
         }
     }
     let mut removed = Vec::new();
