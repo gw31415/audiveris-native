@@ -2424,3 +2424,13 @@ fmt/clippy/build、63＋補正8/exact7/64 XML bytes/XSD成功。内部XMLは拡�
 厳密一致/休符9件全一致を記録した。native初回はbeam検索領域の非凸guardで停止した。
 品質未達。次はEIGHTH_setの原版自動factory処理、その後実beam領域と休符/pickup/slur。
 [証拠](../evidence/real-public-page/VALIDATION.json)・[次依存](../evidence/real-public-page/NEXT-DEPENDENCY.md)。
+
+原版checked後の自動factory13形状のnullと実SIG参照不変を比較し、EIGHTH_setと論理Grace、
+HW_REST_setの変換後休符、DOT callbackを分けて公開受付へ接続した。実休符画像のbeam検索
+領域は正当な自己交差Areaで、原版宣言入力kernelと座標bit一致、9形状の包含658/交差159件と
+既存72 VLinker条件が一致した。余分な凸性制限のみ除去。fresh原版BEAMS→STEMSでも
+同一glyphのSystem1/2一時共有→System1だけ除去を確認した。未丸め原版とnative計画には
+referenceY差−0.0333611があり、全画像geometry数値一致とは扱わない。対象5件・fmt/clippy/
+build・63＋補正8/exact7/64 XML bytes/XSD成功。An Laura公開v4はTUPLET_THREEへ、
+Der Winter v2はSTEMS後のmusic_native_clef_requiredへ進み、両方XML未出力。品質未達。
+[証拠](../evidence/real-image-admission/VALIDATION.json)・[次依存](../evidence/real-image-admission/NEXT-DEPENDENCY.md)。

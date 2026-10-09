@@ -1,0 +1,143 @@
+{
+  "qualification": "Actual original owner method output is distinct from the exact-input declared-kernel comparison. No precision parity claimed.",
+  "native_capture_sha256": "5d1ca9504353c3d92c03fc44c442cd48b0c60f25cf4af0857519518031d137fc",
+  "fresh_original_observed_sha256": "911a4e7ebb2a8c84b4b16228ffbb0ad3c107437db2bb618f179d062eee921818",
+  "shared_glyph_object_before_STEMS": true,
+  "system1_removed_after_STEMS": true,
+  "system2_survivor_stem_count": 2,
+  "actual_original_request_fields": {
+    "reference": [
+      572.5,
+      997.4467757230888
+    ],
+    "direction": 1,
+    "border": [
+      571.0,
+      1000.5523944997617,
+      612.0,
+      1003.575391180653
+    ],
+    "limit": null,
+    "slope": 0.0,
+    "slope_margin": 0.015,
+    "half_lookup_dx": 3.3,
+    "max_seed_dy_ratio": 0.25,
+    "gap_pixels": 13,
+    "system_bounds": [
+      0.0,
+      0.0,
+      1489.0,
+      999.0
+    ],
+    "surrounding": [],
+    "area_bounds": [
+      560.0,
+      0.0,
+      25.0,
+      1005.0
+    ],
+    "area_path": [
+      {
+        "type": 0,
+        "coordinates": [
+          560.8382983641536,
+          0.0
+        ]
+      },
+      {
+        "type": 1,
+        "coordinates": [
+          572.4971736001282,
+          782.4867369760303
+        ]
+      },
+      {
+        "type": 1,
+        "coordinates": [
+          584.1617016358464,
+          0.0
+        ]
+      },
+      {
+        "type": 4,
+        "coordinates": []
+      },
+      {
+        "type": 0,
+        "coordinates": [
+          572.4971736001282,
+          782.4867369760303
+        ]
+      },
+      {
+        "type": 1,
+        "coordinates": [
+          569.2,
+          1003.6696775723063
+        ]
+      },
+      {
+        "type": 1,
+        "coordinates": [
+          575.8,
+          1004.1563063063035
+        ]
+      },
+      {
+        "type": 1,
+        "coordinates": [
+          572.4971736001282,
+          782.4867369760303
+        ]
+      },
+      {
+        "type": 4,
+        "coordinates": []
+      }
+    ],
+    "theoretical_line": [
+      572.5,
+      997.4467757230888,
+      572.5000000000006,
+      -0.0
+    ]
+  },
+  "native_request_fields": {
+    "border": [
+      571.0,
+      1000.5,
+      612.0,
+      1003.6
+    ],
+    "direction": 1,
+    "gap_pixels": 13,
+    "half_lookup_dx": 3.3,
+    "limit": null,
+    "max_seed_dy_ratio": 0.25,
+    "reference": [
+      572.5,
+      997.4134146341455
+    ],
+    "slope": 0.0,
+    "slope_margin": 0.015,
+    "surrounding_part_bounds": [],
+    "system_bounds": [
+      0,
+      0,
+      1489,
+      999
+    ]
+  },
+  "native_minus_original_reference_y": -0.03336108894325207,
+  "native_minus_original_border": [
+    0.0,
+    -0.05239449976170363,
+    0.0,
+    0.024608819347008648
+  ],
+  "consistent_owner_fields": {
+    "system_bounds": true,
+    "empty_surrounding": true
+  },
+  "source_cleanup": "StemsRetriever.Finalizer.purgeOrphanBeams removes a no-stem beam only after its cross-system counterpart has linked stems."
+}

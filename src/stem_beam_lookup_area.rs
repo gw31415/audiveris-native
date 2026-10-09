@@ -42,7 +42,7 @@ fn rectangle_valid(b: &[i32; 4]) -> bool {
         && b[0] + b[2] <= 4_000_000
         && b[1] + b[3] <= 4_000_000
 }
-/// Derive a single convex beam search path. The default end combines the
+/// Derive the original closed beam search path. The default end combines the
 /// system edge and all declared surrounding part edges, preserving -1 on
 /// inclusive part bottoms. Limits use original yAtX arithmetic. Inputs and
 /// registry/cache/head/SIG state are unchanged.
@@ -121,15 +121,9 @@ pub fn generate(r: &Request) -> Result<Geometry, String> {
     {
         return Err("unsupported_beam_lookup_area_result".into());
     }
-    let mut sign = 0f64;
-    for i in 0..4 {
-        let (a, b, c) = (polygon[i], polygon[(i + 1) % 4], polygon[(i + 2) % 4]);
-        let cross = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]);
-        if cross == 0. || (sign != 0. && cross.signum() != sign) {
-            return Err("unsupported_beam_lookup_area_nonconvex".into());
-        }
-        sign = cross.signum();
-    }
+    // Original VLinker closes a WIND_NON_ZERO path and constructs Area.
+    // A reversed limit can cross the sides; preserve its lobes and empty
+    // degeneracies for the existing LinearArea consumer, not a convex hull.
     Ok(Geometry {
         polygon,
         theoretical_line: [x, y, target[0], target[1]],

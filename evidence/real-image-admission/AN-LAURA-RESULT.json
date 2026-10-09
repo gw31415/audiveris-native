@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/audiveris-musicxml",
+    "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png",
+    "/tmp/real-public-page-v4/laura.musicxml",
+    "/tmp/real-public-page-v4/report.json"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 218.43520123098278,
+  "image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "binary_sha256": "0fa9fe4bbec072f7ed84a00fc53bb6c7eba3e8886793e7c9284fe48e7f6d5bc8",
+  "XML_written": false,
+  "report_written": false,
+  "normal_user_command": true,
+  "original_or_observation_used_as_recognition_input": false
+}

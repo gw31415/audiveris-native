@@ -1,0 +1,77 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "automatic_factory_source": "/tmp/audiveris-pinned-source/sheet/symbol/InterFactory.java",
+  "automatic_factory_sha256": "2230888cc56c1dc2d3e6678572079afe78984fc333cb2e1c35105697cd4c361d",
+  "classifier_model": "crates/audiveris-classifier/models/audiveris-5.11.0.json",
+  "classifier_model_sha256": "4650334a8a1fe8d5f65e9bc53bee5f2df7fff85e90c53665d8f6f75805fc9a5f",
+  "label_count": 149,
+  "automatic_case_count": 158,
+  "default_null": [
+    "EIGHTH_set",
+    "HW_REST_set",
+    "METRO_DOTTED_EIGHTH",
+    "METRO_DOTTED_HALF",
+    "METRO_DOTTED_QUARTER",
+    "METRO_DOTTED_SIXTEENTH",
+    "METRO_HALF",
+    "METRO_QUARTER",
+    "METRO_SIXTEENTH",
+    "METRO_WHOLE",
+    "TIME_ONE",
+    "TIME_ZERO"
+  ],
+  "explicit_unconditional_null": [
+    "CLUTTER"
+  ],
+  "null_with_side_effects_excluded": [
+    "DOT_set"
+  ],
+  "default_switch_disabled_not_unconditional": [
+    "TREMOLO_1",
+    "TREMOLO_2",
+    "TREMOLO_3",
+    "DIGIT_0",
+    "DIGIT_1",
+    "DIGIT_2",
+    "DIGIT_3",
+    "DIGIT_4",
+    "DIGIT_5",
+    "PLUCK_P",
+    "PLUCK_I",
+    "PLUCK_M",
+    "PLUCK_A",
+    "ROMAN_I",
+    "ROMAN_II",
+    "ROMAN_III",
+    "ROMAN_IV",
+    "ROMAN_V",
+    "ROMAN_VI",
+    "ROMAN_VII",
+    "ROMAN_VIII",
+    "ROMAN_IX",
+    "ROMAN_X",
+    "ROMAN_XI",
+    "ROMAN_XII",
+    "PLAYING_OPEN",
+    "PLAYING_HALF_OPEN",
+    "PLAYING_CLOSED"
+  ],
+  "qualification": "The supplied shape at automatic create is tested. ShapeChecker can replace physical classes with logical classes before this call. GRACE_NOTE and WHOLE_REST/HALF_REST positive factories are not classified null.",
+  "source_locations": {
+    "automatic_doCreate": "InterFactory.java:248-565",
+    "explicit_clutter_null": "InterFactory.java:260-261",
+    "dot_side_effects": "InterFactory.java:274-277",
+    "time_zero_one_commented_not_cases": "InterFactory.java:317-318",
+    "grace_positive_factory": "InterFactory.java:460-469",
+    "default_null": "InterFactory.java:559-562",
+    "checked_evaluation_before_create": "SymbolsBuilder.java:207-220",
+    "half_whole_rest_shape_replacement": "ShapeChecker.java:293-345"
+  },
+  "fresh_observation": {
+    "observed": "/tmp/real-phase-null-factory-original-v2/observed.json",
+    "provenance": "/tmp/real-phase-null-factory-original-v2/provenance.json",
+    "cases": 13,
+    "returns_null_all": true,
+    "actual_vertex_edge_object_identity_all": true
+  }
+}

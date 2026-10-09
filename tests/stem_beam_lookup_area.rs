@@ -12,7 +12,7 @@ fn original_beam_areas_actual_borders_parts_and_ratio_ulp_controls_match() {
     assert_eq!(result["cases"].as_array().unwrap().len(), 72);
 }
 #[test]
-fn beam_area_input_bounds_skew_nonconvex_and_part_empty_contracts() {
+fn beam_area_input_bounds_skew_and_part_empty_contracts() {
     let r = Request {
         reference: [20., 50.],
         border: [0., 48., 100., 48.],
@@ -51,9 +51,6 @@ fn beam_area_input_bounds_skew_nonconvex_and_part_empty_contracts() {
     bad = r.clone();
     bad.surrounding_part_bounds = vec![[0, 10, 100, 91]; 4097];
     assert!(stem_beam_lookup_area::generate(&bad).is_err());
-    bad = r.clone();
-    bad.limit = Some([0., -1000., 100., -1000.]);
-    assert!(stem_beam_lookup_area::generate(&bad).is_err());
     // Empty neighborhoods use the original initial system edge. These are
     // native boundary contracts, separate from the actual original controls.
     bad = r.clone();
@@ -66,4 +63,67 @@ fn beam_area_input_bounds_skew_nonconvex_and_part_empty_contracts() {
         [20., 50., 20., 200.]
     );
     assert_eq!(serde_json::to_value(&r).unwrap(), before);
+}
+
+#[test]
+fn actual_reversed_beam_limit_and_nonzero_area_boundaries_match_original() {
+    let original: serde_json::Value = serde_json::from_str(include_str!(
+        "../fixtures/official-beam-nonconvex-area/controls.json"
+    ))
+    .unwrap();
+    let mut points = 0;
+    let mut rectangles = 0;
+    for case in original["cases"].as_array().unwrap() {
+        let polygon: Vec<[f64; 2]> = serde_json::from_value(case["polygon"].clone()).unwrap();
+        let actual = if !case["request"].is_null() {
+            let request: Request = serde_json::from_value(case["request"].clone()).unwrap();
+            let before = serde_json::to_value(&request).unwrap();
+            let actual = stem_beam_lookup_area::generate(&request).unwrap();
+            assert_eq!(serde_json::to_value(&request).unwrap(), before);
+            assert_eq!(
+                serde_json::json!(actual.theoretical_line),
+                case["theoretical_line"]
+            );
+            assert_eq!(actual.polygon, polygon);
+            actual.polygon
+        } else {
+            polygon
+        };
+        let area = audiveris_area::LinearArea::polygon(&actual).unwrap();
+        assert_eq!(
+            serde_json::json!(area.bounds()),
+            case["bounds"],
+            "{}",
+            case["name"]
+        );
+        assert_eq!(
+            area.intersects_area(&area).unwrap(),
+            !case["empty"].as_bool().unwrap(),
+            "{}",
+            case["name"]
+        );
+        for query in case["points"].as_array().unwrap() {
+            let point = serde_json::from_value(query["point"].clone()).unwrap();
+            assert_eq!(
+                area.contains(point).unwrap(),
+                query["contains"].as_bool().unwrap(),
+                "{} point {:?}",
+                case["name"],
+                point
+            );
+            points += 1;
+        }
+        for query in case["rectangles"].as_array().unwrap() {
+            let rectangle = serde_json::from_value(query["rectangle"].clone()).unwrap();
+            assert_eq!(
+                area.intersects_rect(rectangle).unwrap(),
+                query["intersects"].as_bool().unwrap(),
+                "{} rectangle {:?}",
+                case["name"],
+                rectangle
+            );
+            rectangles += 1;
+        }
+    }
+    assert_eq!((points, rectangles), (658, 159));
 }

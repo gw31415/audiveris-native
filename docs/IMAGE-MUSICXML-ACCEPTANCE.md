@@ -314,3 +314,10 @@ Der Winterの未改変CC0譜面をLinux MuseScore3.2.3で全ページ画像化�
 はunsupported_beam_lookup_area_nonconvexで停止した。同等品質はまだfalse。
 次依存は[最新NEXT](../evidence/real-public-page/NEXT-DEPENDENCY.md)、画像/原版比較は
 [休符baseline](../evidence/real-rest-quality-baseline/README.md)。
+
+自動factoryのphase-null13形状と原版nonzero-winding Beam領域を比較して接続した。
+公開An Laura v4はTUPLET_THREE受付、Der Winter v2はclef必須条件へ進んだが、まだXMLは
+出力されていない。原版休符XMLはXSD/独立readerを通過（124notes/9rests）。対象5件と
+既存XML/XSD回帰は成功。実所有の原版観測と幾何数値残差を分けた
+[最新証拠](../evidence/real-image-admission/VALIDATION.json)・
+[次依存](../evidence/real-image-admission/NEXT-DEPENDENCY.md)に沿い、品質falseのまま続ける。

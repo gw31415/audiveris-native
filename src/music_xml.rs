@@ -664,6 +664,27 @@ fn original_default_factory_disabled(shape: &str) -> bool {
             | "PLAYING_CLOSED"
     )
 }
+fn original_phase_factory_null(shape: &str) -> bool {
+    // This is the automatic factory after ShapeChecker. In particular,
+    // HW_REST_set has already become HALF/WHOLE_REST; EIGHTH_set is not a
+    // logical GRACE_NOTE. DOT_set has instant callbacks and is excluded.
+    matches!(
+        shape,
+        "CLUTTER"
+            | "EIGHTH_set"
+            | "HW_REST_set"
+            | "TIME_ZERO"
+            | "TIME_ONE"
+            | "METRO_WHOLE"
+            | "METRO_HALF"
+            | "METRO_QUARTER"
+            | "METRO_SIXTEENTH"
+            | "METRO_DOTTED_HALF"
+            | "METRO_DOTTED_QUARTER"
+            | "METRO_DOTTED_EIGHTH"
+            | "METRO_DOTTED_SIXTEENTH"
+    )
+}
 fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
     if m.owner.prepared.report["symbol_cluster_scope"] != "original-seven-part-cap-recursive" {
         return Err("musicxml_compound_symbol_parts_pending".into());
@@ -676,7 +697,7 @@ fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
             let shape = evaluation["shape"]
                 .as_str()
                 .ok_or("musicxml_symbol_shape_required")?;
-            if original_default_factory_disabled(shape) {
+            if original_default_factory_disabled(shape) || original_phase_factory_null(shape) {
                 continue;
             }
             if shape == "ARPEGGIATO" {
@@ -3856,6 +3877,33 @@ mod tuplet_second_pass;
 
 #[cfg(test)]
 mod default_factory_tests {
+    #[test]
+    fn checked_phase_null_factories_preserve_logical_rest_grace_and_dot_paths() {
+        let source: serde_json::Value = serde_json::from_str(include_str!(
+            "../fixtures/official-phase-null-factories/image-observed.json"
+        ))
+        .unwrap();
+        for case in source["cases"].as_array().unwrap() {
+            assert_eq!(case["returns_null"], true);
+            assert_eq!(case["actual_SIG_unchanged"], true);
+            assert_eq!(case["vertex_edge_object_identity_retained"], true);
+            assert!(super::original_phase_factory_null(
+                case["shape"].as_str().unwrap()
+            ));
+        }
+        for shape in [
+            "GRACE_NOTE",
+            "GRACE_NOTE_DOWN",
+            "GRACE_NOTE_SLASH",
+            "GRACE_NOTE_SLASH_DOWN",
+            "HALF_REST",
+            "WHOLE_REST",
+            "DOT_set",
+            "TIME_FIVE",
+        ] {
+            assert!(!super::original_phase_factory_null(shape));
+        }
+    }
     #[test]
     fn original_default_switches_leave_declared_factory_evaluations_null() {
         let source: serde_json::Value = serde_json::from_str(include_str!(

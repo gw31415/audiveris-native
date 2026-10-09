@@ -1,0 +1,82 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "34f18e77582bec898b6140497b9dc5d15e0bf8dc289d6a34ec1aed742192e325",
+  "image_file_sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0",
+  "compile_commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/real-rest-beam-owners-original-v2/compile-only",
+      "/tmp/real-rest-beam-owners-original-v2/compile-only/Book.java",
+      "/tmp/real-rest-beam-owners-original-v2/compile-only/RunClass.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-rest-beam-owners-original-v2/compile-only",
+      "-d",
+      "/tmp/real-rest-beam-owners-original-v2/classes",
+      "/tmp/RealRestBeamOwnersProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+    ]
+  ],
+  "compile_only_signatures_on_runtime_classpath": false,
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/real-rest-beam-owners-original-v2/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-rest-beam-owners-original-v2/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-rest-beam-owners-original-v2/prefs",
+    "-Duser.home=/tmp/real-rest-beam-owners-original-v2/home",
+    "-Dnative.probe.output=/tmp/real-rest-beam-owners-original-v2/observed.json",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-rest-beam-owners-original-v2/classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "RealRestBeamOwnersProbe",
+    "-output",
+    "/tmp/real-rest-beam-owners-original-v2",
+    "--",
+    "/workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png"
+  ],
+  "exit_code": 0,
+  "console_sha256": "4414930360f90ff00447a4581714e9bea0b434823250a7e31564e07fa2e37f5c",
+  "native_outputs_used": false,
+  "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+  "observed_sha256": "911a4e7ebb2a8c84b4b16228ffbb0ad3c107437db2bb618f179d062eee921818",
+  "scope": "fresh original unchanged Der Winter PNG through ordinary BEAMS then STEMS; retain selected actual beam/glyph owner identities and invoke their original VLinker.buildLuArea(null) after STEMS with theoLine restored; no native input or overwritten original geometry",
+  "runner_sha256": "64dde91441cf4b0f95beef3b67619e04b6956674a0b8b71f7aa553ef0b088bf0",
+  "runtime_binary_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "runtime_version": "25.0.3+9-LTS",
+  "compiled_observer_sha256": "14f8595aed5ff244ad3f03d612c13d535f42026d1f6c41059a80ae83250ff309",
+  "pinned_source_sha256": {
+    "sheet/stem/BeamLinker.java": "131f91f6605ecf03463ef4b6021a461240f99d7dfe2b1a1b94b0213d158d1747",
+    "sheet/stem/StemsRetriever.java": "26e95fa09905b39ea0dcae2b65a85b4e4fcb49b772c57f97f332a00c4dc8b9e7",
+    "sheet/stem/StemsStep.java": "791a2c7d25e944b026277f25057809e2bfe27137c7ff06bc7dd1ae5d41e5a6ce",
+    "sheet/SystemInfo.java": "ca5046588d72fc9eef0f21d6957cd2d34d63510599ca3f89aa70a73a2a690952",
+    "sheet/StaffManager.java": "3fc3f109b1255dbdc58914c11d3d9f8f3027f6124f49192cd0dc1ec86ca4a77f"
+  },
+  "saved_PAGE_book_sha256": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "qualifications": [
+    "The previous v1 observer failed at BEAMS while serializing Staff Rectangle2D as Rectangle; its log and provenance remain in /tmp/real-rest-beam-owners-original-v1. v2 fixes only observer Rectangle2D serialization.",
+    "Original PNG processing runs ordinary reachStep(BEAMS,false), then ordinary reachStep(STEMS,false), retaining actual beam references across stages. No original geometry or ownership is replaced with native inputs.",
+    "VLinker.buildLuArea(null) observations are fresh method calls after STEMS on retained actual original linkers; theoLine is restored after each call. They are not an instrumented trace inside the original STEMS callback. Removed System1 object/linkers remain reachable through observer references.",
+    "contains_beam_centroid_590_997 and area_contains_beam_center are queries at declared fixed points [590,997] and [591,999], respectively; the actual glyph centroid was not independently recorded in this observer.",
+    "Fresh original floating geometry is more precise than the persisted one-decimal .omr XML and captured native geometry. Declared-kernel exact arithmetic applies only to identical supplied inputs.",
+    "Original observed ownership and geometry are test-only evidence, not inputs to native recognition."
+  ]
+}

@@ -1,0 +1,10 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-native)
+    Finished `test` profile [unoptimized] target(s) in 33.59s
+     Running unittests src/lib.rs (target/debug/deps/audiveris_native-5fcd8c0ec93be988)
+
+running 1 test
+test stem_beam_lookup_area::capture_real_rest_beam_lookup_frontier has been running for over 60 seconds
+test stem_beam_lookup_area::capture_real_rest_beam_lookup_frontier ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 290 filtered out; finished in 71.60s
+
