@@ -1,0 +1,16 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "files": {
+    "scripts/java/RealSupportedAlterImageProbe.java": "3615ec8adb8658603c1fcfbeb6eb0ee4688a6b151d1e7c180d93b31699a20943",
+    "fixtures/official-supported-alters/image-observed.json": "5f473e19b40f1133a05953acfce65c3f8d4d000dffb2da63fd0b5c4b4753a252",
+    "fixtures/official-supported-alters/image-provenance.json": "741b2e895521777dbf6671b2a7c02483e3ea5a567d7718efd94dde7805967633"
+  },
+  "pinned_sources": {
+    "sig/SIGraph.java": "6b6ff3172d1f194566a7f59aa2c854cb62ea9c4deab79a43b6b0b85e1d4c4c2f",
+    "sig/SigReducer.java": "6d1b2517d3d0fff6f37c337f6bb1fc02b4ab8ce1dd1dd0ecf3ab4d1e4b2ab244",
+    "sig/relation/AlterHeadRelation.java": "9aa62e928f57f46db0dcec9a15c654b0213441e88e1d65579553dcb796b2fd75",
+    "sheet/symbol/SymbolsStep.java": "613f3b22ecc5a83c38e9595f11e10834286eebb14f779ff45b5fd969f944bca9",
+    "sheet/symbol/InterFactory.java": "2230888cc56c1dc2d3e6678572079afe78984fc333cb2e1c35105697cd4c361d"
+  },
+  "native_inputs_are_unchanged_image_only": true
+}

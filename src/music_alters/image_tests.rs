@@ -153,3 +153,202 @@ pub(crate) fn assert_actual_image_factory(music: &OwnedMusic, cleaned: &crate::G
     }
     assert_eq!((count, linked), (17, 13));
 }
+
+pub(crate) fn assert_supported_context(music: &OwnedMusic, cleaned: &crate::GrayImage) {
+    let source: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-supported-alters/image-observed.json"
+    ))
+    .unwrap();
+    let glyphs = audiveris_staff_removal::extract_glyphs(
+        audiveris_staff_removal::BinaryPage::new(cleaned.width, cleaned.height, &cleaned.pixels)
+            .unwrap(),
+        audiveris_staff_removal::Orientation::Vertical,
+        (0, 0),
+        audiveris_staff_removal::Limits::default(),
+    )
+    .unwrap();
+    let mut cases = 0;
+    let mut actual_removed = 0;
+    let mut max_actual_grade_residual = 0.0_f64;
+    for group in music_symbols::geometry::dispatch(&music.owner, &glyphs).unwrap() {
+        let original = source["systems"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|s| s["system"] == group.system.id)
+            .unwrap();
+        let parts = group.glyphs.into_iter().cloned().collect::<Vec<_>>();
+        let candidates =
+            music_symbols::symbol_candidates(&parts, music.owner.interline, group.system.left, &[])
+                .unwrap();
+        let mut actual_graph = music.owner.graph.clone();
+        let mut actual_keys = Vec::new();
+        for (row, observed) in original["trials"].as_array().unwrap().iter().zip(
+            original["before_contextualize_and_purge"]
+                .as_array()
+                .unwrap(),
+        ) {
+            let digest = format!(
+                "{:x}",
+                Sha256::digest(serde_json::to_vec(&row["glyph"]).unwrap())
+            );
+            let (glyph, _) = candidates
+                .iter()
+                .find(|(g, _)| fingerprint(g) == digest)
+                .unwrap();
+            let staff = music
+                .owner
+                .staffs
+                .iter()
+                .find(|s| row["staff"] == s.id)
+                .unwrap();
+            let mut registry = music.owner.prepared.registry.clone();
+            let gid = registry.register(glyph).unwrap();
+            for control in row["controls"].as_array().unwrap() {
+                let mut graph = music.owner.graph.clone();
+                let key = graph.next_symbol_key(group.system.id).unwrap();
+                let mut data = create(
+                    &music.owner,
+                    glyph,
+                    row["shape"].as_str().unwrap(),
+                    control["grade"].as_f64().unwrap(),
+                    staff,
+                    gid,
+                )
+                .unwrap();
+                data["manual"] = control["manual"].clone();
+                data["frozen"] = control["frozen"].clone();
+                graph.vertex(key, data, false).unwrap();
+                set_links(&mut graph, key, music.owner.interline, group.system.profile).unwrap();
+                // Declared partner grades isolate the support contract from
+                // whole classifier/context parity.
+                for support in control["supports"].as_array().unwrap() {
+                    let head = graph
+                        .live_inter_keys(group.system.id, "HeadInter")
+                        .into_iter()
+                        .find(|k| {
+                            let (n, _) = graph.retained_inter(*k).unwrap();
+                            n["bounds"] == support["head_bounds"]
+                                && n["staff_id"] == support["head_staff"]
+                        })
+                        .unwrap();
+                    let (mut data, _) = graph
+                        .retained_inter(head)
+                        .map(|(n, r)| (n.clone(), r))
+                        .unwrap();
+                    data["grade"] = support["head_grade"].clone();
+                    graph.vertex(head, data, false).unwrap();
+                }
+                let before = graph.snapshot();
+                let contextual =
+                    contextual_grade(&before, graph.retained_inter(key).unwrap().0).unwrap();
+                assert_observed(&json!(contextual), &control["contextual_grade"]);
+                let report = contextualize_and_purge(&mut graph).unwrap();
+                let (node, removed) = graph.retained_inter(key).unwrap();
+                assert_eq!(removed, control["weak"]);
+                assert_observed(&node["contextual_grade"], &control["contextual_grade"]);
+                assert_eq!(node["manual"], control["manual"]);
+                assert_eq!(node["frozen"], control["frozen"]);
+                assert_eq!(node["abnormal"], control["abnormal"]);
+                assert_eq!(
+                    report["removed_weak_alters"].as_array().unwrap().len(),
+                    usize::from(removed)
+                );
+                let after = graph.snapshot();
+                let actual = after["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|n| (n["id"].as_u64().unwrap(), n))
+                    .collect::<std::collections::BTreeMap<_, _>>();
+                for old in before["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter(|n| n["id"] != graph.id(key).unwrap())
+                {
+                    assert_eq!(actual[&old["id"].as_u64().unwrap()], old);
+                }
+                cases += 1;
+            }
+            let key = actual_graph.next_symbol_key(group.system.id).unwrap();
+            actual_graph
+                .vertex(
+                    key,
+                    create(
+                        &music.owner,
+                        glyph,
+                        row["shape"].as_str().unwrap(),
+                        observed["grade"].as_f64().unwrap(),
+                        staff,
+                        gid,
+                    )
+                    .unwrap(),
+                    false,
+                )
+                .unwrap();
+            set_links(
+                &mut actual_graph,
+                key,
+                music.owner.interline,
+                group.system.profile,
+            )
+            .unwrap();
+            actual_keys.push(key);
+        }
+        let before = actual_graph.snapshot();
+        let rollback_key = actual_keys
+            .iter()
+            .copied()
+            .find(|k| {
+                before["relations"].as_array().unwrap().iter().any(|e| {
+                    e["kind"] == "AlterHeadRelation" && e["source"] == actual_graph.id(*k).unwrap()
+                })
+            })
+            .unwrap_or(actual_keys[0]);
+        // A late invalid partner grade must not commit earlier grade writes or
+        // weak removals. Keep the real Chord and relation identities in place.
+        if let Some(edge) = before["relations"].as_array().unwrap().iter().find(|e| {
+            e["kind"] == "AlterHeadRelation"
+                && e["source"] == actual_graph.id(rollback_key).unwrap()
+        }) {
+            let mut invalid = actual_graph.clone();
+            let mut head = before["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|n| n["id"] == edge["target"])
+                .unwrap()
+                .clone();
+            let key: Key = serde_json::from_value(head["origin"].clone()).unwrap();
+            head["grade"] = json!(1.01);
+            invalid.vertex(key, head, false).unwrap();
+            let before = invalid.snapshot();
+            assert!(contextualize_and_purge(&mut invalid).is_err());
+            assert_eq!(invalid.snapshot(), before);
+        }
+        contextualize_and_purge(&mut actual_graph).unwrap();
+        for (key, expected) in actual_keys.into_iter().zip(
+            original["after_contextualize_and_purge"]
+                .as_array()
+                .unwrap(),
+        ) {
+            let (node, removed) = actual_graph.retained_inter(key).unwrap();
+            assert_eq!(removed, expected["removed"]);
+            let residual = (node["contextual_grade"].as_f64().unwrap()
+                - expected["contextual_grade"].as_f64().unwrap())
+            .abs();
+            max_actual_grade_residual = max_actual_grade_residual.max(residual);
+            assert!(residual < 0.0004);
+            assert_eq!(node["manual"], expected["manual"]);
+            actual_removed += usize::from(removed);
+        }
+    }
+    assert_eq!((cases, actual_removed), (204, 2));
+    std::fs::write(
+        "/tmp/real-supported-alter-native-residual.json",
+        serde_json::to_vec(&json!({"max_actual_grade_residual":max_actual_grade_residual}))
+            .unwrap(),
+    )
+    .unwrap();
+}

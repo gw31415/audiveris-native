@@ -555,7 +555,7 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
                     }
                 }
                 "FLAT" => {
-                    let removed=m.owner.prepared.report["limited_links"]["alter_weak_purge"]["removed_weak_unlinked_alters"].as_array().ok_or("musicxml_alter_purge_required")?;
+                    let removed=m.owner.prepared.report["limited_links"]["alter_weak_purge"]["removed_weak_alters"].as_array().ok_or("musicxml_alter_purge_required")?;
                     if !removed
                         .iter()
                         .any(|n| n["glyph_id"] == t["glyph_id"] && n["shape"] == shape)

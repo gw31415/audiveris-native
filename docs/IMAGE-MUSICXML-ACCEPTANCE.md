@@ -72,7 +72,11 @@ post-analysisの12仮想Ledger曲線をcallbackから保持し、物理Ledger削
 lookupを比較した。対象6件とXML/XSD回帰成功。実画像CLI v21は175.43秒で実AlterHead
 supportのcontextualizationガードへ進み、次は支持付き臨時記号のweak purge、その後の
 実container/共有rhythm/outputへ接続する。shared Stack全filterと正repeatの生成/pairは
-後続に残す。原版最終XMLの8 staccatoはまだnative出力で比較できていない。
+後続に残す。実Alter支持のcontextualization/weak purgeは17実記号と204宣言条件で比較し、
+実Head intrinsic gradeの残差最大2.22e-16、除去2個が一致して接続済み。対象6件とXML/XSD
+回帰成功。実画像CLI v22は184.55秒でHead/Stem/Flagの外部relation projectionへ進み、
+その原版比較が次の切断点。後続競合除去・共有container/rhythm・音高伝播と出力は未完。
+原版最終XMLの8 staccatoはまだnative出力で比較できていない。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、

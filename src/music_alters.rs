@@ -131,45 +131,133 @@ pub(crate) fn set_links(
     }
     Ok(())
 }
-pub(crate) fn purge_unlinked(graph: &mut Graph) -> Result<Value, String> {
+fn contextual_grade(snapshot: &Value, alter: &Value) -> Result<f64, String> {
+    let grade = alter["grade"]
+        .as_f64()
+        .filter(|g| g.is_finite() && (0.0..=1.0).contains(g))
+        .ok_or("music_alter_grade_required")?;
+    let nodes = snapshot["inters"]
+        .as_array()
+        .ok_or("music_alter_SIG_required")?;
+    let relations = snapshot["relations"]
+        .as_array()
+        .ok_or("music_alter_relations_required")?;
+    let mut partners = Vec::new();
+    let mut contributions = std::collections::BTreeMap::new();
+    for relation in relations
+        .iter()
+        .filter(|e| e["source"] == alter["id"] || e["target"] == alter["id"])
+    {
+        if relation["kind"] == "Exclusion" {
+            continue;
+        }
+        if relation["kind"] != "AlterHeadRelation"
+            || relation["source"] != alter["id"]
+            || relation["target_ratio"] != 1.0
+        {
+            return Err("music_alter_typed_context_support_required".into());
+        }
+        let head = nodes
+            .iter()
+            .find(|n| {
+                n["id"] == relation["target"]
+                    && n["kind"] == "HeadInter"
+                    && n["origin"]["system"] == alter["origin"]["system"]
+            })
+            .ok_or("music_alter_actual_context_Head_required")?;
+        let partner = head["id"]
+            .as_u64()
+            .ok_or("music_alter_context_partner_id_required")?;
+        let intrinsic = head["grade"]
+            .as_f64()
+            .filter(|g| g.is_finite() && (0.0..=1.0).contains(g))
+            .ok_or("music_alter_context_partner_grade_required")?;
+        let support = relation["grade"]
+            .as_f64()
+            .filter(|g| g.is_finite() && (0.0..=1.0).contains(g))
+            .ok_or("music_alter_context_support_grade_required")?;
+        let ratio = relation["source_ratio"]
+            .as_f64()
+            .filter(|r| r.is_finite() && (*r - (1. + 3. * support)).abs() < 1e-12)
+            .ok_or("music_alter_context_support_ratio_required")?;
+        if ratio > 1. {
+            partners.push((partner, intrinsic));
+            contributions.insert(partner, intrinsic * (ratio - 1.));
+        }
+    }
+    // Keep the existing partition storage bound; an unadmitted large support
+    // graph must fail before changing any contextual grades or deleting owners.
+    if partners.len() > 16 {
+        return Err("music_alter_context_partner_limit_16".into());
+    }
+    partners.sort_by(|a, b| b.1.total_cmp(&a.1));
+    let mut conflicts = vec![Vec::new(); partners.len()];
+    for (i, (partner, _)) in partners.iter().enumerate() {
+        for edge in relations.iter().filter(|e| e["kind"] == "Exclusion") {
+            let other = if edge["source"] == *partner {
+                edge["target"].as_u64()
+            } else if edge["target"] == *partner {
+                edge["source"].as_u64()
+            } else {
+                None
+            };
+            if let Some(j) =
+                other.and_then(|other| partners.iter().position(|(id, _)| *id == other))
+                && j > i
+                && !conflicts[i].contains(&j)
+            {
+                conflicts[i].push(j);
+            }
+        }
+    }
+    let mut best = 0.0_f64;
+    for partition in crate::sig_context::compatible_partitions(&conflicts) {
+        let sum = partition
+            .into_iter()
+            .map(|i| contributions[&partners[i].0])
+            .sum::<f64>();
+        best = best.max(((1. + sum) * grade) / (1. + sum * grade));
+    }
+    Ok(best)
+}
+pub(crate) fn contextualize_and_purge(graph: &mut Graph) -> Result<Value, String> {
     let snapshot = graph.snapshot();
     let mut staged = graph.clone();
-    let mut removed = Vec::new();
+    let mut weak = Vec::new();
+    let mut contextualized = Vec::new();
     for alter in snapshot["inters"]
         .as_array()
-        .unwrap()
+        .ok_or("music_alter_SIG_required")?
         .iter()
         .filter(|n| n["kind"] == "AlterInter" && n["origin"]["phase"] == "SYMBOL")
     {
-        if snapshot["relations"].as_array().unwrap().iter().any(|e| {
-            (e["source"] == alter["id"] || e["target"] == alter["id"]) && e["kind"] != "Exclusion"
-        }) {
-            return Err("music_alter_supported_context_pending".into());
-        }
-        let grade = alter["grade"]
-            .as_f64()
-            .ok_or("music_alter_grade_required")?;
+        let contextual = contextual_grade(&snapshot, alter)?;
         let key: Key = serde_json::from_value(alter["origin"].clone())
             .map_err(|_| "music_alter_origin_required")?;
         if key.phase != Phase::Symbol {
             return Err("music_alter_symbol_origin_required".into());
         }
-        if grade < 0.5 && alter["frozen"] != true {
-            staged.remove_music_inter(key)?;
-            removed.push(json!({"id":alter["id"],"shape":alter["shape"],"bounds":alter["bounds"],"glyph_id":alter["glyph_id"],"grade":grade,"contextual_grade":grade}));
-        } else {
-            let mut n = alter.clone();
-            n["contextual_grade"] = json!(grade);
-            staged.vertex(key, n, false)?;
+        let mut data = alter.clone();
+        data["contextual_grade"] = json!(contextual);
+        staged.vertex(key, data, false)?;
+        contextualized.push(json!({"id":alter["id"],"contextual_grade":contextual}));
+        if contextual < 0.5 && alter["frozen"] != true {
+            weak.push(key);
         }
+    }
+    let mut removed = Vec::new();
+    for key in weak {
+        let (alter, _) = staged.retained_inter(key)?;
+        removed.push(json!({"id":staged.id(key),"shape":alter["shape"],"bounds":alter["bounds"],"glyph_id":alter["glyph_id"],"grade":alter["grade"],"contextual_grade":alter["contextual_grade"]}));
+        staged.remove_music_inter(key)?;
     }
     *graph = staged;
     Ok(
-        json!({"removed_weak_unlinked_alters":removed,"positive_accidental_head_semantics_complete":false}),
+        json!({"contextualized_alters":contextualized,"removed_weak_alters":removed,"positive_accidental_head_semantics_complete":false}),
     )
 }
 
 #[cfg(test)]
 mod image_tests;
 #[cfg(test)]
-pub(crate) use image_tests::assert_actual_image_factory;
+pub(crate) use image_tests::{assert_actual_image_factory, assert_supported_context};

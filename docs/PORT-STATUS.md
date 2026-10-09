@@ -45,10 +45,15 @@ instant repeatはstaccatoの前に実Staff音高/Barline lookupを接続した�
 原版97実dot候補の反復0と、21実Barline周辺の宣言168 lookupが一致した。
 対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
 実画像CLI v21は175.43秒で `music_alter_supported_context_pending` に到達し、XMLは未出力。
-次は実AlterHead supportによるcontextual grade/weak purge、次いでArticulationや実container/
-共有rhythm/outputへ進む。正のrepeat生成・pair処理とshared Stack全filterは後続に残す。
-原版最終XMLの8 staccatoと生成前後16制御の一致は区別し、画像品質受入は未達。
-[証拠](../evidence/real-repeat-dot-lookup/VALIDATION.json)・[次依存](../evidence/real-repeat-dot-lookup/NEXT-DEPENDENCY.md)。
+実AlterHead supportによるcontextual grade/weak purgeを接続し、17実記号と204宣言
+own-grade/manual/frozen条件が一致した。実Head intrinsic gradeでの残差は最大2.22e-16、
+局所Alter除去2個も一致。全SIGの弱除去・後続LINKS状態とは区別する。
+対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
+実画像CLI v22は184.55秒で `unsupported_head_stem_flag_external_relation` に到達し、XML未出力。
+次は支持partnerへ影響しない外部Exclusionのcontext projectionを原版比較し、実relationを
+保持して後続の競合除去へ渡す。共有container/rhythm、臨時記号の音高伝播、出力と品質受入は未完。
+正repeat生成・pair処理とshared Stack全filterも必要な入力へ後続接続する。
+[証拠](../evidence/real-supported-alter/VALIDATION.json)・[次依存](../evidence/real-supported-alter/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 
