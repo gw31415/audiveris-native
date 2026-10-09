@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Header-clef diatonic candidates, before measure-local clefs/alter/rhythm.
-//! Arithmetic follows ClefInter.noteStepOf/octaveOf and getIntegerPitch.
+//! Clef pitch arithmetic and header-only diatonic candidates.
+//! Arithmetic follows the separate original ClefInter APIs and getIntegerPitch.
 use serde_json::{Value, json};
 
 pub(crate) fn diatonic(
@@ -31,6 +31,43 @@ pub(crate) fn diatonic(
         _ => return Err("unsupported_diatonic_clef"),
     };
     Ok((["A", "B", "C", "D", "E", "F", "G"][index as usize], octave))
+}
+
+pub(crate) fn diatonic_for_clef(
+    clef: Option<(&str, f64)>,
+    head_pitch: f64,
+) -> Result<(&'static str, i32), &'static str> {
+    let (shape, clef_pitch) = clef.unwrap_or(("G_CLEF", 2.));
+    diatonic(shape, clef_pitch, head_pitch)
+}
+
+pub(crate) fn absolute_pitch(
+    clef: Option<(&str, f64)>,
+    head_pitch: f64,
+) -> Result<i64, &'static str> {
+    let (shape, clef_pitch) = clef.unwrap_or(("G_CLEF", 2.));
+    if !clef_pitch.is_finite()
+        || !head_pitch.is_finite()
+        || clef_pitch.abs() > 12.
+        || head_pitch.abs() > 32.
+    {
+        return Err("absolute_pitch_outside_verified_range");
+    }
+    let c = clef_pitch.round_ties_even() as i64;
+    let p = head_pitch.round_ties_even() as i64;
+    // The original C-clef absolute API has the opposite clef-pitch sign from
+    // noteStepOf/octaveOf. VoiceDistance must not derive this from musical pitch.
+    match shape {
+        "G_CLEF" | "G_CLEF_SMALL" => Ok(34 - p),
+        "G_CLEF_8VA" => Ok(41 - p),
+        "G_CLEF_8VB" => Ok(27 - p),
+        "C_CLEF" => Ok(28 - c - p),
+        "F_CLEF" | "F_CLEF_SMALL" => Ok(20 - c - p),
+        "F_CLEF_8VA" => Ok(29 - p),
+        "F_CLEF_8VB" => Ok(15 - p),
+        "PERCUSSION_CLEF" => Ok(0),
+        _ => Err("unsupported_absolute_pitch_clef"),
+    }
 }
 
 /// Derived only from the retained live Graph snapshot and native header result.
@@ -99,6 +136,70 @@ mod tests {
             assert_eq!(o as i64, c["octave"].as_i64().unwrap(), "{c}");
         }
     }
+    #[test]
+    fn direct_original_absolute_and_nullable_pitch_controls_keep_distinct_apis() {
+        let oracle: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-null-header/absolute-control-original.json"
+        ))
+        .unwrap();
+        assert_eq!(oracle["absolute_pitch_derived_from_step_octave"], false);
+        let cases = oracle["cases"].as_array().unwrap();
+        assert_eq!(cases.len(), 268);
+        let mut pitched = 0;
+        for case in cases {
+            let clef = case["shape"]
+                .as_str()
+                .map(|shape| (shape, case["clef_pitch"].as_f64().unwrap()));
+            let head = case["head_pitch"].as_f64().unwrap();
+            assert_eq!(
+                head.round_ties_even() as i64,
+                case["head_integer_pitch"].as_i64().unwrap(),
+                "{case}"
+            );
+            assert_eq!(
+                absolute_pitch(clef, head).unwrap(),
+                case["absolute_pitch"].as_i64().unwrap(),
+                "{case}"
+            );
+            if case["shape"] == "PERCUSSION_CLEF" {
+                assert_eq!(
+                    diatonic_for_clef(clef, head),
+                    Err("unpitched_percussion_requires_separate_mapping")
+                );
+            } else {
+                let (step, octave) = diatonic_for_clef(clef, head).unwrap();
+                assert_eq!(step, case["step"].as_str().unwrap(), "{case}");
+                assert_eq!(octave as i64, case["octave"].as_i64().unwrap(), "{case}");
+                pitched += 1;
+            }
+        }
+        assert_eq!(pitched, 256);
+        assert_eq!(absolute_pitch(Some(("C_CLEF", 4.)), 0.), Ok(24));
+        assert_eq!(diatonic_for_clef(Some(("C_CLEF", 4.)), 0.), Ok(("G", 4)));
+        assert_eq!(absolute_pitch(None, -4.), Ok(38));
+        assert_eq!(diatonic_for_clef(None, -4.), Ok(("F", 5)));
+    }
+
+    #[test]
+    fn nullable_pitch_keeps_invalid_input_and_unpitched_admission_explicit() {
+        for head in [f64::NAN, f64::INFINITY, 33., -33.] {
+            assert!(absolute_pitch(None, head).is_err());
+            assert!(diatonic_for_clef(None, head).is_err());
+        }
+        for clef in [f64::NAN, f64::INFINITY, 13., -13.] {
+            assert!(absolute_pitch(Some(("G_CLEF", clef)), 0.).is_err());
+            assert!(diatonic_for_clef(Some(("G_CLEF", clef)), 0.).is_err());
+        }
+        assert_eq!(
+            absolute_pitch(Some(("UNKNOWN", 0.)), 0.),
+            Err("unsupported_absolute_pitch_clef")
+        );
+        assert_eq!(
+            diatonic_for_clef(Some(("UNKNOWN", 0.)), 0.),
+            Err("unsupported_diatonic_clef")
+        );
+    }
+
     #[test]
     fn unavailable_headers_and_invalid_pitch_do_not_invent_musical_notes() {
         assert!(diatonic("G_CLEF", 2., f64::NAN).is_err());

@@ -483,34 +483,27 @@ impl Context<'_> {
                     .max_by_key(|c| {
                         c["bounds"][0].as_i64().unwrap() + c["bounds"][2].as_i64().unwrap() / 2
                     })
-                    .ok_or("music_mapping_actual_Staff_clef_required")?
             } else {
-                self.clef
+                Some(self.clef)
             };
-            let (step, octave) = crate::head_musical_pitch::diatonic(
-                clef["shape"]
-                    .as_str()
-                    .ok_or("music_mapping_clef_required")?,
-                clef["pitch"]
-                    .as_f64()
-                    .ok_or("music_mapping_clef_pitch_required")?,
-                member["pitch"]
-                    .as_f64()
-                    .ok_or("music_mapping_head_pitch_required")?,
-            )
-            .map_err(str::to_owned)?;
+            let numerical_clef = clef
+                .map(|c| -> Result<_, String> {
+                    Ok((
+                        c["shape"].as_str().ok_or("music_mapping_clef_required")?,
+                        c["pitch"]
+                            .as_f64()
+                            .ok_or("music_mapping_clef_pitch_required")?,
+                    ))
+                })
+                .transpose()?;
             Some(
-                i64::from(octave) * 7
-                    + match step {
-                        "C" => 0,
-                        "D" => 1,
-                        "E" => 2,
-                        "F" => 3,
-                        "G" => 4,
-                        "A" => 5,
-                        "B" => 6,
-                        _ => unreachable!(),
-                    },
+                crate::head_musical_pitch::absolute_pitch(
+                    numerical_clef,
+                    member["pitch"]
+                        .as_f64()
+                        .ok_or("music_mapping_head_pitch_required")?,
+                )
+                .map_err(str::to_owned)?,
             )
         } else {
             None
@@ -645,6 +638,27 @@ impl Context<'_> {
             }
         }
         if !self.read_grouped_slot_times(slot)? {
+            #[cfg(test)]
+            {
+                let measure = &self.measures[self.measure_index];
+                std::fs::write(
+                    "/tmp/real-mapping-conflict-before-rollback.json",
+                    serde_json::to_vec_pretty(&json!({
+                        "measure":{"vector_index":self.measure_index,"system":measure.system,
+                            "part":measure.part,"index":measure.index,
+                            "expected":crate::music_time::format_fraction(self.expected),
+                            "abnormal":measure.timing.abnormal},
+                        "compound":{"key":slot.key,"id":slot.id,
+                            "chord_ids":slot.chord_ids,"members":slot.members},
+                        "narrow_clocks":self.slot_times.projection(slot)?,
+                        "graph":self.graph.snapshot(),
+                        "voices":crate::music_voices::projection(self.voices,self.measures),
+                        "before_transaction_rollback":true
+                    }))
+                    .unwrap(),
+                )
+                .unwrap();
+            }
             return Err("music_mapping_implicit_tuplet_or_conflicting_slot_times_pending".into());
         }
         let rookies = slot

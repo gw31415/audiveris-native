@@ -15,11 +15,13 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
-現在の通常画像CLIは、AnLauraの追加7形状とDer Winterの追加9形状へ到達しました。
-実Arpeggiato factoryは原版と同じ47 Chordを対象にhead-only boundsでnullとなり、
-対象5件・fmt/clippy/build・既存63＋補正8/exact7/64 XML byte/XSDが成功しています。
-両実ページのMusicXMLはまだ未出力で、品質受入は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-arpeggiato-factory/NEXT-DEPENDENCY.md) を使います。
+現在の通常画像CLIはAnLauraの追加7形状、Der Winterの追加9形状でguardされ、
+両実ページのMusicXMLは未出力・品質受入未達です。内部の保持済み実所有経路では、
+null Clefの数値音高と直接absolute API、論理Part/staff調号継承、短い休符音価を接続。
+20実Headと原版268 scalar制御を比較し、短い休符の次でSlot時刻競合へ到達しました。
+失敗時は実Chord/Measure/Stack・Voice/Slotと時計を戻します。原版は同種の競合を
+非致命的に扱い、超過1/8を保持してexportするため、その中間状態が次の比較です。
+直近の作業順は [保存NEXT依存](../evidence/real-null-pitch-export/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

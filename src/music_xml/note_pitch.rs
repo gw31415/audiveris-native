@@ -53,7 +53,7 @@ impl<'a> Reader<'a> {
             .map_err(|_| "music_pitch_bounds_required")?;
         Ok([b[0] + b[2] / 2, b[1] + b[3] / 2])
     }
-    fn diatonic(&self, id: usize) -> Result<(&'static str, i32, usize), String> {
+    fn diatonic(&self, id: usize) -> Result<(&'static str, i32, Option<usize>), String> {
         let n = self.node(id)?;
         if n["kind"] != "HeadInter" {
             return Err("music_pitch_actual_Head_required".into());
@@ -100,24 +100,33 @@ impl<'a> Reader<'a> {
                 clefs.push((center[0], c));
             }
         }
-        let clef = clefs
-            .into_iter()
-            .max_by_key(|(x, _)| *x)
-            .map(|(_, c)| c)
-            .ok_or("music_pitch_actual_ClefBefore_required")?;
-        let (step, octave) = crate::head_musical_pitch::diatonic(
-            clef["shape"]
-                .as_str()
-                .ok_or("music_pitch_Clef_shape_required")?,
-            clef["pitch"]
-                .as_f64()
-                .ok_or("music_pitch_Clef_pitch_required")?,
+        let clef = clefs.into_iter().max_by_key(|(x, _)| *x).map(|(_, c)| c);
+        let numerical_clef = clef
+            .map(|c| -> Result<_, String> {
+                Ok((
+                    c["shape"]
+                        .as_str()
+                        .ok_or("music_pitch_Clef_shape_required")?,
+                    c["pitch"]
+                        .as_f64()
+                        .ok_or("music_pitch_Clef_pitch_required")?,
+                ))
+            })
+            .transpose()?;
+        // The static G fallback has no graph identity and must not borrow a
+        // previous system's physical clef or the writer's carried XML clef.
+        let (step, octave) = crate::head_musical_pitch::diatonic_for_clef(
+            numerical_clef,
             n["pitch"]
                 .as_f64()
                 .ok_or("music_pitch_Head_pitch_required")?,
         )
         .map_err(str::to_owned)?;
-        Ok((step, octave, clef["id"].as_u64().unwrap() as usize))
+        Ok((
+            step,
+            octave,
+            clef.map(|c| c["id"].as_u64().unwrap() as usize),
+        ))
     }
     fn key_before(&self, id: usize) -> Result<Option<&Value>, String> {
         let chord = self.chord(id)?;
@@ -277,6 +286,20 @@ impl<'a> Reader<'a> {
         crate::music_headers::key_alter(self.diatonic(id)?.0, fifths)
     }
     pub(crate) fn read(&self, id: usize) -> Result<Value, String> {
+        self.read_with_key(id, None)
+    }
+    pub(crate) fn read_for_export(
+        &self,
+        id: usize,
+        exported_fifths: Option<i64>,
+    ) -> Result<Value, String> {
+        self.read_with_key(id, Some(exported_fifths))
+    }
+    fn read_with_key(
+        &self,
+        id: usize,
+        export_key_fifths: Option<Option<i64>>,
+    ) -> Result<Value, String> {
         let chord = self.chord(id)?;
         let measure = &self.music.measures[chord.measure];
         let n = self.node(id)?;
@@ -291,9 +314,14 @@ impl<'a> Reader<'a> {
             .transpose()?;
         let accidental =
             |a: Option<&Value>| a.map(|a| json!({"shape":a["shape"],"bounds":a["bounds"]}));
-        Ok(
-            json!({"bounds":n["bounds"],"staff":n["staff_id"],"part":measure.part,"measure_index":measure.index,"step":step,"octave":octave,"alter":self.alteration(id,fifths,&mut BTreeSet::new())?,"key_fifths":fifths,"local_accidental":accidental(self.accidental(id)?),"measure_accidental":accidental(self.measure_accidental(id)?),"effective_clef_id":clef,"effective_key_id":key.map(|k|k["id"].clone())}),
-        )
+        // Some(None) is an empty exported key cache, not a request to fall
+        // back to this physical Measure's key. Ordinary reads retain local keys.
+        let alteration_fifths = export_key_fifths.unwrap_or(fifths);
+        let mut result = json!({"bounds":n["bounds"],"staff":n["staff_id"],"part":measure.part,"measure_index":measure.index,"step":step,"octave":octave,"alter":self.alteration(id,alteration_fifths,&mut BTreeSet::new())?,"key_fifths":fifths,"local_accidental":accidental(self.accidental(id)?),"measure_accidental":accidental(self.measure_accidental(id)?),"effective_clef_id":clef,"effective_key_id":key.map(|k|k["id"].clone())});
+        if let Some(exported) = export_key_fifths {
+            result["export_key_fifths"] = json!(exported);
+        }
+        Ok(result)
     }
 }
 

@@ -1,0 +1,16 @@
+
+running 1 test
+test music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original has been running for over 60 seconds
+
+thread 'music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original' (511025) panicked at src/music_tuplets/tests.rs:622:55:
+first internal rhythm/export error saved in /tmp/real-rest-native-internal-rhythm-export.json: "musicxml_note_duration_outside_quarter_half_scope:ONE_16TH_REST"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original ... FAILED
+
+failures:
+
+failures:
+    music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 307 filtered out; finished in 287.81s
+

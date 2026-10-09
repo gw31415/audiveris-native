@@ -3,6 +3,164 @@ use super::*;
 use crate::{music_measures::ChordKind, music_voice_export::Step};
 use std::{collections::BTreeSet, sync::Arc};
 
+#[derive(Default, Debug, PartialEq, Eq)]
+struct HeaderState {
+    keys: Vec<Option<i64>>,
+    clefs: Vec<Option<ClefAttributes>>,
+}
+
+#[derive(Debug, PartialEq, Eq)]
+struct HeaderChanges {
+    keys: Vec<(Option<usize>, i64)>,
+    clefs: Vec<(usize, ClefAttributes)>,
+}
+
+type MeasureHeaders = (Vec<Option<i64>>, Vec<Option<ClefAttributes>>);
+
+impl HeaderState {
+    fn advance(
+        &mut self,
+        keys: &[Option<i64>],
+        clefs: &[Option<ClefAttributes>],
+        system_start: bool,
+    ) -> Result<HeaderChanges, String> {
+        if keys.is_empty() || keys.len() != clefs.len() {
+            return Err("musicxml_logical_header_Staff_count_required".into());
+        }
+        if self.keys.is_empty() {
+            self.keys.resize(keys.len(), None);
+            self.clefs.resize(keys.len(), None);
+        }
+        if self.keys.len() != keys.len() {
+            return Err("musicxml_logical_Part_Staff_continuity_required".into());
+        }
+        let mut changes = HeaderChanges {
+            keys: Vec::new(),
+            clefs: Vec::new(),
+        };
+        if keys.iter().any(Option::is_some) {
+            if let Some(first) = keys[0]
+                && keys.iter().all(|k| *k == Some(first))
+            {
+                if self.keys.iter().any(|k| *k != Some(first)) {
+                    changes.keys.push((None, first));
+                    self.keys.fill(Some(first));
+                }
+            } else {
+                for (index, &key) in keys.iter().enumerate() {
+                    if let Some(key) = key
+                        && self.keys[index] != Some(key)
+                    {
+                        changes.keys.push((Some(index + 1), key));
+                        self.keys[index] = Some(key);
+                    }
+                }
+            }
+        } else if system_start && self.keys.iter().any(|k| k.is_some_and(|k| k != 0)) {
+            // processKey(null) does nothing. Only the whole-Part void at a
+            // system start cancels a previously exported nonzero signature.
+            changes.keys.push((None, 0));
+            self.keys.fill(Some(0));
+        }
+        for (index, &clef) in clefs.iter().enumerate() {
+            if let Some(clef) = clef
+                && self.clefs[index] != Some(clef)
+            {
+                changes.clefs.push((index + 1, clef));
+                self.clefs[index] = Some(clef);
+            }
+        }
+        Ok(changes)
+    }
+}
+
+// The as-built image path has actual Measure/Staff ownership, but no ordered
+// Measure Key/Clef registry yet. Do not claim this spatial observation handles
+// add/remove lifecycle or substitute Graph order for multiple registered keys.
+fn actual_headers(
+    music: &OwnedMusic,
+    snapshot: &Value,
+    measure_index: usize,
+    first_slot: Option<i64>,
+) -> Result<MeasureHeaders, String> {
+    let measure = &music.measures[measure_index];
+    let geometry = measure
+        .geometry
+        .as_ref()
+        .ok_or("musicxml_actual_Measure_required")?;
+    music.owner.graph.require_actual_music_measure(geometry)?;
+    let nodes = snapshot["inters"]
+        .as_array()
+        .ok_or("musicxml_actual_header_SIG_required")?;
+    let mut keys = Vec::new();
+    let mut clefs = Vec::new();
+    for staff in &geometry.part.staffs {
+        if staff.system != measure.system
+            || !music
+                .owner
+                .staffs
+                .iter()
+                .any(|held| Arc::ptr_eq(staff, held))
+        {
+            return Err("musicxml_actual_header_Staff_required".into());
+        }
+        let [left, right] = geometry.abscissae(staff)?;
+        let mut actual_keys = Vec::new();
+        let mut actual_clefs = Vec::new();
+        for inter in nodes.iter().filter(|n| {
+            n["origin"]["system"] == measure.system
+                && n["staff_id"] == staff.id
+                && matches!(n["kind"].as_str(), Some("KeyInter" | "ClefInter"))
+        }) {
+            let point = center(inter)?;
+            if left < point[0] && point[0] <= right {
+                if inter["kind"] == "KeyInter" {
+                    actual_keys.push(inter);
+                } else {
+                    actual_clefs.push((point, inter));
+                }
+            }
+        }
+        if actual_keys.len() > 1 {
+            return Err("musicxml_multiple_measure_Key_registration_pending".into());
+        }
+        keys.push(
+            actual_keys
+                .first()
+                .map(|k| {
+                    k["fifths"]
+                        .as_i64()
+                        .ok_or("musicxml_actual_key_fifths_required")
+                })
+                .transpose()?,
+        );
+        // ClefIterators can emit several timed changes. Until that is connected,
+        // only one actual clef per Staff/Measure before the first Slot is admitted.
+        if actual_clefs.len() > 1 {
+            return Err("musicxml_multiple_measure_Clef_events_pending".into());
+        }
+        let clef = actual_clefs
+            .first()
+            .map(|(point, inter)| {
+                if let Some(first_slot) = first_slot {
+                    // ClefIterators uses getXOffset(point, singletonList(staff)),
+                    // rather than the surrounding-Staff interpolation overload.
+                    let side = geometry.left_point(&music.owner.graph, staff)?;
+                    let angle = geometry.skew.slope().atan();
+                    let offset = angle.cos() * (point[0] as f64 - side[0])
+                        + angle.sin() * (point[1] as f64 - side[1]);
+                    if !offset.is_finite() || offset > first_slot as f64 {
+                        return Err("musicxml_mid_measure_clef_change_pending".into());
+                    }
+                }
+                clef_attributes(inter)
+            })
+            .transpose()?;
+        clefs.push(clef);
+    }
+    Ok((keys, clefs))
+}
+
 fn node(snapshot: &Value, id: usize) -> Result<&Value, String> {
     snapshot["inters"]
         .as_array()
@@ -214,8 +372,7 @@ impl OwnedMusic {
             writeln!(xml, "<part id=\"P{part}\">").unwrap();
             let mut staff_count = None;
             let mut previous_meter = None;
-            let mut keys = None;
-            let mut clefs = None;
+            let mut headers = HeaderState::default();
             let mut previous_system = None;
             for (number, (mi, measure)) in self
                 .measures
@@ -265,6 +422,17 @@ impl OwnedMusic {
                 if measure.timing.expected != range.duration {
                     return Err("musicxml_recognized_expected_duration_required".into());
                 }
+                let (measure_keys, measure_clefs) = actual_headers(
+                    self,
+                    &snapshot,
+                    mi,
+                    timing.slots.first().map(|slot| slot.x_offset),
+                )?;
+                let changes = headers.advance(
+                    &measure_keys,
+                    &measure_clefs,
+                    previous_system != Some(measure.system),
+                )?;
                 let steps = crate::music_voice_export::sequence(
                     &self.owner.graph,
                     &self.voices,
@@ -310,7 +478,8 @@ impl OwnedMusic {
                         let rest = chord.kind == ChordKind::Rest;
                         let mut event = json!({"chord_id":chord.id,"note_id":id,"rest":rest,"beams":beam_marks,"stem_direction":null});
                         if !rest {
-                            let pitch = reader.read(id)?;
+                            let pitch =
+                                reader.read_for_export(id, headers.keys[staff_number - 1])?;
                             event
                                 .as_object_mut()
                                 .unwrap()
@@ -361,63 +530,28 @@ impl OwnedMusic {
                     let live = node(&snapshot, chord.id)?;
                     omitted.push(json!({"chord":chord.key,"bounds":live["bounds"],"part_id":part,"measure_number":number+1,"voice":live["voice"],"time_offset":live["time_offset"],"slot_id":live["slot_id"],"reason":"no_actual_Voice_BEGIN_in_canonical_Stack_slots"}));
                 }
-                let mut new_keys = Vec::new();
-                let mut new_clefs = Vec::new();
-                for staff in &geometry.part.staffs {
-                    let pitch = self
-                        .chords
-                        .iter()
-                        .filter(|c| c.measure == mi && c.kind == ChordKind::Head)
-                        .flat_map(|c| c.members.iter())
-                        .filter(|n| n["staff_id"] == staff.id)
-                        .min_by_key(|n| n["bounds"][0].as_i64())
-                        .ok_or("musicxml_rest_only_Staff_header_read_pending")?;
-                    let pitch = reader.read(pitch["id"].as_u64().unwrap() as usize)?;
-                    let clef = node(
-                        &snapshot,
-                        pitch["effective_clef_id"].as_u64().unwrap() as usize,
-                    )?;
-                    let attrs = clef_attributes(clef)?;
-                    for event in local
-                        .iter()
-                        .filter(|e| e["staff_id"] == staff.id && e["rest"] == false)
-                    {
-                        let current = clef_attributes(node(
-                            &snapshot,
-                            event["effective_clef_id"].as_u64().unwrap() as usize,
-                        )?)?;
-                        if current != attrs {
-                            return Err("musicxml_mid_measure_clef_change_pending".into());
-                        }
-                    }
-                    new_clefs.push(attrs);
-                    new_keys.push(pitch["key_fifths"].as_i64().unwrap_or(0));
-                }
                 writeln!(xml, "<measure number=\"{}\">", number + 1).unwrap();
                 if previous_system.is_some_and(|s| s != measure.system) {
                     xml.push_str("<print new-system=\"yes\"/>\n");
                 }
                 if number == 0
-                    || keys.as_ref() != Some(&new_keys)
-                    || clefs.as_ref() != Some(&new_clefs)
+                    || !changes.keys.is_empty()
+                    || !changes.clefs.is_empty()
                     || previous_meter != Some(meter)
                 {
                     xml.push_str("<attributes>");
                     if number == 0 {
                         write!(xml, "<divisions>{divisions}</divisions>").unwrap();
                     }
-                    if keys.as_ref() != Some(&new_keys) {
-                        if new_keys.iter().all(|k| *k == new_keys[0]) {
-                            write!(xml, "<key><fifths>{}</fifths></key>", new_keys[0]).unwrap();
+                    for (staff_number, fifths) in &changes.keys {
+                        if let Some(staff_number) = staff_number {
+                            write!(
+                                xml,
+                                "<key number=\"{staff_number}\"><fifths>{fifths}</fifths></key>"
+                            )
+                            .unwrap();
                         } else {
-                            for (i, key) in new_keys.iter().enumerate() {
-                                write!(
-                                    xml,
-                                    "<key number=\"{}\"><fifths>{key}</fifths></key>",
-                                    i + 1
-                                )
-                                .unwrap();
-                            }
+                            write!(xml, "<key><fifths>{fifths}</fifths></key>").unwrap();
                         }
                     }
                     if previous_meter != Some(meter) {
@@ -431,19 +565,17 @@ impl OwnedMusic {
                     if number == 0 && count > 1 {
                         write!(xml, "<staves>{count}</staves>").unwrap();
                     }
-                    if clefs.as_ref() != Some(&new_clefs) {
-                        for (i, clef) in new_clefs.iter().enumerate() {
-                            let mut value = String::new();
-                            write_clef(&mut value, *clef);
-                            if count > 1 {
-                                value = value.replacen(
-                                    "<clef>",
-                                    &format!("<clef number=\"{}\">", i + 1),
-                                    1,
-                                );
-                            }
-                            xml.push_str(&value);
+                    for (staff_number, clef) in &changes.clefs {
+                        let mut value = String::new();
+                        write_clef(&mut value, *clef);
+                        if count > 1 {
+                            value = value.replacen(
+                                "<clef>",
+                                &format!("<clef number=\"{staff_number}\">"),
+                                1,
+                            );
                         }
+                        xml.push_str(&value);
                     }
                     xml.push_str("</attributes>\n");
                 }
@@ -456,8 +588,6 @@ impl OwnedMusic {
                 )?;
                 xml.push_str("</measure>\n");
                 events.extend(local);
-                keys = Some(new_keys);
-                clefs = Some(new_clefs);
                 previous_meter = Some(meter);
                 previous_system = Some(measure.system);
             }
@@ -470,3 +600,6 @@ impl OwnedMusic {
         ))
     }
 }
+
+#[cfg(test)]
+mod header_tests;

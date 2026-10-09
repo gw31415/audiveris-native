@@ -1447,7 +1447,18 @@ pub(crate) fn assign_chord_voice(
             || members.iter().any(|member| {
                 nodes.get(member).is_none_or(|n| {
                     n["kind"] == "RestInter"
-                        && !matches!(n["shape"].as_str(), Some("QUARTER_REST" | "HALF_REST"))
+                        && !matches!(
+                            n["shape"].as_str(),
+                            Some(
+                                "HALF_REST"
+                                    | "QUARTER_REST"
+                                    | "EIGHTH_REST"
+                                    | "ONE_16TH_REST"
+                                    | "ONE_32ND_REST"
+                                    | "ONE_64TH_REST"
+                                    | "ONE_128TH_REST"
+                            )
+                        )
                         && !(voice.measure_rest_chord == Some(id)
                             && n["shape"]
                                 .as_str()

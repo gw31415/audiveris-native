@@ -1,0 +1,25 @@
+{
+  "actual_Chord_Measure_Stack_owners_retained": true,
+  "error": "music_mapping_implicit_tuplet_or_conflicting_slot_times_pending",
+  "failed_stage": "ordinary_native_page_rhythm",
+  "input": "fixtures/real-rest-page/der-winter-gray.png",
+  "input_is_existing_actual_LINKS_owner": true,
+  "public_factory_admission_checked": false,
+  "quality_accepted": false,
+  "rollback_actual_Voice_Slot_identities_retained": true,
+  "rollback_state_equal": true,
+  "schema": "audiveris-native.internal-real-image-continuation.v1",
+  "source_or_truth_used_as_recognition_input": false,
+  "xml_written": false,
+  "raw_artifact": {
+    "path": "/tmp/real-rest-native-internal-rhythm-export.json",
+    "bytes": 3029618,
+    "sha256": "2602eaf534708d3cb8d9d30473880b70b16a9b13c165a8ca65183a37537fd11c"
+  },
+  "state_summary": {
+    "measures": 18,
+    "stacks": 9,
+    "graph_inters": 568,
+    "graph_relations": 671
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "check": "fmt",
+    "exit_code": 0,
+    "elapsed_seconds": 1.9203994940035045,
+    "log": "/tmp/real-null-pitch-rest-v4-fmt.log"
+  },
+  {
+    "check": "clippy",
+    "exit_code": 0,
+    "elapsed_seconds": 22.55461595399538,
+    "log": "/tmp/real-null-pitch-rest-v4-clippy.log"
+  },
+  {
+    "check": "build",
+    "exit_code": 0,
+    "elapsed_seconds": 21.015931321977405,
+    "log": "/tmp/real-null-pitch-rest-v4-build.log"
+  }
+]

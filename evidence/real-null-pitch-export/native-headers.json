@@ -1,0 +1,1880 @@
+{
+  "final_logical_keys": [
+    {
+      "keys": [
+        1
+      ],
+      "part": 1
+    },
+    {
+      "keys": [
+        1,
+        1
+      ],
+      "part": 2
+    }
+  ],
+  "headers": [
+    {
+      "measures": [
+        {
+          "clefs": [
+            {
+              "line": 2,
+              "number": null,
+              "sign": "G"
+            }
+          ],
+          "keys": [
+            {
+              "fifths": 1,
+              "number": null
+            }
+          ]
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        }
+      ],
+      "part": 1
+    },
+    {
+      "measures": [
+        {
+          "clefs": [
+            {
+              "line": 1,
+              "number": 1,
+              "sign": "C"
+            },
+            {
+              "line": 4,
+              "number": 2,
+              "sign": "F"
+            }
+          ],
+          "keys": [
+            {
+              "fifths": 1,
+              "number": null
+            }
+          ]
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        },
+        {
+          "clefs": [],
+          "keys": []
+        }
+      ],
+      "part": 2
+    }
+  ],
+  "null_physical_Staff_heads": [
+    {
+      "absolute_pitch": 38,
+      "declared_plus1": {
+        "alter": 1,
+        "bounds": [
+          186,
+          1276,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "F"
+      },
+      "exported": {
+        "alter": 1,
+        "bounds": [
+          186,
+          1276,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "F"
+      },
+      "head": {
+        "local": 120,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          186,
+          1276,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "F"
+      },
+      "original": {
+        "absolute_pitch": 38,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 1,
+        "bounds": [
+          186,
+          1276,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -4.0,
+        "staff": 6,
+        "step": "F",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 37,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          277,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          277,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "head": {
+        "local": 124,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          277,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "original": {
+        "absolute_pitch": 37,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          277,
+          1282,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -3.0,
+        "staff": 6,
+        "step": "E",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 36,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          369,
+          1287,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "D"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          369,
+          1287,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "D"
+      },
+      "head": {
+        "local": 133,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          369,
+          1287,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "D"
+      },
+      "original": {
+        "absolute_pitch": 36,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          369,
+          1287,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -2.0,
+        "staff": 6,
+        "step": "D",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 41,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          369,
+          1259,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          369,
+          1259,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "head": {
+        "local": 163,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          369,
+          1259,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "original": {
+        "absolute_pitch": 41,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          369,
+          1259,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -7.0,
+        "staff": 6,
+        "step": "B",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 41,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          481,
+          1259,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          481,
+          1259,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "head": {
+        "local": 165,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          481,
+          1259,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 1,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "original": {
+        "absolute_pitch": 41,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          481,
+          1259,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -7.0,
+        "staff": 6,
+        "step": "B",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 39,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          597,
+          1270,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "G"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          597,
+          1270,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "G"
+      },
+      "head": {
+        "local": 118,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          597,
+          1270,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "G"
+      },
+      "original": {
+        "absolute_pitch": 39,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          597,
+          1270,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -5.0,
+        "staff": 6,
+        "step": "G",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 38,
+      "declared_plus1": {
+        "alter": 1,
+        "bounds": [
+          635,
+          1276,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "F"
+      },
+      "exported": {
+        "alter": 1,
+        "bounds": [
+          635,
+          1276,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "F"
+      },
+      "head": {
+        "local": 123,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          635,
+          1276,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "F"
+      },
+      "original": {
+        "absolute_pitch": 38,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 1,
+        "bounds": [
+          635,
+          1276,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -4.0,
+        "staff": 6,
+        "step": "F",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 37,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          674,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          674,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "head": {
+        "local": 127,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          674,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "original": {
+        "absolute_pitch": 37,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          674,
+          1282,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -3.0,
+        "staff": 6,
+        "step": "E",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 36,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          713,
+          1287,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "D"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          713,
+          1287,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "D"
+      },
+      "head": {
+        "local": 136,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          713,
+          1287,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "D"
+      },
+      "original": {
+        "absolute_pitch": 36,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          713,
+          1287,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -2.0,
+        "staff": 6,
+        "step": "D",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 35,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          751,
+          1293,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "C"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          751,
+          1293,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "C"
+      },
+      "head": {
+        "local": 138,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          751,
+          1293,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "C"
+      },
+      "original": {
+        "absolute_pitch": 35,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          751,
+          1293,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -1.0,
+        "staff": 6,
+        "step": "C",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 34,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          790,
+          1299,
+          15,
+          11
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          790,
+          1299,
+          15,
+          11
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "head": {
+        "local": 143,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          790,
+          1299,
+          15,
+          11
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "original": {
+        "absolute_pitch": 34,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          790,
+          1299,
+          15,
+          11
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 4,
+        "pitch": 0.0,
+        "staff": 6,
+        "step": "B",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 33,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          829,
+          1304,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          829,
+          1304,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "head": {
+        "local": 147,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          829,
+          1304,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "original": {
+        "absolute_pitch": 33,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          829,
+          1304,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 4,
+        "pitch": 1.0,
+        "staff": 6,
+        "step": "A",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 40,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          559,
+          1265,
+          15,
+          11
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          559,
+          1265,
+          15,
+          11
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "head": {
+        "local": 167,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          559,
+          1265,
+          15,
+          11
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 2,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "original": {
+        "absolute_pitch": 40,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          559,
+          1265,
+          15,
+          11
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -6.0,
+        "staff": 6,
+        "step": "A",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 35,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          968,
+          1293,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "C"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          968,
+          1293,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "C"
+      },
+      "head": {
+        "local": 140,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          968,
+          1293,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "C"
+      },
+      "original": {
+        "absolute_pitch": 35,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          968,
+          1293,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -1.0,
+        "staff": 6,
+        "step": "C",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 34,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          1061,
+          1298,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          1061,
+          1298,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "head": {
+        "local": 146,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          1061,
+          1298,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "original": {
+        "absolute_pitch": 34,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          1061,
+          1298,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 4,
+        "pitch": 0.0,
+        "staff": 6,
+        "step": "B",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 33,
+      "declared_plus1": {
+        "alter": 1,
+        "bounds": [
+          1029,
+          1304,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": {
+          "bounds": [
+            1015,
+            1292,
+            12,
+            36
+          ],
+          "shape": "SHARP"
+        },
+        "measure_accidental": {
+          "bounds": [
+            1015,
+            1292,
+            12,
+            36
+          ],
+          "shape": "SHARP"
+        },
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "exported": {
+        "alter": 1,
+        "bounds": [
+          1029,
+          1304,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": {
+          "bounds": [
+            1015,
+            1292,
+            12,
+            36
+          ],
+          "shape": "SHARP"
+        },
+        "measure_accidental": {
+          "bounds": [
+            1015,
+            1292,
+            12,
+            36
+          ],
+          "shape": "SHARP"
+        },
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "head": {
+        "local": 152,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 1,
+        "bounds": [
+          1029,
+          1304,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": {
+          "bounds": [
+            1015,
+            1292,
+            12,
+            36
+          ],
+          "shape": "SHARP"
+        },
+        "measure_accidental": {
+          "bounds": [
+            1015,
+            1292,
+            12,
+            36
+          ],
+          "shape": "SHARP"
+        },
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "A"
+      },
+      "original": {
+        "absolute_pitch": 33,
+        "alter_with_declared_null_fifths": 1,
+        "alter_with_declared_plus1_fifths": 1,
+        "bounds": [
+          1029,
+          1304,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 4,
+        "pitch": 1.0,
+        "staff": 6,
+        "step": "A",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 32,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          899,
+          1310,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "G"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          899,
+          1310,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "G"
+      },
+      "head": {
+        "local": 155,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          899,
+          1310,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "G"
+      },
+      "original": {
+        "absolute_pitch": 32,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          899,
+          1310,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 4,
+        "pitch": 2.0,
+        "staff": 6,
+        "step": "G",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 27,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          1129,
+          1338,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 3,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          1129,
+          1338,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 3,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "head": {
+        "local": 168,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          1129,
+          1338,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 3,
+        "octave": 3,
+        "part": 2,
+        "staff": 6,
+        "step": "B"
+      },
+      "original": {
+        "absolute_pitch": 27,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          1129,
+          1338,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 3,
+        "pitch": 7.0,
+        "staff": 6,
+        "step": "B",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 37,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          1244,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 4,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          1244,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 4,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "head": {
+        "local": 130,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          1244,
+          1282,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 4,
+        "octave": 5,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "original": {
+        "absolute_pitch": 37,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          1244,
+          1282,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 5,
+        "pitch": -3.0,
+        "staff": 6,
+        "step": "E",
+        "system": 2
+      }
+    },
+    {
+      "absolute_pitch": 30,
+      "declared_plus1": {
+        "alter": 0,
+        "bounds": [
+          1244,
+          1321,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 4,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "exported": {
+        "alter": 0,
+        "bounds": [
+          1244,
+          1321,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "export_key_fifths": 1,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 4,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "head": {
+        "local": 160,
+        "phase": "HEAD",
+        "system": 2
+      },
+      "native": {
+        "alter": 0,
+        "bounds": [
+          1244,
+          1321,
+          15,
+          12
+        ],
+        "effective_clef_id": null,
+        "effective_key_id": null,
+        "key_fifths": null,
+        "local_accidental": null,
+        "measure_accidental": null,
+        "measure_index": 4,
+        "octave": 4,
+        "part": 2,
+        "staff": 6,
+        "step": "E"
+      },
+      "original": {
+        "absolute_pitch": 30,
+        "alter_with_declared_null_fifths": 0,
+        "alter_with_declared_plus1_fifths": 0,
+        "bounds": [
+          1244,
+          1321,
+          15,
+          12
+        ],
+        "clef_before": null,
+        "key_before": null,
+        "octave": 4,
+        "pitch": 4.0,
+        "staff": 6,
+        "step": "E",
+        "system": 2
+      }
+    }
+  ],
+  "qualification": "Actual Measure/Staff Arcs and live Graph are read; Key/Clef membership is as-built spatial collection until the ordered registry exists. Native rhythm and final MusicXML note equivalence are not claimed.",
+  "stage": "ordinary native LINKS; header-only preview before rhythm"
+}

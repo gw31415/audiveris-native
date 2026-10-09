@@ -552,6 +552,11 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
         .unwrap()
         .clone();
     let exact = Fraction::new(7, 64).unwrap();
+    let control_voices = music.voices.clone();
+    let original_voices = std::mem::replace(&mut music.voices, control_voices);
+    let control_timing = music.measures[seed.measure].timing.clone();
+    let original_timing =
+        std::mem::replace(&mut music.measures[seed.measure].timing, control_timing);
     let vi =
         crate::music_voices::create_voice(&mut failed, &mut music.voices, &music.measures, &seed)
             .unwrap();
@@ -608,4 +613,18 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     );
     assert!(music.measures[mi].stack_tuplets.contains(&key));
     std::fs::write("/tmp/real-linked-tuplets-native-observed.json",serde_json::to_vec_pretty(&json!({"ornaments":ornaments,"lookup":lookup_row,"linked":linked,"context":context,"cached_chord_residuals":confidence_residuals,"contextual_residual":contextual_residual,"same_relation_bodies_after_remove":true,"actual_chord_and_stack_owners_retained":true,"late_survivor_failure_exact_7_64_voice_slot_expected_rollback":true,"positive_surviving_rhythm_complete":false})).unwrap()).unwrap();
+    // Only the declared control changed these live containers. Restore their
+    // held originals after its assertions, before ordinary LINKS sees them.
+    music.voices = original_voices;
+    music.measures[seed.measure].timing = original_timing;
+    let mut music = crate::music_links::continue_links(music).unwrap();
+    music.assert_der_winter_nullable_reader_and_logical_headers();
+    // Header and short-rest support must not turn the next unresolved mapping
+    // into guessed clocks. The diagnostic checks actual-owner rollback too.
+    assert_eq!(
+        music
+            .observe_der_winter_internal_rhythm_export()
+            .unwrap_err(),
+        "music_mapping_implicit_tuplet_or_conflicting_slot_times_pending"
+    );
 }

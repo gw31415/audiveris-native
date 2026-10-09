@@ -4,14 +4,18 @@
 //! special/mirrored heads and tuplets remain separate dependencies.
 use crate::music_time::Fraction;
 use serde_json::Value;
-fn note_duration(shape: &str) -> Result<(u32, &'static str), String> {
-    match shape {
-        "NOTEHEAD_BLACK" | "QUARTER_REST" => Ok((1, "quarter")),
-        "NOTEHEAD_VOID" | "HALF_REST" => Ok((2, "half")),
-        _ => Err(format!(
-            "musicxml_note_duration_outside_quarter_half_scope:{shape}"
-        )),
-    }
+fn note_duration(shape: &str) -> Result<(Fraction, &'static str), String> {
+    let (denominator, note_type) = match shape {
+        "NOTEHEAD_BLACK" | "QUARTER_REST" => (4, "quarter"),
+        "NOTEHEAD_VOID" | "HALF_REST" => (2, "half"),
+        "EIGHTH_REST" => (8, "eighth"),
+        "ONE_16TH_REST" => (16, "16th"),
+        "ONE_32ND_REST" => (32, "32nd"),
+        "ONE_64TH_REST" => (64, "64th"),
+        "ONE_128TH_REST" => (128, "128th"),
+        _ => return Err(format!("musicxml_note_duration_shape_pending:{shape}")),
+    };
+    Ok((Fraction::new(1, denominator)?, note_type))
 }
 #[derive(Clone, Copy)]
 pub(crate) struct ChordDuration {
@@ -180,11 +184,11 @@ pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDu
                 }
                 // A void head without a mirror keeps its half-note base before
                 // flag division; treating every flagged head as black loses it.
-                note_type = match (base, count) {
-                    (2, 1) => "quarter",
-                    (2, 2) | (1, 1) => "eighth",
-                    (2, 3) | (1, 2) => "16th",
-                    (1, 3) => "32nd",
+                note_type = match (shape, count) {
+                    ("NOTEHEAD_VOID", 1) => "quarter",
+                    ("NOTEHEAD_VOID", 2) | ("NOTEHEAD_BLACK", 1) => "eighth",
+                    ("NOTEHEAD_VOID", 3) | ("NOTEHEAD_BLACK", 2) => "16th",
+                    ("NOTEHEAD_BLACK", 3) => "32nd",
                     _ => return Err("musicxml_beam_flag_duration_type_pending".into()),
                 };
             }
@@ -194,7 +198,7 @@ pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDu
             .find(|n| n["id"] == id)
             .ok_or("musicxml_duration_live_chord_required")?;
         let dots = live_chord["dots_number"].as_u64().unwrap_or(0) as usize;
-        let mut duration = Fraction::new(base, 4 << count)?;
+        let mut duration = base.times(Fraction::new(1, 1 << count)?)?;
         match dots {
             0 => {}
             1 => duration = duration.times(Fraction::new(3, 2)?)?,
@@ -215,3 +219,62 @@ pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDu
 mod image_tests;
 #[cfg(test)]
 pub(crate) use image_tests::assert_real_duration_reads;
+
+#[cfg(test)]
+mod rest_tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn short_rest_base_durations_match_direct_original_shape_calls() {
+        let original: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-rest-durations/observed.json"
+        ))
+        .unwrap();
+        let mut compared = 0;
+        for case in original["cases"].as_array().unwrap() {
+            let shape = case["shape"].as_str().unwrap();
+            if matches!(shape, "LONG_REST" | "BREVE_REST" | "WHOLE_REST") {
+                continue; // Measure-rest duration remains the separate existing owner path.
+            }
+            let (duration, _) = note_duration(shape).unwrap();
+            assert_eq!(duration.to_string(), case["duration"]);
+            compared += 1;
+        }
+        assert_eq!(compared, 9);
+    }
+
+    #[test]
+    fn dotted_short_rest_keeps_exact_duration_and_the_legacy_tick_boundary() {
+        for (shape, dots, duration, note_type, ticks) in [
+            ("EIGHTH_REST", 0, "1/8", "eighth", Some(2)),
+            ("EIGHTH_REST", 1, "3/16", "eighth", Some(3)),
+            ("EIGHTH_REST", 2, "7/32", "eighth", None),
+            ("ONE_16TH_REST", 0, "1/16", "16th", Some(1)),
+            ("ONE_16TH_REST", 1, "3/32", "16th", None),
+            ("ONE_16TH_REST", 2, "7/64", "16th", None),
+            ("ONE_32ND_REST", 0, "1/32", "32nd", None),
+            ("ONE_64TH_REST", 0, "1/64", "64th", None),
+            ("ONE_128TH_REST", 0, "1/128", "128th", None),
+        ] {
+            let snapshot = json!({"inters":[
+                {"id":1,"kind":"RestChordInter","dots_number":dots,"manual":true},
+                {"id":2,"kind":"RestInter","shape":shape}],
+                "relations":[{"kind":"Containment","source":1,"target":2}]});
+            let before = snapshot.clone();
+            let actual = live_exact(&snapshot, 1).unwrap();
+            assert_eq!(actual.intrinsic, Some(Fraction::parse(duration).unwrap()));
+            assert_eq!(actual.note_type, note_type);
+            assert_eq!(actual.beams_or_flags, 0);
+            assert_eq!(actual.dots, dots);
+            match ticks {
+                Some(ticks) => assert_eq!(live(&snapshot, 1).unwrap().intrinsic, Some(ticks)),
+                None => assert_eq!(
+                    live(&snapshot, 1).err().unwrap(),
+                    "musicxml_dotted_duration_finer_than_sixteenth_pending"
+                ),
+            }
+            assert_eq!(snapshot, before);
+        }
+    }
+}
