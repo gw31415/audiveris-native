@@ -173,9 +173,38 @@ fn mode(values: impl Iterator<Item = i32>) -> Option<i32> {
 /// Musical state carried from one page to the next.
 #[derive(Default)]
 pub struct State {
+    /// Staff counts of the parts of the fullest system seen so far.
+    template: Vec<usize>,
     clefs: HashMap<(usize, u32), ClefKind>,
     fifths: Option<i32>,
     time: Option<TimeSig>,
+}
+
+/// Align system parts to template parts by staff count, from the bottom
+/// (a missing part is typically a hidden empty vocal staff above the piano).
+fn align(counts: &[usize], template: &[usize]) -> Vec<Option<usize>> {
+    let mut map = vec![None; counts.len()];
+    let (mut i, mut j) = (counts.len(), template.len());
+    while i > 0 && j > 0 {
+        if counts[i - 1] == template[j - 1] {
+            map[i - 1] = Some(j - 1);
+            i -= 1;
+        }
+        j -= 1;
+    }
+    map
+}
+
+fn filler(m: &Measure) -> Measure {
+    Measure {
+        new_system: m.new_system,
+        attributes: None,
+        events: Vec::new(),
+        directions: Vec::new(),
+        clef_changes: Vec::new(),
+        expected: m.expected,
+        right_bar: m.right_bar,
+    }
 }
 
 pub fn build(sheet: &Sheet, state: &mut State) -> Score {
@@ -185,18 +214,61 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     let mut fifths_state = state.fifths;
     let mut time_state = state.time;
 
+    // Parts already built on previous pages are carried by the book; here we
+    // only need as many as the template.
+    for _ in 0..state.template.len() {
+        parts.push(Part { name: format!("Part {}", parts.len() + 1), staves: 1, measures: Vec::new() });
+    }
     for sys in &sheet.systems {
         // System-wide key and time from the staff headers.
         let fifths = mode(sys.staves.iter().map(|&s| sheet.headers[s].fifths)).unwrap_or(0);
         let time = sys.staves.iter().find_map(|&s| sheet.headers[s].time);
-        for (pi, part_staves) in sys.parts.iter().enumerate() {
-            if parts.len() <= pi {
-                parts.push(Part {
-                    name: format!("Part {}", pi + 1),
-                    staves: part_staves.len() as u32,
-                    measures: Vec::new(),
+        let counts: Vec<usize> = sys.parts.iter().map(|p| p.len()).collect();
+        if counts.len() > state.template.len() {
+            // Grow the template: existing parts keep their place.
+            let map = align(&state.template, &counts);
+            let len = parts.iter().map(|p| p.measures.len()).max().unwrap_or(0);
+            let model: Vec<Measure> = parts.iter().find(|p| p.measures.len() == len).map(|p| p.measures.iter().map(filler).collect()).unwrap_or_default();
+            let mut grown: Vec<Option<Part>> = (0..counts.len()).map(|_| None).collect();
+            for (old, part) in parts.drain(..).enumerate() {
+                if let Some(Some(new)) = map.get(old) {
+                    grown[*new] = Some(part);
+                }
+            }
+            parts = grown
+                .into_iter()
+                .enumerate()
+                .map(|(k, p)| p.unwrap_or(Part { name: String::new(), staves: counts[k] as u32, measures: model.clone() }))
+                .collect();
+            for (k, p) in parts.iter_mut().enumerate() {
+                p.name = format!("Part {}", k + 1);
+            }
+            state.template = counts.clone();
+        }
+        let map = align(&counts, &state.template);
+        let n_measures = sys.boundaries.len().saturating_sub(1);
+        for ti in 0..state.template.len() {
+            if map.contains(&Some(ti)) {
+                continue;
+            }
+            // Absent (hidden) part in this system: empty measures.
+            let model = parts.iter().find(|p| !p.measures.is_empty());
+            let expected = time_state.map(|t| Q::new(t.beats as i64, t.beat_type as i64)).unwrap_or(Q::new(1, 1));
+            let _ = model;
+            for mi in 0..n_measures {
+                parts[ti].measures.push(Measure {
+                    new_system: mi == 0,
+                    attributes: None,
+                    events: Vec::new(),
+                    directions: Vec::new(),
+                    clef_changes: Vec::new(),
+                    expected,
+                    right_bar: sys.boundaries[mi + 1].style,
                 });
             }
+        }
+        for (spi, part_staves) in sys.parts.iter().enumerate() {
+            let Some(pi) = map[spi] else { continue };
             let part = &mut parts[pi];
             part.staves = part.staves.max(part_staves.len() as u32);
             // Clefs at system start.
@@ -286,7 +358,9 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             }
         }
     }
-    *state = State { clefs: clef_state, fifths: fifths_state, time: time_state };
+    state.clefs = clef_state;
+    state.fifths = fifths_state;
+    state.time = time_state;
     Score { parts }
 }
 
@@ -652,12 +726,32 @@ fn build_measure(
                     .partial_cmp(&(b.1.y_at(cx) - cy).abs())
                     .unwrap()
             });
-        if let Some((bi, _)) = beam {
+        let beamed = beam.is_some_and(|(bi, _)| {
+            events.iter().any(|ev| ev.stem.is_some_and(|st| sheet.stems[st].beams.contains(&bi)))
+        });
+        if let Some((bi, _)) = beam.filter(|_| beamed) {
             for ev in events.iter_mut() {
                 if let Some(st) = ev.stem
                     && sheet.stems[st].beams.contains(&bi)
                 {
                     ev.tuplet = Some((3, 2));
+                }
+            }
+        } else if let Some(n) = staff_no(s.staff) {
+            // Bracketed (or plain) triplet over unbeamed notes: the three
+            // chords of the staff centered below / above the number.
+            let mut idx: Vec<usize> = (0..events.len()).filter(|&i| events[i].staff == n && matches!(events[i].kind, Kind::Chord { .. })).collect();
+            idx.sort_by(|&a, &b| events[a].x.partial_cmp(&events[b].x).unwrap());
+            if let Some(c) = (0..idx.len()).min_by(|&a, &b| (events[idx[a]].x - cx).abs().partial_cmp(&(events[idx[b]].x - cx).abs()).unwrap())
+                && c >= 1
+                && c + 1 < idx.len()
+                && (events[idx[c]].x - cx).abs() <= 1.5 * il
+            {
+                let group = [idx[c - 1], idx[c], idx[c + 1]];
+                if group.iter().all(|&i| events[i].tuplet.is_none()) && events[group[2]].x - events[group[0]].x <= 12.0 * il {
+                    for i in group {
+                        events[i].tuplet = Some((3, 2));
+                    }
                 }
             }
         }
