@@ -9,10 +9,12 @@ use crate::{
 use serde_json::{Value, json};
 use std::{collections::BTreeMap, sync::Arc};
 
+#[derive(Debug)]
 pub(crate) struct StaffBarline {
     pub(crate) group: Group,
     pub(crate) key: Key,
 }
+#[derive(Debug)]
 pub(crate) struct PartBarline {
     pub(crate) part: Arc<PartGeometry>,
     pub(crate) bars: Vec<Arc<StaffBarline>>,
@@ -45,10 +47,12 @@ impl PartBarline {
         )
     }
 }
+#[derive(Debug)]
 pub(crate) struct Stack {
     pub(crate) system: u64,
     pub(crate) index: usize,
 }
+#[derive(Debug)]
 pub(crate) struct MeasureLayout {
     pub(crate) part: Arc<PartGeometry>,
     pub(crate) index: usize,

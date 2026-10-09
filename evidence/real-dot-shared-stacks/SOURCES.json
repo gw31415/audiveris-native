@@ -1,0 +1,16 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "files": {
+    "scripts/java/RealDotStackImageProbe.java": "f9b2ebdd2c75643de137f0b80c1faf5ff20bf5c12fc7905538876e9733677777",
+    "fixtures/official-dot-shared-stacks/image-observed.json": "e1a67c400c0ed336cb31e36cde19e7b37ea3ac10137be9290f63b24e913a4217",
+    "fixtures/official-dot-shared-stacks/image-provenance.json": "4a605fe9f36e3dd5aba50458982057986222751963b9f5396dbc97a67b4d8ad1"
+  },
+  "pinned_sources": {
+    "sheet/SystemInfo.java": "ca5046588d72fc9eef0f21d6957cd2d34d63510599ca3f89aa70a73a2a690952",
+    "sheet/rhythm/MeasureStack.java": "9d0f711b03636cbc3b307e3a593ed9674e3e6536aebf5a9d0745529e5e1a5ad3",
+    "sheet/rhythm/Measure.java": "c1299a305ff168ffe57b5a537da384ca63d69beda5ecc57bd2f64ce0f372e611",
+    "sheet/rhythm/PageRhythm.java": "257ae1e4261fcfab65ece13c35ea0189f6a7b3db4a24fc946f745fa4b1afeb5a",
+    "sig/inter/AugmentationDotInter.java": "4741eeafed3105f42e908dcb810eea65d7e41400a305f1a693ed7235dc5fa87b"
+  },
+  "native_recognition_inputs_are_unchanged_image_only": true
+}

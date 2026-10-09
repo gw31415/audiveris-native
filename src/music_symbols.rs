@@ -719,6 +719,12 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         .commit_symbol_extension(registry)?;
     m.owner.graph = graph;
     m.chords.extend(new_chords);
+    m.owner.graph.bind_owned_dot_measures(
+        &m.measures,
+        &m.owner.staffs,
+        &m.owner.staff_areas,
+        &m.owner.parts,
+    )?;
     let staffs = m.owner.upstream_report["grid_ir"]["staffs"]
         .as_array()
         .ok_or("music_dot_staff_metadata_required")?;

@@ -7,7 +7,7 @@ use crate::{
 };
 use serde_json::{Value, json};
 use std::sync::Arc;
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub(crate) struct Group {
     pub(crate) staff: Arc<StaffGeometry>,
     pub(crate) members: Vec<Key>,

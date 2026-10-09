@@ -1,6 +1,6 @@
 # 画像入力から原Audiveris同等品質のMusicXMLへ：現在位置と接続順
 
-更新日: 2026-10-08。対象原版5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
+更新日: 2026-10-09。対象原版5.11.0、ソース `9e1e55cd2746037d059345881c53e6a6754bffbd`。
 
 ユーザーが終了条件を変更しました。現在のゴールは、少なくともPNG画像入力から、
 代表的な実譜面を原版Audiverisと同等品質で認識し、native Rust CLIでMusicXMLへ出力することです。
@@ -30,8 +30,12 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 これは原版shape/gradeを制御入力とするfactory比較で、classifier全体の同等性ではない。
 対象3件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
 実画像CLI v17は170.86秒で `music_dot_multistaff_stack_filter_pending` に到達し、XMLは未出力。
-次は保持済みPart/Staff/Measure/Stackを使うDot所属処理。品質受入は未達。
-[証拠](../evidence/real-symbol-alter-factory/VALIDATION.json)・[次依存](../evidence/real-symbol-alter-factory/NEXT-DEPENDENCY.md)。
+実Staff/Part/MeasureLayout/共有Stackを同じArcでDotへ保持し、原版の境界52地点と追加／
+Stack再登録／削除24操作を比較した。null Partは未所属、piano上下Staffは同じPart Measureへ登録。
+対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
+実画像CLI v18は171.14秒でDotの曲線Staff判定に到達し、XMLは未出力。
+次は実曲線音高・実Ledger距離とDotの所属選択。PageRhythm全filter・共有rhythm・品質受入は未完。
+[証拠](../evidence/real-dot-shared-stacks/VALIDATION.json)・[次依存](../evidence/real-dot-shared-stacks/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

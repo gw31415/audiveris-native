@@ -1,6 +1,6 @@
 # 実譜面画像 → MusicXML 品質受入
 
-更新: 2026-10-08。ユーザーの変更した終了条件を適用する。
+更新: 2026-10-09。ユーザーの変更した終了条件を適用する。
 
 ## ゴールと対象
 
@@ -60,7 +60,9 @@ post-analysisの12仮想Ledger曲線をcallbackから保持し、物理Ledger削
 実Alter factoryの17件（リンク13/未接続4）は原版の音高・中間状態・関係値と一致した。
 これは実glyphに原版shape/gradeを与えた制御比較で、classifier全体の同等性ではない。
 実画像CLI v17は170.86秒で複数StaffのDot所属ガードに到達した。保持済み実Part/Measure/Stack
-による所属と曲線Staff選択、後続記号reduction・共有rhythm・出力を接続する。XMLはまだ出力できない。
+によるDot登録を接続した。原版境界52地点と宣言Dot24操作は一致し、対象6件とXML/XSD回帰も成功。
+実画像CLI v18は171.14秒でDotの曲線Staff判定に到達した。次は実曲線・実Ledger距離と所属選択、
+PageRhythm filter、後続記号reduction・共有rhythm・出力。XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。

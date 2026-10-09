@@ -3,8 +3,9 @@ use super::{Graph, Key, Phase};
 use crate::music_measures::Measure;
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::Arc;
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug)]
 pub(super) struct Membership {
     system: u64,
     part: u64,
@@ -13,13 +14,22 @@ pub(super) struct Membership {
     left: i64,
     right: i64,
     dots: Vec<usize>,
+    geometry: Option<Arc<crate::music_measure_layout::MeasureLayout>>,
 }
 #[derive(Clone, Debug, Default)]
 pub(super) struct Ownership {
     measures: Vec<Membership>,
     staff_parts: BTreeMap<(u64, u64), u64>,
+    staffs: Vec<Arc<crate::grid_ir::StaffGeometry>>,
+    areas: Vec<Arc<crate::system_area_geometry::Band>>,
+    parts: Vec<Arc<crate::grid_ir::PartGeometry>>,
 }
 impl Ownership {
+    fn contains_staff(m: &Membership, staff: u64) -> bool {
+        m.geometry.as_ref().map_or(m.staff == staff, |g| {
+            g.part.staffs.iter().any(|s| s.id == staff)
+        })
+    }
     pub(super) fn measure_for_chord(&self, system: u64, chord: &Value) -> Option<(usize, usize)> {
         let bounds: [i64; 4] = serde_json::from_value(chord["bounds"].clone()).ok()?;
         let x = bounds[0] + bounds[2] / 2;
@@ -29,7 +39,9 @@ impl Ownership {
             .find(|(_, m)| {
                 m.system == system
                     && chord["part_id"] == m.part
-                    && chord["staff_id"] == m.staff
+                    && chord["staff_id"]
+                        .as_u64()
+                        .is_some_and(|s| Self::contains_staff(m, s))
                     && m.left < x
                     && x <= m.right
             })
@@ -40,7 +52,9 @@ impl Ownership {
             m.system == system
                 && chord["measure_index"] == m.index
                 && chord["part_id"] == m.part
-                && chord["staff_id"] == m.staff
+                && chord["staff_id"]
+                    .as_u64()
+                    .is_some_and(|s| Self::contains_staff(m, s))
         })
     }
 }
@@ -122,13 +136,46 @@ impl Graph {
             {
                 return Err("music_dot_owned_measure_identity_required".into());
             }
-            if system_staves
-                .insert(m.system, (m.staff, m.part))
-                .is_some_and(|old| old != (m.staff, m.part))
+            if m.geometry.is_none()
+                && system_staves
+                    .insert(m.system, (m.staff, m.part))
+                    .is_some_and(|old| old != (m.staff, m.part))
             {
                 return Err("music_dot_multistaff_stack_filter_pending".into());
             }
-            ownership.staff_parts.insert((m.system, m.staff), m.part);
+            if let Some(g) = &m.geometry {
+                if g.part.system != m.system
+                    || g.part.id != m.part
+                    || g.index != m.index
+                    || g.stack.system != m.system
+                    || g.stack.index != m.index
+                    || !g.part.staffs.iter().any(|s| s.id == m.staff)
+                {
+                    return Err("music_dot_actual_measure_owner_required".into());
+                }
+                for staff in &g.part.staffs {
+                    g.abscissae(staff)?;
+                    if ownership
+                        .staff_parts
+                        .insert((m.system, staff.id), m.part)
+                        .is_some_and(|part| part != m.part)
+                    {
+                        return Err("music_dot_actual_Staff_Part_required".into());
+                    }
+                }
+                if ownership.measures.iter().any(|other| {
+                    other.system == m.system
+                        && other.index == m.index
+                        && other
+                            .geometry
+                            .as_ref()
+                            .is_none_or(|other| !Arc::ptr_eq(&other.stack, &g.stack))
+                }) {
+                    return Err("music_dot_actual_shared_Stack_required".into());
+                }
+            } else {
+                ownership.staff_parts.insert((m.system, m.staff), m.part);
+            }
             ownership.measures.push(Membership {
                 system: m.system,
                 part: m.part,
@@ -137,6 +184,7 @@ impl Graph {
                 left: m.left,
                 right: m.right,
                 dots: Vec::new(),
+                geometry: m.geometry.clone(),
             });
         }
         ownership.measures.sort_by_key(|m| (m.system, m.index));
@@ -145,6 +193,11 @@ impl Graph {
                 || old.measures.iter().zip(&ownership.measures).any(|(a, b)| {
                     (a.system, a.part, a.index, a.left, a.right)
                         != (b.system, b.part, b.index, b.left, b.right)
+                        || match (&a.geometry, &b.geometry) {
+                            (Some(a), Some(b)) => !Arc::ptr_eq(a, b),
+                            (None, None) => false,
+                            _ => true,
+                        }
                 })
                 || old.measures.len() != ownership.measures.len()
             {
@@ -155,19 +208,114 @@ impl Graph {
         self.dot_ownership = Some(ownership);
         Ok(())
     }
+    pub(crate) fn bind_owned_dot_measures(
+        &mut self,
+        measures: &[Measure],
+        staffs: &[Arc<crate::grid_ir::StaffGeometry>],
+        areas: &[Arc<crate::system_area_geometry::Band>],
+        parts: &[Arc<crate::grid_ir::PartGeometry>],
+    ) -> Result<(), String> {
+        let mut next = self.clone();
+        next.bind_dot_measures(measures)?;
+        if staffs.len() != areas.len()
+            || measures.iter().any(|m| {
+                m.geometry.as_ref().is_none_or(|g| {
+                    !parts.iter().any(|p| Arc::ptr_eq(p, &g.part))
+                        || g.part
+                            .staffs
+                            .iter()
+                            .any(|s| !staffs.iter().any(|held| Arc::ptr_eq(s, held)))
+                })
+            })
+        {
+            return Err("music_dot_actual_Staff_area_Part_required".into());
+        }
+        let owner = next.dot_ownership.as_mut().unwrap();
+        if !owner.staffs.is_empty()
+            && (owner.staffs.len() != staffs.len()
+                || owner
+                    .staffs
+                    .iter()
+                    .zip(staffs)
+                    .any(|(a, b)| !Arc::ptr_eq(a, b))
+                || owner.areas.len() != areas.len()
+                || owner
+                    .areas
+                    .iter()
+                    .zip(areas)
+                    .any(|(a, b)| !Arc::ptr_eq(a, b))
+                || owner.parts.len() != parts.len()
+                || owner
+                    .parts
+                    .iter()
+                    .zip(parts)
+                    .any(|(a, b)| !Arc::ptr_eq(a, b)))
+        {
+            return Err("music_dot_measure_rebinding_pending".into());
+        }
+        owner.staffs = staffs.to_vec();
+        owner.areas = areas.to_vec();
+        owner.parts = parts.to_vec();
+        *self = next;
+        Ok(())
+    }
     fn dot_center(&self, id: usize) -> Result<[i64; 2], String> {
         let b: [i64; 4] = serde_json::from_value(self.vertices[id - 1].data["bounds"].clone())
             .map_err(|_| "music_dot_bounds_required")?;
         Ok([b[0] + b[2] / 2, b[1] + b[3] / 2])
     }
     fn stack_for_dot(&self, id: usize) -> Result<Option<usize>, String> {
+        self.stack_at_dot_point(
+            self.vertices[id - 1].key.system,
+            Some(self.dot_center(id)?.map(|v| v as f64)),
+        )
+    }
+    fn stack_at_dot_point(
+        &self,
+        system: u64,
+        point: Option<[f64; 2]>,
+    ) -> Result<Option<usize>, String> {
+        let Some(point) = point else {
+            return Ok(None);
+        };
         let Some(owner) = &self.dot_ownership else {
             return Ok(None);
         };
-        let x = self.dot_center(id)?[0];
-        Ok(owner.measures.iter().position(|m| {
-            m.system == self.vertices[id - 1].key.system && m.left < x && x <= m.right
-        }))
+        if !owner.staffs.is_empty() {
+            let around = crate::grid_staff_neighborhood::around(
+                &owner.staffs,
+                &owner.areas,
+                &owner.parts,
+                system,
+                point,
+            )?;
+            let Some(staff) = around.staffs.first() else {
+                return Ok(None);
+            };
+            for (index, m) in owner
+                .measures
+                .iter()
+                .enumerate()
+                .filter(|(_, m)| m.system == system)
+            {
+                let g = m
+                    .geometry
+                    .as_ref()
+                    .ok_or("music_dot_actual_measure_owner_required")?;
+                if g.part.staffs.iter().any(|s| Arc::ptr_eq(s, staff)) {
+                    let [left, right] = g.abscissae(staff)?;
+                    if (left as f64) < point[0] && point[0] <= right as f64 {
+                        return Ok(Some(index));
+                    }
+                }
+            }
+            return Ok(None);
+        }
+        let x = point[0] as i64;
+        Ok(owner
+            .measures
+            .iter()
+            .position(|m| m.system == system && m.left < x && x <= m.right))
     }
     pub(super) fn dot_edit_stack_target(&self, inter: Key) -> Result<Option<Value>, String> {
         let id = self.id(inter).ok_or("editing_inter_identity_required")?;
@@ -191,7 +339,7 @@ impl Graph {
             .as_ref()
             .ok_or("editing_owned_stack_selection_required")?;
         // SystemInfo.getStackAt uses current center, not cached Part membership.
-        // Binding already enforces the retained one-staff/Part stack geometry.
+        // The first surrounding Staff selects the shared Stack before Part lookup.
         Ok(self.stack_for_dot(id)?.map(|index| {
             let m = &owner.measures[index];
             json!({"system_id":m.system,"measure_index":m.index,"left":m.left,"right":m.right})
@@ -279,10 +427,8 @@ impl Graph {
         if let Some(index) = self.stack_for_dot(id)?
             && let Some(part) = self.augmentation_part(self.vertices[id - 1].key)?
         {
+            let index = self.measure_in_dot_stack(index, part)?;
             let m = &mut self.dot_ownership.as_mut().unwrap().measures[index];
-            if m.part != part {
-                return Err("music_dot_part_stack_owner_required".into());
-            }
             if !m.dots.contains(&id) {
                 m.dots.push(id)
             }
@@ -293,13 +439,28 @@ impl Graph {
         if let Some(index) = self.stack_for_dot(id)?
             && let Some(part) = self.augmentation_part(self.vertices[id - 1].key)?
         {
+            let index = self.measure_in_dot_stack(index, part)?;
             let m = &mut self.dot_ownership.as_mut().unwrap().measures[index];
-            if m.part != part {
-                return Err("music_dot_part_stack_owner_required".into());
-            }
             m.dots.retain(|n| *n != id);
         }
         Ok(())
+    }
+    fn measure_in_dot_stack(&self, index: usize, part: u64) -> Result<usize, String> {
+        let owner = self.dot_ownership.as_ref().unwrap();
+        let selected = &owner.measures[index];
+        owner
+            .measures
+            .iter()
+            .position(|m| {
+                m.part == part
+                    && m.system == selected.system
+                    && match (&selected.geometry, &m.geometry) {
+                        (Some(a), Some(b)) => Arc::ptr_eq(&a.stack, &b.stack),
+                        (None, None) => m.index == selected.index,
+                        _ => false,
+                    }
+            })
+            .ok_or_else(|| "music_dot_part_stack_owner_required".into())
     }
     pub(crate) fn populate_dot_measures(&mut self) -> Result<(), String> {
         if self.dot_ownership.is_none() {
@@ -322,9 +483,13 @@ impl Graph {
     }
     pub(super) fn dot_ownership_snapshot(&self) -> Value {
         let owner = self.dot_ownership.as_ref().unwrap();
-        json!({"scope":"retained ordinary one-staff zero-skew dot subset of PageRhythm.populateFRATs; full FRAT/Part/stack lifecycle partial","measures":owner.measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"measure_index":m.index,"left":m.left,"right":m.right,"augmentation_dot_ids":m.dots})).collect::<Vec<_>>(),"part_cache":self.vertices.iter().enumerate().filter(|(_,v)|v.data["kind"]=="AugmentationDotInter").map(|(i,v)|json!({"id":i+1,"part_id":v.cached_part})).collect::<Vec<_>>()})
+        json!({"scope":"retained ordinary dot Part/shared Stack membership; actual Staff areas and per-Staff abscissae when bound; full FRAT rhythm lifecycle partial","measures":owner.measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"measure_index":m.index,"left":m.left,"right":m.right,"augmentation_dot_ids":m.dots})).collect::<Vec<_>>(),"part_cache":self.vertices.iter().enumerate().filter(|(_,v)|v.data["kind"]=="AugmentationDotInter").map(|(i,v)|json!({"id":i+1,"part_id":v.cached_part})).collect::<Vec<_>>()})
     }
 }
+
+#[cfg(test)]
+#[path = "dot_ownership_image_tests.rs"]
+mod image_tests;
 
 #[cfg(test)]
 mod tests {
