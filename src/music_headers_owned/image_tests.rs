@@ -20,7 +20,6 @@ pub(crate) struct HeldHeaders {
     inters: Vec<InterRef>,
     relations: Vec<(Key, Key, Arc<NativeHeaderRelation>)>,
     carrier_relations: Vec<HeldSystemRelations>,
-    carrier_only_selected: Vec<(Key, Key, Arc<NativeHeaderRelation>)>,
     null_clefs: Vec<Arc<StaffGeometry>>,
     projection: Value,
 }
@@ -31,7 +30,6 @@ pub(crate) fn hold(owner: &OwnedItems) -> HeldHeaders {
     let mut inters = Vec::new();
     let mut relations = Vec::new();
     let mut carrier_relations = Vec::new();
-    let mut carrier_only_selected = Vec::new();
     let mut null_clefs = Vec::new();
     for system in owner.native_headers.systems() {
         assert!(
@@ -137,7 +135,7 @@ pub(crate) fn hold(owner: &OwnedItems) -> HeldHeaders {
                                     })
                             })
                         }));
-                        carrier_only_selected.push((a.key, b.key, relation.clone()));
+                        relations.push((a.key, b.key, relation.clone()));
                     }
                     other => panic!("uncompared selected header relation: {other:?}"),
                 }
@@ -149,7 +147,6 @@ pub(crate) fn hold(owner: &OwnedItems) -> HeldHeaders {
         inters,
         relations,
         carrier_relations,
-        carrier_only_selected,
         null_clefs,
         projection,
     }
@@ -213,36 +210,6 @@ pub(crate) fn verify(music: &OwnedMusic, held: &HeldHeaders, page: &str, stage: 
                 .or_default() += 1;
         }
     }
-    let mut carrier_only_selected = Vec::new();
-    for (source, target, relation) in &held.carrier_only_selected {
-        assert_eq!(relation.body()["kind"], "KeyAltersRelation");
-        assert!(Arc::ptr_eq(
-            music.owner.graph.native_header_source(*source).unwrap(),
-            relation.source()
-        ));
-        assert!(Arc::ptr_eq(
-            music.owner.graph.native_header_source(*target).unwrap(),
-            relation.target()
-        ));
-        // The unchanged narrow importer registers Key Containments and ClefKey
-        // support. KeyAlter support remains in the finalized carrier only.
-        assert!(
-            !music
-                .owner
-                .graph
-                .has_relation(*source, *target, "KeyAltersRelation")
-        );
-        assert!(
-            !music
-                .owner
-                .graph
-                .has_relation(*target, *source, "KeyAltersRelation")
-        );
-        carrier_only_selected.push(json!({"kind":relation.body()["kind"],
-            "source_header_id":relation.source().id(),"target_header_id":relation.target().id(),
-            "manual":relation.body()["manual"]==true,"same_relation_and_member_Arcs":true,
-            "registered_in_shared_SIG":false}));
-    }
     for (source, target, relation) in &held.relations {
         edges.push(
             music
@@ -280,7 +247,7 @@ pub(crate) fn verify(music: &OwnedMusic, held: &HeldHeaders, page: &str, stage: 
     };
     std::fs::write(path,serde_json::to_vec_pretty(&json!({"stage":stage,"nodes":nodes,"relations":edges,"null_selected_clef_count":held.null_clefs.len(),
         "all_carrier_relation_kinds":carrier_kinds,"all_carrier_relation_order_and_endpoint_Arcs_retained":true,
-        "carrier_only_selected_relations":carrier_only_selected,
+        "selected_KeyAlters_supports_registered_from_same_Arcs":true,
         "native_finalized_source_Staff_member_relation_Arcs_retained":true,"transaction_clone_keeps_same_Arcs":true,"read_only_observation":true,
         "Measure_membership_or_prefreeze_identity_claimed":false,"quality_accepted":false})).unwrap()).unwrap();
 }

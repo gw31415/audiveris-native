@@ -1,0 +1,28 @@
+[
+  {
+    "target": "header-scalar",
+    "argv": [
+      "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+      "--exact",
+      "music_headers_owned::tests::contradictory_final_ids_or_member_payloads_never_replace_held_owners",
+      "--test-threads=2",
+      "--nocapture"
+    ],
+    "binary_sha256": "02d5e578a34a2c51ae8d5153dd1154f158f51fbebe24c807f04fac206291e6e3",
+    "unique_targets": 1,
+    "exit_code": 0,
+    "elapsed_seconds": 0.1013931329944171
+  },
+  {
+    "target": "header-finalization",
+    "argv": [
+      "/workspace/audiveris-native/target/debug/deps/header_finalization-0af8df4b21eb8b2f",
+      "--test-threads=2",
+      "--nocapture"
+    ],
+    "binary_sha256": "b3c661904d6742cfd805104506d32c7c41224843812868a447c74f85eeb99098",
+    "unique_targets": 6,
+    "exit_code": 0,
+    "elapsed_seconds": 0.008947065012762323
+  }
+]

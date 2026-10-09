@@ -1,0 +1,510 @@
+{
+  "scope": "Independent original retained Header C/K subset, selected only by original StaffHeader object IDs. The positive nonheader Clef is intentionally outside this prerequisite. Saved-book afterReload already populated Header memberships; original process calls are idempotent controls, not fresh first-add callback observations. Expected comparisons only, never native ownership/recognition inputs.",
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "source_path": "/tmp/measure-filler-clef-key-book-v1/observed.json",
+  "source_sha256": "0765425fd3e4d348857195e3f314c2636ee7daf7a4c0caceebebaa145ff629d8",
+  "systems": [
+    {
+      "system": 1,
+      "filling": [
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            240,
+            373,
+            30,
+            77
+          ],
+          "staff": 1,
+          "part": 1
+        },
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            240,
+            498,
+            30,
+            77
+          ],
+          "staff": 2,
+          "part": 2
+        },
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            242,
+            633,
+            30,
+            39
+          ],
+          "staff": 3,
+          "part": 2
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            283,
+            375,
+            52,
+            53
+          ],
+          "staff": 1,
+          "part": 1
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            283,
+            500,
+            52,
+            54
+          ],
+          "staff": 2,
+          "part": 2
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            283,
+            631,
+            52,
+            54
+          ],
+          "staff": 3,
+          "part": 2
+        }
+      ],
+      "stacks": [
+        {
+          "stack": 1,
+          "kept": [
+            {
+              "kind": "ClefInter",
+              "bounds": [
+                240,
+                373,
+                30,
+                77
+              ],
+              "staff": 1,
+              "part": 1
+            },
+            {
+              "kind": "ClefInter",
+              "bounds": [
+                240,
+                498,
+                30,
+                77
+              ],
+              "staff": 2,
+              "part": 2
+            },
+            {
+              "kind": "ClefInter",
+              "bounds": [
+                242,
+                633,
+                30,
+                39
+              ],
+              "staff": 3,
+              "part": 2
+            },
+            {
+              "kind": "KeyInter",
+              "bounds": [
+                283,
+                375,
+                52,
+                53
+              ],
+              "staff": 1,
+              "part": 1
+            },
+            {
+              "kind": "KeyInter",
+              "bounds": [
+                283,
+                500,
+                52,
+                54
+              ],
+              "staff": 2,
+              "part": 2
+            },
+            {
+              "kind": "KeyInter",
+              "bounds": [
+                283,
+                631,
+                52,
+                54
+              ],
+              "staff": 3,
+              "part": 2
+            }
+          ]
+        },
+        {
+          "stack": 2,
+          "kept": []
+        }
+      ]
+    },
+    {
+      "system": 2,
+      "filling": [
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            78,
+            868,
+            30,
+            77
+          ],
+          "staff": 4,
+          "part": 1
+        },
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            78,
+            1010,
+            30,
+            77
+          ],
+          "staff": 5,
+          "part": 2
+        },
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            80,
+            1153,
+            30,
+            39
+          ],
+          "staff": 6,
+          "part": 2
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            120,
+            870,
+            53,
+            53
+          ],
+          "staff": 4,
+          "part": 1
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            120,
+            1012,
+            53,
+            54
+          ],
+          "staff": 5,
+          "part": 2
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            120,
+            1152,
+            53,
+            53
+          ],
+          "staff": 6,
+          "part": 2
+        }
+      ],
+      "stacks": [
+        {
+          "stack": 1,
+          "kept": [
+            {
+              "kind": "ClefInter",
+              "bounds": [
+                78,
+                868,
+                30,
+                77
+              ],
+              "staff": 4,
+              "part": 1
+            },
+            {
+              "kind": "ClefInter",
+              "bounds": [
+                78,
+                1010,
+                30,
+                77
+              ],
+              "staff": 5,
+              "part": 2
+            },
+            {
+              "kind": "ClefInter",
+              "bounds": [
+                80,
+                1153,
+                30,
+                39
+              ],
+              "staff": 6,
+              "part": 2
+            },
+            {
+              "kind": "KeyInter",
+              "bounds": [
+                120,
+                870,
+                53,
+                53
+              ],
+              "staff": 4,
+              "part": 1
+            },
+            {
+              "kind": "KeyInter",
+              "bounds": [
+                120,
+                1012,
+                53,
+                54
+              ],
+              "staff": 5,
+              "part": 2
+            },
+            {
+              "kind": "KeyInter",
+              "bounds": [
+                120,
+                1152,
+                53,
+                53
+              ],
+              "staff": 6,
+              "part": 2
+            }
+          ]
+        },
+        {
+          "stack": 2,
+          "kept": []
+        }
+      ]
+    }
+  ],
+  "final_memberships": [
+    {
+      "system": 1,
+      "part": 1,
+      "measure": 1,
+      "stack": 1,
+      "clefs": [
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            240,
+            373,
+            30,
+            77
+          ],
+          "staff": 1,
+          "part": 1
+        }
+      ],
+      "keys": [
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            283,
+            375,
+            52,
+            53
+          ],
+          "staff": 1,
+          "part": 1
+        }
+      ]
+    },
+    {
+      "system": 1,
+      "part": 1,
+      "measure": 2,
+      "stack": 2,
+      "clefs": [],
+      "keys": []
+    },
+    {
+      "system": 1,
+      "part": 2,
+      "measure": 1,
+      "stack": 1,
+      "clefs": [
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            240,
+            498,
+            30,
+            77
+          ],
+          "staff": 2,
+          "part": 2
+        },
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            242,
+            633,
+            30,
+            39
+          ],
+          "staff": 3,
+          "part": 2
+        }
+      ],
+      "keys": [
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            283,
+            500,
+            52,
+            54
+          ],
+          "staff": 2,
+          "part": 2
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            283,
+            631,
+            52,
+            54
+          ],
+          "staff": 3,
+          "part": 2
+        }
+      ]
+    },
+    {
+      "system": 1,
+      "part": 2,
+      "measure": 2,
+      "stack": 2,
+      "clefs": [],
+      "keys": []
+    },
+    {
+      "system": 2,
+      "part": 1,
+      "measure": 1,
+      "stack": 1,
+      "clefs": [
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            78,
+            868,
+            30,
+            77
+          ],
+          "staff": 4,
+          "part": 1
+        }
+      ],
+      "keys": [
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            120,
+            870,
+            53,
+            53
+          ],
+          "staff": 4,
+          "part": 1
+        }
+      ]
+    },
+    {
+      "system": 2,
+      "part": 1,
+      "measure": 2,
+      "stack": 2,
+      "clefs": [],
+      "keys": []
+    },
+    {
+      "system": 2,
+      "part": 2,
+      "measure": 1,
+      "stack": 1,
+      "clefs": [
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            78,
+            1010,
+            30,
+            77
+          ],
+          "staff": 5,
+          "part": 2
+        },
+        {
+          "kind": "ClefInter",
+          "bounds": [
+            80,
+            1153,
+            30,
+            39
+          ],
+          "staff": 6,
+          "part": 2
+        }
+      ],
+      "keys": [
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            120,
+            1012,
+            53,
+            54
+          ],
+          "staff": 5,
+          "part": 2
+        },
+        {
+          "kind": "KeyInter",
+          "bounds": [
+            120,
+            1152,
+            53,
+            53
+          ],
+          "staff": 6,
+          "part": 2
+        }
+      ]
+    },
+    {
+      "system": 2,
+      "part": 2,
+      "measure": 2,
+      "stack": 2,
+      "clefs": [],
+      "keys": []
+    }
+  ]
+}

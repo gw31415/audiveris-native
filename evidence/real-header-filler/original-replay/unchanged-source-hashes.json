@@ -1,0 +1,24 @@
+{
+  "v1": {
+    "compile_exit": 0,
+    "run_exit": 1,
+    "seconds": 2.2209974979923572,
+    "book_before": "3d2168a5c3b841d918356ca97b27e0cbb764cff3bad3708257b19ea09f34a331",
+    "book_after": "3d2168a5c3b841d918356ca97b27e0cbb764cff3bad3708257b19ea09f34a331",
+    "jar_before": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "jar_after": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "Book_unchanged": true,
+    "Jar_unchanged": true
+  },
+  "v2": {
+    "compile_exit": 0,
+    "run_exit": 0,
+    "seconds": 2.278743738977937,
+    "book_before": "3d2168a5c3b841d918356ca97b27e0cbb764cff3bad3708257b19ea09f34a331",
+    "book_after": "3d2168a5c3b841d918356ca97b27e0cbb764cff3bad3708257b19ea09f34a331",
+    "jar_before": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "jar_after": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "Book_unchanged": true,
+    "Jar_unchanged": true
+  }
+}

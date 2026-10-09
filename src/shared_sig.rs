@@ -10,6 +10,7 @@ use std::collections::{BTreeMap, BTreeSet};
 mod alter_callbacks;
 mod articulation_callbacks;
 mod beam_rest;
+mod clef;
 #[cfg(test)]
 mod context_projection_image_tests;
 mod direction_callbacks;
@@ -388,6 +389,7 @@ struct Edge {
 }
 #[derive(Clone, Default, Debug)]
 pub struct Graph {
+    clef_ownership: Option<clef::ClefOwnership>,
     native_header_bindings: BTreeMap<Key, header_binding::HeaderBinding>,
     native_header_relation_bindings:
         BTreeMap<usize, std::sync::Arc<crate::native_headers::NativeHeaderRelation>>,

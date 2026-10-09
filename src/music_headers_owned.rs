@@ -159,6 +159,31 @@ pub(crate) fn register_key(
         rows.push(next.retained_inter(member_key)?.0.clone());
         registered.push(member_key);
     }
+    // KeyBuilder inserts actual sibling supports before creating the Key ensemble.
+    for relation in system
+        .relations()
+        .iter()
+        .filter(|relation| relation.body()["kind"] == "KeyAltersRelation")
+    {
+        let left = members
+            .iter()
+            .position(|member| Arc::ptr_eq(member, relation.source()));
+        let right = members
+            .iter()
+            .position(|member| Arc::ptr_eq(member, relation.target()));
+        match (left, right) {
+            (Some(left), Some(right)) if left != right => {
+                next.register_native_header_relation(
+                    registered[left],
+                    registered[right],
+                    relation.clone(),
+                    Phase::MusicKey,
+                )?;
+            }
+            (None, None) => {}
+            _ => return Err("music_header_actual_KeyAlter_sibling_support_required".into()),
+        }
+    }
     let mut data = body.clone();
     data["source_header_id"] = json!(source.id());
     data["member_ids"] = json!(registered.iter().map(|k| next.id(*k)).collect::<Vec<_>>());

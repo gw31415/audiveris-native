@@ -1,0 +1,142 @@
+{
+  "base_commit": "c3334100be01f73c7957d38ade258deedcc7c9bf",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "proposal_hashes": [
+    {
+      "path": "/tmp/clef-filler-next-unit-v1/core.patch",
+      "bytes": 58269,
+      "sha256": "6fff3afa0674f3b161c789fea08d4ff5b0bd25f9f79c13b94e5d5a44e0cb5d11"
+    },
+    {
+      "path": "/tmp/typed-key-alters-import-unit-v1/proposed.patch",
+      "bytes": 5266,
+      "sha256": "7cf95f6fb86bb6740a2bc16e2d646a886ac7b36d0081546e401725ac71dc523c"
+    },
+    {
+      "path": "/tmp/measure-filler-peer-observation-v1/proposed.patch",
+      "bytes": 3722,
+      "sha256": "8e16df2ecd32aaae23dfc6099ca56af19071f511d45d838b63f669e7d5fccaba"
+    }
+  ],
+  "source_copy_plan": {
+    "scope": "Copy-plan only; no checkout edits. Source artifacts frozen. No native comparison until parent confirms completion.",
+    "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "raw_observation_copies": 1,
+    "excluded": [
+      "Book",
+      "Jar",
+      "classes",
+      "private runtime caches/preferences",
+      "duplicate raw observation"
+    ],
+    "failed_v1_source_sha256": "c2cea52f81a9b25cc8ecbfd4f03beea47e8f7f823924c6947f7882bb6503eaea",
+    "executed_superclass_binary_sha256": "c44bd9cb65b13dfa616b5a7467ccfe059c3f99c02915da81eaf1488dfe96ef4a",
+    "copy_plan": [
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/observed.json",
+        "package_path": "fixtures/official-measure-filler-headers/declared-first-add-observed.json",
+        "checkout_target": "fixtures/official-measure-filler-headers/declared-first-add-observed.json",
+        "bytes": 216183,
+        "sha256": "94f58e2bafcf069b024cf7635b54a687aec8e5c7136ceba360d769719cd71a63"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/MeasureFillerFirstAddReplayProbe.java",
+        "package_path": "scripts/java/MeasureFillerFirstAddReplayProbe.java",
+        "checkout_target": "scripts/java/MeasureFillerFirstAddReplayProbe.java",
+        "bytes": 11393,
+        "sha256": "274807b6b4f48b8e9f0e95d8a463ceb93cf3f4444025dc8fd66d29ce3df126d3"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/dependencies/MeasureFillerClefKeyBookProbe.java",
+        "package_path": "scripts/java/MeasureFillerClefKeyBookProbe.java",
+        "checkout_target": "scripts/java/MeasureFillerClefKeyBookProbe.java",
+        "bytes": 8616,
+        "sha256": "c90e3c191c863ecd181cff08456768bf4882f0d3c8c58509e47d811adff350c3"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/compare_native.py",
+        "package_path": "scripts/compare_header_filler_replay.py",
+        "checkout_target": "scripts/compare_header_filler_replay.py",
+        "bytes": 9279,
+        "sha256": "6e5625060da674cceffe380814d8274f679da86be83ed77ebfb96458d838a84a"
+      },
+      {
+        "source": "Derived only path resolution from frozen v2/reproduce.py; not executed",
+        "package_path": "scripts/replay_header_filler.py",
+        "checkout_target": "scripts/replay_header_filler.py",
+        "bytes": 2836,
+        "sha256": "5e82ef9e89499684c4de1c1cf062de5607e4d64e85a4326bd03d7d108ecc4f08"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/RUN-COMMAND.json",
+        "package_path": "evidence/real-header-filler/original-replay/RUN-COMMAND.json",
+        "checkout_target": "evidence/real-header-filler/original-replay/RUN-COMMAND.json",
+        "bytes": 1696,
+        "sha256": "c7ede8e5bbed789408bf882a3fe755a3ba3d0767a98d6c20c4be3b2d9c408427"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/SUMMARY.json",
+        "package_path": "evidence/real-header-filler/original-replay/SUMMARY.json",
+        "checkout_target": "evidence/real-header-filler/original-replay/SUMMARY.json",
+        "bytes": 2815,
+        "sha256": "79a7047c8510688f8ee4c1b8040df3ca16618128c1559b350e9514ceb831f7f8"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/console.log",
+        "package_path": "evidence/real-header-filler/original-replay/console.log",
+        "checkout_target": "evidence/real-header-filler/original-replay/console.log",
+        "bytes": 437,
+        "sha256": "d48b7f4ed3d297cbce302a9c1534ce55fa628c89a895c8daa9e528370820d7d3"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v2/comparison-controls.json",
+        "package_path": "evidence/real-header-filler/original-replay/comparison-controls.json",
+        "checkout_target": "evidence/real-header-filler/original-replay/comparison-controls.json",
+        "bytes": 403,
+        "sha256": "50f8ce7001b7994100aac119f2276c1e08dbbe6ecd189625844d504ac229f433"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v1/RUN-COMMAND.json",
+        "package_path": "evidence/real-header-filler/original-replay/failed-v1/RUN-COMMAND.json",
+        "checkout_target": "evidence/real-header-filler/original-replay/failed-v1/RUN-COMMAND.json",
+        "bytes": 1697,
+        "sha256": "e416ce45168a8c7e5643c3f9abe91308416b3338b6f9b80bd36df0c51abf3bf9"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v1/console.log",
+        "package_path": "evidence/real-header-filler/original-replay/failed-v1/console.log",
+        "checkout_target": "evidence/real-header-filler/original-replay/failed-v1/console.log",
+        "bytes": 862,
+        "sha256": "23b32f383071da95f5b6953bc7cf1a025947e54bc8547af8a6fa8ba180df7d53"
+      },
+      {
+        "source": "/tmp/measure-filler-first-add-replay-v1/observed.json",
+        "package_path": "evidence/real-header-filler/original-replay/failed-v1/observed.json",
+        "checkout_target": "evidence/real-header-filler/original-replay/failed-v1/observed.json",
+        "bytes": 799,
+        "sha256": "f068514cf2676a3ff08b7f2214cc27e2a266868bd6110a36d4aead96e4d580d6"
+      },
+      {
+        "source": "Original RUN-COMMAND.json v1/v2 hashes; no rerun",
+        "package_path": "evidence/real-header-filler/original-replay/unchanged-source-hashes.json",
+        "checkout_target": "evidence/real-header-filler/original-replay/unchanged-source-hashes.json",
+        "bytes": 982,
+        "sha256": "180d186c6c425d8958cb3b5c4c39201d4acce651d42bc48f899ca728c1a11870"
+      },
+      {
+        "source": "Bounded package provenance; observed source only",
+        "package_path": "evidence/real-header-filler/original-replay/README.md",
+        "checkout_target": "evidence/real-header-filler/original-replay/README.md",
+        "bytes": 4010,
+        "sha256": "a7a0d89b43098670737a90241c6c09f5298b284f523764c00f09a03a04a37b8f"
+      }
+    ],
+    "total_payload_bytes": 262008
+  },
+  "source_scope": "declared afterReload header-only replay; nonheader4226 remains observed but is outside native prerequisite",
+  "test_only_postproposal_corrections": [
+    "peer observer reads actual members field",
+    "missing target control removes22; missing source control removes21"
+  ],
+  "earlier_failed_source_replay_retained": true
+}

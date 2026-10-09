@@ -103,6 +103,7 @@ fn declared_header() -> DeclaredHeader {
         },
         inters: vec![clef, key, first, second],
         relations: vec![
+            json!({"kind":"KeyAltersRelation","source":21,"target":22,"manual":true}),
             json!({"kind":"Containment","source":20,"target":21,"manual":true}),
             json!({"kind":"Containment","source":20,"target":22,"manual":false}),
             json!({"kind":"ClefKeyRelation","source":10,"target":20,
@@ -410,11 +411,15 @@ fn contradictory_final_ids_or_member_payloads_never_replace_held_owners() {
         (0, "native_header_duplicate_inter"),
         (1, "native_header_member_payload_conflict"),
         (2, "native_header_relation_target_required"),
+        (3, "native_header_relation_source_required"),
     ] {
         let mut declared = declared_header();
         match case {
             0 => declared.inters.push(declared.inters[0].clone()),
             1 => declared.inters[1]["members"][0]["manual"] = json!(false),
+            2 => {
+                declared.inters.remove(3);
+            }
             _ => {
                 declared.inters.remove(2);
             }

@@ -1,0 +1,114 @@
+{
+  "unique_targets_passed": 19,
+  "fast_unique_targets": 16,
+  "image_and_rational_targets": 3,
+  "real_page_recognition_runs": 2,
+  "source_stable": true,
+  "initial_failures": [
+    {
+      "run": "v1",
+      "phase": "clippy",
+      "reason": "new cfg(test) peer observer used clefs instead of actual members field; fixed before image execution"
+    },
+    {
+      "run": "v2",
+      "phase": "fast scalar",
+      "passed": 9,
+      "failed": 1,
+      "reason": "new first KeyAlters sibling support exposed missing source before the old expected missing Containment target; split test into explicit missing target/source cases"
+    }
+  ],
+  "already_passed_nine_scalar_targets_repeated": false,
+  "production_changed_after_v2_scalar_run": false,
+  "original_Filler": {
+    "scope": "Header-only actual-owner observations; original saved SYMBOLS afterReload declared clear/replay, not fresh first-fill recognition. Source nonheader remains held but is outside this prerequisite. Descriptors join independent observations only; no owner/clock/recognition reconstruction.",
+    "source_sha256": "94f58e2bafcf069b024cf7635b54a687aec8e5c7136ceba360d769719cd71a63",
+    "source_systems": 2,
+    "source_selected_additions": 12,
+    "source_measures": 8,
+    "source_excluded_nonheaders": [
+      {
+        "system": 2,
+        "source_id": 4226,
+        "kind": "ClefInter",
+        "bounds": [
+          291,
+          996,
+          36,
+          79
+        ],
+        "reason": "actual nonheader Inter outside selected-header prerequisite"
+      }
+    ],
+    "source_clock_scope": "Actual held Chord 7/64 and shared Stack expected 1/2 are declared source controls. No nonempty Voice/Slot behavior or same-input native clock parity claimed.",
+    "real_quality_accepted": false,
+    "native_comparison_performed": true,
+    "native_sha256": "655a0f845aeeeb1bd6da502b148a0f8aaf282fc7dfa8de3fc4c91ef51dfdeb2c",
+    "checks": {
+      "systems": true,
+      "additions": true,
+      "initial": true,
+      "final": true
+    },
+    "ordinary_links_actual_owner_assertion": true,
+    "ordinary_links_header_membership_matches_source": true,
+    "observations_match": true
+  },
+  "header_owners": {
+    "AnLaura": {
+      "MEASURES": {
+        "nodes": 36,
+        "relations": 66,
+        "null_clefs": 0,
+        "sha256": "1b79abee5a6df20e0d2d573bebc15e10424b322739e31fb9382a300d2ea6c1cf"
+      },
+      "LINKS": {
+        "nodes": 36,
+        "relations": 66,
+        "null_clefs": 0,
+        "sha256": "37164c7bf953fcb2a3f33db8241f9ec201a2b6c98e814661aca77e3b2ed3d583"
+      }
+    },
+    "DerWinter": {
+      "MEASURES": {
+        "nodes": 15,
+        "relations": 10,
+        "null_clefs": 1,
+        "sha256": "300fb637231ae8ee2a228966d98258342cb062dd3c54afbf494b27a2aa6be872"
+      },
+      "LINKS": {
+        "nodes": 15,
+        "relations": 10,
+        "null_clefs": 1,
+        "sha256": "817b90d6187282536f4227506b2ce2bf0dfdcd1ced6d2877ec059b325653636f"
+      }
+    }
+  },
+  "XML": {
+    "AnLaura": {
+      "XML_sha256": "89157bea58bb7c5e21855e23902430701530cad5bede519d52367b9166820552",
+      "XSD": "passed",
+      "bytes_identical": true,
+      "gold": "evidence/real-directions/laura-native-internal.musicxml"
+    },
+    "DerWinter": {
+      "XML_sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb",
+      "XSD": "passed",
+      "bytes_identical": true,
+      "gold": "evidence/real-page-pickup/der-winter-native-internal.musicxml"
+    },
+    "exact_7_64": {
+      "XML_sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6",
+      "XSD": "passed",
+      "bytes_identical": true,
+      "gold": "evidence/musicxml-rational-voice-clocks/control.musicxml"
+    }
+  },
+  "CLI_events": {
+    "automatic": 63,
+    "declared_correction": 8,
+    "bytes_and_XSD": "passed"
+  },
+  "independent_reader_and_quality_comparison": "Reused only for exactly identical saved real-page XML bytes. No public image rerun or quality acceptance claimed.",
+  "quality_accepted": false
+}

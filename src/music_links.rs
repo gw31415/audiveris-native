@@ -95,6 +95,10 @@ pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, Stri
 /// is not a support relation. Weak rest removal also empties its rest chord.
 pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
+    let mut initial_header_filler = Vec::new();
+    for system in &m.owner.systems {
+        initial_header_filler.push(graph.fill_owned_clefs_and_keys(&m.measure_layout, system.id)?);
+    }
     let directions = crate::music_directions::link_and_contextualize(&m, &mut graph)?;
     // Tuplet lookup reads durationSansTuplet. Original linkAugmentationDots
     // harmonizes actual Chords before lookup, before later weak-dot reduction.
@@ -118,6 +122,9 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let articulation_redundancy =
         crate::music_articulations::check_redundancy(&mut graph, &m.chords)?;
     let dot_consistency = crate::music_dots::reduce_consistencies(&mut graph, &m.chords)?;
+    for system in &m.owner.systems {
+        graph.require_header_filler_boundary(system.id)?;
+    }
     m.owner.graph = graph;
     for (mi, assigned, unassigned) in tuplet_containers {
         m.measures[mi].tuplets = assigned;
@@ -125,6 +132,8 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     }
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
     m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"Rest/TimeWhole physical overlaps with incoming zero-target augmentation support, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
+    m.owner.prepared.report["limited_links"]["initial_header_filler"] =
+        json!(initial_header_filler);
     m.owner.prepared.report["limited_links"]["flag_overlap_preparation"] = flag_overlaps;
     m.owner.prepared.report["limited_links"]["flag_overlap_reduction"] = flag_competition;
     if !removed_beam_head_supports.is_empty() {

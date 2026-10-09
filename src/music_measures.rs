@@ -203,6 +203,12 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
         owner.sheet_skew,
         owner.interline,
     )?;
+    graph.bind_clef_layout(
+        &measure_layout,
+        &owner.staffs,
+        &owner.staff_areas,
+        &owner.parts,
+    )?;
     let mut measures = Vec::new();
     let mut chords = Vec::new();
     let mut bar_rows = Vec::new();
@@ -210,6 +216,30 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     let mut key_rows = Vec::new();
     let mut time_rows = Vec::new();
     for sid in systems {
+        let system = owner
+            .systems
+            .iter()
+            .find(|system| system.id == sid)
+            .ok_or("music_header_actual_System_required")?;
+        let mut header_clefs = Vec::new();
+        // HeaderBuilder completes the System's Clef column before its Key column.
+        // Binding retains those objects; header added() predates Measure creation.
+        for staff in &system.staffs {
+            let header = owner.native_headers.staff_header(staff)?;
+            let key = if let Some(registered) =
+                crate::music_headers_owned::register_clef(&mut graph, header)?
+            {
+                graph.bind_clef_identity(registered.key, staff.clone(), true)?;
+                clef_rows.push(registered.projection);
+                Some(registered.key)
+            } else {
+                if header.key().is_some() {
+                    return Err("music_header_key_without_actual_Clef_pending".into());
+                }
+                None
+            };
+            header_clefs.push((staff.clone(), key));
+        }
         for layout in measure_layout.parts.iter().filter(|p| p.part.system == sid) {
             let part = &layout.part;
             let pid = part.id;
@@ -261,22 +291,22 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     .iter()
                     .find(|headers| headers.system().id == sid)
                     .ok_or("music_native_header_System_required")?;
-                if let Some(clef) =
-                    crate::music_headers_owned::register_clef(&mut graph, actual_header)?
-                {
-                    let clef_key = clef.key;
-                    clef_rows.push(clef.projection);
-                    if let Some(key) = crate::music_headers_owned::register_key(
+                let clef_key = header_clefs
+                    .iter()
+                    .find(|(staff, _)| std::sync::Arc::ptr_eq(staff, actual_staff))
+                    .ok_or("music_header_actual_Clef_registration_required")?
+                    .1;
+                if let Some(clef_key) = clef_key
+                    && let Some(key) = crate::music_headers_owned::register_key(
                         &mut graph,
                         &mut owner.prepared.registry,
                         actual_header,
                         actual_header_system,
                         clef_key,
-                    )? {
-                        key_rows.push(key.projection);
-                    }
-                } else if actual_header.key().is_some() {
-                    return Err("music_header_key_without_actual_Clef_pending".into());
+                    )?
+                {
+                    graph.bind_filler_key_identity(key.key, actual_staff.clone())?;
+                    key_rows.push(key.projection);
                 }
                 // Time registration remains the existing isolated importer.
                 // This unit certifies selected Clef/Key bindings, not Time bindings.

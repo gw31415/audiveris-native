@@ -1,0 +1,10 @@
+{
+  "scope": "Declared comparator-only transformations of source projection, not native recognition or ownership input; no quality acceptance",
+  "checks": {
+    "self_projection_equal": true,
+    "addition_order_difference_detected": true,
+    "peer_membership_difference_detected": true,
+    "before_target_membership_difference_detected": true,
+    "final_membership_difference_detected": true
+  }
+}

@@ -1,0 +1,152 @@
+Historical executed commands only. Do not rerun against recorded output paths.
+
+from pathlib import Path
+import hashlib,json,os,subprocess,time
+root=Path('/workspace/audiveris-native');out=Path('/tmp/real-header-filler-v1');out.mkdir()
+env=os.environ.copy();env.update(CARGO_HOME='/workspace/native-build-tools/cargo',RUSTUP_HOME='/workspace/native-build-tools/rustup',CARGO_INCREMENTAL='0',CARGO_PROFILE_DEV_DEBUG='0',CARGO_PROFILE_TEST_DEBUG='0');env['PATH']='/workspace/native-build-tools/cargo/bin:'+env['PATH']
+files=set(json.loads(Path('/tmp/real-checked-rejections-v1/RESULT.json').read_text())['source_sha256'])
+files.update(subprocess.check_output(['git','diff','--name-only'],cwd=root,text=True).splitlines());files.update(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=root,text=True).splitlines())
+sources={n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in sorted(files) if n.endswith('.rs')}
+checks=[]
+for name,argv in [('fmt',['cargo','fmt','--all','--','--check']),('clippy',['cargo','clippy','--offline','--locked','-j2','--all-targets','--','-D','warnings']),('compile',['cargo','test','--offline','--locked','-j2','--lib','--test','header_finalization','--no-run'])]:
+    started=time.monotonic()
+    with (out/(name+'.log')).open('x') as log:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=600)
+    checks.append(dict(check=name,argv=argv,exit_code=p.returncode,elapsed_seconds=time.monotonic()-started));(out/'CHECKS.json').write_text(json.dumps(checks,indent=2)+'\n');print(json.dumps(checks[-1]),flush=True)
+    if p.returncode:raise SystemExit(p.returncode)
+assert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==h for n,h in sources.items())
+binary=root/'target/debug/deps/audiveris_native-5fcd8c0ec93be988';kernel=root/'target/debug/deps/header_finalization-0af8df4b21eb8b2f'
+scalar_names=['finalized_canonical_members_relations_and_staff_arcs_survive_registration','detached_or_raw_null_selected_clef_cannot_replace_a_held_binding','late_bad_key_glyph_preserves_graph_source_arcs_and_physical_registry','null_selected_headers_do_not_fall_back_to_live_candidates','refused_key_member_support_or_foreign_owner_preserves_held_registration','contradictory_final_ids_or_member_payloads_never_replace_held_owners']
+scalar_names=['shared_sig::clef::filler::scalar_tests::filler_uses_left_open_right_closed_bounds_and_preserves_key_insertion_order','shared_sig::clef::filler::scalar_tests::foreign_equal_id_layout_or_missing_key_owner_preserves_existing_memberships']+['music_headers_owned::tests::'+n for n in scalar_names]+['music_headers::tests::original_key_alter_controls_and_invalid_late_header_are_atomic','music_headers::time_import_tests::time_import_errors_preserve_graph_and_registry']
+fast=[]
+for name,executable,names,unique in [('header-scalar',binary,['--exact',*scalar_names],10),('header-finalization',kernel,[],6)]:
+    argv=[str(executable),*names,'--test-threads=2','--nocapture'];started=time.monotonic();sha=hashlib.sha256(executable.read_bytes()).hexdigest()
+    with (out/(name+'.log')).open('x') as log:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=120)
+    fast.append(dict(target=name,argv=argv,binary_sha256=sha,unique_targets=unique,exit_code=p.returncode,elapsed_seconds=time.monotonic()-started));(out/'FAST-RESULTS.json').write_text(json.dumps(fast,indent=2)+'\n');print(json.dumps(fast[-1]),flush=True)
+    if p.returncode:raise SystemExit(p.returncode)
+names=['music_xml::rational_owned_export_tests::actual_rational_slots_and_underfilled_voice_termination_match_original','music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original','music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original']
+env['AUDIVERIS_RATIONAL_OWNER_XML']='/tmp/real-header-filler-v1-rational.musicxml';assert not Path(env['AUDIVERIS_RATIONAL_OWNER_XML']).exists()
+markers=['real-laura-header-bindings-MEASURES.json','real-laura-header-bindings-LINKS.json','real-rest-header-bindings-MEASURES.json','real-rest-header-bindings-LINKS.json']
+markers += ['real-header-filler-native-control.json','real-header-filler-native-LINKS.json']
+argv=[str(binary),'--exact',*names,'--test-threads=2','--nocapture'];started=time.monotonic();record=dict(argv=argv,start_time=time.time(),source_sha256=sources,binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),unique_targets=3,fast_targets=16,total_unique_targets=19)
+(out/'START.json').write_text(json.dumps(record,indent=2)+'\n');print('Starting same-owner real-page and exact7/64 targets',flush=True)
+with (out/'console.log').open('x') as log:
+    try:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=1800);code=p.returncode
+    except subprocess.TimeoutExpired:code=124
+record.update(exit_code=code,elapsed_seconds=time.monotonic()-started,source_stable=all(hashlib.sha256((root/n).read_bytes()).hexdigest()==h for n,h in sources.items()))
+(out/'RESULT.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({k:record[k] for k in ['exit_code','elapsed_seconds','total_unique_targets','binary_sha256','source_stable']}),flush=True);raise SystemExit(code)
+
+
+from pathlib import Path
+import hashlib,json,os,subprocess,time
+root=Path('/workspace/audiveris-native');out=Path('/tmp/real-header-filler-v2');out.mkdir()
+env=os.environ.copy();env.update(CARGO_HOME='/workspace/native-build-tools/cargo',RUSTUP_HOME='/workspace/native-build-tools/rustup',CARGO_INCREMENTAL='0',CARGO_PROFILE_DEV_DEBUG='0',CARGO_PROFILE_TEST_DEBUG='0');env['PATH']='/workspace/native-build-tools/cargo/bin:'+env['PATH']
+files=set(json.loads(Path('/tmp/real-checked-rejections-v1/RESULT.json').read_text())['source_sha256'])
+files.update(subprocess.check_output(['git','diff','--name-only'],cwd=root,text=True).splitlines());files.update(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=root,text=True).splitlines())
+sources={n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in sorted(files) if n.endswith('.rs')}
+checks=[]
+for name,argv in [('fmt',['cargo','fmt','--all','--','--check']),('clippy',['cargo','clippy','--offline','--locked','-j2','--all-targets','--','-D','warnings']),('compile',['cargo','test','--offline','--locked','-j2','--lib','--test','header_finalization','--no-run'])]:
+    started=time.monotonic()
+    with (out/(name+'.log')).open('x') as log:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=600)
+    checks.append(dict(check=name,argv=argv,exit_code=p.returncode,elapsed_seconds=time.monotonic()-started));(out/'CHECKS.json').write_text(json.dumps(checks,indent=2)+'\n');print(json.dumps(checks[-1]),flush=True)
+    if p.returncode:raise SystemExit(p.returncode)
+assert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==h for n,h in sources.items())
+binary=root/'target/debug/deps/audiveris_native-5fcd8c0ec93be988';kernel=root/'target/debug/deps/header_finalization-0af8df4b21eb8b2f'
+scalar_names=['finalized_canonical_members_relations_and_staff_arcs_survive_registration','detached_or_raw_null_selected_clef_cannot_replace_a_held_binding','late_bad_key_glyph_preserves_graph_source_arcs_and_physical_registry','null_selected_headers_do_not_fall_back_to_live_candidates','refused_key_member_support_or_foreign_owner_preserves_held_registration','contradictory_final_ids_or_member_payloads_never_replace_held_owners']
+scalar_names=['shared_sig::clef::filler::scalar_tests::filler_uses_left_open_right_closed_bounds_and_preserves_key_insertion_order','shared_sig::clef::filler::scalar_tests::foreign_equal_id_layout_or_missing_key_owner_preserves_existing_memberships']+['music_headers_owned::tests::'+n for n in scalar_names]+['music_headers::tests::original_key_alter_controls_and_invalid_late_header_are_atomic','music_headers::time_import_tests::time_import_errors_preserve_graph_and_registry']
+fast=[]
+for name,executable,names,unique in [('header-scalar',binary,['--exact',*scalar_names],10),('header-finalization',kernel,[],6)]:
+    argv=[str(executable),*names,'--test-threads=2','--nocapture'];started=time.monotonic();sha=hashlib.sha256(executable.read_bytes()).hexdigest()
+    with (out/(name+'.log')).open('x') as log:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=120)
+    fast.append(dict(target=name,argv=argv,binary_sha256=sha,unique_targets=unique,exit_code=p.returncode,elapsed_seconds=time.monotonic()-started));(out/'FAST-RESULTS.json').write_text(json.dumps(fast,indent=2)+'\n');print(json.dumps(fast[-1]),flush=True)
+    if p.returncode:raise SystemExit(p.returncode)
+names=['music_xml::rational_owned_export_tests::actual_rational_slots_and_underfilled_voice_termination_match_original','music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original','music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original']
+env['AUDIVERIS_RATIONAL_OWNER_XML']='/tmp/real-header-filler-v2-rational.musicxml';assert not Path(env['AUDIVERIS_RATIONAL_OWNER_XML']).exists()
+markers=['real-laura-header-bindings-MEASURES.json','real-laura-header-bindings-LINKS.json','real-rest-header-bindings-MEASURES.json','real-rest-header-bindings-LINKS.json']
+markers += ['real-header-filler-native-control.json','real-header-filler-native-LINKS.json']
+argv=[str(binary),'--exact',*names,'--test-threads=2','--nocapture'];started=time.monotonic();record=dict(argv=argv,start_time=time.time(),source_sha256=sources,binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),unique_targets=3,fast_targets=16,total_unique_targets=19)
+(out/'START.json').write_text(json.dumps(record,indent=2)+'\n');print('Starting same-owner real-page and exact7/64 targets',flush=True)
+with (out/'console.log').open('x') as log:
+    try:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=1800);code=p.returncode
+    except subprocess.TimeoutExpired:code=124
+record.update(exit_code=code,elapsed_seconds=time.monotonic()-started,source_stable=all(hashlib.sha256((root/n).read_bytes()).hexdigest()==h for n,h in sources.items()))
+(out/'RESULT.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({k:record[k] for k in ['exit_code','elapsed_seconds','total_unique_targets','binary_sha256','source_stable']}),flush=True);raise SystemExit(code)
+
+
+from pathlib import Path
+import hashlib,json,os,subprocess,time
+root=Path('/workspace/audiveris-native');out=Path('/tmp/real-header-filler-v3');out.mkdir()
+env=os.environ.copy();env.update(CARGO_HOME='/workspace/native-build-tools/cargo',RUSTUP_HOME='/workspace/native-build-tools/rustup',CARGO_INCREMENTAL='0',CARGO_PROFILE_DEV_DEBUG='0',CARGO_PROFILE_TEST_DEBUG='0');env['PATH']='/workspace/native-build-tools/cargo/bin:'+env['PATH']
+files=set(json.loads(Path('/tmp/real-checked-rejections-v1/RESULT.json').read_text())['source_sha256'])
+files.update(subprocess.check_output(['git','diff','--name-only'],cwd=root,text=True).splitlines());files.update(subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=root,text=True).splitlines())
+sources={n:hashlib.sha256((root/n).read_bytes()).hexdigest() for n in sorted(files) if n.endswith('.rs')}
+checks=[]
+for name,argv in [('fmt',['cargo','fmt','--all','--','--check']),('clippy',['cargo','clippy','--offline','--locked','-j2','--all-targets','--','-D','warnings']),('compile',['cargo','test','--offline','--locked','-j2','--lib','--test','header_finalization','--no-run'])]:
+    started=time.monotonic()
+    with (out/(name+'.log')).open('x') as log:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=600)
+    checks.append(dict(check=name,argv=argv,exit_code=p.returncode,elapsed_seconds=time.monotonic()-started));(out/'CHECKS.json').write_text(json.dumps(checks,indent=2)+'\n');print(json.dumps(checks[-1]),flush=True)
+    if p.returncode:raise SystemExit(p.returncode)
+assert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==h for n,h in sources.items())
+binary=root/'target/debug/deps/audiveris_native-5fcd8c0ec93be988';kernel=root/'target/debug/deps/header_finalization-0af8df4b21eb8b2f'
+scalar_names=['music_headers_owned::tests::contradictory_final_ids_or_member_payloads_never_replace_held_owners']
+fast=[]
+for name,executable,names,unique in [('header-scalar',binary,['--exact',*scalar_names],1),('header-finalization',kernel,[],6)]:
+    argv=[str(executable),*names,'--test-threads=2','--nocapture'];started=time.monotonic();sha=hashlib.sha256(executable.read_bytes()).hexdigest()
+    with (out/(name+'.log')).open('x') as log:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=120)
+    fast.append(dict(target=name,argv=argv,binary_sha256=sha,unique_targets=unique,exit_code=p.returncode,elapsed_seconds=time.monotonic()-started));(out/'FAST-RESULTS.json').write_text(json.dumps(fast,indent=2)+'\n');print(json.dumps(fast[-1]),flush=True)
+    if p.returncode:raise SystemExit(p.returncode)
+names=['music_xml::rational_owned_export_tests::actual_rational_slots_and_underfilled_voice_termination_match_original','music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original','music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original']
+env['AUDIVERIS_RATIONAL_OWNER_XML']='/tmp/real-header-filler-v3-rational.musicxml';assert not Path(env['AUDIVERIS_RATIONAL_OWNER_XML']).exists()
+markers=['real-laura-header-bindings-MEASURES.json','real-laura-header-bindings-LINKS.json','real-rest-header-bindings-MEASURES.json','real-rest-header-bindings-LINKS.json']
+markers += ['real-header-filler-native-control.json','real-header-filler-native-LINKS.json']
+argv=[str(binary),'--exact',*names,'--test-threads=2','--nocapture'];started=time.monotonic();record=dict(argv=argv,start_time=time.time(),source_sha256=sources,binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),unique_targets=3,fast_targets=16,total_unique_targets=19)
+(out/'START.json').write_text(json.dumps(record,indent=2)+'\n');print('Starting same-owner real-page and exact7/64 targets',flush=True)
+with (out/'console.log').open('x') as log:
+    try:p=subprocess.run(argv,cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=1800);code=p.returncode
+    except subprocess.TimeoutExpired:code=124
+record.update(exit_code=code,elapsed_seconds=time.monotonic()-started,source_stable=all(hashlib.sha256((root/n).read_bytes()).hexdigest()==h for n,h in sources.items()))
+(out/'RESULT.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps({k:record[k] for k in ['exit_code','elapsed_seconds','total_unique_targets','binary_sha256','source_stable']}),flush=True);raise SystemExit(code)
+
+
+from pathlib import Path
+import hashlib,json,subprocess
+from lxml import etree
+root=Path('/workspace/audiveris-native');out=Path('/tmp/real-header-filler-v3')
+run=json.loads((out/'RESULT.json').read_text())
+assert run['exit_code']==0 and run['source_stable']
+assert '3 passed; 0 failed' in (out/'console.log').read_text()
+assert '9 passed; 1 failed' in Path('/tmp/real-header-filler-v2/header-scalar.log').read_text()
+assert '1 passed; 0 failed' in (out/'header-scalar.log').read_text()
+assert '6 passed; 0 failed' in (out/'header-finalization.log').read_text()
+assert all(v['exit_code']==0 for name in ['CHECKS.json','FAST-RESULTS.json'] for v in json.loads((out/name).read_text()))
+headers={}
+for page,prefix,nodes,rels,nulls in [('AnLaura','real-laura',36,66,0),('DerWinter','real-rest',15,10,1)]:
+ stages={}
+ for stage in ['MEASURES','LINKS']:
+  p=Path('/tmp')/f'{prefix}-header-bindings-{stage}.json';assert p.stat().st_mtime>=run['start_time'];v=json.loads(p.read_text())
+  assert len(v['nodes'])==nodes and len(v['relations'])==rels and v['null_selected_clef_count']==nulls
+  assert v['all_carrier_relation_order_and_endpoint_Arcs_retained'] and v['selected_KeyAlters_supports_registered_from_same_Arcs']
+  assert all(r['same_relation_and_endpoint_Arcs'] for r in v['relations']) and not v['quality_accepted']
+  stages[stage]={'nodes':nodes,'relations':rels,'null_clefs':nulls,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
+ headers[page]=stages
+for marker in ['real-header-filler-native-control.json','real-header-filler-native-LINKS.json']:
+ assert (Path('/tmp')/marker).stat().st_mtime>=run['start_time']
+argv=['python3','/tmp/measure-filler-first-add-replay-v2/compare_native.py','--source','/tmp/measure-filler-first-add-replay-v2/observed.json','--native','/tmp/real-header-filler-native-control.json','--links','/tmp/real-header-filler-native-LINKS.json','--output','/tmp/real-header-filler-v3-source-comparison.json']
+# This comparison ran after the completed AnLaura target while DerWinter continued.
+assert Path('/tmp/real-header-filler-v3-source-comparison.json').exists()
+comparison=json.loads(Path('/tmp/real-header-filler-v3-source-comparison.json').read_text());assert comparison['observations_match']
+assert comparison['native_sha256']==hashlib.sha256(Path('/tmp/real-header-filler-native-control.json').read_bytes()).hexdigest()
+assert comparison['source_sha256']==hashlib.sha256(Path('/tmp/measure-filler-first-add-replay-v2/observed.json').read_bytes()).hexdigest()
+schema_dir=Path('/workspace/native-build-tools/musicxml4')
+class LocalImports(etree.Resolver):
+ def resolve(self,url,public,context):
+  name=url.rsplit('/',1)[-1];assert name in ('musicxml.xsd','xml.xsd','xlink.xsd');return self.resolve_filename(str(schema_dir/name),context)
+parser=etree.XMLParser(no_network=True,resolve_entities=False);parser.resolvers.add(LocalImports());schema=etree.XMLSchema(etree.parse(str(schema_dir/'musicxml.xsd'),parser))
+xml={}
+for label,current,gold in [('AnLaura','/tmp/real-directions-native.musicxml','evidence/real-directions/laura-native-internal.musicxml'),('DerWinter','/tmp/real-rest-native-internal.musicxml','evidence/real-page-pickup/der-winter-native-internal.musicxml'),('exact_7_64','/tmp/real-header-filler-v3-rational.musicxml','evidence/musicxml-rational-voice-clocks/control.musicxml')]:
+ p=Path(current);assert p.stat().st_mtime>=run['start_time'] and p.read_bytes()==(root/gold).read_bytes();schema.assertValid(etree.parse(str(p),etree.XMLParser(no_network=True,resolve_entities=False)))
+ xml[label]={'XML_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'XSD':'passed','bytes_identical':True,'gold':gold}
+cli=json.loads(Path('/tmp/real-header-filler-v3-cli-regression/RESULTS.json').read_text());assert cli['automatic_events']==63 and cli['declared_correction']['events']==8
+assert all(v['previous_XML_bytes']=='identical' and v['XSD']=='passed' for v in [*cli['automatic_inputs'],cli['declared_correction']])
+assert json.loads(Path('/tmp/real-header-filler-v3-build.json').read_text())['exit_code']==0
+v={'unique_targets_passed':19,'fast_unique_targets':16,'image_and_rational_targets':3,'real_page_recognition_runs':2,'source_stable':True,'initial_failures':[{'run':'v1','phase':'clippy','reason':'new cfg(test) peer observer used clefs instead of actual members field; fixed before image execution'},{'run':'v2','phase':'fast scalar','passed':9,'failed':1,'reason':'new first KeyAlters sibling support exposed missing source before the old expected missing Containment target; split test into explicit missing target/source cases'}],'already_passed_nine_scalar_targets_repeated':False,'production_changed_after_v2_scalar_run':False,'original_Filler':comparison,'header_owners':headers,'XML':xml,'CLI_events':{'automatic':63,'declared_correction':8,'bytes_and_XSD':'passed'},'independent_reader_and_quality_comparison':'Reused only for exactly identical saved real-page XML bytes. No public image rerun or quality acceptance claimed.','quality_accepted':False}
+Path('/tmp/real-header-filler-v3-VALIDATION.json').write_text(json.dumps(v,indent=2)+'\n');print(json.dumps(v))

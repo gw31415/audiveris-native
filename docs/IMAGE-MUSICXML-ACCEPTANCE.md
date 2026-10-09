@@ -45,14 +45,15 @@ native各Voice直後のpeer excess公開も同じ実画像ownerで比較済み�
 nullをnativeへ代入せず、宣言1/64→1/8 controlも実Voice/Slot/Chord所有を保って復元する。
 4境界契約＋3実所有対象、fmt/clippy/build、63＋補正8・exact7/64・両実譜面XML/XSD成功。
 初回test lint失敗と修正後の成功は別記録とし、全回帰や公開成功を主張しない。
-[保持Headerの直接登録](../evidence/real-typed-header-binding/README.md) も接続し、17対象と
-同じXML/XSD回帰が成功した。AnLaura36/30、Der Winter15/10の実Inter/登録relationを
-MEASURESからLINKSまで保持し、null Clef1件を維持。Header側KeyAlters36本は保持のみで、
-shared SIGへの登録は次依存。最初のAnLaura観測失敗と修正後成功は別記録にした。
-次は実Measure所属と混合MeasureFiller・KeyAlter support、正のfactoryと共通削除順、
-Slur認識を接続する。Der Winterの余分なp方向記号1件は
-原版の限定実所有比較でAccentとのOVERLAP除去が確認され、native削除順の修正が必要。
-Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えない。
+[保持Headerの直接登録](../evidence/real-typed-header-binding/README.md) に続き、
+[実MeasureのClef/Key所属と混合Filler](../evidence/real-header-filler/README.md) を接続しました。
+原版宣言afterReload replayの12追加・全peer中間所属が一致し、同じ実参照とmanual状態を保持。
+KeyAlters36本も実shared SIGへ登録し、AnLaura36 Inter/66 relations、Der Winter15/10・null Clef1件を比較。
+source宣言Chord7/64・expected1/2の保持とnative既存時計回帰は区別し、非空Voice/Slotやfresh callbackは主張しません。
+19対象とfmt/clippy/build、同じXML/XSD回帰が成功。初回観測コードの誤りと不正参照期待順の失敗は別記録。
+次はtyped RestChord/Flag削除、Header Time所有binding、正factoryと共通削除順、Slur認識・出力を接続します。
+Der Winterの余分なp方向記号1件は原版の限定実所有比較でAccentとのOVERLAP除去が確認され、native削除順の修正が必要。
+Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えません。
 
 ## 最初の実証と切断点
 

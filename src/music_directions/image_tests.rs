@@ -66,6 +66,7 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
     crate::music_headers_owned::image_tests::verify(&music, &header_owners, "an_laura", "MEASURES");
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
     crate::music_symbols::assert_real_checked_rejections(&music, "an_laura");
+    let header_filler = crate::shared_sig::Graph::assert_real_owned_filler(&music);
     // The original observer calls Pedal.getStaff at SYMBOLS; compare that lazy
     // read separately without assigning those source IDs into the native graph.
 
@@ -141,6 +142,7 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
     let frames = music.owner.graph.snapshot();
     music = crate::music_links::continue_links(music).unwrap();
     crate::music_headers_owned::image_tests::verify(&music, &header_owners, "an_laura", "LINKS");
+    crate::shared_sig::Graph::assert_completed_header_filler(&music, &header_filler);
     let after = rows(&music);
     let expect_after = expected(&source, 1);
     assert_eq!(before.len(), 29);

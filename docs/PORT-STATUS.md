@@ -17,18 +17,20 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 
 両実ページの公開MusicXMLは未出力・品質受入未達です。直近の公開CLI観測は
 AnLaura追加7形状／Der Winter追加9形状のguardで、CHECKED変更前の結果です。
-CHECKED棄却15件と実画像のfactory到達15/77件、PAGE各Voiceの終了量・共有excess比較は保存済み。
-今回、native Header最終化で実System/Staff・selected Inter/member/relation Arcを保持し、
-Clef/Keyを診断reportへ戻さずMEASURESで直接登録しました。最終化以前の候補identityと
-Timeのshared SIG bindingは未移行。null/detachedを保持し、foreign ownerや遅い失敗を拒否します。
-計17対象、fmt/clippy/build、既存63＋補正8・exact7/64・両実譜面XML bytes/XSDが成功。
-最初のAnLaura観測はKeyAltersRelationを見落として失敗し、観測だけを修正して同対象だけ再実行。
-AnLauraの36 Inter/30登録relationとHeader側36 KeyAlters、Der Winterの15 Inter/10relationと
-null Clef1件を保持。Header側のみのKeyAltersをshared SIG登録済みとは扱いません。
+CHECKED棄却15件・factory到達15/77件とPAGE各Voice終了量・共有excess比較は保存済み。
+保持Headerを直接登録する経路に、実MeasureのClef/Key所属と初回LINKSの混合Fillerを接続しました。
+System全Clef→Keyの部分順、Stack全filter→各追加、全peer所属と実Arcを保持します。
+KeyAlters36本も同じrelation/member Arcとmanual状態でshared SIGへ登録し、AnLaura36 Inter/66 relations、
+Der Winter15/10とnull Clef1件を比較。Timeの直接所有bindingと全C/K/T時系列は未移行です。
+原版保存Bookの宣言clear/fill/restoreと12追加の全peer中間状態が一致し、元Book/Jar不変。
+これはafterReload replayであり、初回画像認識callbackとは区別します。source宣言Chord7/64と
+Stack expected1/2は保持する一方、元状態の非空Voice/Slotやnative同一時計入力は主張しません。
+計19対象とfmt/clippy/build、63＋補正8・exact7/64・両実譜面XML bytes/XSDが成功。
+初回テスト用フィールド名と既存不正参照テストの期待順の失敗は修正・別記録し、成功済み9対象は反復しませんでした。
 内部Der Winterの124イベント・27 Voice・18小節identity、弱起27/27を保持しています。
 原版との差は余分なp方向記号1件と欠けたSlur6本。独立正解イベント102/124は原版と
 同じですが、公開受付・品質同等は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-typed-header-binding/NEXT-DEPENDENCY.md) を使います。
+直近の作業順は [保存NEXT依存](../evidence/real-header-filler/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

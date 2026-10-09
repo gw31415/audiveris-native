@@ -1,0 +1,34 @@
+{
+  "scope": "Header-only actual-owner observations; original saved SYMBOLS afterReload declared clear/replay, not fresh first-fill recognition. Source nonheader remains held but is outside this prerequisite. Descriptors join independent observations only; no owner/clock/recognition reconstruction.",
+  "source_sha256": "94f58e2bafcf069b024cf7635b54a687aec8e5c7136ceba360d769719cd71a63",
+  "source_systems": 2,
+  "source_selected_additions": 12,
+  "source_measures": 8,
+  "source_excluded_nonheaders": [
+    {
+      "system": 2,
+      "source_id": 4226,
+      "kind": "ClefInter",
+      "bounds": [
+        291,
+        996,
+        36,
+        79
+      ],
+      "reason": "actual nonheader Inter outside selected-header prerequisite"
+    }
+  ],
+  "source_clock_scope": "Actual held Chord 7/64 and shared Stack expected 1/2 are declared source controls. No nonempty Voice/Slot behavior or same-input native clock parity claimed.",
+  "real_quality_accepted": false,
+  "native_comparison_performed": true,
+  "native_sha256": "655a0f845aeeeb1bd6da502b148a0f8aaf282fc7dfa8de3fc4c91ef51dfdeb2c",
+  "checks": {
+    "systems": true,
+    "additions": true,
+    "initial": true,
+    "final": true
+  },
+  "ordinary_links_actual_owner_assertion": true,
+  "ordinary_links_header_membership_matches_source": true,
+  "observations_match": true
+}

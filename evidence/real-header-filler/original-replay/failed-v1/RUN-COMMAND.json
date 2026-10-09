@@ -1,0 +1,37 @@
+{
+  "compile": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/tmp/measure-filler-clef-key-book-v1",
+    "-d",
+    "/tmp/measure-filler-first-add-replay-v1/classes",
+    "/tmp/measure-filler-first-add-replay-v1/MeasureFillerFirstAddReplayProbe.java"
+  ],
+  "compile_exit": 0,
+  "book_before": "3d2168a5c3b841d918356ca97b27e0cbb764cff3bad3708257b19ea09f34a331",
+  "jar_before": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "no_images_or_reachStep": true,
+  "no_book_or_Jar_writes": true,
+  "run": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Dlogback.configurationFile=/tmp/measure-filler-first-add-replay-v1/logback.xml",
+    "-Djava.io.tmpdir=/tmp/measure-filler-first-add-replay-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/measure-filler-first-add-replay-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/measure-filler-first-add-replay-v1/prefs",
+    "-Duser.home=/tmp/measure-filler-first-add-replay-v1/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/measure-filler-clef-key-book-v1:/tmp/measure-filler-first-add-replay-v1/classes",
+    "MeasureFillerFirstAddReplayProbe",
+    "/tmp/real-seven-label-original-v1/laura-gray.omr",
+    "/tmp/measure-filler-first-add-replay-v1/observed.json"
+  ],
+  "run_exit": 1,
+  "seconds": 2.2209974979923572,
+  "book_after": "3d2168a5c3b841d918356ca97b27e0cbb764cff3bad3708257b19ea09f34a331",
+  "jar_after": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5"
+}
