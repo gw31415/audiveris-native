@@ -33,6 +33,191 @@ fn compare(a: &Value, b: &Value) {
         _ => assert_eq!(a, b),
     }
 }
+
+pub(crate) fn assert_real_reduction(music: &mut OwnedMusic) {
+    let support: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-articulation-reduction/support-observed.json"
+    ))
+    .unwrap();
+    let prior: Value = serde_json::from_str(include_str!(
+        "../../evidence/real-symbol-ensemble/VALIDATION.json"
+    ))
+    .unwrap();
+    let partner_bound = prior["numeric_grade_residuals"]["maximum_absolute_difference"]
+        .as_f64()
+        .unwrap();
+    let source: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-articulation-reduction/stages-observed.json"
+    ))
+    .unwrap();
+    let ordinary: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-articulation-reduction/image-observed.json"
+    ))
+    .unwrap();
+    assert_eq!(source["stages"][4], ordinary["stages"][1]);
+    let before = music.owner.graph.snapshot();
+    let address = music.chords.as_ptr();
+    let mut graph = music.owner.graph.clone();
+    let mut rows = Vec::new();
+    let observed = |graph: &Graph| {
+        let snap = graph.snapshot();
+        let nodes = snap["inters"].as_array().unwrap();
+        music.owner.systems.iter().map(|sys| {
+            let mut arts = nodes.iter().filter(|n| n["kind"]=="ArticulationInter" && n["origin"]["system"]==sys.id).map(|n| {
+                let rels = snap["relations"].as_array().unwrap().iter().filter(|e|e["target"]==n["id"]).map(|e| {
+                    let ch = nodes.iter().find(|c|c["id"]==e["source"]).unwrap();
+                    json!({"kind":e["kind"],"opposite_kind":ch["kind"],"bounds":ch["bounds"]})
+                }).collect::<Vec<_>>();
+                json!({"shape":n["shape"],"bounds":n["bounds"],"grade":n["grade"],"contextual_grade":n["contextual_grade"],"relations":rels})
+            }).collect::<Vec<_>>();
+            arts.sort_by_key(|n|format!("{}{}",n["shape"],n["bounds"]));
+            json!({"system":sys.id,"articulations":arts})
+        }).collect::<Vec<_>>()
+    };
+    let expected = |stage: usize| {
+        let mut systems = source["stages"][stage]["systems"]
+            .as_array()
+            .unwrap()
+            .clone();
+        for sys in &mut systems {
+            sys["articulations"]
+                .as_array_mut()
+                .unwrap()
+                .sort_by_key(|n| format!("{}{}", n["shape"], n["bounds"]));
+        }
+        systems
+    };
+    let initial = observed(&graph);
+    compare(&json!(initial), &json!(expected(0)));
+    let weak = contextualize_and_purge(&mut graph, &music.chords).unwrap();
+    let mut contexts = initial.clone();
+    let mut residuals = Vec::new();
+    for sys in &mut contexts {
+        for n in sys["articulations"].as_array_mut().unwrap() {
+            let native = weak["contextualized"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|a| a["bounds"] == n["bounds"] && a["shape"] == n["shape"])
+                .unwrap();
+            let source = support["stages"][1]["systems"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .flat_map(|s| s["articulations"].as_array().unwrap())
+                .find(|a| a["bounds"] == n["bounds"] && a["shape"] == n["shape"])
+                .unwrap();
+            let input = &native["sources"][0];
+            let original = &source["relations"][0];
+            let p = input["partner_grade"].as_f64().unwrap();
+            let original_p = original["partner_grade"].as_f64().unwrap();
+            let r = input["relation_grade"].as_f64().unwrap();
+            let original_r = original["relation_grade"].as_f64().unwrap();
+            let g = native["grade"].as_f64().unwrap();
+            let original_g = source["grade"].as_f64().unwrap();
+            let cg = native["contextual_grade"].as_f64().unwrap();
+            let original_cg = source["contextual_grade"].as_f64().unwrap();
+            let odds = |g: f64, r: f64, p: f64| g / (g + (1. - g) / (1. + 2.5 * r * p));
+            assert!((odds(original_g, original_r, original_p) - original_cg).abs() < 1e-12);
+            assert!((odds(g, r, p) - cg).abs() < 1e-12);
+            assert!((p - original_p).abs() <= partner_bound + 1e-10);
+            assert!((r - original_r).abs() < 1e-10);
+            assert!((g - original_g).abs() < 1e-10);
+            // Existing Head confidence residual propagates through support.
+            // Its derivative in cached partner grade is at most2.5/4.
+            assert!((cg - original_cg).abs() <= 0.625 * (p - original_p).abs() + 1e-9);
+            residuals.push(json!({"bounds":n["bounds"],"shape":n["shape"],"native_partner_grade":p,"original_partner_grade":original_p,"native_contextual_grade":cg,"original_contextual_grade":original_cg,"partner_residual":(p-original_p).abs(),"context_residual":(cg-original_cg).abs()}));
+            n["grade"] = native["grade"].clone();
+            n["contextual_grade"] = native["contextual_grade"].clone();
+        }
+    }
+    rows.push(json!({"stage":"CONTEXTUALIZED","actual":contexts,"expected":expected(1)}));
+    let purged = observed(&graph);
+    rows.push(json!({"stage":"WEAK_PURGED","actual":purged,"expected":expected(2)}));
+    std::fs::write(
+        "/tmp/real-articulation-reduction-native-current.json",
+        serde_json::to_vec_pretty(&rows).unwrap(),
+    )
+    .unwrap();
+    let without_context_grade = |mut systems: Vec<Value>| {
+        for s in &mut systems {
+            for n in s["articulations"].as_array_mut().unwrap() {
+                n.as_object_mut().unwrap().remove("contextual_grade");
+            }
+        }
+        systems
+    };
+    compare(
+        &json!(without_context_grade(contexts)),
+        &json!(without_context_grade(expected(1))),
+    );
+    compare(
+        &json!(without_context_grade(purged)),
+        &json!(without_context_grade(expected(2))),
+    );
+    let redundancy = check_redundancy(&mut graph, &music.chords).unwrap();
+    let reduced = observed(&graph);
+    rows.push(json!({"stage":"REDUNDANCY_CHECKED","actual":reduced,"expected":expected(3)}));
+    std::fs::write(
+        "/tmp/real-articulation-reduction-native-current.json",
+        serde_json::to_vec_pretty(&rows).unwrap(),
+    )
+    .unwrap();
+    compare(
+        &json!(without_context_grade(reduced.clone())),
+        &json!(without_context_grade(expected(3))),
+    );
+    compare(
+        &json!(without_context_grade(reduced)),
+        &json!(without_context_grade(expected(4))),
+    );
+    assert_eq!(
+        weak["removed_weak_articulation_ids"]
+            .as_array()
+            .unwrap()
+            .len(),
+        6
+    );
+    assert_eq!(
+        redundancy["removed_redundant_articulation_ids"]
+            .as_array()
+            .unwrap()
+            .len(),
+        2
+    );
+    let after = graph.snapshot();
+    for n in before["inters"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|n| n["kind"] != "ArticulationInter")
+    {
+        assert_eq!(
+            after["inters"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|a| a["id"] == n["id"])
+                .unwrap(),
+            n
+        );
+    }
+    for e in before["relations"].as_array().unwrap().iter() {
+        if let Some(held) = after["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|a| a["id"] == e["id"])
+        {
+            assert_eq!(held, e);
+        } else {
+            assert_eq!(e["kind"], "ChordArticulationRelation");
+        }
+    }
+    assert_eq!(music.chords.as_ptr(), address);
+    music.owner.graph = graph;
+    std::fs::write("/tmp/real-articulation-reduction-native-observed.json",serde_json::to_vec_pretty(&json!({"stages":rows,"weak":weak,"redundancy":redundancy,"numeric_cached_Chord_and_context_grade_residuals":residuals,"original16_10_8_membership_and_relations_match":true,"support_equation_matches_actual_cached_Chord_inputs":true,"ordinary_original_LINKS8_membership_match":true,"actual_grade_numeric_parity_claimed":false,"all_other_Inter_bodies_clocks_and_retained_relations_unchanged":true,"actual_Chord_vector_retained":true,"quality_accepted":false})).unwrap()).unwrap();
+}
 pub(crate) fn assert_actual_factory(music: &OwnedMusic, cleaned: &crate::GrayImage) {
     let original: Value = serde_json::from_str(include_str!(
         "../../fixtures/official-dot-articulations/image-observed.json"

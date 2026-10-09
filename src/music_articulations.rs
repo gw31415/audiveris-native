@@ -158,7 +158,129 @@ pub(crate) fn create(
     )
 }
 
+pub(crate) fn contextualize_and_purge(
+    graph: &mut Graph,
+    chords: &[crate::music_measures::Chord],
+) -> Result<Value, String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let mut staged = graph.clone();
+    let mut contexts = Vec::new();
+    let mut weak = Vec::new();
+    for n in nodes.iter().filter(|n| n["kind"] == "ArticulationInter") {
+        let mut sources = Vec::new();
+        let supports = snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "ChordArticulationRelation" && e["target"] == n["id"])
+            .collect::<Vec<_>>();
+        if supports.len() > 1 {
+            return Err("music_articulation_single_Chord_source_required".into());
+        }
+        let mut sum = 0.;
+        for e in supports {
+            let chord = chords
+                .iter()
+                .find(|c| c.id == e["source"] && c.kind == ChordKind::Head)
+                .ok_or("music_articulation_actual_Chord_required")?;
+            if graph.id(chord.key) != Some(chord.id) {
+                return Err("music_articulation_actual_Chord_required".into());
+            }
+            let partner = nodes
+                .iter()
+                .find(|c| c["id"] == chord.id)
+                .ok_or("music_articulation_live_Chord_required")?;
+            // Chord grade is the mean cached at actual membership invalidation.
+            // Recomputing it from today's Head grades changes original support.
+            let grade = partner["grade"]
+                .as_f64()
+                .filter(|g| (0.0..=1.0).contains(g))
+                .ok_or("music_articulation_cached_Chord_grade_required")?;
+            sum += (e["target_ratio"]
+                .as_f64()
+                .ok_or("music_articulation_support_ratio_required")?
+                - 1.)
+                * grade;
+            sources.push(json!({"relation_grade":e["grade"],"partner_grade":grade,"partner_bounds":partner["bounds"]}));
+        }
+        let grade = n["grade"]
+            .as_f64()
+            .filter(|g| (0.0..=1.0).contains(g))
+            .ok_or("music_articulation_grade_required")?;
+        let contextual = ((1. + sum) * grade) / (1. + sum * grade);
+        let key: Key = serde_json::from_value(n["origin"].clone())
+            .map_err(|_| "music_articulation_origin_required")?;
+        let mut data = n.clone();
+        data["contextual_grade"] = json!(contextual);
+        staged.vertex(key, data, false)?;
+        contexts.push(json!({"id":n["id"],"bounds":n["bounds"],"shape":n["shape"],"grade":grade,"contextual_grade":contextual,"sources":sources}));
+        if contextual < 0.5 && n["frozen"] != true {
+            staged.remove_music_inter(key)?;
+            weak.push(n["id"].clone());
+        }
+    }
+    *graph = staged;
+    Ok(json!({"contextualized":contexts,"removed_weak_articulation_ids":weak}))
+}
+
+pub(crate) fn check_redundancy(
+    graph: &mut Graph,
+    chords: &[crate::music_measures::Chord],
+) -> Result<Value, String> {
+    let snapshot = graph.snapshot();
+    let nodes = snapshot["inters"].as_array().unwrap();
+    let mut staged = graph.clone();
+    let mut removed = Vec::new();
+    for chord in chords.iter().filter(|c| c.kind == ChordKind::Head) {
+        let mut shapes = Vec::<(String, Vec<&Value>)>::new();
+        for e in snapshot["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["kind"] == "ChordArticulationRelation" && e["source"] == chord.id)
+        {
+            let n = nodes
+                .iter()
+                .find(|n| n["id"] == e["target"])
+                .ok_or("music_articulation_live_target_required")?;
+            let shape = n["shape"]
+                .as_str()
+                .ok_or("music_articulation_shape_required")?;
+            if let Some((_, list)) = shapes.iter_mut().find(|(s, _)| s == shape) {
+                list.push(n);
+            } else {
+                shapes.push((shape.to_owned(), vec![n]));
+            }
+        }
+        for (_, mut list) in shapes {
+            for n in &list {
+                n["grade"]
+                    .as_f64()
+                    .filter(|g| (0.0..=1.0).contains(g))
+                    .ok_or("music_articulation_grade_required")?;
+            }
+            // checkArticulations uses stable reverse intrinsic grade, even if
+            // contextual grades disagree. Keep actual relation encounter order.
+            list.sort_by(|a, b| {
+                b["grade"]
+                    .as_f64()
+                    .unwrap()
+                    .total_cmp(&a["grade"].as_f64().unwrap())
+            });
+            for n in list.into_iter().skip(1) {
+                let key = serde_json::from_value(n["origin"].clone())
+                    .map_err(|_| "music_articulation_origin_required")?;
+                staged.remove_music_inter(key)?;
+                removed.push(n["id"].clone());
+            }
+        }
+    }
+    *graph = staged;
+    Ok(json!({"removed_redundant_articulation_ids":removed}))
+}
+
 #[cfg(test)]
-mod image_tests;
+pub(crate) mod image_tests;
 #[cfg(test)]
 pub(crate) use image_tests::assert_actual_factory;

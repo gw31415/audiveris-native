@@ -1,0 +1,23 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-native)
+    Finished `test` profile [unoptimized] target(s) in 28.70s
+     Running unittests src/lib.rs (target/debug/deps/audiveris_native-5fcd8c0ec93be988)
+
+running 1 test
+test music_barline_groups::tests::real_foundation_bar_groups_and_construction_match_original_before_multistaff_measure_ownership has been running for over 60 seconds
+test music_barline_groups::tests::real_foundation_bar_groups_and_construction_match_original_before_multistaff_measure_ownership ... FAILED
+
+failures:
+
+---- music_barline_groups::tests::real_foundation_bar_groups_and_construction_match_original_before_multistaff_measure_ownership stdout ----
+
+thread 'music_barline_groups::tests::real_foundation_bar_groups_and_construction_match_original_before_multistaff_measure_ownership' (465192) panicked at src/music_articulations/image_tests.rs:19:13:
+assertion failed: (a.as_f64().unwrap() - b.as_f64().unwrap()).abs() < 1e-10
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    music_barline_groups::tests::real_foundation_bar_groups_and_construction_match_original_before_multistaff_measure_ownership
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 285 filtered out; finished in 228.99s
+
+error: test failed, to rerun pass `--lib`

@@ -63,12 +63,15 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let alters = crate::music_alters::contextualize_and_purge(&mut graph)?;
     let flags = crate::music_flags::contextualize(&mut graph)?;
     let pauses = crate::music_pauses::contextualize_and_purge(&mut graph, &m.chords)?;
+    let articulations = crate::music_articulations::contextualize_and_purge(&mut graph, &m.chords)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
     let flag_competition = crate::music_flags::reduce_exclusions(&mut graph)?;
     let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
     let containers =
         crate::music_containers::refresh(&mut graph, &m.measures, &mut m.chords, &mut m.voices)?;
     let empty_chords = containers.removed_chords;
+    let articulation_redundancy =
+        crate::music_articulations::check_redundancy(&mut graph, &m.chords)?;
     let dot_consistency = crate::music_dots::reduce_consistencies(&mut graph, &m.chords)?;
     m.owner.graph = graph;
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
@@ -87,6 +90,8 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         dot_consistency["competition"].clone();
     m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
     m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
+    m.owner.prepared.report["limited_links"]["articulation_weak_purge"] = articulations;
+    m.owner.prepared.report["limited_links"]["articulation_redundancy"] = articulation_redundancy;
     Ok(m)
 }
 

@@ -227,3 +227,16 @@ Graph/Voice/Measure/Stack時計を一括stageし、実Measure欠落時には元�
 次は実Voice/BEGIN走査・複段clef/key/臨時記号、live articulation/強弱/pedalを
 native出力へ接続し、実譜面と休符例の品質・独立readerを比較する。
 [証拠](../evidence/real-page-rhythm/VALIDATION.json)・[次依存](../evidence/real-page-rhythm/NEXT-DEPENDENCY.md)。
+
+実Articulationの支持を、実Chordのmembership invalidation時に保持したcached gradeと
+ChordArticulationRelationから計算し、弱候補除去→同じChord/shapeのintrinsic grade順
+による重複除去へ接続した。原版16→10→8件・支持先・削除選択が一致し、元の
+Chord vector・他Inter body/時計・残存relation/manual metadataを保持する。
+最初のconfidence数値完全一致testは失敗証拠として残した。実cached Chord差の最大は
+0.000316301、支持後grade差は0.000047534で、既知Head grade残差からの伝播範囲内。
+原版の実入力による支持式は一致し、grade数値同一は主張しない。対象10件、
+通常Page前後4フレーム・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。
+既存ProxyMusic readerは原版2Part/8小節/92音/45beamとnative有理数8音を読めたが、
+native実譜面XMLは未出力。品質未達のまま、次は実Head Staff/clef/key/臨時記号を
+原版94Head観測と比較し、Voice/BEGIN走査と必要な強弱/pedal・複段出力へ接続する。
+[証拠](../evidence/real-articulation-reduction/VALIDATION.json)・[次依存](../evidence/real-articulation-reduction/NEXT-DEPENDENCY.md)。
