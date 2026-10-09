@@ -1,0 +1,165 @@
+//! audiveris-native: score image(s) -> MusicXML, following the Audiveris
+//! recognition pipeline.
+
+use std::path::{Path, PathBuf};
+
+mod beams;
+mod binary;
+mod classifier;
+mod debug;
+mod features;
+mod grid;
+mod header;
+mod heads;
+mod labels;
+mod musicxml;
+mod pipeline;
+mod rational;
+mod scale;
+mod score;
+mod staff;
+mod stems;
+mod symbols;
+mod template;
+
+const USAGE: &str = "\
+Usage: audiveris-native [OPTIONS] IMAGE...
+
+Recognize score page image(s) (PNG, JPEG, TIFF, BMP) and write MusicXML.
+Several images are processed as consecutive pages of one score.
+
+Options:
+  -o, --output FILE   MusicXML output (default: first image with .musicxml extension)
+      --debug DIR     write per-page annotated images and recognition JSON into DIR
+  -v, --verbose       print step timings
+  -h, --help          show this help";
+
+struct Args {
+    inputs: Vec<PathBuf>,
+    output: Option<PathBuf>,
+    debug: Option<PathBuf>,
+    verbose: bool,
+}
+
+fn parse_args() -> Result<Args, String> {
+    let mut a = Args { inputs: Vec::new(), output: None, debug: None, verbose: false };
+    let mut it = std::env::args().skip(1);
+    while let Some(s) = it.next() {
+        match s.as_str() {
+            "-h" | "--help" => {
+                println!("{USAGE}");
+                std::process::exit(0);
+            }
+            "-o" | "--output" => a.output = Some(it.next().ok_or("missing value for --output")?.into()),
+            "--debug" => a.debug = Some(it.next().ok_or("missing value for --debug")?.into()),
+            "-v" | "--verbose" => a.verbose = true,
+            s if s.starts_with('-') => return Err(format!("unknown option {s}\n\n{USAGE}")),
+            s => a.inputs.push(s.into()),
+        }
+    }
+    if a.inputs.is_empty() {
+        return Err(USAGE.into());
+    }
+    Ok(a)
+}
+
+fn write_debug(dir: &Path, stem: &str, sheet: &pipeline::Sheet, score: &score::Score) -> Result<(), String> {
+    std::fs::create_dir_all(dir).map_err(|e| e.to_string())?;
+    let mut ov = debug::Overlay::new(&sheet.binary);
+    for s in &sheet.staves {
+        for l in &s.lines {
+            for x in s.left..=s.right {
+                ov.dot(x, l.y_at(x as f64).round() as i32, [0, 0, 255]);
+            }
+        }
+    }
+    for sys in &sheet.systems {
+        let top = sheet.staves[sys.staves[0]].top(sys.left as f64) as i32;
+        let bot = sheet.staves[*sys.staves.last().unwrap()].bottom(sys.left as f64) as i32;
+        for b in &sys.boundaries {
+            ov.rect(binary::Rect::new(b.x0, top, b.x1 - b.x0 + 1, bot - top), [0, 200, 0]);
+        }
+    }
+    for h in &sheet.headers {
+        for (r, _) in &h.items {
+            ov.rect(*r, [0, 150, 150]);
+        }
+    }
+    for l in &sheet.ledgers {
+        ov.line(l.x0 as f64, l.y, l.x1 as f64, l.y, [0, 160, 0]);
+    }
+    for st in &sheet.stems {
+        let c = if st.up { [0, 180, 0] } else { [200, 0, 200] };
+        ov.line(st.x as f64, st.top as f64, st.x as f64, st.bottom as f64, c);
+        for &bi in &st.beams {
+            let b = &sheet.beams[bi];
+            ov.line(b.x0, b.y_at(b.x0), b.x1, b.y_at(b.x1), [255, 128, 0]);
+        }
+    }
+    for h in &sheet.heads {
+        let c = match h.shape {
+            template::HeadShape::Black => [255, 0, 0],
+            template::HeadShape::Void => [0, 0, 255],
+            _ => [200, 0, 200],
+        };
+        ov.rect(h.bounds, c);
+    }
+    for s in &sheet.symbols {
+        ov.rect(s.bounds.grow(1, 1), [0, 150, 255]);
+    }
+    ov.save(&dir.join(format!("{stem}.png")))?;
+    let json = serde_json::json!({
+        "scale": sheet.scale,
+        "staves": sheet.staves,
+        "systems": sheet.systems,
+        "headers": sheet.headers,
+        "heads": sheet.heads,
+        "stems": sheet.stems,
+        "symbols": sheet.symbols,
+        "score": score,
+    });
+    std::fs::write(dir.join(format!("{stem}.json")), serde_json::to_string_pretty(&json).unwrap()).map_err(|e| e.to_string())
+}
+
+fn run() -> Result<(), String> {
+    let args = parse_args()?;
+    let mut book: Option<score::Score> = None;
+    for input in &args.inputs {
+        let sheet = pipeline::process(input, args.verbose)?;
+        let page = score::build(&sheet);
+        if let Some(dir) = &args.debug {
+            let stem = input.file_stem().and_then(|s| s.to_str()).unwrap_or("page");
+            write_debug(dir, stem, &sheet, &page)?;
+        }
+        match &mut book {
+            None => book = Some(page),
+            Some(b) => {
+                for (i, p) in page.parts.into_iter().enumerate() {
+                    match b.parts.get_mut(i) {
+                        Some(bp) => {
+                            bp.staves = bp.staves.max(p.staves);
+                            bp.measures.extend(p.measures);
+                        }
+                        None => b.parts.push(p),
+                    }
+                }
+            }
+        }
+    }
+    let score = book.unwrap();
+    let title = args.inputs[0].file_stem().and_then(|s| s.to_str()).unwrap_or("Score");
+    let xml = musicxml::write(&score, title);
+    let out = args.output.clone().unwrap_or_else(|| args.inputs[0].with_extension("musicxml"));
+    std::fs::write(&out, xml).map_err(|e| format!("{}: {e}", out.display()))?;
+    if args.verbose {
+        eprintln!("wrote {}", out.display());
+    }
+    Ok(())
+}
+
+fn main() {
+    if let Err(e) = run() {
+        eprintln!("audiveris-native: {e}");
+        std::process::exit(1);
+    }
+}

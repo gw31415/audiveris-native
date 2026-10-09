@@ -16,3 +16,4 @@ evidence/linux-oracle/**/native-cache/
 evidence/linux-oracle/**/observer-classes/
 evidence/linux-oracle/**/prefs/
 evidence/linux-oracle/**/tmp/
+/omr/target/
