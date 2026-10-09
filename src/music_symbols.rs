@@ -435,7 +435,7 @@ fn checked(
     // is created. Their specific ShapeChecker/InterFactory dependencies remain.
     Ok(Some(shape.to_owned()))
 }
-fn actual_fine_boxes(
+pub(crate) fn actual_fine_boxes(
     graph: &crate::shared_sig::Graph,
     system: u64,
     il: usize,
@@ -711,7 +711,7 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 )],
             )?;
         }
-        trials.push(json!({"glyph_id":gid,"bounds":[g.left,g.top,g.width,g.height],"weight":weight,"part_count":part_count,"part_glyph_ids":part_ids,"created_inter_ids":created.iter().map(|key| graph.id(*key).unwrap()).collect::<Vec<_>>(),"evaluations":evaluations}));
+        trials.push(json!({"system_id":sid,"glyph_id":gid,"bounds":[g.left,g.top,g.width,g.height],"weight":weight,"part_count":part_count,"part_glyph_ids":part_ids,"created_inter_ids":created.iter().map(|key| graph.id(*key).unwrap()).collect::<Vec<_>>(),"evaluations":evaluations}));
     }
     m.owner
         .prepared
@@ -719,24 +719,15 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         .commit_symbol_extension(registry)?;
     m.owner.graph = graph;
     m.chords.extend(new_chords);
-    m.owner.graph.bind_owned_dot_measures(
-        &m.measures,
-        &m.owner.staffs,
-        &m.owner.staff_areas,
-        &m.owner.parts,
-    )?;
-    let staffs = m.owner.upstream_report["grid_ir"]["staffs"]
-        .as_array()
-        .ok_or("music_dot_staff_metadata_required")?;
+    let mut dot_graph = m.owner.graph.clone();
     let dot_late_checks = crate::music_dots::late_checks(
-        &mut m.owner.graph,
+        &mut dot_graph,
         &m.owner.prepared.registry,
         &trials,
-        staffs,
-        &m.measures,
-        &m.chords,
+        &m,
         il,
     )?;
+    m.owner.graph = dot_graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
     m.owner.prepared.report = json!({"schema":"audiveris-native.music-symbols-isolated.v1","measures_head_chords":previous,"symbol_filter_PGM_SHA256":format!("{:x}",Sha256::digest(im.pgm())),"symbol_glyphs":glyphs.iter().map(beam_dispatch::glyph_json).collect::<Vec<_>>(),"classifier_trials":trials,"symbol_cluster_scope":"original-seven-part-cap-recursive","symbols":accepted,"shared_sig":m.owner.graph.snapshot(),"scope":"actual System/Staff/virtual Ledger curves and original strong cleaner; stable connected glyphs, original cap7 recursive classification with bounded Rest/TimeWhole SIG exclusions; actual Graph/registry/cache retained","pending":["other physical factories/shape checks and supported/frozen conflict reduction/weak optionals","factory.lateChecks/symbol epilog/flags/dots/accidentals/LINKS/rhythm/export","general stroked areas/full symbol reduction/cleaner/epilog","nonzero skew/real scans/special staff/full24shapes/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["dot_late_checks"] = dot_late_checks;

@@ -1,11 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! DotFactory late note/rest augmentation, owned AbstractNote/Chord dot getters.
 use crate::{
-    music_measures::{Chord, ChordKind, Measure},
+    music_measures::{Chord, ChordKind},
     music_symbols::flat_staff_y,
     shared_sig::{Graph, Key, Phase},
 };
 use serde_json::{Value, json};
+mod geometry;
+#[cfg(test)]
+#[path = "music_dots/geometry_tests.rs"]
+mod geometry_tests;
+#[cfg(test)]
+pub(crate) use geometry_tests::assert_actual_geometry;
 
 fn rect(n: &Value) -> Result<[i64; 4], String> {
     serde_json::from_value(n["bounds"].clone()).map_err(|_| "music_dot_bounds_required".into())
@@ -235,13 +241,18 @@ pub(crate) fn late_checks(
     graph: &mut Graph,
     registry: &crate::beam_dispatch::Registry,
     trials: &[Value],
-    staffs: &[Value],
-    measures: &[Measure],
-    chords: &[Chord],
+    music: &crate::music_measures::OwnedMusic,
     il: usize,
 ) -> Result<Value, String> {
     let mut staged = graph.clone();
-    staged.bind_dot_measures(measures)?;
+    let measures = &music.measures;
+    let chords = &music.chords;
+    staged.bind_owned_dot_measures(
+        measures,
+        &music.owner.staffs,
+        &music.owner.staff_areas,
+        &music.owner.parts,
+    )?;
     let mut candidates = trials
         .iter()
         .filter_map(|t| {
@@ -258,16 +269,12 @@ pub(crate) fn late_checks(
     for &(trial, evaluation) in &candidates {
         let b = rect(trial)?;
         let p = center(b);
-        let staff = staffs
-            .iter()
-            .map(|s| Ok(((p[1] as f64 - flat_staff_y(s, 2)?).abs(), s)))
-            .collect::<Result<Vec<_>, String>>()?
-            .into_iter()
-            .min_by(|a, b| a.0.total_cmp(&b.0))
-            .ok_or("music_dot_staff_required")?
-            .1;
+        let system = trial["system_id"]
+            .as_u64()
+            .ok_or("music_dot_actual_System_source_required")?;
+        let staff = geometry::closest(&music.owner, system, b)?;
         let snapshot = staged.snapshot();
-        if !distant_from_line(b, staff, il, &snapshot)? {
+        if !geometry::distant(&music.owner, &staff, b)? {
             continue;
         }
         eligible.insert(
@@ -275,17 +282,7 @@ pub(crate) fn late_checks(
                 .as_u64()
                 .ok_or("music_dot_registered_glyph_required")?,
         );
-        let system = staff["system_id"]
-            .as_u64()
-            .ok_or("music_dot_system_required")?;
-        let Some(mi) = measures.iter().position(|m| {
-            m.system == system
-                && Some(m.staff) == staff["id"].as_u64()
-                && m.left < p[0]
-                && p[0] <= m.right
-        }) else {
-            return Err("music_dot_stack_required".into());
-        };
+        let mi = geometry::measure_at(music, &staff, p)?;
         let measure = &measures[mi];
         // Conservative admission for not-yet-connected repeat/articulation
         // interpretations. These guards retain ambiguous dots for later ports.
@@ -308,7 +305,7 @@ pub(crate) fn late_checks(
                 cb,
                 [
                     p[0] - lu_dx,
-                    flat_staff_y(staff, 0)? as i64,
+                    staff.lines[0].y(p[0] as f64) as i64,
                     2 * lu_dx + 1,
                     (4 * il + 1) as i64,
                 ],
@@ -372,14 +369,7 @@ pub(crate) fn late_checks(
             let glyph = crate::beam_dispatch::glyph_json(&registry.get(gid)?.glyph);
             let data = json!({"kind":"AugmentationDotInter","shape":"AUGMENTATION_DOT","bounds":b,"glyph":glyph,"glyph_id":gid,"grade":grade,"abnormal":true});
             let id = staged.vertex(dk, data, false)?;
-            staged.edit_note_owner(
-                dk,
-                crate::shared_sig::NoteOwnerEdit::Staff(Some(
-                    staff["id"]
-                        .as_u64()
-                        .ok_or("music_dot_owned_staff_required")?,
-                )),
-            )?;
+            staged.edit_note_owner(dk, crate::shared_sig::NoteOwnerEdit::Staff(Some(staff.id)))?;
             staged.relations(system, Phase::Symbol, vec![(dk, note, rel)])?;
             created.push(id);
         }
@@ -403,25 +393,11 @@ pub(crate) fn late_checks(
         }
         let b = rect(trial)?;
         let p = center(b);
-        let staff = staffs
-            .iter()
-            .map(|s| Ok(((p[1] as f64 - flat_staff_y(s, 2)?).abs(), s)))
-            .collect::<Result<Vec<_>, String>>()?
-            .into_iter()
-            .min_by(|a, b| a.0.total_cmp(&b.0))
-            .ok_or("music_dot_staff_required")?
-            .1;
-        let system = staff["system_id"]
+        let system = trial["system_id"]
             .as_u64()
-            .ok_or("music_dot_system_required")?;
-        let Some(mi) = measures.iter().position(|m| {
-            m.system == system
-                && Some(m.staff) == staff["id"].as_u64()
-                && m.left < p[0]
-                && p[0] <= m.right
-        }) else {
-            continue;
-        };
+            .ok_or("music_dot_actual_System_source_required")?;
+        let staff = geometry::closest(&music.owner, system, b)?;
+        let mi = geometry::measure_at(music, &staff, p)?;
         let same_stack = firsts
             .iter()
             .filter_map(|n| {
@@ -839,6 +815,7 @@ pub(crate) fn bounds_with_dots(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::music_measures::Measure;
     #[test]
     fn original_rest_and_double_competition_preserves_edge_order_and_owner_callbacks() {
         let f: Value = serde_json::from_str(include_str!(

@@ -34,8 +34,12 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 Stack再登録／削除24操作を比較した。null Partは未所属、piano上下Staffは同じPart Measureへ登録。
 対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
 実画像CLI v18は171.14秒でDotの曲線Staff判定に到達し、XMLは未出力。
-次は実曲線音高・実Ledger距離とDotの所属選択。PageRhythm全filter・共有rhythm・品質受入は未完。
-[証拠](../evidence/real-dot-shared-stacks/VALIDATION.json)・[次依存](../evidence/real-dot-shared-stacks/NEXT-DEPENDENCY.md)。
+Dotの実曲線・仮想Ledger音高・実Ledger map距離も接続し、788実候補（許可736/拒否52）と
+15実Ledger周辺45制御、12実Part Measure選択が原版一致した。対象6件とXML/XSD回帰成功。
+実画像CLI v19は177.52秒で `music_dot_articulation_checks_pending` に到達し、XMLは未出力。
+次は原版のinstant staccato lookup／callback順と共有Stack filterを使う実Dot links。
+PageRhythm全filter・後続記号reduction・共有rhythm・品質受入は未完。
+[証拠](../evidence/real-dot-geometry/VALIDATION.json)・[次依存](../evidence/real-dot-geometry/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

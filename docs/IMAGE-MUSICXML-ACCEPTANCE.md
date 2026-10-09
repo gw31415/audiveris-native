@@ -62,7 +62,10 @@ post-analysisの12仮想Ledger曲線をcallbackから保持し、物理Ledger削
 実画像CLI v17は170.86秒で複数StaffのDot所属ガードに到達した。保持済み実Part/Measure/Stack
 によるDot登録を接続した。原版境界52地点と宣言Dot24操作は一致し、対象6件とXML/XSD回帰も成功。
 実画像CLI v18は171.14秒でDotの曲線Staff判定に到達した。次は実曲線・実Ledger距離と所属選択、
-PageRhythm filter、後続記号reduction・共有rhythm・出力。XMLはまだ出力できない。
+実曲線・実Ledger距離は788実候補と45 Ledger制御、実Part Measure選択12地点で原版一致して接続済み。
+対象6件とXML/XSD回帰成功。実画像CLI v19は177.52秒でinstant articulation判定に到達した。
+次はその原版lookupと生成順、共有Stack Dot links／filter、後続記号reduction・共有rhythm・出力。
+XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
 実譜面評価から除外する。元の画像と歴史的rendererのexit qualificationは保持する。

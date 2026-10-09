@@ -148,5 +148,6 @@ pub(crate) fn assert_real_symbol_geometry(music: &OwnedMusic) {
     super::clusters_tests::assert_actual_image_clusters(music, &cleaned);
     crate::music_alters::assert_actual_image_factory(music, &cleaned);
     crate::shared_sig::Graph::assert_actual_image_dot_stacks(music);
+    crate::music_dots::assert_actual_geometry(music, &cleaned);
     assert_eq!(owner.graph.snapshot(), before);
 }
