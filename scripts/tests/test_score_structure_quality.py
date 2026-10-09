@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from compare_score_structure_quality import UnsupportedScore, compare
@@ -41,6 +42,22 @@ def xml(notes, measure_attributes="", meter=(4, 4)):
             f'<attributes><divisions>4</divisions><time><beats>{meter[0]}</beats>'
             f'<beat-type>{meter[1]}</beat-type></time></attributes>{notes}'
             '</measure></part></score-partwise>')
+
+
+def joined_truth(*scores):
+    root = ET.fromstring(scores[0])
+    staff = root.find("Score/Staff")
+    for text in scores[1:]:
+        staff.append(ET.fromstring(text).find("Score/Staff/Measure"))
+    return ET.tostring(root, encoding="unicode")
+
+
+def joined_xml(*scores):
+    root = ET.fromstring(scores[0])
+    part = root.find("part")
+    for text in scores[1:]:
+        part.append(ET.fromstring(text).find("part/measure"))
+    return ET.tostring(root, encoding="unicode")
 
 
 class StructureQualityContracts(unittest.TestCase):
@@ -150,6 +167,55 @@ class StructureQualityContracts(unittest.TestCase):
         self.assertFalse(result["categories"]["meters"]["equal"])
         self.assertFalse(result["categories"]["measure_extents"]["equal"])
 
+    def test_single_stream_boundary_ignores_per_measure_voice_renumbering(self):
+        expected = joined_truth(truth([chord([60])]), truth([chord([62])]))
+        result = self.compare(expected, joined_xml(xml(note("C", voice="99")), xml(note("D", voice="soprano"))))
+        metric = result["categories"]["across_measure_single_stream_successors"]
+        self.assertEqual((metric["truth"], metric["recognized"], metric["matched"]), (1, 1, 1))
+        self.assertEqual(result["across_measure_voice_coverage"]["jointly_scored_boundaries"], 1)
+
+    def test_reused_polyphonic_labels_do_not_supply_cross_measure_identity(self):
+        expected = joined_truth(truth([chord([60]), chord([64])]), truth([chord([62]), chord([65])]))
+        before = note("C", voice="1") + "<backup><duration>4</duration></backup>" + note("E", voice="2")
+        after = note("D", voice="1") + "<backup><duration>4</duration></backup>" + note("F", voice="2")
+        result = self.compare(expected, joined_xml(xml(before), xml(after)))
+        self.assertTrue(result["categories"]["events"]["equal"])
+        metric = result["categories"]["across_measure_single_stream_successors"]
+        self.assertEqual(metric["truth"], 0)
+        self.assertIsNone(metric["F1"])
+        coverage = result["across_measure_voice_coverage"]
+        self.assertEqual(coverage["unscored_boundary_union"], 1)
+        self.assertIn("multiple_local_streams_without_cross_measure_identity_evidence",
+                      coverage["observations"][0]["recognized"]["left"]["reasons"])
+
+    def test_one_reused_voice_with_overlapping_notes_is_not_single_stream_evidence(self):
+        expected = joined_truth(truth([chord([60, 64])]), truth([chord([62])]))
+        before = note("C") + "<backup><duration>4</duration></backup>" + note("E")
+        result = self.compare(expected, joined_xml(xml(before), xml(note("D"))))
+        self.assertTrue(result["categories"]["events"]["equal"])
+        coverage = result["across_measure_voice_coverage"]
+        self.assertEqual(coverage["jointly_scored_boundaries"], 0)
+        self.assertEqual(coverage["observations"][0]["recognized"]["left"]["reasons"],
+                         ["overlapping_groups_in_local_stream"])
+
+    def test_empty_measure_is_not_bridged_to_manufacture_continuity(self):
+        expected = joined_truth(truth([chord([60])]), truth([""]), truth([chord([62])]))
+        result = self.compare(expected, joined_xml(xml(note("C")), xml(""), xml(note("D"))))
+        coverage = result["across_measure_voice_coverage"]
+        self.assertEqual(coverage["truth_boundaries"], 2)
+        self.assertEqual(coverage["jointly_scored_boundaries"], 0)
+        self.assertEqual(coverage["unscored_boundary_union"], 2)
+        self.assertTrue(all(item["measures"][1] - item["measures"][0] == 1 for item in coverage["observations"]))
+
+    def test_boundary_wrong_pitch_is_scored_and_rest_endpoint_is_retained(self):
+        expected = joined_truth(truth([chord([60])]), truth([chord([62])]),
+                                truth(["<Rest><durationType>quarter</durationType></Rest>"]))
+        result = self.compare(expected, joined_xml(xml(note("F")), xml(note("D")), xml(note(None))))
+        metric = result["categories"]["across_measure_single_stream_successors"]
+        self.assertEqual((metric["truth"], metric["recognized"], metric["matched"]), (2, 2, 1))
+        self.assertEqual(result["across_measure_voice_coverage"]["jointly_scored_boundaries"], 2)
+        self.assertEqual(result["across_measure_voice_coverage"]["observations"][1]["truth"]["successor"][1][-1], (None,))
+
     def test_real_pages_retain_prior_event_baselines_and_exercise_six_slurs(self):
         root = Path(__file__).resolve().parents[2]
         pages = (("lc6019054", "real-image-quality-baseline/laura-original.musicxml", 101, 92, 73, 0),
@@ -168,6 +234,17 @@ class StructureQualityContracts(unittest.TestCase):
                 self.assertTrue(result["slur_pairing_valid"])
                 self.assertTrue(result["categories"]["pickup_markers"]["equal"])
                 self.assertFalse(result["quality_accepted"])
+                coverage = result["across_measure_voice_coverage"]
+                boundaries, scored, matched = (9, 4, 3) if name == "lc6019054" else (24, 24, 19)
+                self.assertEqual(coverage["truth_boundaries"], boundaries)
+                self.assertEqual(coverage["recognized_boundaries"], boundaries)
+                self.assertEqual(coverage["jointly_scored_boundaries"], scored)
+                self.assertEqual(result["categories"]["across_measure_single_stream_successors"]["matched"], matched)
+                relations = coverage["available_relation_observations"]
+                self.assertEqual(relations["truth_cross_measure_slurs"], 0)
+                self.assertEqual(relations["recognized_cross_measure_slurs"], 0)
+                self.assertEqual(relations["truth_tie_endpoints"], 0)
+                self.assertEqual(relations["recognized_tie_endpoints"], 0)
 
 
 if __name__ == "__main__":

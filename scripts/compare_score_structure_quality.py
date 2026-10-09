@@ -90,6 +90,85 @@ def voice_structure(groups):
     return partitions, successors
 
 
+def single_stream_boundaries(score):
+    """Observe only boundaries whose local streams need no identity assignment."""
+    members = defaultdict(list)
+    for group in score.groups:
+        members[(group.staff, group.measure)].append(group)
+    measures = {(row[0], row[1]) for row in score.measures}
+    streams = {}
+    for key in measures:
+        groups = sorted(members[key], key=lambda group: (group.onset, group.order))
+        voices = {group.voice for group in groups}
+        reasons = []
+        if not groups:
+            reasons.append("empty_measure")
+        if len(voices) > 1:
+            reasons.append("multiple_local_streams_without_cross_measure_identity_evidence")
+        end = Fraction()
+        if len(voices) == 1:
+            for group in groups:
+                if group.onset < end:
+                    reasons.append("overlapping_groups_in_local_stream")
+                    break
+                if group.duration < 0 or (not group.grace and group.duration == 0):
+                    reasons.append("nonpositive_ordinary_duration")
+                    break
+                end = group.onset + group.duration
+        streams[key] = {
+            "voice_count": len(voices),
+            "group_count": len(groups),
+            "reasons": reasons,
+            "first": groups[0].key() if groups else None,
+            "last": groups[-1].key() if groups else None,
+        }
+    boundaries = {}
+    for staff, measure in sorted(measures):
+        if (staff, measure + 1) not in measures:
+            continue
+        left, right = streams[(staff, measure)], streams[(staff, measure + 1)]
+        eligible = not left["reasons"] and not right["reasons"]
+        boundaries[(staff, measure, measure + 1)] = {
+            "eligible": eligible,
+            "left": left,
+            "right": right,
+            "successor": (left["last"], right["first"]) if eligible else None,
+        }
+    return boundaries
+
+
+def compare_boundary_continuity(expected, actual):
+    expected_boundaries = single_stream_boundaries(expected)
+    actual_boundaries = single_stream_boundaries(actual)
+    expected_edges, actual_edges, observations = [], [], []
+    for boundary in sorted(expected_boundaries.keys() | actual_boundaries.keys()):
+        left, right = expected_boundaries.get(boundary), actual_boundaries.get(boundary)
+        comparable = left is not None and right is not None and left["eligible"] and right["eligible"]
+        if comparable:
+            expected_edges.append(left["successor"])
+            actual_edges.append(right["successor"])
+        observations.append({"staff": boundary[0], "measures": boundary[1:],
+                             "scored": comparable, "truth": left, "recognized": right})
+    coverage = {
+        "truth_boundaries": len(expected_boundaries),
+        "recognized_boundaries": len(actual_boundaries),
+        "truth_single_stream_boundaries": sum(item["eligible"] for item in expected_boundaries.values()),
+        "recognized_single_stream_boundaries": sum(item["eligible"] for item in actual_boundaries.values()),
+        "jointly_scored_boundaries": len(expected_edges),
+        "unscored_boundary_union": sum(not item["scored"] for item in observations),
+        "available_relation_observations": {
+            "truth_cross_measure_slurs": sum(start[1] != stop[1] for start, stop in expected.slurs),
+            "recognized_cross_measure_slurs": sum(start[1] != stop[1] for start, stop in actual.slurs),
+            "truth_tie_endpoints": len(expected.tie_endpoints),
+            "recognized_tie_endpoints": len(actual.tie_endpoints),
+            "used_for_polyphonic_identity_assignment": False,
+        },
+        "observations": observations,
+        "qualification": "Only adjacent measures on the same staff with one nonoverlapping local stream on each side in BOTH scores are scored. Local voice labels may change freely across the barline. The compared pair is the last complete group before the boundary and the first after it, retaining pitch, duration and grace identity. Multiple streams, empty measures and missing boundaries remain unscored; no pitch-distance or reused-label heuristic supplies continuity. This does not prove polyphonic voice identity across measures.",
+    }
+    return metric(expected_edges, actual_edges), coverage
+
+
 def fraction_text(element, name, default="0"):
     return Fraction(element.findtext(name, default))
 
@@ -349,6 +428,8 @@ def compare(truth, recognized):
         [group for group in actual.groups if group.key() in shared_unique])
     categories["matched_chord_voice_partitions"] = metric(expected_partitions, actual_partitions)
     categories["matched_chord_voice_successors"] = metric(expected_successors, actual_successors)
+    boundary_metric, boundary_coverage = compare_boundary_continuity(expected, actual)
+    categories["across_measure_single_stream_successors"] = boundary_metric
     return {
         "schema": "audiveris-native.independent-structure-quality.v1",
         "truth_sha256": hashlib.sha256(truth.read_bytes()).hexdigest(),
@@ -363,16 +444,17 @@ def compare(truth, recognized):
             "recognized_groups_excluded": len(actual.groups) - len(shared_unique),
             "qualification": "Matched-chord voice categories project each voice onto complete chord keys appearing exactly once in both scores. Unmatched or ambiguous chords are excluded, so these categories alone cannot establish recognition quality.",
         },
+        "across_measure_voice_coverage": boundary_coverage,
         "scope": {
             "events": "Exact staff order, measure order, rational onset/duration, MIDI pitch/rest and grace status.",
             "chords": "Actual serialized chord grouping, compared as complete pitch multisets; simultaneous independent voices stay separate.",
-            "voices": "Per-staff, per-measure ordered partitions and successive chord/rest edges; arbitrary labels excluded. Full categories include pitch/timing errors; matched-chord categories isolate voice membership over stated common anchors. Across-measure voice continuity is not scored.",
+            "voices": "Per-staff, per-measure ordered partitions and successive chord/rest edges; arbitrary labels excluded. Full categories include pitch/timing errors; matched-chord categories isolate voice membership over stated common anchors. Across-measure comparisons cover only jointly unambiguous single-stream boundaries, with explicit coverage and exclusions.",
             "measures": "Nominal meters, occupied/forward extent, irregular/implicit markers and part/staff membership; printed measure numbers excluded.",
             "slurs": "Reciprocal MuseScore chord locations versus paired MusicXML slur numbers. Full musical chord endpoints compared; engraving placement excluded.",
             "ties": "Tie-free truth is checked for extra XML sound/notation endpoints. Tie-bearing MuseScore truth is explicitly unsupported until a real fixture establishes its endpoint encoding.",
         },
         "not_scored": {
-            "features": ["across-measure voice continuity", "cross-staff chords", "tie-bearing references",
+            "features": ["polyphonic across-measure voice identity", "cross-staff chords", "tie-bearing references",
                          "dynamics/hairpins", "articulations", "beam grouping", "lyrics", "engraving"],
             "truth_observed_unscored_spanners": dict(expected.unscored),
         },

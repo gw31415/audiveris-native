@@ -1,0 +1,383 @@
+{
+  "tests": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts/tests",
+      "-p",
+      "test_score_structure_quality.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.1390475620282814,
+    "contracts": 18,
+    "new_contracts": 5
+  },
+  "pages": {
+    "laura": {
+      "argv": [
+        "python3",
+        "scripts/compare_score_structure_quality.py",
+        "fixtures/openscore-lieder/lc6019054.mscx",
+        "evidence/real-image-quality-baseline/laura-original.musicxml",
+        "/tmp/real-voice-continuity-quality-v1/laura-original.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.29366150000714697,
+      "previous_15_categories_unchanged": true,
+      "boundary_metric": {
+        "truth": 4,
+        "recognized": 4,
+        "matched": 3,
+        "precision": 0.75,
+        "recall": 0.75,
+        "F1": 0.75,
+        "equal": false,
+        "qualification": "observed",
+        "missing": [
+          [
+            [
+              1,
+              3,
+              "5/8",
+              "1/8",
+              false,
+              [
+                68
+              ]
+            ],
+            [
+              1,
+              4,
+              "0",
+              "1/8",
+              false,
+              [
+                67
+              ]
+            ]
+          ]
+        ],
+        "extra": [
+          [
+            [
+              1,
+              3,
+              "5/8",
+              "1/8",
+              false,
+              [
+                70
+              ]
+            ],
+            [
+              1,
+              4,
+              "0",
+              "1/8",
+              false,
+              [
+                67
+              ]
+            ]
+          ]
+        ]
+      },
+      "boundary_coverage": {
+        "truth_boundaries": 9,
+        "recognized_boundaries": 9,
+        "truth_single_stream_boundaries": 9,
+        "recognized_single_stream_boundaries": 4,
+        "jointly_scored_boundaries": 4,
+        "unscored_boundary_union": 5,
+        "available_relation_observations": {
+          "truth_cross_measure_slurs": 0,
+          "recognized_cross_measure_slurs": 0,
+          "truth_tie_endpoints": 0,
+          "recognized_tie_endpoints": 0,
+          "used_for_polyphonic_identity_assignment": false
+        },
+        "qualification": "Only adjacent measures on the same staff with one nonoverlapping local stream on each side in BOTH scores are scored. Local voice labels may change freely across the barline. The compared pair is the last complete group before the boundary and the first after it, retaining pitch, duration and grace identity. Multiple streams, empty measures and missing boundaries remain unscored; no pitch-distance or reused-label heuristic supplies continuity. This does not prove polyphonic voice identity across measures."
+      }
+    },
+    "der-winter": {
+      "argv": [
+        "python3",
+        "scripts/compare_score_structure_quality.py",
+        "fixtures/openscore-lieder/lc6053913.mscx",
+        "evidence/real-rest-quality-baseline/der-winter-original.musicxml",
+        "/tmp/real-voice-continuity-quality-v1/der-winter-original.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.07813709898618981,
+      "previous_15_categories_unchanged": true,
+      "boundary_metric": {
+        "truth": 24,
+        "recognized": 24,
+        "matched": 19,
+        "precision": 0.7916666666666666,
+        "recall": 0.7916666666666666,
+        "F1": 0.7916666666666666,
+        "equal": false,
+        "qualification": "observed",
+        "missing": [
+          [
+            [
+              3,
+              3,
+              "3/8",
+              "1/8",
+              false,
+              [
+                47
+              ]
+            ],
+            [
+              3,
+              4,
+              "0",
+              "3/8",
+              false,
+              [
+                48
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              5,
+              "3/8",
+              "1/8",
+              false,
+              [
+                null
+              ]
+            ],
+            [
+              3,
+              6,
+              "0",
+              "1/8",
+              false,
+              [
+                57
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              6,
+              "7/16",
+              "1/16",
+              false,
+              [
+                62
+              ]
+            ],
+            [
+              3,
+              7,
+              "0",
+              "1/16",
+              false,
+              [
+                60
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              7,
+              "7/16",
+              "1/16",
+              false,
+              [
+                48
+              ]
+            ],
+            [
+              3,
+              8,
+              "0",
+              "1/8",
+              false,
+              [
+                47
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              8,
+              "3/8",
+              "1/8",
+              false,
+              [
+                38
+              ]
+            ],
+            [
+              3,
+              9,
+              "0",
+              "1/4",
+              false,
+              [
+                43,
+                55
+              ]
+            ]
+          ]
+        ],
+        "extra": [
+          [
+            [
+              3,
+              3,
+              "1/2",
+              "1/8",
+              false,
+              [
+                47
+              ]
+            ],
+            [
+              3,
+              4,
+              "0",
+              "3/8",
+              false,
+              [
+                48
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              5,
+              "3/8",
+              "1/8",
+              false,
+              [
+                null
+              ]
+            ],
+            [
+              3,
+              6,
+              "0",
+              "1/8",
+              false,
+              [
+                78
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              6,
+              "7/16",
+              "1/16",
+              false,
+              [
+                83
+              ]
+            ],
+            [
+              3,
+              7,
+              "0",
+              "1/16",
+              false,
+              [
+                81
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              7,
+              "7/16",
+              "1/16",
+              false,
+              [
+                69
+              ]
+            ],
+            [
+              3,
+              8,
+              "0",
+              "1/8",
+              false,
+              [
+                67
+              ]
+            ]
+          ],
+          [
+            [
+              3,
+              8,
+              "3/8",
+              "1/8",
+              false,
+              [
+                59
+              ]
+            ],
+            [
+              3,
+              9,
+              "0",
+              "1/4",
+              false,
+              [
+                64,
+                76
+              ]
+            ]
+          ]
+        ]
+      },
+      "boundary_coverage": {
+        "truth_boundaries": 24,
+        "recognized_boundaries": 24,
+        "truth_single_stream_boundaries": 24,
+        "recognized_single_stream_boundaries": 24,
+        "jointly_scored_boundaries": 24,
+        "unscored_boundary_union": 0,
+        "available_relation_observations": {
+          "truth_cross_measure_slurs": 0,
+          "recognized_cross_measure_slurs": 0,
+          "truth_tie_endpoints": 0,
+          "recognized_tie_endpoints": 0,
+          "used_for_polyphonic_identity_assignment": false
+        },
+        "qualification": "Only adjacent measures on the same staff with one nonoverlapping local stream on each side in BOTH scores are scored. Local voice labels may change freely across the barline. The compared pair is the last complete group before the boundary and the first after it, retaining pitch, duration and grace identity. Multiple streams, empty measures and missing boundaries remain unscored; no pitch-distance or reused-label heuristic supplies continuity. This does not prove polyphonic voice identity across measures."
+      }
+    }
+  },
+  "files_sha256": {
+    "scripts/compare_score_structure_quality.py": "98e2bd0b2aca676a5394d89259d2e184483870fa916164176ef193e72b58abb5",
+    "scripts/tests/test_score_structure_quality.py": "702db1c6385cdb533057c4ab49d1c70e17079e3869bccbbc9559843282532057",
+    "fixtures/openscore-lieder/lc6019054.mscx": "c884cf023a152e0af29be3719f158a8ec8903cd312b6f1d880bc6b43dcbc1682",
+    "fixtures/openscore-lieder/lc6053913.mscx": "776b60aa1488636fe8d2e83c79391aa80d15981ce17ecc2ca30ca3a3fac6ccd6",
+    "evidence/real-image-quality-baseline/laura-original.musicxml": "4f979b7cfce80dd56a7babac36f4cec59a774bfd0577e9e9724be706b31dcc94",
+    "evidence/real-rest-quality-baseline/der-winter-original.musicxml": "e04333e06b7c58181824602b4b57367d5c2aad2b2b7811707fa2dc3f3e26c7fb"
+  },
+  "original_rerun": false,
+  "native_rerun": false,
+  "quality_accepted": false,
+  "external_network_used": false
+}
