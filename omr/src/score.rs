@@ -437,31 +437,44 @@ fn build_measure(
         });
     }
 
-    // Augmentation dots.
+    // Augmentation dots: first dot column right of the chord / rest, second
+    // dot column right of the first. For a chord, every head must find a dot
+    // in its own space (the space above for a head on a line), otherwise the
+    // dots are inconsistent and ignored.
     let dots: Vec<&crate::symbols::Symbol> = syms.iter().copied().filter(|s| s.shape == "DOT_set").collect();
     for ev in events.iter_mut() {
-        let (top, bot) = match &ev.kind {
-            Kind::Chord { .. } => {
-                let hs = &ev.heads;
-                (
-                    hs.iter().map(|&h| sheet.heads[h].bounds.y).min().unwrap_or(0) as f64 - 0.5 * il,
-                    hs.iter().map(|&h| sheet.heads[h].bounds.bottom()).max().unwrap_or(0) as f64 + 0.5 * il,
-                )
-            }
-            Kind::Rest { .. } => (ev.y_mid - 1.0 * il, ev.y_mid + 1.0 * il),
+        let st = &sheet.staves[part_staves[(ev.staff - 1) as usize]];
+        let near = |d: &&&crate::symbols::Symbol| {
+            let x = d.bounds.x as f64;
+            x >= ev.right - 1.0 && x <= ev.right + 1.6 * il
         };
-        let mut row: Vec<f64> = dots
-            .iter()
-            .filter(|d| d.bounds.cy() >= top && d.bounds.cy() <= bot && d.bounds.w as f64 <= 0.8 * il)
-            .map(|d| d.bounds.x as f64)
-            .filter(|&x| x >= ev.right - 1.0 && x <= ev.right + 1.5 * il)
-            .collect();
-        row.sort_by(|a, b| a.partial_cmp(b).unwrap());
-        if let Some(&first) = row.first() {
-            ev.dots = 1;
-            if row.iter().any(|&x| x > first + 0.3 * il && x <= first + 1.2 * il) {
-                ev.dots = 2;
+        let candidates: Vec<&&crate::symbols::Symbol> = dots.iter().filter(near).collect();
+        let first_col: Vec<&&crate::symbols::Symbol> = match &ev.kind {
+            Kind::Chord { .. } => {
+                let mut slots: Vec<i32> = ev.heads.iter().map(|&h| sheet.heads[h].pitch).map(|p| if p % 2 == 0 { p - 1 } else { p }).collect();
+                slots.sort();
+                slots.dedup();
+                let found: Vec<&&crate::symbols::Symbol> = candidates
+                    .iter()
+                    .copied()
+                    .filter(|d| {
+                        let p = st.pitch_of(d.bounds.cy(), d.bounds.cx()).round() as i32;
+                        slots.contains(&p) || slots.contains(&(p - 1)) || slots.contains(&(p + 1))
+                    })
+                    .collect();
+                let covered = slots.iter().all(|&sl| found.iter().any(|d| (st.pitch_of(d.bounds.cy(), d.bounds.cx()) - sl as f64).abs() <= 1.0));
+                if covered { found } else { Vec::new() }
             }
+            Kind::Rest { .. } => candidates.into_iter().filter(|d| (d.bounds.cy() - ev.y_mid).abs() <= 1.0 * il).collect(),
+        };
+        let Some(first) = first_col.iter().map(|d| d.bounds.x as f64).reduce(f64::min) else { continue };
+        ev.dots = 1;
+        let second = dots.iter().any(|d| {
+            let x = d.bounds.x as f64;
+            x > first + 0.3 * il && x <= first + 1.6 * il && first_col.iter().any(|f| (f.bounds.cy() - d.bounds.cy()).abs() <= 0.3 * il)
+        });
+        if second {
+            ev.dots = 2;
         }
     }
 

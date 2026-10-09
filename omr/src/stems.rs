@@ -42,7 +42,7 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
     let min_len = (1.8 * il) as i32;
     let w = nostaff.width as i32;
     let mut best: Option<(i32, Link)> = None;
-    let ranges = [(b.x - 1, b.x + ms + 1), (b.right() - ms - 2, b.right())];
+    let ranges = [(b.x - 3, b.x + ms + 1), (b.right() - ms - 2, b.right() + 2)];
     // Longest thin vertical stroke leaving the head on one side, upwards or downwards.
     let stroke = |x0: i32, x1: i32, up: bool| -> i32 {
         (x0..=x1)

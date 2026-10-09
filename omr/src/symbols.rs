@@ -62,14 +62,26 @@ pub fn residual(
     let ms = scale.max_stem + 1;
     let good_stem = |s: &&Stem| s.heads.iter().any(|&h| heads[h].ctx >= 0.6);
     for s in stems.iter().filter(good_stem) {
-        for y in s.top..=s.bottom {
-            for x in [s.x - 1, s.x, s.x + 1] {
-                if img.get(x, y) {
-                    let (a, b) = img.hrun_at(x, y);
-                    if b - a + 1 <= ms {
-                        for xx in a..=b {
-                            img.set(xx, y, false);
-                        }
+        // Stem columns (covered by black over half the stem length at least):
+        // erase their pixels where the horizontal run is stem-thin, so that
+        // flags and dots touching the stem are kept.
+        let len = s.bottom - s.top + 1;
+        let is_col = |x: i32| ((s.top..=s.bottom).filter(|&y| nostaff.get(x, y)).count() as i32) * 2 >= len;
+        // Contiguous stem columns around s.x only.
+        let mut x0 = s.x;
+        while x0 > s.x - ms && is_col(x0 - 1) {
+            x0 -= 1;
+        }
+        let mut x1 = s.x;
+        while x1 < s.x + ms && is_col(x1 + 1) {
+            x1 += 1;
+        }
+        for x in x0..=x1 {
+            for y in s.top..=s.bottom {
+                if nostaff.get(x, y) {
+                    let (a, b) = nostaff.hrun_at(x, y);
+                    if b - a < ms {
+                        img.set(x, y, false);
                     }
                 }
             }
@@ -172,9 +184,27 @@ fn relevant(shape: &str) -> bool {
         || shape == "CUT_TIME"
 }
 
+/// Geometric plausibility of a shape (Audiveris ShapeChecker), in interline units.
+fn plausible(shape: &str, b: &Rect, il: f64) -> bool {
+    let (w, h) = (b.w as f64 / il, b.h as f64 / il);
+    match shape {
+        "DOT_set" => (0.2..=0.9).contains(&w) && (0.2..=0.9).contains(&h) && w / h <= 2.0 && h / w <= 2.0,
+        "HW_REST_set" => (0.7..=2.0).contains(&w) && (0.25..=0.9).contains(&h),
+        "QUARTER_REST" => (1.8..=3.6).contains(&h),
+        "BREVE_REST" | "LONG_REST" => (0.8..=4.2).contains(&h) && w <= 1.5,
+        s if s.ends_with("_REST") => (1.1..=6.0).contains(&h),
+        "SHARP" | "NATURAL" | "DOUBLE_FLAT" => (1.8..=4.0).contains(&h),
+        "FLAT" => (1.5..=3.5).contains(&h),
+        "DOUBLE_SHARP" => (0.5..=1.5).contains(&h),
+        s if s.starts_with("FLAG_") => h >= 1.0,
+        _ => true,
+    }
+}
+
 pub fn min_grade(shape: &str) -> f64 {
     match shape {
         "DOT_set" => 0.2,
+        "BREVE_REST" | "LONG_REST" => 0.7,
         s if s.starts_with("DYNAMICS") => 0.6,
         _ => 0.35,
     }
@@ -219,6 +249,7 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
         if let Some(&(s, gr)) = ev.first()
             && relevant(s)
             && gr >= min_grade(s)
+            && plausible(s, &g.bounds, il as f64)
         {
             cands.push((idx, s, gr, g.bounds));
         }
@@ -272,23 +303,23 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
 pub fn stem_flags(residual: &Bitmap, stem: &Stem, scale: &Scale) -> u32 {
     let il = scale.interline;
     let len = stem.bottom - stem.top;
-    let zone = if stem.up {
-        Rect::new(stem.x - 2, stem.top - 2, il + il / 2, (len / 2).min(4 * il))
-    } else {
-        let h = (len / 2).min(4 * il);
-        Rect::new(stem.x - 2, stem.bottom - h, il + il / 2, h + 3)
-    };
-    let parts: Vec<Component> = components(residual, Some(zone)).into_iter().filter(|c| c.weight() >= 6).collect();
+    // From the tip to just before the heads.
+    let h = (len - il).clamp(il, 5 * il);
+    let zone = if stem.up { Rect::new(stem.x - 2, stem.top - 2, il + il / 2, h) } else { Rect::new(stem.x - 2, stem.bottom - h, il + il / 2, h + 3) };
+    let parts: Vec<Component> =
+        components(residual, Some(zone)).into_iter().filter(|c| c.weight() >= 6 && c.bounds.w >= 3).collect();
     if parts.is_empty() {
         return 0;
     }
     let refs: Vec<&Component> = parts.iter().collect();
     let g = Component::merge(&refs);
     let ev = classify(&g, il);
+    if std::env::var("OMR_FLAG").is_ok() {
+        eprintln!("flag stem x {} {}..{} glyph {:?} -> {:?}", stem.x, stem.top, stem.bottom, g.bounds, &ev[..3]);
+    }
     let suffix_ok = |s: &str| s.ends_with("_DOWN") != stem.up;
-    ev.iter()
-        .find(|(s, _)| s.starts_with("FLAG_") && !s.contains("SMALL") && suffix_ok(s))
-        .filter(|(_, g)| *g >= 0.05)
+    ev.first()
+        .filter(|(s, g)| s.starts_with("FLAG_") && suffix_ok(s) && *g >= 0.2)
         .map(|(s, _)| s.trim_start_matches("FLAG_").trim_end_matches("_DOWN").parse().unwrap_or(0))
         .unwrap_or(0)
 }

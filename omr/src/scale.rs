@@ -99,8 +99,10 @@ pub fn compute(img: &Bitmap) -> Result<Scale, String> {
             }
         }
     }
-    let beam = peak(&beam_hist, line_hi + 1, interline + 1)
-        .filter(|&p| beam_hist[p] as f64 >= 0.5 * interline as f64)
+    let lo = ((0.3 * interline as f64).round() as usize).max(line_hi + 1);
+    let hi = (0.75 * interline as f64).round() as usize;
+    let beam = peak(&beam_hist, lo, hi + 1)
+        .filter(|&p| beam_hist[p] as f64 >= 5.0 * interline as f64)
         .unwrap_or((0.5 * interline as f64).round() as usize);
     // Stem width: horizontal runs between 1 and interline/2.
     let mut horiz = vec![0u64; w + 1];
