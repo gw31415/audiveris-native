@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/READ-BASES.json",
+      "bytes": 201,
+      "sha256": "1aab0f783b45d3cab30019f3f070a33f478fb9d7ac7e228800a96daaed0dc8c3"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/README.md",
+      "bytes": 4597,
+      "sha256": "6cac5062a9cf2e76a8e8fc7e5bbffe9972ed0e17cf8c1208ac9faf78b1b5c082"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/REVIEW-SOURCES.json",
+      "bytes": 2567,
+      "sha256": "cecfab21cb919433068846041eba000916e930b15435183d060b46d358ec335d"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/TEST-BASE.json",
+      "bytes": 98,
+      "sha256": "2643d75278af3535f4a6625a390e472beb8764df60927a9e0fcaf756e66cb383"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/batch.patch",
+      "bytes": 2820,
+      "sha256": "a81135bbb5d71645c0c6a0c2f7db8a7caf68c1af38e9541a2c9ef5aefd3194ab"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/prepare.py",
+      "bytes": 3218,
+      "sha256": "d54056f68abb768cfd6d44be90e46700a1762299a49403639368df9307acfe55"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/test-addition.rs",
+      "bytes": 4307,
+      "sha256": "44a2c822e09f58b096f47fb5d595b48047d287b29a83301122177d4b796c5216"
+    },
+    {
+      "path": "/tmp/slur-stem-batch-review-v1/test.patch",
+      "bytes": 4518,
+      "sha256": "e18e381656ea320e76c86c91fdcaefc911ce3de024e253dab987493ad7973a0c"
+    }
+  ]
+}

@@ -63,6 +63,136 @@ fn actual_check(music: &OwnedMusic, trial: &Value, shape: &str) -> Value {
     }
     row
 }
+fn glyph_ink(glyph: &GlyphPixels) -> BTreeSet<(i32, i32)> {
+    assert_eq!(glyph.orientation, Orientation::Vertical);
+    glyph
+        .runs
+        .iter()
+        .flat_map(|run| {
+            (run.start..run.start + run.length)
+                .map(move |y| (glyph.left + run.position as i32, glyph.top + y as i32))
+        })
+        .collect()
+}
+fn assert_historical_candidates_erased_by_actual_slurs(
+    music: &OwnedMusic,
+    trials: &[Value],
+    historical: &[Value],
+) -> Vec<Value> {
+    // These masks are old native candidate observations, not original glyphs
+    // or recognition inputs. Partial overlap does not mean whole-box erasure.
+    let controls: Value = serde_json::from_str(r#"[{"system":2,"bounds":[565,1047,37,13],"weight":77,"parts":[{"bounds":[574,1055,28,5],"orientation":"VERTICAL","runs":[[0,1,1],[1,1,1],[2,1,2],[3,1,2],[4,1,3],[5,1,3],[6,1,3],[7,1,3],[8,2,3],[9,2,3],[10,2,3],[11,2,3],[12,2,3],[13,2,3],[14,2,3],[15,2,3],[16,2,3],[17,2,3],[18,2,3],[19,2,2],[20,2,2],[21,1,3],[22,1,2],[23,1,2],[24,0,2],[25,0,2],[26,0,1],[27,0,1]]},{"bounds":[565,1047,5,5],"orientation":"VERTICAL","runs":[[0,0,2],[1,1,2],[2,2,2],[3,3,2],[4,4,1]]}]},{"system":2,"bounds":[642,1194,36,13],"weight":81,"parts":[{"bounds":[651,1203,27,4],"orientation":"VERTICAL","runs":[[0,0,1],[1,0,1],[2,0,2],[3,0,2],[4,0,3],[5,0,3],[6,0,3],[7,0,3],[8,1,3],[9,1,3],[10,1,3],[11,1,3],[12,1,3],[13,1,3],[14,1,3],[15,1,3],[16,1,3],[17,1,3],[18,1,3],[19,1,3],[20,1,2],[21,0,3],[22,0,3],[23,0,2],[24,0,2],[25,0,1],[26,0,1]]},{"bounds":[642,1194,7,6],"orientation":"VERTICAL","runs":[[0,0,1],[1,0,3],[2,2,2],[3,3,2],[4,4,2],[5,4,2],[6,5,1]]}]}]"#).unwrap();
+    let controls = controls.as_array().unwrap();
+    assert_eq!(historical.len(), controls.len());
+    let registry = &music.owner.prepared.registry;
+    let classified_ink = (1..=registry.len())
+        .map(|id| registry.get(id).unwrap())
+        .filter(|entry| entry.groups.contains(&beam_dispatch::Group::Symbol))
+        .flat_map(|entry| glyph_ink(&entry.glyph))
+        .collect::<BTreeSet<_>>();
+    let state = music
+        .slurs
+        .as_ref()
+        .expect("accepted actual Slur owners before SYMBOLS");
+    let mut used_slurs = BTreeSet::new();
+    let mut observed = Vec::new();
+    for (expected, control) in historical.iter().zip(controls) {
+        assert_eq!(expected["system"], control["system"]);
+        assert_eq!(expected["bounds"], control["bounds"]);
+        assert_eq!(expected["shape"], "FERMATA_BELOW");
+        assert_eq!(expected["created_inter_ids"], json!([]));
+        assert!(
+            trials
+                .iter()
+                .all(|trial| trial["system_id"] != expected["system"]
+                    || trial["bounds"] != expected["bounds"]),
+            "old candidate must be absent after actual Slur cleanup: {expected}"
+        );
+        let parts = control["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|part| glyph_ink(&beam_dispatch::glyph_from_json(part).unwrap()))
+            .collect::<Vec<_>>();
+        let old_ink = parts.iter().flatten().copied().collect::<BTreeSet<_>>();
+        assert_eq!(old_ink.len() as u64, control["weight"].as_u64().unwrap());
+        for &(x, y) in &old_ink {
+            assert!(x >= 0 && y >= 0);
+            assert_eq!(
+                music.owner.raw_binary.pixels
+                    [y as usize * music.owner.raw_binary.width + x as usize],
+                0
+            );
+        }
+        let matches = state
+            .slurs
+            .iter()
+            .filter_map(|slur| {
+                if expected["system"] != slur.system.id {
+                    return None;
+                }
+                let glyph = &registry.get(slur.glyph_id).unwrap().glyph;
+                let ink = glyph_ink(glyph);
+                let overlap = old_ink.intersection(&ink).copied().collect::<BTreeSet<_>>();
+                (!overlap.is_empty()).then_some((slur, glyph, ink, overlap))
+            })
+            .collect::<Vec<_>>();
+        assert_eq!(
+            matches.len(),
+            1,
+            "unique actual Slur consumes old component ink"
+        );
+        let (slur, glyph, ink, overlap) = &matches[0];
+        assert!(used_slurs.insert(slur.key));
+        let (node, removed) = music.owner.graph.retained_inter(slur.key).unwrap();
+        assert!(!removed);
+        assert_eq!(node["kind"], "SlurInter");
+        assert_eq!(node["manual"], false);
+        assert_eq!(node["is_tie"], false);
+        assert_eq!(node["abnormal"], false);
+        assert_eq!(node["glyph_id"], slur.glyph_id);
+        assert_eq!(node["glyph"], beam_dispatch::glyph_json(glyph));
+        assert!(
+            music
+                .owner
+                .systems
+                .iter()
+                .any(|s| Arc::ptr_eq(s, &slur.system))
+        );
+        assert_eq!(
+            state
+                .parts
+                .iter()
+                .filter(|part| Arc::ptr_eq(&part.part, &slur.part)
+                    && part.slurs.iter().any(|s| Arc::ptr_eq(s, slur)))
+                .count(),
+            1
+        );
+        for (id, relation) in slur.relation_ids.iter().zip(&slur.relations) {
+            assert!(Arc::ptr_eq(
+                music.owner.graph.fresh_slur_relation_owner(*id).unwrap(),
+                relation
+            ));
+        }
+        let component_overlap = parts
+            .iter()
+            .map(|part| part.intersection(ink).count())
+            .collect::<Vec<_>>();
+        assert!(component_overlap.iter().all(|&count| count > 0));
+        assert!(
+            ink.is_disjoint(&classified_ink),
+            "accepted Slur ink must be absent from actual post-cleanup Symbol glyphs"
+        );
+        observed.push(json!({"historical_candidate":expected,"historical_native_weight":old_ink.len(),
+            "actual_slur":slur.key,"actual_Slur_owner":Arc::as_ptr(slur) as usize,
+            "actual_glyph_id":slur.glyph_id,"actual_relation_ids":slur.relation_ids,
+            "historical_component_overlap_pixels":component_overlap,"erased_old_pixels":overlap.len(),
+            "old_pixels_outside_this_Slur":old_ink.len()-overlap.len(),
+            "old_candidate_absent":true,"accepted_Slur_ink_absent_from_post_cleanup_Symbol_glyphs":true}));
+    }
+    observed
+}
+
 /// Extends the existing real-image tests; fixtures only assert the resulting evaluations.
 pub(crate) fn assert_real_checked_rejections(music: &OwnedMusic, page: &str) {
     let all = source();
@@ -129,19 +259,13 @@ pub(crate) fn assert_real_checked_rejections(music: &OwnedMusic, page: &str) {
             .unwrap();
         protected.push(remaining.remove(index));
     }
-    for expected in source["unmatched_native"].as_array().unwrap() {
-        let index = remaining
-            .iter()
-            .position(|e| {
-                e["system"] == expected["system"]
-                    && e["bounds"] == expected["bounds"]
-                    && e["shape"] == expected["shape"]
-                    && (e["score"].as_f64().unwrap() - expected["score"].as_f64().unwrap()).abs()
-                        < 1e-10
-            })
-            .unwrap();
-        remaining.remove(index);
-    }
+    let historical_unmatched = source["unmatched_native"].as_array().unwrap();
+    let removed_by_slurs = if page == "der_winter" {
+        assert_historical_candidates_erased_by_actual_slurs(music, trials, historical_unmatched)
+    } else {
+        assert!(historical_unmatched.is_empty());
+        Vec::new()
+    };
     assert!(
         remaining.is_empty(),
         "unexpected surviving family evaluations: {remaining:?}"
@@ -200,7 +324,7 @@ pub(crate) fn assert_real_checked_rejections(music: &OwnedMusic, page: &str) {
     };
     std::fs::write(output,serde_json::to_vec_pretty(&json!({"scope":"Actual native evaluation results with retained Staff/ledger geometry; source data is test-only.",
         "page":page,"rejected":rejected,"protected_factory_arrivals":protected,"accepted_limit_controls":source["accepted_limit_controls"],
-        "unmatched_CURVES_candidates_preserved":source["unmatched_native"],"accent":accent,
+        "historical_unmatched_CURVES_candidates":source["unmatched_native"],"unmatched_CURVES_candidates_removed_by_actual_Slur_cleanup":removed_by_slurs,"accent":accent,
         "graph_unchanged_during_assertion":true,"factory_lifecycles_admitted_by_this_unit":false,"whole_page_checked_or_quality_parity_claimed":false})).unwrap()).unwrap();
 }
 fn staff(slope: f64) -> crate::grid_ir::StaffGeometry {

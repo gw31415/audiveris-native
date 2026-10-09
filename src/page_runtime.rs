@@ -5,6 +5,7 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) raw_binary: GrayImage,
     pub(crate) native_headers: crate::native_headers::NativeHeaders,
     pub(crate) systems: Vec<std::sync::Arc<crate::grid_ir::SystemGeometry>>,
     pub(crate) grid_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
@@ -736,6 +737,7 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        raw_binary: binary,
         native_headers,
         systems: owned_grid.systems,
         grid_glyphs: owned_grid.physical_glyphs,

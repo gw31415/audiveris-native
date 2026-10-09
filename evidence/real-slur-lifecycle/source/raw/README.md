@@ -1,0 +1,11 @@
+# Alternative generic raw-gap point refinement
+
+All19native pair candidates were processed using only retained input component point lists and the independently verified native rawBINARY. The rule samples actual black pixels inside an endpoint-derived narrow corridor, adding one existing foreground pixel nearest the ties-even column mean in each currently missing interior x column. Existing points/endpoints are preserved; no white pixel/interpolated point, original accepted mask, original coordinates/IDs, label score, or expected result enters selection.
+
+This is a NEW native extractor hypothesis, not original Skeleton/ArcRetriever/getAllPoints. Original getAllPoints never fills gap pixels. Source skeleton points are obtained before SYMBOLS cleaning, after thinning rawBINARY before good-shape erasure; they can contain multiple points at one x. Final recognition quality still requires real owner/endpoint and XML validation.
+
+V2 polygon membership follows nonzero line crossings, preserving diagonal boundary inclusion. Independent actual Java Area observations agree on the complete rawforeground set of all19corridors. V1's interval-based boundary convention omitted onepixel and picked the wrong boundarypixel in another corridor; v1 remains preserved and is superseded. This distinction is recorded in comparison.json.
+
+For the three diagnostically corresponding split slurs, adding4/2/2actualblack points makes actual pinned original retrieveGlyph pass34>=28,28>=26,29>=27strict run counts. Rawgap remains0at max3; maxRunDistance remains2.75 and coverage.75. More than the number of added points can become acceptable because original run endpoints may lie near ANY supplied point. All19refined mathematical decisions were reevaluated by original Java;6pass math, and their original run supports pass. Pair143still has original rawgap7 and must be rejected. Source noncrossable-obstacle checks and actual Head/Chord links remain untested.
+
+No repository changes, full image recognition rerun, authentication changes, Git or save of the original book. Original book before/after hashes match. Evidence is suitable for prospective native tests; runtime code must consume actual owners and raw pixels, never these reports.

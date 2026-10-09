@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import java.awt.geom.*;import java.nio.file.*;import java.util.*;
+public class SlurBandRoutingProbe extends NativeSlurCandidateMathProbe {
+ public static void main(String[]args)throws Exception{
+  Object manager=c("sheet.SystemManager").getConstructor(c("sheet.Sheet")).newInstance(new Object[]{null});List<Object>systems=new ArrayList<>();List<Area>areas=new ArrayList<>();List<String>names=new ArrayList<>();
+  for(String line:Files.readAllLines(Path.of(args[0]))){String[]f=line.split("\t");String[]meta=f[1].split(",");int[]m=Arrays.stream(meta).mapToInt(Integer::parseInt).toArray();Path2D.Double path=new Path2D.Double(Path2D.WIND_NON_ZERO);boolean first=true;
+   for(String ss:f[2].split(";")){double[]p=Arrays.stream(ss.split(",")).mapToDouble(Double::parseDouble).toArray();if(first){path.moveTo(p[0],p[1]);first=false;}else path.lineTo(p[0],p[1]);if(p.length==4)path.lineTo(p[2],p[3]);else if(p.length==6)path.quadTo(p[2],p[3],p[4],p[5]);else path.curveTo(p[2],p[3],p[4],p[5],p[6],p[7]);}
+   path.closePath();Area area=new Area(path);if(m[0]!=0||m[1]!=m[2])area.intersect(new Area(new Rectangle2D.Double(m[0],0,m[1]-m[0],m[3])));Object sys=c("sheet.SystemInfo").getConstructor(int.class,c("sheet.Sheet"),List.class).newInstance(systems.size()+1,null,null);call(sys,"setArea",area);systems.add(sys);areas.add(area);names.add(f[0]);
+  }
+  set(manager,"systems",systems);List<Object>rows=new ArrayList<>();int qi=0;for(String line:Files.readAllLines(Path.of(args[1]))){double[]p=Arrays.stream(line.split(",")).mapToDouble(Double::parseDouble).toArray();Rectangle2D rect=new Rectangle2D.Double(p[0],p[1],p[2],p[3]);List<Object>hits=new ArrayList<>();for(Area area:areas)hits.add(area.intersects(rect));List<Object>route=new ArrayList<>();for(Object s:(List<?>)call(manager,"getSystemsOf",rect,null))route.add(call(s,"getId"));List<Object>reused=new ArrayList<>();reused.add(systems.get(0));Object result=call(manager,"getSystemsOf",rect,reused);rows.add(map("query",qi++,"area_hits",hits,"route",route,"reused_same_list",result==reused,"reused_route",reused.stream().map(s->{try{return call(s,"getId");}catch(Exception e){throw new RuntimeException(e);}}).toList()));}
+  Files.writeString(Path.of(args[2]),json(map("scope","Original runtime java.awt.geom.Area and pinned original SystemManager on actual detached original SystemInfo owners with synthetic generic noncrossing Band geometries. No Book/image/Slur recognition/native owner hookup. Exact contact/positive overlap and supplied System order/reused list are observed.","bands",names,"rows",rows))+"\n");
+ }
+}

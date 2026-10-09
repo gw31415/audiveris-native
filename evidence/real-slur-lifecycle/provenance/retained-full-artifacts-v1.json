@@ -1,0 +1,100 @@
+{
+  "policy": "Remain at original paths unchanged. No archives, raw image buffers, build binaries, or repeated dense native outputs included in copy plan.",
+  "artifacts": [
+    {
+      "path": "/tmp/native-slur-math-original-v1/observed.json",
+      "sha256": "3c1db310972365e1805cb73fea21439806d2b48ad9c38c75763e8458d4d09550",
+      "bytes": 234720
+    },
+    {
+      "path": "/tmp/native-slur-math-original-v1/rust-observed.json",
+      "sha256": "08389579d42260b8c172b4a98bb25c90735e099a2228e99b960599be9bb9a8d3",
+      "bytes": 120909
+    },
+    {
+      "path": "/tmp/native-slur-math-original-v1/console.log",
+      "sha256": "dbff30d48755b55afc091664a545c1ceb613d4b407c4e94a6934b31899b4ea4e",
+      "bytes": 19251939
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/observed.json",
+      "sha256": "220c796e2b910141259f2456c0b8442dee0b1217f4054110acf39786afd0e421",
+      "bytes": 22652
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/rust-observed.json",
+      "sha256": "a01b2933926e29fd17007c4d2d74529f5a42ac67c2eb72544eb6fa5608697e5d",
+      "bytes": 113956
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/console.log",
+      "sha256": "8d81f440df96adfa4edd83bcedf7c99c6bd7257de6f851ef1029d5ce724c8285",
+      "bytes": 19215443
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/observed.json",
+      "sha256": "aa7b65258ae9f73c1aa02afa893a8c3a7a91d6ffe7fdc26a1392a39c966d56f6",
+      "bytes": 210810
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/inputs.json",
+      "sha256": "25d798b1b8ca33eab1924d7b4e58bd3688ff82702c8eaed01d773f2fb20c3dcd",
+      "bytes": 396030
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/console.log",
+      "sha256": "cf792a5dfb984953dd14d5ee5d279a8727ff38769d0e50a85d78d1caf3b3a358",
+      "bytes": 651
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/observed.json",
+      "sha256": "f76918f055752f8b06071b83a5aa7cb29939a8d8c50e069bbbec18e1b50010dd",
+      "bytes": 968656
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/rust-observed.json",
+      "sha256": "ec16ae3cb4cc0f390ca00cccb8de24643a74898bd1bdef45c37b3751e0101a03",
+      "bytes": 923173
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/console.log",
+      "sha256": "415c23c746bb22948f2fb1227e42714887c70f01ac2111ba55c985ae40db7ebe",
+      "bytes": 19209153
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/observed.json",
+      "sha256": "a23c9be14865a04af44ea74a40354c41a74cd8a3c1ac523685c7c7d0ee174346",
+      "bytes": 695461
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/rust-observed.json",
+      "sha256": "bbe473e0ebd016e3850cd8daef02738fedf0c879782fb954850d999897bc969e",
+      "bytes": 567177
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/console.log",
+      "sha256": "6c77850b7555f1c1bf06f96eb04ad19aa46e1bf32b03a16d3adc5a9164f5f07e",
+      "bytes": 19208257
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/observed.json",
+      "sha256": "94de882de50224d255596903311a9f2af141812aa3fbc004af6c18639b7d07bd",
+      "bytes": 14893
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/console.log",
+      "sha256": "90549903cd9c875effbfa23e2af95c68aab55d1b7e02e3aba608381c087e5764",
+      "bytes": 19210376
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/observed.json",
+      "sha256": "ad68270c6e77531b08f7064fc42680a60f4bdde0c8d29bdd86e1223f4254002b",
+      "bytes": 285366
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/console.log",
+      "sha256": "d5dd72d41be46452e517e27241bad47bc344c6aa9d7f918af600a3f03cde3501",
+      "bytes": 918
+    }
+  ]
+}

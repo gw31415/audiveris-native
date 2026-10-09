@@ -151,6 +151,36 @@ impl Graph {
         let id = self.endpoint(key)?;
         self.read_retained_chord(id)
     }
+    pub(crate) fn retained_or_live_chord_getters(&mut self, key: Key) -> Result<ChordRead, String> {
+        let id = self.endpoint(key)?;
+        let vertex = &self.vertices[id - 1];
+        if key.phase != Phase::Chord || vertex.data["kind"] != "HeadChordInter" {
+            return Err("chord_cache_actual_head_chord_required".into());
+        }
+        if vertex.chord_cache.is_some() {
+            return self.read_retained_chord(id);
+        }
+        // Recognition already owns these fields from Chord construction and relation
+        // invalidation. Reading them must not create or warm the editing-path cache.
+        let mut stem = None;
+        for eid in self.incident_edges(id) {
+            let edge = &self.edges[eid - 1];
+            if edge.key.source == id && edge.key.kind == "ChordStemRelation" {
+                self.validate_chord_identity(id, edge.key.target, &edge.key.kind)?;
+                stem = Some(self.vertices[edge.key.target - 1].key);
+                break;
+            }
+        }
+        Ok(ChordRead {
+            stem,
+            bounds: serde_json::from_value(vertex.data["bounds"].clone())
+                .map_err(|_| "retained_chord_bounds_required")?,
+            head: serde_json::from_value(vertex.data["head_location"].clone())
+                .map_err(|_| "retained_chord_head_location_required")?,
+            tail: serde_json::from_value(vertex.data["tail_location"].clone())
+                .map_err(|_| "retained_chord_tail_location_required")?,
+        })
+    }
     fn read_retained_chord(&mut self, id: usize) -> Result<ChordRead, String> {
         if self.vertices[id - 1].chord_cache.is_none() {
             return Err("retained_chord_cache_owner_required".into());

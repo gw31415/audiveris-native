@@ -1,0 +1,58 @@
+[
+  {
+    "path": "/tmp/audiveris-pinned-source/sheet/curve/Curve.java",
+    "sha256": "6eccb19879cc15331214ee60f639978f9b2373dc8f8385a1b986838cc0fc8baa"
+  },
+  {
+    "path": "/tmp/audiveris-pinned-source/sheet/curve/CurveGap.java",
+    "sha256": "324975767249e23a11a1c12a6e22f65ce671760780067e60c8a41126a0569a91"
+  },
+  {
+    "path": "/tmp/audiveris-pinned-source/sheet/curve/CurvesBuilder.java",
+    "sha256": "649ebb3633aa5ce53e66a59fb209838513880d51d2eae7435f43f9eb9120bf59"
+  },
+  {
+    "path": "/tmp/audiveris-pinned-source/sheet/curve/SlursBuilder.java",
+    "sha256": "651e4576dceae7cb2a4b8a97b632e2a17eba37e409ab625225894893b4d334b3"
+  },
+  {
+    "path": "/tmp/audiveris-pinned-source/sheet/curve/Skeleton.java",
+    "sha256": "a0250d80b107123376cb23d812181ce8b736b9969851ebbf649b5908d5ff16b0"
+  },
+  {
+    "path": "/tmp/audiveris-pinned-source/run/RunTable.java",
+    "sha256": "0a1d100fa7540e537983a1eb89d204098d3fb51f3f34c6264442147388840982"
+  },
+  {
+    "path": "/workspace/audiveris-native/src/page_runtime.rs",
+    "sha256": "ee820f106c06c9625ea9478469641cae47ffe077d9d220691777a8ce8886fa21"
+  },
+  {
+    "path": "/workspace/audiveris-native/src/stem_image_owned.rs",
+    "sha256": "45b61329ee7b090fc3e5b56eb85491a365c787298c2355ca24af5b3f282132e5"
+  },
+  {
+    "path": "/workspace/audiveris-native/src/music_symbols.rs",
+    "sha256": "007e216377c3f5903f11203c33ea1ff4ee8eb073c829a0f5eb0aac77b2ae4064"
+  },
+  {
+    "path": "/workspace/audiveris-native/src/sections.rs",
+    "sha256": "cce4a08768fc286a4dc7f742a5e5cc40e019cad053b3f3437b4a6650b681c86e"
+  },
+  {
+    "path": "/workspace/audiveris-native/src/vertical.rs",
+    "sha256": "dd9c4b933ebe98523aa257e5cb2545ab83385054add742555eb412d0abcca750"
+  },
+  {
+    "path": "/workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png",
+    "sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0"
+  },
+  {
+    "path": "/tmp/short-slur-run-gap-source.md",
+    "sha256": "44a301b0a988db2e440d5df73341e9604d97c24d45696457875102ab58d5ef4d"
+  },
+  {
+    "path": "/tmp/slur_java_hypot.rs",
+    "sha256": "34c9ece312ccf8ab2bb83f7cc700fb5993c29182e92b706991c114c89fcb1529"
+  }
+]

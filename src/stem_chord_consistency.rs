@@ -17,7 +17,7 @@ fn key(v: &Value) -> Result<Key, String> {
         .map_err(|_| "foundation_chord_origin_required".into())
 }
 // java.awt.Rectangle2D.intersectsLine, including closed boundary contacts.
-fn intersects(mut line: [f64; 4], b: [f64; 4]) -> bool {
+pub(crate) fn intersects(mut line: [f64; 4], b: [f64; 4]) -> bool {
     let outcode = |x: f64, y: f64| -> u8 {
         (if x < b[0] {
             1

@@ -1,0 +1,14 @@
+{
+  "scope": "Original Java expected observations on full-precision native-generated candidate curves against loaded original real HeadChord owners; source expected coordinates/masks/Slur IDs were not used to select curves or relevant Systems. Rust has borrowed test-fixture views; this is geometry/selection-kernel comparison, not native recognition or same-runtime object proof. Rust pair selection here exercises nonmirror two-link or empty selections. Common-Chord/manual controls belong to the separate26-case fixture. Positive mirror/native orphan/clump/tie/edge insertion cases remain unexercised.",
+  "cases": 17,
+  "saved_real_slurs": 0,
+  "native_generated_curve_cases": 17,
+  "control_cases": 0,
+  "area_queries": 7728,
+  "checks": 39291,
+  "finite_tolerance": 1e-10,
+  "maximum_scalar_absolute_error": 0.0,
+  "scalar_nonzero_deltas": [],
+  "failures": [],
+  "source_live_relookup_matches_persisted_heads": []
+}

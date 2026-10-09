@@ -1,0 +1,36 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "338c289017873bbd5ad61f5758673f3225bdfc867c78da506651030ae51002da",
+  "helper_sha256": "ee4233833feb0a89fa6c5ec6efbbe63d4b20056fde1f63955f3744e430c1d34e",
+  "runner_sha256": "52d93eeb284cc96f49c9c584d3f7fc61aa5d8e1f2fbfcc0aa4acad142bd41077",
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-d",
+    "/tmp/slur-band-routing-original-v1/classes",
+    "/tmp/SlurBandRoutingProbe.java",
+    "/tmp/NativeSlurCandidateMathProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx256m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/slur-band-routing-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/slur-band-routing-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/slur-band-routing-original-v1/prefs",
+    "-Duser.home=/tmp/slur-band-routing-original-v1/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/slur-band-routing-original-v1/classes",
+    "SlurBandRoutingProbe",
+    "/tmp/slur-band-routing-original-v1/bands.tsv",
+    "/tmp/slur-band-routing-original-v1/queries.tsv",
+    "/tmp/slur-band-routing-original-v1/observed.json"
+  ],
+  "exit_code": 0,
+  "Book_loaded": false,
+  "image_recognition_invoked": false,
+  "Book_saved": false
+}

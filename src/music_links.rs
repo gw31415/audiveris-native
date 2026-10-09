@@ -146,7 +146,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         m.measures[mi].stack_tuplets = unassigned;
     }
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
-    m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"Rest/TimeWhole physical overlaps with incoming zero-target augmentation support, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
+    m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"Rest/TimeWhole physical overlaps with incoming zero-target augmentation support, contextualization/weak purge/exclusion reduction; actual member/container cleanup; retains typed same-Staff nontie Slurs; Slur export requires its separate writer; lyrics/tremolos remain pending; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
     m.owner.prepared.report["limited_links"]["initial_header_filler"] =
         json!(initial_header_filler);
     m.owner.prepared.report["limited_links"]["flag_overlap_preparation"] = flag_overlaps;

@@ -1,0 +1,160 @@
+{
+  "scope": "Independent actual original Java is expected output. Standalone Rust proposal uses JAMA matrix operation order and bundled FdLibm hypot transcription. Numeric comparison on supplied153real candidate sequences plus4controls only; no complete Slur recognition claim.",
+  "rows": 157,
+  "final_decision_mismatches": [],
+  "nullable_presence_mismatches": [],
+  "discrete_or_nonfinite_state_mismatches": [],
+  "max_absolute_deltas": {
+    "rough.center": {
+      "delta": 0.0,
+      "candidate_index": 0
+    },
+    "rough.radius": {
+      "delta": 0.0,
+      "candidate_index": 0
+    },
+    "rough.distance": {
+      "delta": 0.0,
+      "candidate_index": 0
+    },
+    "rough.ccw": {
+      "delta": 0,
+      "candidate_index": 0
+    },
+    "rough.arc_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "rough.mid_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "rough.first_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "rough.last_angle": {
+      "delta": 2.220446049250313e-16,
+      "candidate_index": 26
+    },
+    "fitted.center": {
+      "delta": 0.0,
+      "candidate_index": 0
+    },
+    "fitted.radius": {
+      "delta": 0.0,
+      "candidate_index": 0
+    },
+    "fitted.distance": {
+      "delta": 0.0,
+      "candidate_index": 0
+    },
+    "fitted.ccw": {
+      "delta": 0,
+      "candidate_index": 0
+    },
+    "fitted.arc_angle": {
+      "delta": 6.661338147750939e-16,
+      "candidate_index": 77
+    },
+    "fitted.mid_angle": {
+      "delta": 8.881784197001252e-16,
+      "candidate_index": 115
+    },
+    "fitted.first_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 12
+    },
+    "fitted.last_angle": {
+      "delta": 2.220446049250313e-16,
+      "candidate_index": 77
+    },
+    "selected_before_impacts.center": {
+      "delta": 0.0,
+      "candidate_index": 15
+    },
+    "selected_before_impacts.radius": {
+      "delta": 0.0,
+      "candidate_index": 15
+    },
+    "selected_before_impacts.distance": {
+      "delta": 0.0,
+      "candidate_index": 15
+    },
+    "selected_before_impacts.ccw": {
+      "delta": 0,
+      "candidate_index": 15
+    },
+    "selected_before_impacts.arc_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "selected_before_impacts.mid_angle": {
+      "delta": 8.881784197001252e-16,
+      "candidate_index": 115
+    },
+    "selected_before_impacts.first_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "selected_before_impacts.last_angle": {
+      "delta": 2.220446049250313e-16,
+      "candidate_index": 26
+    },
+    "selected_after_impacts.center": {
+      "delta": 0.0,
+      "candidate_index": 15
+    },
+    "selected_after_impacts.radius": {
+      "delta": 0.0,
+      "candidate_index": 15
+    },
+    "selected_after_impacts.distance": {
+      "delta": 0.0,
+      "candidate_index": 15
+    },
+    "selected_after_impacts.ccw": {
+      "delta": 0,
+      "candidate_index": 15
+    },
+    "selected_after_impacts.arc_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "selected_after_impacts.mid_angle": {
+      "delta": 8.881784197001252e-16,
+      "candidate_index": 115
+    },
+    "selected_after_impacts.first_angle": {
+      "delta": 4.440892098500626e-16,
+      "candidate_index": 45
+    },
+    "selected_after_impacts.last_angle": {
+      "delta": 2.220446049250313e-16,
+      "candidate_index": 26
+    },
+    "bezier": {
+      "delta": 1.1368683772161603e-13,
+      "candidate_index": 65
+    },
+    "impacts": {
+      "delta": 0.0,
+      "candidate_index": 30
+    },
+    "grade": {
+      "delta": 0.0,
+      "candidate_index": 30
+    }
+  },
+  "tolerance_all_reported_finite_scalars": 1e-12,
+  "all_finite_deltas_within_tolerance": true,
+  "extraction_component_sets_points_weights_match_all153": true,
+  "rust_extraction_counts": {
+    "input_components": 828,
+    "eligible_components": 134,
+    "single_count": 134,
+    "pair_count": 19
+  },
+  "selected_before_circle_centers_radii_distances_exact_on_observed_values": true,
+  "circle_constructor_fitted_distances_exact_on_observed_values": true
+}

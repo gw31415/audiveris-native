@@ -63,6 +63,29 @@ impl Retriever {
         }
         Ok(Arc::clone(stem))
     }
+    pub(crate) fn registered_stems(
+        &self,
+        graph: &Graph,
+        locals: &[usize],
+    ) -> Result<Vec<Arc<CachedStem>>, String> {
+        // A borrowed lookup batch must certify the entire cache, including
+        // unrequested entries, before resolving any of its actual Stem owners.
+        self.existing(graph)?;
+        locals
+            .iter()
+            .map(|local| {
+                let stem = self
+                    .stems
+                    .get(local)
+                    .ok_or("missing_owned_foundation_stem")?;
+                let state = stem.snapshot()?;
+                if state["removed"] == true || state["in_sig"] != true {
+                    return Err("inactive_owned_foundation_stem".into());
+                }
+                Ok(Arc::clone(stem))
+            })
+            .collect()
+    }
     pub fn new(system: u64) -> Result<Self, String> {
         Ok(Self {
             cache: stem_builder::Cache::new(system)?,
@@ -288,5 +311,125 @@ impl Retriever {
         state["removed"] = json!(true);
         *graph = next;
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod batch_tests {
+    use super::*;
+
+    #[test]
+    fn registered_stem_batch_preserves_order_identity_and_rejects_unrequested_stale_cache() {
+        let fixture: Value = serde_json::from_str(include_str!(
+            "../fixtures/official-stem-cache-sig/controls.json"
+        ))
+        .unwrap();
+        let first_parts = fixture["cases"][0]["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| beam_dispatch::glyph_from_json(v).unwrap())
+            .collect::<Vec<_>>();
+        let second_parts = first_parts
+            .iter()
+            .cloned()
+            .map(|mut g| {
+                g.left += 20;
+                g
+            })
+            .collect::<Vec<_>>();
+        let mut image = GrayImage {
+            width: 128,
+            height: 96,
+            pixels: vec![255; 128 * 96],
+        };
+        for parts in [&first_parts, &second_parts] {
+            let glyph = stem_glyph::assemble(parts).unwrap();
+            for run in &glyph.runs {
+                for y in run.start..run.start + run.length {
+                    image.pixels[(glyph.top as usize + y) * image.width
+                        + glyph.left as usize
+                        + run.position] = 0;
+                }
+            }
+        }
+        let parameters = stem_checks::Parameters::new(11, 5, 0., 0).unwrap();
+        let mut registry = Registry::default();
+        let mut cache = Retriever::new(1).unwrap();
+        let mut graph = Graph::default();
+        let mut stems = Vec::new();
+        for parts in [&first_parts, &second_parts] {
+            let stem = cache
+                .create_selected(&mut registry, parts, &image, &parameters)
+                .unwrap()
+                .stem
+                .unwrap();
+            cache.register(&registry, &mut graph, &stem).unwrap();
+            stems.push(stem);
+        }
+        let locals = [
+            stems[1].glyph_id(),
+            stems[0].glyph_id(),
+            stems[1].glyph_id(),
+        ];
+        let graph_before = graph.snapshot();
+        let registry_before = registry.snapshot();
+        let states_before = stems
+            .iter()
+            .map(|s| s.snapshot().unwrap())
+            .collect::<Vec<_>>();
+        let selected = cache.registered_stems(&graph, &locals).unwrap();
+        for (actual, expected) in selected.iter().zip([&stems[1], &stems[0], &stems[1]]) {
+            assert!(Arc::ptr_eq(actual, expected));
+        }
+        assert_eq!(graph.snapshot(), graph_before);
+        assert_eq!(registry.snapshot(), registry_before);
+        assert_eq!(
+            stems
+                .iter()
+                .map(|s| s.snapshot().unwrap())
+                .collect::<Vec<_>>(),
+            states_before
+        );
+        assert_eq!(
+            cache.registered_stems(&graph, &[usize::MAX]).unwrap_err(),
+            "missing_owned_foundation_stem"
+        );
+
+        let other_key = cache.key(&stems[1]);
+        let other_body = graph.retained_inter(other_key).unwrap().0.clone();
+        let mut damaged = other_body.clone();
+        damaged["grade"] = json!(0.7);
+        graph.vertex(other_key, damaged, false).unwrap();
+        let damaged_before = graph.snapshot();
+        let single_error = cache.registered_stem(&graph, locals[1]).unwrap_err();
+        assert_eq!(single_error, "changed_cached_stem_sig_record");
+        assert_eq!(
+            cache.registered_stems(&graph, &[locals[1]]).unwrap_err(),
+            single_error
+        );
+        assert_eq!(graph.snapshot(), damaged_before);
+        assert_eq!(registry.snapshot(), registry_before);
+        assert_eq!(
+            stems
+                .iter()
+                .map(|s| s.snapshot().unwrap())
+                .collect::<Vec<_>>(),
+            states_before
+        );
+
+        graph.vertex(other_key, other_body, false).unwrap();
+        cache.remove(&mut graph, &stems[1]).unwrap();
+        let removed_before = graph.snapshot();
+        let removed_state = stems[1].snapshot().unwrap();
+        let surviving = cache.registered_stems(&graph, &[locals[1]]).unwrap();
+        assert!(Arc::ptr_eq(&surviving[0], &stems[0]));
+        assert_eq!(
+            cache.registered_stems(&graph, &[locals[0]]).unwrap_err(),
+            "inactive_owned_foundation_stem"
+        );
+        assert_eq!(graph.snapshot(), removed_before);
+        assert_eq!(stems[1].snapshot().unwrap(), removed_state);
+        assert_eq!(registry.snapshot(), registry_before);
     }
 }

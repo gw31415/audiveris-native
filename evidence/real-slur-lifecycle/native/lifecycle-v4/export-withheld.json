@@ -1,0 +1,17 @@
+{
+  "error": "musicxml_slur_writer_required_for_retained_or_live_Slur",
+  "export_preserved_graph_and_clocks": true,
+  "lifecycle_only_checkpoint": true,
+  "new_XML_written": false,
+  "ordinary_LINKS_rhythm_PAGE_succeeded": true,
+  "previous_XML_baseline": {
+    "bytes": 24624,
+    "sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb"
+  },
+  "previous_XML_preserved": true,
+  "quality_accepted": false,
+  "retained_slurs": 6,
+  "same_actual_Slur_and_relation_owners_after_refusal": true,
+  "scope": "existing DerWinter target reached the production export guard only after compared Slur lifecycle and ordinary LINKS/rhythm/PAGE succeeded",
+  "writer_still_required": true
+}

@@ -38,6 +38,10 @@ mod rest_removal;
 pub(crate) use rest_removal::{RestRemovalEvent, RestRemovalStage};
 mod editing_task;
 mod manual_chord_stem;
+mod slur_boundary;
+mod slur_callbacks;
+mod slur_obstacles;
+pub(crate) mod slur_owners;
 #[cfg(test)]
 mod stem_refinement_tests;
 mod symbol_cleaner;
@@ -61,6 +65,7 @@ pub enum Phase {
     StaffBarline,
     Chord,
     Symbol,
+    Curve,
     MusicKey,
     MusicTime,
 }
@@ -392,6 +397,10 @@ struct Edge {
 }
 #[derive(Clone, Default, Debug)]
 pub struct Graph {
+    slur_relation_bindings: BTreeMap<usize, std::sync::Arc<crate::music_slurs::Relation>>,
+    pending_slur_relation: Option<(Key, Key, std::sync::Arc<crate::music_slurs::Relation>)>,
+    #[cfg(test)]
+    fresh_slur_trace: Option<Vec<slur_callbacks::SlurCallbackRecord>>,
     clef_ownership: Option<clef::ClefOwnership>,
     native_header_bindings: BTreeMap<Key, header_binding::HeaderBinding>,
     native_header_relation_bindings:
@@ -575,6 +584,17 @@ impl Graph {
         if !removed && added && self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             self.add_dot_to_measure(id)?;
             self.vertices[id - 1].data["abnormal"] = json!(true);
+        }
+        if !removed
+            && added
+            && key.phase == Phase::Curve
+            && self.vertices[id - 1].data["kind"] == "SlurInter"
+        {
+            #[cfg(test)]
+            self.record_fresh_slur("SlurInter.added.entry", key, None);
+            self.vertices[id - 1].data["abnormal"] = json!(true);
+            #[cfg(test)]
+            self.record_fresh_slur("SlurInter.added.return", key, None);
         }
         if !removed && added && self.vertices[id - 1].data["kind"] == "AlterInter" {
             self.vertices[id - 1].data["abnormal"] = json!(true);
@@ -983,6 +1003,9 @@ impl Graph {
                 .filter(|s| !s.is_empty())
                 .ok_or("invalid_shared_sig_relation_kind")?
                 .to_owned();
+            if phase == Phase::Curve && kind == "SlurHeadRelation" {
+                self.validate_fresh_slur_head(source, target, &data)?;
+            }
             if kind == "AlterHeadRelation" {
                 self.validate_alter_head(source, target, &data)?;
             }
@@ -1163,6 +1186,14 @@ impl Graph {
                 self.refresh_head_stem_abnormal(&[source, target]);
                 #[cfg(test)]
                 self.dot_callback_event("edgeAdded", id, "leave");
+            }
+            if added && phase == Phase::Curve && self.edges[id - 1].key.kind == "SlurHeadRelation" {
+                self.bind_pending_slur_relation(id)?;
+                #[cfg(test)]
+                self.record_fresh_slur("SlurHeadRelation.added.entry", a, Some(id));
+                self.refresh_fresh_slur_abnormal(source);
+                #[cfg(test)]
+                self.record_fresh_slur("SlurHeadRelation.added.return", a, Some(id));
             }
             if added && self.edges[id - 1].key.kind == "AlterHeadRelation" {
                 self.refresh_alter_abnormal(&[source]);
@@ -2307,11 +2338,17 @@ impl Graph {
             .map(|v| v["id"].as_u64().unwrap() as usize)
             .collect::<BTreeSet<_>>();
         let mut relations = Vec::new();
-        for e in self.edges.iter().filter(|e| !e.removed) {
+        for (index, e) in self.edges.iter().enumerate().filter(|(_, e)| !e.removed) {
             if matches!(
                 e.data["kind"].as_str(),
                 Some("Containment" | "ChordStemRelation")
             ) {
+                continue;
+            }
+            if e.key.kind == "SlurHeadRelation" {
+                self.require_fresh_slur_zero_head_support(index + 1)?;
+                // The original inherits target coefficient 0; retain the
+                // actual Slur support and edge outside this Head projection.
                 continue;
             }
             let source = ids.contains(&e.key.source);
@@ -2369,7 +2406,7 @@ impl Graph {
             .map(|n| n["id"].as_u64().unwrap() as usize)
             .collect::<BTreeSet<_>>();
         let mut relations = Vec::new();
-        for e in self.edges.iter().filter(|e| !e.removed) {
+        for (index, e) in self.edges.iter().enumerate().filter(|(_, e)| !e.removed) {
             // Original getSupports excludes non-Support identity relations.
             if matches!(
                 e.data["kind"].as_str(),
@@ -2402,6 +2439,12 @@ impl Graph {
                 {
                     return Err("music_dot_typed_support_required".into());
                 }
+                continue;
+            }
+            if e.key.kind == "SlurHeadRelation" {
+                self.require_fresh_slur_zero_head_support(index + 1)?;
+                // The original inherits target coefficient 0; retain the
+                // actual Slur support and edge outside this Head projection.
                 continue;
             }
             let source = ids.contains(&e.key.source);

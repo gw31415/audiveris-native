@@ -1,0 +1,10 @@
+{
+  "bands": 8,
+  "queries": 1570,
+  "area_comparisons": 12560,
+  "route_order_and_reused_list_comparisons": 4710,
+  "comparisons": 17270,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "scope": "Generic noncrossing line/quadratic/cubic Band geometry against original runtime Area and pinned SystemManager. Production Band owner integration and native image routing not executed."
+}

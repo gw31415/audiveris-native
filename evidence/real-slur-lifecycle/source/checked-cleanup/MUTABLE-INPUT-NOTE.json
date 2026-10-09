@@ -1,0 +1,14 @@
+{
+  "historical_native_dump_observed": {
+    "path": "/tmp/real-rest-symbol-candidates.json",
+    "sha256": "b03658e38cdf5913e1cba8383288e599255bf61ad4a3749997bed2fb9f7bcfa0"
+  },
+  "same_transient_path_current_sha256": "a752cc9016a0af98dff8df95acd33ef3f2b4f9b8bac29547c9637f32ef100c05",
+  "historical_full_dump_still_at_that_path": false,
+  "exact_selected_historical_component_masks_retained": "PROVENANCE.json controls and test-local observed masks",
+  "v3_lifecycle_preserved": {
+    "path": "native/lifecycle-v3/lifecycle.json",
+    "sha256": "0b5311f1cf988880b71d49f21b2c3bdc41f70600876a42fff8545a55fe420793"
+  },
+  "qualification": "The existing image target reuses its temporary candidate-dump and lifecycle-marker paths. Historical hashes are not rewritten; selected old component runs were preserved before reuse. Current path contents must not be presented as the old full dump."
+}

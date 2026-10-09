@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "cargo",
+    "build",
+    "--offline",
+    "--locked",
+    "-j2",
+    "--bin",
+    "audiveris-musicxml"
+  ],
+  "exit_code": 0,
+  "seconds": 33.6776794680045,
+  "binary_sha256": "97ffccf8f031e9dcdefa02fc10b3ac7042b88465e22956cc7b56b7afd276eff7"
+}

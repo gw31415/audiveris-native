@@ -1,0 +1,1025 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "destination_root": "evidence/real-slur-lifecycle",
+  "destination_policy": "copy destination_relative is beneath destination_root; verify_existing destination_relative is relative to repository root. This script copies nothing into checkout.",
+  "previous_plan": {
+    "path": "/tmp/slur-checkpoint-evidence-plan-v1/copy-plan.json",
+    "sha256": "a30123a377267de2a9258fe6df874ee5eb0315ed7d3dc5479e2c143bb74a7498",
+    "bytes": 30235
+  },
+  "copy_count": 120,
+  "copy_bytes": 734099,
+  "verify_existing_count": 6,
+  "entries": [
+    {
+      "path": "/tmp/native-slur-math-original-v1/README.md",
+      "sha256": "fb5be9695eebfc734470d13da2f54001baf0585b6c7a989e703c794b05d7e213",
+      "bytes": 2656,
+      "destination_relative": "source/fit/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/native-slur-math-original-v1/provenance.json",
+      "sha256": "fd223e6cd0f67b0b57cd641f3e6e224bc641d10f0d2cdcad6bb8bec3528fcb9c",
+      "bytes": 1864,
+      "destination_relative": "source/fit/provenance.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/native-slur-math-original-v1/rust-comparison.json",
+      "sha256": "90fbc8e99a698e0931712479498bf9b24a15af26c0e3dc30e8923c51b3b0fda1",
+      "bytes": 4222,
+      "destination_relative": "source/fit/rust-comparison.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/README.md",
+      "sha256": "0a78ad0beb66d79b043425b2b3bba9a1819f56e31c51e8fdd3e548f87381e5f1",
+      "bytes": 2237,
+      "destination_relative": "source/raw/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/provenance.json",
+      "sha256": "10ce1ae4bc4e49f98ab8bd10f73834fca465ab493df2a0fcd258e2b31e5b8f8f",
+      "bytes": 2216,
+      "destination_relative": "source/raw/provenance.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/rust-comparison.json",
+      "sha256": "e38ad3cb3558c837d71ebbbbf1048e0380140ce8fbc20816592d4cc40ddf3b61",
+      "bytes": 2185,
+      "destination_relative": "source/raw/rust-comparison.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/README.md",
+      "sha256": "9321a667ebeca7d8f8cb4d85a4ac18439d6d1204177928465b2078ef13c5002b",
+      "bytes": 2220,
+      "destination_relative": "source/band/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/PROVENANCE.json",
+      "sha256": "099f5668dd322b72c071a272b25bfcdea6fbd1dc68e4bc7121ca2bf52da1d736",
+      "bytes": 1566,
+      "destination_relative": "source/band/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/RUST-PROVENANCE.json",
+      "sha256": "b752efb20d3ecb58a6f1b0e4ffeef6fa5b67f7130c0074b6d0f47c3625c80b0a",
+      "bytes": 607,
+      "destination_relative": "source/band/RUST-PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/MANIFEST.json",
+      "sha256": "bcc66bdeb988906dd6635481479dda2bde8cb9efb2f9497f1c37517a30d5c3ad",
+      "bytes": 3032,
+      "destination_relative": "source/band/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-band-routing-original-v1/comparison.json",
+      "sha256": "607deec56caa95b120a84a358221e87c2c5923ae8893962f86a0cd8b3e7294ba",
+      "bytes": 381,
+      "destination_relative": "source/band/comparison.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/README.md",
+      "sha256": "1a2aa0635f3c24a4395fcb6ea95bbe017077886590d161321f3810067b9d8ebd",
+      "bytes": 2648,
+      "destination_relative": "source/lookup-controls/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/PROVENANCE.json",
+      "sha256": "620828d0783bf95ae8c820984793ffc177ce745d0e39e6dfb96169cb649a48cf",
+      "bytes": 1773,
+      "destination_relative": "source/lookup-controls/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/RUST-PROVENANCE.json",
+      "sha256": "defc0b8b4b7ae2e25bd29df89a11fea9cb3214753296372d8bc8b3cb68a94323",
+      "bytes": 2651,
+      "destination_relative": "source/lookup-controls/RUST-PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/MANIFEST.json",
+      "sha256": "5dd5856b64867a7e1a4b50ce64e992e43735a512b5613a7d427d2142f7ae634e",
+      "bytes": 2113,
+      "destination_relative": "source/lookup-controls/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-owned-lookup-original-v2/comparison.json",
+      "sha256": "a9e2bb7b9ac5e87136fee909b76f66b5e4ce5c4709899e693901fed54dcda6c0",
+      "bytes": 1891,
+      "destination_relative": "source/lookup-controls/comparison.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/README.md",
+      "sha256": "e2e1e99024fd015e79345f8fb1f091cb8514b23c5aab5c2a1d1599c74c778f52",
+      "bytes": 2363,
+      "destination_relative": "source/lookup-native-curves/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/PROVENANCE.json",
+      "sha256": "ccf8c4ccef98118133c699486b9b55770c5db974a1c2c05edf6ff02393496c8d",
+      "bytes": 1930,
+      "destination_relative": "source/lookup-native-curves/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/RUST-PROVENANCE.json",
+      "sha256": "0058beccee73a82146e8a7257daea6722bfaf67af5a893928f0feeab1a4fe0d9",
+      "bytes": 2715,
+      "destination_relative": "source/lookup-native-curves/RUST-PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/MANIFEST.json",
+      "sha256": "534d4742ac303d0d3fe7eeec98efb48747ff998d1130200beabcfae23dd1046c",
+      "bytes": 2352,
+      "destination_relative": "source/lookup-native-curves/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-curve-lookup-original-v1/comparison.json",
+      "sha256": "a4efde3e3bb315c25ef4f30a6af2e14e0d323326e71680370fdcb6bc9b2553e5",
+      "bytes": 923,
+      "destination_relative": "source/lookup-native-curves/comparison.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/README.md",
+      "sha256": "5e82c76dcff323f36a109f2fef0a89cbcee327ac40d8721e0eb95f797d79a210",
+      "bytes": 4591,
+      "destination_relative": "source/clump/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/PROVENANCE.json",
+      "sha256": "a3c456570919517c5369719fbf63bcec1e7d76ba0641bf8c4b0a954548c087b0",
+      "bytes": 2270,
+      "destination_relative": "source/clump/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/RUST-PROVENANCE.json",
+      "sha256": "6c4d2d214fa60d804a200db8a140206f42ef390f2d95001d1d81cda35b07d8d3",
+      "bytes": 517,
+      "destination_relative": "source/clump/RUST-PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/MANIFEST.json",
+      "sha256": "8cbd2f45627e0d71c0d5e4e6f3781d8d8c11ce8d2a27a04e6655d5d592770788",
+      "bytes": 2873,
+      "destination_relative": "source/clump/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/comparison.json",
+      "sha256": "11356c94b4c413b5c1f282a85afc34b27681c101856d2108c5db718cfc16aa36",
+      "bytes": 727,
+      "destination_relative": "source/clump/comparison.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/README.md",
+      "sha256": "b23b2f1a52e6a65dee79f2097d1577d3022c7893888dc8aa2f61876d038cb8a9",
+      "bytes": 7837,
+      "destination_relative": "source/callbacks/README.md",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/PROVENANCE.json",
+      "sha256": "ef83d04c5be31ca85bec44f4309f31f48ba42806408f8377b24284cb155f73c3",
+      "bytes": 3057,
+      "destination_relative": "source/callbacks/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/MANIFEST.json",
+      "sha256": "84907e15d132d0c7d4d82b3568a730d1824a578427394b5ea1166dd771d2d5ba",
+      "bytes": 4639,
+      "destination_relative": "source/callbacks/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Preserve original provenance and historical scope unchanged."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/summary.json",
+      "sha256": "c120502d723795d2135aea8c823af3308efe6e2bfb5fd556dbcb5d22fcf72435",
+      "bytes": 11622,
+      "destination_relative": "source/callbacks/summary.json",
+      "action": "copy",
+      "purpose": "Actual recorded comparison result, not a new execution."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v1/band-source-fixture.json",
+      "sha256": "c5d8c570aaef15e39821128deb4bfc421f524f121cb28a7f74fd2f6dc4200516",
+      "bytes": 157394,
+      "destination_relative": "source/projected/band-source-fixture.json",
+      "action": "copy",
+      "purpose": "Deterministic original-only projection; full originals remain referenced by hash."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v1/lookup-source-semantic-fixture.json",
+      "sha256": "0061dc3b0a7cffc029c0357b0e1f99d85df2d65ba82940679896574df41d35a2",
+      "bytes": 77981,
+      "destination_relative": "source/projected/lookup-source-semantic-fixture.json",
+      "action": "copy",
+      "purpose": "Deterministic original-only projection; full originals remain referenced by hash."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/observed.json",
+      "sha256": "94de882de50224d255596903311a9f2af141812aa3fbc004af6c18639b7d07bd",
+      "bytes": 14893,
+      "destination_relative": "source/clump/observed.json",
+      "action": "copy",
+      "purpose": "Small exact original observation or actual candidate input."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/selection-inputs.tsv",
+      "sha256": "523dfa6f3b02bee71f11a1654bf7e7ade36a6239e404939f0c5c65e34d928672",
+      "bytes": 1181,
+      "destination_relative": "source/clump/selection-inputs.tsv",
+      "action": "copy",
+      "purpose": "Small exact original observation or actual candidate input."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/component-inputs.tsv",
+      "sha256": "5fddaa71294ddc83ff46bf3d8349334b08c4694a07160f6e3d4cf71aec13a8ac",
+      "bytes": 115,
+      "destination_relative": "source/clump/component-inputs.tsv",
+      "action": "copy",
+      "purpose": "Small exact original observation or actual candidate input."
+    },
+    {
+      "path": "/tmp/slur-native-clump-original-v1/groups.tsv",
+      "sha256": "4aec38ea1ccb3fee4932414a9b9ada348a5240bbca713df5728d08240bf37b3f",
+      "bytes": 67,
+      "destination_relative": "source/clump/groups.tsv",
+      "action": "copy",
+      "purpose": "Small exact original observation or actual candidate input."
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/observed.json",
+      "sha256": "220c796e2b910141259f2456c0b8442dee0b1217f4054110acf39786afd0e421",
+      "bytes": 22652,
+      "destination_relative": "source/raw/observed.json",
+      "action": "copy",
+      "purpose": "Small exact original observation or actual candidate input."
+    },
+    {
+      "path": "/tmp/native-slur-raw-gap-refinement-v2/sequences.tsv",
+      "sha256": "9635398489f06b4c3e31bd451f5652e36a8d03f5ad8794b5eca387f7817b0bfe",
+      "bytes": 2966,
+      "destination_relative": "source/raw/sequences.tsv",
+      "action": "copy",
+      "purpose": "Small exact original observation or actual candidate input."
+    },
+    {
+      "path": "/tmp/native-slur-binary-support-v1/observed.json",
+      "sha256": "53dfedacf86a10839d5781c511b709ce0986d3c3f8ef4c6d07f0ccc91d59152c",
+      "bytes": 60429,
+      "destination_relative": "source/raw-baseline/observed.json",
+      "action": "copy",
+      "purpose": "Strict original BINARY/gap/run evidence; raw image buffers are excluded."
+    },
+    {
+      "path": "/tmp/native-slur-binary-support-v1/gap-area-observed.json",
+      "sha256": "9305d84ea53426ba623f2c927f20cd9b6d22e78a28ed3184cae527c34d1b2b55",
+      "bytes": 5563,
+      "destination_relative": "source/raw-baseline/gap-area-observed.json",
+      "action": "copy",
+      "purpose": "Strict original BINARY/gap/run evidence; raw image buffers are excluded."
+    },
+    {
+      "path": "/tmp/native-slur-binary-support-v1/provenance.json",
+      "sha256": "0a31a45d1f9737d6867a39881568bb542c04e925b27891027b59bdf3cbe0ff5f",
+      "bytes": 2381,
+      "destination_relative": "source/raw-baseline/provenance.json",
+      "action": "copy",
+      "purpose": "Strict original BINARY/gap/run evidence; raw image buffers are excluded."
+    },
+    {
+      "path": "/tmp/native-slur-binary-support-v1/input-provenance.json",
+      "sha256": "d747dc535af347602c5d937031912e9119b0fb35547a2208b0ef645a029976db",
+      "bytes": 1081,
+      "destination_relative": "source/raw-baseline/input-provenance.json",
+      "action": "copy",
+      "purpose": "Strict original BINARY/gap/run evidence; raw image buffers are excluded."
+    },
+    {
+      "path": "/tmp/NativeSlurCandidateMathProbe.java",
+      "sha256": "ee4233833feb0a89fa6c5ec6efbbe63d4b20056fde1f63955f3744e430c1d34e",
+      "bytes": 7822,
+      "destination_relative": "source/harness/NativeSlurCandidateMathProbe.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/NativeSlurBinarySupportProbe.java",
+      "sha256": "ecd74cbe16ebd325ece27b04e66d5578cc0ccd4477880052ab24aa99c0e7d6fb",
+      "bytes": 5624,
+      "destination_relative": "source/harness/NativeSlurBinarySupportProbe.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/NativeSlurRawGapSupportProbe.java",
+      "sha256": "bce640f71a3ec830d388d032699eb3991e2352be31cfa2047b19061a61cd7361",
+      "bytes": 5694,
+      "destination_relative": "source/harness/NativeSlurRawGapSupportProbe.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/SlurBandRoutingProbe.java",
+      "sha256": "338c289017873bbd5ad61f5758673f3225bdfc867c78da506651030ae51002da",
+      "bytes": 2620,
+      "destination_relative": "source/harness/SlurBandRoutingProbe.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/SlurOwnedLookupProbeV2.java",
+      "sha256": "7d3185ee32d4ba93d237ff987c62f7b60416982e84d8b28e4abf947c9f652dfc",
+      "bytes": 9710,
+      "destination_relative": "source/harness/SlurOwnedLookupProbeV2.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/SlurNativeCurveLookupProbe.java",
+      "sha256": "d2879776a8190da8863395ccdf54cf7ae1ff7f00dda6a1335720a974d25ebae1",
+      "bytes": 2696,
+      "destination_relative": "source/harness/SlurNativeCurveLookupProbe.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/SlurNativeClumpProbe.java",
+      "sha256": "0e8ce02afd48734a4be226d875fd99967c81d3f628b3c87266a9ce7f380aea6b",
+      "bytes": 7555,
+      "destination_relative": "source/harness/SlurNativeClumpProbe.java",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/run-native-slur-math.py",
+      "sha256": "cf616f079b534d4b9dadaf8409c1ee5a895b1a314ade2fa30ac69140d38ffa14",
+      "bytes": 2609,
+      "destination_relative": "source/harness/run-native-slur-math.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/run-slur-raw-gap-support-v2.py",
+      "sha256": "efd7fe81715d341584f9c4d479de7a32b92c9baeef773004995bdc2faa4afb12",
+      "bytes": 2377,
+      "destination_relative": "source/harness/run-slur-raw-gap-support-v2.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/run-slur-band-routing.py",
+      "sha256": "52d93eeb284cc96f49c9c584d3f7fc61aa5d8e1f2fbfcc0aa4acad142bd41077",
+      "bytes": 1812,
+      "destination_relative": "source/harness/run-slur-band-routing.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/run-slur-owned-lookup-v2.py",
+      "sha256": "792a96c46ef08a51d4d172d9cafc8bbd1b3bab14b4ee752ec610a357bd0423b5",
+      "bytes": 1974,
+      "destination_relative": "source/harness/run-slur-owned-lookup-v2.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/run-slur-native-curve-lookup.py",
+      "sha256": "cbaf5e04c58a4771b9eee485de4681df5015fd1dabb6e7d31f55945e090b1f40",
+      "bytes": 2034,
+      "destination_relative": "source/harness/run-slur-native-curve-lookup.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/run-slur-native-clump.py",
+      "sha256": "f0798a349bc2297f245eef3ba37b98984a6e523e3ba075e2552e22b06af5369e",
+      "bytes": 2144,
+      "destination_relative": "source/harness/run-slur-native-clump.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/compare-rust-slur-math.py",
+      "sha256": "456fa298cb1c30716b445d0a2d52727f1323a04cd12914ae843019fc9a717d7e",
+      "bytes": 3160,
+      "destination_relative": "source/harness/compare-rust-slur-math.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/compare_slur_raw_support_actual.py",
+      "sha256": "ae25ce208ad49c7156e5243d7ed47ff3ffb5fec60032fc83a3dc5b139b924db7",
+      "bytes": 4019,
+      "destination_relative": "source/harness/compare_slur_raw_support_actual.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/compare_slur_owned_lookup.py",
+      "sha256": "0d598cfb14bcf80e966562113a639a3bdff6fae36712f680d648e7c6926fc5ec",
+      "bytes": 3568,
+      "destination_relative": "source/harness/compare_slur_owned_lookup.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/compare_slur_native_curve_lookup.py",
+      "sha256": "44adc0e04b9cbb43459f2fb80dfb0ac94e2621996c80813a0601735f739686e2",
+      "bytes": 3725,
+      "destination_relative": "source/harness/compare_slur_native_curve_lookup.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/compare_slur_clump_selection.py",
+      "sha256": "91bbb6bb9305a75befe6e5cc4ff3b1a99f1edf2b9b1cc41f057f07043e54ddbc",
+      "bytes": 3204,
+      "destination_relative": "source/harness/compare_slur_clump_selection.py",
+      "action": "copy",
+      "purpose": "Reproduction source; historical absolute paths require deliberate adaptation, never auto-run during copy."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/SlurLifecycleObserver.java",
+      "sha256": "782d98e53c86f3f532fa771a7d9be3760edfecca6c37356ba6d2556e69529ab5",
+      "bytes": 9175,
+      "destination_relative": "source/callbacks/SlurLifecycleObserver.java",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/SlurLifecycleLoader.java",
+      "sha256": "2c70286032d390ae5f03d69a89daf1ffaad1df5e4e91e609282a7751680d521a",
+      "bytes": 3559,
+      "destination_relative": "source/callbacks/SlurLifecycleLoader.java",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/SlurLifecycleRewriter.java",
+      "sha256": "d78c0f1510d5ba71746a757dfc27a6347ca3c26c0a836a38e08e10f341692248",
+      "bytes": 3657,
+      "destination_relative": "source/callbacks/SlurLifecycleRewriter.java",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/VerifyObservationOverlay.java",
+      "sha256": "ca7f3880921fda6720402d6c3959444bf6f42734915ed3da3f077d7ed273cfe4",
+      "bytes": 3298,
+      "destination_relative": "source/callbacks/VerifyObservationOverlay.java",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/run.py",
+      "sha256": "3cd9cb93075e9a5dc07c3ff5e8ae30293c5b187bd95efa073c8ed6cdd6abd6d1",
+      "bytes": 2612,
+      "destination_relative": "source/callbacks/run.py",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/check.py",
+      "sha256": "ccc195e1e5a6f60b9fc2dc346031ccca0aa78e82a906a595abe62f8fec2718ec",
+      "bytes": 7031,
+      "destination_relative": "source/callbacks/check.py",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/instrumentation.json",
+      "sha256": "93c06fddc99e25bc07630c8df710059e29b2277c613aaf1db45389cfbe464848",
+      "bytes": 2108,
+      "destination_relative": "source/callbacks/instrumentation.json",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/instrumentation-audit.json",
+      "sha256": "5345d5cf56f2efb47b3d0fa21eaee450e00bb1d65f976ad1f48d3d55181a9a5c",
+      "bytes": 1618,
+      "destination_relative": "source/callbacks/instrumentation-audit.json",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-fresh-callbacks-original-v1/setup-attempts.json",
+      "sha256": "5eb36d0c3a5f7ee01325b953a3a5b5459c0c2ccae5a168d1f1bc7a9f72d7b3ad",
+      "bytes": 878,
+      "destination_relative": "source/callbacks/setup-attempts.json",
+      "action": "copy",
+      "purpose": "Original resumed-CURVES observation and audited instruction-only hooks."
+    },
+    {
+      "path": "/tmp/slur-native-integration-v2/source-fixture/observed.json",
+      "sha256": "22dcc7253110e8d272383ac997a38cff782fab96a9c732f994a3aa551cd2905e",
+      "bytes": 23845,
+      "destination_relative": "fixtures/official-slur-fresh-lifecycle/observed.json",
+      "action": "verify_existing",
+      "purpose": "Already adopted callback fixture; verify existing bytes, do not duplicate under evidence."
+    },
+    {
+      "path": "/tmp/slur-native-integration-v2/source-fixture/PROVENANCE.json",
+      "sha256": "31c0f309cffb8242ac67e2081358b8b78e1848a5feb6d38647df79e7a7a3d778",
+      "bytes": 542,
+      "destination_relative": "fixtures/official-slur-fresh-lifecycle/PROVENANCE.json",
+      "action": "verify_existing",
+      "purpose": "Already adopted callback fixture; verify existing bytes, do not duplicate under evidence."
+    },
+    {
+      "path": "/tmp/slur-fit-source-hashes.json",
+      "sha256": "5ddcbeadaa0c079f43922d6aa0a85dcadf4be4645a72f9ad072cb73a6bd1c56f",
+      "bytes": 4473,
+      "destination_relative": "source/references/slur-fit-source-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/slur-jama-operation-order-hashes.json",
+      "sha256": "4b93f6a9741523ea8e0399cf1ffe2e705e884c4ebeefad1a84f4ef1f90287381",
+      "bytes": 1355,
+      "destination_relative": "source/references/slur-jama-operation-order-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/short-slur-run-gap-source-hashes.json",
+      "sha256": "2e0fe96133f9a4b181a7a1f9c8b1a46ee27ba1365e2453b14296cd982cc7fc7c",
+      "bytes": 2168,
+      "destination_relative": "source/references/short-slur-run-gap-source-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/slur-point-extraction-source-hashes.json",
+      "sha256": "f8bf44e83429ba9d3d3468e2c088f3dbd894f914b546d4f9036640366e9c7c4a",
+      "bytes": 1604,
+      "destination_relative": "source/references/slur-point-extraction-source-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/slur-linker-proposal-hashes.json",
+      "sha256": "8fbcd910dd15db4ef3d4bdcaffa593a34ceb7238f0f1bd9a93e623a85d46f937",
+      "bytes": 2538,
+      "destination_relative": "source/references/slur-linker-proposal-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/short-slur-proposal-hashes.json",
+      "sha256": "57f965fc9f02088faffb9a3aa12a6ab0ee3391355f169bcd7bcbc5d29db13c6d",
+      "bytes": 1131,
+      "destination_relative": "source/references/short-slur-proposal-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/short-slur-raw-support-hashes.json",
+      "sha256": "f3b4211c79a5acb6c75673a4206cbf693e0e5ba7453747dac62dc2bbd093c25f",
+      "bytes": 1179,
+      "destination_relative": "source/references/short-slur-raw-support-hashes.json",
+      "action": "copy",
+      "purpose": "Exact frozen source/kernel hashes; do not replace them with current build hashes."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v1/prepare.py",
+      "sha256": "5c52eca8823ad864029f3ff46432853d0977457573a23764eead73fb343cadae",
+      "bytes": 9350,
+      "destination_relative": "provenance/prepare-plan-v1.py",
+      "action": "copy",
+      "purpose": "Plan/projection reproduction or explicit historical-manifest qualification."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v1/original-manifest-verification.json",
+      "sha256": "bcb83ca605f00397d8f2cc36d8fdb26dfadf01d75743d08f41d95c83b8e6ec01",
+      "bytes": 1965,
+      "destination_relative": "original-manifest-verification.json",
+      "action": "copy",
+      "purpose": "Plan/projection reproduction or explicit historical-manifest qualification."
+    },
+    {
+      "path": "/tmp/slur-kernel-test-adoption-fit-v1/source-observations.json",
+      "sha256": "78d715f761556c4385436cfe095535c7596d3d3efe099ad07ce152fc26e3a555",
+      "bytes": 41779,
+      "destination_relative": "fixtures/official-short-slur-fit/source-observations.json",
+      "action": "verify_existing",
+      "purpose": "Already adopted exact fixture/test source; verify existing checkout bytes only."
+    },
+    {
+      "path": "/tmp/slur-kernel-test-adoption-fit-v1/SOURCE.json",
+      "sha256": "de129b30f7796d3f1f1c97529777d06787b03149fb9f47767ed2482190ce42ad",
+      "bytes": 2699,
+      "destination_relative": "fixtures/official-short-slur-fit/SOURCE.json",
+      "action": "verify_existing",
+      "purpose": "Already adopted exact fixture/test source; verify existing checkout bytes only."
+    },
+    {
+      "path": "/tmp/slur-kernel-test-adoption-fit-v1/fit_source_observations.rs",
+      "sha256": "c5d9d94acfd21f3ecdf1823c7ffb08b0175bba73f8a065edac28b68ba66e37a8",
+      "bytes": 6607,
+      "destination_relative": "src/music_slurs/fit_source_observations.rs",
+      "action": "verify_existing",
+      "purpose": "Already adopted exact fixture/test source; verify existing checkout bytes only."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-adapter-v1/source-fixture.json",
+      "sha256": "8282392fef16832fcac8c43d4d49dfc205fa272bb9a05a0fcbabfcb5a76ad3c8",
+      "bytes": 7461,
+      "destination_relative": "fixtures/official-slur-gap-obstacles/observed.json",
+      "action": "verify_existing",
+      "purpose": "Already adopted exact fixture/test source; verify existing checkout bytes only."
+    },
+    {
+      "path": "/tmp/slur-kernel-test-adoption-fit-v1/README.md",
+      "sha256": "f544cb0ade0498cd51dd78228330165b76ac182f8172b97367ddcac571b5a608",
+      "bytes": 3938,
+      "destination_relative": "source/adopted-fit/README.md",
+      "action": "copy",
+      "purpose": "Historical fixture proposal scope; later adopted execution is separately recorded."
+    },
+    {
+      "path": "/tmp/slur-kernel-test-adoption-fit-v1/HASHES.json",
+      "sha256": "f7ed93d783760647bfcb74b07f3a111a62c8f12a2846c22780a5e009a62b48ef",
+      "bytes": 730,
+      "destination_relative": "source/adopted-fit/HASHES.json",
+      "action": "copy",
+      "purpose": "Frozen source fixture/projection/test manifest; referenced adopted files are not duplicated."
+    },
+    {
+      "path": "/tmp/slur-kernel-test-adoption-fit-v1/project_existing_observation.py",
+      "sha256": "5638945836222cd449874ad6de08bebf77bbdb2b6452ce2ec1e0acee4e17ec56",
+      "bytes": 5613,
+      "destination_relative": "source/adopted-fit/project_existing_observation.py",
+      "action": "copy",
+      "purpose": "Reproducible bounded fixture projection, never a source/native execution."
+    },
+    {
+      "path": "/tmp/slur-adopted-fit-v1/PROVENANCE.json",
+      "sha256": "6522fbab2c5e0a06afb252af00496d9b7e5165de4d66e651fdb3c0e5782f62d9",
+      "bytes": 777,
+      "destination_relative": "native/adopted-fit/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Actual adopted157row test binary/source hashes and qualified pass."
+    },
+    {
+      "path": "/tmp/slur-adopted-fit-v1/RESULT.json",
+      "sha256": "846728a7c8cfa675dea4fc80fe4342381177ed5a2d1601b8ee5790cf5b5e74a2",
+      "bytes": 471,
+      "destination_relative": "native/adopted-fit/RESULT.json",
+      "action": "copy",
+      "purpose": "Actual targeted fit invocation and successful exit; not image lifecycle."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v1/retained-full-artifacts.json",
+      "sha256": "6da39ab6d057d2be2a07386c58547360eb0fbb5769ecfca44d35c710ed033c1d",
+      "bytes": 3736,
+      "destination_relative": "provenance/retained-full-artifacts-v1.json",
+      "action": "copy",
+      "purpose": "Exact larger historical original references; no large artifact copied."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v1/README.md",
+      "sha256": "5d446b075b6744e4b2085f35134eafcb179ab7a102ae636e8181fd4e02b3aa38",
+      "bytes": 4082,
+      "destination_relative": "provenance/plan-v1-README.md",
+      "action": "copy",
+      "purpose": "Preserve historical kernel count and mutable rlib qualification."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-adoption-notes-v2.json",
+      "sha256": "03aa9d4f8f375aa70fafd591f140b5cf768b6617c8db709dc7921e4db38b668d",
+      "bytes": 2490,
+      "destination_relative": "ADOPTION-NOTES-v2.json",
+      "action": "copy",
+      "purpose": "Current root adoption and failures; explicitly incomplete and qualityfalse."
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/README.md",
+      "sha256": "8eef784f6be1d25da5cdc2972328736a2c244b14ab01e65090acc06f96582c89",
+      "bytes": 5323,
+      "destination_relative": "source/live-chord-getter/README.md",
+      "action": "copy",
+      "purpose": "Pinned source/getter review and exact historical hashes; no duplicate test patch or native implementation."
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/PROVENANCE.json",
+      "sha256": "0b910f0a949ec0ca8e50a3e8c13de3863e967eb7537ec9fbb49d9792585d33fb",
+      "bytes": 2071,
+      "destination_relative": "source/live-chord-getter/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Pinned source/getter review and exact historical hashes; no duplicate test patch or native implementation."
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/MANIFEST.json",
+      "sha256": "65563d5c845f84317b2182b99dfb7139cf720f66e5527a8b357f419b502fe487",
+      "bytes": 949,
+      "destination_relative": "source/live-chord-getter/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Pinned source/getter review and exact historical hashes; no duplicate test patch or native implementation."
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/READ-BASES.json",
+      "sha256": "5e68acb7c29b4a49de6cc5c37fbd866aa6709709685dfe2d1e49804dbc34b5f0",
+      "bytes": 213,
+      "destination_relative": "source/live-chord-getter/READ-BASES.json",
+      "action": "copy",
+      "purpose": "Pinned source/getter review and exact historical hashes; no duplicate test patch or native implementation."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v3/CHECKS.json",
+      "sha256": "439ef8819b6c98e83b1a958bb18c28124849006ba5a6bfec80721c149a634b3d",
+      "bytes": 673,
+      "destination_relative": "native/lifecycle-v3-pending/CHECKS.json",
+      "action": "copy",
+      "purpose": "Actual fresh check/scalar record only; v3 fullimage retry remains pending and separate."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v3/FAST-RESULT.json",
+      "sha256": "969e23b7890490675e2c363fd828e2ec53c3b3de354d3bdd0ac7a5c62335fd1e",
+      "bytes": 440,
+      "destination_relative": "native/lifecycle-v3-pending/FAST-RESULT.json",
+      "action": "copy",
+      "purpose": "Actual fresh check/scalar record only; v3 fullimage retry remains pending and separate."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/README.md",
+      "sha256": "9f11f17f2cf26f4a8f5337b91afad925e63079bfe2ea5825d5fe59cadcc28a00",
+      "bytes": 1929,
+      "destination_relative": "source/gap-obstacles/README.md",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/PROVENANCE.json",
+      "sha256": "71f7d5f3f6e06ba0d603ce7c713b9072d54f425d7f405bf039add37a1b8308e3",
+      "bytes": 1565,
+      "destination_relative": "source/gap-obstacles/PROVENANCE.json",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/MANIFEST.json",
+      "sha256": "bbc7291e96824ae7a4b298215497e28b4b9165748461f6f5884c5ab5f44571a2",
+      "bytes": 1365,
+      "destination_relative": "source/gap-obstacles/MANIFEST.json",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/SOURCE-HASHES.json",
+      "sha256": "6150b84544b1d6b14ace57009784cde7a7bc43adf7baf329d234dac0cd213052",
+      "bytes": 3673,
+      "destination_relative": "source/gap-obstacles/SOURCE-HASHES.json",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/observed.json",
+      "sha256": "ba9c1d17c08791ef521dcb80c35f26f8e7eab26ffe8236d80c06bc027642db3a",
+      "bytes": 5195,
+      "destination_relative": "source/gap-obstacles/observed.json",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/inputs.tsv",
+      "sha256": "3c27c6f0f356ac4d34c7e3149e137076dde320cfb734d2618e1bac15d0f7fb9d",
+      "bytes": 1159,
+      "destination_relative": "source/gap-obstacles/inputs.tsv",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/SlurGapObstacleProbe.java",
+      "sha256": "994804af1516be43da49c61b8f563edf4c7021c8c27a578f753ef3da8703763b",
+      "bytes": 5014,
+      "destination_relative": "source/gap-obstacles/SlurGapObstacleProbe.java",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/run.py",
+      "sha256": "74739242c2cf2c177af2fd77425ccddbd69ff298b7dd0bcccd15fe97b5753725",
+      "bytes": 1817,
+      "destination_relative": "source/gap-obstacles/run.py",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-original-v1/native-retained-diagnostic.json",
+      "sha256": "d1dfb4ca77363b7b8c53ee1d52a66b9517917a4b546a00a163ab8f3f12034049",
+      "bytes": 8048,
+      "destination_relative": "source/gap-obstacles/native-retained-diagnostic.json",
+      "action": "copy",
+      "purpose": "Detached original filter15cases+4Head threshold controls; no original Skeleton/cleanup lifecycle proof."
+    },
+    {
+      "path": "/tmp/slur-gap-obstacle-adapter-v1/README.md",
+      "sha256": "59d4a3ad90c342faf3c4cbe6a9e2b52483e526d78867ee4b4cf19f312ff19fd3",
+      "bytes": 4861,
+      "destination_relative": "source/gap-obstacles/ADAPTER-README.md",
+      "action": "copy",
+      "purpose": "Adapter interpretation and scope; implementation/test code is already in checkout."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/lifecycle-v1-RESULT-compact.json",
+      "sha256": "7331cfda7690a736eb0c8496e916008e062811aae91e17d9f897bddd943f52ed",
+      "bytes": 2350,
+      "destination_relative": "native/lifecycle-v1/RESULT-compact.json",
+      "action": "copy",
+      "purpose": "Failed actual image+rational batch; exit101 and source_stable preserved, full raw hash referenced."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v1/PARTIAL-VALIDATION.json",
+      "sha256": "fa5df731fd9f4e6124741351267ede6d2752008ece6cb6fb70a4ce6cbce5ba6b",
+      "bytes": 704,
+      "destination_relative": "native/lifecycle-v1/PARTIAL-VALIDATION.json",
+      "action": "copy",
+      "purpose": "Exact historical partial result: focused passes do not imply DerWinter lifecycle success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v1/CHECKS.json",
+      "sha256": "9a0ea27c550c0f4f9e200accfbff4c8dc3713e2f0ab01adcae02285e87082e2a",
+      "bytes": 671,
+      "destination_relative": "native/lifecycle-v1/CHECKS.json",
+      "action": "copy",
+      "purpose": "Exact historical partial result: focused passes do not imply DerWinter lifecycle success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v1/FAST-RESULT.json",
+      "sha256": "56ca0c6691682c05cabb2f094cefa2eb7d1920a7288edbd56aa12d83e101e8b1",
+      "bytes": 1349,
+      "destination_relative": "native/lifecycle-v1/FAST-RESULT.json",
+      "action": "copy",
+      "purpose": "Exact historical partial result: focused passes do not imply DerWinter lifecycle success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v1-cli-regression/RESULTS.json",
+      "sha256": "3dc7a361df4addcea0892d5da2163f9aef495ddb690fb69559151121541ac2ab",
+      "bytes": 2369,
+      "destination_relative": "native/lifecycle-v1/CLI-RESULTS.json",
+      "action": "copy",
+      "purpose": "Existing63+8event XML byte/XSD pass for this recorded version, not Slur success."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/lifecycle-v2-RESULT-compact.json",
+      "sha256": "b8bb8b7bf8a03e6a6aa6e139e2d82aaa565524c9480dabe8e4bcdfea5c31d475",
+      "bytes": 2721,
+      "destination_relative": "native/lifecycle-v2/RESULT-compact.json",
+      "action": "copy",
+      "purpose": "Failed actual image+rational batch; exit101 and source_stable preserved, full raw hash referenced."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v2/PARTIAL-VALIDATION.json",
+      "sha256": "4bd49392527852814e2e4bd55668d6e156a030a2de5e35d4b560562cc3157465",
+      "bytes": 732,
+      "destination_relative": "native/lifecycle-v2/PARTIAL-VALIDATION.json",
+      "action": "copy",
+      "purpose": "Exact historical partial result: focused passes do not imply DerWinter lifecycle success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v2/CHECKS.json",
+      "sha256": "880c21957944bf241870b9759b677a704e845cbc2c9d7b4ef04a2c8d47a7902f",
+      "bytes": 673,
+      "destination_relative": "native/lifecycle-v2/CHECKS.json",
+      "action": "copy",
+      "purpose": "Exact historical partial result: focused passes do not imply DerWinter lifecycle success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v2/FAST-RESULT.json",
+      "sha256": "3fd02258db324f04a2d264a3f9a69be352d2c5dd4d9af5ef4b1b2b04db8b91ed",
+      "bytes": 442,
+      "destination_relative": "native/lifecycle-v2/FAST-RESULT.json",
+      "action": "copy",
+      "purpose": "Exact historical partial result: focused passes do not imply DerWinter lifecycle success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v2-cli-regression/RESULTS.json",
+      "sha256": "3dc7a361df4addcea0892d5da2163f9aef495ddb690fb69559151121541ac2ab",
+      "bytes": 2369,
+      "destination_relative": "native/lifecycle-v2/CLI-RESULTS.json",
+      "action": "copy",
+      "purpose": "Existing63+8event XML byte/XSD pass for this recorded version, not Slur success."
+    },
+    {
+      "path": "/tmp/slur-lifecycle-v2/gap-decisions.json",
+      "sha256": "3e316c3cbc9b43be5a1dff9e6ea2821234b47f244c1156e48504f26fbf29b4cf",
+      "bytes": 67396,
+      "destination_relative": "native/lifecycle-v2/gap-decisions.json",
+      "action": "copy",
+      "purpose": "Exact19actual native prefilter decisions from failed v2; owning addresses local to this run, no successfulSlur lifecycle implied."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/gap-diary-summary.json",
+      "sha256": "0f00256fd7ff61a2d24a865bcecb310eb1e9fe54bcffd85cdf11ad740140fa67",
+      "bytes": 504,
+      "destination_relative": "native/lifecycle-v2/gap-diary-summary.json",
+      "action": "copy",
+      "purpose": "Small index of exact retained v2 diary; not a replay or a recognition result."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/adopted-checkout-verification.json",
+      "sha256": "06da4462740e8e05649f81ec19e649559f61306ec3109629b26326362e19d5f6",
+      "bytes": 2699,
+      "destination_relative": "provenance/adopted-checkout-verification.json",
+      "action": "copy",
+      "purpose": "Existingfixture/testcode verified, current production/diary source hashes referenced without duplication."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/retained-run-records.json",
+      "sha256": "a363b68fed7e8a14787ab045f9bcff173d1d1f47f52ce40ec35ec1513954be19",
+      "bytes": 993,
+      "destination_relative": "provenance/retained-run-records.json",
+      "action": "copy",
+      "purpose": "Raw failed result/start records retained locally by exact hash; no repeated whole-repo maps."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/mutable-build-qualification.json",
+      "sha256": "6485a711c05c26580fd0ec8895253f01d48ef44f3a595fd54363c4d2b138c5cf",
+      "bytes": 1935,
+      "destination_relative": "provenance/mutable-build-qualification.json",
+      "action": "copy",
+      "purpose": "Explicitly retain bothhistorical rlib mismatch records; no new kernel validation claim."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/STATUS-PENDING.json",
+      "sha256": "589f30a9f0023d3d587dc19a4cf42648951395a2d810f80d558b8bc26b22f7ec",
+      "bytes": 1433,
+      "destination_relative": "provenance/PREPARATION-STATUS.json",
+      "action": "copy",
+      "purpose": "Checkpoint prep is not a success declaration; parent must add freshv3 outcome before finalizing evidence."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/prepare.py",
+      "sha256": "0770e31a76d822c0b632e3aeabd7ab2e0331078ea7b6eeec28788ce152013f84",
+      "bytes": 11868,
+      "destination_relative": "provenance/prepare-plan-v2.py",
+      "action": "copy",
+      "purpose": "Plan reproduction/instructions; no automatic source execution or checkout writes."
+    },
+    {
+      "path": "/tmp/slur-checkpoint-evidence-plan-v2/README.md",
+      "sha256": "2c2bc5aa0df0a619c07b0c992ffe3e5ff00be6f101b1bb726e7ce98346145a9f",
+      "bytes": 5332,
+      "destination_relative": "provenance/PREPARATION.md",
+      "action": "copy",
+      "purpose": "Plan reproduction/instructions; no automatic source execution or checkout writes."
+    }
+  ],
+  "status": "incomplete; v3retry pending",
+  "raw_logs_Books_JARs_binaries_included": false
+}

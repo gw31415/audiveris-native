@@ -1,0 +1,28 @@
+[
+  {
+    "check": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.3731884619919583
+  },
+  {
+    "check": "fit",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--lib",
+      "actual_java_sequences_preserve_nullable_geometry_and_math_decisions",
+      "--",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 42.72931243700441
+  }
+]

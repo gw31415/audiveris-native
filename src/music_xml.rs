@@ -11,6 +11,7 @@ mod page_measures;
 mod recognized_export;
 #[cfg(test)]
 mod selected_cli_tests;
+pub(crate) mod slur_boundary;
 pub(crate) mod stack_rhythm;
 mod tuplet_getters;
 mod tuplet_groups;
@@ -1517,6 +1518,7 @@ fn render(
     rhythm: Rhythm,
     image_entry: bool,
 ) -> Result<String, String> {
+    slur_boundary::require_no_slurs(&m.owner.graph, m.slurs.as_ref())?;
     let Rhythm {
         measures,
         events,

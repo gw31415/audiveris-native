@@ -1,0 +1,86 @@
+[
+  {
+    "path": "/tmp/slur-band-routing-original-v1/README.md",
+    "sha256": "9321a667ebeca7d8f8cb4d85a4ac18439d6d1204177928465b2078ef13c5002b"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/comparison.json",
+    "sha256": "607deec56caa95b120a84a358221e87c2c5923ae8893962f86a0cd8b3e7294ba"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/rust-observed.tsv",
+    "sha256": "c37033da73a8adf7fa184914a744985bdd4cc9526274353614f2a9a068903690"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/PROVENANCE.json",
+    "sha256": "099f5668dd322b72c071a272b25bfcdea6fbd1dc68e4bc7121ca2bf52da1d736"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/observed.json",
+    "sha256": "aa7b65258ae9f73c1aa02afa893a8c3a7a91d6ffe7fdc26a1392a39c966d56f6"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/console.log",
+    "sha256": "cf792a5dfb984953dd14d5ee5d279a8727ff38769d0e50a85d78d1caf3b3a358"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/compile.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/queries.tsv",
+    "sha256": "1a81f2ca8f1312fe54ed94b763ffdb9372bd9431da869c3a9010b5f346eb68f7"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/bands.tsv",
+    "sha256": "e534d73b576b7dbd24804c2ad3cb8683f1d65c1547bf1a10ca5c1fffbe2a3166"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/inputs.json",
+    "sha256": "25d798b1b8ca33eab1924d7b4e58bd3688ff82702c8eaed01d773f2fb20c3dcd"
+  },
+  {
+    "path": "/tmp/area_rect_proposal.rs",
+    "sha256": "d57e256f2ca1097a445cabb4292bf3d3517f6a2f4843079d063f173c70794861"
+  },
+  {
+    "path": "/tmp/check_slur_band_routing.rs",
+    "sha256": "0904ee4b86e1ef095393534efba57811c6c1baab3dbe23749f24d16b0490f9da"
+  },
+  {
+    "path": "/tmp/SlurBandRoutingProbe.java",
+    "sha256": "338c289017873bbd5ad61f5758673f3225bdfc867c78da506651030ae51002da"
+  },
+  {
+    "path": "/tmp/run-slur-band-routing.py",
+    "sha256": "52d93eeb284cc96f49c9c584d3f7fc61aa5d8e1f2fbfcc0aa4acad142bd41077"
+  },
+  {
+    "path": "/tmp/audiveris-pinned-source/sheet/SystemManager.java",
+    "sha256": "4a36c6881db7ef070ca7a577015ca8a151b71be99ab63f50da29938b2ffadaf2"
+  },
+  {
+    "path": "/tmp/jdk21-Area.java",
+    "sha256": "128fbd86d42f462acf3e011458450381ef70f826f3e34877746e1166ff0afe91"
+  },
+  {
+    "path": "/tmp/jdk21-Curve.java",
+    "sha256": "578c74681f643fb72eb95ef45d08a6eeb79d9a1f22dfdb6c1ec4c1a543ca2d15"
+  },
+  {
+    "path": "/tmp/jdk21-Order1.java",
+    "sha256": "a8af7312e94cf39d6f3718b5ef6d1dfed274c59def521b5e8168cc3c30a9e266"
+  },
+  {
+    "path": "/tmp/jdk21-Order2.java",
+    "sha256": "e9b9e9526e76b1b22cab97e4e3bfa73f89c8c26a8f0c244342ce87cc0bdc045d"
+  },
+  {
+    "path": "/tmp/jdk21-Order3.java",
+    "sha256": "c6c7cb0aa99cde1e0dde1c4e4c415e13300e4e2de7f335461fde2fb92ecb707b"
+  },
+  {
+    "path": "/tmp/slur-band-routing-original-v1/RUST-PROVENANCE.json",
+    "sha256": "b752efb20d3ecb58a6f1b0e4ffeef6fa5b67f7130c0074b6d0f47c3625c80b0a"
+  }
+]

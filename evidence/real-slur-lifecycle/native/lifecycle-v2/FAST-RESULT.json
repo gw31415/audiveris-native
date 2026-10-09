@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "shared_sig::slur_obstacles::tests::original_non_crossable_filter_keeps_area_prefilter_and_segment_boundaries",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "binary_sha256": "c4280ca758f32d4be3b55156fb9ba6d7dfb1d59a9c460468b17509ddf9bd1486",
+  "targets": 1,
+  "exit_code": 0,
+  "elapsed_seconds": 0.1437341569981072
+}

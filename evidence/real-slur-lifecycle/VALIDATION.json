@@ -1,0 +1,181 @@
+{
+  "unique_targets_passed": 17,
+  "fast_unique_targets": 14,
+  "target_provenance": {
+    "v1": {
+      "fast_passed": 10
+    },
+    "adopted_fit": {
+      "passed": 1,
+      "original_cases": 157
+    },
+    "v2": {
+      "fast_passed": 1,
+      "original_filter_cases": 15,
+      "actual_Head_threshold_controls": 4,
+      "AnLaura_and_rational_passed": 2
+    },
+    "v3": {
+      "new_getter_contract_passed": 1,
+      "DerWinter_failed_after_six_Slur_lifecycle": true
+    },
+    "v4": {
+      "batch_Stem_owner_contract_passed": 1,
+      "previously_failing_DerWinter_passed": 1
+    }
+  },
+  "current_source_stable": true,
+  "current_binary_sha256": "27c719d3f98854fe283a04a646f82c01a2d90c2c6b2cd0df43ccdc48969b62d5",
+  "Slur_lifecycle": {
+    "actual_slurs": 6,
+    "same_selected_relation_Arcs": 12,
+    "per_Slur_callbacks_match_source": true,
+    "actual_System_Part_Staff_Head_Chord_Measure_paths_validated": true,
+    "Part_collection_before_cached_Part": true,
+    "cleanup_only_actual_accepted_glyph_pixels": true,
+    "same_prepared_stage_after_late_refusal": true,
+    "raw_eligible": 12,
+    "clumps": 10
+  },
+  "original_scope": "Fresh CURVES resumed from unchanged persisted CHORDS Book; upstream owners reloaded, callback clocks null. Native extraction uses retained components/column centers/raw gap support, not original Skeleton/trunk provenance.",
+  "clock_scope": "Image callback clocks remain null. Declared actual Voice/Slot/Chord 7/64 and expected3/4 cache controls plus exact7/64 XML are separate evidence; no active-clock original image callback claim.",
+  "DerWinter_export": {
+    "error": "musicxml_slur_writer_required_for_retained_or_live_Slur",
+    "export_preserved_graph_and_clocks": true,
+    "lifecycle_only_checkpoint": true,
+    "new_XML_written": false,
+    "ordinary_LINKS_rhythm_PAGE_succeeded": true,
+    "previous_XML_baseline": {
+      "bytes": 24624,
+      "sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb"
+    },
+    "previous_XML_preserved": true,
+    "quality_accepted": false,
+    "retained_slurs": 6,
+    "same_actual_Slur_and_relation_owners_after_refusal": true,
+    "scope": "existing DerWinter target reached the production export guard only after compared Slur lifecycle and ordinary LINKS/rhythm/PAGE succeeded",
+    "writer_still_required": true
+  },
+  "CHECKED_after_actual_Slur_cleanup": {
+    "original_rejected": 10,
+    "original_factory_arrivals": 77,
+    "accepted_limit_controls": 4,
+    "old_unmatched_candidates_removed": [
+      {
+        "accepted_Slur_ink_absent_from_post_cleanup_Symbol_glyphs": true,
+        "actual_Slur_owner": 140064424269776,
+        "actual_glyph_id": 3283,
+        "actual_relation_ids": [
+          1547,
+          1548
+        ],
+        "actual_slur": {
+          "local": 1,
+          "phase": "CURVE",
+          "system": 2
+        },
+        "erased_old_pixels": 71,
+        "historical_candidate": {
+          "bounds": [
+            565,
+            1047,
+            37,
+            13
+          ],
+          "created_inter_ids": [],
+          "score": 0.19649688667464693,
+          "shape": "FERMATA_BELOW",
+          "system": 2
+        },
+        "historical_component_overlap_pixels": [
+          62,
+          9
+        ],
+        "historical_native_weight": 77,
+        "old_candidate_absent": true,
+        "old_pixels_outside_this_Slur": 6
+      },
+      {
+        "accepted_Slur_ink_absent_from_post_cleanup_Symbol_glyphs": true,
+        "actual_Slur_owner": 140064431035840,
+        "actual_glyph_id": 3285,
+        "actual_relation_ids": [
+          1551,
+          1552
+        ],
+        "actual_slur": {
+          "local": 3,
+          "phase": "CURVE",
+          "system": 2
+        },
+        "erased_old_pixels": 70,
+        "historical_candidate": {
+          "bounds": [
+            642,
+            1194,
+            36,
+            13
+          ],
+          "created_inter_ids": [],
+          "score": 0.176686103444728,
+          "shape": "FERMATA_BELOW",
+          "system": 2
+        },
+        "historical_component_overlap_pixels": [
+          59,
+          11
+        ],
+        "historical_native_weight": 81,
+        "old_candidate_absent": true,
+        "old_pixels_outside_this_Slur": 11
+      }
+    ]
+  },
+  "retained_full_frontier": {
+    "path": "/tmp/real-rest-native-internal-rhythm-export.json",
+    "sha256": "c5afa6cefccec023399a2c96d28c4e91925892b4d56672f7ce0dfb71ed16777b",
+    "bytes": 4854286,
+    "copied": false
+  },
+  "retained_XML_regressions": {
+    "AnLaura_and_exact7_64": {
+      "AnLaura": {
+        "sha256": "89157bea58bb7c5e21855e23902430701530cad5bede519d52367b9166820552",
+        "bytes_identical": true,
+        "XSD": "passed"
+      },
+      "exact7_64": {
+        "sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6",
+        "bytes_identical": true,
+        "XSD": "passed"
+      }
+    },
+    "provenance": "Successful v2 executions retained; v3 adds the Slur geometry adapter; v4 batches unchanged full Stem cache certification and updates the obsolete pre-Slur-cleanup assertion. Neither successful image nor rational target was repeated."
+  },
+  "CLI_63_plus_8": {
+    "bytes_identical": true,
+    "XSD": "passed",
+    "production_binary_sha256": "97ffccf8f031e9dcdefa02fc10b3ac7042b88465e22956cc7b56b7afd276eff7"
+  },
+  "initial_failures": [
+    {
+      "run": "preflight",
+      "failure": "Ten clippy issues before image execution; corrected without changing JAMA operation order."
+    },
+    {
+      "run": "v1",
+      "failure": "Conservative noncrossable guard rejected DerWinter; replaced with original Area/extension-box/line filtering and contextual threshold0.4."
+    },
+    {
+      "run": "v2",
+      "failure": "retained_chord_cache_owner_required; existing recognition geometry now read directly without allocating or warming an editing cache."
+    },
+    {
+      "run": "v3",
+      "failure": "Six Slur lifecycle comparisons passed; old CHECKED assertion still required two unmatched candidates removed by actual Slur cleanup."
+    }
+  ],
+  "public_representative_CLI_rerun": false,
+  "quality_accepted": false,
+  "next": "Recognized MusicXML Slur writer; then ordinary Flag/factory/common SymbolsLinker reduction and representative public acceptance."
+}

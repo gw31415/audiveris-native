@@ -266,6 +266,7 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
         "der_winter",
         "MEASURES",
     );
+    crate::music_slurs::image_tests::begin_der_winter();
     crate::music_arpeggiato::tests::begin_factory_observation();
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
     crate::music_arpeggiato::tests::assert_der_winter_null_factory(&music);
@@ -630,7 +631,68 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     crate::music_symbol_reduction::owned_image_tests::finish(&music, "der_winter");
     crate::music_headers_owned::image_tests::verify(&music, &header_owners, "der_winter", "LINKS");
     music.assert_der_winter_nullable_reader_and_logical_headers();
-    music.observe_der_winter_internal_rhythm_export().expect(
-        "first internal rhythm/export error saved in /tmp/real-rest-native-internal-rhythm-export.json",
+    // Recognition, LINKS, rhythm and PAGE must all succeed before the temporary
+    // writer boundary can be accepted. Preserve the previous XML as a baseline.
+    fn saved_xml() -> Option<Vec<u8>> {
+        match std::fs::read("/tmp/real-rest-native-internal.musicxml") {
+            Ok(bytes) => Some(bytes),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => None,
+            Err(error) => panic!("prior native XML read failed: {error}"),
+        }
+    }
+    let previous_xml = saved_xml();
+    let slurs = music.slurs.as_ref().unwrap();
+    let held_slurs = slurs.slurs.clone();
+    assert_eq!(held_slurs.len(), 6);
+    let error = music
+        .observe_der_winter_internal_rhythm_export()
+        .unwrap_err();
+    assert_eq!(
+        error,
+        "musicxml_slur_writer_required_for_retained_or_live_Slur"
     );
+    let observation: Value = serde_json::from_slice(
+        &std::fs::read("/tmp/real-rest-native-internal-rhythm-export.json").unwrap(),
+    )
+    .unwrap();
+    assert_eq!(
+        observation["failed_stage"],
+        "ordinary_native_recognized_export"
+    );
+    assert_eq!(observation["error"], error);
+    assert_eq!(observation["xml_written"], false);
+    assert!(observation["rhythm"].is_object());
+    assert!(observation["PAGE_measures"].is_object());
+    assert_eq!(
+        observation["actual_Chord_Measure_Stack_owners_retained"],
+        true
+    );
+    assert_eq!(
+        observation["PAGE_actual_Voice_Slot_Chord_Measure_Stack_identities_retained"],
+        true
+    );
+    assert_eq!(observation["export_preserved_graph_and_clocks"], true);
+    let slurs = music.slurs.as_ref().unwrap();
+    assert_eq!(slurs.slurs.len(), held_slurs.len());
+    for (actual, held) in slurs.slurs.iter().zip(&held_slurs) {
+        assert!(Arc::ptr_eq(actual, held));
+        for (id, owner) in actual.relation_ids.iter().zip(&actual.relations) {
+            assert!(Arc::ptr_eq(
+                music.owner.graph.fresh_slur_relation_owner(*id).unwrap(),
+                owner
+            ));
+        }
+    }
+    assert_eq!(saved_xml(), previous_xml);
+    let baseline = previous_xml.as_ref().map(|bytes| {
+        use sha2::Digest;
+        json!({"bytes":bytes.len(),"sha256":format!("{:x}",sha2::Sha256::digest(bytes))})
+    });
+    std::fs::write("/tmp/real-slur-native-export-withheld-v1.json",serde_json::to_vec_pretty(&json!({
+        "scope":"existing DerWinter target reached the production export guard only after compared Slur lifecycle and ordinary LINKS/rhythm/PAGE succeeded",
+        "error":error,"new_XML_written":false,"previous_XML_preserved":true,"previous_XML_baseline":baseline,
+        "same_actual_Slur_and_relation_owners_after_refusal":true,"retained_slurs":held_slurs.len(),
+        "ordinary_LINKS_rhythm_PAGE_succeeded":true,"export_preserved_graph_and_clocks":true,
+        "lifecycle_only_checkpoint":true,"writer_still_required":true,"quality_accepted":false
+    })).unwrap()).unwrap();
 }

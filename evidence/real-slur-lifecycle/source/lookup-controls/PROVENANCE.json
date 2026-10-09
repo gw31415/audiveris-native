@@ -1,0 +1,37 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "7d3185ee32d4ba93d237ff987c62f7b60416982e84d8b28e4abf947c9f652dfc",
+  "helper_sha256": "ee4233833feb0a89fa6c5ec6efbbe63d4b20056fde1f63955f3744e430c1d34e",
+  "runner_sha256": "792a96c46ef08a51d4d172d9cafc8bbd1b3bab14b4ee752ec610a357bd0423b5",
+  "book_sha256_before": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "book_sha256_after": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-d",
+    "/tmp/slur-owned-lookup-original-v2/classes",
+    "/tmp/NativeSlurCandidateMathProbe.java",
+    "/tmp/SlurOwnedLookupProbeV2.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/slur-owned-lookup-original-v2/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/slur-owned-lookup-original-v2/cache",
+    "-Djava.util.prefs.userRoot=/tmp/slur-owned-lookup-original-v2/prefs",
+    "-Duser.home=/tmp/slur-owned-lookup-original-v2/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/slur-owned-lookup-original-v2/classes",
+    "SlurOwnedLookupProbeV2",
+    "/tmp/real-rest-original-v1/der-winter-gray.omr",
+    "/tmp/slur-owned-lookup-original-v2/observed.json"
+  ],
+  "exit_code": 0,
+  "image_recognition_invoked": false,
+  "book_save_invoked": false,
+  "observed_sha256": "f76918f055752f8b06071b83a5aa7cb29939a8d8c50e069bbbec18e1b50010dd"
+}

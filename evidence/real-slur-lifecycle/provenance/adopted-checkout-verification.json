@@ -1,0 +1,80 @@
+[
+  {
+    "path": "fixtures/official-slur-fresh-lifecycle/observed.json",
+    "sha256": "22dcc7253110e8d272383ac997a38cff782fab96a9c732f994a3aa551cd2905e",
+    "matches_recorded_source": true,
+    "copied": false
+  },
+  {
+    "path": "fixtures/official-slur-fresh-lifecycle/PROVENANCE.json",
+    "sha256": "31c0f309cffb8242ac67e2081358b8b78e1848a5feb6d38647df79e7a7a3d778",
+    "matches_recorded_source": true,
+    "copied": false
+  },
+  {
+    "path": "fixtures/official-short-slur-fit/source-observations.json",
+    "sha256": "78d715f761556c4385436cfe095535c7596d3d3efe099ad07ce152fc26e3a555",
+    "matches_recorded_source": true,
+    "copied": false
+  },
+  {
+    "path": "fixtures/official-short-slur-fit/SOURCE.json",
+    "sha256": "de129b30f7796d3f1f1c97529777d06787b03149fb9f47767ed2482190ce42ad",
+    "matches_recorded_source": true,
+    "copied": false
+  },
+  {
+    "path": "src/music_slurs/fit_source_observations.rs",
+    "sha256": "c5d9d94acfd21f3ecdf1823c7ffb08b0175bba73f8a065edac28b68ba66e37a8",
+    "matches_recorded_source": true,
+    "copied": false
+  },
+  {
+    "path": "fixtures/official-slur-gap-obstacles/observed.json",
+    "sha256": "8282392fef16832fcac8c43d4d49dfc205fa272bb9a05a0fcbabfcb5a76ad3c8",
+    "matches_recorded_source": true,
+    "copied": false
+  },
+  {
+    "path": "src/music_slurs/fit.rs",
+    "sha256": "0241c3ef119764057db3e6c17114053b60af5649185d1f9c3da4293ac179aa51",
+    "current_checkout_reference_only": true,
+    "copied": false
+  },
+  {
+    "path": "src/shared_sig/slur_obstacles.rs",
+    "sha256": "092d52c3da83c049af951d7cda43295e001df169102dcf168f755fb13948dfae",
+    "current_checkout_reference_only": true,
+    "copied": false
+  },
+  {
+    "path": "src/music_slurs/extension_boxes.rs",
+    "sha256": "1056612b979abf3ff3baf42c44a1c92d602db48d43d16b47db90bd1a007324c3",
+    "current_checkout_reference_only": true,
+    "copied": false
+  },
+  {
+    "path": "src/music_slurs/image_tests.rs",
+    "sha256": "dae43193ab0b7b1418efa3d40ac4a2e59951f01ae2a0dd36f44eecfe69387000",
+    "current_checkout_reference_only": true,
+    "copied": false
+  },
+  {
+    "path": "src/shared_sig/chord_cache.rs",
+    "sha256": "cc884cfcf0d9b7ce4343d8cbd2e5093c1042e71d13741cca0a0ddbba4f4a8de9",
+    "current_checkout_reference_only": true,
+    "copied": false
+  },
+  {
+    "path": "src/shared_sig/slur_owners.rs",
+    "sha256": "3b6530c79733d0c046e2dde30803a0955a81f27a19afde5383c7786b12451881",
+    "current_checkout_reference_only": true,
+    "copied": false
+  },
+  {
+    "path": "src/music_slurs/boundary_tests.rs",
+    "sha256": "8b8a5e7fe1107b7d357ad36e0f6e1602495eeb36a2eb0ac96bd80229425f9643",
+    "current_checkout_reference_only": true,
+    "copied": false
+  }
+]

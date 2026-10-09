@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/PROVENANCE.json",
+      "bytes": 2071,
+      "sha256": "0b910f0a949ec0ca8e50a3e8c13de3863e967eb7537ec9fbb49d9792585d33fb"
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/READ-BASES.json",
+      "bytes": 213,
+      "sha256": "5e68acb7c29b4a49de6cc5c37fbd866aa6709709685dfe2d1e49804dbc34b5f0"
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/README.md",
+      "bytes": 5323,
+      "sha256": "8eef784f6be1d25da5cdc2972328736a2c244b14ab01e65090acc06f96582c89"
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/test-addition.rs",
+      "bytes": 3082,
+      "sha256": "210b45271c14e312be2f1cbf45a9a0c348066d530431dc5e7290d9da910cf8cc"
+    },
+    {
+      "path": "/tmp/slur-live-chord-getter-review-v1/test.patch",
+      "bytes": 3290,
+      "sha256": "433fb92da162a0def44aba79ec4284fb47cc22bc10c38122b7488887a97f0488"
+    }
+  ]
+}

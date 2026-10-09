@@ -328,6 +328,7 @@ impl OwnedMusic {
     /// Export the live recognized Voice/BEGIN stream. Publication admission is
     /// separate until all required image factories and quality checks are met.
     pub fn write_recognized_musicxml(&self, part_name: &str) -> Result<(String, Value), String> {
+        super::slur_boundary::require_no_slurs(&self.owner.graph, self.slurs.as_ref())?;
         if part_name.trim().is_empty()
             || part_name.len() > 256
             || part_name.chars().any(char::is_control)

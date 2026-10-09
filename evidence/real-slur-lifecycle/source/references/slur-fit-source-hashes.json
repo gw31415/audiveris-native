@@ -1,0 +1,70 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "sources": [
+    {
+      "path": "/tmp/audiveris-pinned-source/math/Circle.java",
+      "sha256": "09a3801fb1f3d3a2b2395d4197b99dfe9654651fc4d70768dc678cf130010f36",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/math/Circle.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/math/LineUtil.java",
+      "sha256": "3644b4c4ffd627bf554c8dd4045ba273f2cb7f7a6e938d8d68c45540844405cb",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/math/LineUtil.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/CircleModel.java",
+      "sha256": "6acc86fde0a9683c8a6e1e299c08dedf64f0694102b9d26677691e5f3bfc30df",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/CircleModel.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/LineModel.java",
+      "sha256": "8dd282fb525a24c56d9dd9d0b7c8314735b6725f43a56980dd09cbb609db7206",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/LineModel.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/SlurInfo.java",
+      "sha256": "4babc8137e8a0602665acefd8c6131ec1c8f0dafa88ea81cbbf5563052f55ac2",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/SlurInfo.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/SlursBuilder.java",
+      "sha256": "651e4576dceae7cb2a4b8a97b632e2a17eba37e409ab625225894893b4d334b3",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/SlursBuilder.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/CurvesBuilder.java",
+      "sha256": "649ebb3633aa5ce53e66a59fb209838513880d51d2eae7435f43f9eb9120bf59",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/CurvesBuilder.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/Curve.java",
+      "sha256": "6eccb19879cc15331214ee60f639978f9b2373dc8f8385a1b986838cc0fc8baa",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/Curve.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/Arc.java",
+      "sha256": "3d09f597bd334760da54997e32884aa6b872ef04347830b63794394dbbac4dd8",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sheet/curve/Arc.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sig/inter/SlurInter.java",
+      "sha256": "317847fd072e85392d3adb961a42f7e0ab2087c7bdd8a6acc96dba8dfdf7e05f",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/SlurInter.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sig/inter/AbstractInter.java",
+      "sha256": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/inter/AbstractInter.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sig/GradeImpacts.java",
+      "sha256": "f0b90aad2d26675f4518153e6395d8c528960b146f1a32ca5d272d5297d7e840",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/sig/GradeImpacts.java"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/glyph/Grades.java",
+      "sha256": "04f999eea71dd1ed25461911b938a0dfd29c2f7f46769639d12d9cc26ad4cdd6",
+      "url": "https://raw.githubusercontent.com/Audiveris/audiveris/9e1e55cd2746037d059345881c53e6a6754bffbd/app/src/main/java/org/audiveris/omr/glyph/Grades.java"
+    }
+  ]
+}

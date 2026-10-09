@@ -1,0 +1,27 @@
+[
+  {
+    "file": "README.md",
+    "bytes": 3938,
+    "sha256": "f544cb0ade0498cd51dd78228330165b76ac182f8172b97367ddcac571b5a608"
+  },
+  {
+    "file": "SOURCE.json",
+    "bytes": 2699,
+    "sha256": "de129b30f7796d3f1f1c97529777d06787b03149fb9f47767ed2482190ce42ad"
+  },
+  {
+    "file": "fit_source_observations.rs",
+    "bytes": 6607,
+    "sha256": "c5d9d94acfd21f3ecdf1823c7ffb08b0175bba73f8a065edac28b68ba66e37a8"
+  },
+  {
+    "file": "project_existing_observation.py",
+    "bytes": 5613,
+    "sha256": "5638945836222cd449874ad6de08bebf77bbdb2b6452ce2ec1e0acee4e17ec56"
+  },
+  {
+    "file": "source-observations.json",
+    "bytes": 41779,
+    "sha256": "78d715f761556c4385436cfe095535c7596d3d3efe099ad07ce152fc26e3a555"
+  }
+]

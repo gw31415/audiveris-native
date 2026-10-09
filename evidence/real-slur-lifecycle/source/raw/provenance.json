@@ -1,0 +1,42 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "bce640f71a3ec830d388d032699eb3991e2352be31cfa2047b19061a61cd7361",
+  "math_helper_sha256": "ee4233833feb0a89fa6c5ec6efbbe63d4b20056fde1f63955f3744e430c1d34e",
+  "original_book_sha256_before": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "original_book_sha256_after": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "sequences_sha256": "9635398489f06b4c3e31bd451f5652e36a8d03f5ad8794b5eca387f7817b0bfe",
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-d",
+    "/tmp/native-slur-raw-gap-refinement-v2/classes",
+    "/tmp/NativeSlurRawGapSupportProbe.java",
+    "/tmp/NativeSlurCandidateMathProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/native-slur-raw-gap-refinement-v2/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/native-slur-raw-gap-refinement-v2/cache",
+    "-Djava.util.prefs.userRoot=/tmp/native-slur-raw-gap-refinement-v2/prefs",
+    "-Duser.home=/tmp/native-slur-raw-gap-refinement-v2/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/native-slur-raw-gap-refinement-v2/classes",
+    "NativeSlurRawGapSupportProbe",
+    "/tmp/real-rest-original-v1/der-winter-gray.omr",
+    "/tmp/native-slur-raw-gap-refinement-v2/sequences.tsv",
+    "/tmp/native-slur-raw-gap-refinement-v2/observed.json",
+    "/tmp/native-slur-raw-gap-refinement-v2/original-Java-BINARY.raw",
+    "/tmp/native-slur-binary-support-v1/native-glyph-union.raw"
+  ],
+  "exit_code": 0,
+  "image_recognition_invoked": false,
+  "no_original_coordinates_used_for_selection": true,
+  "observed.json_sha256": "220c796e2b910141259f2456c0b8442dee0b1217f4054110acf39786afd0e421",
+  "original-Java-BINARY.raw_sha256": "cde2e6be218995f38aa599cd1e66e98c1c1e4866b459cad63e190853bfca8cff",
+  "java_raw_equals_isolated_native_raw": true
+}

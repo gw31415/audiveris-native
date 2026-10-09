@@ -1,0 +1,36 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "994804af1516be43da49c61b8f563edf4c7021c8c27a578f753ef3da8703763b",
+  "helper_sha256": "ee4233833feb0a89fa6c5ec6efbbe63d4b20056fde1f63955f3744e430c1d34e",
+  "input_sha256": "3c27c6f0f356ac4d34c7e3149e137076dde320cfb734d2618e1bac15d0f7fb9d",
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-d",
+    "/tmp/slur-gap-obstacle-original-v1/classes",
+    "/tmp/slur-gap-obstacle-original-v1/SlurGapObstacleProbe.java",
+    "/tmp/NativeSlurCandidateMathProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx256m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/slur-gap-obstacle-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/slur-gap-obstacle-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/slur-gap-obstacle-original-v1/prefs",
+    "-Duser.home=/tmp/slur-gap-obstacle-original-v1/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/slur-gap-obstacle-original-v1/classes",
+    "SlurGapObstacleProbe",
+    "/tmp/slur-gap-obstacle-original-v1/inputs.tsv",
+    "/tmp/slur-gap-obstacle-original-v1/observed.json"
+  ],
+  "exit_code": 0,
+  "Book_loaded": false,
+  "image_recognition_invoked": false,
+  "Book_saved": false,
+  "native_run": false
+}

@@ -512,6 +512,14 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         Limits::default(),
     )
     .map_err(|e| e.to_string())?;
+    let im = crate::music_slurs::process(&mut m, im, glyphs)?;
+    let glyphs = extract_glyphs(
+        BinaryPage::new(im.width, im.height, &im.pixels).map_err(|e| e.to_string())?,
+        Orientation::Vertical,
+        (0, 0),
+        Limits::default(),
+    )
+    .map_err(|e| e.to_string())?;
     let model = audiveris_classifier::Model::from_json(MODEL).map_err(|e| e.to_string())?;
     let initial = m.owner.graph.snapshot();
     let nodes = initial["inters"].as_array().unwrap();

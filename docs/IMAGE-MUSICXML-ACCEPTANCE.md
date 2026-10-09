@@ -53,9 +53,17 @@ relation→vertex順と退役時計を保持し、原Java宣言制御14状態・
 画像のnull時計と宣言7/64・underfill/excessは別の観測範囲として記録しています。
 20対象とfmt/clippy/build、両実譜面・exact7/64・63＋補正8 XML byte/XSDが成功。
 実譜面XMLが同一のため既存独立reader/品質比較を再利用し、新しい品質成功とはしません。
-次はSlurの実認識・callback・cleanupと出力、その後Flag/正factoryと共通削除順を接続します。
-Der Winterの余分なpは原版実所有比較でAccentとのOVERLAP除去が確認され、native順序の修正が必要。
-Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えません。
+[Slur実所有接続](../evidence/real-slur-lifecycle/README.md)では、同じDer Winter画像から
+Slur6本・実relation12 Arcを認識し、原版再開CURVESの端点・callback・Part所属順を比較。
+実Chord/Voice/Slot/Measureと時計・manualを含む公開直前rollback、受理glyph限定cleanupを確認。
+17固有対象とfmt/clippy/build、63＋補正8 byte/XSD成功。成功済みAnLaura・exact7/64を保持し、
+失敗したDer Winterだけを再実行しました。LINKS/rhythm/PAGEは成功し、writer guardで
+新XMLは保留しています。旧XMLの同一性を新しいSlur出力・品質成功へ読み替えません。
+native抽出はcomponent/column/raw-gap方式で、原版Skeleton一般同等性は未証明です。
+次はSlur6本の実MusicXML出力、その後Flag/正factoryと共通削除順を接続します。
+以後は変更対象テストで小単位保存し、代表譜面・XML/XSDは接続の区切りに集約します。
+余分なpは原版のAccentとのOVERLAP除去に合わせたnative順序修正が必要です。
+公開CLI受付・品質falseを維持し、内部成功を公開受付へ読み替えません。
 
 ## 最初の実証と切断点
 

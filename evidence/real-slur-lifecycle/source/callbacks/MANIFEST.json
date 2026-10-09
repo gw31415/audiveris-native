@@ -1,0 +1,138 @@
+{
+  "scope": "Selected reproducible evidence and uncompiled proposal only; failed startup drafts/classes/runtime cache are not integration artifacts.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 7837,
+      "sha256": "b23b2f1a52e6a65dee79f2097d1577d3022c7893888dc8aa2f61876d038cb8a9"
+    },
+    {
+      "path": "SlurLifecycleObserver.java",
+      "bytes": 9175,
+      "sha256": "782d98e53c86f3f532fa771a7d9be3760edfecca6c37356ba6d2556e69529ab5"
+    },
+    {
+      "path": "SlurLifecycleRewriter.java",
+      "bytes": 3657,
+      "sha256": "d78c0f1510d5ba71746a757dfc27a6347ca3c26c0a836a38e08e10f341692248"
+    },
+    {
+      "path": "VerifyObservationOverlay.java",
+      "bytes": 3298,
+      "sha256": "ca7f3880921fda6720402d6c3959444bf6f42734915ed3da3f077d7ed273cfe4"
+    },
+    {
+      "path": "run.py",
+      "bytes": 2612,
+      "sha256": "3cd9cb93075e9a5dc07c3ff5e8ae30293c5b187bd95efa073c8ed6cdd6abd6d1"
+    },
+    {
+      "path": "check.py",
+      "bytes": 7031,
+      "sha256": "ccc195e1e5a6f60b9fc2dc346031ccca0aa78e82a906a595abe62f8fec2718ec"
+    },
+    {
+      "path": "observed.json",
+      "bytes": 285366,
+      "sha256": "ad68270c6e77531b08f7064fc42680a60f4bdde0c8d29bdd86e1223f4254002b"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 11622,
+      "sha256": "c120502d723795d2135aea8c823af3308efe6e2bfb5fd556dbcb5d22fcf72435"
+    },
+    {
+      "path": "PROVENANCE.json",
+      "bytes": 3057,
+      "sha256": "ef83d04c5be31ca85bec44f4309f31f48ba42806408f8377b24284cb155f73c3"
+    },
+    {
+      "path": "instrumentation.json",
+      "bytes": 2108,
+      "sha256": "93c06fddc99e25bc07630c8df710059e29b2277c613aaf1db45389cfbe464848"
+    },
+    {
+      "path": "instrumentation-audit.json",
+      "bytes": 1618,
+      "sha256": "5345d5cf56f2efb47b3d0fa21eaee450e00bb1d65f976ad1f48d3d55181a9a5c"
+    },
+    {
+      "path": "methods.txt",
+      "bytes": 485,
+      "sha256": "d7e5fe3bb9647b1e22a10df7d03f5dabaa5f7356b8db249bee78f34309e12322"
+    },
+    {
+      "path": "existing-book-stage-inventory.json",
+      "bytes": 32236,
+      "sha256": "e6064e3da37d7eda1ea385ec2dcb61c98b4c4df48f05698604ea04c1ecbf857b"
+    },
+    {
+      "path": "setup-attempts.json",
+      "bytes": 878,
+      "sha256": "5eb36d0c3a5f7ee01325b953a3a5b5459c0c2ccae5a168d1f1bc7a9f72d7b3ad"
+    },
+    {
+      "path": "E-part-dispatch-observed-order.patch",
+      "bytes": 1462,
+      "sha256": "4717c87aabaf0b663fb3d770304a90594ce617c1eea63d225f770db0cab83fab"
+    },
+    {
+      "path": "music_slurs-observed-dispatch.rs",
+      "bytes": 18865,
+      "sha256": "f2e515a2af98605844791a31d4245b4e5b59c9be92baf564f5a0d088311b6696"
+    },
+    {
+      "path": "console.log",
+      "bytes": 918,
+      "sha256": "d5dd72d41be46452e517e27241bad47bc344c6aa9d7f918af600a3f03cde3501"
+    },
+    {
+      "path": "compile.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "rewrite.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "pinned_sources": [
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/SlursBuilder.java",
+      "sha256": "651e4576dceae7cb2a4b8a97b632e2a17eba37e409ab625225894893b4d334b3"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/ClumpPruner.java",
+      "sha256": "0b77cf4e453559b34cfccd9b5f00666f4718ff3d3993f9948e1c58a901dc0d12"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/curve/CurvesStep.java",
+      "sha256": "a254fedf6a523fab02143658273f97a4381b1a662adc6c7818244f1b6ea23077"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sig/inter/SlurInter.java",
+      "sha256": "317847fd072e85392d3adb961a42f7e0ab2087c7bdd8a6acc96dba8dfdf7e05f"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sig/inter/AbstractInter.java",
+      "sha256": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sig/relation/SlurHeadRelation.java",
+      "sha256": "ce27cd34663f2929b6f9d538f86ef969cbe3e93a8468f6ac204dc24e62ed7044"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/Part.java",
+      "sha256": "a57e2bb280a6d8e56316e8fe79ee3bf11be69f883f4c8c694d9b2a421cd35aff"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/rhythm/Measure.java",
+      "sha256": "c1299a305ff168ffe57b5a537da384ca63d69beda5ecc57bd2f64ce0f372e611"
+    }
+  ],
+  "frozen_proposal_base": {
+    "path": "/tmp/slur-native-hookup-unit/music_slurs.rs",
+    "sha256": "7e7d9570b93bef9c1365bea97ad943e99a7b822a7c271e76c699f0cc762a4798"
+  }
+}

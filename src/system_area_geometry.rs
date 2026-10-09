@@ -49,6 +49,7 @@ fn vertical(nodes: &[Node], i: usize, top: bool, remove_self: bool) -> Vec<usize
 #[derive(Debug)]
 pub struct Band {
     path: Area,
+    rectangle_certified: bool,
     ends: [usize; 2],
     width: usize,
     height: usize,
@@ -69,6 +70,28 @@ impl Band {
     pub fn header_left(&self) -> Result<usize, String> {
         self.header_left
             .ok_or("unsupported_beam_header_area_bounds".into())
+    }
+
+    /// Original Area.intersects(Rectangle) over the retained noncrossing Band.
+    pub(crate) fn intersects_rect(&self, mut r: [f64; 4]) -> Result<bool, String> {
+        if r.iter().any(|v| !v.is_finite() || v.abs() > 16_000_000.) {
+            return Err("invalid_system_area_rectangle".into());
+        }
+        if r[2] <= 0. || r[3] <= 0. {
+            return Ok(false);
+        }
+        if !self.rectangle_certified {
+            return Err("system_area_rectangle_noncrossing_certificate_required".into());
+        }
+        if self.ends != [0, self.width] {
+            let right = (r[0] + r[2]).min(self.ends[1] as f64);
+            let bottom = (r[1] + r[3]).min(self.height as f64);
+            r[0] = r[0].max(self.ends[0] as f64);
+            r[1] = r[1].max(0.);
+            r[2] = right - r[0];
+            r[3] = bottom - r[1];
+        }
+        self.path.intersects_rect_for_noncrossing_path(r)
     }
 
     pub fn contains(&self, p: [f64; 2]) -> Result<bool, String> {
@@ -163,6 +186,36 @@ fn curved_clip_bounds(
     Some([ends[0] as i32, low, (ends[1] - ends[0]) as i32, high - low])
 }
 
+// Global X monotonicity and separated control hulls certify one simple filled
+// band. This avoids applying raw path crossings to general Area boolean geometry.
+fn rectangle_path_certificate(
+    top: &[Vec<[f64; 2]>],
+    bottom: &[Vec<[f64; 2]>],
+    width: usize,
+) -> bool {
+    let monotone = |segments: &[Vec<[f64; 2]>]| {
+        !segments.is_empty()
+            && segments.first().unwrap().first().unwrap()[0] == 0.
+            && segments.last().unwrap().last().unwrap()[0] == width as f64
+            && segments
+                .iter()
+                .all(|s| s.windows(2).all(|p| p[0][0] <= p[1][0]))
+            && segments.windows(2).all(|s| s[0].last() == s[1].first())
+    };
+    monotone(top)
+        && monotone(bottom)
+        && top
+            .iter()
+            .flatten()
+            .map(|p| p[1])
+            .fold(f64::NEG_INFINITY, f64::max)
+            < bottom
+                .iter()
+                .flatten()
+                .map(|p| p[1])
+                .fold(f64::INFINITY, f64::min)
+}
+
 fn band(
     north: &[&Curve],
     south: &[&Curve],
@@ -247,6 +300,7 @@ fn band(
         clip_bounds = curved_clip_bounds(&top, &bottom, ends, height);
         header_left = clip_bounds.map(|b| b[0] as usize);
     }
+    let rectangle_certified = rectangle_path_certificate(&top, &bottom, width);
     let mut path = top;
     path.extend(bottom.into_iter().rev().map(|mut s| {
         s.reverse();
@@ -263,6 +317,7 @@ fn band(
     };
     Ok(Band {
         path,
+        rectangle_certified,
         bounds,
         header_left,
         ends,

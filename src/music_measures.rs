@@ -10,6 +10,7 @@ use serde_json::{Value, json};
 use std::collections::BTreeMap;
 
 pub struct OwnedMusic {
+    pub(crate) slurs: Option<crate::music_slurs::State>,
     pub owner: OwnedItems,
     pub(crate) measures: Vec<Measure>,
     pub(crate) measure_layout: crate::music_measure_layout::Layout,
@@ -443,6 +444,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     let reduction = std::mem::take(&mut owner.prepared.report);
     owner.prepared.report = json!({"schema":"audiveris-native.music-measures-head-chords.v1","reduction":reduction,"actual_measure_layout":measure_layout.projection(&owner.graph),"staff_barlines":bar_rows,"registered_native_clefs":clef_rows,"registered_native_keys":key_rows,"registered_native_times":time_rows,"measures":measures.iter().map(|m|json!({"system_id":m.system,"part_id":m.part,"staff_id":m.staff,"index":m.index,"left":m.left,"right":m.right})).collect::<Vec<_>>(),"head_chords":chords.iter().map(|c|json!({"id":c.id,"origin":c.key,"stem_origin":c.stem,"bounds":c.bounds,"measure_index":measures[c.measure].index,"head_ids":c.members.iter().map(|h|h["id"].clone()).collect::<Vec<_>>(),"duration":null,"voice":null})).collect::<Vec<_>>(),"shared_sig":owner.graph.snapshot(),"scope":"native grouped physical barlines with complete actual Staff columns, actual multi-Staff PartBarline/Measure layouts and common Stack references; Part-wide single-stem chord dispatch across constituent Staffs; canonical Part/Staff/cache and actual SIG retained; original head union/stem tail/leading note geometry; no duration/meter assumptions","pending":["missing bar columns/back-to-back export/shared or stemless heads/courtesy measures","SYMBOLS/rest chords/LINKS/rhythm/export","full reduction/finalizeStems/cleaner/epilog","nonzero skew/real scans/special staff/full24shape pages/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     Ok(OwnedMusic {
+        slurs: None,
         owner,
         measures,
         measure_layout,

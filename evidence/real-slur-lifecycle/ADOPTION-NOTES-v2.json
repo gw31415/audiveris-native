@@ -1,0 +1,42 @@
+{
+  "base_commit": "57bb6a93702b78f3e33f9bd9c7fd8e68d26cb365",
+  "base_tree": "20e02c8bd677c0de6629668201129f75f2e60529",
+  "normal_main_readback": "/tmp/real-rest-time-owners-readback.json",
+  "applied": [
+    "/tmp/slur-export-followon-v2/preconditions/A-retained-raw-binary.patch",
+    "/tmp/slur-export-followon-v2/preconditions/B-exact-band-rectangle-routing.patch",
+    "/tmp/slur-native-integration-v2/C-typed-slur-lifecycle.patch",
+    "/tmp/slur-native-integration-v2/D-native-short-slur-stage.patch",
+    "/tmp/slur-native-integration-v2/T-same-existing-image-observation.patch",
+    "/tmp/slur-native-integration-v2-production/P-production-owner-validation.patch",
+    "/tmp/slur-export-boundary-v1/A-boundary-and-tests.patch",
+    "/tmp/slur-export-boundary-v1/B-temporary-recognized-boundary.patch",
+    "/tmp/slur-lifecycle-export-frontier-v1/L-lifecycle-existing-target-frontier.patch",
+    "/tmp/slur-zero-head-context-v1/production.patch",
+    "/tmp/slur-zero-head-support-v1/T-actual-owner-zero-head-support.patch",
+    "/tmp/slur-zero-head-context-v1/negative-tests.patch",
+    "/tmp/slur-kernel-test-adoption-fit-v1",
+    "/tmp/slur-gap-obstacle-adapter-v1/non-crossable-filter.patch"
+  ],
+  "corrections": [
+    "Removed proposal-only module docstrings",
+    "Initial10clippy lints corrected: enum names, result aliases, collapsibleif, bounds/edgeid iteration, finite/NaN-equivalent clamp",
+    "JAMA inverse4 indexedoperationorder retained with narrow documented lint allowance",
+    "A boundary single-line shared_sig module hunk did not apply atomically; applied all other files then inserted unique module declaration manually",
+    "Superseded L/R patch erroneously removed begin_der_winter; never applied; corrected single exporttail hunk applied retaining lifecycle hook"
+  ],
+  "checks": {
+    "preflight_v1": "fmtpassed; clippy10lints",
+    "preflight_v2": "fmt/clippyalltargets passed; no tests/images yet",
+    "adopted_fit": "/tmp/slur-adopted-fit-v1/RESULT.json",
+    "lifecycle_v1": "/tmp/slur-lifecycle-v1/PARTIAL-VALIDATION.json",
+    "lifecycle_v2": "/tmp/slur-lifecycle-v2/PARTIAL-VALIDATION.json"
+  },
+  "pending": [
+    "Slur lookup live-versus-retained Chord geometry adapter",
+    "Existing DerWinter lifecycle target with no new XML until writer",
+    "Separate writer+remove recognizedtemporaryguard+restoreexistingtest follow-on",
+    "Common mixed SymbolsLinker/reducer and public representative acceptance"
+  ],
+  "quality_accepted": false
+}

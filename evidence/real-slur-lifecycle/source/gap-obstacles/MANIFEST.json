@@ -1,0 +1,45 @@
+{
+  "scope": "Selected /tmp proof/proposal files; no archive, build products, raw images or full duplicate current-context source copies.",
+  "files": [
+    {
+      "path": "PROVENANCE.json",
+      "bytes": 1565,
+      "sha256": "71f7d5f3f6e06ba0d603ce7c713b9072d54f425d7f405bf039add37a1b8308e3"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1929,
+      "sha256": "9f11f17f2cf26f4a8f5337b91afad925e63079bfe2ea5825d5fe59cadcc28a00"
+    },
+    {
+      "path": "SOURCE-HASHES.json",
+      "bytes": 3673,
+      "sha256": "6150b84544b1d6b14ace57009784cde7a7bc43adf7baf329d234dac0cd213052"
+    },
+    {
+      "path": "SlurGapObstacleProbe.java",
+      "bytes": 5014,
+      "sha256": "994804af1516be43da49c61b8f563edf4c7021c8c27a578f753ef3da8703763b"
+    },
+    {
+      "path": "inputs.tsv",
+      "bytes": 1159,
+      "sha256": "3c27c6f0f356ac4d34c7e3149e137076dde320cfb734d2618e1bac15d0f7fb9d"
+    },
+    {
+      "path": "native-retained-diagnostic.json",
+      "bytes": 8048,
+      "sha256": "d1dfb4ca77363b7b8c53ee1d52a66b9517917a4b546a00a163ab8f3f12034049"
+    },
+    {
+      "path": "observed.json",
+      "bytes": 5195,
+      "sha256": "ba9c1d17c08791ef521dcb80c35f26f8e7eab26ffe8236d80c06bc027642db3a"
+    },
+    {
+      "path": "run.py",
+      "bytes": 1817,
+      "sha256": "74739242c2cf2c177af2fd77425ccddbd69ff298b7dd0bcccd15fe97b5753725"
+    }
+  ]
+}

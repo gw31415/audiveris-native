@@ -9,6 +9,7 @@ use serde_json::Value;
 use std::collections::BTreeMap;
 
 pub struct OwnedItems {
+    pub(crate) raw_binary: GrayImage,
     pub(crate) native_headers: crate::native_headers::NativeHeaders,
     pub(crate) systems: Vec<std::sync::Arc<crate::grid_ir::SystemGeometry>>,
     pub(crate) grid_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
@@ -70,14 +71,14 @@ pub fn continue_items(
             return Err("duplicate owned HEADS system".into());
         }
     }
-    let binary = crate::vertical::binarize(image, |_, _, _| {});
-    let interline = crate::scale::analyze(&binary)
+    let interline = crate::scale::analyze(&upstream.raw_binary)
         .result
         .map_err(|e| e.code())?
         .interline
         .main;
     upstream.ledger_memberships.validate(&upstream.graph)?;
     Ok(OwnedItems {
+        raw_binary: upstream.raw_binary,
         native_headers: upstream.native_headers,
         systems: upstream.systems,
         grid_glyphs: upstream.grid_glyphs,

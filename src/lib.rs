@@ -550,3 +550,5 @@ mod music_time_late;
 mod native_headers;
 
 mod music_headers_owned;
+
+mod music_slurs;

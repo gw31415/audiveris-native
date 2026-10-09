@@ -6,6 +6,7 @@
 // The Classpath exception is retained for this modified independent library.
 // Distributed WITHOUT ANY WARRANTY; see LICENSE and NOTICE.
 mod fdlibm_hypot;
+mod rectangle;
 pub use fdlibm_hypot::hypot;
 
 pub type Point = [f64; 2];

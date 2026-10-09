@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "stem_cache_sig::batch_tests::registered_stem_batch_preserves_order_identity_and_rejects_unrequested_stale_cache",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "binary_sha256": "27c719d3f98854fe283a04a646f82c01a2d90c2c6b2cd0df43ccdc48969b62d5",
+  "targets": 1,
+  "exit_code": 0,
+  "elapsed_seconds": 0.12105457999859937
+}
