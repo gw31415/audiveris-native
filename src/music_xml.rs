@@ -12,6 +12,7 @@ mod recognized_export;
 #[cfg(test)]
 mod selected_cli_tests;
 pub(crate) mod slur_boundary;
+mod slur_export;
 pub(crate) mod stack_rhythm;
 mod tuplet_getters;
 mod tuplet_groups;

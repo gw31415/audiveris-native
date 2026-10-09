@@ -1,0 +1,1214 @@
+{
+  "schema": "audiveris-native.original-slur-export.v1",
+  "original_revision": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "book_sha256": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "book_member": "sheet#1/sheet#1.xml",
+  "book_member_sha256": "34945a2ce9c7be8fd893a96341febdc7610c69f39f65d21f52c8cd1830615307",
+  "XML_sha256": "e04333e06b7c58181824602b4b57367d5c2aad2b2b7811707fa2dc3f3e26c7fb",
+  "native_inputs_used": false,
+  "counts": {
+    "book_notes": 124,
+    "xml_notes": 124
+  },
+  "slurs": [
+    {
+      "source_id": 4268,
+      "system": 1,
+      "part": 1,
+      "above": false,
+      "persisted_rounded_curve": [
+        1243.6,
+        547.3,
+        1253.3,
+        558.6,
+        1270.2,
+        560.0,
+        1281.7,
+        550.7
+      ],
+      "bounds": [
+        1243,
+        547,
+        39,
+        10
+      ],
+      "endpoints": [
+        {
+          "side": "LEFT",
+          "head_bounds": [
+            1235,
+            530,
+            15,
+            12
+          ],
+          "staff_id": 1,
+          "source_head_id": 2456,
+          "source_chord_id": 4179
+        },
+        {
+          "side": "RIGHT",
+          "head_bounds": [
+            1275,
+            535,
+            15,
+            12
+          ],
+          "staff_id": 1,
+          "source_head_id": 2479,
+          "source_chord_id": 4180
+        }
+      ],
+      "fresh_CURVES_curve": [
+        [
+          1243.6122675769834,
+          547.3357752665135
+        ],
+        [
+          1253.332884079477,
+          558.5605394633029
+        ],
+        [
+          1270.2105191558057,
+          560.0373269430696
+        ],
+        [
+          1281.732822087286,
+          550.6713111616779
+        ]
+      ]
+    },
+    {
+      "source_id": 4264,
+      "system": 1,
+      "part": 2,
+      "above": false,
+      "persisted_rounded_curve": [
+        1241.1,
+        700.9,
+        1251.1,
+        713.5,
+        1269.3,
+        715.9,
+        1282.1,
+        706.2
+      ],
+      "bounds": [
+        1241,
+        700,
+        42,
+        13
+      ],
+      "endpoints": [
+        {
+          "side": "LEFT",
+          "head_bounds": [
+            1235,
+            685,
+            15,
+            12
+          ],
+          "staff_id": 2,
+          "source_head_id": 2641,
+          "source_chord_id": 4195
+        },
+        {
+          "side": "RIGHT",
+          "head_bounds": [
+            1276,
+            690,
+            14,
+            12
+          ],
+          "staff_id": 2,
+          "source_head_id": 2647,
+          "source_chord_id": 4196
+        }
+      ],
+      "fresh_CURVES_curve": [
+        [
+          1241.1434972399443,
+          700.887377991607
+        ],
+        [
+          1251.0733689871895,
+          713.5395159623345
+        ],
+        [
+          1269.315053251948,
+          715.8901948926825
+        ],
+        [
+          1282.1280500978535,
+          706.168772158644
+        ]
+      ]
+    },
+    {
+      "source_id": 4271,
+      "system": 2,
+      "part": 1,
+      "above": false,
+      "persisted_rounded_curve": [
+        565.2,
+        1046.9,
+        572.7,
+        1057.3,
+        586.6,
+        1060.8,
+        598.1,
+        1055.2
+      ],
+      "bounds": [
+        565,
+        1046,
+        34,
+        12
+      ],
+      "endpoints": [
+        {
+          "side": "LEFT",
+          "head_bounds": [
+            558,
+            1031,
+            15,
+            12
+          ],
+          "staff_id": 4,
+          "source_head_id": 2774,
+          "source_chord_id": 4217
+        },
+        {
+          "side": "RIGHT",
+          "head_bounds": [
+            597,
+            1037,
+            15,
+            12
+          ],
+          "staff_id": 4,
+          "source_head_id": 2786,
+          "source_chord_id": 4218
+        }
+      ],
+      "fresh_CURVES_curve": [
+        [
+          565.1537676494531,
+          1046.8888704781507
+        ],
+        [
+          572.66687666044,
+          1057.284605954022
+        ],
+        [
+          586.5543566302406,
+          1060.7942162648874
+        ],
+        [
+          598.1043485072555,
+          1055.2160614860961
+        ]
+      ]
+    },
+    {
+      "source_id": 4266,
+      "system": 2,
+      "part": 1,
+      "above": false,
+      "persisted_rounded_curve": [
+        642.2,
+        1057.9,
+        651.3,
+        1070.5,
+        669.0,
+        1072.9,
+        681.2,
+        1063.3
+      ],
+      "bounds": [
+        642,
+        1057,
+        40,
+        13
+      ],
+      "endpoints": [
+        {
+          "side": "LEFT",
+          "head_bounds": [
+            635,
+            1042,
+            15,
+            12
+          ],
+          "staff_id": 4,
+          "source_head_id": 2803,
+          "source_chord_id": 4219
+        },
+        {
+          "side": "RIGHT",
+          "head_bounds": [
+            674,
+            1048,
+            15,
+            12
+          ],
+          "staff_id": 4,
+          "source_head_id": 2818,
+          "source_chord_id": 4220
+        }
+      ],
+      "fresh_CURVES_curve": [
+        [
+          642.1804192548639,
+          1057.8697974532797
+        ],
+        [
+          651.2739698469088,
+          1070.4705619022957
+        ],
+        [
+          669.0446210032603,
+          1072.9332100739925
+        ],
+        [
+          681.2220924904639,
+          1063.2801734922737
+        ]
+      ]
+    },
+    {
+      "source_id": 4277,
+      "system": 2,
+      "part": 2,
+      "above": false,
+      "persisted_rounded_curve": [
+        565.3,
+        1182.8,
+        572.5,
+        1192.9,
+        585.8,
+        1196.4,
+        597.1,
+        1191.2
+      ],
+      "bounds": [
+        565,
+        1182,
+        33,
+        12
+      ],
+      "endpoints": [
+        {
+          "side": "LEFT",
+          "head_bounds": [
+            558,
+            1167,
+            15,
+            12
+          ],
+          "staff_id": 5,
+          "source_head_id": 2879,
+          "source_chord_id": 4233
+        },
+        {
+          "side": "RIGHT",
+          "head_bounds": [
+            598,
+            1172,
+            14,
+            12
+          ],
+          "staff_id": 5,
+          "source_head_id": 2891,
+          "source_chord_id": 4234
+        }
+      ],
+      "fresh_CURVES_curve": [
+        [
+          565.2537502798972,
+          1182.8185936969226
+        ],
+        [
+          572.4687755010603,
+          1192.9109368971112
+        ],
+        [
+          585.8463964982053,
+          1196.437304359687
+        ],
+        [
+          597.098909640682,
+          1191.213040948372
+        ]
+      ]
+    },
+    {
+      "source_id": 4274,
+      "system": 2,
+      "part": 2,
+      "above": false,
+      "persisted_rounded_curve": [
+        642.3,
+        1193.8,
+        649.8,
+        1204.2,
+        663.6,
+        1207.8,
+        675.2,
+        1202.4
+      ],
+      "bounds": [
+        642,
+        1193,
+        34,
+        12
+      ],
+      "endpoints": [
+        {
+          "side": "LEFT",
+          "head_bounds": [
+            635,
+            1178,
+            15,
+            12
+          ],
+          "staff_id": 5,
+          "source_head_id": 2897,
+          "source_chord_id": 4235
+        },
+        {
+          "side": "RIGHT",
+          "head_bounds": [
+            674,
+            1184,
+            15,
+            12
+          ],
+          "staff_id": 5,
+          "source_head_id": 2911,
+          "source_chord_id": 4236
+        }
+      ],
+      "fresh_CURVES_curve": [
+        [
+          642.2709821316764,
+          1193.805361850223
+        ],
+        [
+          649.7500498001186,
+          1204.2179849771321
+        ],
+        [
+          663.577197149068,
+          1207.839935843228
+        ],
+        [
+          675.2006125972083,
+          1202.4311109346072
+        ]
+      ]
+    }
+  ],
+  "endpoints_in_export_order": [
+    {
+      "system": 1,
+      "part": 1,
+      "physical_measure": 5,
+      "measure_score_id": "4",
+      "note_index": 0,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 1,
+      "head_bounds": [
+        1235,
+        530,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        1235,
+        498,
+        15,
+        44
+      ],
+      "side": "LEFT",
+      "source_slur_id": 4268,
+      "source_head_id": 2456,
+      "source_chord_id": 4179,
+      "attributes": {
+        "type": "start",
+        "number": "1",
+        "placement": "below",
+        "default-x": "8",
+        "default-y": "-41",
+        "bezier-x": "9",
+        "bezier-y": "-10"
+      },
+      "pitch": {
+        "step": "G",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 1235,
+        "staff_top_at_end": 502.0,
+        "curve": [
+          1243.6,
+          547.3,
+          1253.3,
+          558.6,
+          1270.2,
+          560.0,
+          1281.7,
+          550.7
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            256.0,
+            502.0
+          ],
+          [
+            1416.0,
+            502.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 1,
+      "part": 1,
+      "physical_measure": 5,
+      "measure_score_id": "4",
+      "note_index": 1,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 1,
+      "head_bounds": [
+        1275,
+        535,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        1275,
+        501,
+        15,
+        46
+      ],
+      "side": "RIGHT",
+      "source_slur_id": 4268,
+      "source_head_id": 2479,
+      "source_chord_id": 4180,
+      "attributes": {
+        "type": "stop",
+        "number": "1",
+        "default-x": "6",
+        "default-y": "-44",
+        "bezier-x": "-10",
+        "bezier-y": "-8"
+      },
+      "pitch": {
+        "step": "F",
+        "alter": "1",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 1275,
+        "staff_top_at_end": 502.0,
+        "curve": [
+          1243.6,
+          547.3,
+          1253.3,
+          558.6,
+          1270.2,
+          560.0,
+          1281.7,
+          550.7
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            256.0,
+            502.0
+          ],
+          [
+            1416.0,
+            502.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 1,
+      "part": 2,
+      "physical_measure": 5,
+      "measure_score_id": "4",
+      "note_index": 0,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 2,
+      "head_bounds": [
+        1235,
+        685,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        1235,
+        626,
+        15,
+        71
+      ],
+      "side": "LEFT",
+      "source_slur_id": 4264,
+      "source_head_id": 2641,
+      "source_chord_id": 4195,
+      "attributes": {
+        "type": "start",
+        "number": "1",
+        "placement": "below",
+        "default-x": "6",
+        "default-y": "-55",
+        "bezier-x": "9",
+        "bezier-y": "-11"
+      },
+      "pitch": {
+        "step": "B",
+        "octave": "3"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 1235,
+        "staff_top_at_end": 640.0,
+        "curve": [
+          1241.1,
+          700.9,
+          1251.1,
+          713.5,
+          1269.3,
+          715.9,
+          1282.1,
+          706.2
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            256.0,
+            640.0
+          ],
+          [
+            1416.0,
+            640.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 1,
+      "part": 2,
+      "physical_measure": 5,
+      "measure_score_id": "4",
+      "note_index": 2,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 2,
+      "head_bounds": [
+        1276,
+        690,
+        14,
+        12
+      ],
+      "chord_bounds": [
+        1275,
+        628,
+        15,
+        74
+      ],
+      "side": "RIGHT",
+      "source_slur_id": 4264,
+      "source_head_id": 2647,
+      "source_chord_id": 4196,
+      "attributes": {
+        "type": "stop",
+        "number": "1",
+        "default-x": "6",
+        "default-y": "-60",
+        "bezier-x": "-12",
+        "bezier-y": "-9"
+      },
+      "pitch": {
+        "step": "A",
+        "octave": "3"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 1276,
+        "staff_top_at_end": 640.0,
+        "curve": [
+          1241.1,
+          700.9,
+          1251.1,
+          713.5,
+          1269.3,
+          715.9,
+          1282.1,
+          706.2
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            256.0,
+            640.0
+          ],
+          [
+            1416.0,
+            640.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 1,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 0,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 4,
+      "head_bounds": [
+        558,
+        1031,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        558,
+        994,
+        15,
+        49
+      ],
+      "side": "LEFT",
+      "source_slur_id": 4271,
+      "source_head_id": 2774,
+      "source_chord_id": 4217,
+      "attributes": {
+        "type": "start",
+        "number": "1",
+        "placement": "below",
+        "default-x": "7",
+        "default-y": "-34",
+        "bezier-x": "7",
+        "bezier-y": "-9"
+      },
+      "pitch": {
+        "step": "A",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 558,
+        "staff_top_at_end": 1009.0,
+        "curve": [
+          565.2,
+          1046.9,
+          572.7,
+          1057.3,
+          586.6,
+          1060.8,
+          598.1,
+          1055.2
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1009.0
+          ],
+          [
+            1414.0,
+            1009.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 1,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 1,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 4,
+      "head_bounds": [
+        597,
+        1037,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        597,
+        997,
+        15,
+        52
+      ],
+      "side": "RIGHT",
+      "source_slur_id": 4271,
+      "source_head_id": 2786,
+      "source_chord_id": 4218,
+      "attributes": {
+        "type": "stop",
+        "number": "1",
+        "default-x": "1",
+        "default-y": "-42",
+        "bezier-x": "-10",
+        "bezier-y": "-5"
+      },
+      "pitch": {
+        "step": "G",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 597,
+        "staff_top_at_end": 1009.0,
+        "curve": [
+          565.2,
+          1046.9,
+          572.7,
+          1057.3,
+          586.6,
+          1060.8,
+          598.1,
+          1055.2
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1009.0
+          ],
+          [
+            1414.0,
+            1009.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 1,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 2,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 4,
+      "head_bounds": [
+        635,
+        1042,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        635,
+        1006,
+        15,
+        48
+      ],
+      "side": "LEFT",
+      "source_slur_id": 4266,
+      "source_head_id": 2803,
+      "source_chord_id": 4219,
+      "attributes": {
+        "type": "start",
+        "number": "1",
+        "placement": "below",
+        "default-x": "7",
+        "default-y": "-44",
+        "bezier-x": "8",
+        "bezier-y": "-11"
+      },
+      "pitch": {
+        "step": "F",
+        "alter": "1",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 635,
+        "staff_top_at_end": 1009.0,
+        "curve": [
+          642.2,
+          1057.9,
+          651.3,
+          1070.5,
+          669.0,
+          1072.9,
+          681.2,
+          1063.3
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1009.0
+          ],
+          [
+            1414.0,
+            1009.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 1,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 3,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 4,
+      "head_bounds": [
+        674,
+        1048,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        674,
+        1008,
+        15,
+        52
+      ],
+      "side": "RIGHT",
+      "source_slur_id": 4266,
+      "source_head_id": 2818,
+      "source_chord_id": 4220,
+      "attributes": {
+        "type": "stop",
+        "number": "1",
+        "default-x": "7",
+        "default-y": "-49",
+        "bezier-x": "-11",
+        "bezier-y": "-9"
+      },
+      "pitch": {
+        "step": "E",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 674,
+        "staff_top_at_end": 1009.0,
+        "curve": [
+          642.2,
+          1057.9,
+          651.3,
+          1070.5,
+          669.0,
+          1072.9,
+          681.2,
+          1063.3
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1009.0
+          ],
+          [
+            1414.0,
+            1009.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 2,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 0,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 5,
+      "head_bounds": [
+        558,
+        1167,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        558,
+        1133,
+        15,
+        46
+      ],
+      "side": "LEFT",
+      "source_slur_id": 4277,
+      "source_head_id": 2879,
+      "source_chord_id": 4233,
+      "attributes": {
+        "type": "start",
+        "number": "1",
+        "placement": "below",
+        "default-x": "7",
+        "default-y": "-24",
+        "bezier-x": "7",
+        "bezier-y": "-9"
+      },
+      "pitch": {
+        "step": "A",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 558,
+        "staff_top_at_end": 1156.0,
+        "curve": [
+          565.3,
+          1182.8,
+          572.5,
+          1192.9,
+          585.8,
+          1196.4,
+          597.1,
+          1191.2
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1156.0
+          ],
+          [
+            1414.0,
+            1156.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 2,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 1,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 5,
+      "head_bounds": [
+        598,
+        1172,
+        14,
+        12
+      ],
+      "chord_bounds": [
+        598,
+        1137,
+        14,
+        47
+      ],
+      "side": "RIGHT",
+      "source_slur_id": 4277,
+      "source_head_id": 2891,
+      "source_chord_id": 4234,
+      "attributes": {
+        "type": "stop",
+        "number": "1",
+        "default-x": "-1",
+        "default-y": "-32",
+        "bezier-x": "-10",
+        "bezier-y": "-5"
+      },
+      "pitch": {
+        "step": "G",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 598,
+        "staff_top_at_end": 1156.0,
+        "curve": [
+          565.3,
+          1182.8,
+          572.5,
+          1192.9,
+          585.8,
+          1196.4,
+          597.1,
+          1191.2
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1156.0
+          ],
+          [
+            1414.0,
+            1156.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 2,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 2,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 5,
+      "head_bounds": [
+        635,
+        1178,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        635,
+        1140,
+        15,
+        50
+      ],
+      "side": "LEFT",
+      "source_slur_id": 4274,
+      "source_head_id": 2897,
+      "source_chord_id": 4235,
+      "attributes": {
+        "type": "start",
+        "number": "1",
+        "placement": "below",
+        "default-x": "7",
+        "default-y": "-34",
+        "bezier-x": "7",
+        "bezier-y": "-9"
+      },
+      "pitch": {
+        "step": "F",
+        "alter": "1",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 635,
+        "staff_top_at_end": 1156.0,
+        "curve": [
+          642.3,
+          1193.8,
+          649.8,
+          1204.2,
+          663.6,
+          1207.8,
+          675.2,
+          1202.4
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1156.0
+          ],
+          [
+            1414.0,
+            1156.0
+          ]
+        ]
+      }
+    },
+    {
+      "system": 2,
+      "part": 2,
+      "physical_measure": 7,
+      "measure_score_id": "6",
+      "note_index": 3,
+      "voice": 1,
+      "staff_number": 1,
+      "staff_id": 5,
+      "head_bounds": [
+        674,
+        1184,
+        15,
+        12
+      ],
+      "chord_bounds": [
+        674,
+        1144,
+        15,
+        52
+      ],
+      "side": "RIGHT",
+      "source_slur_id": 4274,
+      "source_head_id": 2911,
+      "source_chord_id": 4236,
+      "attributes": {
+        "type": "stop",
+        "number": "1",
+        "default-x": "1",
+        "default-y": "-42",
+        "bezier-x": "-11",
+        "bezier-y": "-5"
+      },
+      "pitch": {
+        "step": "E",
+        "octave": "4"
+      },
+      "saved_geometry_control": {
+        "interline": 11,
+        "head_left": 674,
+        "staff_top_at_end": 1156.0,
+        "curve": [
+          642.3,
+          1193.8,
+          649.8,
+          1204.2,
+          663.6,
+          1207.8,
+          675.2,
+          1202.4
+        ],
+        "above": false,
+        "staff_line_points": [
+          [
+            96.0,
+            1156.0
+          ],
+          [
+            1414.0,
+            1156.0
+          ]
+        ]
+      }
+    }
+  ],
+  "rounded_Book_geometry_differences": [],
+  "qualification": "Persisted original owner/relationship and exported notation observations, not fresh runtime callbacks. Curve serialization is rounded; original XML attributes remain independent output evidence, not native input.",
+  "fresh_CURVES_reference": {
+    "sha256": "ad68270c6e77531b08f7064fc42680a60f4bdde0c8d29bdd86e1223f4254002b",
+    "scope": "Fresh original CURVES automatic construction from an unchanged persisted original CHORDS checkpoint; upstream owners are unmarshalled, not same allocations as prior image run. CURVES is invoked once in memory via untouched original CurvesStep.doit. No upstream image recognition rerun, replay of existing Slurs, native input, Book storage or original file mutation.",
+    "joined_by": "System, Part and both side-labelled full Head bounds; no cross-run ID joins",
+    "qualification": "Independent fresh CURVES construction from original CHORDS Book; saved XML is from earlier complete original image run. No fresh PartwiseBuilder invocation. Above/below comes from the independently matched saved Book."
+  },
+  "fresh_CURVES_geometry_differences": [
+    {
+      "source_slur_id": 4268,
+      "side": "RIGHT",
+      "attribute": "bezier-y",
+      "saved_XML": "-8",
+      "fresh_CURVES_derivation": "-9"
+    },
+    {
+      "source_slur_id": 4264,
+      "side": "LEFT",
+      "attribute": "bezier-y",
+      "saved_XML": "-11",
+      "fresh_CURVES_derivation": "-12"
+    }
+  ]
+}

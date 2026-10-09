@@ -328,7 +328,6 @@ impl OwnedMusic {
     /// Export the live recognized Voice/BEGIN stream. Publication admission is
     /// separate until all required image factories and quality checks are met.
     pub fn write_recognized_musicxml(&self, part_name: &str) -> Result<(String, Value), String> {
-        super::slur_boundary::require_no_slurs(&self.owner.graph, self.slurs.as_ref())?;
         if part_name.trim().is_empty()
             || part_name.len() > 256
             || part_name.chars().any(char::is_control)
@@ -374,6 +373,7 @@ impl OwnedMusic {
             let mut staff_count = None;
             let mut previous_meter = None;
             let mut headers = HeaderState::default();
+            let mut slurs = super::slur_export::PartWriter::new(self, part)?;
             let mut previous_system = None;
             for (number, (mi, measure)) in self
                 .measures
@@ -498,6 +498,12 @@ impl OwnedMusic {
                                 });
                             }
                         }
+                        if !rest {
+                            let marks = slurs.note(chord, id)?;
+                            if marks.as_array().is_some_and(|rows| !rows.is_empty()) {
+                                event["slurs"] = marks;
+                            }
+                        }
                         event["directions"] = if index == 0 {
                             directions(self, &snapshot, chord, note)?
                         } else {
@@ -599,6 +605,7 @@ impl OwnedMusic {
                 previous_meter = Some(meter);
                 previous_system = Some(measure.system);
             }
+            slurs.finish()?;
             xml.push_str("</part>\n");
         }
         xml.push_str("</score-partwise>\n");

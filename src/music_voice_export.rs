@@ -491,13 +491,7 @@ pub(crate) fn write_measure(
                                 ))
                                 .collect::<String>())
                             .unwrap_or_default(),
-                        e["articulations"].as_array().filter(|a|!a.is_empty()).map(|arts| {
-                            let mut value=String::from("<notations><articulations>");
-                            for a in arts {
-                                write!(value,"<{} placement=\"{}\"{} />",a["name"].as_str().unwrap(),a["placement"].as_str().unwrap(),a["type"].as_str().map(|t|format!(" type=\"{t}\"")).unwrap_or_default()).unwrap();
-                            }
-                            value.push_str("</articulations></notations>");value
-                        }).unwrap_or_default()
+                        notations_xml(e)?
                     )
                     .unwrap();
                 }
@@ -508,4 +502,148 @@ pub(crate) fn write_measure(
         return Err("musicxml_voice_unexported_event_required".into());
     }
     Ok(())
+}
+
+fn notations_xml(event: &Value) -> Result<String, String> {
+    let arts = event["articulations"].as_array().filter(|a| !a.is_empty());
+    let slurs = event["slurs"].as_array().filter(|s| !s.is_empty());
+    if arts.is_none() && slurs.is_none() {
+        return Ok(String::new());
+    }
+    let mut xml = String::from("<notations>");
+    if let Some(arts) = arts {
+        xml.push_str("<articulations>");
+        for a in arts {
+            write!(
+                xml,
+                "<{} placement=\"{}\"{} />",
+                a["name"].as_str().unwrap(),
+                a["placement"].as_str().unwrap(),
+                a["type"]
+                    .as_str()
+                    .map(|t| format!(" type=\"{t}\""))
+                    .unwrap_or_default()
+            )
+            .unwrap();
+        }
+        xml.push_str("</articulations>");
+    }
+    if let Some(slurs) = slurs {
+        for slur in slurs {
+            let kind = match slur["type"].as_str() {
+                Some(kind @ ("start" | "stop" | "continue")) => kind,
+                _ => return Err("musicxml_slur_notation_type_required".into()),
+            };
+            write!(xml, "<slur type=\"{kind}\"").unwrap();
+            if !slur["number"].is_null() {
+                let n = slur["number"]
+                    .as_u64()
+                    .filter(|n| (1..=16).contains(n))
+                    .ok_or("musicxml_slur_notation_number_required")?;
+                write!(xml, " number=\"{n}\"").unwrap();
+            }
+            if !slur["placement"].is_null() {
+                let value = match slur["placement"].as_str() {
+                    Some(value @ ("above" | "below")) => value,
+                    _ => return Err("musicxml_slur_notation_placement_required".into()),
+                };
+                write!(xml, " placement=\"{value}\"").unwrap();
+            }
+            for name in [
+                "default-x",
+                "default-y",
+                "bezier-x",
+                "bezier-y",
+                "bezier-x2",
+                "bezier-y2",
+            ] {
+                if !slur[name].is_null() {
+                    let value = slur[name]
+                        .as_i64()
+                        .ok_or("musicxml_slur_notation_position_required")?;
+                    write!(xml, " {name}=\"{value}\"").unwrap();
+                }
+            }
+            xml.push_str("/>");
+        }
+    }
+    xml.push_str("</notations>");
+    Ok(xml)
+}
+
+#[cfg(test)]
+mod notation_tests {
+    use super::*;
+
+    #[test]
+    fn slur_notation_serializer_preserves_same_note_order_and_rejects_invalid_attributes() {
+        let arts = json!([{"name":"accent","placement":"below"}]);
+        let start = json!({"type":"start","number":1,"placement":"below",
+            "default-x":-2,"default-y":-10,"bezier-x":4,"bezier-y":-5});
+        let stop = json!({"type":"stop","number":null,"placement":null,
+            "default-x":22,"default-y":-10,"bezier-x":-4,"bezier-y":-5});
+        let continued = json!({"type":"continue","number":16,"placement":"above",
+            "default-x":2,"default-y":-10,"bezier-x2":4,"bezier-y2":-5});
+        assert_eq!(
+            notations_xml(&json!({"articulations":arts,"slurs":[start,stop,continued]})).unwrap(),
+            concat!(
+                "<notations><articulations><accent placement=\"below\" /></articulations>",
+                "<slur type=\"start\" number=\"1\" placement=\"below\" default-x=\"-2\" default-y=\"-10\" bezier-x=\"4\" bezier-y=\"-5\"/>",
+                "<slur type=\"stop\" default-x=\"22\" default-y=\"-10\" bezier-x=\"-4\" bezier-y=\"-5\"/>",
+                "<slur type=\"continue\" number=\"16\" placement=\"above\" default-x=\"2\" default-y=\"-10\" bezier-x2=\"4\" bezier-y2=\"-5\"/>",
+                "</notations>"
+            )
+        );
+        for empty in [json!({}), json!({"articulations":[],"slurs":[]})] {
+            assert_eq!(notations_xml(&empty).unwrap(), "");
+        }
+        assert_eq!(
+            notations_xml(&json!({"articulations":arts})).unwrap(),
+            "<notations><articulations><accent placement=\"below\" /></articulations></notations>"
+        );
+        // Original enums/integers cannot carry these untyped event values. Refuse
+        // instead of serializing a partial notation after the first valid mark.
+        for (field, value, expected) in [
+            (
+                "type",
+                json!("tied"),
+                "musicxml_slur_notation_type_required",
+            ),
+            ("number", json!(0), "musicxml_slur_notation_number_required"),
+            (
+                "number",
+                json!(17),
+                "musicxml_slur_notation_number_required",
+            ),
+            (
+                "number",
+                json!(1.5),
+                "musicxml_slur_notation_number_required",
+            ),
+            (
+                "placement",
+                json!("under"),
+                "musicxml_slur_notation_placement_required",
+            ),
+            (
+                "default-x",
+                json!(0.5),
+                "musicxml_slur_notation_position_required",
+            ),
+            (
+                "bezier-y2",
+                json!("-5"),
+                "musicxml_slur_notation_position_required",
+            ),
+        ] {
+            let mut malformed = start.clone();
+            malformed[field] = value;
+            assert_eq!(
+                notations_xml(&json!({"articulations":arts,"slurs":[start,malformed]}))
+                    .unwrap_err(),
+                expected,
+                "{field}"
+            );
+        }
+    }
 }

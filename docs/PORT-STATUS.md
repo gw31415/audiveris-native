@@ -17,19 +17,15 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 
 両実ページの公開MusicXMLは未出力・品質受入未達です。直近の公開CLI観測は
 AnLaura追加7形状／Der Winter追加9形状のguardで、CHECKED変更前の結果です。
-[Time/Rest実所有](../evidence/real-rest-time-owners/README.md)に続き、同じ未改変Der Winter
-から実Slur6本・選択SlurHead relation12 Arcを保持してSYMBOLSへ接続しました。
-原版fresh CURVES再開観測の端点・callback・Part所属順と比較し、実Chord/Measure/Staff/Part、
-時計・manual・relation identityと遅い公開拒否のrollbackを保持します。認識済み幾何の取得で
-別経路のcacheを新設・先読みせず、受理glyphの画素だけを消去します。
-17固有対象・fmt/clippy/build、既存63＋補正8 XML byte/XSDが成功。AnLauraとexact7/64は
-成功済みv2のbyte/XSDを保持し、v4では失敗していたDer Winterのみ再実行しました。
-Der Winterは通常LINKS/rhythm/PAGEまで成功し、Slur writer未接続の明示guardで出力を保留。
-旧XMLを保存したまま、新XMLの成功・品質同等とは扱いません。原版CURVES証拠は保存CHORDS
-Bookの再開であり、nativeのcomponent/column/raw-gap抽出も原版Skeletonそのものではありません。
-初回lint・過剰な交差guard・誤ったcache必須条件の失敗を別記録として保持しています。
-次は実SlurのMusicXML出力、Flag/正factoryと共通削除順、余分なpの実overlap除去です。
-直近の作業順は [保存NEXT依存](../evidence/real-slur-lifecycle/NEXT-DEPENDENCY.md) を使います。
+[Slur実所有](../evidence/real-slur-lifecycle/README.md)ではDer Winterの実Slur6本・
+選択relation12 Arc、原版再開CURVESの端点/callback/Part順、実時計とrollbackを確認しました。
+通常LINKS/rhythm/PAGE成功後のwriter guardで新XMLを保留した証拠を保持しています。
+[Slur writer](../evidence/real-slur-writer/README.md)を同じ実Head/Chord/Measure/Staff/Partへ
+接続し、5対象とfmt/clippy/test compile、exact7/64 XML byte/XSDが成功しました。
+今回の小単位では代表譜面と63＋補正8を再実行せず、新Slur XML・品質成功は未確認です。
+実画像で124音符/12端点を比較する既存hookは次の接続区切りで実行します。
+次はFlagの実所属追加/削除、正factoryと共通削除順、余分なpの実overlap除去です。
+直近の作業順は [保存NEXT依存](../evidence/real-slur-writer/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

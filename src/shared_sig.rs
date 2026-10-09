@@ -40,6 +40,7 @@ mod editing_task;
 mod manual_chord_stem;
 mod slur_boundary;
 mod slur_callbacks;
+mod slur_export;
 mod slur_obstacles;
 pub(crate) mod slur_owners;
 #[cfg(test)]

@@ -61,6 +61,10 @@ Slur6本・実relation12 Arcを認識し、原版再開CURVESの端点・callbac
 新XMLは保留しています。旧XMLの同一性を新しいSlur出力・品質成功へ読み替えません。
 native抽出はcomponent/column/raw-gap方式で、原版Skeleton一般同等性は未証明です。
 次はSlur6本の実MusicXML出力、その後Flag/正factoryと共通削除順を接続します。
+続く[Slur writer](../evidence/real-slur-writer/README.md)は実所有経路へ接続し、
+5対象とexact7/64 XML byte/XSDが成功。新しい代表譜面XMLはまだ出力検証していません。
+原版12端点属性・番号再利用・出力notationはfocused確認済みで、124音符/12端点の実画像
+serialized XML比較は接続区切りへ保留します。63＋補正8もこの小単位では再実行しません。
 以後は変更対象テストで小単位保存し、代表譜面・XML/XSDは接続の区切りに集約します。
 余分なpは原版のAccentとのOVERLAP除去に合わせたnative順序修正が必要です。
 公開CLI受付・品質falseを維持し、内部成功を公開受付へ読み替えません。

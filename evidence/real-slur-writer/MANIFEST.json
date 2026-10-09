@@ -1,0 +1,36 @@
+{
+  "files": {
+    "CHECKS.json": {
+      "bytes": 671,
+      "sha256": "f026a95da438c74244e6b2048854b5973d203762127464f4787a58b5746487ac"
+    },
+    "NEXT-DEPENDENCY.md": {
+      "bytes": 1365,
+      "sha256": "be33d9027eb3200df93a7f918ee873a804f9cc7b40da1e79970d28898c3b1bdc"
+    },
+    "OBSERVER-REVIEW.json": {
+      "bytes": 498,
+      "sha256": "8ec6847a981472ca5c7267d4818afb6d3822ecdd715982722b6df3529c1f65db"
+    },
+    "README.md": {
+      "bytes": 2165,
+      "sha256": "dcbe73516790a2a3d82525aa66bafb3fdcaa3d8210cb1eff4af58a1b9058d1ec"
+    },
+    "RESULT.json": {
+      "bytes": 65457,
+      "sha256": "b03bd3dbf0c9f2449a41a969ee91e27f869ff11119a4586a0a12cd9d4604d986"
+    },
+    "SOURCE-REVIEW.json": {
+      "bytes": 4580,
+      "sha256": "97919799b62c2f79f8db4f67183638452d466c65b375ffedc5be00fcb3d5f58d"
+    },
+    "VALIDATION.json": {
+      "bytes": 484,
+      "sha256": "2d7dedee3e49a7ef0f21a66c79449c7b70c6d06453a13d88d07ddf048c67b66f"
+    },
+    "run-focused.py": {
+      "bytes": 2961,
+      "sha256": "34ca6bc707ff41a18b5d428bf74da1c9f684ec4165e1b3cba38bdddc8e7d3d2b"
+    }
+  }
+}

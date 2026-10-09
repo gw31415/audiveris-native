@@ -130,6 +130,7 @@ impl Before {
         );
         assert_eq!(m.owner.raw_binary.pixels, self.raw_pixels);
         assert_eq!(m.owner.graph.slur_chord_clock_observation(), self.clocks);
+        let registry = m.owner.prepared.registry.snapshot();
         for (i, address) in self.run_addresses.iter().enumerate() {
             assert_eq!(
                 m.owner
@@ -142,7 +143,7 @@ impl Before {
                     .as_ptr() as usize,
                 *address
             );
-            assert_eq!(m.owner.prepared.registry.snapshot()[i], self.registry[i]);
+            assert_eq!(registry[i], self.registry[i]);
         }
     }
 }

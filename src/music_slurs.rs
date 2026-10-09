@@ -63,6 +63,11 @@ pub(crate) struct Slur {
     pub(crate) glyph_id: usize,
     candidate: Arc<Candidate>,
 }
+impl Slur {
+    pub(crate) fn curve(&self) -> lookup::Curve {
+        self.candidate.curve
+    }
+}
 pub(crate) struct PartSlurs {
     pub(crate) part: Arc<PartGeometry>,
     pub(crate) slurs: Vec<Arc<Slur>>,

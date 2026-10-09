@@ -548,6 +548,7 @@ impl OwnedMusic {
         observation["export_preserved_graph_and_clocks"] = json!(after_page == after_export);
         match exported {
             Ok((xml, export)) => {
+                crate::music_xml::slur_export::tests::assert_same_real_page(self, &export, &xml);
                 std::fs::write("/tmp/real-rest-native-internal.musicxml", xml).unwrap();
                 observation["xml_written"] = json!(true);
                 observation["xml_path"] = json!("/tmp/real-rest-native-internal.musicxml");
