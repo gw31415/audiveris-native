@@ -81,6 +81,12 @@ supportのcontextualizationガードへ進み、次は支持付き臨時記号�
 比較する。後続競合除去・共有container/rhythm・音高伝播と出力は未完。
 対象6件とfmt/clippy/build、63＋補正8/exact7/64 XML bytes/XSDは成功。
 実画像CLI v23は183.16秒で `music_symbol_cross_kind_exclusion_pending`、XML未出力。
+原版late handleTimesを観測して、9 whole候補の3失敗列cleanupを接続した。
+実Stack ArcのままStaff filter→列削除の中間順序を保ち、header数字6個・他Inter/時計を保持。
+遅いfrozen/manual失敗でprefix全体が戻る。既存の単一Staff・孤立4/4 wholeは選択後も
+全graph/Staff/glyph不変で原版一致。一般正列/numbers/lower-neighborは未接続。
+対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML bytes/XSD成功。
+実画像CLI v24は182.01秒で `music_symbol_cross_kind_exclusion_pending`、XML未出力。
 原版最終XMLの8 staccatoはまだnative出力で比較できていない。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。

@@ -462,7 +462,10 @@ pub(crate) fn symbol_candidates(
 ) -> Result<Vec<(GlyphPixels, Vec<GlyphPixels>)>, String> {
     clusters::candidates(glyphs, il, left, fine_boxes)
 }
-pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
+pub fn continue_symbols(m: OwnedMusic) -> Result<OwnedMusic, String> {
+    crate::music_time_late::continue_time_checks(build_symbols(m)?)
+}
+pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     if m.owner.prepared.report["schema"] != "audiveris-native.music-measures-head-chords.v1"
         || m.owner.prepared.report["shared_sig"] != m.owner.graph.snapshot()
     {

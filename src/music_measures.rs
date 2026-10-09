@@ -272,6 +272,7 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                 clef["kind"] = json!("ClefInter");
                 clef["source_header_id"] = clef["id"].clone();
                 clef["staff_id"] = json!(staff_id);
+                clef["header_stop"] = header["stop"].clone();
                 let id = graph.vertex(key, clef, false)?;
                 clef_rows.push(json!({"id":id,"origin":key,"staff_id":staff_id}));
                 let relations = owner.upstream_report["headers"]["systems"]

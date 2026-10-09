@@ -1,0 +1,37 @@
+[
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sheet/symbol/InterFactory.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "2230888cc56c1dc2d3e6678572079afe78984fc333cb2e1c35105697cd4c361d"
+  },
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sheet/time/TimeColumn.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "40775b4e23614fed87ee73b3fe16225f380942e06958915796190b8842d56413"
+  },
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sheet/time/BasicTimeColumn.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "e632a8244dcbdce58b3733231933def4379d2d3e39fb8c3de4991c84c0ce3853"
+  },
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sheet/time/BasicTimeBuilder.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "40c48f601a266a8cf924b6870b61c696fe42eabd2305c7eccd3e141998ca40e4"
+  },
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sheet/time/TimeBuilder.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "4a9568eb699cb5476e097a4b225585c29aaf375cf9cc9eaf91d5771d7c16d5fc"
+  },
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sig/inter/TimeWholeInter.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "3dd4a7fcfe638202d825a43f980119fef81c0cddb809ce65558d0050a4ad7084"
+  },
+  {
+    "path": "app/src/main/java/org/audiveris/omr/sig/inter/AbstractInter.java",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "sha256": "06899dae74d5adb6dc7be927647c4b4ff3a184838b144faac4d1fcb59ad02548"
+  }
+]

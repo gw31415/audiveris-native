@@ -270,6 +270,27 @@ impl Graph {
             Some(self.dot_center(id)?.map(|v| v as f64)),
         )
     }
+    // Membership is sorted by Stack index. Its position cannot index the
+    // caller's Part-ordered Measures; return the same held Stack Arc.
+    pub(crate) fn actual_music_stack_at(
+        &self,
+        system: u64,
+        point: Option<[f64; 2]>,
+    ) -> Result<Option<Arc<crate::music_measure_layout::Stack>>, String> {
+        let Some(index) = self.stack_at_dot_point(system, point)? else {
+            return Ok(None);
+        };
+        let owner = self
+            .dot_ownership
+            .as_ref()
+            .ok_or("music_actual_Stack_membership_required")?;
+        let measure = owner
+            .measures
+            .get(index)
+            .and_then(|m| m.geometry.as_ref())
+            .ok_or("music_actual_Stack_geometry_required")?;
+        Ok(Some(measure.stack.clone()))
+    }
     fn stack_at_dot_point(
         &self,
         system: u64,

@@ -62,6 +62,15 @@ handleTimes/BasicTimeColumnが未接続なので、中間状態の比較が次�
 正repeat生成・pair処理とshared Stack全filterも必要な入力へ後続接続する。
 [証拠](../evidence/real-context-projection/VALIDATION.json)・[次依存](../evidence/real-context-projection/NEXT-DEPENDENCY.md)。
 
+原版で生成される途中拍子候補9個の、実Staffごとのfilter失敗→同じStack候補列cleanupを接続。
+原版と同じ3列で削除し、ヘッダーTimeNumber6個と他Interは残る。並べ替え済み
+Dot membershipの位置を別Measure配列へ使う接続ミスは、同じ実Stack Arcを返して修正した。
+既存dot画像の単一Staff・孤立4/4 wholeも原版が保持し、唯一のalignment/value選択後に
+全graph/Staff/glyphが不変で一致した。一般正列・numbers・lower-neighbor callbackは未接続。
+対象6件とfmt/clippy/build、63＋補正8/exact7/64 XML bytes/XSD成功。
+実画像CLI v24は182.01秒で `music_symbol_cross_kind_exclusion_pending`、XML未出力。
+[証拠](../evidence/real-time-column-failure/VALIDATION.json)・[次依存](../evidence/real-time-column-failure/NEXT-DEPENDENCY.md)。
+
 ## 実装済みの具体的単位
 
 - PNG 8-bit grayscale/PGM読取、原版の適応二値化・runs・classifier特徴量と149出力モデル推論。入出力形式・領域上限・全種類のページ処理は下表の部分対応です。

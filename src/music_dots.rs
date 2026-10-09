@@ -1086,7 +1086,9 @@ mod tests {
         let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
         let owner = crate::music_links::finalize_stems(owner).unwrap();
         let m = crate::music_measures::continue_measures(owner).unwrap();
-        crate::music_symbols::continue_symbols(m).unwrap()
+        let m = crate::music_symbols::build_symbols(m).unwrap();
+        crate::music_time_late::assert_isolated_positive_column(&m);
+        crate::music_time_late::continue_time_checks(m).unwrap()
     }
     #[test]
     fn actual_double_dot_chain_detachment_recounts_owner_and_preserves_glyphs() {

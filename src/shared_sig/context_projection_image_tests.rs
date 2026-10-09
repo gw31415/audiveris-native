@@ -39,7 +39,10 @@ impl Graph {
             })
             .collect::<Vec<_>>();
         assert_eq!(expected.len(), 2);
-        let music = crate::music_symbols::continue_symbols(music).unwrap();
+        let mut music = crate::music_symbols::build_symbols(music).unwrap();
+        music.owner.upstream_report["headers"] = Value::Null;
+        crate::music_time_late::assert_real_time_columns(&music);
+        let music = crate::music_time_late::continue_time_checks(music).unwrap();
         let mut graph = music.owner.graph.clone();
         let before = graph.snapshot();
         let external = normalize_edges(&before);
