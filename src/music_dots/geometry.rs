@@ -67,7 +67,7 @@ pub(super) fn concrete_ledger(
     }
     Ok(best.map(|(key, _)| key))
 }
-pub(super) fn distant(
+pub(crate) fn distant(
     owner: &OwnedItems,
     staff: &Arc<StaffGeometry>,
     bounds: [i64; 4],

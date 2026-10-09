@@ -6,7 +6,7 @@ use crate::{
     shared_sig::{Graph, Key, Phase},
 };
 use serde_json::{Value, json};
-mod geometry;
+pub(crate) mod geometry;
 #[cfg(test)]
 #[path = "music_dots/geometry_tests.rs"]
 mod geometry_tests;
@@ -298,23 +298,6 @@ pub(crate) fn late_checks(
             .filter(|c| c.measure == mi)
             .collect::<Vec<_>>();
         nearby.sort_by_key(|c| c.bounds[0]);
-        for c in nearby.iter().filter(|c| c.kind == ChordKind::Head) {
-            let cb = c.bounds;
-            let lu_dx = il as i64;
-            if intersects(
-                cb,
-                [
-                    p[0] - lu_dx,
-                    staff.lines[0].y(p[0] as f64) as i64,
-                    2 * lu_dx + 1,
-                    (4 * il + 1) as i64,
-                ],
-            ) && !intersects(cb, b)
-                && (p[1] < cb[1] || p[1] >= cb[1] + cb[3])
-            {
-                return Err("music_dot_articulation_checks_pending".into());
-            }
-        }
         let mut links = Vec::new();
         if let Some(link) = head_link(&snapshot, b, il, &nearby)? {
             links.push(link);

@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 mod alter_callbacks;
+mod articulation_callbacks;
 mod beam_rest;
 mod tuplet;
 mod tuplet_addition;
@@ -423,6 +424,24 @@ pub struct Graph {
     observed_voice_bindings: Vec<(Key, std::sync::Arc<()>)>,
 }
 impl Graph {
+    pub(crate) fn next_symbol_key(&self, system: u64) -> Result<Key, String> {
+        // Internal DotFactory interpretations can be registered without being
+        // returned by InterFactory. Glyph-based slots would alias that vertex.
+        let local = self
+            .keys
+            .keys()
+            .filter(|k| k.system == system && k.phase == Phase::Symbol)
+            .map(|k| k.local)
+            .max()
+            .unwrap_or(0)
+            .checked_add(1)
+            .ok_or("music_symbol_identity_budget")?;
+        Ok(Key {
+            system,
+            phase: Phase::Symbol,
+            local,
+        })
+    }
     fn require_pre_heads(&self, system: u64) -> Result<(), String> {
         if self.vertices.iter().any(|v| {
             v.key.system == system && matches!(v.key.phase, Phase::Head | Phase::Stem) && !v.removed
@@ -541,6 +560,9 @@ impl Graph {
             self.vertices[id - 1].data["abnormal"] = json!(true);
         }
         if !removed && added && self.vertices[id - 1].data["kind"] == "AlterInter" {
+            self.vertices[id - 1].data["abnormal"] = json!(true);
+        }
+        if !removed && added && self.vertices[id - 1].data["kind"] == "ArticulationInter" {
             self.vertices[id - 1].data["abnormal"] = json!(true);
         }
         Ok(id)
@@ -895,7 +917,10 @@ impl Graph {
         let alters = relations
             .iter()
             .any(|(_, _, r)| r["kind"] == "AlterHeadRelation");
-        if chords || dots || retained_stems || alters {
+        let articulations = relations
+            .iter()
+            .any(|(_, _, r)| r["kind"] == "ChordArticulationRelation");
+        if chords || dots || retained_stems || alters || articulations {
             // Original identity callbacks operate on the actual registered
             // chord. Validate/update a stage before changing the retained SIG.
             let mut next = self.clone();
@@ -928,6 +953,9 @@ impl Graph {
                 .to_owned();
             if kind == "AlterHeadRelation" {
                 self.validate_alter_head(source, target, &data)?;
+            }
+            if kind == "ChordArticulationRelation" {
+                self.validate_chord_articulation(source, target, &data)?;
             }
             let dot_support = matches!(kind.as_str(), "AugmentationRelation" | "DoubleDotRelation");
             if dot_support {
@@ -1097,6 +1125,9 @@ impl Graph {
             }
             if added && self.edges[id - 1].key.kind == "AlterHeadRelation" {
                 self.refresh_alter_abnormal(&[source]);
+            }
+            if added && self.edges[id - 1].key.kind == "ChordArticulationRelation" {
+                self.refresh_articulation_abnormal(target);
             }
             if added && dot_support {
                 #[cfg(test)]
@@ -1627,6 +1658,17 @@ impl Graph {
         Ok(())
     }
     fn prune(&mut self) {
+        let articulations = self
+            .live_edges()
+            .iter()
+            .filter(|e| {
+                e.key.kind == "ChordArticulationRelation"
+                    && (self.vertices[e.key.source - 1].removed
+                        || self.vertices[e.key.target - 1].removed)
+            })
+            .map(|e| e.data["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        self.remove_articulation_edges_ordered(&articulations);
         let alters = self
             .live_edges()
             .iter()
@@ -2284,6 +2326,10 @@ impl Graph {
             // Alter cannot change existing Head/Stem contextual grades.
             if e.key.kind == "AlterHeadRelation" && e.data["target_ratio"] == 1.0 {
                 self.validate_alter_head(e.key.source, e.key.target, &e.data)?;
+                continue;
+            }
+            if e.key.kind == "ChordArticulationRelation" && e.data["source_ratio"] == 1.0 {
+                self.validate_chord_articulation(e.key.source, e.key.target, &e.data)?;
                 continue;
             }
             // Augmentation supports the dot only (target coefficient zero).

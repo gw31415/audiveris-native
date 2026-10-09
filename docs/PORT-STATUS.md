@@ -37,9 +37,14 @@ Stack再登録／削除24操作を比較した。null Partは未所属、piano�
 Dotの実曲線・仮想Ledger音高・実Ledger map距離も接続し、788実候補（許可736/拒否52）と
 15実Ledger周辺45制御、12実Part Measure選択が原版一致した。対象6件とXML/XSD回帰成功。
 実画像CLI v19は177.52秒で `music_dot_articulation_checks_pending` に到達し、XMLは未出力。
-次は原版のinstant staccato lookup／callback順と共有Stack filterを使う実Dot links。
-PageRhythm全filter・後続記号reduction・共有rhythm・品質受入は未完。
-[証拠](../evidence/real-dot-geometry/VALIDATION.json)・[次依存](../evidence/real-dot-geometry/NEXT-DEPENDENCY.md)。
+実Staff近傍と実Chordによるinstant staccatoを接続し、原版97 dot候補lookup
+（正15）と16 articulationの生成・追加・リンク・除去状態を比較した。
+対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
+実画像CLI v20は172.0秒で `music_dot_repeat_checks_pending` に到達し、XMLは未出力。
+次はinstant repeatの実音高/Barline lookupをstaccatoより前へ接続し、共有Stack filterと
+実Dot links、後続記号reduction・共有rhythm・出力へ進む。原版最終XMLの8 staccatoと、
+生成前後16制御の一致は区別し、実画像品質受入は未達のまま。
+[証拠](../evidence/real-dot-articulations/VALIDATION.json)・[次依存](../evidence/real-dot-articulations/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

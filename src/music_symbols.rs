@@ -567,16 +567,51 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let b = [g.left as i64, g.top as i64, g.width as i64, g.height as i64];
             let rest = shape.ends_with("_REST");
             let meter = time(shape);
+            if shape == "DOT_set" {
+                if crate::music_dots::geometry::distant(&m.owner, &s, b)? {
+                    // Repeat interpretation remains an explicit late guard.
+                    // Staccato registration belongs to this instant phase and
+                    // is not returned for same-glyph InterFactory Exclusion.
+                    crate::music_articulations::create_added(
+                        &mut graph,
+                        &m,
+                        sid,
+                        gid,
+                        beam_dispatch::glyph_json(g),
+                        "STACCATO",
+                        grade,
+                    )?;
+                }
+                continue;
+            }
+            if matches!(
+                shape,
+                "ACCENT"
+                    | "TENUTO"
+                    | "MARCATO"
+                    | "MARCATO_BELOW"
+                    | "STACCATISSIMO"
+                    | "STACCATISSIMO_BELOW"
+            ) {
+                if let Some(key) = crate::music_articulations::create_added(
+                    &mut graph,
+                    &m,
+                    sid,
+                    gid,
+                    beam_dispatch::glyph_json(g),
+                    shape,
+                    grade,
+                )? {
+                    created.push(key);
+                }
+                continue;
+            }
             if matches!(
                 shape,
                 "FLAT" | "NATURAL" | "SHARP" | "DOUBLE_FLAT" | "DOUBLE_SHARP"
             ) {
                 let data = crate::music_alters::create(&m.owner, g, shape, grade, &s, gid)?;
-                let key = Key {
-                    system: sid,
-                    phase: Phase::Symbol,
-                    local: gid * 2 + created.len(),
-                };
+                let key = graph.next_symbol_key(sid)?;
                 graph.vertex(key, data, false)?;
                 crate::music_alters::set_links(&mut graph, key, il, system.profile)?;
                 created.push(key);
@@ -586,11 +621,7 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 if let Some((chord, relation)) =
                     crate::music_pauses::lookup(b, sid, staff, il, &m.measures, &m.chords)?
                 {
-                    let key = Key {
-                        system: sid,
-                        phase: Phase::Symbol,
-                        local: gid * 2 + created.len(),
-                    };
+                    let key = graph.next_symbol_key(sid)?;
                     graph.vertex(key,json!({"kind":if shape=="CAESURA"{"CaesuraInter"}else{"BreathMarkInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"abnormal":false}),false)?;
                     graph.relations(sid, Phase::Symbol, vec![(chord, key, relation)])?;
                     created.push(key);
@@ -604,11 +635,7 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 if let Some((stem, rel)) =
                     crate::music_flags::lookup(shape, b, il, max, sid, &graph.snapshot())?
                 {
-                    let key = Key {
-                        system: sid,
-                        phase: Phase::Symbol,
-                        local: gid * 2 + created.len(),
-                    };
+                    let key = graph.next_symbol_key(sid)?;
                     let data = json!({"kind":"FlagInter","shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"value":flag_value});
                     graph.vertex(key, data, false)?;
                     graph.relations(sid, Phase::Symbol, vec![(key, stem, rel)])?;
@@ -649,11 +676,7 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                     continue;
                 }
             }
-            let key = Key {
-                system: sid,
-                phase: Phase::Symbol,
-                local: gid * 2 + created.len(),
-            };
+            let key = graph.next_symbol_key(sid)?;
             let mut data = json!({"kind":if rest{"RestInter"}else{"TimeWholeInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade});
             if let Some((num, den)) = meter {
                 data["numerator"] = json!(num);
