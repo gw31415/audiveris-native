@@ -1,0 +1,6343 @@
+{
+  "actual_chord_and_stack_owners_retained": true,
+  "cached_chord_residuals": [
+    {
+      "absolute_delta": 0.00001908018081531182,
+      "bounds": [
+        369,
+        1020,
+        15,
+        45
+      ],
+      "id": 738,
+      "native_cached_grade": 0.9517103966189365,
+      "original_cached_grade": 0.9516913164381212
+    },
+    {
+      "absolute_delta": 0.000012227832905331582,
+      "bounds": [
+        369,
+        1156,
+        15,
+        59
+      ],
+      "id": 757,
+      "native_cached_grade": 0.9674127121304419,
+      "original_cached_grade": 0.9674004842975366
+    },
+    {
+      "absolute_delta": 0.00002808153216093956,
+      "bounds": [
+        277,
+        1019,
+        15,
+        47
+      ],
+      "id": 737,
+      "native_cached_grade": 0.9402481576764357,
+      "original_cached_grade": 0.9402200761442747
+    },
+    {
+      "absolute_delta": 0.000017282836322851658,
+      "bounds": [
+        277,
+        1155,
+        15,
+        58
+      ],
+      "id": 756,
+      "native_cached_grade": 0.9605119736962568,
+      "original_cached_grade": 0.960494690859934
+    },
+    {
+      "absolute_delta": 0.000026130351744479974,
+      "bounds": [
+        481,
+        1025,
+        15,
+        46
+      ],
+      "id": 739,
+      "native_cached_grade": 0.9439818849881012,
+      "original_cached_grade": 0.9439557546363567
+    },
+    {
+      "absolute_delta": 0.000019208587526131637,
+      "bounds": [
+        481,
+        1161,
+        15,
+        51
+      ],
+      "id": 758,
+      "native_cached_grade": 0.957078763824056,
+      "original_cached_grade": 0.9570595552365299
+    },
+    {
+      "absolute_delta": 3.651565940843149e-6,
+      "bounds": [
+        186,
+        1155,
+        28,
+        52
+      ],
+      "id": 755,
+      "native_cached_grade": 0.9601860288882142,
+      "original_cached_grade": 0.9601823773222734
+    },
+    {
+      "absolute_delta": 9.331092110875794e-6,
+      "bounds": [
+        186,
+        1019,
+        15,
+        47
+      ],
+      "id": 736,
+      "native_cached_grade": 0.9482605970752686,
+      "original_cached_grade": 0.9482699281673794
+    }
+  ],
+  "context": {
+    "contextualization": [
+      {
+        "bounds": [
+          372,
+          1089,
+          13,
+          16
+        ],
+        "contextual_grade": 0.2221883824029842,
+        "grade": 0.12696614500228973,
+        "id": 867,
+        "partitions": [
+          {
+            "contextual_grade": 0.2221883824029842,
+            "contribution": 0.9642197493563811,
+            "partner_ids": [
+              738,
+              739,
+              737
+            ]
+          }
+        ],
+        "partner_order": [
+          738,
+          739,
+          737
+        ],
+        "removed": true,
+        "shape": "TUPLET_SIX",
+        "sources": [
+          {
+            "contribution": 0.3196843736099882,
+            "partner_bounds": [
+              277,
+              1019,
+              15,
+              47
+            ],
+            "partner_grade": 0.9402481576764357,
+            "partner_id": 737,
+            "relation_grade": 1.0,
+            "relation_id": 1633,
+            "target_ratio": 1.34
+          },
+          {
+            "contribution": 0.3235815348504385,
+            "partner_bounds": [
+              369,
+              1020,
+              15,
+              45
+            ],
+            "partner_grade": 0.9517103966189365,
+            "partner_id": 738,
+            "relation_grade": 1.0,
+            "relation_id": 1634,
+            "target_ratio": 1.34
+          },
+          {
+            "contribution": 0.32095384089595447,
+            "partner_bounds": [
+              481,
+              1025,
+              15,
+              46
+            ],
+            "partner_grade": 0.9439818849881012,
+            "partner_id": 739,
+            "relation_grade": 1.0,
+            "relation_id": 1635,
+            "target_ratio": 1.34
+          }
+        ]
+      }
+    ],
+    "surviving_positive_rhythm_complete": false
+  },
+  "contextual_residual": {
+    "absolute_delta": 2.192516132121236e-6,
+    "measured_support_input_delta_bound": 0.000024919302005048665,
+    "native_contextual_grade": 0.2221883824029842,
+    "native_equation": 0.2221883824029842,
+    "native_support": 0.9642197493563811,
+    "numeric_parity_claimed": false,
+    "original_contextual_grade": 0.22218618988685207,
+    "original_equation": 0.22218618988685207,
+    "original_support": 0.9641948300543761,
+    "propagated_context_bound": 6.229825503988069e-6
+  },
+  "late_survivor_failure_exact_7_64_voice_slot_expected_rollback": true,
+  "linked": {
+    "linked_positive_complete": false,
+    "tuplets": [
+      {
+        "additions": [
+          {
+            "after": {
+              "chords": [
+                {
+                  "bounds": [
+                    186,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 736,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 737,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "id": 738,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1025,
+                    15,
+                    46
+                  ],
+                  "id": 739,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    994,
+                    15,
+                    49
+                  ],
+                  "id": 740,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    597,
+                    997,
+                    15,
+                    52
+                  ],
+                  "id": 741,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1006,
+                    15,
+                    48
+                  ],
+                  "id": 742,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1008,
+                    15,
+                    52
+                  ],
+                  "id": 743,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 744,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 745,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    899,
+                    1004,
+                    15,
+                    45
+                  ],
+                  "id": 746,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1008,
+                    15,
+                    52
+                  ],
+                  "id": 747,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1019,
+                    15,
+                    52
+                  ],
+                  "id": 748,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1060,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 749,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1008,
+                    15,
+                    46
+                  ],
+                  "id": 750,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1004,
+                    15,
+                    45
+                  ],
+                  "id": 751,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    186,
+                    1155,
+                    28,
+                    52
+                  ],
+                  "id": 755,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1155,
+                    15,
+                    58
+                  ],
+                  "id": 756,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1156,
+                    15,
+                    59
+                  ],
+                  "id": 757,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1161,
+                    15,
+                    51
+                  ],
+                  "id": 758,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    1133,
+                    15,
+                    46
+                  ],
+                  "id": 759,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    598,
+                    1137,
+                    14,
+                    47
+                  ],
+                  "id": 760,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1140,
+                    15,
+                    50
+                  ],
+                  "id": 761,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1144,
+                    15,
+                    52
+                  ],
+                  "id": 762,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 763,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 764,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    900,
+                    1133,
+                    14,
+                    51
+                  ],
+                  "id": 765,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1139,
+                    15,
+                    57
+                  ],
+                  "id": 766,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1144,
+                    15,
+                    63
+                  ],
+                  "id": 767,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1060,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 768,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1150,
+                    15,
+                    57
+                  ],
+                  "id": 769,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1142,
+                    15,
+                    71
+                  ],
+                  "id": 770,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    186,
+                    1276,
+                    15,
+                    42
+                  ],
+                  "id": 771,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1282,
+                    15,
+                    39
+                  ],
+                  "id": 772,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1259,
+                    15,
+                    70
+                  ],
+                  "id": 773,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1259,
+                    15,
+                    59
+                  ],
+                  "id": 774,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    1265,
+                    16,
+                    51
+                  ],
+                  "id": 775,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    597,
+                    1270,
+                    15,
+                    49
+                  ],
+                  "id": 776,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1276,
+                    15,
+                    47
+                  ],
+                  "id": 777,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1282,
+                    15,
+                    45
+                  ],
+                  "id": 778,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1287,
+                    15,
+                    51
+                  ],
+                  "id": 779,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    751,
+                    1293,
+                    15,
+                    49
+                  ],
+                  "id": 780,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1299,
+                    15,
+                    47
+                  ],
+                  "id": 781,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    829,
+                    1304,
+                    15,
+                    45
+                  ],
+                  "id": 782,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    899,
+                    1253,
+                    15,
+                    69
+                  ],
+                  "id": 783,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1253,
+                    15,
+                    52
+                  ],
+                  "id": 784,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1253,
+                    15,
+                    63
+                  ],
+                  "id": 785,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1061,
+                    1267,
+                    15,
+                    43
+                  ],
+                  "id": 786,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1278,
+                    15,
+                    72
+                  ],
+                  "id": 787,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1256,
+                    15,
+                    77
+                  ],
+                  "id": 788,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    571,
+                    1083,
+                    19,
+                    22
+                  ],
+                  "id": 916,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1045,
+                    1083,
+                    23,
+                    22
+                  ],
+                  "id": 917,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1013,
+                    12,
+                    33
+                  ],
+                  "id": 918,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1161,
+                    12,
+                    33
+                  ],
+                  "id": 919,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1287,
+                    12,
+                    33
+                  ],
+                  "id": 920,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                }
+              ],
+              "expected": [
+                {
+                  "expected": null,
+                  "index": 1,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 2,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 3,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 4,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 1,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 2,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 3,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 4,
+                  "part": 2
+                }
+              ],
+              "removed": false,
+              "tuplet": {
+                "abnormal": true,
+                "bounds": [
+                  372,
+                  1089,
+                  13,
+                  16
+                ],
+                "frozen": false,
+                "glyph": {
+                  "bounds": [
+                    372,
+                    1089,
+                    13,
+                    16
+                  ],
+                  "orientation": "VERTICAL",
+                  "runs": [
+                    [
+                      0,
+                      8,
+                      6
+                    ],
+                    [
+                      1,
+                      1,
+                      3
+                    ],
+                    [
+                      1,
+                      7,
+                      8
+                    ],
+                    [
+                      2,
+                      1,
+                      4
+                    ],
+                    [
+                      2,
+                      7,
+                      8
+                    ],
+                    [
+                      3,
+                      0,
+                      5
+                    ],
+                    [
+                      3,
+                      7,
+                      3
+                    ],
+                    [
+                      3,
+                      13,
+                      3
+                    ],
+                    [
+                      4,
+                      0,
+                      2
+                    ],
+                    [
+                      4,
+                      6,
+                      3
+                    ],
+                    [
+                      4,
+                      13,
+                      3
+                    ],
+                    [
+                      5,
+                      0,
+                      2
+                    ],
+                    [
+                      5,
+                      6,
+                      2
+                    ],
+                    [
+                      5,
+                      13,
+                      3
+                    ],
+                    [
+                      6,
+                      0,
+                      2
+                    ],
+                    [
+                      6,
+                      6,
+                      2
+                    ],
+                    [
+                      6,
+                      13,
+                      2
+                    ],
+                    [
+                      7,
+                      0,
+                      2
+                    ],
+                    [
+                      7,
+                      6,
+                      2
+                    ],
+                    [
+                      7,
+                      12,
+                      2
+                    ],
+                    [
+                      8,
+                      0,
+                      14
+                    ],
+                    [
+                      9,
+                      1,
+                      14
+                    ],
+                    [
+                      10,
+                      2,
+                      13
+                    ],
+                    [
+                      11,
+                      13,
+                      2
+                    ],
+                    [
+                      12,
+                      13,
+                      2
+                    ]
+                  ]
+                },
+                "glyph_id": 3437,
+                "grade": 0.12696614500228973,
+                "id": 867,
+                "implicit": false,
+                "kind": "TupletInter",
+                "manual": false,
+                "origin": {
+                  "local": 13,
+                  "phase": "SYMBOL",
+                  "system": 2
+                },
+                "part_id": null,
+                "shape": "TUPLET_SIX",
+                "staff_id": null
+              }
+            },
+            "lookup": {
+              "around": [
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "head": [
+                    291,
+                    1060
+                  ],
+                  "id": 737,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    291,
+                    1019
+                  ]
+                }
+              ],
+              "bounds": [
+                372,
+                1089,
+                13,
+                16
+              ],
+              "collector": [
+                {
+                  "base": "1/8",
+                  "beam_siblings": [
+                    737
+                  ],
+                  "chord_id": 737,
+                  "chords": [
+                    {
+                      "bounds": [
+                        277,
+                        1019,
+                        15,
+                        47
+                      ],
+                      "head": [
+                        291,
+                        1060
+                      ],
+                      "id": 737,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        291,
+                        1019
+                      ]
+                    }
+                  ],
+                  "expected_total": "3/4",
+                  "status": null,
+                  "total": "1/8"
+                }
+              ],
+              "filtered": [
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "head": [
+                    291,
+                    1060
+                  ],
+                  "id": 737,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    291,
+                    1019
+                  ]
+                }
+              ],
+              "id": 867,
+              "search_links": [],
+              "status": null,
+              "target_staff": 4
+            },
+            "relation_id": 1633
+          },
+          {
+            "after": {
+              "chords": [
+                {
+                  "bounds": [
+                    186,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 736,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 737,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "id": 738,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1025,
+                    15,
+                    46
+                  ],
+                  "id": 739,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    994,
+                    15,
+                    49
+                  ],
+                  "id": 740,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    597,
+                    997,
+                    15,
+                    52
+                  ],
+                  "id": 741,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1006,
+                    15,
+                    48
+                  ],
+                  "id": 742,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1008,
+                    15,
+                    52
+                  ],
+                  "id": 743,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 744,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 745,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    899,
+                    1004,
+                    15,
+                    45
+                  ],
+                  "id": 746,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1008,
+                    15,
+                    52
+                  ],
+                  "id": 747,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1019,
+                    15,
+                    52
+                  ],
+                  "id": 748,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1060,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 749,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1008,
+                    15,
+                    46
+                  ],
+                  "id": 750,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1004,
+                    15,
+                    45
+                  ],
+                  "id": 751,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    186,
+                    1155,
+                    28,
+                    52
+                  ],
+                  "id": 755,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1155,
+                    15,
+                    58
+                  ],
+                  "id": 756,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1156,
+                    15,
+                    59
+                  ],
+                  "id": 757,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1161,
+                    15,
+                    51
+                  ],
+                  "id": 758,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    1133,
+                    15,
+                    46
+                  ],
+                  "id": 759,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    598,
+                    1137,
+                    14,
+                    47
+                  ],
+                  "id": 760,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1140,
+                    15,
+                    50
+                  ],
+                  "id": 761,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1144,
+                    15,
+                    52
+                  ],
+                  "id": 762,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 763,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 764,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    900,
+                    1133,
+                    14,
+                    51
+                  ],
+                  "id": 765,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1139,
+                    15,
+                    57
+                  ],
+                  "id": 766,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1144,
+                    15,
+                    63
+                  ],
+                  "id": 767,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1060,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 768,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1150,
+                    15,
+                    57
+                  ],
+                  "id": 769,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1142,
+                    15,
+                    71
+                  ],
+                  "id": 770,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    186,
+                    1276,
+                    15,
+                    42
+                  ],
+                  "id": 771,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1282,
+                    15,
+                    39
+                  ],
+                  "id": 772,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1259,
+                    15,
+                    70
+                  ],
+                  "id": 773,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1259,
+                    15,
+                    59
+                  ],
+                  "id": 774,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    1265,
+                    16,
+                    51
+                  ],
+                  "id": 775,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    597,
+                    1270,
+                    15,
+                    49
+                  ],
+                  "id": 776,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1276,
+                    15,
+                    47
+                  ],
+                  "id": 777,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1282,
+                    15,
+                    45
+                  ],
+                  "id": 778,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1287,
+                    15,
+                    51
+                  ],
+                  "id": 779,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    751,
+                    1293,
+                    15,
+                    49
+                  ],
+                  "id": 780,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1299,
+                    15,
+                    47
+                  ],
+                  "id": 781,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    829,
+                    1304,
+                    15,
+                    45
+                  ],
+                  "id": 782,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    899,
+                    1253,
+                    15,
+                    69
+                  ],
+                  "id": 783,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1253,
+                    15,
+                    52
+                  ],
+                  "id": 784,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1253,
+                    15,
+                    63
+                  ],
+                  "id": 785,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1061,
+                    1267,
+                    15,
+                    43
+                  ],
+                  "id": 786,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1278,
+                    15,
+                    72
+                  ],
+                  "id": 787,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1256,
+                    15,
+                    77
+                  ],
+                  "id": 788,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    571,
+                    1083,
+                    19,
+                    22
+                  ],
+                  "id": 916,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1045,
+                    1083,
+                    23,
+                    22
+                  ],
+                  "id": 917,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1013,
+                    12,
+                    33
+                  ],
+                  "id": 918,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1161,
+                    12,
+                    33
+                  ],
+                  "id": 919,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1287,
+                    12,
+                    33
+                  ],
+                  "id": 920,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                }
+              ],
+              "expected": [
+                {
+                  "expected": null,
+                  "index": 1,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 2,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 3,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 4,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 1,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 2,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 3,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 4,
+                  "part": 2
+                }
+              ],
+              "removed": false,
+              "tuplet": {
+                "abnormal": true,
+                "bounds": [
+                  372,
+                  1089,
+                  13,
+                  16
+                ],
+                "frozen": false,
+                "glyph": {
+                  "bounds": [
+                    372,
+                    1089,
+                    13,
+                    16
+                  ],
+                  "orientation": "VERTICAL",
+                  "runs": [
+                    [
+                      0,
+                      8,
+                      6
+                    ],
+                    [
+                      1,
+                      1,
+                      3
+                    ],
+                    [
+                      1,
+                      7,
+                      8
+                    ],
+                    [
+                      2,
+                      1,
+                      4
+                    ],
+                    [
+                      2,
+                      7,
+                      8
+                    ],
+                    [
+                      3,
+                      0,
+                      5
+                    ],
+                    [
+                      3,
+                      7,
+                      3
+                    ],
+                    [
+                      3,
+                      13,
+                      3
+                    ],
+                    [
+                      4,
+                      0,
+                      2
+                    ],
+                    [
+                      4,
+                      6,
+                      3
+                    ],
+                    [
+                      4,
+                      13,
+                      3
+                    ],
+                    [
+                      5,
+                      0,
+                      2
+                    ],
+                    [
+                      5,
+                      6,
+                      2
+                    ],
+                    [
+                      5,
+                      13,
+                      3
+                    ],
+                    [
+                      6,
+                      0,
+                      2
+                    ],
+                    [
+                      6,
+                      6,
+                      2
+                    ],
+                    [
+                      6,
+                      13,
+                      2
+                    ],
+                    [
+                      7,
+                      0,
+                      2
+                    ],
+                    [
+                      7,
+                      6,
+                      2
+                    ],
+                    [
+                      7,
+                      12,
+                      2
+                    ],
+                    [
+                      8,
+                      0,
+                      14
+                    ],
+                    [
+                      9,
+                      1,
+                      14
+                    ],
+                    [
+                      10,
+                      2,
+                      13
+                    ],
+                    [
+                      11,
+                      13,
+                      2
+                    ],
+                    [
+                      12,
+                      13,
+                      2
+                    ]
+                  ]
+                },
+                "glyph_id": 3437,
+                "grade": 0.12696614500228973,
+                "id": 867,
+                "implicit": false,
+                "kind": "TupletInter",
+                "manual": false,
+                "origin": {
+                  "local": 13,
+                  "phase": "SYMBOL",
+                  "system": 2
+                },
+                "part_id": null,
+                "shape": "TUPLET_SIX",
+                "staff_id": null
+              }
+            },
+            "lookup": {
+              "around": [
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "head": [
+                    291,
+                    1060
+                  ],
+                  "id": 737,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    291,
+                    1019
+                  ]
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "head": [
+                    370,
+                    1026
+                  ],
+                  "id": 738,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    370,
+                    1065
+                  ]
+                }
+              ],
+              "bounds": [
+                372,
+                1089,
+                13,
+                16
+              ],
+              "collector": [
+                {
+                  "base": "1/8",
+                  "beam_siblings": [
+                    737
+                  ],
+                  "chord_id": 737,
+                  "chords": [
+                    {
+                      "bounds": [
+                        277,
+                        1019,
+                        15,
+                        47
+                      ],
+                      "head": [
+                        291,
+                        1060
+                      ],
+                      "id": 737,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        291,
+                        1019
+                      ]
+                    }
+                  ],
+                  "expected_total": "3/4",
+                  "status": null,
+                  "total": "1/8"
+                },
+                {
+                  "base": "1/8",
+                  "beam_siblings": [
+                    738
+                  ],
+                  "chord_id": 738,
+                  "chords": [
+                    {
+                      "bounds": [
+                        277,
+                        1019,
+                        15,
+                        47
+                      ],
+                      "head": [
+                        291,
+                        1060
+                      ],
+                      "id": 737,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        291,
+                        1019
+                      ]
+                    },
+                    {
+                      "bounds": [
+                        369,
+                        1020,
+                        15,
+                        45
+                      ],
+                      "head": [
+                        370,
+                        1026
+                      ],
+                      "id": 738,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        370,
+                        1065
+                      ]
+                    }
+                  ],
+                  "expected_total": "3/4",
+                  "status": null,
+                  "total": "5/16"
+                }
+              ],
+              "filtered": [
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "head": [
+                    291,
+                    1060
+                  ],
+                  "id": 737,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    291,
+                    1019
+                  ]
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "head": [
+                    370,
+                    1026
+                  ],
+                  "id": 738,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    370,
+                    1065
+                  ]
+                }
+              ],
+              "id": 867,
+              "search_links": [],
+              "status": null,
+              "target_staff": 4
+            },
+            "relation_id": 1634
+          },
+          {
+            "after": {
+              "chords": [
+                {
+                  "bounds": [
+                    186,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 736,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 737,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "id": 738,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1025,
+                    15,
+                    46
+                  ],
+                  "id": 739,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    994,
+                    15,
+                    49
+                  ],
+                  "id": 740,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    597,
+                    997,
+                    15,
+                    52
+                  ],
+                  "id": 741,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1006,
+                    15,
+                    48
+                  ],
+                  "id": 742,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1008,
+                    15,
+                    52
+                  ],
+                  "id": 743,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 744,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 745,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    899,
+                    1004,
+                    15,
+                    45
+                  ],
+                  "id": 746,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1008,
+                    15,
+                    52
+                  ],
+                  "id": 747,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1019,
+                    15,
+                    52
+                  ],
+                  "id": 748,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1060,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "id": 749,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1008,
+                    15,
+                    46
+                  ],
+                  "id": 750,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1004,
+                    15,
+                    45
+                  ],
+                  "id": 751,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    186,
+                    1155,
+                    28,
+                    52
+                  ],
+                  "id": 755,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1155,
+                    15,
+                    58
+                  ],
+                  "id": 756,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1156,
+                    15,
+                    59
+                  ],
+                  "id": 757,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1161,
+                    15,
+                    51
+                  ],
+                  "id": 758,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    1133,
+                    15,
+                    46
+                  ],
+                  "id": 759,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    598,
+                    1137,
+                    14,
+                    47
+                  ],
+                  "id": 760,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1140,
+                    15,
+                    50
+                  ],
+                  "id": 761,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1144,
+                    15,
+                    52
+                  ],
+                  "id": 762,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 763,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 764,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    900,
+                    1133,
+                    14,
+                    51
+                  ],
+                  "id": 765,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1139,
+                    15,
+                    57
+                  ],
+                  "id": 766,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1144,
+                    15,
+                    63
+                  ],
+                  "id": 767,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1060,
+                    1155,
+                    15,
+                    47
+                  ],
+                  "id": 768,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1150,
+                    15,
+                    57
+                  ],
+                  "id": 769,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1142,
+                    15,
+                    71
+                  ],
+                  "id": 770,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    186,
+                    1276,
+                    15,
+                    42
+                  ],
+                  "id": 771,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    277,
+                    1282,
+                    15,
+                    39
+                  ],
+                  "id": 772,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    369,
+                    1259,
+                    15,
+                    70
+                  ],
+                  "id": 773,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    481,
+                    1259,
+                    15,
+                    59
+                  ],
+                  "id": 774,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    558,
+                    1265,
+                    16,
+                    51
+                  ],
+                  "id": 775,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    597,
+                    1270,
+                    15,
+                    49
+                  ],
+                  "id": 776,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    635,
+                    1276,
+                    15,
+                    47
+                  ],
+                  "id": 777,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    674,
+                    1282,
+                    15,
+                    45
+                  ],
+                  "id": 778,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    713,
+                    1287,
+                    15,
+                    51
+                  ],
+                  "id": 779,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    751,
+                    1293,
+                    15,
+                    49
+                  ],
+                  "id": 780,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    790,
+                    1299,
+                    15,
+                    47
+                  ],
+                  "id": 781,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    829,
+                    1304,
+                    15,
+                    45
+                  ],
+                  "id": 782,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    899,
+                    1253,
+                    15,
+                    69
+                  ],
+                  "id": 783,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    968,
+                    1253,
+                    15,
+                    52
+                  ],
+                  "id": 784,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1029,
+                    1253,
+                    15,
+                    63
+                  ],
+                  "id": 785,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1061,
+                    1267,
+                    15,
+                    43
+                  ],
+                  "id": 786,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1129,
+                    1278,
+                    15,
+                    72
+                  ],
+                  "id": 787,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1244,
+                    1256,
+                    15,
+                    77
+                  ],
+                  "id": 788,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    571,
+                    1083,
+                    19,
+                    22
+                  ],
+                  "id": 916,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1045,
+                    1083,
+                    23,
+                    22
+                  ],
+                  "id": 917,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1013,
+                    12,
+                    33
+                  ],
+                  "id": 918,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1161,
+                    12,
+                    33
+                  ],
+                  "id": 919,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                },
+                {
+                  "bounds": [
+                    1324,
+                    1287,
+                    12,
+                    33
+                  ],
+                  "id": 920,
+                  "removed": false,
+                  "slot_id": null,
+                  "time_offset": null,
+                  "voice": null
+                }
+              ],
+              "expected": [
+                {
+                  "expected": null,
+                  "index": 1,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 2,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 3,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 4,
+                  "part": 1
+                },
+                {
+                  "expected": null,
+                  "index": 1,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 2,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 3,
+                  "part": 2
+                },
+                {
+                  "expected": null,
+                  "index": 4,
+                  "part": 2
+                }
+              ],
+              "removed": false,
+              "tuplet": {
+                "abnormal": false,
+                "bounds": [
+                  372,
+                  1089,
+                  13,
+                  16
+                ],
+                "frozen": false,
+                "glyph": {
+                  "bounds": [
+                    372,
+                    1089,
+                    13,
+                    16
+                  ],
+                  "orientation": "VERTICAL",
+                  "runs": [
+                    [
+                      0,
+                      8,
+                      6
+                    ],
+                    [
+                      1,
+                      1,
+                      3
+                    ],
+                    [
+                      1,
+                      7,
+                      8
+                    ],
+                    [
+                      2,
+                      1,
+                      4
+                    ],
+                    [
+                      2,
+                      7,
+                      8
+                    ],
+                    [
+                      3,
+                      0,
+                      5
+                    ],
+                    [
+                      3,
+                      7,
+                      3
+                    ],
+                    [
+                      3,
+                      13,
+                      3
+                    ],
+                    [
+                      4,
+                      0,
+                      2
+                    ],
+                    [
+                      4,
+                      6,
+                      3
+                    ],
+                    [
+                      4,
+                      13,
+                      3
+                    ],
+                    [
+                      5,
+                      0,
+                      2
+                    ],
+                    [
+                      5,
+                      6,
+                      2
+                    ],
+                    [
+                      5,
+                      13,
+                      3
+                    ],
+                    [
+                      6,
+                      0,
+                      2
+                    ],
+                    [
+                      6,
+                      6,
+                      2
+                    ],
+                    [
+                      6,
+                      13,
+                      2
+                    ],
+                    [
+                      7,
+                      0,
+                      2
+                    ],
+                    [
+                      7,
+                      6,
+                      2
+                    ],
+                    [
+                      7,
+                      12,
+                      2
+                    ],
+                    [
+                      8,
+                      0,
+                      14
+                    ],
+                    [
+                      9,
+                      1,
+                      14
+                    ],
+                    [
+                      10,
+                      2,
+                      13
+                    ],
+                    [
+                      11,
+                      13,
+                      2
+                    ],
+                    [
+                      12,
+                      13,
+                      2
+                    ]
+                  ]
+                },
+                "glyph_id": 3437,
+                "grade": 0.12696614500228973,
+                "id": 867,
+                "implicit": false,
+                "kind": "TupletInter",
+                "manual": false,
+                "origin": {
+                  "local": 13,
+                  "phase": "SYMBOL",
+                  "system": 2
+                },
+                "part_id": null,
+                "shape": "TUPLET_SIX",
+                "staff_id": null
+              }
+            },
+            "lookup": {
+              "around": [
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "head": [
+                    291,
+                    1060
+                  ],
+                  "id": 737,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    291,
+                    1019
+                  ]
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "head": [
+                    370,
+                    1026
+                  ],
+                  "id": 738,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    370,
+                    1065
+                  ]
+                },
+                {
+                  "bounds": [
+                    481,
+                    1025,
+                    15,
+                    46
+                  ],
+                  "head": [
+                    482,
+                    1031
+                  ],
+                  "id": 739,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    482,
+                    1071
+                  ]
+                }
+              ],
+              "bounds": [
+                372,
+                1089,
+                13,
+                16
+              ],
+              "collector": [
+                {
+                  "base": "1/8",
+                  "beam_siblings": [
+                    737
+                  ],
+                  "chord_id": 737,
+                  "chords": [
+                    {
+                      "bounds": [
+                        277,
+                        1019,
+                        15,
+                        47
+                      ],
+                      "head": [
+                        291,
+                        1060
+                      ],
+                      "id": 737,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        291,
+                        1019
+                      ]
+                    }
+                  ],
+                  "expected_total": "3/4",
+                  "status": null,
+                  "total": "1/8"
+                },
+                {
+                  "base": "1/8",
+                  "beam_siblings": [
+                    738
+                  ],
+                  "chord_id": 738,
+                  "chords": [
+                    {
+                      "bounds": [
+                        277,
+                        1019,
+                        15,
+                        47
+                      ],
+                      "head": [
+                        291,
+                        1060
+                      ],
+                      "id": 737,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        291,
+                        1019
+                      ]
+                    },
+                    {
+                      "bounds": [
+                        369,
+                        1020,
+                        15,
+                        45
+                      ],
+                      "head": [
+                        370,
+                        1026
+                      ],
+                      "id": 738,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        370,
+                        1065
+                      ]
+                    }
+                  ],
+                  "expected_total": "3/4",
+                  "status": null,
+                  "total": "5/16"
+                },
+                {
+                  "base": "1/16",
+                  "beam_siblings": [
+                    739
+                  ],
+                  "chord_id": 739,
+                  "chords": [
+                    {
+                      "bounds": [
+                        277,
+                        1019,
+                        15,
+                        47
+                      ],
+                      "head": [
+                        291,
+                        1060
+                      ],
+                      "id": 737,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        291,
+                        1019
+                      ]
+                    },
+                    {
+                      "bounds": [
+                        369,
+                        1020,
+                        15,
+                        45
+                      ],
+                      "head": [
+                        370,
+                        1026
+                      ],
+                      "id": 738,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        370,
+                        1065
+                      ]
+                    },
+                    {
+                      "bounds": [
+                        481,
+                        1025,
+                        15,
+                        46
+                      ],
+                      "head": [
+                        482,
+                        1031
+                      ],
+                      "id": 739,
+                      "staffs": [
+                        4
+                      ],
+                      "tail": [
+                        482,
+                        1071
+                      ]
+                    }
+                  ],
+                  "expected_total": "3/8",
+                  "status": "OK",
+                  "total": "3/8"
+                }
+              ],
+              "filtered": [
+                {
+                  "bounds": [
+                    277,
+                    1019,
+                    15,
+                    47
+                  ],
+                  "head": [
+                    291,
+                    1060
+                  ],
+                  "id": 737,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    291,
+                    1019
+                  ]
+                },
+                {
+                  "bounds": [
+                    369,
+                    1020,
+                    15,
+                    45
+                  ],
+                  "head": [
+                    370,
+                    1026
+                  ],
+                  "id": 738,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    370,
+                    1065
+                  ]
+                },
+                {
+                  "bounds": [
+                    481,
+                    1025,
+                    15,
+                    46
+                  ],
+                  "head": [
+                    482,
+                    1031
+                  ],
+                  "id": 739,
+                  "staffs": [
+                    4
+                  ],
+                  "tail": [
+                    482,
+                    1071
+                  ]
+                }
+              ],
+              "id": 867,
+              "search_links": [
+                737,
+                738,
+                739
+              ],
+              "status": "OK",
+              "target_staff": 4
+            },
+            "relation_id": 1635
+          }
+        ],
+        "around": [
+          {
+            "bounds": [
+              369,
+              1020,
+              15,
+              45
+            ],
+            "head": [
+              370,
+              1026
+            ],
+            "id": 738,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              370,
+              1065
+            ]
+          },
+          {
+            "bounds": [
+              369,
+              1156,
+              15,
+              59
+            ],
+            "head": [
+              370,
+              1162
+            ],
+            "id": 757,
+            "staffs": [
+              5
+            ],
+            "tail": [
+              370,
+              1215
+            ]
+          },
+          {
+            "bounds": [
+              277,
+              1019,
+              15,
+              47
+            ],
+            "head": [
+              291,
+              1060
+            ],
+            "id": 737,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              291,
+              1019
+            ]
+          },
+          {
+            "bounds": [
+              277,
+              1155,
+              15,
+              58
+            ],
+            "head": [
+              291,
+              1207
+            ],
+            "id": 756,
+            "staffs": [
+              5
+            ],
+            "tail": [
+              291,
+              1155
+            ]
+          },
+          {
+            "bounds": [
+              481,
+              1025,
+              15,
+              46
+            ],
+            "head": [
+              482,
+              1031
+            ],
+            "id": 739,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              482,
+              1071
+            ]
+          },
+          {
+            "bounds": [
+              481,
+              1161,
+              15,
+              51
+            ],
+            "head": [
+              481,
+              1167
+            ],
+            "id": 758,
+            "staffs": [
+              5
+            ],
+            "tail": [
+              481,
+              1212
+            ]
+          },
+          {
+            "bounds": [
+              186,
+              1155,
+              28,
+              52
+            ],
+            "head": [
+              199,
+              1201
+            ],
+            "id": 755,
+            "staffs": [
+              5
+            ],
+            "tail": [
+              199,
+              1155
+            ]
+          },
+          {
+            "bounds": [
+              186,
+              1019,
+              15,
+              47
+            ],
+            "head": [
+              199,
+              1060
+            ],
+            "id": 736,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              199,
+              1019
+            ]
+          }
+        ],
+        "bounds": [
+          372,
+          1089,
+          13,
+          16
+        ],
+        "collector": [
+          {
+            "base": "3/16",
+            "beam_siblings": [
+              738
+            ],
+            "chord_id": 738,
+            "chords": [
+              {
+                "bounds": [
+                  369,
+                  1020,
+                  15,
+                  45
+                ],
+                "head": [
+                  370,
+                  1026
+                ],
+                "id": 738,
+                "staffs": [
+                  4
+                ],
+                "tail": [
+                  370,
+                  1065
+                ]
+              }
+            ],
+            "expected_total": "9/8",
+            "status": null,
+            "total": "3/16"
+          },
+          {
+            "base": "1/8",
+            "beam_siblings": [
+              737
+            ],
+            "chord_id": 737,
+            "chords": [
+              {
+                "bounds": [
+                  277,
+                  1019,
+                  15,
+                  47
+                ],
+                "head": [
+                  291,
+                  1060
+                ],
+                "id": 737,
+                "staffs": [
+                  4
+                ],
+                "tail": [
+                  291,
+                  1019
+                ]
+              },
+              {
+                "bounds": [
+                  369,
+                  1020,
+                  15,
+                  45
+                ],
+                "head": [
+                  370,
+                  1026
+                ],
+                "id": 738,
+                "staffs": [
+                  4
+                ],
+                "tail": [
+                  370,
+                  1065
+                ]
+              }
+            ],
+            "expected_total": "3/4",
+            "status": null,
+            "total": "5/16"
+          },
+          {
+            "base": "1/16",
+            "beam_siblings": [
+              739
+            ],
+            "chord_id": 739,
+            "chords": [
+              {
+                "bounds": [
+                  277,
+                  1019,
+                  15,
+                  47
+                ],
+                "head": [
+                  291,
+                  1060
+                ],
+                "id": 737,
+                "staffs": [
+                  4
+                ],
+                "tail": [
+                  291,
+                  1019
+                ]
+              },
+              {
+                "bounds": [
+                  369,
+                  1020,
+                  15,
+                  45
+                ],
+                "head": [
+                  370,
+                  1026
+                ],
+                "id": 738,
+                "staffs": [
+                  4
+                ],
+                "tail": [
+                  370,
+                  1065
+                ]
+              },
+              {
+                "bounds": [
+                  481,
+                  1025,
+                  15,
+                  46
+                ],
+                "head": [
+                  482,
+                  1031
+                ],
+                "id": 739,
+                "staffs": [
+                  4
+                ],
+                "tail": [
+                  482,
+                  1071
+                ]
+              }
+            ],
+            "expected_total": "3/8",
+            "status": "OK",
+            "total": "3/8"
+          }
+        ],
+        "filtered": [
+          {
+            "bounds": [
+              369,
+              1020,
+              15,
+              45
+            ],
+            "head": [
+              370,
+              1026
+            ],
+            "id": 738,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              370,
+              1065
+            ]
+          },
+          {
+            "bounds": [
+              277,
+              1019,
+              15,
+              47
+            ],
+            "head": [
+              291,
+              1060
+            ],
+            "id": 737,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              291,
+              1019
+            ]
+          },
+          {
+            "bounds": [
+              481,
+              1025,
+              15,
+              46
+            ],
+            "head": [
+              482,
+              1031
+            ],
+            "id": 739,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              482,
+              1071
+            ]
+          },
+          {
+            "bounds": [
+              186,
+              1019,
+              15,
+              47
+            ],
+            "head": [
+              199,
+              1060
+            ],
+            "id": 736,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              199,
+              1019
+            ]
+          }
+        ],
+        "id": 867,
+        "removed": false,
+        "search_links": [
+          737,
+          738,
+          739
+        ],
+        "stack": 1,
+        "status": "OK",
+        "target_staff": 4
+      }
+    ]
+  },
+  "lookup": {
+    "around": [
+      {
+        "bounds": [
+          369,
+          1020,
+          15,
+          45
+        ],
+        "head": [
+          370,
+          1026
+        ],
+        "id": 738,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          370,
+          1065
+        ]
+      },
+      {
+        "bounds": [
+          369,
+          1156,
+          15,
+          59
+        ],
+        "head": [
+          370,
+          1162
+        ],
+        "id": 757,
+        "staffs": [
+          5
+        ],
+        "tail": [
+          370,
+          1215
+        ]
+      },
+      {
+        "bounds": [
+          277,
+          1019,
+          15,
+          47
+        ],
+        "head": [
+          291,
+          1060
+        ],
+        "id": 737,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          291,
+          1019
+        ]
+      },
+      {
+        "bounds": [
+          277,
+          1155,
+          15,
+          58
+        ],
+        "head": [
+          291,
+          1207
+        ],
+        "id": 756,
+        "staffs": [
+          5
+        ],
+        "tail": [
+          291,
+          1155
+        ]
+      },
+      {
+        "bounds": [
+          481,
+          1025,
+          15,
+          46
+        ],
+        "head": [
+          482,
+          1031
+        ],
+        "id": 739,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          482,
+          1071
+        ]
+      },
+      {
+        "bounds": [
+          481,
+          1161,
+          15,
+          51
+        ],
+        "head": [
+          481,
+          1167
+        ],
+        "id": 758,
+        "staffs": [
+          5
+        ],
+        "tail": [
+          481,
+          1212
+        ]
+      },
+      {
+        "bounds": [
+          186,
+          1155,
+          28,
+          52
+        ],
+        "head": [
+          199,
+          1201
+        ],
+        "id": 755,
+        "staffs": [
+          5
+        ],
+        "tail": [
+          199,
+          1155
+        ]
+      },
+      {
+        "bounds": [
+          186,
+          1019,
+          15,
+          47
+        ],
+        "head": [
+          199,
+          1060
+        ],
+        "id": 736,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          199,
+          1019
+        ]
+      }
+    ],
+    "bounds": [
+      372,
+      1089,
+      13,
+      16
+    ],
+    "collector": [
+      {
+        "base": "3/16",
+        "beam_siblings": [
+          738
+        ],
+        "chord_id": 738,
+        "chords": [
+          {
+            "bounds": [
+              369,
+              1020,
+              15,
+              45
+            ],
+            "head": [
+              370,
+              1026
+            ],
+            "id": 738,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              370,
+              1065
+            ]
+          }
+        ],
+        "expected_total": "9/8",
+        "status": null,
+        "total": "3/16"
+      },
+      {
+        "base": "1/8",
+        "beam_siblings": [
+          737
+        ],
+        "chord_id": 737,
+        "chords": [
+          {
+            "bounds": [
+              277,
+              1019,
+              15,
+              47
+            ],
+            "head": [
+              291,
+              1060
+            ],
+            "id": 737,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              291,
+              1019
+            ]
+          },
+          {
+            "bounds": [
+              369,
+              1020,
+              15,
+              45
+            ],
+            "head": [
+              370,
+              1026
+            ],
+            "id": 738,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              370,
+              1065
+            ]
+          }
+        ],
+        "expected_total": "3/4",
+        "status": null,
+        "total": "5/16"
+      },
+      {
+        "base": "1/16",
+        "beam_siblings": [
+          739
+        ],
+        "chord_id": 739,
+        "chords": [
+          {
+            "bounds": [
+              277,
+              1019,
+              15,
+              47
+            ],
+            "head": [
+              291,
+              1060
+            ],
+            "id": 737,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              291,
+              1019
+            ]
+          },
+          {
+            "bounds": [
+              369,
+              1020,
+              15,
+              45
+            ],
+            "head": [
+              370,
+              1026
+            ],
+            "id": 738,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              370,
+              1065
+            ]
+          },
+          {
+            "bounds": [
+              481,
+              1025,
+              15,
+              46
+            ],
+            "head": [
+              482,
+              1031
+            ],
+            "id": 739,
+            "staffs": [
+              4
+            ],
+            "tail": [
+              482,
+              1071
+            ]
+          }
+        ],
+        "expected_total": "3/8",
+        "status": "OK",
+        "total": "3/8"
+      }
+    ],
+    "filtered": [
+      {
+        "bounds": [
+          369,
+          1020,
+          15,
+          45
+        ],
+        "head": [
+          370,
+          1026
+        ],
+        "id": 738,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          370,
+          1065
+        ]
+      },
+      {
+        "bounds": [
+          277,
+          1019,
+          15,
+          47
+        ],
+        "head": [
+          291,
+          1060
+        ],
+        "id": 737,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          291,
+          1019
+        ]
+      },
+      {
+        "bounds": [
+          481,
+          1025,
+          15,
+          46
+        ],
+        "head": [
+          482,
+          1031
+        ],
+        "id": 739,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          482,
+          1071
+        ]
+      },
+      {
+        "bounds": [
+          186,
+          1019,
+          15,
+          47
+        ],
+        "head": [
+          199,
+          1060
+        ],
+        "id": 736,
+        "staffs": [
+          4
+        ],
+        "tail": [
+          199,
+          1019
+        ]
+      }
+    ],
+    "id": 867,
+    "search_links": [
+      737,
+      738,
+      739
+    ],
+    "stack": 1,
+    "status": "OK",
+    "target_staff": 4
+  },
+  "ornaments": {
+    "actual_symbols_ornaments": 3,
+    "context_and_purge": {
+      "contextualized": [
+        {
+          "bounds": [
+            554,
+            576,
+            34,
+            21
+          ],
+          "contextual_grade": 0.24619171028269776,
+          "grade": 0.22912765764749846,
+          "id": 806,
+          "sources": [
+            {
+              "partner_bounds": [
+                573,
+                626,
+                15,
+                43
+              ],
+              "partner_grade": 0.9428756254469913,
+              "partner_id": 705,
+              "relation_grade": 0.20956528600265667,
+              "relation_id": 1556
+            }
+          ],
+          "system": 1
+        },
+        {
+          "bounds": [
+            1347,
+            576,
+            34,
+            21
+          ],
+          "contextual_grade": 0.26037674852254905,
+          "grade": 0.23685644520686316,
+          "id": 840,
+          "sources": [
+            {
+              "partner_bounds": [
+                1367,
+                512,
+                15,
+                47
+              ],
+              "partner_grade": 0.9482605970755335,
+              "partner_id": 691,
+              "relation_grade": 0.28317143808213696,
+              "relation_id": 1580
+            }
+          ],
+          "system": 1
+        },
+        {
+          "bounds": [
+            1061,
+            1084,
+            17,
+            21
+          ],
+          "contextual_grade": 0.34109842131485324,
+          "grade": 0.2843743346741809,
+          "id": 902,
+          "sources": [
+            {
+              "partner_bounds": [
+                1060,
+                1019,
+                15,
+                47
+              ],
+              "partner_grade": 0.9464581129524969,
+              "partner_id": 749,
+              "relation_grade": 0.6397129803520093,
+              "relation_id": 1609
+            }
+          ],
+          "system": 2
+        }
+      ],
+      "removed_weak_ornament_ids": [
+        806,
+        840,
+        902
+      ]
+    },
+    "declared_source_cache_grade_clone_control": {
+      "contextualized": [
+        {
+          "bounds": [
+            554,
+            576,
+            34,
+            21
+          ],
+          "contextual_grade": 0.24619127733180737,
+          "grade": 0.22912765764749846,
+          "id": 806,
+          "sources": [
+            {
+              "partner_bounds": [
+                573,
+                626,
+                15,
+                43
+              ],
+              "partner_grade": 0.9428511611821568,
+              "partner_id": 705,
+              "relation_grade": 0.20956528600265667,
+              "relation_id": 1556
+            }
+          ],
+          "system": 1
+        },
+        {
+          "bounds": [
+            1347,
+            576,
+            34,
+            21
+          ],
+          "contextual_grade": 0.26037697283422134,
+          "grade": 0.23685644520686316,
+          "id": 840,
+          "sources": [
+            {
+              "partner_bounds": [
+                1367,
+                512,
+                15,
+                47
+              ],
+              "partner_grade": 0.948269928167643,
+              "partner_id": 691,
+              "relation_grade": 0.28317143808213696,
+              "relation_id": 1580
+            }
+          ],
+          "system": 1
+        },
+        {
+          "bounds": [
+            1061,
+            1084,
+            17,
+            21
+          ],
+          "contextual_grade": 0.3410972698089362,
+          "grade": 0.2843743346741809,
+          "id": 902,
+          "sources": [
+            {
+              "partner_bounds": [
+                1060,
+                1019,
+                15,
+                47
+              ],
+              "partner_grade": 0.9464372457293007,
+              "partner_id": 749,
+              "relation_grade": 0.6397129803520093,
+              "relation_id": 1609
+            }
+          ],
+          "system": 2
+        }
+      ],
+      "removed_weak_ornament_ids": [
+        806,
+        840,
+        902
+      ]
+    },
+    "late_survivor_rollback_keeps_actual_chord_7_64": true,
+    "measured_cached_HeadChord_residuals": [
+      {
+        "actual_member_geometry_matches": true,
+        "chord_bounds": [
+          573,
+          626,
+          15,
+          43
+        ],
+        "difference": 0.00002446426483448949,
+        "members": [
+          {
+            "bounds": [
+              573,
+              657,
+              15,
+              12
+            ],
+            "difference": 0.00002446426483448949,
+            "native_best_grade": 0.9428756254469913,
+            "source_best_grade": 0.9428511611821568
+          }
+        ],
+        "native_cached_grade": 0.9428756254469913,
+        "ornament_bounds": [
+          554,
+          576,
+          34,
+          21
+        ],
+        "source_cached_grade": 0.9428511611821568
+      },
+      {
+        "actual_member_geometry_matches": true,
+        "chord_bounds": [
+          1367,
+          512,
+          15,
+          47
+        ],
+        "difference": -9.331092109543526e-6,
+        "members": [
+          {
+            "bounds": [
+              1367,
+              547,
+              15,
+              12
+            ],
+            "difference": -9.331092109543526e-6,
+            "native_best_grade": 0.9482605970755335,
+            "source_best_grade": 0.948269928167643
+          }
+        ],
+        "native_cached_grade": 0.9482605970755335,
+        "ornament_bounds": [
+          1347,
+          576,
+          34,
+          21
+        ],
+        "source_cached_grade": 0.948269928167643
+      },
+      {
+        "actual_member_geometry_matches": true,
+        "chord_bounds": [
+          1060,
+          1019,
+          15,
+          47
+        ],
+        "difference": 0.000020867223196274765,
+        "members": [
+          {
+            "bounds": [
+              1060,
+              1054,
+              15,
+              12
+            ],
+            "difference": 0.000020867223196274765,
+            "native_best_grade": 0.9464581129524969,
+            "source_best_grade": 0.9464372457293007
+          }
+        ],
+        "native_cached_grade": 0.9464581129524969,
+        "ornament_bounds": [
+          1061,
+          1084,
+          17,
+          21
+        ],
+        "source_cached_grade": 0.9464372457293007
+      }
+    ],
+    "numeric_parity_claimed": false,
+    "original_checked_candidates": 24,
+    "per_system_context_before_removal": [
+      {
+        "ornaments": [
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                554,
+                576,
+                34,
+                21
+              ],
+              "contextual_grade": 0.24619171028269776,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  554,
+                  576,
+                  34,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    1,
+                    3
+                  ],
+                  [
+                    2,
+                    1,
+                    5
+                  ],
+                  [
+                    3,
+                    1,
+                    9
+                  ],
+                  [
+                    4,
+                    1,
+                    12
+                  ],
+                  [
+                    5,
+                    1,
+                    15
+                  ],
+                  [
+                    6,
+                    1,
+                    2
+                  ],
+                  [
+                    6,
+                    8,
+                    12
+                  ],
+                  [
+                    7,
+                    1,
+                    2
+                  ],
+                  [
+                    7,
+                    11,
+                    10
+                  ],
+                  [
+                    8,
+                    15,
+                    6
+                  ],
+                  [
+                    9,
+                    15,
+                    6
+                  ],
+                  [
+                    10,
+                    11,
+                    8
+                  ],
+                  [
+                    11,
+                    7,
+                    9
+                  ],
+                  [
+                    12,
+                    4,
+                    8
+                  ],
+                  [
+                    13,
+                    2,
+                    7
+                  ],
+                  [
+                    14,
+                    2,
+                    7
+                  ],
+                  [
+                    15,
+                    2,
+                    11
+                  ],
+                  [
+                    16,
+                    5,
+                    11
+                  ],
+                  [
+                    17,
+                    8,
+                    12
+                  ],
+                  [
+                    18,
+                    12,
+                    9
+                  ],
+                  [
+                    19,
+                    15,
+                    6
+                  ],
+                  [
+                    20,
+                    14,
+                    7
+                  ],
+                  [
+                    21,
+                    1,
+                    2
+                  ],
+                  [
+                    21,
+                    11,
+                    8
+                  ],
+                  [
+                    22,
+                    1,
+                    2
+                  ],
+                  [
+                    22,
+                    7,
+                    9
+                  ],
+                  [
+                    23,
+                    1,
+                    11
+                  ],
+                  [
+                    24,
+                    1,
+                    8
+                  ],
+                  [
+                    25,
+                    1,
+                    4
+                  ],
+                  [
+                    26,
+                    1,
+                    2
+                  ],
+                  [
+                    27,
+                    1,
+                    2
+                  ],
+                  [
+                    30,
+                    2,
+                    1
+                  ],
+                  [
+                    31,
+                    0,
+                    4
+                  ],
+                  [
+                    32,
+                    0,
+                    4
+                  ],
+                  [
+                    33,
+                    0,
+                    4
+                  ]
+                ]
+              },
+              "glyph_id": 4180,
+              "grade": 0.22912765764749846,
+              "id": 806,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 18,
+                "phase": "SYMBOL",
+                "system": 1
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": false
+          },
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                1347,
+                576,
+                34,
+                21
+              ],
+              "contextual_grade": 0.26037674852254905,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  1347,
+                  576,
+                  34,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    1,
+                    2
+                  ],
+                  [
+                    2,
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    1,
+                    8
+                  ],
+                  [
+                    4,
+                    1,
+                    11
+                  ],
+                  [
+                    5,
+                    1,
+                    15
+                  ],
+                  [
+                    6,
+                    1,
+                    2
+                  ],
+                  [
+                    6,
+                    7,
+                    12
+                  ],
+                  [
+                    7,
+                    1,
+                    2
+                  ],
+                  [
+                    7,
+                    10,
+                    11
+                  ],
+                  [
+                    8,
+                    14,
+                    7
+                  ],
+                  [
+                    9,
+                    16,
+                    5
+                  ],
+                  [
+                    10,
+                    12,
+                    8
+                  ],
+                  [
+                    11,
+                    8,
+                    9
+                  ],
+                  [
+                    12,
+                    5,
+                    8
+                  ],
+                  [
+                    13,
+                    2,
+                    7
+                  ],
+                  [
+                    14,
+                    2,
+                    7
+                  ],
+                  [
+                    15,
+                    2,
+                    10
+                  ],
+                  [
+                    16,
+                    4,
+                    12
+                  ],
+                  [
+                    17,
+                    7,
+                    12
+                  ],
+                  [
+                    18,
+                    11,
+                    10
+                  ],
+                  [
+                    19,
+                    14,
+                    7
+                  ],
+                  [
+                    20,
+                    15,
+                    6
+                  ],
+                  [
+                    21,
+                    1,
+                    2
+                  ],
+                  [
+                    21,
+                    11,
+                    9
+                  ],
+                  [
+                    22,
+                    1,
+                    2
+                  ],
+                  [
+                    22,
+                    8,
+                    9
+                  ],
+                  [
+                    23,
+                    1,
+                    12
+                  ],
+                  [
+                    24,
+                    1,
+                    9
+                  ],
+                  [
+                    25,
+                    1,
+                    5
+                  ],
+                  [
+                    26,
+                    1,
+                    3
+                  ],
+                  [
+                    27,
+                    1,
+                    2
+                  ],
+                  [
+                    31,
+                    0,
+                    4
+                  ],
+                  [
+                    32,
+                    0,
+                    4
+                  ],
+                  [
+                    33,
+                    0,
+                    4
+                  ]
+                ]
+              },
+              "glyph_id": 4271,
+              "grade": 0.23685644520686316,
+              "id": 840,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 52,
+                "phase": "SYMBOL",
+                "system": 1
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": false
+          }
+        ],
+        "stage": "contextualized",
+        "system": 1
+      },
+      {
+        "ornaments": [
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                1347,
+                576,
+                34,
+                21
+              ],
+              "contextual_grade": 0.26037674852254905,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  1347,
+                  576,
+                  34,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    1,
+                    2
+                  ],
+                  [
+                    2,
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    1,
+                    8
+                  ],
+                  [
+                    4,
+                    1,
+                    11
+                  ],
+                  [
+                    5,
+                    1,
+                    15
+                  ],
+                  [
+                    6,
+                    1,
+                    2
+                  ],
+                  [
+                    6,
+                    7,
+                    12
+                  ],
+                  [
+                    7,
+                    1,
+                    2
+                  ],
+                  [
+                    7,
+                    10,
+                    11
+                  ],
+                  [
+                    8,
+                    14,
+                    7
+                  ],
+                  [
+                    9,
+                    16,
+                    5
+                  ],
+                  [
+                    10,
+                    12,
+                    8
+                  ],
+                  [
+                    11,
+                    8,
+                    9
+                  ],
+                  [
+                    12,
+                    5,
+                    8
+                  ],
+                  [
+                    13,
+                    2,
+                    7
+                  ],
+                  [
+                    14,
+                    2,
+                    7
+                  ],
+                  [
+                    15,
+                    2,
+                    10
+                  ],
+                  [
+                    16,
+                    4,
+                    12
+                  ],
+                  [
+                    17,
+                    7,
+                    12
+                  ],
+                  [
+                    18,
+                    11,
+                    10
+                  ],
+                  [
+                    19,
+                    14,
+                    7
+                  ],
+                  [
+                    20,
+                    15,
+                    6
+                  ],
+                  [
+                    21,
+                    1,
+                    2
+                  ],
+                  [
+                    21,
+                    11,
+                    9
+                  ],
+                  [
+                    22,
+                    1,
+                    2
+                  ],
+                  [
+                    22,
+                    8,
+                    9
+                  ],
+                  [
+                    23,
+                    1,
+                    12
+                  ],
+                  [
+                    24,
+                    1,
+                    9
+                  ],
+                  [
+                    25,
+                    1,
+                    5
+                  ],
+                  [
+                    26,
+                    1,
+                    3
+                  ],
+                  [
+                    27,
+                    1,
+                    2
+                  ],
+                  [
+                    31,
+                    0,
+                    4
+                  ],
+                  [
+                    32,
+                    0,
+                    4
+                  ],
+                  [
+                    33,
+                    0,
+                    4
+                  ]
+                ]
+              },
+              "glyph_id": 4271,
+              "grade": 0.23685644520686316,
+              "id": 840,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 52,
+                "phase": "SYMBOL",
+                "system": 1
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": false
+          },
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                554,
+                576,
+                34,
+                21
+              ],
+              "contextual_grade": 0.24619171028269776,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  554,
+                  576,
+                  34,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    1,
+                    3
+                  ],
+                  [
+                    2,
+                    1,
+                    5
+                  ],
+                  [
+                    3,
+                    1,
+                    9
+                  ],
+                  [
+                    4,
+                    1,
+                    12
+                  ],
+                  [
+                    5,
+                    1,
+                    15
+                  ],
+                  [
+                    6,
+                    1,
+                    2
+                  ],
+                  [
+                    6,
+                    8,
+                    12
+                  ],
+                  [
+                    7,
+                    1,
+                    2
+                  ],
+                  [
+                    7,
+                    11,
+                    10
+                  ],
+                  [
+                    8,
+                    15,
+                    6
+                  ],
+                  [
+                    9,
+                    15,
+                    6
+                  ],
+                  [
+                    10,
+                    11,
+                    8
+                  ],
+                  [
+                    11,
+                    7,
+                    9
+                  ],
+                  [
+                    12,
+                    4,
+                    8
+                  ],
+                  [
+                    13,
+                    2,
+                    7
+                  ],
+                  [
+                    14,
+                    2,
+                    7
+                  ],
+                  [
+                    15,
+                    2,
+                    11
+                  ],
+                  [
+                    16,
+                    5,
+                    11
+                  ],
+                  [
+                    17,
+                    8,
+                    12
+                  ],
+                  [
+                    18,
+                    12,
+                    9
+                  ],
+                  [
+                    19,
+                    15,
+                    6
+                  ],
+                  [
+                    20,
+                    14,
+                    7
+                  ],
+                  [
+                    21,
+                    1,
+                    2
+                  ],
+                  [
+                    21,
+                    11,
+                    8
+                  ],
+                  [
+                    22,
+                    1,
+                    2
+                  ],
+                  [
+                    22,
+                    7,
+                    9
+                  ],
+                  [
+                    23,
+                    1,
+                    11
+                  ],
+                  [
+                    24,
+                    1,
+                    8
+                  ],
+                  [
+                    25,
+                    1,
+                    4
+                  ],
+                  [
+                    26,
+                    1,
+                    2
+                  ],
+                  [
+                    27,
+                    1,
+                    2
+                  ],
+                  [
+                    30,
+                    2,
+                    1
+                  ],
+                  [
+                    31,
+                    0,
+                    4
+                  ],
+                  [
+                    32,
+                    0,
+                    4
+                  ],
+                  [
+                    33,
+                    0,
+                    4
+                  ]
+                ]
+              },
+              "glyph_id": 4180,
+              "grade": 0.22912765764749846,
+              "id": 806,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 18,
+                "phase": "SYMBOL",
+                "system": 1
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": true
+          }
+        ],
+        "stage": "removed",
+        "system": 1
+      },
+      {
+        "ornaments": [
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                554,
+                576,
+                34,
+                21
+              ],
+              "contextual_grade": 0.24619171028269776,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  554,
+                  576,
+                  34,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    1,
+                    3
+                  ],
+                  [
+                    2,
+                    1,
+                    5
+                  ],
+                  [
+                    3,
+                    1,
+                    9
+                  ],
+                  [
+                    4,
+                    1,
+                    12
+                  ],
+                  [
+                    5,
+                    1,
+                    15
+                  ],
+                  [
+                    6,
+                    1,
+                    2
+                  ],
+                  [
+                    6,
+                    8,
+                    12
+                  ],
+                  [
+                    7,
+                    1,
+                    2
+                  ],
+                  [
+                    7,
+                    11,
+                    10
+                  ],
+                  [
+                    8,
+                    15,
+                    6
+                  ],
+                  [
+                    9,
+                    15,
+                    6
+                  ],
+                  [
+                    10,
+                    11,
+                    8
+                  ],
+                  [
+                    11,
+                    7,
+                    9
+                  ],
+                  [
+                    12,
+                    4,
+                    8
+                  ],
+                  [
+                    13,
+                    2,
+                    7
+                  ],
+                  [
+                    14,
+                    2,
+                    7
+                  ],
+                  [
+                    15,
+                    2,
+                    11
+                  ],
+                  [
+                    16,
+                    5,
+                    11
+                  ],
+                  [
+                    17,
+                    8,
+                    12
+                  ],
+                  [
+                    18,
+                    12,
+                    9
+                  ],
+                  [
+                    19,
+                    15,
+                    6
+                  ],
+                  [
+                    20,
+                    14,
+                    7
+                  ],
+                  [
+                    21,
+                    1,
+                    2
+                  ],
+                  [
+                    21,
+                    11,
+                    8
+                  ],
+                  [
+                    22,
+                    1,
+                    2
+                  ],
+                  [
+                    22,
+                    7,
+                    9
+                  ],
+                  [
+                    23,
+                    1,
+                    11
+                  ],
+                  [
+                    24,
+                    1,
+                    8
+                  ],
+                  [
+                    25,
+                    1,
+                    4
+                  ],
+                  [
+                    26,
+                    1,
+                    2
+                  ],
+                  [
+                    27,
+                    1,
+                    2
+                  ],
+                  [
+                    30,
+                    2,
+                    1
+                  ],
+                  [
+                    31,
+                    0,
+                    4
+                  ],
+                  [
+                    32,
+                    0,
+                    4
+                  ],
+                  [
+                    33,
+                    0,
+                    4
+                  ]
+                ]
+              },
+              "glyph_id": 4180,
+              "grade": 0.22912765764749846,
+              "id": 806,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 18,
+                "phase": "SYMBOL",
+                "system": 1
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": true
+          },
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                1347,
+                576,
+                34,
+                21
+              ],
+              "contextual_grade": 0.26037674852254905,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  1347,
+                  576,
+                  34,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    1,
+                    2
+                  ],
+                  [
+                    1,
+                    1,
+                    2
+                  ],
+                  [
+                    2,
+                    1,
+                    4
+                  ],
+                  [
+                    3,
+                    1,
+                    8
+                  ],
+                  [
+                    4,
+                    1,
+                    11
+                  ],
+                  [
+                    5,
+                    1,
+                    15
+                  ],
+                  [
+                    6,
+                    1,
+                    2
+                  ],
+                  [
+                    6,
+                    7,
+                    12
+                  ],
+                  [
+                    7,
+                    1,
+                    2
+                  ],
+                  [
+                    7,
+                    10,
+                    11
+                  ],
+                  [
+                    8,
+                    14,
+                    7
+                  ],
+                  [
+                    9,
+                    16,
+                    5
+                  ],
+                  [
+                    10,
+                    12,
+                    8
+                  ],
+                  [
+                    11,
+                    8,
+                    9
+                  ],
+                  [
+                    12,
+                    5,
+                    8
+                  ],
+                  [
+                    13,
+                    2,
+                    7
+                  ],
+                  [
+                    14,
+                    2,
+                    7
+                  ],
+                  [
+                    15,
+                    2,
+                    10
+                  ],
+                  [
+                    16,
+                    4,
+                    12
+                  ],
+                  [
+                    17,
+                    7,
+                    12
+                  ],
+                  [
+                    18,
+                    11,
+                    10
+                  ],
+                  [
+                    19,
+                    14,
+                    7
+                  ],
+                  [
+                    20,
+                    15,
+                    6
+                  ],
+                  [
+                    21,
+                    1,
+                    2
+                  ],
+                  [
+                    21,
+                    11,
+                    9
+                  ],
+                  [
+                    22,
+                    1,
+                    2
+                  ],
+                  [
+                    22,
+                    8,
+                    9
+                  ],
+                  [
+                    23,
+                    1,
+                    12
+                  ],
+                  [
+                    24,
+                    1,
+                    9
+                  ],
+                  [
+                    25,
+                    1,
+                    5
+                  ],
+                  [
+                    26,
+                    1,
+                    3
+                  ],
+                  [
+                    27,
+                    1,
+                    2
+                  ],
+                  [
+                    31,
+                    0,
+                    4
+                  ],
+                  [
+                    32,
+                    0,
+                    4
+                  ],
+                  [
+                    33,
+                    0,
+                    4
+                  ]
+                ]
+              },
+              "glyph_id": 4271,
+              "grade": 0.23685644520686316,
+              "id": 840,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 52,
+                "phase": "SYMBOL",
+                "system": 1
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": true
+          }
+        ],
+        "stage": "removed",
+        "system": 1
+      },
+      {
+        "ornaments": [
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                1061,
+                1084,
+                17,
+                21
+              ],
+              "contextual_grade": 0.34109842131485324,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  1061,
+                  1084,
+                  17,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    5,
+                    2
+                  ],
+                  [
+                    1,
+                    5,
+                    2
+                  ],
+                  [
+                    2,
+                    5,
+                    12
+                  ],
+                  [
+                    3,
+                    5,
+                    14
+                  ],
+                  [
+                    4,
+                    0,
+                    3
+                  ],
+                  [
+                    4,
+                    5,
+                    15
+                  ],
+                  [
+                    5,
+                    0,
+                    3
+                  ],
+                  [
+                    5,
+                    6,
+                    14
+                  ],
+                  [
+                    6,
+                    0,
+                    3
+                  ],
+                  [
+                    6,
+                    18,
+                    3
+                  ],
+                  [
+                    7,
+                    18,
+                    3
+                  ],
+                  [
+                    8,
+                    18,
+                    3
+                  ],
+                  [
+                    9,
+                    5,
+                    2
+                  ],
+                  [
+                    9,
+                    18,
+                    2
+                  ],
+                  [
+                    10,
+                    5,
+                    2
+                  ],
+                  [
+                    10,
+                    17,
+                    3
+                  ],
+                  [
+                    11,
+                    5,
+                    14
+                  ],
+                  [
+                    12,
+                    5,
+                    15
+                  ],
+                  [
+                    13,
+                    5,
+                    15
+                  ],
+                  [
+                    14,
+                    18,
+                    2
+                  ],
+                  [
+                    15,
+                    18,
+                    2
+                  ],
+                  [
+                    16,
+                    19,
+                    1
+                  ]
+                ]
+              },
+              "glyph_id": 4756,
+              "grade": 0.2843743346741809,
+              "id": 902,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 48,
+                "phase": "SYMBOL",
+                "system": 2
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": false
+          }
+        ],
+        "stage": "contextualized",
+        "system": 2
+      },
+      {
+        "ornaments": [
+          {
+            "body": {
+              "abnormal": false,
+              "bounds": [
+                1061,
+                1084,
+                17,
+                21
+              ],
+              "contextual_grade": 0.34109842131485324,
+              "frozen": false,
+              "glyph": {
+                "bounds": [
+                  1061,
+                  1084,
+                  17,
+                  21
+                ],
+                "orientation": "VERTICAL",
+                "runs": [
+                  [
+                    0,
+                    5,
+                    2
+                  ],
+                  [
+                    1,
+                    5,
+                    2
+                  ],
+                  [
+                    2,
+                    5,
+                    12
+                  ],
+                  [
+                    3,
+                    5,
+                    14
+                  ],
+                  [
+                    4,
+                    0,
+                    3
+                  ],
+                  [
+                    4,
+                    5,
+                    15
+                  ],
+                  [
+                    5,
+                    0,
+                    3
+                  ],
+                  [
+                    5,
+                    6,
+                    14
+                  ],
+                  [
+                    6,
+                    0,
+                    3
+                  ],
+                  [
+                    6,
+                    18,
+                    3
+                  ],
+                  [
+                    7,
+                    18,
+                    3
+                  ],
+                  [
+                    8,
+                    18,
+                    3
+                  ],
+                  [
+                    9,
+                    5,
+                    2
+                  ],
+                  [
+                    9,
+                    18,
+                    2
+                  ],
+                  [
+                    10,
+                    5,
+                    2
+                  ],
+                  [
+                    10,
+                    17,
+                    3
+                  ],
+                  [
+                    11,
+                    5,
+                    14
+                  ],
+                  [
+                    12,
+                    5,
+                    15
+                  ],
+                  [
+                    13,
+                    5,
+                    15
+                  ],
+                  [
+                    14,
+                    18,
+                    2
+                  ],
+                  [
+                    15,
+                    18,
+                    2
+                  ],
+                  [
+                    16,
+                    19,
+                    1
+                  ]
+                ]
+              },
+              "glyph_id": 4756,
+              "grade": 0.2843743346741809,
+              "id": 902,
+              "kind": "OrnamentInter",
+              "manual": false,
+              "origin": {
+                "local": 48,
+                "phase": "SYMBOL",
+                "system": 2
+              },
+              "shape": "TR",
+              "staff_id": null
+            },
+            "removed": true
+          }
+        ],
+        "stage": "removed",
+        "system": 2
+      }
+    ],
+    "positive_factories": [
+      {
+        "bounds": [
+          554,
+          576,
+          34,
+          21
+        ],
+        "chord_key": {
+          "local": 20,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "relation": {
+          "dx": 0.8181818181818182,
+          "dy": 3.6363636363636362,
+          "grade": 0.20956528600265667,
+          "kind": "ChordOrnamentRelation",
+          "manual": false,
+          "source_ratio": 1.0,
+          "target_ratio": 1.1047826430013283
+        }
+      },
+      {
+        "bounds": [
+          1347,
+          576,
+          34,
+          21
+        ],
+        "chord_key": {
+          "local": 16,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "relation": {
+          "dx": 0.9090909090909091,
+          "dy": 2.4545454545454546,
+          "grade": 0.28317143808213696,
+          "kind": "ChordOrnamentRelation",
+          "manual": false,
+          "source_ratio": 1.0,
+          "target_ratio": 1.1415857190410685
+        }
+      },
+      {
+        "bounds": [
+          1061,
+          1084,
+          17,
+          21
+        ],
+        "chord_key": {
+          "local": 14,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "relation": {
+          "dx": 0.18181818181818182,
+          "dy": 2.5454545454545454,
+          "grade": 0.6397129803520093,
+          "kind": "ChordOrnamentRelation",
+          "manual": false,
+          "source_ratio": 1.0,
+          "target_ratio": 1.3198564901760046
+        }
+      }
+    ],
+    "retained_relation_identity_and_raw_staff_null": true,
+    "scope": "Actual image factory owners and weak Ornament purge only; original overlap Exclusion event sequence and surviving ornament export remain separate frontiers."
+  },
+  "positive_surviving_rhythm_complete": false,
+  "same_relation_bodies_after_remove": true
+}

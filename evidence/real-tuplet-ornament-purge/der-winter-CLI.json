@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/audiveris-musicxml",
+    "/workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png",
+    "/tmp/real-rest-native-v5/der-winter.musicxml",
+    "/tmp/real-rest-native-v5/report.json"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 271.0675099679793,
+  "image_sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0",
+  "binary_sha256": "a425e1abc3f153508b0e37ae712cedd3b79235293289e464ba6bb3dbcaff4104",
+  "XML_written": false,
+  "report_written": false,
+  "normal_user_command": true,
+  "original_or_observation_used_as_recognition_input": false
+}

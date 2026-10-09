@@ -689,6 +689,7 @@ fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
     if m.owner.prepared.report["symbol_cluster_scope"] != "original-seven-part-cap-recursive" {
         return Err("musicxml_compound_symbol_parts_pending".into());
     }
+    let mut pending = Vec::new();
     for trial in m.owner.prepared.report["classifier_trials"]
         .as_array()
         .ok_or("musicxml_symbol_trials_required")?
@@ -738,15 +739,24 @@ fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
                     | "TUPLET_SIX"
             ) || crate::music_directions::signature(shape).is_some()
                 || crate::music_numbers::value(shape).is_some()
+                || crate::music_ornaments::is_shape(shape)
                 || music_symbols::time(shape).is_some()
                 || shape.ends_with("_REST")
                 || crate::music_flags::value(shape).is_some())
+                && !pending.contains(&shape)
             {
-                return Err(format!("musicxml_unported_symbol_interpretation:{shape}"));
+                pending.push(shape);
             }
         }
     }
-    Ok(())
+    match pending.as_slice() {
+        [] => Ok(()),
+        [shape] => Err(format!("musicxml_unported_symbol_interpretation:{shape}")),
+        _ => Err(format!(
+            "musicxml_unported_symbol_interpretations:{}",
+            pending.join(",")
+        )),
+    }
 }
 fn continue_recognized_export(mut m: OwnedMusic, part_name: &str) -> Result<Export, String> {
     admit_recognized_factories(&m)?;

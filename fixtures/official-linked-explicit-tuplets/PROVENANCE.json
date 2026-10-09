@@ -1,0 +1,108 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "Independent fresh original Der Winter runs; development observation fixtures, never native recognition inputs. A generated and linked TUPLET_SIX is later removed by weak contextual purge.",
+  "image": "fixtures/real-rest-page/der-winter-gray.png",
+  "image_file_sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0",
+  "runs": {
+    "factory": {
+      "observation": "factory-observed.json",
+      "executed_provenance": "factory-provenance.json",
+      "observed_sha256": "ffdf7ce16608143e71eac77179ac74781d64138fded7243c88873dae39d42b73",
+      "checks": {
+        "exit_zero": true,
+        "completed": true,
+        "observation_hash_matches": true,
+        "console_hash_matches": true,
+        "pinned_jar": true,
+        "image_matches": true,
+        "no_native_output": true,
+        "no_runtime_stubs": true,
+        "runner_hash_matches": true,
+        "source_RealLedgerMembershipImageProbe.java": true,
+        "source_RealTupletProbeSupport.java": true,
+        "source_RealTupletFactoryImageProbe.java": true,
+        "source_RealTupletStagesImageProbe.java": true,
+        "source_RealTupletLookupImageProbe.java": true
+      }
+    },
+    "lookup": {
+      "observation": "lookup-observed.json",
+      "executed_provenance": "lookup-provenance.json",
+      "observed_sha256": "b87a7cd4e31951550ea17e0da059fcbbab608ce7f6c92af4ef4a97825b243623",
+      "checks": {
+        "exit_zero": true,
+        "completed": true,
+        "observation_hash_matches": true,
+        "console_hash_matches": true,
+        "pinned_jar": true,
+        "image_matches": true,
+        "no_native_output": true,
+        "no_runtime_stubs": true,
+        "runner_hash_matches": true,
+        "source_RealLedgerMembershipImageProbe.java": true,
+        "source_RealTupletProbeSupport.java": true,
+        "source_RealTupletFactoryImageProbe.java": true,
+        "source_RealTupletStagesImageProbe.java": true,
+        "source_RealTupletLookupImageProbe.java": true
+      }
+    },
+    "stages": {
+      "observation": "stages-observed.json",
+      "executed_provenance": "stages-provenance.json",
+      "observed_sha256": "846ca1e5861f03ff262b993b36058ff95c1e21d51c2d372e1d7251db33584038",
+      "checks": {
+        "exit_zero": true,
+        "completed": true,
+        "observation_hash_matches": true,
+        "console_hash_matches": true,
+        "pinned_jar": true,
+        "image_matches": true,
+        "no_native_output": true,
+        "no_runtime_stubs": true,
+        "runner_hash_matches": true,
+        "source_RealLedgerMembershipImageProbe.java": true,
+        "source_RealTupletProbeSupport.java": true,
+        "source_RealTupletFactoryImageProbe.java": true,
+        "source_RealTupletStagesImageProbe.java": true,
+        "source_RealTupletLookupImageProbe.java": true
+      }
+    },
+    "support-inputs": {
+      "observation": "support-inputs-observed.json",
+      "executed_provenance": "support-inputs-provenance.json",
+      "observed_sha256": "7a1b451505f0b9af2f077addf9fa2fd267f01f44285b9932565fb53cf9639e6b",
+      "checks": {
+        "exit_zero": true,
+        "completed": true,
+        "observation_hash_matches": true,
+        "console_hash_matches": true,
+        "pinned_jar": true,
+        "image_matches": true,
+        "no_native_output": true,
+        "no_runtime_stubs": true,
+        "runner_hash_matches": true,
+        "source_RealLedgerMembershipImageProbe.java": true,
+        "source_RealTupletProbeSupport.java": true,
+        "source_RealTupletFactoryImageProbe.java": true,
+        "source_RealTupletStagesImageProbe.java": true,
+        "source_RealTupletLookupImageProbe.java": true,
+        "source_RealTupletSupportInputsImageProbe.java": true
+      }
+    }
+  },
+  "executed_support_observer": {
+    "path": "executed-sources/RealTupletSupportInputsImageProbe.java",
+    "sha256": "26a27f5228fb4436f64f1052998a5ead9651615e5c4c8a168e5112771fe8e1ca",
+    "qualification": "Exact executed source: installed Lookup observer renamed, with only actual getGrade/getContextualGrade fields added to chordRow. Existing runner API does not include this extra class; historical command and all common source hashes are retained in support-inputs-provenance.json."
+  },
+  "qualifications": [
+    "Four independent runs; object labels and numeric IDs are meaningful only within each run.",
+    "GraphListener events observe after the original SIG callback.",
+    "Whole-Tuplet removal skips abnormal recomputation and clears actual Stack membership before edge callbacks.",
+    "Ordinary pre-LINKS clocks and expectedDuration are NULL; initialized 7/64 and manual/frozen/rollback controls are separate.",
+    "Factory/lookup positive does not establish surviving-positive XML quality. No manual relation or frozen behavior is claimed by these runs.",
+    "Source-only evidence; native parity requires separate tests."
+  ],
+  "native_outputs_used": false,
+  "quality_acceptance_passed": false
+}

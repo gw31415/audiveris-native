@@ -1,0 +1,49 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "factory_checked_candidates": 8,
+  "factory_shapes": [
+    "TR"
+  ],
+  "actual_factory_null": 8,
+  "null_vertex_edge_identity_retained": 8,
+  "ordinary_stage_live_ornaments": {
+    "SYMBOLS": 0,
+    "LINKS": 0,
+    "RHYTHMS": 0
+  },
+  "original_final_musicxml": "evidence/real-image-quality-baseline/laura-original.musicxml",
+  "original_final_musicxml_sha256": "4f979b7cfce80dd56a7babac36f4cec59a774bfd0577e9e9724be706b31dcc94",
+  "original_final_ornaments": 0,
+  "positive_factory_path_observed": true,
+  "native_verification": "pending",
+  "der_winter": {
+    "factory_candidates": 24,
+    "actual_factory_null": 21,
+    "actual_positive_creation": 3,
+    "ordinary_SYMBOLS_live": 3,
+    "ordinary_LINKS_live": 0,
+    "ordinary_RHYTHMS_live": 0,
+    "actual_contextual_grades": [
+      0.24619127733180704,
+      0.2603769728342209,
+      0.3410972698089361
+    ],
+    "removal_method": "SIGraph.deleteWeakInters via SigReducer.contextualizeAndPurge",
+    "original_final_musicxml": "evidence/real-rest-quality-baseline/der-winter-original.musicxml",
+    "original_final_musicxml_sha256": "e04333e06b7c58181824602b4b57367d5c2aad2b2b7811707fa2dc3f3e26c7fb",
+    "original_final_ornaments": 0,
+    "native_verification": "pending combined existing Tuplet image target",
+    "confidence_comparison": {
+      "numeric_parity_claimed": false,
+      "first_strict_cached_grade_failure": {
+        "native": 0.9428756254469913,
+        "original": 0.9428511611821568,
+        "difference": 2.446426483448949e-05
+      },
+      "factory_geometry_relation_and_candidate_grade_tolerance": 1e-10,
+      "context_residual_bound": "0.25*abs(native_support-original_support) + (1+max(native_support,original_support))*abs(native_intrinsic-original_intrinsic) +1e-10",
+      "source_cache_grade_clone_control": "explicit separate actual Graph clone; original grades never initialize recognition",
+      "AnLaura_bound_applied_to_DerWinter": false
+    }
+  }
+}

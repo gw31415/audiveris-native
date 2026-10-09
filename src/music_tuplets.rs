@@ -3,6 +3,7 @@
 use crate::{
     beam_dispatch,
     grid_ir::StaffGeometry,
+    music_font_symbols::TupletShape,
     music_measure_layout::Stack,
     music_measures::{Chord, ChordKind, OwnedMusic},
     music_time::Fraction,
@@ -311,12 +312,6 @@ fn lookup(
     stack: &Arc<Stack>,
 ) -> Result<(Vec<Key>, Value), String> {
     let node = graph.retained_inter(key)?.0;
-    let expected_count = count(
-        node["shape"]
-            .as_str()
-            .ok_or("music_tuplet_shape_required")?,
-    )
-    .ok_or("music_tuplet_shape_required")?;
     let point = center(rectangle(node)?);
     let around = crate::grid_staff_neighborhood::around(
         &m.owner.staffs,
@@ -357,6 +352,24 @@ fn lookup(
         }
     }
     candidates.sort_by(|a, b| distance(a.bounds, point).total_cmp(&distance(b.bounds, point)));
+    let (links, mut observation) = embraced(m, graph, key, candidates)?;
+    observation["stack"] = json!(stack.index);
+    Ok((links, observation))
+}
+fn embraced(
+    m: &OwnedMusic,
+    graph: &mut Graph,
+    key: Key,
+    mut candidates: Vec<Candidate>,
+) -> Result<(Vec<Key>, Value), String> {
+    let node = graph.retained_inter(key)?.0;
+    let expected_count = count(
+        node["shape"]
+            .as_str()
+            .ok_or("music_tuplet_shape_required")?,
+    )
+    .ok_or("music_tuplet_shape_required")?;
+    let point = center(rectangle(node)?);
     let around_rows = candidates.iter().map(Candidate::row).collect::<Vec<_>>();
     let mut i = 0;
     while i < candidates.len() {
@@ -449,11 +462,78 @@ fn lookup(
     };
     Ok((
         links,
-        json!({"id":graph.id(key),"bounds":rectangle(graph.retained_inter(key)?.0)?,"stack":stack.index,"around":around_rows,"filtered":filtered,"target_staff":target.map(|s|s.id),"collector":trace,"status":status,"search_links":if status==Some("OK"){collected.iter().map(|c|c.id).collect::<Vec<_>>()}else{Vec::new()}}),
+        json!({"id":graph.id(key),"bounds":rectangle(graph.retained_inter(key)?.0)?,"around":around_rows,"filtered":filtered,"target_staff":target.map(|s|s.id),"collector":trace,"status":status,"search_links":if status==Some("OK"){collected.iter().map(|c|c.id).collect::<Vec<_>>()}else{Vec::new()}}),
     ))
 }
 
 pub(crate) type ContainerPlan = Vec<(usize, Vec<Key>, Vec<Key>)>;
+
+fn raw_callback_frame(m: &OwnedMusic, graph: &Graph, key: Key) -> Result<Value, String> {
+    let (tuplet, removed) = graph.retained_inter(key)?;
+    let mut chords = Vec::new();
+    for chord in m.chords.iter().filter(|c| c.key.system == key.system) {
+        let (node, removed) = graph.retained_inter(chord.key)?;
+        chords.push(json!({"id":chord.id,"bounds":node["bounds"],"voice":node["voice"],"slot_id":node["slot_id"],"time_offset":node["time_offset"],"removed":removed}));
+    }
+    Ok(
+        json!({"tuplet":tuplet,"removed":removed,"chords":chords,"expected":m.measures.iter().filter(|m|m.system==key.system).map(|m|json!({"part":m.part,"index":m.index,"expected":m.timing.expected.map(crate::music_time::format_fraction)})).collect::<Vec<_>>()}),
+    )
+}
+
+fn check_abnormal(m: &OwnedMusic, graph: &mut Graph, key: Key) -> Result<Value, String> {
+    let mut candidates = Vec::new();
+    for chord in graph.tuplet_chords(key)? {
+        let index = m
+            .chords
+            .iter()
+            .position(|c| c.key == chord)
+            .ok_or("music_tuplet_actual_callback_Chord_required")?;
+        candidates.push(chord_candidate(m, graph, index)?);
+    }
+    // getChords preserves relation order on equal left abscissae. It does not
+    // reuse lookup's distance ordering or include unlinked nearby candidates.
+    candidates.sort_by_key(|c| c.bounds[0]);
+    let (embraced, observation) = embraced(m, graph, key, candidates)?;
+    graph.set_tuplet_abnormal(key, embraced.is_empty())?;
+    Ok(observation)
+}
+
+fn remove_from_containers(
+    m: &OwnedMusic,
+    graph: &mut Graph,
+    key: Key,
+    stack: &Arc<Stack>,
+    containers: &mut ContainerPlan,
+) -> Result<(), String> {
+    if graph.retained_inter(key)?.0["frozen"] == true {
+        return Err("music_removal_frozen_inter".into());
+    }
+    let canonical = stack_measure(m, stack)?;
+    let members = m
+        .measures
+        .iter()
+        .enumerate()
+        .filter(|(_, measure)| {
+            measure
+                .geometry
+                .as_ref()
+                .is_some_and(|g| Arc::ptr_eq(&g.stack, stack))
+        })
+        .map(|(i, _)| i)
+        .collect::<Vec<_>>();
+    for &mi in &members {
+        containers[mi].1.retain(|k| *k != key);
+    }
+    containers[canonical].2.retain(|k| *k != key);
+    let assigned = members
+        .iter()
+        .flat_map(|mi| containers[*mi].1.iter().copied())
+        .collect::<Vec<_>>();
+    let mut all = assigned.clone();
+    all.extend(containers[canonical].2.iter().copied());
+    graph.remove_owned_tuplet(key, &assigned, &all)
+}
+
 pub(crate) fn link_and_remove(
     m: &OwnedMusic,
     graph: &mut Graph,
@@ -518,31 +598,32 @@ pub(crate) fn link_and_remove(
             if implicit {
                 return Err("music_tuplet_implicit_LINKS_relookup_pending".into());
             }
-            // Existing relation callbacks and positive linkage need their own source
-            // comparison; an unsupported result must not masquerade as no partner.
+            // Reprocessing must preserve manual edges and remove each old
+            // automatic edge through its callback; it is not a fresh link pass.
             if !next.tuplet_chords(key)?.is_empty() {
                 return Err("music_tuplet_existing_links_relookup_pending".into());
             }
             let (links, mut observation) = lookup(m, &mut next, key, &held.stack)?;
-            if !links.is_empty() {
-                return Err("music_tuplet_linked_positive_pending".into());
+            let shape = match next.retained_inter(key)?.0["shape"].as_str() {
+                Some("TUPLET_THREE") => TupletShape::Three,
+                Some("TUPLET_SIX") => TupletShape::Six,
+                _ => return Err("music_tuplet_shape_required".into()),
+            };
+            let mut additions = Vec::new();
+            for chord in &links {
+                let mut callback = Value::Null;
+                let edge = next.add_explicit_chord_tuplet(*chord, key, shape, |graph, key| {
+                    let lookup = check_abnormal(m, graph, key)?;
+                    callback = json!({"lookup":lookup,"after":raw_callback_frame(m,graph,key)?});
+                    Ok(())
+                })?;
+                callback["relation_id"] = json!(edge);
+                additions.push(callback);
             }
-            observation["removed"] = json!(!manual);
-            if !manual {
-                if next.retained_inter(key)?.0["frozen"] == true {
-                    return Err("music_removal_frozen_inter".into());
-                }
-                for &mi in &members {
-                    containers[mi].1.retain(|k| *k != key);
-                }
-                containers[canonical].2.retain(|k| *k != key);
-                let assigned = members
-                    .iter()
-                    .flat_map(|mi| containers[*mi].1.iter().copied())
-                    .collect::<Vec<_>>();
-                let mut all = assigned.clone();
-                all.extend(containers[canonical].2.iter().copied());
-                next.remove_owned_tuplet(key, &assigned, &all)?;
+            observation["additions"] = json!(additions);
+            observation["removed"] = json!(links.is_empty() && !manual);
+            if links.is_empty() && !manual {
+                remove_from_containers(m, &mut next, key, &held.stack, &mut containers)?;
             }
             observations.push(observation);
         }
@@ -559,6 +640,71 @@ pub(crate) fn link_and_remove(
         json!({"tuplets":observations,"linked_positive_complete":false}),
         containers,
     ))
+}
+
+pub(crate) fn contextualize_and_purge(
+    m: &OwnedMusic,
+    graph: &mut Graph,
+    containers: &mut ContainerPlan,
+) -> Result<Value, String> {
+    let mut next = graph.clone();
+    let mut planned = containers.clone();
+    if planned.len() != m.measures.len()
+        || planned.iter().enumerate().any(|(i, (mi, _, _))| i != *mi)
+    {
+        return Err("music_tuplet_actual_container_plan_required".into());
+    }
+    let keys = m
+        .owner
+        .systems
+        .iter()
+        .flat_map(|s| next.live_inter_keys(s.id, "TupletInter"))
+        .collect::<Vec<_>>();
+    let mut observations = Vec::new();
+    for &key in &keys {
+        let (implicit, manual) = next.tuplet_status(key)?;
+        if implicit {
+            return Err("music_tuplet_implicit_LINKS_context_pending".into());
+        }
+        if manual && next.tuplet_chords(key)?.is_empty() {
+            return Err("music_tuplet_unlinked_manual_pending".into());
+        }
+        observations.push(next.contextualize_explicit_tuplet(key)?);
+    }
+    // Context is materialized for every target before the first weak-removal
+    // callback. Container membership is removed before the SIG edges disappear.
+    for (&key, observation) in keys.iter().zip(&mut observations) {
+        let node = next.retained_inter(key)?.0;
+        let weak = node["contextual_grade"]
+            .as_f64()
+            .ok_or("music_tuplet_context_required")?
+            < 0.5
+            && node["frozen"] != true;
+        observation["removed"] = json!(weak);
+        if weak {
+            let owner = planned
+                .iter()
+                .position(|(_, a, u)| a.contains(&key) || u.contains(&key))
+                .ok_or("music_tuplet_actual_removal_Stack_required")?;
+            let stack = m.measures[owner]
+                .geometry
+                .as_ref()
+                .ok_or("music_tuplet_actual_Measure_geometry_required")?
+                .stack
+                .clone();
+            remove_from_containers(m, &mut next, key, &stack, &mut planned)?;
+        }
+    }
+    if m.owner
+        .systems
+        .iter()
+        .any(|s| !next.live_inter_keys(s.id, "TupletInter").is_empty())
+    {
+        return Err("music_tuplet_surviving_linked_rhythm_pending".into());
+    }
+    *graph = next;
+    *containers = planned;
+    Ok(json!({"contextualization":observations,"surviving_positive_rhythm_complete":false}))
 }
 
 #[cfg(test)]

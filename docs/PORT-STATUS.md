@@ -15,10 +15,11 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
-現在の通常画像CLIの到達点は、AnLauraのTR factoryとDer Winterの正リンクTupletのlifecycleです。
-空header・実休符とTuplet orphanの対象6件と63＋補正8/exact7/64回帰は成功しました。
+現在の通常画像CLIは、AnLauraの追加7形状とDer WinterのArpeggiato lookupへ到達しました。
+実連符3辺のcallbackと実Ornament3件の後段弱削除を比較し、現production対象5件と
+63＋補正8/exact7/64のXML byte/XSD回帰が成功しています。浮動confidence差は別記録です。
 両実ページのMusicXMLはまだ未出力で、品質受入は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-recognition-factories/NEXT-DEPENDENCY.md) を使います。
+直近の作業順は [保存NEXT依存](../evidence/real-tuplet-ornament-purge/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。
@@ -2457,3 +2458,15 @@ Voice/Slotと失敗時保持を検証。通常CLIはAnLauraがTR、Der Winterが
 の未接続処理に到達し、どちらもXML未出力。原版では後者は3辺追加後の弱削除で消える。
 [証拠](../evidence/real-recognition-factories/VALIDATION.json)・[次依存](../evidence/real-recognition-factories/NEXT-DEPENDENCY.md)。
 画像品質受入は未達。認証・通常Gitに障害なし。
+
+実連符・Ornamentの原版中間状態を接続した。Der WinterのSIXは実Chord3辺の追加で
+abnormal true→true→falseとなり、後の弱削除で実Stackを先に離れ、同じ辺を除去する。
+AnLauraのTR8件はfactory null、Der Winterの24候補中3件は実relationを作成して後段で消える。
+実所有・manual identity・callback時計と失敗時rollbackを対象化した。現production対象5件、
+fmt/clippy/build、既存63＋補正8とexact7/64 XML byte/XSDが成功。別段階のorphan対象1件も成功。
+厳密confidence比較の初回失敗は保持し、このページの実member/cache差とcontextへの伝播を
+分離して記録した。数値完全一致・画像品質合格とはしない。通常CLIはAnLauraの7形状、
+Der WinterのArpeggiatoで停止し、まだXML未出力。次は実head-only lookupのnull判定、
+checked symbol lifecycle、null物理clefと論理export状態、必要なSlur接続へ進む。
+[証拠](../evidence/real-tuplet-ornament-purge/VALIDATION.json)・
+[次依存](../evidence/real-tuplet-ornament-purge/NEXT-DEPENDENCY.md)。

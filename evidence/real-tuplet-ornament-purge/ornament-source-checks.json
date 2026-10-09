@@ -1,0 +1,92 @@
+[
+  {
+    "run": "factory",
+    "field": "observer_sha256",
+    "match": true
+  },
+  {
+    "run": "factory",
+    "field": "observed_sha256",
+    "match": true
+  },
+  {
+    "run": "factory",
+    "field": "rest_lifecycle_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "factory",
+    "field": "image_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "stages",
+    "field": "observer_sha256",
+    "match": true
+  },
+  {
+    "run": "stages",
+    "field": "observed_sha256",
+    "match": true
+  },
+  {
+    "run": "stages",
+    "field": "rest_lifecycle_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "stages",
+    "field": "image_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "stages",
+    "field": "ornament_factory_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-factory",
+    "field": "observer_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-factory",
+    "field": "observed_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-factory",
+    "field": "rest_lifecycle_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-factory",
+    "field": "image_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-lifecycle",
+    "field": "observer_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-lifecycle",
+    "field": "observed_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-lifecycle",
+    "field": "rest_lifecycle_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-lifecycle",
+    "field": "image_helper_sha256",
+    "match": true
+  },
+  {
+    "run": "der-winter-lifecycle",
+    "field": "ornament_factory_helper_sha256",
+    "match": true
+  }
+]

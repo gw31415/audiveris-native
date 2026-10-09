@@ -13,8 +13,10 @@ mod beam_rest;
 #[cfg(test)]
 mod context_projection_image_tests;
 mod direction_callbacks;
+mod explicit_tuplet;
 #[cfg(test)]
 mod flag_rest_weak_image_tests;
+mod ornament;
 mod tuplet;
 mod tuplet_addition;
 #[cfg(test)]
@@ -973,6 +975,9 @@ impl Graph {
             }
             if kind == "ChordArticulationRelation" {
                 self.validate_chord_articulation(source, target, &data)?;
+            }
+            if kind == "ChordOrnamentRelation" {
+                self.validate_chord_ornament(source, target, &data)?;
             }
             if matches!(
                 kind.as_str(),
@@ -2367,6 +2372,10 @@ impl Graph {
             }
             if e.key.kind == "ChordArticulationRelation" && e.data["source_ratio"] == 1.0 {
                 self.validate_chord_articulation(e.key.source, e.key.target, &e.data)?;
+                continue;
+            }
+            if e.key.kind == "ChordOrnamentRelation" && e.data["source_ratio"] == 1.0 {
+                self.validate_chord_ornament(e.key.source, e.key.target, &e.data)?;
                 continue;
             }
             // Augmentation supports the dot only (target coefficient zero).

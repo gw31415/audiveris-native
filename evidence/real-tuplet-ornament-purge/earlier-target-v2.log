@@ -1,0 +1,18 @@
+
+running 2 tests
+test music_ornaments::tests::an_laura_checked_ornaments_preserve_original_null_factory_without_registration has been running for over 60 seconds
+test music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original has been running for over 60 seconds
+test music_ornaments::tests::an_laura_checked_ornaments_preserve_original_null_factory_without_registration ... ok
+
+thread 'music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original' (494672) panicked at src/music_ornaments/tests.rs:38:5:
+actual=0.9428756254469913 expected=0.9428511611821568
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original ... FAILED
+
+failures:
+
+failures:
+    music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 296 filtered out; finished in 245.14s
+

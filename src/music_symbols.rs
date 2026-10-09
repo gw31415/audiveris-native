@@ -706,6 +706,20 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 }
                 continue;
             }
+            if crate::music_ornaments::is_shape(shape) {
+                if let Some(key) = crate::music_ornaments::create_added(
+                    &mut graph,
+                    &m,
+                    sid,
+                    gid,
+                    beam_dispatch::glyph_json(g),
+                    shape,
+                    grade,
+                )? {
+                    created.push(key);
+                }
+                continue;
+            }
             if matches!(shape, "TUPLET_THREE" | "TUPLET_SIX") {
                 if let Some(key) =
                     crate::music_tuplets::create(&mut m, &mut graph, g, sid, shape, grade, gid)?

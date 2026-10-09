@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 242.3605412550096,
+  "source_sha256": {
+    "src/music_symbols.rs": "62d25476091d4ba87320e3ee6a62d42bc0617cb3f975e7df70ac1d1796dc8bd3",
+    "src/music_links.rs": "64db8b138df3e1cc46e849ecb813aa759f49c7af7d2e1501845fe21164df782b",
+    "src/music_rests.rs": "c3381556e35128f3b65657e7455f3781416af5d37542539959d8f519ece585a3",
+    "src/music_rests/tests.rs": "61d3d10bdc213c60348141324bfc1807e599b9656c91987cd678d9d11a329a91",
+    "src/music_tuplets.rs": "aceab4e4b061ed45b3d4fce871ff50eaa0a6ac8d7546c185bf1ed9207a8c2e84",
+    "src/music_tuplets/tests.rs": "018f8db0cd4379afb0e5ba9ea34a4c34b80565ac24d0fa5efa37f05db7262e3b",
+    "src/music_measures.rs": "a3c9c28f42b2617178ba107e33434e22d6e78b3d673c3f32caa3637c224c312d",
+    "src/music_ornaments.rs": "f85cc7ef80fb1292341563171c4bd2a21d6c1d9e76bbf28e8d770f62e6ec1757",
+    "src/music_ornaments/tests.rs": "9344bc24e3d641ff3706f9df4c9c72f6a090d1859c531c431c7c076320a2c7b1",
+    "src/shared_sig/explicit_tuplet.rs": "87a6d82bd2dcb936ef5c9a961df30280225dab2192b5b488f963c2bbbcbeef21",
+    "src/shared_sig/ornament.rs": "6018955216fc428df70b6bc31902a9331b9514c5eae6cba838000ec174429cf3",
+    "src/shared_sig.rs": "4a2239b96355dfe4b25bbf1f0a34272a2fc62fa5289bfe9c1bae167e464a43ad"
+  },
+  "binary_sha256": "f5bdaa57d86a6001b34a39d4a0291f7d8b0e73805ff8752cad1fc8938fd63ba0",
+  "unique_targets": 1,
+  "source_stable": true
+}

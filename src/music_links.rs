@@ -99,13 +99,16 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     // Tuplet lookup reads durationSansTuplet. Original linkAugmentationDots
     // harmonizes actual Chords before lookup, before later weak-dot reduction.
     count_augmentation_before_tuplets(&m, &mut graph)?;
-    let (tuplets, tuplet_containers) = crate::music_tuplets::link_and_remove(&m, &mut graph)?;
+    let (tuplets, mut tuplet_containers) = crate::music_tuplets::link_and_remove(&m, &mut graph)?;
     let numbers = crate::music_numbers::link_and_remove(&m, &mut graph)?;
     let flag_overlaps = crate::music_flags::detect_overlaps(&mut graph)?;
     let alters = crate::music_alters::contextualize_and_purge(&mut graph)?;
     let flags = crate::music_flags::contextualize(&mut graph)?;
     let pauses = crate::music_pauses::contextualize_and_purge(&mut graph, &m.chords)?;
     let articulations = crate::music_articulations::contextualize_and_purge(&mut graph, &m.chords)?;
+    let ornaments = crate::music_ornaments::contextualize_and_purge(&mut graph, &m)?;
+    let tuplet_purge =
+        crate::music_tuplets::contextualize_and_purge(&m, &mut graph, &mut tuplet_containers)?;
     let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
     let flag_competition = crate::music_flags::reduce_exclusions(&mut graph)?;
     let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
@@ -138,8 +141,10 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     m.owner.prepared.report["limited_links"]["direction_linking_and_weak_purge"] = directions;
     m.owner.prepared.report["limited_links"]["temporary_numbers"] = numbers;
     m.owner.prepared.report["limited_links"]["explicit_tuplets"] = tuplets;
+    m.owner.prepared.report["limited_links"]["explicit_tuplet_weak_purge"] = tuplet_purge;
     m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
     m.owner.prepared.report["limited_links"]["articulation_weak_purge"] = articulations;
+    m.owner.prepared.report["limited_links"]["ornament_weak_purge"] = ornaments;
     m.owner.prepared.report["limited_links"]["articulation_redundancy"] = articulation_redundancy;
     Ok(m)
 }

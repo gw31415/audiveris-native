@@ -515,6 +515,7 @@ mod music_measure_layout;
 mod music_measure_slots;
 pub mod music_measures;
 mod music_numbers;
+mod music_ornaments;
 mod music_pauses;
 mod music_repeat_dots;
 mod music_rests;
