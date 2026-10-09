@@ -173,7 +173,12 @@ pub(crate) fn assert_real_part_memberships(
         .collect::<Vec<_>>();
     assert_eq!(exclusions.len(), 2);
     crate::music_alters::contextualize_and_purge(&mut music.owner.graph).unwrap();
-    crate::music_flags::contextualize(&mut music.owner.graph).unwrap();
+    let before_flag_weak = music.owner.graph.clone();
+    let flag_weak = crate::music_flags::contextualize(&mut music.owner.graph).unwrap();
+    flag_overlap_preparation["owned_flag_weak_lifecycle"] = music
+        .owner
+        .graph
+        .assert_owned_flag_family_removal(&before_flag_weak, &flag_weak, true);
     let rest_reduction = crate::music_symbol_reduction::reduce_owned(
         &mut music.owner.graph,
         &music.measures,

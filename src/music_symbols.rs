@@ -692,9 +692,10 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                     crate::music_flags::lookup(shape, b, il, max, sid, &graph.snapshot())?
                 {
                     let key = graph.next_symbol_key(sid)?;
-                    let data = json!({"kind":"FlagInter","shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"value":flag_value});
+                    let data = json!({"kind":"FlagInter","shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":null,"part_id":null,"grade":grade,"value":flag_value});
                     graph.vertex(key, data, false)?;
-                    graph.relations(sid, Phase::Symbol, vec![(key, stem, rel)])?;
+                    graph.fresh_flag_added(key)?;
+                    graph.apply_owned_flag_stem(key, stem, rel)?;
                     created.push(key);
                     accepted.push(
                         graph.snapshot()["inters"]

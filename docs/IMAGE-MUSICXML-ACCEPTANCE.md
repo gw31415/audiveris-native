@@ -65,6 +65,9 @@ native抽出はcomponent/column/raw-gap方式で、原版Skeleton一般同等性
 5対象とexact7/64 XML byte/XSDが成功。新しい代表譜面XMLはまだ出力検証していません。
 原版12端点属性・番号再利用・出力notationはfocused確認済みで、124音符/12端点の実画像
 serialized XML比較は接続区切りへ保留します。63＋補正8もこの小単位では再実行しません。
+[Flag実所属lifecycle](../evidence/real-flag-owned-lifecycle/README.md)は通常factoryと
+既存weak/exclusion削除へ接続し、8対象が成功。代表画像とXML/XSDは未再実行です。
+ユーザーの停止指示により [引継ぎ](HANDOFF-2026-10-09.md) を保存して区切ります。
 以後は変更対象テストで小単位保存し、代表譜面・XML/XSDは接続の区切りに集約します。
 余分なpは原版のAccentとのOVERLAP除去に合わせたnative順序修正が必要です。
 公開CLI受付・品質falseを維持し、内部成功を公開受付へ読み替えません。

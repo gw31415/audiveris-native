@@ -1,0 +1,36 @@
+{
+  "files": {
+    "CHECKS.json": {
+      "bytes": 673,
+      "sha256": "03ef2e53a7edb4afb9e534003db1df40f4a27cdd2f6f1adedea343f18985eec1"
+    },
+    "CONSUMER-REVIEW.md": {
+      "bytes": 5282,
+      "sha256": "81f77d8407c181b767b1d7a4f8dd17eaafa576feed6802b4ecee4779fa7aa80f"
+    },
+    "NEXT-DEPENDENCY.md": {
+      "bytes": 926,
+      "sha256": "9051b1072449bba9e018f2ecd02750ca8a210148b9521c538ef894e1c37424f2"
+    },
+    "README.md": {
+      "bytes": 2083,
+      "sha256": "65ef2de0e112a6cc7a51ca694a2d552c70333d880ea00dd385ed5c4c6c7def74"
+    },
+    "RESULT.json": {
+      "bytes": 66127,
+      "sha256": "76030e73fedec1b6488244886695c8fd4eee08a6767648d77bc85579aaa269ad"
+    },
+    "SOURCE-AND-CONTRACT-REVIEW.md": {
+      "bytes": 4401,
+      "sha256": "cc7d944a868014226555caf8634072f79d1aa51f867a79ec011a3b785b62ed5b"
+    },
+    "VALIDATION.json": {
+      "bytes": 420,
+      "sha256": "71db8e9864b8d4a74416ecdf8466850981dc3315393b83f732599d6be15b17b2"
+    },
+    "run-focused.py": {
+      "bytes": 2632,
+      "sha256": "62dac19ac1e67a2dbd4f1b90f26dcd8695cbe52516686e7c010e63595b14b374"
+    }
+  }
+}

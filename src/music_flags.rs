@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! AbstractFlagInter.lookupLink/createValidAdded, ordinary one/two flags.
 //! Actual symbol glyphs and retained stem/head relations; no selected input IDs.
-use crate::shared_sig::{Graph, Key};
+use crate::shared_sig::{FlagRemovalEvent, FlagRemovalStage, Graph, Key};
 use serde_json::{Value, json};
 pub(crate) fn value(shape: &str) -> Option<usize> {
     match shape {
@@ -125,22 +125,50 @@ pub(crate) fn lookup(
     }
     Ok(None)
 }
-/// Complete the original contextualize-and-weak-purge subset for flags. Other
-/// supported symbol overlaps and multiple stems stay explicit pending cases.
+fn remove_flag_observing(
+    graph: &mut Graph,
+    key: Key,
+    lifecycle: &mut Vec<Value>,
+    observe: &mut impl FnMut(&Graph, FlagRemovalEvent) -> Result<(), String>,
+) -> Result<(), String> {
+    graph.remove_owned_flag(key, |g, event| {
+        let stage = match event.stage {
+            FlagRemovalStage::ContainerLookupComplete => "ContainerLookupComplete",
+            FlagRemovalStage::EdgeRemoved => "EdgeRemoved",
+            FlagRemovalStage::VertexRemoved => "VertexRemoved",
+        };
+        lifecycle.push(json!({"stage":stage,"key":event.key,
+            "inter_id":g.id(event.key),"relation_id":event.edge}));
+        observe(g, event)
+    })
+}
+fn remove_flag(graph: &mut Graph, key: Key, lifecycle: &mut Vec<Value>) -> Result<(), String> {
+    remove_flag_observing(graph, key, lifecycle, &mut |_, _| Ok(()))
+}
+/// This remains the existing Flag-family pass; a common first-purge queue is a
+/// separate boundary. Lazy Part reads and earlier removals commit together.
 pub(crate) fn contextualize(graph: &mut Graph) -> Result<Value, String> {
-    let initial = graph.snapshot();
+    contextualize_with(graph, |_, _| Ok(()))
+}
+fn contextualize_with(
+    graph: &mut Graph,
+    mut observe: impl FnMut(&Graph, FlagRemovalEvent) -> Result<(), String>,
+) -> Result<Value, String> {
+    let mut next = graph.clone();
+    let initial = next.snapshot();
     let flags = initial["inters"]
         .as_array()
         .unwrap()
         .iter()
         .filter(|n| n["kind"] == "FlagInter")
-        .collect::<Vec<_>>();
-    if flags.is_empty() {
-        return Ok(json!({"flags":0,"removed":[]}));
+        .count();
+    if flags == 0 {
+        return Ok(json!({"flags":0,"removed":[],"lifecycle":[]}));
     }
-    graph.contextualize_head_stem_flags()?;
-    let snap = graph.snapshot();
+    next.contextualize_head_stem_flags()?;
+    let snap = next.snapshot();
     let mut removed = Vec::new();
+    let mut lifecycle = Vec::new();
     for f in snap["inters"]
         .as_array()
         .unwrap()
@@ -155,14 +183,23 @@ pub(crate) fn contextualize(graph: &mut Graph) -> Result<Value, String> {
         {
             let key = serde_json::from_value(f["origin"].clone())
                 .map_err(|_| "flag_owned_origin_required")?;
-            graph.remove_music_inter(key)?;
+            remove_flag_observing(&mut next, key, &mut lifecycle, &mut observe)?;
             removed.push(f["id"].clone());
         }
     }
-    graph.contextualize_head_stem_flags()?;
+    next.contextualize_head_stem_flags()?;
+    *graph = next;
     Ok(
-        json!({"flags":flags.len(),"removed":removed,"scope":"ordinary one/two flags, actual HeadStem/FlagStem support/context and weak purge; full supported symbol conflict reduction pending"}),
+        json!({"flags":flags,"removed":removed,"lifecycle":lifecycle,
+        "scope":"ordinary one/two flags, actual HeadStem/FlagStem support/context and weak purge; full supported symbol conflict reduction pending"}),
     )
+}
+#[cfg(test)]
+pub(crate) fn contextualize_observing(
+    graph: &mut Graph,
+    observe: impl FnMut(&Graph, FlagRemovalEvent) -> Result<(), String>,
+) -> Result<Value, String> {
+    contextualize_with(graph, observe)
 }
 
 #[cfg(test)]

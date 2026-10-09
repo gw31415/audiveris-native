@@ -73,9 +73,13 @@ impl Graph {
         assert_eq!(relations.len(), 2);
         let mut chord_body = manual.retained_inter(chord).unwrap().0.clone();
         chord_body["manual"] = json!(true);
-        chord_body["time_offset"] = json!({"num":7,"den":64});
-        chord_body["expected_duration"] = json!({"num":3,"den":4});
+        chord_body["time_offset"] = json!("7/64");
         manual.vertex(chord, chord_body, false).unwrap();
+        let exact_offset = crate::music_time::Fraction::new(7, 64).unwrap();
+        assert_eq!(
+            manual.actual_chord_time_offset(chord).unwrap(),
+            Some(exact_offset)
+        );
         let checkpoint = manual.snapshot();
         let mut invalid = manual.clone();
         let last = competition["removed_conflicting_flags"]
@@ -99,6 +103,10 @@ impl Graph {
             "flag_frozen_overlap_pending"
         );
         assert_eq!(invalid.snapshot(), failed);
+        assert_eq!(
+            invalid.actual_chord_time_offset(chord).unwrap(),
+            Some(exact_offset)
+        );
         let result = crate::music_flags::reduce_overlaps(&mut manual).unwrap();
         assert_eq!(
             result["removed_conflicting_flags"],
@@ -120,6 +128,10 @@ impl Graph {
             assert!(removed);
             assert_eq!(body["manual"], true);
         }
+        assert_eq!(
+            manual.actual_chord_time_offset(chord).unwrap(),
+            Some(exact_offset)
+        );
         let after = manual.snapshot();
         for node in checkpoint["inters"]
             .as_array()
@@ -137,6 +149,6 @@ impl Graph {
                 node
             );
         }
-        json!({"declared_manual_flag_and_relation_identity_retained":true,"frozen_overlap_preserves_full_graph":true,"actual_Chord_manual_7_64_clock_expected_3_4_preserved":true})
+        json!({"declared_manual_flag_and_relation_identity_retained":true,"frozen_overlap_preserves_full_graph":true,"actual_Chord_manual_offset_7_64_preserved":true})
     }
 }

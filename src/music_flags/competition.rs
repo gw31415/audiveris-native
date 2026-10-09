@@ -69,6 +69,7 @@ pub(crate) fn reduce_exclusions(graph: &mut Graph) -> Result<Value, String> {
         .collect::<std::collections::BTreeSet<_>>();
     next.contextualize_head_stem_flags()?;
     let mut removed = Vec::new();
+    let mut lifecycle = Vec::new();
     for system in systems {
         loop {
             let snapshot = next.snapshot();
@@ -111,13 +112,15 @@ pub(crate) fn reduce_exclusions(graph: &mut Graph) -> Result<Value, String> {
             let key: Key = serde_json::from_value(weaker["origin"].clone())
                 .map_err(|_| "flag_owned_origin_required")?;
             removed.push(weaker["id"].clone());
-            next.remove_music_inter(key)?;
+            remove_flag(&mut next, key, &mut lifecycle)?;
             next.contextualize_head_stem_flags()?;
         }
     }
     *graph = next;
-    Ok(json!({"removed_conflicting_flags":removed,
-        "scope":"actual Flag glyph overlaps and strict contextual best-edge exclusion selection; other cross-kind/frozen conflicts remain explicit"}))
+    Ok(
+        json!({"removed_conflicting_flags":removed,"lifecycle":lifecycle,
+        "scope":"actual Flag glyph overlaps and strict contextual best-edge exclusion selection; other cross-kind/frozen conflicts remain explicit"}),
+    )
 }
 
 #[cfg(test)]

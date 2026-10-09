@@ -11,6 +11,8 @@ use std::{
     sync::Arc,
 };
 mod filler;
+mod flags;
+pub(crate) use flags::{FlagRemovalEvent, FlagRemovalStage};
 
 #[derive(Clone, Debug)]
 struct ClefOwner {
@@ -24,6 +26,7 @@ struct MeasureClefs {
     measure: Arc<MeasureLayout>,
     members: Vec<Key>,
     keys: Vec<Key>,
+    flags: Vec<Key>,
 }
 #[derive(Clone, Default)]
 pub(super) struct ClefOwnership {
@@ -35,6 +38,7 @@ pub(super) struct ClefOwnership {
     clefs: BTreeMap<Key, ClefOwner>,
     key_signatures: BTreeMap<Key, filler::KeyOwner>,
     filled_systems: BTreeSet<u64>,
+    flag_added_keys: BTreeSet<Key>,
 }
 impl std::fmt::Debug for ClefOwnership {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -83,6 +87,7 @@ impl Graph {
                     measure: measure.clone(),
                     members: Vec::new(),
                     keys: Vec::new(),
+                    flags: Vec::new(),
                 });
             }
         }
@@ -110,6 +115,7 @@ impl Graph {
             clefs: BTreeMap::new(),
             key_signatures: BTreeMap::new(),
             filled_systems: BTreeSet::new(),
+            flag_added_keys: BTreeSet::new(),
         });
         Ok(())
     }

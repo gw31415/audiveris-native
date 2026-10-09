@@ -11,6 +11,7 @@ mod alter_callbacks;
 mod articulation_callbacks;
 mod beam_rest;
 mod clef;
+pub(crate) use clef::{FlagRemovalEvent, FlagRemovalStage};
 #[cfg(test)]
 mod context_projection_image_tests;
 mod direction_callbacks;
@@ -700,6 +701,9 @@ impl Graph {
         }
         if self.requires_owned_rest_removal(key) {
             return Err("music_removal_actual_Rest_owners_required".into());
+        }
+        if self.requires_owned_flag_removal(key) {
+            return Err("music_removal_actual_Flag_owners_required".into());
         }
         if self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             let mut next = self.clone();

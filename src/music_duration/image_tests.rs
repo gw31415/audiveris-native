@@ -8,6 +8,10 @@ pub(crate) fn assert_real_duration_reads(mut music: OwnedMusic, preparation: Val
     let flags_before = music.owner.graph.snapshot();
     let mut competition = preparation;
     let selection = crate::music_flags::reduce_exclusions(&mut music.owner.graph).unwrap();
+    competition["owned_flag_exclusion_lifecycle"] = music
+        .owner
+        .graph
+        .assert_owned_flag_family_removal(&untouched, &selection, false);
     competition
         .as_object_mut()
         .unwrap()
