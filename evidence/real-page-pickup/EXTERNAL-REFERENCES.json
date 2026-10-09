@@ -1,0 +1,80 @@
+{
+  "generated_utc": "2026-10-09T11:51:50.330114+00:00",
+  "raw_artifacts_retained_not_duplicated": [
+    {
+      "path": "/tmp/real-page-pickup-v1/RESULT.json",
+      "bytes": 5430,
+      "sha256": "e75d1d2df8ed5e7469ada2cfa55d32e6b3840d7f44c20c6ee1ca2b53620ea3ec"
+    },
+    {
+      "path": "/tmp/real-page-pickup-v1/console.log",
+      "bytes": 1986,
+      "sha256": "56d51d223cf4b1676bc58bc6946c799ed0549fab546678f12d67d75d5eba0a2c"
+    },
+    {
+      "path": "/tmp/real-rest-native-internal-rhythm-export.json",
+      "bytes": 4872627,
+      "sha256": "455722d0de93d335673cbb4d2b3bf57fa086331a013df0e1c9b8e0f7ac06d133"
+    },
+    {
+      "path": "/tmp/real-page-pickup-v1-vs-original.json",
+      "bytes": 19104,
+      "sha256": "029e03bdfeaca3d6932f941fdb95461b853a4e5504a4690861bb0383020e9770"
+    },
+    {
+      "path": "/tmp/real-page-pickup-v1-structure.json",
+      "bytes": 118238,
+      "sha256": "796c95d189268270b4e6f98bf9dd70d80db5acce515f41591615615dc8e1c351"
+    },
+    {
+      "path": "/tmp/real-page-pickup-v1-laura-vs-original.json",
+      "bytes": 9890,
+      "sha256": "a570cd64168097613b9ac41091888c9ff38c89131164fbaa540590cdfeaf20a4"
+    },
+    {
+      "path": "/tmp/real-rest-page-fixer-replay-original-v3/observed.json",
+      "bytes": 253341,
+      "sha256": "94d1eee5c56f44157d65fe85950a689649f3969b7b5f72849482ae35b3f0d4af"
+    },
+    {
+      "path": "/tmp/real-rest-page-fixer-replay-original-v3/MixedRestStartingProbe.java",
+      "bytes": 7459,
+      "sha256": "caa19fe03bc09ce220e74dc793ff9b6fe79aa56f3d5df01b51a19fc646299418"
+    },
+    {
+      "path": "/tmp/real-rest-page-fixer-replay-original-v3/run.py",
+      "bytes": 2285,
+      "sha256": "b51b3a29931d9b4716994635079fc9f46580531ba548832782b3edfdae0b3cdd"
+    },
+    {
+      "path": "/tmp/real-rest-page-fixer-replay-original-v3/extract.py",
+      "bytes": 5090,
+      "sha256": "9ddee24cbb0476a048ed76af9816d5ff8252979c08ee33a53d1589cc7b9b9c86"
+    },
+    {
+      "path": "/tmp/real-rest-page-fixer-replay-original-v3/PROVENANCE.json",
+      "bytes": 2226,
+      "sha256": "bc238c75194675cab85d885a2e1626f9cd64a122fc7e460b3b0d587546f31b0d"
+    },
+    {
+      "path": "/tmp/real-page-pickup-persisted-reproduced-v1.json",
+      "bytes": 2816,
+      "sha256": "cb93e8461fb048a5cb0174a21ee5cc153546e0a3dcf33ff4be197768f28552b8"
+    },
+    {
+      "path": "/tmp/real-page-pickup-duration-control-v1/RESULT.json",
+      "bytes": 549,
+      "sha256": "4eca4b0bf279560ed720d9818b390f714a81e0c6002ba0978e77bdd10998a202"
+    },
+    {
+      "path": "/tmp/real-page-pickup-v1c-checks.json",
+      "bytes": 285,
+      "sha256": "0d863071416241acbce811dbd35f63c13f5e5fc857dd217b88cf60a004e7e30a"
+    },
+    {
+      "path": "/tmp/page-duration-native-controls-proposed-v1/README.md",
+      "bytes": 3694,
+      "sha256": "a61014e93d6c3f39bcf62dd083a2b3ec8869dc69d93d7ccc4bca198387fda2d0"
+    }
+  ]
+}

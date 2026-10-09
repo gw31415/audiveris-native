@@ -7,6 +7,7 @@ pub(crate) mod beam_rest;
 mod beam_rest_detect;
 mod beam_rest_lookup;
 pub(crate) mod note_pitch;
+mod page_measures;
 mod recognized_export;
 #[cfg(test)]
 mod selected_cli_tests;
@@ -751,9 +752,10 @@ fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
 fn continue_recognized_export(mut m: OwnedMusic, part_name: &str) -> Result<Export, String> {
     admit_recognized_factories(&m)?;
     let rhythm = m.process_recognized_page_rhythm()?;
+    let page_measures = m.fix_recognized_page_measures()?;
     let (xml, observation) = m.write_recognized_musicxml(part_name)?;
     let symbols = std::mem::take(&mut m.owner.prepared.report);
-    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-recognized-image.v1","symbols":symbols,"events":observation["events"],"recognized_page_rhythm":rhythm,"omitted_actual_Chords":observation["omitted_actual_Chords"],"divisions":observation["divisions"],"shared_sig":m.owner.graph.snapshot(),"part_name":part_name,"part_name_is_user_metadata_not_instrument_recognition":true,"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"required_directions_connected":true,"real_image_quality_accepted":false,"pending":["representative real-rest image quality comparison and rest-only Staff headers","recognition dependencies exposed by further representative inputs"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-recognized-image.v1","symbols":symbols,"events":observation["events"],"recognized_page_rhythm":rhythm,"recognized_PAGE_measures":page_measures,"omitted_actual_Chords":observation["omitted_actual_Chords"],"divisions":observation["divisions"],"shared_sig":m.owner.graph.snapshot(),"part_name":part_name,"part_name_is_user_metadata_not_instrument_recognition":true,"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"required_directions_connected":true,"real_image_quality_accepted":false,"pending":["representative real-rest image quality comparison and rest-only Staff headers","recognition dependencies exposed by further representative inputs"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     let provenance = provenance(&m);
     Ok(Export {
         owner: m,

@@ -1,0 +1,219 @@
+{
+  "scope": "Bounded checkpoint package. /tmp only; no repo/build/image/Git mutations. Full historical raw observations remain referenced, not replaced.",
+  "files": {
+    "CLI-REGRESSION.json": {
+      "bytes": 2369,
+      "sha256": "3dc7a361df4addcea0892d5da2163f9aef495ddb690fb69559151121541ac2ab"
+    },
+    "DER-WINTER-XSD.json": {
+      "bytes": 500,
+      "sha256": "c46a31f2b0af3e6c4aab72fc90ecaafc6439d8c47fe9a52471071e8bbbf83270"
+    },
+    "EXTERNAL-REFERENCES.json": {
+      "bytes": 2878,
+      "sha256": "4137dbbdf8d23845e5364ca8e4fe9af2ebfd6c18980f53b66bb73275e0a30640"
+    },
+    "EXTRA-XML-REGRESSION.json": {
+      "bytes": 459,
+      "sha256": "cce9c0abd4607a97b8f559873a9accc2894439243086f8638fd0e6c96ec952a2"
+    },
+    "NATIVE-PAGE-SUMMARY.json": {
+      "bytes": 5801,
+      "sha256": "e5ffca18531ea47381cf46918f5018b3d4b9c139095e6e26ba912f9d0602b6ce"
+    },
+    "NEXT-DEPENDENCY.md": {
+      "bytes": 2695,
+      "sha256": "029827eccd817084bcd59fca494591ed147503e530a6a7002cd6677d5d10e078"
+    },
+    "PORT-STATUS-PARAGRAPH.md": {
+      "bytes": 839,
+      "sha256": "611cdc2e996875634321db8fb393f3ccc13b1411774216609d92a0bfe9399377"
+    },
+    "PROXYMUSIC.json": {
+      "bytes": 2003,
+      "sha256": "e1c6f62854149ce93d0676e470bd54319aa77384d614bf831361a59733f7f09a"
+    },
+    "README.md": {
+      "bytes": 4592,
+      "sha256": "17e9c7621aa0c807103f5396a67a23ba718be9b505b5b5e75e0652a8c1dad097"
+    },
+    "TRUTH-STRUCTURE-SUMMARY.json": {
+      "bytes": 5812,
+      "sha256": "d54cbd94f7fa60a3d1515115c5adffd0ab8128458e87ab6f473b063ec1cb144f"
+    },
+    "VALIDATION.json": {
+      "bytes": 2376,
+      "sha256": "682f8da7e538621d7f8c2738a9c866ab0bbc50dc8c2e17074abba9563e372ad9"
+    },
+    "XML-COMPARISON-SUMMARY.json": {
+      "bytes": 7981,
+      "sha256": "553a346a9f64726045d35f811de876cd25911b06982528ef0f115b522f5f2239"
+    },
+    "archive-oneoffs.txt": {
+      "bytes": 10023,
+      "sha256": "464f16d1067572c5cd5112309f5d7168d808293c857cf2a2d190ffab05826f75"
+    },
+    "checks.json": {
+      "bytes": 827,
+      "sha256": "7bfc9231e20fd25157f5cce8070d19d9ec0e7c8f9058316d5672651979f77346"
+    },
+    "der-winter-native-internal.musicxml": {
+      "bytes": 24624,
+      "sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb"
+    },
+    "duration-control-RESULT.json": {
+      "bytes": 549,
+      "sha256": "4eca4b0bf279560ed720d9818b390f714a81e0c6002ba0978e77bdd10998a202"
+    },
+    "duration-control-historical-proposal-scope.md": {
+      "bytes": 3694,
+      "sha256": "a61014e93d6c3f39bcf62dd083a2b3ec8869dc69d93d7ccc4bca198387fda2d0"
+    },
+    "final-fmt-clippy-checks.json": {
+      "bytes": 285,
+      "sha256": "0d863071416241acbce811dbd35f63c13f5e5fc857dd217b88cf60a004e7e30a"
+    },
+    "original-replay/MANIFEST.json": {
+      "bytes": 2520,
+      "sha256": "591c89f9ab29254d0a5536bacca52251126644f9bb8ad7a865c8e2d461d7997c"
+    },
+    "original-replay/PROVENANCE.json": {
+      "bytes": 2226,
+      "sha256": "bc238c75194675cab85d885a2e1626f9cd64a122fc7e460b3b0d587546f31b0d"
+    },
+    "original-replay/PageMeasureFixerReplayProbe.java": {
+      "bytes": 9603,
+      "sha256": "ee71217971d99ee6c3a54e022c45fb5a518e25e0c4096dd975ddac4aabf60553"
+    },
+    "original-replay/README.md": {
+      "bytes": 8238,
+      "sha256": "b0ca20b81281a2b1a96b6e5edb959277fe04620c8dab77ce455e5e7887729d72"
+    },
+    "original-replay/compare_native.py": {
+      "bytes": 6658,
+      "sha256": "ac3202d667c1840e3628bba1d898282a48a966d4d59ab193a1e82228aa482635"
+    },
+    "original-replay/native-comparison-v1.json": {
+      "bytes": 2690,
+      "sha256": "9a7975516ba5a2ba5910b58e03c0b006f8ef205a783ae1e0c40c28545cb8520e"
+    },
+    "original-replay/summary.json": {
+      "bytes": 52514,
+      "sha256": "02e78d1ae179ee4f2b8e88b2c7c0ca9c06c6e27c570c0dd6975e541adcc79313"
+    },
+    "target-RESULT.json": {
+      "bytes": 5430,
+      "sha256": "e75d1d2df8ed5e7469ada2cfa55d32e6b3840d7f44c20c6ee1ca2b53620ea3ec"
+    }
+  },
+  "saved_checkpoint_files": {
+    "CLI-REGRESSION.json": {
+      "bytes": 2369,
+      "sha256": "3dc7a361df4addcea0892d5da2163f9aef495ddb690fb69559151121541ac2ab"
+    },
+    "DER-WINTER-XSD.json": {
+      "bytes": 500,
+      "sha256": "c46a31f2b0af3e6c4aab72fc90ecaafc6439d8c47fe9a52471071e8bbbf83270"
+    },
+    "EXTERNAL-REFERENCES.json": {
+      "bytes": 2878,
+      "sha256": "4137dbbdf8d23845e5364ca8e4fe9af2ebfd6c18980f53b66bb73275e0a30640"
+    },
+    "EXTRA-XML-REGRESSION.json": {
+      "bytes": 459,
+      "sha256": "cce9c0abd4607a97b8f559873a9accc2894439243086f8638fd0e6c96ec952a2"
+    },
+    "NATIVE-PAGE-SUMMARY.json": {
+      "bytes": 5801,
+      "sha256": "e5ffca18531ea47381cf46918f5018b3d4b9c139095e6e26ba912f9d0602b6ce"
+    },
+    "NEXT-DEPENDENCY.md": {
+      "bytes": 2695,
+      "sha256": "029827eccd817084bcd59fca494591ed147503e530a6a7002cd6677d5d10e078"
+    },
+    "PORT-STATUS-PARAGRAPH.md": {
+      "bytes": 839,
+      "sha256": "611cdc2e996875634321db8fb393f3ccc13b1411774216609d92a0bfe9399377"
+    },
+    "PROXYMUSIC.json": {
+      "bytes": 2003,
+      "sha256": "e1c6f62854149ce93d0676e470bd54319aa77384d614bf831361a59733f7f09a"
+    },
+    "README.md": {
+      "bytes": 4592,
+      "sha256": "17e9c7621aa0c807103f5396a67a23ba718be9b505b5b5e75e0652a8c1dad097"
+    },
+    "TRUTH-STRUCTURE-SUMMARY.json": {
+      "bytes": 5812,
+      "sha256": "d54cbd94f7fa60a3d1515115c5adffd0ab8128458e87ab6f473b063ec1cb144f"
+    },
+    "VALIDATION.json": {
+      "bytes": 2376,
+      "sha256": "682f8da7e538621d7f8c2738a9c866ab0bbc50dc8c2e17074abba9563e372ad9"
+    },
+    "XML-COMPARISON-SUMMARY.json": {
+      "bytes": 7981,
+      "sha256": "553a346a9f64726045d35f811de876cd25911b06982528ef0f115b522f5f2239"
+    },
+    "archive-oneoffs.txt": {
+      "bytes": 10023,
+      "sha256": "464f16d1067572c5cd5112309f5d7168d808293c857cf2a2d190ffab05826f75"
+    },
+    "checks.json": {
+      "bytes": 827,
+      "sha256": "7bfc9231e20fd25157f5cce8070d19d9ec0e7c8f9058316d5672651979f77346"
+    },
+    "der-winter-native-internal.musicxml": {
+      "bytes": 24624,
+      "sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb"
+    },
+    "duration-control-RESULT.json": {
+      "bytes": 549,
+      "sha256": "4eca4b0bf279560ed720d9818b390f714a81e0c6002ba0978e77bdd10998a202"
+    },
+    "duration-control-historical-proposal-scope.md": {
+      "bytes": 3694,
+      "sha256": "a61014e93d6c3f39bcf62dd083a2b3ec8869dc69d93d7ccc4bca198387fda2d0"
+    },
+    "final-fmt-clippy-checks.json": {
+      "bytes": 285,
+      "sha256": "0d863071416241acbce811dbd35f63c13f5e5fc857dd217b88cf60a004e7e30a"
+    },
+    "final-test-only-checks.json": {
+      "bytes": 285,
+      "sha256": "0d863071416241acbce811dbd35f63c13f5e5fc857dd217b88cf60a004e7e30a"
+    },
+    "original-replay/MANIFEST.json": {
+      "bytes": 2520,
+      "sha256": "591c89f9ab29254d0a5536bacca52251126644f9bb8ad7a865c8e2d461d7997c"
+    },
+    "original-replay/PROVENANCE.json": {
+      "bytes": 2226,
+      "sha256": "bc238c75194675cab85d885a2e1626f9cd64a122fc7e460b3b0d587546f31b0d"
+    },
+    "original-replay/PageMeasureFixerReplayProbe.java": {
+      "bytes": 9603,
+      "sha256": "ee71217971d99ee6c3a54e022c45fb5a518e25e0c4096dd975ddac4aabf60553"
+    },
+    "original-replay/README.md": {
+      "bytes": 8238,
+      "sha256": "b0ca20b81281a2b1a96b6e5edb959277fe04620c8dab77ce455e5e7887729d72"
+    },
+    "original-replay/compare_native.py": {
+      "bytes": 6658,
+      "sha256": "ac3202d667c1840e3628bba1d898282a48a966d4d59ab193a1e82228aa482635"
+    },
+    "original-replay/native-comparison-v1.json": {
+      "bytes": 2690,
+      "sha256": "9a7975516ba5a2ba5910b58e03c0b006f8ef205a783ae1e0c40c28545cb8520e"
+    },
+    "original-replay/summary.json": {
+      "bytes": 52514,
+      "sha256": "02e78d1ae179ee4f2b8e88b2c7c0ca9c06c6e27c570c0dd6975e541adcc79313"
+    },
+    "target-RESULT.json": {
+      "bytes": 5430,
+      "sha256": "e75d1d2df8ed5e7469ada2cfa55d32e6b3840d7f44c20c6ee1ca2b53620ea3ec"
+    }
+  }
+}

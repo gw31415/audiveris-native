@@ -1,0 +1,42 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "runtime_sha256": "9d2c3cd83a1cdea4bc6b0e68d37648d5258fe6c4d67937854514028b31b46971",
+  "compiler_sha256": "55859b80e7a9c4c4736be19ad3addeb35112ca6d17a30c4e0e116afc0a499bdb",
+  "book_before_sha256": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "book_after_sha256": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "helper_sha256": "ee71217971d99ee6c3a54e022c45fb5a518e25e0c4096dd975ddac4aabf60553",
+  "runner_sha256": "b51b3a29931d9b4716994635079fc9f46580531ba548832782b3edfdae0b3cdd",
+  "compile_argv": [
+    "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+    "--release",
+    "21",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "-d",
+    "/tmp/real-rest-page-fixer-replay-original-v3/classes",
+    "/tmp/real-rest-page-fixer-replay-original-v3/MixedRestStartingProbe.java",
+    "/tmp/real-rest-page-fixer-replay-original-v3/PageMeasureFixerReplayProbe.java"
+  ],
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Dlogback.configurationFile=/tmp/real-rest-page-fixer-replay-original-v3/logback.xml",
+    "-Djava.io.tmpdir=/tmp/real-rest-page-fixer-replay-original-v3/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-rest-page-fixer-replay-original-v3/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-rest-page-fixer-replay-original-v3/prefs",
+    "-Duser.home=/tmp/real-rest-page-fixer-replay-original-v3/home",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-rest-page-fixer-replay-original-v3/classes",
+    "PageMeasureFixerReplayProbe",
+    "/tmp/real-rest-original-v1/der-winter-gray.omr",
+    "/tmp/real-rest-page-fixer-replay-original-v3/observed.json"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 2.991276505024871,
+  "no_image_processing": true,
+  "native_outputs_used": false,
+  "output": "94d1eee5c56f44157d65fe85950a689649f3969b7b5f72849482ae35b3f0d4af"
+}

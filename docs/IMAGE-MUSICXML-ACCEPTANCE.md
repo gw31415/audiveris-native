@@ -34,14 +34,16 @@
 
 ## 現在の次依存
 
-[通常休符・非致命的Slot競合](../evidence/real-rest-rhythm-continuation/README.md) を
-実LINKS所有から接続した。内部Der Winterは124イベントを出力し、原版保存状態の
-9 Stack・18 Measure・27 Voice・106 Chordと、XMLの全音符/休符/声部群が一致。
-XSDと独立readerも成功した。独立正解とのイベント一致は102/124、休符9/9で
-原版と同じだが、弱起小節番号・余分なp方向記号1件・欠けたSlur6本が残る。
-次は実共有StackのPAGE弱起処理、未接続記号lifecycleとSlur認識を比較する。
-公開CLIの追加形状guardと品質falseは維持する。内部経路は公開admission未検証であり、
-このXMLを通常画像CLIの受入成功に読み替えない。
+[実共有StackのPAGE弱起処理](../evidence/real-page-pickup/README.md) を接続し、
+内部Der Winterの全18小節identityが原版と一致した。全124イベント・27 Voiceも一致し、
+XSD・独立readerは成功。独立正解の弱起マーカーは27/27、イベント102/124・休符9/9で
+原版の指標を保持する。AnLauraの既存XMLはバイト同一で17カテゴリ比較も維持。
+原版保存オブジェクトの限定再生では終了量・共有excess更新と実参照保持を比較した。
+native各Voice直後のpeer中間観測は次の必要な実画像テストで追加し、現段階では
+最終共有状態とrollback/実identityの検証に限定する。
+次は生成前CHECKED棄却と評価順位、実Header/Clef/Key/Filler、競合relation除去、
+Slur認識を接続する。Der Winterの余分なp方向記号1件はAccentとの欠けた排他候補、
+Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えない。
 
 ## 最初の実証と切断点
 

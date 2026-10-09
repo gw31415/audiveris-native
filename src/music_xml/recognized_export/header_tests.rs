@@ -287,6 +287,7 @@ impl OwnedMusic {
                     "abnormal":m.timing.abnormal,
                     "slots":crate::music_voices::slots_projection(&m.timing.slots),
                     "tuplets":m.tuplets,"stack_tuplets":m.stack_tuplets})).collect::<Vec<_>>(),
+                "PAGE_ids":m.measure_layout.stacks.iter().map(|s|s.page_identity.map(|i|json!({"number":i.number,"implicit":i.pickup}))).collect::<Vec<_>>(),
                 "stacks":m.measure_layout.stacks.iter().map(|s|s.timing.as_ref().map(|t|json!({
                     "expected":t.expected.map(crate::music_time::format_fraction),
                     "actual":t.actual.map(crate::music_time::format_fraction),
@@ -400,9 +401,143 @@ impl OwnedMusic {
             }
         };
         observation["rhythm"] = rhythm;
+        let before_page = state(self);
+        let page_voices = self
+            .voices
+            .iter()
+            .map(|v| v.identity.clone())
+            .collect::<Vec<_>>();
+        let page_slots = self
+            .measures
+            .iter()
+            .map(|m| m.timing.slots.clone())
+            .collect::<Vec<_>>();
+        let page_result = self.fix_recognized_page_measures();
+        let after_page = state(self);
+        observation["after_PAGE"] = after_page.clone();
+        let page = match page_result {
+            Ok(page) => page,
+            Err(error) => {
+                observation["failed_stage"] = json!("ordinary_native_PAGE_measures");
+                observation["error"] = json!(error);
+                observation["PAGE_rollback_state_equal"] = json!(before_page == after_page);
+                save(&observation);
+                assert_eq!(before_page, after_page);
+                return Err(error);
+            }
+        };
+        observation["PAGE_measures"] = page.clone();
+        save(&observation);
+        crate::music_xml::page_measures::tests::assert_der_winter_persisted_page_state(self, &page);
+        assert_eq!(before_page["graph"], after_page["graph"]);
+        assert_eq!(page_voices.len(), self.voices.len());
+        assert!(
+            page_voices
+                .iter()
+                .zip(&self.voices)
+                .all(|(held, v)| { Arc::ptr_eq(held, &v.identity) })
+        );
+        assert_eq!(page_slots.len(), self.measures.len());
+        assert!(
+            page_slots
+                .iter()
+                .zip(&self.measures)
+                .all(|(held, m)| { same_slots(held, &m.timing.slots) })
+        );
+        assert!(
+            measures
+                .iter()
+                .zip(&self.measures)
+                .all(|(held, m)| { m.geometry.as_ref().is_some_and(|g| Arc::ptr_eq(held, g)) })
+        );
+        assert!(
+            stacks
+                .iter()
+                .zip(&self.measure_layout.stacks)
+                .all(|(held, s)| { Arc::ptr_eq(held, &s.stack) })
+        );
+        assert_eq!(chord_storage, self.chords.as_ptr());
+        observation["PAGE_actual_Voice_Slot_Chord_Measure_Stack_identities_retained"] = json!(true);
+        // Declared generation change has the same clock values and actual owners.
+        // Reclassification is still required; old source PAGE metadata survives.
+        let fresh_stack = 0;
+        let held_identity = self.measure_layout.stacks[fresh_stack].page_identity;
+        let held_generation = std::mem::replace(
+            &mut self.measure_layout.stacks[fresh_stack]
+                .timing
+                .as_mut()
+                .unwrap()
+                .generation,
+            Arc::new(()),
+        );
+        let stale = self
+            .require_recognized_page_classification(&self.measure_layout.stacks[fresh_stack])
+            .unwrap_err();
+        assert_eq!(stale, "musicxml_stale_PAGE_classification");
+        assert_eq!(
+            self.measure_layout.stacks[fresh_stack].page_identity,
+            held_identity
+        );
+        self.measure_layout.stacks[fresh_stack]
+            .timing
+            .as_mut()
+            .unwrap()
+            .generation = held_generation;
+        self.require_recognized_page_classification(&self.measure_layout.stacks[fresh_stack])
+            .unwrap();
+        observation["declared_new_generation_rejects_old_PAGE_without_erasing_metadata"] =
+            json!(true);
+        // Declared late-stage failure uses the held native Stack timing, never
+        // a report replacement; earlier staged numbering must not be published.
+        let before_failure = state(self);
+        let previous_ids = self
+            .measure_layout
+            .stacks
+            .iter()
+            .map(|s| s.page_identity)
+            .collect::<Vec<_>>();
+        let previous_voices = self
+            .voices
+            .iter()
+            .map(|v| v.identity.clone())
+            .collect::<Vec<_>>();
+        let previous_slots = self
+            .measures
+            .iter()
+            .flat_map(|m| m.timing.slots.iter().map(|s| s.identity.clone()))
+            .collect::<Vec<_>>();
+        let late = self.measure_layout.stacks.len() - 1;
+        let held_timing = self.measure_layout.stacks[late].timing.take();
+        let missing_timing = self.fix_recognized_page_measures().unwrap_err();
+        self.measure_layout.stacks[late].timing = held_timing;
+        assert_eq!(missing_timing, "music_page_actual_rhythm_required");
+        assert_eq!(
+            previous_ids,
+            self.measure_layout
+                .stacks
+                .iter()
+                .map(|s| s.page_identity)
+                .collect::<Vec<_>>()
+        );
+        assert_eq!(before_failure, state(self));
+        assert!(
+            previous_voices
+                .iter()
+                .zip(&self.voices)
+                .all(|(old, v)| Arc::ptr_eq(old, &v.identity))
+        );
+        assert!(
+            previous_slots
+                .iter()
+                .zip(self.measures.iter().flat_map(|m| &m.timing.slots))
+                .all(|(old, s)| Arc::ptr_eq(old, &s.identity))
+        );
+        assert_eq!(chord_storage, self.chords.as_ptr());
+        observation["declared_late_missing_Stack_timing_keeps_previous_PAGE_and_clocks"] =
+            json!(true);
         let exported = self.write_recognized_musicxml("Der Winter");
         let after_export = state(self);
-        observation["export_preserved_graph_and_clocks"] = json!(after_rhythm == after_export);
+        observation["export_preserved_graph_and_clocks"] = json!(after_page == after_export);
         match exported {
             Ok((xml, export)) => {
                 std::fs::write("/tmp/real-rest-native-internal.musicxml", xml).unwrap();
@@ -416,13 +551,13 @@ impl OwnedMusic {
                 observation["error"] = json!(error);
                 save(&observation);
                 assert!(owners_retained);
-                assert_eq!(after_rhythm, after_export);
+                assert_eq!(after_page, after_export);
                 return Err(error);
             }
         }
         save(&observation);
         assert!(owners_retained);
-        assert_eq!(after_rhythm, after_export);
+        assert_eq!(after_page, after_export);
         Ok(observation)
     }
 }

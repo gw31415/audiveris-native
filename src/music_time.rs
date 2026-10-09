@@ -133,12 +133,15 @@ impl serde::Serialize for Fraction {
         serializer.collect_str(self)
     }
 }
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) struct Delta {
     negative: bool,
     magnitude: Fraction,
 }
 impl Delta {
+    pub(crate) fn is_negative(self) -> bool {
+        self.negative
+    }
     pub(crate) fn is_zero(self) -> bool {
         self.magnitude == Fraction::ZERO
     }

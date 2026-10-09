@@ -165,6 +165,7 @@ pub(crate) fn gather_actual_stack_rhythm(
         .filter_map(|&mi| staged_measures[mi].timing.excess)
         .max();
     let timing = StackTiming {
+        generation: Arc::new(()),
         expected,
         excess,
         slots,

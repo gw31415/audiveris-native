@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "music_voices::group_tests::original_saved_group_getters_and_declared_beam_rest_follow_actual_ensemble",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 32.280607724009315,
+  "binary_sha256": "9e2753dcb634100b62c479ff22d24b43ee90bb2529c97aec413d125fc5141ba6",
+  "source_sha256": "05f4043dda2c910b0829abb678e743ff67f2927b209190dbaf9043a0432dd04b",
+  "source_stable": true,
+  "unique_targets": 1,
+  "test_only_extension_after_primary14": true
+}

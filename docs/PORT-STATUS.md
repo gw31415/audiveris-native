@@ -16,13 +16,15 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
 現在の通常画像CLIはAnLauraの追加7形状、Der Winterの追加9形状でguardされ、
-両実ページの公開MusicXMLは未出力・品質受入未達です。内部の保持済み実所有経路では、
-通常休符の並行開始と非致命的なSlot時計競合を接続し、Der Winterの全124イベントを
-MusicXMLへ出力しました。原版保存状態の9 Stack・18 Measure・27 Voice・106 Chordが
-一致し、XMLの全イベント・声部群も一致。XSDと独立ProxyMusic readerは成功しました。
-原版との差は弱起小節番号、余分なp方向記号1件、欠けたSlur6本です。独立正解の
-イベント一致は102/124で原版と同じですが、品質同等とは判定しません。
-直近の作業順は [保存NEXT依存](../evidence/real-rest-rhythm-continuation/NEXT-DEPENDENCY.md) を使います。
+両実ページの公開MusicXMLは未出力・品質受入未達です。内部経路ではDer Winterの
+全124イベント・27 Voice・18小節を出力し、今回、実共有StackのPAGE弱起分類を接続。
+原版同様に先頭を0/implicit、以後1..8とし、全18小節identityと独立正解の弱起27/27が一致。
+原版保存所有の限定再生と終了量・超過を比較し、実Voice/Slot/Chord/Measure/Stack、
+時計、古いPAGE情報を保持。再rhythm後の古い分類はexportで拒否し、遅い失敗は戻す。
+15対象、fmt/clippy/build、既存63＋補正8・exact7/64・AnLauraのXML bytes/XSDが成功。
+Der Winterの原版XMLとの差は余分なp方向記号1件、欠けたSlur6本。独立正解の
+イベント一致102/124は原版と同じだが、公開受付・品質同等は未達です。
+直近の作業順は [保存NEXT依存](../evidence/real-page-pickup/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

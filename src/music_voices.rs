@@ -115,6 +115,8 @@ pub(crate) struct SlotVoice {
 }
 #[derive(Clone, Default)]
 pub(crate) struct StackTiming {
+    // A completed gather publishes a new generation; staging preserves it.
+    pub(crate) generation: Arc<()>,
     pub expected: Option<Fraction>,
     pub excess: Option<Fraction>,
     pub slots: Vec<Slot>,
@@ -2519,6 +2521,65 @@ mod group_tests {
         end_node["time_offset"] = Value::Null;
         excess_graph.vertex(end_key, end_node, false).unwrap();
         check_duration(&excess_graph, &mut shortened_voice, &mut shortened_measure).unwrap();
+        assert_eq!(
+            duration_state(&shortened_voice, &shortened_measure),
+            duration["missing_offset"]
+        );
+
+        // A later underflow must not erase excess retained by the same Voice.
+        let mut underflow_graph = excess_graph.clone();
+        let mut underflow_voice = shortened_voice.clone();
+        let mut underflow_measure = shortened_measure.clone();
+        let held_voice = underflow_voice.identity.clone();
+        let held_measure = underflow_measure.geometry.as_ref().unwrap().clone();
+        let held_slots = underflow_measure.timing.slots.clone();
+        let held_relations = underflow_graph.snapshot()["relations"].clone();
+        let mut underflow_node = underflow_graph.snapshot()["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|n| n["id"] == end_id)
+            .unwrap()
+            .clone();
+        underflow_node["time_offset"] = json!("0");
+        underflow_graph
+            .vertex(end_key, underflow_node, false)
+            .unwrap();
+        assert_eq!(
+            underflow_graph.chord_duration(end_key).unwrap().as_deref(),
+            Some("1/4")
+        );
+        let before_underflow = underflow_graph.snapshot();
+        check_duration(
+            &underflow_graph,
+            &mut underflow_voice,
+            &mut underflow_measure,
+        )
+        .unwrap();
+        assert_eq!(
+            duration_state(&underflow_voice, &underflow_measure),
+            json!({
+                "termination":"-3/4", "voice_excess":"1/4", "measure_abnormal":true,
+                "stack_excess":"1/4", "expected_duration":"1"
+            })
+        );
+        assert!(std::sync::Arc::ptr_eq(
+            &held_voice,
+            &underflow_voice.identity
+        ));
+        assert!(std::sync::Arc::ptr_eq(
+            &held_measure,
+            underflow_measure.geometry.as_ref().unwrap()
+        ));
+        assert_eq!(held_slots.len(), underflow_measure.timing.slots.len());
+        for (held, slot) in held_slots.iter().zip(&underflow_measure.timing.slots) {
+            assert!(std::sync::Arc::ptr_eq(&held.identity, &slot.identity));
+            assert_eq!(held.time_offset, slot.time_offset);
+            assert_eq!(held.incoming_ids, slot.incoming_ids);
+        }
+        assert_eq!(underflow_graph.snapshot(), before_underflow);
+        assert_eq!(underflow_graph.snapshot()["relations"], held_relations);
+        assert_eq!(underflow_voice.chord_ids, shortened_voice.chord_ids);
         assert_eq!(
             duration_state(&shortened_voice, &shortened_measure),
             duration["missing_offset"]

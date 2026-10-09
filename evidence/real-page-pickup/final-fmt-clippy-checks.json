@@ -1,0 +1,14 @@
+[
+  {
+    "check": "fmt",
+    "exit_code": 0,
+    "elapsed_seconds": 2.251123968977481,
+    "log": "/tmp/real-page-pickup-v1c-fmt.log"
+  },
+  {
+    "check": "clippy",
+    "exit_code": 0,
+    "elapsed_seconds": 26.38911561400164,
+    "log": "/tmp/real-page-pickup-v1c-clippy.log"
+  }
+]

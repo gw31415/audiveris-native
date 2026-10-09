@@ -1,0 +1,283 @@
+{
+  "DerWinter": {
+    "raw": {
+      "path": "/tmp/real-page-pickup-v1-vs-original.json",
+      "bytes": 19104,
+      "sha256": "029e03bdfeaca3d6932f941fdb95461b853a4e5504a4690861bb0383020e9770"
+    },
+    "categories": {
+      "notes": {
+        "native": 124,
+        "original": 124,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "measures": {
+        "native": 18,
+        "original": 18,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "motions": {
+        "native": 9,
+        "original": 9,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "directions": {
+        "native": 4,
+        "original": 3,
+        "multiset_equal": false,
+        "qualification": "observed_comparison"
+      },
+      "voice_groups": {
+        "native": 27,
+        "original": 27,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "core_notes": {
+        "native": 124,
+        "original": 124,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "core_voice_groups": {
+        "native": 27,
+        "original": 27,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "staccato_relations": {
+        "native": 2,
+        "original": 2,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "measure_identity": {
+        "native": 18,
+        "original": 18,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "direction_sounds": {
+        "native": 4,
+        "original": 3,
+        "multiset_equal": false,
+        "qualification": "observed_comparison"
+      },
+      "sound_tie_endpoints": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "notation_tie_endpoints": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "slur_endpoints": {
+        "native": 0,
+        "original": 12,
+        "multiset_equal": false,
+        "qualification": "observed_comparison"
+      },
+      "sound_tie_relations": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "notation_tie_relations": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "slur_relations": {
+        "native": 0,
+        "original": 6,
+        "multiset_equal": false,
+        "qualification": "observed_comparison"
+      },
+      "relation_issues": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "no_pairing_issues"
+      }
+    },
+    "note_voice_identifiers_exact_on_this_page": true,
+    "relation_pairing_valid": true,
+    "relation_comparison_scope": "Musical note endpoints retain part, measure order, staff, onset, spelled pitch, duration, grace and voice. Number labels resolve links but are not compared as identities. Placement, orientation and line-type are compared; engraving coordinates are excluded. Unnumbered ties resolve by sounding pitch and voice; ambiguous or unpaired endpoints are reported as relation_issues.",
+    "quality_accepted": false,
+    "direction_differences": {
+      "directions": {
+        "native": 4,
+        "original": 3,
+        "multiset_equal": false,
+        "missing": [],
+        "extra": [
+          [
+            1,
+            1,
+            "0",
+            1,
+            "below",
+            [
+              "dynamics",
+              [
+                "p"
+              ]
+            ]
+          ]
+        ],
+        "qualification": "observed_comparison"
+      },
+      "direction_sounds": {
+        "native": 4,
+        "original": 3,
+        "multiset_equal": false,
+        "missing": [],
+        "extra": [
+          [
+            1,
+            1,
+            "0",
+            1,
+            null,
+            [
+              "sound",
+              [
+                [
+                  "dynamics",
+                  "56"
+                ]
+              ],
+              "",
+              []
+            ]
+          ]
+        ],
+        "qualification": "observed_comparison"
+      }
+    }
+  },
+  "AnLaura": {
+    "raw": {
+      "path": "/tmp/real-page-pickup-v1-laura-vs-original.json",
+      "bytes": 9890,
+      "sha256": "a570cd64168097613b9ac41091888c9ff38c89131164fbaa540590cdfeaf20a4"
+    },
+    "categories": {
+      "notes": {
+        "native": 92,
+        "original": 92,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "measures": {
+        "native": 8,
+        "original": 8,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "motions": {
+        "native": 13,
+        "original": 13,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "directions": {
+        "native": 6,
+        "original": 6,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "voice_groups": {
+        "native": 16,
+        "original": 16,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "core_notes": {
+        "native": 92,
+        "original": 92,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "core_voice_groups": {
+        "native": 16,
+        "original": 16,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "staccato_relations": {
+        "native": 8,
+        "original": 8,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "measure_identity": {
+        "native": 8,
+        "original": 8,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "direction_sounds": {
+        "native": 6,
+        "original": 6,
+        "multiset_equal": true,
+        "qualification": "observed_comparison"
+      },
+      "sound_tie_endpoints": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "notation_tie_endpoints": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "slur_endpoints": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "sound_tie_relations": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "notation_tie_relations": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "slur_relations": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "both_empty_not_exercised"
+      },
+      "relation_issues": {
+        "native": 0,
+        "original": 0,
+        "multiset_equal": true,
+        "qualification": "no_pairing_issues"
+      }
+    },
+    "note_voice_identifiers_exact_on_this_page": true,
+    "relation_pairing_valid": true,
+    "relation_comparison_scope": "Musical note endpoints retain part, measure order, staff, onset, spelled pitch, duration, grace and voice. Number labels resolve links but are not compared as identities. Placement, orientation and line-type are compared; engraving coordinates are excluded. Unnumbered ties resolve by sounding pitch and voice; ambiguous or unpaired endpoints are reported as relation_issues.",
+    "quality_accepted": false
+  }
+}

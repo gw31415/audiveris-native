@@ -164,11 +164,27 @@ impl PartLayout {
         Ok(None)
     }
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) struct PageMeasureIdentity {
+    pub(crate) number: i32,
+    pub(crate) pickup: bool,
+}
+#[derive(Clone)]
+pub(crate) struct PageClassification {
+    pub(crate) identity: PageMeasureIdentity,
+    pub(crate) timing: crate::music_voices::StackTiming,
+    pub(crate) measures: Vec<Arc<MeasureLayout>>,
+    pub(crate) voices: Vec<crate::music_voices::Voice>,
+    pub(crate) voice_last_offsets: Vec<Option<crate::music_time::Fraction>>,
+    pub(crate) voice_ends: Vec<Option<crate::music_time::Fraction>>,
+}
 #[derive(Clone)]
 pub(crate) struct StackOwner {
     pub(crate) stack: Arc<Stack>,
     pub(crate) measures: Vec<Arc<MeasureLayout>>,
     pub(crate) timing: Option<crate::music_voices::StackTiming>,
+    pub(crate) page_identity: Option<PageMeasureIdentity>,
+    pub(crate) page_classification: Option<PageClassification>,
 }
 pub(crate) struct Layout {
     pub(crate) parts: Vec<PartLayout>,
@@ -290,6 +306,8 @@ pub(crate) fn build(
                             }),
                             measures: Vec::new(),
                             timing: None,
+                            page_identity: None,
+                            page_classification: None,
                         });
                     }
                     let stack = &mut result.stacks[stack_start + index - 1];
@@ -328,6 +346,8 @@ pub(crate) fn build(
                         }),
                         measures: Vec::new(),
                         timing: None,
+                        page_identity: None,
+                        page_classification: None,
                     });
                 }
                 let stack = &mut result.stacks[stack_start + index - 1];

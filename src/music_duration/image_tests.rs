@@ -177,6 +177,7 @@ pub(crate) fn assert_real_duration_reads(mut music: OwnedMusic, preparation: Val
     crate::music_xml::stack_rhythm::page::image_tests::assert_real_page_rhythm(&mut music);
     let before = music.owner.graph.snapshot();
     let address = music.chords.as_ptr();
+    music.fix_recognized_page_measures().unwrap();
     let (xml, observation) = music.write_recognized_musicxml("An Laura").unwrap();
     std::fs::write("/tmp/real-voice-begin-export-native.musicxml", xml).unwrap();
     std::fs::write(

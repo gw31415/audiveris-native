@@ -1,0 +1,59 @@
+{
+  "scope": "Bounded actual PAGE pickup/ordinary nonempty Stack continuation, not full PAGE or public recognition admission.",
+  "target": {
+    "passed": 14,
+    "exit_code": 0,
+    "elapsed_seconds": 622.4920544389752,
+    "source_stable": true,
+    "binary_sha256": "c894fcbd9037d64d3fd725abd38f907ccc0f6a3b815879bfb47e320fbefbda17"
+  },
+  "fmt_clippy_build": "passed",
+  "CLI": {
+    "automatic_images": 6,
+    "automatic_events": 63,
+    "declared_correction_events": 8,
+    "XML_bytes": "identical",
+    "XSD": "passed"
+  },
+  "exact_7_64": "byte-identical and XSD passed",
+  "AnLaura": "byte-identical, XSD passed; all17 available original comparison categories equal (empty categories remain unexercised)",
+  "DerWinter": {
+    "XSD": "passed",
+    "ProxyMusic": "passed",
+    "notes": 124,
+    "voice_groups": 27,
+    "measure_identities": 18,
+    "measure_identities_equal_to_original": true,
+    "truth_pickup_markers_matched": 27,
+    "truth_pickup_markers_total": 27,
+    "truth_events_matched": 102,
+    "truth_events_total": 124,
+    "truth_rests_matched": 9,
+    "truth_rests_total": 9,
+    "slur_relations_matched": 0,
+    "slur_relations_original": 6,
+    "extra_directions": 1,
+    "extra_direction": "Part1 physical Measure1 onset0 p, sound56"
+  },
+  "source_selected_owner_replay": {
+    "status": "matched",
+    "actual_stacks_compared": 2,
+    "fresh_image_recognition": false,
+    "whole_PAGE_or_MeasureFixer_process_executed": false,
+    "native_per_Voice_intermediate_callbacks_compared": false
+  },
+  "extra_old_positive_excess_to_underflow_test": {
+    "status": "passed",
+    "exit_code": 0,
+    "elapsed_seconds": 32.280607724009315,
+    "source_stable": true,
+    "binary_sha256": "9e2753dcb634100b62c479ff22d24b43ee90bb2529c97aec413d125fc5141ba6",
+    "test_only_extension_after_primary14": true,
+    "qualification": "Declared source-branch control on the existing actual native quarter-note owner: expected1, last offset0, duration1/4 gives termination-3/4 while old Voice/Stack excess1/4 remains. Not a new real-score sample or exact DerWinter eighth-note replay. Native per-Voice peer-publication intermediate parity remains unobserved."
+  },
+  "public_factory_admission_checked": false,
+  "quality_accepted": false,
+  "repository_edits_build_image_or_Git_by_packager": false,
+  "unique_target_total": 15,
+  "final_fmt_clippy": "passed"
+}

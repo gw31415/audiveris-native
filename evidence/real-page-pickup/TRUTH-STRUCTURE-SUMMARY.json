@@ -1,0 +1,195 @@
+{
+  "raw": {
+    "path": "/tmp/real-page-pickup-v1-structure.json",
+    "bytes": 118238,
+    "sha256": "796c95d189268270b4e6f98bf9dd70d80db5acce515f41591615615dc8e1c351"
+  },
+  "schema": "audiveris-native.independent-structure-quality.v1",
+  "truth_sha256": "776b60aa1488636fe8d2e83c79391aa80d15981ce17ecc2ca30ca3a3fac6ccd6",
+  "recognized_sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb",
+  "quality_accepted": false,
+  "qualification": "Evidence for stated categories on this page only; this utility does not decide Audiveris-equivalent recognition quality.",
+  "scope": {
+    "events": "Exact staff order, measure order, rational onset/duration, MIDI pitch/rest and grace status.",
+    "chords": "Actual serialized chord grouping, compared as complete pitch multisets; simultaneous independent voices stay separate.",
+    "voices": "Per-staff, per-measure ordered partitions and successive chord/rest edges; arbitrary labels excluded. Full categories include pitch/timing errors; matched-chord categories isolate voice membership over stated common anchors. Across-measure comparisons cover only jointly unambiguous single-stream boundaries, with explicit coverage and exclusions.",
+    "measures": "Nominal meters, occupied/forward extent, irregular/implicit markers and part/staff membership; printed measure numbers excluded.",
+    "slurs": "Reciprocal MuseScore chord locations versus paired MusicXML slur numbers. Full musical chord endpoints compared; engraving placement excluded.",
+    "ties": "Tie-free truth is checked for extra XML sound/notation endpoints. Tie-bearing MuseScore truth is explicitly unsupported until a real fixture establishes its endpoint encoding."
+  },
+  "not_scored": {
+    "features": [
+      "polyphonic across-measure voice identity",
+      "cross-staff chords",
+      "tie-bearing references",
+      "dynamics/hairpins",
+      "articulations",
+      "beam grouping",
+      "lyrics",
+      "engraving"
+    ],
+    "truth_observed_unscored_spanners": {}
+  },
+  "categories": {
+    "events": {
+      "truth": 124,
+      "recognized": 124,
+      "matched": 102,
+      "precision": 0.8225806451612904,
+      "recall": 0.8225806451612904,
+      "F1": 0.8225806451612904,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "rests": {
+      "truth": 9,
+      "recognized": 9,
+      "matched": 9,
+      "precision": 1.0,
+      "recall": 1.0,
+      "F1": 1.0,
+      "equal": true,
+      "qualification": "observed"
+    },
+    "chord_groups": {
+      "truth": 106,
+      "recognized": 106,
+      "matched": 86,
+      "precision": 0.8113207547169812,
+      "recall": 0.8113207547169812,
+      "F1": 0.8113207547169812,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "multiple_note_chords": {
+      "truth": 16,
+      "recognized": 16,
+      "matched": 14,
+      "precision": 0.875,
+      "recall": 0.875,
+      "F1": 0.875,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "within_measure_voice_partitions": {
+      "truth": 27,
+      "recognized": 27,
+      "matched": 22,
+      "precision": 0.8148148148148148,
+      "recall": 0.8148148148148148,
+      "F1": 0.8148148148148148,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "within_measure_voice_successors": {
+      "truth": 79,
+      "recognized": 79,
+      "matched": 62,
+      "precision": 0.7848101265822784,
+      "recall": 0.7848101265822784,
+      "F1": 0.7848101265822784,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "meters": {
+      "truth": 27,
+      "recognized": 27,
+      "matched": 27,
+      "precision": 1.0,
+      "recall": 1.0,
+      "F1": 1.0,
+      "equal": true,
+      "qualification": "observed"
+    },
+    "measure_extents": {
+      "truth": 27,
+      "recognized": 27,
+      "matched": 26,
+      "precision": 0.9629629629629629,
+      "recall": 0.9629629629629629,
+      "F1": 0.9629629629629629,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "pickup_markers": {
+      "truth": 27,
+      "recognized": 27,
+      "matched": 27,
+      "precision": 1.0,
+      "recall": 1.0,
+      "F1": 1.0,
+      "equal": true,
+      "qualification": "observed"
+    },
+    "part_staff_membership": {
+      "truth": 2,
+      "recognized": 2,
+      "matched": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "F1": 1.0,
+      "equal": true,
+      "qualification": "observed"
+    },
+    "slur_endpoints": {
+      "truth": 12,
+      "recognized": 0,
+      "matched": 0,
+      "precision": null,
+      "recall": 0.0,
+      "F1": 0.0,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "slur_relations": {
+      "truth": 6,
+      "recognized": 0,
+      "matched": 0,
+      "precision": null,
+      "recall": 0.0,
+      "F1": 0.0,
+      "equal": false,
+      "qualification": "observed"
+    },
+    "tie_endpoints": {
+      "truth": 0,
+      "recognized": 0,
+      "matched": 0,
+      "precision": null,
+      "recall": null,
+      "F1": null,
+      "equal": true,
+      "qualification": "both_empty_not_exercised"
+    },
+    "matched_chord_voice_partitions": {
+      "truth": 24,
+      "recognized": 24,
+      "matched": 24,
+      "precision": 1.0,
+      "recall": 1.0,
+      "F1": 1.0,
+      "equal": true,
+      "qualification": "observed"
+    },
+    "matched_chord_voice_successors": {
+      "truth": 62,
+      "recognized": 62,
+      "matched": 62,
+      "precision": 1.0,
+      "recall": 1.0,
+      "F1": 1.0,
+      "equal": true,
+      "qualification": "observed"
+    },
+    "across_measure_single_stream_successors": {
+      "truth": 24,
+      "recognized": 24,
+      "matched": 19,
+      "precision": 0.7916666666666666,
+      "recall": 0.7916666666666666,
+      "F1": 0.7916666666666666,
+      "equal": false,
+      "qualification": "observed"
+    }
+  }
+}

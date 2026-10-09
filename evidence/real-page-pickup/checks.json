@@ -1,0 +1,47 @@
+[
+  {
+    "check": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.1873927299748175,
+    "log": "/tmp/real-page-pickup-v1-fmt.log"
+  },
+  {
+    "check": "clippy",
+    "argv": [
+      "cargo",
+      "clippy",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 25.17371918700519,
+    "log": "/tmp/real-page-pickup-v1-clippy.log"
+  },
+  {
+    "check": "build",
+    "argv": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--bin",
+      "audiveris-musicxml"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 22.482598022994353,
+    "log": "/tmp/real-page-pickup-v1-build.log"
+  }
+]

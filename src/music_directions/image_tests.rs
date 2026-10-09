@@ -226,6 +226,7 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
         original_callbacks["actual_identity_retained"]
     );
     let baseline = music.owner.graph.snapshot();
+    music.fix_recognized_page_measures().unwrap();
     let (xml, observation) = music.write_recognized_musicxml("An Laura").unwrap();
     std::fs::write("/tmp/real-directions-native.musicxml", xml).unwrap();
     std::fs::write("/tmp/real-directions-native-observed.json",serde_json::to_vec_pretty(&json!({"before":before,"after":after,"cached_confidence_residuals":residuals,"pedal_callbacks":callbacks,"export":observation,"actual_Chord_vector_retained":music.chords.as_ptr()==actual_chords,"read_does_not_change_graph_clocks_relations_manual_status":music.owner.graph.snapshot()==baseline})).unwrap()).unwrap();

@@ -398,6 +398,7 @@ impl OwnedMusic {
                     .position(|s| Arc::ptr_eq(&s.stack, &geometry.stack))
                     .ok_or("musicxml_actual_Stack_required")?;
                 let stack = &self.measure_layout.stacks[si];
+                let page_identity = self.require_recognized_page_classification(stack)?;
                 let timing = stack
                     .timing
                     .as_ref()
@@ -518,6 +519,8 @@ impl OwnedMusic {
                         }
                         event["part_id"] = json!(part);
                         event["measure_number"] = json!(number + 1);
+                        event["measure_score_id"] = json!(page_identity.number.to_string());
+                        event["measure_implicit"] = json!(page_identity.pickup);
                         local.push(event);
                         emitted.insert(chord.id);
                     }
@@ -528,9 +531,13 @@ impl OwnedMusic {
                     .filter(|c| c.measure == mi && !emitted.contains(&c.id))
                 {
                     let live = node(&snapshot, chord.id)?;
-                    omitted.push(json!({"chord":chord.key,"bounds":live["bounds"],"part_id":part,"measure_number":number+1,"voice":live["voice"],"time_offset":live["time_offset"],"slot_id":live["slot_id"],"reason":"no_actual_Voice_BEGIN_in_canonical_Stack_slots"}));
+                    omitted.push(json!({"chord":chord.key,"bounds":live["bounds"],"part_id":part,"measure_number":number+1,"measure_score_id":page_identity.number.to_string(),"measure_implicit":page_identity.pickup,"voice":live["voice"],"time_offset":live["time_offset"],"slot_id":live["slot_id"],"reason":"no_actual_Voice_BEGIN_in_canonical_Stack_slots"}));
                 }
-                writeln!(xml, "<measure number=\"{}\">", number + 1).unwrap();
+                write!(xml, "<measure number=\"{}\"", page_identity.number).unwrap();
+                if page_identity.pickup {
+                    xml.push_str(" implicit=\"yes\"");
+                }
+                xml.push_str(">\n");
                 if previous_system.is_some_and(|s| s != measure.system) {
                     xml.push_str("<print new-system=\"yes\"/>\n");
                 }
