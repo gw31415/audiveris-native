@@ -1,0 +1,73 @@
+{
+  "scope": "initial intrinsic read comparison before Flag overlap reduction",
+  "matched": 65,
+  "unresolved": [
+    {
+      "native": {
+        "beam_count": 0,
+        "bounds": [
+          1078,
+          510,
+          15,
+          68
+        ],
+        "dots_number": 0,
+        "error": "musicxml_flagged_void_rest_or_multiple_flags_pending",
+        "measure_index": 2,
+        "part": 2,
+        "staff": 2,
+        "system": 1
+      },
+      "original": {
+        "beam_count": 0,
+        "bounds": [
+          1078,
+          510,
+          15,
+          68
+        ],
+        "dots_number": 0,
+        "duration": "1/8",
+        "flags_number": 1,
+        "measure_index": 2,
+        "part": 2,
+        "staff": 2,
+        "system": 1
+      }
+    },
+    {
+      "native": {
+        "beam_count": 0,
+        "bounds": [
+          499,
+          1008,
+          15,
+          65
+        ],
+        "dots_number": 0,
+        "error": "musicxml_flagged_void_rest_or_multiple_flags_pending",
+        "measure_index": 1,
+        "part": 2,
+        "staff": 5,
+        "system": 2
+      },
+      "original": {
+        "beam_count": 0,
+        "bounds": [
+          499,
+          1008,
+          15,
+          65
+        ],
+        "dots_number": 0,
+        "duration": "1/8",
+        "flags_number": 1,
+        "measure_index": 1,
+        "part": 2,
+        "staff": 5,
+        "system": 2
+      }
+    }
+  ],
+  "quality_accepted": false
+}

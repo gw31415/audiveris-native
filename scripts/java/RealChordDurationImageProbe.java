@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+import org.audiveris.omr.sheet.Book;
+import java.nio.file.*;import java.util.*;
+public class RealChordDurationImageProbe extends RealLedgerMembershipImageProbe {
+ private final Object actual;
+ public RealChordDurationImageProbe(Book book,SortedSet<Integer> ids){super(book,ids);actual=book;}
+ static String observed(Object sheet)throws Exception {
+ List<String> systems=new ArrayList<>();for(Object sys:(List<?>)call(sheet,"getSystems")){
+ List<String> chords=new ArrayList<>();
+ for(Object part:(List<?>)call(sys,"getParts"))for(Object measure:(List<?>)call(part,"getMeasures"))for(Object chord:(Collection<?>)call(measure,"getHeadChords")){
+ Object staff=call(chord,"getStaff");
+ chords.add("{\"bounds\":"+rect(call(chord,"getBounds"))+",\"part\":"+call(part,"getId")+",\"measure_index\":"+(((List<?>)call(part,"getMeasures")).indexOf(measure)+1)+",\"staff\":"+(staff==null?"null":call(staff,"getId"))+",\"beam_count\":"+((Collection<?>)call(chord,"getBeams")).size()+",\"flags_number\":"+call(chord,"getFlagsNumber")+",\"dots_number\":"+call(chord,"getDotsNumber")+",\"duration_sans_dot_or_tuplet\":\""+call(chord,"getDurationSansDotOrTuplet")+"\",\"duration\":\""+call(chord,"getDuration")+"\"}");}
+ systems.add("{\"system\":"+call(sys,"getId")+",\"chords\":["+String.join(",",chords)+"]}");}return "["+String.join(",",systems)+"]";
+ }
+ public void process(){try {Object stub=((List<?>)call(actual,"getStubs")).get(0);call(stub,"reachStep",c("step.OmrStep").getField("LINKS").get(null),false);Files.writeString(Path.of(System.getProperty("native.probe.output")),"{\"scope\":\"fresh unchanged original image ordinary LINKS actual Chord beam/flag/dot duration reads before RHYTHMS, no native input\",\"systems\":"+observed(call(stub,"getSheet"))+"}\n");}catch(Exception e){throw new RuntimeException(e);}}
+}

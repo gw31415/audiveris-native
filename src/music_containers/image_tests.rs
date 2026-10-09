@@ -70,7 +70,9 @@ fn assert_stage(music: &crate::music_measures::OwnedMusic, stage: &Value) {
         }
     }
 }
-pub(crate) fn assert_real_part_memberships(mut music: crate::music_measures::OwnedMusic) {
+pub(crate) fn assert_real_part_memberships(
+    mut music: crate::music_measures::OwnedMusic,
+) -> (crate::music_measures::OwnedMusic, Value) {
     let source: Value = serde_json::from_str(include_str!(
         "../../fixtures/official-recognition-containers/image-observed.json"
     ))
@@ -126,11 +128,71 @@ pub(crate) fn assert_real_part_memberships(mut music: crate::music_measures::Own
     );
     assert_eq!(invalid.snapshot(), bad_before);
     assert_eq!(old_chords.iter().map(|c| c.id).collect::<Vec<_>>(), ids);
+    let mut flag_overlap_preparation =
+        crate::music_flags::detect_overlaps(&mut music.owner.graph).unwrap();
+    let prepared = music.owner.graph.snapshot();
+    let source_order: Value = serde_json::from_str(include_str!(
+        "../../fixtures/official-flag-overlap-order/image-observed.json"
+    ))
+    .unwrap();
+    let flags = |snapshot: &Value| {
+        snapshot["inters"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|n| n["kind"] == "FlagInter")
+            .map(
+                |n| json!({"system":n["origin"]["system"],"shape":n["shape"],"bounds":n["bounds"]}),
+            )
+            .collect::<Vec<_>>()
+    };
+    let source_flags = |stage: &str| {
+        source_order["stages"].as_array().unwrap().iter().find(|s|s["stage"] == stage).unwrap()["systems"].as_array().unwrap().iter().flat_map(|sys|sys["flags"].as_array().unwrap().iter().map(move |n|json!({"system":sys["system"],"shape":n["shape"],"bounds":n["bounds"]}))).collect::<Vec<_>>()
+    };
+    assert_eq!(
+        sorted(flags(&prepared)),
+        sorted(source_flags("FLAG_OVERLAPS"))
+    );
+    let inserted = flag_overlap_preparation["inserted_flag_overlap_pairs"]
+        .as_array()
+        .unwrap();
+    assert_eq!(inserted.len(), 2);
+    let exclusions = prepared["relations"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|e| {
+            e["kind"] == "Exclusion"
+                && inserted.iter().any(|p| {
+                    (p[0] == e["source"] && p[1] == e["target"])
+                        || (p[1] == e["source"] && p[0] == e["target"])
+                })
+        })
+        .cloned()
+        .collect::<Vec<_>>();
+    assert_eq!(exclusions.len(), 2);
     crate::music_alters::contextualize_and_purge(&mut music.owner.graph).unwrap();
     crate::music_flags::contextualize(&mut music.owner.graph).unwrap();
     crate::music_symbol_reduction::reduce(&mut music.owner.graph).unwrap();
     crate::music_beams::clean_head_supports(&mut music.owner.graph).unwrap();
     let graph_before_refresh = music.owner.graph.snapshot();
+    assert_eq!(
+        sorted(flags(&graph_before_refresh)),
+        sorted(source_flags("WEAK_PURGED"))
+    );
+    for relation in &exclusions {
+        assert_eq!(
+            graph_before_refresh["relations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["id"] == relation["id"])
+                .unwrap(),
+            relation
+        );
+    }
+    flag_overlap_preparation["original_pre_weak_Flag_membership_matches"] = json!(true);
+    flag_overlap_preparation["actual_exclusion_identity_survives_weak_callbacks"] = json!(true);
     let result = refresh(
         &mut music.owner.graph,
         &music.measures,
@@ -147,4 +209,5 @@ pub(crate) fn assert_real_part_memberships(mut music: crate::music_measures::Own
         6
     );
     std::fs::write("/tmp/real-part-containers-native-observed.json",serde_json::to_vec_pretty(&json!({"actual_SYMBOLS_head_chords":67,"actual_SYMBOLS_rest_chords":6,"actual_LINKS_head_chords":67,"actual_LINKS_rest_chords":0,"actual_LINKS_heads":94,"all_six_Staff_note_memberships_and_Part_Measure_Chord_members_match":true,"actual_Part_Measure_Arcs_retained":true,"nullable_Chord_Staff_validated_from_members":true,"foreign_Measure_Arc_same_scalar_ID_rejected_before_changes":true,"declared_real_Chord_clock_and_manual_full_graph_rollback":true,"projection":result.projection})).unwrap()).unwrap();
+    (music, flag_overlap_preparation)
 }

@@ -256,3 +256,8 @@ mod tests {
         assert_eq!(relation["extension_point"], c["extension_point"]);
     }
 }
+
+mod competition;
+#[cfg(test)]
+pub(crate) use competition::reduce_overlaps;
+pub(crate) use competition::{detect_overlaps, reduce_exclusions};

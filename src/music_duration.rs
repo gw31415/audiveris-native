@@ -155,10 +155,10 @@ pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDu
                 })
                 .collect::<Vec<_>>();
             if !flags.is_empty() || !beams.is_empty() {
-                if shape != "NOTEHEAD_BLACK"
+                if !matches!(shape, "NOTEHEAD_BLACK" | "NOTEHEAD_VOID")
                     || (!flags.is_empty() && !beams.is_empty())
                     || flags.len() > 1
-                    || beams.len() > 2
+                    || beams.len() > 3
                     || flags
                         .first()
                         .is_some_and(|f| !matches!(f["value"].as_u64(), Some(1 | 2)))
@@ -170,7 +170,23 @@ pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDu
                     .map(|f| f["value"].as_u64().unwrap() as usize)
                     .sum::<usize>()
                     + beams.len();
-                note_type = if count == 1 { "eighth" } else { "16th" };
+                if shape == "NOTEHEAD_VOID"
+                    && edges.iter().any(|e| {
+                        e["kind"] == "MirrorRelation"
+                            && (e["source"] == note["id"] || e["target"] == note["id"])
+                    })
+                {
+                    return Err("musicxml_mirrored_void_duration_pending".into());
+                }
+                // A void head without a mirror keeps its half-note base before
+                // flag division; treating every flagged head as black loses it.
+                note_type = match (base, count) {
+                    (2, 1) => "quarter",
+                    (2, 2) | (1, 1) => "eighth",
+                    (2, 3) | (1, 2) => "16th",
+                    (1, 3) => "32nd",
+                    _ => return Err("musicxml_beam_flag_duration_type_pending".into()),
+                };
             }
         }
         let live_chord = nodes
@@ -194,3 +210,8 @@ pub(crate) fn live_intrinsic(snapshot: &Value, id: usize) -> Result<ExactChordDu
     };
     Ok(result)
 }
+
+#[cfg(test)]
+mod image_tests;
+#[cfg(test)]
+pub(crate) use image_tests::assert_real_duration_reads;

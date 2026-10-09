@@ -607,6 +607,11 @@ fn admit_symbols(m: &OwnedMusic) -> Result<(), String> {
 pub fn continue_export(m: OwnedMusic) -> Result<Export, String> {
     continue_export_named(m, "Music")
 }
+pub(crate) fn verified_image_catalog(m: &OwnedMusic) -> bool {
+    m.owner.interline == 11
+        && m.owner.catalog.family == "Bravura"
+        && matches!(m.owner.catalog.stored_point_size, 44 | 47 | 51)
+}
 fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, String> {
     if part_name.trim().is_empty()
         || part_name.len() > 256
@@ -620,11 +625,8 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
         return Err("musicxml_retained_symbol_owner_required".into());
     }
     m = crate::music_links::continue_links(m)?;
-    if m.owner.interline != 11
-        || m.owner.catalog.family != "Bravura"
-        || !matches!(m.owner.catalog.stored_point_size, 44 | 47)
-    {
-        return Err("musicxml_verified_Bravura44_or47_interline11_scope_required".into());
+    if !verified_image_catalog(&m) {
+        return Err("musicxml_verified_Bravura44_or47_or51_interline11_scope_required".into());
     }
     let grid = &m.owner.upstream_report["grid_ir"];
     if grid["pages"].as_array().is_none_or(|p| p.len() != 1)

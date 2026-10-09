@@ -23,7 +23,7 @@ fn key(n: &Value) -> Result<Key, String> {
     }
     Ok(k)
 }
-fn overlap(a: &Value, b: &Value) -> Result<bool, String> {
+pub(crate) fn overlap(a: &Value, b: &Value) -> Result<bool, String> {
     let rect = |n: &Value| -> Result<[i64; 4], String> {
         serde_json::from_value(n["bounds"].clone())
             .map_err(|_| "music_symbol_bounds_required".into())

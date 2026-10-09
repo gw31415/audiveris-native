@@ -134,3 +134,14 @@ MIDI/音価/graceで厳密一致。precision0.79348、recall0.72277、F1=0.75648
 声部連続性・和音群・記号関係はこのevent multisetの指標では評価していない。
 [全残差](../evidence/real-image-quality-baseline/ORIGINAL-EVENT-QUALITY.json)。
 これは初期基準であり、native品質受入や最終品質判定ではない。
+
+実Flag overlapをweak callbacks前に検出し、contextual exclusion選択を後へ接続した。
+原版の37 Flags/2 exclusions→35/2→33/0とLINKS33 Flagsを比較し、
+既存Exclusion identity/manual status・実Chord時計・frozen rollbackを保持した。
+同じ画像の67 Chord全音価は原版一致（三beam1/32が7個、unmirrored void＋flag1/4も含む）。
+既存検証済みBravura51幾何をexport入口へ接続した。対象12件・fmt/clippy/build、
+63＋補正8/exact7/64 XML byte/XSD成功。実画像CLI v29は190.23秒で
+`musicxml_single_page_one_part_scope_required`、XML未出力。品質受入は未達。
+次は実Part StaffのHIGH/LOW Voice生成、共有Stack/Slotの有理数rhythm、
+複段Partの調号・臨時記号・必要なnotationと出力へ接続する。
+[証拠](../evidence/real-chord-duration/VALIDATION.json)・[次依存](../evidence/real-chord-duration/NEXT-DEPENDENCY.md)。

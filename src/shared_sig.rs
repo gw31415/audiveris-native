@@ -3425,3 +3425,6 @@ impl Graph {
         Ok(updated)
     }
 }
+
+#[cfg(test)]
+mod flag_competition_image_tests;

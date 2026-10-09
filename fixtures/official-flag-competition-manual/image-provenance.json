@@ -1,0 +1,61 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "dd76c6eb769582a3a58f98b62db50f95450f1a6be2a7356004aefa4ae2fe20c0",
+  "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "compile_commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/real-flag-competition-manual-original-v1/compile-only",
+      "/tmp/real-flag-competition-manual-original-v1/compile-only/Book.java",
+      "/tmp/real-flag-competition-manual-original-v1/compile-only/RunClass.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-flag-competition-manual-original-v1/compile-only",
+      "-d",
+      "/tmp/real-flag-competition-manual-original-v1/classes",
+      "/tmp/RealFlagCompetitionManualImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+    ]
+  ],
+  "compile_only_signatures_on_runtime_classpath": false,
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/real-flag-competition-manual-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-flag-competition-manual-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-flag-competition-manual-original-v1/prefs",
+    "-Duser.home=/tmp/real-flag-competition-manual-original-v1/home",
+    "-Dnative.probe.output=/tmp/real-flag-competition-manual-original-v1/observed.json",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-flag-competition-manual-original-v1/classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "RealFlagCompetitionManualImageProbe",
+    "-output",
+    "/tmp/real-flag-competition-manual-original-v1",
+    "--",
+    "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+  ],
+  "exit_code": 0,
+  "console_sha256": "693b951e05bcc0756b3784e468390c69ee705713b318596a7142d2691e12ae8a",
+  "native_outputs_used": false,
+  "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+  "observed_sha256": "b498f275682b28ab2b1c7e6fa896bf20b459b31f53e8c260b6c2957609b0a254"
+}
