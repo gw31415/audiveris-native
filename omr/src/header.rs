@@ -313,17 +313,22 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
         Some("FLAT") => -count.min(7),
         _ => 0,
     };
-    // Time signature
-    if i < cols_parts.len() {
-        let (col, parts) = &cols_parts[i];
-        if col.bounds.x - header.stop <= max_gap
-            && let Some(t) = time_from_column(col, parts, staff, il)
-        {
-            header.time = Some(t);
-            header.stop = col.bounds.right();
-            header
-                .items
-                .push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
+    // Time signature: a column, or up to three close columns merged
+    // (thin parts of the glyphs may be cut by staff line removal).
+    if i < cols_parts.len() && cols_parts[i].0.bounds.x - header.stop <= max_gap {
+        for k in 1..=3.min(cols_parts.len() - i) {
+            let group = &cols_parts[i..i + k];
+            let col = Component::merge(&group.iter().map(|c| &c.0).collect::<Vec<_>>());
+            if col.bounds.w > 3 * il || (k > 1 && group[k - 1].0.bounds.x - group[k - 2].0.bounds.right() > il / 2) {
+                break;
+            }
+            let parts: Vec<Component> = group.iter().flat_map(|c| c.1.iter().cloned()).collect();
+            if let Some(t) = time_from_column(&col, &parts, staff, il) {
+                header.time = Some(t);
+                header.stop = col.bounds.right();
+                header.items.push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
+                break;
+            }
         }
     }
     header.stop += il / 3;

@@ -27,29 +27,21 @@ impl Line {
         let x0 = pts.iter().map(|p| p.0).sum::<f64>() / pts.len() as f64;
         let xs = pts.iter().map(|p| (p.0 - x0).abs()).fold(1.0, f64::max);
         let mut used: Vec<(f64, f64)> = pts.to_vec();
-        let mut line = Line {
-            c: [used[0].1, 0.0, 0.0],
-            x0,
-            xs,
-        };
-        for _ in 0..4 {
-            let deg = if used.len() >= 8 {
-                2
-            } else if used.len() >= 2 {
-                1
-            } else {
-                0
-            };
-            line.c = lsq(&used, x0, xs, deg);
-            let keep: Vec<(f64, f64)> = pts
-                .iter()
-                .copied()
-                .filter(|p| (p.1 - line.y_at(p.0)).abs() <= 1.5)
-                .collect();
-            if keep.len() < 2 || keep.len() == used.len() {
-                break;
+        let mut line = Line { c: [used[0].1, 0.0, 0.0], x0, xs };
+        // Robust start: linear fit with progressively tighter outlier rejection.
+        for tol in [8.0, 4.0, 2.0, 1.5] {
+            line.c = lsq(&used, x0, xs, if used.len() >= 2 { 1 } else { 0 });
+            let keep: Vec<(f64, f64)> = pts.iter().copied().filter(|p| (p.1 - line.y_at(p.0)).abs() <= tol).collect();
+            if keep.len() >= 2 {
+                used = keep;
             }
-            used = keep;
+        }
+        // Mild curvature allowed when well supported.
+        if used.len() >= 20 {
+            let c = lsq(&used, x0, xs, 2);
+            if c[2].abs() <= 3.0 {
+                line.c = c;
+            }
         }
         line
     }
@@ -293,13 +285,25 @@ pub fn retrieve(img: &Bitmap, scale: &Scale) -> Vec<Staff> {
         let mut lines = Vec::new();
         let mut lefts = Vec::new();
         let mut rights = Vec::new();
-        for i in 0..5 {
-            let pts: Vec<(f64, f64)> = ch
-                .combs
-                .iter()
-                .map(|&k| (combs[k].x as f64, combs[k].ys[i]))
-                .collect();
-            let line = Line::fit(&pts);
+        // The five lines share one smooth shape: fit it on all samples
+        // shifted by each line's median offset to the middle line.
+        let offsets: Vec<f64> = (0..5)
+            .map(|i| {
+                let mut d: Vec<f64> = ch.combs.iter().map(|&k| combs[k].ys[i] - combs[k].ys[2]).collect();
+                d.sort_by(|a, b| a.partial_cmp(b).unwrap());
+                d[d.len() / 2]
+            })
+            .collect();
+        let pts: Vec<(f64, f64)> = ch
+            .combs
+            .iter()
+            .flat_map(|&k| (0..5).map(move |i| (k, i)))
+            .map(|(k, i)| (combs[k].x as f64, combs[k].ys[i] - offsets[i]))
+            .collect();
+        let mid = Line::fit(&pts);
+        for &o in &offsets {
+            let mut line = mid.clone();
+            line.c[0] += o;
             lefts.push(trace_end(img, &line, first.x, -1, scale));
             rights.push(trace_end(img, &line, last.x, 1, scale));
             lines.push(line);
