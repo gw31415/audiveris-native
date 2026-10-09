@@ -173,4 +173,5 @@ pub(crate) fn assert_real_duration_reads(mut music: OwnedMusic, preparation: Val
     music.voices = frame.voices;
     crate::music_voices::shared_stack::image_tests::assert_real_shared_slots(&mut music);
     crate::music_voices::image_tests::refinement::assert_real_refinement(&mut music);
+    crate::music_xml::stack_rhythm::page::image_tests::assert_real_page_rhythm(&mut music);
 }

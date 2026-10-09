@@ -2,6 +2,7 @@
 use super::*;
 #[cfg(test)]
 pub(crate) mod image_tests;
+pub(crate) mod page;
 use crate::music_measure_slots::{CompoundSlot, Retrieval};
 use crate::music_measures::{Chord, Measure};
 use crate::music_voices::Voice;

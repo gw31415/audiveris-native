@@ -1,0 +1,61 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "observer_sha256": "14121d77345238a1205d107401520230d70d3e1265aa5660f193082bafae78b4",
+  "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "compile_commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/real-page-time-ranges-original-v1/compile-only",
+      "/tmp/real-page-time-ranges-original-v1/compile-only/Book.java",
+      "/tmp/real-page-time-ranges-original-v1/compile-only/RunClass.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-page-time-ranges-original-v1/compile-only",
+      "-d",
+      "/tmp/real-page-time-ranges-original-v1/classes",
+      "/workspace/audiveris-native/scripts/java/RealPageTimeRangesImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+    ]
+  ],
+  "compile_only_signatures_on_runtime_classpath": false,
+  "run_argv": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+    "-Xmx512m",
+    "-XX:ActiveProcessorCount=2",
+    "-Djava.awt.headless=true",
+    "-Djava.io.tmpdir=/tmp/real-page-time-ranges-original-v1/tmp",
+    "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-page-time-ranges-original-v1/cache",
+    "-Djava.util.prefs.userRoot=/tmp/real-page-time-ranges-original-v1/prefs",
+    "-Duser.home=/tmp/real-page-time-ranges-original-v1/home",
+    "-Dnative.probe.output=/tmp/real-page-time-ranges-original-v1/observed.json",
+    "-cp",
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-page-time-ranges-original-v1/classes",
+    "Audiveris",
+    "-batch",
+    "-constant",
+    "org.audiveris.omr.Main.persistBatchCliConstants=false",
+    "-constant",
+    "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+    "-step",
+    "SCALE",
+    "-run",
+    "RealPageTimeRangesImageProbe",
+    "-output",
+    "/tmp/real-page-time-ranges-original-v1",
+    "--",
+    "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+  ],
+  "exit_code": 0,
+  "console_sha256": "c7ec20c4810a89dce41287f282ca5222a68bfeb3d2c2f7c01a34337063565ccd",
+  "native_outputs_used": false,
+  "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+  "observed_sha256": "e203c7bd2112db66a8e8db47225cd09588deaadcedb7d9b48335cd6171380229"
+}

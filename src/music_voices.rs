@@ -21,7 +21,7 @@ pub(crate) enum VoiceKind {
     HighAndLow,
 }
 impl VoiceKind {
-    fn label(self) -> &'static str {
+    pub(crate) fn label(self) -> &'static str {
         match self {
             Self::High => "HIGH",
             Self::Low => "LOW",

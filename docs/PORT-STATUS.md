@@ -2319,3 +2319,18 @@ ordinateの順とkind offset+1からの番号調整へ接続した。最上段St
 次は実header time rangeからStack→各Measure→共有Slot→system refinementを
 通常認識へ接続し、複段clef/key・臨時記号・staccato・強弱・pedalと出力へ進む。
 [証拠](../evidence/real-voice-refinement/VALIDATION.json)・[次依存](../evidence/real-voice-refinement/NEXT-DEPENDENCY.md)。
+
+実TimeInterの中心を実Part/Staff領域・登録済みMeasure/Stack Arcから辿り、
+原版のtime range（実画像は第1〜4 Stack、3/4）を保持する通常Page rhythmを実装した。
+Stack reset→各Measureの準備/正当なreset/認識→共有Slot→system refinementの順で
+処理し、callback前に旧Voice/Chord時計やMeasure abnormalを消さない。正当なresetは
+旧Voice/canonical Slotを置換し、実Chord vector・幾何所有・relationsを保持する。
+同じ実譜面の原版前後4フレーム、8小節の判定（false2）・全時計/終了量/excessが一致。
+Graph/Voice/Measure/Stack時計を一括stageし、実Measure欠落時には元状態を保持する。
+対象10件・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。
+先頭の未知拍子はdefaultせず明示拒否、null Staffの原版fallbackは未接続として明示する。
+通常Page engineは内部実装済みだが公開画像CLIの複数Partガードと出力は未変更。
+最新全ページ観測v29を再実行しておらず、画像XML品質は未達。
+次は実Voice/BEGIN走査・複段clef/key/臨時記号、live articulation/強弱/pedalを
+native出力へ接続し、実譜面と休符例の品質・独立readerを比較する。
+[証拠](../evidence/real-page-rhythm/VALIDATION.json)・[次依存](../evidence/real-page-rhythm/NEXT-DEPENDENCY.md)。
