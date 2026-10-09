@@ -11,6 +11,8 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use std::collections::BTreeMap;
+#[cfg(test)]
+pub(crate) mod image_tests;
 
 #[derive(Deserialize, Serialize)]
 struct Fact {
@@ -452,12 +454,44 @@ impl Context<'_> {
         } else {
             crate::head_chord_geometry::calculate_rest(&members)?
         };
+        let staff = member["staff_id"]
+            .as_u64()
+            .ok_or("music_mapping_actual_top_Staff_required")?;
+        if m.geometry
+            .as_ref()
+            .is_some_and(|g| !g.part.staffs.iter().any(|s| s.id == staff))
+        {
+            return Err("music_mapping_actual_Part_Staff_required".into());
+        }
         let absolute_pitch = if head {
+            let clef = if m.geometry.is_some() {
+                let member_bounds = bounds(member)?;
+                let x = member_bounds[0] + member_bounds[2] / 2;
+                snapshot["inters"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter(|c| {
+                        c["kind"] == "ClefInter"
+                            && c["origin"]["system"] == m.system
+                            && c["staff_id"] == staff
+                            && c["bounds"][0]
+                                .as_i64()
+                                .zip(c["bounds"][2].as_i64())
+                                .is_some_and(|(left, width)| left + width / 2 <= x)
+                    })
+                    .max_by_key(|c| {
+                        c["bounds"][0].as_i64().unwrap() + c["bounds"][2].as_i64().unwrap() / 2
+                    })
+                    .ok_or("music_mapping_actual_Staff_clef_required")?
+            } else {
+                self.clef
+            };
             let (step, octave) = crate::head_musical_pitch::diatonic(
-                self.clef["shape"]
+                clef["shape"]
                     .as_str()
                     .ok_or("music_mapping_clef_required")?,
-                self.clef["pitch"]
+                clef["pitch"]
                     .as_f64()
                     .ok_or("music_mapping_clef_pitch_required")?,
                 member["pitch"]
@@ -483,7 +517,7 @@ impl Context<'_> {
         };
         Ok(Fact {
             head,
-            staff: m.staff,
+            staff,
             part: m.part,
             stem_dir: geometry.stem_dir(stem.is_some())?,
             voice,

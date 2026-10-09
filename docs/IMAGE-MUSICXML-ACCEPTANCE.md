@@ -156,3 +156,12 @@ Voice以外の実Inter全field/relationsを保持した。対象9件・fmt/clipp
 最新の全ページ観測。今回その同じ停止位置は再実行していない。品質受入は未達。
 次は実Staff/clefによる声部照合、その後共有Stack rhythmと複段MusicXML出力。
 [証拠](../evidence/real-voice-family/VALIDATION.json)・[次依存](../evidence/real-voice-family/NEXT-DEPENDENCY.md)。
+
+声部照合のfact取得を、最高実memberのStaff・その音の位置以前の同Staff clefへ
+接続した。原版実Chord同一Measure全613組×未割当/初期Voice割当後の
+1,226距離が一致（各220組はcross-Staff）。読み取りで全Graphを保持し、
+欠落Staff/clefは明示する。対象10件・fmt/clippy/build、63＋補正8/exact7/64
+XML byte/XSD成功。複数Partガードは今回未変更で、v29のXML未出力が
+最新全ページ観測。品質受入は未達。次は実narrow/wide/compound取得と
+曲線Staffによる共有Stack abscissa、共有Slot/rhythmと複段MusicXML出力。
+[証拠](../evidence/real-voice-distance/VALIDATION.json)・[次依存](../evidence/real-voice-distance/NEXT-DEPENDENCY.md)。
