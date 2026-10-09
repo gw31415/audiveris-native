@@ -283,16 +283,6 @@ pub(crate) fn late_checks(
                 .ok_or("music_dot_registered_glyph_required")?,
         );
         let mi = geometry::measure_at(music, &staff, p)?;
-        let measure = &measures[mi];
-        // Conservative admission for not-yet-connected repeat/articulation
-        // interpretations. These guards retain ambiguous dots for later ports.
-        if (p[0] - measure.left)
-            .abs()
-            .min((p[0] - measure.right).abs())
-            <= (2.2 * il as f64).round_ties_even() as i64
-        {
-            return Err("music_dot_repeat_checks_pending".into());
-        }
         let mut nearby = chords
             .iter()
             .filter(|c| c.measure == mi)

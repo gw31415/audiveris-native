@@ -569,7 +569,9 @@ pub fn continue_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
             let meter = time(shape);
             if shape == "DOT_set" {
                 if crate::music_dots::geometry::distant(&m.owner, &s, b)? {
-                    // Repeat interpretation remains an explicit late guard.
+                    crate::music_repeat_dots::instant_check(&m, sid, b)?;
+                    // Positive repeat construction stays explicit until its
+                    // own add/bar/pair callbacks are compared.
                     // Staccato registration belongs to this instant phase and
                     // is not returned for same-glyph InterFactory Exclusion.
                     crate::music_articulations::create_added(

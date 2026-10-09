@@ -41,10 +41,14 @@ Dotの実曲線・仮想Ledger音高・実Ledger map距離も接続し、788実�
 （正15）と16 articulationの生成・追加・リンク・除去状態を比較した。
 対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
 実画像CLI v20は172.0秒で `music_dot_repeat_checks_pending` に到達し、XMLは未出力。
-次はinstant repeatの実音高/Barline lookupをstaccatoより前へ接続し、共有Stack filterと
-実Dot links、後続記号reduction・共有rhythm・出力へ進む。原版最終XMLの8 staccatoと、
-生成前後16制御の一致は区別し、実画像品質受入は未達のまま。
-[証拠](../evidence/real-dot-articulations/VALIDATION.json)・[次依存](../evidence/real-dot-articulations/NEXT-DEPENDENCY.md)。
+instant repeatはstaccatoの前に実Staff音高/Barline lookupを接続した。
+原版97実dot候補の反復0と、21実Barline周辺の宣言168 lookupが一致した。
+対象6件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
+実画像CLI v21は175.43秒で `music_alter_supported_context_pending` に到達し、XMLは未出力。
+次は実AlterHead supportによるcontextual grade/weak purge、次いでArticulationや実container/
+共有rhythm/outputへ進む。正のrepeat生成・pair処理とshared Stack全filterは後続に残す。
+原版最終XMLの8 staccatoと生成前後16制御の一致は区別し、画像品質受入は未達。
+[証拠](../evidence/real-repeat-dot-lookup/VALIDATION.json)・[次依存](../evidence/real-repeat-dot-lookup/NEXT-DEPENDENCY.md)。
 
 ## 実装済みの具体的単位
 

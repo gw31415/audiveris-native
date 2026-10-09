@@ -68,7 +68,11 @@ post-analysisの12仮想Ledger曲線をcallbackから保持し、物理Ledger削
 原版97候補lookupの正15、16実記号の制御状態が一致し、対象6件とXML/XSD回帰成功。
 実画像CLI v20は172.0秒でrepeat判定ガードへ進んだ。次は原版instant repeatをstaccatoより
 前で実Staff/Barlineから判定し、共有Stack Dot links／filter、後続記号reduction・共有rhythm・出力へ。
-原版最終XMLの8 staccatoはまだnative出力で比較できていない。
+原版instant repeatをstaccatoより前へ接続し、97実dot候補の反復0と168宣言Barline
+lookupを比較した。対象6件とXML/XSD回帰成功。実画像CLI v21は175.43秒で実AlterHead
+supportのcontextualizationガードへ進み、次は支持付き臨時記号のweak purge、その後の
+実container/共有rhythm/outputへ接続する。shared Stack全filterと正repeatの生成/pairは
+後続に残す。原版最終XMLの8 staccatoはまだnative出力で比較できていない。
 XMLはまだ出力できない。
 この新切断点は全画像のライブラリ対象検証であり、native全画像CLIの成功を示さない。
 XMLを出力できない。staff消去済み同名開発fixtureでの `no_regular_lines` は画素が異なり、
