@@ -157,39 +157,71 @@ fn best_among<'a>(ev: &[(&'a str, f64)], pred: impl Fn(&str) -> bool) -> Option<
 }
 
 /// Recognize a time signature from a column (whole pair, or numerator over denominator).
-pub fn time_from_column(
-    col: &Component,
-    parts: &[Component],
-    staff: &Staff,
-    il: i32,
-) -> Option<TimeSig> {
+pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<TimeSig> {
     let ev = classify(col, il);
     if let Some((s, g)) = ev.first()
-        && *g >= 0.1
+        && *g >= 0.5
         && let Some(t) = time_of(s)
     {
         return Some(t);
     }
-    // Split into upper and lower halves around the middle line.
+    // Numerator above and denominator below the middle line (pixel split).
     let mid = staff.pitch_y(0.0, col.bounds.cx());
-    let upper: Vec<&Component> = parts.iter().filter(|p| p.bounds.cy() < mid).collect();
-    let lower: Vec<&Component> = parts.iter().filter(|p| p.bounds.cy() >= mid).collect();
-    if upper.is_empty() || lower.is_empty() {
-        return None;
-    }
-    let num = |v: &[&Component]| -> Option<u32> {
-        let g = Component::merge(v);
-        let ev = classify(&g, il);
-        best_among(&ev, |s| digit_of(s).is_some())
-            .filter(|e| e.1 >= 0.1)
-            .and_then(|e| digit_of(e.0))
+    let half = |upper: bool| -> Option<Component> {
+        let pixels: Vec<(i32, i32)> = col.pixels.iter().copied().filter(|p| ((p.1 as f64) < mid) == upper).collect();
+        if pixels.len() < 4 {
+            return None;
+        }
+        let (x0, x1) = (pixels.iter().map(|p| p.0).min()?, pixels.iter().map(|p| p.0).max()?);
+        let (y0, y1) = (pixels.iter().map(|p| p.1).min()?, pixels.iter().map(|p| p.1).max()?);
+        Some(Component { bounds: Rect::new(x0, y0, x1 - x0 + 1, y1 - y0 + 1), pixels })
     };
-    let (n, d) = (num(&upper)?, num(&lower)?);
-    (n > 0 && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig {
-        beats: n,
-        beat_type: d,
-        symbol: None,
-    })
+    let digit = |g: &Component| -> Option<u32> {
+        let ev = classify(g, il);
+        best_among(&ev, |s| digit_of(s).is_some()).filter(|e| e.1 >= 0.1).and_then(|e| digit_of(e.0))
+    };
+    let number = |g: Component| -> Option<u32> {
+        if let Some(d) = digit(&g) {
+            return Some(d);
+        }
+        // Several digits side by side (e.g. 12): read them left to right.
+        let mut bm = Bitmap::new(g.bounds.w as usize, g.bounds.h as usize);
+        for &(x, y) in &g.pixels {
+            bm.set(x - g.bounds.x, y - g.bounds.y, true);
+        }
+        let mut cols = columns(components(&bm, None).into_iter().filter(|c| c.weight() >= 4).collect());
+        if cols.len() < 2 {
+            return None;
+        }
+        cols.sort_by_key(|c| c.bounds.x);
+        let mut n = 0;
+        for c in cols {
+            n = n * 10 + digit(&c).filter(|&d| d < 10)?;
+        }
+        Some(n)
+    };
+    let upper = half(true)?;
+    let n = number(upper.clone())?;
+    // Denominator: a power of two; when unreadable, the best of those classes
+    // (or the usual one for compound numerators).
+    let lower = half(false)?;
+    let ilf = il as f64;
+    let digit_like = (1.5 * ilf..=2.6 * ilf).contains(&(lower.bounds.h as f64))
+        && (1.5 * ilf..=2.6 * ilf).contains(&(upper.bounds.h as f64))
+        && (lower.bounds.cx() - upper.bounds.cx()).abs() <= 0.5 * ilf;
+    let d = number(lower.clone()).filter(|d| [1, 2, 4, 8, 16, 32].contains(d)).or_else(|| {
+        if !digit_like {
+            return None;
+        }
+        let ev = classify(&lower, il);
+        let best = ev.iter().filter(|(s, _)| matches!(*s, "TIME_TWO" | "TIME_FOUR" | "TIME_EIGHT" | "TIME_SIXTEEN")).max_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+        match best {
+            Some((s, g)) if *g >= 0.01 => digit_of(s),
+            _ if [6, 9, 12].contains(&n) => Some(8),
+            _ => None,
+        }
+    })?;
+    ((1..=16).contains(&n) && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig { beats: n, beat_type: d, symbol: None })
 }
 
 pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
@@ -322,8 +354,7 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
             if col.bounds.w > 3 * il || (k > 1 && group[k - 1].0.bounds.x - group[k - 2].0.bounds.right() > il / 2) {
                 break;
             }
-            let parts: Vec<Component> = group.iter().flat_map(|c| c.1.iter().cloned()).collect();
-            if let Some(t) = time_from_column(&col, &parts, staff, il) {
+            if let Some(t) = time_from_column(&col, staff, il) {
                 header.time = Some(t);
                 header.stop = col.bounds.right();
                 header.items.push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
