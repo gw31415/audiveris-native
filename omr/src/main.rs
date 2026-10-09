@@ -108,6 +108,7 @@ fn write_debug(dir: &Path, stem: &str, sheet: &pipeline::Sheet, score: &score::S
         ov.rect(s.bounds.grow(1, 1), [0, 150, 255]);
     }
     ov.save(&dir.join(format!("{stem}.png")))?;
+    debug::Overlay::new(&sheet.residual).save(&dir.join(format!("{stem}.residual.png")))?;
     let json = serde_json::json!({
         "scale": sheet.scale,
         "staves": sheet.staves,

@@ -80,12 +80,20 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         }
     }
     log(verbose, &t, format!("HEADS {} candidates (point size {})", candidates.len(), catalog.point_size));
-    let (heads, mut stems) = stems::link(&nostaff, candidates, &scale);
+    if let Ok(v) = std::env::var("OMR_PROBE") {
+        let v: Vec<i32> = v.split(',').map(|x| x.parse().unwrap()).collect();
+        let r = Rect::new(v[0] - 15, v[1] - 15, 30, 30);
+        for h in candidates.iter().filter(|h| h.bounds.intersects(&r)) {
+            eprintln!("probe {h:?}");
+        }
+    }
+    let (mut heads, mut stems) = stems::link(&nostaff, candidates, &scale);
     stems::attach_beams(&mut stems, &heads, &beams, &scale);
     log(verbose, &t, format!("STEMS {} heads, {} stems", heads.len(), stems.len()));
     let items: Vec<Rect> = headers.iter().flat_map(|h| h.items.iter().map(|i| i.0)).collect();
     let residual = symbols::residual(&nostaff, &heads, &catalog, &stems, &beams, &ledgers, &systems, &staves, &items, &scale);
     let symbols = symbols::recognize(&residual, &staves, &scale);
+    stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
     Ok(Sheet {
         binary: bin,

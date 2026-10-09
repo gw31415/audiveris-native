@@ -36,7 +36,8 @@ pub fn residual(
 ) -> Bitmap {
     let mut img = nostaff.clone();
     // Heads: erase template foreground (dilated by one pixel).
-    for h in heads {
+    // Only good heads are erased; weak ones may still be other symbols.
+    for h in heads.iter().filter(|h| h.ctx >= 0.6) {
         let t = catalog.template(h);
         // Recover the MIDDLE_LEFT anchor from the slim bounds.
         let (ox, oy) = t.middle_left();
@@ -50,17 +51,17 @@ pub fn residual(
                 }
             }
         }
-        if t.shape.has_hole() {
-            for y in h.bounds.y..h.bounds.bottom() {
-                for x in h.bounds.x..h.bounds.right() {
-                    img.set(x, y, false);
-                }
+        let r = h.bounds.grow(1, 1);
+        for y in r.y..r.bottom() {
+            for x in r.x..r.right() {
+                img.set(x, y, false);
             }
         }
     }
     // Stems: erase thin horizontal runs on the stem column.
     let ms = scale.max_stem + 1;
-    for s in stems {
+    let good_stem = |s: &&Stem| s.heads.iter().any(|&h| heads[h].ctx >= 0.6);
+    for s in stems.iter().filter(good_stem) {
         for y in s.top..=s.bottom {
             for x in [s.x - 1, s.x, s.x + 1] {
                 if img.get(x, y) {
@@ -74,7 +75,7 @@ pub fn residual(
             }
         }
     }
-    for s in stems {
+    for s in stems.iter().filter(good_stem) {
         for &bi in &s.beams {
             for &(x, y) in &beams[bi].pixels {
                 img.set(x, y, false);
@@ -212,6 +213,9 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             return;
         }
         let ev = classify(&g, il);
+        if std::env::var("OMR_SYM").is_ok() {
+            eprintln!("glyph {:?} -> {:?}", g.bounds, &ev[..2.min(ev.len())]);
+        }
         if let Some(&(s, gr)) = ev.first()
             && relevant(s)
             && gr >= min_grade(s)
@@ -250,9 +254,41 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             used[i] = true;
         }
         if let Some(si) = staff_of(&bounds) {
+            // Time signatures and clefs lie within the staff height.
+            let st = &staves[si];
+            let inside = bounds.cy() > st.top(bounds.cx()) && bounds.cy() < st.bottom(bounds.cx());
+            if (shape.starts_with("TIME_") || shape.ends_with("_TIME") || shape.contains("CLEF")) && !inside {
+                continue;
+            }
             out.push(Symbol { shape, grade, bounds, staff: si });
         }
     }
     out.sort_by_key(|s| s.bounds.x);
     out
+}
+
+/// Number of flags on a beamless stem: glyphs of the residual image near the
+/// stem tip, classified among flag shapes only.
+pub fn stem_flags(residual: &Bitmap, stem: &Stem, scale: &Scale) -> u32 {
+    let il = scale.interline;
+    let len = stem.bottom - stem.top;
+    let zone = if stem.up {
+        Rect::new(stem.x - 2, stem.top - 2, il + il / 2, (len / 2).min(4 * il))
+    } else {
+        let h = (len / 2).min(4 * il);
+        Rect::new(stem.x - 2, stem.bottom - h, il + il / 2, h + 3)
+    };
+    let parts: Vec<Component> = components(residual, Some(zone)).into_iter().filter(|c| c.weight() >= 6).collect();
+    if parts.is_empty() {
+        return 0;
+    }
+    let refs: Vec<&Component> = parts.iter().collect();
+    let g = Component::merge(&refs);
+    let ev = classify(&g, il);
+    let suffix_ok = |s: &str| s.ends_with("_DOWN") != stem.up;
+    ev.iter()
+        .find(|(s, _)| s.starts_with("FLAG_") && !s.contains("SMALL") && suffix_ok(s))
+        .filter(|(_, g)| *g >= 0.05)
+        .map(|(s, _)| s.trim_start_matches("FLAG_").trim_end_matches("_DOWN").parse().unwrap_or(0))
+        .unwrap_or(0)
 }

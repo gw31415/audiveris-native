@@ -28,6 +28,8 @@ pub struct Head {
     pub grade: f64,
     /// Matching distance.
     pub dist: f64,
+    /// Contextual grade (after stem support).
+    pub ctx: f64,
 }
 
 pub fn grade_of(dist: f64) -> f64 {
@@ -238,7 +240,7 @@ pub fn detect(
                 if shape.stemless() && grade < 0.5 {
                     continue;
                 }
-                let head = Head { staff: si, shape, pitch: scan.pitch, bounds: catalog.get(shape).slim_at(x0, y), grade, dist: d };
+                let head = Head { staff: si, shape, pitch: scan.pitch, bounds: catalog.get(shape).slim_at(x0, y), grade, dist: d, ctx: grade };
                 // A small (cue / grace) head matching better is not a standard head:
                 // it is left to the symbol classifier (grace notes).
                 if !shape.stemless() && catalog.get(shape).fore_black_ratio(&cells.data, cells.w, cells.h, x0, y) < 0.8 {

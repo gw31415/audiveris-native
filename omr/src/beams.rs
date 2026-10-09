@@ -40,7 +40,7 @@ pub fn detect(nostaff: &Bitmap, scale: &Scale) -> Vec<Beam> {
     let vr = nostaff.vertical_run_lengths();
     let bt = scale.beam as f64;
     let lo = (0.6 * bt).floor() as u16;
-    let hi = (1.6 * bt).ceil() as u16;
+    let hi = (1.35 * bt).ceil() as u16;
     let mut mask = Bitmap::new(w, h);
     for i in 0..w * h {
         mask.data[i] = vr[i] >= lo.max(2) && vr[i] <= hi;
@@ -67,7 +67,7 @@ pub fn detect(nostaff: &Bitmap, scale: &Scale) -> Vec<Beam> {
     let il = scale.interline as f64;
     let mut beams = Vec::new();
     for c in components(&mask, None) {
-        if (c.bounds.w as f64) < 0.9 * il || c.weight() < 6 {
+        if (c.bounds.w as f64) < 0.6 * il || c.weight() < 6 {
             continue;
         }
         // Column-wise top/bottom extents.
@@ -100,7 +100,7 @@ pub fn detect(nostaff: &Bitmap, scale: &Scale) -> Vec<Beam> {
         let mut thick: Vec<f64> = cols.iter().map(|c| c.2 - c.1 + 1.0).collect();
         thick.sort_by(|p, q| p.partial_cmp(q).unwrap());
         let t = thick[thick.len() / 2];
-        if t < 0.6 * bt || t > 1.6 * bt {
+        if t < 0.6 * bt || t > 1.35 * bt {
             continue;
         }
         // Straightness: center deviation and filling of the parallelogram.

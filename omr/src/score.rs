@@ -315,19 +315,22 @@ fn build_measure(
         }
         let shape = sheet.heads[heads[0]].shape;
         let flags: u32 = if stem.beams.is_empty() {
-            syms.iter()
+            let from_symbols: u32 = syms
+                .iter()
                 .filter(|s| s.shape.starts_with("FLAG_"))
                 .filter(|s| {
                     let dx = s.bounds.x as f64 - stem.x as f64;
+                    let mid = (stem.top + stem.bottom) as f64 / 2.0;
                     let tip_zone = if stem.up {
-                        s.bounds.y as f64 <= stem.top as f64 + 1.0 * il && s.bounds.bottom() as f64 >= stem.top as f64
+                        (s.bounds.y as f64) < mid && s.bounds.bottom() as f64 >= stem.top as f64
                     } else {
-                        s.bounds.bottom() as f64 >= stem.bottom as f64 - 1.0 * il && (s.bounds.y as f64) <= stem.bottom as f64
+                        s.bounds.bottom() as f64 > mid && (s.bounds.y as f64) <= stem.bottom as f64
                     };
                     (-0.4 * il..=0.6 * il).contains(&dx) && tip_zone
                 })
                 .map(|s| flag_count(s.shape))
-                .sum()
+                .sum();
+            if from_symbols > 0 { from_symbols } else { crate::symbols::stem_flags(&sheet.residual, stem, &sheet.scale) }
         } else {
             0
         };
