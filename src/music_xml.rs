@@ -6,6 +6,7 @@
 pub(crate) mod beam_rest;
 mod beam_rest_detect;
 mod beam_rest_lookup;
+pub(crate) mod note_pitch;
 #[cfg(test)]
 mod selected_cli_tests;
 pub(crate) mod stack_rhythm;

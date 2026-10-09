@@ -164,6 +164,7 @@ pub(crate) fn assert_real_duration_reads(mut music: OwnedMusic, preparation: Val
     assert_eq!(before["inters"], after["inters"]);
     assert_eq!(before["relations"], after["relations"]);
     assert_eq!(before["tombstones"], after["tombstones"]);
+    crate::music_xml::note_pitch::image_tests::assert_real_pitch(&music);
     crate::music_voices::image_tests::assert_real_voice_families(&music);
     crate::music_rookie_mapping::image_tests::assert_real_voice_distances(&music);
     crate::music_measure_slots::image_tests::assert_real_measure_slots(&music);

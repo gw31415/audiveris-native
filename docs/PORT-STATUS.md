@@ -2347,3 +2347,15 @@ Chord vector・他Inter body/時計・残存relation/manual metadataを保持す
 native実譜面XMLは未出力。品質未達のまま、次は実Head Staff/clef/key/臨時記号を
 原版94Head観測と比較し、Voice/BEGIN走査と必要な強弱/pedal・複段出力へ接続する。
 [証拠](../evidence/real-articulation-reduction/VALIDATION.json)・[次依存](../evidence/real-articulation-reduction/NEXT-DEPENDENCY.md)。
+
+実Head自身のStaffと登録済みPart/Measure所有から、同Staffのclef・調号・小節内の
+臨時記号を読む出力用getterを実装した。変更していない同じ実譜面の原版94 Headの
+音名・octave・alter・Staff/Part/Measure・調号と13臨時記号が一致し、読み取りで
+Graph body/時計/relation/manual statusと実Chord vectorを保持した。原版XMLの
+92音/11臨時記号との差はnull時計・空BEGINの2 Chordに由来し、ここで省略しない。
+この0 tie画像はtieやcross-system extensionの同等性を証明せず、未解決extensionは
+明示guardする。対象10件・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。
+公開複数Partガードは未変更でv29を再実行していない。品質未達。次は通常Page rhythm
+から実Voice/BEGINを走査し、複段Staffのnote/accidental/beamと必要な
+articulation・強弱/pedalをnative出力へ接続する。
+[証拠](../evidence/real-head-pitch/VALIDATION.json)・[次依存](../evidence/real-head-pitch/NEXT-DEPENDENCY.md)。
