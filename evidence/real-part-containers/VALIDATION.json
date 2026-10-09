@@ -1,0 +1,530 @@
+{
+  "baseline_commit": "a9a4295872f0d910a37b66eeb5c14a26a0da9ce4",
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "native_observations": {
+    "actual_LINKS_head_chords": 67,
+    "actual_LINKS_heads": 94,
+    "actual_LINKS_rest_chords": 0,
+    "actual_Part_Measure_Arcs_retained": true,
+    "actual_SYMBOLS_head_chords": 67,
+    "actual_SYMBOLS_rest_chords": 6,
+    "all_six_Staff_note_memberships_and_Part_Measure_Chord_members_match": true,
+    "declared_real_Chord_clock_and_manual_full_graph_rollback": true,
+    "foreign_Measure_Arc_same_scalar_ID_rejected_before_changes": true,
+    "nullable_Chord_Staff_validated_from_members": true,
+    "projection": {
+      "measure_chords": [
+        {
+          "head_chord_ids": [
+            622,
+            623,
+            624,
+            625,
+            626,
+            627,
+            628
+          ],
+          "measure_index": 1,
+          "part_id": 1,
+          "rest_chord_ids": [],
+          "staff_id": 1,
+          "system_id": 1
+        },
+        {
+          "head_chord_ids": [
+            629,
+            630,
+            631,
+            632,
+            633
+          ],
+          "measure_index": 2,
+          "part_id": 1,
+          "rest_chord_ids": [],
+          "staff_id": 1,
+          "system_id": 1
+        },
+        {
+          "head_chord_ids": [
+            652,
+            653,
+            654,
+            655,
+            656,
+            657,
+            658,
+            659,
+            664,
+            665,
+            666
+          ],
+          "measure_index": 1,
+          "part_id": 2,
+          "rest_chord_ids": [],
+          "staff_id": 2,
+          "system_id": 1
+        },
+        {
+          "head_chord_ids": [
+            660,
+            661,
+            662,
+            663,
+            667,
+            668,
+            669,
+            670,
+            671
+          ],
+          "measure_index": 2,
+          "part_id": 2,
+          "rest_chord_ids": [],
+          "staff_id": 2,
+          "system_id": 1
+        },
+        {
+          "head_chord_ids": [
+            678,
+            679,
+            680,
+            681,
+            682,
+            683
+          ],
+          "measure_index": 1,
+          "part_id": 1,
+          "rest_chord_ids": [],
+          "staff_id": 4,
+          "system_id": 2
+        },
+        {
+          "head_chord_ids": [
+            684,
+            685,
+            686,
+            687,
+            688,
+            689
+          ],
+          "measure_index": 2,
+          "part_id": 1,
+          "rest_chord_ids": [],
+          "staff_id": 4,
+          "system_id": 2
+        },
+        {
+          "head_chord_ids": [
+            702,
+            703,
+            704,
+            705,
+            706,
+            713,
+            714,
+            715,
+            716,
+            717,
+            718
+          ],
+          "measure_index": 1,
+          "part_id": 2,
+          "rest_chord_ids": [],
+          "staff_id": 5,
+          "system_id": 2
+        },
+        {
+          "head_chord_ids": [
+            707,
+            708,
+            709,
+            710,
+            711,
+            712,
+            719,
+            720,
+            721,
+            722,
+            723,
+            724
+          ],
+          "measure_index": 2,
+          "part_id": 2,
+          "rest_chord_ids": [],
+          "staff_id": 5,
+          "system_id": 2
+        }
+      ],
+      "scope": "actual note/chord containers and retained single-voice ownership; general voices/lyrics/full Part cleanup pending",
+      "staff_notes": [
+        {
+          "note_ids": [
+            132,
+            134,
+            139,
+            143,
+            147,
+            150,
+            155,
+            156,
+            157,
+            159,
+            163,
+            171
+          ],
+          "staff_id": 1,
+          "system_id": 1
+        },
+        {
+          "note_ids": [
+            177,
+            178,
+            182,
+            188,
+            191,
+            200,
+            201,
+            202,
+            204,
+            208,
+            209,
+            214,
+            218,
+            228,
+            230,
+            232,
+            233
+          ],
+          "staff_id": 2,
+          "system_id": 1
+        },
+        {
+          "note_ids": [
+            240,
+            243,
+            245,
+            249,
+            252,
+            254,
+            257,
+            261,
+            263,
+            275,
+            281,
+            283,
+            285
+          ],
+          "staff_id": 3,
+          "system_id": 1
+        },
+        {
+          "note_ids": [
+            289,
+            292,
+            300,
+            303,
+            310,
+            317,
+            320,
+            323,
+            325,
+            332,
+            338,
+            343
+          ],
+          "staff_id": 4,
+          "system_id": 2
+        },
+        {
+          "note_ids": [
+            355,
+            361,
+            364,
+            367,
+            369,
+            372,
+            377,
+            380,
+            393,
+            395,
+            398,
+            404,
+            406,
+            409,
+            412,
+            414,
+            418,
+            425,
+            434,
+            438,
+            446,
+            452,
+            454,
+            456,
+            458,
+            461,
+            463,
+            466
+          ],
+          "staff_id": 5,
+          "system_id": 2
+        },
+        {
+          "note_ids": [
+            471,
+            473,
+            479,
+            482,
+            484,
+            486,
+            489,
+            492,
+            494,
+            496,
+            498,
+            500
+          ],
+          "staff_id": 6,
+          "system_id": 2
+        }
+      ],
+      "voices": []
+    }
+  },
+  "ordinary_original_stage_ownership_subset_compared": true,
+  "whole_LINKS_or_classifier_or_musical_quality_parity_not_claimed": true,
+  "unique_target_tests": 11,
+  "checks": [
+    {
+      "check": "real_cleaner",
+      "exit_code": 0,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "real_foundation_bar_groups_and_construction_match_original_before_multistaff_measure_ownership",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-part-containers-real_cleaner.log"
+    },
+    {
+      "check": "dot_factory",
+      "exit_code": 0,
+      "tests": 4,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_dots::tests::original_",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-part-containers-dot_factory.log"
+    },
+    {
+      "check": "symbol_conflicts",
+      "exit_code": 0,
+      "tests": 3,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_symbol_reduction::tests::",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-part-containers-symbol_conflicts.log"
+    },
+    {
+      "check": "containers",
+      "exit_code": 0,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_containers::tests::",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-part-containers-containers.log"
+    },
+    {
+      "check": "rational",
+      "exit_code": 0,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "actual_rational_slots_and_underfilled_voice_termination_match_original",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-part-containers-rational.log"
+    },
+    {
+      "check": "format",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all"
+      ],
+      "log": "/tmp/real-part-containers-format.log"
+    },
+    {
+      "check": "fmt",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "log": "/tmp/real-part-containers-fmt.log"
+    },
+    {
+      "check": "clippy",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "log": "/tmp/real-part-containers-clippy.log"
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "log": "/tmp/real-part-containers-build.log"
+    },
+    {
+      "check": "chord_removal",
+      "exit_code": 0,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "music_containers::head_chord_removal_tests::",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-part-containers-chord_removal.log"
+    }
+  ],
+  "CLI_XML": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed",
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    },
+    "checker_sha256": "44064e43ce013fc4a5fb2a03799b8647f7d8c3016a6da8b227603debbfa654ac"
+  },
+  "exact_7_64_XML": {
+    "bytes_identical": true,
+    "XSD": "passed",
+    "sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+  },
+  "real_image_CLI": {
+    "exit_code": 1,
+    "elapsed_seconds": 187.63,
+    "diagnostic": "audiveris-musicxml: fixtures/official-grid/laura-gray.png: musicxml_verified_Bravura44_or47_interline11_scope_required\n",
+    "XML_present": false
+  },
+  "real_image_quality_accepted": false,
+  "whole_649_or_profile_rerun": false
+}

@@ -120,5 +120,6 @@ impl Graph {
         assert_eq!(invalid.snapshot(), before);
         Self::assert_real_flag_rest_weak(&music);
         std::fs::write("/tmp/real-context-projection-native-observed.json",serde_json::to_vec_pretty(&json!({"external_non_support_edges":external,"matched_original_Flag_Rest_edges":matched,"unaccepted_time_factory_edges":unaccepted_time_factory_edges,"focus_context_count":context(&after).len(),"context_identical_without_external_non_support_edges":true,"actual_relations_retained":true,"unsupported_external_support_rollback":true})).unwrap()).unwrap();
+        crate::music_containers::assert_real_part_memberships(music);
     }
 }

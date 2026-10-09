@@ -102,6 +102,16 @@ metadataを保持した。遅いfrozen失敗は実Chord7/64時計・expected3/4�
 実画像CLI v25は179.9秒で `music_container_owned_measure_required`、XML未出力。
 [証拠](../evidence/real-flag-rest-weak/VALIDATION.json)・[次依存](../evidence/real-flag-rest-weak/NEXT-DEPENDENCY.md)。
 
+実Part全Staffによるcontainer refreshを接続し、原版通常CHORDS/SYMBOLS/LINKSの
+67実HeadChord・94 Headと全6 Staff所属を比較した。実Part/Measure Arc・nullable
+Chord Staffを保持し、一時RestChord6個だけを除去する。同じscalar IDの異なるMeasure
+Arcは変更前に拒否し、manual/実Chord7/64時計/expected3/4を含む全graphを保持する。
+対象11件・fmt/clippy/build・63＋補正8/exact7/64 XML bytes/XSD成功。
+実画像CLI v26は187.63秒で `musicxml_verified_Bravura44_or47_interline11_scope_required`、
+XML未出力。次は実Bravura51 Chordの有理数音価・共有rhythmと複段Partの出力へ接続する。
+[証拠](../evidence/real-part-containers/VALIDATION.json)・[次依存](../evidence/real-part-containers/NEXT-DEPENDENCY.md)。
+
+
 ## 改訂した残工程
 
 1. 複数part/staffでのbeam周辺の実所有選択は接続済み。次の実入力切断点である

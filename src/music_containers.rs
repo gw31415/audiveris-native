@@ -20,6 +20,10 @@ pub(crate) fn refresh(
     chords: &mut Vec<Chord>,
     voices: &mut Vec<crate::music_voices::Voice>,
 ) -> Result<Refresh, String> {
+    if measures.iter().any(|m| m.geometry.is_some()) {
+        let mut ownership = graph.clone();
+        ownership.bind_dot_measures(measures)?;
+    }
     let snapshot = graph.snapshot();
     let nodes: BTreeMap<_, _> = snapshot["inters"]
         .as_array()
@@ -64,9 +68,28 @@ pub(crate) fn refresh(
             || origin != chord.key
             || measure.system != chord.key.system
             || n["part_id"] != measure.part
-            || n["staff_id"] != measure.staff
             || n["measure_index"] != measure.index
         {
+            return Err("music_container_owned_measure_required".into());
+        }
+        if let Some(layout) = &measure.geometry {
+            if layout.part.system != measure.system
+                || layout.part.id != measure.part
+                || layout.index != measure.index
+                || layout.stack.system != measure.system
+            {
+                return Err("music_container_actual_Part_Measure_required".into());
+            }
+            if let Some(staff) = n["staff_id"].as_u64()
+                && !layout
+                    .part
+                    .staffs
+                    .iter()
+                    .any(|s| s.id == staff && s.system == measure.system)
+            {
+                return Err("music_container_actual_Chord_Staff_required".into());
+            }
+        } else if n["staff_id"] != measure.staff {
             return Err("music_container_owned_measure_required".into());
         }
         // The actual typed relation, not a stale copied optional key, is the
@@ -131,6 +154,31 @@ pub(crate) fn refresh(
             }
             members.push((*member).clone());
         }
+        if let Some(layout) = &measure.geometry {
+            let mut member_staffs = std::collections::BTreeSet::new();
+            for member in &members {
+                let staff = member["staff_id"]
+                    .as_u64()
+                    .ok_or("music_container_actual_member_Staff_required")?;
+                if !layout
+                    .part
+                    .staffs
+                    .iter()
+                    .any(|s| s.id == staff && s.system == measure.system)
+                {
+                    return Err("music_container_actual_member_Part_required".into());
+                }
+                member_staffs.insert(staff);
+            }
+            let single = if member_staffs.len() == 1 {
+                member_staffs.iter().next().copied()
+            } else {
+                None
+            };
+            if n["staff_id"] != json!(single) {
+                return Err("music_container_actual_Chord_member_Staff_required".into());
+            }
+        }
         // Removing the last vertex kills its ensemble. A live, empty chord
         // from direct relation editing needs a later original editing/cleaner
         // path; do not silently invent a vertex deletion here.
@@ -169,22 +217,29 @@ pub(crate) fn refresh(
     let mut staff_notes = Vec::new();
     let mut staffs = BTreeSet::new();
     for m in measures {
-        if !staffs.insert((m.system, m.staff)) {
-            continue;
+        let actual_staffs = m
+            .geometry
+            .as_ref()
+            .map(|g| g.part.staffs.iter().map(|s| s.id).collect::<Vec<_>>())
+            .unwrap_or_else(|| vec![m.staff]);
+        for staff in actual_staffs {
+            if !staffs.insert((m.system, staff)) {
+                continue;
+            }
+            let ids = nodes
+                .iter()
+                .filter_map(|(id, n)| {
+                    if !matches!(n["kind"].as_str(), Some("HeadInter" | "RestInter"))
+                        || n["staff_id"] != staff
+                    {
+                        return None;
+                    }
+                    let key: Key = serde_json::from_value(n["origin"].clone()).ok()?;
+                    (key.system == m.system).then_some(*id)
+                })
+                .collect::<Vec<_>>();
+            staff_notes.push(json!({"system_id":m.system,"staff_id":staff,"note_ids":ids}));
         }
-        let ids = nodes
-            .iter()
-            .filter_map(|(id, n)| {
-                if !matches!(n["kind"].as_str(), Some("HeadInter" | "RestInter"))
-                    || n["staff_id"] != m.staff
-                {
-                    return None;
-                }
-                let key: Key = serde_json::from_value(n["origin"].clone()).ok()?;
-                (key.system == m.system).then_some(*id)
-            })
-            .collect::<Vec<_>>();
-        staff_notes.push(json!({"system_id":m.system,"staff_id":m.staff,"note_ids":ids}));
     }
     let measure_chords = measures.iter().enumerate().map(|(i,m)| json!({
         "system_id":m.system,"part_id":m.part,"staff_id":m.staff,"measure_index":m.index,
@@ -657,3 +712,8 @@ mod head_chord_removal_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod image_tests;
+#[cfg(test)]
+pub(crate) use image_tests::assert_real_part_memberships;
