@@ -145,3 +145,14 @@ MIDI/音価/graceで厳密一致。precision0.79348、recall0.72277、F1=0.75648
 次は実Part StaffのHIGH/LOW Voice生成、共有Stack/Slotの有理数rhythm、
 複段Partの調号・臨時記号・必要なnotationと出力へ接続する。
 [証拠](../evidence/real-chord-duration/VALIDATION.json)・[次依存](../evidence/real-chord-duration/NEXT-DEPENDENCY.md)。
+
+実Part StaffのVoice familyを開始Chordの最高実memberから取得し、
+HIGH/LOW/INFRA/HIGH_AND_LOWを保持してoffset+1から空番号を探す構築へ接続した。
+同じ実画像の67件（HIGH47/LOW20）と原版38中間状態を比較し、12構築・登録、
+同一Measure BeamGroup伝播、LOW5〜10、旧6 object保持と新objectへの6再利用が一致。
+Voice以外の実Inter全field/relationsを保持した。対象9件・fmt/clippy/build、
+63＋補正8/exact7/64 XML byte/XSD成功。広すぎたlifecycle83件指定は中止し、
+直接の6件へ絞り直した。実画像の複数Partガードは未変更で、v29のXML未出力が
+最新の全ページ観測。今回その同じ停止位置は再実行していない。品質受入は未達。
+次は実Staff/clefによる声部照合、その後共有Stack rhythmと複段MusicXML出力。
+[証拠](../evidence/real-voice-family/VALIDATION.json)・[次依存](../evidence/real-voice-family/NEXT-DEPENDENCY.md)。

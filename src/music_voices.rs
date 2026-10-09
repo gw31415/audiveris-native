@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Retained Voice chord ownership in the admitted ordinary single-staff rhythm
-//! path. VoiceKind HIGH is justified by the existing first-staff-only guard;
-//! general voice matching/merged parts and automatic tie recognition remain pending.
+//! Retained Voice chord ownership from the actual starting Chord and Part Staff.
+//! Merged Parts and automatic tie recognition remain separate dependencies.
 use crate::music_measures::{Chord, Measure};
 use crate::music_time::{Delta, Fraction};
 use serde_json::{Value, json};
@@ -9,7 +8,59 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
 #[cfg(test)]
+pub(crate) mod image_tests;
+#[cfg(test)]
 mod lifecycle_tests;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) enum VoiceKind {
+    High,
+    Low,
+    Infra,
+    HighAndLow,
+}
+impl VoiceKind {
+    fn label(self) -> &'static str {
+        match self {
+            Self::High => "HIGH",
+            Self::Low => "LOW",
+            Self::Infra => "INFRA",
+            Self::HighAndLow => "HIGH_AND_LOW",
+        }
+    }
+    fn id_offset(self) -> usize {
+        match self {
+            Self::High => 0,
+            Self::Low => 4,
+            Self::Infra => 8,
+            Self::HighAndLow => 12,
+        }
+    }
+}
+fn starting_family(measure: &Measure, seed: &Chord) -> Result<(u64, VoiceKind), String> {
+    let Some(geometry) = &measure.geometry else {
+        return Ok((measure.staff, VoiceKind::High));
+    };
+    let staff = seed
+        .members
+        .last()
+        .and_then(|n| n["staff_id"].as_u64())
+        .ok_or("music_voice_actual_starting_staff_required")?;
+    let index = geometry
+        .part
+        .staffs
+        .iter()
+        .position(|s| s.id == staff)
+        .ok_or("music_voice_actual_Part_Staff_required")?;
+    let kind = match index {
+        0 => VoiceKind::High,
+        1 => VoiceKind::Low,
+        2 => VoiceKind::Infra,
+        3 => VoiceKind::HighAndLow,
+        _ => VoiceKind::High,
+    };
+    Ok((staff, kind))
+}
 
 #[derive(Clone)]
 pub(crate) struct Voice {
@@ -19,6 +70,7 @@ pub(crate) struct Voice {
     pub id: usize,
     pub measure: usize,
     pub starting_staff: u64,
+    pub(crate) kind: VoiceKind,
     pub chord_ids: Vec<usize>,
     // getChords exposes both null and empty as [], but direct duration reads
     // distinguish resetChords' null list from the last removeChord's empty list.
@@ -74,7 +126,7 @@ pub(crate) struct MeasureTiming {
 pub(crate) fn is_measure_rest_shape(shape: &str, partial_whole_rests: bool) -> bool {
     matches!(shape, "LONG_REST" | "BREVE_REST") || (shape == "WHOLE_REST" && !partial_whole_rests)
 }
-/// Voice constructor/createMeasureRestVoice -> generateVoiceId(HIGH), setVoice.
+/// Voice constructor/createMeasureRestVoice -> inferVoiceKind/generateVoiceId, setVoice.
 /// Measure-rest Voice keeps its separate rest chord, not a normal chord list. The
 /// caller has already admitted a single voice in this nonmerged one-staff part.
 pub(crate) fn single(
@@ -110,7 +162,8 @@ fn construct(
         }
     }
     members.sort_by_key(|c| c.bounds[0] + c.bounds[2] / 2);
-    let id = (1..)
+    let (starting_staff, kind) = starting_family(measure, chords[0])?;
+    let id = (kind.id_offset() + 1..)
         .find(|id| {
             !existing
                 .iter()
@@ -135,7 +188,8 @@ fn construct(
         identity: Arc::new(()),
         id,
         measure: measure_index,
-        starting_staff: measure.staff,
+        starting_staff,
+        kind,
         chord_ids: if measure_rest_chord.is_some() {
             Vec::new()
         } else {
@@ -284,7 +338,7 @@ pub(crate) fn projection(voices: &[Voice], measures: &[Measure]) -> Value {
             .iter()
             .map(|v| {
                 let m = &measures[v.measure];
-                json!({"id":v.id,"kind":"HIGH","system_id":m.system,"part_id":m.part,
+                json!({"id":v.id,"kind":v.kind.label(),"system_id":m.system,"part_id":m.part,
             "measure_index":m.index,"starting_staff_id":v.starting_staff,"chord_ids":v.chord_ids,"measure_rest_chord_id":v.measure_rest_chord,"is_measure_rest":v.measure_rest_chord.is_some(),"termination":v.termination.map(crate::music_time::format_delta),"excess":v.excess.map(crate::music_time::format_fraction),"slots":v.slots.iter().map(|(id,s)|json!({"slot_id":id,"chord_id":s.chord_id,"status":if s.continuing {"CONTINUE"}else{"BEGIN"}})).collect::<Vec<_>>()})
             })
             .collect::<Vec<_>>()
