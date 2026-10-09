@@ -1,0 +1,143 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "Fresh unchanged AnLaura image, checked explicit Tuplet factory, ordinary SYMBOLS->LINKS->RHYTHMS, and isolated source-ordered LINKS lookup; three independent original runs. Development evidence only; never native recognition input.",
+  "image": "fixtures/official-grid/laura-gray.png",
+  "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "runs": {
+    "factory": {
+      "observed": "factory-observed.json",
+      "executed_provenance": "factory-provenance.json",
+      "observed_sha256": "8186c2e978b46e8a80f1918d56d442d7785e3b2989f2cf0c609cab52d7ae03f7"
+    },
+    "stages": {
+      "observed": "stages-observed.json",
+      "executed_provenance": "stages-provenance.json",
+      "observed_sha256": "12d511931db304ddd3e391e010168fa3bbf01b377aa08b78beb14aac8d43e151"
+    },
+    "lookup": {
+      "observed": "lookup-observed.json",
+      "executed_provenance": "lookup-provenance.json",
+      "observed_sha256": "f69558a7238d86fae69dc65a57791e9446490301f0604ef6b674fe747ba08ee6"
+    }
+  },
+  "executed_source_archive": {
+    "RealRestLifecycleImageProbe.java": {
+      "path": "scripts/java/RealRestLifecycleImageProbe.java",
+      "sha256": "1dad106d4fe979d75459ac492c9c5ddc458bdc1a647483e272ef26c472ca8775"
+    },
+    "RealTupletFactoryImageProbe.java": {
+      "installed_path": "scripts/java/RealTupletFactoryImageProbe.java",
+      "exact_byte_reconstruction": {
+        "replace_once": "extends RealTupletProbeSupport",
+        "with": "extends RealRestLifecycleImageProbe"
+      },
+      "sha256": "9aa8ad012672b800268155bf9953d79d2e97eafbc0acce08db29d926fea41a20"
+    },
+    "RealTupletStagesImageProbe.java": {
+      "path": "scripts/java/RealTupletStagesImageProbe.java",
+      "sha256": "785d800ff3d22a1027ecb85c7180f1aa72cd74d660d68b8f832a13a0d954fe78"
+    },
+    "RealTupletLookupImageProbe.java": {
+      "path": "scripts/java/RealTupletLookupImageProbe.java",
+      "sha256": "c3cc6c36a9e86663fe2f84dd9c6295040eb603915cc6def169cead65391a295d"
+    },
+    "RealLedgerMembershipImageProbe.java": {
+      "path": "scripts/java/RealLedgerMembershipImageProbe.java",
+      "sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727"
+    }
+  },
+  "installed_source_sha256": {
+    "RealTupletProbeSupport.java": "f850705ddd684d567cb3245b7ce359d5403462e85ef08ea243bec59fd75e8388",
+    "RealTupletFactoryImageProbe.java": "19fa8e63c03bfc5b82a56107f1f1cb1e2eec77dcc419ea877150a814676d60b6",
+    "RealTupletStagesImageProbe.java": "785d800ff3d22a1027ecb85c7180f1aa72cd74d660d68b8f832a13a0d954fe78",
+    "RealTupletLookupImageProbe.java": "c3cc6c36a9e86663fe2f84dd9c6295040eb603915cc6def169cead65391a295d",
+    "RealLedgerMembershipImageProbe.java": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727"
+  },
+  "source_consolidation": {
+    "executed_installed_hierarchy_identical": false,
+    "qualification": "Installed RealTupletFactoryImageProbe changes only its superclass from RealRestLifecycleImageProbe to RealTupletProbeSupport. New support copies the exact eleven common utility method bodies and fresh-JVM label/candidate storage; it includes no Rest observer. Stages and Lookup sources are byte-identical to the executed sources. Consolidated hierarchy is compile-checked only and was not re-executed; original observation provenance remains unchanged.",
+    "archived_sources_purpose": "Unchanged executed sources use repository paths. Historical factory bytes are exactly recoverable by the one recorded superclass substitution, with verified SHA256. No duplicate source archive is stored.",
+    "checks": {
+      "eleven_common_method_bodies_preserved": true,
+      "support_has_no_rest_observer": true,
+      "factory_superclass_only_change": true,
+      "stages_and_lookup_executed_bytes_preserved": true,
+      "all_fixture_json_parse": true,
+      "historical_factory_reconstruction_matches_executed_sha256": true
+    }
+  },
+  "qualifications": [
+    "TUPLET_SIX and positive linked tuplets not observed.",
+    "Manual ChordTupletRelation preservation not exercised: this actual candidate never gains one.",
+    "GraphListener observes after original SIG callback; not a before-callback interception.",
+    "Factory, ordinary-step and lookup observations are separate fresh runs; labels identify object references only within a run.",
+    "Numbers/IDs differ across original runs; comparison must use geometry+actual ownership, not hard-coded original numeric IDs.",
+    "No new native comparison is included."
+  ],
+  "preparation_checks": {
+    "factory": {
+      "source_exit_zero": true,
+      "observation_bytes_match": true,
+      "executed_observer_source_match": true,
+      "executed_rest_helper_source_match": true,
+      "executed_ledger_helper_source_match": true,
+      "input_image_match": true,
+      "original_console_match": true,
+      "no_native_outputs": true,
+      "no_runtime_stubs": true
+    },
+    "stages": {
+      "source_exit_zero": true,
+      "observation_bytes_match": true,
+      "executed_observer_source_match": true,
+      "executed_rest_helper_source_match": true,
+      "executed_ledger_helper_source_match": true,
+      "input_image_match": true,
+      "original_console_match": true,
+      "no_native_outputs": true,
+      "no_runtime_stubs": true
+    },
+    "lookup": {
+      "source_exit_zero": true,
+      "observation_bytes_match": true,
+      "executed_observer_source_match": true,
+      "executed_rest_helper_source_match": true,
+      "executed_ledger_helper_source_match": true,
+      "input_image_match": true,
+      "original_console_match": true,
+      "no_native_outputs": true,
+      "no_runtime_stubs": true
+    }
+  },
+  "native_comparison_included": false,
+  "quality_acceptance_passed": false,
+  "installed_compile_check": {
+    "argv": [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-tuplet-factory-original-v1/compile-only",
+      "-d",
+      "/tmp/real-tuplet-consolidated-compile-v1/classes",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletProbeSupport.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletFactoryImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletStagesImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletLookupImageProbe.java"
+    ],
+    "exit_code": 0,
+    "compile_only": true,
+    "original_rerun": false,
+    "stdout_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "generated_classes": [
+      "classes/RealLedgerMembershipImageProbe.class",
+      "classes/RealTupletFactoryImageProbe$ObservedFactory.class",
+      "classes/RealTupletFactoryImageProbe.class",
+      "classes/RealTupletLookupImageProbe.class",
+      "classes/RealTupletProbeSupport.class",
+      "classes/RealTupletStagesImageProbe.class"
+    ]
+  }
+}

@@ -734,6 +734,8 @@ fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
                     | "STACCATISSIMO_BELOW"
                     | "PEDAL_MARK"
                     | "PEDAL_UP_MARK"
+                    | "TUPLET_THREE"
+                    | "TUPLET_SIX"
             ) || crate::music_directions::signature(shape).is_some()
                 || crate::music_numbers::value(shape).is_some()
                 || music_symbols::time(shape).is_some()

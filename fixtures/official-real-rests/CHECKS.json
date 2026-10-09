@@ -1,0 +1,71 @@
+{
+  "checks": {
+    "all_12_candidates_are_actual_original_results": true,
+    "factory_results_have_registered_staff_and_no_chord": true,
+    "system_1_preexisting_rest_chords_absent": true,
+    "system_1_same_actual_rest_objects_retained": true,
+    "system_1_chord_measure_member_and_relation_identity_retained": true,
+    "system_1_actual_chords_registered_and_clocks_null": true,
+    "system_2_preexisting_rest_chords_absent": true,
+    "system_2_same_actual_rest_objects_retained": true,
+    "system_2_chord_measure_member_and_relation_identity_retained": true,
+    "system_2_actual_chords_registered_and_clocks_null": true
+  },
+  "all_passed": true,
+  "frame_rest_counts": [
+    [
+      1,
+      "before_buildSymbols_after_original_doProlog",
+      0,
+      0
+    ],
+    [
+      1,
+      "after_buildSymbols_before_rest_chords",
+      7,
+      0
+    ],
+    [
+      1,
+      "after_buildRestChords_before_lateChecks",
+      7,
+      7
+    ],
+    [
+      1,
+      "after_lateChecks",
+      7,
+      7
+    ],
+    [
+      2,
+      "before_buildSymbols_after_original_doProlog",
+      0,
+      0
+    ],
+    [
+      2,
+      "after_buildSymbols_before_rest_chords",
+      5,
+      0
+    ],
+    [
+      2,
+      "after_buildRestChords_before_lateChecks",
+      5,
+      5
+    ],
+    [
+      2,
+      "after_lateChecks",
+      5,
+      5
+    ]
+  ],
+  "qualification": "Original actual Rest factory accepted 12 candidates at SYMBOLS; 9 survive in separately observed final export book. These stages precede LINKS reduction and RHYTHMS, so do not compare the 12 pre-LINKS candidates directly with 9 final MusicXML rests. No native result counts inferred.",
+  "coverage": {
+    "factory_null_returns": 0,
+    "passed_vs_centroid_staff_difference": 0,
+    "qualification": "No nullable rejection or center-vs-centroid Staff disagreement occurred among checked Rest evaluations on this image; these edge contracts require separate source observations if changed."
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+  "runner_sha256": "4ebe90790c2434ddb25bef110b05ce65306fedb6997a92e31335ae875013446e",
+  "probe": "RealTupletStagesImageProbe",
+  "observer_sha256": "785d800ff3d22a1027ecb85c7180f1aa72cd74d660d68b8f832a13a0d954fe78",
+  "source_sha256": {
+    "RealLedgerMembershipImageProbe.java": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+    "RealTupletProbeSupport.java": "f850705ddd684d567cb3245b7ce359d5403462e85ef08ea243bec59fd75e8388",
+    "RealTupletFactoryImageProbe.java": "19fa8e63c03bfc5b82a56107f1f1cb1e2eec77dcc419ea877150a814676d60b6",
+    "RealTupletStagesImageProbe.java": "785d800ff3d22a1027ecb85c7180f1aa72cd74d660d68b8f832a13a0d954fe78",
+    "RealTupletLookupImageProbe.java": "c3cc6c36a9e86663fe2f84dd9c6295040eb603915cc6def169cead65391a295d"
+  },
+  "image": null,
+  "image_file_sha256": null,
+  "compile_only": true,
+  "compile_commands": [
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "-J-Djava.awt.headless=true",
+      "-J-Djava.io.tmpdir=/tmp/real-tuplet-runner-compile-v2/tmp",
+      "-J-Dorg.bytedeco.javacpp.cachedir=/tmp/real-tuplet-runner-compile-v2/cache",
+      "-J-Djava.util.prefs.userRoot=/tmp/real-tuplet-runner-compile-v2/prefs",
+      "-J-Djava.util.prefs.systemRoot=/tmp/real-tuplet-runner-compile-v2/system-prefs",
+      "-J-Duser.home=/tmp/real-tuplet-runner-compile-v2/home",
+      "--release",
+      "21",
+      "-d",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/Book.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/RunClass.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/SystemInfo.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/Staff.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/Glyph.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/Evaluation.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/Inter.java",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only/InterFactory.java"
+    ],
+    [
+      "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+      "-J-Djava.awt.headless=true",
+      "-J-Djava.io.tmpdir=/tmp/real-tuplet-runner-compile-v2/tmp",
+      "-J-Dorg.bytedeco.javacpp.cachedir=/tmp/real-tuplet-runner-compile-v2/cache",
+      "-J-Djava.util.prefs.userRoot=/tmp/real-tuplet-runner-compile-v2/prefs",
+      "-J-Djava.util.prefs.systemRoot=/tmp/real-tuplet-runner-compile-v2/system-prefs",
+      "-J-Duser.home=/tmp/real-tuplet-runner-compile-v2/home",
+      "--release",
+      "21",
+      "-cp",
+      "/tmp/real-tuplet-runner-compile-v2/compile-only",
+      "-d",
+      "/tmp/real-tuplet-runner-compile-v2/classes",
+      "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletProbeSupport.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletFactoryImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletStagesImageProbe.java",
+      "/workspace/audiveris-native/scripts/java/RealTupletLookupImageProbe.java"
+    ]
+  ],
+  "compile_exit_codes": [
+    0,
+    0
+  ],
+  "compile_only_stub_sha256": {
+    "Book.java": "a4f3d4243f6310551f644365b3e215949e147436f07bf02e5d702ab4f8c21fc2",
+    "RunClass.java": "bc2afa4cfdd439b9f5168ebc1eccb9ebccab19e44525ced4d77c3ff5ba4e2454",
+    "SystemInfo.java": "365d4f430178168290ae4c6a47f532d221436e24a541640a042375c2cc6ba678",
+    "Staff.java": "5f344c8c134a0057353b267f962297e60eec46ee2a18181bcde61e8f36477668",
+    "Glyph.java": "2865ecabbaa60fcadad24f94905289bf5fc0b1c068034d11001d8360f43842c5",
+    "Evaluation.java": "99fbb8331f125bfff580af7d15d25463408503b1058d54decf75b59a4e22cebf",
+    "Inter.java": "3a8005320d68eba158e72d83d14a1926e96c09888df2327a2b3d6d27e6e46a77",
+    "InterFactory.java": "995fc0597306a112af6343ba6eba1459e72ae12f1b88a250e907a0ebd8344957"
+  },
+  "runtime_classpath": [
+    "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*",
+    "/tmp/real-tuplet-runner-compile-v2/classes"
+  ],
+  "compile_only_signatures_on_runtime_classpath": false,
+  "run_argv": null,
+  "planned_run_argv": null,
+  "original_run_attempted": false,
+  "original_run_started": false,
+  "original_run_completed": false,
+  "original_exit_code": null,
+  "native_outputs_used": false,
+  "qualification": "Installed consolidated Tuplet helpers. Each invocation is an independent original run; labels do not establish cross-run identity. Compile-only success is not an original observation.",
+  "compile_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "generated_classes": [
+    "RealLedgerMembershipImageProbe.class",
+    "RealTupletFactoryImageProbe$ObservedFactory.class",
+    "RealTupletFactoryImageProbe.class",
+    "RealTupletLookupImageProbe.class",
+    "RealTupletProbeSupport.class",
+    "RealTupletStagesImageProbe.class"
+  ],
+  "exit_code": 0
+}

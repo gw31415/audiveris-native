@@ -8,6 +8,42 @@ use crate::{
 };
 use serde_json::json;
 
+fn count_augmentation_before_tuplets(
+    m: &OwnedMusic,
+    graph: &mut crate::shared_sig::Graph,
+) -> Result<(), String> {
+    for stack in &m.measure_layout.stacks {
+        for geometry in &stack.measures {
+            let mi = m
+                .measures
+                .iter()
+                .position(|measure| {
+                    measure
+                        .geometry
+                        .as_ref()
+                        .is_some_and(|g| std::sync::Arc::ptr_eq(g, geometry))
+                })
+                .ok_or("music_LINKS_actual_Stack_Measure_required")?;
+            for kind in [
+                crate::music_measures::ChordKind::Head,
+                crate::music_measures::ChordKind::Rest,
+            ] {
+                for chord in m
+                    .chords
+                    .iter()
+                    .filter(|c| c.measure == mi && c.kind == kind)
+                {
+                    let (node, removed) = graph.retained_inter(chord.key)?;
+                    if !removed && node["kind"] != "SmallChordInter" {
+                        graph.count_owned_augmentation(chord.key)?;
+                    }
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Preflight the actual retained beam catalogs before original VLinker scheduling.
 /// Empty builders and cross-system orphan beams must survive until linkStems /
 /// Finalizer / SigReducer; the former horizontal-envelope shortcut is obsolete.
@@ -60,6 +96,10 @@ pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, Stri
 pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
     let directions = crate::music_directions::link_and_contextualize(&m, &mut graph)?;
+    // Tuplet lookup reads durationSansTuplet. Original linkAugmentationDots
+    // harmonizes actual Chords before lookup, before later weak-dot reduction.
+    count_augmentation_before_tuplets(&m, &mut graph)?;
+    let (tuplets, tuplet_containers) = crate::music_tuplets::link_and_remove(&m, &mut graph)?;
     let numbers = crate::music_numbers::link_and_remove(&m, &mut graph)?;
     let flag_overlaps = crate::music_flags::detect_overlaps(&mut graph)?;
     let alters = crate::music_alters::contextualize_and_purge(&mut graph)?;
@@ -76,6 +116,10 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         crate::music_articulations::check_redundancy(&mut graph, &m.chords)?;
     let dot_consistency = crate::music_dots::reduce_consistencies(&mut graph, &m.chords)?;
     m.owner.graph = graph;
+    for (mi, assigned, unassigned) in tuplet_containers {
+        m.measures[mi].tuplets = assigned;
+        m.measures[mi].stack_tuplets = unassigned;
+    }
     m.owner.prepared.report["shared_sig"] = m.owner.graph.snapshot();
     m.owner.prepared.report["limited_links"] = json!({"removed_weak_symbol_ids":reduction["removed_weak_symbol_ids"],"symbol_conflict_reduction":reduction,"removed_empty_chord_ids":empty_chords,"scope":"Rest/TimeWhole physical overlaps with incoming zero-target augmentation support, contextualization/weak purge/exclusion reduction; actual member/container cleanup; admitted single-voice path has no lyrics/slurs/tremolos; temporary BeamHead relations are removed by the connected BeamHeadCleaner","flag_support_and_weak_purge":flags,"full_LINKS_complete":false,"heads_complete":false,"stems_complete":false,"epilog_complete":false});
     m.owner.prepared.report["limited_links"]["flag_overlap_preparation"] = flag_overlaps;
@@ -93,6 +137,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
     m.owner.prepared.report["limited_links"]["direction_linking_and_weak_purge"] = directions;
     m.owner.prepared.report["limited_links"]["temporary_numbers"] = numbers;
+    m.owner.prepared.report["limited_links"]["explicit_tuplets"] = tuplets;
     m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
     m.owner.prepared.report["limited_links"]["articulation_weak_purge"] = articulations;
     m.owner.prepared.report["limited_links"]["articulation_redundancy"] = articulation_redundancy;

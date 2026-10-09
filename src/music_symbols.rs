@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Strong SymbolsFilter + bounded SymbolsBuilder/InterFactory continuation.
 //! Original capped recursive candidate generation; remaining factories/conflicts are pending.
+#[cfg(test)]
+use crate::shared_sig::Key;
 use crate::{
     GrayImage, beam_dispatch,
     music_measures::{Chord, OwnedMusic},
-    shared_sig::{Key, Phase},
+    shared_sig::Phase,
 };
 use audiveris_staff_removal::{BinaryPage, GlyphPixels, Limits, Orientation, extract_glyphs};
 use serde_json::{Value, json};
@@ -19,7 +21,7 @@ fn head_dilation(point_size: u16) -> i64 {
 }
 // RestInter.createValid: grow the rest glyph horizontally, intersect the
 // actual HeadChord (including its stem tail), then compare center2D strictly.
-fn rest_too_close_to_chord(b: [i64; 4], d: i64, c: &Chord) -> bool {
+pub(crate) fn rest_too_close_to_chord(b: [i64; 4], d: i64, c: &Chord) -> bool {
     let h = c.bounds;
     b[0] - d < h[0] + h[2]
         && h[0] < b[0] + b[2] + d
@@ -145,10 +147,12 @@ fn filter(m: &OwnedMusic) -> Result<GrayImage, String> {
             return Err("music_symbols_uniform_five_lines_required".into());
         }
         erase_rectangle(&mut im, header_rectangle(staff, left, right, o.interline)?);
-        if h["clef"]["frozen"] != true {
-            return Err("music_frozen_header_clef_required".into());
+        if !h["clef"].is_null() {
+            if h["clef"]["frozen"] != true {
+                return Err("music_frozen_header_clef_required".into());
+            }
+            glyph_erase(&mut im, &h["clef"]["glyph"])?;
         }
-        glyph_erase(&mut im, &h["clef"]["glyph"])?;
         if !h["time"].is_null() {
             // PageCleaner visits the actual TimeWhole glyph or TimePair numbers.
             // The pair has no synthetic physical glyph; upstream is provenance.
@@ -393,6 +397,9 @@ fn checked(
                 .then(|| shape.to_owned()),
         );
     }
+    if matches!(shape, "TUPLET_THREE" | "TUPLET_SIX") {
+        return Ok((pitch.abs() <= 17.).then(|| shape.to_owned()));
+    }
     let rest = matches!(
         shape,
         "HW_REST_set"
@@ -510,7 +517,7 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     }
     let mut trials = Vec::new();
     let mut accepted = Vec::new();
-    let mut new_chords = Vec::new();
+    let mut current_system = None;
     let mut candidates = Vec::new();
     for group in geometry::dispatch(&m.owner, &glyphs)? {
         let system = group.system;
@@ -521,6 +528,13 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         }
     }
     for (system, g, parts) in &candidates {
+        if current_system != Some(system.id) {
+            if let Some(previous) = current_system {
+                let chords = crate::music_rests::add_rest_chords(&mut graph, &m, previous)?;
+                m.chords.extend(chords);
+            }
+            current_system = Some(system.id);
+        }
         let part_count = parts.len();
         let mut part_ids = Vec::new();
         for part in parts {
@@ -692,76 +706,52 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 }
                 continue;
             }
-            if meter.is_none() && !rest {
+            if matches!(shape, "TUPLET_THREE" | "TUPLET_SIX") {
+                if let Some(key) =
+                    crate::music_tuplets::create(&mut m, &mut graph, g, sid, shape, grade, gid)?
+                {
+                    created.push(key);
+                }
                 continue;
             }
-            let centroid = beam_dispatch::centroid(g)?;
-            let cx = centroid[0] as i64;
-            let mi = m.measures.iter().position(|mm| {
-                mm.system == sid && mm.staff == staff && mm.left < cx && cx <= mm.right
-            });
             if rest {
-                let Some(mi) = mi else {
+                let Some(rest) = crate::music_rests::create(&m, system, g, shape, grade, gid)?
+                else {
                     continue;
                 };
-                let d = (il as f64 * 0.5).round_ties_even() as i64;
-                if m.chords
-                    .iter()
-                    .filter(|c| {
-                        c.measure == mi
-                            && c.members.first().is_some_and(|n| n["kind"] == "HeadInter")
-                    })
-                    .any(|c| rest_too_close_to_chord(b, d, c))
+                if !m.measures[rest.measure_index]
+                    .geometry
+                    .as_ref()
+                    .is_some_and(|g| std::sync::Arc::ptr_eq(g, &rest.measure))
+                    || !rest
+                        .measure
+                        .part
+                        .staffs
+                        .iter()
+                        .any(|s| std::sync::Arc::ptr_eq(s, &rest.staff))
+                    || rest.body["staff_id"] != rest.staff.id
                 {
-                    continue;
+                    return Err("music_rest_factory_actual_owners_required".into());
                 }
+                let key = graph.next_symbol_key(sid)?;
+                let mut data = rest.body;
+                let id = graph.vertex(key, data.clone(), false)?;
+                created.push(key);
+                data["id"] = json!(id);
+                data["origin"] = json!(key);
+                accepted.push(data);
+                continue;
             }
+            let Some((num, den)) = meter else {
+                continue;
+            };
             let key = graph.next_symbol_key(sid)?;
-            let mut data = json!({"kind":if rest{"RestInter"}else{"TimeWholeInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade});
-            if let Some((num, den)) = meter {
-                data["numerator"] = json!(num);
-                data["denominator"] = json!(den);
-            } else {
-                data["pitch"] = json!(
-                    m.owner
-                        .ledger_memberships
-                        .pitch_at(&s, centroid.map(|v| v as f64))?
-                );
-            }
+            let mut data = json!({"kind":"TimeWholeInter","shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"numerator":num,"denominator":den});
             let id = graph.vertex(key, data.clone(), false)?;
             created.push(key);
             data["id"] = json!(id);
             data["origin"] = json!(key);
             accepted.push(data.clone());
-            if rest {
-                let mi = mi.unwrap();
-                let ck = Key {
-                    system: sid,
-                    phase: Phase::Chord,
-                    local: m
-                        .chords
-                        .iter()
-                        .chain(&new_chords)
-                        .filter(|c: &&Chord| c.key.system == sid)
-                        .count()
-                        + 1,
-                };
-                let cid=graph.vertex(ck,json!({"kind":"RestChordInter","bounds":b,"staff_id":staff,"part_id":m.measures[mi].part,"measure_index":m.measures[mi].index,"member_ids":[id],"duration":null,"voice":null}),false)?;
-                graph.relations(
-                    sid,
-                    Phase::Chord,
-                    vec![(ck, key, json!({"kind":"Containment"}))],
-                )?;
-                new_chords.push(Chord {
-                    kind: crate::music_measures::ChordKind::Rest,
-                    key: ck,
-                    id: cid,
-                    stem: None,
-                    members: vec![data],
-                    measure: mi,
-                    bounds: b,
-                });
-            }
         }
         if created.len() == 2 {
             graph.relations(
@@ -776,12 +766,15 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         }
         trials.push(json!({"system_id":sid,"glyph_id":gid,"bounds":[g.left,g.top,g.width,g.height],"weight":weight,"part_count":part_count,"part_glyph_ids":part_ids,"created_inter_ids":created.iter().map(|key| graph.id(*key).unwrap()).collect::<Vec<_>>(),"evaluations":evaluations}));
     }
+    if let Some(system) = current_system {
+        let chords = crate::music_rests::add_rest_chords(&mut graph, &m, system)?;
+        m.chords.extend(chords);
+    }
     m.owner
         .prepared
         .registry
         .commit_symbol_extension(registry)?;
     m.owner.graph = graph;
-    m.chords.extend(new_chords);
     let mut dot_graph = m.owner.graph.clone();
     let dot_late_checks = crate::music_dots::late_checks(
         &mut dot_graph,

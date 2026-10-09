@@ -1,0 +1,486 @@
+[
+  {
+    "chords": [
+      {
+        "bounds": [
+          1029,
+          1253,
+          15,
+          63
+        ],
+        "manual": false,
+        "measure_index": 3,
+        "members": [
+          {
+            "bounds": [
+              1029,
+              1304,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": 1,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 3
+      },
+      {
+        "bounds": [
+          1061,
+          1267,
+          15,
+          43
+        ],
+        "manual": false,
+        "measure_index": 3,
+        "members": [
+          {
+            "bounds": [
+              1061,
+              1298,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": 0,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 3
+      },
+      {
+        "bounds": [
+          1129,
+          1278,
+          15,
+          72
+        ],
+        "manual": false,
+        "measure_index": 3,
+        "members": [
+          {
+            "bounds": [
+              1129,
+              1338,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": 7,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 3
+      },
+      {
+        "bounds": [
+          1244,
+          1256,
+          15,
+          77
+        ],
+        "manual": false,
+        "measure_index": 4,
+        "members": [
+          {
+            "bounds": [
+              1244,
+              1321,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": 4,
+            "shape": "NOTEHEAD_BLACK"
+          },
+          {
+            "bounds": [
+              1244,
+              1282,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -3,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 4
+      },
+      {
+        "bounds": [
+          186,
+          1276,
+          15,
+          42
+        ],
+        "manual": false,
+        "measure_index": 1,
+        "members": [
+          {
+            "bounds": [
+              186,
+              1276,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -4,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 1
+      },
+      {
+        "bounds": [
+          277,
+          1282,
+          15,
+          39
+        ],
+        "manual": false,
+        "measure_index": 1,
+        "members": [
+          {
+            "bounds": [
+              277,
+              1282,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -3,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 1
+      },
+      {
+        "bounds": [
+          369,
+          1259,
+          15,
+          70
+        ],
+        "manual": false,
+        "measure_index": 1,
+        "members": [
+          {
+            "bounds": [
+              369,
+              1287,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -2,
+            "shape": "NOTEHEAD_BLACK"
+          },
+          {
+            "bounds": [
+              369,
+              1259,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -7,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 1
+      },
+      {
+        "bounds": [
+          481,
+          1259,
+          15,
+          59
+        ],
+        "manual": false,
+        "measure_index": 1,
+        "members": [
+          {
+            "bounds": [
+              481,
+              1259,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -7,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 1
+      },
+      {
+        "bounds": [
+          558,
+          1265,
+          16,
+          51
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              559,
+              1265,
+              15,
+              11
+            ],
+            "manual": false,
+            "pitch": -6,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          597,
+          1270,
+          15,
+          49
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              597,
+              1270,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -5,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          635,
+          1276,
+          15,
+          47
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              635,
+              1276,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -4,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          674,
+          1282,
+          15,
+          45
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              674,
+              1282,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -3,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          713,
+          1287,
+          15,
+          51
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              713,
+              1287,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -2,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          751,
+          1293,
+          15,
+          49
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              751,
+              1293,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -1,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          790,
+          1299,
+          15,
+          47
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              790,
+              1299,
+              15,
+              11
+            ],
+            "manual": false,
+            "pitch": 0,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          829,
+          1304,
+          15,
+          45
+        ],
+        "manual": false,
+        "measure_index": 2,
+        "members": [
+          {
+            "bounds": [
+              829,
+              1304,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": 1,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 2
+      },
+      {
+        "bounds": [
+          899,
+          1253,
+          15,
+          69
+        ],
+        "manual": false,
+        "measure_index": 3,
+        "members": [
+          {
+            "bounds": [
+              899,
+              1310,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": 2,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 3
+      },
+      {
+        "bounds": [
+          968,
+          1253,
+          15,
+          52
+        ],
+        "manual": false,
+        "measure_index": 3,
+        "members": [
+          {
+            "bounds": [
+              968,
+              1293,
+              15,
+              12
+            ],
+            "manual": false,
+            "pitch": -1,
+            "shape": "NOTEHEAD_BLACK"
+          }
+        ],
+        "stack_index": 3
+      }
+    ],
+    "header": {
+      "clef": null,
+      "clef_range": {
+        "browse_start": 97,
+        "browse_stop": 147,
+        "start": null,
+        "stop": null,
+        "valid": false
+      },
+      "key": null,
+      "key_range": null,
+      "staff_id": 6,
+      "start": 97,
+      "stop": 157,
+      "system_id": 2,
+      "time": null,
+      "time_range": {
+        "browse_start": 157,
+        "browse_stop": 200,
+        "start": null,
+        "stop": null,
+        "valid": false
+      }
+    },
+    "staff": 6,
+    "system": 2
+  }
+]

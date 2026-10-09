@@ -121,8 +121,8 @@ pub(crate) struct Measure {
     pub(crate) geometry: Option<std::sync::Arc<crate::music_measure_layout::MeasureLayout>>,
     pub timing: crate::music_voices::MeasureTiming,
     pub tuplets: Vec<Key>,
-    // In the admitted single-part path this is the actual Stack unassigned set.
-    // Multipart stacks must share one container before extending this admission.
+    // The explicit image path stores the shared Stack's unassigned set only
+    // on its first Measure; copying it into each Part would duplicate owners.
     pub stack_tuplets: Vec<Key>,
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -260,21 +260,30 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     .flatten()
                     .find(|h| h["staff_id"] == staff_id && h["system_id"] == sid)
                     .ok_or("music_staff_header_required")?;
-                let mut clef = header["clef"].clone();
-                if clef["shape"].as_str().is_none() {
-                    return Err("music_native_clef_required".into());
-                }
                 let key = Key {
                     system: sid,
                     phase: Phase::MusicHeader,
                     local: staff_id as usize,
                 };
-                clef["kind"] = json!("ClefInter");
-                clef["source_header_id"] = clef["id"].clone();
-                clef["staff_id"] = json!(staff_id);
-                clef["header_stop"] = header["stop"].clone();
-                let id = graph.vertex(key, clef, false)?;
-                clef_rows.push(json!({"id":id,"origin":key,"staff_id":staff_id}));
+                let clef = header
+                    .get("clef")
+                    .ok_or("music_native_header_clef_state_required")?;
+                // An empty StaffHeader owns no ClefInter. Pitch fallback must not
+                // create one or borrow a clef from another physical Staff.
+                if !clef.is_null() {
+                    let mut clef = clef.clone();
+                    if clef["shape"].as_str().is_none() {
+                        return Err("music_native_clef_required".into());
+                    }
+                    clef["kind"] = json!("ClefInter");
+                    clef["source_header_id"] = clef["id"].clone();
+                    clef["staff_id"] = json!(staff_id);
+                    clef["header_stop"] = header["stop"].clone();
+                    let id = graph.vertex(key, clef, false)?;
+                    clef_rows.push(json!({"id":id,"origin":key,"staff_id":staff_id}));
+                } else if !header["key"].is_null() {
+                    return Err("music_header_key_without_clef_support_pending".into());
+                }
                 let relations = owner.upstream_report["headers"]["systems"]
                     .as_array()
                     .into_iter()
@@ -437,6 +446,8 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
     })
 }
 
+#[cfg(test)]
+mod null_header_tests;
 #[cfg(test)]
 mod tests;
 #[cfg(test)]

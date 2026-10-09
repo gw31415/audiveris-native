@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "installed_runner_sha_matches": true,
+    "both_compile_commands_succeeded": true,
+    "all_three_probes_compiled": true,
+    "signature_classes_excluded": true,
+    "stub_directory_excluded_from_runtime_classpath": true,
+    "original_never_attempted": true,
+    "no_original_artifacts": true,
+    "no_image_required_for_compile_only": true,
+    "native_outputs_unused": true
+  },
+  "all_passed": true,
+  "provenance": "/tmp/real-tuplet-runner-compile-v2/provenance.json",
+  "runner_sha256": "4ebe90790c2434ddb25bef110b05ce65306fedb6997a92e31335ae875013446e",
+  "earlier_lookup_alias_compile": "/tmp/real-tuplet-runner-compile-v1/provenance.json"
+}

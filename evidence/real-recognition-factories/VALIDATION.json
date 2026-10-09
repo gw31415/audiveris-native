@@ -1,0 +1,298 @@
+{
+  "baseline_commit": "de00f2fe47506964d62f433570ae944f2447c4f3",
+  "unique_native_target_tests": 6,
+  "owner_targets": {
+    "argv": [
+      "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+      "--exact",
+      "music_rests::tests::real_rest_factory_keeps_lower_staff_owners_before_allocating_chords",
+      "music_tuplets::tests::real_image_tuplet_factory_stack_lookup_and_orphan_lifecycle_match_original",
+      "--test-threads=2",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 240.57705332199112,
+    "source_sha256": {
+      "src/music_symbols.rs": "e51fb767ade2b2dbb760a87a5de8b47264ffe3e78f4132d4352e4b8ca87fa502",
+      "src/music_links.rs": "c3e7378e17daafd7a4e1854f7dfc3df21ffb0edc66c7f0533e86bb04963113e9",
+      "src/music_rests.rs": "c3381556e35128f3b65657e7455f3781416af5d37542539959d8f519ece585a3",
+      "src/music_rests/tests.rs": "61d3d10bdc213c60348141324bfc1807e599b9656c91987cd678d9d11a329a91",
+      "src/music_tuplets.rs": "55c8c7a4552412e31abd250a87acbe3c3ab5f0ffb0f4394b0ec398957dab4397",
+      "src/music_tuplets/tests.rs": "928f646e3eaed7835c5616dd4db4bdb419d029e7f353fba1dbfd1f16b70859cc",
+      "src/music_measures.rs": "10dcef6c5b96a13ea29513205276938f894a27bd5ec40be1a05e4dde837f9824"
+    },
+    "binary_sha256": "33fbf7be2094acbe925e8e2c6d1d19ccd1d777aa6795c3af6bc28749dff4b2c9",
+    "unique_targets": 2,
+    "source_stable": true
+  },
+  "null_header_target": {
+    "argv": [
+      "/workspace/native-build-tools/cargo/bin/cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--lib",
+      "music_measures::null_header_tests::empty_real_header_preserves_staff_part_measure_and_head_chords",
+      "--",
+      "--exact",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 246.9984656610177,
+    "console_sha256": "e37ad65dda5e435d5d2bcb01a03fc5f89cf352a58a2c17942950ec8ae66581c1",
+    "image_sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0",
+    "original_observed_sha256": "8ea7ecf05e12268d99bbdfa96acaf549e54777ec0c429a6f5014fe369547e4a7",
+    "recognition_input": "PNG only; original fixture used solely for assertions",
+    "sources_sha256": {
+      "src/music_measures.rs": "10dcef6c5b96a13ea29513205276938f894a27bd5ec40be1a05e4dde837f9824",
+      "src/music_measures/null_header_tests.rs": "8c2b389fdc2048b9d43dfa32f04e9590debe9ecfba3b1274855ac6dd701da79d"
+    },
+    "native_observed_sha256": "e1537bd42a07fd95598cda3b23d2d11088d1bd91e9806a801e9815c51f6781ce"
+  },
+  "fast_rest_target": {
+    "tests": 1,
+    "passed": true,
+    "log": "FAST-REST-TARGET.log"
+  },
+  "checks": [
+    {
+      "check": "fmt",
+      "exit_code": 0,
+      "elapsed_seconds": 2.0938786799961235,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "log": "/tmp/real-recognition-factories-fmt.log"
+    },
+    {
+      "check": "rest_spacing",
+      "exit_code": 0,
+      "elapsed_seconds": 0.051586204004706815,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "original_rest_admission_uses_chord_tail_and_strict_dx_boundaries",
+        "--",
+        "--nocapture"
+      ],
+      "log": "/tmp/real-recognition-factories-rest_spacing.log"
+    },
+    {
+      "check": "rational",
+      "exit_code": 0,
+      "elapsed_seconds": 15.45018275201437,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "actual_rational_slots_and_underfilled_voice_termination_match_original",
+        "--",
+        "--nocapture"
+      ],
+      "log": "/tmp/real-recognition-factories-rational.log"
+    },
+    {
+      "check": "clippy",
+      "exit_code": 0,
+      "elapsed_seconds": 21.91885358901345,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "log": "/tmp/real-recognition-factories-clippy.log"
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "elapsed_seconds": 20.44048325502081,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "log": "/tmp/real-recognition-factories-build.log"
+    }
+  ],
+  "final_scope": {
+    "owner_tests_run_before_final_scope_guards": true,
+    "scope_guards": [
+      "music_tuplet_cross_staff_chord_lookup_pending",
+      "music_tuplet_multi_rest_chord_lookup_pending"
+    ],
+    "effect": "Previously unverified geometry now errors before cache warming or no-link decisions; known same-Staff singleton-Rest controls remain admitted.",
+    "final_source_sha256": {
+      "src/music_symbols.rs": "e51fb767ade2b2dbb760a87a5de8b47264ffe3e78f4132d4352e4b8ca87fa502",
+      "src/music_links.rs": "c3e7378e17daafd7a4e1854f7dfc3df21ffb0edc66c7f0533e86bb04963113e9",
+      "src/music_rests.rs": "c3381556e35128f3b65657e7455f3781416af5d37542539959d8f519ece585a3",
+      "src/music_rests/tests.rs": "61d3d10bdc213c60348141324bfc1807e599b9656c91987cd678d9d11a329a91",
+      "src/music_tuplets.rs": "684a716088f97ce0abf0707a476da00778bb374b1cde509dd5b9e4807bbff46a",
+      "src/music_tuplets/tests.rs": "928f646e3eaed7835c5616dd4db4bdb419d029e7f353fba1dbfd1f16b70859cc",
+      "src/music_measures.rs": "a3c9c28f42b2617178ba107e33434e22d6e78b3d673c3f32caa3637c224c312d"
+    },
+    "full_ordinary_CLI_on_final_binary": {
+      "AN-LAURA": 1,
+      "DER-WINTER": 1
+    },
+    "observed_AnLaura_same_Staff_candidates_retained": true,
+    "post_owner_test_changes": [
+      "explicit error guards for unverified cross-Staff/multiple-Rest lookup geometry",
+      "shared Stack unassigned-container comment clarified"
+    ]
+  },
+  "CLI_XML": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed",
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    },
+    "checker_sha256": "44064e43ce013fc4a5fb2a03799b8647f7d8c3016a6da8b227603debbfa654ac"
+  },
+  "exact_7_64_XML": {
+    "bytes_identical": true,
+    "XSD": "passed",
+    "sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+  },
+  "ordinary_real_image_runs": {
+    "AN-LAURA": {
+      "argv": [
+        "/workspace/audiveris-native/target/debug/audiveris-musicxml",
+        "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png",
+        "/tmp/real-public-page-v5/laura.musicxml",
+        "/tmp/real-public-page-v5/report.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 222.2404363460082,
+      "image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "binary_sha256": "1e3f147ee28908b2f0ecfaa6541ebecc335a97d45c4f5bc0809207da2637c8f8",
+      "XML_written": false,
+      "report_written": false,
+      "normal_user_command": true,
+      "original_or_observation_used_as_recognition_input": false
+    },
+    "DER-WINTER": {
+      "argv": [
+        "/workspace/audiveris-native/target/debug/audiveris-musicxml",
+        "/workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png",
+        "/tmp/real-rest-native-v3/der-winter.musicxml",
+        "/tmp/real-rest-native-v3/report.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 246.54903043000377,
+      "image_sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0",
+      "binary_sha256": "1e3f147ee28908b2f0ecfaa6541ebecc335a97d45c4f5bc0809207da2637c8f8",
+      "XML_written": false,
+      "report_written": false,
+      "normal_user_command": true,
+      "original_or_observation_used_as_recognition_input": false
+    }
+  },
+  "frontiers": {
+    "AnLaura": "musicxml_unported_symbol_interpretation:TR",
+    "DerWinter": "music_tuplet_linked_positive_pending"
+  },
+  "tuplets": {
+    "checked_factory_candidates": 2,
+    "created": 1,
+    "factory_null": 1,
+    "orphan_original_reason": "OUTSIDE",
+    "clock_manual_Voice_Slot_Stack_identity_rollback": "passed",
+    "linked_positive_complete": false
+  },
+  "rests": {
+    "created": 12,
+    "lower_Staff_3_and_6": 3,
+    "factory_then_Chord_boundaries_original_match": true,
+    "intra_empty_Chord_callback_trace_claimed": false,
+    "manual_exact_clock_expected_actual_Chord_rollback": "passed"
+  },
+  "null_header": {
+    "Staff": 6,
+    "head_chords": 18,
+    "heads": 20,
+    "fake_clef_created": false,
+    "nullable_pitch_export_connected": false
+  },
+  "whole_649_rerun": false,
+  "real_image_quality_accepted": false
+}

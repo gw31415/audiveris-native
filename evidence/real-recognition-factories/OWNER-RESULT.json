@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "music_rests::tests::real_rest_factory_keeps_lower_staff_owners_before_allocating_chords",
+    "music_tuplets::tests::real_image_tuplet_factory_stack_lookup_and_orphan_lifecycle_match_original",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 240.57705332199112,
+  "source_sha256": {
+    "src/music_symbols.rs": "e51fb767ade2b2dbb760a87a5de8b47264ffe3e78f4132d4352e4b8ca87fa502",
+    "src/music_links.rs": "c3e7378e17daafd7a4e1854f7dfc3df21ffb0edc66c7f0533e86bb04963113e9",
+    "src/music_rests.rs": "c3381556e35128f3b65657e7455f3781416af5d37542539959d8f519ece585a3",
+    "src/music_rests/tests.rs": "61d3d10bdc213c60348141324bfc1807e599b9656c91987cd678d9d11a329a91",
+    "src/music_tuplets.rs": "55c8c7a4552412e31abd250a87acbe3c3ab5f0ffb0f4394b0ec398957dab4397",
+    "src/music_tuplets/tests.rs": "928f646e3eaed7835c5616dd4db4bdb419d029e7f353fba1dbfd1f16b70859cc",
+    "src/music_measures.rs": "10dcef6c5b96a13ea29513205276938f894a27bd5ec40be1a05e4dde837f9824"
+  },
+  "binary_sha256": "33fbf7be2094acbe925e8e2c6d1d19ccd1d777aa6795c3af6bc28749dff4b2c9",
+  "unique_targets": 2,
+  "source_stable": true
+}

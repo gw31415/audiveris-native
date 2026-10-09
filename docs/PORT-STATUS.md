@@ -15,7 +15,12 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
-最新の画像接続: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
+現在の通常画像CLIの到達点は、AnLauraのTR factoryとDer Winterの正リンクTupletのlifecycleです。
+空header・実休符とTuplet orphanの対象6件と63＋補正8/exact7/64回帰は成功しました。
+両実ページのMusicXMLはまだ未出力で、品質受入は未達です。
+直近の作業順は [保存NEXT依存](../evidence/real-recognition-factories/NEXT-DEPENDENCY.md) を使います。
+
+過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。
 仮想曲線はpost-analysis callbackで保持し、後の物理Ledger削除やreportから作り直さない。
 対象3件・fmt/clippy/build・63＋補正8/exact7/64 XML byte/XSD成功。
@@ -2441,3 +2446,14 @@ Der Winter v2はSTEMS後のmusic_native_clef_requiredへ進み、両方XML未出
 これらは原版の品質基準でありnative成功ではない。小節を跨ぐ声部継続、tie-bearing
 truth、cross-staff、beam等はこの比較器の未評価範囲として明示する。
 [構造比較と全残差](../evidence/real-structure-quality/README.md)。
+
+実画像factoryの次段を接続した。AnLauraは実Tupletを生成・共有Stackへ登録し、
+原版のlookupで音価3/8一致でもtail804〜823に中心802が入らないため除去する。
+Der Winterは欠けたStaff6 clefをnullのまま保持し、実18 Chord/20 Headを維持する。
+休符はcentroid→実Staff/Part/Measure判定と後段RestChord構築を分離し、
+全12候補と下段Staff3/6の3候補を原版比較した。対象6件・fmt/clippy/build、
+63＋補正8/exact7/64 XML byte/XSD成功。実Chord・manual・時計・expected・
+Voice/Slotと失敗時保持を検証。通常CLIはAnLauraがTR、Der Winterが正リンクTuplet
+の未接続処理に到達し、どちらもXML未出力。原版では後者は3辺追加後の弱削除で消える。
+[証拠](../evidence/real-recognition-factories/VALIDATION.json)・[次依存](../evidence/real-recognition-factories/NEXT-DEPENDENCY.md)。
+画像品質受入は未達。認証・通常Gitに障害なし。

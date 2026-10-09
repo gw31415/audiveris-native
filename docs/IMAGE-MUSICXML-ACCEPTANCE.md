@@ -328,3 +328,14 @@ Der Winterの未改変CC0譜面をLinux MuseScore3.2.3で全ページ画像化�
 これらは原版の品質基準でありnative成功ではない。小節を跨ぐ声部継続、tie-bearing
 truth、cross-staff、beam等はこの比較器の未評価範囲として明示する。
 [構造比較と全残差](../evidence/real-structure-quality/README.md)。
+
+実画像factoryの次段を接続した。AnLauraは実Tupletを生成・共有Stackへ登録し、
+原版のlookupで音価3/8一致でもtail804〜823に中心802が入らないため除去する。
+Der Winterは欠けたStaff6 clefをnullのまま保持し、実18 Chord/20 Headを維持する。
+休符はcentroid→実Staff/Part/Measure判定と後段RestChord構築を分離し、
+全12候補と下段Staff3/6の3候補を原版比較した。対象6件・fmt/clippy/build、
+63＋補正8/exact7/64 XML byte/XSD成功。実Chord・manual・時計・expected・
+Voice/Slotと失敗時保持を検証。通常CLIはAnLauraがTR、Der Winterが正リンクTuplet
+の未接続処理に到達し、どちらもXML未出力。原版では後者は3辺追加後の弱削除で消える。
+[証拠](../evidence/real-recognition-factories/VALIDATION.json)・[次依存](../evidence/real-recognition-factories/NEXT-DEPENDENCY.md)。
+画像品質受入は未達。認証・通常Gitに障害なし。

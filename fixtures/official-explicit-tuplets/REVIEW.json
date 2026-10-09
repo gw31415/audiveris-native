@@ -1,0 +1,63 @@
+{
+  "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "checks": {
+    "two_checked_factory_candidates_one_positive_one_null": true,
+    "positive_real_chord_intersections_two": true,
+    "positive_added_to_actual_stack_with_null_staff_abnormal_nonmanual": true,
+    "null_factory_preserves_actual_graph_identity": true,
+    "normal_lookup_has_no_links": true,
+    "collector_duration_fits_but_tail_abscissa_outside": true,
+    "ordinary_removal_at_linkStackTuplets": true,
+    "clock_and_expected_fields_unchanged_through_removal_event": true,
+    "retained_object_and_stack_removal_match": true,
+    "ordinary_observer_has_no_errors": true
+  },
+  "all_passed": true,
+  "observations": {
+    "factory": "/tmp/real-tuplet-factory-original-v1/observed.json",
+    "ordinary_steps": "/tmp/real-tuplet-stages-original-v1/observed.json",
+    "plain_lookup": "/tmp/real-tuplet-lookup-original-v1/observed.json"
+  },
+  "factory_contract": {
+    "shape_checker": "Glyph center2D system.estimatedPitch must be non-null and abs <=17. No OCR tuplet check; commented source only.",
+    "lookup": "Glyph Rectangle grow original Scale.toPixels(3) on each axis; intersect actual InterFactory.systemChords ordered by abscissa, all AbstractChordInter. Empty => null, nonempty => Tuplet without Staff; SIG added callback registers unassigned actual Stack then abnormal=true.",
+    "positive_example": {
+      "bounds": [
+        794,
+        525,
+        17,
+        30
+      ],
+      "grade": 0.5227474831517711,
+      "stack": [
+        1,
+        1
+      ],
+      "manual": false,
+      "raw_staff": null
+    },
+    "negative_example": {
+      "bounds": [
+        67,
+        850,
+        8,
+        14
+      ],
+      "nearby": 0
+    }
+  },
+  "plain_lookup_contract": {
+    "order": "Same original Stack standard Chords, common staff neighborhood, stable rectangle-distance ordering, overlap filter, first nonrest topStaff, collector including closest beam siblings only on tail side; test count/duration and final first/last tail abscissa.",
+    "observed_outcome": "base1/4 total1/4 expected3/4 -> base1/8 total3/8 expected3/8; integer tuplet center802 outside tail range804..823 => OUTSIDE => no links.",
+    "removal": "Original SymbolsLinker.linkTuplets -> TupletsBuilder.linkStackTuplets line161, nonmanual orphan removal; happens before SigReducer. No ChordTupletRelation was inserted or removed for this case."
+  },
+  "native_small_unit": "Connect source ShapeChecker and nullable factory retaining live actual Chords and Stack containers; keep explicit generated-positive Tuplet alive until original normal LINKS orphan lookup/removal. Do not reuse implicit-tuplet generator or drop positives based on final XML. Need explicit shared Stack registration/removal path and normal lookup collector; positive linked-tuplet relations/duration/XML remain separately unverified.",
+  "coverage_limits": [
+    "TUPLET_SIX and positive linked tuplets not observed.",
+    "Manual ChordTupletRelation preservation not exercised: this actual candidate never gains one.",
+    "GraphListener observes after original SIG callback; not a before-callback interception.",
+    "Factory, ordinary-step and lookup observations are separate fresh runs; labels identify object references only within a run.",
+    "Numbers/IDs differ across original runs; comparison must use geometry+actual ownership, not hard-coded original numeric IDs.",
+    "No new native comparison is included."
+  ]
+}

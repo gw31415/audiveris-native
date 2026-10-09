@@ -1,0 +1,101 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.sun.jna.Native in an unnamed module (file:/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/jna-5.14.0.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO  []                      Main 259  | Running in batch mode
+INFO  []              TesseractOCR 137  | Creating OCR folder /tmp/real-null-pitch-original-v1/config/AudiverisLtd/audiveris/tessdata
+WARN  []                 Languages 142  | *** No installed OCR languages ***
+INFO  []             AliasPatterns 146  | Alias patterns: [(IMSLP[0-9]*)-.*]
+INFO  []                      Main 194  | Submitting 1 task(s) in sequence:
+    Input "/workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png"
+INFO  [der-winter-gray]                      Book 560  | 1 sheet in /workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png
+INFO  []                      Book 2565 | Stored /book.xml
+INFO  []                      Book 2525 | Book stored as /tmp/real-null-pitch-original-v1/der-winter-gray.omr
+INFO  []                      Book 1929 | Book reaching SCALE on sheets:[#1]
+INFO  [der-winter-gray]            StepMonitoring 98   | LOAD
+INFO  [der-winter-gray]                 SheetStub 1278 | Loaded image #1 1489x2104 from /workspace/audiveris-native/fixtures/real-rest-page/der-winter-gray.png
+INFO  [der-winter-gray]            StepMonitoring 98   | BINARY
+INFO  [der-winter-gray]            StepMonitoring 98   | SCALE
+INFO  [der-winter-gray]              ScaleBuilder 254  | Beam  guessed height:  6 -- 0.25 of [5..10] range
+INFO  [der-winter-gray]              ScaleBuilder 271  | Beam measured height:  6 -- 0.20 of [5..10] range at 360% of needed quorum
+INFO  [der-winter-gray]              ScaleBuilder 401  | Normalized black jitter: 27.27 %
+INFO  [der-winter-gray]                 ScaleStep 65   | Scale{ interline(11,11,12) line(1,2,4) beam(6)}
+INFO  [der-winter-gray]                      Book 2584 | Book{der-winter-gray} storing
+INFO  [der-winter-gray]                      Book 2565 | Stored /book.xml
+INFO  [der-winter-gray]                DataHolder 348  | Stored /sheet#1/BINARY.png
+INFO  [der-winter-gray]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [der-winter-gray]                      Book 2525 | Book stored as /tmp/real-null-pitch-original-v1/der-winter-gray.omr
+INFO  [der-winter-gray]                 SheetStub 1655 | Sheet disposed
+INFO  [der-winter-gray]                      Book 2050 | End of Stub#1
+INFO  [der-winter-gray]                      Book 2057 | End of Book{der-winter-gray}
+INFO  [der-winter-gray]            StepMonitoring 98   | GRID
+INFO  [der-winter-gray]                 SheetStub 1000 | Loaded /sheet#1/sheet#1.xml
+INFO  [der-winter-gray]            LinesRetriever 1508 | Global slope: 0.00000
+INFO  [der-winter-gray]         ClustersRetriever 326  | Retrieved raw line clusters: 6 of sizes [5] with interline(11,11,12)
+INFO  [der-winter-gray]                 PeakGraph 310  | Systems: #1[1, 2, 3] #2[4, 5, 6]
+INFO  [der-winter-gray]             SystemManager 134  | Indentation detected for system #1
+INFO  [der-winter-gray]             SystemManager 800  | 2 parts along 2 systems
+INFO  [der-winter-gray]                      Book 543  | Created scores: [{Score 1}]
+INFO  [der-winter-gray]            StepMonitoring 98   | HEADERS
+WARN  [der-winter-gray]               ClefBuilder 658  | Staff#6 no recognized header clef.
+INFO  [der-winter-gray]            StepMonitoring 98   | STEM_SEEDS
+INFO  [der-winter-gray]             StemSeedsStep 86   | stem(3 max:4)
+INFO  [der-winter-gray]            StepMonitoring 98   | BEAMS
+INFO  [der-winter-gray]            StepMonitoring 98   | LEDGERS
+INFO  [der-winter-gray]            StepMonitoring 98   | HEADS
+INFO  [der-winter-gray]             HeadSeedTally 235  | Scale information: HeadSeeds{NOTEHEAD_BLACK[L:-0.1,R:-0.4]}
+INFO  [der-winter-gray]            StepMonitoring 98   | STEMS
+INFO  [der-winter-gray]            StepMonitoring 98   | REDUCTION
+INFO  [der-winter-gray]             ReductionStep 105  | Stems free length median value: 41 pixels, 3.7 interlines
+INFO  [der-winter-gray]            StepMonitoring 98   | CUE_BEAMS
+INFO  [der-winter-gray]              CueBeamsStep 81   | Step CUE_BEAMS is skipped because small heads switch is off
+INFO  [der-winter-gray]            StepMonitoring 98   | TEXTS
+WARN  [der-winter-gray]              TesseractOCR 335  | The collection of supported languages is empty
+INFO  [der-winter-gray]                   OcrUtil 106  | Missing support for 'eng' language(s)
+INFO  [der-winter-gray]            StepMonitoring 98   | MEASURES
+INFO  [der-winter-gray]                      Page 307  | 9 raw measures: [5 in system#1, 4 in system#2]
+INFO  [der-winter-gray]            StepMonitoring 98   | CHORDS
+INFO  [der-winter-gray]            StepMonitoring 98   | CURVES
+INFO  [der-winter-gray]              SlursBuilder 240  | Slurs: 6
+INFO  [der-winter-gray]           SegmentsBuilder 155  | Segments: 4
+INFO  [der-winter-gray]            StepMonitoring 98   | SYMBOLS
+INFO  [der-winter-gray]            StepMonitoring 98   | LINKS
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5325{(0.140) staff:1 QUINDICESIMA ALTA} at java.awt.Point[x=539,y=466]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5436{(0.320) staff:1 OTTAVA BASSA} at java.awt.Point[x=1034,y=587]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5441{(0.190) staff:1 QUINDICESIMA ALTA} at java.awt.Point[x=1200,y=263]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5496{(0.301) staff:6 QUINDICESIMA} at java.awt.Point[x=95,y=1670]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5500{(0.268) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=119,y=1711]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5511{(0.366) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=121,y=1793]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5520{(0.268) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=153,y=1670]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5551{(0.134) staff:6 OTTAVA BASSA} at java.awt.Point[x=217,y=1673]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5642{(0.297) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=402,y=1711]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5681{(0.211) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=397,y=1547]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5693{(0.366) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=448,y=1793]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5702{(0.242) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=445,y=1670]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5721{(0.208) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=567,y=1588]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5730{(0.268) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=494,y=1506]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5736{(0.330) staff:4 QUINDICESIMA BASSA} at java.awt.Point[x=497,y=1094]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5744{(0.302) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=500,y=1547]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#5988{(0.136) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=924,y=1753]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6094{(0.134) staff:6 OTTAVA BASSA} at java.awt.Point[x=1071,y=1755]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6105{(0.366) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=1151,y=1464]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6123{(0.209) staff:6 OTTAVA BASSA} at java.awt.Point[x=1139,y=1670]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6129{(0.172) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=1144,y=1670]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6140{(0.268) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=1191,y=1546]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6154{(0.294) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=1185,y=1711]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6210{(0.121) staff:6 QUINDICESIMA BASSA} at java.awt.Point[x=1254,y=1546]
+INFO  [der-winter-gray]             SymbolsLinker 258  | No chord linked to OctaveShiftInter#6241{(0.152) staff:6 OTTAVA BASSA} at java.awt.Point[x=1288,y=1752]
+WARN  [der-winter-gray]                  KeyInter 1174 | No effective clef before KeyAlterInter#218{(0.796/0.796) staff:6 SHARP pitch:-2.0}
+WARN  [der-winter-gray]                  KeyInter 1174 | No effective clef before AlterInter#6027{(0.798) staff:6 SHARP pitch:1.0}
+INFO  [der-winter-gray]            StepMonitoring 98   | RHYTHMS
+INFO  [der-winter-gray]             MeasureRhythm 1276 | Measure{#3P2} Time inconsistency in {3/8=[HeadChordInter#4215{(0.969/0.969) staff:2 slot#4 off:3/8 dur:1/8}], 1/2=[HeadChordInter#4231{(0.947/0.947) staff:3 slot#4 off:1/2 dur:1/8}]}
+INFO  [der-winter-gray]                     Voice 257  | Measure{#3P2} Voice{#5 excess:1/8} too long
+INFO  [der-winter-gray]               StackRhythm 224  | S1 MeasureStack#3 no correct rhythm
+INFO  [der-winter-gray]            StepMonitoring 98   | PAGE
+INFO  [der-winter-gray]                     Voice 257  | Measure{#3P2} Voice{#5 excess:1/8} too long
+INFO  [der-winter-gray]           PartwiseBuilder 2707 | Exporting sheet(s): [#1]
+INFO  [der-winter-gray]                      Book 2565 | Stored /book.xml
+INFO  [der-winter-gray]                     Sheet 1583 | Stored /sheet#1/sheet#1.xml
+INFO  [der-winter-gray]                      Book 2525 | Book stored as /tmp/real-null-pitch-original-v1/der-winter-gray.omr
+INFO  [der-winter-gray]                     Score 181  | Closing {Score 1}
