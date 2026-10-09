@@ -174,13 +174,148 @@ fn freeze_detached(
     Ok(result)
 }
 
-/// Input is the live post-time graph, not a serialized/reloaded .omr graph.
-/// This stage mutates only its clone and retains explicit removed-node IDs.
+struct HeaderSelection {
+    staff_id: u64,
+    start: i32,
+    stop: i32,
+    clef_id: Option<u64>,
+    key_id: Option<u64>,
+    time_id: Option<u64>,
+    clef_range: Value,
+    key_range: Value,
+    time_range: Value,
+}
+// These are live kernel results, consumed before any header report is emitted.
+// The native carrier allocation starts at finalization; earlier candidate object
+// identity is not reconstructed or claimed by this transport prerequisite.
+struct RawFinalizedSystem {
+    staffs: Vec<HeaderSelection>,
+    inters: Vec<Value>,
+    relations: Vec<Value>,
+    detached: BTreeMap<u64, Value>,
+    removed_clef_ids: BTreeSet<u64>,
+    purged_barline_ids: BTreeSet<u64>,
+    frozen_ids: BTreeSet<u64>,
+}
+impl RawFinalizedSystem {
+    fn report(&self) -> Value {
+        let get = |id: Option<u64>| {
+            id.and_then(|id| {
+                self.inters
+                    .iter()
+                    .find(|n| n["id"] == id)
+                    .or_else(|| self.detached.get(&id))
+            })
+            .cloned()
+            .unwrap_or(Value::Null)
+        };
+        let staffs = self.staffs.iter().map(|s| json!({"staff_id":s.staff_id,
+            "start":s.start,"stop":s.stop,"clef":get(s.clef_id),"key":get(s.key_id),"time":get(s.time_id),
+            "clef_range":s.clef_range,"key_range":s.key_range,"time_range":s.time_range})).collect::<Vec<_>>();
+        json!({"staffs":staffs,"sig_inters":self.inters,"relations":self.relations,
+            "removed_clef_ids":self.removed_clef_ids,"purged_barline_ids":self.purged_barline_ids,
+            "frozen_ids":self.frozen_ids})
+    }
+    fn into_owned(
+        self,
+        system: std::sync::Arc<crate::grid_ir::SystemGeometry>,
+    ) -> Result<crate::native_headers::NativeSystemHeaders, String> {
+        let mut staff_inputs = Vec::new();
+        for selected in self.staffs {
+            let staff = system
+                .staffs
+                .iter()
+                .find(|s| s.id == selected.staff_id)
+                .ok_or("native_header_selected_actual_Staff_required")?
+                .clone();
+            staff_inputs.push(crate::native_headers::HeaderStaffInput {
+                staff,
+                start: selected.start,
+                stop: selected.stop,
+                clef_id: selected.clef_id,
+                key_id: selected.key_id,
+                time_id: selected.time_id,
+                clef_range: selected.clef_range,
+                key_range: selected.key_range,
+                time_range: selected.time_range,
+            });
+        }
+        crate::native_headers::NativeSystemHeaders::from_finalized(
+            system,
+            staff_inputs,
+            self.inters,
+            self.relations,
+            self.detached,
+            self.removed_clef_ids,
+            self.purged_barline_ids,
+            self.frozen_ids,
+        )
+    }
+}
+
+// Legacy isolated-kernel callers receive only the unchanged projection.
 pub fn finalize_system(
     grid: &Value,
     post_time: &Value,
     sheet_interline: usize,
 ) -> Result<Value, String> {
+    Ok(finalize_system_raw(grid, post_time, sheet_interline)?.report())
+}
+
+pub(crate) struct OwnedHeaderFinalization {
+    pub(crate) report: Value,
+    pub(crate) owner: crate::native_headers::NativeHeaders,
+}
+
+pub(crate) fn analyze_owned(
+    grid: &Value,
+    time_column: &Value,
+    sheet_interline: usize,
+    actual_systems: &[std::sync::Arc<crate::grid_ir::SystemGeometry>],
+) -> Result<OwnedHeaderFinalization, String> {
+    if time_column["time_column_complete"] != true {
+        return Err("incomplete_header_time_dependency".into());
+    }
+    let systems = time_column["systems"]
+        .as_array()
+        .filter(|s| !s.is_empty() && s.len() <= 1024)
+        .ok_or("invalid_header_systems")?;
+    let mut retained = Vec::new();
+    let mut ids = BTreeSet::new();
+    for system in systems {
+        let id = id(&system["system_id"])?;
+        if !ids.insert(id) {
+            return Err("duplicate_header_system".into());
+        }
+        let actual = actual_systems
+            .iter()
+            .find(|s| s.id == id)
+            .ok_or("native_header_actual_System_required")?
+            .clone();
+        let raw = finalize_system_raw(grid, &system["after_system_time_stop"], sheet_interline)?;
+        #[cfg(test)]
+        let legacy_projection = raw.report();
+        let owned = raw.into_owned(actual)?;
+        #[cfg(test)]
+        {
+            let mut projection = owned.report();
+            projection.as_object_mut().unwrap().remove("system_id");
+            assert_eq!(projection, legacy_projection);
+        }
+        retained.push(owned);
+    }
+    let owner = crate::native_headers::NativeHeaders::new(retained)?;
+    let report = owner.report();
+    Ok(OwnedHeaderFinalization { report, owner })
+}
+
+/// Input is the live post-time graph, not a serialized/reloaded .omr graph.
+/// This stage mutates only its clone and retains explicit removed-node IDs.
+fn finalize_system_raw(
+    grid: &Value,
+    post_time: &Value,
+    sheet_interline: usize,
+) -> Result<RawFinalizedSystem, String> {
     if !(1..=128).contains(&sheet_interline) {
         return Err("unsupported_header_interline".into());
     }
@@ -358,24 +493,35 @@ pub fn finalize_system(
             node["members"] = json!(members);
         }
     }
-    let mut rows = Vec::new();
+    let mut selected_staffs = Vec::new();
     for staff in staffs {
         let sid = id(&staff["staff_id"])?;
-        let get = |nid: Option<u64>| {
-            nid.and_then(|n| {
-                inters
-                    .iter()
-                    .find(|i| i["id"] == n)
-                    .or_else(|| detached.get(&n))
-            })
-            .cloned()
-            .unwrap_or(Value::Null)
-        };
-        rows.push(json!({"staff_id":sid,"start":staff["header_start"],"stop":staff["header_stop"],"clef":get(selected.get(&sid).copied()),"key":get(staff["header_key"]["id"].as_u64()),"time":get(staff["header_time"]["id"].as_u64()),"clef_range":{"valid":!staff["clef_stop"].is_null(),"browse_start":staff["header_start"],"browse_stop":integer(&staff["header_start"])?+(4.5*sheet_interline as f64).round_ties_even()as i64,"start":null,"stop":staff["clef_stop"]},"key_range":staff["key_range"],"time_range":staff["time_range"]}));
+        selected_staffs.push(HeaderSelection {
+            staff_id: sid,
+            start: i32::try_from(integer(&staff["header_start"])?)
+                .map_err(|_| "invalid_header_range")?,
+            stop: i32::try_from(integer(&staff["header_stop"])?)
+                .map_err(|_| "invalid_header_range")?,
+            clef_id: selected.get(&sid).copied(),
+            key_id: staff["header_key"]["id"].as_u64(),
+            time_id: staff["header_time"]["id"].as_u64(),
+            clef_range: json!({"valid":!staff["clef_stop"].is_null(),
+                "browse_start":staff["header_start"],
+                "browse_stop":integer(&staff["header_start"])?+(4.5*sheet_interline as f64).round_ties_even()as i64,
+                "start":null,"stop":staff["clef_stop"]}),
+            key_range: staff["key_range"].clone(),
+            time_range: staff["time_range"].clone(),
+        });
     }
-    Ok(
-        json!({"staffs":rows,"sig_inters":inters,"relations":relations,"removed_clef_ids":removed_clefs,"purged_barline_ids":removed_bars,"frozen_ids":frozen}),
-    )
+    Ok(RawFinalizedSystem {
+        staffs: selected_staffs,
+        inters,
+        relations,
+        detached,
+        removed_clef_ids: removed_clefs,
+        purged_barline_ids: removed_bars,
+        frozen_ids: frozen,
+    })
 }
 
 /// Final HEADERS state for the current explicitly bounded fresh five-line path.

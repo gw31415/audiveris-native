@@ -258,7 +258,14 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
     let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
     let owner = crate::music_links::finalize_stems(owner).unwrap();
+    let header_owners = crate::music_headers_owned::image_tests::hold(&owner);
     let music = crate::music_measures::continue_measures(owner).unwrap();
+    crate::music_headers_owned::image_tests::verify(
+        &music,
+        &header_owners,
+        "der_winter",
+        "MEASURES",
+    );
     crate::music_arpeggiato::tests::begin_factory_observation();
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
     crate::music_arpeggiato::tests::assert_der_winter_null_factory(&music);
@@ -619,6 +626,7 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     music.voices = original_voices;
     music.measures[seed.measure].timing = original_timing;
     let mut music = crate::music_links::continue_links(music).unwrap();
+    crate::music_headers_owned::image_tests::verify(&music, &header_owners, "der_winter", "LINKS");
     music.assert_der_winter_nullable_reader_and_logical_headers();
     music.observe_der_winter_internal_rhythm_export().expect(
         "first internal rhythm/export error saved in /tmp/real-rest-native-internal-rhythm-export.json",

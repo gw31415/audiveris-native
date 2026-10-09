@@ -6,8 +6,10 @@ use crate::{
     shared_sig::{Graph, Key, Phase},
 };
 use serde_json::{Value, json};
+#[cfg(test)]
 use std::collections::BTreeSet;
 
+#[cfg(test)]
 pub(crate) fn import_key(
     graph: &mut Graph,
     registry: &mut Registry,

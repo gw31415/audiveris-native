@@ -1,0 +1,172 @@
+{
+  "categories": {
+    "notes": {
+      "native": 124,
+      "original": 124,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "measures": {
+      "native": 18,
+      "original": 18,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "motions": {
+      "native": 9,
+      "original": 9,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "directions": {
+      "native": 4,
+      "original": 3,
+      "multiset_equal": false,
+      "qualification": "observed_comparison"
+    },
+    "voice_groups": {
+      "native": 27,
+      "original": 27,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "core_notes": {
+      "native": 124,
+      "original": 124,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "core_voice_groups": {
+      "native": 27,
+      "original": 27,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "staccato_relations": {
+      "native": 2,
+      "original": 2,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "measure_identity": {
+      "native": 18,
+      "original": 18,
+      "multiset_equal": true,
+      "qualification": "observed_comparison"
+    },
+    "direction_sounds": {
+      "native": 4,
+      "original": 3,
+      "multiset_equal": false,
+      "qualification": "observed_comparison"
+    },
+    "sound_tie_endpoints": {
+      "native": 0,
+      "original": 0,
+      "multiset_equal": true,
+      "qualification": "both_empty_not_exercised"
+    },
+    "notation_tie_endpoints": {
+      "native": 0,
+      "original": 0,
+      "multiset_equal": true,
+      "qualification": "both_empty_not_exercised"
+    },
+    "slur_endpoints": {
+      "native": 0,
+      "original": 12,
+      "multiset_equal": false,
+      "qualification": "observed_comparison"
+    },
+    "sound_tie_relations": {
+      "native": 0,
+      "original": 0,
+      "multiset_equal": true,
+      "qualification": "both_empty_not_exercised"
+    },
+    "notation_tie_relations": {
+      "native": 0,
+      "original": 0,
+      "multiset_equal": true,
+      "qualification": "both_empty_not_exercised"
+    },
+    "slur_relations": {
+      "native": 0,
+      "original": 6,
+      "multiset_equal": false,
+      "qualification": "observed_comparison"
+    },
+    "relation_issues": {
+      "native": 0,
+      "original": 0,
+      "multiset_equal": true,
+      "qualification": "no_pairing_issues"
+    }
+  },
+  "recognition_feature_coverage": {
+    "rests": {
+      "native": 9,
+      "original": 9,
+      "qualification": "observed_comparison"
+    },
+    "graces": {
+      "native": 0,
+      "original": 0,
+      "qualification": "both_empty_not_exercised"
+    },
+    "implicit_measures": {
+      "native": 2,
+      "original": 2,
+      "qualification": "observed_comparison"
+    },
+    "sound_ties": {
+      "native": 0,
+      "original": 0,
+      "qualification": "both_empty_not_exercised"
+    },
+    "notation_ties": {
+      "native": 0,
+      "original": 0,
+      "qualification": "both_empty_not_exercised"
+    },
+    "slurs": {
+      "native": 0,
+      "original": 12,
+      "qualification": "observed_comparison"
+    }
+  },
+  "relation_pairing_valid": true,
+  "relation_comparison_scope": "Musical note endpoints retain part, measure order, staff, onset, spelled pitch, duration, grace and voice. Number labels resolve links but are not compared as identities. Placement, orientation and line-type are compared; engraving coordinates are excluded. Unnumbered ties resolve by sounding pitch and voice; ambiguous or unpaired endpoints are reported as relation_issues.",
+  "native_truth_events": {
+    "truth_sha256": "776b60aa1488636fe8d2e83c79391aa80d15981ce17ecc2ca30ca3a3fac6ccd6",
+    "recognized_sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb",
+    "scope": "exact staff/measure/onset/MIDI/duration/grace multiset; voice continuity, chord grouping and notation relations not yet scored",
+    "truth_events": 124,
+    "recognized_events": 124,
+    "matched_events": 102,
+    "precision": 0.8225806451612904,
+    "recall": 0.8225806451612904,
+    "F1": 0.8225806451612904,
+    "meter_matches": true,
+    "truth_voice_counts": {
+      "1": 1,
+      "2": 1,
+      "3": 1
+    },
+    "recognized_voice_counts": {
+      "1": 1,
+      "2": 1,
+      "3": 1
+    },
+    "quality_accepted": false
+  },
+  "note_voice_identifiers_exact_on_this_page": true,
+  "zero_rest_tie_grace_image_does_not_prove_those_categories": true,
+  "numeric_grade_parity_claimed": false,
+  "quality_accepted": false,
+  "raw": {
+    "path": "/tmp/real-typed-header-binding-v1-vs-original.json",
+    "bytes": 19104,
+    "sha256": "029e03bdfeaca3d6932f941fdb95461b853a4e5504a4690861bb0383020e9770"
+  }
+}

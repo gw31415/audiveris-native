@@ -5,6 +5,7 @@ use crate::{GrayImage, scale, sections, vertical};
 use serde_json::Value;
 
 pub struct OwnedPage {
+    pub(crate) native_headers: crate::native_headers::NativeHeaders,
     pub(crate) systems: Vec<std::sync::Arc<crate::grid_ir::SystemGeometry>>,
     pub(crate) grid_glyphs: Vec<std::sync::Arc<audiveris_staff_removal::GlyphPixels>>,
     pub(crate) ledger_memberships: crate::ledger_membership_owners::LedgerMemberships,
@@ -178,8 +179,14 @@ pub fn analyze(
         &key_column,
         sc.interline.main,
     )?;
-    let headers =
-        audiveris_native::header_finalization::analyze(&grid_ir, &time_column, sc.interline.main)?;
+    let finalized_headers = audiveris_native::header_finalization::analyze_owned(
+        &grid_ir,
+        &time_column,
+        sc.interline.main,
+        &owned_grid.systems,
+    )?;
+    let headers = finalized_headers.report;
+    let native_headers = finalized_headers.owner;
     let stem_seeds =
         audiveris_native::stem_seeds::analyze(&residual, &grid_ir, &headers, &sc, slope)?;
     let (beam_images, beam_preparation) = match audiveris_native::beam_preparation::analyze(
@@ -729,6 +736,7 @@ pub fn analyze(
         None => (None, Vec::new()),
     };
     Ok(OwnedPage {
+        native_headers,
         systems: owned_grid.systems,
         grid_glyphs: owned_grid.physical_glyphs,
         ledger_memberships,

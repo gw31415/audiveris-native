@@ -1,0 +1,60 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "base_commit": "42d486fab1b3034365a54aab2d5f788c271050ee",
+  "existing_source_artifacts": [
+    {
+      "path": "/workspace/audiveris-native/fixtures/header-finalization-source/HeaderBuilder.java",
+      "bytes": 14088,
+      "sha256": "dfb50ab17f9a443049d2037a20c385e2f22d2fd4e353762bdc18c17721325140"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/header-finalization-source/StaffHeader.java",
+      "bytes": 9590,
+      "sha256": "e01920687bc16d23e141872ce927d2c84499090cbc7f4aaaeb1960dfe5bd370e"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/key-preparation-source/KeyBuilder.java",
+      "bytes": 88917,
+      "sha256": "009c58b47f8aba41e5210feccd04aa85c3a5303366794b92eab30513b10362e4"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/key-clef-source/KeyAltersRelation.java",
+      "bytes": 3736,
+      "sha256": "d63b4770683cb395af3615506a90975c6f851e52c4949cbe36d73883573bd001"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-headers-live/laura-gray.json",
+      "bytes": 44165,
+      "sha256": "a73e399ddea906c53bff9ba88cb012eee4f113f91f412007b6ce64f794de0c8f"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-grid/laura-gray-time-column.json",
+      "bytes": 1428401,
+      "sha256": "e6b2b2500f041f75733b92cbbbe9107cbf6d0152b7f49afac447553072ff9717"
+    }
+  ],
+  "proposals_not_duplicated": [
+    {
+      "path": "/tmp/typed-header-binding-unit-v1/proposed.patch",
+      "bytes": 70306,
+      "sha256": "98a407c5be0decf4acb2ad516107e22df9986deb19fd0ef8cc21bf3b12f69b39"
+    },
+    {
+      "path": "/tmp/native-header-selected-certificate-v1/proposed.patch",
+      "bytes": 1597,
+      "sha256": "5bf34b1dc6ed0ac5cd196862b56699720e17e4ccd6171f55c8a66c85833b39b0"
+    },
+    {
+      "path": "/tmp/native-header-selected-certificate-v1/test-control.patch",
+      "bytes": 673,
+      "sha256": "947c6d8bba4541d49920ec313ccea9e8d8d82c60a31e79ccabc1a687c74a1442"
+    },
+    {
+      "path": "/tmp/typed-header-carrier-relations-fix-v1/proposed.patch",
+      "bytes": 7938,
+      "sha256": "88afe4cb6638290f260fa9df3fdd3c88070d7c9139496233f75d503c68d7a9b5"
+    }
+  ],
+  "new_original_recognition_or_replay_for_this_checkpoint": false,
+  "pre_freeze_candidate_identity_claimed": false
+}

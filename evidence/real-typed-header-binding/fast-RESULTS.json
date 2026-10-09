@@ -1,0 +1,35 @@
+[
+  {
+    "target": "header-scalar",
+    "argv": [
+      "/workspace/audiveris-native/target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+      "--exact",
+      "music_headers_owned::tests::finalized_canonical_members_relations_and_staff_arcs_survive_registration",
+      "music_headers_owned::tests::detached_or_raw_null_selected_clef_cannot_replace_a_held_binding",
+      "music_headers_owned::tests::late_bad_key_glyph_preserves_graph_source_arcs_and_physical_registry",
+      "music_headers_owned::tests::null_selected_headers_do_not_fall_back_to_live_candidates",
+      "music_headers_owned::tests::refused_key_member_support_or_foreign_owner_preserves_held_registration",
+      "music_headers_owned::tests::contradictory_final_ids_or_member_payloads_never_replace_held_owners",
+      "music_headers::tests::original_key_alter_controls_and_invalid_late_header_are_atomic",
+      "music_headers::time_import_tests::time_import_errors_preserve_graph_and_registry",
+      "--test-threads=2",
+      "--nocapture"
+    ],
+    "binary_sha256": "b6ea8a410702c8a0f7f0b2fb60eb875a58ee60acb551b90b8f7999f82e69cb2b",
+    "unique_targets": 8,
+    "exit_code": 0,
+    "elapsed_seconds": 0.10858991998247802
+  },
+  {
+    "target": "header-finalization",
+    "argv": [
+      "/workspace/audiveris-native/target/debug/deps/header_finalization-0af8df4b21eb8b2f",
+      "--test-threads=2",
+      "--nocapture"
+    ],
+    "binary_sha256": "795b1b9b7cc0cb7b329a0d9e8ca9b59c7466dad5294535f7ad30d493a6ea8ef9",
+    "unique_targets": 6,
+    "exit_code": 0,
+    "elapsed_seconds": 0.008627924020402133
+  }
+]

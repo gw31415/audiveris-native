@@ -1,0 +1,17 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-native)
+warning: field `detached` is never read
+   --> src/native_headers.rs:182:5
+    |
+178 | pub(crate) struct NativeSystemHeaders {
+    |                   ------------------- field in this struct
+...
+182 |     detached: BTreeMap<u64, Arc<NativeHeaderInter>>,
+    |     ^^^^^^^^
+    |
+    = note: `NativeSystemHeaders` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `audiveris-native` (lib) generated 1 warning
+    Finished `test` profile [unoptimized] target(s) in 38.01s
+  Executable unittests src/lib.rs (target/debug/deps/audiveris_native-5fcd8c0ec93be988)
+  Executable tests/header_finalization.rs (target/debug/deps/header_finalization-0af8df4b21eb8b2f)

@@ -16,18 +16,19 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
 両実ページの公開MusicXMLは未出力・品質受入未達です。直近の公開CLI観測は
-AnLaura追加7形状／Der Winter追加9形状のguardで、今回のCHECKED変更前の結果です。
-生成前の原版棄却15件とACCENT StaffGapを接続し、実画像のAnLaura15／Der Winter77の
-factory到達評価・順序を保持しました。正のfactoryと公開受付は引き続き未完です。
-同じ実画像ownerでPAGEの各Voice直後を観測し、原版の限定再生と終了量・超過の
-共有更新を比較しました。原版reloadのnullとnative既存時計を区別し、実参照・古い
-excess・expectedDuration・relation/manual identityを保持したまま宣言controlを復元。
-計7対象、fmt/clippy/build、既存63＋補正8・exact7/64・両実譜面のXML bytes/XSDが成功。
-初回clippyのtest内lint3件と整形の実行失敗は証跡に残し、修正後の成功と区別します。
-内部Der Winterの124イベント・27 Voice・18小節identity、独立正解の弱起27/27を保持。
+AnLaura追加7形状／Der Winter追加9形状のguardで、CHECKED変更前の結果です。
+CHECKED棄却15件と実画像のfactory到達15/77件、PAGE各Voiceの終了量・共有excess比較は保存済み。
+今回、native Header最終化で実System/Staff・selected Inter/member/relation Arcを保持し、
+Clef/Keyを診断reportへ戻さずMEASURESで直接登録しました。最終化以前の候補identityと
+Timeのshared SIG bindingは未移行。null/detachedを保持し、foreign ownerや遅い失敗を拒否します。
+計17対象、fmt/clippy/build、既存63＋補正8・exact7/64・両実譜面XML bytes/XSDが成功。
+最初のAnLaura観測はKeyAltersRelationを見落として失敗し、観測だけを修正して同対象だけ再実行。
+AnLauraの36 Inter/30登録relationとHeader側36 KeyAlters、Der Winterの15 Inter/10relationと
+null Clef1件を保持。Header側のみのKeyAltersをshared SIG登録済みとは扱いません。
+内部Der Winterの124イベント・27 Voice・18小節identity、弱起27/27を保持しています。
 原版との差は余分なp方向記号1件と欠けたSlur6本。独立正解イベント102/124は原版と
 同じですが、公開受付・品質同等は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-checked-page-trace/NEXT-DEPENDENCY.md) を使います。
+直近の作業順は [保存NEXT依存](../evidence/real-typed-header-binding/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

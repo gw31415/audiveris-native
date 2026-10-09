@@ -45,8 +45,12 @@ native各Voice直後のpeer excess公開も同じ実画像ownerで比較済み�
 nullをnativeへ代入せず、宣言1/64→1/8 controlも実Voice/Slot/Chord所有を保って復元する。
 4境界契約＋3実所有対象、fmt/clippy/build、63＋補正8・exact7/64・両実譜面XML/XSD成功。
 初回test lint失敗と修正後の成功は別記録とし、全回帰や公開成功を主張しない。
-次は保持したHeaderの実Clef/KeyをMEASURESへ直接渡し、その後のMeasureFiller・
-正のfactory・競合relation除去・Slur認識を接続する。Der Winterの余分なp方向記号1件は
+[保持Headerの直接登録](../evidence/real-typed-header-binding/README.md) も接続し、17対象と
+同じXML/XSD回帰が成功した。AnLaura36/30、Der Winter15/10の実Inter/登録relationを
+MEASURESからLINKSまで保持し、null Clef1件を維持。Header側KeyAlters36本は保持のみで、
+shared SIGへの登録は次依存。最初のAnLaura観測失敗と修正後成功は別記録にした。
+次は実Measure所属と混合MeasureFiller・KeyAlter support、正のfactoryと共通削除順、
+Slur認識を接続する。Der Winterの余分なp方向記号1件は
 原版の限定実所有比較でAccentとのOVERLAP除去が確認され、native削除順の修正が必要。
 Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えない。
 

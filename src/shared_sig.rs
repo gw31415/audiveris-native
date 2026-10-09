@@ -16,6 +16,7 @@ mod direction_callbacks;
 mod explicit_tuplet;
 #[cfg(test)]
 mod flag_rest_weak_image_tests;
+mod header_binding;
 mod ornament;
 mod tuplet;
 mod tuplet_addition;
@@ -387,6 +388,9 @@ struct Edge {
 }
 #[derive(Clone, Default, Debug)]
 pub struct Graph {
+    native_header_bindings: BTreeMap<Key, header_binding::HeaderBinding>,
+    native_header_relation_bindings:
+        BTreeMap<usize, std::sync::Arc<crate::native_headers::NativeHeaderRelation>>,
     // This certificate is held by the live graph; reports cannot supply it.
     refined_stem_geometry: BTreeMap<Key, Value>,
     pub(crate) editing_chords: Vec<chord_tasks::EditingHeadChord>,

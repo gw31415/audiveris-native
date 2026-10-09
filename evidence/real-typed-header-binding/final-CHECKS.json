@@ -1,0 +1,44 @@
+[
+  {
+    "check": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.0197913629817776
+  },
+  {
+    "check": "clippy",
+    "argv": [
+      "cargo",
+      "clippy",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 19.023109592992114
+  },
+  {
+    "check": "compile",
+    "argv": [
+      "cargo",
+      "test",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--lib",
+      "--no-run"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 34.67464716898394
+  }
+]

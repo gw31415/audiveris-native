@@ -254,36 +254,38 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     }
                     bar_rows.push(json!({"id":graph.id(key),"origin":key,"physical_barline_id":bar["member_ids"][0],"member_ids":bar["member_ids"],"staff_id":staff_id,"x":bar["right_x"],"leading":bar["leading"],"style":bar["style"]}));
                 }
+                let actual_header = owner.native_headers.staff_header(actual_staff)?;
+                let actual_header_system = owner
+                    .native_headers
+                    .systems()
+                    .iter()
+                    .find(|headers| headers.system().id == sid)
+                    .ok_or("music_native_header_System_required")?;
+                if let Some(clef) =
+                    crate::music_headers_owned::register_clef(&mut graph, actual_header)?
+                {
+                    let clef_key = clef.key;
+                    clef_rows.push(clef.projection);
+                    if let Some(key) = crate::music_headers_owned::register_key(
+                        &mut graph,
+                        &mut owner.prepared.registry,
+                        actual_header,
+                        actual_header_system,
+                        clef_key,
+                    )? {
+                        key_rows.push(key.projection);
+                    }
+                } else if actual_header.key().is_some() {
+                    return Err("music_header_key_without_actual_Clef_pending".into());
+                }
+                // Time registration remains the existing isolated importer.
+                // This unit certifies selected Clef/Key bindings, not Time bindings.
                 let header = owner.upstream_report["headers"]["staffs"]
                     .as_array()
                     .into_iter()
                     .flatten()
                     .find(|h| h["staff_id"] == staff_id && h["system_id"] == sid)
                     .ok_or("music_staff_header_required")?;
-                let key = Key {
-                    system: sid,
-                    phase: Phase::MusicHeader,
-                    local: staff_id as usize,
-                };
-                let clef = header
-                    .get("clef")
-                    .ok_or("music_native_header_clef_state_required")?;
-                // An empty StaffHeader owns no ClefInter. Pitch fallback must not
-                // create one or borrow a clef from another physical Staff.
-                if !clef.is_null() {
-                    let mut clef = clef.clone();
-                    if clef["shape"].as_str().is_none() {
-                        return Err("music_native_clef_required".into());
-                    }
-                    clef["kind"] = json!("ClefInter");
-                    clef["source_header_id"] = clef["id"].clone();
-                    clef["staff_id"] = json!(staff_id);
-                    clef["header_stop"] = header["stop"].clone();
-                    let id = graph.vertex(key, clef, false)?;
-                    clef_rows.push(json!({"id":id,"origin":key,"staff_id":staff_id}));
-                } else if !header["key"].is_null() {
-                    return Err("music_header_key_without_clef_support_pending".into());
-                }
                 let relations = owner.upstream_report["headers"]["systems"]
                     .as_array()
                     .into_iter()
@@ -291,16 +293,6 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     .find(|s| s["system_id"] == sid)
                     .and_then(|s| s["relations"].as_array())
                     .ok_or("music_header_relations_required")?;
-                let imported = crate::music_headers::import_key(
-                    &mut graph,
-                    &mut owner.prepared.registry,
-                    header,
-                    key,
-                    relations,
-                )?;
-                if !imported.is_null() {
-                    key_rows.push(imported);
-                }
                 let imported = crate::music_headers::import_time(
                     &mut graph,
                     &mut owner.prepared.registry,

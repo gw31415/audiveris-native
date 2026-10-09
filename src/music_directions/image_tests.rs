@@ -61,7 +61,9 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
     let owner = crate::stem_image_head_linking::continue_process(owner).unwrap();
     let owner = crate::stem_foundation_consistency::continue_reduction(owner).unwrap();
     let owner = crate::music_links::finalize_stems(owner).unwrap();
+    let header_owners = crate::music_headers_owned::image_tests::hold(&owner);
     let music = crate::music_measures::continue_measures(owner).unwrap();
+    crate::music_headers_owned::image_tests::verify(&music, &header_owners, "an_laura", "MEASURES");
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
     crate::music_symbols::assert_real_checked_rejections(&music, "an_laura");
     // The original observer calls Pedal.getStaff at SYMBOLS; compare that lazy
@@ -138,6 +140,7 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
         .collect::<Vec<_>>();
     let frames = music.owner.graph.snapshot();
     music = crate::music_links::continue_links(music).unwrap();
+    crate::music_headers_owned::image_tests::verify(&music, &header_owners, "an_laura", "LINKS");
     let after = rows(&music);
     let expect_after = expected(&source, 1);
     assert_eq!(before.len(), 29);

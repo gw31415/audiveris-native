@@ -93,6 +93,11 @@ fn malformed_header_range_and_member_bounds_are_errors_not_panics() {
     p["staffs"][0]["header_start"] = json!(i64::MAX);
     assert!(finalize_system(&g, &p, 10).is_err());
     let (g, mut p) = fixture();
+    p["staffs"][0]["header_stop"] = json!(i64::MAX);
+    let before = p.clone();
+    assert!(finalize_system(&g, &p, 10).is_err());
+    assert_eq!(p, before);
+    let (g, mut p) = fixture();
     p["sig_inters"][3]["bounds"] = json!([0]);
     assert!(finalize_system(&g, &p, 10).is_err());
 }

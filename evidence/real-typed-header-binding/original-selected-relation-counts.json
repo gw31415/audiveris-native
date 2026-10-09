@@ -1,0 +1,26 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "source_fixture": "/workspace/audiveris-native/fixtures/official-headers-live/laura-gray.json",
+  "source_sha256": "a73e399ddea906c53bff9ba88cb012eee4f113f91f412007b6ce64f794de0c8f",
+  "systems": [
+    {
+      "system": 1,
+      "selected_relation_kinds": {
+        "KeyAltersRelation": 18,
+        "Containment": 12,
+        "ClefKeyRelation": 3
+      },
+      "key_alter_endpoints_are_selected_members": true
+    },
+    {
+      "system": 2,
+      "selected_relation_kinds": {
+        "KeyAltersRelation": 18,
+        "Containment": 12,
+        "ClefKeyRelation": 3
+      },
+      "key_alter_endpoints_are_selected_members": true
+    }
+  ],
+  "qualification": "Existing original live-HEADERS fixture, no new recognition. Source relationship evidence only; native carrier continuity and narrower shared-SIG import are asserted separately."
+}

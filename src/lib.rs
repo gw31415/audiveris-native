@@ -545,3 +545,8 @@ mod grid_staff_neighborhood;
 mod ledger_membership_owners;
 
 mod music_time_late;
+
+// Native header ownership begins at finalization, before its diagnostic projection.
+mod native_headers;
+
+mod music_headers_owned;

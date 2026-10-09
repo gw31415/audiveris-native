@@ -1,0 +1,20 @@
+
+running 3 tests
+test music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original has been running for over 60 seconds
+test music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original has been running for over 60 seconds
+
+thread 'music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original' (544524) panicked at src/music_headers_owned/image_tests.rs:90:17:
+assertion failed: matches!(relation.body()["kind"].as_str(),
+    Some("Containment" | "ClefKeyRelation"))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original ... FAILED
+test music_xml::rational_owned_export_tests::actual_rational_slots_and_underfilled_voice_termination_match_original ... ok
+test music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original ... ok
+
+failures:
+
+failures:
+    music_directions::image_tests::unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 328 filtered out; finished in 593.97s
+
