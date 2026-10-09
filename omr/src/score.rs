@@ -92,6 +92,9 @@ pub struct Score {
 
 const SHARP_ORDER: [usize; 7] = [3, 0, 4, 1, 5, 2, 6]; // F C G D A E B
 const FLAT_ORDER: [usize; 7] = [6, 2, 5, 1, 4, 0, 3]; // B E A D G C F
+/// Pitch offset from area center to focus line of the Bravura flat glyph
+/// (bounding box from -0.7 to +1.756 staff spaces around the baseline).
+const FLAT_AREA_PITCH_OFFSET: f64 = 1.056;
 const STEPS: [char; 7] = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
 fn key_alter(fifths: i32, step: usize) -> i32 {
@@ -289,13 +292,21 @@ fn build_measure(
     };
 
     // Accidentals: (staff, pitch, x right edge, shape)
+    // AlterInter.computePitch: mass center pitch; flats mix it (+0.65) with the
+    // area center pitch shifted by the Bravura flat offset.
     let accidentals: Vec<(usize, i32, f64, &'static str)> = syms
         .iter()
         .filter(|s| alter_of(s.shape).is_some())
         .map(|s| {
             let st = &sheet.staves[s.staff];
-            let yref = if s.shape.contains("FLAT") { s.bounds.bottom() as f64 - 0.45 * il } else { s.bounds.cy() };
-            (s.staff, st.pitch_of(yref, s.bounds.cx()).round() as i32, s.bounds.right() as f64, s.shape)
+            let mass = st.pitch_of(s.centroid.1, s.centroid.0);
+            let p = if s.shape.contains("FLAT") {
+                let geo = st.pitch_of(s.bounds.cy(), s.bounds.cx()) + FLAT_AREA_PITCH_OFFSET;
+                0.5 * (mass + 0.65 + geo)
+            } else {
+                mass
+            };
+            (s.staff, p.round() as i32, s.bounds.right() as f64, s.shape)
         })
         .collect();
 

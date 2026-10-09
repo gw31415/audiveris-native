@@ -116,6 +116,7 @@ fn write_debug(dir: &Path, stem: &str, sheet: &pipeline::Sheet, score: &score::S
         "headers": sheet.headers,
         "heads": sheet.heads,
         "stems": sheet.stems,
+        "beams": sheet.beams,
         "symbols": sheet.symbols,
         "score": score,
     });

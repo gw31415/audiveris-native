@@ -120,6 +120,14 @@ pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Ve
             (1.0 + c) * h.grade / (1.0 + c * h.grade)
         })
         .collect();
+    if let Ok(v) = std::env::var("OMR_PROBE") {
+        let v: Vec<i32> = v.split(',').map(|x| x.parse().unwrap()).collect();
+        for (i, h) in heads.iter().enumerate() {
+            if h.bounds.intersects(&crate::binary::Rect::new(v[0] - 5, v[1] - 5, 10, 10)) {
+                eprintln!("link {:?} {} ctx {:.2} link {:?}", h.shape, h.pitch, ctx[i], links[i].as_ref().map(|l| (l.x, l.top, l.bottom)));
+            }
+        }
+    }
     let mut order: Vec<usize> = (0..heads.len()).filter(|&i| (links[i].is_some() || heads[i].shape.stemless()) && ctx[i] >= 0.5)
         .collect();
     order.sort_by(|&a, &b| ctx[b].partial_cmp(&ctx[a]).unwrap());
@@ -168,21 +176,19 @@ pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Ve
         }
         s.heads.retain(|&h| !drop[h]);
     }
-    // Minimum tail length after the last head (StemInter.minTailLength = 1.75).
-    stems.retain(|s| {
-        let ys: Vec<f64> = s.heads.iter().map(|&h| out_heads[h].bounds.cy()).collect();
-        let tail = if s.up {
-            ys.iter().cloned().fold(f64::MAX, f64::min) - s.top as f64
-        } else {
-            s.bottom as f64 - ys.iter().cloned().fold(f64::MIN, f64::max)
-        };
-        let ok = tail >= 1.75 * il;
-        if !ok {
-            for &h in &s.heads {
+    // Minimum tail length after the last head (StemInter.minTailLength = 1.75):
+    // heads lying within the tail are not on this stem's head side.
+    stems.retain_mut(|s| {
+        let min_tail = 1.75 * il;
+        for &h in &s.heads {
+            let cy = out_heads[h].bounds.cy();
+            let tail = if s.up { cy - s.top as f64 } else { s.bottom as f64 - cy };
+            if tail < min_tail {
                 drop[h] = true;
             }
         }
-        ok
+        s.heads.retain(|&h| !drop[h]);
+        !s.heads.is_empty()
     });
     // Re-index heads after dropping.
     let mut map = vec![usize::MAX; out_heads.len()];

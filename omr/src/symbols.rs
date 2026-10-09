@@ -18,6 +18,8 @@ pub struct Symbol {
     pub grade: f64,
     pub bounds: Rect,
     pub staff: usize,
+    /// Mass center.
+    pub centroid: (f64, f64),
 }
 
 /// Erase all recognized items from the staff-free image.
@@ -235,8 +237,9 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
     // Candidate groups: single glyphs and pairs/triples of close glyphs.
     let gap = (0.5 * il as f64) as i32;
     let near = |a: &Rect, b: &Rect| a.grow(gap, gap).intersects(b);
-    let mut cands: Vec<(Vec<usize>, &'static str, f64, Rect)> = Vec::new();
-    let mut eval = |idx: Vec<usize>, comps: &[Component], cands: &mut Vec<(Vec<usize>, &'static str, f64, Rect)>| {
+    type Cand = (Vec<usize>, &'static str, f64, Rect, (f64, f64));
+    let mut cands: Vec<Cand> = Vec::new();
+    let eval = |idx: Vec<usize>, comps: &[Component], cands: &mut Vec<Cand>| {
         let parts: Vec<&Component> = idx.iter().map(|&i| &comps[i]).collect();
         let g = Component::merge(&parts);
         if g.bounds.w > 6 * il || g.bounds.h > 8 * il {
@@ -251,7 +254,9 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             && gr >= min_grade(s)
             && plausible(s, &g.bounds, il as f64)
         {
-            cands.push((idx, s, gr, g.bounds));
+            let n = g.pixels.len() as f64;
+            let c = (g.pixels.iter().map(|p| p.0 as f64).sum::<f64>() / n, g.pixels.iter().map(|p| p.1 as f64).sum::<f64>() / n);
+            cands.push((idx, s, gr, g.bounds, c));
         }
     };
     for i in 0..comps.len() {
@@ -277,7 +282,7 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
     cands.sort_by(|a, b| (b.2 + 0.05 * b.0.len() as f64).partial_cmp(&(a.2 + 0.05 * a.0.len() as f64)).unwrap());
     let mut used = vec![false; comps.len()];
     let mut out = Vec::new();
-    for (idx, shape, grade, bounds) in cands {
+    for (idx, shape, grade, bounds, centroid) in cands {
         if idx.iter().any(|&i| used[i]) {
             continue;
         }
@@ -291,7 +296,7 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             if (shape.starts_with("TIME_") || shape.ends_with("_TIME") || shape.contains("CLEF")) && !inside {
                 continue;
             }
-            out.push(Symbol { shape, grade, bounds, staff: si });
+            out.push(Symbol { shape, grade, bounds, staff: si, centroid });
         }
     }
     out.sort_by_key(|s| s.bounds.x);

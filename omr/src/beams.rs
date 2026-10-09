@@ -37,13 +37,14 @@ impl Beam {
 
 pub fn detect(nostaff: &Bitmap, scale: &Scale) -> Vec<Beam> {
     let (w, h) = (nostaff.width, nostaff.height);
-    let vr = nostaff.vertical_run_lengths();
     let bt = scale.beam as f64;
-    let lo = (0.6 * bt).floor() as u16;
-    let hi = (1.35 * bt).ceil() as u16;
+    let lo = ((0.6 * bt).floor() as i32).max(2);
+    let hi = (1.35 * bt).ceil() as i32;
     let mut mask = Bitmap::new(w, h);
+    let vr = nostaff.vertical_run_lengths();
     for i in 0..w * h {
-        mask.data[i] = vr[i] >= lo.max(2) && vr[i] <= hi;
+        let len = vr[i] as i32;
+        mask.data[i] = len >= lo && len <= hi;
     }
     // Close small horizontal gaps (stems crossing the beam).
     let gap = (scale.max_stem + 2) as usize;
