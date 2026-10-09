@@ -60,6 +60,7 @@ pub(crate) fn prepare_beam_linking(mut o: OwnedItems) -> Result<OwnedItems, Stri
 pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let mut graph = m.owner.graph.clone();
     let directions = crate::music_directions::link_and_contextualize(&m, &mut graph)?;
+    let numbers = crate::music_numbers::link_and_remove(&m, &mut graph)?;
     let flag_overlaps = crate::music_flags::detect_overlaps(&mut graph)?;
     let alters = crate::music_alters::contextualize_and_purge(&mut graph)?;
     let flags = crate::music_flags::contextualize(&mut graph)?;
@@ -91,6 +92,7 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         dot_consistency["competition"].clone();
     m.owner.prepared.report["limited_links"]["pause_weak_purge"] = pauses;
     m.owner.prepared.report["limited_links"]["direction_linking_and_weak_purge"] = directions;
+    m.owner.prepared.report["limited_links"]["temporary_numbers"] = numbers;
     m.owner.prepared.report["limited_links"]["alter_weak_purge"] = alters;
     m.owner.prepared.report["limited_links"]["articulation_weak_purge"] = articulations;
     m.owner.prepared.report["limited_links"]["articulation_redundancy"] = articulation_redundancy;

@@ -305,3 +305,12 @@ fmt/clippy/build、XSD・独立readerと既存63＋補正8/exact7/64 byte/XSDが
 公開画像CLIへの通常Page/複数Part出力接続と、休符を含む代表実譜面・rest-only Staff header、
 その画像に必要な認識依存の比較が残る。品質受入はまだfalseで、旧全API台帳へは戻らない。
 [証拠](../evidence/real-directions/VALIDATION.json)・[比較](../evidence/real-directions/COMPARISON.json)・[内部XML](../evidence/real-directions/laura-native-internal.musicxml)・[次依存](../evidence/real-directions/NEXT-DEPENDENCY.md)。
+
+実NumberInter7件のnullable生成→LINKS no-link除去と、原版switch既定null28形状を比較した。
+複数Partの通常Page/実Voice出力への公開経路を接続したが、試行3はEIGHTH_setで停止し、
+公開XMLは未出力。内部An Lauraの拡張17カテゴリ一致は公開成功へ読み替えない。
+Der Winterの未改変CC0譜面をLinux MuseScore3.2.3で全ページ画像化し、白背景正規化の
+画素/PNG hashを固定した。原版124イベント中102厳密一致、休符9件は全一致。native初回
+はunsupported_beam_lookup_area_nonconvexで停止した。同等品質はまだfalse。
+次依存は[最新NEXT](../evidence/real-public-page/NEXT-DEPENDENCY.md)、画像/原版比較は
+[休符baseline](../evidence/real-rest-quality-baseline/README.md)。

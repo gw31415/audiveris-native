@@ -684,6 +684,14 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 created.push(key);
                 continue;
             }
+            if crate::music_numbers::value(shape).is_some() {
+                if let Some(data) = crate::music_numbers::create(&m, g, &s, shape, grade, gid)? {
+                    let key = graph.next_symbol_key(sid)?;
+                    graph.vertex(key, data, false)?;
+                    created.push(key);
+                }
+                continue;
+            }
             if meter.is_none() && !rest {
                 continue;
             }

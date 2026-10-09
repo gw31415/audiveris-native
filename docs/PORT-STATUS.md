@@ -2412,3 +2412,15 @@ fmt/clippy/build、XSD・独立readerと既存63＋補正8/exact7/64 byte/XSDが
 公開画像CLIへの通常Page/複数Part出力接続と、休符を含む代表実譜面・rest-only Staff header、
 その画像に必要な認識依存の比較が残る。品質受入はまだfalseで、旧全API台帳へは戻らない。
 [証拠](../evidence/real-directions/VALIDATION.json)・[比較](../evidence/real-directions/COMPARISON.json)・[内部XML](../evidence/real-directions/laura-native-internal.musicxml)・[次依存](../evidence/real-directions/NEXT-DEPENDENCY.md)。
+
+実NumberInterの生成を整数glyph重心で判定し、LINKS検索は矩形中心から実Staff/
+Ledger曲線を読む。原版7候補のStaff/grade/manual/abnormal/2種の音高とno-link結果が一致し、
+通常除去でも登録identity・ヘッダー数字・他relation・実Chord格納を保持した。遅いfrozen失敗は
+staged graph全体を戻す。TIME_FIVE候補5件は生成時null、正の変換はguardを保持する。
+原版既定switchによる28形状のnull/SIG不変も比較済み。公開複数Part経路を実Page出力へ
+接続したが、公開試行3はEIGHTH_setのfactory受付で停止しXML未出力である。対象3件と
+fmt/clippy/build、63＋補正8/exact7/64 XML bytes/XSD成功。内部XMLは拡張比較17カテゴリ
+一致だが公開成功とは扱わない。休符実曲Der WinterをLinuxで準備・固定し、原版124中102
+厳密一致/休符9件全一致を記録した。native初回はbeam検索領域の非凸guardで停止した。
+品質未達。次はEIGHTH_setの原版自動factory処理、その後実beam領域と休符/pickup/slur。
+[証拠](../evidence/real-public-page/VALIDATION.json)・[次依存](../evidence/real-public-page/NEXT-DEPENDENCY.md)。

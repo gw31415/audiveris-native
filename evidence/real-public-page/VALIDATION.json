@@ -1,0 +1,339 @@
+{
+  "baseline_commit": "44c394d0335ee26e02d8fa2f6486eee7065a8efc",
+  "source_provenance": {
+    "numbers": {
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "observer_sha256": "b32c5a2f2e56201d62e809f7cbe1780bc3eb15b43eb9d9925bdbf410a7c36e9d",
+      "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "compile_commands": [
+        [
+          "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+          "--release",
+          "21",
+          "-d",
+          "/tmp/real-numbers-original-review-v1/compile-only",
+          "/tmp/real-numbers-original-review-v1/compile-only/Book.java",
+          "/tmp/real-numbers-original-review-v1/compile-only/RunClass.java"
+        ],
+        [
+          "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+          "--release",
+          "21",
+          "-cp",
+          "/tmp/real-numbers-original-review-v1/compile-only",
+          "-d",
+          "/tmp/real-numbers-original-review-v1/classes",
+          "/tmp/RealNumbersImageProbe.java",
+          "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+        ]
+      ],
+      "compile_only_signatures_on_runtime_classpath": false,
+      "run_argv": [
+        "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Xmx512m",
+        "-XX:ActiveProcessorCount=2",
+        "-Djava.awt.headless=true",
+        "-Djava.io.tmpdir=/tmp/real-numbers-original-review-v1/tmp",
+        "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-numbers-original-review-v1/cache",
+        "-Djava.util.prefs.userRoot=/tmp/real-numbers-original-review-v1/prefs",
+        "-Duser.home=/tmp/real-numbers-original-review-v1/home",
+        "-Dnative.probe.output=/tmp/real-numbers-original-review-v1/observed.json",
+        "-cp",
+        "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-numbers-original-review-v1/classes",
+        "Audiveris",
+        "-batch",
+        "-constant",
+        "org.audiveris.omr.Main.persistBatchCliConstants=false",
+        "-constant",
+        "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+        "-step",
+        "SCALE",
+        "-run",
+        "RealNumbersImageProbe",
+        "-output",
+        "/tmp/real-numbers-original-review-v1",
+        "--",
+        "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+      ],
+      "exit_code": 0,
+      "console_sha256": "22686ea8f7e46a498a73f5d37c5d6f791ce40e3e6f4a09978eb688b1fb4d8d9b",
+      "native_outputs_used": false,
+      "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+      "observed_sha256": "6aa2994f7c915cc6e95782127bd53595f96f0bbd8ed51b99f7287df7e572f642"
+    },
+    "default-factories": {
+      "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+      "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+      "observer_sha256": "810fbd5c3122cf19bd1bfbdf6f3490b3cf184dd4ca1b115029439f72f3616086",
+      "image_file_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+      "compile_commands": [
+        [
+          "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+          "--release",
+          "21",
+          "-d",
+          "/tmp/real-default-factory-original-v2/compile-only",
+          "/tmp/real-default-factory-original-v2/compile-only/Book.java",
+          "/tmp/real-default-factory-original-v2/compile-only/RunClass.java"
+        ],
+        [
+          "/workspace/native-build-tools/oracle/jdk-21.0.12.1+1/bin/javac",
+          "--release",
+          "21",
+          "-cp",
+          "/tmp/real-default-factory-original-v2/compile-only",
+          "-d",
+          "/tmp/real-default-factory-original-v2/classes",
+          "/workspace/audiveris-native/scripts/java/RealDefaultFactoryImageProbe.java",
+          "/workspace/audiveris-native/scripts/java/RealLedgerMembershipImageProbe.java"
+        ]
+      ],
+      "compile_only_signatures_on_runtime_classpath": false,
+      "run_argv": [
+        "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/runtime/bin/java",
+        "-Xmx512m",
+        "-XX:ActiveProcessorCount=2",
+        "-Djava.awt.headless=true",
+        "-Djava.io.tmpdir=/tmp/real-default-factory-original-v2/tmp",
+        "-Dorg.bytedeco.javacpp.cachedir=/tmp/real-default-factory-original-v2/cache",
+        "-Djava.util.prefs.userRoot=/tmp/real-default-factory-original-v2/prefs",
+        "-Duser.home=/tmp/real-default-factory-original-v2/home",
+        "-Dnative.probe.output=/tmp/real-default-factory-original-v2/observed.json",
+        "-cp",
+        "/workspace/native-build-tools/oracle/official/opt/audiveris/lib/app/*:/tmp/real-default-factory-original-v2/classes",
+        "Audiveris",
+        "-batch",
+        "-constant",
+        "org.audiveris.omr.Main.persistBatchCliConstants=false",
+        "-constant",
+        "org.audiveris.omr.Main.runBatchTasksInParallel=false",
+        "-step",
+        "SCALE",
+        "-run",
+        "RealDefaultFactoryImageProbe",
+        "-output",
+        "/tmp/real-default-factory-original-v2",
+        "--",
+        "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png"
+      ],
+      "exit_code": 0,
+      "console_sha256": "010846958ab6c6d8e7b685fe6e5752716c202134e1df48841bc6d37025a25ebe",
+      "native_outputs_used": false,
+      "image_helper_sha256": "0c96a7b5b66b3b3869561ae08365e34b2ebb8a94f5ab543d609084e0a750c727",
+      "observed_sha256": "8aaa87d287ed316176f77df899e0de9a50d4c8868e5086b1958f76730abdb46f"
+    }
+  },
+  "default_disabled_factory_shapes": 28,
+  "actual_NumberInter_count": 7,
+  "all_numbers_search_no_link_and_removed_with_retained_identity": true,
+  "time_five_null_factory_candidates": 5,
+  "integer_centroid_factory_distinct_from_rectangle_center_lookup": true,
+  "header_vertices_unrelated_relations_actual_chord_storage_preserved": true,
+  "late_frozen_failure_full_graph_rollback": true,
+  "positive_Number_conversion_guarded": true,
+  "normal_multi_Part_Page_export_route_connected_but_public_admission_incomplete": true,
+  "public_CLI": {
+    "argv": [
+      "/workspace/audiveris-native/target/debug/audiveris-musicxml",
+      "/workspace/audiveris-native/fixtures/official-grid/laura-gray.png",
+      "/tmp/real-public-page-v3/laura.musicxml",
+      "/tmp/real-public-page-v3/report.json"
+    ],
+    "exit_code": 1,
+    "elapsed_seconds": 206.23401348298648,
+    "image_sha256": "24c1d60001250e6381c711c819f1e5fd7cc23c6dde424a855fdc22a40538ebec",
+    "binary_sha256": "a41f916da9aae2d7b2f44c6cbeb08b6b7581679566214d168dbba72d28198dce",
+    "XML_written": false,
+    "report_written": false,
+    "normal_user_command": true,
+    "original_or_observation_used_as_recognition_input": false
+  },
+  "public_frontier": "musicxml_unported_symbol_interpretation:EIGHTH_set",
+  "native_XML_written": false,
+  "unique_target_tests": 3,
+  "checks": [
+    {
+      "check": "format",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all"
+      ],
+      "log": "/tmp/real-public-page-format.log"
+    },
+    {
+      "check": "default_factories",
+      "exit_code": 0,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "original_default_switches_leave_declared_factory_evaluations_null",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-public-page-default_factories.log"
+    },
+    {
+      "check": "rational",
+      "exit_code": 0,
+      "tests": 1,
+      "argv": [
+        "cargo",
+        "test",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--lib",
+        "actual_rational_slots_and_underfilled_voice_termination_match_original",
+        "--",
+        "--test-threads=2"
+      ],
+      "log": "/tmp/real-public-page-rational.log"
+    },
+    {
+      "check": "fmt",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "log": "/tmp/real-public-page-fmt.log"
+    },
+    {
+      "check": "clippy",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "clippy",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "log": "/tmp/real-public-page-clippy.log"
+    },
+    {
+      "check": "build",
+      "exit_code": 0,
+      "tests": null,
+      "argv": [
+        "cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "-j2",
+        "--bin",
+        "audiveris-musicxml"
+      ],
+      "log": "/tmp/real-public-page-build.log"
+    },
+    {
+      "check": "actual_temporary_numbers",
+      "exit_code": 0,
+      "tests": 1,
+      "log": "/tmp/real-numbers-test.log",
+      "log_sha256": "502346de45f370458f4c5633f36c2fe30fb2d583b4a6ea484e6b4fe21ddcf7af"
+    }
+  ],
+  "comparator_contract_checks": {
+    "checks": {
+      "slur_number_labels_do_not_change_endpoints_or_connections": true,
+      "missing_slur_start_changes_endpoints_connections_and_reports_issue": true,
+      "missing_pickup_changes_measure_identity": true,
+      "sound_change_is_detected_even_when_printed_direction_unchanged": true,
+      "numeric_sound_spelling_normalized": true,
+      "tie_sound_and_notation_are_separate_complete_relations": true,
+      "tie_number_labels_normalize": true,
+      "visual_tie_does_not_mask_missing_sound_tie": true,
+      "same_note_start_then_stop_visual_tie_is_retained": true
+    },
+    "all_passed": true,
+    "scope": "Comparator contracts only; altered and constructed XML do not establish recognition quality."
+  },
+  "retained_internal_XML_17_categories_match_original": true,
+  "CLI_XML": {
+    "automatic_inputs": [
+      {
+        "input": "fixtures/official-image-musicxml-chord-members/chord-flag2.png",
+        "events": 15,
+        "XML_sha256": "1e0fb15478469439e574bb2f3aefa140074e8ecf85471daa5f2c71f92549f30e",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/augmentation.png",
+        "events": 8,
+        "XML_sha256": "b2e08e7205a34302abcc432a4e2db7ea6d9da3abc680fc64d8f94b81e60e26f6",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png",
+        "events": 8,
+        "XML_sha256": "12f7dd4bea2806601e7b45b674cc7997a09de9ca2cf54e16b4a92e180683b0ed",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/inconsistent-augmentation.png",
+        "events": 12,
+        "XML_sha256": "e2e8b7df70076d090bec57d1233ab2570212736fbdecf9a860d20e6ca9b0a3cc",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-augmentation/half-rest-augmentation.png",
+        "events": 4,
+        "XML_sha256": "003668b163ab586b121bf6c8ff747fda8cecbe828667b309e64a57d8d05e0a48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      },
+      {
+        "input": "fixtures/official-image-musicxml-parallel-voices/parallel-quarters.png",
+        "events": 16,
+        "XML_sha256": "ae12b2a78df9d61ceccf6c6531d3628c8eebf4bc3307a0407aeb5beffa4ffc48",
+        "previous_XML_bytes": "identical",
+        "XSD": "passed"
+      }
+    ],
+    "automatic_events": 63,
+    "declared_correction": {
+      "mode": "declared mixed correction",
+      "events": 8,
+      "XML_sha256": "6a1e6264a38f5932c70945a17082d50d482afb69d342f726e68008a4ae37fc8b",
+      "previous_XML_bytes": "identical",
+      "XSD": "passed",
+      "input": "fixtures/official-image-musicxml-augmentation/double-augmentation.png"
+    },
+    "XSD_sha256": {
+      "xlink.xsd": "6e601f8eeb41618b50e4c7f944dff754e57ea43b602755470dda24c9c2f6df92",
+      "xml.xsd": "616a3077df5cfc954ac74a75abe9697b95eef7a85dbe09367d995a483e840eb5",
+      "musicxml.xsd": "bfe37ed25a9ec00e6f2591d53df260b84efe12aed209ba3ac0a76f9287665a99"
+    },
+    "checker_sha256": "44064e43ce013fc4a5fb2a03799b8647f7d8c3016a6da8b227603debbfa654ac"
+  },
+  "exact_7_64_XML": {
+    "bytes_identical": true,
+    "XSD": "passed",
+    "sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6"
+  },
+  "rest_baseline": "evidence/real-rest-quality-baseline",
+  "whole_649_or_profile_rerun": false,
+  "real_image_quality_accepted": false
+}

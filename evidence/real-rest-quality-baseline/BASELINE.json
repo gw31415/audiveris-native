@@ -1,0 +1,140 @@
+{
+  "scope": "Original Audiveris baseline on the saved real-rest PNG, compared with independently retained CC0 source score; no native quality result",
+  "image": {
+    "file": "fixtures/real-rest-page/der-winter-gray.png",
+    "sha256": "10f61bf0d44be190df7177b57c1cd26a31bfbcc68d9ad8f85a76813d51ae59e0",
+    "width": 1489,
+    "height": 2104,
+    "same_image_for_future_native_comparison_required": true
+  },
+  "truth": {
+    "file": "fixtures/openscore-lieder/lc6053913.mscx",
+    "sha256": "776b60aa1488636fe8d2e83c79391aa80d15981ce17ecc2ca30ca3a3fac6ccd6",
+    "source_provenance": "fixtures/real-rest-page/PROVENANCE.json",
+    "staffs": 3,
+    "measures_per_staff": 9,
+    "events": 124,
+    "pitched_notes": 115,
+    "rests": 9
+  },
+  "original": {
+    "run": "ORIGINAL-RUN.json",
+    "console": "ORIGINAL-CONSOLE.log",
+    "xml_file": "der-winter-original.musicxml",
+    "xml_sha256": "e04333e06b7c58181824602b4b57367d5c2aad2b2b7811707fa2dc3f3e26c7fb",
+    "export_mxl_sha256": "4b6ab353fc07737abeb1fcd8cd27aadae0811acbb27ed1c8ae14370349bde027",
+    "xml_is_exact_mxl_member": "der-winter-gray.xml",
+    "upstream_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+    "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
+    "exit_code": 0,
+    "parts": 2,
+    "measures_per_part": 9,
+    "events": 124,
+    "pitched_notes": 115,
+    "rests": 9,
+    "chord_continuations": 18,
+    "beam_elements": 113,
+    "slur_elements": 12
+  },
+  "independent_event_comparison": {
+    "file": "ORIGINAL-EVENT-QUALITY.json",
+    "sha256": "a47745a39cec6d9249e35b329aa647d1dda0d2f8f225b90e174b2bdc629eeeed",
+    "recomputed_and_equal_to_existing_result": true,
+    "matched": 102,
+    "missing": 22,
+    "extra": 22,
+    "precision": 0.8225806451612904,
+    "recall": 0.8225806451612904,
+    "F1": 0.8225806451612904,
+    "meter_matches": true,
+    "all_9_rest_events_exact": true,
+    "rest_events": [
+      [
+        1,
+        5,
+        "1/4",
+        null,
+        "1/8",
+        false
+      ],
+      [
+        1,
+        5,
+        "3/8",
+        null,
+        "1/16",
+        false
+      ],
+      [
+        1,
+        9,
+        "1/4",
+        null,
+        "1/4",
+        false
+      ],
+      [
+        2,
+        5,
+        "1/4",
+        null,
+        "1/8",
+        false
+      ],
+      [
+        2,
+        5,
+        "3/8",
+        null,
+        "1/16",
+        false
+      ],
+      [
+        2,
+        9,
+        "1/4",
+        null,
+        "1/4",
+        false
+      ],
+      [
+        3,
+        5,
+        "0",
+        null,
+        "1/16",
+        false
+      ],
+      [
+        3,
+        5,
+        "3/8",
+        null,
+        "1/8",
+        false
+      ],
+      [
+        3,
+        9,
+        "1/4",
+        null,
+        "1/4",
+        false
+      ]
+    ],
+    "known_difference_scope": "All 22 unmatched truth/recognized event pairs are on global Staff3:2 timing/duration differences in ordinal measure3 and20 pitch differences in ordinal measures6-9. Measures here use score order, not the MusicXML number attribute. 22 missing plus22 extra does not mean44 independent mistakes.",
+    "not_scored": [
+      "voice continuity",
+      "chord grouping",
+      "notation relations"
+    ]
+  },
+  "native_comparison_performed_in_this_unit": false,
+  "quality_accepted": false,
+  "original_output_is_recognition_input": false,
+  "required_next": [
+    "Native recognition of the exact saved opaque PNG",
+    "Compare pitch/duration/rest/chord/voice/meter/measure/required relations with original and independent score truth",
+    "MusicXML XSD and independent reader validation; no parity claim from event counts alone"
+  ]
+}

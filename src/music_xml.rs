@@ -629,6 +629,115 @@ pub(crate) fn verified_image_catalog(m: &OwnedMusic) -> bool {
         && m.owner.catalog.family == "Bravura"
         && matches!(m.owner.catalog.stored_point_size, 44 | 47 | 51)
 }
+fn original_default_factory_disabled(shape: &str) -> bool {
+    // InterFactory returns null under original default switches. These are
+    // classifier evaluations, not lost recognition objects or enabled features.
+    matches!(
+        shape,
+        "PLUCK_P"
+            | "PLUCK_I"
+            | "PLUCK_M"
+            | "PLUCK_A"
+            | "DIGIT_0"
+            | "DIGIT_1"
+            | "DIGIT_2"
+            | "DIGIT_3"
+            | "DIGIT_4"
+            | "DIGIT_5"
+            | "ROMAN_I"
+            | "ROMAN_II"
+            | "ROMAN_III"
+            | "ROMAN_IV"
+            | "ROMAN_V"
+            | "ROMAN_VI"
+            | "ROMAN_VII"
+            | "ROMAN_VIII"
+            | "ROMAN_IX"
+            | "ROMAN_X"
+            | "ROMAN_XI"
+            | "ROMAN_XII"
+            | "TREMOLO_1"
+            | "TREMOLO_2"
+            | "TREMOLO_3"
+            | "PLAYING_OPEN"
+            | "PLAYING_HALF_OPEN"
+            | "PLAYING_CLOSED"
+    )
+}
+fn admit_recognized_factories(m: &OwnedMusic) -> Result<(), String> {
+    if m.owner.prepared.report["symbol_cluster_scope"] != "original-seven-part-cap-recursive" {
+        return Err("musicxml_compound_symbol_parts_pending".into());
+    }
+    for trial in m.owner.prepared.report["classifier_trials"]
+        .as_array()
+        .ok_or("musicxml_symbol_trials_required")?
+    {
+        for evaluation in trial["evaluations"].as_array().into_iter().flatten() {
+            let shape = evaluation["shape"]
+                .as_str()
+                .ok_or("musicxml_symbol_shape_required")?;
+            if original_default_factory_disabled(shape) {
+                continue;
+            }
+            if shape == "ARPEGGIATO" {
+                let b = serde_json::from_value(trial["bounds"].clone())
+                    .map_err(|_| "musicxml_arpeggiato_bounds_required")?;
+                if arpeggiato_may_link(
+                    b,
+                    m.owner.interline,
+                    &m.chords
+                        .iter()
+                        .filter(|c| c.kind == crate::music_measures::ChordKind::Head)
+                        .map(|c| c.bounds)
+                        .collect::<Vec<_>>(),
+                ) {
+                    return Err("musicxml_arpeggiato_chord_link_pending".into());
+                }
+            } else if !(matches!(
+                shape,
+                "CLUTTER"
+                    | "NOISE"
+                    | "DOT_set"
+                    | "CAESURA"
+                    | "BREATH_MARK"
+                    | "FLAT"
+                    | "NATURAL"
+                    | "SHARP"
+                    | "DOUBLE_FLAT"
+                    | "DOUBLE_SHARP"
+                    | "ACCENT"
+                    | "TENUTO"
+                    | "MARCATO"
+                    | "MARCATO_BELOW"
+                    | "STACCATISSIMO"
+                    | "STACCATISSIMO_BELOW"
+                    | "PEDAL_MARK"
+                    | "PEDAL_UP_MARK"
+            ) || crate::music_directions::signature(shape).is_some()
+                || crate::music_numbers::value(shape).is_some()
+                || music_symbols::time(shape).is_some()
+                || shape.ends_with("_REST")
+                || crate::music_flags::value(shape).is_some())
+            {
+                return Err(format!("musicxml_unported_symbol_interpretation:{shape}"));
+            }
+        }
+    }
+    Ok(())
+}
+fn continue_recognized_export(mut m: OwnedMusic, part_name: &str) -> Result<Export, String> {
+    admit_recognized_factories(&m)?;
+    let rhythm = m.process_recognized_page_rhythm()?;
+    let (xml, observation) = m.write_recognized_musicxml(part_name)?;
+    let symbols = std::mem::take(&mut m.owner.prepared.report);
+    m.owner.prepared.report = json!({"schema":"audiveris-native.musicxml-recognized-image.v1","symbols":symbols,"events":observation["events"],"recognized_page_rhythm":rhythm,"omitted_actual_Chords":observation["omitted_actual_Chords"],"divisions":observation["divisions"],"shared_sig":m.owner.graph.snapshot(),"part_name":part_name,"part_name_is_user_metadata_not_instrument_recognition":true,"head_template_catalog":m.owner.catalog,"MusicXML_written_from_native_image_recognition":true,"original_XML_output_reused":false,"required_directions_connected":true,"real_image_quality_accepted":false,"pending":["representative real-rest image quality comparison and rest-only Staff headers","recognition dependencies exposed by further representative inputs"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
+    let provenance = provenance(&m);
+    Ok(Export {
+        owner: m,
+        xml,
+        provenance,
+    })
+}
 fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, String> {
     if part_name.trim().is_empty()
         || part_name.len() > 256
@@ -644,6 +753,15 @@ fn continue_export_named(mut m: OwnedMusic, part_name: &str) -> Result<Export, S
     m = crate::music_links::continue_links(m)?;
     if !verified_image_catalog(&m) {
         return Err("musicxml_verified_Bravura44_or47_or51_interline11_scope_required".into());
+    }
+    // The compared Page path uses actual Part ownership. The historical
+    // one-Part admission keeps its byte contract and independent correction fixtures.
+    if m.owner
+        .systems
+        .iter()
+        .any(|s| m.owner.parts.iter().filter(|p| p.system == s.id).count() > 1)
+    {
+        return continue_recognized_export(m, part_name);
     }
     let grid = &m.owner.upstream_report["grid_ir"];
     if grid["pages"].as_array().is_none_or(|p| p.len() != 1)
@@ -3735,3 +3853,23 @@ mod tuplet_collection;
 mod tuplet_merge;
 
 mod tuplet_second_pass;
+
+#[cfg(test)]
+mod default_factory_tests {
+    #[test]
+    fn original_default_switches_leave_declared_factory_evaluations_null() {
+        let source: serde_json::Value = serde_json::from_str(include_str!(
+            "../fixtures/official-default-factories/image-observed.json"
+        ))
+        .unwrap();
+        for case in source["cases"].as_array().unwrap() {
+            assert_eq!(case["returns_null"], true);
+            assert_eq!(case["actual_SIG_unchanged"], true);
+            assert!(super::original_default_factory_disabled(
+                case["shape"].as_str().unwrap()
+            ));
+        }
+        assert!(!super::original_default_factory_disabled("TIME_FIVE"));
+        assert!(!super::original_default_factory_disabled("DYNAMICS_F"));
+    }
+}
