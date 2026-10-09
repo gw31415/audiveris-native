@@ -1,0 +1,1196 @@
+{
+  "before": [
+    {
+      "abnormal": false,
+      "bounds": [
+        1005,
+        464,
+        20,
+        18
+      ],
+      "contextual_grade": null,
+      "grade": 0.5790364383682434,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.16321517910314395,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1078,
+        344,
+        22,
+        14
+      ],
+      "contextual_grade": null,
+      "grade": 0.15809709742583633,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_PP",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1078,
+        599,
+        22,
+        14
+      ],
+      "contextual_grade": null,
+      "grade": 0.15809709742583633,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_PP",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1200,
+        218,
+        44,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.15532913926445946,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        383,
+        356,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282158633,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        383,
+        580,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159505,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        495,
+        855,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159505,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        751,
+        70,
+        33,
+        26
+      ],
+      "contextual_grade": null,
+      "grade": 0.1668995060755331,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_FF",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        751,
+        70,
+        33,
+        26
+      ],
+      "contextual_grade": null,
+      "grade": 0.15634221353294397,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_SFZ",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        792,
+        845,
+        38,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7178980722732976,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_FF",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        961,
+        218,
+        35,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.17237251095887218,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1005,
+        1550,
+        42,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.1510578792591506,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_MP",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1054,
+        1511,
+        31,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.15117510593523603,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_PP",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1072,
+        1321,
+        40,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.2595796379527082,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1072,
+        1354,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.1709911654572586,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1095,
+        961,
+        32,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.13712508045904978,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_MP",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1103,
+        1110,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282158211,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1111,
+        1321,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.1593707461034567,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1209,
+        1354,
+        35,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.2121915763424528,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1231,
+        1360,
+        37,
+        16
+      ],
+      "contextual_grade": null,
+      "grade": 0.13108905969910553,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1291,
+        956,
+        42,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.12475659729144394,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 4,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1291,
+        956,
+        42,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.13802585212023685,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 4,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1291,
+        956,
+        42,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.24061053262832743,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 4,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        198,
+        1110,
+        25,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.720698100727154,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_F",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        198,
+        844,
+        25,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7206981007271556,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_F",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        296,
+        1392,
+        37,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.5130093358109459,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        304,
+        1295,
+        28,
+        20
+      ],
+      "contextual_grade": null,
+      "grade": 0.35616630693474854,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        332,
+        1504,
+        35,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.1760720122174443,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        495,
+        1102,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159505,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        495,
+        855,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159505,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        514,
+        1537,
+        43,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.13574153955443224,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_PPP",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        514,
+        1537,
+        43,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.2073002799399309,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        618,
+        1396,
+        37,
+        20
+      ],
+      "contextual_grade": null,
+      "grade": 0.15398437949403676,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_SFZ",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        618,
+        1396,
+        37,
+        20
+      ],
+      "contextual_grade": null,
+      "grade": 0.12509075272127737,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        619,
+        1295,
+        39,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.1349491726516568,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_MP",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        671,
+        1295,
+        26,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.14111327596620962,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        786,
+        1295,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.16026210485800657,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        786,
+        1295,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.18121798392927657,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        792,
+        845,
+        38,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7178980722732976,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_FF",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        801,
+        1100,
+        38,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7182300502992848,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_FF",
+      "staff": null,
+      "system": 2
+    }
+  ],
+  "expected_before": [
+    {
+      "abnormal": false,
+      "bounds": [
+        1005,
+        464,
+        20,
+        18
+      ],
+      "contextual_grade": null,
+      "grade": 0.5790364383682435,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.16321517910314387,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1078,
+        344,
+        22,
+        14
+      ],
+      "contextual_grade": null,
+      "grade": 0.15809709742583655,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_PP",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1078,
+        599,
+        22,
+        14
+      ],
+      "contextual_grade": null,
+      "grade": 0.15809709742583655,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_PP",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        383,
+        356,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282158636,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        383,
+        580,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159485,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 1
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1072,
+        1321,
+        40,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.2595796379527084,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1072,
+        1354,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.17099116545725865,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1095,
+        961,
+        32,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.13712508045905003,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_MP",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        1103,
+        1110,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.1757245528215822,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1111,
+        1321,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.15937074610345656,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1209,
+        1354,
+        35,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.21219157634245278,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1231,
+        1360,
+        37,
+        16
+      ],
+      "contextual_grade": null,
+      "grade": 0.13108905969910542,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1291,
+        956,
+        42,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.12475659729144384,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 4,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1291,
+        956,
+        42,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.13802585212023685,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 4,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        1291,
+        956,
+        42,
+        19
+      ],
+      "contextual_grade": null,
+      "grade": 0.24061053262832788,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 4,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        198,
+        1110,
+        25,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7206981007271542,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_F",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        198,
+        844,
+        25,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7206981007271558,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_F",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        296,
+        1392,
+        37,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.5130093358109462,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        304,
+        1295,
+        28,
+        20
+      ],
+      "contextual_grade": null,
+      "grade": 0.356166306934748,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        332,
+        1504,
+        35,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.17607201221744442,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        495,
+        1102,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159485,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        495,
+        855,
+        23,
+        21
+      ],
+      "contextual_grade": null,
+      "grade": 0.17572455282159485,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_P",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        514,
+        1537,
+        43,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.20730027993993075,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        618,
+        1396,
+        37,
+        20
+      ],
+      "contextual_grade": null,
+      "grade": 0.12509075272127745,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        786,
+        1295,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.16026210485800632,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": true,
+      "bounds": [
+        786,
+        1295,
+        36,
+        22
+      ],
+      "contextual_grade": null,
+      "grade": 0.18121798392927618,
+      "kind": "PedalInter",
+      "manual": false,
+      "relations": [],
+      "shape": "PEDAL_MARK",
+      "staff": 6,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        792,
+        845,
+        38,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7178980722732975,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_FF",
+      "staff": null,
+      "system": 2
+    },
+    {
+      "abnormal": false,
+      "bounds": [
+        801,
+        1100,
+        38,
+        30
+      ],
+      "contextual_grade": null,
+      "grade": 0.7182300502992844,
+      "kind": "DynamicsInter",
+      "manual": false,
+      "relations": [],
+      "shape": "DYNAMICS_FF",
+      "staff": null,
+      "system": 2
+    }
+  ]
+}

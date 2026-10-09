@@ -12,6 +12,7 @@ mod articulation_callbacks;
 mod beam_rest;
 #[cfg(test)]
 mod context_projection_image_tests;
+mod direction_callbacks;
 #[cfg(test)]
 mod flag_rest_weak_image_tests;
 mod tuplet;
@@ -566,7 +567,13 @@ impl Graph {
         if !removed && added && self.vertices[id - 1].data["kind"] == "AlterInter" {
             self.vertices[id - 1].data["abnormal"] = json!(true);
         }
-        if !removed && added && self.vertices[id - 1].data["kind"] == "ArticulationInter" {
+        if !removed
+            && added
+            && matches!(
+                self.vertices[id - 1].data["kind"].as_str(),
+                Some("ArticulationInter" | "PedalInter")
+            )
+        {
             self.vertices[id - 1].data["abnormal"] = json!(true);
         }
         Ok(id)
@@ -924,7 +931,13 @@ impl Graph {
         let articulations = relations
             .iter()
             .any(|(_, _, r)| r["kind"] == "ChordArticulationRelation");
-        if chords || dots || retained_stems || alters || articulations {
+        let directions = relations.iter().any(|(_, _, r)| {
+            matches!(
+                r["kind"].as_str(),
+                Some("ChordDynamicsRelation" | "ChordPedalRelation")
+            )
+        });
+        if chords || dots || retained_stems || alters || articulations || directions {
             // Original identity callbacks operate on the actual registered
             // chord. Validate/update a stage before changing the retained SIG.
             let mut next = self.clone();
@@ -960,6 +973,12 @@ impl Graph {
             }
             if kind == "ChordArticulationRelation" {
                 self.validate_chord_articulation(source, target, &data)?;
+            }
+            if matches!(
+                kind.as_str(),
+                "ChordDynamicsRelation" | "ChordPedalRelation"
+            ) {
+                self.validate_chord_direction(source, target, &data)?;
             }
             let dot_support = matches!(kind.as_str(), "AugmentationRelation" | "DoubleDotRelation");
             if dot_support {
@@ -1129,6 +1148,9 @@ impl Graph {
             }
             if added && self.edges[id - 1].key.kind == "AlterHeadRelation" {
                 self.refresh_alter_abnormal(&[source]);
+            }
+            if added && self.edges[id - 1].key.kind == "ChordPedalRelation" {
+                self.refresh_pedal_abnormal(target);
             }
             if added && self.edges[id - 1].key.kind == "ChordArticulationRelation" {
                 self.refresh_articulation_abnormal(target);
@@ -1662,6 +1684,17 @@ impl Graph {
         Ok(())
     }
     fn prune(&mut self) {
+        let pedals = self
+            .live_edges()
+            .iter()
+            .filter(|e| {
+                e.key.kind == "ChordPedalRelation"
+                    && (self.vertices[e.key.source - 1].removed
+                        || self.vertices[e.key.target - 1].removed)
+            })
+            .map(|e| e.data["id"].as_u64().unwrap() as usize)
+            .collect::<Vec<_>>();
+        self.remove_pedal_edges_ordered(&pedals);
         let articulations = self
             .live_edges()
             .iter()

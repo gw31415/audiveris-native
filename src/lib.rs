@@ -503,6 +503,7 @@ mod music_barline_groups;
 mod music_beams;
 mod music_chord_time;
 mod music_containers;
+mod music_directions;
 mod music_dots;
 mod music_duration;
 mod music_flags;

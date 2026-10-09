@@ -431,6 +431,25 @@ fn checked(
             });
         }
     }
+    if crate::music_directions::signature(shape).is_some()
+        || matches!(shape, "PEDAL_MARK" | "PEDAL_UP_MARK")
+    {
+        let top = s
+            .lines
+            .first()
+            .ok_or("music_direction_actual_Staff_line_required")?
+            .y(x);
+        let bottom = s.lines.last().unwrap().y(x);
+        let gap = (top - (g.top as f64 + g.height as f64))
+            .max(g.top as f64 - bottom)
+            .max(0.);
+        let valid = if shape.starts_with("DYNAMICS_") {
+            pitch.abs() > 4. && gap <= (8. * scale).round_ties_even()
+        } else {
+            pitch > 4. && gap > 0.
+        };
+        return Ok(valid.then(|| shape.to_owned()));
+    }
     // Other physical shapes remain observations; no unchecked musical Inter
     // is created. Their specific ShapeChecker/InterFactory dependencies remain.
     Ok(Some(shape.to_owned()))
@@ -657,6 +676,14 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 }
                 continue;
             }
+            if crate::music_directions::signature(shape).is_some()
+                || matches!(shape, "PEDAL_MARK" | "PEDAL_UP_MARK")
+            {
+                let key = graph.next_symbol_key(sid)?;
+                graph.vertex(key,json!({"kind":if shape.starts_with("DYNAMICS_"){"DynamicsInter"}else{"PedalInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"grade":grade,"staff_id":null,"manual":false,"frozen":false,"abnormal":false}),false)?;
+                created.push(key);
+                continue;
+            }
             if meter.is_none() && !rest {
                 continue;
             }
@@ -755,10 +782,12 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
         &m,
         il,
     )?;
+    let dynamics_absorption = crate::music_directions::absorb(&mut dot_graph)?;
     m.owner.graph = dot_graph;
     let previous = std::mem::take(&mut m.owner.prepared.report);
     m.owner.prepared.report = json!({"schema":"audiveris-native.music-symbols-isolated.v1","measures_head_chords":previous,"symbol_filter_PGM_SHA256":format!("{:x}",Sha256::digest(im.pgm())),"symbol_glyphs":glyphs.iter().map(beam_dispatch::glyph_json).collect::<Vec<_>>(),"classifier_trials":trials,"symbol_cluster_scope":"original-seven-part-cap-recursive","symbols":accepted,"shared_sig":m.owner.graph.snapshot(),"scope":"actual System/Staff/virtual Ledger curves and original strong cleaner; stable connected glyphs, original cap7 recursive classification with bounded Rest/TimeWhole SIG exclusions; actual Graph/registry/cache retained","pending":["other physical factories/shape checks and supported/frozen conflict reduction/weak optionals","factory.lateChecks/symbol epilog/flags/dots/accidentals/LINKS/rhythm/export","general stroked areas/full symbol reduction/cleaner/epilog","nonzero skew/real scans/special staff/full24shapes/32sources"],"heads_complete":false,"stems_complete":false,"musicxml_complete":false,"epilog_complete":false,"automatic_raster_pipeline_complete":false});
     m.owner.prepared.report["dot_late_checks"] = dot_late_checks;
+    m.owner.prepared.report["complex_dynamics_absorption"] = dynamics_absorption;
     Ok(m)
 }
 

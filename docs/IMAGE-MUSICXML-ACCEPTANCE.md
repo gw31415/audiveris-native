@@ -285,3 +285,23 @@ refresh前後のVec格納アドレスをidentityとして扱った過剰テス�
 残るため品質未達。次は原版の生成/complex吸収/lookup/支持/weak除去と6 directions、
 通常画像CLIと実休符例へ進む。
 [証拠](../evidence/real-pause-part-staff/VALIDATION.json)・[比較](../evidence/real-pause-part-staff/COMPARISON.json)・[内部XML](../evidence/real-pause-part-staff/laura-native-internal.musicxml)・[次依存](../evidence/real-pause-part-staff/NEXT-DEPENDENCY.md)。
+
+
+原版ShapeCheckerの強弱/pedal生成前条件と、署名長・intrinsic gradeの安定順による
+complex吸収を接続した。実Staff曲線、共有Stack/Measure、実Chordを使い、dynamics→
+pedalのlookup順と原版のstrict overlap/近傍選択を保持する。強弱支持は実cached Chord
+信頼度を読み、pedalの支持係数は0。生成時manual=false、pedal added/removedの
+abnormalを保持する。実画像の原版SYMBOLS29→LINKS6で、全候補と最終5強弱＋1pedalの
+Staff/Chord所属・manual/abnormal・intrinsic gradeが一致した。contextual gradeは既知
+Head信頼度残差の伝播内で比較し、全classifier数値一致とは言わない。
+認識後のpedal relation除去→同じidentityでmanual再追加によりfalse→true→falseとなり、
+実Voice5/Slot・時計1/8・長さ1/8を維持する。遅い型不正の辺追加は全graph/時計をrollbackし、
+実Chord除去で残ったpedalはabnormalになる。
+実Voice BEGINから最初のnoteへ6 directionsを出力し、内部実譜面XMLは92音、全声部群16、
+8小節、backup/forward13、staccato8、caesura3、強弱5/pedal1の観測意味が原版一致した。
+独立正解は101音中73一致、F1=0.7564767で原版の誤りも保持し、完全正解とは主張しない。
+最初の41候補対29候補の失敗と12余剰の観測を保持した。生成前条件欠落を修正して対象10件、
+fmt/clippy/build、XSD・独立readerと既存63＋補正8/exact7/64 byte/XSDが成功した。
+公開画像CLIへの通常Page/複数Part出力接続と、休符を含む代表実譜面・rest-only Staff header、
+その画像に必要な認識依存の比較が残る。品質受入はまだfalseで、旧全API台帳へは戻らない。
+[証拠](../evidence/real-directions/VALIDATION.json)・[比較](../evidence/real-directions/COMPARISON.json)・[内部XML](../evidence/real-directions/laura-native-internal.musicxml)・[次依存](../evidence/real-directions/NEXT-DEPENDENCY.md)。

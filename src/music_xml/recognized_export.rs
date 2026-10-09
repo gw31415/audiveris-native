@@ -99,6 +99,73 @@ fn articulations(snapshot: &Value, id: usize, first_note: &Value) -> Result<Valu
     }
     Ok(json!(result))
 }
+fn directions(
+    music: &OwnedMusic,
+    snapshot: &Value,
+    chord: &crate::music_measures::Chord,
+    note: &Value,
+) -> Result<Value, String> {
+    let measure = &music.measures[chord.measure];
+    let g = measure
+        .geometry
+        .as_ref()
+        .ok_or("musicxml_direction_actual_Measure_required")?;
+    let staff = g
+        .part
+        .staffs
+        .iter()
+        .find(|s| note["staff_id"] == s.id)
+        .ok_or("musicxml_direction_actual_Staff_required")?;
+    let staff_number = g
+        .part
+        .staffs
+        .iter()
+        .position(|s| Arc::ptr_eq(s, staff))
+        .unwrap()
+        + 1;
+    let tenths = |d: f64| (10. * d / music.owner.interline as f64).round_ties_even() as i64;
+    let mut directions = Vec::new();
+    for edge in snapshot["relations"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|e| {
+            e["source"] == chord.id
+                && matches!(
+                    e["kind"].as_str(),
+                    Some("ChordDynamicsRelation" | "ChordPedalRelation")
+                )
+        })
+    {
+        let n = node(snapshot, edge["target"].as_u64().unwrap() as usize)?;
+        let b: [i64; 4] = serde_json::from_value(n["bounds"].clone())
+            .map_err(|_| "musicxml_direction_bounds_required")?;
+        let dynamics = edge["kind"] == "ChordDynamicsRelation";
+        let y = if dynamics {
+            b[1] + b[3] / 2
+        } else {
+            b[1] + b[3]
+        };
+        let mut v = json!({"kind":if dynamics{"dynamics"}else{"pedal"},"shape":n["shape"],"placement":if y<center(note)?[1]{"above"}else{"below"},"staff_number":if g.part.staffs.len()>1{Some(staff_number)}else{None},"default_y":tenths(staff.lines.first().unwrap().y(b[0]as f64)-y as f64)});
+        if dynamics {
+            v["signature"] = json!(
+                crate::music_directions::signature(n["shape"].as_str().unwrap())
+                    .ok_or("musicxml_dynamic_shape_pending")?
+            );
+            v["relative_x"] = json!(tenths((b[0] - note["bounds"][0].as_i64().unwrap()) as f64));
+            v["sound"] = json!(crate::music_directions::sound(n["shape"].as_str().unwrap()));
+        } else {
+            v["type"] = json!(if n["shape"] == "PEDAL_MARK" {
+                "start"
+            } else {
+                "stop"
+            });
+            v["default_x"] = json!(tenths((b[0] - g.abscissae(staff)?[0]) as f64));
+        }
+        directions.push(v);
+    }
+    Ok(json!(directions))
+}
 impl OwnedMusic {
     /// Export the live recognized Voice/BEGIN stream. Publication admission is
     /// separate until all required image factories and quality checks are met.
@@ -260,6 +327,11 @@ impl OwnedMusic {
                                 });
                             }
                         }
+                        event["directions"] = if index == 0 {
+                            directions(self, &snapshot, chord, note)?
+                        } else {
+                            json!([])
+                        };
                         event["articulations"] = if index == 0 {
                             articulations(&snapshot, chord.id, note)?
                         } else {
@@ -394,7 +466,7 @@ impl OwnedMusic {
         xml.push_str("</score-partwise>\n");
         Ok((
             xml,
-            json!({"events":events,"omitted_actual_Chords":omitted,"divisions":divisions,"required_directions_connected":false,"quality_accepted":false}),
+            json!({"events":events,"omitted_actual_Chords":omitted,"divisions":divisions,"required_directions_connected":true,"quality_accepted":false}),
         ))
     }
 }

@@ -399,6 +399,43 @@ pub(crate) fn write_measure(
                     if dots > 2 || e["dots"] != dots {
                         return Err("musicxml_voice_owned_dot_count_required".into());
                     }
+                    if index == 0 {
+                        for d in e["directions"].as_array().into_iter().flatten() {
+                            write!(
+                                xml,
+                                "<direction placement=\"{}\"><direction-type>",
+                                d["placement"].as_str().unwrap()
+                            )
+                            .unwrap();
+                            if d["kind"] == "dynamics" {
+                                write!(
+                                    xml,
+                                    "<dynamics default-y=\"{}\" relative-x=\"{}\"><{}/></dynamics>",
+                                    d["default_y"],
+                                    d["relative_x"],
+                                    d["signature"].as_str().unwrap()
+                                )
+                                .unwrap();
+                            } else {
+                                write!(xml,"<pedal type=\"{}\" line=\"no\" halign=\"left\" default-x=\"{}\" default-y=\"{}\"/>",d["type"].as_str().unwrap(),d["default_x"],d["default_y"]).unwrap();
+                            }
+                            xml.push_str("</direction-type>");
+                            if let Some(staff) = d["staff_number"].as_u64() {
+                                write!(xml, "<staff>{staff}</staff>").unwrap();
+                            }
+                            if d["kind"] == "pedal" {
+                                write!(
+                                    xml,
+                                    "<sound damper-pedal=\"{}\"/>",
+                                    if d["type"] == "start" { "yes" } else { "no" }
+                                )
+                                .unwrap();
+                            } else if let Some(sound) = d["sound"].as_u64() {
+                                write!(xml, "<sound dynamics=\"{sound}\"/>").unwrap();
+                            }
+                            xml.push_str("</direction>\n");
+                        }
+                    }
                     xml.push_str("<note>");
                     if index != 0 {
                         xml.push_str("<chord/>");
