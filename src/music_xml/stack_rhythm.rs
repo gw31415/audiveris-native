@@ -2,6 +2,8 @@
 use super::*;
 #[cfg(test)]
 pub(crate) mod image_tests;
+#[cfg(test)]
+mod mixed_starting_tests;
 pub(crate) mod page;
 use crate::music_measure_slots::{CompoundSlot, Retrieval};
 use crate::music_measures::{Chord, Measure};
@@ -70,9 +72,14 @@ impl Context<'_> {
         starting.sort_by_key(|id| centers[id]);
         if starting.len() != 1
             && starting.iter().any(|id| {
-                chords
-                    .iter()
-                    .any(|c| c.id == *id && c.kind == crate::music_measures::ChordKind::Rest)
+                chords.iter().any(|c| {
+                    c.id == *id
+                        && c.kind == crate::music_measures::ChordKind::Rest
+                        && c.members
+                            .first()
+                            .and_then(|n| n["shape"].as_str())
+                            .is_some_and(|s| crate::music_voices::is_measure_rest_shape(s, false))
+                })
             })
         {
             return Err("musicxml_starting_parallel_voice_mapping_pending".into());
@@ -87,7 +94,28 @@ impl Context<'_> {
                     .ok_or("musicxml_starting_owned_chord_required")
             })
             .collect::<Result<Vec<_>, _>>()?;
+        #[cfg(test)]
+        let mixed_starting = mixed_starting_tests::before(
+            graph,
+            voices,
+            measures,
+            mi,
+            chords,
+            &seeds,
+            self.rest_geometry.staffs,
+        );
         crate::music_voices::process_starting_chords(graph, voices, measures, mi, &seeds)?;
+        #[cfg(test)]
+        if let Some(control) = mixed_starting {
+            control.after(
+                graph,
+                voices,
+                measures,
+                mi,
+                chords,
+                self.rest_geometry.staffs,
+            );
+        }
         let start_snapshot = graph.snapshot();
         observations["starting_chord_ids"] = json!(starting);
         observations["starting_state"] = json!({"voices":voices.iter().filter(|v| v.measure == mi).map(|v| json!({"id":v.id,"is_measure_rest":v.measure_rest_chord.is_some(),"chord_ids":v.chord_ids,"measure_rest_chord_id":v.measure_rest_chord})).collect::<Vec<_>>(),"chords":chords.iter().map(|c| {let n=start_snapshot["inters"].as_array().unwrap().iter().find(|n|n["id"]==c.id).unwrap();json!({"id":c.id,"bounds":n["bounds"],"duration":n["duration"],"time_offset":n["time_offset"],"voice":n["voice"]})}).collect::<Vec<_>>()});
@@ -120,6 +148,9 @@ impl Context<'_> {
             }
             .map_slot(&slot)?;
             let validation = step.as_object_mut().unwrap().remove("validation").unwrap();
+            let grouped_times_consistent = step["ok"]
+                .as_bool()
+                .ok_or("music_mapping_consistency_status_required")?;
             observations["mapping_validation_steps"]
                 .as_array_mut()
                 .unwrap()
@@ -128,7 +159,7 @@ impl Context<'_> {
                 .as_array_mut()
                 .unwrap()
                 .push(step);
-            observations["candidate_time_steps"].as_array_mut().unwrap().push(json!({"slot_id":slot.id,"before":before,"after":slot_times.projection(&slot)?,"ok":true}));
+            observations["candidate_time_steps"].as_array_mut().unwrap().push(json!({"slot_id":slot.id,"before":before,"after":slot_times.projection(&slot)?,"ok":grouped_times_consistent}));
             if order.contains(slot.key) {
                 let first_time = slot_times.first_time(&slot)?;
                 let extinction = lifetime.purge(

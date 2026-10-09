@@ -619,12 +619,7 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     music.measures[seed.measure].timing = original_timing;
     let mut music = crate::music_links::continue_links(music).unwrap();
     music.assert_der_winter_nullable_reader_and_logical_headers();
-    // Header and short-rest support must not turn the next unresolved mapping
-    // into guessed clocks. The diagnostic checks actual-owner rollback too.
-    assert_eq!(
-        music
-            .observe_der_winter_internal_rhythm_export()
-            .unwrap_err(),
-        "music_mapping_implicit_tuplet_or_conflicting_slot_times_pending"
+    music.observe_der_winter_internal_rhythm_export().expect(
+        "first internal rhythm/export error saved in /tmp/real-rest-native-internal-rhythm-export.json",
     );
 }

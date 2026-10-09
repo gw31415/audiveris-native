@@ -1,0 +1,65 @@
+{
+  "schema": "audiveris-native.saved-original-final-rhythm-comparison.v1",
+  "source_book_sha256": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "source_sheet_member_sha256": "34945a2ce9c7be8fd893a96341febdc7610c69f39f65d21f52c8cd1830615307",
+  "helper_sha256": "34bab3cb79c1cac9b107ea0f33f119ce3399170da1b5adda4b2f054b12221b3f",
+  "qualifications": [
+    "Offline test-only comparison. No original observations are supplied to native recognition or used to rebuild runtime owners.",
+    "Source Chord identities use actual serialized Measure membership and shape-independent kind/Staff/bounds. Cross-run numeric Inter IDs are never joined. Ambiguous geometry is rejected.",
+    "Source Chord times/Voice IDs/shared Slot IDs are read through persisted Voice BEGIN-to-Stack-Slot references, not fresh original getters. BEGIN and CONTINUE are compared separately.",
+    "Source Measure expected/actual/excess and shared slots come from its serialized Stack association. Printed IDs may be pickup-renumbered; comparison uses physical System-local index.",
+    "Native diagnostic Stack entries lack owner scope fields. Their array order is associated with first-encounter unique (system,index) in actual native Measure diagnostic; no production owner is changed.",
+    "Incoming Chord membership and Voice member identities are compared as sets; serialized source does not preserve all original runtime encounter order.",
+    "Transient source Voice termination/kind/startingStaff, exact Chord duration/end getter values, callback identity and automatic recognition quality are not proven by the saved book. Native values must not be used to fill missing source fields."
+  ],
+  "source_runtime_fields_unavailable": [
+    "Voice.termination",
+    "Voice.kind",
+    "Voice.startingStaff",
+    "Chord.duration",
+    "Chord.endTime",
+    "Java runtime object identities"
+  ],
+  "used_as_native_recognition_input": false,
+  "quality_parity_claimed": false,
+  "native_artifact_sha256": "a66c77ecec72c66c51944b9d020cd5a9698eba56d34ffe51092915c99cb2f85d",
+  "comparison": {
+    "stacks": {
+      "source_count": 9,
+      "native_count": 9,
+      "matched": 9,
+      "differences": []
+    },
+    "measures": {
+      "source_count": 18,
+      "native_count": 18,
+      "matched": 18,
+      "differences": []
+    },
+    "voices": {
+      "source_count": 27,
+      "native_count": 27,
+      "matched": 27,
+      "differences": []
+    },
+    "chord_times": {
+      "source_count": 106,
+      "native_count": 106,
+      "matched": 106,
+      "differences": []
+    },
+    "chord_membership": {
+      "source_count": 106,
+      "native_count": 106,
+      "equal": true
+    }
+  },
+  "compared": true,
+  "all_serialized_contracts_equal": true,
+  "raw": {
+    "path": "/tmp/real-rest-slot-conflict-review-v1/final-comparison-v2.json",
+    "exists": true,
+    "bytes": 399958,
+    "sha256": "46e8892a169c88e56a0c8bbe3f4793003d5f508078aa3af03507a66a9435eef8"
+  }
+}

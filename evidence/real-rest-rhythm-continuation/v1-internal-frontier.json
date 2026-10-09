@@ -1,0 +1,17 @@
+{
+  "actual_Chord_Measure_Stack_owners_retained": true,
+  "error": "musicxml_starting_parallel_voice_mapping_pending",
+  "failed_stage": "ordinary_native_page_rhythm",
+  "input": "fixtures/real-rest-page/der-winter-gray.png",
+  "input_is_existing_actual_LINKS_owner": true,
+  "public_factory_admission_checked": false,
+  "quality_accepted": false,
+  "rollback_actual_Voice_Slot_identities_retained": true,
+  "rollback_state_equal": true,
+  "schema": "audiveris-native.internal-real-image-continuation.v1",
+  "source_or_truth_used_as_recognition_input": false,
+  "xml_written": false,
+  "raw_sha256": "322a9a5c4633c09f339c13e4a92cbabc9681d01723f59bb217ceb345dc6b8797",
+  "before_state_sha256": "fdcf246428bca26c94b62607517118f7343440081bd07a67de3dd1c5be5e09aa",
+  "after_state_sha256": "fdcf246428bca26c94b62607517118f7343440081bd07a67de3dd1c5be5e09aa"
+}

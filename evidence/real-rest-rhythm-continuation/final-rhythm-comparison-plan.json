@@ -1,0 +1,81 @@
+{
+  "source_baseline": {
+    "path": "/tmp/real-rest-slot-conflict-review-v1/source-final-rhythm.json",
+    "exists": true,
+    "bytes": 200878,
+    "sha256": "3a5b6d6657a1895118669f978af4adfc15a2fe207c5a1dcdef80c726d34c0963"
+  },
+  "source_counts": {
+    "stacks": 9,
+    "measures": 18,
+    "voices": 27,
+    "chord_times": 106,
+    "chord_membership": 106
+  },
+  "source_book_sha256": "a5cf0b402687b9448f6a73aad2d82a93a39dcb9001a97c60a32a1909b58f3204",
+  "source_sheet_member_sha256": "34945a2ce9c7be8fd893a96341febdc7610c69f39f65d21f52c8cd1830615307",
+  "qualifications": [
+    "Offline test-only comparison. No original observations are supplied to native recognition or used to rebuild runtime owners.",
+    "Source Chord identities use actual serialized Measure membership and shape-independent kind/Staff/bounds. Cross-run numeric Inter IDs are never joined. Ambiguous geometry is rejected.",
+    "Source Chord times/Voice IDs/shared Slot IDs are read through persisted Voice BEGIN-to-Stack-Slot references, not fresh original getters. BEGIN and CONTINUE are compared separately.",
+    "Source Measure expected/actual/excess and shared slots come from its serialized Stack association. Printed IDs may be pickup-renumbered; comparison uses physical System-local index.",
+    "Native diagnostic Stack entries lack owner scope fields. Their array order is associated with first-encounter unique (system,index) in actual native Measure diagnostic; no production owner is changed.",
+    "Incoming Chord membership and Voice member identities are compared as sets; serialized source does not preserve all original runtime encounter order.",
+    "Transient source Voice termination/kind/startingStaff, exact Chord duration/end getter values, callback identity and automatic recognition quality are not proven by the saved book. Native values must not be used to fill missing source fields."
+  ],
+  "source_runtime_fields_unavailable": [
+    "Voice.termination",
+    "Voice.kind",
+    "Voice.startingStaff",
+    "Chord.duration",
+    "Chord.endTime",
+    "Java runtime object identities"
+  ],
+  "pre_rhythm_membership_only": {
+    "source_chords": 106,
+    "native_before_rhythm_chords": 106,
+    "exact_owned_scope_kind_staff_bounds_membership_equal": true,
+    "rhythm_or_quality_equality_claimed": false
+  },
+  "status": "completed_on_current_v2",
+  "previous_rejection": {
+    "raw": {
+      "path": "/tmp/real-rest-slot-conflict-review-v1/not-ready-check.json",
+      "exists": true,
+      "bytes": 201100,
+      "sha256": "62b46d92d6d25f884ae41c79aa34da549b7ab453186d8b95254ce56ed71d91b1"
+    },
+    "compared": false,
+    "reason": "native ordinary rhythm failed; after_rhythm is rollback, not completed rhythm"
+  },
+  "runner": {
+    "path": "/tmp/real-rest-rhythm-continuation-draft/compare_final_rhythm.py",
+    "exists": true,
+    "bytes": 12347,
+    "sha256": "34bab3cb79c1cac9b107ea0f33f119ce3399170da1b5adda4b2f054b12221b3f"
+  },
+  "command": [
+    "python3",
+    "/tmp/real-rest-rhythm-continuation-draft/compare_final_rhythm.py",
+    "--original-book",
+    "/tmp/real-rest-original-v1/der-winter-gray.omr",
+    "--native",
+    "/tmp/real-rest-native-internal-rhythm-export.json",
+    "--output",
+    "/tmp/real-rest-rhythm-continuation-draft/final-comparison-raw.json"
+  ],
+  "exit_codes": {
+    "0": "All available serialized contracts equal",
+    "1": "Comparison completed with differences",
+    "2": "Failed/rolled-back native rhythm or invalid/ambiguous data; not comparable"
+  },
+  "quality_parity_claimed": false,
+  "compared": true,
+  "all_serialized_contracts_equal": true,
+  "completed_result": {
+    "path": "/tmp/real-rest-slot-conflict-review-v1/final-comparison-v2.json",
+    "exists": true,
+    "bytes": 399958,
+    "sha256": "46e8892a169c88e56a0c8bbe3f4793003d5f508078aa3af03507a66a9435eef8"
+  }
+}

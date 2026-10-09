@@ -2,9 +2,9 @@
 
 現在のゴールは、代表的な実譜面PNGから原版Audiverisと同等品質のMusicXMLをnative CLIで出力することです。周辺変換・一般編集/undo・project保存互換・認識に不要な全API再現は対象外です。[受入条件と残工程](docs/IMAGE-MUSICXML-ACCEPTANCE.md)。合成入力の成功だけで品質同等とは判断しません。
 
-## 現在の目標と移植台帳（2026-10-05）
+## 過去の目標と移植台帳（2026-10-05）
 
-UI表示を除く原Audiveris5.11の認識・解析・補正・保存・MusicXML出力機能の同等性が最終目標です。原版機能を省略する予定はありません。限定画像CLIは小段階の成果です。[実装済み/部分/未対応/GUIのみ除外と接続順](docs/PORT-STATUS.md)、[現段階CLI手順](docs/MUSICXML-LIMITED.md)。以下の個別記録は当時の境界・ソースSHAとして保持します。
+当時はUI表示を除く原Audiveris5.11の全機能移植を目標としていました。現在の終了条件は上記の画像認識品質に変更されています。限定画像CLIは小段階の成果です。[実装済み/部分/未対応/GUIのみ除外と接続順](docs/PORT-STATUS.md)、[現段階CLI手順](docs/MUSICXML-LIMITED.md)。以下の個別記録は当時の境界・ソースSHAとして保持します。
 
 直近の追加は、認識済み固定3/4 TimePairから小節長・6音（F♯を含む）をMusicXMLへ伝える縦経路です。[入力例と実行手順](docs/MUSICXML-LIMITED.md#recognized-34-header--musicxml)。続けて固定COMMON_TIMEの実glyph・HEADER競合除外・`symbol="common"`を8音の原版成功画像で接続しました。4/4の既存入力を保持し、他拍子・他clef等は台帳に残して段階的に接続します。
 

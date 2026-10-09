@@ -1,0 +1,29 @@
+{
+  "target_result": {
+    "path": "/tmp/real-slot-conflict-rest-v2/RESULT.json",
+    "exists": true,
+    "bytes": 3968,
+    "sha256": "80222e865b468f627c7adcdd4d5ed80af84a050faeee2ee0918d2987d4029732"
+  },
+  "runner": {
+    "path": "/tmp/run-real-slot-conflict-rest-v2.py",
+    "exists": true,
+    "bytes": 2724,
+    "sha256": "499dfc6e439a0aaefc6a15c8972b81d68200532025a6ab4dd26b751e72b8af28"
+  },
+  "console": {
+    "path": "/tmp/real-slot-conflict-rest-v2/console.log",
+    "exists": true,
+    "bytes": 1356,
+    "sha256": "94bb5397bcbb1a87b1086bac335562373681c3a6548ce16a5c5d3771263d0fe1"
+  },
+  "logged_completed_targets": 10,
+  "mixed_start_marker_confirmed": true,
+  "native_image_rerun_performed_by_this_script": false,
+  "status": "finished",
+  "exit_code": 0,
+  "unique_targets": 10,
+  "source_stable": true,
+  "elapsed_seconds": 629.1673284030112,
+  "overall_passed": true
+}

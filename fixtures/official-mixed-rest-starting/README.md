@@ -1,0 +1,23 @@
+# Ordinary mixed first-slot Voice creation
+
+Pinned-original saved-owner evidence, used only as assertions in the native same-image test. Native validation is recorded separately in the checkpoint evidence.
+
+Production change: retain the existing pending guard only when a parallel starting set contains a **measure rest**. An ordinary RestChord takes the same `Voice(chord, measure)` path as a HeadChord in pinned `MeasureRhythm.processStartingChords`; existing actual-owner `process_starting_chords` already implements the sorted per-Chord constructor followed by `setAndPushTime(0)` loop. No recognition selector, clock repair, fake Voice ID, or owner reconstruction is added.
+
+Test change: an optional cfg(test) observer matches actual System/Part/physical Measure and the complete selected Chord/member geometry against an independent source observation. Only after the complete test match does it compare all 11 actual measure Chords before and after, including exact durations, Slot numbers, manual status, Voice membership, and null/0/1/8 clocks. It checks native actual Chord storage/key/member identity, canonical Measure/Part/Staff owners, Slot Arc identity, relation IDs/manual/endpoints, and actual Voice owner Arcs. The source fixture is never a production input.
+
+The existing DerWinter internal continuation image test uses this helper. The runner requires no stale `/tmp/real-rest-mixed-starting-native.json` marker before the run and a newly created marker with `states_match=true` afterward. The marker is required to prove the bounded assertion ran; a silently unmatched geometry alone is not validation. The checkpoint evidence records the successful same-image target and its internal XML comparison. No second native image target is added.
+
+## Independent original observation
+
+`/tmp/real-rest-mixed-starting-original-v3/run.py` invokes the original private methods on actual objects loaded from the existing original saved book; it does not recognize the image again. Original preparation runs remove implicit tuplets → clear/detect interleaved rests → reset rhythm → build narrow/wide geometric Slots → build compound Slots, then calls the actual `processStartingChords` method once for each mixed case. `implicitTuplets=false` is read from the actual original runtime. This is a bounded saved-owner method observation, **not** a fresh whole-rhythm/source-quality equivalence claim.
+
+Exactly one mixed case is present: System 1, Part 2, physical Measure 5 (printed ID 4). An actual HeadChord at `[1235,626,15,71]` and ordinary ONE_16TH_REST RestChord at `[1233,770,16,36]` start Voice 1/HIGH/Staff 2 and Voice 5/LOW/Staff 3 at time 0. The same actual BeamGroup propagates its next HeadChord `[1275,628,15,74]` into Voice 1 at time 1/8. The remaining eight actual Chords retain null Voice/time. Expected duration remains 1/2; abnormal=false; termination and excess remain null. Source actual Chord, Staff, Part, Measure, Slot, member, relation and Voice-reference checks passed.
+
+`observed.json` is a bounded normalized projection of the successful 59,692-byte raw observation. Source IDs are used only inside extraction to validate same-run object references; test comparison joins independent runs by complete actual geometry. The raw observation and its hash remain in `/tmp/real-rest-mixed-starting-original-v3`; it is not replaced. The saved source book hash is unchanged. `extract_observation.py --input <raw-observed.json> --output <fixture.json>` independently reproduces the fixture bytes (verified with cmp); `MixedRestStartingProbe.java`, `original-run.py.txt`, `logback.xml`, and `PROVENANCE.json` retain source invocation details. Pinned source hashes are recorded separately in `SOURCE-HASHES.json`.
+
+Failed v1 and v2 observer attempts remain at their original `/tmp/real-rest-mixed-starting-original-v{1,2}` paths. v1 called absent `Voice.getMeasureRestChord`; v2 accidentally changed `Measure.getMeasureRestChords` to absent `getWholeChords`. v3 uses the actual original APIs `Voice.getWholeChord` and `Measure.getMeasureRestChords`. These failures do not constitute successful source observations, and their large logs are not copied.
+
+Parallel measure-rest starting remains pending. This source-only observation does not certify recognition quality; the separate checkpoint records native internal rhythm/export and its remaining XML differences.
+
+`original-run.py.txt` archives the exact historical one-off command wrapper; it is not a rerun entrypoint. Keep its original temporary output intact. Reproduction requires a fresh isolated output directory and the recorded original book/JAR.

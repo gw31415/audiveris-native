@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+"""Read current saved proof artifacts; compact them without running recognition or tests."""
+from pathlib import Path
+import datetime, hashlib, json, re, shutil
+D=Path(__file__).resolve().parent
+P=Path('/tmp/real-rest-mixed-starting-proposed-v1')
+S=Path('/tmp/real-rest-slot-conflict-review-v1')
+
+def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+def load(path):return json.loads(path.read_text())
+def save(name,value):(D/name).write_text(json.dumps(value,indent=2)+'\n')
+def ref(path):
+ path=Path(path)
+ return {'path':str(path),'exists':path.is_file(),**({'bytes':path.stat().st_size,'sha256':sha(path)}if path.is_file()else{})}
+
+shutil.copyfile(S/'compare_final_rhythm.py',D/'compare_final_rhythm.py')
+shutil.copyfile('/tmp/real-rest-mixed-starting-original-v3/PROVENANCE.json',D/'mixed-start-original-PROVENANCE.json')
+shutil.copyfile(P/'COMPACT-PROVENANCE.json',D/'mixed-start-COMPACT-PROVENANCE.json')
+shutil.copyfile(P/'SOURCE-HASHES.json',D/'mixed-start-SOURCE-HASHES.json')
+shutil.copyfile('/tmp/real-slot-conflict-v1/RESULT.json',D/'v1-target-RESULT.json')
+shutil.copyfile('/tmp/real-slot-conflict-v1/record-summary.json',D/'v1-internal-frontier.json')
+marker=load(Path('/tmp/real-rest-mixed-starting-native.json'))
+assert marker['states_match'] and marker['source_fixture_used_as_recognition_input'] is False
+assert marker['after']==marker['expected_after']
+summary={k:v for k,v in marker.items()if k not in ['before','after','expected_after']}
+summary['raw']=ref('/tmp/real-rest-mixed-starting-native.json')
+summary['state_sha256']={k:hashlib.sha256(json.dumps(marker[k],sort_keys=True,separators=(',',':')).encode()).hexdigest()for k in ['before','after','expected_after']}
+summary['chords_before']=len(marker['before']['chords']);summary['chords_after']=len(marker['after']['chords'])
+summary['before_voices']=marker['before']['voices']
+summary['after_voices']=[{**{k:v for k,v in voice.items()if k!='chords'},'chord_bounds':[c['bounds']for c in voice['chords']]}for voice in marker['after']['voices']]
+summary['after_assigned_chords']=[{k:c[k]for k in ['kind','bounds','staff','voice','time_offset','duration','slot']}for c in marker['after']['chords']if c['voice']is not None]
+summary['remaining_null_voice_and_time']=sum(c['voice']is None and c['time_offset']is None for c in marker['after']['chords'])
+summary['expected_before']=marker['before']['expected'];summary['expected_after']=marker['after']['expected']
+save('mixed-start-native-summary.json',summary)
+original=load(Path('/tmp/real-rest-mixed-starting-original-v3/observed.json'))
+assert original['implicit_tuplets']is False and len(original['mixed_starts'])==1
+save('mixed-start-original-summary.json',{'scope':original['scope'],'implicit_tuplets':False,'mixed_start_cases':1,'raw':ref('/tmp/real-rest-mixed-starting-original-v3/observed.json'),'normalized_fixture':ref(P/'after/fixtures/official-mixed-rest-starting/observed.json'),'failed_attempts_preserved':[{'path':'/tmp/real-rest-mixed-starting-original-v1','reason':'Observer called unavailable Voice.getMeasureRestChord; no successful observation.'},{'path':'/tmp/real-rest-mixed-starting-original-v2','reason':'Observer accidentally called unavailable Measure.getWholeChords; no successful observation.'}]})
+v1=load(Path('/tmp/real-slot-conflict-v1/RESULT.json'));log=Path('/tmp/real-slot-conflict-v1/console.log').read_text()
+assert v1['exit_code']==101 and '8 passed; 2 failed' in log
+save('v1-failures.json',{'result':'8 passed; 2 failed','exit_code':101,'elapsed_seconds':v1['elapsed_seconds'],'raw_console':ref('/tmp/real-slot-conflict-v1/console.log'),'failures':[{'test':'music_rookie_mapping::tests::owned_mapping_preserves_original_voice_members_and_unknown_times','reason':'Old observer NewVoiceProbe eagerly reads actives before private mapRookies; the source full mapChords returns before active lookup for an empty rookie set. Test expected eager actives [2] instead of the actual empty list.','resolution':'Only the assertion now checks empty actives/costs, null mapping/validation, and ok=true for this source early-return case. No clocks/owners are supplied by the probe.','fix_reference':ref('/tmp/slot-conflict-assertion-fix.patch')},{'test':'music_tuplets::tests::real_image_linked_six_callbacks_and_later_weak_purge_match_original','reason':'Native ordinary Page rhythm reached musicxml_starting_parallel_voice_mapping_pending at an ordinary Head + short-rest first-slot start.','resolution':'Narrow ordinary-rest allowance, preserving parallel measure-rest guard; source actual saved-owner call and same-image cfg(test) boundary comparison added.','frontier':load(Path('/tmp/real-slot-conflict-v1/record-summary.json'))}]})
+v2dir=Path('/tmp/real-slot-conflict-rest-v2');result=v2dir/'RESULT.json';console=v2dir/'console.log';text=console.read_text()
+status={'target_result':ref(result),'runner':ref('/tmp/run-real-slot-conflict-rest-v2.py'),'console':ref(console),'logged_completed_targets':len(re.findall(r'^test .* \.\.\. ok$',text,re.M)),'mixed_start_marker_confirmed':True,'native_image_rerun_performed_by_this_script':False}
+if result.exists():
+ v2=load(result);status.update({'status':'finished','exit_code':v2['exit_code'],'unique_targets':v2['unique_targets'],'source_stable':v2['source_stable'],'elapsed_seconds':v2['elapsed_seconds'],'overall_passed':v2['exit_code']==0})
+ shutil.copyfile(result,D/'v2-target-RESULT.json')
+else:status.update({'status':'running_or_result_not_yet_recorded','overall_passed':None,'qualification':'A passing intermediate boundary marker is not the target RESULT. No complete-run success claimed.'})
+save('v2-status.json',status)
+checks=load(Path('/tmp/real-slot-conflict-rest-v2-checks.json'));cli=load(Path('/tmp/real-slot-conflict-rest-v2-cli-regression/RESULTS.json'));rational=load(Path('/tmp/real-slot-conflict-rest-v2-rational-check.json'))
+assert all(c['exit_code']==0 for c in checks)
+assert cli['automatic_events']==63 and cli['declared_correction']['events']==8
+assert all(row['previous_XML_bytes']=='identical' and row['XSD']=='passed'for row in cli['automatic_inputs'])
+assert cli['declared_correction']['previous_XML_bytes']=='identical' and cli['declared_correction']['XSD']=='passed'
+assert rational['bytes_identical'] and rational['XSD']=='passed'
+save('regression-summary.json',{'checks':checks,'automatic_images':len(cli['automatic_inputs']),'automatic_events':63,'declared_correction_events':8,'previous_XML_bytes':'identical','XSD':'passed','exact_7_64':rational,'raw_cli':ref('/tmp/real-slot-conflict-rest-v2-cli-regression/RESULTS.json'),'raw_rational':ref('/tmp/real-slot-conflict-rest-v2-rational-check.json')})
+source=load(S/'source-final-rhythm.json');old=load(S/'not-ready-check.json')
+save('final-rhythm-comparison-plan.json',{'source_baseline':ref(S/'source-final-rhythm.json'),'source_counts':{k:len(v)for k,v in source['source'].items()},'source_book_sha256':source['source_book_sha256'],'source_sheet_member_sha256':source['source_sheet_member_sha256'],'qualifications':source['qualifications'],'source_runtime_fields_unavailable':source['source_runtime_fields_unavailable'],'pre_rhythm_membership_only':load(S/'membership-only-check.json'),'status':'not_run_on_current_v2','previous_rejection':{'raw':ref(S/'not-ready-check.json'),'compared':old['compared'],'reason':old['comparison_blocker']},'runner':ref(D/'compare_final_rhythm.py'),'command':['python3',str(D/'compare_final_rhythm.py'),'--original-book','/tmp/real-rest-original-v1/der-winter-gray.omr','--native','/tmp/real-rest-native-internal-rhythm-export.json','--output',str(D/'final-comparison-raw.json')],'exit_codes':{'0':'All available serialized contracts equal','1':'Comparison completed with differences','2':'Failed/rolled-back native rhythm or invalid/ambiguous data; not comparable'},'quality_parity_claimed':False})
+final_path=S/'final-comparison-v2.json'
+if final_path.exists():
+ final=load(final_path)
+ compact={k:v for k,v in final.items() if k not in ['source','native']}
+ compact['raw']=ref(final_path)
+ save('final-rhythm-comparison-summary.json',compact)
+ plan=load(D/'final-rhythm-comparison-plan.json')
+ plan['status']='completed_on_current_v2'
+ plan['compared']=final['compared']
+ plan['all_serialized_contracts_equal']=final['all_serialized_contracts_equal']
+ plan['completed_result']=ref(final_path)
+ save('final-rhythm-comparison-plan.json',plan)
+xml_path=Path('/tmp/real-rest-native-internal.musicxml')
+internal=load(Path('/tmp/real-rest-native-internal-rhythm-export.json'))
+if internal.get('xml_written'):
+ assert internal['public_factory_admission_checked'] is False and internal['quality_accepted'] is False
+ report={k:v for k,v in internal.items()if k not in ['before_rhythm','after_rhythm','export','rhythm']}
+ report['raw']=ref('/tmp/real-rest-native-internal-rhythm-export.json')
+ report['xml']=ref(xml_path)
+ save('v2-internal-export-summary.json',report)
+ shutil.copyfile(xml_path,D/'der-winter-native-internal.musicxml')
+ comparison=load(Path('/tmp/real-rest-native-internal-v2-vs-original.json'))
+ save('xml-vs-original-summary.json',{'raw':ref('/tmp/real-rest-native-internal-v2-vs-original.json'),'quality_accepted':comparison['quality_accepted'],'note_voice_identifiers_exact_on_this_page':comparison['note_voice_identifiers_exact_on_this_page'],'relation_comparison_scope':comparison['relation_comparison_scope'],'categories':{k:{a:b for a,b in row.items()if a not in ['missing','extra']}for k,row in comparison['categories'].items()},'direction_differences':{k:comparison['categories'][k]for k in ['directions','direction_sounds']}})
+ structure=load(Path('/tmp/real-rest-native-internal-v2-structure.json'))
+ save('independent-truth-structure-summary.json',{'raw':ref('/tmp/real-rest-native-internal-v2-structure.json'),'schema':structure['schema'],'truth_sha256':structure['truth_sha256'],'recognized_sha256':structure['recognized_sha256'],'quality_accepted':structure['quality_accepted'],'qualification':structure['qualification'],'scope':structure['scope'],'not_scored':structure['not_scored'],'categories':{k:{a:b for a,b in row.items()if a not in ['missing','extra']}for k,row in structure['categories'].items()}})
+ shutil.copyfile('/tmp/real-rest-native-internal-v2-XSD.json',D/'internal-XML-XSD.json')
+proxy=Path('/tmp/real-rest-native-internal-proxymusic-v2')
+if (proxy/'PROVENANCE.json').exists() and (proxy/'read.json').exists():
+ provenance=load(proxy/'PROVENANCE.json')
+ save('ProxyMusic.json',{'read':load(proxy/'read.json'),'provenance':provenance,'raw_read':ref(proxy/'read.json'),'raw_provenance':ref(proxy/'PROVENANCE.json')})
+external=[Path('/tmp/real-rest-mixed-starting-original-v3')/x for x in ['MixedRestStartingProbe.java','run.py','logback.xml','observed.json','PROVENANCE.json']]+[P/x for x in ['extract_observation.py','after/fixtures/official-mixed-rest-starting/observed.json']]+[S/x for x in ['captured-correspondence.json','observed.json','source-final-rhythm.json','compare_final_rhythm.py','membership-only-check.json','not-ready-check.json']]+[Path('/tmp/real-rest-original-v1/der-winter-gray.omr'),Path('/tmp/real-rest-mixed-starting-native.json'),v2dir/'RESULT.json',v2dir/'console.log',Path('/tmp/real-rest-native-internal-rhythm-export.json')]
+external += [final_path, Path('/tmp/real-rest-native-internal-v2-vs-original.json'), Path('/tmp/real-rest-native-internal-v2-structure.json'), Path('/tmp/real-rest-native-internal-v2-XSD.json'), xml_path, proxy/'PROVENANCE.json', proxy/'read.json']
+save('MANIFEST.json',{'generated_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'/tmp-only compact checkpoint draft; repository unchanged. Raw historical output retained at original paths; no duplicate raw graph/archive.','copied_or_generated':{str(f.relative_to(D)):{'bytes':f.stat().st_size,'sha256':sha(f)}for f in sorted(D.iterdir())if f.is_file()and f.name!='MANIFEST.json'},'external_references':[ref(p)for p in external]})
+print(json.dumps({'draft':str(D),'v2_status':status['status'],'v2_passed':status['overall_passed'],'mixed_start_states_match':True}))

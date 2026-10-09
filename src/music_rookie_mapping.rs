@@ -637,36 +637,29 @@ impl Context<'_> {
                 times.entry(t).or_default().push(id);
             }
         }
-        if !self.read_grouped_slot_times(slot)? {
-            #[cfg(test)]
-            {
-                let measure = &self.measures[self.measure_index];
-                std::fs::write(
-                    "/tmp/real-mapping-conflict-before-rollback.json",
-                    serde_json::to_vec_pretty(&json!({
-                        "measure":{"vector_index":self.measure_index,"system":measure.system,
-                            "part":measure.part,"index":measure.index,
-                            "expected":crate::music_time::format_fraction(self.expected),
-                            "abnormal":measure.timing.abnormal},
-                        "compound":{"key":slot.key,"id":slot.id,
-                            "chord_ids":slot.chord_ids,"members":slot.members},
-                        "narrow_clocks":self.slot_times.projection(slot)?,
-                        "graph":self.graph.snapshot(),
-                        "voices":crate::music_voices::projection(self.voices,self.measures),
-                        "before_transaction_rollback":true
-                    }))
-                    .unwrap(),
-                )
-                .unwrap();
-            }
-            return Err("music_mapping_implicit_tuplet_or_conflicting_slot_times_pending".into());
-        }
+        // In nonimplicit mode, mapChords reports an inconsistent grouped read
+        // without changing either clock. MeasureRhythm continues to finalCheck.
+        let grouped_times_consistent = self.read_grouped_slot_times(slot)?;
         let rookies = slot
             .chord_ids
             .iter()
             .copied()
             .filter(|&id| node(&snapshot, id).unwrap()["voice"].is_null())
             .collect::<Vec<_>>();
+        if rookies.is_empty() {
+            let after = slot
+                .chord_ids
+                .iter()
+                .map(|&id| {
+                    let n = node(&snapshot, id).unwrap();
+                    json!({"chord_id":id,"time_offset":n["time_offset"],"voice":n["voice"]})
+                })
+                .collect::<Vec<_>>();
+            return Ok((
+                json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_fraction(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":[],"costs":[],"mapping":null,"ok":grouped_times_consistent,"after":after,"validation":null}),
+                rookies,
+            ));
+        }
         let pairs = |kind: &str| {
             rookies
                 .iter()
@@ -844,7 +837,7 @@ impl Context<'_> {
             })
             .collect::<Vec<_>>();
         Ok((
-            json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_fraction(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":actives,"costs":costs,"mapping":result,"ok":true,"after":after,"validation":validation}),
+            json!({"slot_id":slot.id,"known_times":times.iter().map(|(t,ids)|json!({"time":crate::music_time::format_fraction(*t),"chord_ids":ids})).collect::<Vec<_>>(),"rookies":rookies,"actives":actives,"costs":costs,"mapping":result,"ok":grouped_times_consistent,"after":after,"validation":validation}),
             rookies,
         ))
     }
@@ -1579,6 +1572,18 @@ mod tests {
             .unwrap();
             let ordinal = |id| chords.iter().position(|c| c.id == id).unwrap();
             for key in ["rookies", "actives"] {
+                // NewVoiceProbe eagerly reads actives before invoking private
+                // mapRookies. Full mapChords returns earlier when already owned.
+                if key == "actives"
+                    && !unknown_active
+                    && case["input"]["rookies"].as_array().unwrap().is_empty()
+                {
+                    assert_eq!(step["actives"], json!([]));
+                    assert_eq!(step["costs"], json!([]));
+                    assert!(step["mapping"].is_null() && step["validation"].is_null());
+                    assert_eq!(step["ok"], true);
+                    continue;
+                }
                 assert_eq!(
                     json!(
                         step[key]
@@ -1945,14 +1950,20 @@ mod tests {
         }
     }
     #[test]
-    fn grouped_known_clocks_are_member_scoped_and_empty_reads_preserve_them() {
+    fn grouped_known_conflicts_report_false_and_continue_without_rewriting_clocks() {
         let oracle: Value = serde_json::from_str(include_str!(
             "../fixtures/official-grouped-slot-clock/observed.json"
         ))
         .unwrap();
         let mut owner = image_owner();
         let mi = 1;
-        for case in oracle["controls"].as_array().unwrap() {
+        let cases = oracle["controls"].as_array().unwrap();
+        for (case, unrelated_voice) in cases.iter().map(|c| (c, false)).chain(
+            cases
+                .iter()
+                .filter(|c| c["name"] == "conflicting-known-times-in-one-member")
+                .map(|c| (c, true)),
+        ) {
             reset_owner(&mut owner);
             let mut chords = owner
                 .chords
@@ -1995,6 +2006,39 @@ mod tests {
                     time,
                 )
                 .unwrap();
+            }
+            if unrelated_voice {
+                let other = crate::music_voices::create_voice(
+                    &mut owner.owner.graph,
+                    &mut owner.voices,
+                    &owner.measures,
+                    chords[2],
+                )
+                .unwrap();
+                let actual = owner.owner.graph.snapshot();
+                let member_ids = actual["relations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter(|e| e["kind"] == "Containment" && e["source"] == chords[2].id)
+                    .map(|e| e["target"].as_u64().unwrap() as usize)
+                    .collect::<Vec<_>>();
+                assert!(!member_ids.is_empty());
+                for id in member_ids {
+                    let mut head = node(&actual, id).unwrap().clone();
+                    assert_eq!(head["kind"], "HeadInter");
+                    head["shape"] = json!("NOTEHEAD_DIAMOND_FILLED");
+                    let key = serde_json::from_value(head["origin"].clone()).unwrap();
+                    owner.owner.graph.vertex(key, head, false).unwrap();
+                }
+                // This is a valid original head shape with an unported native
+                // duration. No current rookie needs this unrelated Voice read.
+                assert_eq!(
+                    crate::music_voices::last_end_time(&owner.owner.graph, &owner.voices[other])
+                        .err()
+                        .as_deref(),
+                    Some("musicxml_note_duration_shape_pending:NOTEHEAD_DIAMOND_FILLED")
+                );
             }
             let members = case["input"]["members"]
                 .as_array()
@@ -2056,7 +2100,13 @@ mod tests {
                 .find(|n| n["kind"] == "ClefInter" && n["origin"]["system"] == 1)
                 .unwrap();
             let lifetime = crate::music_voice_lifetime::Lifetime::default();
-            let ok = Context {
+            let voice_identities = owner
+                .voices
+                .iter()
+                .map(|v| v.identity.clone())
+                .collect::<Vec<_>>();
+            let voices_before = crate::music_voices::projection(&owner.voices, &owner.measures);
+            let step = Context {
                 graph: &mut owner.owner.graph,
                 voices: &mut owner.voices,
                 measures: &mut owner.measures,
@@ -2071,17 +2121,33 @@ mod tests {
                 lifetime: &lifetime,
                 slot_times: &mut slot_times,
             }
-            .read_grouped_slot_times(&compounds[0])
+            .map_slot(&compounds[0])
             .unwrap();
             assert_eq!(
-                json!({"ok":ok,"members":slot_times.projection(&compounds[0]).unwrap()}),
+                json!({"ok":step["ok"],"members":slot_times.projection(&compounds[0]).unwrap()}),
                 json!({"ok":case["output"]["ok"],"members":case["output"]["members"]}),
                 "{}",
                 case["name"]
             );
-            assert_eq!(case["output"]["remaining_rookies"], json!([]));
-            assert!(case["output"]["mapping"].is_null());
+            assert_eq!(step["rookies"], case["output"]["remaining_rookies"]);
+            assert_eq!(step["actives"], json!([]));
+            assert_eq!(step["costs"], json!([]));
+            assert_eq!(step["mapping"], case["output"]["mapping"]);
+            assert!(step["validation"].is_null());
             assert_eq!(case["output"]["black"], json!([]));
+            assert_eq!(owner.owner.graph.snapshot(), snapshot);
+            assert_eq!(
+                crate::music_voices::projection(&owner.voices, &owner.measures),
+                voices_before
+            );
+            assert_eq!(owner.voices.len(), voice_identities.len());
+            assert!(
+                owner
+                    .voices
+                    .iter()
+                    .zip(&voice_identities)
+                    .all(|(a, b)| std::sync::Arc::ptr_eq(&a.identity, b))
+            );
         }
     }
     #[test]

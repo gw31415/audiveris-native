@@ -34,12 +34,14 @@
 
 ## 現在の次依存
 
-[null音部記号・論理調号・短い休符](../evidence/real-null-pitch-export/README.md) を
-実LINKS所有から接続した。Der Winterの20 Headは物理Clef/Keyがnullのまま、
-数値G基準とexport時の継承調号を別々に保持する。内部rhythmは短い休符の次の
-Slot時刻競合で停止し、XML未出力。原版は3/8対1/2の競合を保持したまま続行し、
-Voice超過1/8を記録している。その実中間状態、PAGE pickup、未接続記号lifecycleと
-Slur認識を順に比較する。公開CLIの追加形状guardと品質falseは維持する。
+[通常休符・非致命的Slot競合](../evidence/real-rest-rhythm-continuation/README.md) を
+実LINKS所有から接続した。内部Der Winterは124イベントを出力し、原版保存状態の
+9 Stack・18 Measure・27 Voice・106 Chordと、XMLの全音符/休符/声部群が一致。
+XSDと独立readerも成功した。独立正解とのイベント一致は102/124、休符9/9で
+原版と同じだが、弱起小節番号・余分なp方向記号1件・欠けたSlur6本が残る。
+次は実共有StackのPAGE弱起処理、未接続記号lifecycleとSlur認識を比較する。
+公開CLIの追加形状guardと品質falseは維持する。内部経路は公開admission未検証であり、
+このXMLを通常画像CLIの受入成功に読み替えない。
 
 ## 最初の実証と切断点
 

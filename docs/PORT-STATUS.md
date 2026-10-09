@@ -16,12 +16,13 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
 現在の通常画像CLIはAnLauraの追加7形状、Der Winterの追加9形状でguardされ、
-両実ページのMusicXMLは未出力・品質受入未達です。内部の保持済み実所有経路では、
-null Clefの数値音高と直接absolute API、論理Part/staff調号継承、短い休符音価を接続。
-20実Headと原版268 scalar制御を比較し、短い休符の次でSlot時刻競合へ到達しました。
-失敗時は実Chord/Measure/Stack・Voice/Slotと時計を戻します。原版は同種の競合を
-非致命的に扱い、超過1/8を保持してexportするため、その中間状態が次の比較です。
-直近の作業順は [保存NEXT依存](../evidence/real-null-pitch-export/NEXT-DEPENDENCY.md) を使います。
+両実ページの公開MusicXMLは未出力・品質受入未達です。内部の保持済み実所有経路では、
+通常休符の並行開始と非致命的なSlot時計競合を接続し、Der Winterの全124イベントを
+MusicXMLへ出力しました。原版保存状態の9 Stack・18 Measure・27 Voice・106 Chordが
+一致し、XMLの全イベント・声部群も一致。XSDと独立ProxyMusic readerは成功しました。
+原版との差は弱起小節番号、余分なp方向記号1件、欠けたSlur6本です。独立正解の
+イベント一致は102/124で原版と同じですが、品質同等とは判定しません。
+直近の作業順は [保存NEXT依存](../evidence/real-rest-rhythm-continuation/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

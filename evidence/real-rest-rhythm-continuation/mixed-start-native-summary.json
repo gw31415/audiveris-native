@@ -1,0 +1,112 @@
+{
+  "actual_Chord_Staff_Part_Measure_Slot_and_relation_identities_retained": true,
+  "actual_Voice_owners_verified": true,
+  "part": 2,
+  "physical_measure_index": 5,
+  "schema": "audiveris-native.mixed-rest-starting-comparison.v1",
+  "source_fixture_used_as_recognition_input": false,
+  "source_observation_sha256": "e86d769c7310018bf7bcc79b3dcceb7531e273ba3e0c9eac98d994b00f091d99",
+  "states_match": true,
+  "system": 1,
+  "raw": {
+    "path": "/tmp/real-rest-mixed-starting-native.json",
+    "exists": true,
+    "bytes": 26530,
+    "sha256": "8756d43cfd5952f9bef2bf1f64e0f62e59b13c96bc70f47b329961757036720a"
+  },
+  "state_sha256": {
+    "before": "85839aced8f8d89fe4bb66c841b969523c02f466bab98b5c99edfd97f0924477",
+    "after": "5bcc319f31053154f8584695d97c043d798e91d07eabdf3241fdd174df15a9df",
+    "expected_after": "5bcc319f31053154f8584695d97c043d798e91d07eabdf3241fdd174df15a9df"
+  },
+  "chords_before": 11,
+  "chords_after": 11,
+  "before_voices": [],
+  "after_voices": [
+    {
+      "excess": null,
+      "id": 1,
+      "is_measure_rest": false,
+      "kind": "HIGH",
+      "starting_staff": 2,
+      "termination": null,
+      "chord_bounds": [
+        [
+          1235,
+          626,
+          15,
+          71
+        ],
+        [
+          1275,
+          628,
+          15,
+          74
+        ]
+      ]
+    },
+    {
+      "excess": null,
+      "id": 5,
+      "is_measure_rest": false,
+      "kind": "LOW",
+      "starting_staff": 3,
+      "termination": null,
+      "chord_bounds": [
+        [
+          1233,
+          770,
+          16,
+          36
+        ]
+      ]
+    }
+  ],
+  "after_assigned_chords": [
+    {
+      "kind": "RestChordInter",
+      "bounds": [
+        1233,
+        770,
+        16,
+        36
+      ],
+      "staff": 3,
+      "voice": 5,
+      "time_offset": "0",
+      "duration": "1/16",
+      "slot": 1
+    },
+    {
+      "kind": "HeadChordInter",
+      "bounds": [
+        1235,
+        626,
+        15,
+        71
+      ],
+      "staff": 2,
+      "voice": 1,
+      "time_offset": "0",
+      "duration": "1/8",
+      "slot": 1
+    },
+    {
+      "kind": "HeadChordInter",
+      "bounds": [
+        1275,
+        628,
+        15,
+        74
+      ],
+      "staff": 2,
+      "voice": 1,
+      "time_offset": "1/8",
+      "duration": "1/8",
+      "slot": 3
+    }
+  ],
+  "remaining_null_voice_and_time": 8,
+  "expected_before": "1/2",
+  "expected_after": "1/2"
+}
