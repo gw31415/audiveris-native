@@ -3,6 +3,8 @@
 //! Rest/TimeWhole, including incoming zero-target augmentation support; no frozen conflicts.
 use crate::{
     beam_dispatch,
+    music_measures::{Chord, Measure},
+    music_voices::Voice,
     shared_sig::{Graph, Key, Phase},
 };
 use audiveris_staff_removal::Orientation;
@@ -91,8 +93,71 @@ fn weak_rest_flag_exclusion(n: &Value, e: &Value, nodes: &[Value]) -> bool {
         && flag["glyph_id"] == n["glyph_id"]
         && flag["glyph"] == n["glyph"]
 }
+/// Preserve this bounded reducer's existing selection order while deleting an
+/// actual Rest through Staff/Measure/Voice owners before relation callbacks.
+pub(crate) fn reduce_owned(
+    graph: &mut Graph,
+    measures: &[Measure],
+    chords: &mut Vec<Chord>,
+    voices: &mut Vec<Voice>,
+) -> Result<Value, String> {
+    let mut next = graph.clone();
+    let mut next_chords = chords.clone();
+    let mut next_voices = voices.clone();
+    let mut retired = Vec::new();
+    let mut lifecycle = Vec::new();
+    let mut report = reduce_with(&mut next, |graph, key| {
+        if graph.retained_inter(key)?.0["kind"] == "RestInter" {
+            let removed = graph.remove_first_weak_rest(
+                key,
+                measures,
+                &mut next_chords,
+                &mut next_voices,
+                |actual, _chords, _voices, event| {
+                    lifecycle.push(json!({"stage":event.stage.as_str(),
+                        "inter":event.inter,"inter_id":actual.id(event.inter),
+                        "relation_id":event.relation_id}));
+                    #[cfg(test)]
+                    owned_image_tests::record(actual, measures, _chords, _voices, event);
+                    Ok(())
+                },
+            )?;
+            for removed_key in removed {
+                if removed_key.phase == Phase::Chord {
+                    retired.push(
+                        graph
+                            .id(removed_key)
+                            .ok_or("music_symbol_retired_Chord_required")?,
+                    );
+                }
+            }
+            Ok(())
+        } else {
+            graph.remove_music_inter(key)
+        }
+    })?;
+    report["removed_owned_chord_ids"] = json!(retired);
+    report["owned_rest_removal_lifecycle"] = json!(lifecycle);
+    *graph = next;
+    *chords = next_chords;
+    *voices = next_voices;
+    Ok(report)
+}
+
+/// Legacy scalar graphs have no factory Staff/Measure owners. Registered
+/// recognition Rests cannot use this path: Graph rejects the generic removal.
+#[cfg(test)]
 pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
     let mut next = graph.clone();
+    let report = reduce_with(&mut next, Graph::remove_music_inter)?;
+    *graph = next;
+    Ok(report)
+}
+
+fn reduce_with(
+    graph: &mut Graph,
+    mut remove: impl FnMut(&mut Graph, Key) -> Result<(), String>,
+) -> Result<Value, String> {
     let initial = graph.snapshot();
     let nodes = initial["inters"]
         .as_array()
@@ -145,7 +210,7 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
             if a["frozen"] == true || b["frozen"] == true {
                 return Err("music_symbol_frozen_overlap_pending".into());
             }
-            let snap = next.snapshot();
+            let snap = graph.snapshot();
             if snap["relations"].as_array().unwrap().iter().any(|e| {
                 e["kind"] == "Exclusion"
                     && ((e["source"] == a["id"] && e["target"] == b["id"])
@@ -153,7 +218,7 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
             }) {
                 continue;
             }
-            next.relations(
+            graph.relations(
                 ak.system,
                 Phase::Symbol,
                 vec![(ak, bk, json!({"kind":"Exclusion","cause":"OVERLAP"}))],
@@ -171,19 +236,19 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
             .ok_or("music_links_grade_required")?;
         let mut data = (*n).clone();
         data["contextual_grade"] = json!(grade);
-        next.vertex(key(n)?, data, false)?;
+        graph.vertex(key(n)?, data, false)?;
         grades.push(grade);
     }
     let mut weak = Vec::new();
     for (n, grade) in symbols.iter().zip(grades) {
         if grade < 0.5 && n["frozen"] != true {
-            next.remove_music_inter(key(n)?)?;
+            remove(graph, key(n)?)?;
             weak.push(n["id"].clone());
         }
     }
     let mut removed = Vec::new();
     loop {
-        let snap = next.snapshot();
+        let snap = graph.snapshot();
         let nodes = snap["inters"].as_array().unwrap();
         let mut best: Option<(&Value, f64)> = None;
         for e in snap["relations"]
@@ -222,10 +287,9 @@ pub(crate) fn reduce(graph: &mut Graph) -> Result<Value, String> {
             } else {
                 b
             };
-        next.remove_music_inter(key(weaker)?)?;
+        remove(graph, key(weaker)?)?;
         removed.push(weaker["id"].clone());
     }
-    *graph = next;
     Ok(
         json!({"overlap_exclusions_inserted":overlaps,"removed_weak_symbol_ids":weak,"removed_conflict_symbol_ids":removed,"scope":"Rest/TimeWhole physical overlaps and incoming zero-target augmentation support, other support/frozen conflicts pending; original strict best-grade exclusion order; containing empty chords cleaned by owner","full_LINKS_complete":false}),
     )
@@ -382,3 +446,6 @@ mod tests {
         assert_eq!(graph.snapshot(), before);
     }
 }
+
+#[cfg(test)]
+pub(crate) mod owned_image_tests;

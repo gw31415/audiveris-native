@@ -1,0 +1,1619 @@
+{
+  "common_mixed_first_purge_admitted": false,
+  "events": [
+    {
+      "actual_Chord_in_Measure": true,
+      "actual_Voices": [],
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 33,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": null,
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "StaffRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 33,
+        "phase": "CHORD",
+        "system": 1
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": {
+        "bounds": [
+          1005,
+          464,
+          20,
+          19
+        ],
+        "id": 794,
+        "key": {
+          "local": 33,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [
+          757
+        ],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "MeasureRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 33,
+        "phase": "CHORD",
+        "system": 1
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": {
+        "id": 1789,
+        "kind": "Containment",
+        "source": 794,
+        "system_id": 1,
+        "target": 757
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1005,
+          464,
+          20,
+          19
+        ],
+        "id": 794,
+        "key": {
+          "local": 33,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "EdgeRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 33,
+        "phase": "CHORD",
+        "system": 1
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1005,
+          464,
+          20,
+          19
+        ],
+        "id": 794,
+        "key": {
+          "local": 33,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "VertexRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1005,
+        464,
+        20,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 33,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1005,
+          464,
+          20,
+          19
+        ],
+        "id": 794,
+        "key": {
+          "local": 33,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "VertexRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": true,
+      "actual_Voices": [],
+      "bounds": [
+        1336,
+        464,
+        16,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 66,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": null,
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "StaffRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1336,
+        464,
+        16,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 34,
+        "phase": "CHORD",
+        "system": 1
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": {
+        "bounds": [
+          1336,
+          464,
+          16,
+          19
+        ],
+        "id": 795,
+        "key": {
+          "local": 34,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [
+          790
+        ],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "MeasureRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1336,
+        464,
+        16,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 34,
+        "phase": "CHORD",
+        "system": 1
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": {
+        "id": 1790,
+        "kind": "Containment",
+        "source": 795,
+        "system_id": 1,
+        "target": 790
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1336,
+          464,
+          16,
+          19
+        ],
+        "id": 795,
+        "key": {
+          "local": 34,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "EdgeRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1336,
+        464,
+        16,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 34,
+        "phase": "CHORD",
+        "system": 1
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1336,
+          464,
+          16,
+          19
+        ],
+        "id": 795,
+        "key": {
+          "local": 34,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "VertexRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1336,
+        464,
+        16,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 66,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": true,
+      "relation": {
+        "dx": 0.7272727272727273,
+        "dy": 0.0,
+        "grade": 1.0,
+        "id": 1838,
+        "kind": "AugmentationRelation",
+        "profile": 1,
+        "source": 874,
+        "source_ratio": 4.0,
+        "system_id": 1,
+        "target": 790,
+        "target_ratio": 1.0
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1336,
+          464,
+          16,
+          19
+        ],
+        "id": 795,
+        "key": {
+          "local": 34,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "EdgeRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1336,
+        464,
+        16,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 66,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 1,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1336,
+          464,
+          16,
+          19
+        ],
+        "id": 795,
+        "key": {
+          "local": 34,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "VertexRemoved",
+      "system": 1
+    },
+    {
+      "actual_Chord_in_Measure": true,
+      "actual_Voices": [],
+      "bounds": [
+        215,
+        956,
+        18,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 2,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": null,
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "StaffRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        215,
+        956,
+        18,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 36,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": {
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "id": 864,
+        "key": {
+          "local": 36,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 4,
+        "member_ids": [
+          797
+        ],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "MeasureRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        215,
+        956,
+        18,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 36,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": {
+        "id": 1828,
+        "kind": "Containment",
+        "source": 864,
+        "system_id": 2,
+        "target": 797
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "id": 864,
+        "key": {
+          "local": 36,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 4,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "EdgeRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        215,
+        956,
+        18,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 36,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "id": 864,
+        "key": {
+          "local": 36,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 4,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        215,
+        956,
+        18,
+        19
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 2,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "id": 864,
+        "key": {
+          "local": 36,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 4,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "ONE_16TH_REST",
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": true,
+      "actual_Voices": [],
+      "bounds": [
+        1116,
+        958,
+        18,
+        17
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 45,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": null,
+      "same_actual_Staff": true,
+      "shape": "EIGHTH_REST",
+      "stage": "StaffRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1116,
+        958,
+        18,
+        17
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 37,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": {
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "id": 865,
+        "key": {
+          "local": 37,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [
+          840
+        ],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "MeasureRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1116,
+        958,
+        18,
+        17
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 37,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": {
+        "id": 1829,
+        "kind": "Containment",
+        "source": 865,
+        "system_id": 2,
+        "target": 840
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "id": 865,
+        "key": {
+          "local": 37,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "EdgeRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1116,
+        958,
+        18,
+        17
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 37,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "id": 865,
+        "key": {
+          "local": 37,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1116,
+        958,
+        18,
+        17
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 45,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "id": 865,
+        "key": {
+          "local": 37,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "EIGHTH_REST",
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": true,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        879,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 51,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": null,
+      "same_actual_Staff": true,
+      "shape": "QUARTER_REST",
+      "stage": "StaffRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        879,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 38,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "id": 866,
+        "key": {
+          "local": 38,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [
+          846
+        ],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "MeasureRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        879,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 38,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": {
+        "id": 1830,
+        "kind": "Containment",
+        "source": 866,
+        "system_id": 2,
+        "target": 846
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "id": 866,
+        "key": {
+          "local": 38,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "EdgeRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        879,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 38,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "id": 866,
+        "key": {
+          "local": 38,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        879,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 51,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": true,
+      "relation": {
+        "cause": "OVERLAP",
+        "id": 1816,
+        "kind": "Exclusion",
+        "source": 845,
+        "system_id": 2,
+        "target": 846
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "id": 866,
+        "key": {
+          "local": 38,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "QUARTER_REST",
+      "stage": "EdgeRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        879,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 51,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 4,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "id": 866,
+        "key": {
+          "local": 38,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "QUARTER_REST",
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": true,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        1022,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 53,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 5,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": null,
+      "same_actual_Staff": true,
+      "shape": "QUARTER_REST",
+      "stage": "StaffRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        1022,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 39,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 5,
+      "registered": true,
+      "relation": null,
+      "removed": false,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "id": 867,
+        "key": {
+          "local": 39,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 7,
+        "member_ids": [
+          848
+        ],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "MeasureRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        1022,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 39,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 5,
+      "registered": true,
+      "relation": {
+        "id": 1831,
+        "kind": "Containment",
+        "source": 867,
+        "system_id": 2,
+        "target": 848
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "id": 867,
+        "key": {
+          "local": 39,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 7,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "EdgeRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        1022,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 39,
+        "phase": "CHORD",
+        "system": 2
+      },
+      "kind": "RestChordInter",
+      "manual": false,
+      "raw_staff": 5,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "id": 867,
+        "key": {
+          "local": 39,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 7,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": null,
+      "stage": "VertexRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        1022,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 53,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 5,
+      "registered": true,
+      "relation": {
+        "cause": "OVERLAP",
+        "id": 1818,
+        "kind": "Exclusion",
+        "source": 847,
+        "system_id": 2,
+        "target": 848
+      },
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "id": 867,
+        "key": {
+          "local": 39,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 7,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "QUARTER_REST",
+      "stage": "EdgeRemoved",
+      "system": 2
+    },
+    {
+      "actual_Chord_in_Measure": false,
+      "actual_Voices": [],
+      "bounds": [
+        1122,
+        1022,
+        10,
+        32
+      ],
+      "chord_raw_slot": null,
+      "chord_raw_time_offset": null,
+      "chord_raw_voice": null,
+      "key": {
+        "local": 53,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "kind": "RestInter",
+      "manual": false,
+      "raw_staff": 5,
+      "registered": false,
+      "relation": null,
+      "removed": true,
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "id": 867,
+        "key": {
+          "local": 39,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 7,
+        "member_ids": [],
+        "stem": null
+      },
+      "same_actual_Staff": true,
+      "shape": "QUARTER_REST",
+      "stage": "VertexRemoved",
+      "system": 2
+    }
+  ],
+  "page": "an_laura",
+  "retired_actual_chords": [
+    {
+      "rest": {
+        "local": 33,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "retired_actual_Chord": {
+        "bounds": [
+          1005,
+          464,
+          20,
+          19
+        ],
+        "id": 794,
+        "key": {
+          "local": 33,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "members": [],
+        "stem": null
+      }
+    },
+    {
+      "rest": {
+        "local": 66,
+        "phase": "SYMBOL",
+        "system": 1
+      },
+      "retired_actual_Chord": {
+        "bounds": [
+          1336,
+          464,
+          16,
+          19
+        ],
+        "id": 795,
+        "key": {
+          "local": 34,
+          "phase": "CHORD",
+          "system": 1
+        },
+        "measure": 1,
+        "members": [],
+        "stem": null
+      }
+    },
+    {
+      "rest": {
+        "local": 2,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "retired_actual_Chord": {
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "id": 864,
+        "key": {
+          "local": 36,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 4,
+        "members": [],
+        "stem": null
+      }
+    },
+    {
+      "rest": {
+        "local": 45,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "retired_actual_Chord": {
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "id": 865,
+        "key": {
+          "local": 37,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "members": [],
+        "stem": null
+      }
+    },
+    {
+      "rest": {
+        "local": 51,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "id": 866,
+        "key": {
+          "local": 38,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 5,
+        "members": [],
+        "stem": null
+      }
+    },
+    {
+      "rest": {
+        "local": 53,
+        "phase": "SYMBOL",
+        "system": 2
+      },
+      "retired_actual_Chord": {
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "id": 867,
+        "key": {
+          "local": 39,
+          "phase": "CHORD",
+          "system": 2
+        },
+        "measure": 7,
+        "members": [],
+        "stem": null
+      }
+    }
+  ],
+  "scope": "Existing bounded family reducer calls actual Staff/Measure/Voice removal; original whole common LINKS order remains pending",
+  "source_AnLaura_System2_vertex_subsequence_compared": true,
+  "source_Rest_edge_callback_observation": false,
+  "source_callback_clock_scope": "NULL clocks only; exact 7/64 Voice/Slot underfill/excess preservation is a separate declared scalar control"
+}

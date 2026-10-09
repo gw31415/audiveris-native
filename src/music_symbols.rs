@@ -760,6 +760,7 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                 let key = graph.next_symbol_key(sid)?;
                 let mut data = rest.body;
                 let id = graph.vertex(key, data.clone(), false)?;
+                graph.register_rest_membership(key, rest.staff.clone())?;
                 created.push(key);
                 data["id"] = json!(id);
                 data["origin"] = json!(key);

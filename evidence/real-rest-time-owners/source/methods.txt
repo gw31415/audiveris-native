@@ -1,0 +1,9 @@
+org/audiveris/omr/sig/inter/AbstractNoteInter.remove(Z)V
+org/audiveris/omr/sig/inter/AbstractChordInter.invalidateCache()V
+org/audiveris/omr/sig/inter/AbstractChordInter.remove(Z)V
+org/audiveris/omr/sig/inter/AbstractInter.remove(Z)V
+org/audiveris/omr/sheet/Staff.removeNote(Lorg/audiveris/omr/sig/inter/AbstractNoteInter;)Z
+org/audiveris/omr/sheet/rhythm/Measure.removeInter(Lorg/audiveris/omr/sig/inter/Inter;)V
+org/audiveris/omr/sheet/rhythm/Measure.removeVoiceChord(Lorg/audiveris/omr/sig/inter/AbstractChordInter;)V
+org/audiveris/omr/sheet/rhythm/Voice.removeChord(Lorg/audiveris/omr/sig/inter/AbstractChordInter;)Z
+org/audiveris/omr/sig/relation/Containment.removed(Lorg/jgrapht/event/GraphEdgeChangeEvent;)V

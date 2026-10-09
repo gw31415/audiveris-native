@@ -45,14 +45,16 @@ native各Voice直後のpeer excess公開も同じ実画像ownerで比較済み�
 nullをnativeへ代入せず、宣言1/64→1/8 controlも実Voice/Slot/Chord所有を保って復元する。
 4境界契約＋3実所有対象、fmt/clippy/build、63＋補正8・exact7/64・両実譜面XML/XSD成功。
 初回test lint失敗と修正後の成功は別記録とし、全回帰や公開成功を主張しない。
-[保持Headerの直接登録](../evidence/real-typed-header-binding/README.md) に続き、
-[実MeasureのClef/Key所属と混合Filler](../evidence/real-header-filler/README.md) を接続しました。
-原版宣言afterReload replayの12追加・全peer中間所属が一致し、同じ実参照とmanual状態を保持。
-KeyAlters36本も実shared SIGへ登録し、AnLaura36 Inter/66 relations、Der Winter15/10・null Clef1件を比較。
-source宣言Chord7/64・expected1/2の保持とnative既存時計回帰は区別し、非空Voice/Slotやfresh callbackは主張しません。
-19対象とfmt/clippy/build、同じXML/XSD回帰が成功。初回観測コードの誤りと不正参照期待順の失敗は別記録。
-次はtyped RestChord/Flag削除、Header Time所有binding、正factoryと共通削除順、Slur認識・出力を接続します。
-Der Winterの余分なp方向記号1件は原版の限定実所有比較でAccentとのOVERLAP除去が確認され、native削除順の修正が必要。
+[実MeasureのClef/Key所属と混合Filler](../evidence/real-header-filler/README.md) に続き、
+[Time直接登録と実Rest削除](../evidence/real-rest-time-owners/README.md) を接続しました。
+保持Time/member/support Arcをshared SIGへ登録し、AnLaura45 Inter/75 relations、
+Der Winter22/16・null Clef1件をMEASURES/LINKSで比較。Rest除去のStaff→Measure/Voice→
+relation→vertex順と退役時計を保持し、原Java宣言制御14状態・588チェックが一致。
+画像のnull時計と宣言7/64・underfill/excessは別の観測範囲として記録しています。
+20対象とfmt/clippy/build、両実譜面・exact7/64・63＋補正8 XML byte/XSDが成功。
+実譜面XMLが同一のため既存独立reader/品質比較を再利用し、新しい品質成功とはしません。
+次はSlurの実認識・callback・cleanupと出力、その後Flag/正factoryと共通削除順を接続します。
+Der Winterの余分なpは原版実所有比較でAccentとのOVERLAP除去が確認され、native順序の修正が必要。
 Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えません。
 
 ## 最初の実証と切断点

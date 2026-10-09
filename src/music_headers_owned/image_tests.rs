@@ -84,6 +84,28 @@ pub(crate) fn hold(owner: &OwnedItems) -> HeldHeaders {
                     staff: header.staff().clone(),
                 });
             }
+            if let Some(source) = header.time() {
+                for member in source.members() {
+                    inters.push(InterRef {
+                        key: Key {
+                            system: system.system().id,
+                            phase: Phase::MusicTime,
+                            local: member.id() as usize,
+                        },
+                        source: member.clone(),
+                        staff: header.staff().clone(),
+                    });
+                }
+                inters.push(InterRef {
+                    key: Key {
+                        system: system.system().id,
+                        phase: Phase::MusicTime,
+                        local: source.id() as usize,
+                    },
+                    source: source.clone(),
+                    staff: header.staff().clone(),
+                });
+            }
         }
         carrier_relations.push(HeldSystemRelations {
             system: system.system().clone(),
@@ -96,18 +118,50 @@ pub(crate) fn hold(owner: &OwnedItems) -> HeldHeaders {
             let b = inters.iter().find(|r| {
                 r.key.system == system.system().id && Arc::ptr_eq(&r.source, relation.target())
             });
+            let touches_time = system
+                .staffs()
+                .iter()
+                .filter_map(|header| header.time())
+                .any(|time| {
+                    std::iter::once(time).chain(time.members()).any(|node| {
+                        Arc::ptr_eq(node, relation.source()) || Arc::ptr_eq(node, relation.target())
+                    })
+                });
+            if touches_time {
+                assert!(
+                    a.is_some() && b.is_some(),
+                    "selected Time incident relation lacks a bound owner"
+                );
+            }
             if let (Some(a), Some(b)) = (a, b) {
                 match relation.body()["kind"].as_str() {
                     Some("Containment") => {
                         assert!(system.staffs().iter().any(|header| {
-                            header.key().is_some_and(|key| {
-                                Arc::ptr_eq(key, relation.source())
-                                    && key
-                                        .members()
-                                        .iter()
-                                        .any(|member| Arc::ptr_eq(member, relation.target()))
-                            })
+                            [header.key(), header.time()]
+                                .into_iter()
+                                .flatten()
+                                .any(|root| {
+                                    Arc::ptr_eq(root, relation.source())
+                                        && root
+                                            .members()
+                                            .iter()
+                                            .any(|member| Arc::ptr_eq(member, relation.target()))
+                                })
                         }));
+                        relations.push((a.key, b.key, relation.clone()));
+                    }
+                    Some("TimeTopBottomRelation") => {
+                        assert!(
+                            system
+                                .staffs()
+                                .iter()
+                                .any(|header| header.time().is_some_and(
+                                    |time| time.body()["kind"] == "TimePairInter"
+                                        && time.members().len() == 2
+                                        && Arc::ptr_eq(&time.members()[0], relation.source())
+                                        && Arc::ptr_eq(&time.members()[1], relation.target())
+                                ))
+                        );
                         relations.push((a.key, b.key, relation.clone()));
                     }
                     Some("ClefKeyRelation") => {
@@ -170,7 +224,7 @@ pub(crate) fn verify(music: &OwnedMusic, held: &HeldHeaders, page: &str, stage: 
                 .any(|s| Arc::ptr_eq(s, &reference.staff))
         );
         assert!(
-            [header.clef(), header.key()]
+            [header.clef(), header.key(), header.time()]
                 .into_iter()
                 .flatten()
                 .any(|s| Arc::ptr_eq(s, &reference.source)
@@ -248,6 +302,7 @@ pub(crate) fn verify(music: &OwnedMusic, held: &HeldHeaders, page: &str, stage: 
     std::fs::write(path,serde_json::to_vec_pretty(&json!({"stage":stage,"nodes":nodes,"relations":edges,"null_selected_clef_count":held.null_clefs.len(),
         "all_carrier_relation_kinds":carrier_kinds,"all_carrier_relation_order_and_endpoint_Arcs_retained":true,
         "selected_KeyAlters_supports_registered_from_same_Arcs":true,
+        "selected_Time_incident_relations_registered_from_same_Arcs":true,
         "native_finalized_source_Staff_member_relation_Arcs_retained":true,"transaction_clone_keeps_same_Arcs":true,"read_only_observation":true,
         "Measure_membership_or_prefreeze_identity_claimed":false,"quality_accepted":false})).unwrap()).unwrap();
 }

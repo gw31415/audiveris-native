@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! Selected frozen Clef/Key source ownership at the MEASURES registration boundary.
+//! Selected frozen Clef/Key/Time source ownership at the MEASURES registration boundary.
 use crate::{
     beam_dispatch::{self, Registry},
     native_headers::{NativeStaffHeader, NativeSystemHeaders},
@@ -204,6 +204,9 @@ pub(crate) fn register_key(
         "member_ids":rows.iter().map(|n|&n["id"]).collect::<Vec<_>>()}),
     }))
 }
+
+mod time;
+pub(crate) use time::register_time;
 
 #[cfg(test)]
 pub(crate) mod image_tests;

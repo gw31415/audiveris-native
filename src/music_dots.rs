@@ -2130,7 +2130,20 @@ mod tests {
             .graph
             .vertex(key(rest).unwrap(), target, false)
             .unwrap();
-        crate::music_symbol_reduction::reduce(&mut m.owner.graph).unwrap();
+        let reduction = crate::music_symbol_reduction::reduce_owned(
+            &mut m.owner.graph,
+            &m.measures,
+            &mut m.chords,
+            &mut m.voices,
+        )
+        .unwrap();
+        assert_eq!(
+            reduction["removed_owned_chord_ids"]
+                .as_array()
+                .unwrap()
+                .len(),
+            1
+        );
         let after = m.owner.graph.snapshot();
         assert!(
             after["inters"]
@@ -2163,7 +2176,7 @@ mod tests {
             &mut m.voices,
         )
         .unwrap();
-        assert_eq!(containers.removed_chords.len(), 1);
+        assert!(containers.removed_chords.is_empty());
         let mut frozen = m.owner.graph.clone();
         let mut data = orphan.clone();
         data["frozen"] = json!(true);

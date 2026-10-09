@@ -33,6 +33,9 @@ mod chord_cache;
 mod chord_duration;
 pub(crate) mod chord_tasks;
 mod dot_ownership;
+mod rest_removal;
+#[cfg(test)]
+pub(crate) use rest_removal::{RestRemovalEvent, RestRemovalStage};
 mod editing_task;
 mod manual_chord_stem;
 #[cfg(test)]
@@ -397,6 +400,7 @@ pub struct Graph {
     refined_stem_geometry: BTreeMap<Key, Value>,
     pub(crate) editing_chords: Vec<chord_tasks::EditingHeadChord>,
     retained_voices: Vec<crate::music_voices::Voice>,
+    rest_ownership: rest_removal::RestOwnership,
     vertices: Vec<Vertex>,
     keys: BTreeMap<Key, usize>,
     edges: Vec<Edge>,
@@ -672,6 +676,9 @@ impl Graph {
         // have been removed by the last member's callback.
         if self.vertices[id - 1].removed || self.vertices[id - 1].removing {
             return Ok(());
+        }
+        if self.requires_owned_rest_removal(key) {
+            return Err("music_removal_actual_Rest_owners_required".into());
         }
         if self.vertices[id - 1].data["kind"] == "AugmentationDotInter" {
             let mut next = self.clone();

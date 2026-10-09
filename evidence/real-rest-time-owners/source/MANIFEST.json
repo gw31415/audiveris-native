@@ -1,0 +1,136 @@
+{
+  "scope": "Original Rest declared-clock removal controls; source-only deliverables. No native test or Java rollback claim.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 7247,
+      "sha256": "5c9dd31648b62d8445e2099fe96b7eedf18f398ce806247206785d07af40fce0"
+    },
+    {
+      "path": "run.py",
+      "bytes": 3548,
+      "sha256": "81e4773041015ec6f2ea16611a0a8bc4a5a49aa4cf2ba51df998ee92728611ac"
+    },
+    {
+      "path": "extract.py",
+      "bytes": 6791,
+      "sha256": "a1bcd718c84d7a8f84f1850a0aee8c4f5835b9ba301d4938ffb1ec9694cd0572"
+    },
+    {
+      "path": "RestRemovalClockProbe.java",
+      "bytes": 9596,
+      "sha256": "c3a40de3c3f967622f2b8455762ee9740a42a225dfd4cfa29cadc214cdd9fb55"
+    },
+    {
+      "path": "RestRemovalRewriter.java",
+      "bytes": 3885,
+      "sha256": "5e56dcd93df1c9ecb00553341afbb74cb784291ae9455a4aa7e0acc237e93111"
+    },
+    {
+      "path": "VerifyRestOverlay.java",
+      "bytes": 3275,
+      "sha256": "9cc9ba990c0675566d6150a7653bdf40f12982afb967217fed7015e3c474973b"
+    },
+    {
+      "path": "PedalRawStaffBookProbe.java",
+      "bytes": 8856,
+      "sha256": "10c10ea0af73935723e01125bffb210fe6b5478d4d800ab8b7f76a5be70d683b"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 30471,
+      "sha256": "d5676df725901c5d7d6b9928d1eb6ffcea6c70aa941fea1eecc8d447fbc0b8b9"
+    },
+    {
+      "path": "PROVENANCE.json",
+      "bytes": 6684,
+      "sha256": "d5b651582d0da641aca352636ecd3b80acc4a7f53eed8fbab63a937886bb04c3"
+    },
+    {
+      "path": "instrumentation-audit.json",
+      "bytes": 1793,
+      "sha256": "c1b7a041de2af67322d588ac369dd0b3bc6d65a3c4ad9ab2d9240f2d4aa5de07"
+    },
+    {
+      "path": "instrumentation.json",
+      "bytes": 2595,
+      "sha256": "82d659dcd63b7645582baeaa8116afd3b3f485b9996f79cb6e08795eb33ccaa6"
+    },
+    {
+      "path": "methods.txt",
+      "bytes": 715,
+      "sha256": "7c46f2984caeea1b83da56b8251866c9a7f76992a2e623f92a1015d21ad848b0"
+    },
+    {
+      "path": "compile.log",
+      "bytes": 157,
+      "sha256": "efe91fdcff42cf3a8bf51d9d91a0913079d50717a2469c2d777052f97587595c"
+    },
+    {
+      "path": "rewrite.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "underfill-observed.json",
+      "bytes": 35697,
+      "sha256": "0522653f21b0e702262ae9bd35ad5ea84171a73aba204e5028508b51a1518157"
+    },
+    {
+      "path": "excess-observed.json",
+      "bytes": 35697,
+      "sha256": "402240a5432f460cfd42e37970c4d38d84beea60fbb7c9ad7cacea907fd5c695"
+    },
+    {
+      "path": "compare_native.py",
+      "bytes": 8145,
+      "sha256": "7cf3ea98add84e33187d6748ff361c653944aad675b51e0159410c99cdda49d3"
+    },
+    {
+      "path": "compare_native-v1-null-assumption.py",
+      "bytes": 8046,
+      "sha256": "34700e3e6c9e9177b0f53457cf764f8f5bd6e49e02b2ce9f5ce86dfb484442e4"
+    },
+    {
+      "path": "native-comparison-v1-null-assumption.json",
+      "bytes": 6844,
+      "sha256": "e753db9a0f1cbed5daa462f929bde6001382da9dbc03d3e4f7244ad2d9bc4e86"
+    },
+    {
+      "path": "native-comparison-v2.json",
+      "bytes": 3895,
+      "sha256": "de61b5e824e959bbfd4030c4a56c09418525577f157fcaff85d7227678f28728"
+    },
+    {
+      "path": "NATIVE-COMPARISON-PROVENANCE.json",
+      "bytes": 2583,
+      "sha256": "e7f03bad2b1ca40dfc6b9e4ffdce729e78501138b04d318e89a89b107cb67f40"
+    }
+  ],
+  "nonpackaged_runtime_logs": [
+    {
+      "path": "underfill-console.log",
+      "bytes": 15890250,
+      "sha256": "d95a2a0c85514507c5beb1baee10d54c95a58bfd905aa6a6f813d84376ae8e00"
+    },
+    {
+      "path": "excess-console.log",
+      "bytes": 15890357,
+      "sha256": "a459e0785366edbe1a092f07ca367fa6a6515f3ea3f3a01d44057633a874af54"
+    }
+  ],
+  "packaged_bytes": 186520,
+  "packaging_note": "Include each raw observation once as requested. Do not copy .class files, overlays, caches, Book or JAR.",
+  "native_comparison_status": "Passed supported common contracts from the explicitly passed clock target; enclosing batch16pass/1failed preserved. First comparator NULL-cache assumption failure retained.",
+  "external_native_raw_observation": {
+    "path": "/tmp/rest-owned-native-scalar-observed.json",
+    "bytes": 65332,
+    "sha256": "81151b51ed9196bf455555b9d20a14d6754da18adb32f769cf8fff96d691cc75",
+    "note": "Parent should package this marker once with its native test evidence; not duplicated in this directory."
+  }
+}

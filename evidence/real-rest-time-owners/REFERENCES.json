@@ -1,0 +1,29 @@
+{
+  "base_commit": "4907174ad8b6094b9f573e387cfa785203051333",
+  "source_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "proposals": [
+    {
+      "path": "/tmp/typed-header-time-unit-v2/proposed.patch",
+      "bytes": 29018,
+      "sha256": "f71f110850db0006a38d4372859bff28a0b16c983745c3758cb3a9f76e370d9a"
+    },
+    {
+      "path": "/tmp/rest-owned-links-unit/integration.patch",
+      "bytes": 15483,
+      "sha256": "e479d50eab0a980ddfaae166c7a542b2cc01862d2317ddb0c77f091e6058c02d"
+    },
+    {
+      "path": "/tmp/rest-scalar-observation-unit/observation.patch",
+      "bytes": 8331,
+      "sha256": "bcc429315041cee939d37ac7021a744517f64ab275d107edfb7c188b0ee15d80"
+    }
+  ],
+  "postproposal_corrections": [
+    "missing test Arc import",
+    "shorter stage enum names preserve observed strings",
+    "test observer collapsible-if",
+    "existing orphan-dot assertion now observes typed removal1 and later refresh0"
+  ],
+  "initial_comparator_failure_retained": "source/native-comparison-v1-null-assumption.json",
+  "quality_accepted": false
+}

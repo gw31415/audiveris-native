@@ -1,0 +1,928 @@
+{
+  "source_pin": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "scope": "Two declared original singleton quarter-rest extensive-removal controls on reloaded actual source owners; no fresh image/ordinary LINKS-clock/Java-rollback claim. Source coordinates select the test-owned original object only; never production selectors. Identity comparisons are intra-run.",
+  "selected": {
+    "source_system": 2,
+    "source_rest": 4436,
+    "source_chord": 4485,
+    "shape": "QUARTER_REST",
+    "bounds": [
+      1122,
+      879,
+      10,
+      32
+    ],
+    "staff": 4,
+    "part": 1
+  },
+  "controls": [
+    {
+      "name": "underfill",
+      "raw_observation_path": "/tmp/rest-removal-clock-original-v1/underfill-observed.json",
+      "raw_observation_sha256": "0522653f21b0e702262ae9bd35ad5ea84171a73aba204e5028508b51a1518157",
+      "original_event_count": 21,
+      "all_phase_clock_manual_and_owner_invariants": true,
+      "initial_raw_rest_part": null,
+      "initial_raw_chord_part": null,
+      "declared_expected": "3/4",
+      "prepared": {
+        "rest": {
+          "removed": false,
+          "registered": true,
+          "manual": true
+        },
+        "chord": {
+          "removed": false,
+          "registered": true,
+          "manual": true,
+          "time_offset": "7/64",
+          "member_count": 1,
+          "same_identity": true,
+          "same_bounds": true,
+          "same_bounds_object": true,
+          "same_staff": true,
+          "same_raw_part": true,
+          "same_measure": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_time_offset_object": true
+        },
+        "staff_contains_rest": true,
+        "measure_contains_chord": true,
+        "measure_contains_voice": true,
+        "same_actual_owner_chain": true,
+        "expected_duration": "3/4",
+        "same_expected_object": true,
+        "stack_excess": null,
+        "voice": {
+          "same_identity": true,
+          "id": 1,
+          "same_measure": true,
+          "chord_count": 1,
+          "slot_count": 1,
+          "slot_entries_unchanged": true,
+          "same_slot_table": true,
+          "termination": "-25/64",
+          "same_termination_object": true,
+          "excess": null,
+          "same_excess_object": true
+        },
+        "slot": {
+          "same_identity": true,
+          "time_offset": "7/64",
+          "same_time_offset_object": true,
+          "same_stack": true,
+          "incoming_same_chord": true,
+          "retained_in_stack": true
+        },
+        "containment": {
+          "registered": true,
+          "manual": true,
+          "same_identity": true
+        }
+      },
+      "events": [
+        {
+          "phase": "StaffRemoved",
+          "subject_kind": "RestInter",
+          "source_hook": "sheet/Staff.removeNote.return",
+          "state": {
+            "rest": {
+              "removed": false,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": false,
+              "registered": true,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 1,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "same_actual_owner_chain": true,
+            "expected_duration": "3/4",
+            "same_expected_object": true,
+            "stack_excess": null,
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 1,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "-25/64",
+              "same_termination_object": true,
+              "excess": null,
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": true,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "MeasureRemoved",
+          "subject_kind": "RestChordInter",
+          "source_hook": "sheet/rhythm/Measure.removeInter.return",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": false,
+              "registered": true,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 1,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "3/4",
+            "same_expected_object": true,
+            "stack_excess": null,
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "-25/64",
+              "same_termination_object": true,
+              "excess": null,
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": true,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "EdgeRemoved",
+          "subject_kind": "RestChordInter",
+          "source_hook": "GraphListener.edgeRemoved",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": true,
+              "registered": true,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 0,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "3/4",
+            "same_expected_object": true,
+            "stack_excess": null,
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "-25/64",
+              "same_termination_object": true,
+              "excess": null,
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": false,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "VertexRemoved",
+          "subject_kind": "RestChordInter",
+          "source_hook": "GraphListener.vertexRemoved",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": true,
+              "registered": false,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 0,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "3/4",
+            "same_expected_object": true,
+            "stack_excess": null,
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "-25/64",
+              "same_termination_object": true,
+              "excess": null,
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": false,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "VertexRemoved",
+          "subject_kind": "RestInter",
+          "source_hook": "GraphListener.vertexRemoved",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": false,
+              "manual": true
+            },
+            "chord": {
+              "removed": true,
+              "registered": false,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 0,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "3/4",
+            "same_expected_object": true,
+            "stack_excess": null,
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "-25/64",
+              "same_termination_object": true,
+              "excess": null,
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": false,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        }
+      ],
+      "after": {
+        "rest": {
+          "removed": true,
+          "registered": false,
+          "manual": true
+        },
+        "chord": {
+          "removed": true,
+          "registered": false,
+          "manual": true,
+          "time_offset": "7/64",
+          "member_count": 0,
+          "same_identity": true,
+          "same_bounds": true,
+          "same_bounds_object": true,
+          "same_staff": true,
+          "same_raw_part": true,
+          "same_measure": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_time_offset_object": true
+        },
+        "staff_contains_rest": false,
+        "measure_contains_chord": false,
+        "measure_contains_voice": false,
+        "same_actual_owner_chain": true,
+        "expected_duration": "3/4",
+        "same_expected_object": true,
+        "stack_excess": null,
+        "voice": {
+          "same_identity": true,
+          "id": 1,
+          "same_measure": true,
+          "chord_count": 0,
+          "slot_count": 1,
+          "slot_entries_unchanged": true,
+          "same_slot_table": true,
+          "termination": "-25/64",
+          "same_termination_object": true,
+          "excess": null,
+          "same_excess_object": true
+        },
+        "slot": {
+          "same_identity": true,
+          "time_offset": "7/64",
+          "same_time_offset_object": true,
+          "same_stack": true,
+          "incoming_same_chord": true,
+          "retained_in_stack": true
+        },
+        "containment": {
+          "registered": false,
+          "manual": true,
+          "same_identity": true
+        }
+      },
+      "containment_callback_entry_equals_return": true,
+      "chord_cache_invalidation_during_removal": false,
+      "all_source_hooks": [
+        "sig/inter/AbstractNoteInter.remove.entry",
+        "sheet/Staff.removeNote.entry",
+        "sheet/Staff.removeNote.return",
+        "sig/inter/AbstractInter.remove.entry",
+        "sig/inter/AbstractChordInter.remove.entry",
+        "sheet/rhythm/Measure.removeInter.entry",
+        "sheet/rhythm/Measure.removeVoiceChord.entry",
+        "sheet/rhythm/Voice.removeChord.entry",
+        "sheet/rhythm/Voice.removeChord.return",
+        "sheet/rhythm/Measure.removeVoiceChord.return",
+        "sheet/rhythm/Measure.removeInter.return",
+        "sig/inter/AbstractInter.remove.entry",
+        "sig/relation/Containment.removed.entry",
+        "sig/relation/Containment.removed.return",
+        "GraphListener.edgeRemoved",
+        "GraphListener.vertexRemoved",
+        "sig/inter/AbstractInter.remove.return",
+        "sig/inter/AbstractChordInter.remove.return",
+        "GraphListener.vertexRemoved",
+        "sig/inter/AbstractInter.remove.return",
+        "sig/inter/AbstractNoteInter.remove.return"
+      ]
+    },
+    {
+      "name": "excess",
+      "raw_observation_path": "/tmp/rest-removal-clock-original-v1/excess-observed.json",
+      "raw_observation_sha256": "402240a5432f460cfd42e37970c4d38d84beea60fbb7c9ad7cacea907fd5c695",
+      "original_event_count": 21,
+      "all_phase_clock_manual_and_owner_invariants": true,
+      "initial_raw_rest_part": null,
+      "initial_raw_chord_part": null,
+      "declared_expected": "1/4",
+      "prepared": {
+        "rest": {
+          "removed": false,
+          "registered": true,
+          "manual": true
+        },
+        "chord": {
+          "removed": false,
+          "registered": true,
+          "manual": true,
+          "time_offset": "7/64",
+          "member_count": 1,
+          "same_identity": true,
+          "same_bounds": true,
+          "same_bounds_object": true,
+          "same_staff": true,
+          "same_raw_part": true,
+          "same_measure": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_time_offset_object": true
+        },
+        "staff_contains_rest": true,
+        "measure_contains_chord": true,
+        "measure_contains_voice": true,
+        "same_actual_owner_chain": true,
+        "expected_duration": "1/4",
+        "same_expected_object": true,
+        "stack_excess": "7/64",
+        "voice": {
+          "same_identity": true,
+          "id": 1,
+          "same_measure": true,
+          "chord_count": 1,
+          "slot_count": 1,
+          "slot_entries_unchanged": true,
+          "same_slot_table": true,
+          "termination": "7/64",
+          "same_termination_object": true,
+          "excess": "7/64",
+          "same_excess_object": true
+        },
+        "slot": {
+          "same_identity": true,
+          "time_offset": "7/64",
+          "same_time_offset_object": true,
+          "same_stack": true,
+          "incoming_same_chord": true,
+          "retained_in_stack": true
+        },
+        "containment": {
+          "registered": true,
+          "manual": true,
+          "same_identity": true
+        }
+      },
+      "events": [
+        {
+          "phase": "StaffRemoved",
+          "subject_kind": "RestInter",
+          "source_hook": "sheet/Staff.removeNote.return",
+          "state": {
+            "rest": {
+              "removed": false,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": false,
+              "registered": true,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 1,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "same_actual_owner_chain": true,
+            "expected_duration": "1/4",
+            "same_expected_object": true,
+            "stack_excess": "7/64",
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 1,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "7/64",
+              "same_termination_object": true,
+              "excess": "7/64",
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": true,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "MeasureRemoved",
+          "subject_kind": "RestChordInter",
+          "source_hook": "sheet/rhythm/Measure.removeInter.return",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": false,
+              "registered": true,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 1,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "1/4",
+            "same_expected_object": true,
+            "stack_excess": "7/64",
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "7/64",
+              "same_termination_object": true,
+              "excess": "7/64",
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": true,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "EdgeRemoved",
+          "subject_kind": "RestChordInter",
+          "source_hook": "GraphListener.edgeRemoved",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": true,
+              "registered": true,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 0,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "1/4",
+            "same_expected_object": true,
+            "stack_excess": "7/64",
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "7/64",
+              "same_termination_object": true,
+              "excess": "7/64",
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": false,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "VertexRemoved",
+          "subject_kind": "RestChordInter",
+          "source_hook": "GraphListener.vertexRemoved",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": true,
+              "manual": true
+            },
+            "chord": {
+              "removed": true,
+              "registered": false,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 0,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "1/4",
+            "same_expected_object": true,
+            "stack_excess": "7/64",
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "7/64",
+              "same_termination_object": true,
+              "excess": "7/64",
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": false,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        },
+        {
+          "phase": "VertexRemoved",
+          "subject_kind": "RestInter",
+          "source_hook": "GraphListener.vertexRemoved",
+          "state": {
+            "rest": {
+              "removed": true,
+              "registered": false,
+              "manual": true
+            },
+            "chord": {
+              "removed": true,
+              "registered": false,
+              "manual": true,
+              "time_offset": "7/64",
+              "member_count": 0,
+              "same_identity": true,
+              "same_bounds": true,
+              "same_bounds_object": true,
+              "same_staff": true,
+              "same_raw_part": true,
+              "same_measure": true,
+              "same_voice": true,
+              "same_slot": true,
+              "same_time_offset_object": true
+            },
+            "staff_contains_rest": false,
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "same_actual_owner_chain": true,
+            "expected_duration": "1/4",
+            "same_expected_object": true,
+            "stack_excess": "7/64",
+            "voice": {
+              "same_identity": true,
+              "id": 1,
+              "same_measure": true,
+              "chord_count": 0,
+              "slot_count": 1,
+              "slot_entries_unchanged": true,
+              "same_slot_table": true,
+              "termination": "7/64",
+              "same_termination_object": true,
+              "excess": "7/64",
+              "same_excess_object": true
+            },
+            "slot": {
+              "same_identity": true,
+              "time_offset": "7/64",
+              "same_time_offset_object": true,
+              "same_stack": true,
+              "incoming_same_chord": true,
+              "retained_in_stack": true
+            },
+            "containment": {
+              "registered": false,
+              "manual": true,
+              "same_identity": true
+            }
+          }
+        }
+      ],
+      "after": {
+        "rest": {
+          "removed": true,
+          "registered": false,
+          "manual": true
+        },
+        "chord": {
+          "removed": true,
+          "registered": false,
+          "manual": true,
+          "time_offset": "7/64",
+          "member_count": 0,
+          "same_identity": true,
+          "same_bounds": true,
+          "same_bounds_object": true,
+          "same_staff": true,
+          "same_raw_part": true,
+          "same_measure": true,
+          "same_voice": true,
+          "same_slot": true,
+          "same_time_offset_object": true
+        },
+        "staff_contains_rest": false,
+        "measure_contains_chord": false,
+        "measure_contains_voice": false,
+        "same_actual_owner_chain": true,
+        "expected_duration": "1/4",
+        "same_expected_object": true,
+        "stack_excess": "7/64",
+        "voice": {
+          "same_identity": true,
+          "id": 1,
+          "same_measure": true,
+          "chord_count": 0,
+          "slot_count": 1,
+          "slot_entries_unchanged": true,
+          "same_slot_table": true,
+          "termination": "7/64",
+          "same_termination_object": true,
+          "excess": "7/64",
+          "same_excess_object": true
+        },
+        "slot": {
+          "same_identity": true,
+          "time_offset": "7/64",
+          "same_time_offset_object": true,
+          "same_stack": true,
+          "incoming_same_chord": true,
+          "retained_in_stack": true
+        },
+        "containment": {
+          "registered": false,
+          "manual": true,
+          "same_identity": true
+        }
+      },
+      "containment_callback_entry_equals_return": true,
+      "chord_cache_invalidation_during_removal": false,
+      "all_source_hooks": [
+        "sig/inter/AbstractNoteInter.remove.entry",
+        "sheet/Staff.removeNote.entry",
+        "sheet/Staff.removeNote.return",
+        "sig/inter/AbstractInter.remove.entry",
+        "sig/inter/AbstractChordInter.remove.entry",
+        "sheet/rhythm/Measure.removeInter.entry",
+        "sheet/rhythm/Measure.removeVoiceChord.entry",
+        "sheet/rhythm/Voice.removeChord.entry",
+        "sheet/rhythm/Voice.removeChord.return",
+        "sheet/rhythm/Measure.removeVoiceChord.return",
+        "sheet/rhythm/Measure.removeInter.return",
+        "sig/inter/AbstractInter.remove.entry",
+        "sig/relation/Containment.removed.entry",
+        "sig/relation/Containment.removed.return",
+        "GraphListener.edgeRemoved",
+        "GraphListener.vertexRemoved",
+        "sig/inter/AbstractInter.remove.return",
+        "sig/inter/AbstractChordInter.remove.return",
+        "GraphListener.vertexRemoved",
+        "sig/inter/AbstractInter.remove.return",
+        "sig/inter/AbstractNoteInter.remove.return"
+      ]
+    }
+  ]
+}

@@ -174,7 +174,13 @@ pub(crate) fn assert_real_part_memberships(
     assert_eq!(exclusions.len(), 2);
     crate::music_alters::contextualize_and_purge(&mut music.owner.graph).unwrap();
     crate::music_flags::contextualize(&mut music.owner.graph).unwrap();
-    crate::music_symbol_reduction::reduce(&mut music.owner.graph).unwrap();
+    let rest_reduction = crate::music_symbol_reduction::reduce_owned(
+        &mut music.owner.graph,
+        &music.measures,
+        &mut music.chords,
+        &mut music.voices,
+    )
+    .unwrap();
     crate::music_beams::clean_head_supports(&mut music.owner.graph).unwrap();
     let graph_before_refresh = music.owner.graph.snapshot();
     assert_eq!(
@@ -201,7 +207,14 @@ pub(crate) fn assert_real_part_memberships(
         &mut music.voices,
     )
     .unwrap();
-    assert_eq!(result.removed_chords.len(), 6);
+    assert_eq!(
+        rest_reduction["removed_owned_chord_ids"]
+            .as_array()
+            .unwrap()
+            .len(),
+        6
+    );
+    assert!(result.removed_chords.is_empty());
     assert_eq!(music.chords.len(), 67);
     assert_eq!(music.owner.graph.snapshot(), graph_before_refresh);
     assert_stage(&music, links);

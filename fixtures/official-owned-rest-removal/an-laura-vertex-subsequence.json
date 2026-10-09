@@ -1,0 +1,228 @@
+{
+  "scope": "Exact existing observer Rest/RestChord vertex subsequence only. Source raw clocks NULL; no Rest edge/container callbacks observed. Native matching descriptors do not provide recognition inputs.",
+  "source_path": "/tmp/pedal-raw-staff-first-purge-v1/observed.json",
+  "source_sha256": "18cd88f2fb18195b3e9d2d525dc90761bfc970d5382e2fa3cf2c071325cc5e7c",
+  "system": 2,
+  "events": [
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4483,
+        "object": 293,
+        "kind": "RestChordInter",
+        "shape": null,
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "raw_staff": 4,
+        "raw_staff_object": 31,
+        "raw_grade": 0.157,
+        "raw_context": 0.157,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false,
+        "raw_voice": null,
+        "voice_object": null,
+        "raw_slot": null,
+        "slot_object": null,
+        "raw_timeOffset": null,
+        "timeOffset_object": null,
+        "raw_duration": "FIELD_NOT_PRESENT"
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4196,
+        "object": 236,
+        "kind": "RestInter",
+        "shape": "ONE_16TH_REST",
+        "bounds": [
+          215,
+          956,
+          18,
+          19
+        ],
+        "raw_staff": 4,
+        "raw_staff_object": 31,
+        "raw_grade": 0.157,
+        "raw_context": 0.157,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4484,
+        "object": 294,
+        "kind": "RestChordInter",
+        "shape": null,
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "raw_staff": 4,
+        "raw_staff_object": 31,
+        "raw_grade": 0.409,
+        "raw_context": 0.409,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false,
+        "raw_voice": null,
+        "voice_object": null,
+        "raw_slot": null,
+        "slot_object": null,
+        "raw_timeOffset": null,
+        "timeOffset_object": null,
+        "raw_duration": "FIELD_NOT_PRESENT"
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4429,
+        "object": 276,
+        "kind": "RestInter",
+        "shape": "EIGHTH_REST",
+        "bounds": [
+          1116,
+          958,
+          18,
+          17
+        ],
+        "raw_staff": 4,
+        "raw_staff_object": 31,
+        "raw_grade": 0.409,
+        "raw_context": 0.409,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4485,
+        "object": 295,
+        "kind": "RestChordInter",
+        "shape": null,
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "raw_staff": 4,
+        "raw_staff_object": 31,
+        "raw_grade": 0.13,
+        "raw_context": 0.13,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false,
+        "raw_voice": null,
+        "voice_object": null,
+        "raw_slot": null,
+        "slot_object": null,
+        "raw_timeOffset": null,
+        "timeOffset_object": null,
+        "raw_duration": "FIELD_NOT_PRESENT"
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4436,
+        "object": 282,
+        "kind": "RestInter",
+        "shape": "QUARTER_REST",
+        "bounds": [
+          1122,
+          879,
+          10,
+          32
+        ],
+        "raw_staff": 4,
+        "raw_staff_object": 31,
+        "raw_grade": 0.13,
+        "raw_context": 0.13,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4486,
+        "object": 296,
+        "kind": "RestChordInter",
+        "shape": null,
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "raw_staff": 5,
+        "raw_staff_object": 52,
+        "raw_grade": 0.13,
+        "raw_context": 0.13,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false,
+        "raw_voice": null,
+        "voice_object": null,
+        "raw_slot": null,
+        "slot_object": null,
+        "raw_timeOffset": null,
+        "timeOffset_object": null,
+        "raw_duration": "FIELD_NOT_PRESENT"
+      }
+    },
+    {
+      "stage": "first_weak_purge",
+      "event": "vertexRemoved",
+      "inter": {
+        "id": 4438,
+        "object": 284,
+        "kind": "RestInter",
+        "shape": "QUARTER_REST",
+        "bounds": [
+          1122,
+          1022,
+          10,
+          32
+        ],
+        "raw_staff": 5,
+        "raw_staff_object": 52,
+        "raw_grade": 0.13,
+        "raw_context": 0.13,
+        "manual": false,
+        "frozen": false,
+        "removed": true,
+        "registered": false
+      }
+    }
+  ]
+}

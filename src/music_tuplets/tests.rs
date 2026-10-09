@@ -625,7 +625,9 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     // held originals after its assertions, before ordinary LINKS sees them.
     music.voices = original_voices;
     music.measures[seed.measure].timing = original_timing;
+    crate::music_symbol_reduction::owned_image_tests::begin(&music);
     let mut music = crate::music_links::continue_links(music).unwrap();
+    crate::music_symbol_reduction::owned_image_tests::finish(&music, "der_winter");
     crate::music_headers_owned::image_tests::verify(&music, &header_owners, "der_winter", "LINKS");
     music.assert_der_winter_nullable_reader_and_logical_headers();
     music.observe_der_winter_internal_rhythm_export().expect(

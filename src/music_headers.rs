@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! Preserve native frozen header keys and their actual glyph/ensemble identities.
 //! Key-only HeadInter.getAlteration fallback; accidental/tie paths remain guarded.
+#[cfg(test)]
 use crate::{
     beam_dispatch::{self, Registry},
     shared_sig::{Graph, Key, Phase},
 };
+#[cfg(test)]
 use serde_json::{Value, json};
 #[cfg(test)]
 use std::collections::BTreeSet;
@@ -126,6 +128,7 @@ pub(crate) fn import_key(
 /// StaffHeader.freeze already selected the actual pair and froze its members.
 /// Retain the selected TimePair and its actual numeric members atomically.
 /// A selected TimeWhole retains its own physical glyph instead of number members.
+#[cfg(test)]
 pub(crate) fn import_time(
     graph: &mut Graph,
     registry: &mut Registry,
@@ -262,6 +265,7 @@ pub(crate) fn import_time(
     )
 }
 
+#[cfg(test)]
 fn import_whole_time(
     graph: &mut Graph,
     registry: &mut Registry,

@@ -113,12 +113,27 @@ pub(crate) fn continue_links(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
     let ornaments = crate::music_ornaments::contextualize_and_purge(&mut graph, &m)?;
     let tuplet_purge =
         crate::music_tuplets::contextualize_and_purge(&m, &mut graph, &mut tuplet_containers)?;
-    let reduction = crate::music_symbol_reduction::reduce(&mut graph)?;
+    let reduction = crate::music_symbol_reduction::reduce_owned(
+        &mut graph,
+        &m.measures,
+        &mut m.chords,
+        &mut m.voices,
+    )?;
     let flag_competition = crate::music_flags::reduce_exclusions(&mut graph)?;
     let removed_beam_head_supports = crate::music_beams::clean_head_supports(&mut graph)?;
     let containers =
         crate::music_containers::refresh(&mut graph, &m.measures, &mut m.chords, &mut m.voices)?;
-    let empty_chords = containers.removed_chords;
+    let mut empty_chords = reduction["removed_owned_chord_ids"]
+        .as_array()
+        .ok_or("music_LINKS_retired_Chord_ids_required")?
+        .iter()
+        .map(|id| {
+            id.as_u64()
+                .map(|id| id as usize)
+                .ok_or("music_LINKS_retired_Chord_id_required")
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    empty_chords.extend(containers.removed_chords.iter().copied());
     let articulation_redundancy =
         crate::music_articulations::check_redundancy(&mut graph, &m.chords)?;
     let dot_consistency = crate::music_dots::reduce_consistencies(&mut graph, &m.chords)?;

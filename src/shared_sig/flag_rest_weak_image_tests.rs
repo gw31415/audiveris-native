@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 use super::*;
+use std::sync::Arc;
 impl Graph {
     pub(crate) fn assert_real_flag_rest_weak(music: &crate::music_measures::OwnedMusic) {
         let automatic: Value = serde_json::from_str(include_str!(
@@ -13,6 +14,8 @@ impl Graph {
         let mut records = Vec::new();
         for (mode, source) in [(false, &automatic), (true, &manual)] {
             let mut graph = music.owner.graph.clone();
+            let mut chords = music.chords.clone();
+            let mut voices = music.voices.clone();
             crate::music_alters::contextualize_and_purge(&mut graph).unwrap();
             crate::music_flags::contextualize(&mut graph).unwrap();
             let cases = source["systems"]
@@ -84,17 +87,67 @@ impl Graph {
             let chord = &music.chords[0];
             let mut body = invalid.retained_inter(chord.key).unwrap().0.clone();
             body["manual"] = json!(true);
-            body["time_offset"] = json!({"num":7,"den":64});
-            body["expected_duration"] = json!({"num":3,"den":4});
+            let exact = crate::music_time::Fraction::new(7, 64).unwrap();
+            let expected = crate::music_time::Fraction::new(3, 4).unwrap();
+            body["time_offset"] = json!(crate::music_time::format_fraction(exact));
             invalid.vertex(chord.key, body, false).unwrap();
-            let bad_before = invalid.snapshot();
+            let mut invalid_measures = music.measures.clone();
+            invalid_measures[chord.measure].timing.expected = Some(expected);
             assert_eq!(
-                crate::music_symbol_reduction::reduce(&mut invalid).unwrap_err(),
+                invalid.actual_chord_time_offset(chord.key).unwrap(),
+                Some(exact)
+            );
+            let end_before = invalid.chord_end_time(chord.key).unwrap();
+            assert!(end_before.is_some());
+            let bad_before = invalid.snapshot();
+            let mut invalid_chords = chords.clone();
+            let mut invalid_voices = voices.clone();
+            let invalid_chord_state = format!("{invalid_chords:?}");
+            let invalid_voice_ids = invalid_voices
+                .iter()
+                .map(|v| v.identity.clone())
+                .collect::<Vec<_>>();
+            assert_eq!(
+                crate::music_symbol_reduction::reduce_owned(
+                    &mut invalid,
+                    &invalid_measures,
+                    &mut invalid_chords,
+                    &mut invalid_voices
+                )
+                .unwrap_err(),
                 "music_symbol_cross_kind_exclusion_pending"
             );
             assert_eq!(invalid.snapshot(), bad_before);
+            assert_eq!(
+                invalid.actual_chord_time_offset(chord.key).unwrap(),
+                Some(exact)
+            );
+            assert_eq!(invalid.chord_end_time(chord.key).unwrap(), end_before);
+            assert_eq!(
+                invalid_measures[chord.measure].timing.expected,
+                Some(expected)
+            );
+            assert!(invalid_measures.iter().zip(&music.measures).all(
+                |(actual, held)| Arc::ptr_eq(
+                    actual.geometry.as_ref().unwrap(),
+                    held.geometry.as_ref().unwrap()
+                )
+            ));
+            assert_eq!(format!("{invalid_chords:?}"), invalid_chord_state);
+            assert!(
+                invalid_voices
+                    .iter()
+                    .zip(&invalid_voice_ids)
+                    .all(|(v, old)| Arc::ptr_eq(&v.identity, old))
+            );
             assert_eq!(invalid.id(fk), graph.id(fk));
-            let reduction = crate::music_symbol_reduction::reduce(&mut graph).unwrap();
+            let reduction = crate::music_symbol_reduction::reduce_owned(
+                &mut graph,
+                &music.measures,
+                &mut chords,
+                &mut voices,
+            )
+            .unwrap();
             let after = graph.snapshot();
             for ((fk, rk, id, c), original_relation) in pairs.iter().zip(&relations) {
                 let (flag, removed) = graph.retained_inter(*fk).unwrap();

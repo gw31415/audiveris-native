@@ -1,0 +1,12 @@
+Diff in /workspace/audiveris-native/src/music_dots.rs:2138:
+         )
+         .unwrap();
+         assert_eq!(
+-            reduction["removed_owned_chord_ids"].as_array().unwrap().len(),
++            reduction["removed_owned_chord_ids"]
++                .as_array()
++                .unwrap()
++                .len(),
+             1
+         );
+         let after = m.owner.graph.snapshot();

@@ -1,0 +1,16 @@
+Diff in /workspace/audiveris-native/src/shared_sig/rest_removal.rs:234:
+                 .filter(|owner| Arc::ptr_eq(&owner.staff, &staff))
+                 .ok_or("music_weak_rest_actual_Staff_required")?;
+             membership.members.retain(|member| *member != key);
+-            emit(
+-                self,
+-                chords,
+-                voices,
+-                RestRemovalStage::Staff,
+-                None,
+-                observe,
+-            )?;
++            emit(self, chords, voices, RestRemovalStage::Staff, None, observe)?;
+             self.vertices[id - 1].removing = true;
+             if extensive {
+                 let parents = self

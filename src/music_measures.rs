@@ -308,30 +308,13 @@ pub fn continue_measures(mut owner: OwnedItems) -> Result<OwnedMusic, String> {
                     graph.bind_filler_key_identity(key.key, actual_staff.clone())?;
                     key_rows.push(key.projection);
                 }
-                // Time registration remains the existing isolated importer.
-                // This unit certifies selected Clef/Key bindings, not Time bindings.
-                let header = owner.upstream_report["headers"]["staffs"]
-                    .as_array()
-                    .into_iter()
-                    .flatten()
-                    .find(|h| h["staff_id"] == staff_id && h["system_id"] == sid)
-                    .ok_or("music_staff_header_required")?;
-                let relations = owner.upstream_report["headers"]["systems"]
-                    .as_array()
-                    .into_iter()
-                    .flatten()
-                    .find(|s| s["system_id"] == sid)
-                    .and_then(|s| s["relations"].as_array())
-                    .ok_or("music_header_relations_required")?;
-                let imported = crate::music_headers::import_time(
+                if let Some(time) = crate::music_headers_owned::register_time(
                     &mut graph,
                     &mut owner.prepared.registry,
-                    header,
-                    sid,
-                    relations,
-                )?;
-                if !imported.is_null() {
-                    time_rows.push(imported);
+                    actual_header,
+                    actual_header_system,
+                )? {
+                    time_rows.push(time.projection);
                 }
 
                 let mut heads = nodes

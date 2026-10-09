@@ -1,0 +1,2200 @@
+{
+  "boundary_scope": "Prepared state plus five actual callback aftermath states and after. previous_observed_state is the prior recorded boundary, not an injected method-entry hook",
+  "controls": [
+    {
+      "after": {
+        "chord": {
+          "manual": true,
+          "member_count": 0,
+          "raw_bounds": [
+            20,
+            10,
+            6,
+            20
+          ],
+          "raw_bounds_unchanged": true,
+          "registered": false,
+          "removed": true,
+          "retired_actual_Chord": {
+            "bounds": [
+              20,
+              10,
+              6,
+              20
+            ],
+            "id": 2,
+            "key": {
+              "local": 1,
+              "phase": "CHORD",
+              "system": 1
+            },
+            "measure_index": 0,
+            "member_ids": [],
+            "stem": null
+          },
+          "same_bounds": true,
+          "same_identity": true,
+          "same_measure_index": true,
+          "same_raw_part_id": true,
+          "same_raw_staff_id": true,
+          "same_slot": true,
+          "same_voice": true,
+          "time_offset": "7/64"
+        },
+        "containment": {
+          "body": {
+            "id": 1,
+            "kind": "Containment",
+            "manual": true,
+            "source": 2,
+            "system_id": 1,
+            "target": 1
+          },
+          "manual": true,
+          "native_relation_id": 1,
+          "registered": false,
+          "same_body": true,
+          "same_identity": true
+        },
+        "expected_duration": "3/4",
+        "measure_contains_chord": false,
+        "measure_contains_voice": false,
+        "measure_geometry_is_none": true,
+        "rest": {
+          "manual": true,
+          "native_id": 1,
+          "registered": false,
+          "removed": true,
+          "same_actual_Staff": true
+        },
+        "scalar_measure_excess": null,
+        "slot": {
+          "id": 1,
+          "incoming_same_chord": true,
+          "retained_in_measure_timing": true,
+          "same_identity": true,
+          "time_offset": "7/64"
+        },
+        "staff_contains_rest": false,
+        "voice": {
+          "chord_count": 0,
+          "chord_ids": [],
+          "excess": null,
+          "id": 1,
+          "same_identity": true,
+          "same_measure_index": true,
+          "slot_count": 1,
+          "slot_entries": [
+            {
+              "chord_is_held": true,
+              "slot_id": 1,
+              "status": "BEGIN"
+            }
+          ],
+          "slot_entries_unchanged": true,
+          "termination": "-25/64"
+        }
+      },
+      "declared_expected": "3/4",
+      "events": [
+        {
+          "native_relation_id": null,
+          "phase": "StaffRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": null,
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": false,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": true,
+            "voice": {
+              "chord_count": 1,
+              "chord_ids": [
+                2
+              ],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": null,
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": false,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 1,
+              "chord_ids": [
+                2
+              ],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "subject_kind": "RestInter"
+        },
+        {
+          "native_relation_id": null,
+          "phase": "MeasureRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": null,
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": false,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 1,
+              "chord_ids": [
+                2
+              ],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [
+                  1
+                ],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "subject_kind": "RestChordInter"
+        },
+        {
+          "native_relation_id": 1,
+          "phase": "EdgeRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [
+                  1
+                ],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "subject_kind": "RestChordInter"
+        },
+        {
+          "native_relation_id": null,
+          "phase": "VertexRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": false,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "subject_kind": "RestChordInter"
+        },
+        {
+          "native_relation_id": null,
+          "phase": "VertexRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": false,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": false,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "3/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": false,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": null,
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": null,
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "-25/64"
+            }
+          },
+          "subject_kind": "RestInter"
+        }
+      ],
+      "later_queued_Chord_removal_idempotent": true,
+      "name": "underfill",
+      "prepared": {
+        "chord": {
+          "manual": true,
+          "member_count": 1,
+          "raw_bounds": [
+            20,
+            10,
+            6,
+            20
+          ],
+          "raw_bounds_unchanged": true,
+          "registered": true,
+          "removed": false,
+          "retired_actual_Chord": null,
+          "same_bounds": true,
+          "same_identity": true,
+          "same_measure_index": true,
+          "same_raw_part_id": true,
+          "same_raw_staff_id": true,
+          "same_slot": true,
+          "same_voice": true,
+          "time_offset": "7/64"
+        },
+        "containment": {
+          "body": {
+            "id": 1,
+            "kind": "Containment",
+            "manual": true,
+            "source": 2,
+            "system_id": 1,
+            "target": 1
+          },
+          "manual": true,
+          "native_relation_id": 1,
+          "registered": true,
+          "same_body": true,
+          "same_identity": true
+        },
+        "expected_duration": "3/4",
+        "measure_contains_chord": true,
+        "measure_contains_voice": true,
+        "measure_geometry_is_none": true,
+        "rest": {
+          "manual": true,
+          "native_id": 1,
+          "registered": true,
+          "removed": false,
+          "same_actual_Staff": true
+        },
+        "scalar_measure_excess": null,
+        "slot": {
+          "id": 1,
+          "incoming_same_chord": true,
+          "retained_in_measure_timing": true,
+          "same_identity": true,
+          "time_offset": "7/64"
+        },
+        "staff_contains_rest": true,
+        "voice": {
+          "chord_count": 1,
+          "chord_ids": [
+            2
+          ],
+          "excess": null,
+          "id": 1,
+          "same_identity": true,
+          "same_measure_index": true,
+          "slot_count": 1,
+          "slot_entries": [
+            {
+              "chord_is_held": true,
+              "slot_id": 1,
+              "status": "BEGIN"
+            }
+          ],
+          "slot_entries_unchanged": true,
+          "termination": "-25/64"
+        }
+      }
+    },
+    {
+      "after": {
+        "chord": {
+          "manual": true,
+          "member_count": 0,
+          "raw_bounds": [
+            20,
+            10,
+            6,
+            20
+          ],
+          "raw_bounds_unchanged": true,
+          "registered": false,
+          "removed": true,
+          "retired_actual_Chord": {
+            "bounds": [
+              20,
+              10,
+              6,
+              20
+            ],
+            "id": 2,
+            "key": {
+              "local": 1,
+              "phase": "CHORD",
+              "system": 1
+            },
+            "measure_index": 0,
+            "member_ids": [],
+            "stem": null
+          },
+          "same_bounds": true,
+          "same_identity": true,
+          "same_measure_index": true,
+          "same_raw_part_id": true,
+          "same_raw_staff_id": true,
+          "same_slot": true,
+          "same_voice": true,
+          "time_offset": "7/64"
+        },
+        "containment": {
+          "body": {
+            "id": 1,
+            "kind": "Containment",
+            "manual": true,
+            "source": 2,
+            "system_id": 1,
+            "target": 1
+          },
+          "manual": true,
+          "native_relation_id": 1,
+          "registered": false,
+          "same_body": true,
+          "same_identity": true
+        },
+        "expected_duration": "1/4",
+        "measure_contains_chord": false,
+        "measure_contains_voice": false,
+        "measure_geometry_is_none": true,
+        "rest": {
+          "manual": true,
+          "native_id": 1,
+          "registered": false,
+          "removed": true,
+          "same_actual_Staff": true
+        },
+        "scalar_measure_excess": "7/64",
+        "slot": {
+          "id": 1,
+          "incoming_same_chord": true,
+          "retained_in_measure_timing": true,
+          "same_identity": true,
+          "time_offset": "7/64"
+        },
+        "staff_contains_rest": false,
+        "voice": {
+          "chord_count": 0,
+          "chord_ids": [],
+          "excess": "7/64",
+          "id": 1,
+          "same_identity": true,
+          "same_measure_index": true,
+          "slot_count": 1,
+          "slot_entries": [
+            {
+              "chord_is_held": true,
+              "slot_id": 1,
+              "status": "BEGIN"
+            }
+          ],
+          "slot_entries_unchanged": true,
+          "termination": "7/64"
+        }
+      },
+      "declared_expected": "1/4",
+      "events": [
+        {
+          "native_relation_id": null,
+          "phase": "StaffRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": null,
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": false,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": true,
+            "voice": {
+              "chord_count": 1,
+              "chord_ids": [
+                2
+              ],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": null,
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": false,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 1,
+              "chord_ids": [
+                2
+              ],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "subject_kind": "RestInter"
+        },
+        {
+          "native_relation_id": null,
+          "phase": "MeasureRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": null,
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": true,
+            "measure_contains_voice": true,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": false,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 1,
+              "chord_ids": [
+                2
+              ],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [
+                  1
+                ],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "subject_kind": "RestChordInter"
+        },
+        {
+          "native_relation_id": 1,
+          "phase": "EdgeRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 1,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": false,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [
+                  1
+                ],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": true,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "subject_kind": "RestChordInter"
+        },
+        {
+          "native_relation_id": null,
+          "phase": "VertexRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": true,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": false,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "subject_kind": "RestChordInter"
+        },
+        {
+          "native_relation_id": null,
+          "phase": "VertexRemoved",
+          "previous_observed_state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": false,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": true,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "state": {
+            "chord": {
+              "manual": true,
+              "member_count": 0,
+              "raw_bounds": [
+                20,
+                10,
+                6,
+                20
+              ],
+              "raw_bounds_unchanged": true,
+              "registered": false,
+              "removed": true,
+              "retired_actual_Chord": {
+                "bounds": [
+                  20,
+                  10,
+                  6,
+                  20
+                ],
+                "id": 2,
+                "key": {
+                  "local": 1,
+                  "phase": "CHORD",
+                  "system": 1
+                },
+                "measure_index": 0,
+                "member_ids": [],
+                "stem": null
+              },
+              "same_bounds": true,
+              "same_identity": true,
+              "same_measure_index": true,
+              "same_raw_part_id": true,
+              "same_raw_staff_id": true,
+              "same_slot": true,
+              "same_voice": true,
+              "time_offset": "7/64"
+            },
+            "containment": {
+              "body": {
+                "id": 1,
+                "kind": "Containment",
+                "manual": true,
+                "source": 2,
+                "system_id": 1,
+                "target": 1
+              },
+              "manual": true,
+              "native_relation_id": 1,
+              "registered": false,
+              "same_body": true,
+              "same_identity": true
+            },
+            "expected_duration": "1/4",
+            "measure_contains_chord": false,
+            "measure_contains_voice": false,
+            "measure_geometry_is_none": true,
+            "rest": {
+              "manual": true,
+              "native_id": 1,
+              "registered": false,
+              "removed": true,
+              "same_actual_Staff": true
+            },
+            "scalar_measure_excess": "7/64",
+            "slot": {
+              "id": 1,
+              "incoming_same_chord": true,
+              "retained_in_measure_timing": true,
+              "same_identity": true,
+              "time_offset": "7/64"
+            },
+            "staff_contains_rest": false,
+            "voice": {
+              "chord_count": 0,
+              "chord_ids": [],
+              "excess": "7/64",
+              "id": 1,
+              "same_identity": true,
+              "same_measure_index": true,
+              "slot_count": 1,
+              "slot_entries": [
+                {
+                  "chord_is_held": true,
+                  "slot_id": 1,
+                  "status": "BEGIN"
+                }
+              ],
+              "slot_entries_unchanged": true,
+              "termination": "7/64"
+            }
+          },
+          "subject_kind": "RestInter"
+        }
+      ],
+      "later_queued_Chord_removal_idempotent": true,
+      "name": "excess",
+      "prepared": {
+        "chord": {
+          "manual": true,
+          "member_count": 1,
+          "raw_bounds": [
+            20,
+            10,
+            6,
+            20
+          ],
+          "raw_bounds_unchanged": true,
+          "registered": true,
+          "removed": false,
+          "retired_actual_Chord": null,
+          "same_bounds": true,
+          "same_identity": true,
+          "same_measure_index": true,
+          "same_raw_part_id": true,
+          "same_raw_staff_id": true,
+          "same_slot": true,
+          "same_voice": true,
+          "time_offset": "7/64"
+        },
+        "containment": {
+          "body": {
+            "id": 1,
+            "kind": "Containment",
+            "manual": true,
+            "source": 2,
+            "system_id": 1,
+            "target": 1
+          },
+          "manual": true,
+          "native_relation_id": 1,
+          "registered": true,
+          "same_body": true,
+          "same_identity": true
+        },
+        "expected_duration": "1/4",
+        "measure_contains_chord": true,
+        "measure_contains_voice": true,
+        "measure_geometry_is_none": true,
+        "rest": {
+          "manual": true,
+          "native_id": 1,
+          "registered": true,
+          "removed": false,
+          "same_actual_Staff": true
+        },
+        "scalar_measure_excess": "7/64",
+        "slot": {
+          "id": 1,
+          "incoming_same_chord": true,
+          "retained_in_measure_timing": true,
+          "same_identity": true,
+          "time_offset": "7/64"
+        },
+        "staff_contains_rest": true,
+        "voice": {
+          "chord_count": 1,
+          "chord_ids": [
+            2
+          ],
+          "excess": "7/64",
+          "id": 1,
+          "same_identity": true,
+          "same_measure_index": true,
+          "slot_count": 1,
+          "slot_entries": [
+            {
+              "chord_is_held": true,
+              "slot_id": 1,
+              "status": "BEGIN"
+            }
+          ],
+          "slot_entries_unchanged": true,
+          "termination": "7/64"
+        }
+      }
+    }
+  ],
+  "identity_scope": "Voice/Slot/Staff use retained Arc identities; Chord identity is retained key/id and typed Chord record; SlotVoice and Rational are values, not Java object-identity claims",
+  "measure_geometry": "None, declared scalar Measure index; does not establish actual Part/Measure/Stack Arc parity",
+  "scope": "Existing two scalar singleton quarter-Rest controls, real Voice/Slot Arcs and typed Chord/Staff owners; no source fixture inputs"
+}

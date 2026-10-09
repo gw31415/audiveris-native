@@ -17,20 +17,20 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 
 両実ページの公開MusicXMLは未出力・品質受入未達です。直近の公開CLI観測は
 AnLaura追加7形状／Der Winter追加9形状のguardで、CHECKED変更前の結果です。
-CHECKED棄却15件・factory到達15/77件とPAGE各Voice終了量・共有excess比較は保存済み。
-保持Headerを直接登録する経路に、実MeasureのClef/Key所属と初回LINKSの混合Fillerを接続しました。
-System全Clef→Keyの部分順、Stack全filter→各追加、全peer所属と実Arcを保持します。
-KeyAlters36本も同じrelation/member Arcとmanual状態でshared SIGへ登録し、AnLaura36 Inter/66 relations、
-Der Winter15/10とnull Clef1件を比較。Timeの直接所有bindingと全C/K/T時系列は未移行です。
-原版保存Bookの宣言clear/fill/restoreと12追加の全peer中間状態が一致し、元Book/Jar不変。
-これはafterReload replayであり、初回画像認識callbackとは区別します。source宣言Chord7/64と
-Stack expected1/2は保持する一方、元状態の非空Voice/Slotやnative同一時計入力は主張しません。
-計19対象とfmt/clippy/build、63＋補正8・exact7/64・両実譜面XML bytes/XSDが成功。
-初回テスト用フィールド名と既存不正参照テストの期待順の失敗は修正・別記録し、成功済み9対象は反復しませんでした。
+保持Header Clef/Keyと混合Fillerに続き、TimePair/Whole/member/supportを実carrierから
+直接登録しました。AnLaura45 Inter/75 relations、Der Winter22/16・null Clef1件を
+MEASURESとLINKSで同じArcとして比較。一般の全C/K/T factory時系列は未完です。
+通常の限定symbol reducerからRest削除を実Staff・Measure・Voiceへ接続し、
+callback前に時計を消去せず、退役Chord/Voice/Slot・expectedDuration・manualを保持します。
+原Javaの宣言underfill/excess除去と14状態・434項目・保持検証込み588チェックが一致。
+元Book/Jar不変、実ページではAnLaura S2の8頂点削除順も一致しました。
+原版の宣言時計制御と画像のnull時計は区別し、全mixed scheduler同等とは主張しません。
+20対象とfmt/clippy/build、両実譜面・exact7/64・既存63＋補正8 XML bytes/XSDが成功。
+初回lint/formatと旧遅延削除assertionの失敗は別記録、成功済み16対象は再実行していません。
 内部Der Winterの124イベント・27 Voice・18小節identity、弱起27/27を保持しています。
 原版との差は余分なp方向記号1件と欠けたSlur6本。独立正解イベント102/124は原版と
 同じですが、公開受付・品質同等は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-header-filler/NEXT-DEPENDENCY.md) を使います。
+直近の作業順は [保存NEXT依存](../evidence/real-rest-time-owners/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

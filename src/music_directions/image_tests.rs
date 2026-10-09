@@ -140,7 +140,9 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
         })
         .collect::<Vec<_>>();
     let frames = music.owner.graph.snapshot();
+    crate::music_symbol_reduction::owned_image_tests::begin(&music);
     music = crate::music_links::continue_links(music).unwrap();
+    crate::music_symbol_reduction::owned_image_tests::finish(&music, "an_laura");
     crate::music_headers_owned::image_tests::verify(&music, &header_owners, "an_laura", "LINKS");
     crate::shared_sig::Graph::assert_completed_header_filler(&music, &header_filler);
     let after = rows(&music);
