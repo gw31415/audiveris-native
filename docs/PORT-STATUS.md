@@ -2359,3 +2359,19 @@ Graph body/時計/relation/manual statusと実Chord vectorを保持した。原�
 から実Voice/BEGINを走査し、複段Staffのnote/accidental/beamと必要な
 articulation・強弱/pedalをnative出力へ接続する。
 [証拠](../evidence/real-head-pitch/VALIDATION.json)・[次依存](../evidence/real-head-pitch/NEXT-DEPENDENCY.md)。
+
+通常Page rhythm後の保持済み実Voice/BEGINとcanonical Stack Slotから、複数Part/Staffの
+内部native MusicXMLを出力する経路を実装した。原版とcore音符92件（音高/正確な
+onset/長さ/Staff/voice/和音/付点/臨時記号/stem/beam）、小節8件の拍子/調号/clef、
+backup/forward13件（4 forwardの実top Staffを含む）、声部群16、staccato8が一致した。
+実Chord vector・Graph body/時計/relation/manual statusを保持し、null時計2 Chordは
+空BEGINによる省略診断へ残した。独立正解73/101音一致・F1=0.756476684は原版と同じで、
+原版の誤りも残る。原版caesura3件と強弱/pedal6件は未出力で、全notation一致ではない。
+実所有からのXMLはXSDと既存ProxyMusic readerに通り、2Part/8小節/92音/27和音継続/
+45beam/声部1,2,3,5,6を読めた。対象10件・fmt/clippy/buildと既存63＋補正8/exact7/64
+XML byte/XSD成功。初期中止runnerの子が残した出力は正式検証から除外した。
+公開画像CLIの複数Part guardは未変更（v29再実行なし）、品質未達。0休符/tie/graceの
+画像はそれらを証明せず、rest-only Staff header/mid-measure clefは明示guardする。
+次は実Part全Staffと原版x範囲によるpause lookup/notation、その後強弱/pedalの
+生成/吸収/lookup/支持/weak除去、通常画像CLIへの接続と実休符譜面の受入へ進む。
+[証拠](../evidence/real-voice-begin-export/VALIDATION.json)・[比較](../evidence/real-voice-begin-export/COMPARISON.json)・[内部XML](../evidence/real-voice-begin-export/laura-native-internal.musicxml)・[次依存](../evidence/real-voice-begin-export/NEXT-DEPENDENCY.md)。

@@ -16,6 +16,7 @@ pub(crate) enum Step {
     Forward {
         voice: usize,
         duration: Fraction,
+        staff_number: Option<usize>,
     },
 }
 impl Step {
@@ -55,7 +56,6 @@ pub(crate) fn bind_event(
         || chord["origin"]["system"] != measure.system
         || chord["part_id"] != measure.part
         || chord["measure_index"] != measure.index
-        || chord["staff_id"] != measure.staff
         || !matches!(
             chord["kind"].as_str(),
             Some("HeadChordInter" | "RestChordInter")
@@ -65,6 +65,27 @@ pub(crate) fn bind_event(
             .is_some_and(|ids| ids.contains(&event["note_id"]))
     {
         return Err("musicxml_voice_owned_event_required".into());
+    }
+    let note = nodes
+        .iter()
+        .find(|n| n["id"] == event["note_id"])
+        .ok_or("musicxml_voice_live_note_required")?;
+    let staff_id = note["staff_id"]
+        .as_u64()
+        .ok_or("musicxml_voice_actual_note_Staff_required")?;
+    let staff_valid = if let Some(geometry) = &measure.geometry {
+        graph.require_actual_music_measure(geometry)?;
+        geometry
+            .part
+            .staffs
+            .iter()
+            .any(|s| chord["staff_id"] == s.id)
+            && geometry.part.staffs.iter().any(|s| s.id == staff_id)
+    } else {
+        chord["staff_id"] == measure.staff && staff_id == measure.staff
+    };
+    if !staff_valid {
+        return Err("musicxml_voice_owned_Part_Staff_required".into());
     }
     let index = chord_notes(nodes, chord)?
         .iter()
@@ -115,11 +136,11 @@ pub(crate) fn bind_event(
     event["measure_number"] = json!(measure_index + 1);
     event["measure_index"] = json!(measure.index);
     event["system_id"] = json!(measure.system);
-    event["staff_id"] = json!(measure.staff);
+    event["staff_id"] = json!(staff_id);
     Ok(())
 }
 
-fn chord_notes<'a>(nodes: &'a [Value], chord: &Value) -> Result<Vec<&'a Value>, String> {
+pub(crate) fn chord_notes<'a>(nodes: &'a [Value], chord: &Value) -> Result<Vec<&'a Value>, String> {
     let members = chord["member_ids"]
         .as_array()
         .ok_or("musicxml_voice_owned_event_required")?;
@@ -210,8 +231,35 @@ pub(crate) fn sequence(
                     return Err("musicxml_voice_owned_slot_clock_required".into());
                 }
                 if cursor < onset {
+                    let staff_number = if let Some(geometry) = measure
+                        .geometry
+                        .as_ref()
+                        .filter(|g| g.part.staffs.len() > 1)
+                    {
+                        graph.require_actual_music_measure(geometry)?;
+                        let notes = chord_notes(snapshot["inters"].as_array().unwrap(), n)?;
+                        let top = notes
+                            .iter()
+                            .map(|note| {
+                                geometry
+                                    .part
+                                    .staffs
+                                    .iter()
+                                    .position(|s| note["staff_id"] == s.id)
+                                    .map(|i| i + 1)
+                                    .ok_or("musicxml_forward_actual_Part_Staff_required")
+                            })
+                            .collect::<Result<Vec<_>, _>>()?
+                            .into_iter()
+                            .min()
+                            .ok_or("musicxml_forward_actual_Chord_members_required")?;
+                        Some(top)
+                    } else {
+                        None
+                    };
                     steps.push(Step::Forward {
                         voice: voice.id,
+                        staff_number,
                         duration: onset
                             .difference(cursor)?
                             .excess()
@@ -314,9 +362,16 @@ pub(crate) fn write_measure(
             Step::Backup(_) => {
                 writeln!(xml, "<backup><duration>{duration}</duration></backup>").unwrap()
             }
-            Step::Forward { voice, .. } => writeln!(
+            Step::Forward {
+                voice,
+                staff_number,
+                ..
+            } => writeln!(
                 xml,
-                "<forward><duration>{duration}</duration><voice>{voice}</voice></forward>"
+                "<forward><duration>{duration}</duration><voice>{voice}</voice>{}</forward>",
+                staff_number
+                    .map(|s| format!("<staff>{s}</staff>"))
+                    .unwrap_or_default()
             )
             .unwrap(),
             Step::Chord { id, voice, .. } => {
@@ -370,16 +425,24 @@ pub(crate) fn write_measure(
                     }
                     writeln!(
                         xml,
-                        "<duration>{duration}</duration><voice>{voice}</voice>{}{}{}{}</note>",
+                        "<duration>{duration}</duration><voice>{voice}</voice>{}{}{}{}{}{}{}</note>",
                         e["type"]
                             .as_str()
                             .map(|t| format!("<type>{t}</type>"))
                             .unwrap_or_default(),
                         "<dot/>".repeat(dots as usize),
+                        match e["accidental"].as_str() {
+                            None => String::new(),
+                            Some(shape) => {
+                                let value=match shape {"NATURAL"=>"natural","FLAT"=>"flat","DOUBLE_FLAT"=>"flat-flat","SHARP"=>"sharp","DOUBLE_SHARP"=>"double-sharp",_=>return Err("musicxml_accidental_shape_pending".into())};
+                                format!("<accidental>{value}</accidental>")
+                            }
+                        },
                         e["stem_direction"]
                             .as_str()
                             .map(|d| format!("<stem>{d}</stem>"))
                             .unwrap_or_default(),
+                        e["staff_number"].as_u64().map(|s|format!("<staff>{s}</staff>")).unwrap_or_default(),
                         e["beams"]
                             .as_array()
                             .map(|beams| beams
@@ -390,7 +453,14 @@ pub(crate) fn write_measure(
                                     b["value"].as_str().unwrap()
                                 ))
                                 .collect::<String>())
-                            .unwrap_or_default()
+                            .unwrap_or_default(),
+                        e["articulations"].as_array().filter(|a|!a.is_empty()).map(|arts| {
+                            let mut value=String::from("<notations><articulations>");
+                            for a in arts {
+                                write!(value,"<{} placement=\"{}\"{} />",a["name"].as_str().unwrap(),a["placement"].as_str().unwrap(),a["type"].as_str().map(|t|format!(" type=\"{t}\"")).unwrap_or_default()).unwrap();
+                            }
+                            value.push_str("</articulations></notations>");value
+                        }).unwrap_or_default()
                     )
                     .unwrap();
                 }

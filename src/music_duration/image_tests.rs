@@ -175,4 +175,26 @@ pub(crate) fn assert_real_duration_reads(mut music: OwnedMusic, preparation: Val
     crate::music_voices::shared_stack::image_tests::assert_real_shared_slots(&mut music);
     crate::music_voices::image_tests::refinement::assert_real_refinement(&mut music);
     crate::music_xml::stack_rhythm::page::image_tests::assert_real_page_rhythm(&mut music);
+    let before = music.owner.graph.snapshot();
+    let address = music.chords.as_ptr();
+    let (xml, observation) = music.write_recognized_musicxml("An Laura").unwrap();
+    std::fs::write("/tmp/real-voice-begin-export-native.musicxml", xml).unwrap();
+    std::fs::write(
+        "/tmp/real-voice-begin-export-native-observed.json",
+        serde_json::to_vec_pretty(&observation).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(observation["events"].as_array().unwrap().len(), 92);
+    assert_eq!(
+        observation["omitted_actual_Chords"]
+            .as_array()
+            .unwrap()
+            .len(),
+        2
+    );
+    for omitted in observation["omitted_actual_Chords"].as_array().unwrap() {
+        assert!(omitted["time_offset"].is_null());
+    }
+    assert_eq!(before, music.owner.graph.snapshot());
+    assert_eq!(address, music.chords.as_ptr());
 }

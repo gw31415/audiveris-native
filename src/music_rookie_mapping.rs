@@ -1231,7 +1231,7 @@ mod tests {
                     json!({"kind":"chord","voice":voice,"step":e["step"],"octave":e["octave"],"type":e["type"],"stem":e["stem_direction"],"duration":crate::music_time::format_fraction(duration)})
                 },
                 crate::music_voice_export::Step::Backup(duration) => json!({"kind":"backup","duration":crate::music_time::format_fraction(duration)}),
-                crate::music_voice_export::Step::Forward { voice, duration } => json!({"kind":"forward","voice":voice,"duration":crate::music_time::format_fraction(duration)}),
+                crate::music_voice_export::Step::Forward { voice, duration, .. } => json!({"kind":"forward","voice":voice,"duration":crate::music_time::format_fraction(duration)}),
             }).collect::<Vec<_>>();
             assert_eq!(json!(stream), export["export_stream"], "{}", case["name"]);
             let divisions = crate::music_voice_export::divisions(
