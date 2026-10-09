@@ -291,6 +291,67 @@ impl Graph {
             .ok_or("music_actual_Stack_geometry_required")?;
         Ok(Some(measure.stack.clone()))
     }
+    pub(crate) fn actual_music_stack_x_offset(
+        &self,
+        geometry: &Arc<crate::music_measure_layout::MeasureLayout>,
+        point: [f64; 2],
+    ) -> Result<f64, String> {
+        let owner = self
+            .dot_ownership
+            .as_ref()
+            .ok_or("music_actual_Stack_membership_required")?;
+        if !owner.measures.iter().any(|m| {
+            m.geometry
+                .as_ref()
+                .is_some_and(|g| Arc::ptr_eq(g, geometry))
+        }) {
+            return Err("music_stack_actual_geometry_required".into());
+        }
+        let around = crate::grid_staff_neighborhood::around(
+            &owner.staffs,
+            &owner.areas,
+            &owner.parts,
+            geometry.stack.system,
+            point,
+        )?;
+        if !(1..=2).contains(&around.staffs.len()) {
+            return Err("music_stack_actual_surrounding_Staffs_required".into());
+        }
+        let left = |staff: &Arc<crate::grid_ir::StaffGeometry>| -> Result<[f64; 2], String> {
+            let g = owner
+                .measures
+                .iter()
+                .filter_map(|m| m.geometry.as_ref())
+                .find(|g| {
+                    Arc::ptr_eq(&g.stack, &geometry.stack)
+                        && g.part.staffs.iter().any(|s| Arc::ptr_eq(s, staff))
+                })
+                .ok_or("music_stack_actual_Staff_Measure_required")?;
+            g.left_point(self, staff)
+        };
+        let first = &around.staffs[0];
+        let left1 = left(first)?;
+        let offset = if around.staffs.len() == 2 {
+            let second = &around.staffs[1];
+            let left2 = left(second)?;
+            let y1 = first.lines[first.lines.len() / 2].y(point[0]);
+            let y2 = second.lines[second.lines.len() / 2].y(point[0]);
+            if !y1.is_finite() || !y2.is_finite() || y1 == y2 {
+                return Err("music_stack_staff_midline_required".into());
+            }
+            let offset1 = point[0] - left1[0];
+            let offset2 = point[0] - left2[0];
+            offset1 + (offset2 - offset1) * (point[1] - y1) / (y2 - y1)
+        } else {
+            // Translation of the measured sheet affine origin cancels here.
+            let angle = geometry.skew.slope().atan();
+            angle.cos() * (point[0] - left1[0]) + angle.sin() * (point[1] - left1[1])
+        };
+        if !offset.is_finite() {
+            return Err("music_stack_finite_offset_required".into());
+        }
+        Ok(offset)
+    }
     fn stack_at_dot_point(
         &self,
         system: u64,

@@ -104,6 +104,7 @@ pub(crate) fn assert_real_part_memberships(
         part: old.part.clone(),
         index: old.index,
         stack: old.stack.clone(),
+        skew: old.skew,
         contained_left: old.contained_left.clone(),
         effective_left: old.effective_left.clone(),
         right: old.right.clone(),

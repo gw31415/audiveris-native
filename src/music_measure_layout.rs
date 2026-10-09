@@ -57,11 +57,47 @@ pub(crate) struct MeasureLayout {
     pub(crate) part: Arc<PartGeometry>,
     pub(crate) index: usize,
     pub(crate) stack: Arc<Stack>,
+    pub(crate) skew: SheetSkew,
     pub(crate) contained_left: Option<Arc<PartBarline>>,
     pub(crate) effective_left: Option<Arc<PartBarline>>,
     pub(crate) right: Option<Arc<PartBarline>>,
 }
 impl MeasureLayout {
+    pub(crate) fn left_point(
+        &self,
+        graph: &Graph,
+        staff: &Arc<StaffGeometry>,
+    ) -> Result<[f64; 2], String> {
+        if !self.part.staffs.iter().any(|s| Arc::ptr_eq(s, staff)) {
+            return Err("music_Measure_actual_Part_Staff_required".into());
+        }
+        if let Some(bar) = &self.effective_left {
+            let index = bar
+                .part
+                .staffs
+                .iter()
+                .position(|s| Arc::ptr_eq(s, staff))
+                .ok_or("music_PartBarline_actual_Staff_required")?;
+            let member = bar
+                .bars
+                .get(index)
+                .and_then(|b| b.group.members.last())
+                .ok_or("music_stack_physical_bar_reference_required")?;
+            let (body, removed) = graph.retained_inter(*member)?;
+            if removed || body["kind"] != "BarlineInter" {
+                return Err("music_stack_physical_bar_reference_required".into());
+            }
+            let b: [i64; 4] = serde_json::from_value(body["bounds"].clone())
+                .map_err(|_| "music_stack_bar_bounds_required")?;
+            // Integer abscissae lose half-pixel centers of odd-width bars.
+            return Ok([
+                b[0] as f64 + b[2] as f64 / 2.,
+                b[1] as f64 + b[3] as f64 / 2.,
+            ]);
+        }
+        let x = staff.abscissae[0];
+        Ok([x as f64, staff.middle_at(x)? as f64])
+    }
     pub(crate) fn abscissae(&self, staff: &Arc<StaffGeometry>) -> Result<[i64; 2], String> {
         if !self.part.staffs.iter().any(|s| Arc::ptr_eq(s, staff)) {
             return Err("music_Measure_actual_Part_Staff_required".into());
@@ -263,6 +299,7 @@ pub(crate) fn build(
                         part: part.clone(),
                         index,
                         stack: stack.stack.clone(),
+                        skew,
                         contained_left,
                         effective_left,
                         right: Some(bar.clone()),
@@ -295,6 +332,7 @@ pub(crate) fn build(
                     part: part.clone(),
                     index,
                     stack: stack.stack.clone(),
+                    skew,
                     contained_left: pending,
                     effective_left,
                     right: None,

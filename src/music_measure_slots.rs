@@ -11,6 +11,8 @@ use crate::{
 };
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+#[cfg(test)]
+pub(crate) mod image_tests;
 use std::{
     cmp::Ordering,
     collections::{BTreeMap, BTreeSet},
@@ -745,7 +747,17 @@ pub(crate) fn from_owned(
             id: chord.id,
             bounds,
             dot_bounds: crate::music_dots::bounds_with_dots(&snapshot, chord, bounds)?,
-            x: (bounds[0] + bounds[2] / 2 - measure.left) as f64,
+            x: if let Some(geometry) = &measure.geometry {
+                graph.actual_music_stack_x_offset(
+                    geometry,
+                    [
+                        (bounds[0] + bounds[2] / 2) as f64,
+                        (bounds[1] + bounds[3] / 2) as f64,
+                    ],
+                )?
+            } else {
+                (bounds[0] + bounds[2] / 2 - measure.left) as f64
+            },
             head: geometry
                 .head_location
                 .ok_or("music_measure_slot_head_location_required")?

@@ -2272,3 +2272,12 @@ XML byte/XSD成功。複数Partガードは今回未変更で、v29のXML未出�
 最新全ページ観測。品質受入は未達。次は実narrow/wide/compound取得と
 曲線Staffによる共有Stack abscissa、共有Slot/rhythmと複段MusicXML出力。
 [証拠](../evidence/real-voice-distance/VALIDATION.json)・[次依存](../evidence/real-voice-distance/NEXT-DEPENDENCY.md)。
+
+実ChordのStack x-offsetを、保持済みStaff領域・曲線、同じ実StackのMeasure、
+実Barlineの半pixel中心から取得する経路へ接続した。原版67位置と8小節の
+narrow/wide/compoundの全member・順序が一致し、読み取りで全Graphを保持した。
+対象5件・fmt/clippy/build、63＋補正8/exact7/64 XML byte/XSD成功。
+複数Partガードは未変更で、最新全ページ観測v29のXML未出力を再実行していない。
+品質受入は未達。次は原版の共有Stack rhythm、null時計・超過・Voice終了量と
+refinement前後の実所有を比較し、複段Partの必要な記号と出力へ接続する。
+[証拠](../evidence/real-measure-slots/VALIDATION.json)・[次依存](../evidence/real-measure-slots/NEXT-DEPENDENCY.md)。
