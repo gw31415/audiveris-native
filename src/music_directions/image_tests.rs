@@ -63,6 +63,7 @@ fn unchanged_real_page_dynamics_pedal_factory_lookup_and_export_match_original()
     let owner = crate::music_links::finalize_stems(owner).unwrap();
     let music = crate::music_measures::continue_measures(owner).unwrap();
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
+    crate::music_symbols::assert_real_checked_rejections(&music, "an_laura");
     // The original observer calls Pedal.getStaff at SYMBOLS; compare that lazy
     // read separately without assigning those source IDs into the native graph.
 

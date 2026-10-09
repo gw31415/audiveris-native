@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "fixtures/official-page-duration-replay/PROVENANCE.md",
+      "before_sha256": null,
+      "after_sha256": "72ccffded93e008e08a02c5540f485c82518d1b1509922b63447c063a924b7f5",
+      "current_matches_before": true
+    },
+    {
+      "path": "fixtures/official-page-duration-replay/observed.json",
+      "before_sha256": null,
+      "after_sha256": "d2a80ac5309d76d61238f3e4ffc72295f5741f3302cc9aa0d1928913774d65a6",
+      "current_matches_before": true
+    },
+    {
+      "path": "src/music_xml/page_measures/trace_tests.rs",
+      "before_sha256": null,
+      "after_sha256": "1897c2aa3df19a123a583e9f0bac73abb0abe449ae775105ab7fb36ce6ff4508",
+      "current_matches_before": true
+    },
+    {
+      "path": "src/music_xml/page_measures.rs",
+      "before_sha256": "e40185359401a636bbaed12775d9345e9fc0a3eb4f2758427e69a807fa0efa2d",
+      "after_sha256": "2052a80f9391277e393b96e11a76a1041b8c8e5a1275d03061898e73bd74db7d",
+      "current_matches_before": true
+    },
+    {
+      "path": "src/music_xml/recognized_export/header_tests.rs",
+      "before_sha256": "182ab0c904c2571a328e74d9868910154b26a3279bf23ddb5b179001699b184b",
+      "after_sha256": "7df6467b806e1c937dd725ba66b66464b967a72af1272fafa8dd88a03f2ea620",
+      "current_matches_before": true
+    }
+  ],
+  "source_observed_sha256": "94d1eee5c56f44157d65fe85950a689649f3969b7b5f72849482ae35b3f0d4af",
+  "previous_success_comparison": {
+    "path": "/tmp/real-rest-page-fixer-replay-original-v3/native-comparison-v1.json",
+    "sha256": "9a7975516ba5a2ba5910b58e03c0b006f8ef205a783ae1e0c40c28545cb8520e"
+  },
+  "previous_success_native_report_sha256": "455722d0de93d335673cbb4d2b3bf57fa086331a013df0e1c9b8e0f7ac06d133",
+  "rustfmt_parsed": true,
+  "cargo_or_native_or_image_run": false,
+  "checkout_edits": false,
+  "independent_review": "No concrete compile/borrow/type/owner reconstruction issue found; unwind qualification fixed with TLS guard and restore-before-resume."
+}

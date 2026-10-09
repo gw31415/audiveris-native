@@ -1,0 +1,57 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "files": [
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-checked-rejections/observed.json",
+      "exists": true,
+      "bytes": 37983,
+      "sha256": "a061bae18ac23c28f281655ee6318de80697b1eb1ff9a4312179cdc699c62c4c"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-checked-rejections/PROVENANCE.json",
+      "exists": true,
+      "bytes": 3906,
+      "sha256": "605fee433f963ec1a8574ea08d8660754cfb77f4affafff82373cec93524115e"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-checked-rejections/extract_controls.py",
+      "exists": true,
+      "bytes": 4977,
+      "sha256": "347639784425544aac0c250187f7685b128517fc334e18d5d85acdca54ffbd11"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-page-duration-replay/observed.json",
+      "exists": true,
+      "bytes": 6837,
+      "sha256": "d2a80ac5309d76d61238f3e4ffc72295f5741f3302cc9aa0d1928913774d65a6"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-page-duration-replay/PROVENANCE.md",
+      "exists": true,
+      "bytes": 2241,
+      "sha256": "72ccffded93e008e08a02c5540f485c82518d1b1509922b63447c063a924b7f5"
+    },
+    {
+      "path": "/workspace/audiveris-native/fixtures/official-page-duration-replay/extract_source.py",
+      "exists": true,
+      "bytes": 2458,
+      "sha256": "b8201d56951121b3c1707a6a74b3d43be32fd01281f4a06ff64d7721d53dd8a0"
+    },
+    {
+      "path": "/workspace/audiveris-native/evidence/real-page-pickup/original-replay/summary.json",
+      "exists": true,
+      "bytes": 52514,
+      "sha256": "02e78d1ae179ee4f2b8e88b2c7c0ca9c06c6e27c570c0dd6975e541adcc79313"
+    },
+    {
+      "path": "/workspace/audiveris-native/evidence/real-page-pickup/original-replay/PROVENANCE.json",
+      "exists": true,
+      "bytes": 2226,
+      "sha256": "bc238c75194675cab85d885a2e1626f9cd64a122fc7e460b3b0d587546f31b0d"
+    }
+  ],
+  "direct_checked_rejections": 15,
+  "ACCENT_exact_original_live_gap_and_failure_string_observed": false,
+  "PAGE_original_scope": "Selected original methods replayed on saved post-PAGE actual owners, not fresh image or whole PAGE. Restored original null priors remain distinct from native already-computed prior clocks.",
+  "declared_shared_growth_scope": "Only original last-excess-Voice before/after is directly observed; preceding zero-termination native checks preserving1/64 are source-derived controls."
+}

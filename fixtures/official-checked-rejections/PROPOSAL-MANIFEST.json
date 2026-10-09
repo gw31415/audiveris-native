@@ -1,0 +1,56 @@
+{
+  "files": {
+    "PROVENANCE.json": {
+      "bytes": 3906,
+      "sha256": "605fee433f963ec1a8574ea08d8660754cfb77f4affafff82373cec93524115e"
+    },
+    "README.md": {
+      "bytes": 6679,
+      "sha256": "61de21bc99f49ad7c741d7d3d161e7ee98b4ada7a2dbdc4258833a2d8b32a568"
+    },
+    "after/fixtures/official-checked-rejections/observed.json": {
+      "bytes": 37983,
+      "sha256": "a061bae18ac23c28f281655ee6318de80697b1eb1ff9a4312179cdc699c62c4c"
+    },
+    "after/src/music_ornaments/tests.rs": {
+      "bytes": 25430,
+      "sha256": "2cdf1b1b8febb7dfd84ecbc8511f94bc69e9eefa1ea79815ade65e9345a6a4e2"
+    },
+    "after/src/music_symbols/checked_rejection_tests.rs": {
+      "bytes": 12463,
+      "sha256": "be58b4a6a10683e82b9d8c72003771367f56e474473682cd8db61fbad828b481"
+    },
+    "after/src/music_symbols/checked_rejections.rs": {
+      "bytes": 2082,
+      "sha256": "4af34c2128baeceef656b8805952429904c278ccc2b6b1d9b50f2be56c5d4f03"
+    },
+    "after/src/music_symbols.rs": {
+      "bytes": 38668,
+      "sha256": "ffa08675d9718fc4effa3a87e05c468c3f34fadde694a639352409283386fa6f"
+    },
+    "after/src/music_tuplets/tests.rs": {
+      "bytes": 28793,
+      "sha256": "8f14ee0e202c543c9362b09df295295dc9594dfb63310c06e2b39705376f12bd"
+    },
+    "before/src/music_ornaments/tests.rs": {
+      "bytes": 25352,
+      "sha256": "9344bc24e3d641ff3706f9df4c9c72f6a090d1859c531c431c7c076320a2c7b1"
+    },
+    "before/src/music_symbols.rs": {
+      "bytes": 38230,
+      "sha256": "007e216377c3f5903f11203c33ea1ff4ee8eb073c829a0f5eb0aac77b2ae4064"
+    },
+    "before/src/music_tuplets/tests.rs": {
+      "bytes": 28713,
+      "sha256": "2d6b487b42135899cfcd1fb28e14cbae3f5dcdbf503619ab7f503744dbe344a1"
+    },
+    "extract_controls.py": {
+      "bytes": 4977,
+      "sha256": "347639784425544aac0c250187f7685b128517fc334e18d5d85acdca54ffbd11"
+    },
+    "proposed.patch": {
+      "bytes": 55582,
+      "sha256": "0162c5b13857f82a4414f6d801664bc5ccaeaecf275f9164fca7978b2cfa21f9"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "delta": [
+    {
+      "path": "src/music_xml/page_measures/trace_tests.rs",
+      "primary_test_sha256": "1897c2aa3df19a123a583e9f0bac73abb0abe449ae775105ab7fb36ce6ff4508",
+      "final_sha256": "ba010ca50f045275406183681684a475d9a9f09db0caf4b11698e8c0a540a9cd"
+    }
+  ],
+  "production_source_changed_after_primary_tests": false,
+  "change": "Three test-only fixed-size pair iterators changed from chunks_exact(2) to as_chunks::<2>().0.iter(), then formatted. Existing assertions require even lengths.",
+  "initial_clippy_failure_preserved": true,
+  "post_fix_first_fmt_attempt": {
+    "exit_code": 1,
+    "reason": "Standalone cargo fmt initially omitted existing Cloud toolchain home variables and could not create /home/agent/.rustup on read-only filesystem; existing configured environment variables fixed invocation without configuration changes. The following fmt check observed unformatted pair iterators; retained final-checks.json and final-fmt.log record it."
+  }
+}

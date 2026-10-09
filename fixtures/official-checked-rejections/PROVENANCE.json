@@ -1,0 +1,102 @@
+{
+  "original_commit": "9e1e55cd2746037d059345881c53e6a6754bffbd",
+  "operation": "Read-only saved evidence and source review; /tmp proposal only. No native build/test/image, original full-page rerun, repo edit or Git operation.",
+  "sources": [
+    {
+      "path": "/tmp/audiveris-pinned-source/glyph/ShapeChecker.java",
+      "bytes": 37331,
+      "sha256": "b610829c63c685d619923d7ce559317698d5bb9f5eb82a7d04f3147b46efa0b4"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/classifier/AbstractClassifier.java",
+      "bytes": 14739,
+      "sha256": "3eb261e257b59ca85d223e1045a3f92fe859dc7d8b80ca627dd6d2f15fa6295e"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/Staff.java",
+      "bytes": 70491,
+      "sha256": "ab1bf02960acb0c20f0c1e8f5e0c8b2765d52f4efd0b2d27abd14ec085a05d57"
+    },
+    {
+      "path": "/tmp/audiveris-pinned-source/sheet/SystemInfo.java",
+      "bytes": 57751,
+      "sha256": "ca5046588d72fc9eef0f21d6957cd2d34d63510599ca3f89aa70a73a2a690952"
+    },
+    {
+      "path": "/tmp/real-seven-label-lifecycle-v3/observed.json",
+      "bytes": 540118,
+      "sha256": "cfed938c400443deb1acd50a40851fa2192124278fad899848e0934ef5ca134a"
+    },
+    {
+      "path": "/tmp/real-rest-nine-label-original-v1/observed.json",
+      "bytes": 1066824,
+      "sha256": "6d997c59a0eb930c7a659008d8d88473a11e332e017d9dcab6ab7194556eae24"
+    },
+    {
+      "path": "/tmp/real-rest-nine-label-original-v1/compact-observed.json",
+      "bytes": 501117,
+      "sha256": "73c0257576a95e321df1cfd2056679e744cc1ca1c15140d2b658a29a6117156a"
+    },
+    {
+      "path": "/tmp/real-rest-nine-label-original-v1/compact-observed.CHECKS.json",
+      "bytes": 340,
+      "sha256": "a438414704166ea29987e5629179d580e39737d33be5b122532f7f272db876d6"
+    },
+    {
+      "path": "/tmp/real-rest-nine-label-original-v1/provenance.json",
+      "bytes": 6868,
+      "sha256": "b8fa74577b173ff801c64ed25abb01560bdfa9401a021e1587039f7b7670c69c"
+    },
+    {
+      "path": "/tmp/real-rest-nine-label-original-v1/unmatched-fermata-slur-association.json",
+      "bytes": 2510,
+      "sha256": "74e24ab561f930e1b091ca9be1f26a9ea4e941349319d335178e49b91d6f3158"
+    },
+    {
+      "path": "/tmp/real-rest-symbol-candidates.json",
+      "bytes": 513293,
+      "sha256": "05aa90a232014133f51f5e168e6064ff145a3d9bd1d7f05e63d28b0b0b3d4807"
+    },
+    {
+      "path": "/tmp/real-ornament-native-symbols.json",
+      "bytes": 92731478,
+      "sha256": "96576a1e5abbb143bf02dc47e38fe564354667b9f944152ead00ad0f06ed49f4"
+    }
+  ],
+  "direct_new_rejections": 15,
+  "accent_exact_gap_or_failure_string_observed": false,
+  "protected_factory_arrivals": {
+    "AnLaura": 15,
+    "DerWinter": 77
+  },
+  "rank_three_no_failure_excluded_by_limit": 4,
+  "unmatched_DerWinter_Fermata_candidates": 2,
+  "existing_saved_full_array_comparison": {
+    "DerWinter": {
+      "matched": 77,
+      "total": 77
+    },
+    "AnLaura": {
+      "matched": 14,
+      "total": 15,
+      "difference": "ACCENT followed by QUINDICESIMA vs original QUINDICESIMA only"
+    }
+  },
+  "native_proposed_behavior_verified": false,
+  "rustfmt_parsed_and_formatted": true,
+  "read_only_review": {
+    "nested_iterator_capture_fixed": "move captures actual trial reference by value; no native compile claimed",
+    "source_registration_and_failure_contracts": "reviewed independently",
+    "native_test_or_image_execution": false,
+    "all_rejection_rows_and_protected_arrays_match_existing_original": true,
+    "DerWinter_control_geometries_unique_in_saved_native_capture": true,
+    "additional_concrete_blockers": null,
+    "ordering_scope": "Per-trial complete CHECKED array; no new global factory order claim"
+  },
+  "diagnostic_extension": {
+    "actual_native_ACCENT_rectangle_gap_and_max_gap": true,
+    "predicate_behavior_changed": false,
+    "additional_image_or_native_run": false,
+    "original_exact_gap_still_unobserved": true
+  }
+}

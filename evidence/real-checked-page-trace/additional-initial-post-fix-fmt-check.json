@@ -1,0 +1,15 @@
+[
+  {
+    "check": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 1,
+    "elapsed_seconds": 2.1708672970125917,
+    "log": "/tmp/real-checked-rejections-v1-final-fmt.log"
+  }
+]

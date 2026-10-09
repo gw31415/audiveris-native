@@ -1,0 +1,717 @@
+{
+  "comparison_complete": true,
+  "comparisons": [
+    {
+      "checked_Voice_results_and_unchanged_other_Voices_match": true,
+      "native_live_before": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "original_reloaded_before": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": null
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": null
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": null
+            }
+          ]
+        }
+      ],
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "checked_Voice_results_and_unchanged_other_Voices_match": true,
+      "native_live_before": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "original_reloaded_before": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": null
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": null
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": null
+            }
+          ]
+        }
+      ],
+      "stack_index": 3,
+      "system": 1
+    }
+  ],
+  "frames": [
+    {
+      "actual": "1/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 1,
+      "checked_voice_id": 1,
+      "excess": null,
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "phase": "before",
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "actual": "1/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 1,
+      "checked_voice_id": 1,
+      "excess": null,
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "phase": "after",
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "actual": "1/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 1,
+      "excess": null,
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "phase": "before",
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "actual": "1/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 1,
+      "excess": null,
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "phase": "after",
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "actual": "1/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 5,
+      "excess": null,
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "phase": "before",
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "actual": "1/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 5,
+      "excess": null,
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            }
+          ]
+        },
+        {
+          "abnormal": false,
+          "actual": "1/8",
+          "excess": null,
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "-3/8"
+            },
+            {
+              "excess": null,
+              "id": 5,
+              "termination": "-3/8"
+            }
+          ]
+        }
+      ],
+      "phase": "after",
+      "stack_index": 1,
+      "system": 1
+    },
+    {
+      "actual": "5/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 1,
+      "checked_voice_id": 1,
+      "excess": "1/8",
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "phase": "before",
+      "stack_index": 3,
+      "system": 1
+    },
+    {
+      "actual": "5/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 1,
+      "checked_voice_id": 1,
+      "excess": "1/8",
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "phase": "after",
+      "stack_index": 3,
+      "system": 1
+    },
+    {
+      "actual": "5/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 1,
+      "excess": "1/8",
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "phase": "before",
+      "stack_index": 3,
+      "system": 1
+    },
+    {
+      "actual": "5/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 1,
+      "excess": "1/8",
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "phase": "after",
+      "stack_index": 3,
+      "system": 1
+    },
+    {
+      "actual": "5/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 5,
+      "excess": "1/8",
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "phase": "before",
+      "stack_index": 3,
+      "system": 1
+    },
+    {
+      "actual": "5/8",
+      "actual_Stack_Measure_Voice_Slot_Arcs_and_Chord_memberships_retained": true,
+      "checked_part": 2,
+      "checked_voice_id": 5,
+      "excess": "1/8",
+      "expected": "1/2",
+      "peers": [
+        {
+          "abnormal": false,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 1,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            }
+          ]
+        },
+        {
+          "abnormal": true,
+          "actual": "5/8",
+          "excess": "1/8",
+          "expected": "1/2",
+          "part": 2,
+          "voices": [
+            {
+              "excess": null,
+              "id": 1,
+              "termination": "0"
+            },
+            {
+              "excess": "1/8",
+              "id": 5,
+              "termination": "1/8"
+            }
+          ]
+        }
+      ],
+      "phase": "after",
+      "stack_index": 3,
+      "system": 1
+    }
+  ],
+  "qualification": "Original saved-PAGE reload starts with null transient termination; native live RHYTHMS already computed it. Each checked result and unaffected peers are compared without clearing native prior state.",
+  "quality_accepted": false,
+  "raw": {
+    "path": "/tmp/real-rest-PAGE-duration-trace-native.json",
+    "exists": true,
+    "bytes": 16053,
+    "sha256": "4504ac2d52193349352d2ea965ddf195f59d3cb726f2f8cf3a0201b898415c94"
+  }
+}

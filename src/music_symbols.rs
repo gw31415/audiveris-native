@@ -13,6 +13,7 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeSet;
 const MODEL: &[u8] = include_bytes!("../crates/audiveris-classifier/models/audiveris-5.11.0.json");
+mod checked_rejections;
 mod clusters;
 pub(crate) mod geometry;
 fn head_dilation(point_size: u16) -> i64 {
@@ -389,6 +390,11 @@ fn checked(
     let left = s.abscissae[0] as f64;
     let right = s.abscissae[1] as f64;
     if (g.left as f64 + g.width as f64) < left || g.left as f64 > right {
+        return Ok(None);
+    }
+    // Rejected evaluations must not consume either accepted rank or reach a factory.
+    // Surviving small clefs/markers still require their remaining checks and lifecycle.
+    if checked_rejections::rejection(shape, g, s, il, Some(pitch))?.is_some() {
         return Ok(None);
     }
     if time(shape).is_some() {
@@ -909,3 +915,8 @@ mod dilation_tests;
 
 #[cfg(test)]
 mod clusters_tests;
+
+#[cfg(test)]
+mod checked_rejection_tests;
+#[cfg(test)]
+pub(crate) use checked_rejection_tests::assert_real_checked_rejections;

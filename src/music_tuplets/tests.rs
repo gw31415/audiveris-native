@@ -262,6 +262,7 @@ fn real_image_linked_six_callbacks_and_later_weak_purge_match_original() {
     crate::music_arpeggiato::tests::begin_factory_observation();
     let mut music = crate::music_symbols::continue_symbols(music).unwrap();
     crate::music_arpeggiato::tests::assert_der_winter_null_factory(&music);
+    crate::music_symbols::assert_real_checked_rejections(&music, "der_winter");
     std::fs::write("/tmp/real-rest-symbol-candidates.json",serde_json::to_vec(&json!({"symbol_glyphs":music.owner.prepared.report["symbol_glyphs"],"classifier_trials":music.owner.prepared.report["classifier_trials"]})).unwrap()).unwrap();
     let actual_sig = music.owner.graph.snapshot();
     let native_inputs = music.chords.iter().map(|chord| {

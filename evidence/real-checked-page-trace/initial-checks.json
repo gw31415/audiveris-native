@@ -1,0 +1,32 @@
+[
+  {
+    "check": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 2.203854622988729,
+    "log": "/tmp/real-checked-rejections-v1-fmt.log"
+  },
+  {
+    "check": "clippy",
+    "argv": [
+      "cargo",
+      "clippy",
+      "--offline",
+      "--locked",
+      "-j2",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 101,
+    "elapsed_seconds": 20.99658862000797,
+    "log": "/tmp/real-checked-rejections-v1-clippy.log"
+  }
+]

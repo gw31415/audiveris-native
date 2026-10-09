@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "music_symbols::checked_rejection_tests::accent_gap_uses_main_scale_and_includes_contact_and_limit",
+    "music_symbols::checked_rejection_tests::clef_height_rejects_null_and_boundary_without_admitting_other_families",
+    "music_symbols::checked_rejection_tests::markers_require_above_pitch_and_positive_fractional_center_gap",
+    "music_symbols::checked_rejection_tests::measure_repeat_distinguishes_null_pitch_and_inclusive_unit_boundary",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "unique_targets": 4,
+  "elapsed_seconds": 0.0037355459935497493,
+  "binary_sha256": "717911d4ddd328f5115d7934537dafac02f266642f7a7a496b9c6f15ba316ded",
+  "source_sha256": {
+    "src/music_symbols.rs": "ffa08675d9718fc4effa3a87e05c468c3f34fadde694a639352409283386fa6f",
+    "src/music_symbols/checked_rejections.rs": "4af34c2128baeceef656b8805952429904c278ccc2b6b1d9b50f2be56c5d4f03",
+    "src/music_symbols/checked_rejection_tests.rs": "be58b4a6a10683e82b9d8c72003771367f56e474473682cd8db61fbad828b481"
+  },
+  "source_stable": true
+}

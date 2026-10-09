@@ -1,0 +1,121 @@
+{
+  "files": {
+    "AnLaura-CHECKED-observed.json": {
+      "bytes": 5387,
+      "sha256": "4187f0456a73393d18a975c33701a830725ad536415345728cc2bc397172eb9a"
+    },
+    "CLI-REGRESSION.json": {
+      "bytes": 2369,
+      "sha256": "3dc7a361df4addcea0892d5da2163f9aef495ddb690fb69559151121541ac2ab"
+    },
+    "DerWinter-CHECKED-observed.json": {
+      "bytes": 20089,
+      "sha256": "ab0fcaa7615a37add44e4331605a67b0c82b5f7c9f72a853c2642cbd2f66038a"
+    },
+    "NEXT-DEPENDENCY.md": {
+      "bytes": 2351,
+      "sha256": "30a49f1c8c304c5986ade713e8b98c675e51869fef817345f4ee7243bd09b720"
+    },
+    "PAGE-DURATION-TRACE.json": {
+      "bytes": 16253,
+      "sha256": "f3787753a92ddc02acac34563d083eb2e5b50f8661411b5436df220d5fd48745"
+    },
+    "PAGE-SHARED-GROWTH.json": {
+      "bytes": 13245,
+      "sha256": "0612ac138840171eab41696eeb3a40d6486c63015c19e676c81ba514d7172273"
+    },
+    "PORT-STATUS-PARAGRAPH.md": {
+      "bytes": 504,
+      "sha256": "e4e179c38e3c7fcc2a7a0800feba80a1f924b6b2f836d971708f40d0435c7d9b"
+    },
+    "README.md": {
+      "bytes": 4120,
+      "sha256": "374bdfdef6322ee84bc01de86d9e7ef19a5ec24871bb7ced4cf9ab09d57f7b67"
+    },
+    "SOURCE-REFERENCES.json": {
+      "bytes": 2508,
+      "sha256": "72eb933d5833e6e68400e48abd9a11ecd9e2adee690d771c948b1afd8f0823d9"
+    },
+    "VALIDATION.json": {
+      "bytes": 6111,
+      "sha256": "12bad9f4a5ccf51e83ac0732bba6b6e1fc350b5a998d47baedc3b90e4bd91eb4"
+    },
+    "additional-AnLaura-original-summary.json": {
+      "bytes": 4832,
+      "sha256": "7b658a2872438086f5dd54d110e2a18354609fd87bfbe72e6866f77bc55b81b0"
+    },
+    "additional-PAGE-selected-replay.json": {
+      "bytes": 2690,
+      "sha256": "b796d1d00a55add0974ea2c3f9133086e6c6a54b0d53b58eb7d7cae2c2454934"
+    },
+    "additional-XML-original-summary.json": {
+      "bytes": 4815,
+      "sha256": "fff7d924e77b8e775f89839503d268d6ce1fc311140df8a7c5b92cadace2d288"
+    },
+    "additional-XML-regression.json": {
+      "bytes": 693,
+      "sha256": "b5a09dba80941cc71c2f5f9a8ab5cb65fa877634b2c0e8965565fb8c4f4bb062"
+    },
+    "additional-final-rhythm-summary.json": {
+      "bytes": 2899,
+      "sha256": "21339538a825592967c82cf6c9d3a6106a3bc38eef8e28f044cf7a29261d5ac6"
+    },
+    "additional-final-scalar.json": {
+      "bytes": 934,
+      "sha256": "ceedb726f3b68c26f735c3865b8455c7af695981ec2079eaa2b8b25cd952d788"
+    },
+    "additional-initial-post-fix-fmt-check.json": {
+      "bytes": 246,
+      "sha256": "3589cbfea09c5633e22def62e3757ba92165c0917f4378c565031873932886bc"
+    },
+    "additional-lint-only-delta.json": {
+      "bytes": 982,
+      "sha256": "241b55eb9ed8c1e4fa2d3c04edcc08d27daa2e9da5fd627d2b275007d201db49"
+    },
+    "additional-truth-structure-summary.json": {
+      "bytes": 5576,
+      "sha256": "5332b338ab92e11fcad3987a955ea652885202d58eea406b1da6ffcd1e22465b"
+    },
+    "archive-oneoff-runner.txt": {
+      "bytes": 2294,
+      "sha256": "c37ecb0736d9b76ece1fa9081fc96423f0b24ce13b25a3434dd2953c4b97cce6"
+    },
+    "build-RESULT.json": {
+      "bytes": 186,
+      "sha256": "9c44a0fa538d503f462e129151888960a984d2b983ace3086718924519afd803"
+    },
+    "image-target-RESULT.json": {
+      "bytes": 4075,
+      "sha256": "2bf04936e204055a2f2a57ebee96b546e35df418ef6910380b99ffe8e2009238"
+    },
+    "image-target-START.json": {
+      "bytes": 3992,
+      "sha256": "b3aa6855b1cc1a951dec285447a56a4e90d51a451bab194c2163e2c547744339"
+    },
+    "initial-checks.json": {
+      "bytes": 557,
+      "sha256": "c2050b42c97b0d713654d87e1330e0dcfefa4c364ac890c77e52c7c0ad00666e"
+    },
+    "initial-clippy.log": {
+      "bytes": 2031,
+      "sha256": "8cd83b4f6effb08bf4e39622cbff2a98296b9ae840df287e7f2754a1d3ba924e"
+    },
+    "inputs.json": {
+      "bytes": 2414,
+      "sha256": "c96d92ca56b816f30c27cda0e8abc509ea82531ec6f35a473c89d33e175dddfd"
+    },
+    "package_evidence.py": {
+      "bytes": 14215,
+      "sha256": "0faaa36c408b938aebcb2bf7f50fafd96502efc0ec7d099c781fe2f0307f8faf"
+    },
+    "post-fix-checks.json": {
+      "bytes": 870,
+      "sha256": "3f08c1e01d2cacacac584a718fb52c6958e42a349064a07a5eb11c5d009ddebe"
+    },
+    "scalar-RESULT.json": {
+      "bytes": 1137,
+      "sha256": "607ccf65c175c178b2be3c933f8b4053708d70e8cdab6dbf28b7b3b6b075b3a3"
+    }
+  },
+  "scope": "Final bounded checkpoint; packager-generated draft prose finalized after all results."
+}

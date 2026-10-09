@@ -148,11 +148,31 @@ impl OwnedMusic {
                     .filter_map(|(vi, voice)| (voice.measure == mi).then_some(vi))
                     .collect::<Vec<_>>();
                 for vi in voice_indices {
+                    #[cfg(test)]
+                    trace_tests::record(
+                        "before",
+                        &stack.stack,
+                        &indices,
+                        &voices,
+                        &measures,
+                        timing,
+                        vi,
+                    );
                     crate::music_voices::check_duration(graph, &mut voices[vi], &mut measures[mi])?;
                     timing.excess = measures[mi].timing.excess;
                     for &view in &indices {
                         measures[view].timing.excess = timing.excess;
                     }
+                    #[cfg(test)]
+                    trace_tests::record(
+                        "after",
+                        &stack.stack,
+                        &indices,
+                        &voices,
+                        &measures,
+                        timing,
+                        vi,
+                    );
                 }
             }
             let terminations = voices
@@ -203,3 +223,6 @@ impl OwnedMusic {
 
 #[cfg(test)]
 pub(crate) mod tests;
+
+#[cfg(test)]
+pub(crate) mod trace_tests;

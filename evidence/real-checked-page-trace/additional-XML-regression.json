@@ -1,0 +1,20 @@
+{
+  "exact_7_64": {
+    "XML_sha256": "33aa5af3acf41ec8fac45c25138b6b395489946efcd1cb8b4d574c24a40d57e6",
+    "XSD": "passed",
+    "bytes_identical": true,
+    "gold": "evidence/musicxml-rational-voice-clocks/control.musicxml"
+  },
+  "AnLaura": {
+    "XML_sha256": "89157bea58bb7c5e21855e23902430701530cad5bede519d52367b9166820552",
+    "XSD": "passed",
+    "bytes_identical": true,
+    "gold": "evidence/real-directions/laura-native-internal.musicxml"
+  },
+  "DerWinter": {
+    "XML_sha256": "5a423f27f9e7b5e8bbf81f0b2ec0b4494b3488b0b7dba19885d7ed49161046bb",
+    "XSD": "passed",
+    "bytes_identical": true,
+    "gold": "evidence/real-page-pickup/der-winter-native-internal.musicxml"
+  }
+}

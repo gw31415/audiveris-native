@@ -39,10 +39,15 @@
 XSD・独立readerは成功。独立正解の弱起マーカーは27/27、イベント102/124・休符9/9で
 原版の指標を保持する。AnLauraの既存XMLはバイト同一で17カテゴリ比較も維持。
 原版保存オブジェクトの限定再生では終了量・共有excess更新と実参照保持を比較した。
-native各Voice直後のpeer中間観測は次の必要な実画像テストで追加し、現段階では
-最終共有状態とrollback/実identityの検証に限定する。
-次は生成前CHECKED棄却と評価順位、実Header/Clef/Key/Filler、競合relation除去、
-Slur認識を接続する。Der Winterの余分なp方向記号1件はAccentとの欠けた排他候補、
+[CHECKEDとPAGE中間観測](../evidence/real-checked-page-trace/README.md) では
+原版棄却15件・実画像のfactory到達15/77件を比較し、受付順位と既存XMLを保持した。
+native各Voice直後のpeer excess公開も同じ実画像ownerで比較済み。原版reload時の
+nullをnativeへ代入せず、宣言1/64→1/8 controlも実Voice/Slot/Chord所有を保って復元する。
+4境界契約＋3実所有対象、fmt/clippy/build、63＋補正8・exact7/64・両実譜面XML/XSD成功。
+初回test lint失敗と修正後の成功は別記録とし、全回帰や公開成功を主張しない。
+次は保持したHeaderの実Clef/KeyをMEASURESへ直接渡し、その後のMeasureFiller・
+正のfactory・競合relation除去・Slur認識を接続する。Der Winterの余分なp方向記号1件は
+原版の限定実所有比較でAccentとのOVERLAP除去が確認され、native削除順の修正が必要。
 Slur6本は未出力。公開CLI guardと品質falseを維持し、内部成功を公開受付へ読み替えない。
 
 ## 最初の実証と切断点

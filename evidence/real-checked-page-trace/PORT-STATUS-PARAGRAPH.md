@@ -1,0 +1,1 @@
+CHECKEDの原版棄却15件と実画像factory到達15/77件を比較し、計7対象・fmt/clippy/build・63＋補正8/exact7/64/両実譜面XML bytes/XSD成功。実PAGEの各Voice終了量とpeer excess公開も同じ実所有で比較し、原版reload nullとnative既存時計を区別した。初回test lintと整形失敗は保持。次は保持Headerの実Clef/KeyをMEASURESへ渡し、正factory・余分なp競合・欠けたSlur6本を接続する。公開受付・品質同等は未達。

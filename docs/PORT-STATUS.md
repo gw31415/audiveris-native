@@ -15,16 +15,19 @@ PDF/多形式変換、一般編集CLI/UI/undo、project保存互換、認識に�
 環境・モデル設定・既存認証と通常main保存/readbackを維持し、元task/環境/work189を保持します。
 未取得ce785c9は取得済み扱い・置換・再生成をしません。
 
-現在の通常画像CLIはAnLauraの追加7形状、Der Winterの追加9形状でguardされ、
-両実ページの公開MusicXMLは未出力・品質受入未達です。内部経路ではDer Winterの
-全124イベント・27 Voice・18小節を出力し、今回、実共有StackのPAGE弱起分類を接続。
-原版同様に先頭を0/implicit、以後1..8とし、全18小節identityと独立正解の弱起27/27が一致。
-原版保存所有の限定再生と終了量・超過を比較し、実Voice/Slot/Chord/Measure/Stack、
-時計、古いPAGE情報を保持。再rhythm後の古い分類はexportで拒否し、遅い失敗は戻す。
-15対象、fmt/clippy/build、既存63＋補正8・exact7/64・AnLauraのXML bytes/XSDが成功。
-Der Winterの原版XMLとの差は余分なp方向記号1件、欠けたSlur6本。独立正解の
-イベント一致102/124は原版と同じだが、公開受付・品質同等は未達です。
-直近の作業順は [保存NEXT依存](../evidence/real-page-pickup/NEXT-DEPENDENCY.md) を使います。
+両実ページの公開MusicXMLは未出力・品質受入未達です。直近の公開CLI観測は
+AnLaura追加7形状／Der Winter追加9形状のguardで、今回のCHECKED変更前の結果です。
+生成前の原版棄却15件とACCENT StaffGapを接続し、実画像のAnLaura15／Der Winter77の
+factory到達評価・順序を保持しました。正のfactoryと公開受付は引き続き未完です。
+同じ実画像ownerでPAGEの各Voice直後を観測し、原版の限定再生と終了量・超過の
+共有更新を比較しました。原版reloadのnullとnative既存時計を区別し、実参照・古い
+excess・expectedDuration・relation/manual identityを保持したまま宣言controlを復元。
+計7対象、fmt/clippy/build、既存63＋補正8・exact7/64・両実譜面のXML bytes/XSDが成功。
+初回clippyのtest内lint3件と整形の実行失敗は証跡に残し、修正後の成功と区別します。
+内部Der Winterの124イベント・27 Voice・18小節identity、独立正解の弱起27/27を保持。
+原版との差は余分なp方向記号1件と欠けたSlur6本。独立正解イベント102/124は原版と
+同じですが、公開受付・品質同等は未達です。
+直近の作業順は [保存NEXT依存](../evidence/real-checked-page-trace/NEXT-DEPENDENCY.md) を使います。
 
 過去の画像接続記録: 構築時の実System領域とStaff参照、12仮想Ledger曲線をPAGE/STEMS/SYMBOLSまで保持し、
 543実glyph中心のSystem所属と796地点のStaff/null/曲線音高を原版比較した。

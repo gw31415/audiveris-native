@@ -412,7 +412,9 @@ impl OwnedMusic {
             .iter()
             .map(|m| m.timing.slots.clone())
             .collect::<Vec<_>>();
+        let page_trace_guard = crate::music_xml::page_measures::trace_tests::begin(self);
         let page_result = self.fix_recognized_page_measures();
+        let page_trace = page_trace_guard.finish();
         let after_page = state(self);
         observation["after_PAGE"] = after_page.clone();
         let page = match page_result {
@@ -427,6 +429,8 @@ impl OwnedMusic {
             }
         };
         observation["PAGE_measures"] = page.clone();
+        observation["PAGE_duration_trace"] =
+            crate::music_xml::page_measures::trace_tests::compare_ordinary(&page_trace);
         save(&observation);
         crate::music_xml::page_measures::tests::assert_der_winter_persisted_page_state(self, &page);
         assert_eq!(before_page["graph"], after_page["graph"]);
@@ -535,6 +539,10 @@ impl OwnedMusic {
         assert_eq!(chord_storage, self.chords.as_ptr());
         observation["declared_late_missing_Stack_timing_keeps_previous_PAGE_and_clocks"] =
             json!(true);
+        let before_growth = state(self);
+        observation["declared_shared_excess_growth"] =
+            crate::music_xml::page_measures::trace_tests::declared_shared_growth(self);
+        assert_eq!(before_growth, state(self));
         let exported = self.write_recognized_musicxml("Der Winter");
         let after_export = state(self);
         observation["export_preserved_graph_and_clocks"] = json!(after_page == after_export);

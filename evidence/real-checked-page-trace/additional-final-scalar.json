@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "target/debug/deps/audiveris_native-5fcd8c0ec93be988",
+    "--exact",
+    "music_symbols::checked_rejection_tests::accent_gap_uses_main_scale_and_includes_contact_and_limit",
+    "music_symbols::checked_rejection_tests::clef_height_rejects_null_and_boundary_without_admitting_other_families",
+    "music_symbols::checked_rejection_tests::markers_require_above_pitch_and_positive_fractional_center_gap",
+    "music_symbols::checked_rejection_tests::measure_repeat_distinguishes_null_pitch_and_inclusive_unit_boundary",
+    "--test-threads=2",
+    "--nocapture"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.0036119589931331575,
+  "binary_sha256": "35ac5ea8139107de7247e15b61d404a92cdeaf693f47c1a27b837a52cae4c6f6",
+  "unique_targets": 4,
+  "scope": "Post lint-only array pair iteration change; four previously passed scalar contracts rechecked. Real image primary result retains its executed binary/source hashes."
+}
