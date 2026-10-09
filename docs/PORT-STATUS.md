@@ -2307,3 +2307,15 @@ system refinementと複段MusicXML出力は未接続で品質未達。次はVoic
 並べ替え・番号調整と実参照保持を比較し、実header time rangeによる通常処理へ
 接続する。その後、実clef/key・臨時記号・staccato・強弱・pedalと出力を接続する。
 [証拠](../evidence/real-stack-slots/VALIDATION.json)・[次依存](../evidence/real-stack-slots/NEXT-DEPENDENCY.md)。
+
+system Voice refinementを、保持済みVoiceKind・最初の実Slot番号・Chord中心
+ordinateの順とkind offset+1からの番号調整へ接続した。最上段Staffだけでなく
+登録済み実PartのStaff所属を検査し、tie→beam→Next→preferred順を維持する。
+実2 systemの前後4フレームが原版一致。最初のピアノ小節は旧HIGH3(null時計)
+が2へ、旧2が3へ変わりLOW5/6を保持。Chord/Voice/Slot実object・全時計・
+終了量/excess・relations/manual statusを保持した。対象10件、fmt/clippy/build、
+63＋補正8/exact7/64 XML byte/XSD成功。比較testの終了量型を表示契約へ修正し、
+一時的transport切断後も同じ環境・成果を確認して継続した。画像XML品質は未達。
+次は実header time rangeからStack→各Measure→共有Slot→system refinementを
+通常認識へ接続し、複段clef/key・臨時記号・staccato・強弱・pedalと出力へ進む。
+[証拠](../evidence/real-voice-refinement/VALIDATION.json)・[次依存](../evidence/real-voice-refinement/NEXT-DEPENDENCY.md)。

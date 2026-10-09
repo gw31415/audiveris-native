@@ -363,7 +363,7 @@ pub(crate) fn reset_stack_rhythm(measure: &mut Measure, expected: Option<Fractio
     measure.timing.actual = None;
 }
 
-/// Voices.refineSystem on admitted HIGH owners: purge/sort/rename, then actual
+/// Voices.refineSystem: purge/sort/rename by retained Voice kind, then actual
 /// tie, previous-Measure BeamGroup, NextInVoice and preferred-ID swaps, in
 /// original order. Classified relations are distinct from image discovery.
 pub(crate) fn refine_ordinary_system(
@@ -409,11 +409,23 @@ pub(crate) fn refine_ordinary_system(
             if node["origin"]["system"] != measure.system
                 || node["part_id"] != measure.part
                 || node["measure_index"] != measure.index
-                || v.starting_staff != measure.staff
             {
                 return Err("music_refine_owned_HIGH_voice_required".into());
             }
-            // Reassignment leaves old member lists intact; HIGH uses their geometry.
+            let staff_belongs = if let Some(geometry) = &measure.geometry {
+                staged.require_actual_music_measure(geometry)?;
+                geometry
+                    .part
+                    .staffs
+                    .iter()
+                    .any(|s| s.id == v.starting_staff)
+            } else {
+                v.starting_staff == measure.staff
+            };
+            if !staff_belongs {
+                return Err("music_refine_owned_HIGH_voice_required".into());
+            }
+            // Reassignment leaves old member lists and cached kind intact.
             let slot = if v.measure_rest_chord.is_some() {
                 1
             } else {
@@ -421,14 +433,19 @@ pub(crate) fn refine_ordinary_system(
                     .as_u64()
                     .ok_or("music_refine_first_slot_required")?
             };
-            let y = node["bounds"][1]
-                .as_i64()
-                .ok_or("music_refine_first_chord_bounds_required")?;
+            let bounds: [i64; 4] = serde_json::from_value(node["bounds"].clone())
+                .map_err(|_| "music_refine_first_chord_bounds_required")?;
+            let y = bounds[1] + bounds[3] / 2;
             keys.insert(id, (slot, y));
         }
-        ordered.sort_by_key(|v| keys[&first(v).unwrap()]);
-        for (ordinal, voice) in ordered.iter_mut().enumerate() {
-            set_owned_voice_id(&mut staged, voice, ordinal + 1)?;
+        ordered.sort_by_key(|v| (v.kind.id_offset(), keys[&first(v).unwrap()]));
+        let mut next = BTreeMap::new();
+        for voice in ordered.iter_mut() {
+            let id = next
+                .entry(voice.kind.id_offset())
+                .or_insert(voice.kind.id_offset());
+            *id += 1;
+            set_owned_voice_id(&mut staged, voice, *id)?;
         }
         for (&i, voice) in positions.iter().zip(ordered) {
             retained[i] = voice;
