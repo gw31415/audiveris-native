@@ -213,6 +213,7 @@ pub fn min_grade(shape: &str) -> f64 {
     match shape {
         "DOT_set" => 0.2,
         "BREVE_REST" | "LONG_REST" => 0.7,
+        "HW_REST_set" => 0.15,
         s if s.starts_with("DYNAMICS") => 0.6,
         _ => 0.35,
     }
@@ -323,6 +324,18 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
                 && !inside
             {
                 continue;
+            }
+            // Whole rests hang from a line, half rests sit on a line.
+            if shape == "HW_REST_set" {
+                let x = bounds.cx();
+                let on_line = (-6..=6).step_by(2).any(|p| {
+                    let ly = st.pitch_y(p as f64, x);
+                    (bounds.y as f64 - ly).abs() <= 0.3 * il as f64
+                        || (bounds.bottom() as f64 - ly).abs() <= 0.3 * il as f64
+                });
+                if !on_line {
+                    continue;
+                }
             }
             out.push(Symbol {
                 shape,

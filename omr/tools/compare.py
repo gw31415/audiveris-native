@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare two MusicXML files event by event (per part, measure, staff).
+"""Compare a reference (MusicXML or MuseScore .mscx) with one or more MusicXML outputs event by event (per part, measure, staff).
 
 Events are (onset, pitch-or-rest, duration) in quarter-note units. Voice numbers
 and layout are ignored. Prints a per-measure diff and an overall match score.
@@ -110,7 +110,14 @@ def name(e):
 
 
 def main():
-    a, b = load(sys.argv[1]), load(sys.argv[2])
+    a = load(sys.argv[1])
+    b = []
+    for path in sys.argv[2:]:  # several outputs (pages) are concatenated part-wise
+        for i, part in enumerate(load(path)):
+            if i < len(b):
+                b[i].extend(part)
+            else:
+                b.append(part)
     total = matched = 0
     for pi in range(max(len(a), len(b))):
         pa = a[pi] if pi < len(a) else []
@@ -126,6 +133,23 @@ def main():
             if ea != eb:
                 print(f"  m{mi + 1}: only-ref {[e for e in ea if e not in eb]}  only-test {[e for e in eb if e not in ea]}")
     print(f"MATCH {matched}/{total} = {matched / max(total, 1):.3f}")
+    # Measure-independent: per part/staff sequence of (pitch-or-rest, duration), chords sorted.
+    def seq(parts, pi):
+        out = {}
+        for m in (parts[pi] if pi < len(parts) else []):
+            for (staff, start, what, dur) in m:
+                out.setdefault(staff, []).append((start, str(what), str(dur)))
+        return out
+    ft = fm = 0
+    for pi in range(max(len(a), len(b))):
+        sa, sb = seq(a, pi), seq(b, pi)
+        for st in set(sa) | set(sb):
+            xa = [f"{w}/{d}" for _, w, d in sa.get(st, [])]
+            xb = [f"{w}/{d}" for _, w, d in sb.get(st, [])]
+            sm = SequenceMatcher(None, xa, xb, autojunk=False)
+            fm += sum(bl.size for bl in sm.get_matching_blocks())
+            ft += max(len(xa), len(xb))
+    print(f"FLAT {fm}/{ft} = {fm / max(ft, 1):.3f}")
 
 
 main()

@@ -97,8 +97,10 @@ pub fn staff_bars(img: &Bitmap, staves: &[Staff], si: usize, scale: &Scale) -> V
         let down = staves
             .get(si + 1)
             .filter(|n| connected(img, x0, x1, bot, n.top(xm).round() as i32));
-        let clean_up = up.is_some() || clean_end(img, x0, x1, top, -1, scale);
-        let clean_down = down.is_some() || clean_end(img, x0, x1, bot, 1, scale);
+        // A bar connected on one side only needs to stop at the staff on the other side.
+        let connected = up.is_some() || down.is_some();
+        let clean_up = up.is_some() || clean_end(img, x0, x1, top, -1, scale, connected);
+        let clean_down = down.is_some() || clean_end(img, x0, x1, bot, 1, scale, connected);
         if clean_up && clean_down {
             bars.push(Bar {
                 x0,
@@ -124,7 +126,7 @@ fn connected(img: &Bitmap, x0: i32, x1: i32, y0: i32, y1: i32) -> bool {
 }
 
 /// Is the area just beyond the staff end (above if dir<0, below if dir>0) free of material?
-fn clean_end(img: &Bitmap, x0: i32, x1: i32, y: i32, dir: i32, scale: &Scale) -> bool {
+fn clean_end(img: &Bitmap, x0: i32, x1: i32, y: i32, dir: i32, scale: &Scale, stop_only: bool) -> bool {
     let il = scale.interline;
     let dx = il / 2;
     let h = (il * 2) / 3;
@@ -140,7 +142,8 @@ fn clean_end(img: &Bitmap, x0: i32, x1: i32, y: i32, dir: i32, scale: &Scale) ->
     } else {
         Rect::new(x0, y + 3, x1 - x0 + 1, h - 1)
     };
-    (n as f64) < 0.08 * r.area() as f64 && (img.count_rect(r2) as f64) < 0.3 * r2.area() as f64
+    let stops = (img.count_rect(r2) as f64) < 0.3 * r2.area() as f64;
+    stops && (stop_only || (n as f64) < 0.08 * r.area() as f64)
 }
 
 pub fn build_systems(img: &Bitmap, staves: &mut [Staff], scale: &Scale) -> Vec<System> {
@@ -176,7 +179,7 @@ pub fn build_systems(img: &Bitmap, staves: &mut [Staff], scale: &Scale) -> Vec<S
         let quorum = sys.len().div_ceil(2);
         let lines: Vec<Bar> = clusters
             .into_iter()
-            .filter(|c| c.len() >= quorum)
+            .filter(|c| c.len() >= quorum || c.iter().any(|b| b.connected_up || b.connected_down))
             .map(|c| Bar {
                 x0: (c.iter().map(|b| b.x0).sum::<i32>() as f64 / c.len() as f64).round() as i32,
                 x1: (c.iter().map(|b| b.x1).sum::<i32>() as f64 / c.len() as f64).round() as i32,
