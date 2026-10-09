@@ -2375,3 +2375,20 @@ XML byte/XSD成功。初期中止runnerの子が残した出力は正式検証�
 次は実Part全Staffと原版x範囲によるpause lookup/notation、その後強弱/pedalの
 生成/吸収/lookup/支持/weak除去、通常画像CLIへの接続と実休符譜面の受入へ進む。
 [証拠](../evidence/real-voice-begin-export/VALIDATION.json)・[比較](../evidence/real-voice-begin-export/COMPARISON.json)・[内部XML](../evidence/real-voice-begin-export/laura-native-internal.musicxml)・[次依存](../evidence/real-voice-begin-export/NEXT-DEPENDENCY.md)。
+
+実Part全Staff所属と実StaffのMeasure abscissaからpauseをlookupし、同じsystemの
+HeadChordのmember Staffと原版のleft〜pause center-right範囲から右端Chordを選ぶ。
+支持はmember invalidation時の実cached Chord gradeを読む。原版SYMBOLS15→LINKS3
+caesuraの全候補/所属/支持先/削除選択が一致し、支持式とcached信頼度残差を分けて
+検査した（最大0.000269300、既知Head残差の範囲内）。自動Inter/relationのmanual=false
+既定状態も生成時に明示した。原版3 caesuraを最初の実noteへ出力する経路を接続し、
+92音の記号付きイベント全体、声部群16、8小節の拍子/調号/clef、backup/forward13、
+staccato8が原版一致。実登録Chord/member/Stem/Measureと時計/relation/manualを
+保持し、内部実譜面XMLのXSD・reader、対象10件・fmt/clippy/buildと既存
+63＋補正8/exact7/64 XML byte/XSDは成功。最初のmanual metadata欠落と、通常container
+refresh前後のVec格納アドレスをidentityとして扱った過剰テストの2失敗logを保持した。
+後者は原版の観測契約へ修正し、実登録参照の保持と出力時のstorage保持を検査した。
+公開複数Part CLIはまだguardされ、強弱/pedal6件と実休符譜面・rest-only headerの検証が
+残るため品質未達。次は原版の生成/complex吸収/lookup/支持/weak除去と6 directions、
+通常画像CLIと実休符例へ進む。
+[証拠](../evidence/real-pause-part-staff/VALIDATION.json)・[比較](../evidence/real-pause-part-staff/COMPARISON.json)・[内部XML](../evidence/real-pause-part-staff/laura-native-internal.musicxml)・[次依存](../evidence/real-pause-part-staff/NEXT-DEPENDENCY.md)。

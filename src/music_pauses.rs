@@ -15,28 +15,47 @@ pub(crate) fn lookup(
     chords: &[Chord],
 ) -> Result<Option<(Key, Value)>, String> {
     let x = b[0] + b[2] / 2;
-    let Some(mi) = measures
-        .iter()
-        .position(|m| m.system == system && m.staff == staff && m.left < x && x <= m.right)
-    else {
+    let mut selected = None;
+    for m in measures.iter().filter(|m| m.system == system) {
+        let abscissae = if let Some(g) = &m.geometry {
+            let Some(held) = g.part.staffs.iter().find(|s| s.id == staff) else {
+                continue;
+            };
+            g.abscissae(held)?
+        } else {
+            if m.staff != staff {
+                continue;
+            }
+            [m.left, m.right]
+        };
+        if abscissae[0] < x && x <= abscissae[1] {
+            selected = Some(abscissae[0]);
+            break;
+        }
+    }
+    let Some(left) = selected else {
         return Ok(None);
     };
     let max = b[0] + b[2] - 1;
     let mut heads = chords
         .iter()
-        .filter(|c| c.kind == ChordKind::Head && c.measure == mi)
+        .filter(|c| {
+            c.kind == ChordKind::Head
+                && c.key.system == system
+                && c.members.iter().any(|n| n["staff_id"] == staff)
+        })
         .collect::<Vec<_>>();
     heads.sort_by_key(|c| c.bounds[0]);
     let Some(chord) = heads.into_iter().rfind(|c| {
         let cx = c.bounds[0] + c.bounds[2] / 2;
-        cx >= measures[mi].left && cx <= max
+        cx >= left && cx <= max
     }) else {
         return Ok(None);
     };
     let cx = chord.bounds[0] + chord.bounds[2] / 2;
     let dx = (max - cx) as f64 / il as f64;
     let grade = crate::music_dots::gap_grade(dx, 0., 100., 4., 2., 1.);
-    Ok((grade>=0.1).then(||(chord.key,json!({"kind":"ChordPauseRelation","grade":grade,"dx":dx,"dy":0.,"source_ratio":1.,"target_ratio":1.+3.*grade,"profile":1}))))
+    Ok((grade>=0.1).then(||(chord.key,json!({"kind":"ChordPauseRelation","grade":grade,"dx":dx,"dy":0.,"source_ratio":1.,"target_ratio":1.+3.*grade,"profile":1,"manual":false}))))
 }
 pub(crate) fn contextualize_and_purge(
     graph: &mut Graph,
@@ -64,25 +83,13 @@ pub(crate) fn contextualize_and_purge(
             .iter()
             .find(|c| r["source"] == c.id)
             .ok_or("music_pause_actual_chord_required")?;
-        // AbstractChord.invalidateCache uses the mean member contextual grade.
-        let grades = chord
-            .members
+        // Support reads the confidence cached at membership invalidation.
+        // Later Head contextualization must not recompute this Chord grade.
+        let partner = nodes
             .iter()
-            .map(|n| {
-                let live = nodes
-                    .iter()
-                    .find(|v| v["id"] == n["id"])
-                    .ok_or("music_pause_live_note_required")?;
-                live["contextual_grade"]
-                    .as_f64()
-                    .or_else(|| live["grade"].as_f64())
-                    .ok_or("music_pause_note_grade_required")
-            })
-            .collect::<Result<Vec<_>, _>>()?;
-        if grades.is_empty() {
-            return Err("music_pause_chord_members_required".into());
-        }
-        let partner = grades.iter().sum::<f64>() / grades.len() as f64;
+            .find(|n| n["id"] == chord.id)
+            .and_then(|n| n["grade"].as_f64())
+            .ok_or("music_pause_actual_cached_Chord_grade_required")?;
         let grade = pause["grade"]
             .as_f64()
             .ok_or("music_pause_grade_required")?;
@@ -106,3 +113,6 @@ pub(crate) fn contextualize_and_purge(
     *graph = staged;
     Ok(json!({"removed_weak_pauses":removed,"positive_pause_notation_export_complete":false}))
 }
+
+#[cfg(test)]
+mod image_tests;

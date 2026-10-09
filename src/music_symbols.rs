@@ -627,7 +627,7 @@ pub(crate) fn build_symbols(mut m: OwnedMusic) -> Result<OwnedMusic, String> {
                     crate::music_pauses::lookup(b, sid, staff, il, &m.measures, &m.chords)?
                 {
                     let key = graph.next_symbol_key(sid)?;
-                    graph.vertex(key,json!({"kind":if shape=="CAESURA"{"CaesuraInter"}else{"BreathMarkInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"abnormal":false}),false)?;
+                    graph.vertex(key,json!({"kind":if shape=="CAESURA"{"CaesuraInter"}else{"BreathMarkInter"},"shape":shape,"bounds":b,"glyph":beam_dispatch::glyph_json(g),"glyph_id":gid,"staff_id":staff,"grade":grade,"manual":false,"frozen":false,"abnormal":false}),false)?;
                     graph.relations(sid, Phase::Symbol, vec![(chord, key, relation)])?;
                     created.push(key);
                 }

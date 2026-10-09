@@ -76,11 +76,18 @@ fn articulations(snapshot: &Value, id: usize, first_note: &Value) -> Result<Valu
         .as_array()
         .unwrap()
         .iter()
-        .filter(|e| e["kind"] == "ChordArticulationRelation" && e["source"] == id)
+        .filter(|e| {
+            matches!(
+                e["kind"].as_str(),
+                Some("ChordArticulationRelation" | "ChordPauseRelation")
+            ) && e["source"] == id
+        })
     {
         let art = node(snapshot, edge["target"].as_u64().unwrap() as usize)?;
         let (name, strong_type) = match art["shape"].as_str() {
             Some("STACCATO") => ("staccato", None),
+            Some("CAESURA") => ("caesura", None),
+            Some("BREATH_MARK") => ("breath-mark", None),
             Some("TENUTO") => ("tenuto", None),
             Some("ACCENT") => ("accent", None),
             Some("STACCATISSIMO" | "STACCATISSIMO_BELOW") => ("staccatissimo", None),

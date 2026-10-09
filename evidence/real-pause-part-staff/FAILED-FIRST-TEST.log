@@ -1,0 +1,25 @@
+   Compiling audiveris-native v0.1.0 (/workspace/audiveris-native)
+    Finished `test` profile [unoptimized] target(s) in 30.17s
+     Running unittests src/lib.rs (target/debug/deps/audiveris_native-5fcd8c0ec93be988)
+
+running 1 test
+test music_pauses::image_tests::unchanged_real_page_pause_part_staff_lookup_and_notation_match_original has been running for over 60 seconds
+test music_pauses::image_tests::unchanged_real_page_pause_part_staff_lookup_and_notation_match_original ... FAILED
+
+failures:
+
+---- music_pauses::image_tests::unchanged_real_page_pause_part_staff_lookup_and_notation_match_original stdout ----
+
+thread 'music_pauses::image_tests::unchanged_real_page_pause_part_staff_lookup_and_notation_match_original' (471302) panicked at src/music_pauses/image_tests.rs:46:14:
+assertion `left == right` failed
+  left: Null
+ right: Bool(false)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    music_pauses::image_tests::unchanged_real_page_pause_part_staff_lookup_and_notation_match_original
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 286 filtered out; finished in 185.56s
+
+error: test failed, to rerun pass `--lib`
