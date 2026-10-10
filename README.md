@@ -109,11 +109,11 @@ tools/evaluate.sh                                           # samples/ の正解
 | **スケール** | 線幅・五線間隔 | ✅ | ScaleBuilder（black / combo ヒストグラム） |
 | | 連桁の太さ | 🔧 | 長い横ランのみの縦ラン分布。本家の black ピーク方式では過小推定する例あり（優位性: 冬の旅で確認） |
 | | 符幹の太さ | 🔧 | 横ランのピーク（本家 StemScaler）。優位性: 音価側の指標で確認 |
-| | 第2の五線間隔（小さい五線） | ⬜ | ScaleBuilder interline2 |
+| | 第2の五線間隔（小さい五線） | ⬜ | ScaleBuilder interline2（冬の旅には該当なし） |
 | **五線** | 五線の検出 | 🔧 | 細い縦ランの「櫛」で検出（本家 LinesRetriever / ClustersRetriever）。優位性: 音高側の指標で確認 |
 | | 線の形状モデル | 🔧 | 5本共通の二次曲線を頑健フィット（本家 NaturalSpline）。優位性: 音高側の指標で確認 |
 | | 五線の消去 | 🔧 | 線上の細い縦ランを消去（本家は線 glyph の画素）。優位性: 音高側の指標で確認 |
-| | 1線譜・打楽器譜・タブ譜 | ⬜ | OneLineStaff, Tablature |
+| | 1線譜・打楽器譜・タブ譜 | ⬜ | OneLineStaff, Tablature。本家も既定ではオフ（ProcessingSwitch oneLineStaves / drumNotation / tablatures） |
 | **小節線・段・パート** | 小節線の検出 | 🔧 | 全高の縦ピーク＋端の検査（本家 BarsRetriever）。優位性: 小節数の誤差 8（本家 15） |
 | | 段の構成（コネクタ） | ✅ | 小節線が五線間をつなぐ段 |
 | | ブレース／ブラケットとパート | 🔧 | 左端の大きな成分の形で判定（本家 BracesRetriever / PartsBuilder）。パート数は本家と同等（22/22） |
@@ -133,7 +133,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | | 重複・重なりの整理 | ✅ | aggregateMatches, HeadInter.overlaps |
 | | 黒→白符頭の判定（hole） | ✅ | evalBlackAsVoid |
 | | 小さい符頭（cue） | 🔧 | 小テンプレート（0.67）で範囲走査し、符幹付きのものを装飾音符に使用（本家は処理スイッチで既定オフ） |
-| | 特殊符頭（×・菱形など） | ⬜ | ShapeSet.Heads |
+| | 特殊符頭（×・菱形など） | ⬜ | ShapeSet.Heads。本家も既定ではオフ（ProcessingSwitch crossHeads） |
 | **符幹** | 符幹の探索 | 🔧 | 符頭の左右で縦の細い線を探索（本家 StemsRetriever / HeadLinker）。優位性: 音価側の指標で確認 |
 | | 文脈グレードによる取捨 | ✅ | GradeUtil.contextual、HeadStemRelation 係数 4 |
 | | 尾の最小長 | ✅ | StemInter.minTailLength 1.75 |
