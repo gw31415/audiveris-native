@@ -340,7 +340,7 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
     // Prefer larger groups at equal quality, then grade; a compound dynamics
     // (fp, mf, sfz...) wins over its separate letters.
     let key = |c: &Cand| {
-        let per_part = if c.1.starts_with("DYNAMICS_") { 0.25 } else { 0.05 };
+        let per_part = if c.1.starts_with("DYNAMICS_") || c.1.starts_with("FERMATA") { 0.25 } else { 0.05 };
         c.2 + per_part * c.0.len() as f64
     };
     cands.sort_by(|a, b| key(b).partial_cmp(&key(a)).unwrap());

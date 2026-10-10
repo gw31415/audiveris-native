@@ -49,8 +49,13 @@ pub struct Event {
     pub beams: Vec<(u32, &'static str)>,
     /// MusicXML articulation names (staccato, accent, ...).
     pub articulations: Vec<&'static str>,
+    /// Fermata type (upright / inverted).
+    pub fermata: Option<&'static str>,
     #[serde(skip)]
     heads: Vec<usize>,
+    /// Bounds of the chord (heads and stem) or rest.
+    #[serde(skip)]
+    bbox: Rect,
     #[serde(skip)]
     y_mid: f64,
     #[serde(skip)]
@@ -564,6 +569,8 @@ fn build_measure(
             duration: Q::ZERO,
             beams: Vec::new(),
             articulations: Vec::new(),
+            fermata: None,
+            bbox: Rect::default(),
             y_mid,
             stem: Some(sti),
             right,
@@ -613,6 +620,8 @@ fn build_measure(
             duration: Q::ZERO,
             beams: Vec::new(),
             articulations: Vec::new(),
+            fermata: None,
+            bbox: Rect::default(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
             right: g
@@ -658,10 +667,22 @@ fn build_measure(
             duration: Q::ZERO,
             beams: Vec::new(),
             articulations: Vec::new(),
+            fermata: None,
+            bbox: Rect::default(),
             y_mid: cy,
             stem: None,
             right: s.bounds.right() as f64,
         });
+        events.last_mut().unwrap().bbox = s.bounds;
+    }
+
+    for e in events.iter_mut().filter(|e| !e.heads.is_empty()) {
+        let mut b = e.heads.iter().map(|&h| sheet.heads[h].bounds).reduce(|a, b| a.union(&b)).unwrap();
+        if let Some(st) = e.stem {
+            let s = &sheet.stems[st];
+            b = b.union(&Rect::new(s.x, s.top, 1, s.bottom - s.top + 1));
+        }
+        e.bbox = b;
     }
 
     // Augmentation dots: first dot column right of the chord / rest, second
@@ -735,6 +756,7 @@ fn build_measure(
     }
 
     attach_articulations(sheet, part_staves, &syms, &mut events, &aug_dots);
+    attach_fermatas(sheet, part_staves, &syms, &mut events);
 
     // Tuplets attached to beam groups.
     for s in syms
@@ -1138,21 +1160,8 @@ fn attach_articulations(
 ) {
     let il = sheet.scale.interline as f64;
     let (x_max, y_max, y_min) = (0.8 * il, 3.0 * il, 0.1 * il);
-    // Chord bounds: heads and stem.
-    let boxes: Vec<Option<Rect>> = events
-        .iter()
-        .map(|e| {
-            if !matches!(e.kind, Kind::Chord { .. }) {
-                return None;
-            }
-            let mut b = e.heads.iter().map(|&h| sheet.heads[h].bounds).reduce(|a, b| a.union(&b))?;
-            if let Some(st) = e.stem {
-                let s = &sheet.stems[st];
-                b = b.union(&Rect::new(s.x, s.top, 1, s.bottom - s.top + 1));
-            }
-            Some(b)
-        })
-        .collect();
+    let boxes: Vec<Option<Rect>> =
+        events.iter().map(|e| matches!(e.kind, Kind::Chord { .. }).then_some(e.bbox)).collect();
     for s in syms {
         let (name, above_only, below_only) = match s.shape {
             "ACCENT" => ("accent", false, false),
@@ -1223,3 +1232,36 @@ fn attach_articulations(
         }
     }
 }
+
+/// Fermatas (Audiveris FermataInter.lookupChordLink): the closest standard
+/// chord (or rest) below a FERMATA (above a FERMATA_BELOW) overlapping it
+/// horizontally, within 2.5 interlines of the chord or of its staff.
+fn attach_fermatas(sheet: &Sheet, part_staves: &[usize], syms: &[&crate::symbols::Symbol], events: &mut [Event]) {
+    let il = sheet.scale.interline as f64;
+    let max_dy = 2.5 * il;
+    for s in syms.iter().filter(|s| s.shape == "FERMATA" || s.shape == "FERMATA_BELOW") {
+        let below = s.shape == "FERMATA_BELOW";
+        let (cx, cy) = (s.bounds.cx(), s.bounds.cy());
+        let dist = |b: &Rect| {
+            let dx = (b.x as f64 - cx).max(cx - b.right() as f64).max(0.0);
+            let dy = (b.y as f64 - cy).max(cy - b.bottom() as f64).max(0.0);
+            dx.hypot(dy)
+        };
+        let best = (0..events.len())
+            .filter(|&i| {
+                let b = events[i].bbox;
+                b.x < s.bounds.right() && s.bounds.x < b.right() && if below { b.cy() < cy } else { b.cy() > cy }
+            })
+            .min_by(|&a, &b| dist(&events[a].bbox).partial_cmp(&dist(&events[b].bbox)).unwrap());
+        let Some(i) = best else { continue };
+        if dist(&events[i].bbox) > max_dy {
+            let st = &sheet.staves[part_staves[(events[i].staff - 1) as usize]];
+            let d = if below { cy - st.bottom(cx) } else { st.top(cx) - cy };
+            if d > max_dy {
+                continue;
+            }
+        }
+        events[i].fermata = Some(if below { "inverted" } else { "upright" });
+    }
+}
+
