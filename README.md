@@ -79,12 +79,92 @@ tools/evaluate.sh                                           # samples/ の正解
 `mscore -r 300 -o NAME.png NAME.mscx`（`NAME-1.png, NAME-2.png, …` が出力される）とし、
 `tools/evaluate.sh コーパスのディレクトリ` を実行します。
 
-## 対応していないもの
+## 開発方針
 
-- タイ・スラー・歌詞・テキスト・アーティキュレーションの出力（強弱記号のみ出力）
-- 装飾音符の出力（誤って通常の音符にしないよう除外するだけ）
-- 写真・傾きの大きいスキャン、タブ譜・打楽器譜、PDF 入力
-- 連桁の束が五線の線とちょうど重なる箇所、一部フォントの16分音符の旗
+**Audiveris 本家と原則同じロジック**で実装し、本家と異なるロジック（改良）は、正解付きコーパスで
+本家の方式より精度が上回ることを確認できた場合にのみ採用します。下の表の「改良ロジック」のうち
+「優位性未検証」のものは、本家ロジックへ戻す（移植する）候補です。
+
+## 機能チェックリスト
+
+凡例: ✅ 本家と同じ ／ 🔧 改良ロジック（本家と異なる） ／ ⬜ 未実装
+
+| 機能 | 実装単位 | 状態 | 備考（本家の該当クラス） |
+|---|---|---|---|
+| **画像入力・二値化** | 画像読込（PNG/JPEG/TIFF/BMP、グレー化） | ✅ | ImageLoading |
+| | PDF入力 | ⬜ | Ghostscript 経由 |
+| | 二値化 | ✅ | AdaptiveFilter（37×37、0.7·mean+0.9·std） |
+| **スケール** | 線幅・五線間隔 | ✅ | ScaleBuilder（black / combo ヒストグラム） |
+| | 連桁の太さ | 🔧 | 長い横ランのみの縦ラン分布。本家の black ピーク方式では過小推定する例あり（優位性: 冬の旅で確認） |
+| | 符幹の太さ | 🔧 | 横ランのピーク（本家 StemScaler。優位性未検証） |
+| | 第2の五線間隔（小さい五線） | ⬜ | ScaleBuilder interline2 |
+| **五線** | 五線の検出 | 🔧 | 細い縦ランの「櫛」で検出（本家 LinesRetriever / ClustersRetriever。優位性未検証） |
+| | 線の形状モデル | 🔧 | 5本共通の二次曲線を頑健フィット（本家 NaturalSpline。優位性未検証） |
+| | 五線の消去 | 🔧 | 線上の細い縦ランを消去（本家は線 glyph の画素。優位性未検証） |
+| | 1線譜・打楽器譜・タブ譜 | ⬜ | OneLineStaff, Tablature |
+| **小節線・段・パート** | 小節線の検出 | 🔧 | 全高の縦ピーク＋端の検査（本家 BarsRetriever。優位性未検証） |
+| | 段の構成（コネクタ） | ✅ | 小節線が五線間をつなぐ段 |
+| | ブレース／ブラケットとパート | 🔧 | 左端の大きな成分の形で判定（本家 BracesRetriever / PartsBuilder。優位性未検証） |
+| | 小節線の種類（複縦線・終止線） | 🔧 | 太さで判定 |
+| | 反復記号（リピート点） | ⬜ | RepeatDotInter |
+| **音部記号** | 段頭の音部記号 | 🔧 | 分類器は本家と同じ、候補の組み立ては独自（本家 ClefBuilder。優位性未検証） |
+| | 途中の音部記号変更 | ✅ | SYMBOLS の分類器（G/F/C、小型を含む） |
+| | 8va/8vb 付き音部記号 | ✅ | 分類器の形状 |
+| **調号** | 段頭の調号 | 🔧 | 分類器による♯/♭の列（本家 KeyBuilder の射影ピーク方式。優位性未検証） |
+| | 途中の調号変更・取消（ナチュラル） | ⬜ | KeyInter |
+| **拍子** | 段頭の拍子 | 🔧 | 分類器（全体形／分子・分母）＋分母の補完（本家 TimeBuilder。優位性未検証） |
+| | 途中の拍子変更 | 🔧 | SYMBOLS の拍子形状 |
+| **符頭** | テンプレート生成（Bravura、fore/back/hole） | ✅ | TemplateFactory |
+| | テンプレート距離 | ✅ | Template.evaluate（重み 6/1/4） |
+| | 符頭サイズの推定 | 🔧 | 黒符頭幅の実測（本家 BlackHeadSizer。優位性未検証） |
+| | 範囲走査（線・間・加線） | ✅ | NoteHeadsBuilder.lookupRange |
+| | 符幹シードからの走査 | ⬜ | NoteHeadsBuilder.lookupSeeds |
+| | 重複・重なりの整理 | ✅ | aggregateMatches, HeadInter.overlaps |
+| | 黒→白符頭の判定（hole） | ✅ | evalBlackAsVoid |
+| | 小さい符頭（cue） | ⬜ | 小テンプレートでの除外のみ（本家 CUE_BEAMS） |
+| | 特殊符頭（×・菱形など） | ⬜ | ShapeSet.Heads |
+| **符幹** | 符幹の探索 | 🔧 | 符頭の左右で縦の細い線を探索（本家 StemsRetriever / HeadLinker。優位性未検証） |
+| | 文脈グレードによる取捨 | ✅ | GradeUtil.contextual、HeadStemRelation 係数 4 |
+| | 尾の最小長 | ✅ | StemInter.minTailLength 1.75 |
+| | 2度の反対側規則・臨時記号型の偽符頭排除 | 🔧 | 本家 SIG の排他関係の簡略版 |
+| **連桁** | 連桁の検出 | 🔧 | 厚みのそろった画素の平行四辺形フィット（本家 BeamsBuilder のスポット方式。優位性未検証） |
+| | 符幹との接続・レベル | 🔧 | 本家 BeamLinker |
+| | 部分連桁（フック） | 🔧 | |
+| | 小さい連桁（cue） | ⬜ | CueBeamsStep |
+| **旗** | 旗の認識 | 🔧 | 分類器は本家と同じ。符幹先端での限定分類を追加 |
+| **加線** | 加線の検出 | 🔧 | 本家 LedgersBuilder。優位性未検証 |
+| **休符** | 休符の分類 | ✅ | 分類器 |
+| | 全休符・2分休符の判別 | ✅ | 線からぶら下がる／線に乗る位置 |
+| | 全小節休符 | ✅ | 小節中に単独の全休符 |
+| | 複数小節休符 | ⬜ | MultipleRestInter |
+| **付点** | 付点の認識と音符への割当 | 🔧 | 本家 DotFactory / AugmentationDotInter |
+| | 和音の付点の一貫性 | 🔧 | 本家は各音の付点数の平均を丸める（countDots） |
+| **臨時記号** | 分類 | ✅ | 分類器 |
+| | 音高位置（♭の補正） | ✅ | AlterInter.computePitch |
+| | 符頭への割当 | 🔧 | 本家 AlterHeadRelation |
+| | 小節内での持続・調号との関係 | ✅ | |
+| **和音** | 同じ符幹の符頭をまとめる | ✅ | ChordsBuilder |
+| **装飾音符** | 装飾音符（前打音・短前打音） | ⬜ | GraceChordInter、GRACE_NOTE 形状 |
+| **連符** | 明示された3連符・6連符 | 🔧 | 数字の近くの連桁群／3つの和音 |
+| | 暗黙の3連符 | 🔧 | 小節が溢れる声部で、ちょうど収まる場合のみ（優位性: 冬の旅で確認） |
+| **リズム** | 声部の割当 | 🔧 | 本家 Voices / SlotsRetriever。優位性未検証 |
+| | タイムスロット | 🔧 | |
+| | 弱起・小節長の検査 | ⬜ | MeasureRhythm, PageRhythm |
+| **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器は本家と同じ。音符への割当は最も近い音符 |
+| **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ⬜ | ArticulationInter |
+| **装飾・その他記号** | フェルマータ | ⬜ | FermataInter |
+| | トリル・ターン・モルデント | ⬜ | OrnamentInter |
+| | アルペジオ・ブレス・カエスーラ | ⬜ | ArpeggiatoInter, BreathMarkInter, CaesuraInter |
+| | トレモロ | ⬜ | TremoloInter |
+| **ヘアピン** | クレッシェンド／デクレッシェンド | ⬜ | WedgesBuilder |
+| **オッターヴァ・ペダル** | 8va/15ma 線、ペダル記号 | ⬜ | OctaveShiftInter, PedalInter |
+| **反復構造** | ボルタ（括弧）・セーニョ・コーダ | ⬜ | EndingInter, SegnoInter |
+| **タイ・スラー** | スラー／タイの検出と音符への接続 | ⬜ | SlursBuilder, SlurInter |
+| **テキスト** | 歌詞 | ⬜ | LyricItemInter（OCR） |
+| | 発想記号・テンポ・タイトル | ⬜ | WordInter, SentenceInter（OCR） |
+| **ページ・パート** | 複数ページの結合・状態の引継ぎ | 🔧 | 本家 Book / PageRhythm |
+| | 段ごとのパート対応（隠れた五線） | 🔧 | 本家 PartsBuilder / ScoreReduction。優位性: 冬の旅で確認 |
+| **出力** | MusicXML 4.0 | ✅ | 本家 PartwiseBuilder（独自 writer、XSD 検証） |
 
 ## ライセンス・由来
 
