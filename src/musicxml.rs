@@ -293,7 +293,11 @@ fn write_pitch(x: &mut String, p: &crate::score::Pitch) {
 
 fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
     let d = dur(e.duration, div);
-    let common_tail = |x: &mut String, with_beams: bool| {
+    // `note`: index of the note in the chord (None for a rest); the first
+    // note carries the beams and the chord-level notations.
+    let common_tail = |x: &mut String, note: Option<usize>| {
+        let with_beams = note == Some(0);
+        let ties: Vec<bool> = e.ties.iter().filter(|t| Some(t.0) == note).map(|t| t.1).collect();
         if let Some((a, b)) = e.tuplet {
             let _ = write!(
                 x,
@@ -313,8 +317,23 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
             for (n, v) in &e.beams {
                 let _ = write!(x, "<beam number=\"{n}\">{v}</beam>");
             }
-            if !e.articulations.is_empty() || e.fermata.is_some() || !e.ornaments.is_empty() || e.arpeggiate || e.tremolo > 0 {
-                x.push_str("<notations>");
+        }
+        let chord_level = with_beams
+            && (!e.articulations.is_empty()
+                || e.fermata.is_some()
+                || !e.ornaments.is_empty()
+                || e.arpeggiate
+                || e.tremolo > 0
+                || !e.slurs.is_empty());
+        if chord_level || !ties.is_empty() {
+            x.push_str("<notations>");
+            for &start in &ties {
+                let _ = write!(x, "<tied type=\"{}\"/>", if start { "start" } else { "stop" });
+            }
+            if chord_level {
+                for (n, start) in &e.slurs {
+                    let _ = write!(x, "<slur type=\"{}\" number=\"{n}\"/>", if *start { "start" } else { "stop" });
+                }
                 if let Some(f) = e.fermata {
                     let _ = write!(x, "<fermata type=\"{f}\"/>");
                 }
@@ -338,8 +357,8 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
                     }
                     x.push_str("</ornaments>");
                 }
-                x.push_str("</notations>");
             }
+            x.push_str("</notations>");
         }
     };
     match &e.kind {
@@ -361,7 +380,7 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
                     x.push_str("<dot/>");
                 }
             }
-            common_tail(x, false);
+            common_tail(x, None);
             x.push_str("</note>\n");
         }
         Kind::Chord { pitches, .. } => {
@@ -388,19 +407,18 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
                     x.push_str("<chord/>");
                 }
                 write_pitch(x, p);
-                let _ = write!(
-                    x,
-                    "<duration>{d}</duration><voice>{}</voice><type>{}</type>",
-                    e.voice,
-                    type_name(e.base)
-                );
+                let _ = write!(x, "<duration>{d}</duration>");
+                for t in e.ties.iter().filter(|t| t.0 == i) {
+                    let _ = write!(x, "<tie type=\"{}\"/>", if t.1 { "start" } else { "stop" });
+                }
+                let _ = write!(x, "<voice>{}</voice><type>{}</type>", e.voice, type_name(e.base));
                 for _ in 0..e.dots {
                     x.push_str("<dot/>");
                 }
                 if let Some(a) = p.accidental {
                     let _ = write!(x, "<accidental>{a}</accidental>");
                 }
-                common_tail(x, i == 0);
+                common_tail(x, Some(i));
                 x.push_str("</note>\n");
             }
         }

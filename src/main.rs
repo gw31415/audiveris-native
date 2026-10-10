@@ -126,6 +126,10 @@ fn write_debug(
     for w in &sheet.wedges {
         ov.rect(w.bounds.grow(2, 2), [255, 0, 255]);
     }
+    for s in &sheet.slurs {
+        ov.line(s.left.0, s.left.1, s.right.0, s.right.1, [0, 200, 200]);
+        ov.rect(s.bounds, [0, 200, 200]);
+    }
     for e in &sheet.endings {
         ov.line(e.x0, e.y - 3.0, e.x1, e.y - 3.0, [255, 0, 255]);
     }
@@ -142,6 +146,7 @@ fn write_debug(
         "symbols": sheet.symbols,
         "wedges": sheet.wedges,
         "endings": sheet.endings,
+        "slurs": sheet.slurs,
         "score": score,
     });
     std::fs::write(

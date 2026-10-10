@@ -346,3 +346,323 @@ pub fn octave_shifts(residual: &Bitmap, symbols: &[crate::symbols::Symbol], stav
     }
     out
 }
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct Slur {
+    /// Left and right end points.
+    pub left: (f64, f64),
+    pub right: (f64, f64),
+    /// Arc bulging upwards (heads lie below its ends).
+    pub above: bool,
+    pub grade: f64,
+    pub bounds: Rect,
+    /// Center line.
+    #[serde(skip)]
+    pub pts: Vec<(f64, f64)>,
+}
+
+/// Circle through the points (algebraic least squares): (cx, cy, r, mean distance).
+fn fit_circle(pts: &[(f64, f64)]) -> Option<(f64, f64, f64, f64)> {
+    let n = pts.len() as f64;
+    let (mx, my) = pts.iter().fold((0.0, 0.0), |a, p| (a.0 + p.0 / n, a.1 + p.1 / n));
+    let (mut suu, mut svv, mut suv, mut suuu, mut svvv, mut suvv, mut svuu) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    for &(x, y) in pts {
+        let (u, v) = (x - mx, y - my);
+        suu += u * u;
+        svv += v * v;
+        suv += u * v;
+        suuu += u * u * u;
+        svvv += v * v * v;
+        suvv += u * v * v;
+        svuu += v * u * u;
+    }
+    let det = suu * svv - suv * suv;
+    if det.abs() < 1e-9 {
+        return None;
+    }
+    let (b1, b2) = (0.5 * (suuu + suvv), 0.5 * (svvv + svuu));
+    let uc = (b1 * svv - b2 * suv) / det;
+    let vc = (suu * b2 - suv * b1) / det;
+    let r = (uc * uc + vc * vc + (suu + svv) / n).sqrt();
+    let (cx, cy) = (uc + mx, vc + my);
+    let d = pts.iter().map(|p| ((p.0 - cx).hypot(p.1 - cy) - r).abs()).sum::<f64>() / n;
+    Some((cx, cy, r, d))
+}
+
+/// Mean distance of the points to their side models (Audiveris
+/// SlursBuilder): circles fitted on the first and last 6 interlines.
+fn side_distance(pts: &[(f64, f64)], il: f64) -> Option<f64> {
+    let len = 6.0 * il;
+    let (x0, x1) = (pts[0].0, pts[pts.len() - 1].0);
+    let left: Vec<(f64, f64)> = pts.iter().copied().filter(|p| p.0 - x0 <= len).collect();
+    let right: Vec<(f64, f64)> = pts.iter().copied().filter(|p| x1 - p.0 <= len).collect();
+    if left.len() < 3 || right.len() < 3 {
+        return None;
+    }
+    Some((fit_circle(&left)?.3 + fit_circle(&right)?.3) / 2.0)
+}
+
+/// A thin piece of curve: its center points, one per column with a single run.
+struct Piece {
+    pts: Vec<(f64, f64)>,
+    bounds: Rect,
+}
+
+/// Slurs and ties (Audiveris CURVES step, before SYMBOLS): thin curved
+/// strokes of the residual image (chains of thin vertical runs, joined across
+/// small gaps) whose center line fits a circle, graded as in
+/// SlursBuilder.computeImpacts. Only slurs with both ends near a note (heads
+/// and stem), or one end near a note and the other near a staff end, are
+/// kept. Their pixels are returned as a mask, so that glyphs lying on them
+/// are not read as symbols.
+pub fn slurs(
+    residual: &Bitmap,
+    heads: &[crate::heads::Head],
+    stems: &[crate::stems::Stem],
+    staves: &[Staff],
+    symbols: &[crate::symbols::Symbol],
+    scale: &Scale,
+) -> (Vec<Slur>, Bitmap) {
+    let il = scale.interline as f64;
+    // Notes: a stem with its heads, or a stemless head.
+    let mut notes: Vec<Rect> = stems
+        .iter()
+        .filter(|st| !st.heads.is_empty())
+        .map(|st| {
+            st.heads
+                .iter()
+                .map(|&h| heads[h].bounds)
+                .fold(Rect::new(st.x, st.top, 1, st.bottom - st.top + 1), |a, b| a.union(&b))
+        })
+        .collect();
+    let stemmed: Vec<usize> = stems.iter().flat_map(|st| st.heads.iter().copied()).collect();
+    notes.extend((0..heads.len()).filter(|h| !stemmed.contains(h)).map(|h| heads[h].bounds));
+    let near = |end: (f64, f64), left: bool, above: bool| -> Option<usize> {
+        let (x0, x1) = if left { (end.0 - 2.0 * il, end.0 + 0.5 * il) } else { (end.0 - 0.5 * il, end.0 + 2.0 * il) };
+        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 3.0 * il) } else { (end.1 - 3.0 * il, end.1 + 0.5 * il) };
+        notes.iter().position(|b| {
+            (b.right() as f64) >= x0 && (b.x as f64) <= x1 && (b.bottom() as f64) >= y0 && (b.y as f64) <= y1
+        })
+    };
+    let staff_end = |p: (f64, f64), left: bool| {
+        staves.iter().any(|st| {
+            p.1 >= st.top(p.0) - 4.0 * il
+                && p.1 <= st.bottom(p.0) + 4.0 * il
+                && if left {
+                    p.0 - st.header_stop.max(st.left) as f64 <= 6.0 * il
+                } else {
+                    st.right as f64 - p.0 <= 6.0 * il
+                }
+        })
+    };
+    let max_thick = il.max(3.0) as i32;
+    let mut mask = Bitmap::new(residual.width, residual.height);
+    let mut out = Vec::new();
+    // An end touching a stem is a flag, not a slur.
+    let on_stem = |p: (f64, f64)| {
+        stems.iter().any(|st| {
+            (p.0 - st.x as f64).abs() <= 2.0 && p.1 >= st.top as f64 && p.1 <= st.bottom as f64
+        })
+    };
+    for s in slur_candidates(residual, symbols, scale) {
+        if on_stem(s.left) || on_stem(s.right) {
+            continue;
+        }
+        let (l, r) = (near(s.left, true, s.above), near(s.right, false, s.above));
+        let keep = match (l, r) {
+            (Some(a), Some(b)) => a != b,
+            (Some(_), None) => staff_end(s.right, false),
+            (None, Some(_)) => staff_end(s.left, true),
+            _ => false,
+        };
+        if !keep {
+            continue;
+        }
+        for &(x, y) in &s.pts {
+            let (a, b) = residual.vrun_at(x as i32, y.round() as i32);
+            if b - a < max_thick {
+                for yy in a..=b {
+                    mask.set(x as i32, yy, true);
+                }
+            }
+        }
+        out.push(s);
+    }
+    (out, mask)
+}
+
+fn slur_candidates(residual: &Bitmap, symbols: &[crate::symbols::Symbol], scale: &Scale) -> Vec<Slur> {
+    let il = scale.interline as f64;
+    let max_thick = il.max(3.0);
+    let mut pieces: Vec<Piece> = Vec::new();
+    // Thin vertical runs of every column, chained column to column while the
+    // chain does not branch (an approximation of skeleton arcs between
+    // junctions, so that a slur touching another glyph is still found).
+    let (w, h) = (residual.width as i32, residual.height as i32);
+    let mut runs: Vec<Vec<(i32, i32)>> = vec![Vec::new(); w as usize];
+    for x in 0..w {
+        let mut y = 0;
+        while y < h {
+            if residual.get(x, y) {
+                let a = y;
+                while y < h && residual.get(x, y) {
+                    y += 1;
+                }
+                if ((y - a) as f64) <= max_thick {
+                    runs[x as usize].push((a, y - 1));
+                }
+            }
+            y += 1;
+        }
+    }
+    let touch = |a: (i32, i32), b: (i32, i32)| a.0 <= b.1 + 1 && b.0 <= a.1 + 1;
+    let right_of = |x: usize, r: (i32, i32)| -> Vec<usize> {
+        if x + 1 >= runs.len() {
+            return Vec::new();
+        }
+        (0..runs[x + 1].len()).filter(|&j| touch(r, runs[x + 1][j])).collect()
+    };
+    let left_count = |x: usize, r: (i32, i32)| -> usize {
+        if x == 0 {
+            return 0;
+        }
+        runs[x - 1].iter().filter(|&&q| touch(r, q)).count()
+    };
+    let mut seen: Vec<Vec<bool>> = runs.iter().map(|c| vec![false; c.len()]).collect();
+    for x in 0..runs.len() {
+        for i in 0..runs[x].len() {
+            if seen[x][i] {
+                continue;
+            }
+            seen[x][i] = true;
+            let mut pts = Vec::new();
+            let mut thick = 0.0;
+            let (mut cx, mut ci) = (x, i);
+            loop {
+                let r = runs[cx][ci];
+                thick += (r.1 - r.0 + 1) as f64;
+                pts.push((cx as f64, (r.0 + r.1) as f64 / 2.0));
+                let next = right_of(cx, r);
+                if next.len() != 1 {
+                    break;
+                }
+                let n = runs[cx + 1][next[0]];
+                if left_count(cx + 1, n) != 1 || seen[cx + 1][next[0]] {
+                    break;
+                }
+                cx += 1;
+                ci = next[0];
+                seen[cx][ci] = true;
+            }
+            // Short pieces must be thin (cut pieces of a curve, not dots).
+            if pts.len() < 3 || ((pts.len() as f64) < 0.5 * il && thick / pts.len() as f64 > 0.25 * il) {
+                continue;
+            }
+            let (x0, x1) = (pts[0].0 as i32, pts[pts.len() - 1].0 as i32);
+            let (y0, y1) = pts.iter().fold((f64::MAX, f64::MIN), |a, p| (a.0.min(p.1), a.1.max(p.1)));
+            let bounds = Rect::new(x0, y0 as i32 - 1, x1 - x0 + 1, (y1 - y0) as i32 + 3);
+            // Not part of a recognized symbol (but dots and rest bars may be
+            // pieces of a slur cut by staff lines).
+            if symbols.iter().any(|s| {
+                s.shape != "DOT_set"
+                    && s.shape != "HW_REST_set"
+                    && s.bounds.intersection(&bounds).is_some_and(|i| i.area() as f64 >= 0.5 * bounds.area() as f64)
+            }) {
+                continue;
+            }
+            pieces.push(Piece { pts, bounds });
+        }
+    }
+    pieces.sort_by_key(|p| p.bounds.x);
+    // Join pieces end to end when the union still fits a circle.
+    let mut used = vec![false; pieces.len()];
+    let mut out = Vec::new();
+    for i in 0..pieces.len() {
+        if used[i] {
+            continue;
+        }
+        used[i] = true;
+        let mut pts = pieces[i].pts.clone();
+        let mut bounds = pieces[i].bounds;
+        // Last state passing the final check (extensions are accepted with
+        // the looser intermediate distance, maxArcsDistance 0.15).
+        let mut best = grade_slur(&pts, il).map(|s| Slur { bounds, ..s });
+        loop {
+            let end = *pts.last().unwrap();
+            let next = (0..pieces.len()).filter(|&j| !used[j]).find(|&j| {
+                let p0 = pieces[j].pts[0];
+                p0.0 - end.0 >= -1.0
+                    && p0.0 - end.0 <= 2.0 * il
+                    && (p0.1 - end.1).abs() <= 0.5 * il
+                    && {
+                        let mut u = pts.clone();
+                        u.extend(&pieces[j].pts);
+                        side_distance(&u, il).is_some_and(|d| d <= 0.15 * il)
+                    }
+            });
+            let Some(j) = next else { break };
+            used[j] = true;
+            pts.extend(&pieces[j].pts);
+            bounds = bounds.union(&pieces[j].bounds);
+            if let Some(s) = grade_slur(&pts, il) {
+                best = Some(Slur { bounds, ..s });
+            }
+        }
+        if let Some(s) = best {
+            out.push(s);
+        }
+    }
+    out
+}
+
+fn grade_slur(pts: &[(f64, f64)], il: f64) -> Option<Slur> {
+    let (cx, cy, _r, _) = fit_circle(pts)?;
+    let dist = side_distance(pts, il)?;
+    let max_dist = 0.1 * il;
+    if dist > max_dist {
+        return None;
+    }
+    let (p0, p1, p2) = (pts[0], pts[pts.len() / 2], pts[pts.len() - 1]);
+    let ang = |p: (f64, f64)| (p.1 - cy).atan2(p.0 - cx);
+    let (a0, a1, a2) = (ang(p0), ang(p1), ang(p2));
+    // Arc from p0 to p2 through p1.
+    let norm = |a: f64| a.rem_euclid(2.0 * std::f64::consts::PI);
+    let (d01, d02) = (norm(a1 - a0), norm(a2 - a0));
+    let arc = if d01 <= d02 { d02 } else { 2.0 * std::f64::consts::PI - d02 }.to_degrees();
+    if arc > 190.0 {
+        return None;
+    }
+    let mut mid = a1.rem_euclid(std::f64::consts::PI);
+    if mid < 0.0 {
+        mid += std::f64::consts::PI;
+    }
+    let from_vertical = mid.min(std::f64::consts::PI - mid).to_degrees();
+    if from_vertical < 10.0 {
+        return None;
+    }
+    let width = (p2.0 - p0.0).abs();
+    if width < 0.7 * il {
+        return None;
+    }
+    let (dx, dy) = (p2.0 - p0.0, p2.1 - p0.1);
+    let height = ((p1.0 - p0.0) * dy - (p1.1 - p0.1) * dx).abs() / dx.hypot(dy);
+    if height < 0.07 * il {
+        return None;
+    }
+    let impacts = [
+        (1.0 - dist / max_dist, 3.0),
+        ((190.0 - arc) / 20.0, 1.0),
+        ((width - 0.7 * il) / (0.8 * il), 1.0),
+        ((height - 0.07 * il) / (0.93 * il), 1.0),
+        ((from_vertical - 10.0) / 15.0, 1.0),
+    ];
+    let grade = if impacts.iter().any(|(v, _)| *v <= 0.0) {
+        0.0
+    } else {
+        0.8 * impacts.iter().map(|(v, w)| v.powf(*w)).product::<f64>().powf(1.0 / 7.0)
+    };
+    if grade < 0.08 {
+        return None;
+    }
+    Some(Slur { left: p0, right: p2, above: p1.1 < cy, grade, bounds: Rect::default(), pts: pts.to_vec() })
+}

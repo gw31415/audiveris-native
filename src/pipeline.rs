@@ -32,6 +32,7 @@ pub struct Sheet {
     pub wedges: Vec<crate::curves::Wedge>,
     pub endings: Vec<crate::curves::Ending>,
     pub octave_shifts: Vec<crate::curves::OctaveShift>,
+    pub slurs: Vec<crate::curves::Slur>,
     /// Key signature changes: (staff, barline right abscissa, fifths).
     pub key_changes: Vec<(usize, i32, i32)>,
 }
@@ -154,7 +155,25 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     let residual = symbols::residual(
         &nostaff, &heads, &catalog, &stems, &beams, &ledgers, &systems, &staves, &items, &scale,
     );
-    let symbols = symbols::recognize(&residual, &staves, &scale);
+    let mut symbols = symbols::recognize(&residual, &staves, &scale);
+    let (slurs, slur_mask) = crate::curves::slurs(&residual, &heads, &stems, &staves, &symbols, &scale);
+    // Dots and rest bars read from pieces of a slur or tie belong to it.
+    symbols.retain(|y| {
+        if y.shape != "DOT_set" && y.shape != "HW_REST_set" {
+            return true;
+        }
+        let b = y.bounds;
+        let (mut on, mut all) = (0, 0);
+        for yy in b.y..b.bottom() {
+            for x in b.x..b.right() {
+                if residual.get(x, yy) {
+                    all += 1;
+                    on += slur_mask.get(x, yy) as usize;
+                }
+            }
+        }
+        (on as f64) < 0.7 * all.max(1) as f64
+    });
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
     let (wedges, endings) = crate::curves::build(&residual, &bin, &staves, &systems, &scale);
@@ -162,7 +181,13 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     log(
         verbose,
         &t,
-        format!("CURVES {} wedges, {} endings, {} octave shifts", wedges.len(), endings.len(), octave_shifts.len()),
+        format!(
+            "CURVES {} wedges, {} endings, {} octave shifts, {} slurs",
+            wedges.len(),
+            endings.len(),
+            octave_shifts.len(),
+            slurs.len()
+        ),
     );
     Ok(Sheet {
         binary: bin,
@@ -180,6 +205,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         wedges,
         endings,
         octave_shifts,
+        slurs,
         key_changes,
     })
 }

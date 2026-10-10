@@ -98,7 +98,19 @@ pub fn residual(
         }
     }
     let thin = scale.max_line + 1;
-    for l in ledgers {
+    // Only ledgers supporting a head (Audiveris discards the others), so that
+    // thin parts of slurs at ledger height are kept.
+    let il = scale.interline as f64;
+    let supported = |l: &&Ledger| {
+        heads.iter().any(|h| {
+            h.ctx >= 0.6
+                && h.staff == l.staff
+                && h.bounds.right() >= l.x0
+                && h.bounds.x <= l.x1
+                && (h.bounds.cy() - l.y).abs() <= il
+        })
+    };
+    for l in ledgers.iter().filter(supported) {
         for x in l.x0..=l.x1 {
             let (a, b) = img.vrun_at(x, l.y.round() as i32);
             if b - a < thin {
