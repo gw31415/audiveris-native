@@ -53,6 +53,8 @@ pub struct Event {
     pub fermata: Option<&'static str>,
     /// Ornaments (MusicXML element names).
     pub ornaments: Vec<&'static str>,
+    /// Arpeggiato sign on the left of the chord.
+    pub arpeggiate: bool,
     #[serde(skip)]
     heads: Vec<usize>,
     /// Bounds of the chord (heads and stem) or rest.
@@ -573,6 +575,7 @@ fn build_measure(
             articulations: Vec::new(),
             fermata: None,
             ornaments: Vec::new(),
+            arpeggiate: false,
             bbox: Rect::default(),
             y_mid,
             stem: Some(sti),
@@ -625,6 +628,7 @@ fn build_measure(
             articulations: Vec::new(),
             fermata: None,
             ornaments: Vec::new(),
+            arpeggiate: false,
             bbox: Rect::default(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
@@ -673,6 +677,7 @@ fn build_measure(
             articulations: Vec::new(),
             fermata: None,
             ornaments: Vec::new(),
+            arpeggiate: false,
             bbox: Rect::default(),
             y_mid: cy,
             stem: None,
@@ -763,6 +768,7 @@ fn build_measure(
     attach_articulations(sheet, part_staves, &syms, &mut events, &aug_dots);
     attach_fermatas(sheet, part_staves, &syms, &mut events);
     attach_ornaments(sheet, &syms, &mut events);
+    attach_arpeggios(sheet, &syms, &mut events);
 
     // Tuplets attached to beam groups.
     for s in syms
@@ -1312,3 +1318,28 @@ fn attach_ornaments(sheet: &Sheet, syms: &[&crate::symbols::Symbol], events: &mu
     }
 }
 
+/// Arpeggios (Audiveris ArpeggiatoInter.lookupLink): the head chord on the
+/// right, within 1.5 il, whose heads overlap the sign most vertically
+/// (overlap ratio at least 0.1).
+fn attach_arpeggios(sheet: &Sheet, syms: &[&crate::symbols::Symbol], events: &mut [Event]) {
+    let il = sheet.scale.interline;
+    for s in syms.iter().filter(|s| s.shape == "ARPEGGIATO") {
+        let lu = Rect::new(s.bounds.right(), s.bounds.y, (1.5 * il as f64).round() as i32, s.bounds.h);
+        let mut best: Option<(usize, i32)> = None;
+        for (i, e) in events.iter().enumerate() {
+            let Some(hb) = e.heads.iter().map(|&h| sheet.heads[h].bounds).reduce(|a, b| a.union(&b)) else { continue };
+            if !hb.intersects(&lu) {
+                continue;
+            }
+            let overlap = hb.bottom().min(lu.bottom()) - hb.y.max(lu.y);
+            if best.is_none_or(|(_, o)| overlap > o) {
+                best = Some((i, overlap));
+            }
+        }
+        if let Some((i, o)) = best
+            && o as f64 / lu.h as f64 >= 0.1
+        {
+            events[i].arpeggiate = true;
+        }
+    }
+}

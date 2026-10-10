@@ -193,6 +193,7 @@ fn relevant(shape: &str) -> bool {
             | "TURN_SLASH"
             | "MORDENT"
             | "MORDENT_INVERTED"
+            | "ARPEGGIATO"
     ) || shape.starts_with("FLAG_")
         || shape.starts_with("TIME_")
         || shape == "COMMON_TIME"
@@ -222,7 +223,7 @@ pub fn min_grade(shape: &str) -> f64 {
     match shape {
         "DOT_set" => 0.2,
         "BREVE_REST" | "LONG_REST" => 0.7,
-        "HW_REST_set" => 0.15,
+        "HW_REST_set" | "ARPEGGIATO" => 0.15,
         s if s.starts_with("DYNAMICS") => 0.6,
         _ => 0.35,
     }

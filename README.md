@@ -156,7 +156,8 @@ tools/evaluate.sh                                           # samples/ の正解
 | **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ✅ | ArticulationInter.lookupLink、ChordArticulationRelation、DotFactory（スタッカート） |
 | **装飾・その他記号** | フェルマータ | ✅ | FermataInter.lookupChordLink（冬の旅: F1 0.57、本家 0.56） |
 | | トリル・ターン・モルデント | ✅ | OrnamentInter.lookupLink、ChordOrnamentRelation（冬の旅: 再現率 0.53／適合率 0.21、本家 0.53／0.12） |
-| | アルペジオ・ブレス・カエスーラ | ⬜ | ArpeggiatoInter, BreathMarkInter, CaesuraInter |
+| | アルペジオ | ✅ | ArpeggiatoInter.lookupLink、本家の最小グレード 0.15（冬の旅: 再現率 0.25／適合率 0.67、本家 0.17／1.0） |
+| | ブレス・カエスーラ | ⬜ | BreathMarkInter, CaesuraInter |
 | | トレモロ | ⬜ | TremoloInter |
 | **ヘアピン** | クレッシェンド／デクレッシェンド | ⬜ | WedgesBuilder |
 | **オッターヴァ・ペダル** | 8va/15ma 線、ペダル記号 | ⬜ | OctaveShiftInter, PedalInter |
