@@ -14,16 +14,16 @@ if [ -n "$1" ]; then
     n=$(basename "$m" .mscx)
     pages=$(ls "$1/$n"-*.png | sort -V)
     $BIN -o "$OUT/$n.musicxml" $pages
-    echo "$n $(python3 tools/compare.py "$m" "$OUT/$n.musicxml" | tail -2 | tr '\n' ' ')"
+    echo "$n $(python3 tools/compare.py "$m" "$OUT/$n.musicxml" | grep -E "^(MATCH|FLAT)" | tr '\n' ' ')"
   done
   exit 0
 fi
 for f in an-laura der-winter der-brautschmuck; do
   $BIN -o "$OUT/$f.musicxml" samples/real/$f.png
-  echo "$f $(python3 tools/compare.py samples/real/$f.mscx "$OUT/$f.musicxml" | tail -2 | tr '\n' ' ')"
+  echo "$f $(python3 tools/compare.py samples/real/$f.mscx "$OUT/$f.musicxml" | grep -E "^(MATCH|FLAT)" | tr '\n' ' ')"
 done
 for r in samples/synthetic/*.audiveris.musicxml; do
   n=$(basename "$r" .audiveris.musicxml)
   $BIN -o "$OUT/$n.musicxml" samples/synthetic/$n.png
-  echo "$n $(python3 tools/compare.py "$r" "$OUT/$n.musicxml" | tail -1)"
+  echo "$n $(python3 tools/compare.py "$r" "$OUT/$n.musicxml" | grep "^FLAT")"
 done

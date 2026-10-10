@@ -12,6 +12,19 @@ from difflib import SequenceMatcher
 STEP = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
 
 
+def lcs(a, b):
+    """Exact longest common subsequence length (bit-parallel)."""
+    masks = {}
+    for i, x in enumerate(a):
+        masks[x] = masks.get(x, 0) | (1 << i)
+    full = (1 << len(a)) - 1
+    v = full
+    for y in b:
+        u = v & masks.get(y, 0)
+        v = ((v + u) | (v - u)) & full
+    return len(a) - bin(v).count('1')
+
+
 def events(path):
     root = ET.parse(path).getroot()
     parts = []
@@ -160,6 +173,17 @@ def main():
             if '-v' in sys.argv[0:1] or VERBOSE:
                 print(f"  part {pi + 1} staff {st}: {k}/{max(len(xa), len(xb))} (ref {len(xa)}, test {len(xb)})")
     print(f"FLAT {fm}/{ft} = {fm / max(ft, 1):.3f}")
+    # Pitch-only and duration-only sequences (head/pitch vs rhythm recognition).
+    for label, key in (('PITCH', lambda w, d: w), ('DUR', lambda w, d: d)):
+        tm = tt = 0
+        for pi in range(max(len(a), len(b))):
+            sa, sb = seq(a, pi), seq(b, pi)
+            for st in set(sa) | set(sb):
+                xa = [key(w, d) for _, w, d in sa.get(st, [])]
+                xb = [key(w, d) for _, w, d in sb.get(st, [])]
+                tm += lcs(xa, xb)
+                tt += max(len(xa), len(xb))
+        print(f"{label} {tm}/{tt} = {tm / max(tt, 1):.3f}")
 
 
 main()

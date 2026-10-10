@@ -262,7 +262,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     for sys in &sheet.systems {
         // System-wide key and time from the staff headers.
         let fifths = mode(sys.staves.iter().map(|&s| sheet.headers[s].fifths)).unwrap_or(0);
-        let time = sys.staves.iter().find_map(|&s| sheet.headers[s].time);
+        let time = column_time(sys.staves.iter().map(|&s| sheet.headers[s].time));
         let counts: Vec<usize> = sys.parts.iter().map(|p| p.len()).collect();
         if counts.len() > state.template.len() {
             // Grow the template: existing parts keep their place.
@@ -383,7 +383,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                 }
                 // Mid-system time signature (from symbols) at the start of this measure.
                 if mi > 0
-                    && let Some(t) = measure_time_change(sheet, part_staves, x_lo, x_lo + 4.0 * il)
+                    && let Some(t) = measure_time_change(sheet, &sys.staves, x_lo, x_lo + 4.0 * il)
                     && time_state != Some(t)
                 {
                     attrs.time = Some(t);
@@ -575,11 +575,26 @@ fn multiple_rest(sheet: &Sheet, staves: &[usize], x0: f64, x1: f64) -> Option<u3
     None
 }
 
-fn measure_time_change(sheet: &Sheet, part_staves: &[usize], x0: f64, x1: f64) -> Option<TimeSig> {
+/// Time signature of a column (Audiveris TimeColumn): every staff of the
+/// system must show one; the most common value is taken.
+fn column_time(times: impl Iterator<Item = Option<TimeSig>>) -> Option<TimeSig> {
+    let times: Vec<TimeSig> = times.collect::<Option<Vec<_>>>()?;
+    times
+        .iter()
+        .max_by_key(|t| times.iter().filter(|u| u == t).count())
+        .copied()
+}
+
+/// Time signature change at the start of a measure, on all staves.
+fn measure_time_change(sheet: &Sheet, staves: &[usize], x0: f64, x1: f64) -> Option<TimeSig> {
+    column_time(staves.iter().map(|&si| staff_time(sheet, si, x0, x1)))
+}
+
+fn staff_time(sheet: &Sheet, si: usize, x0: f64, x1: f64) -> Option<TimeSig> {
     let syms: Vec<_> = sheet
         .symbols
         .iter()
-        .filter(|s| part_staves.contains(&s.staff) && s.bounds.cx() > x0 && s.bounds.cx() < x1)
+        .filter(|s| s.staff == si && s.bounds.cx() > x0 && s.bounds.cx() < x1)
         .filter(|s| {
             let st = &sheet.staves[s.staff];
             s.bounds.cy() > st.top(s.bounds.cx()) && s.bounds.cy() < st.bottom(s.bounds.cx())
