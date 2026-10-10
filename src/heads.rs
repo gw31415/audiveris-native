@@ -385,13 +385,22 @@ pub fn detect(
     (heads, smalls)
 }
 
+/// Small black head kept as a grace note.
+#[derive(Clone, Debug)]
+pub struct GraceHead {
+    pub head: Head,
+    pub up: bool,
+    /// Flags or (cue) beams at the stem tip.
+    pub strokes: u32,
+}
+
 /// Small black heads kept as grace notes: not overlapping a standard head and
 /// with a stem (on the right going up, or on the left going down) of at least
-/// 1.5 interline. Returns the heads with their stem direction.
-pub fn grace_heads(bin: &Bitmap, smalls: Vec<Head>, heads: &[Head], scale: &Scale) -> Vec<(Head, bool)> {
+/// 1.5 interline. The flags or cue beams are counted near the stem tip.
+pub fn grace_heads(bin: &Bitmap, nostaff: &Bitmap, smalls: Vec<Head>, heads: &[Head], scale: &Scale) -> Vec<GraceHead> {
     let il = scale.interline;
     let min_len = (1.5 * il as f64) as i32;
-    let mut out: Vec<(Head, bool)> = Vec::new();
+    let mut out: Vec<GraceHead> = Vec::new();
     for h in smalls {
         let near = h.bounds.grow(il / 3, il / 3);
         if heads.iter().any(|o| o.bounds.intersects(&near)) {
@@ -399,21 +408,50 @@ pub fn grace_heads(bin: &Bitmap, smalls: Vec<Head>, heads: &[Head], scale: &Scal
         }
         let b = h.bounds;
         let cy = b.cy() as i32;
-        let up = (b.right() - 3..=b.right() + 1).any(|x| {
+        let up = (b.right() - 3..=b.right() + 1).find_map(|x| {
             let (a, e) = bin.vrun_at(x, b.y + 1);
-            e >= b.y && cy - a >= min_len
+            (e >= b.y && cy - a >= min_len).then_some((x, a))
         });
-        let down = (b.x - 1..=b.x + 2).any(|x| {
+        let down = (b.x - 1..=b.x + 2).find_map(|x| {
             let (a, e) = bin.vrun_at(x, b.bottom() - 2);
-            a <= b.bottom() && e - cy >= min_len
+            (a <= b.bottom() && e - cy >= min_len).then_some((x, e))
         });
-        if up == down {
+        let ((sx, tip), is_up) = match (up, down) {
+            (Some(u), None) => (u, true),
+            (None, Some(d)) => (d, false),
+            _ => continue,
+        };
+        if out.iter().any(|g| g.head.bounds.intersects(&b)) {
             continue;
         }
-        if out.iter().any(|(o, _)| o.bounds.intersects(&b)) {
-            continue;
-        }
-        out.push((h, up));
+        // Strokes crossing a column on either side of the stem, from the tip
+        // towards the head over 1.5 interline.
+        let span = (1.5 * il as f64) as i32;
+        let (y0, y1) = if is_up { (tip - 2, tip + span) } else { (tip - span, tip + 2) };
+        let off = (0.4 * il as f64).round() as i32;
+        // Close cue beams may merge into one run: a run counts as its length
+        // over the cue beam pitch (about 0.65 of a standard beam).
+        let pitch = (0.65 * scale.beam as f64).max(3.0);
+        let strokes = [sx - off, sx + off]
+            .iter()
+            .map(|&x| {
+                let mut n = 0;
+                let mut y = y0;
+                while y <= y1 {
+                    if nostaff.get(x, y) {
+                        let a = y;
+                        while y <= y1 && nostaff.get(x, y) {
+                            y += 1;
+                        }
+                        n += ((y - a) as f64 / pitch).round().max(1.0) as u32;
+                    }
+                    y += 1;
+                }
+                n
+            })
+            .max()
+            .unwrap_or(0);
+        out.push(GraceHead { head: h, up: is_up, strokes });
     }
     out
 }

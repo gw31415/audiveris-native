@@ -357,12 +357,14 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
             x.push_str("</note>\n");
         }
         Kind::Chord { pitches, .. } => {
-            for g in &e.graces {
-                let Some(p) = &g.pitch else { continue };
+            for (g, k, p) in e.graces.iter().flat_map(|g| g.pitches.iter().enumerate().map(move |(k, p)| (g, k, p))) {
                 x.push_str("      <note>");
                 x.push_str(if g.slash { "<grace slash=\"yes\"/>" } else { "<grace/>" });
+                if k > 0 {
+                    x.push_str("<chord/>");
+                }
                 write_pitch(x, p);
-                let _ = write!(x, "<voice>{}</voice><type>eighth</type>", e.voice);
+                let _ = write!(x, "<voice>{}</voice><type>{}</type>", e.voice, type_name(g.base));
                 if let Some(a) = p.accidental {
                     let _ = write!(x, "<accidental>{a}</accidental>");
                 }

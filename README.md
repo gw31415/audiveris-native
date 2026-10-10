@@ -132,7 +132,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | | 符幹シードからの走査 | 🔧 | 本家 NoteHeadsBuilder.lookupSeeds。範囲走査が全ての横位置を評価するため、その候補に含まれる |
 | | 重複・重なりの整理 | ✅ | aggregateMatches, HeadInter.overlaps |
 | | 黒→白符頭の判定（hole） | ✅ | evalBlackAsVoid |
-| | 小さい符頭（cue） | ⬜ | 小テンプレートでの除外のみ（本家 CUE_BEAMS） |
+| | 小さい符頭（cue） | 🔧 | 小テンプレート（0.67）で範囲走査し、符幹付きのものを装飾音符に使用（本家は処理スイッチで既定オフ） |
 | | 特殊符頭（×・菱形など） | ⬜ | ShapeSet.Heads |
 | **符幹** | 符幹の探索 | 🔧 | 符頭の左右で縦の細い線を探索（本家 StemsRetriever / HeadLinker）。優位性: 音価側の指標で確認 |
 | | 文脈グレードによる取捨 | ✅ | GradeUtil.contextual、HeadStemRelation 係数 4 |
@@ -141,7 +141,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | **連桁** | 連桁の検出 | 🔧 | 厚みのそろった画素の平行四辺形フィット（本家 BeamsBuilder のスポット方式）。優位性: 音価側の指標で確認 |
 | | 符幹との接続・レベル | 🔧 | 本家 BeamLinker |
 | | 部分連桁（フック） | 🔧 | |
-| | 小さい連桁（cue） | ⬜ | CueBeamsStep |
+| | 小さい連桁（cue） | 🔧 | 本家 CueBeamsStep。装飾音符の符幹先端で旗・小連桁の本数を数えて音価に（冬の旅: 装飾音符の音価 112/209 正解、本家 0） |
 | **旗** | 旗の認識 | 🔧 | 分類器は本家と同じ。符幹先端での限定分類を追加 |
 | **加線** | 加線の検出 | 🔧 | 本家 LedgersBuilder とは別実装。優位性: 音高側の指標で確認 |
 | **休符** | 休符の分類 | ✅ | 分類器 |

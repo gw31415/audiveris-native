@@ -48,6 +48,7 @@ def mscx_features(path):
                     c['orn:' + ('trill' if 'trill' in sub else 'mordent' if 'mordent' in sub else 'turn' if 'turn' in sub else sub)] += 1
                 elif t in ('acciaccatura', 'appoggiatura', 'grace4', 'grace16', 'grace32'):
                     c['grace'] += 1
+                    c['gracetype:' + {'grace4': 'quarter', 'grace16': '16th', 'grace32': '32nd'}.get(t, 'eighth')] += 1
                 elif t == 'Spanner' and el.find('next') is not None:
                     kind = el.get('type')
                     if kind == 'Tie':
@@ -99,8 +100,9 @@ def xml_features(path):
                         c['orn:turn'] += 1
                     elif tag == 'tremolo':
                         c['tremolo'] += 1
-            elif t == 'grace':
+            elif t == 'note' and el.find('grace') is not None and el.find('chord') is None:
                 c['grace'] += 1
+                c['gracetype:' + (el.findtext('type') or '')] += 1
             elif t == 'tied' and el.get('type') == 'start':
                 c['tie'] += 1
             elif t == 'slur' and el.get('type') == 'start':

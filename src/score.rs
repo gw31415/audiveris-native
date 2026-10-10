@@ -72,14 +72,17 @@ pub struct Event {
     right: f64,
 }
 
-/// Grace note (one head, eighth, Audiveris GraceChordInter).
+/// Grace chord (Audiveris GraceChordInter / SmallChordInter).
 #[derive(Clone, Debug, serde::Serialize)]
 pub struct Grace {
-    pub pitch: Option<Pitch>,
+    pub pitches: Vec<Pitch>,
     pub slash: bool,
     pub stem_up: bool,
+    /// Notated type (eighth, 16th, 32nd).
+    pub base: Q,
+    /// (staff, pitch position, abscissa) of each head.
     #[serde(skip)]
-    head: (usize, i32, f64),
+    heads: Vec<(usize, i32, f64)>,
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -980,10 +983,10 @@ fn build_measure(
     attach_arpeggios(sheet, &syms, &mut events);
     attach_pauses(part_staves, &syms, &mut events);
     attach_tremolos(sheet, &syms, &mut events);
-    let small_heads: Vec<&(crate::heads::Head, bool)> = sheet
+    let small_heads: Vec<&crate::heads::GraceHead> = sheet
         .grace_heads
         .iter()
-        .filter(|(h, _)| part_staves.contains(&h.staff) && in_measure(h.bounds.cx()))
+        .filter(|g| part_staves.contains(&g.head.staff) && in_measure(g.head.bounds.cx()))
         .collect();
     attach_graces(sheet, &syms, &small_heads, &mut events);
 
@@ -1058,7 +1061,8 @@ fn build_measure(
             continue;
         };
         let mut out = Vec::new();
-        let grace_heads: Vec<(usize, i32, f64)> = ev.graces.iter().map(|g| g.head).collect();
+        let grace_heads: Vec<(usize, i32, f64)> = ev.graces.iter().flat_map(|g| g.heads.iter().copied()).collect();
+        let grace_of: Vec<usize> = ev.graces.iter().enumerate().flat_map(|(k, g)| std::iter::repeat_n(k, g.heads.len())).collect();
         let chord_heads: Vec<(usize, i32, f64)> = ev
             .heads
             .iter()
@@ -1099,7 +1103,7 @@ fn build_measure(
                 accidental: acc.map(|a| accidental_name(a.3)),
             };
             if k < grace_heads.len() {
-                ev.graces[k].pitch = Some(p);
+                ev.graces[grace_of[k]].pitches.push(p);
             } else {
                 out.push(p);
             }
@@ -1728,7 +1732,7 @@ fn attach_tremolos(sheet: &Sheet, syms: &[&crate::symbols::Symbol], events: &mut
 fn attach_graces(
     sheet: &Sheet,
     syms: &[&crate::symbols::Symbol],
-    small_heads: &[&(crate::heads::Head, bool)],
+    small_heads: &[&crate::heads::GraceHead],
     events: &mut [Event],
 ) {
     let il = sheet.scale.interline as f64;
@@ -1742,8 +1746,8 @@ fn attach_graces(
     };
     let (sw, sh) = (0.67 * hw, 0.67 * hh);
     let x_max = 2.5 * il;
-    // (glyph bounds, head center, staff, stem up, slash)
-    let mut graces: Vec<(Rect, (f64, f64), usize, bool, bool)> = Vec::new();
+    // (glyph bounds, head center, staff, stem up, slash, type)
+    let mut graces: Vec<(Rect, (f64, f64), usize, bool, bool, Q)> = Vec::new();
     for s in syms {
         let (up, slash) = match s.shape {
             "GRACE_NOTE" => (true, false),
@@ -1758,11 +1762,12 @@ fn attach_graces(
         } else {
             (b.right() as f64 - sw / 2.0, b.y as f64 + sh / 2.0)
         };
-        graces.push((b, c, s.staff, up, slash));
+        graces.push((b, c, s.staff, up, slash, Q::new(1, 8)));
     }
     // Small heads with a stem (improvement: Audiveris needs a whole-glyph
     // grace shape, absent for 16th / beamed graces and up appoggiaturas).
-    for (h, up) in small_heads {
+    for g in small_heads {
+        let (h, up) = (&g.head, g.up);
         let c = (h.bounds.cx(), h.bounds.cy());
         if graces.iter().any(|g| g.0.intersects(&h.bounds))
             || syms.iter().any(|s| alter_of(s.shape).is_some() && s.bounds.intersects(&h.bounds))
@@ -1773,7 +1778,9 @@ fn attach_graces(
         {
             continue;
         }
-        graces.push((h.bounds, c, h.staff, *up, false));
+        // Type from the flags or cue beams (Audiveris CUE_BEAMS for grace chords).
+        let base = Q::new(1, 8 << g.strokes.clamp(1, 3).saturating_sub(1));
+        graces.push((h.bounds, c, h.staff, up, false, base));
     }
     // Right to left, so that a grace may also lead to the grace on its right
     // (grace groups); the vertical gap is measured to the closest head, up
@@ -1781,7 +1788,7 @@ fn attach_graces(
     let y_max = 3.0 * il;
     graces.sort_by(|a, b| b.1.0.partial_cmp(&a.1.0).unwrap());
     let mut linked: Vec<((f64, f64), usize)> = Vec::new();
-    for (b, (hx, hy), staff, up, slash) in graces {
+    for (b, (hx, hy), staff, up, slash, base) in graces {
         let mut best: Option<(usize, f64)> = None;
         let mut consider = |i: usize, (cx, cy): (f64, f64)| {
             let (dx, dy) = (cx - hx, cy - hy);
@@ -1806,11 +1813,23 @@ fn attach_graces(
         }
         if let Some((i, _)) = best {
             let pitch = sheet.staves[staff].pitch_of(hy, hx).round() as i32;
-            events[i].graces.push(Grace { pitch: None, slash, stem_up: up, head: (staff, pitch, hx - sw / 2.0) });
+            let head = (staff, pitch, hx - sw / 2.0);
+            // Heads on the same stem make one grace chord.
+            match events[i].graces.iter_mut().find(|g| g.heads.iter().any(|h| (h.2 - head.2).abs() <= 0.3 * il)) {
+                Some(g) => {
+                    g.heads.push(head);
+                    g.slash |= slash;
+                    g.base = g.base.min(base);
+                }
+                None => events[i].graces.push(Grace { pitches: Vec::new(), slash, stem_up: up, base, heads: vec![head] }),
+            }
             linked.push(((hx, hy), i));
         }
     }
     for e in events.iter_mut() {
-        e.graces.sort_by(|a, b| a.head.2.partial_cmp(&b.head.2).unwrap());
+        e.graces.sort_by(|a, b| a.heads[0].2.partial_cmp(&b.heads[0].2).unwrap());
+        for g in e.graces.iter_mut() {
+            g.heads.sort_by_key(|h| -h.1);
+        }
     }
 }

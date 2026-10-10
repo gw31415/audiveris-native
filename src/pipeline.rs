@@ -26,7 +26,7 @@ pub struct Sheet {
     pub ledgers: Vec<Ledger>,
     pub heads: Vec<Head>,
     /// Small black heads with a stem (up?), for grace notes.
-    pub grace_heads: Vec<(Head, bool)>,
+    pub grace_heads: Vec<heads::GraceHead>,
     pub stems: Vec<Stem>,
     pub symbols: Vec<Symbol>,
     pub wedges: Vec<crate::curves::Wedge>,
@@ -122,7 +122,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     }
     let (mut heads, mut stems) = stems::link(&nostaff, candidates, &scale);
     stems::attach_beams(&mut stems, &heads, &beams, &scale);
-    let grace_heads = heads::grace_heads(&bin, smalls, &heads, &scale);
+    let grace_heads = heads::grace_heads(&bin, &nostaff, smalls, &heads, &scale);
     log(
         verbose,
         &t,
