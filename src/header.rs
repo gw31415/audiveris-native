@@ -401,3 +401,84 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
     header.stop += il / 3;
     header
 }
+
+const SHARP_STEPS: [i32; 7] = [3, 0, 4, 1, 5, 2, 6]; // F C G D A E B
+const FLAT_STEPS: [i32; 7] = [6, 2, 5, 1, 4, 0, 3]; // B E A D G C F
+
+/// Key signature change right after a (double) barline, as a second
+/// KeyBuilder instance in Audiveris: optional cancelling naturals, then
+/// sharps or flats on the steps imposed by the clef, followed by some space.
+/// Returns the new fifths and the item bounds.
+pub fn key_change(
+    nostaff: &Bitmap,
+    staff: &Staff,
+    clef: ClefKind,
+    prev: i32,
+    x0: i32,
+    scale: &Scale,
+) -> Option<(i32, Vec<Rect>)> {
+    let il = scale.interline;
+    let top = staff.top(x0 as f64).round() as i32;
+    let bot = staff.bottom(x0 as f64).round() as i32;
+    let roi = Rect::new(x0, top - 2 * il, 12 * il, bot - top + 4 * il);
+    let comps: Vec<Component> = components(nostaff, Some(roi))
+        .into_iter()
+        .filter(|c| c.weight() as f64 >= 0.05 * (il * il) as f64)
+        .filter(|c| c.bounds.bottom() > top - il / 2 && c.bounds.y < bot + il / 2)
+        .collect();
+    let cols = columns(comps);
+    let mut stop = x0;
+    let mut items = Vec::new();
+    let mut kind: Option<&str> = None;
+    let mut count = 0;
+    let mut naturals = 0;
+    let mut last = 0;
+    for (k, col) in cols.iter().enumerate() {
+        if col.bounds.x - stop > if items.is_empty() { il } else { il / 2 + il / 4 } {
+            break;
+        }
+        let ev = classify(col, il);
+        let Some(&(s, g)) = ev.first() else { break };
+        if g < 0.1 {
+            break;
+        }
+        let n = col.pixels.len() as f64;
+        let cy = col.pixels.iter().map(|p| p.1 as f64).sum::<f64>() / n;
+        let cx = col.bounds.cx();
+        let mass = staff.pitch_of(cy, cx);
+        let pitch = if s == "FLAT" { mass + 0.65 } else { mass };
+        let step = (clef.middle_line() - pitch.round() as i32).rem_euclid(7);
+        match s {
+            "NATURAL" if kind.is_none() && naturals < prev.unsigned_abs() as usize => {
+                let expected = if prev > 0 { SHARP_STEPS[naturals] } else { FLAT_STEPS[naturals] };
+                if step != expected {
+                    return None;
+                }
+                naturals += 1;
+            }
+            "SHARP" | "FLAT" if kind.is_none_or(|k| k == s) && count < 7 => {
+                let expected = if s == "SHARP" { SHARP_STEPS[count] } else { FLAT_STEPS[count] };
+                if step != expected {
+                    return None;
+                }
+                kind = Some(s);
+                count += 1;
+            }
+            _ => break,
+        }
+        items.push(col.bounds);
+        stop = col.bounds.right();
+        last = k;
+    }
+    // The key must be followed by some space (not an accidental of a note).
+    if items.is_empty() || cols.get(last + 1).is_some_and(|next| next.bounds.x - stop < il / 3) {
+        return None;
+    }
+    let fifths = match kind {
+        Some("SHARP") => count as i32,
+        Some("FLAT") => -(count as i32),
+        _ if naturals > 0 => 0,
+        _ => return None,
+    };
+    (fifths != prev).then_some((fifths, items))
+}

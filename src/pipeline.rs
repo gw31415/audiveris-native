@@ -30,6 +30,8 @@ pub struct Sheet {
     pub stems: Vec<Stem>,
     pub symbols: Vec<Symbol>,
     pub wedges: Vec<crate::wedges::Wedge>,
+    /// Key signature changes: (staff, barline right abscissa, fifths).
+    pub key_changes: Vec<(usize, i32, i32)>,
 }
 
 fn log(verbose: bool, t: &Instant, msg: String) {
@@ -124,10 +126,29 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         &t,
         format!("STEMS {} heads, {} stems", heads.len(), stems.len()),
     );
-    let items: Vec<Rect> = headers
+    let mut items: Vec<Rect> = headers
         .iter()
         .flat_map(|h| h.items.iter().map(|i| i.0))
         .collect();
+    // Key signature changes after double barlines.
+    let mut key_changes = Vec::new();
+    for sys in &systems {
+        for &si in &sys.staves {
+            let clef = headers[si].clef.unwrap_or(crate::header::ClefKind::G);
+            let mut prev = headers[si].fifths;
+            let n = sys.boundaries.len();
+            for b in sys.boundaries.iter().take(n.saturating_sub(1)).skip(1) {
+                if b.style == crate::grid::BarStyle::Regular {
+                    continue;
+                }
+                if let Some((f, its)) = crate::header::key_change(&nostaff, &staves[si], clef, prev, b.x1 + 1, &scale) {
+                    key_changes.push((si, b.x1, f));
+                    items.extend(its);
+                    prev = f;
+                }
+            }
+        }
+    }
     let residual = symbols::residual(
         &nostaff, &heads, &catalog, &stems, &beams, &ledgers, &systems, &staves, &items, &scale,
     );
@@ -150,5 +171,6 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         stems,
         symbols,
         wedges,
+        key_changes,
     })
 }

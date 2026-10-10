@@ -310,9 +310,12 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                 });
             }
         }
+        let sys_fifths = fifths_state;
         for (spi, part_staves) in sys.parts.iter().enumerate() {
             let Some(pi) = map[spi] else { continue };
             let part = &mut parts[pi];
+            let mut part_fifths = sys_fifths;
+            let mut fifths = fifths;
             part.staves = part.staves.max(part_staves.len() as u32);
             // Clefs at system start.
             let mut clefs_now: HashMap<u32, ClefKind> = HashMap::new();
@@ -339,9 +342,9 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     clefs: Vec::new(),
                 };
                 if mi == 0 {
-                    if fifths_state != Some(fifths) {
+                    if part_fifths != Some(fifths) {
                         attrs.fifths = Some(fifths);
-                        fifths_state = Some(fifths);
+                        part_fifths = Some(fifths);
                     }
                     if let Some(t) = time
                         && time_state != Some(t)
@@ -367,6 +370,18 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                 {
                     attrs.time = Some(t);
                     time_state = Some(t);
+                }
+                // Key change after the opening barline of this measure (majority of staves).
+                if mi > 0
+                    && let Some(f) = mode(sheet.key_changes.iter().filter(|k| {
+                        part_staves.contains(&k.0) && k.1 == sys.boundaries[mi].x1
+                    }).map(|k| k.2))
+                {
+                    fifths = f;
+                    if part_fifths != Some(f) {
+                        attrs.fifths = Some(f);
+                        part_fifths = Some(f);
+                    }
                 }
                 let ts = time_state.unwrap();
                 let expected = Q::new(ts.beats as i64, ts.beat_type as i64);
@@ -396,6 +411,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                 }
                 part.measures.push(m);
             }
+            fifths_state = part_fifths;
             for (n, c) in clefs_now {
                 clef_state.insert((pi, n), c);
             }
