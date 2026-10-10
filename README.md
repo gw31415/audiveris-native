@@ -158,7 +158,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | | トリル・ターン・モルデント | ✅ | OrnamentInter.lookupLink、ChordOrnamentRelation（冬の旅: 再現率 0.53／適合率 0.21、本家 0.53／0.12） |
 | | アルペジオ | ✅ | ArpeggiatoInter.lookupLink、本家の最小グレード 0.15（冬の旅: 再現率 0.25／適合率 0.67、本家 0.17／1.0） |
 | | ブレス・カエスーラ | ✅ | AbstractPauseInter.lookupLink（冬の旅には正解データなし） |
-| | トレモロ | ⬜ | TremoloInter |
+| | トレモロ（単音） | ✅ | TremoloInter.searchLinks（符幹／全音符）。2音間トレモロは本家も未対応 |
 | **ヘアピン** | クレッシェンド／デクレッシェンド | ⬜ | WedgesBuilder |
 | **オッターヴァ・ペダル** | 8va/15ma 線、ペダル記号 | ⬜ | OctaveShiftInter, PedalInter |
 | **反復構造** | ボルタ（括弧）・セーニョ・コーダ | ⬜ | EndingInter, SegnoInter |

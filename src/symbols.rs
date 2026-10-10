@@ -196,6 +196,9 @@ fn relevant(shape: &str) -> bool {
             | "ARPEGGIATO"
             | "BREATH_MARK"
             | "CAESURA"
+            | "TREMOLO_1"
+            | "TREMOLO_2"
+            | "TREMOLO_3"
     ) || shape.starts_with("FLAG_")
         || shape.starts_with("TIME_")
         || shape == "COMMON_TIME"

@@ -271,7 +271,7 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
             for (n, v) in &e.beams {
                 let _ = write!(x, "<beam number=\"{n}\">{v}</beam>");
             }
-            if !e.articulations.is_empty() || e.fermata.is_some() || !e.ornaments.is_empty() || e.arpeggiate {
+            if !e.articulations.is_empty() || e.fermata.is_some() || !e.ornaments.is_empty() || e.arpeggiate || e.tremolo > 0 {
                 x.push_str("<notations>");
                 if let Some(f) = e.fermata {
                     let _ = write!(x, "<fermata type=\"{f}\"/>");
@@ -286,10 +286,13 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
                 if e.arpeggiate {
                     x.push_str("<arpeggiate/>");
                 }
-                if !e.ornaments.is_empty() {
+                if !e.ornaments.is_empty() || e.tremolo > 0 {
                     x.push_str("<ornaments>");
                     for o in &e.ornaments {
                         let _ = write!(x, "<{o}/>");
+                    }
+                    if e.tremolo > 0 {
+                        let _ = write!(x, "<tremolo type=\"single\">{}</tremolo>", e.tremolo);
                     }
                     x.push_str("</ornaments>");
                 }

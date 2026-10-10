@@ -55,6 +55,8 @@ pub struct Event {
     pub ornaments: Vec<&'static str>,
     /// Arpeggiato sign on the left of the chord.
     pub arpeggiate: bool,
+    /// Single tremolo strokes.
+    pub tremolo: u32,
     #[serde(skip)]
     heads: Vec<usize>,
     /// Bounds of the chord (heads and stem) or rest.
@@ -576,6 +578,7 @@ fn build_measure(
             fermata: None,
             ornaments: Vec::new(),
             arpeggiate: false,
+            tremolo: 0,
             bbox: Rect::default(),
             y_mid,
             stem: Some(sti),
@@ -629,6 +632,7 @@ fn build_measure(
             fermata: None,
             ornaments: Vec::new(),
             arpeggiate: false,
+            tremolo: 0,
             bbox: Rect::default(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
@@ -678,6 +682,7 @@ fn build_measure(
             fermata: None,
             ornaments: Vec::new(),
             arpeggiate: false,
+            tremolo: 0,
             bbox: Rect::default(),
             y_mid: cy,
             stem: None,
@@ -770,6 +775,7 @@ fn build_measure(
     attach_ornaments(sheet, &syms, &mut events);
     attach_arpeggios(sheet, &syms, &mut events);
     attach_pauses(part_staves, &syms, &mut events);
+    attach_tremolos(sheet, &syms, &mut events);
 
     // Tuplets attached to beam groups.
     for s in syms
@@ -1365,6 +1371,38 @@ fn attach_pauses(part_staves: &[usize], syms: &[&crate::symbols::Symbol], events
             .max_by(|&a, &b| events[a].bbox.cx().partial_cmp(&events[b].bbox.cx()).unwrap());
         if let Some(i) = best {
             events[i].articulations.push(name);
+        }
+    }
+}
+
+/// Single tremolos (Audiveris TremoloInter.searchLinks): the stem crossing
+/// the sign center (within 0.3 il), else a stemless head chord within
+/// 0.3 il horizontally and 2 il vertically.
+fn attach_tremolos(sheet: &Sheet, syms: &[&crate::symbols::Symbol], events: &mut [Event]) {
+    let il = sheet.scale.interline as f64;
+    for s in syms {
+        let n = match s.shape {
+            "TREMOLO_1" => 1,
+            "TREMOLO_2" => 2,
+            "TREMOLO_3" => 3,
+            _ => continue,
+        };
+        let (px, py) = (s.bounds.cx(), s.bounds.cy());
+        let on_stem = events.iter().position(|e| {
+            e.stem.is_some_and(|st| {
+                let st = &sheet.stems[st];
+                (st.x as f64 - px).abs() <= 0.3 * il && py >= st.top as f64 && py <= st.bottom as f64
+            })
+        });
+        let whole = || {
+            events.iter().position(|e| {
+                let b = e.bbox;
+                let dy = (b.y as f64 - py).max(py - b.bottom() as f64).max(0.0);
+                matches!(e.kind, Kind::Chord { .. }) && e.stem.is_none() && (b.cx() - px).abs() <= 0.3 * il && dy <= 2.0 * il
+            })
+        };
+        if let Some(i) = on_stem.or_else(whole) {
+            events[i].tremolo = n;
         }
     }
 }
