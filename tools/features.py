@@ -4,7 +4,7 @@
 Usage: features.py REFERENCE(.mscx|.musicxml) OUTPUT.musicxml [OUTPUT2 ...]
 
 Features are counted per part (bags of tokens, independent of measures):
-dynamics, articulations, fermatas, ornaments, grace notes, ties, slurs,
+dynamics, articulations, breath marks, fermatas, ornaments, grace notes, ties, slurs,
 hairpins (wedges), arpeggios, tremolos and lyric syllables.
 """
 import sys
@@ -37,6 +37,8 @@ def mscx_features(path):
                                  ('tenuto', 'tenuto'), ('marcato', 'marcato')]:
                         if k in sub and not (k == 'staccato' and 'staccatissimo' in sub):
                             c['art:' + v] += 1
+                elif t == 'Breath':
+                    c['breath'] += 1
                 elif t == 'Fermata':
                     c['fermata'] += 1
                 elif t == 'Ornament':
@@ -78,6 +80,8 @@ def xml_features(path):
                 for a in el:
                     if a.tag in ART:
                         c['art:' + ART[a.tag]] += 1
+            elif t in ('breath-mark', 'caesura'):
+                c['breath'] += 1
             elif t == 'fermata':
                 c['fermata'] += 1
             elif t == 'ornaments':

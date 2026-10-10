@@ -194,6 +194,8 @@ fn relevant(shape: &str) -> bool {
             | "MORDENT"
             | "MORDENT_INVERTED"
             | "ARPEGGIATO"
+            | "BREATH_MARK"
+            | "CAESURA"
     ) || shape.starts_with("FLAG_")
         || shape.starts_with("TIME_")
         || shape == "COMMON_TIME"

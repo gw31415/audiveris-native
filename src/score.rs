@@ -769,6 +769,7 @@ fn build_measure(
     attach_fermatas(sheet, part_staves, &syms, &mut events);
     attach_ornaments(sheet, &syms, &mut events);
     attach_arpeggios(sheet, &syms, &mut events);
+    attach_pauses(part_staves, &syms, &mut events);
 
     // Tuplets attached to beam groups.
     for s in syms
@@ -1340,6 +1341,30 @@ fn attach_arpeggios(sheet: &Sheet, syms: &[&crate::symbols::Symbol], events: &mu
             && o as f64 / lu.h as f64 >= 0.1
         {
             events[i].arpeggiate = true;
+        }
+    }
+}
+
+/// Breath marks and caesuras (Audiveris AbstractPauseInter.lookupLink): the
+/// right-most head chord of the same staff and measure, left of the sign.
+fn attach_pauses(part_staves: &[usize], syms: &[&crate::symbols::Symbol], events: &mut [Event]) {
+    for s in syms {
+        let name = match s.shape {
+            "BREATH_MARK" => "breath-mark",
+            "CAESURA" => "caesura",
+            _ => continue,
+        };
+        let x_max = s.bounds.right() as f64;
+        let best = (0..events.len())
+            .filter(|&i| {
+                let e = &events[i];
+                matches!(e.kind, Kind::Chord { .. })
+                    && part_staves.get((e.staff - 1) as usize) == Some(&s.staff)
+                    && e.bbox.cx() <= x_max
+            })
+            .max_by(|&a, &b| events[a].bbox.cx().partial_cmp(&events[b].bbox.cx()).unwrap());
+        if let Some(i) = best {
+            events[i].articulations.push(name);
         }
     }
 }
