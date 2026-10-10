@@ -27,6 +27,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | HEADS | `heads.rs`, `template.rs` | Bravura の符頭を実測サイズでラスタライズし、fore/back/hole キーポイントによる Audiveris と同じテンプレート距離で、線・間・加線の各高さを走査 |
 | STEMS / REDUCTION | `stems.rs` | 符頭の左右から符幹を探索。Audiveris の文脈グレード `(1+C)g/(1+Cg)`、尾の最小長 1.75、2度の反対側規則、臨時記号型の偽符頭排除 |
 | SYMBOLS | `symbols.rs`, `classifier.rs`, `features.rs` | 認識済み要素を消した残差のグリフ（と近傍の組合せ）を Audiveris 5.11 の学習済みニューラル分類器で分類。旗・休符・臨時記号・付点・音部記号変更・強弱・連符数字など |
+| CURVES | `curves.rs` | 残差グリフの包絡線から直線セグメントを取り、ヘアピン（WedgesBuilder）とボルタ（EndingsBuilder）を構成 |
 | CHORDS / RHYTHMS | `score.rs` | 和音・休符・音価（旗/連桁/付点/連符）、音高（音部記号・調号・小節内臨時記号）、声部とタイムスロット、暗黙の3連符、隠れた空き五線を含むパート対応 |
 | export | `musicxml.rs` | MusicXML 4.0 partwise（XSD 検証済み） |
 
