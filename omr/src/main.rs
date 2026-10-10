@@ -191,3 +191,33 @@ fn main() {
         std::process::exit(1);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// End-to-end: the An Laura page gives 2 parts x 4 measures of valid
+    /// music whose first voice notes are the expected ones.
+    #[test]
+    fn an_laura_end_to_end() {
+        let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../samples/real/an-laura.png");
+        let sheet = pipeline::process(&path, false).unwrap();
+        let score = score::build(&sheet, &mut score::State::default());
+        assert_eq!(score.parts.len(), 2);
+        assert!(score.parts.iter().all(|p| p.measures.len() == 4));
+        assert_eq!(score.parts[1].staves, 2);
+        let first: Vec<String> = score.parts[0].measures[0]
+            .events
+            .iter()
+            .filter_map(|e| match &e.kind {
+                score::Kind::Chord { pitches, .. } => {
+                    Some(format!("{}{}{}", pitches[0].step, pitches[0].alter, pitches[0].octave))
+                }
+                _ => None,
+            })
+            .collect();
+        assert_eq!(first, ["A-14", "G04", "F04", "F04", "F04", "F04", "E04"]);
+        let xml = musicxml::write(&score, "test");
+        assert!(xml.contains("<fifths>-4</fifths>") && xml.contains("<beats>3</beats>"));
+    }
+}

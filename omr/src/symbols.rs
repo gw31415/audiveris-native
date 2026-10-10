@@ -101,7 +101,7 @@ pub fn residual(
     for l in ledgers {
         for x in l.x0..=l.x1 {
             let (a, b) = img.vrun_at(x, l.y.round() as i32);
-            if b - a + 1 <= thin {
+            if b - a < thin {
                 for y in a..=b {
                     img.set(x, y, false);
                 }

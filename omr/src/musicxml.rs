@@ -206,7 +206,6 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
                     let _ = write!(x, "<staff>{staff}</staff>");
                 }
                 x.push_str("</forward>\n");
-                cursor = e.start;
             } else if e.start < cursor {
                 // Overlap inside a voice (recognition inconsistency): back up.
                 let _ = writeln!(
@@ -214,7 +213,6 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
                     "      <backup><duration>{}</duration></backup>",
                     dur(cursor - e.start, div)
                 );
-                cursor = e.start;
             }
             for (ci, (n, t, c)) in m.clef_changes.iter().enumerate() {
                 if !done_clefs[ci] && *n == e.staff && *t <= e.start {

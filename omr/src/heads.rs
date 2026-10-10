@@ -63,9 +63,6 @@ impl Catalog {
     pub fn get(&self, shape: HeadShape) -> &Template {
         self.templates.iter().find(|t| t.shape == shape).unwrap()
     }
-    pub fn get_small(&self, shape: HeadShape) -> &Template {
-        self.small.iter().find(|t| t.shape == shape).unwrap()
-    }
     pub fn template(&self, h: &Head) -> &Template {
         self.get(h.shape)
     }
@@ -135,7 +132,7 @@ pub fn build_cells(
         for x in l.x0..=l.x1 {
             let y = l.y.round() as i32;
             let (a, b) = nostaff.vrun_at(x, y);
-            if b - a + 1 <= thin {
+            if b - a < thin {
                 for yy in a..=b {
                     data[yy as usize * w + x as usize] = UNKNOWN;
                 }

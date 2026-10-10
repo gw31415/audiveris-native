@@ -27,11 +27,19 @@ impl Line {
         let x0 = pts.iter().map(|p| p.0).sum::<f64>() / pts.len() as f64;
         let xs = pts.iter().map(|p| (p.0 - x0).abs()).fold(1.0, f64::max);
         let mut used: Vec<(f64, f64)> = pts.to_vec();
-        let mut line = Line { c: [used[0].1, 0.0, 0.0], x0, xs };
+        let mut line = Line {
+            c: [used[0].1, 0.0, 0.0],
+            x0,
+            xs,
+        };
         // Robust start: linear fit with progressively tighter outlier rejection.
         for tol in [8.0, 4.0, 2.0, 1.5] {
             line.c = lsq(&used, x0, xs, if used.len() >= 2 { 1 } else { 0 });
-            let keep: Vec<(f64, f64)> = pts.iter().copied().filter(|p| (p.1 - line.y_at(p.0)).abs() <= tol).collect();
+            let keep: Vec<(f64, f64)> = pts
+                .iter()
+                .copied()
+                .filter(|p| (p.1 - line.y_at(p.0)).abs() <= tol)
+                .collect();
             if keep.len() >= 2 {
                 used = keep;
             }
@@ -289,7 +297,11 @@ pub fn retrieve(img: &Bitmap, scale: &Scale) -> Vec<Staff> {
         // shifted by each line's median offset to the middle line.
         let offsets: Vec<f64> = (0..5)
             .map(|i| {
-                let mut d: Vec<f64> = ch.combs.iter().map(|&k| combs[k].ys[i] - combs[k].ys[2]).collect();
+                let mut d: Vec<f64> = ch
+                    .combs
+                    .iter()
+                    .map(|&k| combs[k].ys[i] - combs[k].ys[2])
+                    .collect();
                 d.sort_by(|a, b| a.partial_cmp(b).unwrap());
                 d[d.len() / 2]
             })
@@ -395,7 +407,7 @@ pub fn remove_lines(img: &Bitmap, staves: &[Staff], scale: &Scale) -> (Bitmap, B
                     if b < yc - scale.line || a > yc + scale.line {
                         continue;
                     }
-                    if b - a + 1 <= max {
+                    if b - a < max {
                         for yy in a..=b {
                             out.set(x, yy, false);
                             removed.set(x, yy, true);

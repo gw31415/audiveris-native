@@ -126,7 +126,15 @@ fn connected(img: &Bitmap, x0: i32, x1: i32, y0: i32, y1: i32) -> bool {
 }
 
 /// Is the area just beyond the staff end (above if dir<0, below if dir>0) free of material?
-fn clean_end(img: &Bitmap, x0: i32, x1: i32, y: i32, dir: i32, scale: &Scale, stop_only: bool) -> bool {
+fn clean_end(
+    img: &Bitmap,
+    x0: i32,
+    x1: i32,
+    y: i32,
+    dir: i32,
+    scale: &Scale,
+    stop_only: bool,
+) -> bool {
     let il = scale.interline;
     let dx = il / 2;
     let h = (il * 2) / 3;

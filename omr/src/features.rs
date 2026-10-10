@@ -7,6 +7,7 @@ const SIZE: usize = 101;
 const PLANES: usize = 100;
 const LIMIT: usize = 1_000_000;
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[allow(dead_code)]
 pub enum Orientation {
     Horizontal,
     Vertical,

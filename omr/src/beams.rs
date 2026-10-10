@@ -188,7 +188,7 @@ pub fn ledgers(nostaff: &Bitmap, staves: &[Staff], si: usize, scale: &Scale) -> 
                     let v: Vec<i32> = xs.collect();
                     let n = v.iter().filter(|&&xx| {
                         let (p, q) = nostaff.vrun_at(xx, y);
-                        q - p + 1 <= thin
+                        q - p < thin
                     });
                     n.count() * 2 >= v.len()
                 };

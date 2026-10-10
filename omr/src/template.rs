@@ -52,8 +52,6 @@ pub enum Kind {
 
 pub struct Template {
     pub shape: HeadShape,
-    pub width: i32,
-    pub height: i32,
     pub slim: Rect,
     pub keys: Vec<(i32, i32, Kind)>,
 }
@@ -249,18 +247,7 @@ pub fn build(shape: HeadShape, point_size: i32) -> Option<Template> {
     let y2 = (0..h).rev().find(|&y| row(y))?;
     Some(Template {
         shape,
-        width: w,
-        height: h,
         slim: Rect::new(x1, y1, x2 - x1 + 1, y2 - y1 + 1),
         keys,
     })
-}
-
-/// Width in pixels of the black notehead at a given point size.
-pub fn black_head_width(point_size: f64) -> f64 {
-    let font = FontRef::try_from_slice(BRAVURA).unwrap();
-    let px = point_size * font.height_unscaled() as f64 / font.units_per_em().unwrap() as f64;
-    let scaled = font.as_scaled(PxScale::from(px as f32));
-    let g = scaled.scaled_glyph('\u{E0A4}');
-    scaled.h_advance(g.id) as f64
 }

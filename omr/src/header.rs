@@ -168,17 +168,33 @@ pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<TimeS
     // Numerator above and denominator below the middle line (pixel split).
     let mid = staff.pitch_y(0.0, col.bounds.cx());
     let half = |upper: bool| -> Option<Component> {
-        let pixels: Vec<(i32, i32)> = col.pixels.iter().copied().filter(|p| ((p.1 as f64) < mid) == upper).collect();
+        let pixels: Vec<(i32, i32)> = col
+            .pixels
+            .iter()
+            .copied()
+            .filter(|p| ((p.1 as f64) < mid) == upper)
+            .collect();
         if pixels.len() < 4 {
             return None;
         }
-        let (x0, x1) = (pixels.iter().map(|p| p.0).min()?, pixels.iter().map(|p| p.0).max()?);
-        let (y0, y1) = (pixels.iter().map(|p| p.1).min()?, pixels.iter().map(|p| p.1).max()?);
-        Some(Component { bounds: Rect::new(x0, y0, x1 - x0 + 1, y1 - y0 + 1), pixels })
+        let (x0, x1) = (
+            pixels.iter().map(|p| p.0).min()?,
+            pixels.iter().map(|p| p.0).max()?,
+        );
+        let (y0, y1) = (
+            pixels.iter().map(|p| p.1).min()?,
+            pixels.iter().map(|p| p.1).max()?,
+        );
+        Some(Component {
+            bounds: Rect::new(x0, y0, x1 - x0 + 1, y1 - y0 + 1),
+            pixels,
+        })
     };
     let digit = |g: &Component| -> Option<u32> {
         let ev = classify(g, il);
-        best_among(&ev, |s| digit_of(s).is_some()).filter(|e| e.1 >= 0.1).and_then(|e| digit_of(e.0))
+        best_among(&ev, |s| digit_of(s).is_some())
+            .filter(|e| e.1 >= 0.1)
+            .and_then(|e| digit_of(e.0))
     };
     let number = |g: Component| -> Option<u32> {
         if let Some(d) = digit(&g) {
@@ -189,7 +205,12 @@ pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<TimeS
         for &(x, y) in &g.pixels {
             bm.set(x - g.bounds.x, y - g.bounds.y, true);
         }
-        let mut cols = columns(components(&bm, None).into_iter().filter(|c| c.weight() >= 4).collect());
+        let mut cols = columns(
+            components(&bm, None)
+                .into_iter()
+                .filter(|c| c.weight() >= 4)
+                .collect(),
+        );
         if cols.len() < 2 {
             return None;
         }
@@ -209,19 +230,30 @@ pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<TimeS
     let digit_like = (1.5 * ilf..=2.6 * ilf).contains(&(lower.bounds.h as f64))
         && (1.5 * ilf..=2.6 * ilf).contains(&(upper.bounds.h as f64))
         && (lower.bounds.cx() - upper.bounds.cx()).abs() <= 0.5 * ilf;
-    let d = number(lower.clone()).filter(|d| [1, 2, 4, 8, 16, 32].contains(d)).or_else(|| {
-        if !digit_like {
-            return None;
-        }
-        let ev = classify(&lower, il);
-        let best = ev.iter().filter(|(s, _)| matches!(*s, "TIME_TWO" | "TIME_FOUR" | "TIME_EIGHT" | "TIME_SIXTEEN")).max_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
-        match best {
-            Some((s, g)) if *g >= 0.01 => digit_of(s),
-            _ if [6, 9, 12].contains(&n) => Some(8),
-            _ => None,
-        }
-    })?;
-    ((1..=16).contains(&n) && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig { beats: n, beat_type: d, symbol: None })
+    let d = number(lower.clone())
+        .filter(|d| [1, 2, 4, 8, 16, 32].contains(d))
+        .or_else(|| {
+            if !digit_like {
+                return None;
+            }
+            let ev = classify(&lower, il);
+            let best = ev
+                .iter()
+                .filter(|(s, _)| {
+                    matches!(*s, "TIME_TWO" | "TIME_FOUR" | "TIME_EIGHT" | "TIME_SIXTEEN")
+                })
+                .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+            match best {
+                Some((s, g)) if *g >= 0.01 => digit_of(s),
+                _ if [6, 9, 12].contains(&n) => Some(8),
+                _ => None,
+            }
+        })?;
+    ((1..=16).contains(&n) && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig {
+        beats: n,
+        beat_type: d,
+        symbol: None,
+    })
 }
 
 pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
@@ -351,13 +383,17 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
         for k in 1..=3.min(cols_parts.len() - i) {
             let group = &cols_parts[i..i + k];
             let col = Component::merge(&group.iter().map(|c| &c.0).collect::<Vec<_>>());
-            if col.bounds.w > 3 * il || (k > 1 && group[k - 1].0.bounds.x - group[k - 2].0.bounds.right() > il / 2) {
+            if col.bounds.w > 3 * il
+                || (k > 1 && group[k - 1].0.bounds.x - group[k - 2].0.bounds.right() > il / 2)
+            {
                 break;
             }
             if let Some(t) = time_from_column(&col, staff, il) {
                 header.time = Some(t);
                 header.stop = col.bounds.right();
-                header.items.push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
+                header
+                    .items
+                    .push((col.bounds, format!("TIME {}/{}", t.beats, t.beat_type)));
                 break;
             }
         }

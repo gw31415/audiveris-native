@@ -24,9 +24,6 @@ impl Scale {
     pub fn frac(&self, f: f64) -> f64 {
         f * self.interline as f64
     }
-    pub fn px(&self, f: f64) -> i32 {
-        (f * self.interline as f64).round() as i32
-    }
 }
 
 fn peak(hist: &[u64], lo: usize, hi: usize) -> Option<usize> {

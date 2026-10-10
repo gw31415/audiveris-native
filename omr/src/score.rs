@@ -217,7 +217,11 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     // Parts already built on previous pages are carried by the book; here we
     // only need as many as the template.
     for _ in 0..state.template.len() {
-        parts.push(Part { name: format!("Part {}", parts.len() + 1), staves: 1, measures: Vec::new() });
+        parts.push(Part {
+            name: format!("Part {}", parts.len() + 1),
+            staves: 1,
+            measures: Vec::new(),
+        });
     }
     for sys in &sheet.systems {
         // System-wide key and time from the staff headers.
@@ -228,7 +232,11 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             // Grow the template: existing parts keep their place.
             let map = align(&state.template, &counts);
             let len = parts.iter().map(|p| p.measures.len()).max().unwrap_or(0);
-            let model: Vec<Measure> = parts.iter().find(|p| p.measures.len() == len).map(|p| p.measures.iter().map(filler).collect()).unwrap_or_default();
+            let model: Vec<Measure> = parts
+                .iter()
+                .find(|p| p.measures.len() == len)
+                .map(|p| p.measures.iter().map(filler).collect())
+                .unwrap_or_default();
             let mut grown: Vec<Option<Part>> = (0..counts.len()).map(|_| None).collect();
             for (old, part) in parts.drain(..).enumerate() {
                 if let Some(Some(new)) = map.get(old) {
@@ -238,7 +246,13 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             parts = grown
                 .into_iter()
                 .enumerate()
-                .map(|(k, p)| p.unwrap_or(Part { name: String::new(), staves: counts[k] as u32, measures: model.clone() }))
+                .map(|(k, p)| {
+                    p.unwrap_or(Part {
+                        name: String::new(),
+                        staves: counts[k] as u32,
+                        measures: model.clone(),
+                    })
+                })
                 .collect();
             for (k, p) in parts.iter_mut().enumerate() {
                 p.name = format!("Part {}", k + 1);
@@ -253,7 +267,9 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             }
             // Absent (hidden) part in this system: empty measures.
             let model = parts.iter().find(|p| !p.measures.is_empty());
-            let expected = time_state.map(|t| Q::new(t.beats as i64, t.beat_type as i64)).unwrap_or(Q::new(1, 1));
+            let expected = time_state
+                .map(|t| Q::new(t.beats as i64, t.beat_type as i64))
+                .unwrap_or(Q::new(1, 1));
             let _ = model;
             for mi in 0..n_measures {
                 parts[ti].measures.push(Measure {
@@ -727,7 +743,10 @@ fn build_measure(
                     .unwrap()
             });
         let beamed = beam.is_some_and(|(bi, _)| {
-            events.iter().any(|ev| ev.stem.is_some_and(|st| sheet.stems[st].beams.contains(&bi)))
+            events.iter().any(|ev| {
+                ev.stem
+                    .is_some_and(|st| sheet.stems[st].beams.contains(&bi))
+            })
         });
         if let Some((bi, _)) = beam.filter(|_| beamed) {
             for ev in events.iter_mut() {
@@ -740,15 +759,23 @@ fn build_measure(
         } else if let Some(n) = staff_no(s.staff) {
             // Bracketed (or plain) triplet over unbeamed notes: the three
             // chords of the staff centered below / above the number.
-            let mut idx: Vec<usize> = (0..events.len()).filter(|&i| events[i].staff == n && matches!(events[i].kind, Kind::Chord { .. })).collect();
+            let mut idx: Vec<usize> = (0..events.len())
+                .filter(|&i| events[i].staff == n && matches!(events[i].kind, Kind::Chord { .. }))
+                .collect();
             idx.sort_by(|&a, &b| events[a].x.partial_cmp(&events[b].x).unwrap());
-            if let Some(c) = (0..idx.len()).min_by(|&a, &b| (events[idx[a]].x - cx).abs().partial_cmp(&(events[idx[b]].x - cx).abs()).unwrap())
-                && c >= 1
+            if let Some(c) = (0..idx.len()).min_by(|&a, &b| {
+                (events[idx[a]].x - cx)
+                    .abs()
+                    .partial_cmp(&(events[idx[b]].x - cx).abs())
+                    .unwrap()
+            }) && c >= 1
                 && c + 1 < idx.len()
                 && (events[idx[c]].x - cx).abs() <= 1.5 * il
             {
                 let group = [idx[c - 1], idx[c], idx[c + 1]];
-                if group.iter().all(|&i| events[i].tuplet.is_none()) && events[group[2]].x - events[group[0]].x <= 12.0 * il {
+                if group.iter().all(|&i| events[i].tuplet.is_none())
+                    && events[group[2]].x - events[group[0]].x <= 12.0 * il
+                {
                     for i in group {
                         events[i].tuplet = Some((3, 2));
                     }
@@ -926,12 +953,18 @@ fn implicit_tuplets(sheet: &Sheet, events: &mut [Event], expected: Q) {
     voices.sort();
     voices.dedup();
     for v in voices {
-        let total = |evs: &[Event]| evs.iter().filter(|e| e.voice == v).fold(Q::ZERO, |a, e| a + e.duration);
+        let total = |evs: &[Event]| {
+            evs.iter()
+                .filter(|e| e.voice == v)
+                .fold(Q::ZERO, |a, e| a + e.duration)
+        };
         if total(events) <= expected {
             continue;
         }
         // Beam groups: events of this voice whose stems share a beam (transitively).
-        let idx: Vec<usize> = (0..events.len()).filter(|&i| events[i].voice == v && events[i].stem.is_some()).collect();
+        let idx: Vec<usize> = (0..events.len())
+            .filter(|&i| events[i].voice == v && events[i].stem.is_some())
+            .collect();
         let mut group = vec![usize::MAX; events.len()];
         let mut next = 0;
         for (a, &i) in idx.iter().enumerate() {
@@ -940,7 +973,10 @@ fn implicit_tuplets(sheet: &Sheet, events: &mut [Event], expected: Q) {
                 next += 1;
             }
             for &j in &idx[a + 1..] {
-                let (bi, bj) = (&sheet.stems[events[i].stem.unwrap()].beams, &sheet.stems[events[j].stem.unwrap()].beams);
+                let (bi, bj) = (
+                    &sheet.stems[events[i].stem.unwrap()].beams,
+                    &sheet.stems[events[j].stem.unwrap()].beams,
+                );
                 if bi.iter().any(|b| bj.contains(b)) {
                     let (gi, gj) = (group[i], group[j]);
                     if gj == usize::MAX {
@@ -960,7 +996,10 @@ fn implicit_tuplets(sheet: &Sheet, events: &mut [Event], expected: Q) {
             let mut members: Vec<usize> = idx.iter().copied().filter(|&i| group[i] == g).collect();
             members.sort_by(|&a, &b| events[a].x.partial_cmp(&events[b].x).unwrap());
             let n = members.len();
-            if (n == 3 || n == 6) && events[members[0]].tuplet.is_none() && members.iter().all(|&i| events[i].dots == 0) {
+            if (n == 3 || n == 6)
+                && events[members[0]].tuplet.is_none()
+                && members.iter().all(|&i| events[i].dots == 0)
+            {
                 let sum = members.iter().fold(Q::ZERO, |a, &i| a + events[i].base);
                 // Triplet of equal notes, or 3 units mixing e.g. quarter + eighth.
                 let unit = members.iter().map(|&i| events[i].base).min().unwrap();

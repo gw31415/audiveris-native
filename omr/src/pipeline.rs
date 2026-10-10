@@ -17,7 +17,6 @@ use crate::symbols::{self, Symbol};
 
 pub struct Sheet {
     pub binary: Bitmap,
-    pub nostaff: Bitmap,
     pub residual: Bitmap,
     pub scale: Scale,
     pub staves: Vec<Staff>,
@@ -25,7 +24,6 @@ pub struct Sheet {
     pub headers: Vec<Header>,
     pub beams: Vec<Beam>,
     pub ledgers: Vec<Ledger>,
-    pub catalog: Catalog,
     pub heads: Vec<Head>,
     pub stems: Vec<Stem>,
     pub symbols: Vec<Symbol>,
@@ -133,7 +131,6 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
     Ok(Sheet {
         binary: bin,
-        nostaff,
         residual,
         scale,
         staves,
@@ -141,7 +138,6 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         headers,
         beams,
         ledgers,
-        catalog,
         heads,
         stems,
         symbols,

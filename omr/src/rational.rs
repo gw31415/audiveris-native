@@ -27,9 +27,6 @@ impl Q {
             d: s * d / g,
         }
     }
-    pub fn f(self) -> f64 {
-        self.n as f64 / self.d as f64
-    }
 }
 
 impl Add for Q {
