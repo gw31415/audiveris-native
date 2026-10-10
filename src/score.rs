@@ -66,6 +66,9 @@ pub struct Event {
     pub lyrics: Vec<Lyric>,
     #[serde(skip)]
     heads: Vec<usize>,
+    /// Staff index in the sheet.
+    #[serde(skip)]
+    sheet_staff: usize,
     /// Bounds of the chord (heads and stem) or rest.
     #[serde(skip)]
     bbox: Rect,
@@ -147,6 +150,9 @@ pub struct Part {
 #[derive(Clone, Debug, serde::Serialize)]
 pub struct Score {
     pub parts: Vec<Part>,
+    pub title: Option<String>,
+    pub composer: Option<String>,
+    pub lyricist: Option<String>,
 }
 
 const SHARP_ORDER: [usize; 7] = [3, 0, 4, 1, 5, 2, 6]; // F C G D A E B
@@ -487,9 +493,60 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.fifths = fifths_state;
     state.time = time_state;
     link_slurs(sheet, &mut parts);
-    assign_lyrics(sheet, &mut parts);
+    let lyric_words = assign_lyrics(sheet, &mut parts);
+    assign_words(sheet, &mut parts, &lyric_words);
     fix_measures(&mut parts);
-    Score { parts }
+    let (title, composer, lyricist) = page_header(sheet);
+    Score { parts, title, composer, lyricist }
+}
+
+/// Title, composer and lyricist (Audiveris text roles TITLE, CREATOR): the
+/// OCR lines above the first system; the tallest line is the title, a line
+/// ending on the right is the composer, one starting on the left the lyricist.
+fn page_header(sheet: &Sheet) -> (Option<String>, Option<String>, Option<String>) {
+    let il = sheet.scale.interline as f64;
+    let Some(top) = sheet.systems.first().map(|y| sheet.staves[y.staves[0]].top(sheet.binary.width as f64 / 2.0)) else {
+        return (None, None, None);
+    };
+    let mut words: Vec<&crate::text::Word> =
+        sheet.words.iter().filter(|w| w.conf >= 60.0 && (w.bounds.bottom() as f64) < top - 5.0 * il).collect();
+    words.sort_by_key(|w| (w.bounds.y, w.bounds.x));
+    let mut lines: Vec<Vec<&crate::text::Word>> = Vec::new();
+    for w in words {
+        // Same baseline and no wide gap (left and right texts are separate).
+        match lines.iter_mut().find(|l| {
+            let last = l[l.len() - 1];
+            (l[0].bounds.cy() - w.bounds.cy()).abs() <= 0.5 * l[0].bounds.h as f64 && ((w.bounds.x - last.bounds.right()) as f64) < 4.0 * il
+        }) {
+            Some(l) => l.push(w),
+            None => lines.push(vec![w]),
+        }
+    }
+    let text = |l: &Vec<&crate::text::Word>| {
+        let mut l = l.clone();
+        l.sort_by_key(|w| w.bounds.x);
+        l.iter().map(|w| w.text.as_str()).collect::<Vec<_>>().join(" ")
+    };
+    let height = |l: &Vec<&crate::text::Word>| l.iter().map(|w| w.bounds.h).max().unwrap_or(0);
+    let Some(ti) = (0..lines.len()).max_by_key(|&i| height(&lines[i])) else {
+        return (None, None, None);
+    };
+    let w = sheet.binary.width as i32;
+    let side = |left: bool| {
+        lines
+            .iter()
+            .enumerate()
+            .filter(|(i, l)| *i != ti && height(l) < height(&lines[ti]))
+            .find(|(_, l)| {
+                if left {
+                    l.iter().map(|w| w.bounds.x).min().unwrap() < w / 4 && l.iter().map(|w| w.bounds.right()).max().unwrap() < w / 2
+                } else {
+                    l.iter().map(|w| w.bounds.right()).max().unwrap() > 3 * w / 4 && l.iter().map(|w| w.bounds.x).min().unwrap() > w / 2
+                }
+            })
+            .map(|(_, l)| text(l))
+    };
+    (Some(text(&lines[ti])), side(false), side(true))
 }
 
 /// Slurs and ties (Audiveris SlurLinker, ClumpPruner and SlurInter): each
@@ -659,7 +716,8 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
 /// below a staff are grouped into lines; words are split into syllables at
 /// hyphens, and each syllable goes to the closest chord of the staff above.
 /// A line is lyrics when most of its syllables find a chord.
-fn assign_lyrics(sheet: &Sheet, parts: &mut [Part]) {
+fn assign_lyrics(sheet: &Sheet, parts: &mut [Part]) -> Vec<bool> {
+    let mut used = vec![false; sheet.words.len()];
     let il = sheet.scale.interline as f64;
     // Chords per sheet staff: (part, measure, event, x).
     let mut chords: HashMap<usize, Vec<(usize, usize, usize, f64)>> = HashMap::new();
@@ -682,19 +740,21 @@ fn assign_lyrics(sheet: &Sheet, parts: &mut [Part]) {
                 let limit = sys.staves.get(k + 1).map_or(st.bottom(cx) + 8.0 * il, |&n| sheet.staves[n].top(cx) - 0.5 * il);
                 cx >= st.left as f64 && cx <= st.right as f64 && cy > st.bottom(cx) + 0.3 * il && cy < limit
             };
-            let mut words: Vec<&crate::text::Word> = sheet.words.iter().filter(|w| w.conf >= 40.0 && below(w)).collect();
-            words.sort_by(|a, b| a.bounds.cy().partial_cmp(&b.bounds.cy()).unwrap());
+            let mut words: Vec<usize> = (0..sheet.words.len()).filter(|&i| sheet.words[i].conf >= 40.0 && below(&sheet.words[i])).collect();
+            words.sort_by(|&a, &b| sheet.words[a].bounds.cy().partial_cmp(&sheet.words[b].bounds.cy()).unwrap());
             // Lines of words.
-            let mut lines: Vec<Vec<&crate::text::Word>> = Vec::new();
-            for w in words {
+            let mut lines: Vec<Vec<usize>> = Vec::new();
+            for i in words {
+                let cy = sheet.words[i].bounds.cy();
                 match lines.last_mut() {
-                    Some(l) if (w.bounds.cy() - l.iter().map(|v| v.bounds.cy()).sum::<f64>() / l.len() as f64).abs() <= 0.6 * il => l.push(w),
-                    _ => lines.push(vec![w]),
+                    Some(l) if (cy - l.iter().map(|&v| sheet.words[v].bounds.cy()).sum::<f64>() / l.len() as f64).abs() <= 0.6 * il => l.push(i),
+                    _ => lines.push(vec![i]),
                 }
             }
             let mut number = 0;
-            for mut line in lines {
-                line.sort_by_key(|w| w.bounds.x);
+            for mut ids in lines {
+                ids.sort_by_key(|&i| sheet.words[i].bounds.x);
+                let line: Vec<&crate::text::Word> = ids.iter().map(|&i| &sheet.words[i]).collect();
                 // Syllables: (text, x0, x1, hyphen after, extend).
                 let mut syl: Vec<(String, f64, f64, bool, bool)> = Vec::new();
                 for w in &line {
@@ -743,6 +803,9 @@ fn assign_lyrics(sheet: &Sheet, parts: &mut [Part]) {
                     continue;
                 }
                 number += 1;
+                for &i in &ids {
+                    used[i] = true;
+                }
                 for (i, s) in syl.iter().enumerate() {
                     let Some(ci) = mapped[i] else { continue };
                     let before = i > 0 && syl[i - 1].3;
@@ -762,6 +825,93 @@ fn assign_lyrics(sheet: &Sheet, parts: &mut [Part]) {
             }
         }
     }
+    used
+}
+
+/// Direction words (Audiveris SentenceInter with the direction role): OCR
+/// phrases within a system that are neither lyrics nor recognized symbols
+/// (tempo marks, "cresc.", "leise"...), at the closest event of the closest
+/// staff.
+fn assign_words(sheet: &Sheet, parts: &mut [Part], lyric_words: &[bool]) {
+    let il = sheet.scale.interline as f64;
+    for sys in &sheet.systems {
+        let first = &sheet.staves[sys.staves[0]];
+        let last = &sheet.staves[*sys.staves.last().unwrap()];
+        let inside = |w: &crate::text::Word| {
+            let (cx, cy) = (w.bounds.cx(), w.bounds.cy());
+            cx >= sys.left as f64
+                && cx <= sys.right as f64
+                && cy >= first.top(cx) - 4.0 * il
+                && cy <= last.bottom(cx) + 4.0 * il
+                && !sys.staves.iter().any(|&si| cy > sheet.staves[si].top(cx) && cy < sheet.staves[si].bottom(cx))
+        };
+        let mut ids: Vec<usize> = (0..sheet.words.len())
+            .filter(|&i| {
+                let w = &sheet.words[i];
+                !lyric_words[i]
+                    && w.conf >= 60.0
+                    && {
+                        let letters = w.text.chars().filter(|c| c.is_alphabetic()).count();
+                        letters >= 3 || (letters >= 2 && w.text.ends_with('.'))
+                    }
+                    && inside(w)
+                    // Not on a lyric line.
+                    && !(0..sheet.words.len()).any(|j| {
+                        lyric_words[j] && (sheet.words[j].bounds.cy() - w.bounds.cy()).abs() <= 0.6 * il
+                    })
+                    && !sheet.symbols.iter().any(|s| {
+                        s.shape.starts_with("DYNAMICS_")
+                            && s.bounds.intersection(&w.bounds).is_some_and(|i| i.area() * 2 >= w.bounds.area())
+                    })
+            })
+            .collect();
+        ids.sort_by_key(|&i| (sheet.words[i].bounds.cy() as i64 / (il as i64).max(1), sheet.words[i].bounds.x));
+        // Phrases: words on the same line, close horizontally.
+        let mut phrases: Vec<Vec<usize>> = Vec::new();
+        for i in ids {
+            let w = &sheet.words[i];
+            match phrases.last_mut() {
+                Some(p) if {
+                    let l = &sheet.words[*p.last().unwrap()];
+                    (w.bounds.cy() - l.bounds.cy()).abs() <= 0.6 * il && (w.bounds.x - l.bounds.right()) as f64 <= 1.5 * il
+                } => p.push(i),
+                _ => phrases.push(vec![i]),
+            }
+        }
+        for p in phrases {
+            if p.len() > 4 {
+                continue; // more like an unmatched lyric line
+            }
+            let text = p.iter().map(|&i| sheet.words[i].text.as_str()).collect::<Vec<_>>().join(" ");
+            let (x, y) = (sheet.words[p[0]].bounds.x as f64, sheet.words[p[0]].bounds.cy());
+            // Closest staff, its part and the measure containing the phrase start.
+            let Some(&si) = sys.staves.iter().min_by(|&&a, &&b| {
+                let d = |s: usize| ((sheet.staves[s].top(x) + sheet.staves[s].bottom(x)) / 2.0 - y).abs();
+                d(a).partial_cmp(&d(b)).unwrap()
+            }) else {
+                continue;
+            };
+            // Closest event (chord or rest) of that staff.
+            let mut target: Option<(usize, usize, u32, Q, f64)> = None;
+            for (pi, part) in parts.iter().enumerate() {
+                for (mi, m) in part.measures.iter().enumerate() {
+                    for e in m.events.iter().filter(|e| e.sheet_staff == si) {
+                        let d = (e.x - x).abs();
+                        if d <= 6.0 * il && target.is_none_or(|t| d < t.4) {
+                            target = Some((pi, mi, e.staff, e.start, d));
+                        }
+                    }
+                }
+            }
+            if let Some((pi, mi, staff, start, _)) = target {
+                parts[pi].measures[mi].directions.push(Direction { staff, start, kind: format!("<words>{}</words>", xml_escape(&text)) });
+            }
+        }
+    }
+}
+
+fn xml_escape(s: &str) -> String {
+    s.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;")
 }
 
 /// Measure duration checks of a page (Audiveris MeasureFixer): a short first
@@ -1160,6 +1310,7 @@ fn build_measure(
             ties: Vec::new(),
             slurs: Vec::new(),
             lyrics: Vec::new(),
+            sheet_staff: 0,
             bbox: Rect::default(),
             y_mid,
             stem: Some(sti),
@@ -1218,6 +1369,7 @@ fn build_measure(
             ties: Vec::new(),
             slurs: Vec::new(),
             lyrics: Vec::new(),
+            sheet_staff: 0,
             bbox: Rect::default(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
@@ -1272,6 +1424,7 @@ fn build_measure(
             ties: Vec::new(),
             slurs: Vec::new(),
             lyrics: Vec::new(),
+            sheet_staff: 0,
             bbox: Rect::default(),
             y_mid: cy,
             stem: None,
@@ -1651,6 +1804,9 @@ fn build_measure(
             .min()
             .unwrap_or(Q::ZERO);
         m.clef_changes.push((n, t, c));
+    }
+    for e in events.iter_mut() {
+        e.sheet_staff = part_staves[(e.staff - 1) as usize];
     }
     m.events = events;
 }

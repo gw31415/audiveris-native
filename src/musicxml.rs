@@ -58,8 +58,15 @@ pub fn write(score: &Score, title: &str) -> String {
     x.push_str("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
     x.push_str("<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 4.0 Partwise//EN\" \"http://www.musicxml.org/dtds/partwise.dtd\">\n");
     x.push_str("<score-partwise version=\"4.0\">\n");
+    let title = score.title.as_deref().unwrap_or(title);
     let _ = writeln!(x, "  <work><work-title>{}</work-title></work>", esc(title));
-    x.push_str("  <identification><encoding><software>audiveris-native</software></encoding></identification>\n");
+    x.push_str("  <identification>");
+    for (kind, name) in [("composer", &score.composer), ("lyricist", &score.lyricist)] {
+        if let Some(n) = name {
+            let _ = write!(x, "<creator type=\"{kind}\">{}</creator>", esc(n));
+        }
+    }
+    x.push_str("<encoding><software>audiveris-native</software></encoding></identification>\n");
     x.push_str("  <part-list>\n");
     for (i, p) in score.parts.iter().enumerate() {
         let _ = writeln!(

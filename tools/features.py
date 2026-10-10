@@ -5,7 +5,7 @@ Usage: features.py REFERENCE(.mscx|.musicxml) OUTPUT.musicxml [OUTPUT2 ...]
 
 Features are counted per part (bags of tokens, independent of measures):
 dynamics, articulations, repeats, breath marks, fermatas, ornaments, grace notes, ties, slurs,
-hairpins (wedges), arpeggios, tremolos and lyric syllables.
+hairpins (wedges), arpeggios, tremolos, lyric syllables and direction words.
 """
 import sys
 import xml.etree.ElementTree as ET
@@ -43,6 +43,11 @@ def mscx_features(path):
                     c['repeat'] += 1  # score-wide: counted on the first part
                 elif t == 'Breath':
                     c['breath'] += 1
+                elif t in ('StaffText', 'Tempo', 'Expression'):
+                    txt = ''.join(el.find('text').itertext()) if el.find('text') is not None else ''
+                    for w in txt.split():
+                        if any(ch.isalpha() for ch in w):
+                            c['words:' + w.lower()] += 1
                 elif t == 'Fermata':
                     c['fermata'] += 1
                 elif t == 'Ornament':
@@ -66,7 +71,8 @@ def mscx_features(path):
                 elif t == 'Tremolo':
                     c['tremolo'] += 1
                 elif t == 'Lyrics':
-                    c['lyric:' + (el.findtext('text') or '').strip().lower()] += 1
+                    t_el = el.find('text')
+                    c['lyric:' + (''.join(t_el.itertext()) if t_el is not None else '').strip().lower()] += 1
         parts.append(c)
     return parts
 
@@ -91,6 +97,10 @@ def xml_features(path):
                 c['repeat'] += 1  # score-wide: counted on the first part
             elif t in ('breath-mark', 'caesura'):
                 c['breath'] += 1
+            elif t == 'words':
+                for w in (el.text or '').split():
+                    if any(ch.isalpha() for ch in w):
+                        c['words:' + w.lower()] += 1
             elif t == 'fermata':
                 c['fermata'] += 1
             elif t == 'ornaments':
