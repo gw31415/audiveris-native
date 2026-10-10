@@ -249,6 +249,14 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
     }
 }
 
+fn write_pitch(x: &mut String, p: &crate::score::Pitch) {
+    let _ = write!(x, "<pitch><step>{}</step>", p.step);
+    if p.alter != 0 {
+        let _ = write!(x, "<alter>{}</alter>", p.alter);
+    }
+    let _ = write!(x, "<octave>{}</octave></pitch>", p.octave);
+}
+
 fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
     let d = dur(e.duration, div);
     let common_tail = |x: &mut String, with_beams: bool| {
@@ -323,19 +331,30 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
             x.push_str("</note>\n");
         }
         Kind::Chord { pitches, .. } => {
+            for g in &e.graces {
+                let Some(p) = &g.pitch else { continue };
+                x.push_str("      <note>");
+                x.push_str(if g.slash { "<grace slash=\"yes\"/>" } else { "<grace/>" });
+                write_pitch(x, p);
+                let _ = write!(x, "<voice>{}</voice><type>eighth</type>", e.voice);
+                if let Some(a) = p.accidental {
+                    let _ = write!(x, "<accidental>{a}</accidental>");
+                }
+                let _ = write!(x, "<stem>{}</stem>", if g.stem_up { "up" } else { "down" });
+                if staves > 1 {
+                    let _ = write!(x, "<staff>{}</staff>", e.staff);
+                }
+                x.push_str("</note>\n");
+            }
             for (i, p) in pitches.iter().enumerate() {
                 x.push_str("      <note>");
                 if i > 0 {
                     x.push_str("<chord/>");
                 }
-                let _ = write!(x, "<pitch><step>{}</step>", p.step);
-                if p.alter != 0 {
-                    let _ = write!(x, "<alter>{}</alter>", p.alter);
-                }
+                write_pitch(x, p);
                 let _ = write!(
                     x,
-                    "<octave>{}</octave></pitch><duration>{d}</duration><voice>{}</voice><type>{}</type>",
-                    p.octave,
+                    "<duration>{d}</duration><voice>{}</voice><type>{}</type>",
                     e.voice,
                     type_name(e.base)
                 );

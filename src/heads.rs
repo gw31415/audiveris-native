@@ -16,6 +16,7 @@ use crate::template::{self, BLACK, HeadShape, Template, UNKNOWN, WHITE};
 
 const MAX_DISTANCE_HIGH: f64 = 0.5;
 const MAX_DISTANCE_LOW: f64 = 0.40;
+const MAX_DISTANCE_SMALL: f64 = 0.30;
 const INTRINSIC_RATIO: f64 = 0.8;
 const MIN_HOLE_WHITE_RATIO: f64 = 0.2;
 
@@ -178,7 +179,7 @@ pub fn detect(
     ledgers: &[Ledger],
     beams: &[Beam],
     scale: &Scale,
-) -> Vec<Head> {
+) -> (Vec<Head>, Vec<Head>) {
     let s = &staves[si];
     let il = scale.interline;
     let min_template_width = il;
@@ -238,6 +239,8 @@ pub fn detect(
     }
 
     let mut heads: Vec<Head> = Vec::new();
+    let mut smalls: Vec<Head> = Vec::new();
+    let small_black = &catalog.small[0];
     for scan in &scans {
         let y_offsets: Vec<i32> = match scan.open_dir {
             Some(dir) => {
@@ -251,6 +254,7 @@ pub fn detect(
             None => vec![0, -1],
         };
         let mut found: Vec<Head> = Vec::new();
+        let mut found_small: Vec<Head> = Vec::new();
         let mut x0 = scan.x_from;
         while x0 <= scan.x_to {
             let y0 = (scan.y)(x0);
@@ -262,6 +266,26 @@ pub fn detect(
             {
                 x0 += 2 * template_half;
                 continue;
+            }
+            // Small (grace) black heads.
+            let mut best: Option<(f64, i32)> = None;
+            for &dy in &y_offsets {
+                let d = small_black.evaluate(&cells.data, cells.w, cells.h, x0, y0 + dy);
+                if d <= MAX_DISTANCE_SMALL && best.is_none_or(|b| d < b.0) {
+                    best = Some((d, y0 + dy));
+                }
+            }
+            if let Some((d, y)) = best {
+                let bounds = small_black.slim_at(x0, y);
+                found_small.push(Head {
+                    staff: si,
+                    shape: HeadShape::Black,
+                    pitch: s.pitch_of(bounds.cy(), bounds.cx()).round() as i32,
+                    bounds,
+                    grade: grade_of(d),
+                    dist: d,
+                    ctx: grade_of(d),
+                });
             }
             for t in &catalog.templates {
                 let mut best: Option<(f64, i32)> = None;
@@ -348,8 +372,50 @@ pub fn detect(
             kept.push(h);
         }
         heads.extend(kept);
+        found_small.sort_by(|a, b| b.grade.partial_cmp(&a.grade).unwrap());
+        let mut anchors: Vec<f64> = Vec::new();
+        for h in found_small {
+            if anchors.iter().any(|&ax| (h.bounds.cx() - ax).abs() <= max_dx as f64) {
+                continue;
+            }
+            anchors.push(h.bounds.cx());
+            smalls.push(h);
+        }
     }
-    heads
+    (heads, smalls)
+}
+
+/// Small black heads kept as grace notes: not overlapping a standard head and
+/// with a stem (on the right going up, or on the left going down) of at least
+/// 1.5 interline. Returns the heads with their stem direction.
+pub fn grace_heads(bin: &Bitmap, smalls: Vec<Head>, heads: &[Head], scale: &Scale) -> Vec<(Head, bool)> {
+    let il = scale.interline;
+    let min_len = (1.5 * il as f64) as i32;
+    let mut out: Vec<(Head, bool)> = Vec::new();
+    for h in smalls {
+        let near = h.bounds.grow(il / 3, il / 3);
+        if heads.iter().any(|o| o.bounds.intersects(&near)) {
+            continue;
+        }
+        let b = h.bounds;
+        let cy = b.cy() as i32;
+        let up = (b.right() - 3..=b.right() + 1).any(|x| {
+            let (a, e) = bin.vrun_at(x, b.y + 1);
+            e >= b.y && cy - a >= min_len
+        });
+        let down = (b.x - 1..=b.x + 2).any(|x| {
+            let (a, e) = bin.vrun_at(x, b.bottom() - 2);
+            a <= b.bottom() && e - cy >= min_len
+        });
+        if up == down {
+            continue;
+        }
+        if out.iter().any(|(o, _)| o.bounds.intersects(&b)) {
+            continue;
+        }
+        out.push((h, up));
+    }
+    out
 }
 
 /// HeadInter.overlaps: same staff, close pitches and significant horizontal / area overlap.

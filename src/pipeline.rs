@@ -25,6 +25,8 @@ pub struct Sheet {
     pub beams: Vec<Beam>,
     pub ledgers: Vec<Ledger>,
     pub heads: Vec<Head>,
+    /// Small black heads with a stem (up?), for grace notes.
+    pub grace_heads: Vec<(Head, bool)>,
     pub stems: Vec<Stem>,
     pub symbols: Vec<Symbol>,
 }
@@ -89,11 +91,12 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     let catalog = Catalog::new(heads::head_point_size(&nostaff, &scale));
     let cells = heads::build_cells(&bin, &removed, &nostaff, &ledgers, &scale);
     let mut candidates = Vec::new();
+    let mut smalls = Vec::new();
     for sys in &systems {
         for &si in &sys.staves {
-            candidates.extend(heads::detect(
-                &cells, &catalog, &staves, si, sys, &ledgers, &beams, &scale,
-            ));
+            let (h, sm) = heads::detect(&cells, &catalog, &staves, si, sys, &ledgers, &beams, &scale);
+            candidates.extend(h);
+            smalls.extend(sm);
         }
     }
     log(
@@ -114,6 +117,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     }
     let (mut heads, mut stems) = stems::link(&nostaff, candidates, &scale);
     stems::attach_beams(&mut stems, &heads, &beams, &scale);
+    let grace_heads = heads::grace_heads(&bin, smalls, &heads, &scale);
     log(
         verbose,
         &t,
@@ -139,6 +143,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         beams,
         ledgers,
         heads,
+        grace_heads,
         stems,
         symbols,
     })
