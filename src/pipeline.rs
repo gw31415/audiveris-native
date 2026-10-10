@@ -29,7 +29,8 @@ pub struct Sheet {
     pub grace_heads: Vec<(Head, bool)>,
     pub stems: Vec<Stem>,
     pub symbols: Vec<Symbol>,
-    pub wedges: Vec<crate::wedges::Wedge>,
+    pub wedges: Vec<crate::curves::Wedge>,
+    pub endings: Vec<crate::curves::Ending>,
     /// Key signature changes: (staff, barline right abscissa, fifths).
     pub key_changes: Vec<(usize, i32, i32)>,
 }
@@ -155,8 +156,8 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     let symbols = symbols::recognize(&residual, &staves, &scale);
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
-    let wedges = crate::wedges::detect(&residual, &staves, &scale);
-    log(verbose, &t, format!("WEDGES {}", wedges.len()));
+    let (wedges, endings) = crate::curves::build(&residual, &bin, &staves, &systems, &scale);
+    log(verbose, &t, format!("CURVES {} wedges, {} endings", wedges.len(), endings.len()));
     Ok(Sheet {
         binary: bin,
         residual,
@@ -171,6 +172,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         stems,
         symbols,
         wedges,
+        endings,
         key_changes,
     })
 }

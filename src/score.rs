@@ -112,6 +112,9 @@ pub struct Measure {
     pub right_bar: BarStyle,
     /// Repeat signs: (forward at the left bar, backward at the right bar).
     pub repeat: (bool, bool),
+    /// Ending (volta) number starting at the left bar, and (number, with a
+    /// right leg) stopping at the right bar.
+    pub ending: (Option<u32>, Option<(u32, bool)>),
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -236,6 +239,7 @@ fn filler(m: &Measure) -> Measure {
         expected: m.expected,
         right_bar: m.right_bar,
         repeat: (false, false),
+        ending: (None, None),
     }
 }
 
@@ -313,11 +317,13 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     expected,
                     right_bar: sys.boundaries[mi + 1].style,
                     repeat: (false, false),
+                    ending: (None, None),
                 });
             }
         }
         let sys_fifths = fifths_state;
         let (repeats, repeat_dots) = repeat_signs(sheet, sys);
+        let endings = system_endings(sheet, sys);
         // Multiple rests decided for the whole system (all parts expand alike).
         let multi: Vec<Option<u32>> = (0..sys.boundaries.len().saturating_sub(1))
             .map(|mi| multiple_rest(sheet, &sys.staves, sys.boundaries[mi].x1 as f64, sys.boundaries[mi + 1].x0 as f64))
@@ -406,8 +412,10 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     expected,
                     right_bar: sys.boundaries[mi + 1].style,
                     repeat: (false, false),
+                    ending: (None, None),
                 };
                 m.repeat = (repeats[mi].1, repeats[mi + 1].0);
+                m.ending = endings[mi];
                 build_measure(
                     sheet,
                     part_staves,
@@ -456,6 +464,33 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.fifths = fifths_state;
     state.time = time_state;
     Score { parts }
+}
+
+/// Endings of a system, per measure: (number started at the left bar,
+/// (number, right leg) stopped at the right bar). The number text is not
+/// read (no OCR): consecutive endings are numbered 1, 2, ...
+fn system_endings(sheet: &Sheet, sys: &crate::grid::System) -> Vec<(Option<u32>, Option<(u32, bool)>)> {
+    let il = sheet.scale.interline as f64;
+    let n = sys.boundaries.len().saturating_sub(1);
+    let mut out = vec![(None, None); n];
+    let measure_at = |x: f64| sys.boundaries.windows(2).position(|w| x > w[0].x1 as f64 && x < w[1].x0 as f64);
+    let mut list: Vec<&crate::curves::Ending> = sheet.endings.iter().filter(|e| sys.staves.contains(&e.staff)).collect();
+    list.sort_by(|a, b| a.x0.partial_cmp(&b.x0).unwrap());
+    let mut last: Option<(usize, u32)> = None;
+    for e in list {
+        let (Some(a), Some(b)) = (measure_at(e.x0 + il), measure_at(e.x1 - il)) else { continue };
+        if out[a].0.is_some() || last.is_some_and(|(stop, _)| a <= stop) {
+            continue;
+        }
+        let number = match last {
+            Some((stop, k)) if stop + 1 == a => k + 1,
+            _ => 1,
+        };
+        out[a].0 = Some(number);
+        out[b].1 = Some((number, e.right_leg));
+        last = Some((b, number));
+    }
+    out
 }
 
 /// Repeat signs (Audiveris DotFactory / RepeatDotInter): on each side of

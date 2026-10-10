@@ -78,8 +78,18 @@ pub fn write(score: &Score, title: &str) -> String {
                 x.push_str("      <print new-system=\"yes\"/>\n");
             }
             write_attributes(&mut x, m, mi == 0, div, p.staves);
-            if m.repeat.0 {
-                x.push_str("      <barline location=\"left\"><bar-style>heavy-light</bar-style><repeat direction=\"forward\"/></barline>\n");
+            if m.repeat.0 || m.ending.0.is_some() {
+                x.push_str("      <barline location=\"left\">");
+                if m.repeat.0 {
+                    x.push_str("<bar-style>heavy-light</bar-style>");
+                }
+                if let Some(n) = m.ending.0 {
+                    let _ = write!(x, "<ending number=\"{n}\" type=\"start\"/>");
+                }
+                if m.repeat.0 {
+                    x.push_str("<repeat direction=\"forward\"/>");
+                }
+                x.push_str("</barline>\n");
             }
             write_measure_body(&mut x, m, div, p.staves);
             let style = match m.right_bar {
@@ -89,17 +99,20 @@ pub fn write(score: &Score, title: &str) -> String {
                 BarStyle::HeavyLight => Some("heavy-light"),
                 BarStyle::Heavy => Some("heavy"),
             };
-            if m.repeat.1 {
-                let _ = writeln!(
-                    x,
-                    "      <barline location=\"right\"><bar-style>{}</bar-style><repeat direction=\"backward\"/></barline>",
-                    style.unwrap_or("light-heavy")
-                );
-            } else if let Some(s) = style {
-                let _ = writeln!(
-                    x,
-                    "      <barline location=\"right\"><bar-style>{s}</bar-style></barline>"
-                );
+            let style = if m.repeat.1 { style.or(Some("light-heavy")) } else { style };
+            if style.is_some() || m.ending.1.is_some() {
+                x.push_str("      <barline location=\"right\">");
+                if let Some(s) = style {
+                    let _ = write!(x, "<bar-style>{s}</bar-style>");
+                }
+                if let Some((n, leg)) = m.ending.1 {
+                    let t = if leg { "stop" } else { "discontinue" };
+                    let _ = write!(x, "<ending number=\"{n}\" type=\"{t}\"/>");
+                }
+                if m.repeat.1 {
+                    x.push_str("<repeat direction=\"backward\"/>");
+                }
+                x.push_str("</barline>\n");
             }
             x.push_str("    </measure>\n");
         }

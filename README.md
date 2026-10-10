@@ -165,7 +165,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | **オッターヴァ・ペダル** | 8va/15ma 線、ペダル記号 | ⬜ | OctaveShiftInter, PedalInter |
 | **反復構造** | 反復記号（縦線の点） | ✅ | DotFactory / RepeatDotInter（点の対・小節線から 1.5 間・段の過半数）。冬の旅: 3/3（本家 3/3） |
 | | セーニョ・コーダ・D.S.・D.C. | ✅ | MarkerInter（重なる小節線に接続）。冬の旅には無く合成画像で確認（誤検出 0） |
-| | ボルタ（括弧） | ⬜ | EndingsBuilder |
+| | ボルタ（括弧） | 🔧 | EndingsBuilder の長さ・傾き・五線からの距離・小節幅比。左の脚を必須に（冬の旅で誤検出 0、本家 1）。番号は OCR なしのため連番 |
 | **タイ・スラー** | スラー／タイの検出と音符への接続 | ⬜ | SlursBuilder, SlurInter |
 | **テキスト** | 歌詞 | ⬜ | LyricItemInter（OCR） |
 | | 発想記号・テンポ・タイトル | ⬜ | WordInter, SentenceInter（OCR） |

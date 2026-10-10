@@ -1,11 +1,14 @@
-//! Hairpins (Audiveris SegmentsBuilder and WedgesBuilder).
+//! Straight-line curves (Audiveris CURVES step: SegmentsBuilder,
+//! WedgesBuilder, EndingsBuilder).
 //!
 //! Straight segments are taken from the residual glyphs: each glyph gives its
 //! upper and lower envelope (one line, or the two legs of a hairpin drawn in
-//! one stroke). Segments are pairs-matched as in WedgesBuilder: ends close on
-//! one side, apart on the other.
+//! one stroke). Hairpins pair two segments whose ends are close on one side
+//! and apart on the other; the remaining long horizontal segments high above
+//! a staff are endings (voltas).
 
 use crate::binary::{Bitmap, Rect, components};
+use crate::grid::System;
 use crate::scale::Scale;
 use crate::staff::Staff;
 
@@ -26,6 +29,8 @@ struct Segment {
     right: (f64, f64),
     /// Distance impact (1 - mean distance / max segment distance).
     dist: f64,
+    /// Mean stroke thickness.
+    thick: f64,
 }
 
 /// Least-squares line through the points: (slope, intercept, mean distance).
@@ -78,6 +83,7 @@ fn segments(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Segment> 
             top.push((x, (col[0] + first_end) as f64 / 2.0));
             bot.push((x, (last_start + *col.last().unwrap()) as f64 / 2.0));
         }
+        let columns = cols.iter().filter(|c| !c.is_empty()).count().max(1) as f64;
         let mut legs = vec![top];
         let (ta, tb, _) = fit(&legs[0]);
         let (ba, bb, _) = fit(&bot);
@@ -86,6 +92,7 @@ fn segments(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Segment> 
         if sep(x0).max(sep(x1)) >= 0.5 * il {
             legs.push(bot);
         }
+        let thick = c.pixels.len() as f64 / columns / legs.len() as f64;
         for pts in legs {
             let (a, k, d) = fit(&pts);
             if d > max_dist || a.abs() > max_slope {
@@ -103,20 +110,33 @@ fn segments(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Segment> 
             if in_staff(left) || in_staff(right) {
                 continue;
             }
-            out.push(Segment { left, right, dist: 1.0 - d / max_dist });
+            out.push(Segment { left, right, dist: 1.0 - d / max_dist, thick });
         }
     }
     out
 }
 
-pub fn detect(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Wedge> {
+/// Hairpins and endings of the sheet.
+pub fn build(
+    residual: &Bitmap,
+    binary: &Bitmap,
+    staves: &[Staff],
+    systems: &[System],
+    scale: &Scale,
+) -> (Vec<Wedge>, Vec<Ending>) {
+    let mut segs = segments(residual, staves, scale);
+    let wedges = wedges(&mut segs, staves, scale);
+    let endings = endings(&segs, binary, staves, systems, scale);
+    (wedges, endings)
+}
+
+fn wedges(segs: &mut Vec<Segment>, staves: &[Staff], scale: &Scale) -> Vec<Wedge> {
     let il = scale.interline as f64;
     let closed_max_dx = (0.2 * il).round();
     let closed_max_dy = (0.5 * il).round();
     let (open_low, open_high) = ((0.5 * il).round(), (1.5 * il).round());
     let (len_low, len_high) = ((2.0 * il).round(), (3.0 * il).round());
     let open_max_bias = 20f64.to_radians().tan();
-    let mut segs = segments(residual, staves, scale);
     let mut wedges = Vec::new();
     for rev in [true, false] {
         // Closed end: left for a crescendo (rev), right for a diminuendo.
@@ -194,4 +214,78 @@ fn staff_dist(s: &Staff, (x, y): (f64, f64)) -> f64 {
     let dx = (s.left as f64 - x).max(x - s.right as f64).max(0.0);
     let dy = (s.top(x) - y).max(y - s.bottom(x)).max(0.0);
     dx.hypot(dy)
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct Ending {
+    pub x0: f64,
+    pub x1: f64,
+    pub y: f64,
+    /// Staff below.
+    pub staff: usize,
+    /// Leg (vertical hook) on the right end: stop, else discontinue.
+    pub right_leg: bool,
+    pub grade: f64,
+}
+
+/// Endings (Audiveris EndingsBuilder / LeggedIntersBuilder): a thin
+/// horizontal segment of at least 6 il, at least 2.5 il above the staff
+/// below, covering most of its measure, with a vertical leg below its left
+/// end (and maybe its right end).
+fn endings(segs: &[Segment], binary: &Bitmap, staves: &[Staff], systems: &[System], scale: &Scale) -> Vec<Ending> {
+    let il = scale.interline as f64;
+    let (len_low, len_high) = (6.0 * il, 10.0 * il);
+    let max_slope = 0.02;
+    let max_thick = scale.max_stem as f64 * 1.4 + 1.0;
+    let mut out = Vec::new();
+    for s in segs {
+        let length = s.right.0 - s.left.0;
+        let slope = ((s.right.1 - s.left.1) / length.max(1.0)).abs();
+        if length < len_low || slope > max_slope || s.thick > max_thick {
+            continue;
+        }
+        let (cx, cy) = ((s.left.0 + s.right.0) / 2.0, (s.left.1 + s.right.1) / 2.0);
+        // Staff at or below.
+        let Some(si) = (0..staves.len())
+            .filter(|&i| staves[i].top(cx) > cy && cx >= staves[i].left as f64 && cx <= staves[i].right as f64)
+            .min_by(|&a, &b| staves[a].top(cx).partial_cmp(&staves[b].top(cx)).unwrap())
+        else {
+            continue;
+        };
+        if staves[si].top(cx) - cy < 2.5 * il {
+            continue;
+        }
+        // Measure under the center.
+        let Some(sys) = systems.iter().find(|y| y.staves.contains(&si)) else { continue };
+        let Some(mi) = sys.boundaries.windows(2).position(|w| cx > w[0].x1 as f64 && cx < w[1].x0 as f64) else {
+            continue;
+        };
+        let width = (sys.boundaries[mi + 1].x0 - sys.boundaries[mi].x1) as f64;
+        let ratio = if mi == 0 { 0.6 } else { 0.8 };
+        if length < ratio * width {
+            continue;
+        }
+        let impacts = [s.dist, 1.0 - slope / max_slope, (length - len_low) / (len_high - len_low)];
+        let grade = 0.8 * impacts.iter().map(|v| v.max(1e-6)).product::<f64>().powf(1.0 / 3.0);
+        if grade < 0.08 {
+            continue;
+        }
+        let leg = |(x, y): (f64, f64)| {
+            let top = staves[si].top(x);
+            ((x - 0.5 * il) as i32..=(x + 0.5 * il) as i32).any(|lx| {
+                (y as i32..=(y + 0.5 * il) as i32).any(|ly| {
+                    let (a, e) = binary.vrun_at(lx, ly);
+                    a as f64 <= y + 0.5 * il && (e - a) as f64 >= il && (e as f64) < top
+                })
+            })
+        };
+        // A left leg is required (improvement: lyric extenders and lone
+        // hairpin legs have none).
+        if !leg(s.left) {
+            continue;
+        }
+        out.push(Ending { x0: s.left.0, x1: s.right.0, y: cy, staff: si, right_leg: leg(s.right), grade });
+    }
+    out.sort_by(|a, b| (a.staff, a.x0 as i64).cmp(&(b.staff, b.x0 as i64)));
+    out
 }
