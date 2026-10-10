@@ -271,6 +271,13 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
             for (n, v) in &e.beams {
                 let _ = write!(x, "<beam number=\"{n}\">{v}</beam>");
             }
+            if !e.articulations.is_empty() {
+                x.push_str("<notations><articulations>");
+                for a in &e.articulations {
+                    let _ = write!(x, "<{a}/>");
+                }
+                x.push_str("</articulations></notations>");
+            }
         }
     };
     match &e.kind {

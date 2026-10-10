@@ -184,6 +184,8 @@ fn relevant(shape: &str) -> bool {
             | "TENUTO"
             | "STACCATISSIMO"
             | "MARCATO"
+            | "MARCATO_BELOW"
+            | "STACCATISSIMO_BELOW"
     ) || shape.starts_with("FLAG_")
         || shape.starts_with("TIME_")
         || shape == "COMMON_TIME"

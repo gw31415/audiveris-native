@@ -5,6 +5,7 @@
 
 use std::collections::HashMap;
 
+use crate::binary::Rect;
 use crate::grid::BarStyle;
 use crate::header::{ClefKind, TimeSig, digit_of, time_of};
 use crate::pipeline::Sheet;
@@ -46,6 +47,8 @@ pub struct Event {
     pub duration: Q,
     /// (beam number, begin|continue|end|forward hook|backward hook)
     pub beams: Vec<(u32, &'static str)>,
+    /// MusicXML articulation names (staccato, accent, ...).
+    pub articulations: Vec<&'static str>,
     #[serde(skip)]
     heads: Vec<usize>,
     #[serde(skip)]
@@ -560,6 +563,7 @@ fn build_measure(
             start: Q::ZERO,
             duration: Q::ZERO,
             beams: Vec::new(),
+            articulations: Vec::new(),
             y_mid,
             stem: Some(sti),
             right,
@@ -608,6 +612,7 @@ fn build_measure(
             start: Q::ZERO,
             duration: Q::ZERO,
             beams: Vec::new(),
+            articulations: Vec::new(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
             right: g
@@ -652,6 +657,7 @@ fn build_measure(
             start: Q::ZERO,
             duration: Q::ZERO,
             beams: Vec::new(),
+            articulations: Vec::new(),
             y_mid: cy,
             stem: None,
             right: s.bounds.right() as f64,
@@ -667,6 +673,7 @@ fn build_measure(
         .copied()
         .filter(|s| s.shape == "DOT_set")
         .collect();
+    let mut aug_dots: Vec<Rect> = Vec::new();
     for ev in events.iter_mut() {
         let st = &sheet.staves[part_staves[(ev.staff - 1) as usize]];
         let near = |d: &&&crate::symbols::Symbol| {
@@ -708,18 +715,26 @@ fn build_measure(
             continue;
         };
         ev.dots = 1;
-        let second = dots.iter().any(|d| {
-            let x = d.bounds.x as f64;
-            x > first + 0.3 * il
-                && x <= first + 1.6 * il
-                && first_col
-                    .iter()
-                    .any(|f| (f.bounds.cy() - d.bounds.cy()).abs() <= 0.3 * il)
-        });
-        if second {
+        aug_dots.extend(first_col.iter().map(|d| d.bounds));
+        let seconds: Vec<Rect> = dots
+            .iter()
+            .filter(|d| {
+                let x = d.bounds.x as f64;
+                x > first + 0.3 * il
+                    && x <= first + 1.6 * il
+                    && first_col
+                        .iter()
+                        .any(|f| (f.bounds.cy() - d.bounds.cy()).abs() <= 0.3 * il)
+            })
+            .map(|d| d.bounds)
+            .collect();
+        if !seconds.is_empty() {
             ev.dots = 2;
+            aug_dots.extend(seconds);
         }
     }
+
+    attach_articulations(sheet, part_staves, &syms, &mut events, &aug_dots);
 
     // Tuplets attached to beam groups.
     for s in syms
@@ -1093,6 +1108,118 @@ fn assign_beams(sheet: &Sheet, events: &mut [Event], il: f64) {
                 "continue"
             };
             ev.beams.push((level as u32 + 1, value));
+        }
+    }
+}
+
+/// Grade of a connection from its gaps (Audiveris AbstractConnection with
+/// GradeImpacts: weighted geometric mean of impacts, times intrinsic ratio 0.8).
+pub fn connection_grade(dx: f64, dy: f64, x_max: f64, y_max: f64, wx: f64, wy: f64) -> f64 {
+    let xi = ((x_max - dx.abs()) / x_max).max(0.0);
+    let yi = ((y_max - dy.abs()) / y_max).max(0.0);
+    if xi == 0.0 || yi == 0.0 {
+        return 0.0;
+    }
+    0.8 * (xi.powf(wx) * yi.powf(wy)).powf(1.0 / (wx + wy))
+}
+
+/// Articulations (Audiveris ArticulationInter.lookupLink and
+/// ChordArticulationRelation): the sign links to the head chord whose
+/// top / bottom is vertically closest, within a lookup box of +/-0.8
+/// interline around its center, up to 3 interlines away (at least 0.1).
+/// Staccato signs come from dots that are neither augmentation dots nor
+/// too close to a staff line (DotFactory, minDyFromLine 0.3).
+fn attach_articulations(
+    sheet: &Sheet,
+    part_staves: &[usize],
+    syms: &[&crate::symbols::Symbol],
+    events: &mut [Event],
+    aug_dots: &[Rect],
+) {
+    let il = sheet.scale.interline as f64;
+    let (x_max, y_max, y_min) = (0.8 * il, 3.0 * il, 0.1 * il);
+    // Chord bounds: heads and stem.
+    let boxes: Vec<Option<Rect>> = events
+        .iter()
+        .map(|e| {
+            if !matches!(e.kind, Kind::Chord { .. }) {
+                return None;
+            }
+            let mut b = e.heads.iter().map(|&h| sheet.heads[h].bounds).reduce(|a, b| a.union(&b))?;
+            if let Some(st) = e.stem {
+                let s = &sheet.stems[st];
+                b = b.union(&Rect::new(s.x, s.top, 1, s.bottom - s.top + 1));
+            }
+            Some(b)
+        })
+        .collect();
+    for s in syms {
+        let (name, above_only, below_only) = match s.shape {
+            "ACCENT" => ("accent", false, false),
+            "TENUTO" => ("tenuto", false, false),
+            "STACCATISSIMO" => ("staccatissimo", true, false),
+            "STACCATISSIMO_BELOW" => ("staccatissimo", false, true),
+            "MARCATO" => ("strong-accent", true, false),
+            "MARCATO_BELOW" => ("strong-accent", false, true),
+            "DOT_set" => ("staccato", false, false),
+            _ => continue,
+        };
+        let st = &sheet.staves[s.staff];
+        let (px, py) = (s.bounds.cx(), s.bounds.cy());
+        if name == "staccato" {
+            if aug_dots.contains(&s.bounds) {
+                continue;
+            }
+            let pitch = st.pitch_of(py, px);
+            if pitch.abs() <= 4.0 && (pitch - 2.0 * (pitch / 2.0).round()).abs() / 2.0 < 0.3 {
+                continue;
+            }
+        }
+        // Vertical lookup range (staff relative position of the sign).
+        let k = part_staves.iter().position(|&x| x == s.staff).unwrap_or(0);
+        let (top, bot) = (st.top(px), st.bottom(px));
+        let (min_y, max_y) = if py < top {
+            if below_only {
+                continue;
+            }
+            let lower = if above_only { py } else { py - y_max };
+            // Between two staves of the part: the upper staff counts too.
+            let upper_bottom = k.checked_sub(1).map(|j| sheet.staves[part_staves[j]].top(px));
+            (upper_bottom.map_or(lower, |t| t.min(lower)), bot)
+        } else if py > bot {
+            if above_only {
+                continue;
+            }
+            let upper = if below_only { py } else { py + y_max };
+            let next_bottom = part_staves.get(k + 1).map(|&j| sheet.staves[j].bottom(px));
+            (top, next_bottom.map_or(upper, |b| b.max(upper)))
+        } else {
+            (if above_only { py } else { top }, if below_only { py } else { bot })
+        };
+        let mut best: Option<(usize, f64)> = None;
+        for (i, b) in boxes.iter().enumerate() {
+            let Some(b) = b else { continue };
+            if b.right() as f64 <= px - x_max || b.x as f64 > px + x_max || b.bottom() as f64 <= min_y || b.y as f64 > max_y {
+                continue;
+            }
+            if b.intersects(&s.bounds) {
+                continue;
+            }
+            let center = (b.cx(), b.cy());
+            let y_ref = if py > center.1 { b.bottom() as f64 } else { b.y as f64 };
+            let y_gap = if py > center.1 { py - y_ref } else { y_ref - py };
+            if y_gap < y_min {
+                continue;
+            }
+            let g = connection_grade(center.0 - px, y_gap, x_max, y_max, 3.0, 1.0);
+            if g >= 0.1 && best.is_none_or(|(_, bg)| y_gap.abs() < bg) {
+                best = Some((i, y_gap.abs()));
+            }
+        }
+        if let Some((i, _)) = best
+            && !events[i].articulations.contains(&name)
+        {
+            events[i].articulations.push(name);
         }
     }
 }

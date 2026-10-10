@@ -151,7 +151,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | | タイムスロット | 🔧 | |
 | | 弱起・小節長の検査 | ⬜ | MeasureRhythm, PageRhythm |
 | **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器は本家と同じ。音符への割当は最も近い音符 |
-| **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ⬜ | ArticulationInter |
+| **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ✅ | ArticulationInter.lookupLink、ChordArticulationRelation、DotFactory（スタッカート） |
 | **装飾・その他記号** | フェルマータ | ⬜ | FermataInter |
 | | トリル・ターン・モルデント | ⬜ | OrnamentInter |
 | | アルペジオ・ブレス・カエスーラ | ⬜ | ArpeggiatoInter, BreathMarkInter, CaesuraInter |
