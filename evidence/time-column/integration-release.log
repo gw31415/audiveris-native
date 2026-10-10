@@ -1,8 +1,0 @@
-    Finished `release` profile [optimized] target(s) in 0.03s
-     Running tests/time_column.rs (/workspace/shared/audiveris-cloud-continuation/target/release/deps/time_column-b297c875f4411de0)
-
-running 1 test
-test complete_time_column_matches_original ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.29s
-

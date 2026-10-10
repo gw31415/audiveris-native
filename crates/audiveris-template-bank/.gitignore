@@ -1,6 +1,0 @@
-/target/
-/oracle/classes/
-/oracle/compile-only/
-/oracle/run/*.omr
-/oracle/tmp/
-/oracle/native-cache/

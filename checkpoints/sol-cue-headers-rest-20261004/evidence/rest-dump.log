@@ -1,3 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.37s
-     Running `/workspace/onboarding/target/debug/examples/cue_rest_dump /workspace/work/cue-clef-key/cue-page.json fixtures/official-cue-headers-rest/rest-mapping.json /workspace/work/cue-clef-key/native-rest-queries.json`

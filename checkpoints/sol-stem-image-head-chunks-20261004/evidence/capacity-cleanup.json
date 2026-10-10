@@ -1,8 +1,0 @@
-{
-  "status": "passed",
-  "removed_only_verified_duplicate_restore": "/workspace/work/head-coverage/sol-head-page-catalog-20261004-remote-restore",
-  "all_sha256": 5411,
-  "source_commit": "e2a3a119549da788476685aa40b73f6d5923eb44",
-  "source_tree": "ff6a0cf5c95d8648f60e64438f475e9b592fffc3",
-  "originals_bundles_latest_fresh_pair_retained": true
-}

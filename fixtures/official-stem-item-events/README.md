@@ -1,1 +1,0 @@
-See docs/STEM-ITEMS-PLAN.md.4432 actual-source constructor/event/length controls on612 legitimate original builders and18 explicitly overridden original line boundary controls are independently certified. Sources are prefiltered surviving original items, not completed automatic native image discovery or full page cache/SIG/epilog. HEADS/STEMS remain false.

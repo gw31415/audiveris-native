@@ -1,6 +1,0 @@
-tree 3b62d077e84403137e51252b5713834f43c7123e
-parent 4bbcfb37165a51aa281f8149a35104908b8241f1
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791037349 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791037349 +0000
-
-Map original overlapping curved staff areas and at-or-above selection for native one-system equal-span staff columns; wire profiles into CLI

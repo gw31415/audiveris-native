@@ -1,8 +1,0 @@
-[package]
-name = "audiveris-template-match"
-version = "0.1.0"
-edition = "2024"
-license = "AGPL-3.0-or-later"
-publish = false
-[dev-dependencies]
-serde_json = { version = "=1.0.150", features = ["float_roundtrip"] }

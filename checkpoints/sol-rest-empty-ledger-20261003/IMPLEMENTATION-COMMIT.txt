@@ -1,6 +1,0 @@
-tree 8a4bc5a06c81527edb0cd1870f5c8c922beb873b
-parent e13359dfd928a474176b65ffe7c3a6edb69951aa
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791036470 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791036470 +0000
-
-Map original empty-ledger outside-staff pitch from measured interline at native pre-LEDGERS rest boundary; preserve explicit multi-staff and populated-ledger limits

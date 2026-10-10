@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "376377c1b017fb3880c8b969c1a29abc023716ea",
-  "source_tree": "1ccac46a8375ca2e5df42acf1bd1a054777ba690",
-  "all_fresh_restored_sha256_verified": 6669,
-  "source_clean": true,
-  "source": "/workspace/work/stem-image-linkers/sol-stem-image-linkers-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/stem-image-linkers/sol-stem-image-linkers-20261004-prepush/source-git"
-}

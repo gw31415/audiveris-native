@@ -1,8 +1,0 @@
-    Checking audiveris-template-match v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-match)
-    Checking audiveris-template-bank v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-template-bank)
-    Checking audiveris-classifier v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-classifier)
-    Checking audiveris-staff-removal v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-staff-removal)
-    Checking audiveris-glyph-features v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-glyph-features)
-    Checking audiveris-area v0.1.0 (/workspace/onboarding/artifacts/audiveris-source/crates/audiveris-area)
-    Checking audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized] target(s) in 8.43s

@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "d78dce43ad078e7613f0b8d2309c21400747a04a",
-  "source_tree": "55550a58ad8f90777a4b23c17bbb691cbec51da3",
-  "all_fresh_restored_sha256_verified": 6349,
-  "source_clean": true,
-  "source": "/workspace/work/cue-clef-key/sol-stem-builder-create-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/cue-clef-key/sol-stem-builder-create-20261004-prepush/source-git"
-}

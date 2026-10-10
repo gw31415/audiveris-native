@@ -1,7 +1,0 @@
-{
-  "base_source_sha256": "dae43193ab0b7b1418efa3d40ac4a2e59951f01ae2a0dd36f44eecfe69387000",
-  "patch_sha256": "c4606fde9142295f1b9d4e3b77161cdac907b83fd17d371661a0ab55711886d7",
-  "scope": "Test-only Before.assert_prior_owners reads the immutable Registry once and compares every old entry and run allocation exactly as before. No ownership or assertion is removed. Apply only after lifecycle checkpoint; writer image run will exercise it.",
-  "current_v4_modified": false,
-  "executed": false
-}

@@ -1,9 +1,0 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-// Observe unmodified original process/finalizeBeams on one saved HEADS image.
-import java.nio.file.*;import java.util.*;import com.fasterxml.jackson.databind.ObjectMapper;
-public class CrossSystemImageFinalizerProbe extends BeamOriginDependencyProbe {
- static List<Object> beams(List<?> systems)throws Exception{List<Object>out=new ArrayList<>();for(Object sys:systems)for(Object b:(Collection<?>)call(call(sys,"getSig"),"vertexSet"))if(b.getClass().getSimpleName().equals("BeamInter")||b.getClass().getSimpleName().equals("BeamHookInter"))out.add(obj("system",call(sys,"getId"),"id",call(b,"getId"),"kind",b.getClass().getSimpleName(),"bounds",rect(call(b,"getBounds")),"glyph",glyph(call(b,"getGlyph")),"glyph_id",call(call(b,"getGlyph"),"getId"),"stems",((Collection<?>)call(b,"getStems")).size()));return out;}
- public static void main(String[]args)throws Exception{
- c("ui.symbol.MusicFont").getMethod("populateAllSymbols").invoke(null);Object book=c("sheet.Book").getMethod("loadBook",Path.class).invoke(null,Path.of(args[0])),sheet=call(((List<?>)call(book,"getStubs")).get(0),"getSheet");List<?>systems=(List<?>)call(sheet,"getSystems");for(Object sys:systems){Object r=c("sheet.stem.StemsRetriever").getConstructor(c("sheet.SystemInfo")).newInstance(sys);call(r,"process");}Object before=beams(systems);for(int i=0;i<systems.size();i++){call(c("sheet.stem.StemsRetriever").getConstructor(c("sheet.SystemInfo")).newInstance(systems.get(i)),"finalizeBeams");call(call(systems.get(i),"getSig"),"contextualize");}Object after=beams(systems);new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(Path.of(args[1]).toFile(),obj("native_outputs_used",false,"scope","original actual process on same image HEADS, ordered finalizeBeams and system contextualization; not whole SIG parity", "before_epilog",before,"after_epilog",after));System.exit(0);
- }
-}

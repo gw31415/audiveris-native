@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.19s
-     Running tests/stem_builder_create.rs (/workspace/onboarding/target/debug/deps/stem_builder_create-8a538369bab7683d)
-
-running 2 tests
-test selected_builder_refuses_invalid_inputs_preserves_groups_and_keeps_cache_per_system ... ok
-test original_selected_stem_builder_144_grade_registration_orientation_and_cache_controls ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s

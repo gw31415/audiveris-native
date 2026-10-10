@@ -1,5 +1,0 @@
-{
-  "raw_sha256": "025997ae48c7f818af487196bc41bb08884236f60df2835d5c218c1961c3af02",
-  "observer_executed_sha256": "5600b4acb2e01cc6e1017a720b15f74e63336a498667f8631ef45133e2572da2",
-  "repair": "insert missing opening quote in kind/shape JSON string values only; no observation values changed; scope clarified for recorded callback XML reload"
-}

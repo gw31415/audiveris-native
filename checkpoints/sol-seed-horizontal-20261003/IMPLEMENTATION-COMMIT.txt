@@ -1,6 +1,0 @@
-tree 76057c875fbdc7549531c77d5c7c727f859a9dda
-parent 6afb227a4885116d34d7d0ff01d924ea161aae48
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791040647 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791040647 +0000
-
-Use original clipped neighbor-chain staff selection for stem seeds; verify four original positive seeds across two columns

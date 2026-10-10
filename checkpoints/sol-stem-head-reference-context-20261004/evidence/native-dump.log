@@ -1,3 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
-     Running `/workspace/onboarding/target/debug/examples/stem_head_reference_context_dump fixtures/official-stem-head-reference-context/controls.json /workspace/work/stem-head-neighborhood/laura-report.json`

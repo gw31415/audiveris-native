@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "removed_only_verified_clean_old_duplicate": "/workspace/work/head-range-catalog/remote-restore",
-  "source_commit": "3f015272fde1c071351296fd80c25ad8c1bc4448",
-  "source_tree": "cae6a56c2fd3526bd56819fb11b54386ca3cf4e2",
-  "all_file_sha256_verified": 4826,
-  "original_archival_bundles_and_manifests_retained": true,
-  "latest_f21_fresh_remote_clone_and_restore_retained": true
-}

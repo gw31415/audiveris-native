@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.01s
-     Running tests/musicxml_limited.rs (/workspace/onboarding/target/debug/deps/musicxml_limited-412e384ef71bb0e2)
-
-running 1 test
-test actual_images_preserve_rests_half_notes_measure_totals_and_refuse_missing_meter ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 21.25s
-

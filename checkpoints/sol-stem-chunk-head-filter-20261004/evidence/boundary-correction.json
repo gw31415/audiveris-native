@@ -1,9 +1,0 @@
-{
-  "initial_test_failed": "group0 case8 at final physical head row",
-  "cause": "Incorrect local yOverlap arithmetic excluded a shared final row. Official GeoUtil uses min(y+height)-max(y), so one shared pixel row has positive overlap.",
-  "correction": "Native overlap adds 1 after inclusive-bottom calculation; observer diagnostics invoke original GeoUtil directly. Separate final-row and one-past-final-row original controls added.",
-  "fixed_original_compilations_and_runs": 2,
-  "fixed_original_controls": 6600,
-  "initial_oracle_direct_method_retained_result_preserved_in_workspace": true,
-  "native_source_output_not_used_by_oracle": true
-}

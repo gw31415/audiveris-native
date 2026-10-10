@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "8d5de292421aea36439dccbabf3fa73a1b18c79f",
-  "source_tree": "7c8fba322e9964d72f70f3d79fa1c6d9386f804f",
-  "all_fresh_restored_sha256_verified": 4865,
-  "source_clean": true,
-  "source": "/workspace/work/head-lifecycle/sol-head-registration-20261003-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/head-lifecycle/sol-head-registration-20261003-prepush/source-git"
-}

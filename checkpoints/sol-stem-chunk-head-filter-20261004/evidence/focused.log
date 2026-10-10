@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.63s
-     Running tests/stem_chunk_head_filter.rs (/workspace/onboarding/target/debug/deps/stem_chunk_head_filter-5a5288c6b6d33b94)
-
-running 2 tests
-test physical_mask_vip_and_nonpositive_overlap_differ_from_bbox_without_mutation ... ok
-test original_actual_head_chunks_vip_remaining_14_15_16_and_zero_overlap_match ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s

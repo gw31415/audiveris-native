@@ -1,9 +1,0 @@
-{
-  "source_commit": "7784b76cf1d738103b1bbc6f0d7b601381dc2813",
-  "tree": "78cfc90489cfc1a4daa2d366e06f37452369812b",
-  "normal_main_push": true,
-  "ls_remote_main_matches": true,
-  "fetched_main_commit_and_tree_match": true,
-  "worktree_clean": true,
-  "prior_work_ref_preserved": true
-}

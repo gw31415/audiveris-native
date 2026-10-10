@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "eaa420d38e3031ad2df60c7361d49c96381eafe6",
-  "source_tree": "cbc33f15153dbb7eabddec6e0716a45993063363",
-  "all_fresh_restored_sha256_verified": 6556,
-  "source_clean": true,
-  "source": "/workspace/work/stem-parts-cache/sol-stem-parts-prefix-cache-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/stem-parts-cache/sol-stem-parts-prefix-cache-20261004-prepush/source-git"
-}

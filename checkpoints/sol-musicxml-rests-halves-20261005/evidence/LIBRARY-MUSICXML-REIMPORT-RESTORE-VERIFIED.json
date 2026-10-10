@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "reference": "library-file:fde1_bGliZmlsZV9INjI5RXJFYkxnNUFVTlcyVmYzNzBR_FileDrive_860dacf66f308191a98d88753eed9f4d",
-  "retrieved_sha256": "68ea66073d1d5ef29e9db43c84b26e478752535bcb888d8aa0dd191197e7526e",
-  "objects_restored": 5,
-  "source_unchanged": "5790f40073495c9f88e4b6297109328c5eebf321",
-  "reimport8notes_and_reference_render_exact": true,
-  "first_two_bar_not_practical_complete": true
-}

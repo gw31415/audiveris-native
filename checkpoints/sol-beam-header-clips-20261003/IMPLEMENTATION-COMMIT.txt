@@ -1,6 +1,0 @@
-tree 41b2425c877dc9570674436fa03451a25c477486
-parent cdb29dcee8e15ed95cb8c02fe9104ccf440953f3
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791042279 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791042279 +0000
-
-Use original SystemInfo area left bounds for beam header erasure on certified straight clips; verify original rectangles and positive raster mask erasure

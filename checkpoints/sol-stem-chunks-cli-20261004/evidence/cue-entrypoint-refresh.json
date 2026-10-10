@@ -1,6 +1,0 @@
-{
-  "reason": "Added supplied section-to-registered-chunks CLI; default cue path reexecuted with current native binary",
-  "default_cue_report_byte_identical": true,
-  "default_cue_report_sha256": "64969e2f69f266d4a894d51d7c31fd8e8227706f421bfc7521ad59ac212369ce",
-  "previous_entrypoint_source_sha256": "056f96ed8af720d3f6d60ce7b309483906e1b5c38f9296d5da55f21f7116b6de"
-}

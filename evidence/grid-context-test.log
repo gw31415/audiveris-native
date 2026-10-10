@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/Users/ama/Documents/Codex/2026-10-03/task-2/audiveris-native)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.61s
-     Running tests/sig_context.rs (target/debug/deps/sig_context-d3aab4a6131b3c68)
-
-running 2 tests
-test original_jar_controlled_exclusion_cases ... ok
-test unsupported_context_is_rejected_without_partial_writes ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

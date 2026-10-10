@@ -1,4 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.84s
-     Running `/workspace/onboarding/target/debug/audiveris-native heads-catalog-control fixtures/official-head-actual-pages/images/Bravura-cue.png /workspace/work/cue-clef-key/cue.pgm /workspace/work/cue-clef-key/cue-page.json Bravura 51`
-Experimental native page glyphs: 92; full GRID and musical recognition remain incomplete

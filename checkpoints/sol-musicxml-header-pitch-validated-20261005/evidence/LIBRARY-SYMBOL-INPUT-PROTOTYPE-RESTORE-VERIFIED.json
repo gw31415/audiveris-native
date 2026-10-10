@@ -1,8 +1,0 @@
-{
-  "status": "passed",
-  "reference": "library-file:fde1_bGliZmlsZV9ZaFE1VkhIWF9tdTdzVmJSRS1oaG13_FileDrive_860dacf66f308191a98d88753eed9f4d",
-  "retrieved_sha256": "0e4e211d7daee65106f2d7c61db9ddc2551a36bee80f7982f12c7571c46ef178",
-  "all_objects_restored": 25,
-  "all26_glyph_bounds_orientation_runs_recompared": true,
-  "production_integrated": false
-}

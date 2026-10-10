@@ -1,8 +1,0 @@
-{
-  "scope": "Bounded projection, not lossless reproduction of raw frame bodies. Source Chord/Staff/Part/Measure/Slot/member identity and actual Voice object references are asserted during extraction; normalized states retain every actual measure Chord and Voice before/after. Full relation bodies remain in hashed original raw observation; unchanged relation identity/manual/endpoints are asserted by original observer and retained as a test contract.",
-  "raw": "/tmp/real-rest-mixed-starting-original-v3/observed.json",
-  "raw_sha256": "e86d769c7310018bf7bcc79b3dcceb7531e273ba3e0c9eac98d994b00f091d99",
-  "extractor_sha256": "9019880308c41505f44da9d007a35708f3a8a4f622f28b4c778fb46b694d84c3",
-  "fixture_sha256": "bdcc77a285f36badc60f083936a50cea17840811147f6f7dc4d358ed9bcfe4d1",
-  "reproduction_byte_equal": true
-}

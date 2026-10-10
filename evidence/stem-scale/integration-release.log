@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
-    Finished `release` profile [optimized] target(s) in 30.50s
-     Running tests/stem_scale.rs (/workspace/shared/audiveris-cloud-continuation/target/release/deps/stem_scale-b7b6ab0a6f6e4e76)
-
-running 1 test
-test original_stem_scaler_matches_complete_native_pipeline ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.79s
-

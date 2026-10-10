@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.53s
-     Running tests/stem_length_map.rs (/workspace/onboarding/target/debug/deps/stem_length_map-296a877330d0417b)
-
-running 2 tests
-test gap_order_first_stop_null_bounds_and_invalid_inputs ... ok
-test original_612_builders_gap_profile_threshold_empty_sticky_and_fractional_controls ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s

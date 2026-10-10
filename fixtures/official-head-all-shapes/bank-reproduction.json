@@ -1,8 +1,0 @@
-{
-  "status": "passed",
-  "all_three_family_assets_and_manifest_hashes_reproduced": true,
-  "new_shapes": 15,
-  "total_templates": 288,
-  "independent_seed_images_reproduced": 240,
-  "native_outputs_used": false
-}

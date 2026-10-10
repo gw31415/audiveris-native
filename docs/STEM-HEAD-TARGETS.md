@@ -1,9 +1,0 @@
-# Declared neighborhood to head beam target
-
-`stem_head_targets::Catalog` validates complete physical beam/group membership. `lookup` reproduces original directional near-border filtering, stable **far-border** distance sorting, minimum distance until the first admitted group, and first group occurrence order. It preserves the sorted, filtered beam list separately from admitted groups. Duplicate beam IDs retain their occurrences; group IDs are deduplicated.
-
-`select` builds the initial part-bound head lookup line, then selects the first ordered group with any member median intersecting that line. A normal head targets the group's farthest member, even when a different member supplied the crossing; its area extends another beam height beyond the far border. A small head uses the nearest member's near border and leaves targetBeam absent. No crossing returns the initial endpoint. The area line and actual stem target are separate contracts.
-
-Direct comparison:600 Laura first-system corners × actual/reverse/duplicate/empty/small-head =3000 controls, plus1680 directional zero/minimum distance ULP controls. Two separately compiled original5.11 observers agree. Input neighborhoods and complete group/median/border geometry come from original context. This is automatic target selection **within supplied neighborhoods**, not completed image candidate discovery or full-page STEMS. Only zero skew is supported. Invalid catalogs/late candidate IDs refuse without mutation. HEADS/STEMS, page cache/SIG, cleaner/epilog, full24-shape pages, real scans and special staff remain incomplete/unverified.
-
-IDs are caller-scoped beam/group Inter identities, normalized per original system in the fixture; they are not JVM allocation IDs or physical glyph-registry IDs. Retained ungrouped beams are explicitly refused before target computation. Candidate limits are4096 per call and4096 catalog beams/groups; original larger/ungrouped contexts are not certified.
