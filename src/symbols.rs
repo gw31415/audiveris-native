@@ -186,6 +186,13 @@ fn relevant(shape: &str) -> bool {
             | "MARCATO"
             | "MARCATO_BELOW"
             | "STACCATISSIMO_BELOW"
+            | "TR"
+            | "TURN"
+            | "TURN_INVERTED"
+            | "TURN_UP"
+            | "TURN_SLASH"
+            | "MORDENT"
+            | "MORDENT_INVERTED"
     ) || shape.starts_with("FLAG_")
         || shape.starts_with("TIME_")
         || shape == "COMMON_TIME"

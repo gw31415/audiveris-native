@@ -155,7 +155,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器・候補生成は本家と同じ。採用閾値 0.6 と複合記号（fp, mf…）の優先は改良（冬の旅: F1 0.82、本家 0.67） |
 | **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ✅ | ArticulationInter.lookupLink、ChordArticulationRelation、DotFactory（スタッカート） |
 | **装飾・その他記号** | フェルマータ | ✅ | FermataInter.lookupChordLink（冬の旅: F1 0.57、本家 0.56） |
-| | トリル・ターン・モルデント | ⬜ | OrnamentInter |
+| | トリル・ターン・モルデント | ✅ | OrnamentInter.lookupLink、ChordOrnamentRelation（冬の旅: 再現率 0.53／適合率 0.21、本家 0.53／0.12） |
 | | アルペジオ・ブレス・カエスーラ | ⬜ | ArpeggiatoInter, BreathMarkInter, CaesuraInter |
 | | トレモロ | ⬜ | TremoloInter |
 | **ヘアピン** | クレッシェンド／デクレッシェンド | ⬜ | WedgesBuilder |

@@ -51,6 +51,8 @@ pub struct Event {
     pub articulations: Vec<&'static str>,
     /// Fermata type (upright / inverted).
     pub fermata: Option<&'static str>,
+    /// Ornaments (MusicXML element names).
+    pub ornaments: Vec<&'static str>,
     #[serde(skip)]
     heads: Vec<usize>,
     /// Bounds of the chord (heads and stem) or rest.
@@ -570,6 +572,7 @@ fn build_measure(
             beams: Vec::new(),
             articulations: Vec::new(),
             fermata: None,
+            ornaments: Vec::new(),
             bbox: Rect::default(),
             y_mid,
             stem: Some(sti),
@@ -621,6 +624,7 @@ fn build_measure(
             beams: Vec::new(),
             articulations: Vec::new(),
             fermata: None,
+            ornaments: Vec::new(),
             bbox: Rect::default(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
@@ -668,6 +672,7 @@ fn build_measure(
             beams: Vec::new(),
             articulations: Vec::new(),
             fermata: None,
+            ornaments: Vec::new(),
             bbox: Rect::default(),
             y_mid: cy,
             stem: None,
@@ -757,6 +762,7 @@ fn build_measure(
 
     attach_articulations(sheet, part_staves, &syms, &mut events, &aug_dots);
     attach_fermatas(sheet, part_staves, &syms, &mut events);
+    attach_ornaments(sheet, &syms, &mut events);
 
     // Tuplets attached to beam groups.
     for s in syms
@@ -1262,6 +1268,47 @@ fn attach_fermatas(sheet: &Sheet, part_staves: &[usize], syms: &[&crate::symbols
             }
         }
         events[i].fermata = Some(if below { "inverted" } else { "upright" });
+    }
+}
+
+/// Ornaments (Audiveris OrnamentInter.lookupLink): the head chord whose
+/// reference side (top or bottom) is vertically closest to the ornament
+/// center, within 0.75 il horizontally and 3 il vertically.
+fn attach_ornaments(sheet: &Sheet, syms: &[&crate::symbols::Symbol], events: &mut [Event]) {
+    let il = sheet.scale.interline as f64;
+    let (x_max, y_max) = (0.75 * il, 3.0 * il);
+    for s in syms {
+        // MusicXML names per Audiveris MusicXML.java (MORDENT is inverted-mordent).
+        let name = match s.shape {
+            "TR" => "trill-mark",
+            "TURN" => "turn",
+            "TURN_INVERTED" => "inverted-turn",
+            "TURN_UP" => "vertical-turn",
+            "TURN_SLASH" => "turn slash=\"yes\"",
+            "MORDENT" => "inverted-mordent",
+            "MORDENT_INVERTED" => "mordent",
+            _ => continue,
+        };
+        let (px, py) = (s.bounds.cx(), s.bounds.cy());
+        let mut best: Option<(usize, f64)> = None;
+        for (i, e) in events.iter().enumerate() {
+            let b = e.bbox;
+            if !matches!(e.kind, Kind::Chord { .. }) || b.intersects(&s.bounds) {
+                continue;
+            }
+            if b.right() as f64 <= px - x_max || b.x as f64 > px + x_max || b.bottom() as f64 <= py - y_max || b.y as f64 > py + y_max {
+                continue;
+            }
+            let y_ref = if py > b.cy() { b.bottom() as f64 } else { b.y as f64 };
+            let y_gap = (y_ref - py).abs();
+            let g = connection_grade((b.cx() - px).abs(), y_gap, x_max, y_max, 2.0, 1.0);
+            if g >= 0.1 && best.is_none_or(|(_, bg)| y_gap < bg) {
+                best = Some((i, y_gap));
+            }
+        }
+        if let Some((i, _)) = best {
+            events[i].ornaments.push(name);
+        }
     }
 }
 
