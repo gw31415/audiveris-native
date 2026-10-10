@@ -26,8 +26,9 @@ mod curves;
 const USAGE: &str = "\
 Usage: audiveris-native [OPTIONS] IMAGE...
 
-Recognize score page image(s) (PNG, JPEG, TIFF, BMP) and write MusicXML.
-Several images are processed as consecutive pages of one score.
+Recognize score page image(s) (PNG, JPEG, TIFF, BMP) or PDF files and write
+MusicXML. Several images are processed as consecutive pages of one score.
+PDF pages are rasterized at 300 dpi with pdftoppm or Ghostscript.
 
 Options:
   -o, --output FILE   MusicXML output (default: first image with .musicxml extension)
@@ -151,11 +152,49 @@ fn write_debug(
     .map_err(|e| e.to_string())
 }
 
+/// Rasterize a PDF into gray PNG pages at 300 dpi (Audiveris default PDF
+/// resolution), with pdftoppm or else Ghostscript.
+fn pdf_pages(pdf: &Path) -> Result<Vec<PathBuf>, String> {
+    let dir = std::env::temp_dir().join(format!("audiveris-native-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    let prefix = dir.join(pdf.file_stem().and_then(|s| s.to_str()).unwrap_or("page"));
+    let ok = std::process::Command::new("pdftoppm")
+        .args(["-r", "300", "-gray", "-png"])
+        .arg(pdf)
+        .arg(&prefix)
+        .status()
+        .is_ok_and(|s| s.success())
+        || std::process::Command::new("gs")
+            .args(["-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pnggray", "-r300"])
+            .arg(format!("-sOutputFile={}-%04d.png", prefix.display()))
+            .arg(pdf)
+            .status()
+            .is_ok_and(|s| s.success());
+    if !ok {
+        return Err(format!("{}: cannot rasterize PDF (needs pdftoppm or gs)", pdf.display()));
+    }
+    let mut pages: Vec<PathBuf> = std::fs::read_dir(&dir)
+        .map_err(|e| e.to_string())?
+        .filter_map(|e| e.ok().map(|e| e.path()))
+        .filter(|p| p.extension().is_some_and(|x| x == "png"))
+        .collect();
+    pages.sort();
+    Ok(pages)
+}
+
 fn run() -> Result<(), String> {
     let args = parse_args()?;
     let mut book: Option<score::Score> = None;
     let mut state = score::State::default();
+    let mut inputs = Vec::new();
     for input in &args.inputs {
+        if input.extension().is_some_and(|x| x.eq_ignore_ascii_case("pdf")) {
+            inputs.extend(pdf_pages(input)?);
+        } else {
+            inputs.push(input.clone());
+        }
+    }
+    for input in &inputs {
         let sheet = pipeline::process(input, args.verbose)?;
         let page = score::build(&sheet, &mut state);
         if let Some(dir) = &args.debug {
@@ -177,6 +216,8 @@ fn run() -> Result<(), String> {
             }
         }
     }
+    let tmp = std::env::temp_dir().join(format!("audiveris-native-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(tmp);
     let score = book.unwrap();
     let title = args.inputs[0]
         .file_stem()

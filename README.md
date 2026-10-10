@@ -1,6 +1,6 @@
 # audiveris-native
 
-楽譜画像（PNG/JPEG/TIFF/BMP）を認識して MusicXML 4.0 を出力する Rust 製 CLI です。
+楽譜画像（PNG/JPEG/TIFF/BMP、PDF）を認識して MusicXML 4.0 を出力する Rust 製 CLI です。
 [Audiveris](https://github.com/Audiveris/audiveris) 5.11 の認識パイプラインと同じ手順・同じ
 アルゴリズム（同じ定数・テンプレート・分類器）を、必要な部分だけ素直に実装し直しています。
 Java も Audiveris 本体も不要です。
@@ -104,7 +104,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | 機能 | 実装単位 | 状態 | 備考（本家の該当クラス） |
 |---|---|---|---|
 | **画像入力・二値化** | 画像読込（PNG/JPEG/TIFF/BMP、グレー化） | ✅ | ImageLoading |
-| | PDF入力 | ⬜ | Ghostscript 経由 |
+| | PDF入力 | ✅ | 本家と同じく 300dpi でラスタライズ（pdftoppm または Ghostscript） |
 | | 二値化 | ✅ | AdaptiveFilter（37×37、0.7·mean+0.9·std） |
 | **スケール** | 線幅・五線間隔 | ✅ | ScaleBuilder（black / combo ヒストグラム） |
 | | 連桁の太さ | 🔧 | 長い横ランのみの縦ラン分布。本家の black ピーク方式では過小推定する例あり（優位性: 冬の旅で確認） |
