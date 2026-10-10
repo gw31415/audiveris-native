@@ -163,7 +163,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | | 暗黙の3連符 | 🔧 | 小節が溢れる声部で、ちょうど収まる場合のみ（優位性: 冬の旅で確認） |
 | **リズム** | 声部の割当 | 🔧 | 本家 Voices / SlotsRetriever とは別実装。優位性: 音価側の指標で確認 |
 | | タイムスロット | 🔧 | |
-| | 弱起・小節長の検査 | ⬜ | MeasureRhythm, PageRhythm |
+| | 弱起・反復で分割された小節・空の小節 | ✅ | MeasureFixer（ページ先頭の短い小節＝弱起、後方反復をはさむ短い2小節＝分割、段頭の空小節は次と結合）。冬の旅: 7/10（本家 8/10）、誤検出 0 |
 | **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器・候補生成は本家と同じ。採用閾値 0.6 と複合記号（fp, mf…）の優先は改良（冬の旅: F1 0.82、本家 0.67） |
 | **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ✅ | ArticulationInter.lookupLink、ChordArticulationRelation、DotFactory（スタッカート） |
 | **装飾・その他記号** | フェルマータ | ✅ | FermataInter.lookupChordLink（冬の旅: F1 0.57、本家 0.56） |

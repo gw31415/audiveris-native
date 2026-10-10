@@ -37,6 +37,8 @@ def mscx_features(path):
                                  ('tenuto', 'tenuto'), ('marcato', 'marcato')]:
                         if k in sub and not (k == 'staccato' and 'staccatissimo' in sub):
                             c['art:' + v] += 1
+                elif t == 'Measure' and el.get('len') and not parts:
+                    c['implicit'] += 1  # irregular measure (pickup, repeat half)
                 elif t in ('startRepeat', 'endRepeat') and not parts:
                     c['repeat'] += 1  # score-wide: counted on the first part
                 elif t == 'Breath':
@@ -83,6 +85,8 @@ def xml_features(path):
                 for a in el:
                     if a.tag in ART:
                         c['art:' + ART[a.tag]] += 1
+            elif t == 'measure' and el.get('implicit') == 'yes' and not parts:
+                c['implicit'] += 1
             elif t == 'repeat' and not parts:
                 c['repeat'] += 1  # score-wide: counted on the first part
             elif t in ('breath-mark', 'caesura'):

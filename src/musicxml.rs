@@ -72,8 +72,16 @@ pub fn write(score: &Score, title: &str) -> String {
     x.push_str("  </part-list>\n");
     for (i, p) in score.parts.iter().enumerate() {
         let _ = writeln!(x, "  <part id=\"P{}\">", i + 1);
+        // Implicit measures (pickup, second half) are not counted.
+        let mut number = 0;
         for (mi, m) in p.measures.iter().enumerate() {
-            let _ = writeln!(x, "    <measure number=\"{}\">", mi + 1);
+            if m.implicit {
+                let label = if mi == 0 { "0".to_string() } else { format!("{number}X1") };
+                let _ = writeln!(x, "    <measure number=\"{label}\" implicit=\"yes\">");
+            } else {
+                number += 1;
+                let _ = writeln!(x, "    <measure number=\"{number}\">");
+            }
             if m.new_system && mi > 0 {
                 x.push_str("      <print new-system=\"yes\"/>\n");
             }

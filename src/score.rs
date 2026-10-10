@@ -118,6 +118,8 @@ pub struct Measure {
     /// Ending (volta) number starting at the left bar, and (number, with a
     /// right leg) stopping at the right bar.
     pub ending: (Option<u32>, Option<(u32, bool)>),
+    /// Pickup or second half of a measure split by a repeat (not counted).
+    pub implicit: bool,
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -243,6 +245,7 @@ fn filler(m: &Measure) -> Measure {
         right_bar: m.right_bar,
         repeat: (false, false),
         ending: (None, None),
+        implicit: false,
     }
 }
 
@@ -321,6 +324,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     right_bar: sys.boundaries[mi + 1].style,
                     repeat: (false, false),
                     ending: (None, None),
+                    implicit: false,
                 });
             }
         }
@@ -416,6 +420,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     right_bar: sys.boundaries[mi + 1].style,
                     repeat: (false, false),
                     ending: (None, None),
+                    implicit: false,
                 };
                 m.repeat = (repeats[mi].1, repeats[mi + 1].0);
                 m.ending = endings[mi];
@@ -466,7 +471,86 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.clefs = clef_state;
     state.fifths = fifths_state;
     state.time = time_state;
+    fix_measures(&mut parts);
     Score { parts }
+}
+
+/// Measure duration checks of a page (Audiveris MeasureFixer): a short first
+/// measure of the page is a pickup, two short measures around a backward
+/// repeat that make one full measure are halves, and an empty first measure
+/// of a system is merged into the next one.
+fn fix_measures(parts: &mut [Part]) {
+    let n = parts.iter().map(|p| p.measures.len()).min().unwrap_or(0);
+    // Duration missing (negative) or exceeding at the end of the measure,
+    // when all voices agree; None for an empty measure (Some(None) when
+    // voices disagree).
+    let termination = |parts: &[Part], mi: usize| -> Option<Option<Q>> {
+        let mut term: Option<Q> = None;
+        let mut empty = true;
+        for p in parts {
+            let m = &p.measures[mi];
+            if m.attributes.as_ref().is_some_and(|a| a.multiple_rest.is_some()) {
+                return Some(Some(Q::ZERO));
+            }
+            let mut voices: Vec<u32> = m.events.iter().map(|e| e.voice).collect();
+            voices.sort();
+            voices.dedup();
+            for v in voices {
+                empty = false;
+                let end = m.events.iter().filter(|e| e.voice == v).map(|e| e.start + e.duration).max().unwrap();
+                let t = end - m.expected;
+                if term.is_some_and(|x| x != t) {
+                    return Some(None);
+                }
+                term = Some(t);
+            }
+        }
+        (!empty).then_some(term)
+    };
+    let mut mi = 0;
+    let mut prev: Option<Option<Q>> = None;
+    let mut removed = 0;
+    while mi < n - removed {
+        let term = termination(parts, mi);
+        let first_of_system = parts[0].measures[mi].new_system || mi == 0;
+        let next_same_system = mi + 1 < n - removed && !parts[0].measures[mi + 1].new_system;
+        if term.is_none() && first_of_system && next_same_system {
+            // Empty first measure: merge into the next one.
+            for p in parts.iter_mut() {
+                let m = p.measures.remove(mi);
+                let next = &mut p.measures[mi];
+                next.new_system |= m.new_system;
+                next.repeat.0 |= m.repeat.0;
+                next.ending.0 = next.ending.0.or(m.ending.0);
+                if next.attributes.is_none() {
+                    next.attributes = m.attributes;
+                } else if let (Some(a), Some(b)) = (next.attributes.as_mut(), m.attributes) {
+                    a.fifths = a.fifths.or(b.fifths);
+                    a.time = a.time.or(b.time);
+                    if a.clefs.is_empty() {
+                        a.clefs = b.clefs;
+                    }
+                }
+            }
+            removed += 1;
+            continue;
+        }
+        let short = |t: Option<Option<Q>>| t.flatten().is_some_and(|t| t < Q::ZERO);
+        if mi == 0 && short(term) {
+            for p in parts.iter_mut() {
+                p.measures[0].implicit = true;
+            }
+        } else if mi > 0 && short(prev) && short(term) && parts[0].measures[mi - 1].repeat.1 {
+            let (a, b) = (prev.flatten().unwrap(), term.flatten().unwrap());
+            if Q::ZERO - (a + b) == parts[0].measures[mi].expected {
+                for p in parts.iter_mut() {
+                    p.measures[mi].implicit = true;
+                }
+            }
+        }
+        prev = term;
+        mi += 1;
+    }
 }
 
 /// Endings of a system, per measure: (number started at the left bar,
