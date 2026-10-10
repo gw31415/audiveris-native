@@ -96,6 +96,8 @@ pub struct Attributes {
     pub time: Option<TimeSig>,
     /// (staff number, clef)
     pub clefs: Vec<(u32, ClefKind)>,
+    /// Measure count of a multiple rest starting here.
+    pub multiple_rest: Option<u32>,
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -311,6 +313,10 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             }
         }
         let sys_fifths = fifths_state;
+        // Multiple rests decided for the whole system (all parts expand alike).
+        let multi: Vec<Option<u32>> = (0..sys.boundaries.len().saturating_sub(1))
+            .map(|mi| multiple_rest(sheet, &sys.staves, sys.boundaries[mi].x1 as f64, sys.boundaries[mi + 1].x0 as f64))
+            .collect();
         for (spi, part_staves) in sys.parts.iter().enumerate() {
             let Some(pi) = map[spi] else { continue };
             let part = &mut parts[pi];
@@ -340,6 +346,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     fifths: None,
                     time: None,
                     clefs: Vec::new(),
+                    multiple_rest: None,
                 };
                 if mi == 0 {
                     if part_fifths != Some(fifths) {
@@ -406,10 +413,30 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                 for (n, _, c) in &m.clef_changes {
                     clefs_now.insert(*n, *c);
                 }
-                if attrs.fifths.is_some() || attrs.time.is_some() || !attrs.clefs.is_empty() {
+                if let Some(n) = multi[mi] {
+                    m.events.clear();
+                    m.directions.clear();
+                    attrs.multiple_rest = Some(n);
+                }
+                if attrs.fifths.is_some() || attrs.time.is_some() || !attrs.clefs.is_empty() || attrs.multiple_rest.is_some() {
                     m.attributes = Some(attrs);
                 }
+                let extra = multi[mi].map_or(0, |n| n - 1);
+                let mut fill = filler(&m);
+                fill.new_system = false;
+                fill.right_bar = crate::grid::BarStyle::Regular;
+                let last_bar = m.right_bar;
+                if extra > 0 {
+                    m.right_bar = crate::grid::BarStyle::Regular;
+                }
                 part.measures.push(m);
+                for k in 0..extra {
+                    let mut f = filler(&fill);
+                    if k + 1 == extra {
+                        f.right_bar = last_bar;
+                    }
+                    part.measures.push(f);
+                }
             }
             fifths_state = part_fifths;
             for (n, c) in clefs_now {
@@ -423,11 +450,55 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     Score { parts }
 }
 
+/// Multiple rest (Audiveris MultipleRestsBuilder): a beam-like bar of at
+/// least 4 il stuck on the staff middle line (pitch within 0.2), with
+/// vertical serifs at both ends; the measure count is the number above.
+fn multiple_rest(sheet: &Sheet, staves: &[usize], x0: f64, x1: f64) -> Option<u32> {
+    let il = sheet.scale.interline as f64;
+    for &si in staves {
+        let st = &sheet.staves[si];
+        for b in &sheet.beams {
+            if b.x0 < x0 || b.x1 > x1 || b.x1 - b.x0 < 4.0 * il {
+                continue;
+            }
+            if [b.x0, b.x1].iter().any(|&x| st.pitch_of(b.y_at(x), x).abs() > 0.2) {
+                continue;
+            }
+            let mid = b.y_at((b.x0 + b.x1) / 2.0);
+            let serif = |x: f64| {
+                (x as i32 - 2..=x as i32 + 2).any(|cx| {
+                    let (a, e) = sheet.binary.vrun_at(cx, mid as i32);
+                    (a as f64) <= mid - 0.75 * il && (e as f64) >= mid + 0.75 * il
+                })
+            };
+            if !serif(b.x0) || !serif(b.x1) {
+                continue;
+            }
+            let mut digits: Vec<(f64, u32)> = sheet
+                .symbols
+                .iter()
+                .filter(|s| s.staff == si && s.bounds.cx() >= b.x0 && s.bounds.cx() <= b.x1 && s.bounds.cy() < st.top(s.bounds.cx()))
+                .filter_map(|s| digit_of(s.shape).map(|d| (s.bounds.x as f64, d)))
+                .collect();
+            digits.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
+            let n = digits.iter().fold(0u32, |n, d| n * 10 + d.1);
+            if n >= 2 {
+                return Some(n);
+            }
+        }
+    }
+    None
+}
+
 fn measure_time_change(sheet: &Sheet, part_staves: &[usize], x0: f64, x1: f64) -> Option<TimeSig> {
     let syms: Vec<_> = sheet
         .symbols
         .iter()
         .filter(|s| part_staves.contains(&s.staff) && s.bounds.cx() > x0 && s.bounds.cx() < x1)
+        .filter(|s| {
+            let st = &sheet.staves[s.staff];
+            s.bounds.cy() > st.top(s.bounds.cx()) && s.bounds.cy() < st.bottom(s.bounds.cx())
+        })
         .collect();
     for s in &syms {
         if let Some(t) = time_of(s.shape) {

@@ -141,6 +141,9 @@ fn write_attributes(x: &mut String, m: &Measure, first: bool, div: i64, staves: 
     for (n, c) in &a.clefs {
         write_clef(x, *n, *c, staves, "        ");
     }
+    if let Some(n) = a.multiple_rest {
+        let _ = writeln!(x, "        <measure-style><multiple-rest>{n}</multiple-rest></measure-style>");
+    }
     x.push_str("      </attributes>\n");
 }
 

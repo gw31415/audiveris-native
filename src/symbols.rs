@@ -370,8 +370,11 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             // Time signatures and clefs lie within the staff height.
             let st = &staves[si];
             let inside = bounds.cy() > st.top(bounds.cx()) && bounds.cy() < st.bottom(bounds.cx());
+            // (Single digits may also be numbers above the staff: multiple rests.)
+            let digit_above = crate::header::digit_of(shape).is_some() && bounds.cy() < st.top(bounds.cx());
             if (shape.starts_with("TIME_") || shape.ends_with("_TIME") || shape.contains("CLEF"))
                 && !inside
+                && !digit_above
             {
                 continue;
             }

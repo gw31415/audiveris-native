@@ -136,7 +136,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | **休符** | 休符の分類 | ✅ | 分類器 |
 | | 全休符・2分休符の判別 | ✅ | 線からぶら下がる／線に乗る位置 |
 | | 全小節休符 | ✅ | 小節中に単独の全休符 |
-| | 複数小節休符 | ⬜ | MultipleRestInter |
+| | 複数小節休符 | ✅ | MultipleRestsBuilder（中央線上の 4 間以上の太線・両端のセリフ・上の数字）。冬の旅には無く合成画像で確認 |
 | **付点** | 付点の認識と音符への割当 | 🔧 | 本家 DotFactory / AugmentationDotInter |
 | | 和音の付点の一貫性 | 🔧 | 本家は各音の付点数の平均を丸める（countDots） |
 | **記号の候補生成** | 部品グラフ（0.8間隔）と連結部分集合（最大7部品）の評価 | ✅ | Glyphs.buildLinks、GlyphCluster.decompose |
