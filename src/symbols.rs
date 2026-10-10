@@ -252,9 +252,27 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
     };
     comps.retain(|c| staff_of(&c.bounds).is_some() && c.bounds.w <= 6 * il && c.bounds.h <= 8 * il);
     comps.sort_by_key(|c| c.bounds.x);
-    // Candidate groups: single glyphs and pairs/triples of close glyphs.
-    let gap = (0.5 * il as f64) as i32;
-    let near = |a: &Rect, b: &Rect| a.grow(gap, gap).intersects(b);
+    // Glyph graph (Audiveris Glyphs.buildLinks): parts are linked when the
+    // distance between their nearest pixels is at most maxGap = 0.8 interline.
+    let max_gap = 0.8 * il as f64;
+    let gi = max_gap.ceil() as i32;
+    let n = comps.len();
+    let mut adj: Vec<Vec<usize>> = vec![Vec::new(); n];
+    for a in 0..n {
+        let fat = comps[a].bounds.grow(gi, gi);
+        for b in a + 1..n {
+            if comps[b].bounds.x > fat.right() {
+                break;
+            }
+            if !fat.intersects(&comps[b].bounds) {
+                continue;
+            }
+            if pixel_distance(&comps[a], &comps[b], max_gap) <= max_gap {
+                adj[a].push(b);
+                adj[b].push(a);
+            }
+        }
+    }
     type Cand = (Vec<usize>, &'static str, f64, Rect, (f64, f64));
     let mut cands: Vec<Cand> = Vec::new();
     let eval = |idx: Vec<usize>, comps: &[Component], cands: &mut Vec<Cand>| {
@@ -264,9 +282,6 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             return;
         }
         let ev = classify(&g, il);
-        if std::env::var("OMR_SYM").is_ok() {
-            eprintln!("glyph {:?} -> {:?}", g.bounds, &ev[..2.min(ev.len())]);
-        }
         if let Some(&(s, gr)) = ev.first()
             && relevant(s)
             && gr >= min_grade(s)
@@ -280,35 +295,55 @@ pub fn recognize(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Symb
             cands.push((idx, s, gr, g.bounds, c));
         }
     };
-    for i in 0..comps.len() {
-        eval(vec![i], &comps, &mut cands);
-        for j in i + 1..comps.len() {
-            if comps[j].bounds.x > comps[i].bounds.right() + gap {
-                break;
+    // Clusters (connected sets), at most 7 parts (the heaviest), and all
+    // their connected subsets (Audiveris GlyphCluster.decompose).
+    let mut seen = vec![false; n];
+    for start in 0..n {
+        if seen[start] {
+            continue;
+        }
+        let mut set = vec![start];
+        seen[start] = true;
+        let mut k = 0;
+        while k < set.len() {
+            for &b in &adj[set[k]] {
+                if !seen[b] {
+                    seen[b] = true;
+                    set.push(b);
+                }
             }
-            if near(&comps[i].bounds, &comps[j].bounds) {
-                eval(vec![i, j], &comps, &mut cands);
-                for k in j + 1..comps.len() {
-                    if comps[k].bounds.x
-                        > comps[j].bounds.right().max(comps[i].bounds.right()) + gap
-                    {
-                        break;
-                    }
-                    if near(&comps[i].bounds, &comps[k].bounds)
-                        || near(&comps[j].bounds, &comps[k].bounds)
-                    {
-                        eval(vec![i, j, k], &comps, &mut cands);
+            k += 1;
+        }
+        if set.len() > 7 {
+            set.sort_by_key(|&i| std::cmp::Reverse(comps[i].weight()));
+            set.truncate(7);
+        }
+        let m = set.len();
+        for mask in 1u32..(1 << m) {
+            let members: Vec<usize> = (0..m).filter(|&b| mask & (1 << b) != 0).map(|b| set[b]).collect();
+            // Connected subset only.
+            let mut reach = vec![members[0]];
+            let mut q = 0;
+            while q < reach.len() {
+                for &b in &adj[reach[q]] {
+                    if members.contains(&b) && !reach.contains(&b) {
+                        reach.push(b);
                     }
                 }
+                q += 1;
+            }
+            if reach.len() == members.len() {
+                eval(members, &comps, &mut cands);
             }
         }
     }
-    // Prefer larger groups at equal quality, then grade.
-    cands.sort_by(|a, b| {
-        (b.2 + 0.05 * b.0.len() as f64)
-            .partial_cmp(&(a.2 + 0.05 * a.0.len() as f64))
-            .unwrap()
-    });
+    // Prefer larger groups at equal quality, then grade; a compound dynamics
+    // (fp, mf, sfz...) wins over its separate letters.
+    let key = |c: &Cand| {
+        let per_part = if c.1.starts_with("DYNAMICS_") { 0.25 } else { 0.05 };
+        c.2 + per_part * c.0.len() as f64
+    };
+    cands.sort_by(|a, b| key(b).partial_cmp(&key(a)).unwrap());
     let mut used = vec![false; comps.len()];
     let mut out = Vec::new();
     for (idx, shape, grade, bounds, centroid) in cands {
@@ -394,4 +429,30 @@ pub fn stem_flags(residual: &Bitmap, stem: &Stem, scale: &Scale) -> u32 {
                 .unwrap_or(0)
         })
         .unwrap_or(0)
+}
+
+/// Euclidean distance between the nearest pixels of two glyphs (stops early
+/// once below `limit`).
+fn pixel_distance(a: &Component, b: &Component, limit: f64) -> f64 {
+    let mut best = f64::MAX;
+    let lim2 = limit * limit;
+    let bb = b.bounds;
+    for &(x, y) in &a.pixels {
+        // Skip pixels too far from b's box.
+        let dx = if x < bb.x { bb.x - x } else if x >= bb.right() { x - bb.right() + 1 } else { 0 };
+        let dy = if y < bb.y { bb.y - y } else if y >= bb.bottom() { y - bb.bottom() + 1 } else { 0 };
+        if ((dx * dx + dy * dy) as f64) > lim2.min(best) {
+            continue;
+        }
+        for &(u, v) in &b.pixels {
+            let d = ((x - u) * (x - u) + (y - v) * (y - v)) as f64;
+            if d < best {
+                best = d;
+            }
+        }
+        if best <= 1.0 {
+            break;
+        }
+    }
+    best.sqrt()
 }

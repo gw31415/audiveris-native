@@ -139,6 +139,8 @@ tools/evaluate.sh                                           # samples/ の正解
 | | 複数小節休符 | ⬜ | MultipleRestInter |
 | **付点** | 付点の認識と音符への割当 | 🔧 | 本家 DotFactory / AugmentationDotInter |
 | | 和音の付点の一貫性 | 🔧 | 本家は各音の付点数の平均を丸める（countDots） |
+| **記号の候補生成** | 部品グラフ（0.8間隔）と連結部分集合（最大7部品）の評価 | ✅ | Glyphs.buildLinks、GlyphCluster.decompose |
+| | 候補の採否 | 🔧 | 本家は SIG の文脈グレードで解決。本実装は形状検査＋グレード順の貪欲選択 |
 | **臨時記号** | 分類 | ✅ | 分類器 |
 | | 音高位置（♭の補正） | ✅ | AlterInter.computePitch |
 | | 符頭への割当 | 🔧 | 本家 AlterHeadRelation |
@@ -150,7 +152,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | **リズム** | 声部の割当 | 🔧 | 本家 Voices / SlotsRetriever。優位性未検証 |
 | | タイムスロット | 🔧 | |
 | | 弱起・小節長の検査 | ⬜ | MeasureRhythm, PageRhythm |
-| **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器は本家と同じ。音符への割当は最も近い音符 |
+| **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器・候補生成は本家と同じ。採用閾値 0.6 と複合記号（fp, mf…）の優先は改良（冬の旅: F1 0.82、本家 0.67） |
 | **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ✅ | ArticulationInter.lookupLink、ChordArticulationRelation、DotFactory（スタッカート） |
 | **装飾・その他記号** | フェルマータ | ⬜ | FermataInter |
 | | トリル・ターン・モルデント | ⬜ | OrnamentInter |
