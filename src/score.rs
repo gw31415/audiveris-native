@@ -1053,7 +1053,14 @@ fn build_measure(
             let clef = clef_at(ev.staff, head_x, clefs);
             let idx = clef.middle_line() - head_pitch;
             let step = idx.rem_euclid(7) as usize;
-            let octave = idx.div_euclid(7);
+            // Octave shift lines (8va above: sounding higher).
+            let shift: i32 = sheet
+                .octave_shifts
+                .iter()
+                .filter(|o| o.staff == head_staff && head_x >= o.x0 && head_x <= o.x1)
+                .map(|o| (o.size as i32 - 1) / 7 * if o.above { 1 } else { -1 })
+                .sum();
+            let octave = idx.div_euclid(7) + shift;
             // Explicit accidental just left of the head.
             let acc = accidentals
                 .iter()
@@ -1170,6 +1177,51 @@ fn build_measure(
                 .map_or(Q::ZERO, |e| e.start)
         };
         m.directions.push(Direction { staff: n, start, kind: kind.into() });
+    }
+    // Pedal marks (Audiveris PedalInter): the chord above overlapping the
+    // sign (for a release, the box extends to the measure start).
+    // Improvement: only below the last staff of a multi-staff part, since
+    // without OCR, lyrics and words are often read as pedal marks.
+    for s in syms.iter().filter(|s| s.shape == "PEDAL_MARK" || s.shape == "PEDAL_UP_MARK") {
+        let (Some(&last), true) = (part_staves.last(), part_staves.len() > 1) else { continue };
+        let st = &sheet.staves[last];
+        if s.staff != last || s.bounds.cy() <= st.bottom(s.bounds.cx()) {
+            continue;
+        }
+        let n = part_staves.len() as u32;
+        let up = s.shape == "PEDAL_UP_MARK";
+        let lo = if up { x_lo } else { s.bounds.x as f64 };
+        let above = events
+            .iter()
+            .filter(|e| e.staff == n && matches!(e.kind, Kind::Chord { .. }))
+            .filter(|e| e.bbox.right() as f64 > lo && (e.bbox.x as f64) < s.bounds.right() as f64)
+            .max_by(|a, b| a.x.partial_cmp(&b.x).unwrap());
+        if let Some(e) = above {
+            let t = if up { "stop" } else { "start" };
+            m.directions.push(Direction { staff: n, start: e.start, kind: format!("<pedal type=\"{t}\" line=\"no\"/>") });
+        }
+    }
+    // Octave shifts: start at the first chord under the line, stop at the last.
+    for o in sheet.octave_shifts.iter().filter(|o| part_staves.contains(&o.staff)) {
+        let n = staff_no(o.staff).unwrap();
+        let under: Vec<&Event> = events
+            .iter()
+            .filter(|e| e.staff == n && matches!(e.kind, Kind::Chord { .. }) && e.x >= o.x0 && e.x <= o.x1)
+            .collect();
+        let (Some(first), Some(last)) = (
+            under.iter().min_by(|a, b| a.x.partial_cmp(&b.x).unwrap()),
+            under.iter().max_by(|a, b| a.x.partial_cmp(&b.x).unwrap()),
+        ) else {
+            continue;
+        };
+        let size = o.size;
+        if in_measure(o.x0) {
+            let t = if o.above { "down" } else { "up" };
+            m.directions.push(Direction { staff: n, start: first.start, kind: format!("<octave-shift type=\"{t}\" size=\"{size}\"/>") });
+        }
+        if in_measure(o.x1) {
+            m.directions.push(Direction { staff: n, start: last.start, kind: format!("<octave-shift type=\"stop\" size=\"{size}\"/>") });
+        }
     }
     // Hairpins: start at the left end, stop at the right end (Audiveris WedgeInter).
     for w in sheet.wedges.iter().filter(|w| part_staves.contains(&w.staff)) {

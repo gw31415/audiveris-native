@@ -31,6 +31,7 @@ pub struct Sheet {
     pub symbols: Vec<Symbol>,
     pub wedges: Vec<crate::curves::Wedge>,
     pub endings: Vec<crate::curves::Ending>,
+    pub octave_shifts: Vec<crate::curves::OctaveShift>,
     /// Key signature changes: (staff, barline right abscissa, fifths).
     pub key_changes: Vec<(usize, i32, i32)>,
 }
@@ -157,7 +158,12 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
     let (wedges, endings) = crate::curves::build(&residual, &bin, &staves, &systems, &scale);
-    log(verbose, &t, format!("CURVES {} wedges, {} endings", wedges.len(), endings.len()));
+    let octave_shifts = crate::curves::octave_shifts(&residual, &symbols, &staves, &scale);
+    log(
+        verbose,
+        &t,
+        format!("CURVES {} wedges, {} endings, {} octave shifts", wedges.len(), endings.len(), octave_shifts.len()),
+    );
     Ok(Sheet {
         binary: bin,
         residual,
@@ -173,6 +179,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         symbols,
         wedges,
         endings,
+        octave_shifts,
         key_changes,
     })
 }

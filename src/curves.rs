@@ -289,3 +289,60 @@ fn endings(segs: &[Segment], binary: &Bitmap, staves: &[Staff], systems: &[Syste
     out.sort_by(|a, b| (a.staff, a.x0 as i64).cmp(&(b.staff, b.x0 as i64)));
     out
 }
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct OctaveShift {
+    pub staff: usize,
+    pub x0: f64,
+    pub x1: f64,
+    /// 8, 15 or 22.
+    pub size: u32,
+    /// Sign above the staff (notes sound higher).
+    pub above: bool,
+}
+
+/// Octave shifts (Audiveris OctaveShiftInter): the 8va / 15ma / 22ma sign
+/// outside the staff height, linked to the chords of its staff under its
+/// line. Improvement: the dashed line is followed in the residual image to
+/// find the end, and is required (Audiveris assumes a default length and has
+/// OCR to discard text digits).
+pub fn octave_shifts(residual: &Bitmap, symbols: &[crate::symbols::Symbol], staves: &[Staff], scale: &Scale) -> Vec<OctaveShift> {
+    let il = scale.interline as f64;
+    let mut out = Vec::new();
+    for s in symbols {
+        let size = match s.shape {
+            "OTTAVA" => 8,
+            "QUINDICESIMA" => 15,
+            "VENTIDUESIMA" => 22,
+            _ => continue,
+        };
+        let st = &staves[s.staff];
+        let (cx, cy) = (s.bounds.cx(), s.bounds.cy());
+        let above = cy < st.top(cx);
+        if !above && cy <= st.bottom(cx) {
+            continue;
+        }
+        // Dashes: thin short horizontal glyphs in a band at the sign's height.
+        let band = Rect::new(s.bounds.right(), s.bounds.y, (40.0 * il) as i32, s.bounds.h);
+        let mut dashes: Vec<Rect> = components(residual, Some(band))
+            .into_iter()
+            .map(|c| c.bounds)
+            .filter(|b| b.h as f64 <= 0.3 * il && b.w as f64 <= 1.5 * il && b.w >= b.h)
+            .collect();
+        dashes.sort_by_key(|b| b.x);
+        let mut end = s.bounds.right() as f64;
+        let mut count = 0;
+        for d in dashes {
+            if d.x as f64 - end > 1.5 * il {
+                break;
+            }
+            end = d.right() as f64;
+            count += 1;
+        }
+        if count < 2 {
+            continue;
+        }
+        out.push(OctaveShift { staff: s.staff, x0: s.bounds.x as f64, x1: end, size, above });
+    }
+    out
+}

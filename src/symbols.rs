@@ -203,6 +203,11 @@ fn relevant(shape: &str) -> bool {
             | "CODA"
             | "DAL_SEGNO"
             | "DA_CAPO"
+            | "OTTAVA"
+            | "QUINDICESIMA"
+            | "VENTIDUESIMA"
+            | "PEDAL_MARK"
+            | "PEDAL_UP_MARK"
     ) || shape.starts_with("FLAG_")
         || shape.starts_with("TIME_")
         || shape == "COMMON_TIME"
