@@ -156,8 +156,10 @@ pub fn process(path: &Path, verbose: bool, languages: &str) -> Result<Sheet, Str
     let residual = symbols::residual(
         &nostaff, &heads, &catalog, &stems, &beams, &ledgers, &systems, &staves, &items, &scale,
     );
+    let words = crate::text::ocr(&residual, languages);
+    log(verbose, &t, format!("TEXTS {} words", words.len()));
     let mut symbols = symbols::recognize(&residual, &staves, &scale);
-    let (slurs, slur_mask) = crate::curves::slurs(&residual, &heads, &stems, &staves, &symbols, &scale);
+    let (slurs, slur_mask) = crate::curves::slurs(&residual, &heads, &stems, &grace_heads, &staves, &symbols, &words, &scale);
     // Dots and rest bars read from pieces of a slur or tie belong to it.
     symbols.retain(|y| {
         if y.shape != "DOT_set" && y.shape != "HW_REST_set" {
@@ -176,8 +178,7 @@ pub fn process(path: &Path, verbose: bool, languages: &str) -> Result<Sheet, Str
         (on as f64) < 0.7 * all.max(1) as f64
     });
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
-    let words = crate::text::ocr(&residual, languages);
-    log(verbose, &t, format!("TEXTS {} words", words.len()));
+
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
     let (wedges, endings) = crate::curves::build(&residual, &bin, &staves, &systems, &scale);
     let octave_shifts = crate::curves::octave_shifts(&residual, &symbols, &staves, &scale);

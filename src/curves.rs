@@ -419,8 +419,10 @@ pub fn slurs(
     residual: &Bitmap,
     heads: &[crate::heads::Head],
     stems: &[crate::stems::Stem],
+    graces: &[crate::heads::GraceHead],
     staves: &[Staff],
     symbols: &[crate::symbols::Symbol],
+    words: &[crate::text::Word],
     scale: &Scale,
 ) -> (Vec<Slur>, Bitmap) {
     let il = scale.interline as f64;
@@ -437,12 +439,55 @@ pub fn slurs(
         .collect();
     let stemmed: Vec<usize> = stems.iter().flat_map(|st| st.heads.iter().copied()).collect();
     notes.extend((0..heads.len()).filter(|h| !stemmed.contains(h)).map(|h| heads[h].bounds));
-    let near = |end: (f64, f64), left: bool, above: bool| -> Option<usize> {
+    // Grace notes (small heads with a stem, or whole grace glyphs).
+    notes.extend(graces.iter().map(|g| g.head.bounds));
+    notes.extend(symbols.iter().filter(|s| s.shape.starts_with("GRACE_NOTE")).map(|s| s.bounds));
+    // Closest note (box) in the lookup area of an end; `depth` on the
+    // concave side, `skip` a note to ignore.
+    let near_in = |end: (f64, f64), left: bool, above: bool, depth: f64, skip: Option<usize>| -> Option<usize> {
         let (x0, x1) = if left { (end.0 - 2.0 * il, end.0 + 0.5 * il) } else { (end.0 - 0.5 * il, end.0 + 2.0 * il) };
-        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 2.5 * il) } else { (end.1 - 2.5 * il, end.1 + 0.5 * il) };
-        notes.iter().position(|b| {
-            (b.right() as f64) >= x0 && (b.x as f64) <= x1 && (b.bottom() as f64) >= y0 && (b.y as f64) <= y1
-        })
+        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + depth * il) } else { (end.1 - depth * il, end.1 + 0.5 * il) };
+        let dist = |b: &Rect| {
+            let dx = (b.x as f64 - end.0).max(end.0 - b.right() as f64).max(0.0);
+            let dy = (b.y as f64 - end.1).max(end.1 - b.bottom() as f64).max(0.0);
+            dx.hypot(dy)
+        };
+        (0..notes.len())
+            .filter(|&i| Some(i) != skip)
+            .filter(|&i| {
+                let b = &notes[i];
+                (b.right() as f64) >= x0 && (b.x as f64) <= x1 && (b.bottom() as f64) >= y0 && (b.y as f64) <= y1
+            })
+            .min_by(|&a, &b| dist(&notes[a]).partial_cmp(&dist(&notes[b])).unwrap())
+    };
+    // Both ends on the same note lying between them: the slur passes over or
+    // under it; look further for the real end notes (improvement).
+    let depth0 = 2.5;
+    let ends = |s: &Slur| -> (Option<usize>, Option<usize>) {
+        let (l, r) = (near_in(s.left, true, s.above, depth0, None), near_in(s.right, false, s.above, depth0, None));
+        match (l, r) {
+            (Some(a), Some(b)) if a == b && {
+                let cx = notes[a].cx();
+                cx > s.left.0 + 0.5 * il && cx < s.right.0 - 0.5 * il
+            } => (near_in(s.left, true, s.above, 4.0, Some(a)), near_in(s.right, false, s.above, 4.0, Some(a))),
+            (l, r) => {
+                // An end with no note in its area: a note right above (below)
+                // it, further away (improvement).
+                let far = |end: (f64, f64)| -> Option<usize> {
+                    if s.right.0 - s.left.0 < 1.5 * il {
+                        return None;
+                    }
+                    (0..notes.len())
+                        .filter(|&i| {
+                            let b = &notes[i];
+                            (b.cx() - end.0).abs() <= il
+                                && if s.above { b.y as f64 >= end.1 - 0.5 * il && (b.y as f64) <= end.1 + 6.0 * il } else { b.bottom() as f64 <= end.1 + 0.5 * il && (b.bottom() as f64) >= end.1 - 6.0 * il }
+                        })
+                        .min_by(|&a, &b| (notes[a].cy() - end.1).abs().partial_cmp(&(notes[b].cy() - end.1).abs()).unwrap())
+                };
+                (l.or_else(|| far(s.left)), r.or_else(|| far(s.right)))
+            }
+        }
     };
     let staff_end = |p: (f64, f64), left: bool| {
         staves.iter().any(|st| {
@@ -458,17 +503,30 @@ pub fn slurs(
     let max_thick = il.max(3.0) as i32;
     let mut mask = Bitmap::new(residual.width, residual.height);
     let mut out = Vec::new();
+    let (mut kept, mut left_only, mut right_only) = (Vec::new(), Vec::new(), Vec::new());
     // An end touching a stem is a flag, not a slur.
     let on_stem = |p: (f64, f64)| {
         stems.iter().any(|st| {
             (p.0 - st.x as f64).abs() <= 2.0 && p.1 >= st.top as f64 && p.1 <= st.bottom as f64
         })
     };
+    // Texts are read before curves (Audiveris TEXTS precede CURVES): a curve
+    // inside a word is part of a letter.
+    let in_word = |b: &Rect| {
+        words.iter().any(|w| {
+            w.conf >= 80.0
+                && w.text.chars().filter(|c| c.is_alphabetic()).count() as f64 >= 2.0
+                && w.bounds.intersection(b).is_some_and(|i| i.area() * 2 >= b.area())
+        })
+    };
     for s in slur_candidates(residual, symbols, scale) {
+        if in_word(&s.bounds) {
+            continue;
+        }
         if on_stem(s.left) || on_stem(s.right) {
             continue;
         }
-        let (l, r) = (near(s.left, true, s.above), near(s.right, false, s.above));
+        let (l, r) = ends(&s);
         let keep = match (l, r) {
             (Some(a), Some(b)) => a != b,
             (Some(_), None) => staff_end(s.right, false),
@@ -476,8 +534,47 @@ pub fn slurs(
             _ => false,
         };
         if !keep {
+            match (l, r) {
+                (Some(_), None) => left_only.push(s),
+                (None, Some(_)) => right_only.push(s),
+                _ => {}
+            }
             continue;
         }
+        kept.push(s);
+    }
+    // A slur cut in two (by a barline, a stem...) leaves a piece linked only
+    // on its left and a piece linked only on its right: join them when their
+    // inner ends meet and they bend the same way.
+    left_only.sort_by(|a, b| a.right.0.partial_cmp(&b.right.0).unwrap());
+    let mut used = vec![false; right_only.len()];
+    for lp in left_only {
+        let best = (0..right_only.len())
+            .filter(|&j| !used[j] && right_only[j].above == lp.above)
+            .filter(|&j| {
+                let (a, b) = (lp.right, right_only[j].left);
+                b.0 - a.0 >= -1.0 && b.0 - a.0 <= 3.0 * il && (b.1 - a.1).abs() <= il
+            })
+            .min_by(|&a, &b| {
+                let d = |j: usize| (right_only[j].left.0 - lp.right.0).hypot(right_only[j].left.1 - lp.right.1);
+                d(a).partial_cmp(&d(b)).unwrap()
+            });
+        if let Some(j) = best {
+            used[j] = true;
+            let rp = &right_only[j];
+            let mut pts = lp.pts.clone();
+            pts.extend(&rp.pts);
+            kept.push(Slur {
+                left: lp.left,
+                right: rp.right,
+                above: lp.above,
+                grade: lp.grade.min(rp.grade),
+                bounds: lp.bounds.union(&rp.bounds),
+                pts,
+            });
+        }
+    }
+    for s in kept {
         for &(x, y) in &s.pts {
             let (a, b) = residual.vrun_at(x as i32, y.round() as i32);
             if b - a < max_thick {
@@ -618,7 +715,7 @@ fn slur_candidates(residual: &Bitmap, symbols: &[crate::symbols::Symbol], scale:
 fn grade_slur(pts: &[(f64, f64)], il: f64) -> Option<Slur> {
     let (cx, cy, _r, _) = fit_circle(pts)?;
     let dist = side_distance(pts, il)?;
-    let max_dist = 0.1 * il;
+    let max_dist = 0.15 * il;
     if dist > max_dist {
         return None;
     }

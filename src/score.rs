@@ -101,6 +101,10 @@ pub struct Grace {
     /// (staff, pitch position, abscissa) of each head.
     #[serde(skip)]
     heads: Vec<(usize, i32, f64)>,
+    #[serde(skip)]
+    bounds: Rect,
+    /// Slurs: (number, start?).
+    pub slurs: Vec<(u32, bool)>,
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -558,34 +562,46 @@ fn page_header(sheet: &Sheet) -> (Option<String>, Option<String>, Option<String>
 fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
     let il = sheet.scale.interline as f64;
     // (part, measure, event) of every chord, with its sheet staff.
+    // Grace chords are targets too (index of the grace in the event).
     let mut chords: Vec<(usize, usize, usize, usize)> = Vec::new();
+    let mut grace_of: Vec<Option<usize>> = Vec::new();
     for (pi, p) in parts.iter().enumerate() {
         for (mi, m) in p.measures.iter().enumerate() {
             for (ei, e) in m.events.iter().enumerate() {
                 if matches!(e.kind, Kind::Chord { .. }) && !e.heads.is_empty() {
                     chords.push((pi, mi, ei, sheet.heads[e.heads[0]].staff));
+                    grace_of.push(None);
+                    for gi in 0..e.graces.len() {
+                        chords.push((pi, mi, ei, e.graces[gi].heads[0].0));
+                        grace_of.push(Some(gi));
+                    }
                 }
             }
         }
     }
     let ev = |parts: &[Part], c: (usize, usize, usize, usize)| -> Event { parts[c.0].measures[c.1].events[c.2].clone() };
     // Head (chord index, note index) closest to an end, inside its area.
-    let lookup = |parts: &[Part], end: (f64, f64), left: bool, above: bool| -> Option<(usize, usize, f64)> {
+    let lookup = |parts: &[Part], end: (f64, f64), left: bool, above: bool, depth: f64, skip: Option<usize>| -> Option<(usize, usize, f64)> {
         let (x0, x1) = if left { (end.0 - 2.0 * il, end.0 + 0.5 * il) } else { (end.0 - 0.5 * il, end.0 + 2.0 * il) };
-        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 2.5 * il) } else { (end.1 - 2.5 * il, end.1 + 0.5 * il) };
+        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + depth * il) } else { (end.1 - depth * il, end.1 + 0.5 * il) };
         // Chords (heads and stem) intersecting the area; the closest one, and
         // its head closest to the end.
         let mut best: Option<(usize, usize, f64)> = None;
         for (ci, &c) in chords.iter().enumerate() {
+            if Some(ci) == skip {
+                continue;
+            }
             let e = &parts[c.0].measures[c.1].events[c.2];
-            let b = e.bbox;
+            let b = grace_of[ci].map_or(e.bbox, |g| e.graces[g].bounds);
             if (b.right() as f64) < x0 || (b.x as f64) > x1 || (b.bottom() as f64) < y0 || (b.y as f64) > y1 {
                 continue;
             }
             let dx = (b.x as f64 - end.0).max(end.0 - b.right() as f64).max(0.0);
             let dy = (b.y as f64 - end.1).max(end.1 - b.bottom() as f64).max(0.0);
             let d = dx.hypot(dy);
-            if best.is_none_or(|(_, _, bd)| d < bd) {
+            if best.is_none_or(|(_, _, bd)| d < bd) && grace_of[ci].is_some() {
+                best = Some((ci, 0, d));
+            } else if best.is_none_or(|(_, _, bd)| d < bd) {
                 let k = (0..e.heads.len())
                     .min_by(|&a, &b| {
                         let dist = |k: usize| {
@@ -611,9 +627,62 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
     };
     // Links: (left (chord, note) or None, right (chord, note) or None).
     let mut links: Vec<(Option<(usize, usize)>, Option<(usize, usize)>, (f64, f64), (f64, f64))> = Vec::new();
+    let depth0 = 2.5;
     for s in &sheet.slurs {
-        let l = lookup(parts, s.left, true, s.above).map(|(c, k, _)| (c, k));
-        let r = lookup(parts, s.right, false, s.above).map(|(c, k, _)| (c, k));
+        let mut l = lookup(parts, s.left, true, s.above, depth0, None).map(|(c, k, _)| (c, k));
+        let mut r = lookup(parts, s.right, false, s.above, depth0, None).map(|(c, k, _)| (c, k));
+        // An end with no chord in its area: a chord right above (below) it,
+        // further away (improvement).
+        let far = |end: (f64, f64)| -> Option<(usize, usize)> {
+            if s.right.0 - s.left.0 < 1.5 * il {
+                return None;
+            }
+            (0..chords.len())
+                .filter(|&ci| grace_of[ci].is_none())
+                .filter(|&ci| {
+                    let c = chords[ci];
+                    let b = parts[c.0].measures[c.1].events[c.2].bbox;
+                    (b.cx() - end.0).abs() <= il
+                        && if s.above { b.y as f64 >= end.1 - 0.5 * il && (b.y as f64) <= end.1 + 6.0 * il } else { b.bottom() as f64 <= end.1 + 0.5 * il && (b.bottom() as f64) >= end.1 - 6.0 * il }
+                })
+                .min_by(|&a, &b| {
+                    let d = |ci: usize| {
+                        let c = chords[ci];
+                        (parts[c.0].measures[c.1].events[c.2].bbox.cy() - end.1).abs()
+                    };
+                    d(a).partial_cmp(&d(b)).unwrap()
+                })
+                .map(|ci| {
+                    // Head of the chord closest to the end.
+                    let c = chords[ci];
+                    let e = &parts[c.0].measures[c.1].events[c.2];
+                    let k = (0..e.heads.len())
+                        .min_by(|&a, &b| {
+                            let d = |k: usize| (sheet.heads[e.heads[k]].bounds.cy() - end.1).abs();
+                            d(a).partial_cmp(&d(b)).unwrap()
+                        })
+                        .unwrap();
+                    (ci, k)
+                })
+        };
+        if l.is_none() {
+            l = far(s.left);
+        }
+        if r.is_none() {
+            r = far(s.right);
+        }
+        // Both ends on a chord lying between them: the slur passes over or
+        // under it, look further for the end chords.
+        if let (Some(a), Some(b)) = (l, r)
+            && a.0 == b.0
+        {
+            let c = chords[a.0];
+            let x = parts[c.0].measures[c.1].events[c.2].bbox.cx();
+            if x > s.left.0 + 0.5 * il && x < s.right.0 - 0.5 * il {
+                l = lookup(parts, s.left, true, s.above, 4.0, Some(a.0)).map(|(c, k, _)| (c, k));
+                r = lookup(parts, s.right, false, s.above, 4.0, Some(a.0)).map(|(c, k, _)| (c, k));
+            }
+        }
         if let (Some(a), Some(b)) = (l, r)
             && a.0 == b.0
         {
@@ -665,7 +734,9 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
     }
     // Ties and slurs.
     let mut slur_list: Vec<(usize, usize)> = Vec::new();
-    for (a, b) in pairs {
+    let arcs_between = |x: usize, y: usize| pairs.iter().filter(|(a, b)| a.0 == x && b.0 == y).count();
+    let arc_counts: Vec<usize> = pairs.iter().map(|(a, b)| arcs_between(a.0, b.0)).collect();
+    for (k, (a, b)) in pairs.into_iter().enumerate() {
         let (ca, cb) = (chords[a.0], chords[b.0]);
         let (ea, eb) = (ev(parts, ca), ev(parts, cb));
         let same_pitch = pitch_of(&ea, a.1).is_some() && pitch_of(&ea, a.1) == pitch_of(&eb, b.1);
@@ -687,7 +758,12 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
         };
         let dup = parts[ca.0].measures[ca.1].events[ca.2].ties.contains(&(a.1, true))
             || parts[cb.0].measures[cb.1].events[cb.2].ties.contains(&(b.1, false));
-        if same_pitch && same_staff && clear && ca.0 == cb.0 {
+        // A single arc between chords of different sizes is a slur
+        // (improvement over ClumpPruner: tied chords have one arc per tied
+        // note, a phrase slur is one arc).
+        let same_size = ea.heads.len() == eb.heads.len() || arc_counts[k] >= 2;
+        let grace = grace_of[a.0].is_some() || grace_of[b.0].is_some();
+        if same_pitch && same_staff && clear && same_size && !grace && ca.0 == cb.0 {
             if dup {
                 continue;
             }
@@ -707,8 +783,13 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
         active.retain(|(end, _)| *end >= start);
         let Some(n) = (1..=6).find(|n| !active.iter().any(|(_, m)| m == n)) else { continue };
         active.push((pos(cb, parts), n));
-        parts[ca.0].measures[ca.1].events[ca.2].slurs.push((n, true));
-        parts[cb.0].measures[cb.1].events[cb.2].slurs.push((n, false));
+        for (c, g, start) in [(ca, grace_of[a], true), (cb, grace_of[b], false)] {
+            let e = &mut parts[c.0].measures[c.1].events[c.2];
+            match g {
+                Some(g) => e.graces[g].slurs.push((n, start)),
+                None => e.slurs.push((n, start)),
+            }
+        }
     }
 }
 
@@ -2358,8 +2439,17 @@ fn attach_graces(
                     g.heads.push(head);
                     g.slash |= slash;
                     g.base = g.base.min(base);
+                    g.bounds = g.bounds.union(&b);
                 }
-                None => events[i].graces.push(Grace { pitches: Vec::new(), slash, stem_up: up, base, heads: vec![head] }),
+                None => events[i].graces.push(Grace {
+                    pitches: Vec::new(),
+                    slash,
+                    stem_up: up,
+                    base,
+                    heads: vec![head],
+                    bounds: b,
+                    slurs: Vec::new(),
+                }),
             }
             linked.push(((hx, hy), i));
         }

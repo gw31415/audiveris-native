@@ -418,6 +418,13 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
                 if staves > 1 {
                     let _ = write!(x, "<staff>{}</staff>", e.staff);
                 }
+                if k == 0 && !g.slurs.is_empty() {
+                    x.push_str("<notations>");
+                    for (n, start) in &g.slurs {
+                        let _ = write!(x, "<slur type=\"{}\" number=\"{n}\"/>", if *start { "start" } else { "stop" });
+                    }
+                    x.push_str("</notations>");
+                }
                 x.push_str("</note>\n");
             }
             for (i, p) in pitches.iter().enumerate() {
