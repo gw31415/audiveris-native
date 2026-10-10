@@ -33,6 +33,7 @@ pub struct Sheet {
     pub endings: Vec<crate::curves::Ending>,
     pub octave_shifts: Vec<crate::curves::OctaveShift>,
     pub slurs: Vec<crate::curves::Slur>,
+    pub words: Vec<crate::text::Word>,
     /// Key signature changes: (staff, barline right abscissa, fifths).
     pub key_changes: Vec<(usize, i32, i32)>,
 }
@@ -43,7 +44,7 @@ fn log(verbose: bool, t: &Instant, msg: String) {
     }
 }
 
-pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
+pub fn process(path: &Path, verbose: bool, languages: &str) -> Result<Sheet, String> {
     let t = Instant::now();
     let (w, h, gray) = binary::load_gray(path)?;
     let bin = binary::binarize(w, h, &gray);
@@ -175,6 +176,8 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         (on as f64) < 0.7 * all.max(1) as f64
     });
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
+    let words = crate::text::ocr(&residual, languages);
+    log(verbose, &t, format!("TEXTS {} words", words.len()));
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
     let (wedges, endings) = crate::curves::build(&residual, &bin, &staves, &systems, &scale);
     let octave_shifts = crate::curves::octave_shifts(&residual, &symbols, &staves, &scale);
@@ -206,6 +209,7 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         endings,
         octave_shifts,
         slurs,
+        words,
         key_changes,
     })
 }

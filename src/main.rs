@@ -21,6 +21,7 @@ mod staff;
 mod stems;
 mod symbols;
 mod template;
+mod text;
 mod curves;
 
 const USAGE: &str = "\
@@ -31,6 +32,7 @@ Several images are processed as consecutive pages of one score.
 
 Options:
   -o, --output FILE   MusicXML output (default: first image with .musicxml extension)
+      --lang LANGS    OCR languages for lyrics (Tesseract names, default eng)
       --debug DIR     write per-page annotated images and recognition JSON into DIR
   -v, --verbose       print step timings
   -h, --help          show this help";
@@ -40,6 +42,7 @@ struct Args {
     output: Option<PathBuf>,
     debug: Option<PathBuf>,
     verbose: bool,
+    lang: String,
 }
 
 fn parse_args() -> Result<Args, String> {
@@ -48,6 +51,7 @@ fn parse_args() -> Result<Args, String> {
         output: None,
         debug: None,
         verbose: false,
+        lang: "eng".into(),
     };
     let mut it = std::env::args().skip(1);
     while let Some(s) = it.next() {
@@ -59,6 +63,7 @@ fn parse_args() -> Result<Args, String> {
             "-o" | "--output" => {
                 a.output = Some(it.next().ok_or("missing value for --output")?.into())
             }
+            "--lang" => a.lang = it.next().ok_or("missing value for --lang")?,
             "--debug" => a.debug = Some(it.next().ok_or("missing value for --debug")?.into()),
             "-v" | "--verbose" => a.verbose = true,
             s if s.starts_with('-') => return Err(format!("unknown option {s}\n\n{USAGE}")),
@@ -161,7 +166,7 @@ fn run() -> Result<(), String> {
     let mut book: Option<score::Score> = None;
     let mut state = score::State::default();
     for input in &args.inputs {
-        let sheet = pipeline::process(input, args.verbose)?;
+        let sheet = pipeline::process(input, args.verbose, &args.lang)?;
         let page = score::build(&sheet, &mut state);
         if let Some(dir) = &args.debug {
             let stem = input.file_stem().and_then(|s| s.to_str()).unwrap_or("page");
@@ -215,7 +220,7 @@ mod tests {
     #[test]
     fn an_laura_end_to_end() {
         let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("samples/real/an-laura.png");
-        let sheet = pipeline::process(&path, false).unwrap();
+        let sheet = pipeline::process(&path, false, "eng").unwrap();
         let score = score::build(&sheet, &mut score::State::default());
         assert_eq!(score.parts.len(), 2);
         assert!(score.parts.iter().all(|p| p.measures.len() == 4));

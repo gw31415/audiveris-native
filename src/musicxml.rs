@@ -360,6 +360,18 @@ fn write_event(x: &mut String, e: &Event, div: i64, staves: u32) {
             }
             x.push_str("</notations>");
         }
+        if with_beams {
+            for l in &e.lyrics {
+                let _ = write!(
+                    x,
+                    "<lyric number=\"{}\"><syllabic>{}</syllabic><text>{}</text>{}</lyric>",
+                    l.number,
+                    l.syllabic,
+                    esc(&l.text),
+                    if l.extend { "<extend/>" } else { "" }
+                );
+            }
+        }
     };
     match &e.kind {
         Kind::Rest { whole_measure } => {

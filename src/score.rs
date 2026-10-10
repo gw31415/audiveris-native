@@ -63,6 +63,7 @@ pub struct Event {
     pub ties: Vec<(usize, bool)>,
     /// Slurs: (number, start?).
     pub slurs: Vec<(u32, bool)>,
+    pub lyrics: Vec<Lyric>,
     #[serde(skip)]
     heads: Vec<usize>,
     /// Bounds of the chord (heads and stem) or rest.
@@ -74,6 +75,16 @@ pub struct Event {
     stem: Option<usize>,
     #[serde(skip)]
     right: f64,
+}
+
+/// Lyric syllable (Audiveris LyricItemInter).
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct Lyric {
+    pub number: u32,
+    pub text: String,
+    /// single, begin, middle or end.
+    pub syllabic: &'static str,
+    pub extend: bool,
 }
 
 /// Grace chord (Audiveris GraceChordInter / SmallChordInter).
@@ -476,6 +487,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.fifths = fifths_state;
     state.time = time_state;
     link_slurs(sheet, &mut parts);
+    assign_lyrics(sheet, &mut parts);
     fix_measures(&mut parts);
     Score { parts }
 }
@@ -640,6 +652,115 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
         active.push((pos(cb, parts), n));
         parts[ca.0].measures[ca.1].events[ca.2].slurs.push((n, true));
         parts[cb.0].measures[cb.1].events[cb.2].slurs.push((n, false));
+    }
+}
+
+/// Lyrics (Audiveris TEXTS / LyricLineInter, LyricItemInter): OCR words
+/// below a staff are grouped into lines; words are split into syllables at
+/// hyphens, and each syllable goes to the closest chord of the staff above.
+/// A line is lyrics when most of its syllables find a chord.
+fn assign_lyrics(sheet: &Sheet, parts: &mut [Part]) {
+    let il = sheet.scale.interline as f64;
+    // Chords per sheet staff: (part, measure, event, x).
+    let mut chords: HashMap<usize, Vec<(usize, usize, usize, f64)>> = HashMap::new();
+    for (pi, p) in parts.iter().enumerate() {
+        for (mi, m) in p.measures.iter().enumerate() {
+            for (ei, e) in m.events.iter().enumerate() {
+                if matches!(e.kind, Kind::Chord { .. }) && !e.heads.is_empty() {
+                    let x = e.heads.iter().map(|&h| sheet.heads[h].bounds.cx()).sum::<f64>() / e.heads.len() as f64;
+                    chords.entry(sheet.heads[e.heads[0]].staff).or_default().push((pi, mi, ei, x));
+                }
+            }
+        }
+    }
+    for sys in &sheet.systems {
+        for (k, &si) in sys.staves.iter().enumerate() {
+            let st = &sheet.staves[si];
+            let Some(cs) = chords.get(&si) else { continue };
+            let below = |w: &crate::text::Word| {
+                let (cx, cy) = (w.bounds.cx(), w.bounds.cy());
+                let limit = sys.staves.get(k + 1).map_or(st.bottom(cx) + 8.0 * il, |&n| sheet.staves[n].top(cx) - 0.5 * il);
+                cx >= st.left as f64 && cx <= st.right as f64 && cy > st.bottom(cx) + 0.3 * il && cy < limit
+            };
+            let mut words: Vec<&crate::text::Word> = sheet.words.iter().filter(|w| w.conf >= 40.0 && below(w)).collect();
+            words.sort_by(|a, b| a.bounds.cy().partial_cmp(&b.bounds.cy()).unwrap());
+            // Lines of words.
+            let mut lines: Vec<Vec<&crate::text::Word>> = Vec::new();
+            for w in words {
+                match lines.last_mut() {
+                    Some(l) if (w.bounds.cy() - l.iter().map(|v| v.bounds.cy()).sum::<f64>() / l.len() as f64).abs() <= 0.6 * il => l.push(w),
+                    _ => lines.push(vec![w]),
+                }
+            }
+            let mut number = 0;
+            for mut line in lines {
+                line.sort_by_key(|w| w.bounds.x);
+                // Syllables: (text, x0, x1, hyphen after, extend).
+                let mut syl: Vec<(String, f64, f64, bool, bool)> = Vec::new();
+                for w in &line {
+                    let t = w.text.trim_matches(|c: char| c == '—');
+                    if t.chars().all(|c| c == '-' || c == '–' || c == '—') {
+                        if let Some(last) = syl.last_mut() {
+                            last.3 = true;
+                        }
+                        continue;
+                    }
+                    if t.chars().all(|c| c == '_') {
+                        if let Some(last) = syl.last_mut() {
+                            last.4 = true;
+                        }
+                        continue;
+                    }
+                    let extend = t.ends_with('_');
+                    let t = t.trim_end_matches('_');
+                    let pieces: Vec<&str> = t.split('-').collect();
+                    let total: usize = pieces.iter().map(|p| p.chars().count().max(1)).sum();
+                    let mut x = w.bounds.x as f64;
+                    for (i, p) in pieces.iter().enumerate() {
+                        let width = w.bounds.w as f64 * p.chars().count().max(1) as f64 / total as f64;
+                        if !p.is_empty() {
+                            syl.push((p.to_string(), x, x + width, i + 1 < pieces.len(), extend && i + 1 == pieces.len()));
+                        } else if let Some(last) = syl.last_mut() {
+                            last.3 = true;
+                        }
+                        x += width;
+                    }
+                }
+                if syl.is_empty() {
+                    continue;
+                }
+                // Closest chord of the staff for each syllable.
+                let mapped: Vec<Option<usize>> = syl
+                    .iter()
+                    .map(|s| {
+                        let c = (s.1 + s.2) / 2.0;
+                        (0..cs.len())
+                            .filter(|&i| cs[i].3 >= s.1 - 1.5 * il && cs[i].3 <= s.2 + 1.5 * il)
+                            .min_by(|&a, &b| (cs[a].3 - c).abs().partial_cmp(&(cs[b].3 - c).abs()).unwrap())
+                    })
+                    .collect();
+                if mapped.iter().filter(|m| m.is_some()).count() * 2 < syl.len() || syl.len() < 2 {
+                    continue;
+                }
+                number += 1;
+                for (i, s) in syl.iter().enumerate() {
+                    let Some(ci) = mapped[i] else { continue };
+                    let before = i > 0 && syl[i - 1].3;
+                    let syllabic = match (before, s.3) {
+                        (false, false) => "single",
+                        (false, true) => "begin",
+                        (true, true) => "middle",
+                        (true, false) => "end",
+                    };
+                    let (pi, mi, ei, _) = cs[ci];
+                    let e = &mut parts[pi].measures[mi].events[ei];
+                    if e.lyrics.iter().any(|l| l.number == number) {
+                        continue;
+                    }
+                    e.lyrics.push(Lyric { number, text: s.0.clone(), syllabic, extend: s.4 });
+                }
+            }
+        }
     }
 }
 
@@ -1038,6 +1159,7 @@ fn build_measure(
             graces: Vec::new(),
             ties: Vec::new(),
             slurs: Vec::new(),
+            lyrics: Vec::new(),
             bbox: Rect::default(),
             y_mid,
             stem: Some(sti),
@@ -1095,6 +1217,7 @@ fn build_measure(
             graces: Vec::new(),
             ties: Vec::new(),
             slurs: Vec::new(),
+            lyrics: Vec::new(),
             bbox: Rect::default(),
             y_mid: g.iter().map(|&h| sheet.heads[h].bounds.cy()).sum::<f64>() / g.len() as f64,
             stem: None,
@@ -1148,6 +1271,7 @@ fn build_measure(
             graces: Vec::new(),
             ties: Vec::new(),
             slurs: Vec::new(),
+            lyrics: Vec::new(),
             bbox: Rect::default(),
             y_mid: cy,
             stem: None,

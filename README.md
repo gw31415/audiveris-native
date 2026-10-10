@@ -3,11 +3,13 @@
 楽譜画像（PNG/JPEG/TIFF/BMP）を認識して MusicXML 4.0 を出力する Rust 製 CLI です。
 [Audiveris](https://github.com/Audiveris/audiveris) 5.11 の認識パイプラインと同じ手順・同じ
 アルゴリズム（同じ定数・テンプレート・分類器）を、必要な部分だけ素直に実装し直しています。
-Java も Audiveris 本体も不要です。
+Java も Audiveris 本体も不要です。歌詞の読み取りには本家と同じく Tesseract OCR（`tesseract` コマンド）を使います
+（無ければ歌詞なしで出力します）。
 
 ```sh
 cargo build --release
 ./target/release/audiveris-native page1.png page2.png -o score.musicxml
+./target/release/audiveris-native --lang deu page.png       # 歌詞の OCR 言語（Tesseract の言語名、既定 eng）
 ./target/release/audiveris-native -v --debug out/ page.png   # 工程ごとの時間、注釈画像と認識JSON
 cargo test --release                                       # 実譜面1ページの end-to-end テスト
 tools/evaluate.sh                                           # samples/ の正解との比較
@@ -180,8 +182,8 @@ tools/evaluate.sh                                           # samples/ の正解
 | | セーニョ・コーダ・D.S.・D.C. | ✅ | MarkerInter（重なる小節線に接続）。冬の旅には無く合成画像で確認（誤検出 0） |
 | | ボルタ（括弧） | 🔧 | EndingsBuilder の長さ・傾き・五線からの距離・小節幅比。左の脚を必須に（冬の旅で誤検出 0、本家 1）。番号は OCR なしのため連番 |
 | **タイ・スラー** | 曲線の検出 | 🔧 | 本家 SlursBuilder は骨格化したアーク。本実装は残差の細い縦ランの連鎖（分岐で分割）を、側方の円モデルで 0.15 間以内なら連結。円の当てはめ・角度・幅・高さの採否と重みは本家と同じ。精度は本家未満（冬の旅: スラー 再現率 0.75／適合率 0.96、F1 0.84、本家 0.83／0.97、F1 0.89） |
-| | 音符への接続・タイの判定 | 🔧 | SlurLinker の探索範囲（外 2 間・内 0.5 間）、ClumpPruner（同音高・同五線・間に和音なし）、段跨ぎの checkCrossTie は本家と同じ。凹側の深さを 3 間→2.5 間に（OCR が無いため歌詞の誤検出を抑える。スラー F1 0.842→0.843、タイ F1 0.653→0.681）。符幹に接する端は旗として除外。冬の旅: タイ 再現率 0.83／適合率 0.58（本家 0.96／0.55） |
-| **テキスト** | 歌詞 | ⬜ | LyricItemInter（OCR） |
+| | 音符への接続・タイの判定 | 🔧 | SlurLinker の探索範囲（外 2 間・内 0.5 間）、ClumpPruner（同音高・同五線・間に和音なし）、段跨ぎの checkCrossTie は本家と同じ。凹側の深さを 3 間→2.5 間に（曲線は文字認識の前に探すため、歌詞の断片の誤検出を抑える。スラー F1 0.842→0.843、タイ F1 0.653→0.681）。符幹に接する端は旗として除外。冬の旅: タイ 再現率 0.83／適合率 0.58（本家 0.96／0.55） |
+| **テキスト** | 歌詞 | ✅ | TEXTS（Tesseract、言語は本家同様に指定、既定 eng）、LyricItemInter（ハイフンで音節に分割し、上の五線の最寄りの和音へ）。冬の旅（--lang deu）: 再現率 0.85／適合率 0.83（eng では 0.81／0.80）。本家の出力は今回の比較環境では歌詞 0 |
 | | 発想記号・テンポ・タイトル | ⬜ | WordInter, SentenceInter（OCR） |
 | **ページ・パート** | 複数ページの結合・状態の引継ぎ | 🔧 | 本家 Book / PageRhythm |
 | | 段ごとのパート対応（隠れた五線） | 🔧 | 本家 PartsBuilder / ScoreReduction。優位性: 冬の旅で確認 |
