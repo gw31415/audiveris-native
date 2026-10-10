@@ -227,8 +227,8 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
                     done_dirs[di] = true;
                     let _ = write!(
                         x,
-                        "      <direction placement=\"below\"><direction-type><dynamics><{}/></dynamics></direction-type>",
-                        d.dynamics
+                        "      <direction placement=\"below\"><direction-type>{}</direction-type>",
+                        d.kind
                     );
                     if staves > 1 {
                         let _ = write!(x, "<staff>{}</staff>", d.staff);

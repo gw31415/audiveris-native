@@ -86,7 +86,8 @@ pub struct Grace {
 pub struct Direction {
     pub staff: u32,
     pub start: Q,
-    pub dynamics: &'static str,
+    /// MusicXML direction type, e.g. `<dynamics><p/></dynamics>` or `<wedge type="stop"/>`.
+    pub kind: String,
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -970,8 +971,27 @@ fn build_measure(
         m.directions.push(Direction {
             staff: n,
             start,
-            dynamics: name,
+            kind: format!("<dynamics><{name}/></dynamics>"),
         });
+    }
+    // Hairpins: start at the left end, stop at the right end (Audiveris WedgeInter).
+    for w in sheet.wedges.iter().filter(|w| part_staves.contains(&w.staff)) {
+        let n = staff_no(w.staff).unwrap();
+        let staff_events = || events.iter().filter(|e| e.staff == n);
+        if in_measure(w.x0) {
+            let start = staff_events()
+                .min_by(|a, b| (a.x - w.x0).abs().partial_cmp(&(b.x - w.x0).abs()).unwrap())
+                .map_or(Q::ZERO, |e| e.start);
+            let t = if w.crescendo { "crescendo" } else { "diminuendo" };
+            m.directions.push(Direction { staff: n, start, kind: format!("<wedge type=\"{t}\"/>") });
+        }
+        if in_measure(w.x1) {
+            let start = staff_events()
+                .filter(|e| e.x <= w.x1)
+                .max_by(|a, b| a.x.partial_cmp(&b.x).unwrap())
+                .map_or(Q::ZERO, |e| e.start);
+            m.directions.push(Direction { staff: n, start, kind: "<wedge type=\"stop\"/>".into() });
+        }
     }
     for (n, x, c) in clef_changes {
         let t = events

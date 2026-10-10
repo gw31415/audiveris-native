@@ -160,7 +160,8 @@ tools/evaluate.sh                                           # samples/ の正解
 | | アルペジオ | ✅ | ArpeggiatoInter.lookupLink、本家の最小グレード 0.15（冬の旅: 再現率 0.25／適合率 0.67、本家 0.17／1.0） |
 | | ブレス・カエスーラ | ✅ | AbstractPauseInter.lookupLink（冬の旅には正解データなし） |
 | | トレモロ（単音） | ✅ | TremoloInter.searchLinks（符幹／全音符）。2音間トレモロは本家も未対応 |
-| **ヘアピン** | クレッシェンド／デクレッシェンド | ⬜ | WedgesBuilder |
+| **ヘアピン** | 直線セグメントの抽出 | 🔧 | 本家は骨格化した弧（SegmentsBuilder）。本実装は残差グリフの上下包絡線を直線当てはめ（傾き 20°・平均距離 0.3・run 比 0.75 は本家と同じ） |
+| | 2本のセグメントの対応付けとグレード | ✅ | WedgesBuilder（冬の旅: 再現率 0.95／適合率 1.0、本家 0.90／0.99） |
 | **オッターヴァ・ペダル** | 8va/15ma 線、ペダル記号 | ⬜ | OctaveShiftInter, PedalInter |
 | **反復構造** | ボルタ（括弧）・セーニョ・コーダ | ⬜ | EndingInter, SegnoInter |
 | **タイ・スラー** | スラー／タイの検出と音符への接続 | ⬜ | SlursBuilder, SlurInter |

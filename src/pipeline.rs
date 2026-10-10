@@ -29,6 +29,7 @@ pub struct Sheet {
     pub grace_heads: Vec<(Head, bool)>,
     pub stems: Vec<Stem>,
     pub symbols: Vec<Symbol>,
+    pub wedges: Vec<crate::wedges::Wedge>,
 }
 
 fn log(verbose: bool, t: &Instant, msg: String) {
@@ -133,6 +134,8 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
     let symbols = symbols::recognize(&residual, &staves, &scale);
     stems::purge_by_symbols(&mut heads, &mut stems, &symbols);
     log(verbose, &t, format!("SYMBOLS {}", symbols.len()));
+    let wedges = crate::wedges::detect(&residual, &staves, &scale);
+    log(verbose, &t, format!("WEDGES {}", wedges.len()));
     Ok(Sheet {
         binary: bin,
         residual,
@@ -146,5 +149,6 @@ pub fn process(path: &Path, verbose: bool) -> Result<Sheet, String> {
         grace_heads,
         stems,
         symbols,
+        wedges,
     })
 }

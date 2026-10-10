@@ -21,6 +21,7 @@ mod staff;
 mod stems;
 mod symbols;
 mod template;
+mod wedges;
 
 const USAGE: &str = "\
 Usage: audiveris-native [OPTIONS] IMAGE...
@@ -122,6 +123,9 @@ fn write_debug(
     for s in &sheet.symbols {
         ov.rect(s.bounds.grow(1, 1), [0, 150, 255]);
     }
+    for w in &sheet.wedges {
+        ov.rect(w.bounds.grow(2, 2), [255, 0, 255]);
+    }
     ov.save(&dir.join(format!("{stem}.png")))?;
     debug::Overlay::new(&sheet.residual).save(&dir.join(format!("{stem}.residual.png")))?;
     let json = serde_json::json!({
@@ -133,6 +137,7 @@ fn write_debug(
         "stems": sheet.stems,
         "beams": sheet.beams,
         "symbols": sheet.symbols,
+        "wedges": sheet.wedges,
         "score": score,
     });
     std::fs::write(
