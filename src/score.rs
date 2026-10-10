@@ -110,6 +110,8 @@ pub struct Measure {
     pub clef_changes: Vec<(u32, Q, ClefKind)>,
     pub expected: Q,
     pub right_bar: BarStyle,
+    /// Repeat signs: (forward at the left bar, backward at the right bar).
+    pub repeat: (bool, bool),
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -233,6 +235,7 @@ fn filler(m: &Measure) -> Measure {
         clef_changes: Vec::new(),
         expected: m.expected,
         right_bar: m.right_bar,
+        repeat: (false, false),
     }
 }
 
@@ -309,10 +312,12 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     clef_changes: Vec::new(),
                     expected,
                     right_bar: sys.boundaries[mi + 1].style,
+                    repeat: (false, false),
                 });
             }
         }
         let sys_fifths = fifths_state;
+        let (repeats, repeat_dots) = repeat_signs(sheet, sys);
         // Multiple rests decided for the whole system (all parts expand alike).
         let multi: Vec<Option<u32>> = (0..sys.boundaries.len().saturating_sub(1))
             .map(|mi| multiple_rest(sheet, &sys.staves, sys.boundaries[mi].x1 as f64, sys.boundaries[mi + 1].x0 as f64))
@@ -400,7 +405,9 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     clef_changes: Vec::new(),
                     expected,
                     right_bar: sys.boundaries[mi + 1].style,
+                    repeat: (false, false),
                 };
+                m.repeat = (repeats[mi].1, repeats[mi + 1].0);
                 build_measure(
                     sheet,
                     part_staves,
@@ -408,6 +415,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     x_hi,
                     fifths,
                     &mut clefs_now,
+                    &repeat_dots,
                     &mut m,
                 );
                 for (n, _, c) in &m.clef_changes {
@@ -448,6 +456,48 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.fifths = fifths_state;
     state.time = time_state;
     Score { parts }
+}
+
+/// Repeat signs (Audiveris DotFactory / RepeatDotInter): on each side of
+/// every system barline, staves having a dot pair (pitch about -1 and +1)
+/// within 1.5 il of the bar; the side repeats when most staves agree.
+/// Returns (backward, forward) flags per boundary and the dots used.
+fn repeat_signs(sheet: &Sheet, sys: &crate::grid::System) -> (Vec<(bool, bool)>, Vec<Rect>) {
+    let il = sheet.scale.interline as f64;
+    let mut flags = Vec::new();
+    let mut used = Vec::new();
+    for b in &sys.boundaries {
+        let side = |left: bool| {
+            let mut dots = Vec::new();
+            let mut votes = 0;
+            for &si in &sys.staves {
+                let st = &sheet.staves[si];
+                let near: Vec<&crate::symbols::Symbol> = sheet
+                    .symbols
+                    .iter()
+                    .filter(|s| s.staff == si && s.shape == "DOT_set")
+                    .filter(|s| {
+                        let x = s.bounds.cx();
+                        if left { x < b.x0 as f64 && b.x0 as f64 - x <= 1.5 * il } else { x > b.x1 as f64 && x - b.x1 as f64 <= 1.5 * il }
+                    })
+                    .filter(|s| (st.pitch_of(s.bounds.cy(), s.bounds.cx()).abs() - 1.0).abs() <= 1.0)
+                    .collect();
+                let up = near.iter().any(|s| st.pitch_of(s.bounds.cy(), s.bounds.cx()) < 0.0);
+                let down = near.iter().any(|s| st.pitch_of(s.bounds.cy(), s.bounds.cx()) > 0.0);
+                if up && down {
+                    votes += 1;
+                    dots.extend(near.iter().map(|s| s.bounds));
+                }
+            }
+            (2 * votes > sys.staves.len()).then_some(dots)
+        };
+        let back = side(true);
+        let fwd = side(false);
+        flags.push((back.is_some(), fwd.is_some()));
+        used.extend(back.into_iter().flatten());
+        used.extend(fwd.into_iter().flatten());
+    }
+    (flags, used)
 }
 
 /// Multiple rest (Audiveris MultipleRestsBuilder): a beam-like bar of at
@@ -534,6 +584,7 @@ fn build_measure(
     x_hi: f64,
     fifths: i32,
     clefs: &mut HashMap<u32, ClefKind>,
+    skip: &[Rect],
     m: &mut Measure,
 ) {
     let il = sheet.scale.interline as f64;
@@ -547,7 +598,7 @@ fn build_measure(
     let syms: Vec<&crate::symbols::Symbol> = sheet
         .symbols
         .iter()
-        .filter(|s| part_staves.contains(&s.staff) && in_measure(s.bounds.cx()))
+        .filter(|s| part_staves.contains(&s.staff) && in_measure(s.bounds.cx()) && !skip.contains(&s.bounds))
         .collect();
 
     // Clef changes inside the measure.

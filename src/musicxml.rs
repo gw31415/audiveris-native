@@ -78,6 +78,9 @@ pub fn write(score: &Score, title: &str) -> String {
                 x.push_str("      <print new-system=\"yes\"/>\n");
             }
             write_attributes(&mut x, m, mi == 0, div, p.staves);
+            if m.repeat.0 {
+                x.push_str("      <barline location=\"left\"><bar-style>heavy-light</bar-style><repeat direction=\"forward\"/></barline>\n");
+            }
             write_measure_body(&mut x, m, div, p.staves);
             let style = match m.right_bar {
                 BarStyle::Regular => None,
@@ -86,7 +89,13 @@ pub fn write(score: &Score, title: &str) -> String {
                 BarStyle::HeavyLight => Some("heavy-light"),
                 BarStyle::Heavy => Some("heavy"),
             };
-            if let Some(s) = style {
+            if m.repeat.1 {
+                let _ = writeln!(
+                    x,
+                    "      <barline location=\"right\"><bar-style>{}</bar-style><repeat direction=\"backward\"/></barline>",
+                    style.unwrap_or("light-heavy")
+                );
+            } else if let Some(s) = style {
                 let _ = writeln!(
                     x,
                     "      <barline location=\"right\"><bar-style>{s}</bar-style></barline>"
