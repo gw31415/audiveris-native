@@ -1112,6 +1112,30 @@ fn build_measure(
             kind: format!("<dynamics><{name}/></dynamics>"),
         });
     }
+    // Markers (Audiveris MarkerInter): at the barline they overlap, else at
+    // the closest event.
+    for s in &syms {
+        let kind = match s.shape {
+            "SEGNO" => "<segno/>",
+            "CODA" => "<coda/>",
+            "DAL_SEGNO" => "<words>D.S.</words>",
+            "DA_CAPO" => "<words>D.C.</words>",
+            _ => continue,
+        };
+        let n = staff_no(s.staff).unwrap();
+        let start = if (s.bounds.x as f64) <= x_lo {
+            Q::ZERO
+        } else if s.bounds.right() as f64 >= x_hi {
+            events.iter().filter(|e| e.staff == n).map(|e| e.start).max().unwrap_or(Q::ZERO)
+        } else {
+            events
+                .iter()
+                .filter(|e| e.staff == n)
+                .min_by(|a, b| (a.x - s.bounds.cx()).abs().partial_cmp(&(b.x - s.bounds.cx()).abs()).unwrap())
+                .map_or(Q::ZERO, |e| e.start)
+        };
+        m.directions.push(Direction { staff: n, start, kind: kind.into() });
+    }
     // Hairpins: start at the left end, stop at the right end (Audiveris WedgeInter).
     for w in sheet.wedges.iter().filter(|w| part_staves.contains(&w.staff)) {
         let n = staff_no(w.staff).unwrap();

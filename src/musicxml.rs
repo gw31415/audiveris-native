@@ -239,7 +239,8 @@ fn write_measure_body(x: &mut String, m: &Measure, div: i64, staves: u32) {
                     done_dirs[di] = true;
                     let _ = write!(
                         x,
-                        "      <direction placement=\"below\"><direction-type>{}</direction-type>",
+                        "      <direction placement=\"{}\"><direction-type>{}</direction-type>",
+                        if d.kind.starts_with("<dynamics") || d.kind.starts_with("<wedge") { "below" } else { "above" },
                         d.kind
                     );
                     if staves > 1 {

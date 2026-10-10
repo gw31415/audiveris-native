@@ -164,7 +164,8 @@ tools/evaluate.sh                                           # samples/ の正解
 | | 2本のセグメントの対応付けとグレード | ✅ | WedgesBuilder（冬の旅: 再現率 0.95／適合率 1.0、本家 0.90／0.99） |
 | **オッターヴァ・ペダル** | 8va/15ma 線、ペダル記号 | ⬜ | OctaveShiftInter, PedalInter |
 | **反復構造** | 反復記号（縦線の点） | ✅ | DotFactory / RepeatDotInter（点の対・小節線から 1.5 間・段の過半数）。冬の旅: 3/3（本家 3/3） |
-| | ボルタ（括弧）・セーニョ・コーダ | ⬜ | EndingInter, SegnoInter |
+| | セーニョ・コーダ・D.S.・D.C. | ✅ | MarkerInter（重なる小節線に接続）。冬の旅には無く合成画像で確認（誤検出 0） |
+| | ボルタ（括弧） | ⬜ | EndingsBuilder |
 | **タイ・スラー** | スラー／タイの検出と音符への接続 | ⬜ | SlursBuilder, SlurInter |
 | **テキスト** | 歌詞 | ⬜ | LyricItemInter（OCR） |
 | | 発想記号・テンポ・タイトル | ⬜ | WordInter, SentenceInter（OCR） |
