@@ -503,7 +503,7 @@ fn link_slurs(sheet: &Sheet, parts: &mut [Part]) {
     // Head (chord index, note index) closest to an end, inside its area.
     let lookup = |parts: &[Part], end: (f64, f64), left: bool, above: bool| -> Option<(usize, usize, f64)> {
         let (x0, x1) = if left { (end.0 - 2.0 * il, end.0 + 0.5 * il) } else { (end.0 - 0.5 * il, end.0 + 2.0 * il) };
-        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 3.0 * il) } else { (end.1 - 3.0 * il, end.1 + 0.5 * il) };
+        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 2.5 * il) } else { (end.1 - 2.5 * il, end.1 + 0.5 * il) };
         // Chords (heads and stem) intersecting the area; the closest one, and
         // its head closest to the end.
         let mut best: Option<(usize, usize, f64)> = None;

@@ -439,7 +439,7 @@ pub fn slurs(
     notes.extend((0..heads.len()).filter(|h| !stemmed.contains(h)).map(|h| heads[h].bounds));
     let near = |end: (f64, f64), left: bool, above: bool| -> Option<usize> {
         let (x0, x1) = if left { (end.0 - 2.0 * il, end.0 + 0.5 * il) } else { (end.0 - 0.5 * il, end.0 + 2.0 * il) };
-        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 3.0 * il) } else { (end.1 - 3.0 * il, end.1 + 0.5 * il) };
+        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + 2.5 * il) } else { (end.1 - 2.5 * il, end.1 + 0.5 * il) };
         notes.iter().position(|b| {
             (b.right() as f64) >= x0 && (b.x as f64) <= x1 && (b.bottom() as f64) >= y0 && (b.y as f64) <= y1
         })
