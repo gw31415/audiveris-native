@@ -1,6 +1,6 @@
 # audiveris-native
 
-楽譜画像（PNG/JPEG/TIFF/BMP、PDF）を認識して MusicXML 4.0 を出力する Rust 製 CLI です。
+楽譜画像（PNG/JPEG/TIFF/BMP）を認識して MusicXML 4.0 を出力する Rust 製 CLI です。
 [Audiveris](https://github.com/Audiveris/audiveris) 5.11 の認識パイプラインと同じ手順・同じ
 アルゴリズム（同じ定数・テンプレート・分類器）を、必要な部分だけ素直に実装し直しています。
 Java も Audiveris 本体も不要です。
@@ -99,12 +99,13 @@ tools/evaluate.sh                                           # samples/ の正解
 
 ## 機能チェックリスト
 
-凡例: ✅ 本家と同じ ／ 🔧 改良ロジック（本家と異なる） ／ ⬜ 未実装
+凡例: ✅ 本家と同じ ／ 🔧 改良ロジック（本家と異なる） ／ ⬜ 未実装 ／ — 対象外
+
+入力は画像（PNG/JPEG/TIFF/BMP）、対象は五線譜のみです（PDF 入力、1線譜・打楽器譜・タブ譜は扱いません）。
 
 | 機能 | 実装単位 | 状態 | 備考（本家の該当クラス） |
 |---|---|---|---|
 | **画像入力・二値化** | 画像読込（PNG/JPEG/TIFF/BMP、グレー化） | ✅ | ImageLoading |
-| | PDF入力 | ✅ | 本家と同じく 300dpi でラスタライズ（pdftoppm または Ghostscript） |
 | | 二値化 | ✅ | AdaptiveFilter（37×37、0.7·mean+0.9·std） |
 | **スケール** | 線幅・五線間隔 | ✅ | ScaleBuilder（black / combo ヒストグラム） |
 | | 連桁の太さ | 🔧 | 長い横ランのみの縦ラン分布。本家の black ピーク方式では過小推定する例あり（優位性: 冬の旅で確認） |
@@ -113,7 +114,7 @@ tools/evaluate.sh                                           # samples/ の正解
 | **五線** | 五線の検出 | 🔧 | 細い縦ランの「櫛」で検出（本家 LinesRetriever / ClustersRetriever）。優位性: 音高側の指標で確認 |
 | | 線の形状モデル | 🔧 | 5本共通の二次曲線を頑健フィット（本家 NaturalSpline）。優位性: 音高側の指標で確認 |
 | | 五線の消去 | 🔧 | 線上の細い縦ランを消去（本家は線 glyph の画素）。優位性: 音高側の指標で確認 |
-| | 1線譜・打楽器譜・タブ譜 | ⬜ | OneLineStaff, Tablature。本家も既定ではオフ（ProcessingSwitch oneLineStaves / drumNotation / tablatures） |
+| | 1線譜・打楽器譜・タブ譜 | — | 対象外（五線譜のみ対応） |
 | **小節線・段・パート** | 小節線の検出 | 🔧 | 全高の縦ピーク＋端の検査（本家 BarsRetriever）。優位性: 小節数の誤差 8（本家 15） |
 | | 段の構成（コネクタ） | ✅ | 小節線が五線間をつなぐ段 |
 | | ブレース／ブラケットとパート | 🔧 | 左端の大きな成分の形で判定（本家 BracesRetriever / PartsBuilder）。パート数は本家と同等（22/22） |
