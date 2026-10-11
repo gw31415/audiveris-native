@@ -1,0 +1,11 @@
+{
+  "name": "audiveris-native",
+  "owner": { "name": "gw31415" },
+  "plugins": [
+    {
+      "name": "audiveris-native",
+      "source": "./",
+      "description": "Skill score-transcription: transcribe score images to MusicXML with a vision model, using the audiveris-native OMR output as a reference."
+    }
+  ]
+}
