@@ -311,7 +311,9 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.time_fixes.clear();
     let saved = state.clone();
     let mut score = build_page(sheet, state);
-    let fixes = time_corrections(&score.parts);
+    let alts: Vec<(TimeSig, TimeSig)> =
+        sheet.headers.iter().filter_map(|h| Some((h.time?, h.time_alt?))).collect();
+    let fixes = time_corrections(&score.parts, &alts);
     if !fixes.is_empty() {
         *state = saved;
         let mut notes = Vec::new();
@@ -350,7 +352,9 @@ fn time_of_length(q: Q) -> Option<TimeSig> {
 /// signature as read (None: assumed): (read, replacement, explanation).
 /// The length of a measure is the latest end of its events over all parts
 /// (whole-measure rests, multiple rests and pickups are not counted).
-fn time_corrections(parts: &[Part]) -> Vec<(Option<TimeSig>, TimeSig, String)> {
+/// `alts` are the other readings of time signatures whose denominator was a
+/// near tie: the one more measures fit wins.
+fn time_corrections(parts: &[Part], alts: &[(TimeSig, TimeSig)]) -> Vec<(Option<TimeSig>, TimeSig, String)> {
     let n = parts.iter().map(|p| p.measures.len()).min().unwrap_or(0);
     // (read, expected, lengths)
     let mut groups: Vec<(Option<TimeSig>, Q, Vec<Q>)> = Vec::new();
@@ -378,6 +382,24 @@ fn time_corrections(parts: &[Part]) -> Vec<(Option<TimeSig>, TimeSig, String)> {
         let mut values = lens.clone();
         values.sort();
         values.dedup();
+        if let Some(r) = read
+            && let Some(&(_, a)) = alts.iter().find(|x| x.0 == r)
+        {
+            let (ca, e) = (count(Q::new(a.beats as i64, a.beat_type as i64)), count(expected));
+            if ca >= 3 && ca > e {
+                let why = format!(
+                    "time signature read as {} or {}; {ca} of {} measures fit {} (only {e} fit {}) -> using {}",
+                    time_name(r),
+                    time_name(a),
+                    lens.len(),
+                    time_name(a),
+                    time_name(r),
+                    time_name(a)
+                );
+                out.push((read, a, why));
+                continue;
+            }
+        }
         let Some(&best) = values.iter().max_by_key(|&&q| (count(q), q == expected)) else { continue };
         if best == expected {
             continue;
@@ -415,6 +437,10 @@ fn build_page(sheet: &Sheet, state: &mut State) -> Score {
     let mut notes: Vec<String> = Vec::new();
     let mut clef_state = std::mem::take(&mut state.clefs);
     let mut fifths_state = state.fifths;
+    // A pickup opens a score or a movement: the first page, or a page that
+    // starts with a time signature.
+    let pickup = state.time.is_none()
+        || sheet.systems.first().is_some_and(|sys| column_time(sys.staves.iter().map(|&s| sheet.headers[s].time)).is_some());
     // The time carried from the previous page follows this page's corrections.
     let mut time_read_state = state.time_read;
     let mut time_state = match (state.time, time_read_state) {
@@ -657,7 +683,7 @@ fn build_page(sheet: &Sheet, state: &mut State) -> Score {
     link_slurs(sheet, &mut parts);
     let lyric_words = assign_lyrics(sheet, &mut parts);
     assign_words(sheet, &mut parts, &lyric_words);
-    fix_measures(&mut parts);
+    fix_measures(&mut parts, pickup);
     let (title, composer, lyricist) = page_header(sheet);
     Score { parts, title, composer, lyricist, notes }
 }
@@ -1154,10 +1180,10 @@ fn xml_escape(s: &str) -> String {
 }
 
 /// Measure duration checks of a page (Audiveris MeasureFixer): a short first
-/// measure of the page is a pickup, two short measures around a backward
+/// measure of the page is a pickup (when `pickup` allows one), two short measures around a backward
 /// repeat that make one full measure are halves, and an empty first measure
 /// of a system is merged into the next one.
-fn fix_measures(parts: &mut [Part]) {
+fn fix_measures(parts: &mut [Part], pickup: bool) {
     let n = parts.iter().map(|p| p.measures.len()).min().unwrap_or(0);
     // Duration missing (negative) or exceeding at the end of the measure,
     // when all voices agree; None for an empty measure (Some(None) when
@@ -1214,7 +1240,7 @@ fn fix_measures(parts: &mut [Part]) {
             continue;
         }
         let short = |t: Option<Option<Q>>| t.flatten().is_some_and(|t| t < Q::ZERO);
-        if mi == 0 && short(term) {
+        if mi == 0 && pickup && short(term) {
             for p in parts.iter_mut() {
                 p.measures[0].implicit = true;
             }

@@ -80,6 +80,9 @@ pub struct Header {
     pub clef: Option<ClefKind>,
     pub fifths: i32,
     pub time: Option<TimeSig>,
+    /// The other reading of the time signature when its denominator is a
+    /// near tie between two digits (2/2 or 2/4): the measure contents decide.
+    pub time_alt: Option<TimeSig>,
     pub stop: i32,
     /// Bounds of recognized header items (for debugging / erasure).
     pub items: Vec<(Rect, String)>,
@@ -156,17 +159,26 @@ fn best_among<'a>(ev: &[(&'a str, f64)], pred: impl Fn(&str) -> bool) -> Option<
     ev.iter().copied().find(|(s, _)| pred(s))
 }
 
-/// Recognize a time signature from a column (whole pair, or numerator over denominator).
-pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<TimeSig> {
+/// Grade ratio under which a second denominator is a near tie.
+const DENOMINATOR_TIE: f64 = 0.8;
+
+/// Recognize a time signature from a column (whole pair, or numerator over
+/// denominator), with the other reading when the denominator is a near tie.
+pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<(TimeSig, Option<TimeSig>)> {
+    // A time signature is centered on the middle line (beamed notes with
+    // ledger lines right after the key can look like one).
+    let mid = staff.pitch_y(0.0, col.bounds.cx());
+    if (col.bounds.cy() - mid).abs() > 0.5 * il as f64 {
+        return None;
+    }
     let ev = classify(col, il);
     if let Some((s, g)) = ev.first()
         && *g >= 0.5
         && let Some(t) = time_of(s)
     {
-        return Some(t);
+        return Some((t, None));
     }
     // Numerator above and denominator below the middle line (pixel split).
-    let mid = staff.pitch_y(0.0, col.bounds.cx());
     let half = |upper: bool| -> Option<Component> {
         let pixels: Vec<(i32, i32)> = col
             .pixels
@@ -249,11 +261,26 @@ pub fn time_from_column(col: &Component, staff: &Staff, il: i32) -> Option<TimeS
                 _ => None,
             }
         })?;
-    ((1..=16).contains(&n) && [1, 2, 4, 8, 16, 32].contains(&d)).then_some(TimeSig {
+    if !(1..=16).contains(&n) || ![1, 2, 4, 8, 16, 32].contains(&d) {
+        return None;
+    }
+    let time = |d| TimeSig {
         beats: n,
         beat_type: d,
         symbol: None,
-    })
+    };
+    let ev = classify(&lower, il);
+    let grade = |d: u32| {
+        ev.iter()
+            .filter(|(s, _)| digit_of(s) == Some(d))
+            .map(|e| e.1)
+            .fold(0.0, f64::max)
+    };
+    let alt = [2, 4, 8, 16]
+        .into_iter()
+        .filter(|&a| a != d && grade(a) > 0.0 && grade(a) >= DENOMINATOR_TIE * grade(d))
+        .max_by(|a, b| grade(*a).partial_cmp(&grade(*b)).unwrap());
+    Some((time(d), alt.map(time)))
 }
 
 pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
@@ -274,6 +301,7 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
         clef: None,
         fifths: 0,
         time: None,
+        time_alt: None,
         stop: x0,
         items: Vec::new(),
     };
@@ -388,8 +416,9 @@ pub fn recognize(nostaff: &Bitmap, staff: &Staff, scale: &Scale) -> Header {
             {
                 break;
             }
-            if let Some(t) = time_from_column(&col, staff, il) {
+            if let Some((t, alt)) = time_from_column(&col, staff, il) {
                 header.time = Some(t);
+                header.time_alt = alt;
                 header.stop = col.bounds.right();
                 header
                     .items

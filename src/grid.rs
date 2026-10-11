@@ -156,7 +156,17 @@ fn clean_end(
         Rect::new(x0, y + below, x1 - x0 + 1, h - 1)
     };
     let stops = (img.count_rect(r2) as f64) < 0.3 * r2.area() as f64;
-    stops && (stop_only || (n as f64) < 0.08 * r.area() as f64)
+    stops && (stop_only || (n as f64) < 0.08 * r.area() as f64) || crossed(img, r, il)
+}
+
+/// Is all the material beyond the staff end a tie or slur crossing the bar?
+/// Such a curve runs through the whole window and is thinner than a head in
+/// every column, while a stem going on, or a head at its end, is not.
+fn crossed(img: &Bitmap, r: Rect, il: i32) -> bool {
+    (r.x..r.x + r.w).all(|x| {
+        let n = (r.y..r.y + r.h).filter(|&y| img.get(x, y)).count();
+        n > 0 && (n as f64) < 0.4 * il as f64
+    })
 }
 
 pub fn build_systems(img: &Bitmap, staves: &mut [Staff], scale: &Scale) -> Vec<System> {
