@@ -21,6 +21,8 @@ description: >-
 
 `scripts/scoretool.py`（Python 3 標準ライブラリのみ。切り出しは Pillow か ImageMagick）を使う。
 以下 `$SKILL` はこの SKILL.md のあるディレクトリ。
+手元の `scoretool.py` に `split`・`merge`・`systems`・`pages` が無い（`invalid choice`）ときはスキルの同梱版が古いので、
+audiveris-native リポジトリの `skills/score-transcription/scripts/scoretool.py`（リモートなら `~/audiveris-native/` の同じパス）を使う。
 
 ## 0. 実行環境を決める
 
