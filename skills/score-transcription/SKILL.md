@@ -55,7 +55,7 @@ audiveris-native --debug work/debug --report work/omr.log -o work/omr.musicxml p
   - `## pages`: ページごとの解像度（interline = 五線の線間隔 px。11 px 未満は警告が出る。精度が全体に落ちるので、
     300dpi 以上で取り直せるならそうする）と、拍子を読めなかった・読み違えたと判断して直した記録
     （例 `no time signature read; 14 of 18 measures last 2/4 -> using 2/4`、
-    `time signature read as 2/2 but ... -> using 2/4`）。これは小節の中身からの推定なので、画像で拍子を確かめる。
+    `time signature read as 2/2 but ... -> using 2/4`、分母が読み分けにくいとき `time signature read as 2/2 or 2/4; ... -> using 2/4`）。これは小節の中身からの推定なので、画像で拍子を確かめる。
   - `## structure`: 小節数・番号の範囲、拍子と調の変化。画像の小節数と比べる。
   - `## flagged measures`: 音価の合計が拍子に合わない小節（と複数小節休符）の一覧。`m12 (page 1, S03): P1 v1
     overfull (5 of 2 quarters) [...]` の形で、小節番号・ページ・段（`S03` は手順 2 の `S03.png`）・
