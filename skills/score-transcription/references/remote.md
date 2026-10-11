@@ -30,11 +30,17 @@ MCP からの実行は PATH が通らないことがあるので、`~/.cargo/bin
      失敗するので、そのときは `host` を使う。
 
 2. **画像を置く**（どれか）:
-   - ユーザーがチャットに添付したファイル: `import_file`（`download_url` が許可されたオリジンのとき）。
+   - ユーザーがチャットに添付したファイル（claude.ai）: ツール一覧に `create_upload` があれば、
+     `create_upload(session_id, path="score.pdf")` で URL を受け取り、会話側のサンドボックスで
+     `curl -fsS -T /mnt/user-data/uploads/<ファイル> '<upload_url>'`。PDF もサイズを問わずそのまま送れる
+     （必要なページだけ先にサンドボックスで切り出してもよい）。curl が通らなければ、claude.ai の
+     コード実行でホストのドメインへの通信が許可されていない。ユーザーに許可を頼むか、下の方法へ。
+   - ユーザーがチャットに添付したファイル（ChatGPT など）: `import_file`（`download_url` が許可されたオリジンのとき）。
    - URL で公開されている: `["curl","-fsSLo","page-1.png",URL]`（`host`）。
    - すでにサーバーにある: `cp` する。
-   - 手元にしか無い: base64 にして 60KB 以下の断片ごとに書き（手順 5 の方法）、
+   - 手元にしか無く、上のどれも使えない: 数十 KB までなら base64 にして断片ごとに書き（手順 5 の方法）、
      `["bash","-c","cat page-1.b64.* | base64 -d > page-1.png && rm page-1.b64.*"]`。
+     それより大きいと書き写しの誤りでほぼ失敗するので、ユーザーに `scp` などでホストへ置いてもらう。
    PDF なら `["pdftoppm","-r","300","-png","score.pdf","page"]`。
    ページ順に並ぶ名前にする（10 ページ以上なら `page-01` のようにゼロ埋め）。
 
