@@ -38,7 +38,7 @@ MusicXML を参考データとして小節ごとに照合・修正させるエ�
 VPS などに置いた CLI を dev-session-mcp などのシェル系 MCP 経由で使います
 （[リモートでの使い方](skills/score-transcription/references/remote.md)）。
 補助スクリプト `skills/score-transcription/scripts/scoretool.py` は単体でも使えます
-（小節ごとの要約、拍の過不足の検査、段・小節ごとの画像切り出し、小節単位の差し替え）。
+（小節ごとの要約、拍の過不足の検査、段・小節ごとの画像切り出し、小節単位の差し替え、小節の分割・結合）。
 
 ## 処理の流れ（Audiveris の各 step と対応）
 

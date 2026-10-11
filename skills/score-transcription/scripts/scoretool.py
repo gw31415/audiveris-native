@@ -10,6 +10,8 @@ Standard library only (cropping uses Pillow when present, else ImageMagick).
   scoretool.py replace  SCORE.musicxml --part P1 --measure 3 FRAGMENT.xml [-o OUT]
   scoretool.py insert   SCORE.musicxml --part P1 --after 3 FRAGMENT.xml [-o OUT]
   scoretool.py delete   SCORE.musicxml --part P1 --measure 3 [-o OUT]
+  scoretool.py split    SCORE.musicxml --measure 3 --at 2 [--part P1] [-o OUT]
+  scoretool.py merge    SCORE.musicxml --measure 3 [--part P1] [-o OUT]
   scoretool.py renumber SCORE.musicxml [-o OUT]
 
 Run "scoretool.py COMMAND -h" for details.
@@ -602,8 +604,7 @@ def cmd_delete(args):
     write_checked(args, text[:s] + text[e:])
 
 
-def cmd_renumber(args):
-    text = read_text(args.score)
+def renumber_text(text):
     out, pos = [], 0
     for pm in re.finditer(r'<part\s+id="[^"]+"\s*>', text):
         p1 = text.index("</part>", pm.end())
@@ -615,7 +616,126 @@ def cmd_renumber(args):
             pos = mm.end()
             n += 1
     out.append(text[pos:])
-    write_checked(args, "".join(out))
+    return "".join(out)
+
+
+def cmd_renumber(args):
+    write_checked(args, renumber_text(read_text(args.score)))
+
+
+def timed_items(measure):
+    """(onset in divisions, element) for the children of a <measure>, without
+    <backup>/<forward> (positions are rebuilt by rebuild_measure), and the end."""
+    items, pos, last_onset, end = [], 0, 0, 0
+    for el in measure:
+        if el.tag == "backup":
+            pos -= int(el.findtext("duration") or 0)
+        elif el.tag == "forward":
+            pos += int(el.findtext("duration") or 0)
+        elif el.tag == "note":
+            if el.find("chord") is not None:
+                items.append((last_onset, el))
+            else:
+                items.append((pos, el))
+                last_onset = pos
+                if el.find("grace") is None:
+                    pos += int(el.findtext("duration") or 0)
+        else:
+            items.append((pos, el))
+        end = max(end, pos)
+    return items, end
+
+
+def rebuild_measure(attrib, items):
+    """A <measure> holding items (onset, element), with <backup>/<forward>
+    inserted wherever the next element does not start at the current position."""
+    m = ET.Element("measure", attrib)
+    pos = 0
+    for onset, el in items:
+        chord = el.tag == "note" and el.find("chord") is not None
+        if not chord and onset != pos:
+            gap = ET.SubElement(m, "forward" if onset > pos else "backup")
+            ET.SubElement(gap, "duration").text = str(abs(onset - pos))
+            pos = onset
+        m.append(el)
+        if el.tag == "note" and not chord and el.find("grace") is None:
+            pos += int(el.findtext("duration") or 0)
+    return m
+
+
+def measure_xml(m):
+    ET.indent(m, space="  ", level=2)
+    return "    " + ET.tostring(m, encoding="unicode", short_empty_elements=False).rstrip() + "\n"
+
+
+def divisions_at(text, pid, number):
+    """Last <divisions> of the part up to and including measure NUMBER."""
+    p0, _ = part_span(text, pid)
+    _, e = measure_span(text, pid, number)
+    found = re.findall(r"<divisions>(\d+)</divisions>", text[p0:e])
+    return int(found[-1]) if found else 1
+
+
+def part_ids(text, part):
+    return [part] if part else re.findall(r'<part\s+id="([^"]+)"', text)
+
+
+def cmd_split(args):
+    text = read_text(args.score)
+    at_q = Fraction(args.at)
+    for pid in part_ids(text, args.part):
+        s, e = measure_span(text, pid, args.measure)
+        m = ET.fromstring(text[s:e])
+        at = at_q * divisions_at(text, pid, args.measure)
+        if at.denominator != 1:
+            sys.exit(f"{pid}: --at {args.at} is not a whole number of divisions")
+        at = int(at)
+        items, _ = timed_items(m)
+        first, second = [], []
+        side_of_onset = {}
+        for onset, el in items:
+            if el.tag == "barline" and el.get("location") == "right":
+                second.append((0, el))
+            elif el.tag in ("attributes", "print") or (el.tag == "barline" and onset == 0):
+                first.append((onset, el))
+            elif onset < at or (el.tag == "note" and el.find("chord") is not None
+                               and side_of_onset.get(onset) == "first"):
+                if el.tag == "note" and el.find("grace") is None and el.find("chord") is None \
+                        and onset + int(el.findtext("duration") or 0) > at:
+                    print(f"{pid} m{args.measure}: note at {onset} crosses the split; "
+                          "left in the first measure, fix it by hand", file=sys.stderr)
+                side_of_onset[onset] = "first"
+                first.append((onset, el))
+            else:
+                second.append((onset - at, el))
+        attrib = dict(m.attrib)
+        attrib.pop("implicit", None)
+        a = rebuild_measure(dict(m.attrib), first)
+        b = rebuild_measure(dict(attrib, number=f"{args.measure}X"), second)
+        text = text[:s] + measure_xml(a) + measure_xml(b) + text[e:]
+    write_checked(args, renumber_text(text))
+
+
+def cmd_merge(args):
+    text = read_text(args.score)
+    for pid in part_ids(text, args.part):
+        s, e = measure_span(text, pid, args.measure)
+        m1 = ET.fromstring(text[s:e])
+        nxt = re.compile(r"<measure\b[^>]*>").search(text, e, part_span(text, pid)[1])
+        if not nxt:
+            sys.exit(f"{pid} m{args.measure}: no next measure to merge")
+        number = re.search(r'number="([^"]+)"', nxt.group()).group(1)
+        s2, e2 = measure_span(text, pid, number)
+        m2 = ET.fromstring(text[s2:e2])
+        items1, end1 = timed_items(m1)
+        items2, _ = timed_items(m2)
+        items = [(o, el) for o, el in items1 if not (el.tag == "barline" and el.get("location") == "right")]
+        for o, el in items2:
+            if el.tag == "print" or (el.tag == "barline" and el.get("location") == "left"):
+                continue
+            items.append((o + end1, el))
+        text = text[:s] + measure_xml(rebuild_measure(dict(m1.attrib), items)) + text[e2:]
+    write_checked(args, renumber_text(text))
 
 
 # ---------------------------------------------------------------- main
@@ -667,6 +787,23 @@ def main():
             p.add_argument("fragment", help="file with <measure> element(s), or - for stdin")
         p.add_argument("-o", "--output", help="write here instead of overwriting SCORE")
         p.set_defaults(func={"replace": cmd_replace, "insert": cmd_insert, "delete": cmd_delete}[name])
+
+    p = sub.add_parser("split", help="split a measure in two at a position (barline missed by the OMR); "
+                                     "all parts unless --part, then renumber")
+    p.add_argument("score")
+    p.add_argument("--measure", required=True)
+    p.add_argument("--at", required=True, help="split position in quarter notes from the measure start, e.g. 2 or 3/2")
+    p.add_argument("--part")
+    p.add_argument("-o", "--output")
+    p.set_defaults(func=cmd_split)
+
+    p = sub.add_parser("merge", help="merge a measure with the next one (extra barline read by the OMR); "
+                                     "all parts unless --part, then renumber")
+    p.add_argument("score")
+    p.add_argument("--measure", required=True)
+    p.add_argument("--part")
+    p.add_argument("-o", "--output")
+    p.set_defaults(func=cmd_merge)
 
     p = sub.add_parser("renumber", help="renumber the measures of every part consecutively")
     p.add_argument("score")
