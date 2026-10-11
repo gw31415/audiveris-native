@@ -354,6 +354,9 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             }
         }
         let sys_fifths = fifths_state;
+        // Time signature in force at the system start: each part tracks its
+        // own copy so every part gets the same <time> attributes.
+        let sys_time = time_state;
         let (repeats, repeat_dots) = repeat_signs(sheet, sys);
         let endings = system_endings(sheet, sys);
         // Multiple rests decided for the whole system (all parts expand alike).
@@ -364,6 +367,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             let Some(pi) = map[spi] else { continue };
             let part = &mut parts[pi];
             let mut part_fifths = sys_fifths;
+            let mut part_time = sys_time;
             let mut fifths = fifths;
             part.staves = part.staves.max(part_staves.len() as u32);
             // Clefs at system start.
@@ -397,29 +401,29 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                         part_fifths = Some(fifths);
                     }
                     if let Some(t) = time
-                        && time_state != Some(t)
+                        && part_time != Some(t)
                     {
                         attrs.time = Some(t);
-                        time_state = Some(t);
+                        part_time = Some(t);
                     }
-                    if time_state.is_none() {
+                    if part_time.is_none() {
                         let t = TimeSig {
                             beats: 4,
                             beat_type: 4,
                             symbol: None,
                         };
                         attrs.time = Some(t);
-                        time_state = Some(t);
+                        part_time = Some(t);
                     }
                     attrs.clefs = changed_clefs.clone();
                 }
                 // Mid-system time signature (from symbols) at the start of this measure.
                 if mi > 0
                     && let Some(t) = measure_time_change(sheet, &sys.staves, x_lo, x_lo + 4.0 * il)
-                    && time_state != Some(t)
+                    && part_time != Some(t)
                 {
                     attrs.time = Some(t);
-                    time_state = Some(t);
+                    part_time = Some(t);
                 }
                 // Key change after the opening barline of this measure (majority of staves).
                 if mi > 0
@@ -433,7 +437,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                         part_fifths = Some(f);
                     }
                 }
-                let ts = time_state.unwrap();
+                let ts = part_time.unwrap();
                 let expected = Q::new(ts.beats as i64, ts.beat_type as i64);
                 let mut m = Measure {
                     new_system: mi == 0,
@@ -488,6 +492,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                 }
             }
             fifths_state = part_fifths;
+            time_state = part_time;
             for (n, c) in clefs_now {
                 clef_state.insert((pi, n), c);
             }

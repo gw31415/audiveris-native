@@ -238,5 +238,10 @@ mod tests {
         assert_eq!(first, ["A-14", "G04", "F04", "F04", "F04", "F04", "E04"]);
         let xml = musicxml::write(&score, "test");
         assert!(xml.contains("<fifths>-4</fifths>") && xml.contains("<beats>3</beats>"));
+        // Every part opens with the 3/4 shown on all staves.
+        for p in &score.parts {
+            let t = p.measures[0].attributes.as_ref().and_then(|a| a.time).unwrap();
+            assert_eq!((t.beats, t.beat_type), (3, 4));
+        }
     }
 }
