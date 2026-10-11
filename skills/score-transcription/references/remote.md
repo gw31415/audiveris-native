@@ -46,9 +46,10 @@ MCP からの実行は PATH が通らないことがあるので、`~/.cargo/bin
 
 3. **OMR と材料**:
    ```json
-   ["bash","-c","T=$HOME/audiveris-native/skills/score-transcription/scripts/scoretool.py; $HOME/.cargo/bin/audiveris-native --debug debug -o omr.musicxml page-*.png && python3 $T crops debug crops page-*.png && python3 $T check omr.musicxml; python3 $T summary omr.musicxml"]
+   ["bash","-c","T=$HOME/audiveris-native/skills/score-transcription/scripts/scoretool.py; $HOME/.cargo/bin/audiveris-native --debug debug --report omr.log -o omr.musicxml page-*.png && cat omr.log && python3 $T crops debug crops page-*.png && python3 $T check omr.musicxml; python3 $T summary omr.musicxml"]
    ```
-   出力が長いときは `summary --measures 1-16` のように分ける。
+   出力が長いときは `summary --measures 1-16` のように分ける。`unknown option --report` で止まるなら CLI が古いので、
+   サーバー側の準備の `cargo install` で更新する。
 
 4. **画像を見る**: `get_image(path="crops/page-1.png")`（全体）、`crops/S01.png`、`crops/S01-1-2.png` …
    （1 MiB 以下。超えるときは `crops --split 1` で作り直す）。

@@ -11,11 +11,18 @@ cargo build --release
 ./target/release/audiveris-native page1.png page2.png -o score.musicxml
 ./target/release/audiveris-native --lang deu page.png       # 歌詞の OCR 言語（Tesseract の言語名、既定 eng）
 ./target/release/audiveris-native -v --debug out/ page.png   # 工程ごとの時間、注釈画像と認識JSON
+./target/release/audiveris-native --report omr.log page.png  # 認識の報告（拍子の推定・補正、拍の合わない小節）
 cargo test --release                                       # 実譜面1ページの end-to-end テスト
 tools/evaluate.sh                                           # samples/ の正解との比較
 ```
 
 複数画像は同じ曲の連続ページとして 1 つの楽譜にまとめます（拍子・調・音部記号はページを跨いで引き継ぎ）。
+
+拍子記号を読めなかったとき（以前は 4/4 と仮定）や、読んだ拍子と大半の小節の中身が食い違うときは、
+小節の中身の長さから拍子を決め直してページを組み直します。`--report FILE` は、ページごとの解像度
+（五線の線間隔）と拍子の推定・補正の記録、小節数と拍子・調の変化、音価の合計が拍子に合わない小節
+（小節番号・ページ・段と推定原因）を書き出します。出力を下書き・参考資料として使うときに、
+信用できない小節を見分けるためのものです。
 
 ## VLM による校正スキル（score-transcription）
 
@@ -145,6 +152,7 @@ VPS などに置いた CLI を dev-session-mcp などのシェル系 MCP 経由�
 | | 途中の調号変更・取消（ナチュラル） | 🔧 | 本家 KeyBuilder（複縦線の後）。段頭と同じ分類器方式に、音部記号が決める♯/♭/♮の段の順序と後続の空白の検査を追加（冬の旅: FLAT 0.904→0.906） |
 | **拍子** | 段頭の拍子 | 🔧 | 分類器（全体形／分子・分母）＋分母の補完（本家 TimeBuilder の射影方式とは別）。段の全五線に拍子があることを要求（本家 TimeColumn と同じ）。冬の旅: 拍子の列 22/22 曲正解（本家 21/22） |
 | | 途中の拍子変更 | 🔧 | SYMBOLS の拍子形状。段頭と同じく全五線での一致を要求 |
+| | 小節の中身による拍子の推定・補正 | 🔧 | 本家は拍子が読めなければ既定値。読めないとき、または読んだ拍子に合う小節が 2 割以下で別の長さが過半のとき、その長さの拍子でページを組み直す（`--report` に記録）。samples の出力は不変、拍子記号を消した・3/4 に差し替えた Der Winter で 2/4 を復元 |
 | **符頭** | テンプレート生成（Bravura、fore/back/hole） | ✅ | TemplateFactory |
 | | テンプレート距離 | ✅ | Template.evaluate（重み 6/1/4） |
 | | 符頭サイズの推定 | 🔧 | 黒符頭幅の実測（本家 BlackHeadSizer）。優位性: 音高側の指標で確認 |

@@ -4,7 +4,7 @@ use std::fmt::Write;
 
 use crate::grid::BarStyle;
 use crate::rational::{Q, gcd, lcm};
-use crate::score::{Event, Kind, Measure, Score};
+use crate::score::{Event, Kind, Measure, Part, Score};
 
 fn type_name(base: Q) -> &'static str {
     match (base.n, base.d) {
@@ -79,15 +79,11 @@ pub fn write(score: &Score, title: &str) -> String {
     x.push_str("  </part-list>\n");
     for (i, p) in score.parts.iter().enumerate() {
         let _ = writeln!(x, "  <part id=\"P{}\">", i + 1);
-        // Implicit measures (pickup, second half) are not counted.
-        let mut number = 0;
-        for (mi, m) in p.measures.iter().enumerate() {
+        for (mi, (m, label)) in p.measures.iter().zip(measure_labels(p)).enumerate() {
             if m.implicit {
-                let label = if mi == 0 { "0".to_string() } else { format!("{number}X1") };
                 let _ = writeln!(x, "    <measure number=\"{label}\" implicit=\"yes\">");
             } else {
-                number += 1;
-                let _ = writeln!(x, "    <measure number=\"{number}\">");
+                let _ = writeln!(x, "    <measure number=\"{label}\">");
             }
             if m.new_system && mi > 0 {
                 x.push_str("      <print new-system=\"yes\"/>\n");
@@ -135,6 +131,24 @@ pub fn write(score: &Score, title: &str) -> String {
     }
     x.push_str("</score-partwise>\n");
     x
+}
+
+/// Measure numbers: implicit measures (pickup, second half of a measure
+/// split by a repeat) are not counted.
+pub fn measure_labels(p: &Part) -> Vec<String> {
+    let mut number = 0;
+    p.measures
+        .iter()
+        .enumerate()
+        .map(|(mi, m)| {
+            if m.implicit {
+                if mi == 0 { "0".to_string() } else { format!("{number}X1") }
+            } else {
+                number += 1;
+                number.to_string()
+            }
+        })
+        .collect()
 }
 
 fn write_attributes(x: &mut String, m: &Measure, first: bool, div: i64, staves: u32) {

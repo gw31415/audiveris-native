@@ -15,6 +15,7 @@ mod labels;
 mod musicxml;
 mod pipeline;
 mod rational;
+mod report;
 mod scale;
 mod score;
 mod staff;
@@ -34,6 +35,8 @@ Options:
   -o, --output FILE   MusicXML output (default: first image with .musicxml extension)
       --lang LANGS    OCR languages for lyrics (Tesseract names, default eng)
       --debug DIR     write per-page annotated images and recognition JSON into DIR
+      --report FILE   write a recognition report: per-page notes, assumed or corrected
+                      time signatures, and measures whose durations do not add up
   -v, --verbose       print step timings
   -h, --help          show this help";
 
@@ -41,6 +44,7 @@ struct Args {
     inputs: Vec<PathBuf>,
     output: Option<PathBuf>,
     debug: Option<PathBuf>,
+    report: Option<PathBuf>,
     verbose: bool,
     lang: String,
 }
@@ -50,6 +54,7 @@ fn parse_args() -> Result<Args, String> {
         inputs: Vec::new(),
         output: None,
         debug: None,
+        report: None,
         verbose: false,
         lang: "eng".into(),
     };
@@ -65,6 +70,7 @@ fn parse_args() -> Result<Args, String> {
             }
             "--lang" => a.lang = it.next().ok_or("missing value for --lang")?,
             "--debug" => a.debug = Some(it.next().ok_or("missing value for --debug")?.into()),
+            "--report" => a.report = Some(it.next().ok_or("missing value for --report")?.into()),
             "-v" | "--verbose" => a.verbose = true,
             s if s.starts_with('-') => return Err(format!("unknown option {s}\n\n{USAGE}")),
             s => a.inputs.push(s.into()),
@@ -165,9 +171,23 @@ fn run() -> Result<(), String> {
     let args = parse_args()?;
     let mut book: Option<score::Score> = None;
     let mut state = score::State::default();
+    let mut pages = Vec::new();
     for input in &args.inputs {
         let sheet = pipeline::process(input, args.verbose, &args.lang)?;
-        let page = score::build(&sheet, &mut state);
+        let mut page = score::build(&sheet, &mut state);
+        if args.verbose {
+            for note in &page.notes {
+                eprintln!("{}: {note}", input.display());
+            }
+        }
+        pages.push(report::Page {
+            name: input.file_name().map_or(String::new(), |s| s.to_string_lossy().into_owned()),
+            width: sheet.binary.width,
+            height: sheet.binary.height,
+            interline: sheet.scale.interline,
+            systems: sheet.systems.len(),
+            notes: std::mem::take(&mut page.notes),
+        });
         if let Some(dir) = &args.debug {
             let stem = input.file_stem().and_then(|s| s.to_str()).unwrap_or("page");
             write_debug(dir, stem, &sheet, &page)?;
@@ -198,6 +218,13 @@ fn run() -> Result<(), String> {
         .clone()
         .unwrap_or_else(|| args.inputs[0].with_extension("musicxml"));
     std::fs::write(&out, xml).map_err(|e| format!("{}: {e}", out.display()))?;
+    if let Some(path) = &args.report {
+        let (text, flagged) = report::write(&pages, &score);
+        std::fs::write(path, text).map_err(|e| format!("{}: {e}", path.display()))?;
+        if args.verbose {
+            eprintln!("wrote {} ({flagged} flagged measures)", path.display());
+        }
+    }
     if args.verbose {
         eprintln!("wrote {}", out.display());
     }
@@ -243,5 +270,65 @@ mod tests {
             let t = p.measures[0].attributes.as_ref().and_then(|a| a.time).unwrap();
             assert_eq!((t.beats, t.beat_type), (3, 4));
         }
+    }
+
+    /// Der Winter (2/4) with its time signatures erased, or replaced by An
+    /// Laura's 3/4: the time is taken from the measure contents and the
+    /// result is the same as with the 2/4 read.
+    #[test]
+    fn time_signature_from_contents() {
+        let dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("samples/real");
+        let winter = image::open(dir.join("der-winter.png")).unwrap().to_luma8();
+        let laura = image::open(dir.join("an-laura.png")).unwrap().to_luma8();
+        let three = image::imageops::crop_imm(&laura, 343, 388, 24, 51).to_image();
+        // Time signature columns of the first system (x, y of the 2/4).
+        let spots = [(329, 501), (330, 639), (330, 758)];
+        let read = |img: &image::GrayImage, name: &str| {
+            let path = std::env::temp_dir().join(format!("audiveris-native-{name}-{}.png", std::process::id()));
+            img.save(&path).unwrap();
+            let sheet = pipeline::process(&path, false, "eng").unwrap();
+            std::fs::remove_file(&path).ok();
+            score::build(&sheet, &mut score::State::default())
+        };
+        let reference = read(&winter, "winter");
+        assert!(reference.notes.is_empty());
+        let mut erased = winter.clone();
+        for &(x, y) in &spots {
+            for yy in y - 3..y + 52 {
+                for xx in x - 3..x + 22 {
+                    erased.put_pixel(xx, yy, image::Luma([255]));
+                }
+            }
+        }
+        let mut replaced = erased.clone();
+        for &(x, y) in &spots {
+            image::imageops::replace(&mut replaced, &three, x as i64 - 3, y as i64 - 2);
+        }
+        for (img, name, note) in [(&erased, "erased", "no time signature read"), (&replaced, "replaced", "read as 3/4")] {
+            let s = read(img, name);
+            assert!(s.notes.iter().any(|n| n.contains(note)), "{name}: {:?}", s.notes);
+            assert_eq!(musicxml::write(&s, "t"), musicxml::write(&reference, "t"), "{name}");
+        }
+    }
+
+    /// The report lists the overfull measures of Der Winter by number and system.
+    #[test]
+    fn report_flags_measures() {
+        let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("samples/real/der-winter.png");
+        let sheet = pipeline::process(&path, false, "eng").unwrap();
+        let score = score::build(&sheet, &mut score::State::default());
+        let page = report::Page {
+            name: "der-winter.png".into(),
+            width: sheet.binary.width,
+            height: sheet.binary.height,
+            interline: sheet.scale.interline,
+            systems: sheet.systems.len(),
+            notes: Vec::new(),
+        };
+        let (text, flagged) = report::write(&[page], &score);
+        assert_eq!(flagged, 2, "{text}");
+        assert!(text.contains("measures: 9 (P1=9, P2=9), numbered 0..8"), "{text}");
+        assert!(text.contains("m5 (page 1, S02): P1 v1 overfull (15/4 of 2 quarters)"), "{text}");
+        assert!(text.contains("m7 (page 1, S02): P1 v1 overfull"), "{text}");
     }
 }

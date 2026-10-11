@@ -267,6 +267,7 @@ def cmd_check(args):
     problems = []
     counts = {}
     first_time = None
+    times = {}  # part -> [(measure number, "beats/beat-type")]
     for part in root.findall("part"):
         pid = part.get("id")
         measures = part.findall("measure")
@@ -293,6 +294,8 @@ def cmd_check(args):
                         divisions = int(el.findtext("divisions"))
                     t = el.find("time")
                     if t is not None and t.findtext("beats"):
+                        times.setdefault(pid, []).append(
+                            (num, f"{t.findtext('beats')}/{t.findtext('beat-type')}"))
                         try:
                             beats = Fraction(sum(int(x) for x in t.findtext("beats").split("+")))
                             beat_type = int(t.findtext("beat-type"))
@@ -355,7 +358,16 @@ def cmd_check(args):
                         + ", ".join(f"{k}={v}" for k, v in counts.items()))
     for p in problems:
         print(p)
-    print(f"{len(problems)} issue(s); measures per part: "
+    # One line per distinct time-signature sequence (normally all parts agree).
+    seqs = {}
+    for pid, seq in times.items():
+        seqs.setdefault(tuple(seq), []).append(pid)
+    for seq, pids in seqs.items():
+        label = "time signatures" + (f" ({','.join(pids)})" if len(seqs) > 1 else "")
+        print(f"{label}: " + ", ".join(f"{t} from m{n}" for n, t in seq))
+    flagged = {re.match(r"\S+ m(\S+?):?(?: |$)", p).group(1) for p in problems
+               if re.match(r"\S+ m\S+", p)}
+    print(f"{len(problems)} issue(s) in {len(flagged)} measure(s); measures per part: "
           + ", ".join(f"{k}={v}" for k, v in counts.items()))
     return 1 if problems else 0
 

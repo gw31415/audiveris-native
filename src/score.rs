@@ -142,6 +142,10 @@ pub struct Measure {
     pub ending: (Option<u32>, Option<(u32, bool)>),
     /// Pickup or second half of a measure split by a repeat (not counted).
     pub implicit: bool,
+    /// Time signature as read for the time in force (None: none read, the
+    /// time is assumed).
+    #[serde(skip)]
+    pub time_read: Option<TimeSig>,
 }
 
 #[derive(Clone, Debug, serde::Serialize)]
@@ -157,6 +161,8 @@ pub struct Score {
     pub title: Option<String>,
     pub composer: Option<String>,
     pub lyricist: Option<String>,
+    /// Decisions worth reporting (time signature assumed or corrected).
+    pub notes: Vec<String>,
 }
 
 const SHARP_ORDER: [usize; 7] = [3, 0, 4, 1, 5, 2, 6]; // F C G D A E B
@@ -235,13 +241,32 @@ fn mode(values: impl Iterator<Item = i32>) -> Option<i32> {
 }
 
 /// Musical state carried from one page to the next.
-#[derive(Default)]
+#[derive(Default, Clone)]
 pub struct State {
     /// Staff counts of the parts of the fullest system seen so far.
     template: Vec<usize>,
     clefs: HashMap<(usize, u32), ClefKind>,
     fifths: Option<i32>,
     time: Option<TimeSig>,
+    /// Time signature read for the time in force (None: assumed).
+    time_read: Option<TimeSig>,
+    /// Misread time signatures corrected from the measure contents: (read, used).
+    time_fixes: Vec<(TimeSig, TimeSig)>,
+    /// Time used when none is read (from the measure contents, else 4/4).
+    default_time: Option<TimeSig>,
+}
+
+impl State {
+    fn fix_time(&self, t: TimeSig) -> TimeSig {
+        self.time_fixes.iter().find(|f| f.0 == t).map_or(t, |f| f.1)
+    }
+    fn assumed_time(&self) -> TimeSig {
+        self.default_time.unwrap_or(TimeSig {
+            beats: 4,
+            beat_type: 4,
+            symbol: None,
+        })
+    }
 }
 
 /// Align system parts to template parts by staff count, from the bottom
@@ -271,15 +296,128 @@ fn filler(m: &Measure) -> Measure {
         repeat: (false, false),
         ending: (None, None),
         implicit: false,
+        time_read: m.time_read,
     }
 }
 
+/// Builds the score of a page. The time signature in force is checked
+/// against the measure contents: a time signature that was not read (4/4
+/// assumed) or that most measures contradict is replaced by the one the
+/// contents show, and the page is built again with it.
 pub fn build(sheet: &Sheet, state: &mut State) -> Score {
+    let saved = state.clone();
+    let mut score = build_page(sheet, state);
+    let fixes = time_corrections(&score.parts);
+    if !fixes.is_empty() {
+        *state = saved;
+        let mut notes = Vec::new();
+        for (read, used, why) in fixes {
+            match read {
+                Some(r) => state.time_fixes.push((r, used)),
+                None => state.default_time = Some(used),
+            }
+            notes.push(why);
+        }
+        score = build_page(sheet, state);
+        score.notes.splice(0..0, notes);
+    }
+    score
+}
+
+fn time_name(t: TimeSig) -> String {
+    format!("{}/{}", t.beats, t.beat_type)
+}
+
+/// Time signature of a measure length: n/4 when possible, else n/8 or n/16.
+fn time_of_length(q: Q) -> Option<TimeSig> {
+    let (beats, beat_type) = match q.d {
+        1 | 2 | 4 => (q.n * 4 / q.d, 4),
+        8 | 16 => (q.n, q.d),
+        _ => return None,
+    };
+    (1..=12).contains(&beats).then_some(TimeSig {
+        beats: beats as u32,
+        beat_type: beat_type as u32,
+        symbol: None,
+    })
+}
+
+/// Time signatures the measure contents contradict, grouped by the time
+/// signature as read (None: assumed): (read, replacement, explanation).
+/// The length of a measure is the latest end of its events over all parts
+/// (whole-measure rests, multiple rests and pickups are not counted).
+fn time_corrections(parts: &[Part]) -> Vec<(Option<TimeSig>, TimeSig, String)> {
+    let n = parts.iter().map(|p| p.measures.len()).min().unwrap_or(0);
+    // (read, expected, lengths)
+    let mut groups: Vec<(Option<TimeSig>, Q, Vec<Q>)> = Vec::new();
+    for mi in 0..n {
+        let ms: Vec<&Measure> = parts.iter().map(|p| &p.measures[mi]).collect();
+        if ms.iter().any(|m| m.implicit || m.attributes.as_ref().is_some_and(|a| a.multiple_rest.is_some())) {
+            continue;
+        }
+        let len = ms
+            .iter()
+            .flat_map(|m| m.events.iter())
+            .filter(|e| !matches!(e.kind, Kind::Rest { whole_measure: true }))
+            .map(|e| e.start + e.duration)
+            .max();
+        let Some(len) = len else { continue };
+        let (read, expected) = (ms[0].time_read, ms[0].expected);
+        match groups.iter_mut().find(|g| g.0 == read && g.1 == expected) {
+            Some(g) => g.2.push(len),
+            None => groups.push((read, expected, vec![len])),
+        }
+    }
+    let mut out = Vec::new();
+    for (read, expected, lens) in groups {
+        let count = |q: Q| lens.iter().filter(|&&l| l == q).count();
+        let mut values = lens.clone();
+        values.sort();
+        values.dedup();
+        let Some(&best) = values.iter().max_by_key(|&&q| (count(q), q == expected)) else { continue };
+        if best == expected {
+            continue;
+        }
+        let (c, e, total) = (count(best), count(expected), lens.len());
+        let convincing = match read {
+            // Nothing read: follow a clear majority.
+            None => c >= 2 && 5 * c >= 2 * total,
+            // Read but contradicted by most measures, and hardly any fits it.
+            Some(_) => c >= 3 && 2 * c >= total && 5 * e <= total,
+        };
+        let Some(t) = time_of_length(best).filter(|_| convincing) else { continue };
+        let why = match read {
+            None => format!(
+                "no time signature read; {c} of {total} measures last {} -> using {} instead of {}",
+                time_name(t),
+                time_name(t),
+                time_name(time_of_length(expected).unwrap_or(t))
+            ),
+            Some(r) => format!(
+                "time signature read as {} but {c} of {total} measures last {} (only {e} fit) -> using {}",
+                time_name(r),
+                time_name(t),
+                time_name(t)
+            ),
+        };
+        out.push((read, t, why));
+    }
+    out
+}
+
+fn build_page(sheet: &Sheet, state: &mut State) -> Score {
     let il = sheet.scale.interline as f64;
     let mut parts: Vec<Part> = Vec::new();
+    let mut notes: Vec<String> = Vec::new();
     let mut clef_state = std::mem::take(&mut state.clefs);
     let mut fifths_state = state.fifths;
-    let mut time_state = state.time;
+    // The time carried from the previous page follows the corrections.
+    let mut time_read_state = state.time_read;
+    let mut time_state = match (state.time, time_read_state) {
+        (Some(_), Some(r)) => Some(state.fix_time(r)),
+        (Some(_), None) => Some(state.assumed_time()),
+        (None, _) => None,
+    };
 
     // Parts already built on previous pages are carried by the book; here we
     // only need as many as the template.
@@ -293,7 +431,8 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     for sys in &sheet.systems {
         // System-wide key and time from the staff headers.
         let fifths = mode(sys.staves.iter().map(|&s| sheet.headers[s].fifths)).unwrap_or(0);
-        let time = column_time(sys.staves.iter().map(|&s| sheet.headers[s].time));
+        let time_read = column_time(sys.staves.iter().map(|&s| sheet.headers[s].time));
+        let time = time_read.map(|t| state.fix_time(t));
         let counts: Vec<usize> = sys.parts.iter().map(|p| p.len()).collect();
         if counts.len() > state.template.len() {
             // Grow the template: existing parts keep their place.
@@ -350,6 +489,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     repeat: (false, false),
                     ending: (None, None),
                     implicit: false,
+                    time_read: time_read_state,
                 });
             }
         }
@@ -357,6 +497,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
         // Time signature in force at the system start: each part tracks its
         // own copy so every part gets the same <time> attributes.
         let sys_time = time_state;
+        let sys_time_read = time_read_state;
         let (repeats, repeat_dots) = repeat_signs(sheet, sys);
         let endings = system_endings(sheet, sys);
         // Multiple rests decided for the whole system (all parts expand alike).
@@ -368,6 +509,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             let part = &mut parts[pi];
             let mut part_fifths = sys_fifths;
             let mut part_time = sys_time;
+            let mut part_time_read = sys_time_read;
             let mut fifths = fifths;
             part.staves = part.staves.max(part_staves.len() as u32);
             // Clefs at system start.
@@ -400,30 +542,34 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                         attrs.fifths = Some(fifths);
                         part_fifths = Some(fifths);
                     }
-                    if let Some(t) = time
-                        && part_time != Some(t)
-                    {
-                        attrs.time = Some(t);
-                        part_time = Some(t);
+                    if let Some(t) = time {
+                        part_time_read = time_read;
+                        if part_time != Some(t) {
+                            attrs.time = Some(t);
+                            part_time = Some(t);
+                        }
                     }
                     if part_time.is_none() {
-                        let t = TimeSig {
-                            beats: 4,
-                            beat_type: 4,
-                            symbol: None,
-                        };
+                        let t = state.assumed_time();
+                        if pi == 0 && state.default_time.is_none() {
+                            notes.push(format!("no time signature read at the start; assumed {}", time_name(t)));
+                        }
                         attrs.time = Some(t);
                         part_time = Some(t);
+                        part_time_read = None;
                     }
                     attrs.clefs = changed_clefs.clone();
                 }
                 // Mid-system time signature (from symbols) at the start of this measure.
                 if mi > 0
-                    && let Some(t) = measure_time_change(sheet, &sys.staves, x_lo, x_lo + 4.0 * il)
-                    && part_time != Some(t)
+                    && let Some(r) = measure_time_change(sheet, &sys.staves, x_lo, x_lo + 4.0 * il)
                 {
-                    attrs.time = Some(t);
-                    part_time = Some(t);
+                    let t = state.fix_time(r);
+                    part_time_read = Some(r);
+                    if part_time != Some(t) {
+                        attrs.time = Some(t);
+                        part_time = Some(t);
+                    }
                 }
                 // Key change after the opening barline of this measure (majority of staves).
                 if mi > 0
@@ -450,6 +596,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
                     repeat: (false, false),
                     ending: (None, None),
                     implicit: false,
+                    time_read: part_time_read,
                 };
                 m.repeat = (repeats[mi].1, repeats[mi + 1].0);
                 m.ending = endings[mi];
@@ -493,6 +640,7 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
             }
             fifths_state = part_fifths;
             time_state = part_time;
+            time_read_state = part_time_read;
             for (n, c) in clefs_now {
                 clef_state.insert((pi, n), c);
             }
@@ -501,12 +649,13 @@ pub fn build(sheet: &Sheet, state: &mut State) -> Score {
     state.clefs = clef_state;
     state.fifths = fifths_state;
     state.time = time_state;
+    state.time_read = time_read_state;
     link_slurs(sheet, &mut parts);
     let lyric_words = assign_lyrics(sheet, &mut parts);
     assign_words(sheet, &mut parts, &lyric_words);
     fix_measures(&mut parts);
     let (title, composer, lyricist) = page_header(sheet);
-    Score { parts, title, composer, lyricist }
+    Score { parts, title, composer, lyricist, notes }
 }
 
 /// Title, composer and lyricist (Audiveris text roles TITLE, CREATOR): the
