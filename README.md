@@ -17,6 +17,22 @@ tools/evaluate.sh                                           # samples/ の正解
 
 複数画像は同じ曲の連続ページとして 1 つの楽譜にまとめます（拍子・調・音部記号はページを跨いで引き継ぎ）。
 
+## VLM による校正スキル（score-transcription）
+
+OMR の出力は誤検出を含むため、画像を読める LLM（Claude Opus、GPT など）に、画像を正本・本 CLI の
+MusicXML を参考データとして小節ごとに照合・修正させるエージェントスキルを同梱しています
+（[`skills/score-transcription/`](skills/score-transcription/SKILL.md)）。
+
+- Claude Code: `/plugin marketplace add gw31415/audiveris-native` → `/plugin install audiveris-native@audiveris-native`
+- その他のエージェント（Codex など Agent Skills 形式に対応するもの）: `skills/score-transcription/` を
+  そのエージェントのスキル置き場（例 `~/.codex/skills/`、`~/.claude/skills/`）にコピー
+
+スキルは CLI を使います。手元にインストールする（`cargo install --locked --git https://github.com/gw31415/audiveris-native`）か、
+VPS などに置いた CLI を dev-session-mcp などのシェル系 MCP 経由で使います
+（[リモートでの使い方](skills/score-transcription/references/remote.md)）。
+補助スクリプト `skills/score-transcription/scripts/scoretool.py` は単体でも使えます
+（小節ごとの要約、拍の過不足の検査、段・小節ごとの画像切り出し、小節単位の差し替え）。
+
 ## 処理の流れ（Audiveris の各 step と対応）
 
 | step | ファイル | 内容 |

@@ -1,0 +1,10 @@
+{
+  "name": "audiveris-native",
+  "description": "Score image to MusicXML: the audiveris-native OMR draft is proofread measure by measure against the image by a vision model.",
+  "version": "0.2.0",
+  "author": { "name": "gw31415" },
+  "homepage": "https://github.com/gw31415/audiveris-native",
+  "repository": "https://github.com/gw31415/audiveris-native",
+  "license": "AGPL-3.0-or-later",
+  "keywords": ["music", "omr", "musicxml", "sheet-music", "audiveris"]
+}
