@@ -138,20 +138,35 @@ fn clean_end(
     let il = scale.interline;
     let dx = il / 2;
     let h = (il * 2) / 3;
+    // Leave out the staff line itself where it is thicker than usual or the
+    // fitted staff is a few pixels off: follow the line's ink beside the bar.
+    let ink = |x: i32| (0..=scale.max_line + 2).take_while(|d| img.get(x, y + dir * d)).count() as i32;
+    let edge = ink(x0 - 2).min(ink(x1 + 2));
+    let (above, below) = (2.max(edge), 3.max(edge));
     let r = if dir < 0 {
-        Rect::new(x0 - dx, y - h - 1, x1 - x0 + 1 + 2 * dx, h - 1)
+        Rect::new(x0 - dx, y - h + 1 - above, x1 - x0 + 1 + 2 * dx, h - 1)
     } else {
-        Rect::new(x0 - dx, y + 3, x1 - x0 + 1 + 2 * dx, h - 1)
+        Rect::new(x0 - dx, y + below, x1 - x0 + 1 + 2 * dx, h - 1)
     };
     let n = img.count_rect(r);
     // The bar itself must not continue beyond the staff either.
     let r2 = if dir < 0 {
-        Rect::new(x0, y - h - 1, x1 - x0 + 1, h - 1)
+        Rect::new(x0, y - h + 1 - above, x1 - x0 + 1, h - 1)
     } else {
-        Rect::new(x0, y + 3, x1 - x0 + 1, h - 1)
+        Rect::new(x0, y + below, x1 - x0 + 1, h - 1)
     };
     let stops = (img.count_rect(r2) as f64) < 0.3 * r2.area() as f64;
-    stops && (stop_only || (n as f64) < 0.08 * r.area() as f64)
+    stops && (stop_only || (n as f64) < 0.08 * r.area() as f64) || crossed(img, r, il)
+}
+
+/// Is all the material beyond the staff end a tie or slur crossing the bar?
+/// Such a curve runs through the whole window and is thinner than a head in
+/// every column, while a stem going on, or a head at its end, is not.
+fn crossed(img: &Bitmap, r: Rect, il: i32) -> bool {
+    (r.x..r.x + r.w).all(|x| {
+        let n = (r.y..r.y + r.h).filter(|&y| img.get(x, y)).count();
+        n > 0 && (n as f64) < 0.4 * il as f64
+    })
 }
 
 pub fn build_systems(img: &Bitmap, staves: &mut [Staff], scale: &Scale) -> Vec<System> {

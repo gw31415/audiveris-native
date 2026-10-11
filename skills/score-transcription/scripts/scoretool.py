@@ -3,13 +3,17 @@
 
 Standard library only (cropping uses Pillow when present, else ImageMagick).
 
+  scoretool.py pages    SCORE.pdf OUT.png [--dpi 30] [--cols 8]
   scoretool.py summary  SCORE.musicxml [--part P1] [--measures 3-8]
+  scoretool.py systems  SCORE.musicxml [--part P1] [--printed 0,5,10,...] [--last N]
   scoretool.py check    SCORE.musicxml
   scoretool.py crops    DEBUG_DIR OUT_DIR IMAGE... [--split N] [--pad K]
   scoretool.py extract  SCORE.musicxml --measures 3-4 [--part P1]
   scoretool.py replace  SCORE.musicxml --part P1 --measure 3 FRAGMENT.xml [-o OUT]
   scoretool.py insert   SCORE.musicxml --part P1 --after 3 FRAGMENT.xml [-o OUT]
   scoretool.py delete   SCORE.musicxml --part P1 --measure 3 [-o OUT]
+  scoretool.py split    SCORE.musicxml --measure 3 --at 2 [--part P1] [-o OUT]
+  scoretool.py merge    SCORE.musicxml --measure 3 [--part P1] [-o OUT]
   scoretool.py renumber SCORE.musicxml [-o OUT]
 
 Run "scoretool.py COMMAND -h" for details.
@@ -260,6 +264,85 @@ def cmd_summary(args):
                 print(line)
 
 
+def systems_of(part):
+    """[(system number, [measure numbers])] from <print new-system>."""
+    out = []
+    for m in part.findall("measure"):
+        if not out or m.find("print[@new-system='yes']") is not None:
+            out.append((len(out) + 1, []))
+        out[-1][1].append(m.get("number"))
+    return out
+
+
+def cmd_systems(args):
+    root = load(args.score)
+    part = root.find(f"part[@id='{args.part}']") if args.part else root.find("part")
+    if part is None:
+        sys.exit(f"part {args.part} not found")
+    systems = systems_of(part)
+    printed = [int(x) for x in args.printed.split(",")] if args.printed else None
+    if printed and len(printed) != len(systems):
+        print(f"note: {len(printed)} printed numbers for {len(systems)} OMR systems; compared in order "
+              "(if the whole list was given, the OMR split or missed a system)")
+    off = 0
+    for i, (no, nums) in enumerate(systems):
+        line = f"S{no:02d}: OMR m{nums[0]}-m{nums[-1]} ({len(nums)})"
+        if printed and i < len(printed):
+            first = printed[i]
+            last = printed[i + 1] - 1 if i + 1 < len(printed) else args.last
+            if last is not None:
+                want = last - first + 1
+                diff = len(nums) - want
+                off += diff
+                line += f"  image m{first}-m{last} ({want})"
+                if diff:
+                    line += f"  {'+' if diff > 0 else ''}{diff}: OMR has {abs(diff)} measure(s) " \
+                            f"{'too many (extra barline)' if diff > 0 else 'too few (missed barline)'}"
+                if off:
+                    line += f"; later OMR numbers are off by {off:+d}"
+        print(line)
+
+
+def cmd_pages(args):
+    """Contact sheet of a PDF's pages, labelled with page numbers, to find
+    the pages of one part or movement; also the resolution of scanned pages."""
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        sys.exit("pages needs Pillow (pip install pillow)")
+    import tempfile
+    if not shutil.which("pdftoppm"):
+        sys.exit("pages needs pdftoppm (poppler-utils)")
+    with tempfile.TemporaryDirectory() as tmp:
+        subprocess.run(["pdftoppm", "-r", str(args.dpi), "-png", args.pdf, os.path.join(tmp, "p")], check=True)
+        files = sorted(os.listdir(tmp), key=lambda f: int(re.search(r"(\d+)\.png$", f).group(1)))
+        thumbs = [Image.open(os.path.join(tmp, f)).convert("L") for f in files]
+        w = max(t.width for t in thumbs)
+        h = max(t.height for t in thumbs)
+        cols = min(args.cols, len(thumbs))
+        rows = -(-len(thumbs) // cols)
+        sheet = Image.new("L", (cols * w, rows * (h + 24)), 255)
+        draw = ImageDraw.Draw(sheet)
+        for i, t in enumerate(thumbs):
+            x, y = (i % cols) * w, (i // cols) * (h + 24)
+            sheet.paste(t, (x, y + 24))
+            draw.text((x + 4, y + 4), f"p{i + 1}", fill=0)
+            draw.rectangle([x, y + 24, x + w - 1, y + 24 + h - 1], outline=160)
+        sheet.save(args.out, optimize=True)
+    print(f"{args.out}: {len(thumbs)} pages, {cols} per row")
+    if shutil.which("pdfimages"):
+        out = subprocess.run(["pdfimages", "-list", args.pdf], capture_output=True, text=True).stdout
+        ppi = {}
+        for line in out.splitlines()[2:]:
+            f = line.split()
+            if len(f) > 13 and f[2] == "image":
+                ppi[int(f[0])] = max(ppi.get(int(f[0]), 0), int(f[12]))
+        if ppi:
+            vals = sorted(set(ppi.values()))
+            print(f"scanned pages: embedded images of {vals[0]}-{vals[-1]} ppi; render at 300 dpi "
+                  f"(pdftoppm -r 300 -f FIRST -l LAST); more than the scan does not add detail")
+
+
 # ---------------------------------------------------------------- checking
 
 def cmd_check(args):
@@ -267,6 +350,7 @@ def cmd_check(args):
     problems = []
     counts = {}
     first_time = None
+    times = {}  # part -> [(measure number, "beats/beat-type")]
     for part in root.findall("part"):
         pid = part.get("id")
         measures = part.findall("measure")
@@ -293,6 +377,8 @@ def cmd_check(args):
                         divisions = int(el.findtext("divisions"))
                     t = el.find("time")
                     if t is not None and t.findtext("beats"):
+                        times.setdefault(pid, []).append(
+                            (num, f"{t.findtext('beats')}/{t.findtext('beat-type')}"))
                         try:
                             beats = Fraction(sum(int(x) for x in t.findtext("beats").split("+")))
                             beat_type = int(t.findtext("beat-type"))
@@ -355,7 +441,16 @@ def cmd_check(args):
                         + ", ".join(f"{k}={v}" for k, v in counts.items()))
     for p in problems:
         print(p)
-    print(f"{len(problems)} issue(s); measures per part: "
+    # One line per distinct time-signature sequence (normally all parts agree).
+    seqs = {}
+    for pid, seq in times.items():
+        seqs.setdefault(tuple(seq), []).append(pid)
+    for seq, pids in seqs.items():
+        label = "time signatures" + (f" ({','.join(pids)})" if len(seqs) > 1 else "")
+        print(f"{label}: " + ", ".join(f"{t} from m{n}" for n, t in seq))
+    flagged = {re.match(r"\S+ m(\S+?):?(?: |$)", p).group(1) for p in problems
+               if re.match(r"\S+ m\S+", p)}
+    print(f"{len(problems)} issue(s) in {len(flagged)} measure(s); measures per part: "
           + ", ".join(f"{k}={v}" for k, v in counts.items()))
     return 1 if problems else 0
 
@@ -590,8 +685,7 @@ def cmd_delete(args):
     write_checked(args, text[:s] + text[e:])
 
 
-def cmd_renumber(args):
-    text = read_text(args.score)
+def renumber_text(text):
     out, pos = [], 0
     for pm in re.finditer(r'<part\s+id="[^"]+"\s*>', text):
         p1 = text.index("</part>", pm.end())
@@ -603,7 +697,133 @@ def cmd_renumber(args):
             pos = mm.end()
             n += 1
     out.append(text[pos:])
-    write_checked(args, "".join(out))
+    return "".join(out)
+
+
+def cmd_renumber(args):
+    write_checked(args, renumber_text(read_text(args.score)))
+
+
+def timed_items(measure):
+    """(onset in divisions, element) for the children of a <measure>, without
+    <backup>/<forward> (positions are rebuilt by rebuild_measure), and the end."""
+    items, pos, last_onset, end = [], 0, 0, 0
+    for el in measure:
+        if el.tag == "backup":
+            pos -= int(el.findtext("duration") or 0)
+        elif el.tag == "forward":
+            pos += int(el.findtext("duration") or 0)
+        elif el.tag == "note":
+            if el.find("chord") is not None:
+                items.append((last_onset, el))
+            else:
+                items.append((pos, el))
+                last_onset = pos
+                if el.find("grace") is None:
+                    pos += int(el.findtext("duration") or 0)
+        else:
+            items.append((pos, el))
+        end = max(end, pos)
+    return items, end
+
+
+def rebuild_measure(attrib, items):
+    """A <measure> holding items (onset, element), with <backup>/<forward>
+    inserted wherever the next element does not start at the current position."""
+    m = ET.Element("measure", attrib)
+    pos = 0
+    for onset, el in items:
+        chord = el.tag == "note" and el.find("chord") is not None
+        if not chord and onset != pos:
+            gap = ET.SubElement(m, "forward" if onset > pos else "backup")
+            ET.SubElement(gap, "duration").text = str(abs(onset - pos))
+            pos = onset
+        m.append(el)
+        if el.tag == "note" and not chord and el.find("grace") is None:
+            pos += int(el.findtext("duration") or 0)
+    return m
+
+
+def measure_xml(m):
+    ET.indent(m, space="  ", level=2)
+    return "    " + ET.tostring(m, encoding="unicode", short_empty_elements=False).rstrip() + "\n"
+
+
+def divisions_at(text, pid, number):
+    """Last <divisions> of the part up to and including measure NUMBER."""
+    p0, _ = part_span(text, pid)
+    _, e = measure_span(text, pid, number)
+    found = re.findall(r"<divisions>(\d+)</divisions>", text[p0:e])
+    return int(found[-1]) if found else 1
+
+
+def part_ids(text, part):
+    return [part] if part else re.findall(r'<part\s+id="([^"]+)"', text)
+
+
+def cmd_split(args):
+    text = read_text(args.score)
+    at_q = Fraction(args.at or 0)
+    for pid in part_ids(text, args.part):
+        s, e = measure_span(text, pid, args.measure)
+        m = ET.fromstring(text[s:e])
+        items, _ = timed_items(m)
+        if args.before_note:
+            onsets = sorted({o for o, el in items if el.tag == "note"
+                             and el.find("chord") is None and el.find("grace") is None})
+            if not 1 <= args.before_note <= len(onsets):
+                sys.exit(f"{pid} m{args.measure}: only {len(onsets)} note positions")
+            at = onsets[args.before_note - 1]
+        else:
+            at = at_q * divisions_at(text, pid, args.measure)
+            if at.denominator != 1:
+                sys.exit(f"{pid}: --at {args.at} is not a whole number of divisions")
+            at = int(at)
+        first, second = [], []
+        side_of_onset = {}
+        for onset, el in items:
+            if el.tag == "barline" and el.get("location") == "right":
+                second.append((0, el))
+            elif el.tag in ("attributes", "print") or (el.tag == "barline" and onset == 0):
+                first.append((onset, el))
+            elif onset < at or (el.tag == "note" and el.find("chord") is not None
+                               and side_of_onset.get(onset) == "first"):
+                if el.tag == "note" and el.find("grace") is None and el.find("chord") is None \
+                        and onset + int(el.findtext("duration") or 0) > at:
+                    print(f"{pid} m{args.measure}: note at {onset} crosses the split; "
+                          "left in the first measure, fix it by hand", file=sys.stderr)
+                side_of_onset[onset] = "first"
+                first.append((onset, el))
+            else:
+                second.append((onset - at, el))
+        attrib = dict(m.attrib)
+        attrib.pop("implicit", None)
+        a = rebuild_measure(dict(m.attrib), first)
+        b = rebuild_measure(dict(attrib, number=f"{args.measure}X"), second)
+        text = text[:s] + measure_xml(a) + measure_xml(b) + text[e:]
+    write_checked(args, renumber_text(text))
+
+
+def cmd_merge(args):
+    text = read_text(args.score)
+    for pid in part_ids(text, args.part):
+        s, e = measure_span(text, pid, args.measure)
+        m1 = ET.fromstring(text[s:e])
+        nxt = re.compile(r"<measure\b[^>]*>").search(text, e, part_span(text, pid)[1])
+        if not nxt:
+            sys.exit(f"{pid} m{args.measure}: no next measure to merge")
+        number = re.search(r'number="([^"]+)"', nxt.group()).group(1)
+        s2, e2 = measure_span(text, pid, number)
+        m2 = ET.fromstring(text[s2:e2])
+        items1, end1 = timed_items(m1)
+        items2, _ = timed_items(m2)
+        items = [(o, el) for o, el in items1 if not (el.tag == "barline" and el.get("location") == "right")]
+        for o, el in items2:
+            if el.tag == "print" or (el.tag == "barline" and el.get("location") == "left"):
+                continue
+            items.append((o + end1, el))
+        text = text[:s] + measure_xml(rebuild_measure(dict(m1.attrib), items)) + text[e2:]
+    write_checked(args, renumber_text(text))
 
 
 # ---------------------------------------------------------------- main
@@ -619,6 +839,22 @@ def main():
     p.add_argument("--part")
     p.add_argument("--measures", help="e.g. 3-8")
     p.set_defaults(func=cmd_summary)
+
+    p = sub.add_parser("pages", help="contact sheet of a PDF's pages (to find a part or movement)")
+    p.add_argument("pdf")
+    p.add_argument("out")
+    p.add_argument("--dpi", type=int, default=30)
+    p.add_argument("--cols", type=int, default=8)
+    p.set_defaults(func=cmd_pages)
+
+    p = sub.add_parser("systems", help="measures per system; with --printed, compare with the measure "
+                                       "numbers printed at the start of each system")
+    p.add_argument("score")
+    p.add_argument("--part")
+    p.add_argument("--printed", help="first printed measure number of each system, in order "
+                                     "(e.g. 0,5,10,16; 0 or 1 for the first system)")
+    p.add_argument("--last", type=int, help="number of the last measure of the last system")
+    p.set_defaults(func=cmd_systems)
 
     p = sub.add_parser("check", help="report measures whose voices do not fill the time signature, "
                                      "dangling ties, part measure count mismatches")
@@ -655,6 +891,26 @@ def main():
             p.add_argument("fragment", help="file with <measure> element(s), or - for stdin")
         p.add_argument("-o", "--output", help="write here instead of overwriting SCORE")
         p.set_defaults(func={"replace": cmd_replace, "insert": cmd_insert, "delete": cmd_delete}[name])
+
+    p = sub.add_parser("split", help="split a measure in two at a position (barline missed by the OMR); "
+                                     "all parts unless --part, then renumber")
+    p.add_argument("score")
+    p.add_argument("--measure", required=True)
+    where = p.add_mutually_exclusive_group(required=True)
+    where.add_argument("--at", help="split position in quarter notes from the measure start, e.g. 2 or 3/2")
+    where.add_argument("--before-note", type=int, help="split before the N-th note/rest position (1-based, "
+                       "in time order; use when the OMR durations are wrong)")
+    p.add_argument("--part")
+    p.add_argument("-o", "--output")
+    p.set_defaults(func=cmd_split)
+
+    p = sub.add_parser("merge", help="merge a measure with the next one (extra barline read by the OMR); "
+                                     "all parts unless --part, then renumber")
+    p.add_argument("score")
+    p.add_argument("--measure", required=True)
+    p.add_argument("--part")
+    p.add_argument("-o", "--output")
+    p.set_defaults(func=cmd_merge)
 
     p = sub.add_parser("renumber", help="renumber the measures of every part consecutively")
     p.add_argument("score")

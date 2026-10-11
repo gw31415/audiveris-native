@@ -29,13 +29,18 @@ impl Stem {
     }
 }
 
+/// Largest vertical gap bridged inside a stem, in interlines (binarization
+/// of a thin, blurred stem breaks it into segments; Audiveris StemsBuilder
+/// also links stem segments across small vertical gaps).
+const STEM_GAP: f64 = 0.3;
+
 struct Link {
     x: i32,
     top: i32,
     bottom: i32,
 }
 
-fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option<Link> {
+fn find_stem(nostaff: &Bitmap, faint: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option<Link> {
     let b = head.bounds;
     let il = scale.interline as f64;
     let ms = scale.max_stem;
@@ -71,7 +76,7 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
             else {
                 continue;
             };
-            let (top, bottom) = nostaff.vrun_at(x, ys);
+            let (top, bottom) = nostaff.vrun_gap_at(x, ys, (STEM_GAP * il).round() as i32, faint);
             let up_len = b.y - top;
             let down_len = bottom - b.bottom();
             let len = up_len.max(down_len);
@@ -113,7 +118,7 @@ fn find_stem(nostaff: &Bitmap, hr: &[u16], head: &Head, scale: &Scale) -> Option
 }
 
 /// Link heads to stems, reduce conflicting heads, build stems.
-pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Vec<Stem>) {
+pub fn link(nostaff: &Bitmap, faint: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Vec<Stem>) {
     let hr = nostaff.horizontal_run_lengths();
     let links: Vec<Option<Link>> = heads
         .iter()
@@ -121,7 +126,7 @@ pub fn link(nostaff: &Bitmap, heads: Vec<Head>, scale: &Scale) -> (Vec<Head>, Ve
             if h.shape.stemless() {
                 None
             } else {
-                find_stem(nostaff, &hr, h, scale)
+                find_stem(nostaff, faint, &hr, h, scale)
             }
         })
         .collect();

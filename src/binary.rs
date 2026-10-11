@@ -51,6 +51,29 @@ impl Bitmap {
         (a, b)
     }
 
+    /// Vertical run through (x, y) bridging gaps of at most `gap` pixels
+    /// that are black in `faint` (a thin, blurred stroke that binarization
+    /// broke into segments; a really white gap is not bridged).
+    pub fn vrun_gap_at(&self, x: i32, y: i32, gap: i32, faint: &Bitmap) -> (i32, i32) {
+        let (mut a, mut b) = self.vrun_at(x, y);
+        if b < a || gap <= 0 {
+            return (a, b);
+        }
+        loop {
+            match (1..=gap + 1).find(|d| self.get(x, a - d)) {
+                Some(d) if d > 1 && (1..d).all(|k| faint.get(x, a - k)) => a = self.vrun_at(x, a - d).0,
+                _ => break,
+            }
+        }
+        loop {
+            match (1..=gap + 1).find(|d| self.get(x, b + d)) {
+                Some(d) if d > 1 && (1..d).all(|k| faint.get(x, b + k)) => b = self.vrun_at(x, b + d).1,
+                _ => break,
+            }
+        }
+        (a, b)
+    }
+
     pub fn hrun_at(&self, x: i32, y: i32) -> (i32, i32) {
         if !self.get(x, y) {
             return (x, x - 1);
@@ -229,6 +252,27 @@ pub fn binarize(width: usize, height: usize, gray: &[u8]) -> Bitmap {
             let std = (rect(&squares) - mean * mean).abs().sqrt();
             out.data[y * width + x] = (gray[y * width + x] as f64) <= 0.7 * mean + 0.9 * std;
         }
+    }
+    out
+}
+
+/// Pixels visibly darker than the paper (paper: the 95th percentile of the
+/// gray levels), however faint: where a blurred stroke continues although
+/// the adaptive filter left it white.
+pub fn faint(width: usize, height: usize, gray: &[u8]) -> Bitmap {
+    let mut hist = [0usize; 256];
+    for &v in gray {
+        hist[v as usize] += 1;
+    }
+    let target = gray.len() * 95 / 100;
+    let mut acc = 0;
+    let paper = (0..256).find(|&v| {
+        acc += hist[v];
+        acc >= target
+    }).unwrap_or(255);
+    let mut out = Bitmap::new(width, height);
+    for (o, &v) in out.data.iter_mut().zip(gray) {
+        *o = (v as usize) + 10 < paper;
     }
     out
 }
