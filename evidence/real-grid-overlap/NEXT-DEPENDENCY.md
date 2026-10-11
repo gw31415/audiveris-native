@@ -1,5 +1,0 @@
-# Next dependency — real image quality
-
-The unchanged full An Laura image passes multi-Part beam neighborhoods and retained GRID BarConnector/Brace overlap. Its actual next failure is unsupported_head_foundation_kind in stem_chord_consistency -> validate_chord_inputs. Admit the real retained GRID objects into recognition-required reduction with original contextual grade, frozen and weak-purge semantics; preserve actual physical bodies, Staff/Part references, relations/manual status and original deletion order. Do not omit the objects from checks, invent grade/Voice IDs, or silently skip weak removal callbacks. Manual Brace removal changes Part membership in original; only implement that if recognition requires it, otherwise keep an explicit protection boundary.
-
-Continue remaining actual image HEADS/STEMS/MEASURES/SYMBOLS/rhythm/output failures against original Java. Independent real-score event, chord/voice/meter/symbol scoring and another rest-containing real-score image remain necessary for acceptance. Keep targeted comparisons and existing XML/XSD controls; save normal main/readback at small checkpoints and continue under existing authorization.

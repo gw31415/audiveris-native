@@ -1,5 +1,0 @@
-    Checking audiveris-staff-removal v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5/crates/audiveris-staff-removal)
-    Checking audiveris-native v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5)
-    Checking audiveris-classifier v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5/crates/audiveris-classifier)
-    Checking audiveris-glyph-features v0.1.0 (/Users/ama/Documents/Codex/2026-10-02/task-5/crates/audiveris-glyph-features)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.70s

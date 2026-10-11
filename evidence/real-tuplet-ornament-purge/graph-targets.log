@@ -1,7 +1,0 @@
-
-running 2 tests
-test shared_sig::explicit_tuplet::tests::callback_failure_keeps_registry_and_exclusions_limit_support ... ok
-test shared_sig::explicit_tuplet::tests::actual_cached_chord_support_matches_original_six_context ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 296 filtered out; finished in 0.02s
-

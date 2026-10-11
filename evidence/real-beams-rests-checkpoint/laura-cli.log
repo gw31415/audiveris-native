@@ -1,3 +1,0 @@
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
-     Running `/workspace/audiveris-debug-check-20261003/target/debug/audiveris-native beam-spots fixtures/official-grid/laura-gray.png /workspace/audiveris-real-beams-rests-check-20261003/laura-spots.pgm /workspace/audiveris-real-beams-rests-check-20261003/laura-report.json`
-Native beam spots: 409; prolog complete: true; initial candidates complete: true; beam interpretation and MusicXML remain incomplete

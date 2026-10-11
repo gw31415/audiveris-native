@@ -1,9 +1,0 @@
-# Real-image beam Staff neighborhood
-
-The unchanged full CC0 An Laura PNG previously stopped before beam builders because it contains multiple Parts. GRID now retains constructor-produced actual Part memberships, actual Staff/Curve objects and Staff area bands through PAGE and STEMS. Beam builders select surrounding actual Staff and Part references using the original containing-area, integer-distance and core-curve order, retaining two Staff references to the same Part. No owner is reconstructed from a report.
-
-Pinned original 9e1e55cd2746037d059345881c53e6a6754bffbd observes two systems, 60 points including 18 real beam centers, Staff boundaries, outside areas and duplicate actual Part references. The lossless 11687-byte fixture and original provenance are in fixtures/official-real-beam-staff-neighborhood. Native comparisons also preserve actual Arc identity and existing graph/storage. The first Java observer attempt used an unavailable Staff accessor; the successful observer uses the original getAbscissa sides.
-
-The actual full-image native CLI now passes this connection and stops at foundation_overlap_class_dependency_pending. No MusicXML or image quality acceptance is claimed. Original recognition is independently scored against the CC0 source score: 73 exact pitch/onset/duration/staff events out of 101 truth events and 92 original output events (F1 0.75648). Voice/chord grouping and notation quality remain unscored. The event comparator has independent chord, grace, rest, backup and wrong-pitch contracts and is a development tool, not a native recognition input.
-
-VALIDATION.json records focused tests and retained 63+correction8/exact7/64 XML byte/XSD regression. This is an interim checkpoint toward the revised real-image quality goal; surrounding editing, conversion, undo and all-API reproduction are outside that goal. Original task and unavailable ce785c9 remain untouched.

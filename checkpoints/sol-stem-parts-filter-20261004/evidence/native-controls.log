@@ -1,4 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33s
-     Running `/workspace/onboarding/target/debug/examples/stem_parts_filter_dump fixtures/official-stem-parts-filter/controls.json /workspace/work/stem-parts-filter/native-controls-final.json`
-Maximum center-line coordinate difference: 0

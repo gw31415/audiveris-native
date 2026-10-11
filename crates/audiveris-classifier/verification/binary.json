@@ -1,9 +1,0 @@
-{
-  "path": "target/release/audiveris-classify",
-  "sha256": "9b2b43e2af816495c4bfc976f9d3ad46be0cfc3695e8d5e466b98e070713542a",
-  "bytes": 675216,
-  "target": "aarch64-apple-darwin",
-  "profile": "release",
-  "not_committed": "Build product under target/; rebuild with Cargo.lock",
-  "production_java_dependency": false
-}

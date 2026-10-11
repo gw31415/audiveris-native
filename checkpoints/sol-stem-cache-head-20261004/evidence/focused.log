@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.55s
-     Running tests/stem_cache_head.rs (/workspace/onboarding/target/debug/deps/stem_cache_head-0e4dd0b8dde8f98f)
-
-running 2 tests
-test preserve_other_edges_owned_cache_and_atomic_refusals ... ok
-test original_cache_head_connections_and_callbacks_1152 ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.40s

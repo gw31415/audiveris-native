@@ -1,3 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
-     Running `/workspace/onboarding/target/debug/examples/stem_head_targets_dump fixtures/official-stem-head-targets/controls.json`

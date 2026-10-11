@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.80s
-     Running tests/stem_head_reference_context.rs (/workspace/onboarding/target/debug/deps/stem_head_reference_context-ec6554624465c1a1)
-
-running 2 tests
-test null_signed_zero_and_invalid_context_leave_live_reference_api_unchanged ... ok
-test original_xml_rounding_and_loaded_context_refs_from_native_laura_image_report ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.29s

@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "9496eb46bcb54bd52ea6f615fdf3290575f2a7ce",
-  "source_tree": "87a17d90421ce81b993e675b0f7173afefe4953b",
-  "all_fresh_restored_sha256_verified": 6212,
-  "source_clean": true,
-  "source": "/workspace/work/head-stem-connection/sol-head-stem-connection-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/head-stem-connection/sol-head-stem-connection-20261004-prepush/source-git"
-}

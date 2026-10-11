@@ -1,5 +1,0 @@
-# Next dependency — real image quality
-
-On the unmodified full An Laura image, beam surrounding Staff/Part lookup is connected and the actual next native failure is foundation_overlap_class_dependency_pending. Identify the actual encountered class, compare pinned original SigReducer.detectOverlaps and directional AbstractInter/Head/ensemble geometry, and connect only the recognition-required semantics. Preserve actual owners, relation/manual identity, callback ordering and existing rollback; do not suppress unknown classes or fabricate acceptance.
-
-Continue image -> recognition -> rhythm -> MusicXML on this representative score. Compare original and native events against independent CC0 MuseScore truth; add actual rest-containing representative score coverage and required chord/voice/meter/symbol scoring. Source original output is already imperfect, so original event count equality alone is not acceptance. Maintain targeted original comparisons and retained XML/XSD controls, normal main save/readback at small meaningful checkpoints. Do not return to the historical goal of every nonUI API.

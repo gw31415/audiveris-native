@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.69s
-     Running tests/stem_glyph_grade.rs (/workspace/onboarding/target/debug/deps/stem_glyph_grade-3b14212167c3a8c5)
-
-running 2 tests
-test physical_check_boundary_and_pixel_center_are_distinct ... ok
-test original_physical_glyph_nearline_and_grade_on_independent_rasters ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s

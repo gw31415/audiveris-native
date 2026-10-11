@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "8a49223686ef45cfef1a5f7f5f3f4a308ddd7060",
-  "source_tree": "caefa1c547ffec638ad03f0013f2e610577cc938",
-  "all_fresh_restored_sha256_verified": 6682,
-  "source_clean": true,
-  "source": "/workspace/work/stem-image-beam-linkers/sol-stem-image-beam-targets-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/stem-image-beam-linkers/sol-stem-image-beam-targets-20261004-prepush/source-git"
-}

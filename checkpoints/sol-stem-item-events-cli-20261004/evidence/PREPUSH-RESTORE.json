@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "b63a29eb7d2659873a1221d906810604998623fd",
-  "source_tree": "6407b1882b2c97e13700eb14c287bae878012b35",
-  "all_fresh_restored_sha256_verified": 6541,
-  "source_clean": true,
-  "source": "/workspace/work/stem-item-events/sol-stem-item-events-cli-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/stem-item-events/sol-stem-item-events-cli-20261004-prepush/source-git"
-}

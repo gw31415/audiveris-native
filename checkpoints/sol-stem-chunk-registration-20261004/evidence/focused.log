@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.50s
-     Running tests/stem_chunk_registration.rs (/workspace/onboarding/target/debug/deps/stem_chunk_registration-5618fc1ec1711ad2)
-
-running 2 tests
-test register_before_removal_keeps_groups_aliases_and_refuses_invalid_late_input ... ok
-test original_actual_raw_chunk_registration_alias_and_existing_removal_prefix_matches ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s

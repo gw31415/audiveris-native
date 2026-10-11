@@ -1,7 +1,0 @@
-Single local debug build, 1489x2104 (3,132,856 pixels), native CLI only.
-No Java runtime in this process; includes BINARY/SCALE/sections/filaments + JSON.
-Not a general benchmark or hard memory bound. RSS unavailable: timing tool sysctl denied.
-        1.47 real         1.14 user         0.01 sys
-time: sysctl kern.clockrate: Operation not permitted
-
-Full report JSON bytes: 1523495

@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.41s
-     Running tests/head_all_shape_boundaries.rs (/workspace/onboarding/target/debug/deps/head_all_shape_boundaries-6c7aa21b6769763c)
-
-running 2 tests
-test selected_catalog_preflight_preserves_veto_transaction_and_legacy_api ... ok
-test original_150_ulp_boundaries_and_all_24_registration_abnormal_states ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s

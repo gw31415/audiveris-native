@@ -1,3 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.19s
-     Running `/workspace/onboarding/target/debug/examples/stem_image_sources_dump fixtures/official-grid/laura-gray.png /workspace/work/stem-image-stumps/verified-laura-report.json /workspace/work/stem-image-sources/native-selection.json`

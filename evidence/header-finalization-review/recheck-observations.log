@@ -1,8 +1,0 @@
-    Blocking waiting for file lock on build directory
-   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
-   Compiling audiveris-finalization-review v0.1.0 (/workspace/shared/audiveris-cloud-continuation/header-research/finalization-review)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.76s
-     Running `/workspace/shared/audiveris-cloud-continuation/target/debug/audiveris-finalization-review`
-partition actual 0.25000000000000006; source expected 0.25000000000000006
-header_start_overflow_panics=false
-malformed_member_bounds_panics=false

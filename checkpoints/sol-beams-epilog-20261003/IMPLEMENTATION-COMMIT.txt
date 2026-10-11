@@ -1,6 +1,0 @@
-tree db3adf6d28c87f852fdc8e39850d6adc9d2c500f
-parent e201b704cfbee035c956d446cb002f979a043106
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791034936 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791034936 +0000
-
-Integrate native sheet BEAMS epilog with atomic reference checks and preserved shared graph ownership

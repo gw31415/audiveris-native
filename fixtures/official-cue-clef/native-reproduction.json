@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "native_report_gzip_sha256": "7f51e0d50824769838a0dd050422fc110ac8ef74f915ad76487cbcfb8dcd9a18",
-  "native_source_sha256": {
-    "src/clef_candidates.rs": "12882721e4400c1182b4b1331089370dfe08a9d66b6e4c807f2d031d242352a0",
-    "src/clef_registration.rs": "ee4b1b065e07b1784520821c401992e9bef101b904c91fff0f01669d478271a6",
-    "examples/cue_clef_dump.rs": "5fc7e5ed88b56a69be5861f2dcfab4fef0cc87d0bfbff382aff31b9c7b01bafa"
-  }
-}

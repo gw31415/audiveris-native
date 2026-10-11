@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.36s
-     Running tests/stem_cleaner.rs (/workspace/onboarding/target/debug/deps/stem_cleaner-ed35f1b3940dc88e)
-
-running 2 tests
-test cleaner_refuses_duplicate_nonfinite_stale_and_parallel_context_and_keeps_empty_graph_unchanged ... ok
-test original_eight_hundred_cleaner_checks_match_ordered_ties_canonical_sharing_and_sig_callbacks ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s

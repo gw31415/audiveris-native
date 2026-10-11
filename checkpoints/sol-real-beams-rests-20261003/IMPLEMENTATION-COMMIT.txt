@@ -1,6 +1,0 @@
-tree bc539c16686d877dcdaf04274d4fec8862a7f499
-parent cbe757dab7cecdc718a2a4ed40f020b58583c0db
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791034482 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791034482 +0000
-
-Wire native BEAMS extension/hook/group/rest phases and single-staff native GRID mapping into real-input CLI intermediate output

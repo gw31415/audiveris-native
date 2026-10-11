@@ -1,6 +1,0 @@
-tree c11dafe9149b50ced9cd17706503a6e7f8755228
-parent 8eea39cfa34efb45cc0ef503e9e1f4a925484203
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791037933 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791037933 +0000
-
-Map original global staff areas and per-system selection for common-overlap vertically stacked systems; filter full lag sections by original system-area rectangle bounds

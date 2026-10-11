@@ -1,18 +1,3 @@
 /target/
-/upstream/
-/tools/
-/evidence/generated/
-/deliverables/
 __pycache__/
 *.pyc
-
-# Reproducible oracle runtime caches and bytecode are not source evidence.
-*.class
-evidence/linux-oracle/**/cache/
-evidence/linux-oracle/**/classes/
-evidence/linux-oracle/**/compile-only/
-evidence/linux-oracle/**/home/
-evidence/linux-oracle/**/native-cache/
-evidence/linux-oracle/**/observer-classes/
-evidence/linux-oracle/**/prefs/
-evidence/linux-oracle/**/tmp/

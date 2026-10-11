@@ -1,121 +1,205 @@
-通常Git workspaceへの移行手順と履歴の扱いは[こちら](docs/GIT-WORKSPACE.md)。ルートから直接Cargo buildできます。
+# audiveris-native
 
-現在のゴールは、代表的な実譜面PNGから原版Audiverisと同等品質のMusicXMLをnative CLIで出力することです。周辺変換・一般編集/undo・project保存互換・認識に不要な全API再現は対象外です。[受入条件と残工程](docs/IMAGE-MUSICXML-ACCEPTANCE.md)。合成入力の成功だけで品質同等とは判断しません。
-
-## 過去の目標と移植台帳（2026-10-05）
-
-当時はUI表示を除く原Audiveris5.11の全機能移植を目標としていました。現在の終了条件は上記の画像認識品質に変更されています。限定画像CLIは小段階の成果です。[実装済み/部分/未対応/GUIのみ除外と接続順](docs/PORT-STATUS.md)、[現段階CLI手順](docs/MUSICXML-LIMITED.md)。以下の個別記録は当時の境界・ソースSHAとして保持します。
-
-直近の追加は、認識済み固定3/4 TimePairから小節長・6音（F♯を含む）をMusicXMLへ伝える縦経路です。[入力例と実行手順](docs/MUSICXML-LIMITED.md#recognized-34-header--musicxml)。続けて固定COMMON_TIMEの実glyph・HEADER競合除外・`symbol="common"`を8音の原版成功画像で接続しました。4/4の既存入力を保持し、他拍子・他clef等は台帳に残して段階的に接続します。
-
-次の追加は、既存HEADERのヘ音記号/ハ音記号を所有SIGの音高とMusicXMLへ接続する経路です。2つの原版成功画像で各8音・2小節を比較しました。[入力と実行例](docs/MUSICXML-LIMITED.md#recognized-bassalto-header--musicxml)。sign/line/octave-changeは原版の汎用変換を用い、small/8va/8vbはkernel比較と全画像検証を区別します。
-
-旗付き八分音符の小単位を追加しました。実glyph→FlagStemRelation→support/弱候補処理→1/8音価・onset→MusicXMLの`divisions=2`を原版の同一画像で比較します。正の単独beamも画像由来builder→cache/SIG→音価・begin/endへ接続しました。[入力と実行例](docs/MUSICXML-LIMITED.md#single-standard-beam-eighth-notes--musicxml)。
-
-# Audiveris native port — experimental page glyph pipeline
-
-[Linux上の独立検証・音部記号候補の登録](docs/CLEF-REGISTRATION.md)。Javaを使わないnative実行で、候補の理論外形・重心補正・競合関係・header stopまで追加しました。調号・拍子後の最終clef選択とheader固定まで接続済みです。対応範囲は [HEADERS検証境界](docs/HEADERS.md) を参照してください。
-
-[調号探索の範囲・画素投影・HiLoピーク](docs/KEY-PREPARATION.md) もnative化し、元画像10件と閾値・境界の独立oracleで比較しています。調号の分類・選択は後段のkey-state/key-columnへ接続済みです。
-
-[調号要素の抽出・分類と空スライスの再試行](docs/KEY-COMPONENTS.md) を追加しました。分断された記号や重複候補も公式実装と比較済みです。[調号の状態処理](docs/KEY-STATE.md) と五線間の調整・複製・最終化まで接続し、51画像で公式KeyColumn結果と比較しています。MusicXMLまでの完了を意味しません。
-
-[拍子候補のnative抽出](docs/TIME-CANDIDATES.md) は調号後の範囲、画素投影、記号分解、分類、理論外形を71画像で比較しています。[分子・分母の組合せとsystem全体の拍子決定](docs/TIME-COLUMN.md)、最終clef選択・bar除去・固定まで接続し、71画像で元実装のlive HEADERS状態と比較しています。音符・拍・MusicXMLは引き続き未完了です。
-
-[STEM_SEEDS](docs/STEM-SEEDS.md) もnative接続しました。11画像でstem幅・候補フィラメント・採用glyph・画素サンプリングを公式結果と比較しています。これはstemのseed候補であり、音符・拍・MusicXMLの完成ではありません。
-
-[BEAMSの画素処理・spot抽出](docs/BEAM-PREPARATION.md) を追加しました。`beam-spots INPUT SPOTS.pgm REPORT.json` はnativeで候補画像と未割当glyphを出力し、13画像・483候補を公式結果と比較しています。BeamInter・音符認識・MusicXMLは未完了です。
-
-[BEAMS前処理のサイズ推定・system割当](docs/BEAM-PROLOG.md) まで追加しました。音符頭のサイズ・フォント推定、glyphの同一性とグループの保持、段ごとの候補割当を13画像で公式prologと比較しています。連桁そのものの確定・音符/拍・MusicXMLは引き続き未完了です。
-
-[BEAMSの初期候補生成](docs/BEAM-CANDIDATES.md)を追加しました。`beam-spots` は beam/hook の幾何・画素採点・候補 glyph と排他関係を JSON に出力します。公式の初期候補生成を13画像で比較しています。連桁の延長・後段 hook・グループ・休符は未移植なので、BEAMS全体・音符/拍・PDF・MusicXMLは未完了です。
-
-
-[線補完・全画像glyph抽出と検証境界](docs/LINE-COMPLETION.md)。`page-glyphs` はnativeスタッフ線画素生成→除去→連結成分→特徴量→任意の分類スコアまで接続します。
-
-`page-glyphs` のJSONには [GRID IR](docs/GRID-FINAL-IR.md) も含まれます。永続StaffLine・画素で重複排除したglyph参照・再構築HLAG・system所属・通常小節線のgraphを出力します。[brace・part/pageの追加検証](docs/BRACES-PARTS.md) でAnLauraの全最終GRID graph内容と2-part構成が一致。[GRID意味処理・自動マスク](docs/GRID-SEMANTICS.md) でbracket/C-clefと右端補正の順序を追加し、13画像を公式結果と比較しました。一般的なGRID完了・音符認識は引き続き未完了です。
-
-[固定テンプレート・全画像スコア比較](docs/TEMPLATE-PROBES.md) を追加しました。`template-probes` は画像を二値化し、明示された位置のテンプレートスコアを計算します。候補位置の自動探索・音符認識は未実装です。
-
-`staff-mask INPUT MASK.pgm REPORT.json` は五線glyphと交差部を含む曲線からマスクを自動生成します。HEADS用の加線・stem seedマスクと音符候補探索は未完了です。
-
-Rust CLIでAudiverisのロジック移植を開始したものです。**全体移植・音符認識は未完了**です。Java CLIのwrapperではありません。
+楽譜画像（PNG/JPEG/TIFF/BMP）を認識して MusicXML 4.0 を出力する Rust 製 CLI です。
+[Audiveris](https://github.com/Audiveris/audiveris) 5.11 の認識パイプラインと同じ手順・同じ
+アルゴリズム（同じ定数・テンプレート・分類器）を、必要な部分だけ素直に実装し直しています。
+Java も Audiveris 本体も不要です。歌詞の読み取りには本家と同じく Tesseract OCR（`tesseract` コマンド）を使います
+（無ければ歌詞なしで出力します）。
 
 ```sh
-cargo build --locked -j 2
-cargo run --locked -- binarize fixtures/original-exercise.png /tmp/exercise-binary.pgm /tmp/exercise-runs.json
-cargo run --locked -- scale fixtures/scale/clean-16.pgm /tmp/scale-binary.pgm /tmp/scale-report.json
-cargo test --workspace --locked -j 2
-cargo clippy --workspace --locked --all-targets -j 2 -- -D warnings
+cargo build --release
+./target/release/audiveris-native page1.png page2.png -o score.musicxml
+./target/release/audiveris-native --lang deu page.png       # 歌詞の OCR 言語（Tesseract の言語名、既定 eng）
+./target/release/audiveris-native -v --debug out/ page.png   # 工程ごとの時間、注釈画像と認識JSON
+cargo test --release                                       # 実譜面1ページの end-to-end テスト
+tools/evaluate.sh                                           # samples/ の正解との比較
 ```
 
-出力先が既に存在する場合は拒否します。入力は8-bit grayscale PNG（alphaなし・非animation）、またはPGM P2/P5（maxval 255）、最大400万画素・32MB。P5のheader/raster境界は1バイトの空白です。カラーPNG/JPEG/TIFF/PDFはこの段階では未対応です。
+複数画像は同じ曲の連続ページとして 1 つの楽譜にまとめます（拍子・調・音部記号はページを跨いで引き継ぎ）。
 
-実移植した範囲:
+## 処理の流れ（Audiveris の各 step と対応）
 
-- `AdaptiveFilter` + `VerticalFilter`: 37×37近傍の積分画像、平均・母標準偏差、`0.7 × mean + 0.9 × stddev`、`pixel <= threshold`。
-- `RunsRetriever.processPosition`: 全画像・全run採用時の水平/垂直run抽出。
-- native PNG/PGM入力 → 二値PGM + version付きJSON（寸法、前景数、3点の中間値、両方向の `[start,length]` 列）。JSONは独自の前処理IRで、Audiveris `.omr` 互換ではありません。
+| step | ファイル | 内容 |
+|---|---|---|
+| BINARY | `binary.rs` | AdaptiveFilter（37×37 窓、`0.7·mean + 0.9·std`） |
+| SCALE | `scale.rs` | 縦ランのヒストグラム（線幅、black+white combo による五線間隔、連桁の太さ、符幹幅） |
+| GRID | `staff.rs`, `grid.rs` | 細い横ランの「櫛」で五線を検出し、5本共通の滑らかな曲線で頑健にフィット。全高の縦ピークを小節線とし、接続で段（system）、ブレースでパートを構成 |
+| HEADERS | `header.rs` | 段頭の音部記号・調号・拍子を分類器で認識（五線消去で割れた記号は隣接部分を結合して再評価） |
+| BEAMS / LEDGERS | `beams.rs` | 連桁らしい厚みの画素から平行四辺形をフィット、加線 |
+| HEADS | `heads.rs`, `template.rs` | Bravura の符頭を実測サイズでラスタライズし、fore/back/hole キーポイントによる Audiveris と同じテンプレート距離で、線・間・加線の各高さを走査 |
+| STEMS / REDUCTION | `stems.rs` | 符頭の左右から符幹を探索。Audiveris の文脈グレード `(1+C)g/(1+Cg)`、尾の最小長 1.75、2度の反対側規則、臨時記号型の偽符頭排除 |
+| SYMBOLS | `symbols.rs`, `classifier.rs`, `features.rs` | 認識済み要素を消した残差のグリフ（と近傍の組合せ）を Audiveris 5.11 の学習済みニューラル分類器で分類。旗・休符・臨時記号・付点・音部記号変更・強弱・連符数字など |
+| TEXTS | `text.rs` | Tesseract で残差画像の文字を読む（歌詞・発想記号・タイトル） |
+| CURVES | `curves.rs` | 残差の細いランの連鎖からスラー・タイ、包絡線の直線からヘアピン（WedgesBuilder）とボルタ（EndingsBuilder） |
+| CHORDS / RHYTHMS | `score.rs` | 和音・休符・音価（旗/連桁/付点/連符）、音高（音部記号・調号・小節内臨時記号）、声部とタイムスロット、暗黙の3連符、隠れた空き五線を含むパート対応 |
+| export | `musicxml.rs` | MusicXML 4.0 partwise（XSD 検証済み） |
 
-追加した `scale` commandは、二値化に続いて `ScaleBuilder` / `HiLoPeakFinder` を実行します。線幅・五線間隔（主/小）・連桁幅（実測/推定）と、black/combo histogram・選択peakをJSONの `scale` に追加します。成功exit 0、scale失敗exit 2（診断JSON・二値画像は保持）、入力/IOエラーexit 1です。5種類の失敗コードを区別します。上流のdefault設定・自動推定経路のみで、指定scaleの上書き機能は未対応です。
+## 精度
 
-[省メモリ化とscale検証](docs/SCALE-MILESTONE.md) / [18ケースJava比較](evidence/scale-parity.json)
+正解は MuseScore の原譜（OpenScore Lieder, CC0）です。`tools/compare.py` で、パート・五線ごとの
+（音高または休符, 音価）列を整列して一致率（FLAT）を求めます。小節線の取り違えに左右されない指標です。
+同じ画像を公式 Audiveris 5.11.0（Linux 版、既定設定）にも通して比較しました。
 
-`grid-prep INPUT BINARY.pgm REPORT.json` はscaleに続いて水平/垂直runの振分けとsection生成を実行します。これはGRIDの入力部品までを出力する段階コマンドです。`grid_preparation.staff_detection` は `not_implemented` と明示します。[GRID前段の境界とJava比較](docs/GRID-PREP.md)。
+`samples/real`（実譜面ページ。An Laura / Der Winter は 180dpi、Der Brautschmuck は 180dpi の MuseScore 描画）:
 
-独立検証済みclassifierを履歴付きで `crates/audiveris-classifier` に統合しました。`classify-features` は **110特徴のJSON配列**を受け取り、149クラスのlabel/scoreをstdoutへ出します。`classify-glyph` は孤立した二値記号画像から110特徴量を抽出し、同じclassifierへ直接渡します。両経路ともJavaや別プロセスは呼びません。
+| 曲 | 本実装 | Audiveris 5.11 |
+|---|---|---|
+| An Laura | 0.980 | 0.869 |
+| Der Winter | 0.968 | 0.831 |
+| Der Brautschmuck | 0.965 | 0.823 |
 
-```sh
-cargo run --locked -- classify-features \
-  crates/audiveris-classifier/models/audiveris-5.11.0.json \
-  crates/audiveris-classifier/tests/fixtures/mean-features.json
-```
+調整に一切使っていない検証用コーパス：シューベルト《冬の旅》全22曲（65ページ、MuseScore 4 で 300dpi 描画）:
 
-```sh
-cargo run --locked -- classify-glyph \
-  crates/audiveris-classifier/models/audiveris-5.11.0.json \
-  fixtures/glyph/ellipse.pgm 8 horizontal 0 0
-```
+| 曲 | Audiveris 5.11 | 本実装 |
+|---|---|---|
+| wr01 | 0.858 | 0.911 |
+| wr02 | 0.983 | 0.970 |
+| wr03 | 0.322 | 0.945 |
+| wr04 | 0.973 | 0.921 |
+| wr05 | 0.951 | 0.979 |
+| wr06 | 0.971 | 0.965 |
+| wr07 | 0.883 | 0.879 |
+| wr08 | 0.986 | 0.960 |
+| wr09 | 0.950 | 0.907 |
+| wr10 | 0.719 | 0.822 |
+| wr11 | 0.726 | 0.981 |
+| wr12 | 0.875 | 0.876 |
+| wr13 | 0.375 | 0.478 |
+| wr14 | 0.911 | 0.882 |
+| wr15 | 0.931 | 0.951 |
+| wr16 | 0.950 | 0.942 |
+| wr17 | 0.981 | 0.980 |
+| wr18 | 0.808 | 0.972 |
+| wr19 | 0.953 | 0.935 |
+| wr20 | 0.988 | 0.939 |
+| wr21 | 0.934 | 0.886 |
+| wr22 | 0.977 | 0.983 |
+| 平均 | 0.864 | 0.912 |
 
-`classify-glyph MODEL.json BINARY_IMAGE INTERLINE [horizontal|vertical [LEFT TOP]]` は0/255の二値画像と明示した五線間隔を必要とします。画像のpaddingを保持し、run方向と原点も指定できます。stdoutは110 raw features・正規化値・149 hidden values・149 label/scoreのJSONです。五線除去・ページからの記号分離・楽譜上の意味付けは含みません。スコアはsigmoid出力で、合計1の確率ではありません。
+（wr18 は Audiveris が 6 ページ中 1 ページを処理できませんでした。）
+処理時間は 300dpi の 1 ページで約 5 秒（1 スレッド）です。
 
-[孤立記号96ケース・49,728値のJava比較](evidence/glyph-integration.json) / [特徴量抽出の数値契約とOFL fixture](crates/audiveris-glyph-features/README.md)。不正な二値画像・空glyph・interline=0等はexit1です。
+コーパスの再現: OpenScore Lieder の `.mscx` を MuseScore で
+`mscore -r 300 -o NAME.png NAME.mscx`（`NAME-1.png, NAME-2.png, …` が出力される）とし、
+`tools/evaluate.sh コーパスのディレクトリ` を実行します。
 
-[root CLI統合検証](evidence/classifier-integration.json) / [classifierの数値契約・モデルの権利未確定事項](crates/audiveris-classifier/README.md)。root CLIで不正特徴/モデルはexit1・成功JSONなしです。独立crate側CLIの不正入力exit2とは異なります。
+## 開発方針
 
-`filament-seeds INPUT BINARY.pgm REPORT.json` は公式の初期filament選別と、矩形seedに限定したcomb列検出を追加します。結合・曲線補間・Staff生成は未実装で、5本組は診断候補です。[実装境界・Java比較・画像](docs/FILAMENT-SEEDS.md)。
+**Audiveris 本家と原則同じロジック**で実装し、本家と異なるロジック（改良）は、正解付きコーパスで
+本家の方式より精度が上回ることを確認できた場合にのみ採用します。
 
-`filaments INPUT BINARY.pgm REPORT.json` は矩形限定を外し、公式の曲線補間・結合/拡張・曲率/傾斜フィルタ・comb検出まで実行します。正式なStaff生成は未実装です。[今回の移植範囲とJava比較](docs/CURVED-FILAMENTS.md)。
+優位性は《冬の旅》コーパスで、本家 Audiveris 5.11 の出力と次の観点別の指標を比べて確認しています
+（単位ごとの差し替え実験ではなく、その単位が効く観点での比較）。
 
-`staff-candidates INPUT BINARY.pgm REPORT.json` は通常の5線・単一interlineのクラスタ形成と初期Staff幾何情報まで実行します。CC0実譜面で6 Staff、合成長尺譜面で1/2 StaffをJava由来oracleと段単位比較しました。後続GRID・systems・記号切出しは未実装です。[範囲・検証・制約](docs/STAFF-CLUSTERS.md)。
+| 観点 | 指標 | 本実装 | 本家 |
+|---|---|---|---|
+| 音高側（五線・符頭・加線・音部記号・調号・臨時記号） | 音高のみの列の一致率（厳密 LCS） | 0.967 | 0.950 |
+| 音価側（符幹・連桁・旗・付点・連符・声部） | 音価のみの列の一致率（厳密 LCS） | 0.937 | 0.873 |
+| 小節線 | 小節数の誤差の合計（22 曲） | 8 | 15 |
+| パート構成 | パート数の正解曲数 | 22/22 | 22/22 |
+| 調号 | 調の列の正解曲数 | 22/22 | 21/22 |
+| 拍子 | 拍子の列の正解曲数 | 22/22 | 21/22 |
 
-`grid-candidates INPUT BINARY.pgm REPORT.json` は小節線候補・縦filament・初期systemまで追加します。本家の元画像からの独立実行と、実譜面2 systems・合成1 systemを比較しました。no-system/未対応分岐はexit 2。**後続の線端・membership補正を含む全GRIDは未完了**です。[独立比較と残作業](docs/GRID-PROGRESS.md)。
+## 機能チェックリスト
 
-現在の優先目標は画像 → 認識した音楽的内容 → MusicXML CLIです。[限定経路と検証範囲](docs/MUSICXML-LIMITED.md)の `audiveris-musicxml` は入力画像から認識した音符・四分休符・音価をnativeで出力します。原版XMLの流用はありません。独立した合成3譜面（2/4小節・改行あり）の内容一致と複数画像CLIを確認しています。任意の実譜面への適用と全工程一致は未完了です。上の各段階の説明は当時の移植境界です。
+凡例: ✅ 本家と同じ ／ 🔧 改良ロジック（本家と異なる） ／ ⬜ 未実装 ／ — 対象外
 
-[移植境界・依存・次段階](docs/PORTING.md) / [検証結果](evidence/java-parity.json) / [帰属・ライセンス](NOTICE) / [fixture由来](fixtures/README.md)
+入力は画像（PNG/JPEG/TIFF/BMP）、対象は五線譜のみです（PDF 入力、1線譜・打楽器譜・タブ譜は扱いません）。
 
-Java oracle再実行（開発時の独立比較専用。製品実行には不要）:
+| 機能 | 実装単位 | 状態 | 備考（本家の該当クラス） |
+|---|---|---|---|
+| **画像入力・二値化** | 画像読込（PNG/JPEG/TIFF/BMP、グレー化） | ✅ | ImageLoading |
+| | 二値化 | ✅ | AdaptiveFilter（37×37、0.7·mean+0.9·std） |
+| **スケール** | 線幅・五線間隔 | ✅ | ScaleBuilder（black / combo ヒストグラム） |
+| | 連桁の太さ | 🔧 | 長い横ランのみの縦ラン分布。本家の black ピーク方式では過小推定する例あり（優位性: 冬の旅で確認） |
+| | 符幹の太さ | 🔧 | 横ランのピーク（本家 StemScaler）。優位性: 音価側の指標で確認 |
+| | 第2の五線間隔（小さい五線） | ⬜ | ScaleBuilder interline2（冬の旅には該当なし） |
+| **五線** | 五線の検出 | 🔧 | 細い縦ランの「櫛」で検出（本家 LinesRetriever / ClustersRetriever）。優位性: 音高側の指標で確認 |
+| | 線の形状モデル | 🔧 | 5本共通の二次曲線を頑健フィット（本家 NaturalSpline）。優位性: 音高側の指標で確認 |
+| | 五線の消去 | 🔧 | 線上の細い縦ランを消去（本家は線 glyph の画素）。優位性: 音高側の指標で確認 |
+| | 1線譜・打楽器譜・タブ譜 | — | 対象外（五線譜のみ対応） |
+| **小節線・段・パート** | 小節線の検出 | 🔧 | 全高の縦ピーク＋端の検査（本家 BarsRetriever）。優位性: 小節数の誤差 8（本家 15） |
+| | 段の構成（コネクタ） | ✅ | 小節線が五線間をつなぐ段 |
+| | ブレース／ブラケットとパート | 🔧 | 左端の大きな成分の形で判定（本家 BracesRetriever / PartsBuilder）。パート数は本家と同等（22/22） |
+| | 小節線の種類（複縦線・終止線） | 🔧 | 太さで判定 |
+| **音部記号** | 段頭の音部記号 | 🔧 | 分類器は本家と同じ、候補の組み立ては独自（本家 ClefBuilder）。優位性: 音高側の指標で確認 |
+| | 途中の音部記号変更 | ✅ | SYMBOLS の分類器（G/F/C、小型を含む） |
+| | 8va/8vb 付き音部記号 | ✅ | 分類器の形状 |
+| **調号** | 段頭の調号 | 🔧 | 分類器による♯/♭の列（本家 KeyBuilder の射影ピーク方式）。優位性: 調の列 22/22（本家 21/22） |
+| | 途中の調号変更・取消（ナチュラル） | 🔧 | 本家 KeyBuilder（複縦線の後）。段頭と同じ分類器方式に、音部記号が決める♯/♭/♮の段の順序と後続の空白の検査を追加（冬の旅: FLAT 0.904→0.906） |
+| **拍子** | 段頭の拍子 | 🔧 | 分類器（全体形／分子・分母）＋分母の補完（本家 TimeBuilder の射影方式とは別）。段の全五線に拍子があることを要求（本家 TimeColumn と同じ）。冬の旅: 拍子の列 22/22 曲正解（本家 21/22） |
+| | 途中の拍子変更 | 🔧 | SYMBOLS の拍子形状。段頭と同じく全五線での一致を要求 |
+| **符頭** | テンプレート生成（Bravura、fore/back/hole） | ✅ | TemplateFactory |
+| | テンプレート距離 | ✅ | Template.evaluate（重み 6/1/4） |
+| | 符頭サイズの推定 | 🔧 | 黒符頭幅の実測（本家 BlackHeadSizer）。優位性: 音高側の指標で確認 |
+| | 範囲走査（線・間・加線） | ✅ | NoteHeadsBuilder.lookupRange |
+| | 符幹シードからの走査 | 🔧 | 本家 NoteHeadsBuilder.lookupSeeds。範囲走査が全ての横位置を評価するため、その候補に含まれる |
+| | 重複・重なりの整理 | ✅ | aggregateMatches, HeadInter.overlaps |
+| | 黒→白符頭の判定（hole） | ✅ | evalBlackAsVoid |
+| | 小さい符頭（cue） | 🔧 | 小テンプレート（0.67）で範囲走査し、符幹付きのものを装飾音符に使用（本家は処理スイッチで既定オフ） |
+| | 特殊符頭（×・菱形など） | ⬜ | ShapeSet.Heads。本家も既定ではオフ（ProcessingSwitch crossHeads） |
+| **符幹** | 符幹の探索 | 🔧 | 符頭の左右で縦の細い線を探索（本家 StemsRetriever / HeadLinker）。優位性: 音価側の指標で確認 |
+| | 文脈グレードによる取捨 | ✅ | GradeUtil.contextual、HeadStemRelation 係数 4 |
+| | 尾の最小長 | ✅ | StemInter.minTailLength 1.75 |
+| | 2度の反対側規則・臨時記号型の偽符頭排除 | 🔧 | 本家 SIG の排他関係の簡略版 |
+| **連桁** | 連桁の検出 | 🔧 | 厚みのそろった画素の平行四辺形フィット（本家 BeamsBuilder のスポット方式）。優位性: 音価側の指標で確認 |
+| | 符幹との接続・レベル | 🔧 | 本家 BeamLinker |
+| | 部分連桁（フック） | 🔧 | |
+| | 小さい連桁（cue） | 🔧 | 本家 CueBeamsStep。装飾音符の符幹先端で旗・小連桁の本数を数えて音価に（冬の旅: 装飾音符の音価 112/209 正解、本家 0） |
+| **旗** | 旗の認識 | 🔧 | 分類器は本家と同じ。符幹先端での限定分類を追加 |
+| **加線** | 加線の検出 | 🔧 | 本家 LedgersBuilder とは別実装。優位性: 音高側の指標で確認。残差からは符頭を支える加線のみを消す（本家も支えの無い加線は破棄） |
+| **休符** | 休符の分類 | ✅ | 分類器 |
+| | 全休符・2分休符の判別 | ✅ | 線からぶら下がる／線に乗る位置 |
+| | 全小節休符 | ✅ | 小節中に単独の全休符 |
+| | 複数小節休符 | ✅ | MultipleRestsBuilder（中央線上の 4 間以上の太線・両端のセリフ・上の数字）。冬の旅には無く合成画像で確認 |
+| **付点** | 付点の認識と音符への割当 | 🔧 | 本家 DotFactory / AugmentationDotInter |
+| | 和音の付点の一貫性 | 🔧 | 本家は各音の付点数の平均を丸める（countDots） |
+| **記号の候補生成** | 部品グラフ（0.8間隔）と連結部分集合（最大7部品）の評価 | ✅ | Glyphs.buildLinks、GlyphCluster.decompose |
+| | 候補の採否 | 🔧 | 本家は SIG の文脈グレードで解決。本実装は形状検査＋グレード順の貪欲選択（強弱記号・フェルマータは複数部品の記号を優先） |
+| **臨時記号** | 分類 | ✅ | 分類器 |
+| | 音高位置（♭の補正） | ✅ | AlterInter.computePitch |
+| | 符頭への割当 | 🔧 | 本家 AlterHeadRelation |
+| | 小節内での持続・調号との関係 | ✅ | |
+| **和音** | 同じ符幹の符頭をまとめる | ✅ | ChordsBuilder |
+| **装飾音符** | 装飾音符の記号（GRACE_NOTE 形状）と主音符への接続 | ✅ | GraceChordInter、SmallChordInter.lookupLink |
+| | 小さい符頭＋符幹による装飾音符（16分・連桁付きの装飾音群） | 🔧 | 本家は全体形状の分類のみ（冬の旅: 再現率 0.67／適合率 0.86、本家 0／0）。接続は最寄りの符頭まで 3 間・右隣の装飾音経由も可 |
+| **連符** | 明示された3連符・6連符 | 🔧 | 数字の近くの連桁群／3つの和音 |
+| | 暗黙の3連符 | 🔧 | 小節が溢れる声部で、ちょうど収まる場合のみ（優位性: 冬の旅で確認） |
+| **リズム** | 声部の割当 | 🔧 | 本家 Voices / SlotsRetriever とは別実装。優位性: 音価側の指標で確認 |
+| | タイムスロット | 🔧 | |
+| | 弱起・反復で分割された小節・空の小節 | ✅ | MeasureFixer（ページ先頭の短い小節＝弱起、後方反復をはさむ短い2小節＝分割、段頭の空小節は次と結合）。冬の旅: 7/10（本家 8/10）、誤検出 0 |
+| **強弱記号** | p/f/mf/sfz など | 🔧 | 分類器・候補生成は本家と同じ。採用閾値 0.6 と複合記号（fp, mf…）の優先は改良（冬の旅: F1 0.82、本家 0.67） |
+| **アーティキュレーション** | スタッカート・アクセント・テヌート・マルカートなど | ✅ | ArticulationInter.lookupLink、ChordArticulationRelation、DotFactory（スタッカート） |
+| **装飾・その他記号** | フェルマータ | ✅ | FermataInter.lookupChordLink（冬の旅: F1 0.57、本家 0.56） |
+| | トリル・ターン・モルデント | ✅ | OrnamentInter.lookupLink、ChordOrnamentRelation（冬の旅: 再現率 0.53／適合率 0.21、本家 0.53／0.12） |
+| | アルペジオ | ✅ | ArpeggiatoInter.lookupLink、本家の最小グレード 0.15（冬の旅: 再現率 0.25／適合率 0.67、本家 0.17／1.0） |
+| | ブレス・カエスーラ | ✅ | AbstractPauseInter.lookupLink（冬の旅には正解データなし） |
+| | トレモロ（単音） | ✅ | TremoloInter.searchLinks（符幹／全音符）。2音間トレモロは本家も未対応 |
+| **ヘアピン** | 直線セグメントの抽出 | 🔧 | 本家は骨格化した弧（SegmentsBuilder）。本実装は残差グリフの上下包絡線を直線当てはめ（傾き 20°・平均距離 0.3・run 比 0.75 は本家と同じ） |
+| | 2本のセグメントの対応付けとグレード | ✅ | WedgesBuilder（冬の旅: 再現率 0.95／適合率 1.0、本家 0.90／0.99） |
+| **オッターヴァ・ペダル** | オッターヴァ（8va/15ma/22ma） | 🔧 | OctaveShiftInter（記号の段の和音を対象、音高に反映）。本家は既定長で破線を確かめないが、OCR が無いため破線の追跡を必須に（冬の旅: 唯一の 8va を検出、誤検出 0。なお MuseScore の正解は記譜音高で持つため FLAT は wr20 で 5 音減） |
+| | ペダル記号 | 🔧 | PedalInter（上の和音に接続）。OCR が無いため複数五線パートの最下段の下に限定（冬の旅には無く誤検出 0、合成画像で確認） |
+| **反復構造** | 反復記号（縦線の点） | ✅ | DotFactory / RepeatDotInter（点の対・小節線から 1.5 間・段の過半数）。冬の旅: 3/3（本家 3/3） |
+| | セーニョ・コーダ・D.S.・D.C. | ✅ | MarkerInter（重なる小節線に接続）。冬の旅には無く合成画像で確認（誤検出 0） |
+| | ボルタ（括弧） | 🔧 | EndingsBuilder の長さ・傾き・五線からの距離・小節幅比。左の脚を必須に（冬の旅で誤検出 0、本家 1）。番号は OCR なしのため連番 |
+| **タイ・スラー** | 曲線の検出 | 🔧 | 本家 SlursBuilder は骨格化したアーク。本実装は残差の細い縦ランの連鎖（分岐で分割）を側方の円モデルで連結。採否は本家の角度・幅・高さの条件で、円からの距離の上限を 0.10→0.15 間に。本家と同じく文字認識（TEXTS）の後に行い、確度 80 以上の語の中の曲線は除外 |
+| | 音符への接続・タイの判定 | 🔧 | SlurLinker の探索範囲（外 2 間・内 0.5 間、凹側は 2.5 間）、ClumpPruner（同音高・同五線・間に和音なし）、段跨ぎの checkCrossTie。改良: 両端が間の同じ和音に付く場合と、端の近くに音符が無い場合は真上（真下）の音符を 4〜6 間まで探す。大きさの違う和音を結ぶ弧が 1 本だけならスラー。装飾音符もスラーの端に。冬の旅: スラー 再現率 0.85／適合率 0.96、F1 0.899（本家 0.892）、タイ 0.81／0.71、F1 0.758（本家 0.696） |
+| **テキスト** | 歌詞 | ✅ | TEXTS（Tesseract、言語は本家同様に指定、既定 eng）、LyricItemInter（ハイフンで音節に分割し、上の五線の最寄りの和音へ）。冬の旅（--lang deu）: 再現率 0.90／適合率 0.88。本家の出力は今回の比較環境では歌詞 0 |
+| | 発想記号・テンポ | 🔧 | SentenceInter の direction 役割。歌詞行・強弱記号以外の短い語句を最寄りの音符へ。3 文字未満（略記の「.」付きを除く）と歌詞行上の語は除外（OCR 誤読対策） |
+| | タイトル・作曲者・作詞者 | ✅ | 最初の段より上の文字行: 最大の行＝タイトル、右寄せ＝作曲者、左寄せ＝作詞者 |
+| **ページ・パート** | 複数ページの結合・状態の引継ぎ | 🔧 | 本家 Book / PageRhythm |
+| | 段ごとのパート対応（隠れた五線） | 🔧 | 本家 PartsBuilder / ScoreReduction。優位性: 冬の旅で確認 |
+| **出力** | MusicXML 4.0 | ✅ | 本家 PartwiseBuilder（独自 writer、XSD 検証） |
 
-```sh
-python3 scripts/linux_oracle.py --bootstrap --probe clef-candidates
-python3 scripts/linux_oracle.py --probe clef-registration
-python3 scripts/linux_oracle.py --probe key-preparation
-python3 scripts/linux_oracle.py --probe key-peaks
-python3 scripts/linux_oracle.py --probe key-components
-python3 scripts/linux_oracle.py --probe key-fallback
-```
+## ライセンス・由来
 
-ハッシュ固定の公式Linux配布物とJDKを作業領域へ用意します。Macやシステム全体へのインストールは不要です。各回の結果は新しい証跡ディレクトリへ保存し、既存fixtureは上書きしません。[依存・再現方法](docs/LINUX-ORACLE.md)。
+AGPL-3.0-or-later（Audiveris に準拠）。`assets/classifier.json` は Audiveris 5.11.0 の学習済みモデル、
+`assets/Bravura.otf` は SIL Open Font License（`assets/BRAVURA-OFL.txt`）。
+`src/features.rs` と `src/labels.rs` は以前の検証済み移植（Audiveris の MixGlyphDescriptor / モデル定義）を
+そのまま利用しています。`samples/real/*.mscx` は OpenScore Lieder（CC0）。
 
-`upstream/`, `tools/`, `target/`, `evidence/generated/` は取得/生成物でGit対象外です。GUI操作・外部公開は行っていません。
+## 以前の実装について
 
-
-限定MusicXML経路に、原版5.11が画像から正しくexportしたC4加線付き1譜面（8四分音符・2小節）を追加確認しました。具体的な加線の保持・消去と2部品評価を接続しています。中央四分休符の既知入力は原版も誤認するため拒否を維持します。他の加線音高・実譜面一般への対応を意味しません。詳細と実行例は[限定MusicXML手順](docs/MUSICXML-LIMITED.md)を参照してください。
-
-
-限定経路に、既存の四分休符画像へ1pxの分断を入れた1入力を追加比較しました。原版5.11通常画像処理の8イベントとnativeが一致し、2部品のcanonical glyph・RestInter・chord登録からMusicXMLまで接続しています。限定Rest/TimeWholeの重なり・SIG排他整理も原版の個別条件と比較しています。真正な付点、support/frozen/異種間の競合、3部品以上は未対応です。
-
-固定HEADER調号の実glyph/SIG→音高→MusicXMLをG major1画像で追加確認しました。F♯を含む8音が原版exportと一致。105調号kernelの一致と全ページ対応は別範囲です。[入力例・残タスク](docs/MUSICXML-LIMITED.md)。
-
-固定HEADER 4/4 TimePairも1制御入力で画像→数字glyph/所有SIG→小節拍数→MusicXMLへ接続しました。原版の同一画像8音/F♯と一致。一般拍子/音部記号/変更は未対応です。[入力と比較範囲](docs/MUSICXML-LIMITED.md)。
+このリポジトリには以前、Audiveris の内部 API を細粒度に一対一移植する方針の実装（約12.5万行と大量の検証証跡）がありました。
+実譜面から MusicXML を出力できないまま停滞していたため、本実装に置き換えました。旧実装は git 履歴
+（コミット `6a42c37` 以前）にそのまま残っています。

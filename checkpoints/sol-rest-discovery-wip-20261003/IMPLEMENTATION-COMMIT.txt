@@ -1,6 +1,0 @@
-tree dbf84c7bc6e42920fbc7061af1d2e085424a35d0
-parent 62d6443f846c5c9ec58ef99cfd38727d8510278b
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791032632 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791032632 +0000
-
-Connect multiple-rest admission and serif discovery with ordered registration plans (WIP)

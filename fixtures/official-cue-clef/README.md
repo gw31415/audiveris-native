@@ -1,7 +1,0 @@
-# Original 5.11 cue CLEF observations
-
-One independent synthetic Bravura cue-first page (specific interline 7, sheet main 11), not a published scan. Original ClefBuilder candidate and register observers were each independently compiled/executed twice; all original fields reproduced byte for byte. Their original input/source/JAR/runtime/compiler/resource/dependency hashes are retained.
-
-Native candidates use staff-specific classification/part-weight/link/height and vertical margins. Horizontal/core margins retain sheet main scale. Original registration uses staff-specific symbol bounds but sheet-main font centroid offset: cue glyph [101,136,21,56] gives G_CLEF bounds [101,139,19,49], grade 0.7990000122676785, clef-stop 119. All four staff candidate parts and registrations, grades, ordered exclusions are compared. Inputs and shared SIG are unchanged by these pure adapters.
-
-Native example observes the actual raster through current GRID; saved artifact is source-pinned. Tests reject explicit unknown/null/zero/negative/noninteger/over-budget scale and duplicate/nonfinite/out-of-bounds sheet centroid metrics; missing scale retains the legacy uniform-staff contract. HEADERS/HEADS/STEMS completion remains false. KEY mixed-scale boundary, multi-rest mapping, cue terminal HEADS, full24 page propagation, automatic STEMS, published scans remain pending. Historical nested checkpoint labels describe their saved scope.

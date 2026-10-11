@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "e8a6f7f372120cdc19a2978cc1d436df9ec8b491",
-  "source_tree": "c7077ae0de7ba00691da1b7425a5d2fcb844906c",
-  "all_fresh_restored_sha256_verified": 6337,
-  "source_clean": true,
-  "source": "/workspace/work/cue-clef-key/sol-cue-default-heads-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/cue-clef-key/sol-cue-default-heads-20261004-prepush/source-git"
-}

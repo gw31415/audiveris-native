@@ -1,8 +1,0 @@
-02:15:41.897 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- No sizeMap for Bravura
-02:15:41.899 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Null or empty sizeMap for Bravura
-02:15:41.899 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Creating fontName: Bravura fileName: Bravura.otf size: 64
-02:15:41.911 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Font url=jar:file:/Users/ama/Documents/Codex/2026-10-02/task-6/full-java-oracle/distribution/Audiveris/Audiveris.app/Contents/app/audiveris.jar!/res/Bravura.otf
-02:15:41.912 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Found file Bravura.otf
-02:15:41.946 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=64] key:Bravura
-02:15:42.126 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Created custom font: java.awt.Font[family=Bravura,name=Bravura,style=plain,size=64] added:true
-02:15:42.126 [main] DEBUG org.audiveris.omr.ui.symbol.OmrFont -- Caching font: org.audiveris.omr.ui.symbol.MusicFont[family=Bravura,name=Bravura,style=plain,size=64] key:Bravura

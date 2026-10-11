@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/shared/audiveris-cloud-continuation/latest)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.40s
-     Running tests/time_column.rs (/workspace/shared/audiveris-cloud-continuation/target/debug/deps/time_column-e1c7932c8d4e7108)
-
-running 1 test
-test complete_time_column_matches_original ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 51.86s
-

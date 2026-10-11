@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "f4f3cd91a62af305824305b4a65e14456bd04953",
-  "source_tree": "26515045a3b6587f4a0af319c970a2328656519e",
-  "all_fresh_restored_sha256_verified": 5347,
-  "source_clean": true,
-  "source": "/workspace/work/head-coverage/sol-head-drum-quarter-20261003-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/head-coverage/sol-head-drum-quarter-20261003-prepush/source-git"
-}

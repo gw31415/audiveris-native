@@ -1,8 +1,0 @@
-    Finished `test` profile [unoptimized] target(s) in 0.02s
-     Running unittests src/lib.rs (target/debug/deps/audiveris_native-5fcd8c0ec93be988)
-
-running 1 test
-test music_xml::rational_owned_export_tests::actual_rational_slots_and_underfilled_voice_termination_match_original ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 297 filtered out; finished in 14.55s
-

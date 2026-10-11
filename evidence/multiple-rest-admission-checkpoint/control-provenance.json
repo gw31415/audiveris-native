@@ -1,7 +1,0 @@
-{
-  "native_outputs_used": false,
-  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
-  "cases": 73,
-  "admitted_to_projector": 26,
-  "runtime_excludes_compile_shims": true
-}

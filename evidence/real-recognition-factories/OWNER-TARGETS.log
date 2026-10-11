@@ -1,9 +1,0 @@
-
-running 2 tests
-test music_rests::tests::real_rest_factory_keeps_lower_staff_owners_before_allocating_chords has been running for over 60 seconds
-test music_tuplets::tests::real_image_tuplet_factory_stack_lookup_and_orphan_lifecycle_match_original has been running for over 60 seconds
-test music_tuplets::tests::real_image_tuplet_factory_stack_lookup_and_orphan_lifecycle_match_original ... ok
-test music_rests::tests::real_rest_factory_keeps_lower_staff_owners_before_allocating_chords ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 292 filtered out; finished in 240.54s
-

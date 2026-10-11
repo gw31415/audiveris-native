@@ -1,6 +1,0 @@
-tree 5a13c10acb9cd1f16e3d0a72f3f9b2231f0fdc61
-parent fe14b3c859b8bb9559714f290423476f0b272a8e
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791031861 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791031861 +0000
-
-WIP: implement serif raster projection and candidate prefilter with positive original controls

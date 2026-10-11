@@ -1,1 +1,0 @@
-package org.audiveris.omr.step; import java.util.SortedSet; import org.audiveris.omr.sheet.Book; public abstract class RunClass { public RunClass(Book b, SortedSet<Integer> ids){} public abstract void process(); }

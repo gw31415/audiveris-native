@@ -1,9 +1,0 @@
-# Original neighbor chains and native GRID areas
-
-Native geometry now follows original StaffManager.horiNeighbor/vertNeighbors and SystemManager.verticalNeighbors: scan encounter order for first strict overlap, expand the selected neighbor along LEFT and RIGHT horizontal links, sort by ID, and remove the queried staff from staff neighbor results. Staff y-overlap uses first/last line LEFT endpoint ordinates without rounding; system y-overlap uses rounded top/bottom. System x-overlap uses left + width - 1 even though getRight used in clip midpoints is left + width.
-
-Global paths join each neighbor staff spline in original ID order, extend horizontally to sheet edges, translate north/south by the rounded sheet margin, and join the reversed south path. Point containment evaluates native Area winding and the supplied clip rectangle intersection. The private uncut path is not exposed as clipped bounds or intersection edges; boolean-intersection bounds remain unfinished. Full-width curved and clipped curved point queries use the same exact path/rectangle conjunction.
-
-Native GRID calls this geometry using its produced staff curves and coordinates, derives horizontal ends, and assigns lag sections by original area containment of their centroids. Single-neighbor legacy fields remain compatible; multiple boundary staffs are explicit arrays. This replaces the adjacent-system-only area assumption in GRID, without expanding unrelated CLI behavior. Original controls use actual original neighbor/area methods, including positive synthetic horizontal layouts and independently observed Laura geometry.
-
-Short-staff raster layouts remain rejected upstream in system_graph. Beam preparation still rejects clipped areas; beam dispatch/rest mapping still require their supported single-column geometry. General downstream horizontal-layout processing and positive real-score rest conversion are not demonstrated. Full regression at this new source remains unverified.

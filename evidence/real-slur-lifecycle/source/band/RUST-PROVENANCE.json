@@ -1,8 +1,0 @@
-{
-  "compiler": "/workspace/native-build-tools/rustup/toolchains/1.98.1-x86_64-unknown-linux-gnu/bin/rustc",
-  "compile_scope": "isolated /tmp Area geometry library + scalar query harness, no native application or Cargo build",
-  "original_area_lib_sha256": "e8dca6c9ba70feea55d42f95ef786cb34b6442cd44df2cfc88da3b8c97bc8063",
-  "isolated_extended_lib_sha256": "de000e366403191d852c96885ce8d4dc5b0f848088e95b6a162623cd1049aed6",
-  "extension_sha256": "d57e256f2ca1097a445cabb4292bf3d3517f6a2f4843079d063f173c70794861",
-  "harness_sha256": "0904ee4b86e1ef095393534efba57811c6c1baab3dbe23749f24d16b0490f9da"
-}

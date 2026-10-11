@@ -1,7 +1,0 @@
-{
-  "status": "passed",
-  "scope": "Original-only head/stem context after linkStems before reduction",
-  "independent_runs": 2,
-  "result_sha256": "a6ab569b119f2ae28f6f2834725965ae1af90f98ccd8618823afd14d7a095d24",
-  "native_context_implemented": false
-}

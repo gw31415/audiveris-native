@@ -1,9 +1,0 @@
-{
-  "status": "passed",
-  "source_commit": "db8941b2df43f081f637f745a77a96d007d4b34f",
-  "source_tree": "13c8847636e38a2b1705500abaacba8329c14ba7",
-  "all_fresh_restored_sha256_verified": 6497,
-  "source_clean": true,
-  "source": "/workspace/work/stem-chunks-cli/sol-stem-chunks-cli-20261004-prepush/artifacts/audiveris-source",
-  "source_git": "/workspace/work/stem-chunks-cli/sol-stem-chunks-cli-20261004-prepush/source-git"
-}

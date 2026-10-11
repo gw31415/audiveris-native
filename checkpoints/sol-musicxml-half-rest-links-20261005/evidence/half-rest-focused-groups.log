@@ -1,9 +1,0 @@
-   Compiling audiveris-native v0.1.0 (/workspace/onboarding/artifacts/audiveris-source)
-    Finished `test` profile [unoptimized] target(s) in 13.79s
-     Running tests/musicxml_limited.rs (/workspace/onboarding/target/debug/deps/musicxml_limited-c932902edba561ac)
-
-running 1 test
-test half_rest_orphan_beams_links_and_refusal_match_original_boundaries ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 24.12s
-

@@ -1,9 +1,0 @@
-{
-  "jar_sha256": "9b35257edea808ec80a8bcd48882d174b107152d9640b5ca33e1365593cff2a5",
-  "resource": "res/drum-set.xml",
-  "resource_sha256": "8e4a2c3bb8495e1181b199c7bb6639e6025f7c75c7971b53a4b89c2f4c4e5652",
-  "shape_sets_source": "original ShapeSet constants observed in enum order",
-  "head_shapes": 24,
-  "drum_pitches": 17,
-  "custom_user_overrides": false
-}

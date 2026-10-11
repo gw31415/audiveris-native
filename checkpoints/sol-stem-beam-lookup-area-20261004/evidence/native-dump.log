@@ -1,3 +1,0 @@
-    Blocking waiting for file lock on build directory
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.23s
-     Running `/workspace/onboarding/target/debug/examples/stem_beam_lookup_area_dump fixtures/official-stem-beam-lookup-area/controls.json`

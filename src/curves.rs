@@ -1,371 +1,765 @@
-// Copyright © Audiveris 2026. All rights reserved.
-// Rust translation 2026; SPDX-License-Identifier: AGPL-3.0-or-later
-// CurvedFilament.computeLine, NaturalSpline, GeoPath.yAtX (horizontal automatic endpoints).
-use crate::sections::{Bounds, Section};
-pub type Point = [f64; 2];
-#[derive(Debug, Clone)]
-pub struct Curve {
-    pub points: Vec<Point>,
-    segments: Vec<Vec<Point>>,
-}
-fn derivatives(z: &[f64]) -> Vec<f64> {
-    let n = z.len() - 1;
-    let mut g = vec![0.; n + 1];
-    g[0] = 0.5;
-    for i in 1..n {
-        g[i] = 1. / (4. - g[i - 1]);
-    }
-    g[n] = 1. / (2. - g[n - 1]);
-    let mut d = vec![0.; n + 1];
-    d[0] = 3. * (z[1] - z[0]) * g[0];
-    for i in 1..n {
-        d[i] = (3. * (z[i + 1] - z[i - 1]) - d[i - 1]) * g[i];
-    }
-    d[n] = (3. * (z[n] - z[n - 1]) - d[n - 1]) * g[n];
-    for i in (0..n).rev() {
-        d[i] -= g[i] * d[i + 1];
-    }
-    d
-}
-impl Curve {
-    pub fn interpolate(points: Vec<Point>) -> Option<Self> {
-        if points.iter().flatten().any(|v| !v.is_finite())
-            || points.len() < 2
-            || points.windows(2).any(|w| w[0][0] >= w[1][0])
-        {
-            return None;
-        }
-        let n = points.len() - 1;
-        let segments = match n {
-            1 => vec![points.clone()],
-            2 => vec![vec![
-                points[0],
-                [
-                    2. * points[1][0] - (points[0][0] + points[2][0]) / 2.,
-                    2. * points[1][1] - (points[0][1] + points[2][1]) / 2.,
-                ],
-                points[2],
-            ]],
-            _ => {
-                let dx = derivatives(&points.iter().map(|p| p[0]).collect::<Vec<_>>());
-                let dy = derivatives(&points.iter().map(|p| p[1]).collect::<Vec<_>>());
-                (0..n)
-                    .map(|i| {
-                        vec![
-                            points[i],
-                            [points[i][0] + dx[i] / 3., points[i][1] + dy[i] / 3.],
-                            [
-                                points[i + 1][0] - dx[i + 1] / 3.,
-                                points[i + 1][1] - dy[i + 1] / 3.,
-                            ],
-                            points[i + 1],
-                        ]
-                    })
-                    .collect()
-            }
-        };
-        Some(Self { points, segments })
-    }
-    /// Stored Bezier segments of the interpolated path, for native area assembly.
-    pub fn path_segments(&self) -> &[Vec<Point>] {
-        &self.segments
-    }
+//! Straight-line curves (Audiveris CURVES step: SegmentsBuilder,
+//! WedgesBuilder, EndingsBuilder).
+//!
+//! Straight segments are taken from the residual glyphs: each glyph gives its
+//! upper and lower envelope (one line, or the two legs of a hairpin drawn in
+//! one stroke). Hairpins pair two segments whose ends are close on one side
+//! and apart on the other; the remaining long horizontal segments high above
+//! a staff are endings (voltas).
 
-    /// Evaluate the actual Bezier boundary for java.awt.Area-style containment.
-    /// GeoPath.yAtX uses endpoint-normalized t; area containment instead solves x(t).
-    pub fn area_y(&self, x: f64) -> f64 {
-        let s = self
-            .segments
-            .iter()
-            .find(|s| x <= s.last().unwrap()[0])
-            .unwrap_or(self.segments.last().unwrap());
-        let value = |t: f64, axis: usize| {
-            let u = 1. - t;
-            match s.len() {
-                2 => s[0][axis] * u + s[1][axis] * t,
-                3 => s[0][axis] * u * u + 2. * s[1][axis] * t * u + s[2][axis] * t * t,
-                _ => {
-                    s[0][axis] * u * u * u
-                        + 3. * s[1][axis] * t * u * u
-                        + 3. * s[2][axis] * t * t * u
-                        + s[3][axis] * t * t * t
-                }
-            }
-        };
-        let (mut low, mut high) = (0., 1.);
-        for _ in 0..60 {
-            let t = (low + high) / 2.;
-            if value(t, 0) < x {
-                low = t;
-            } else {
-                high = t;
-            }
-        }
-        value((low + high) / 2., 1)
-    }
-    pub fn derivative(&self, x: f64) -> f64 {
-        let s = self
-            .segments
-            .iter()
-            .find(|s| x <= s.last().unwrap()[0])
-            .unwrap_or(self.segments.last().unwrap());
-        let p = s[0];
-        let q = *s.last().unwrap();
-        let dx = q[0] - p[0];
-        let t = (x - p[0]) / dx;
-        let u = 1. - t;
-        match s.len() {
-            2 => (q[1] - p[1]) / dx,
-            3 => (-2. * p[1] * u + 2. * s[1][1] * (1. - 2. * t) + 2. * q[1] * t) / dx,
-            _ => {
-                (-3. * p[1] * u * u
-                    + 3. * s[1][1] * (u * u - 2. * u * t)
-                    + 3. * s[2][1] * (2. * t * u - t * t)
-                    + 3. * q[1] * t * t)
-                    / dx
-            }
-        }
-    }
-    /// GeoPath affine Y translation, preserving spline control points.
-    pub fn translated_y(&self, delta: f64) -> Self {
-        let mut result = self.clone();
-        for p in &mut result.points {
-            p[1] += delta;
-        }
-        for segment in &mut result.segments {
-            for p in segment {
-                p[1] += delta;
-            }
-        }
-        result
-    }
-    pub fn y(&self, x: f64) -> f64 {
-        let p = self.points[0];
-        let q = *self.points.last().unwrap();
-        if x < p[0] || x > q[0] {
-            return p[1] + ((q[1] - p[1]) / (q[0] - p[0])) * (x - p[0]);
-        }
-        let s = self
-            .segments
-            .iter()
-            .find(|s| x <= s.last().unwrap()[0])
-            .unwrap();
-        let p = s[0];
-        let q = *s.last().unwrap();
-        let t = (x - p[0]) / (q[0] - p[0]);
-        let u = 1. - t;
-        match s.len() {
-            2 => p[1] + t * (q[1] - p[1]),
-            3 => p[1] * u * u + 2. * s[1][1] * t * u + q[1] * t * t,
-            _ => {
-                p[1] * u * u * u
-                    + 3. * s[1][1] * t * u * u
-                    + 3. * s[2][1] * t * t * u
-                    + q[1] * t * t * t
-            }
-        }
-    }
+use crate::binary::{Bitmap, Rect, components};
+use crate::grid::System;
+use crate::scale::Scale;
+use crate::staff::Staff;
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct Wedge {
+    pub crescendo: bool,
+    /// Left and right abscissae.
+    pub x0: f64,
+    pub x1: f64,
+    /// Closest staff to the closed end.
+    pub staff: usize,
+    pub grade: f64,
+    pub bounds: Rect,
 }
-pub fn bounds(sections: &[Section], members: &[usize]) -> Bounds {
-    let mut b = sections[members[0]].bounds();
-    for &i in &members[1..] {
-        let a = sections[i].bounds();
-        let right = (b.x + b.width).max(a.x + a.width);
-        let bottom = (b.y + b.height).max(a.y + a.height);
-        b.x = b.x.min(a.x);
-        b.y = b.y.min(a.y);
-        b.width = right - b.x;
-        b.height = bottom - b.y;
+
+struct Segment {
+    left: (f64, f64),
+    right: (f64, f64),
+    /// Distance impact (1 - mean distance / max segment distance).
+    dist: f64,
+    /// Mean stroke thickness.
+    thick: f64,
+}
+
+/// Least-squares line through the points: (slope, intercept, mean distance).
+fn fit(pts: &[(f64, f64)]) -> (f64, f64, f64) {
+    let n = pts.len() as f64;
+    let (sx, sy) = pts.iter().fold((0.0, 0.0), |a, p| (a.0 + p.0, a.1 + p.1));
+    let (mx, my) = (sx / n, sy / n);
+    let (mut sxx, mut sxy) = (0.0, 0.0);
+    for p in pts {
+        sxx += (p.0 - mx) * (p.0 - mx);
+        sxy += (p.0 - mx) * (p.1 - my);
     }
-    b
+    let a = if sxx > 0.0 { sxy / sxx } else { 0.0 };
+    let b = my - a * mx;
+    let norm = (1.0 + a * a).sqrt();
+    let d = pts.iter().map(|p| (p.1 - a * p.0 - b).abs() / norm).sum::<f64>() / n;
+    (a, b, d)
 }
-pub fn sorted_members(sections: &[Section], members: &mut Vec<usize>) {
-    members.sort_by_key(|&i| {
-        let b = sections[i].bounds();
-        (b.x, b.y, sections[i].id.0)
-    });
-    members.dedup();
-}
-fn centroid(
-    sections: &[Section],
-    members: &[usize],
-    left: i64,
-    width: usize,
-    min_weight: usize,
-) -> Option<Point> {
-    let (mut n, mut sx, mut sy) = (0usize, 0., 0.);
-    for &i in members {
-        let s = &sections[i];
-        for (j, r) in s.runs.iter().enumerate() {
-            let start = (r.start as i64).max(left);
-            let stop = ((r.start + r.length) as i64).min(left + width as i64);
-            for x in start..stop {
-                n += 1;
-                sx += x as f64;
-                sy += (s.first_pos + j) as f64;
+
+fn segments(residual: &Bitmap, staves: &[Staff], scale: &Scale) -> Vec<Segment> {
+    let il = scale.interline as f64;
+    let max_dist = 0.3 * il;
+    let (max_run_dist, min_run_ratio) = (0.2 * il, 0.75);
+    let max_slope = 20f64.to_radians().tan();
+    let min_len = 2.0 * il;
+    // Segment ends must lie outside any staff height.
+    let in_staff = |(x, y): (f64, f64)| {
+        staves.iter().any(|s| x >= s.left as f64 && x <= s.right as f64 && y >= s.top(x) && y <= s.bottom(x))
+    };
+    let mut out = Vec::new();
+    for c in components(residual, None) {
+        let b = c.bounds;
+        if (b.w as f64) < min_len || b.h as f64 > 4.0 * il {
+            continue;
+        }
+        let mut cols: Vec<Vec<i32>> = vec![Vec::new(); b.w as usize];
+        for &(x, y) in &c.pixels {
+            cols[(x - b.x) as usize].push(y);
+        }
+        let (mut top, mut bot) = (Vec::new(), Vec::new());
+        for (i, col) in cols.iter_mut().enumerate() {
+            if col.is_empty() {
+                continue;
             }
+            col.sort();
+            let x = (b.x + i as i32) as f64;
+            // First and last vertical runs of the column.
+            let first_end = col.windows(2).position(|w| w[1] > w[0] + 1).map_or(*col.last().unwrap(), |k| col[k]);
+            let last_start = col.windows(2).rposition(|w| w[1] > w[0] + 1).map_or(col[0], |k| col[k + 1]);
+            top.push((x, (col[0] + first_end) as f64 / 2.0));
+            bot.push((x, (last_start + *col.last().unwrap()) as f64 / 2.0));
+        }
+        let columns = cols.iter().filter(|c| !c.is_empty()).count().max(1) as f64;
+        let mut legs = vec![top];
+        let (ta, tb, _) = fit(&legs[0]);
+        let (ba, bb, _) = fit(&bot);
+        let (x0, x1) = (b.x as f64, b.right() as f64 - 1.0);
+        let sep = |x: f64| (ba * x + bb - ta * x - tb).abs();
+        if sep(x0).max(sep(x1)) >= 0.5 * il {
+            legs.push(bot);
+        }
+        let thick = c.pixels.len() as f64 / columns / legs.len() as f64;
+        for pts in legs {
+            let (a, k, d) = fit(&pts);
+            if d > max_dist || a.abs() > max_slope {
+                continue;
+            }
+            let (l, r) = (pts[0].0, pts[pts.len() - 1].0);
+            // Runs close to the line over most of the width (maxRunDistance,
+            // minRunRatio of SegmentsBuilder.retrieveGlyph).
+            let close = pts.iter().filter(|p| (p.1 - a * p.0 - k).abs() <= max_run_dist).count();
+            if (close as f64) < min_run_ratio * (r - l + 1.0) {
+                continue;
+            }
+            let left = (l, a * l + k);
+            let right = (r, a * r + k);
+            if in_staff(left) || in_staff(right) {
+                continue;
+            }
+            out.push(Segment { left, right, dist: 1.0 - d / max_dist, thick });
         }
     }
-    if n >= min_weight {
-        Some([sx / n as f64, sy / n as f64])
-    } else {
-        None
-    }
+    out
 }
-pub fn compute(sections: &[Section], members: &[usize], interline: usize) -> Option<Curve> {
-    let b = bounds(sections, members);
-    let start = b.x as f64;
-    let stop = (b.x + b.width - 1) as f64;
-    let len = b.width as f64;
-    let probe = (interline as f64 * 0.5).round_ties_even() as usize;
-    let min_weight = ((interline as f64 * 0.2).round_ties_even() as usize).max(1);
-    let count = (len / (interline * 4) as f64).round_ties_even() as usize;
-    let dx = len / count as f64;
-    let first = centroid(sections, members, start.ceil() as i64, probe, 1)?;
-    let mut points = vec![[start, first[1]]];
-    for i in 1..count {
-        if let Some(p) = centroid(
-            sections,
-            members,
-            (start + i as f64 * dx).round_ties_even() as i64,
-            probe,
-            min_weight,
-        ) {
-            points.push(p);
-        }
-    }
-    let last = centroid(
-        sections,
-        members,
-        (stop - probe as f64 + 1.).floor() as i64,
-        probe,
-        1,
-    )?;
-    points.push([stop, last[1]]);
-    Curve::interpolate(points)
+
+/// Hairpins and endings of the sheet.
+pub fn build(
+    residual: &Bitmap,
+    binary: &Bitmap,
+    staves: &[Staff],
+    systems: &[System],
+    scale: &Scale,
+) -> (Vec<Wedge>, Vec<Ending>) {
+    let mut segs = segments(residual, staves, scale);
+    let wedges = wedges(&mut segs, staves, scale);
+    let endings = endings(&segs, binary, staves, systems, scale);
+    (wedges, endings)
 }
-/// CurvedFilament automatic endpoints with vertical orientation and one-interline segments.
-/// Member order is retained from the absolute abscissa/ordinate/id compound ordering.
-pub fn compute_vertical(
-    sections: &[Section],
-    members: &[usize],
-    interline: usize,
-) -> Option<Curve> {
-    use crate::sections::Orientation;
-    let b = bounds(sections, members);
-    let (start, stop, len) = (b.y as f64, (b.y + b.height - 1) as f64, b.height as f64);
-    let probe = (interline as f64 * 0.5).round_ties_even() as usize;
-    let min_weight = ((interline as f64 * 0.2).round_ties_even() as usize).max(1);
-    let count = (len / interline as f64).round_ties_even() as usize;
-    let dx = len / count as f64;
-    let centroid = |left: i64, minimum: usize| {
-        let (mut n, mut sx, mut sy) = (0usize, 0., 0.);
-        for &i in members {
-            let section = &sections[i];
-            for (j, r) in section.runs.iter().enumerate() {
-                for v in r.start..r.start + r.length {
-                    let (x, y) = match section.orientation {
-                        Orientation::Horizontal => (v, section.first_pos + j),
-                        Orientation::Vertical => (section.first_pos + j, v),
-                    };
-                    if (y as i64) >= left && (y as i64) < left + probe as i64 {
-                        n += 1;
-                        sx += y as f64;
-                        sy += x as f64;
+
+fn wedges(segs: &mut Vec<Segment>, staves: &[Staff], scale: &Scale) -> Vec<Wedge> {
+    let il = scale.interline as f64;
+    let closed_max_dx = (0.2 * il).round();
+    let closed_max_dy = (0.5 * il).round();
+    let (open_low, open_high) = ((0.5 * il).round(), (1.5 * il).round());
+    let (len_low, len_high) = ((2.0 * il).round(), (3.0 * il).round());
+    let open_max_bias = 20f64.to_radians().tan();
+    let mut wedges = Vec::new();
+    for rev in [true, false] {
+        // Closed end: left for a crescendo (rev), right for a diminuendo.
+        let end = |s: &Segment, closed: bool| if closed == rev { s.left } else { s.right };
+        segs.sort_by(|a, b| end(a, true).0.partial_cmp(&end(b, true).0).unwrap());
+        let mut i = 0;
+        while i < segs.len() {
+            let c1 = end(&segs[i], true);
+            let ax = if rev { c1.0 } else { c1.0 - closed_max_dx + 1.0 };
+            let half = (1.0 + closed_max_dy) / 2.0;
+            let mut found = None;
+            for j in i + 1..segs.len() {
+                let c2 = end(&segs[j], true);
+                if c2.0 >= ax && c2.0 < ax + closed_max_dx && (c2.1 - c1.1).abs() <= half {
+                    let (s1, s2) = (&segs[i], &segs[j]);
+                    let closed_dy = (c1.1 - c2.1).abs();
+                    let (o1, o2) = (end(s1, false), end(s2, false));
+                    let open_dy = (o1.1 - o2.1).abs();
+                    let inv_slope = if open_dy > 0.0 { (o1.0 - o2.0).abs() / open_dy } else { f64::INFINITY };
+                    let width = (s1.right.0 - s1.left.0).min(s2.right.0 - s2.left.0) + 1.0;
+                    if closed_dy > closed_max_dy || open_dy < open_low || inv_slope > open_max_bias || width < len_low {
+                        continue;
                     }
+                    let impacts = [
+                        s1.dist,
+                        s2.dist,
+                        1.0 - closed_dy / closed_max_dy,
+                        (open_dy - open_low) / (open_high - open_low),
+                        1.0 - inv_slope / open_max_bias,
+                        (width - len_low) / (len_high - len_low),
+                    ];
+                    let grade = if impacts.iter().any(|&v| v <= 0.0) {
+                        0.0
+                    } else {
+                        0.8 * impacts.iter().product::<f64>().powf(1.0 / 6.0)
+                    };
+                    if grade >= 0.08 {
+                        found = Some((j, grade));
+                        break;
+                    }
+                } else if c2.0 > ax + closed_max_dx {
+                    break;
+                }
+            }
+            if let Some((j, grade)) = found {
+                let (s1, s2) = (&segs[i], &segs[j]);
+                let closed = end(s1, true);
+                let staff = (0..staves.len())
+                    .min_by(|&a, &b| staff_dist(&staves[a], closed).partial_cmp(&staff_dist(&staves[b], closed)).unwrap())
+                    .unwrap();
+                wedges.push(Wedge {
+                    crescendo: rev,
+                    x0: s1.left.0.min(s2.left.0),
+                    x1: s1.right.0.max(s2.right.0),
+                    staff,
+                    grade,
+                    bounds: {
+                        let ys = [s1.left.1, s1.right.1, s2.left.1, s2.right.1];
+                        let (y0, y1) = (ys.iter().cloned().fold(f64::MAX, f64::min), ys.iter().cloned().fold(f64::MIN, f64::max));
+                        let x0 = s1.left.0.min(s2.left.0);
+                        Rect::new(x0 as i32, y0 as i32, (s1.right.0.max(s2.right.0) - x0) as i32 + 1, (y1 - y0) as i32 + 1)
+                    },
+                });
+                segs.remove(j);
+                segs.remove(i);
+            } else {
+                i += 1;
+            }
+        }
+    }
+    wedges
+}
+
+fn staff_dist(s: &Staff, (x, y): (f64, f64)) -> f64 {
+    let dx = (s.left as f64 - x).max(x - s.right as f64).max(0.0);
+    let dy = (s.top(x) - y).max(y - s.bottom(x)).max(0.0);
+    dx.hypot(dy)
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct Ending {
+    pub x0: f64,
+    pub x1: f64,
+    pub y: f64,
+    /// Staff below.
+    pub staff: usize,
+    /// Leg (vertical hook) on the right end: stop, else discontinue.
+    pub right_leg: bool,
+    pub grade: f64,
+}
+
+/// Endings (Audiveris EndingsBuilder / LeggedIntersBuilder): a thin
+/// horizontal segment of at least 6 il, at least 2.5 il above the staff
+/// below, covering most of its measure, with a vertical leg below its left
+/// end (and maybe its right end).
+fn endings(segs: &[Segment], binary: &Bitmap, staves: &[Staff], systems: &[System], scale: &Scale) -> Vec<Ending> {
+    let il = scale.interline as f64;
+    let (len_low, len_high) = (6.0 * il, 10.0 * il);
+    let max_slope = 0.02;
+    let max_thick = scale.max_stem as f64 * 1.4 + 1.0;
+    let mut out = Vec::new();
+    for s in segs {
+        let length = s.right.0 - s.left.0;
+        let slope = ((s.right.1 - s.left.1) / length.max(1.0)).abs();
+        if length < len_low || slope > max_slope || s.thick > max_thick {
+            continue;
+        }
+        let (cx, cy) = ((s.left.0 + s.right.0) / 2.0, (s.left.1 + s.right.1) / 2.0);
+        // Staff at or below.
+        let Some(si) = (0..staves.len())
+            .filter(|&i| staves[i].top(cx) > cy && cx >= staves[i].left as f64 && cx <= staves[i].right as f64)
+            .min_by(|&a, &b| staves[a].top(cx).partial_cmp(&staves[b].top(cx)).unwrap())
+        else {
+            continue;
+        };
+        if staves[si].top(cx) - cy < 2.5 * il {
+            continue;
+        }
+        // Measure under the center.
+        let Some(sys) = systems.iter().find(|y| y.staves.contains(&si)) else { continue };
+        let Some(mi) = sys.boundaries.windows(2).position(|w| cx > w[0].x1 as f64 && cx < w[1].x0 as f64) else {
+            continue;
+        };
+        let width = (sys.boundaries[mi + 1].x0 - sys.boundaries[mi].x1) as f64;
+        let ratio = if mi == 0 { 0.6 } else { 0.8 };
+        if length < ratio * width {
+            continue;
+        }
+        let impacts = [s.dist, 1.0 - slope / max_slope, (length - len_low) / (len_high - len_low)];
+        let grade = 0.8 * impacts.iter().map(|v| v.max(1e-6)).product::<f64>().powf(1.0 / 3.0);
+        if grade < 0.08 {
+            continue;
+        }
+        let leg = |(x, y): (f64, f64)| {
+            let top = staves[si].top(x);
+            ((x - 0.5 * il) as i32..=(x + 0.5 * il) as i32).any(|lx| {
+                (y as i32..=(y + 0.5 * il) as i32).any(|ly| {
+                    let (a, e) = binary.vrun_at(lx, ly);
+                    a as f64 <= y + 0.5 * il && (e - a) as f64 >= il && (e as f64) < top
+                })
+            })
+        };
+        // A left leg is required (improvement: lyric extenders and lone
+        // hairpin legs have none).
+        if !leg(s.left) {
+            continue;
+        }
+        out.push(Ending { x0: s.left.0, x1: s.right.0, y: cy, staff: si, right_leg: leg(s.right), grade });
+    }
+    out.sort_by(|a, b| (a.staff, a.x0 as i64).cmp(&(b.staff, b.x0 as i64)));
+    out
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct OctaveShift {
+    pub staff: usize,
+    pub x0: f64,
+    pub x1: f64,
+    /// 8, 15 or 22.
+    pub size: u32,
+    /// Sign above the staff (notes sound higher).
+    pub above: bool,
+}
+
+/// Octave shifts (Audiveris OctaveShiftInter): the 8va / 15ma / 22ma sign
+/// outside the staff height, linked to the chords of its staff under its
+/// line. Improvement: the dashed line is followed in the residual image to
+/// find the end, and is required (Audiveris assumes a default length and has
+/// OCR to discard text digits).
+pub fn octave_shifts(residual: &Bitmap, symbols: &[crate::symbols::Symbol], staves: &[Staff], scale: &Scale) -> Vec<OctaveShift> {
+    let il = scale.interline as f64;
+    let mut out = Vec::new();
+    for s in symbols {
+        let size = match s.shape {
+            "OTTAVA" => 8,
+            "QUINDICESIMA" => 15,
+            "VENTIDUESIMA" => 22,
+            _ => continue,
+        };
+        let st = &staves[s.staff];
+        let (cx, cy) = (s.bounds.cx(), s.bounds.cy());
+        let above = cy < st.top(cx);
+        if !above && cy <= st.bottom(cx) {
+            continue;
+        }
+        // Dashes: thin short horizontal glyphs in a band at the sign's height.
+        let band = Rect::new(s.bounds.right(), s.bounds.y, (40.0 * il) as i32, s.bounds.h);
+        let mut dashes: Vec<Rect> = components(residual, Some(band))
+            .into_iter()
+            .map(|c| c.bounds)
+            .filter(|b| b.h as f64 <= 0.3 * il && b.w as f64 <= 1.5 * il && b.w >= b.h)
+            .collect();
+        dashes.sort_by_key(|b| b.x);
+        let mut end = s.bounds.right() as f64;
+        let mut count = 0;
+        for d in dashes {
+            if d.x as f64 - end > 1.5 * il {
+                break;
+            }
+            end = d.right() as f64;
+            count += 1;
+        }
+        if count < 2 {
+            continue;
+        }
+        out.push(OctaveShift { staff: s.staff, x0: s.bounds.x as f64, x1: end, size, above });
+    }
+    out
+}
+
+#[derive(Clone, Debug, serde::Serialize)]
+pub struct Slur {
+    /// Left and right end points.
+    pub left: (f64, f64),
+    pub right: (f64, f64),
+    /// Arc bulging upwards (heads lie below its ends).
+    pub above: bool,
+    pub grade: f64,
+    pub bounds: Rect,
+    /// Center line.
+    #[serde(skip)]
+    pub pts: Vec<(f64, f64)>,
+}
+
+/// Circle through the points (algebraic least squares): (cx, cy, r, mean distance).
+fn fit_circle(pts: &[(f64, f64)]) -> Option<(f64, f64, f64, f64)> {
+    let n = pts.len() as f64;
+    let (mx, my) = pts.iter().fold((0.0, 0.0), |a, p| (a.0 + p.0 / n, a.1 + p.1 / n));
+    let (mut suu, mut svv, mut suv, mut suuu, mut svvv, mut suvv, mut svuu) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    for &(x, y) in pts {
+        let (u, v) = (x - mx, y - my);
+        suu += u * u;
+        svv += v * v;
+        suv += u * v;
+        suuu += u * u * u;
+        svvv += v * v * v;
+        suvv += u * v * v;
+        svuu += v * u * u;
+    }
+    let det = suu * svv - suv * suv;
+    if det.abs() < 1e-9 {
+        return None;
+    }
+    let (b1, b2) = (0.5 * (suuu + suvv), 0.5 * (svvv + svuu));
+    let uc = (b1 * svv - b2 * suv) / det;
+    let vc = (suu * b2 - suv * b1) / det;
+    let r = (uc * uc + vc * vc + (suu + svv) / n).sqrt();
+    let (cx, cy) = (uc + mx, vc + my);
+    let d = pts.iter().map(|p| ((p.0 - cx).hypot(p.1 - cy) - r).abs()).sum::<f64>() / n;
+    Some((cx, cy, r, d))
+}
+
+/// Mean distance of the points to their side models (Audiveris
+/// SlursBuilder): circles fitted on the first and last 6 interlines.
+fn side_distance(pts: &[(f64, f64)], il: f64) -> Option<f64> {
+    let len = 6.0 * il;
+    let (x0, x1) = (pts[0].0, pts[pts.len() - 1].0);
+    let left: Vec<(f64, f64)> = pts.iter().copied().filter(|p| p.0 - x0 <= len).collect();
+    let right: Vec<(f64, f64)> = pts.iter().copied().filter(|p| x1 - p.0 <= len).collect();
+    if left.len() < 3 || right.len() < 3 {
+        return None;
+    }
+    Some((fit_circle(&left)?.3 + fit_circle(&right)?.3) / 2.0)
+}
+
+/// A thin piece of curve: its center points, one per column with a single run.
+struct Piece {
+    pts: Vec<(f64, f64)>,
+    bounds: Rect,
+}
+
+/// Slurs and ties (Audiveris CURVES step, before SYMBOLS): thin curved
+/// strokes of the residual image (chains of thin vertical runs, joined across
+/// small gaps) whose center line fits a circle, graded as in
+/// SlursBuilder.computeImpacts. Only slurs with both ends near a note (heads
+/// and stem), or one end near a note and the other near a staff end, are
+/// kept. Their pixels are returned as a mask, so that glyphs lying on them
+/// are not read as symbols.
+pub fn slurs(
+    residual: &Bitmap,
+    heads: &[crate::heads::Head],
+    stems: &[crate::stems::Stem],
+    graces: &[crate::heads::GraceHead],
+    staves: &[Staff],
+    symbols: &[crate::symbols::Symbol],
+    words: &[crate::text::Word],
+    scale: &Scale,
+) -> (Vec<Slur>, Bitmap) {
+    let il = scale.interline as f64;
+    // Notes: a stem with its heads, or a stemless head.
+    let mut notes: Vec<Rect> = stems
+        .iter()
+        .filter(|st| !st.heads.is_empty())
+        .map(|st| {
+            st.heads
+                .iter()
+                .map(|&h| heads[h].bounds)
+                .fold(Rect::new(st.x, st.top, 1, st.bottom - st.top + 1), |a, b| a.union(&b))
+        })
+        .collect();
+    let stemmed: Vec<usize> = stems.iter().flat_map(|st| st.heads.iter().copied()).collect();
+    notes.extend((0..heads.len()).filter(|h| !stemmed.contains(h)).map(|h| heads[h].bounds));
+    // Grace notes (small heads with a stem, or whole grace glyphs).
+    notes.extend(graces.iter().map(|g| g.head.bounds));
+    notes.extend(symbols.iter().filter(|s| s.shape.starts_with("GRACE_NOTE")).map(|s| s.bounds));
+    // Closest note (box) in the lookup area of an end; `depth` on the
+    // concave side, `skip` a note to ignore.
+    let near_in = |end: (f64, f64), left: bool, above: bool, depth: f64, skip: Option<usize>| -> Option<usize> {
+        let (x0, x1) = if left { (end.0 - 2.0 * il, end.0 + 0.5 * il) } else { (end.0 - 0.5 * il, end.0 + 2.0 * il) };
+        let (y0, y1) = if above { (end.1 - 0.5 * il, end.1 + depth * il) } else { (end.1 - depth * il, end.1 + 0.5 * il) };
+        let dist = |b: &Rect| {
+            let dx = (b.x as f64 - end.0).max(end.0 - b.right() as f64).max(0.0);
+            let dy = (b.y as f64 - end.1).max(end.1 - b.bottom() as f64).max(0.0);
+            dx.hypot(dy)
+        };
+        (0..notes.len())
+            .filter(|&i| Some(i) != skip)
+            .filter(|&i| {
+                let b = &notes[i];
+                (b.right() as f64) >= x0 && (b.x as f64) <= x1 && (b.bottom() as f64) >= y0 && (b.y as f64) <= y1
+            })
+            .min_by(|&a, &b| dist(&notes[a]).partial_cmp(&dist(&notes[b])).unwrap())
+    };
+    // Both ends on the same note lying between them: the slur passes over or
+    // under it; look further for the real end notes (improvement).
+    let depth0 = 2.5;
+    let ends = |s: &Slur| -> (Option<usize>, Option<usize>) {
+        let (l, r) = (near_in(s.left, true, s.above, depth0, None), near_in(s.right, false, s.above, depth0, None));
+        match (l, r) {
+            (Some(a), Some(b)) if a == b && {
+                let cx = notes[a].cx();
+                cx > s.left.0 + 0.5 * il && cx < s.right.0 - 0.5 * il
+            } => (near_in(s.left, true, s.above, 4.0, Some(a)), near_in(s.right, false, s.above, 4.0, Some(a))),
+            (l, r) => {
+                // An end with no note in its area: a note right above (below)
+                // it, further away (improvement).
+                let far = |end: (f64, f64)| -> Option<usize> {
+                    if s.right.0 - s.left.0 < 1.5 * il {
+                        return None;
+                    }
+                    (0..notes.len())
+                        .filter(|&i| {
+                            let b = &notes[i];
+                            (b.cx() - end.0).abs() <= il
+                                && if s.above { b.y as f64 >= end.1 - 0.5 * il && (b.y as f64) <= end.1 + 6.0 * il } else { b.bottom() as f64 <= end.1 + 0.5 * il && (b.bottom() as f64) >= end.1 - 6.0 * il }
+                        })
+                        .min_by(|&a, &b| (notes[a].cy() - end.1).abs().partial_cmp(&(notes[b].cy() - end.1).abs()).unwrap())
+                };
+                (l.or_else(|| far(s.left)), r.or_else(|| far(s.right)))
+            }
+        }
+    };
+    let staff_end = |p: (f64, f64), left: bool| {
+        staves.iter().any(|st| {
+            p.1 >= st.top(p.0) - 4.0 * il
+                && p.1 <= st.bottom(p.0) + 4.0 * il
+                && if left {
+                    p.0 - st.header_stop.max(st.left) as f64 <= 6.0 * il
+                } else {
+                    st.right as f64 - p.0 <= 6.0 * il
+                }
+        })
+    };
+    let max_thick = il.max(3.0) as i32;
+    let mut mask = Bitmap::new(residual.width, residual.height);
+    let mut out = Vec::new();
+    let (mut kept, mut left_only, mut right_only) = (Vec::new(), Vec::new(), Vec::new());
+    // An end touching a stem is a flag, not a slur.
+    let on_stem = |p: (f64, f64)| {
+        stems.iter().any(|st| {
+            (p.0 - st.x as f64).abs() <= 2.0 && p.1 >= st.top as f64 && p.1 <= st.bottom as f64
+        })
+    };
+    // Texts are read before curves (Audiveris TEXTS precede CURVES): a curve
+    // inside a word is part of a letter.
+    let in_word = |b: &Rect| {
+        words.iter().any(|w| {
+            w.conf >= 80.0
+                && w.text.chars().filter(|c| c.is_alphabetic()).count() as f64 >= 2.0
+                && w.bounds.intersection(b).is_some_and(|i| i.area() * 2 >= b.area())
+        })
+    };
+    for s in slur_candidates(residual, symbols, scale) {
+        if in_word(&s.bounds) {
+            continue;
+        }
+        if on_stem(s.left) || on_stem(s.right) {
+            continue;
+        }
+        let (l, r) = ends(&s);
+        let keep = match (l, r) {
+            (Some(a), Some(b)) => a != b,
+            (Some(_), None) => staff_end(s.right, false),
+            (None, Some(_)) => staff_end(s.left, true),
+            _ => false,
+        };
+        if !keep {
+            match (l, r) {
+                (Some(_), None) => left_only.push(s),
+                (None, Some(_)) => right_only.push(s),
+                _ => {}
+            }
+            continue;
+        }
+        kept.push(s);
+    }
+    // A slur cut in two (by a barline, a stem...) leaves a piece linked only
+    // on its left and a piece linked only on its right: join them when their
+    // inner ends meet and they bend the same way.
+    left_only.sort_by(|a, b| a.right.0.partial_cmp(&b.right.0).unwrap());
+    let mut used = vec![false; right_only.len()];
+    for lp in left_only {
+        let best = (0..right_only.len())
+            .filter(|&j| !used[j] && right_only[j].above == lp.above)
+            .filter(|&j| {
+                let (a, b) = (lp.right, right_only[j].left);
+                b.0 - a.0 >= -1.0 && b.0 - a.0 <= 3.0 * il && (b.1 - a.1).abs() <= il
+            })
+            .min_by(|&a, &b| {
+                let d = |j: usize| (right_only[j].left.0 - lp.right.0).hypot(right_only[j].left.1 - lp.right.1);
+                d(a).partial_cmp(&d(b)).unwrap()
+            });
+        if let Some(j) = best {
+            used[j] = true;
+            let rp = &right_only[j];
+            let mut pts = lp.pts.clone();
+            pts.extend(&rp.pts);
+            kept.push(Slur {
+                left: lp.left,
+                right: rp.right,
+                above: lp.above,
+                grade: lp.grade.min(rp.grade),
+                bounds: lp.bounds.union(&rp.bounds),
+                pts,
+            });
+        }
+    }
+    for s in kept {
+        for &(x, y) in &s.pts {
+            let (a, b) = residual.vrun_at(x as i32, y.round() as i32);
+            if b - a < max_thick {
+                for yy in a..=b {
+                    mask.set(x as i32, yy, true);
                 }
             }
         }
-        if n >= minimum {
-            Some([sx / n as f64, sy / n as f64])
-        } else {
-            None
-        }
-    };
-    let first = centroid(start.ceil() as i64, 1)?;
-    let mut points = vec![[start, first[1]]];
-    for i in 1..count {
-        if let Some(p) = centroid((start + i as f64 * dx).round_ties_even() as i64, min_weight) {
-            points.push(p);
-        }
+        out.push(s);
     }
-    let last = centroid((stop - probe as f64 + 1.).floor() as i64, 1)?;
-    points.push([stop, last[1]]);
-    Curve::interpolate(points)
+    (out, mask)
 }
-/// CurvedFilament.getMeanCurvature, including upstream infinity/NaN behavior for straight segments.
-pub fn mean_radius(points: &[Point]) -> f64 {
-    let bisector = |a: Point, b: Point| {
-        let dx = (b[0] - a[0]) / 2.;
-        let dy = (b[1] - a[1]) / 2.;
-        let mx = a[0] + dx;
-        let my = a[1] + dy;
-        [mx + dy, my - dx, mx - dy, my + dx]
-    };
-    let mut total = 0.;
-    let mut n = 0;
-    for w in points.windows(3) {
-        let [x1, y1, x2, y2] = bisector(w[0], w[1]);
-        let [x3, y3, x4, y4] = bisector(w[1], w[2]);
-        let den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-        let a = x1 * y2 - y1 * x2;
-        let b = x3 * y4 - y3 * x4;
-        let x = (a * (x3 - x4) - (x1 - x2) * b) / den;
-        let y = (a * (y3 - y4) - (y1 - y2) * b) / den;
-        total += 1. / (x - w[2][0]).hypot(y - w[2][1]);
-        n += 1;
+
+fn slur_candidates(residual: &Bitmap, symbols: &[crate::symbols::Symbol], scale: &Scale) -> Vec<Slur> {
+    let il = scale.interline as f64;
+    let max_thick = il.max(3.0);
+    let mut pieces: Vec<Piece> = Vec::new();
+    // Thin vertical runs of every column, chained column to column while the
+    // chain does not branch (an approximation of skeleton arcs between
+    // junctions, so that a slur touching another glyph is still found).
+    let (w, h) = (residual.width as i32, residual.height as i32);
+    let mut runs: Vec<Vec<(i32, i32)>> = vec![Vec::new(); w as usize];
+    for x in 0..w {
+        let mut y = 0;
+        while y < h {
+            if residual.get(x, y) {
+                let a = y;
+                while y < h && residual.get(x, y) {
+                    y += 1;
+                }
+                if ((y - a) as f64) <= max_thick {
+                    runs[x as usize].push((a, y - 1));
+                }
+            }
+            y += 1;
+        }
     }
-    if n > 0 {
-        1. / (total / n as f64)
+    let touch = |a: (i32, i32), b: (i32, i32)| a.0 <= b.1 + 1 && b.0 <= a.1 + 1;
+    let right_of = |x: usize, r: (i32, i32)| -> Vec<usize> {
+        if x + 1 >= runs.len() {
+            return Vec::new();
+        }
+        (0..runs[x + 1].len()).filter(|&j| touch(r, runs[x + 1][j])).collect()
+    };
+    let left_count = |x: usize, r: (i32, i32)| -> usize {
+        if x == 0 {
+            return 0;
+        }
+        runs[x - 1].iter().filter(|&&q| touch(r, q)).count()
+    };
+    let mut seen: Vec<Vec<bool>> = runs.iter().map(|c| vec![false; c.len()]).collect();
+    for x in 0..runs.len() {
+        for i in 0..runs[x].len() {
+            if seen[x][i] {
+                continue;
+            }
+            seen[x][i] = true;
+            let mut pts = Vec::new();
+            let mut thick = 0.0;
+            let (mut cx, mut ci) = (x, i);
+            loop {
+                let r = runs[cx][ci];
+                thick += (r.1 - r.0 + 1) as f64;
+                pts.push((cx as f64, (r.0 + r.1) as f64 / 2.0));
+                let next = right_of(cx, r);
+                if next.len() != 1 {
+                    break;
+                }
+                let n = runs[cx + 1][next[0]];
+                if left_count(cx + 1, n) != 1 || seen[cx + 1][next[0]] {
+                    break;
+                }
+                cx += 1;
+                ci = next[0];
+                seen[cx][ci] = true;
+            }
+            // Short pieces must be thin (cut pieces of a curve, not dots).
+            if pts.len() < 3 || ((pts.len() as f64) < 0.5 * il && thick / pts.len() as f64 > 0.25 * il) {
+                continue;
+            }
+            let (x0, x1) = (pts[0].0 as i32, pts[pts.len() - 1].0 as i32);
+            let (y0, y1) = pts.iter().fold((f64::MAX, f64::MIN), |a, p| (a.0.min(p.1), a.1.max(p.1)));
+            let bounds = Rect::new(x0, y0 as i32 - 1, x1 - x0 + 1, (y1 - y0) as i32 + 3);
+            // Not part of a recognized symbol (but dots and rest bars may be
+            // pieces of a slur cut by staff lines).
+            if symbols.iter().any(|s| {
+                s.shape != "DOT_set"
+                    && s.shape != "HW_REST_set"
+                    && s.bounds.intersection(&bounds).is_some_and(|i| i.area() as f64 >= 0.5 * bounds.area() as f64)
+            }) {
+                continue;
+            }
+            pieces.push(Piece { pts, bounds });
+        }
+    }
+    pieces.sort_by_key(|p| p.bounds.x);
+    // Join pieces end to end when the union still fits a circle.
+    let mut used = vec![false; pieces.len()];
+    let mut out = Vec::new();
+    for i in 0..pieces.len() {
+        if used[i] {
+            continue;
+        }
+        used[i] = true;
+        let mut pts = pieces[i].pts.clone();
+        let mut bounds = pieces[i].bounds;
+        // Last state passing the final check (extensions are accepted with
+        // the looser intermediate distance, maxArcsDistance 0.15).
+        let mut best = grade_slur(&pts, il).map(|s| Slur { bounds, ..s });
+        loop {
+            let end = *pts.last().unwrap();
+            let next = (0..pieces.len()).filter(|&j| !used[j]).find(|&j| {
+                let p0 = pieces[j].pts[0];
+                p0.0 - end.0 >= -1.0
+                    && p0.0 - end.0 <= 2.0 * il
+                    && (p0.1 - end.1).abs() <= 0.5 * il
+                    && {
+                        let mut u = pts.clone();
+                        u.extend(&pieces[j].pts);
+                        side_distance(&u, il).is_some_and(|d| d <= 0.15 * il)
+                    }
+            });
+            let Some(j) = next else { break };
+            used[j] = true;
+            pts.extend(&pieces[j].pts);
+            bounds = bounds.union(&pieces[j].bounds);
+            if let Some(s) = grade_slur(&pts, il) {
+                best = Some(Slur { bounds, ..s });
+            }
+        }
+        if let Some(s) = best {
+            out.push(s);
+        }
+    }
+    out
+}
+
+fn grade_slur(pts: &[(f64, f64)], il: f64) -> Option<Slur> {
+    let (cx, cy, _r, _) = fit_circle(pts)?;
+    let dist = side_distance(pts, il)?;
+    let max_dist = 0.15 * il;
+    if dist > max_dist {
+        return None;
+    }
+    let (p0, p1, p2) = (pts[0], pts[pts.len() / 2], pts[pts.len() - 1]);
+    let ang = |p: (f64, f64)| (p.1 - cy).atan2(p.0 - cx);
+    let (a0, a1, a2) = (ang(p0), ang(p1), ang(p2));
+    // Arc from p0 to p2 through p1.
+    let norm = |a: f64| a.rem_euclid(2.0 * std::f64::consts::PI);
+    let (d01, d02) = (norm(a1 - a0), norm(a2 - a0));
+    let arc = if d01 <= d02 { d02 } else { 2.0 * std::f64::consts::PI - d02 }.to_degrees();
+    if arc > 190.0 {
+        return None;
+    }
+    let mut mid = a1.rem_euclid(std::f64::consts::PI);
+    if mid < 0.0 {
+        mid += std::f64::consts::PI;
+    }
+    let from_vertical = mid.min(std::f64::consts::PI - mid).to_degrees();
+    if from_vertical < 10.0 {
+        return None;
+    }
+    let width = (p2.0 - p0.0).abs();
+    if width < 0.7 * il {
+        return None;
+    }
+    let (dx, dy) = (p2.0 - p0.0, p2.1 - p0.1);
+    let height = ((p1.0 - p0.0) * dy - (p1.1 - p0.1) * dx).abs() / dx.hypot(dy);
+    if height < 0.07 * il {
+        return None;
+    }
+    let impacts = [
+        (1.0 - dist / max_dist, 3.0),
+        ((190.0 - arc) / 20.0, 1.0),
+        ((width - 0.7 * il) / (0.8 * il), 1.0),
+        ((height - 0.07 * il) / (0.93 * il), 1.0),
+        ((from_vertical - 10.0) / 15.0, 1.0),
+    ];
+    let grade = if impacts.iter().any(|(v, _)| *v <= 0.0) {
+        0.0
     } else {
-        f64::INFINITY
-    }
-}
-
-/// CurvedFilament.computeLine with explicit ending points (setEndingPoints).
-pub fn compute_ended(
-    sections: &[Section],
-    members: &[usize],
-    interline: usize,
-    a: Point,
-    b: Point,
-) -> Option<Curve> {
-    let len = b[0] - a[0] + 1.;
-    let count = (len / (interline * 4) as f64).round_ties_even() as usize;
-    let dx = len / count as f64;
-    let probe = (interline as f64 * 0.5).round_ties_even() as usize;
-    let min_weight = ((interline as f64 * 0.2).round_ties_even() as usize).max(1);
-    let mut points = vec![a];
-    for i in 1..count {
-        if let Some(p) = centroid(
-            sections,
-            members,
-            (a[0] + i as f64 * dx).round_ties_even() as i64,
-            probe,
-            min_weight,
-        ) {
-            points.push(p);
-        }
-    }
-    points.push(b);
-    Curve::interpolate(points)
-}
-
-/// CurvedFilament.getRadius: circumcenter distance to the middle defining point.
-pub fn point_radius(w: &[Point]) -> f64 {
-    let bisector = |a: Point, b: Point| {
-        let dx = (b[0] - a[0]) / 2.;
-        let dy = (b[1] - a[1]) / 2.;
-        let mx = a[0] + dx;
-        let my = a[1] + dy;
-        [mx + dy, my - dx, mx - dy, my + dx]
+        0.8 * impacts.iter().map(|(v, w)| v.powf(*w)).product::<f64>().powf(1.0 / 7.0)
     };
-    let [x1, y1, x2, y2] = bisector(w[0], w[1]);
-    let [x3, y3, x4, y4] = bisector(w[1], w[2]);
-    let den = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-    let a = x1 * y2 - y1 * x2;
-    let b = x3 * y4 - y3 * x4;
-    let x = (a * (x3 - x4) - (x1 - x2) * b) / den;
-    let y = (a * (y3 - y4) - (y1 - y2) * b) / den;
-    (x - w[1][0]).hypot(y - w[1][1])
+    if grade < 0.08 {
+        return None;
+    }
+    Some(Slur { left: p0, right: p2, above: p1.1 < cy, grade, bounds: Rect::default(), pts: pts.to_vec() })
 }

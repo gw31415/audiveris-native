@@ -1,6 +1,0 @@
-tree 188eff6160886aaaf5801557f2714cdbd88495bc
-parent 71635e9793bd48679a4774cb97b9f1f44601c874
-author Checkpoint Restore <checkpoint-restore@local.invalid> 1791036842 +0000
-committer Checkpoint Restore <checkpoint-restore@local.invalid> 1791036842 +0000
-
-Map original consecutive signed straight-ledger pitch interpolation and gap fallback; preserve bounded multi-staff and curved-ledger limits
