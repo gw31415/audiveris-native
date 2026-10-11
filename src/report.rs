@@ -139,6 +139,8 @@ pub fn write(pages: &[Page], score: &Score) -> (String, usize) {
     }
     let _ = writeln!(x, "time/key: {}", changes.join("; "));
 
+    // Measures still covered by a multiple rest, per part.
+    let mut rest_left = vec![0u32; parts.len()];
     let mut flagged = Vec::new();
     for mi in 0..n {
         let ms: Vec<&Measure> = parts.iter().map(|p| &p.measures[mi]).collect();
@@ -146,7 +148,21 @@ pub fn write(pages: &[Page], score: &Score) -> (String, usize) {
         let mut issues = Vec::new();
         for (pi, m) in ms.iter().enumerate() {
             if let Some(r) = m.attributes.as_ref().and_then(|a| a.multiple_rest) {
+                rest_left[pi] = r - 1;
                 issues.push(format!("P{} multi-measure rest of {r} (check the number against the image)", pi + 1));
+                continue;
+            }
+            if rest_left[pi] > 0 {
+                rest_left[pi] -= 1;
+                continue;
+            }
+            // Nothing recognized in a part that has music elsewhere in the
+            // system (a part absent from the system is empty throughout).
+            if m.events.is_empty() && !m.implicit {
+                let same_system = |k: usize| system[k] == system[mi];
+                if (0..n).any(|k| same_system(k) && !parts[pi].measures[k].events.is_empty()) {
+                    issues.push(format!("P{} empty (no note or rest recognized)", pi + 1));
+                }
                 continue;
             }
             for (v, end) in voice_ends(m) {

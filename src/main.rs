@@ -309,6 +309,15 @@ mod tests {
             assert!(s.notes.iter().any(|n| n.contains(note)), "{name}: {:?}", s.notes);
             assert_eq!(musicxml::write(&s, "t"), musicxml::write(&reference, "t"), "{name}");
         }
+        // The correction stays on its page: a following page really in 3/4 keeps it.
+        let path = std::env::temp_dir().join(format!("audiveris-native-next-{}.png", std::process::id()));
+        replaced.save(&path).unwrap();
+        let mut state = score::State::default();
+        score::build(&pipeline::process(&path, false, "eng").unwrap(), &mut state);
+        std::fs::remove_file(&path).ok();
+        let next = score::build(&pipeline::process(&dir.join("an-laura.png"), false, "eng").unwrap(), &mut state);
+        let t = next.parts[0].measures[0].attributes.as_ref().and_then(|a| a.time).unwrap();
+        assert_eq!((t.beats, t.beat_type), (3, 4));
     }
 
     /// The report lists the overfull measures of Der Winter by number and system.

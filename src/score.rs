@@ -250,7 +250,8 @@ pub struct State {
     time: Option<TimeSig>,
     /// Time signature read for the time in force (None: assumed).
     time_read: Option<TimeSig>,
-    /// Misread time signatures corrected from the measure contents: (read, used).
+    /// Misread time signatures of the current page corrected from the measure
+    /// contents: (read, used).
     time_fixes: Vec<(TimeSig, TimeSig)>,
     /// Time used when none is read (from the measure contents, else 4/4).
     default_time: Option<TimeSig>,
@@ -305,6 +306,9 @@ fn filler(m: &Measure) -> Measure {
 /// assumed) or that most measures contradict is replaced by the one the
 /// contents show, and the page is built again with it.
 pub fn build(sheet: &Sheet, state: &mut State) -> Score {
+    // Corrections hold for the page they were found on: a later page may
+    // really change to the time signature that was misread here.
+    state.time_fixes.clear();
     let saved = state.clone();
     let mut score = build_page(sheet, state);
     let fixes = time_corrections(&score.parts);
@@ -411,10 +415,10 @@ fn build_page(sheet: &Sheet, state: &mut State) -> Score {
     let mut notes: Vec<String> = Vec::new();
     let mut clef_state = std::mem::take(&mut state.clefs);
     let mut fifths_state = state.fifths;
-    // The time carried from the previous page follows the corrections.
+    // The time carried from the previous page follows this page's corrections.
     let mut time_read_state = state.time_read;
     let mut time_state = match (state.time, time_read_state) {
-        (Some(_), Some(r)) => Some(state.fix_time(r)),
+        (Some(t), Some(r)) => Some(if state.time_fixes.iter().any(|f| f.0 == r) { state.fix_time(r) } else { t }),
         (Some(_), None) => Some(state.assumed_time()),
         (None, _) => None,
     };
