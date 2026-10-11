@@ -3,7 +3,9 @@
 
 Standard library only (cropping uses Pillow when present, else ImageMagick).
 
+  scoretool.py pages    SCORE.pdf OUT.png [--dpi 30] [--cols 8]
   scoretool.py summary  SCORE.musicxml [--part P1] [--measures 3-8]
+  scoretool.py systems  SCORE.musicxml [--part P1] [--printed 0,5,10,...] [--last N]
   scoretool.py check    SCORE.musicxml
   scoretool.py crops    DEBUG_DIR OUT_DIR IMAGE... [--split N] [--pad K]
   scoretool.py extract  SCORE.musicxml --measures 3-4 [--part P1]
@@ -260,6 +262,85 @@ def cmd_summary(args):
                 print(f"  st{key[0]} v{key[1]}: " + " ".join(toks))
             for line in lines:
                 print(line)
+
+
+def systems_of(part):
+    """[(system number, [measure numbers])] from <print new-system>."""
+    out = []
+    for m in part.findall("measure"):
+        if not out or m.find("print[@new-system='yes']") is not None:
+            out.append((len(out) + 1, []))
+        out[-1][1].append(m.get("number"))
+    return out
+
+
+def cmd_systems(args):
+    root = load(args.score)
+    part = root.find(f"part[@id='{args.part}']") if args.part else root.find("part")
+    if part is None:
+        sys.exit(f"part {args.part} not found")
+    systems = systems_of(part)
+    printed = [int(x) for x in args.printed.split(",")] if args.printed else None
+    if printed and len(printed) != len(systems):
+        print(f"note: {len(printed)} printed numbers for {len(systems)} OMR systems; compared in order "
+              "(if the whole list was given, the OMR split or missed a system)")
+    off = 0
+    for i, (no, nums) in enumerate(systems):
+        line = f"S{no:02d}: OMR m{nums[0]}-m{nums[-1]} ({len(nums)})"
+        if printed and i < len(printed):
+            first = printed[i]
+            last = printed[i + 1] - 1 if i + 1 < len(printed) else args.last
+            if last is not None:
+                want = last - first + 1
+                diff = len(nums) - want
+                off += diff
+                line += f"  image m{first}-m{last} ({want})"
+                if diff:
+                    line += f"  {'+' if diff > 0 else ''}{diff}: OMR has {abs(diff)} measure(s) " \
+                            f"{'too many (extra barline)' if diff > 0 else 'too few (missed barline)'}"
+                if off:
+                    line += f"; later OMR numbers are off by {off:+d}"
+        print(line)
+
+
+def cmd_pages(args):
+    """Contact sheet of a PDF's pages, labelled with page numbers, to find
+    the pages of one part or movement; also the resolution of scanned pages."""
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        sys.exit("pages needs Pillow (pip install pillow)")
+    import tempfile
+    if not shutil.which("pdftoppm"):
+        sys.exit("pages needs pdftoppm (poppler-utils)")
+    with tempfile.TemporaryDirectory() as tmp:
+        subprocess.run(["pdftoppm", "-r", str(args.dpi), "-png", args.pdf, os.path.join(tmp, "p")], check=True)
+        files = sorted(os.listdir(tmp), key=lambda f: int(re.search(r"(\d+)\.png$", f).group(1)))
+        thumbs = [Image.open(os.path.join(tmp, f)).convert("L") for f in files]
+        w = max(t.width for t in thumbs)
+        h = max(t.height for t in thumbs)
+        cols = min(args.cols, len(thumbs))
+        rows = -(-len(thumbs) // cols)
+        sheet = Image.new("L", (cols * w, rows * (h + 24)), 255)
+        draw = ImageDraw.Draw(sheet)
+        for i, t in enumerate(thumbs):
+            x, y = (i % cols) * w, (i // cols) * (h + 24)
+            sheet.paste(t, (x, y + 24))
+            draw.text((x + 4, y + 4), f"p{i + 1}", fill=0)
+            draw.rectangle([x, y + 24, x + w - 1, y + 24 + h - 1], outline=160)
+        sheet.save(args.out, optimize=True)
+    print(f"{args.out}: {len(thumbs)} pages, {cols} per row")
+    if shutil.which("pdfimages"):
+        out = subprocess.run(["pdfimages", "-list", args.pdf], capture_output=True, text=True).stdout
+        ppi = {}
+        for line in out.splitlines()[2:]:
+            f = line.split()
+            if len(f) > 13 and f[2] == "image":
+                ppi[int(f[0])] = max(ppi.get(int(f[0]), 0), int(f[12]))
+        if ppi:
+            vals = sorted(set(ppi.values()))
+            print(f"scanned pages: embedded images of {vals[0]}-{vals[-1]} ppi; render at 300 dpi "
+                  f"(pdftoppm -r 300 -f FIRST -l LAST); more than the scan does not add detail")
 
 
 # ---------------------------------------------------------------- checking
@@ -682,15 +763,22 @@ def part_ids(text, part):
 
 def cmd_split(args):
     text = read_text(args.score)
-    at_q = Fraction(args.at)
+    at_q = Fraction(args.at or 0)
     for pid in part_ids(text, args.part):
         s, e = measure_span(text, pid, args.measure)
         m = ET.fromstring(text[s:e])
-        at = at_q * divisions_at(text, pid, args.measure)
-        if at.denominator != 1:
-            sys.exit(f"{pid}: --at {args.at} is not a whole number of divisions")
-        at = int(at)
         items, _ = timed_items(m)
+        if args.before_note:
+            onsets = sorted({o for o, el in items if el.tag == "note"
+                             and el.find("chord") is None and el.find("grace") is None})
+            if not 1 <= args.before_note <= len(onsets):
+                sys.exit(f"{pid} m{args.measure}: only {len(onsets)} note positions")
+            at = onsets[args.before_note - 1]
+        else:
+            at = at_q * divisions_at(text, pid, args.measure)
+            if at.denominator != 1:
+                sys.exit(f"{pid}: --at {args.at} is not a whole number of divisions")
+            at = int(at)
         first, second = [], []
         side_of_onset = {}
         for onset, el in items:
@@ -752,6 +840,22 @@ def main():
     p.add_argument("--measures", help="e.g. 3-8")
     p.set_defaults(func=cmd_summary)
 
+    p = sub.add_parser("pages", help="contact sheet of a PDF's pages (to find a part or movement)")
+    p.add_argument("pdf")
+    p.add_argument("out")
+    p.add_argument("--dpi", type=int, default=30)
+    p.add_argument("--cols", type=int, default=8)
+    p.set_defaults(func=cmd_pages)
+
+    p = sub.add_parser("systems", help="measures per system; with --printed, compare with the measure "
+                                       "numbers printed at the start of each system")
+    p.add_argument("score")
+    p.add_argument("--part")
+    p.add_argument("--printed", help="first printed measure number of each system, in order "
+                                     "(e.g. 0,5,10,16; 0 or 1 for the first system)")
+    p.add_argument("--last", type=int, help="number of the last measure of the last system")
+    p.set_defaults(func=cmd_systems)
+
     p = sub.add_parser("check", help="report measures whose voices do not fill the time signature, "
                                      "dangling ties, part measure count mismatches")
     p.add_argument("score")
@@ -792,7 +896,10 @@ def main():
                                      "all parts unless --part, then renumber")
     p.add_argument("score")
     p.add_argument("--measure", required=True)
-    p.add_argument("--at", required=True, help="split position in quarter notes from the measure start, e.g. 2 or 3/2")
+    where = p.add_mutually_exclusive_group(required=True)
+    where.add_argument("--at", help="split position in quarter notes from the measure start, e.g. 2 or 3/2")
+    where.add_argument("--before-note", type=int, help="split before the N-th note/rest position (1-based, "
+                       "in time order; use when the OMR durations are wrong)")
     p.add_argument("--part")
     p.add_argument("-o", "--output")
     p.set_defaults(func=cmd_split)

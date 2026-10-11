@@ -30,7 +30,17 @@ description: >-
   画像は `get_image`、テキストは実行の標準出力で受け取る。
 - どちらも無理なら、CLI 無しで画像だけから書き起こす（手順 3 以降を、参考データ無しで行う）。
 
-入力が PDF なら先に画像化する: `pdftoppm -r 300 -png score.pdf page`（300dpi 推奨。150dpi 未満は精度が落ちる）。
+入力が PDF なら、必要なページだけを画像化する。スコアとパート譜が 1 冊になった PDF などで
+「バイオリンのパート譜の 1 楽章だけ」のように頼まれたら、まず全ページの縮小一覧を見て範囲を決める:
+
+```sh
+python3 $SKILL/scripts/scoretool.py pages score.pdf work/pages.png   # p1, p2, … のラベル付き一覧（スキャンの解像度も表示）
+pdftoppm -r 300 -png -f 26 -l 28 score.pdf page                     # 例: 26〜28 ページだけ（page-26.png …）
+```
+
+- 楽章の終わりは終止線（複縦線）、次の楽章はテンポ表示（Largo など）と新しい拍子・調で見分ける。
+  楽章がページの途中で終わる・始まるなら、そのページの画像を段の境目で切ってから OMR に渡す。
+- 300dpi 推奨（150dpi 未満は精度が落ちる）。写真やスキャンの PDF は埋め込み画像の解像度以上にしても細部は増えない。
 
 ## 1. OMR の下書きを作る
 
@@ -62,9 +72,18 @@ python3 $SKILL/scripts/scoretool.py check work/omr.musicxml                     
 ```
 
 - `crops` は段 `S01.png` と、2 小節ずつ拡大した `S01-1-2.png`… を作る（`--split N` で小節数、
-  `--split 0` で段のみ）。`index.json` に段→ページ・検出小節数。
+  `--split 0` で段のみ）。`index.json` に段→ページ・検出小節数。拡大は OMR が検出した小節線で切るので、小節線を見落とした段では
+  1 枚に 3 小節以上写る。どの小節かは段全体の `S<n>.png` と段頭の小節番号で確かめる。
 - `summary` の各小節見出しの `S<n>` が段番号で、`S<n>.png` と対応する。記法は
   [references/notation.md](references/notation.md)。
+- 段の頭に小節番号が印刷されている譜面（パート譜に多い）では、段ごとの小節数を画像と突き合わせる。
+  各段の頭の番号（最初の段は弱起なら 0、無ければ 1）を順に並べ、最後の小節番号と一緒に渡す:
+  ```sh
+  python3 $SKILL/scripts/scoretool.py systems work/omr.musicxml --printed 0,5,10,16,22 --last 26
+  ```
+  `S03: OMR m9-m13 (5)  image m10-m15 (6)  -1: OMR has 1 measure(s) too few (missed barline); later OMR numbers are off by -2`
+  のように、どの段で何小節ずれたか（小節線の見落とし・余分、複数小節休符の数え漏れ）と、OMR の番号が
+  画像の番号からいくつずれているかが分かる。段の数そのものが違うと冒頭に注意が出る。
 - `check` の「overfull/underfull」は音価や声部の誤り、拍子の誤認の強い手がかり。`check` は声部ごとに数えるので、
   件数は `omr.log` の flagged measures（小節ごと）より多くなる。末尾に拍子の変化の一覧が出る。
 
@@ -75,15 +94,22 @@ python3 $SKILL/scripts/scoretool.py check work/omr.musicxml                     
 - **flagged でない小節**: 拍は合っている。画像と照合し、違う音だけ直す（多くはそのまま使える）。
 - **flagged の小節**: 拍が合わない。まず原因を画像で見分け、**小節の中身は残したまま**原因の箇所だけ直す。
   - 音価の誤り（旗・連桁の本数、付点、白黒の符頭、連符の見落とし）: その音符の `type`/`duration`/`dot` を直す。
+    画質の悪い譜面では「音高の列は合っていて音価だけ違う」小節が多い。音高の列はそのまま使い、音価を画像から付け直す。
   - 音符・休符の欠落や余分（cue 音符・小節番号の数字・装飾音の混入など）: その音符だけ足す・消す。
   - 声部の割れ: 声部番号と `backup` を直す。音高はそのまま使える。
   - [ ] に「barline may have been missed」: 2 小節が 1 つにまとまっている。`split` で分ける（中身は再利用される）。
+    音価が信用できないときは `--at` ではなく `--before-note N`（N 番目の音の前で分ける）を使う。
   - 「barline may have been added」: 1 小節が割れている。`merge` でつなぐ。
   - 複数小節休符: 数字（小節番号を読んでいることがある）を画像で確かめ、違えば休符の小節を足す・減らす。
 - **拍子の推定・補正の記録がある / 拍子が画像と違う**: 拍子を画像で確かめる。違っていれば `<time>` を直す。
   小節の中身は拍子と独立に読まれているので、拍子を直すだけで多くの小節の拍が合うことがある。
 - **小節数が画像と合わない**: 段ごとに画像の小節線と下書きの小節を対応づけ、ずれの起きた箇所だけ
   `split` / `merge` / `insert` / `delete` で合わせる。ずれた箇所より後ろの小節も、対応づけ直せば中身は使える。
+  **構成（段ごとの小節数）を全段で先に合わせてから中身を直す**と、以後は OMR の小節と画像の小節が 1 対 1 になり、
+  小節番号で照合できる。`systems --printed` のずれが 0 になるまで、前の段から順に直す（直すたびに `renumber`）。
+- **誤検出の記号を先に消す**: 下書きの途中の音部記号変更（`clef=F4` など）・フェルマータ・装飾音・coda/segno・
+  途中の拍子変更は、画像に無ければ最初に消す。特に誤った音部記号はその後の音高を全部ずらすので、
+  消すだけでその段の音高の多くが正しくなる。
 - flagged が多くても（2 割を超えても）方針は同じ。直す量が増えるだけで、下書きは捨てない。
 
 ## 3. 段ごとに画像と照合する（本作業）
@@ -108,6 +134,13 @@ python3 $SKILL/scripts/scoretool.py check work/omr.musicxml                     
 - 画像に無いものを足さない。OMR が出した記号（特にカエスーラ・トリル・アクセント・ボルタ番号）は、
   画像で確認できたものだけ残す。
 - 移調楽器・オッターヴァは記譜音高のまま書く（`8va` は direction で表す）。
+- パート譜の **cue 音符**（「Fl.」などと書かれた小さい音符で、下に休符がある）は他の楽器の手がかりで、このパートは
+  休んでいる。既定では小さい音符を書かず、本来の休符（全休符など）だけを書く。ユーザーが cue も欲しいと言えば
+  `<cue/>` 付きの音符として別声部に書く。
+- **複数小節休符**: 数字の付いた休符の小節は、数字の数だけ休みの小節がある（「1」は 1 小節、「4」は 4 小節）。
+  古い版では 2 小節を倍全休符（太い縦の四角）、4 小節を長休符で書くことがある。MusicXML では小節を数字の数だけ作り、
+  それぞれ全小節休符（`<rest measure="yes"/>`、duration は 1 小節分）を入れ、先頭の小節の `<attributes>` に
+  `<measure-style><multiple-rest>4</multiple-rest></measure-style>` を付ける。段頭の小節番号はこれを数えた番号。
 - ピアノ譜などの多声部は、符幹の向きで声部を分ける（上声 voice 1・下声 voice 2、下の五線は voice 5〜）。
   各声部が小節を満たすこと（足りない部分は休符、見えない休符は `<forward>` でも可）。
 
@@ -124,6 +157,7 @@ python3 $SKILL/scripts/scoretool.py insert  work/score.musicxml --part P1 --afte
 python3 $SKILL/scripts/scoretool.py delete  work/score.musicxml --part P1 --measure 6          # 余分な小節
 python3 $SKILL/scripts/scoretool.py renumber work/score.musicxml                              # 挿入/削除の後
 python3 $SKILL/scripts/scoretool.py split work/score.musicxml --measure 12 --at 2   # 小節線の見落とし: 2 拍目で分ける（全パート）
+python3 $SKILL/scripts/scoretool.py split work/score.musicxml --measure 12 --before-note 7   # 7 番目の音の前で分ける
 python3 $SKILL/scripts/scoretool.py merge work/score.musicxml --measure 12          # 余分な小節線: 12 と 13 をつなぐ（全パート）
 ```
 
@@ -166,4 +200,4 @@ python3 $SKILL/scripts/scoretool.py merge work/score.musicxml --measure 12      
 | 暗黙の 3 連符・声部 | 小節が溢れる場合の推定。多声部の声部割当て |
 | 連桁の多い速い音型・密な和音 | 音価（連桁の本数）と和音構成音の欠落 |
 | 小さい五線（オッシア）・1 線譜・打楽器譜・タブ譜 | 非対応。画像から書き起こす |
-| 画質 | 低解像度・傾き・かすれ・手書きでは全体に精度が落ちる |
+| 画質 | 低解像度・傾き・かすれ・手書き、スマートフォンで撮った・スキャンした JPEG の PDF では全体に精度が落ちる（細い符幹・小さい符頭を落とし、小節線を記号と取り違える）。この場合も構成（小節線・段）と音高の目安には使えることが多いので、まず `systems --printed` で構成を合わせる |
