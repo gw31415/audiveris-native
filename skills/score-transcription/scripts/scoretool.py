@@ -20,6 +20,7 @@ import json
 import os
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import textwrap
@@ -265,11 +266,17 @@ def cmd_check(args):
     root = load(args.score)
     problems = []
     counts = {}
+    first_time = None
     for part in root.findall("part"):
         pid = part.get("id")
         measures = part.findall("measure")
         counts[pid] = len(measures)
         divisions, beats, beat_type = None, None, None
+        if measures and measures[0].find("attributes/time") is None:
+            problems.append(f"{pid} m{measures[0].get('number')}: no <time> in the first measure"
+                            + (" (checking with the first part's)" if first_time else ""))
+            if first_time:
+                beats, beat_type = first_time
         seen_numbers = set()
         open_ties = {}
         for idx, m in enumerate(measures):
@@ -337,8 +344,10 @@ def cmd_check(args):
                         tag = " (pickup/last measure?)" if first_or_last or m.get("implicit") == "yes" else ""
                         problems.append(f"{pid} m{num} v{v}: underfull "
                                         f"({fmt_beats(end, divisions)} of {fmt_beats(expected, divisions)} quarters){tag}")
-            elif idx == 0:
-                problems.append(f"{pid}: no divisions/time signature at the start")
+            elif idx == 0 and not divisions:
+                problems.append(f"{pid}: no <divisions> in the first measure")
+            if idx == 0 and first_time is None and beats:
+                first_time = (beats, beat_type)
         for key, num in open_ties.items():
             problems.append(f"{pid} m{num}: tie on {key[1]}{key[2]} (staff {key[0]}) never stopped")
     if len(set(counts.values())) > 1:
@@ -600,6 +609,8 @@ def cmd_renumber(args):
 # ---------------------------------------------------------------- main
 
 def main():
+    if hasattr(signal, "SIGPIPE"):
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)  # quiet under "| head"
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
 

@@ -14,41 +14,48 @@ git clone --depth 1 https://github.com/gw31415/audiveris-native ~/audiveris-nati
 sudo apt install tesseract-ocr tesseract-ocr-deu python3-pil   # または imagemagick
 ```
 
-以下 `$SKILL` は `~/audiveris-native/skills/score-transcription`、
-`$BIN` は `~/.cargo/bin/audiveris-native`（MCP のコマンドは PATH が通らないことがあるので絶対パスで）。
+MCP からの実行は PATH が通らないことがあるので、`~/.cargo/bin/audiveris-native` と
+`~/audiveris-native/skills/score-transcription/scripts/scoretool.py` を絶対パス（`$HOME/...`）で呼ぶ。
 更新は同じ `cargo install` と `git -C ~/audiveris-native pull`。
 
 ## 流れ
 
-1. **セッション**: `open_session(cwd=<作業ディレクトリ>)`。作業用ディレクトリ（例 `~/scores/<曲名>`）は
-   `start_execution(["mkdir","-p",...], profile="host")` で作る。セッションの cwd はその中にすると、
-   以後の実行を `profile="sandbox"`（書き込みはセッション内のみ・ネットワーク無し）で安全に行える。
+以下の実行はすべて `start_execution(command=[...], io="pipes")`。終了は `wait_execution` で待ち、
+標準出力を受け取る。
+
+1. **セッション**: 作業ディレクトリ（例 `~/scores/<曲名>`）を `["mkdir","-p",DIR]` で作り、
+   `open_session(cwd=DIR)` を開き直す。以後の実行はその中で行う。
+   - `profile`: `sandbox`（書き込みはセッション内のみ・ネットワーク無し）が使えればそれが安全。
+     ただしサーバーの bubblewrap 設定や mise などのシム（読み取り専用の環境で失敗する）によっては
+     失敗するので、そのときは `host` を使う。
 
 2. **画像を置く**（どれか）:
    - ユーザーがチャットに添付したファイル: `import_file`（`download_url` が許可されたオリジンのとき）。
-   - URL で公開されている: `start_execution(["curl","-fsSLo","page-1.png",URL], profile="host")`。
-   - すでにサーバーにある: そのパスを使う。
-   - 手元にしか無い: base64 にして 60KB 以下の断片ごとに `write_file`（`page-1.b64.000` …）、
-     `bash -c 'cat page-1.b64.* | base64 -d > page-1.png && rm page-1.b64.*'`。
-   PDF なら `pdftoppm -r 300 -png score.pdf page`。
+   - URL で公開されている: `["curl","-fsSLo","page-1.png",URL]`（`host`）。
+   - すでにサーバーにある: `cp` する。
+   - 手元にしか無い: base64 にして 60KB 以下の断片ごとに書き（手順 5 の方法）、
+     `["bash","-c","cat page-1.b64.* | base64 -d > page-1.png && rm page-1.b64.*"]`。
+   PDF なら `["pdftoppm","-r","300","-png","score.pdf","page"]`。
+   ページ順に並ぶ名前にする（10 ページ以上なら `page-01` のようにゼロ埋め）。
 
-3. **OMR と材料**（`profile="sandbox"`、`io="pipes"`）:
+3. **OMR と材料**:
+   ```json
+   ["bash","-c","T=$HOME/audiveris-native/skills/score-transcription/scripts/scoretool.py; $HOME/.cargo/bin/audiveris-native --debug debug -o omr.musicxml page-*.png && python3 $T crops debug crops page-*.png && python3 $T check omr.musicxml; python3 $T summary omr.musicxml"]
    ```
-   ["bash","-c","$BIN --debug debug -o omr.musicxml page-*.png && python3 $SKILL/scripts/scoretool.py crops debug crops page-*.png && python3 $SKILL/scripts/scoretool.py check omr.musicxml; python3 $SKILL/scripts/scoretool.py summary omr.musicxml"]
-   ```
-   `page-*.png` はページ順に並ぶ名前にする（`page-10` があるなら `page-01` のようにゼロ埋め）。
-   `wait_execution` で終了まで待ち、標準出力（要約と check の結果）を受け取る。出力が長いときは
-   `summary --measures 1-16` のように分けて実行する。
+   出力が長いときは `summary --measures 1-16` のように分ける。
 
 4. **画像を見る**: `get_image(path="crops/page-1.png")`（全体）、`crops/S01.png`、`crops/S01-1-2.png` …
-   （1 MiB 以下。超えるときは `crops --split 1` やより小さい `--pad` で作り直す）。
-   注釈画像 `debug/<名前>.png` は大きいので、必要なら
-   `convert debug/x.png -resize 50% dbg-small.png` で縮めてから見る。
+   （1 MiB 以下。超えるときは `crops --split 1` で作り直す）。
+   - `get_image` が失敗する場合（サーバーとクライアントの MCP プロトコルの不一致など）で、手元に
+     ファイルを扱える環境（Claude Code など）があれば、`["base64","-w0","crops/S01.png"]` の出力を
+     手元でデコードして画像として読む。それも無理なら、ユーザーに元画像を会話に直接添付してもらう。
 
-5. **修正**: 直した `<measure>` を `write_file(path="fix.xml")` で書き、
-   `scoretool.py replace score.musicxml --part P1 --measure 5 fix.xml` を実行（最初に
-   `cp omr.musicxml score.musicxml`）。`read_file` は 64 KiB までなので、楽譜全体を読むのではなく
-   `extract` / `summary` の出力で確認する。
+5. **修正**: 最初に `["cp","omr.musicxml","score.musicxml"]`。直した `<measure>` を `fix.xml` に書いて
+   `scoretool.py replace score.musicxml --part P1 --measure 5 fix.xml`。
+   - 書き込みは `write_file(path="fix.xml", content=...)`。失敗する場合は引数で渡す:
+     `["bash","-c","printf '%s' \"$1\" > fix.xml","_","<measure number=\"5\">…</measure>"]`
+     （1 引数 64 KiB まで）。
+   - `read_file` は 64 KiB までなので、楽譜全体を読まず `extract` / `summary` の出力で確かめる。
 
-6. **成果物を渡す**: パスを伝える。手元に必要なら、`read_file(score.musicxml)`（64 KiB 以下のとき）か、
-   `split -b 60000 score.musicxml part.` で分けて順に `read_file` して連結する。
+6. **成果物を渡す**: サーバー上のパスを伝える。手元に必要なら `read_file(score.musicxml)`（64 KiB 以下）か、
+   `["split","-b","60000","score.musicxml","out."]` で分けて順に読み、連結する。
