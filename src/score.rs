@@ -1303,6 +1303,7 @@ fn repeat_signs(sheet: &Sheet, sys: &crate::grid::System) -> (Vec<(bool, bool)>,
 /// Multiple rest (Audiveris MultipleRestsBuilder): a beam-like bar of at
 /// least 4 il stuck on the staff middle line (pitch within 0.2), with
 /// vertical serifs at both ends; the measure count is the number above.
+/// Also a numbered measure rest without such a bar (below).
 fn multiple_rest(sheet: &Sheet, staves: &[usize], x0: f64, x1: f64) -> Option<u32> {
     let il = sheet.scale.interline as f64;
     for &si in staves {
@@ -1335,6 +1336,31 @@ fn multiple_rest(sheet: &Sheet, staves: &[usize], x0: f64, x1: f64) -> Option<u3
             if n >= 2 {
                 return Some(n);
             }
+        }
+    }
+    // Numbered measure rest (older engravings: a whole, breve or long rest
+    // with the measure count above it): no head in the measure and digits
+    // just above the staff around the middle of the measure.
+    let (mid, half) = ((x0 + x1) / 2.0, ((x1 - x0) / 2.0).max(il));
+    for &si in staves {
+        let st = &sheet.staves[si];
+        if sheet.heads.iter().any(|h| h.staff == si && h.bounds.cx() > x0 && h.bounds.cx() < x1) {
+            return None;
+        }
+        let mut digits: Vec<(f64, u32)> = sheet
+            .symbols
+            .iter()
+            .filter(|s| s.staff == si && (s.bounds.cx() - mid).abs() < 0.5 * half)
+            .filter(|s| {
+                let top = st.top(s.bounds.cx());
+                s.bounds.cy() < top && s.bounds.cy() > top - 3.0 * il
+            })
+            .filter_map(|s| digit_of(s.shape).map(|d| (s.bounds.x as f64, d)))
+            .collect();
+        digits.sort_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
+        let n = digits.iter().fold(0u32, |n, d| n * 10 + d.1);
+        if n >= 2 {
+            return Some(n);
         }
     }
     None

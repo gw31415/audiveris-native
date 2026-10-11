@@ -48,6 +48,7 @@ pub fn process(path: &Path, verbose: bool, languages: &str) -> Result<Sheet, Str
     let t = Instant::now();
     let (w, h, gray) = binary::load_gray(path)?;
     let bin = binary::binarize(w, h, &gray);
+    let faint = binary::faint(w, h, &gray);
     log(verbose, &t, format!("BINARY {w}x{h}"));
     let scale = scale::compute(&bin)?;
     log(verbose, &t, format!("SCALE {scale:?}"));
@@ -122,7 +123,7 @@ pub fn process(path: &Path, verbose: bool, languages: &str) -> Result<Sheet, Str
             eprintln!("probe {h:?}");
         }
     }
-    let (mut heads, mut stems) = stems::link(&nostaff, candidates, &scale);
+    let (mut heads, mut stems) = stems::link(&nostaff, &faint, candidates, &scale);
     stems::attach_beams(&mut stems, &heads, &beams, &scale);
     let grace_heads = heads::grace_heads(&bin, &nostaff, smalls, &heads, &scale);
     log(
